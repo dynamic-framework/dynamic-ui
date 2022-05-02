@@ -465,27 +465,31 @@
       "packageName": "@modyo/design-system",
       "projectFolder": "libraries/design-system",
       "reviewCategory": "libraries",
-      "tags": [
-        "libraries"
-      ]
+      "tags": ["libraries"]
     },
     {
       "packageName": "@modyo/react-design-system",
       "projectFolder": "libraries/react-design-system",
       "reviewCategory": "libraries",
-      "tags": [
-        "libraries",
-        "react"
-      ]
+      "tags": ["libraries", "react"]
+    },
+    {
+      "packageName": "@modyo/vue-design-system",
+      "projectFolder": "libraries/vue-design-system",
+      "reviewCategory": "libraries",
+      "tags": ["libraries", "vue"]
     },
     {
       "packageName": "@modyo/react-profile",
       "projectFolder": "widgets/react-profile",
       "reviewCategory": "production",
-      "tags": [
-        "widgets",
-        "react"
-      ]
+      "tags": ["widgets", "react"]
+    },
+    {
+      "packageName": "@modyo/vue-profile",
+      "projectFolder": "widgets/vue-profile",
+      "reviewCategory": "production",
+      "tags": ["widgets", "vue"]
     }
   ]
 }

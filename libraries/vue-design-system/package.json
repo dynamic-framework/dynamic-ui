@@ -1,13 +1,12 @@
 {
-  "name": "@modyo/react-design-system",
+  "name": "@modyo/vue-design-system",
   "sideEffects": false,
   "version": "0.0.1",
   "private": true,
-  "description": "React specific wrapper for component-library",
-  "license": "MIT",
+  "description": "Vue specific wrapper for component-library",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/stencil-ds-output-targets.git"
+    "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
     "test": "jest",
@@ -23,26 +22,22 @@
     "dist/"
   ],
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.8.0",
-    "@testing-library/react": "^10.0.4",
-    "@types/jest": "23.3.9",
-    "@types/node": "^15.12.2",
-    "@types/react": "^18.0.8",
-    "@types/react-dom": "^18.0.3",
+    "@types/jest": "^26.0.23",
+    "@vue/test-utils": "^2.0.0-rc.6",
     "jest": "^26.1.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
     "rimraf": "^2.6.3",
     "rollup": "^1.21.2",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "typescript": "^3.3.4000"
+    "typescript": "^4.3.2",
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13"
   },
   "dependencies": {
     "@modyo/design-system": "workspace:^"
   },
   "peerDependencies": {
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13"
   },
   "jest": {
     "preset": "ts-jest",
@@ -52,6 +47,13 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "dist"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "warnOnly": true
+        }
+      }
+    }
   }
 }
