@@ -474,7 +474,17 @@
       "projectFolder": "libraries/react-design-system",
       "reviewCategory": "libraries",
       "tags": [
-        "libraries"
+        "libraries",
+        "react"
+      ]
+    },
+    {
+      "packageName": "@modyo/react-profile",
+      "projectFolder": "widgets/react-profile",
+      "reviewCategory": "production",
+      "tags": [
+        "widgets",
+        "react"
       ]
     }
   ]
