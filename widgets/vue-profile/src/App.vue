@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Hello</h1>
-    <MText>world! from vue</MText>
-    <MButton text="click me!" />
+    <m-text>world! from vue</m-text>
+    <m-button text="click me!" />
   </div>
 </template>
 

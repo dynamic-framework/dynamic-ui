@@ -1,0 +1,43 @@
+{
+  "name": "@modyo/angular-design-system",
+  "version": "0.0.1",
+  "description": "Angular output target for @stencil/core components.",
+  "files": [
+    "dist/",
+    "resources/",
+    "angular-component-lib/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "prebuild": "rimraf ./dist && npm run test",
+    "build": "ng-packagr",
+    "watch": "tsc --watch",
+    "version": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/stencil-ds-output-targets.git"
+  },
+  "author": "Ionic Team",
+  "homepage": "https://stenciljs.com/",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ionic-team/stencil-ds-output-targets/issues"
+  },
+  "devDependencies": {
+    "@angular/core": "^13.3.6",
+    "@angular/forms": "^13.3.6",
+    "@angular/compiler": "^13.3.6",
+    "@angular/compiler-cli": "^13.3.6",
+    "rxjs": "^7.5.5",
+    "tslib": "^2.4.0",
+    "ng-packagr": "^13.3.1",
+    "@modyo/design-system": "^0.0.1"
+  },
+  "peerDependencies": {
+    "@modyo/design-system": "^0.0.1"
+  }
+}
