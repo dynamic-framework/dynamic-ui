@@ -5,14 +5,29 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { AlertAction } from "./utils/types";
 export namespace Components {
+    interface MAlert {
+        "actions": AlertAction[];
+        "body": string;
+        "title": string;
+    }
     interface MButton {
+        "disabled": boolean;
         "text": string;
+        "type": 'submit' | 'reset' | 'button';
     }
     interface MText {
+        "color": string;
     }
 }
 declare global {
+    interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
+    }
+    var HTMLMAlertElement: {
+        prototype: HTMLMAlertElement;
+        new (): HTMLMAlertElement;
+    };
     interface HTMLMButtonElement extends Components.MButton, HTMLStencilElement {
     }
     var HTMLMButtonElement: {
@@ -26,17 +41,29 @@ declare global {
         new (): HTMLMTextElement;
     };
     interface HTMLElementTagNameMap {
+        "m-alert": HTMLMAlertElement;
         "m-button": HTMLMButtonElement;
         "m-text": HTMLMTextElement;
     }
 }
 declare namespace LocalJSX {
+    interface MAlert {
+        "actions"?: AlertAction[];
+        "body"?: string;
+        "onActionClick"?: (event: CustomEvent<AlertAction>) => void;
+        "title"?: string;
+    }
     interface MButton {
+        "disabled"?: boolean;
+        "onButtonClick"?: (event: CustomEvent<any>) => void;
         "text"?: string;
+        "type"?: 'submit' | 'reset' | 'button';
     }
     interface MText {
+        "color"?: string;
     }
     interface IntrinsicElements {
+        "m-alert": MAlert;
         "m-button": MButton;
         "m-text": MText;
     }
@@ -45,6 +72,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }

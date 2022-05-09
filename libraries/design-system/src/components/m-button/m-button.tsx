@@ -1,17 +1,35 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import {
+  Component,
+  Event,
+  EventEmitter,
+  h,
+  Prop
+} from '@stencil/core';
 
 @Component({
   tag: 'm-button',
-  shadow: true,
+  shadow: true
 })
 export class MButton {
   @Prop() text: string;
+  @Prop() type: 'submit' | 'reset' | 'button';
+  @Prop() disabled: boolean;
+
+  @Event({ eventName: 'buttonClick' }) buttonClick: EventEmitter;
+
+  buttonClickHandler() {
+    this.buttonClick.emit()
+  }
 
   render() {
     return (
-      <Host>
-        <button type="button">{this.text}</button>
-      </Host>
+      <button
+        class="btn btn-primary"
+        type="button"
+        onClick={() => this.buttonClickHandler()}
+      >
+        {this.text}
+      </button>
     );
   }
 

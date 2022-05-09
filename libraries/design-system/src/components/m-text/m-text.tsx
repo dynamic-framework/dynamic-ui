@@ -1,16 +1,18 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'm-text',
   shadow: true,
 })
 export class MText {
+  @Prop() color: string;
+
   render() {
     return (
-      <Host>
-        <p>
-          <slot />
-        </p>
+      <Host
+        {...this.color && { class: `text-${this.color}`}}
+      >
+        <slot />
       </Host>
     );
   }

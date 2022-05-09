@@ -9,10 +9,23 @@ import { defineCustomElements } from '@modyo/design-system/loader';
 
 defineCustomElements();
 
-export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', undefined, [
-  'text'
+export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
+  'title',
+  'body',
+  'actions',
+  'actionClick'
 ]);
 
 
-export const MText = /*@__PURE__*/ defineContainer<JSX.MText>('m-text', undefined);
+export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', undefined, [
+  'text',
+  'type',
+  'disabled',
+  'buttonClick'
+]);
+
+
+export const MText = /*@__PURE__*/ defineContainer<JSX.MText>('m-text', undefined, [
+  'color'
+]);
 

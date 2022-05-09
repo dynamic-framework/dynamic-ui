@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@modyo/react-design-system": "^0.0.1",
+    "@modyo/react-design-system": "workspace:^0.0.1",
+    "@modyo/design-system": "workspace:^0.0.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",

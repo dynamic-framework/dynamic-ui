@@ -8,6 +8,11 @@ const componentCorePackage = '@modyo/design-system';
 export const config: Config = {
   namespace: 'design-system',
   taskQueue: 'async',
+  bundles: [
+    { components: ['m-text'] },
+    { components: ['m-button'] },
+    { components: ['m-alert'] }
+  ],
   outputTargets: [
     reactOutputTarget({
       componentCorePackage,

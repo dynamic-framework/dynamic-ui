@@ -35,14 +35,13 @@
     "rimraf": "^2.6.3",
     "rollup": "^1.21.2",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "typescript": "^4.6.4"
-  },
-  "dependencies": {
-    "@modyo/design-system": "^0.0.1"
+    "typescript": "^4.6.4",
+    "@modyo/design-system": "workspace:^0.0.1"
   },
   "peerDependencies": {
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "@modyo/design-system": "^0.0.1"
   },
   "jest": {
     "preset": "ts-jest",
