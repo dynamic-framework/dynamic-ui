@@ -162,6 +162,7 @@ importers:
       sass-loader: ^12.0.0
       typescript: ^4.6.4
       vue: ^3.2.13
+      webpack: ^5.54.0
     dependencies:
       '@modyo/design-system': link:../../libraries/design-system
       '@modyo/vue-design-system': link:../../libraries/vue-design-system
@@ -176,15 +177,16 @@ importers:
       '@vue/cli-plugin-eslint': 5.0.4_6084a5b0c7b00dd6f5be6d9e72604c89
       '@vue/cli-plugin-typescript': 5.0.4_00a4b8c770d5e3311d3416185cf8ed02
       '@vue/cli-service': 5.0.4_sass-loader@12.6.0
-      '@vue/eslint-config-airbnb': 6.0.0_2d702f7a26ca7873734bc517dfcb2504
+      '@vue/eslint-config-airbnb': 6.0.0_66ed00ea89e1f8bb1f070fc3a7aa65af
       '@vue/eslint-config-typescript': 9.1.0_13fb74c82d85e3e4912ea591eadca0c9
       eslint: 7.32.0
       eslint-plugin-import: 2.26.0_eslint@7.32.0
       eslint-plugin-vue: 8.7.1_eslint@7.32.0
       eslint-plugin-vuejs-accessibility: 1.1.1_eslint@7.32.0
       sass: 1.51.0
-      sass-loader: 12.6.0_sass@1.51.0
+      sass-loader: 12.6.0_sass@1.51.0+webpack@5.72.0
       typescript: 4.6.4
+      webpack: 5.72.0
 
 packages:
 
@@ -3473,7 +3475,7 @@ packages:
       postcss: 8.4.13
       postcss-loader: 6.2.1_postcss@8.4.13+webpack@5.72.0
       progress-webpack-plugin: 1.0.16_webpack@5.72.0
-      sass-loader: 12.6.0_sass@1.51.0
+      sass-loader: 12.6.0_sass@1.51.0+webpack@5.72.0
       ssri: 8.0.1
       terser-webpack-plugin: 5.3.1_webpack@5.72.0
       thread-loader: 3.0.4_webpack@5.72.0
@@ -3569,7 +3571,7 @@ packages:
       prettier: 2.6.2
     dev: true
 
-  /@vue/eslint-config-airbnb/6.0.0_2d702f7a26ca7873734bc517dfcb2504:
+  /@vue/eslint-config-airbnb/6.0.0_66ed00ea89e1f8bb1f070fc3a7aa65af:
     resolution: {integrity: sha512-zoOad6NKIEh8nDOC6fcWMp3i1nYlNF1au80cvTXIEV2w7iRLVo8C10rHAhjCnmgA0Sr+ec1KQxpl7o838DMKOg==}
     peerDependencies:
       '@vue/cli-service': ^4.0.0-0 || ^5.0.0-0
@@ -3583,7 +3585,7 @@ packages:
       eslint: 7.32.0
       eslint-config-airbnb-base: 15.0.0_3bd94fa9be989baab6ef2e6b5dec3766
       eslint-import-resolver-node: 0.3.6
-      eslint-import-resolver-webpack: 0.13.2_eslint-plugin-import@2.26.0
+      eslint-import-resolver-webpack: 0.13.2_3b88e4ac75d1d7096c58d22104971f5d
       eslint-plugin-import: 2.26.0_eslint@7.32.0
       eslint-plugin-vuejs-accessibility: 1.1.1_eslint@7.32.0
     transitivePeerDependencies:
@@ -5936,7 +5938,7 @@ packages:
       debug: 3.2.7
       resolve: 1.22.0
 
-  /eslint-import-resolver-webpack/0.13.2_eslint-plugin-import@2.26.0:
+  /eslint-import-resolver-webpack/0.13.2_3b88e4ac75d1d7096c58d22104971f5d:
     resolution: {integrity: sha512-XodIPyg1OgE2h5BDErz3WJoK7lawxKTJNhgPNafRST6csC/MZC+L5P6kKqsZGRInpbgc02s/WZMrb4uGJzcuRg==}
     engines: {node: '>= 6'}
     peerDependencies:
@@ -5955,6 +5957,7 @@ packages:
       lodash: 4.17.21
       resolve: 1.22.0
       semver: 5.7.1
+      webpack: 5.72.0
     dev: true
 
   /eslint-module-utils/2.7.3:
@@ -11408,7 +11411,7 @@ packages:
     resolution: {integrity: sha512-ZRwKbh/eQ6w9vmTjkuG0Ioi3HBwPFce0O+v//ve+aOq1oeCy7jMV2qzzAlpsNuqpqCBjjriM1lbtZbF/Q8jVyA==}
     dev: false
 
-  /sass-loader/12.6.0_sass@1.51.0:
+  /sass-loader/12.6.0_sass@1.51.0+webpack@5.72.0:
     resolution: {integrity: sha512-oLTaH0YCtX4cfnJZxKSLAyglED0naiYfNG1iXfU5w1LNZ+ukoA5DtyDIN5zmKVZwYNJP4KRc5Y3hkWga+7tYfA==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
@@ -11430,6 +11433,7 @@ packages:
       klona: 2.0.5
       neo-async: 2.6.2
       sass: 1.51.0
+      webpack: 5.72.0
     dev: true
 
   /sass-loader/12.6.0_webpack@5.72.0:
