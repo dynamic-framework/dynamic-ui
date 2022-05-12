@@ -11,7 +11,7 @@
 | --------- | --------- | ----------- | --------------- | ------- |
 | `actions` | --        |             | `AlertAction[]` | `[]`    |
 | `body`    | `body`    |             | `string`        | `''`    |
-| `title`   | `title`   |             | `string`        | `''`    |
+| `header`  | `header`  |             | `string`        | `''`    |
 
 
 ## Events

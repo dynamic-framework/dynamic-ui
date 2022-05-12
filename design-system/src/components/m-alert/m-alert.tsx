@@ -7,7 +7,7 @@ import { AlertAction } from './m-alert-interface';
   shadow: true,
 })
 export class MAlert implements ComponentInterface{
-  @Prop() title: string = '';
+  @Prop() header: string = '';
   @Prop() body: string = '';
   @Prop() actions: AlertAction[] = [];
 
@@ -21,7 +21,7 @@ export class MAlert implements ComponentInterface{
     return (
       <Host>
         <m-text>
-          <h1>{this.title}</h1>
+          <h1>{this.header}</h1>
         </m-text>
         <m-text>
           <p>

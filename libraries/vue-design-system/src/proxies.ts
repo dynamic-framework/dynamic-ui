@@ -10,7 +10,7 @@ import { defineCustomElements } from '@modyo/design-system/loader';
 defineCustomElements();
 
 export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
-  'title',
+  'header',
   'body',
   'actions',
   'modActionClick'
@@ -22,6 +22,17 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'type',
   'disabled',
   'modButtonClick'
+]);
+
+
+export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
+  'id',
+  'label',
+  'placeholder',
+  'type',
+  'value',
+  'disabled',
+  'modChange'
 ]);
 
 

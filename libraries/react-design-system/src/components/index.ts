@@ -1,1 +1,1 @@
-export * from './stencil-generated';
+export * from './proxies';

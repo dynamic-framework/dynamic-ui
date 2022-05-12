@@ -7,6 +7,7 @@ import type { Components } from '@modyo/design-system/components';
 
 import { defineCustomElement as defineMAlert } from '@modyo/design-system/components/m-alert.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
+import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
 import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
@@ -20,13 +21,13 @@ export declare interface MAlert extends Components.MAlert {
 
 @ProxyCmp({
   defineCustomElementFn: defineMAlert,
-  inputs: ['actions', 'body', 'title']
+  inputs: ['actions', 'body', 'header']
 })
 @Component({
   selector: 'm-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['actions', 'body', 'title']
+  inputs: ['actions', 'body', 'header']
 })
 export class MAlert {
   protected el: HTMLElement;
@@ -62,6 +63,34 @@ export class MButton {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['modButtonClick']);
+  }
+}
+
+
+export declare interface MInput extends Components.MInput {
+  /**
+   *  
+   */
+  modChange: EventEmitter<CustomEvent<any>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMInput,
+  inputs: ['disabled', 'id', 'label', 'placeholder', 'type', 'value']
+})
+@Component({
+  selector: 'm-input',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['disabled', 'id', 'label', 'placeholder', 'type', 'value']
+})
+export class MInput {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['modChange']);
   }
 }
 

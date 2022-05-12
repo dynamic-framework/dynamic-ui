@@ -10,12 +10,20 @@ export namespace Components {
     interface MAlert {
         "actions": AlertAction[];
         "body": string;
-        "title": string;
+        "header": string;
     }
     interface MButton {
         "disabled": boolean;
         "text": string;
         "type": 'submit' | 'reset' | 'button';
+    }
+    interface MInput {
+        "disabled": boolean;
+        "id": string;
+        "label": string;
+        "placeholder": string;
+        "type": string;
+        "value": string;
     }
     interface MText {
         "color": string;
@@ -34,6 +42,12 @@ declare global {
         prototype: HTMLMButtonElement;
         new (): HTMLMButtonElement;
     };
+    interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
+    }
+    var HTMLMInputElement: {
+        prototype: HTMLMInputElement;
+        new (): HTMLMInputElement;
+    };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
     var HTMLMTextElement: {
@@ -43,6 +57,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
         "m-button": HTMLMButtonElement;
+        "m-input": HTMLMInputElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -50,8 +65,8 @@ declare namespace LocalJSX {
     interface MAlert {
         "actions"?: AlertAction[];
         "body"?: string;
+        "header"?: string;
         "onModActionClick"?: (event: CustomEvent<AlertAction>) => void;
-        "title"?: string;
     }
     interface MButton {
         "disabled"?: boolean;
@@ -59,12 +74,22 @@ declare namespace LocalJSX {
         "text"?: string;
         "type"?: 'submit' | 'reset' | 'button';
     }
+    interface MInput {
+        "disabled"?: boolean;
+        "id"?: string;
+        "label"?: string;
+        "onModChange"?: (event: CustomEvent<any>) => void;
+        "placeholder"?: string;
+        "type"?: string;
+        "value"?: string;
+    }
     interface MText {
         "color"?: string;
     }
     interface IntrinsicElements {
         "m-alert": MAlert;
         "m-button": MButton;
+        "m-input": MInput;
         "m-text": MText;
     }
 }
@@ -74,6 +99,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
+            "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }

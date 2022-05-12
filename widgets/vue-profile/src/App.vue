@@ -7,7 +7,7 @@
       @mod-button-click="onButtonClick"
     />
     <m-alert
-      :title="title"
+      :header="title"
       body="body prop text"
       :actions="actions"
       @mod-action-click="onActionClick"
