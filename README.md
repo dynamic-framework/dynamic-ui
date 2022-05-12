@@ -110,6 +110,7 @@ Hacer funcionar a `vue` no fue sencillo, problemas encontrados:
     * [https://github.com/ionic-team/ionic-framework/commit/dc48a9f1a2dff8a2d644112bbe1df8b0b6811848#diff-8cee275a9cf24f29120acc6b18432e1b43901e53e260a64bd80c5601a6b97210](https://github.com/ionic-team/ionic-framework/commit/dc48a9f1a2dff8a2d644112bbe1df8b0b6811848#diff-8cee275a9cf24f29120acc6b18432e1b43901e53e260a64bd80c5601a6b97210)
     * [https://github.com/ionic-team/ionic-framework/blob/b064fdebef14018b77242b791914d5bb10863d39/packages/vue/src/ionic-vue.ts] (https://github.com/ionic-team/ionic-framework/blob/b064fdebef14018b77242b791914d5bb10863d39/packages/vue/src/ionic-vue.ts)
   * dejé un workaround híbrido en el que se puede usar setPlatformHelpers, pero es necesario usar `defineCustomElements` para esperar a que los componentes estén definidos antes de montar el app.
+  * el ide no completará los eventos en kebab.
 * hay que configurar el [output-target](https://github.com/ionic-team/stencil-ds-output-targets/blob/main/packages/vue-output-target/README.md#componentmodelconfig) para generar componentes que soporten v-model, según documentación es trivial, pero después de varios intentos no logré hacerlo funcionar.
 
 ## Uso de un componente stencil en angular
@@ -119,6 +120,7 @@ Hacer funcionar a `angular` no fue sencillo, problemas encontrados:
 * angular tiene su propio manejo de espacios de trabajo, por un problema ajeno a rush y al manejador de paquetes hacerlo funcionar dentro de un workspace requiere configuración adicional.
   * la solución a este problema es sencilla, es configurar los paths en el tsconfig de la librería de angular y el widget, sin embargo, encontrar la solución fue complicado.
 * hay que configurar el [output-target](https://github.com/ionic-team/stencil-ds-output-targets/blob/main/packages/angular-output-target/README.md) para generar componentes que soporten ng-model, según documentación es trivial, no hice muchos intentos acá, pero si noté que puede ser más sencillo de resolver que vue, no me funcionó a la primera.
+* al menos en webstorm los eventos se muestran como si no existieran en el html.
 
 ## Uso de scss en stencil
 
