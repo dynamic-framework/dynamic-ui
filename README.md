@@ -100,6 +100,8 @@ A tener en cuenta [https://custom-elements-everywhere.com/](https://custom-eleme
 
 Hacerlo funcionar en `react` no tuvo mayor complejidad.
 
+> Funciona en modyo
+
 ## Uso de un componente stencil en vue
 
 Hacer funcionar a `vue` no fue sencillo, problemas encontrados:
@@ -113,6 +115,8 @@ Hacer funcionar a `vue` no fue sencillo, problemas encontrados:
   * el ide no completará los eventos en kebab.
 * hay que configurar el [output-target](https://github.com/ionic-team/stencil-ds-output-targets/blob/main/packages/vue-output-target/README.md#componentmodelconfig) para generar componentes que soporten v-model, según documentación es trivial, pero después de varios intentos no logré hacerlo funcionar.
 
+> Funciona en modyo
+
 ## Uso de un componente stencil en angular
 
 Hacer funcionar a `angular` no fue sencillo, problemas encontrados:
@@ -121,6 +125,8 @@ Hacer funcionar a `angular` no fue sencillo, problemas encontrados:
   * la solución a este problema es sencilla, es configurar los paths en el tsconfig de la librería de angular y el widget, sin embargo, encontrar la solución fue complicado.
 * hay que configurar el [output-target](https://github.com/ionic-team/stencil-ds-output-targets/blob/main/packages/angular-output-target/README.md) para generar componentes que soporten ng-model, según documentación es trivial, no hice muchos intentos acá, pero si noté que puede ser más sencillo de resolver que vue, no me funcionó a la primera.
 * al menos en webstorm los eventos se muestran como si no existieran en el html.
+
+> No he podido generar un artefacto que funcione en un `page` de modyo
 
 ## Uso de scss en stencil
 
