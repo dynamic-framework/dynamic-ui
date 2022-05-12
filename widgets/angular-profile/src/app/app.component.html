@@ -6,6 +6,7 @@
     (modButtonClick)="onButtonClick()"
   >
   </m-button>
+  <br />
   <m-alert
     [header]="title"
     body="body prop text"
@@ -14,4 +15,16 @@
   >
     children text
   </m-alert>
+  <br />
+  <m-input
+    id="input-1"
+    placeholder="the placeholder"
+    type="text"
+    [value]="value"
+    (modChange)="onInputChange($event)"
+  >
+  </m-input>
+  <m-text>
+    the new value is: {{ value }}
+  </m-text>
 </div>

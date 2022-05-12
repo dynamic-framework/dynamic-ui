@@ -13,11 +13,17 @@ export class AppComponent {
     { id: 'action 2', text: 'Action 2' }
   ];
 
+  value = 'initial';
+
   onButtonClick() {
     console.log('button-clicked')
   }
 
   onActionClick(event: Event) {
     console.log('action-clicked', event)
+  }
+
+  onInputChange(event: Event) {
+    this.value = (event as CustomEvent<string>).detail;
   }
 }
