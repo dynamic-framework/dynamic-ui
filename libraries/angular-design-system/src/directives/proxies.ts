@@ -71,7 +71,7 @@ export declare interface MInput extends Components.MInput {
   /**
    *  
    */
-  modChange: EventEmitter<CustomEvent<any>>;
+  modChange: EventEmitter<CustomEvent<string>>;
 
 }
 

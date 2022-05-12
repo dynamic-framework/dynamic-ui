@@ -21,7 +21,7 @@ export const config: Config = {
       proxiesFile: '../libraries/vue-design-system/src/proxies.ts',
       includeImportCustomElements: false, // TODO: enable this when change the vue plugin
       includePolyfills: false,
-      includeDefineCustomElements: true // TODO: disable this when change the vue plugin
+      includeDefineCustomElements: true, // TODO: disable this when change the vue plugin,
     }),
     angularOutputTarget({
       componentCorePackage,

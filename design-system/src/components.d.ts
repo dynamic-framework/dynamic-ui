@@ -78,7 +78,7 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "id"?: string;
         "label"?: string;
-        "onModChange"?: (event: CustomEvent<any>) => void;
+        "onModChange"?: (event: CustomEvent<string>) => void;
         "placeholder"?: string;
         "type"?: string;
         "value"?: string;

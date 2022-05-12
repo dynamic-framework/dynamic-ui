@@ -6,6 +6,7 @@
       text="click me!"
       @mod-button-click="onButtonClick"
     />
+    <br />
     <m-alert
       :header="title"
       body="body prop text"
@@ -14,41 +15,52 @@
     >
       children text
     </m-alert>
+    <br />
+    <m-input
+      id="input-1"
+      placeholder="the placeholder"
+      type="text"
+      :value="value"
+      @modChange="onInputChange"
+    />
+    <m-text>
+      the new value is: {{value}}
+    </m-text>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
-import { MButton, MText, MAlert } from '@modyo/vue-design-system';
+import { MButton, MText, MAlert, MInput } from '@modyo/vue-design-system';
 
 export default defineComponent({
   name: 'App',
   components: {
     MButton,
     MText,
-    MAlert
+    MAlert,
+    MInput
   },
-  setup() {
-    const title = 'title prop text';
-    const actions = [
-      { id: 'action 1', text: 'Action 1' },
-      { id: 'action 2', text: 'Action 2' }
-    ];
-
-    const onButtonClick = () =>{
-      console.log('button-clicked')
-    };
-
-    const onActionClick = ({ detail: alertAction }: CustomEvent) => {
-      console.log('action-clicked', alertAction)
-    };
-
+  data() {
     return {
-      title,
-      actions,
-      onButtonClick,
-      onActionClick
+      title: 'title prop text',
+      actions: [
+        { id: 'action 1', text: 'Action 1' },
+        { id: 'action 2', text: 'Action 2' }
+      ],
+      value: 'initial'
+    }
+  },
+  methods: {
+    onButtonClick() {
+      console.log('button clicked');
+    },
+    onActionClick({ detail: alertAction }: CustomEvent) {
+      console.log('action clicked', alertAction);
+    },
+    onInputChange(event: CustomEvent<string>) {
+      this.value = event.detail;
     }
   }
 });
