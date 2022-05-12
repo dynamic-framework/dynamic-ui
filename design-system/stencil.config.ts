@@ -25,8 +25,9 @@ export const config: Config = {
     }),
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../libraries/angular-design-system/src/stencil-generated/components.ts',
-      directivesArrayFile: '../libraries/angular-design-system/src/stencil-generated/index.ts',
+      directivesProxyFile: '../libraries/angular-design-system/src/directives/proxies.ts',
+      directivesArrayFile: '../libraries/angular-design-system/src/directives/proxies-list.ts',
+      includeImportCustomElements: true
     }),
     {
       type: 'dist',

@@ -30,7 +30,11 @@
     "rootDir": "src",
     "strictPropertyInitialization": false,
     "target": "es2015",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@angular/*": [ "./node_modules/@angular/*" ],
+      "@modyo/*": [ "./node_modules/@modyo/*" ]
+    }
   },
   "exclude": ["node_modules"],
   "files": ["src/index.ts"]

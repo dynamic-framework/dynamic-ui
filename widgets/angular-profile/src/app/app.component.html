@@ -1,0 +1,17 @@
+<div>
+  <h1>Hello</h1>
+  <m-text>world! from vue</m-text>
+  <m-button
+    text="click me!"
+    (modButtonClick)="onButtonClick()"
+  >
+  </m-button>
+  <m-alert
+    [title]="title"
+    body="body prop text"
+    [actions]="actions"
+    (modButtonClick)="onActionClick($event)"
+  >
+    children text
+  </m-alert>
+</div>

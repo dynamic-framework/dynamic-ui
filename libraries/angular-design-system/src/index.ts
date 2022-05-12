@@ -2,5 +2,5 @@
  * Public API Surface of angular-design-system
  */
 
-export * from './stencil-generated/components';
-export * from './angular-design-system.module';
+export * from './directives/proxies';
+export { AngularDesignSystemModule } from './angular-design-system.module';

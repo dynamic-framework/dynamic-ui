@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { DIRECTIVES } from './stencil-generated';
+import { DIRECTIVES } from './directives/proxies-list';
 
 @NgModule({
   declarations: [...DIRECTIVES],

@@ -496,6 +496,12 @@
       "projectFolder": "widgets/vue-profile",
       "reviewCategory": "production",
       "tags": ["widgets", "vue"]
+    },
+    {
+      "packageName": "@modyo/angular-profile",
+      "projectFolder": "widgets/angular-profile",
+      "reviewCategory": "production",
+      "tags": ["widgets", "angular"]
     }
   ]
 }

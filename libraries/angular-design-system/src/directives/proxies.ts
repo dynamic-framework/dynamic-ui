@@ -3,11 +3,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone } from '@angular/core';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-import { Components } from '@modyo/design-system';
+import type { Components } from '@modyo/design-system/components';
 
+import { defineCustomElement as defineMAlert } from '@modyo/design-system/components/m-alert.js';
+import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
+import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
-
-import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system';
+import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
 export declare interface MAlert extends Components.MAlert {
   /**
    *  
@@ -17,7 +19,7 @@ export declare interface MAlert extends Components.MAlert {
 }
 
 @ProxyCmp({
-  defineCustomElementFn: undefined,
+  defineCustomElementFn: defineMAlert,
   inputs: ['actions', 'body', 'title']
 })
 @Component({
@@ -45,7 +47,7 @@ export declare interface MButton extends Components.MButton {
 }
 
 @ProxyCmp({
-  defineCustomElementFn: undefined,
+  defineCustomElementFn: defineMButton,
   inputs: ['disabled', 'text', 'type']
 })
 @Component({
@@ -67,7 +69,7 @@ export class MButton {
 export declare interface MText extends Components.MText {}
 
 @ProxyCmp({
-  defineCustomElementFn: undefined,
+  defineCustomElementFn: defineMText,
   inputs: ['color']
 })
 @Component({
