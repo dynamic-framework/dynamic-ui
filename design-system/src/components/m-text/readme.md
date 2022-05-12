@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
-| `color`  | `color`   |             | `string` | `undefined` |
+| `color`  | `color`   |             | `string` | `'primary'` |
 
 
 ## Dependencies

@@ -12,31 +12,28 @@
     "test": "jest",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist",
-    "compile": "npm run tsc",
-    "tsc": "tsc -p ."
+    "compile": "tsc -p . && rollup -c rollup.config.js"
   },
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/types/index.d.ts",
   "files": [
     "dist/"
   ],
+  "dependencies": {
+    "@modyo/design-system": "workspace:^0.0.1"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@vue/test-utils": "^2.0.0-rc.6",
     "jest": "^26.1.0",
     "rimraf": "^2.6.3",
-    "rollup": "^1.21.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup": "^2.72.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-commonjs": "^22.0.0",
     "typescript": "^4.6.4",
     "core-js": "^3.8.3",
-    "vue": "^3.2.13",
-    "@modyo/design-system": "workspace:^0.0.1"
-  },
-  "peerDependencies": {
-    "core-js": "^3.8.3",
-    "vue": "^3.2.13",
-    "@modyo/design-system": "^0.0.1"
+    "vue": "^3.2.13"
   },
   "jest": {
     "preset": "ts-jest",

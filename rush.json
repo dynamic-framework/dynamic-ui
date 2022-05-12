@@ -463,7 +463,7 @@
     // }
     {
       "packageName": "@modyo/design-system",
-      "projectFolder": "libraries/design-system",
+      "projectFolder": "design-system",
       "reviewCategory": "libraries",
       "tags": ["libraries"]
     },

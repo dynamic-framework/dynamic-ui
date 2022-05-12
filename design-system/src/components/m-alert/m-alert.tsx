@@ -1,19 +1,20 @@
-import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
-import { AlertAction } from '../../utils/types';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, Event } from '@stencil/core';
+import { AlertAction } from './m-alert-interface';
 
 @Component({
   tag: 'm-alert',
   shadow: true,
 })
-export class MAlert {
-  @Prop() title: string;
-  @Prop() body: string;
+export class MAlert implements ComponentInterface{
+  @Prop() title: string = '';
+  @Prop() body: string = '';
   @Prop() actions: AlertAction[] = [];
 
-  @Event({ eventName: 'actionClick' }) actionClick: EventEmitter<AlertAction>;
+  @Event() modActionClick!: EventEmitter<AlertAction>;
 
-  actionClickHandler(action) {
-    this.actionClick.emit(action);
+  actionClickHandler(action: AlertAction) {
+    this.modActionClick.emit(action);
   }
 
   render() {
@@ -34,7 +35,7 @@ export class MAlert {
         </m-text>
         {this.actions.map((action) => (
           <m-button
-            onButtonClick={() => this.actionClickHandler(action)}
+            onModButtonClick={() => this.actionClickHandler(action)}
             text={action.text}
           />
         ))}

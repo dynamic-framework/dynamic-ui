@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlertAction } from "./utils/types";
+import { AlertAction } from "./components/m-alert/m-alert-interface";
 export namespace Components {
     interface MAlert {
         "actions": AlertAction[];
@@ -50,12 +50,12 @@ declare namespace LocalJSX {
     interface MAlert {
         "actions"?: AlertAction[];
         "body"?: string;
-        "onActionClick"?: (event: CustomEvent<AlertAction>) => void;
+        "onModActionClick"?: (event: CustomEvent<AlertAction>) => void;
         "title"?: string;
     }
     interface MButton {
         "disabled"?: boolean;
-        "onButtonClick"?: (event: CustomEvent<any>) => void;
+        "onModButtonClick"?: (event: CustomEvent<any>) => void;
         "text"?: string;
         "type"?: 'submit' | 'reset' | 'button';
     }

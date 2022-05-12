@@ -11,8 +11,7 @@
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "@modyo/vue-design-system": "workspace:^0.0.1",
-    "@modyo/design-system": "workspace:^0.0.1",
-    "lodash.kebabcase": "~4.1.1"
+    "@modyo/design-system": "workspace:^0.0.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -29,8 +28,7 @@
     "eslint-plugin-vuejs-accessibility": "^1.1.0",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
-    "typescript": "^4.6.4",
-    "@types/lodash.kebabcase": "~4.1.7"
+    "typescript": "^4.6.4"
   },
   "eslintConfig": {
     "root": true,

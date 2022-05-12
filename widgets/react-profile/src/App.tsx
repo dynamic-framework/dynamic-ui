@@ -4,10 +4,10 @@ export default function App() {
   return (
     <div>
       <h1>Hello</h1>
-      <MText>world!</MText>
+      <MText>world! from react</MText>
       <MButton
         text="click me!"
-        onButtonClick={() => (
+        onModButtonClick={() => (
           console.log('button-clicked')
         )}
       />
@@ -18,7 +18,7 @@ export default function App() {
           { id: 'action 1', text: 'Action 1' },
           { id: 'action 2', text: 'Action 2' },
         ]}
-        onActionClick={({ detail: alertAction }) => (
+        onModActionClick={({ detail: alertAction }) => (
           console.log('action-clicked', alertAction)
         )}
       >

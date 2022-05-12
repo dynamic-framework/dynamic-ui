@@ -6,7 +6,7 @@
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/design-system/design-system.esm.js",
@@ -16,6 +16,7 @@
   },
   "files": [
     "dist/",
+    "components/",
     "loader/"
   ],
   "scripts": {
@@ -27,16 +28,16 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@stencil/angular-output-target": "^0.4.0",
-    "@stencil/core": "^2.15.1",
-    "@stencil/react-output-target": "^0.3.1",
-    "@stencil/vue-output-target": "^0.6.0"
+    "@stencil/core": "^2.15.2"
   },
   "devDependencies": {
+    "@stencil/angular-output-target": "^0.4.0",
+    "@stencil/react-output-target": "^0.3.1",
+    "@stencil/vue-output-target": "^0.6.0",
     "@types/jest": "^27.0.3",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
-    "puppeteer": "^10.0.0"
+    "puppeteer": "^14.0.0"
   },
   "license": "MIT"
 }

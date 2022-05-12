@@ -12,7 +12,7 @@ export declare interface MAlert extends Components.MAlert {
   /**
    *  
    */
-  actionClick: EventEmitter<CustomEvent<IMAlertAlertAction>>;
+  modActionClick: EventEmitter<CustomEvent<IMAlertAlertAction>>;
 
 }
 
@@ -31,7 +31,7 @@ export class MAlert {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['actionClick']);
+    proxyOutputs(this, this.el, ['modActionClick']);
   }
 }
 
@@ -40,7 +40,7 @@ export declare interface MButton extends Components.MButton {
   /**
    *  
    */
-  buttonClick: EventEmitter<CustomEvent<any>>;
+  modButtonClick: EventEmitter<CustomEvent<any>>;
 
 }
 
@@ -59,7 +59,7 @@ export class MButton {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['buttonClick']);
+    proxyOutputs(this, this.el, ['modButtonClick']);
   }
 }
 

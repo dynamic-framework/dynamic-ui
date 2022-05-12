@@ -13,15 +13,17 @@
     "test": "jest",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist",
-    "compile": "npm run tsc",
-    "tsc": "tsc -p ."
+    "compile": "tsc -p . && rollup -c rollup.config.js"
   },
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/types/index.d.ts",
   "files": [
     "dist/"
   ],
+  "dependencies": {
+    "@modyo/design-system": "workspace:^0.0.1"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.8.0",
     "@testing-library/react": "^10.0.4",
@@ -33,15 +35,15 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "rimraf": "^2.6.3",
-    "rollup": "^1.21.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup": "^2.72.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-commonjs": "^22.0.0",
     "typescript": "^4.6.4",
-    "@modyo/design-system": "workspace:^0.0.1"
+    "tslib": "^2.4.0"
   },
   "peerDependencies": {
     "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "@modyo/design-system": "^0.0.1"
+    "react-dom": "^18.1.0"
   },
   "jest": {
     "preset": "ts-jest",

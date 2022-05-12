@@ -4,14 +4,13 @@
     <m-text>world! from vue</m-text>
     <m-button
       text="click me!"
-      @button-click="onButtonClick"
+      @mod-button-click="onButtonClick"
     />
     <m-alert
-      ref="alert"
       :title="title"
       body="body prop text"
       :actions="actions"
-      @action-click="onActionClick"
+      @mod-action-click="onActionClick"
     >
       children text
     </m-alert>
@@ -22,7 +21,6 @@
 import { defineComponent } from 'vue';
 
 import { MButton, MText, MAlert } from '@modyo/vue-design-system';
-import { AlertAction } from '@modyo/design-system';
 
 export default defineComponent({
   name: 'App',
@@ -31,21 +29,26 @@ export default defineComponent({
     MText,
     MAlert
   },
-  data() {
-    return {
-      title: 'the title',
-      actions: [
-        { id: 'action 1', text: 'Action 1' },
-        { id: 'action 2', text: 'Action 2' },
-      ]
+  setup() {
+    const title = 'title prop text';
+    const actions = [
+      { id: 'action 1', text: 'Action 1' },
+      { id: 'action 2', text: 'Action 2' }
+    ];
+
+    const onButtonClick = () =>{
+      console.log('button-clicked')
     };
-  },
-  methods: {
-    onButtonClick() {
-      console.log('button-clicked');
-    },
-    onActionClick({ detail: alertAction }: CustomEvent<AlertAction>) {
+
+    const onActionClick = ({ detail: alertAction }: CustomEvent) => {
       console.log('action-clicked', alertAction)
+    };
+
+    return {
+      title,
+      actions,
+      onButtonClick,
+      onActionClick
     }
   }
 });
