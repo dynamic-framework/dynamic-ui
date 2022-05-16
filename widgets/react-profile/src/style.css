@@ -1,4 +1,7 @@
-.btn-primary {
-  --bs-btn-bg: #c39;
+:root {
+  --bs-primary-rgb: 200, 0, 0;
 }
 
+.btn-primary {
+  --bs-btn-bg: #309;
+}

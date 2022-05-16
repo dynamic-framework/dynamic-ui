@@ -55,11 +55,7 @@ export default function App() {
       />
       <br />
       <br />
-      <MText
-        style={{
-          '--bs-dark-rgb': '255, 0, 0',
-        }}
-      >
+      <MText theme="primary">
         the new value is: {value}
       </MText>
     </MApp>

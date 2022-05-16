@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <m-app>
     <m-button
       text="click me!"
       @mod-button-click="onButtonClick"
@@ -45,13 +45,20 @@
     <m-text>
       the new value is: {{value}}
     </m-text>
-  </div>
+  </m-app>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 
-import { MButton, MText, MAlert, MInput, MCard } from '@modyo/vue-design-system';
+import {
+  MButton,
+  MText,
+  MAlert,
+  MInput,
+  MCard,
+  MApp
+} from '@modyo/vue-design-system';
 
 export default defineComponent({
   name: 'App',
@@ -60,7 +67,8 @@ export default defineComponent({
     MText,
     MAlert,
     MInput,
-    MCard
+    MCard,
+    MApp
   },
   data() {
     return {

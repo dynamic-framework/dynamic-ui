@@ -12,7 +12,10 @@ export class MApp implements ComponentInterface {
   render() {
     return (
       <Host class="m-app">
-        <slot />
+        <m-button text="I'm shadow" />
+        <div class="container">
+          <slot />
+        </div>
       </Host>
     )
   }
