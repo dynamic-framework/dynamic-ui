@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `color`  | `color`   |             | `string` | `'primary'` |
+| Property | Attribute | Description | Type     | Default  |
+| -------- | --------- | ----------- | -------- | -------- |
+| `theme`  | `theme`   |             | `string` | `'dark'` |
 
 
 ## Dependencies

@@ -11,22 +11,28 @@ export namespace Components {
         "actions": AlertAction[];
         "body": string;
         "header": string;
+        "theme": string;
     }
     interface MButton {
         "disabled": boolean;
         "text": string;
         "type": 'submit' | 'reset' | 'button';
     }
+    interface MCard {
+        "disabled": boolean;
+        "header"?: string;
+        "theme": string;
+    }
     interface MInput {
         "disabled": boolean;
-        "id": string;
         "label": string;
+        "modId": string;
         "placeholder": string;
         "type": string;
         "value": string;
     }
     interface MText {
-        "color": string;
+        "theme": string;
     }
 }
 declare global {
@@ -41,6 +47,12 @@ declare global {
     var HTMLMButtonElement: {
         prototype: HTMLMButtonElement;
         new (): HTMLMButtonElement;
+    };
+    interface HTMLMCardElement extends Components.MCard, HTMLStencilElement {
+    }
+    var HTMLMCardElement: {
+        prototype: HTMLMCardElement;
+        new (): HTMLMCardElement;
     };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
@@ -57,6 +69,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
         "m-button": HTMLMButtonElement;
+        "m-card": HTMLMCardElement;
         "m-input": HTMLMInputElement;
         "m-text": HTMLMTextElement;
     }
@@ -67,6 +80,7 @@ declare namespace LocalJSX {
         "body"?: string;
         "header"?: string;
         "onModActionClick"?: (event: CustomEvent<AlertAction>) => void;
+        "theme"?: string;
     }
     interface MButton {
         "disabled"?: boolean;
@@ -74,21 +88,28 @@ declare namespace LocalJSX {
         "text"?: string;
         "type"?: 'submit' | 'reset' | 'button';
     }
+    interface MCard {
+        "disabled"?: boolean;
+        "header"?: string;
+        "onModButtonClick"?: (event: CustomEvent<any>) => void;
+        "theme"?: string;
+    }
     interface MInput {
         "disabled"?: boolean;
-        "id"?: string;
         "label"?: string;
+        "modId"?: string;
         "onModChange"?: (event: CustomEvent<string>) => void;
         "placeholder"?: string;
         "type"?: string;
         "value"?: string;
     }
     interface MText {
-        "color"?: string;
+        "theme"?: string;
     }
     interface IntrinsicElements {
         "m-alert": MAlert;
         "m-button": MButton;
+        "m-card": MCard;
         "m-input": MInput;
         "m-text": MText;
     }
@@ -99,6 +120,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
+            "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }

@@ -6,12 +6,12 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class MText implements ComponentInterface {
-  @Prop() color: string = 'primary';
+  @Prop() theme: string = 'dark';
 
   render() {
     return (
       <Host
-        {...this.color && { class: `text-${this.color}`}}
+        {...this.theme && { class: `text-${this.theme}`}}
       >
         <slot />
       </Host>

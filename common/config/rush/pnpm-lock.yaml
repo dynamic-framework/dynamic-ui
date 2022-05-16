@@ -9,22 +9,32 @@ importers:
     specifiers:
       '@stencil/angular-output-target': ^0.4.0
       '@stencil/core': ^2.15.2
+      '@stencil/postcss': ^2.1.0
       '@stencil/react-output-target': ^0.3.1
+      '@stencil/sass': ^1.5.2
       '@stencil/vue-output-target': ^0.6.0
       '@types/jest': ^27.0.3
+      autoprefixer: ^10.4.7
+      bootstrap: ^5.2.0-beta1
       jest: ^27.4.5
       jest-cli: ^27.4.5
       puppeteer: ^14.0.0
+      sass: ^1.51.0
     dependencies:
       '@stencil/core': 2.15.2
+      bootstrap: 5.2.0-beta1
     devDependencies:
       '@stencil/angular-output-target': 0.4.0_@stencil+core@2.15.2
+      '@stencil/postcss': 2.1.0_@stencil+core@2.15.2
       '@stencil/react-output-target': 0.3.1_@stencil+core@2.15.2
+      '@stencil/sass': 1.5.2_@stencil+core@2.15.2
       '@stencil/vue-output-target': 0.6.0_@stencil+core@2.15.2
       '@types/jest': 27.5.0
+      autoprefixer: 10.4.7
       jest: 27.5.1
       jest-cli: 27.5.1
       puppeteer: 14.0.0
+      sass: 1.51.0
 
   ../../libraries/angular-design-system:
     specifiers:
@@ -58,7 +68,6 @@ importers:
   ../../libraries/react-design-system:
     specifiers:
       '@modyo/design-system': workspace:^0.0.1
-      '@rollup/plugin-commonjs': ^22.0.0
       '@rollup/plugin-node-resolve': ^13.3.0
       '@testing-library/jest-dom': ^5.8.0
       '@testing-library/react': ^10.0.4
@@ -76,7 +85,6 @@ importers:
     dependencies:
       '@modyo/design-system': link:../../design-system
     devDependencies:
-      '@rollup/plugin-commonjs': 22.0.0_rollup@2.72.1
       '@rollup/plugin-node-resolve': 13.3.0_rollup@2.72.1
       '@testing-library/jest-dom': 5.16.4
       '@testing-library/react': 10.4.9_react-dom@18.1.0+react@18.1.0
@@ -181,6 +189,7 @@ importers:
   ../../widgets/react-profile:
     specifiers:
       '@craco/craco': ^7.0.0-alpha.3
+      '@modyo/design-system': workspace:^0.0.1
       '@modyo/react-design-system': workspace:^0.0.1
       '@testing-library/jest-dom': ^5.14.1
       '@testing-library/react': ^13.0.0
@@ -196,6 +205,7 @@ importers:
       web-vitals: ^2.1.0
       webpack: ^5.64.4
     dependencies:
+      '@modyo/design-system': link:../../design-system
       '@modyo/react-design-system': link:../../libraries/react-design-system
       '@testing-library/jest-dom': 5.16.4
       '@testing-library/react': 13.2.0_react-dom@18.1.0+react@18.1.0
@@ -3856,10 +3866,28 @@ packages:
     hasBin: true
     dev: false
 
+  /@stencil/postcss/2.1.0_@stencil+core@2.15.2:
+    resolution: {integrity: sha512-/e4TYEXErGaHxH0ocg620YqEMLuMLpK/Wg4MJsiJglrLZCZhU4XCX1N0SwxaIOUbEZ1Zh+AqQ++yMI92ilndEA==}
+    peerDependencies:
+      '@stencil/core': '>=2.0.0'
+    dependencies:
+      '@stencil/core': 2.15.2
+      autoprefixer: 10.4.7_postcss@8.3.11
+      postcss: 8.3.11
+    dev: true
+
   /@stencil/react-output-target/0.3.1_@stencil+core@2.15.2:
     resolution: {integrity: sha512-6d9pPhyajFfdxkqU/pPP2SzI7wn+EklySQc4KXlI/xcdvC2H9BzLmhmR40fR1q2TQoJbJui/nvSWhbYqkE3OBQ==}
     peerDependencies:
       '@stencil/core': ^2.9.0
+    dependencies:
+      '@stencil/core': 2.15.2
+    dev: true
+
+  /@stencil/sass/1.5.2_@stencil+core@2.15.2:
+    resolution: {integrity: sha512-nJ93pUSylsGsMX0eLmhxh1oEljcUjj5mYjhB9ziCdoaydAdjukrUoqDCC7tdVbOcBo2hKptQyWqCtETnBGYsXQ==}
+    peerDependencies:
+      '@stencil/core': '>=1.0.2'
     dependencies:
       '@stencil/core': 2.15.2
     dev: true
@@ -5585,6 +5613,37 @@ packages:
     engines: {node: '>= 4.5.0'}
     hasBin: true
 
+  /autoprefixer/10.4.7:
+    resolution: {integrity: sha512-ypHju4Y2Oav95SipEcCcI5J7CGPuvz8oat7sUtYj3ClK44bldfvtvcxK6IEK++7rqB7YchDGzweZIBG+SD0ZAA==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      browserslist: 4.20.3
+      caniuse-lite: 1.0.30001339
+      fraction.js: 4.2.0
+      normalize-range: 0.1.2
+      picocolors: 1.0.0
+      postcss-value-parser: 4.2.0
+    dev: true
+
+  /autoprefixer/10.4.7_postcss@8.3.11:
+    resolution: {integrity: sha512-ypHju4Y2Oav95SipEcCcI5J7CGPuvz8oat7sUtYj3ClK44bldfvtvcxK6IEK++7rqB7YchDGzweZIBG+SD0ZAA==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      browserslist: 4.20.3
+      caniuse-lite: 1.0.30001339
+      fraction.js: 4.2.0
+      normalize-range: 0.1.2
+      picocolors: 1.0.0
+      postcss: 8.3.11
+      postcss-value-parser: 4.2.0
+    dev: true
+
   /autoprefixer/10.4.7_postcss@8.4.13:
     resolution: {integrity: sha512-ypHju4Y2Oav95SipEcCcI5J7CGPuvz8oat7sUtYj3ClK44bldfvtvcxK6IEK++7rqB7YchDGzweZIBG+SD0ZAA==}
     engines: {node: ^10 || ^12 || >=14}
@@ -5974,6 +6033,12 @@ packages:
 
   /boolbase/1.0.0:
     resolution: {integrity: sha1-aN/1++YMUes3cl6p4+0xDcwed24=}
+
+  /bootstrap/5.2.0-beta1:
+    resolution: {integrity: sha512-6qbgs177WZEFY4SLQUq3tEHayYG80nfDmyTpdKi0MJqRMdS+HAoq24+YKfx6wf+nHY0rx8zrh477J1lFu4WzOA==}
+    peerDependencies:
+      '@popperjs/core': ^2.11.5
+    dev: false
 
   /brace-expansion/1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -13661,6 +13726,15 @@ packages:
       picocolors: 0.2.1
       source-map: 0.6.1
 
+  /postcss/8.3.11:
+    resolution: {integrity: sha512-hCmlUAIlUiav8Xdqw3Io4LcpA1DOt7h3LSTAC4G6JGHFFaWzI6qvFt9oilvl8BmkbBRX1IhM90ZAmpk68zccQA==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.4
+      picocolors: 1.0.0
+      source-map-js: 0.6.2
+    dev: true
+
   /postcss/8.4.13:
     resolution: {integrity: sha512-jtL6eTBrza5MPzy8oJLFuUscHDXTV5KcLlqAWHl5q5WYRfnNRGSmOZmOZ1T6Gy7A99mOZfqungmZMpMmCVJ8ZA==}
     engines: {node: ^10 || ^12 || >=14}
@@ -14875,6 +14949,11 @@ packages:
   /source-list-map/2.0.1:
     resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
     dev: false
+
+  /source-map-js/0.6.2:
+    resolution: {integrity: sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==}
+    engines: {node: '>=0.10.0'}
+    dev: true
 
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

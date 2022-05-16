@@ -21,6 +21,13 @@
 | `modButtonClick` |             | `CustomEvent<any>` |
 
 
+## Shadow Parts
+
+| Part       | Description |
+| ---------- | ----------- |
+| `"button"` |             |
+
+
 ## Dependencies
 
 ### Used by

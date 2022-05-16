@@ -10,8 +10,8 @@
 | Property      | Attribute     | Description | Type      | Default  |
 | ------------- | ------------- | ----------- | --------- | -------- |
 | `disabled`    | `disabled`    |             | `boolean` | `false`  |
-| `id`          | `id`          |             | `string`  | `''`     |
 | `label`       | `label`       |             | `string`  | `''`     |
+| `modId`       | `mod-id`      |             | `string`  | `''`     |
 | `placeholder` | `placeholder` |             | `string`  | `''`     |
 | `type`        | `type`        |             | `string`  | `'text'` |
 | `value`       | `value`       |             | `string`  | `''`     |

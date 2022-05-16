@@ -6,7 +6,8 @@ import { AlertAction } from './m-alert-interface';
   tag: 'm-alert',
   shadow: true,
 })
-export class MAlert implements ComponentInterface{
+export class MAlert implements ComponentInterface {
+  @Prop() theme: string = 'primary';
   @Prop() header: string = '';
   @Prop() body: string = '';
   @Prop() actions: AlertAction[] = [];
@@ -20,25 +21,28 @@ export class MAlert implements ComponentInterface{
   render() {
     return (
       <Host>
-        <m-text>
-          <h1>{this.header}</h1>
-        </m-text>
-        <m-text>
-          <p>
-            {this.body}
-          </p>
-        </m-text>
-        <m-text>
-          <p>
-            <slot></slot>
-          </p>
-        </m-text>
-        {this.actions.map((action) => (
-          <m-button
-            onModButtonClick={() => this.actionClickHandler(action)}
-            text={action.text}
-          />
-        ))}
+        <m-card
+          part="card"
+          theme={this.theme}
+          header={this.header}
+        >
+          <m-text>
+            <p>
+              {this.body}
+            </p>
+          </m-text>
+          <m-text>
+            <p>
+              <slot></slot>
+            </p>
+          </m-text>
+          {this.actions.map((action) => (
+            <m-button
+              onModButtonClick={() => this.actionClickHandler(action)}
+              text={action.text}
+            />
+          ))}
+        </m-card>
       </Host>
     );
   }

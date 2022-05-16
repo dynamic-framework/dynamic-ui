@@ -3,10 +3,11 @@ import { Component, h, Prop, Event } from '@stencil/core';
 
 @Component({
   tag: 'm-input',
+  styleUrl: 'm-input.scss',
   shadow: true,
 })
 export class MInput implements ComponentInterface {
-  @Prop() id: string = '';
+  @Prop() modId: string = '';
   @Prop() label: string = '';
   @Prop() placeholder: string = '';
   @Prop() type: string = 'text';
@@ -24,7 +25,7 @@ export class MInput implements ComponentInterface {
       <div class="input-group">
         <span
           class="input-group-text"
-          id={`${this.id}-add`}
+          id={`${this.modId}-add`}
         >
           @
         </span>
@@ -35,7 +36,7 @@ export class MInput implements ComponentInterface {
           aria-label={this.label}
           disabled={this.disabled}
           value={this.value}
-          aria-describedby={`${this.id}-add`}
+          aria-describedby={`${this.modId}-add`}
           onInput={(event) => this.changeHandler(event)}
         />
       </div>

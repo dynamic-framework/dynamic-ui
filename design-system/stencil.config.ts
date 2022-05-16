@@ -2,6 +2,9 @@ import { Config } from '@stencil/core';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
+import { sass } from '@stencil/sass';
+import { postcss } from '@stencil/postcss';
+import autoprefixer from 'autoprefixer';
 
 const componentCorePackage = '@modyo/design-system';
 
@@ -53,4 +56,15 @@ export const config: Config = {
     // scriptDataOpts: true
   },
   globalScript: 'src/global/initialize.ts',
+  globalStyle: 'src/style/main.scss',
+  plugins: [
+    postcss({
+      plugins: [autoprefixer()]
+    }),
+    sass({
+      injectGlobalPaths: [
+        'src/style/abstracts/_+import.scss'
+      ]
+    })
+  ]
 };

@@ -24,7 +24,8 @@
     "pretty": true,
     "removeComments": false,
     "target": "es2017",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "esModuleInterop": true
   },
   "include": [
     "src"

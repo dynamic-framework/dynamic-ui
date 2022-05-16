@@ -111,7 +111,7 @@ Hacer funcionar a `vue` no fue sencillo, problemas encontrados:
   * revisando el código de ionic framework consigo un workaround mejor usando un plugin de vue en el que pasaron de usar `defineCustomElements` a `setPlatformHelpers`
     * [https://github.com/ionic-team/ionic-framework/commit/dc48a9f1a2dff8a2d644112bbe1df8b0b6811848#diff-8cee275a9cf24f29120acc6b18432e1b43901e53e260a64bd80c5601a6b97210](https://github.com/ionic-team/ionic-framework/commit/dc48a9f1a2dff8a2d644112bbe1df8b0b6811848#diff-8cee275a9cf24f29120acc6b18432e1b43901e53e260a64bd80c5601a6b97210)
     * [https://github.com/ionic-team/ionic-framework/blob/b064fdebef14018b77242b791914d5bb10863d39/packages/vue/src/ionic-vue.ts] (https://github.com/ionic-team/ionic-framework/blob/b064fdebef14018b77242b791914d5bb10863d39/packages/vue/src/ionic-vue.ts)
-  * dejé un workaround híbrido en el que se puede usar setPlatformHelpers, pero es necesario usar `defineCustomElements` para esperar a que los componentes estén definidos antes de montar el app.
+  * dejé un workaround híbrido en el que se puede usar `setPlatformHelpers`, pero es necesario usar `defineCustomElements` para esperar a que los componentes estén definidos antes de montar el app.
   * el ide no completará los eventos en kebab.
 * hay que configurar el [output-target](https://github.com/ionic-team/stencil-ds-output-targets/blob/main/packages/vue-output-target/README.md#componentmodelconfig) para generar componentes que soporten v-model, según documentación es trivial, pero después de varios intentos no logré hacerlo funcionar.
 

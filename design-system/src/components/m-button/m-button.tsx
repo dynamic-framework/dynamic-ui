@@ -1,8 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Event, h, Prop } from '@stencil/core';
+import { Component, Event, h, Prop, Host } from '@stencil/core';
 
 @Component({
   tag: 'm-button',
+  styleUrl: 'm-button.scss',
   shadow: true
 })
 export class MButton implements ComponentInterface {
@@ -18,13 +19,16 @@ export class MButton implements ComponentInterface {
 
   render() {
     return (
-      <button
-        class="btn btn-primary"
-        type="button"
-        onClick={() => this.buttonClickHandler()}
-      >
-        {this.text}
-      </button>
+      <Host class="m-button">
+        <button
+          class="btn btn-primary"
+          type="button"
+          part="button"
+          onClick={() => this.buttonClickHandler()}
+        >
+          {this.text}
+        </button>
+      </Host>
     );
   }
 
