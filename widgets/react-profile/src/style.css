@@ -1,7 +1,11 @@
 
 
-m-button::part(button) {
+.btn-primary {
   --bs-btn-bg: #c39;
+}
+
+m-button::part(button) {
+
 }
 
 

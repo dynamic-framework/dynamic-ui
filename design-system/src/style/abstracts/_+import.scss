@@ -1,3 +1,5 @@
+@charset "utf-8";
+
 // Required bootstrap imports with personalizations
 @import "funcions";
 @import "~bootstrap/scss/functions";
@@ -11,12 +13,3 @@
 @import "mixins";
 @import "~bootstrap/scss/mixins";
 
-// Optional components
-@import "~bootstrap/scss/utilities";
-@import "utilities";
-
-@import "~bootstrap/scss/reboot";
-@import "~bootstrap/scss/containers";
-@import "~bootstrap/scss/grid";
-@import "~bootstrap/scss/helpers";
-@import "~bootstrap/scss/utilities/api";

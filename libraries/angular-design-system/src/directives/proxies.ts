@@ -6,6 +6,7 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 import type { Components } from '@modyo/design-system/components';
 
 import { defineCustomElement as defineMAlert } from '@modyo/design-system/components/m-alert.js';
+import { defineCustomElement as defineMApp } from '@modyo/design-system/components/m-app.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
@@ -36,6 +37,25 @@ export class MAlert {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['modActionClick']);
+  }
+}
+
+
+export declare interface MApp extends Components.MApp {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMApp
+})
+@Component({
+  selector: 'm-app',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>'
+})
+export class MApp {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
 

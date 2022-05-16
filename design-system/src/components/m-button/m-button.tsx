@@ -4,7 +4,7 @@ import { Component, Event, h, Prop, Host } from '@stencil/core';
 @Component({
   tag: 'm-button',
   styleUrl: 'm-button.scss',
-  shadow: true
+  shadow: false
 })
 export class MButton implements ComponentInterface {
   @Prop() text: string = '';

@@ -18,6 +18,9 @@ export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undef
 ]);
 
 
+export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined);
+
+
 export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', undefined, [
   'text',
   'type',

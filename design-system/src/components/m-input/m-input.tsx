@@ -4,7 +4,7 @@ import { Component, h, Prop, Event } from '@stencil/core';
 @Component({
   tag: 'm-input',
   styleUrl: 'm-input.scss',
-  shadow: true,
+  shadow: false
 })
 export class MInput implements ComponentInterface {
   @Prop() modId: string = '';

@@ -1,12 +1,7 @@
-@charset "utf-8";
-
-@import "abstracts/+import";
-
-// Required bootstrap imports
-@import "~bootstrap/scss/root";
-
 // Optional components
 @import "~bootstrap/scss/utilities";
+@import "utilities";
+
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/containers";
 @import "~bootstrap/scss/grid";

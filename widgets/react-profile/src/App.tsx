@@ -1,10 +1,10 @@
-import { MText, MButton, MAlert, MInput, MCard } from '@modyo/react-design-system';
+import { MApp, MText, MButton, MAlert, MInput, MCard } from '@modyo/react-design-system';
 import { useState } from 'react';
 
 export default function App() {
   const [value, setValue] = useState('initial');
   return (
-    <div>
+    <MApp>
       <MButton
         text="click me!"
         onModButtonClick={() => (
@@ -62,6 +62,6 @@ export default function App() {
       >
         the new value is: {value}
       </MText>
-    </div>
+    </MApp>
   );
 }

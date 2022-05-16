@@ -13,6 +13,8 @@ export namespace Components {
         "header": string;
         "theme": string;
     }
+    interface MApp {
+    }
     interface MButton {
         "disabled": boolean;
         "text": string;
@@ -42,6 +44,12 @@ declare global {
         prototype: HTMLMAlertElement;
         new (): HTMLMAlertElement;
     };
+    interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
+    }
+    var HTMLMAppElement: {
+        prototype: HTMLMAppElement;
+        new (): HTMLMAppElement;
+    };
     interface HTMLMButtonElement extends Components.MButton, HTMLStencilElement {
     }
     var HTMLMButtonElement: {
@@ -68,6 +76,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
+        "m-app": HTMLMAppElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
         "m-input": HTMLMInputElement;
@@ -81,6 +90,8 @@ declare namespace LocalJSX {
         "header"?: string;
         "onModActionClick"?: (event: CustomEvent<AlertAction>) => void;
         "theme"?: string;
+    }
+    interface MApp {
     }
     interface MButton {
         "disabled"?: boolean;
@@ -108,6 +119,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "m-alert": MAlert;
+        "m-app": MApp;
         "m-button": MButton;
         "m-card": MCard;
         "m-input": MInput;
@@ -119,6 +131,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
+            "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;

@@ -1,10 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Host, h, Prop, Event } from '@stencil/core';
+
 import { AlertAction } from './m-alert-interface';
 
 @Component({
   tag: 'm-alert',
-  shadow: true,
+  shadow: true
 })
 export class MAlert implements ComponentInterface {
   @Prop() theme: string = 'primary';
