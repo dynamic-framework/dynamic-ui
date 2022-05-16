@@ -57,14 +57,14 @@ export const config: Config = {
     // scriptDataOpts: true
   },
   globalScript: 'src/global/initialize.ts',
-  globalStyle: 'src/global/root.scss',
+  globalStyle: 'src/style/global-style.scss',
   plugins: [
     postcss({
       plugins: [autoprefixer()]
     }),
     sass({
       injectGlobalPaths: [
-        'src/style/abstracts/_+import.scss'
+        'src/style/global-path.scss'
       ]
     })
   ]

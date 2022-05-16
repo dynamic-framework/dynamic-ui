@@ -1,24 +1,4 @@
-
-
 .btn-primary {
   --bs-btn-bg: #c39;
 }
 
-m-button::part(button) {
-
-}
-
-
-m-alert::part(card) {
-  --bs-primary-rgb: 204, 51, 153;
-}
-
-
-.card.bg-warning {
-  --bs-warning-rgb: 204, 51, 153;
-}
-
-
-:root {
-  --bs-warning-rgb: 100, 51, 153;
-}

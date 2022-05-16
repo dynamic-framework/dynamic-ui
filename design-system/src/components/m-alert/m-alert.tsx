@@ -5,7 +5,7 @@ import { AlertAction } from './m-alert-interface';
 
 @Component({
   tag: 'm-alert',
-  shadow: true
+  shadow: false
 })
 export class MAlert implements ComponentInterface {
   @Prop() theme: string = 'primary';
