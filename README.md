@@ -8,7 +8,7 @@
 * [Uso de un componente stencil en react](#uso-de-un-componente-stencil-en-react)
 * [Uso de un componente stencil en vue](#uso-de-un-componente-stencil-en-vue)
 * [Uso de un componente stencil en angular](#uso-de-un-componente-stencil-en-angular)
-* [Uso de scss en stencil](#uso-de-scss-en-stencil)
+* [Uso de variables css en stencil](#uso-de-variables-css-stencil)
 * [Uso de bootstrap en stencil](#uso-de-bootstrap-en-stencil)
 * [Pruebas de manejo de versiones y publicaciones](#pruebas-de-manejo-de-versiones-y-publicaciones)
 
@@ -128,14 +128,21 @@ Hacer funcionar a `angular` no fue sencillo, problemas encontrados:
 
 > No he podido generar un artefacto que funcione en un `page` de modyo
 
-## Uso de scss en stencil
+## Uso de variables css en stencil
 
-> En progreso
+* las variables del `:root` es necesario definirlas en el `globalStyle`
+  * se importa desde el siguiente archivo `@modyo/design-system/dist/design-system/design-system.css`
+  * solo contiene él `root` y el `reboot` de `bootstrap`, también los estilos incluidos en el `injectGlobalPaths`
 
-## Uso de bootstrap en stencil
+* las variables, funciones, mixins y mapas se definen en él `injectGlobalPaths`, este se incluye tanto en los componentes como en el `globalStyle`
+  * este slo importa los recursos abstractos, sin clases de utilidad.
 
-> En espera
-
+* se crea un componente global a usar como wrapper de los widgets `m-app`
+  * se prueba el uso de `shadow-dom` sin embargo el slot del componente se renderiza fuera del shadow lo que evita el scoping natural.
+  * se prueba el uso de `scoping` sin obtener el resultado esperado.
+  
+> Es necesario explorar más con el uso de `shadow: true` y `scoped: true` la idea es encapsular solo el estilo del widget.
+ 
 ## Pruebas de manejo de versiones y publicaciones
 
 > En espera
