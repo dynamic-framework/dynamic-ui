@@ -1,11 +1,10 @@
 <template>
   <div>
-    <h1>Hello</h1>
-    <m-text>world! from vue</m-text>
     <m-button
       text="click me!"
       @mod-button-click="onButtonClick"
     />
+    <br />
     <br />
     <m-alert
       :header="title"
@@ -16,6 +15,24 @@
       children text
     </m-alert>
     <br />
+    <br />
+    <m-card
+      header="card header"
+      theme="warning"
+    >
+      card w/o shadow
+    </m-card>
+    <br />
+    <br />
+    <m-card
+      header="card header"
+      theme="warning"
+      :style="{'--bs-dark-rgb': '255, 0, 0'}"
+    >
+      card w style
+    </m-card>
+    <br />
+    <br />
     <m-input
       id="input-1"
       placeholder="the placeholder"
@@ -23,6 +40,8 @@
       :value="value"
       @modChange="onInputChange"
     />
+    <br />
+    <br />
     <m-text>
       the new value is: {{value}}
     </m-text>
@@ -32,7 +51,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-import { MButton, MText, MAlert, MInput } from '@modyo/vue-design-system';
+import { MButton, MText, MAlert, MInput, MCard } from '@modyo/vue-design-system';
 
 export default defineComponent({
   name: 'App',
@@ -40,7 +59,8 @@ export default defineComponent({
     MButton,
     MText,
     MAlert,
-    MInput
+    MInput,
+    MCard
   },
   data() {
     return {

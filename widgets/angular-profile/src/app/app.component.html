@@ -1,11 +1,10 @@
 <div>
-  <h1>Hello</h1>
-  <m-text>world! from vue</m-text>
   <m-button
     text="click me!"
     (modButtonClick)="onButtonClick()"
   >
   </m-button>
+  <br />
   <br />
   <m-alert
     [header]="title"
@@ -16,6 +15,24 @@
     children text
   </m-alert>
   <br />
+  <br />
+  <m-card
+    header="card header"
+    theme="warning"
+  >
+    card w/o shadow
+  </m-card>
+  <br />
+  <br />
+  <m-card
+    header="card header"
+    theme="warning"
+    [style]="{'--bs-dark-rgb': '255, 0, 0'}"
+  >
+    card w style
+  </m-card>
+  <br />
+  <br />
   <m-input
     id="input-1"
     placeholder="the placeholder"
@@ -24,6 +41,8 @@
     (modChange)="onInputChange($event)"
   >
   </m-input>
+  <br />
+  <br />
   <m-text>
     the new value is: {{ value }}
   </m-text>
