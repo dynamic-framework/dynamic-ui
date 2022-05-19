@@ -1,5 +1,5 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Event, h, Prop, Host } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, h, Prop, Host } from '@stencil/core';
 
 @Component({
   tag: 'm-card',
@@ -7,15 +7,15 @@ import { Component, Event, h, Prop, Host } from '@stencil/core';
   shadow: false
 })
 export class MCard implements ComponentInterface {
+  /**
+   * The theme to use
+   */
   @Prop() theme: string = 'primary';
+  /**
+   * The header text
+   */
   @Prop() header?: string = undefined;
-  @Prop() disabled: boolean = false;
 
-  @Event() modButtonClick!: EventEmitter;
-
-  buttonClickHandler() {
-    this.modButtonClick.emit()
-  }
 
   render() {
     return (

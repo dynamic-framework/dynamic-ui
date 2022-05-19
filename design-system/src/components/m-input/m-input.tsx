@@ -7,16 +7,37 @@ import { Component, h, Prop, Event } from '@stencil/core';
   shadow: false
 })
 export class MInput implements ComponentInterface {
+  /**
+   * The id of the input
+   */
   @Prop() modId: string = '';
+  /**
+   * The label text
+   */
   @Prop() label: string = '';
+  /**
+   * The placeholder text
+   */
   @Prop() placeholder: string = '';
+  /**
+   * The type of the input
+   */
   @Prop() type: string = 'text';
-  @Prop({ mutable: true }) value: string = '';
+  /**
+   * The value of the input
+   */
+  @Prop() value: string = '';
+  /**
+   * Flag to disable the input
+   */
   @Prop() disabled: boolean = false;
 
+  /**
+   * Emitted when the input value has changed
+   */
   @Event({ eventName: 'modChange' }) modChange!: EventEmitter<string>;
 
-  changeHandler(event: Event) {
+  private changeHandler = (event: Event) => {
     this.modChange.emit((event.target as HTMLInputElement).value);
   }
 
@@ -37,7 +58,7 @@ export class MInput implements ComponentInterface {
           disabled={this.disabled}
           value={this.value}
           aria-describedby={`${this.modId}-add`}
-          onInput={(event) => this.changeHandler(event)}
+          onInput={this.changeHandler}
         />
       </div>
     );

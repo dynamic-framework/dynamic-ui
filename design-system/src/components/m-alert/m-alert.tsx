@@ -8,15 +8,41 @@ import { AlertAction } from './m-alert-interface';
   shadow: false
 })
 export class MAlert implements ComponentInterface {
+  /**
+   * The theme to use.
+   */
   @Prop() theme: string = 'primary';
+  /**
+   * The header text
+   */
   @Prop() header: string = '';
+  /**
+   * the body of alert
+   * render on top of the slot
+   */
   @Prop() body: string = '';
+  /**
+   * the action buttons
+   */
   @Prop() actions: AlertAction[] = [];
 
+  /**
+   * Emitted when the action button is clicked.
+   */
   @Event() modActionClick!: EventEmitter<AlertAction>;
 
-  actionClickHandler(action: AlertAction) {
-    this.modActionClick.emit(action);
+
+  private actionClickHandler = (action: CustomEvent<AlertAction>) => {
+    this.modActionClick.emit(action.detail);
+  }
+
+  private renderAction = (action: AlertAction) => {
+    return (
+      <m-alert-action
+        action={action}
+        onModClick={this.actionClickHandler}
+      />
+    );
   }
 
   render() {
@@ -37,12 +63,7 @@ export class MAlert implements ComponentInterface {
               <slot></slot>
             </p>
           </m-text>
-          {this.actions.map((action) => (
-            <m-button
-              onModButtonClick={() => this.actionClickHandler(action)}
-              text={action.text}
-            />
-          ))}
+          {this.actions.map(this.renderAction)}
         </m-card>
       </Host>
     );

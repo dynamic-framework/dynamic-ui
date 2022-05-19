@@ -6,6 +6,9 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: false
 })
 export class MText implements ComponentInterface {
+  /**
+   * The theme to use
+   */
   @Prop() theme: string = 'dark';
 
   render() {

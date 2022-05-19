@@ -7,13 +7,25 @@ import { Component, Event, h, Prop, Host } from '@stencil/core';
   shadow: false
 })
 export class MButton implements ComponentInterface {
+  /**
+   * The text to display in the button.
+   */
   @Prop() text: string = '';
+  /**
+   * The type of the button.
+   */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+  /**
+   * Flag to disable the button.
+   */
   @Prop() disabled: boolean = false;
 
+  /**
+   * Emitted when the button has been clicked.
+   */
   @Event() modButtonClick!: EventEmitter;
 
-  buttonClickHandler() {
+  private buttonClickHandler = () => {
     this.modButtonClick.emit()
   }
 
@@ -24,7 +36,7 @@ export class MButton implements ComponentInterface {
           class="btn btn-primary"
           type="button"
           part="button"
-          onClick={() => this.buttonClickHandler()}
+          onClick={this.buttonClickHandler}
         >
           {this.text}
         </button>

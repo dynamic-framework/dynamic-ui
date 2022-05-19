@@ -25,13 +25,16 @@
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "lint": "eslint src/**/*{.ts,.tsx}"
   },
   "dependencies": {
     "@stencil/core": "^2.15.2",
     "bootstrap": "^5.2.0-beta1"
   },
   "devDependencies": {
+    "eslint": "^7.32.0",
+    "@stencil/eslint-plugin": "^0.4.0",
     "autoprefixer": "^10.4.7",
     "@stencil/sass": "^1.5.2",
     "@stencil/postcss": "^2.1.0",
@@ -42,7 +45,11 @@
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
     "puppeteer": "^14.0.0",
-    "sass": "^1.51.0"
+    "sass": "^1.51.0",
+    "typescript": "~4.4.4",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint-plugin-react": "^7.30.0"
   },
   "license": "MIT"
 }

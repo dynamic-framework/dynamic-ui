@@ -8,32 +8,85 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 export namespace Components {
     interface MAlert {
+        /**
+          * the action buttons
+         */
         "actions": AlertAction[];
+        /**
+          * the body of alert render on top of the slot
+         */
         "body": string;
+        /**
+          * The header text
+         */
         "header": string;
+        /**
+          * The theme to use.
+         */
         "theme": string;
+    }
+    interface MAlertAction {
+        /**
+          * The action to perform when the button is clicked.
+         */
+        "action": AlertAction;
     }
     interface MApp {
     }
     interface MButton {
+        /**
+          * Flag to disable the button.
+         */
         "disabled": boolean;
+        /**
+          * The text to display in the button.
+         */
         "text": string;
+        /**
+          * The type of the button.
+         */
         "type": 'submit' | 'reset' | 'button';
     }
     interface MCard {
-        "disabled": boolean;
+        /**
+          * The header text
+         */
         "header"?: string;
+        /**
+          * The theme to use
+         */
         "theme": string;
     }
     interface MInput {
+        /**
+          * Flag to disable the input
+         */
         "disabled": boolean;
+        /**
+          * The label text
+         */
         "label": string;
+        /**
+          * The id of the input
+         */
         "modId": string;
+        /**
+          * The placeholder text
+         */
         "placeholder": string;
+        /**
+          * The type of the input
+         */
         "type": string;
+        /**
+          * The value of the input
+         */
         "value": string;
     }
     interface MText {
+        /**
+          * The theme to use
+         */
         "theme": string;
     }
 }
@@ -43,6 +96,12 @@ declare global {
     var HTMLMAlertElement: {
         prototype: HTMLMAlertElement;
         new (): HTMLMAlertElement;
+    };
+    interface HTMLMAlertActionElement extends Components.MAlertAction, HTMLStencilElement {
+    }
+    var HTMLMAlertActionElement: {
+        prototype: HTMLMAlertActionElement;
+        new (): HTMLMAlertActionElement;
     };
     interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
     }
@@ -76,6 +135,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
+        "m-alert-action": HTMLMAlertActionElement;
         "m-app": HTMLMAppElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
@@ -85,40 +145,106 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MAlert {
+        /**
+          * the action buttons
+         */
         "actions"?: AlertAction[];
+        /**
+          * the body of alert render on top of the slot
+         */
         "body"?: string;
+        /**
+          * The header text
+         */
         "header"?: string;
+        /**
+          * Emitted when the action button is clicked.
+         */
         "onModActionClick"?: (event: CustomEvent<AlertAction>) => void;
+        /**
+          * The theme to use.
+         */
         "theme"?: string;
+    }
+    interface MAlertAction {
+        /**
+          * The action to perform when the button is clicked.
+         */
+        "action": AlertAction;
+        /**
+          * Emitted when the action button is clicked.
+         */
+        "onModClick"?: (event: CustomEvent<AlertAction>) => void;
     }
     interface MApp {
     }
     interface MButton {
+        /**
+          * Flag to disable the button.
+         */
         "disabled"?: boolean;
+        /**
+          * Emitted when the button has been clicked.
+         */
         "onModButtonClick"?: (event: CustomEvent<any>) => void;
+        /**
+          * The text to display in the button.
+         */
         "text"?: string;
+        /**
+          * The type of the button.
+         */
         "type"?: 'submit' | 'reset' | 'button';
     }
     interface MCard {
-        "disabled"?: boolean;
+        /**
+          * The header text
+         */
         "header"?: string;
-        "onModButtonClick"?: (event: CustomEvent<any>) => void;
+        /**
+          * The theme to use
+         */
         "theme"?: string;
     }
     interface MInput {
+        /**
+          * Flag to disable the input
+         */
         "disabled"?: boolean;
+        /**
+          * The label text
+         */
         "label"?: string;
+        /**
+          * The id of the input
+         */
         "modId"?: string;
+        /**
+          * Emitted when the input value has changed
+         */
         "onModChange"?: (event: CustomEvent<string>) => void;
+        /**
+          * The placeholder text
+         */
         "placeholder"?: string;
+        /**
+          * The type of the input
+         */
         "type"?: string;
+        /**
+          * The value of the input
+         */
         "value"?: string;
     }
     interface MText {
+        /**
+          * The theme to use
+         */
         "theme"?: string;
     }
     interface IntrinsicElements {
         "m-alert": MAlert;
+        "m-alert-action": MAlertAction;
         "m-app": MApp;
         "m-button": MButton;
         "m-card": MCard;
@@ -131,6 +257,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
+            "m-alert-action": LocalJSX.MAlertAction & JSXBase.HTMLAttributes<HTMLMAlertActionElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;

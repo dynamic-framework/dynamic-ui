@@ -7,18 +7,18 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type                              | Default    |
-| ---------- | ---------- | ----------- | --------------------------------- | ---------- |
-| `disabled` | `disabled` |             | `boolean`                         | `false`    |
-| `text`     | `text`     |             | `string`                          | `''`       |
-| `type`     | `type`     |             | `"button" \| "reset" \| "submit"` | `'button'` |
+| Property   | Attribute  | Description                        | Type                              | Default    |
+| ---------- | ---------- | ---------------------------------- | --------------------------------- | ---------- |
+| `disabled` | `disabled` | Flag to disable the button.        | `boolean`                         | `false`    |
+| `text`     | `text`     | The text to display in the button. | `string`                          | `''`       |
+| `type`     | `type`     | The type of the button.            | `"button" \| "reset" \| "submit"` | `'button'` |
 
 
 ## Events
 
-| Event            | Description | Type               |
-| ---------------- | ----------- | ------------------ |
-| `modButtonClick` |             | `CustomEvent<any>` |
+| Event            | Description                               | Type               |
+| ---------------- | ----------------------------------------- | ------------------ |
+| `modButtonClick` | Emitted when the button has been clicked. | `CustomEvent<any>` |
 
 
 ## Shadow Parts
@@ -32,13 +32,13 @@
 
 ### Used by
 
- - [m-alert](../m-alert)
+ - [m-alert-action](../m-alert-action)
  - [m-app](../m-app)
 
 ### Graph
 ```mermaid
 graph TD;
-  m-alert --> m-button
+  m-alert-action --> m-button
   m-app --> m-button
   style m-button fill:#f9f,stroke:#333,stroke-width:4px
 ```

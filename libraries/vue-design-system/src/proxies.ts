@@ -18,6 +18,12 @@ export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undef
 ]);
 
 
+export const MAlertAction = /*@__PURE__*/ defineContainer<JSX.MAlertAction>('m-alert-action', undefined, [
+  'action',
+  'modClick'
+]);
+
+
 export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined);
 
 
@@ -31,9 +37,7 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
 
 export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefined, [
   'theme',
-  'header',
-  'disabled',
-  'modButtonClick'
+  'header'
 ]);
 
 
