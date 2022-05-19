@@ -1,0 +1,72 @@
+// Main colors 
+
+$primary:  #E60063;
+$secondary:#525298;
+$tertiary: #4848B7;
+$success:  #67C23A;
+$info:     #909399;
+$warning:  #E6A23C;
+$danger:   #F56C6C;
+$light:    #F8F8FB;
+$dark:     #1D1929;
+
+// Hover colors
+
+$primary-hover:  #BC0956;
+$secondary-hover:#303071;
+$tertiary-hover: #25258A;
+$success-hover:  #58A533;
+$info-hover:     #516182;
+$warning-hover:  #C38322;
+$danger-hover:   #C64E4E;
+
+// Gray colors
+
+$gray-100: #F8F8FB;
+$gray-200: #DDDCE1;
+$gray-300: #C0C0D1;
+$gray-400: #A6A4AC;
+$gray-500: #8B8992;
+$gray-600: #727588;
+$gray-700: #54515E;
+$gray-800: #383543;
+$gray-900: #1D1929;
+
+// Theme colors
+
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "tertiary":   $tertiary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+);
+
+// TODO: Use hover-colors in components with :hover
+
+$hover-colors: (
+  "primary":    $primary-hover,
+  "secondary":  $secondary-hover,
+  "tertiary":   $tertiary-hover,
+  "success":    $success-hover,
+  "info":       $info-hover,
+  "warning":    $warning-hover,
+  "danger":     $danger-hover,
+);
+
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900
+);
+
