@@ -1,5 +1,6 @@
 // Main colors
 
+$white: #fff !default;
 $pink: #e60063 !default;
 $purple: #525298 !default;
 $indigo: #4848b7 !default;
@@ -93,3 +94,16 @@ $border-radius-pill: 50rem !default;
 $box-shadow-sm: 0 8px 12px 0 rgba($dark, .1) !default;
 $box-shadow: 0 12px 14px 0 rgba($dark, .2) !default;
 $box-shadow-lg: 0 20px 22px 0 rgba($dark, .25) !default;
+
+// Font weight variables
+
+$font-weight-normal: 400 !default;
+
+// Badge variables
+
+$badge-font-size: .75rem !default;
+$badge-font-weight: $font-weight-normal !default;
+$badge-color: $white !default;
+$badge-padding-y: .25rem !default;
+$badge-padding-x: .75rem !default;
+$badge-border-radius: $border-radius-sm !default;
