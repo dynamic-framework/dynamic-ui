@@ -1,80 +1,80 @@
 // Main colors
 
-$pink: #e60063;
-$purple: #525298;
-$indigo: #4848b7;
-$green: #67c23a;
-$yellow: #e6a23c;
-$red: #f56c6c;
+$pink: #e60063 !default;
+$purple: #525298 !default;
+$indigo: #4848b7 !default;
+$green: #67c23a !default;
+$yellow: #e6a23c !default;
+$red: #f56c6c !default;
 
 // Gray colors
 
-$gray-100: #f8f8fb;
-$gray-200: #dddce1;
-$gray-300: #c0c0d1;
-$gray-400: #909399;
-$gray-500: #8b8992;
-$gray-600: #727588;
-$gray-700: #54515e;
-$gray-800: #383543;
-$gray-900: #1d1929;
+$gray-100: #f8f8fb !default;
+$gray-200: #dddce1 !default;
+$gray-300: #c0c0d1 !default;
+$gray-400: #909399 !default;
+$gray-500: #8b8992 !default;
+$gray-600: #727588 !default;
+$gray-700: #54515e !default;
+$gray-800: #383543 !default;
+$gray-900: #1d1929 !default;
 
 // Theme colors
 
-$primary: $pink;
-$secondary: $purple;
-$tertiary: $indigo;
-$success: $green;
-$info: $gray-400;
-$warning: $yellow;
-$danger: $red;
-$light: $gray-100;
-$dark: $gray-900;
+$primary: $pink !default;
+$secondary: $purple !default;
+$tertiary: $indigo !default;
+$success: $green !default;
+$info: $gray-400 !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-900 !default;
 
 // Hover colors
 
-$primary-hover: #bc0956;
-$secondary-hover: #303071;
-$tertiary-hover: #25258a;
-$success-hover: #58a533;
-$info-hover: #516182;
-$warning-hover: #c38322;
-$danger-hover: #c64e4e;
+$primary-hover: #bc0956 !default;
+$secondary-hover: #303071 !default;
+$tertiary-hover: #25258a !default;
+$success-hover: #58a533 !default;
+$info-hover: #516182 !default;
+$warning-hover: #c38322 !default;
+$danger-hover: #c64e4e !default;
 
 // Theme colors
 
 $theme-colors: (
-  'primary': $primary,
-  'secondary': $secondary,
-  'tertiary': $tertiary,
-  'success': $success,
-  'info': $info,
-  'warning': $warning,
-  'danger': $danger,
-  'light': $light,
-  'dark': $dark,
-);
+  "primary": $primary,
+  "secondary": $secondary,
+  "tertiary": $tertiary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+) !default;
 
 // TODO: Use hover-colors in components with :hover
 
 $hover-colors: (
-  'primary': $primary-hover,
-  'secondary': $secondary-hover,
-  'tertiary': $tertiary-hover,
-  'success': $success-hover,
-  'info': $info-hover,
-  'warning': $warning-hover,
-  'danger': $danger-hover,
-);
+  "primary": $primary-hover,
+  "secondary": $secondary-hover,
+  "tertiary": $tertiary-hover,
+  "success": $success-hover,
+  "info": $info-hover,
+  "warning": $warning-hover,
+  "danger": $danger-hover,
+) !default;
 
 $grays: (
-  '100': $gray-100,
-  '200': $gray-200,
-  '300': $gray-300,
-  '400': $gray-400,
-  '500': $gray-500,
-  '600': $gray-600,
-  '700': $gray-700,
-  '800': $gray-800,
-  '900': $gray-900,
-);
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900,
+) !default;
