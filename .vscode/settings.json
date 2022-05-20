@@ -1,0 +1,7 @@
+{
+    "eslint.packageManager": "npm",
+    "eslint.workingDirectories": [
+        "design-system"
+    ],
+    "eslint.alwaysShowStatus": true
+}
