@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle, @typescript-eslint/no-explicit-any */
 import { setPlatformHelpers } from '@stencil/core';
 
 import type { Config } from '../interface';
