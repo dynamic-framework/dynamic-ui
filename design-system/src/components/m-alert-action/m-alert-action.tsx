@@ -1,9 +1,15 @@
-import { Component, ComponentInterface, Event, EventEmitter, h, Prop } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import {
+  Component,
+  Event,
+  h,
+  Prop,
+} from '@stencil/core';
 import { AlertAction } from '../m-alert/m-alert-interface';
 
 @Component({
   tag: 'm-alert-action',
-  shadow: false
+  shadow: false,
 })
 export class MAlertAction implements ComponentInterface {
   /**
@@ -17,7 +23,7 @@ export class MAlertAction implements ComponentInterface {
 
   private clickHandler = () => {
     this.modClick.emit(this.action);
-  }
+  };
 
   render() {
     return (
@@ -25,6 +31,6 @@ export class MAlertAction implements ComponentInterface {
         onModButtonClick={this.clickHandler}
         text={this.action.text}
       />
-    )
+    );
   }
 }

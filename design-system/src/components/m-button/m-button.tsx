@@ -1,16 +1,22 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Event, h, Prop, Host } from '@stencil/core';
+import {
+  Component,
+  Event,
+  h,
+  Prop,
+  Host,
+} from '@stencil/core';
 
 @Component({
   tag: 'm-button',
   styleUrl: 'm-button.scss',
-  shadow: false
+  shadow: false,
 })
 export class MButton implements ComponentInterface {
   /**
    * The text to display in the button.
    */
-  @Prop() text: string = '';
+  @Prop() text = '';
   /**
    * The type of the button.
    */
@@ -18,7 +24,7 @@ export class MButton implements ComponentInterface {
   /**
    * Flag to disable the button.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
    * Emitted when the button has been clicked.
@@ -26,8 +32,8 @@ export class MButton implements ComponentInterface {
   @Event() modButtonClick!: EventEmitter;
 
   private buttonClickHandler = () => {
-    this.modButtonClick.emit()
-  }
+    this.modButtonClick.emit();
+  };
 
   render() {
     return (
@@ -43,5 +49,4 @@ export class MButton implements ComponentInterface {
       </Host>
     );
   }
-
 }

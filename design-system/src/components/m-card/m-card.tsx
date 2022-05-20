@@ -1,21 +1,25 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, h, Prop, Host } from '@stencil/core';
+import {
+  Component,
+  h,
+  Prop,
+  Host,
+} from '@stencil/core';
 
 @Component({
   tag: 'm-card',
   styleUrl: 'm-card.scss',
-  shadow: false
+  shadow: false,
 })
 export class MCard implements ComponentInterface {
   /**
    * The theme to use
    */
-  @Prop() theme: string = 'primary';
+  @Prop() theme = 'primary';
   /**
    * The header text
    */
   @Prop() header?: string = undefined;
-
 
   render() {
     return (
@@ -42,5 +46,4 @@ export class MCard implements ComponentInterface {
       </Host>
     );
   }
-
 }
