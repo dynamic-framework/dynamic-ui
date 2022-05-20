@@ -6,9 +6,10 @@ import { Component, Host, h } from '@stencil/core';
   styleUrl: 'm-app.scss',
   // shadow: { delegatesFocus: true }
   shadow: false,
-  scoped: false
+  scoped: false,
 })
 export class MApp implements ComponentInterface {
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return (
       <Host class="m-app">
@@ -18,6 +19,6 @@ export class MApp implements ComponentInterface {
           <slot />
         </div>
       </Host>
-    )
+    );
   }
 }

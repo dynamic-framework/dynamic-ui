@@ -7,18 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type                  | Default     |
-| ---------- | ---------- | ----------- | --------------------- | ----------- |
-| `disabled` | `disabled` |             | `boolean`             | `false`     |
-| `header`   | `header`   |             | `string \| undefined` | `undefined` |
-| `theme`    | `theme`    |             | `string`              | `'primary'` |
-
-
-## Events
-
-| Event            | Description | Type               |
-| ---------------- | ----------- | ------------------ |
-| `modButtonClick` |             | `CustomEvent<any>` |
+| Property | Attribute | Description      | Type                  | Default     |
+| -------- | --------- | ---------------- | --------------------- | ----------- |
+| `header` | `header`  | The header text  | `string \| undefined` | `undefined` |
+| `theme`  | `theme`   | The theme to use | `string`              | `'primary'` |
 
 
 ## Shadow Parts
