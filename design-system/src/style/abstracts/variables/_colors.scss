@@ -1,0 +1,43 @@
+$white: #fff !default;
+$gray-100: #f8f8fb !default;
+$gray-200: #dddce1 !default;
+$gray-300: #c0c0d1 !default;
+$gray-400: #909399 !default;
+$gray-500: #8b8992 !default;
+$gray-600: #727588 !default;
+$gray-700: #54515e !default;
+$gray-800: #383543 !default;
+$gray-900: #1d1929 !default;
+$black: #000 !default;
+
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900,
+) !default;
+
+$indigo: #4848b7 !default;
+$purple: #525298 !default;
+$pink: #e60063 !default;
+$red: #f56c6c !default;
+$yellow: #e6a23c !default;
+$green: #67c23a !default;
+
+$colors: (
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "yellow": $yellow,
+  "green": $green,
+  "black": $black,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800
+) !default;
