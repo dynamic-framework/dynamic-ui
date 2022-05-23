@@ -1,6 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import {
   Component,
+  Host,
   h,
   Prop,
 } from '@stencil/core';
@@ -22,7 +23,9 @@ export class MBadge implements ComponentInterface {
 
   render() {
     return (
-      <span class={`${this.text !== '' ? 'badge' : 'badge-dot'} bg-${this.theme}`}>{ this.text }</span>
+      <Host class="d-inline-block">
+        <span class={`${this.text !== '' ? 'badge' : 'badge-dot'} bg-${this.theme}`}>{ this.text }</span>
+      </Host>
     );
   }
 }
