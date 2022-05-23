@@ -1,23 +1,17 @@
 @import "~bootstrap/scss/badge";
 
-:host {
-  display: block;
-}
-
 .badge {
-  @extend .badge;
   line-height: 1.125rem;
 }
 
 .badge.bg-light {
-  color: var(--bs-gray-600);
+  color: $badge-color-light;
 }
 
 .badge-dot {
   @extend .badge;
-  display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: .75rem;
+  height: .75rem;
   padding: 0;
   margin: 0;
 
