@@ -1,0 +1,113 @@
+@import "colors";
+@import "colors-palette";
+@import "colors-theme";
+
+/*
+$escaped-characters: (
+  ("<", "%3c"),
+  (">", "%3e"),
+  ("#", "%23"),
+  ("(", "%28"),
+  (")", "%29"),
+) !default;
+*/
+
+@import "options";
+
+// $variable-prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
+// $prefix: $variable-prefix !default;
+
+// $gradient: linear-gradient(180deg, rgba($white, .15), rgba($white, 0)) !default;
+
+@import "spacers";
+
+/*
+$position-values: (
+  0: 0,
+  50: 50%,
+  100: 100%
+) !default;
+*/
+
+
+@import "body";
+@import "grid";
+@import "border";
+@import "box-shadow";
+
+// $component-active-color: $white !default;
+// $component-active-bg: $primary-hover !default;
+
+// $caret-width: .3em !default;
+// $caret-vertical-align: $caret-width * .85 !default;
+// $caret-spacing: $caret-width * .85 !default;
+
+// $transition-base: all .2s ease-in-out !default;
+// $transition-fade: opacity .15s linear !default;
+
+// $transition-collapse: height .35s ease !default;
+// $transition-collapse-width: width .35s ease !default;
+
+/*
+$aspect-ratios: (
+  "1x1": 100%,
+  "4x3": calc(3 / 4 * 100%),
+  "16x9": calc(9 / 16 * 100%),
+  "21x9": calc(9 / 21 * 100%)
+) !default;
+*/
+
+@import "typography";
+@import "tables";
+
+// $input-btn-padding-y: .375rem !default;
+// $input-btn-padding-x: .75rem !default;
+// $input-btn-font-family: null !default;
+// $input-btn-font-size: $font-size-base !default;
+// $input-btn-line-height: $line-height-base !default;
+
+// $input-btn-focus-width: .25rem !default;
+// $input-btn-focus-color-opacity: .25 !default;
+// $input-btn-focus-color: rgba($component-active-bg, $input-btn-focus-color-opacity) !default;
+// $input-btn-focus-blur: 0 !default;
+// $input-btn-focus-box-shadow: 0 0 $input-btn-focus-blur $input-btn-focus-width $input-btn-focus-color !default;
+
+// $input-btn-padding-y-sm: .25rem !default;
+// $input-btn-padding-x-sm: .5rem !default;
+// $input-btn-font-size-sm: $font-size-sm !default;
+
+// $input-btn-padding-y-lg: .5rem !default;
+// $input-btn-padding-x-lg: 1rem !default;
+// $input-btn-font-size-lg: $font-size-lg !default;
+
+// $input-btn-border-width: $border-width !default;
+
+@import "buttons";
+@import "forms";
+@import "z-index";
+@import "navs";
+@import "navbar";
+@import "dropdowns";
+@import "pagination";
+
+// $placeholder-opacity-max: .5 !default;
+// $placeholder-opacity-min: .2 !default;
+
+@import "cards";
+@import "accordion";
+@import "tooltips";
+@import "popovers";
+@import "toasts";
+@import "badges";
+@import "modals";
+@import "alerts";
+@import "progress-bars";
+@import "list-group";
+@import "thumbnails";
+@import "figures";
+@import "breadcrumb";
+@import "carousel";
+@import "spinners";
+@import "close";
+@import "offcanvas";
+@import "code";

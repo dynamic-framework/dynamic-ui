@@ -10,6 +10,9 @@
   ],
   "rules": {
     "import/prefer-default-export": "off",
+    "import/order": ["error", {
+      "newlines-between": "always"
+    }],
     "@typescript-eslint/lines-between-class-members": [
       "error",
       "always",
