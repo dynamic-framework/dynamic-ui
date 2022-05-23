@@ -27,6 +27,12 @@ export const MAlertAction = /*@__PURE__*/ defineContainer<JSX.MAlertAction>('m-a
 export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined);
 
 
+export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undefined, [
+  'theme',
+  'text'
+]);
+
+
 export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', undefined, [
   'text',
   'type',

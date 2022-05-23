@@ -33,6 +33,16 @@ export namespace Components {
     }
     interface MApp {
     }
+    interface MBadge {
+        /**
+          * The text of badge
+         */
+        "text": string;
+        /**
+          * The theme to use.
+         */
+        "theme": string;
+    }
     interface MButton {
         /**
           * Flag to disable the button.
@@ -109,6 +119,12 @@ declare global {
         prototype: HTMLMAppElement;
         new (): HTMLMAppElement;
     };
+    interface HTMLMBadgeElement extends Components.MBadge, HTMLStencilElement {
+    }
+    var HTMLMBadgeElement: {
+        prototype: HTMLMBadgeElement;
+        new (): HTMLMBadgeElement;
+    };
     interface HTMLMButtonElement extends Components.MButton, HTMLStencilElement {
     }
     var HTMLMButtonElement: {
@@ -137,6 +153,7 @@ declare global {
         "m-alert": HTMLMAlertElement;
         "m-alert-action": HTMLMAlertActionElement;
         "m-app": HTMLMAppElement;
+        "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
         "m-input": HTMLMInputElement;
@@ -177,6 +194,16 @@ declare namespace LocalJSX {
         "onModClick"?: (event: CustomEvent<AlertAction>) => void;
     }
     interface MApp {
+    }
+    interface MBadge {
+        /**
+          * The text of badge
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme"?: string;
     }
     interface MButton {
         /**
@@ -246,6 +273,7 @@ declare namespace LocalJSX {
         "m-alert": MAlert;
         "m-alert-action": MAlertAction;
         "m-app": MApp;
+        "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
         "m-input": MInput;
@@ -259,6 +287,7 @@ declare module "@stencil/core" {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-alert-action": LocalJSX.MAlertAction & JSXBase.HTMLAttributes<HTMLMAlertActionElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
+            "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;

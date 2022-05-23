@@ -8,6 +8,7 @@ import type { Components } from '@modyo/design-system/components';
 import { defineCustomElement as defineMAlert } from '@modyo/design-system/components/m-alert.js';
 import { defineCustomElement as defineMAlertAction } from '@modyo/design-system/components/m-alert-action.js';
 import { defineCustomElement as defineMApp } from '@modyo/design-system/components/m-app.js';
+import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
@@ -81,6 +82,27 @@ export declare interface MApp extends Components.MApp {}
   template: '<ng-content></ng-content>'
 })
 export class MApp {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MBadge extends Components.MBadge {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMBadge,
+  inputs: ['text', 'theme']
+})
+@Component({
+  selector: 'm-badge',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['text', 'theme']
+})
+export class MBadge {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();

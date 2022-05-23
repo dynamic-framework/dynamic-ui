@@ -68,6 +68,31 @@
       </div>
     </div>
     </div>
+    <div class="badges-container py-5">
+      <h5>Test Badge</h5>
+      <h6>Without theme</h6>
+      <m-badge text="Primary"></m-badge>
+      <h6>Text</h6>
+      <m-badge theme="primary" text="Primary"></m-badge>
+      <m-badge theme="secondary" text="Secondary"></m-badge>
+      <m-badge theme="tertiary" text="Tertiary"></m-badge>
+      <m-badge theme="success" text="Success"></m-badge>
+      <m-badge theme="warning" text="Warning"></m-badge>
+      <m-badge theme="danger" text="Danger"></m-badge>
+      <m-badge theme="info" text="Info"></m-badge>
+      <m-badge theme="dark" text="Dark"></m-badge>
+      <m-badge theme="light" text="Light"></m-badge>
+      <h6>Dot</h6>
+      <m-badge theme="primary"></m-badge>
+      <m-badge theme="secondary"></m-badge>
+      <m-badge theme="tertiary"></m-badge>
+      <m-badge theme="success"></m-badge>
+      <m-badge theme="warning"></m-badge>
+      <m-badge theme="danger"></m-badge>
+      <m-badge theme="info"></m-badge>
+      <m-badge theme="dark"></m-badge>
+      <m-badge theme="light"></m-badge>
+    </div>
   </m-app>
 </template>
 
@@ -81,6 +106,7 @@ import {
   MInput,
   MCard,
   MApp,
+  MBadge,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -92,6 +118,7 @@ export default defineComponent({
     MInput,
     MCard,
     MApp,
+    MBadge,
   },
   data() {
     return {
