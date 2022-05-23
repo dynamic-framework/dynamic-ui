@@ -4,26 +4,24 @@
   --#{$prefix}badge-line-height: #{$badge-line-height};
 
   line-height: var(--#{$prefix}badge-line-height);
-}
 
-.badge.bg-light {
-  --#{$prefix}badge-color-light: #{$badge-color-light};
+  &.bg-light {
+    --#{$prefix}badge-color-light: #{$badge-color-light};
 
-  color: var(--#{$prefix}badge-color-light);
-}
+    color: var(--#{$prefix}badge-color-light);
+  }
 
-.badge-dot {
-  @extend .badge;
+  &.badge-dot {
+    --#{$prefix}badge-dot-width: #{$badge-dot-width};
+    --#{$prefix}badge-dot-height: #{$badge-dot-height};
 
-  --#{$prefix}badge-dot-width: #{$badge-dot-width};
-  --#{$prefix}badge-dot-height: #{$badge-dot-height};
+    width: var(--#{$prefix}badge-dot-width);
+    height: var(--#{$prefix}badge-dot-height);
+    padding: 0;
+    margin: 0;
 
-  width: var(--#{$prefix}badge-dot-width);
-  height: var(--#{$prefix}badge-dot-height);
-  padding: 0;
-  margin: 0;
-
-  &:empty {
-    display: inline-block;
+    &:empty {
+      display: inline-block;
+    }
   }
 }
