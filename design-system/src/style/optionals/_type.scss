@@ -1,0 +1,6 @@
+@each $level, $font-weight in $font-weights {
+  .h#{$level}, h#{$level} {
+    --#{$prefix}h-font-weight: #{$font-weight};
+    font-weight: var(--#{$prefix}h-font-weight);
+  }
+}

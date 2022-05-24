@@ -2,4 +2,4 @@
 
 // Required bootstrap imports
 @import "~bootstrap/scss/root";
-@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/reboot"; // TODO: extract :root and remove reboot from here

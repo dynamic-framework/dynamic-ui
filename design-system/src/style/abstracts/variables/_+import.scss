@@ -14,8 +14,8 @@ $escaped-characters: (
 
 @import "options";
 
-// $variable-prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
-// $prefix: $variable-prefix !default;
+$variable-prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
+$prefix: $variable-prefix !default;
 
 // $gradient: linear-gradient(180deg, rgba($white, .15), rgba($white, 0)) !default;
 
