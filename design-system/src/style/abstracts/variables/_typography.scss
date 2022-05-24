@@ -39,6 +39,18 @@ $font-sizes: (
   6: $h6-font-size
 ) !default;
 
+$h1-font-weight: $font-weight-bolder !default;
+$h2-font-weight: $font-weight-bolder !default;
+$h3-font-weight: $font-weight-bold !default;
+$h4-font-weight: $font-weight-bold !default;
+
+$font-weights: (
+  1: $h1-font-weight,
+  2: $h2-font-weight,
+  3: $h3-font-weight,
+  4: $h4-font-weight
+) !default;
+
 $headings-margin-bottom: $spacer * .5 !default;
 $headings-font-family: null !default;
 $headings-font-style: null !default;
