@@ -41,20 +41,23 @@ $font-sizes: (
 
 $h1-font-weight: $font-weight-bolder !default;
 $h2-font-weight: $font-weight-bolder !default;
-$h3-font-weight: $font-weight-bold !default;
+$h3-font-weight: $font-weight-bolder !default;
 $h4-font-weight: $font-weight-bold !default;
+$h5-font-weight: $font-weight-semibold !default;
+$h6-font-weight: $font-weight-semibold !default;
 
 $font-weights: (
   1: $h1-font-weight,
   2: $h2-font-weight,
   3: $h3-font-weight,
-  4: $h4-font-weight
+  4: $h4-font-weight,
+  5: $h5-font-weight,
+  6: $h6-font-weight
 ) !default;
 
 $headings-margin-bottom: $spacer * .5 !default;
 $headings-font-family: null !default;
 $headings-font-style: null !default;
-// $headings-font-weight: 500 !default;
 $headings-line-height: 1.2 !default;
 $headings-color: null !default;
 
