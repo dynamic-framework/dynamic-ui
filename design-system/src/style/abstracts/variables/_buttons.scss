@@ -23,9 +23,9 @@ $btn-focus-box-shadow: inset 0 0 0 2px rgba(var(--#{$prefix}theme-hover-rgb), 1)
 $btn-disabled-opacity: .3 !default;
 $btn-active-box-shadow: inset 0 0 0 5px rgba(255, 255, 255, .3) !default;
 
-// $btn-link-color: var(--#{$prefix}link-color) !default;
-// $btn-link-hover-color: var(--#{$prefix}link-hover-color) !default;
-// $btn-link-disabled-color: $gray-600 !default;
+$btn-link-color: var(--#{$prefix}theme) !default;
+$btn-link-hover-color: var(--#{$prefix}theme-hover) !default;
+$btn-link-disabled-color: var(--#{$prefix}theme) !default;
 
 $btn-border-radius: $border-radius-sm !default;
 $btn-border-radius-sm: $border-radius-sm !default;
@@ -41,6 +41,8 @@ $btn-border-radius-lg: $border-radius-lg !default;
 // $btn-active-bg-tint-amount: 20% !default;
 // $btn-active-border-shade-amount: 25% !default;
 // $btn-active-border-tint-amount: 10% !default;
+
+$btn-gap: 10px !default;
 
 $btn-box-border-width: 3px !default;
 

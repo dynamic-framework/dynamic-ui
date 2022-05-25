@@ -7,15 +7,15 @@
 
 ## Properties
 
-| Property  | Attribute | Description                       | Type                                                        | Default     |
-| --------- | --------- | --------------------------------- | ----------------------------------------------------------- | ----------- |
-| `mType`   | `m-type`  | The type of the button.           | `"button" \| "reset" \| "submit"`                           | `'button'`  |
-| `mValue`  | `m-value` | The value of the button.          | `string`                                                    | `''`        |
-| `outline` | `outline` | Flag to display outline button.   | `boolean`                                                   | `false`     |
-| `state`   | `state`   | Flag to set the button as active. | `"active" \| "disabled" \| "focus" \| "hover" \| undefined` | `undefined` |
-| `text`    | `text`    | The text to display.              | `string`                                                    | `''`        |
-| `theme`   | `theme`   | The theme to use.                 | `string`                                                    | `'primary'` |
-| `variant` | `variant` | The variant to use.               | `"block" \| "ghost" \| "pill" \| "text"`                    | `'pill'`    |
+| Property  | Attribute | Description                                  | Type                                                        | Default     |
+| --------- | --------- | -------------------------------------------- | ----------------------------------------------------------- | ----------- |
+| `mType`   | `m-type`  | The type of the button.                      | `"button" \| "reset" \| "submit"`                           | `'button'`  |
+| `mValue`  | `m-value` | The value of the button.                     | `string`                                                    | `''`        |
+| `pill`    | `pill`    | Flag to switch to pill button border radius. | `boolean`                                                   | `false`     |
+| `state`   | `state`   | Flag to set the button as active.            | `"active" \| "disabled" \| "focus" \| "hover" \| undefined` | `undefined` |
+| `text`    | `text`    | The text to display.                         | `string`                                                    | `''`        |
+| `theme`   | `theme`   | The theme to use.                            | `string`                                                    | `'primary'` |
+| `variant` | `variant` | The variant to use.                          | `"ghost" \| "outline" \| "text" \| undefined`               | `undefined` |
 
 
 ## Events

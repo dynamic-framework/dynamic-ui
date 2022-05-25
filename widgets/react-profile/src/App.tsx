@@ -1,24 +1,19 @@
-import { MApp, MButton } from '@modyo/react-design-system';
+import type { ButtonVariant } from '@modyo/design-system';
+import { MApp } from '@modyo/react-design-system';
+
 import Buttons from './Buttons';
+
+const THEMES = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
+const VARIANTS: Partial<ButtonVariant[]> = [undefined, 'ghost', 'text', 'outline'];
 
 export default function App() {
   return (
     <MApp>
-      <Buttons />
-      <Buttons theme="secondary"/>
-      <Buttons theme="tertiary" />
-      <Buttons theme="success" />
-      <Buttons theme="warning" />
-      <Buttons theme="danger" />
-      <Buttons theme="info" />
-
-      <Buttons variant="block" />
-      <Buttons variant="block" theme="secondary"/>
-      <Buttons variant="block" theme="tertiary" />
-      <Buttons variant="block" theme="success" />
-      <Buttons variant="block" theme="warning" />
-      <Buttons variant="block" theme="danger" />
-      <Buttons variant="block" theme="info" />
+      {THEMES.map((theme) => (
+        VARIANTS.map((variant) => (
+          <Buttons theme={theme} variant={variant} />
+        ))
+      ))}
     </MApp>
   );
 }

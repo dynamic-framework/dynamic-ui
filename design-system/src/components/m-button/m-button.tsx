@@ -7,14 +7,9 @@ import {
   Host,
 } from '@stencil/core';
 
-import type { ClassMap } from '../../utils/component-interface';
+import type { ClassMap, InputState } from '../../utils/component-interface';
 
-const BTN_CLASS_VARIANT = {
-  block: undefined,
-  pill: 'rounded-pill',
-  text: 'btn-link',
-  ghost: 'btn-link btn-ghost',
-};
+import type { ButtonType, ButtonVariant } from './m-button-interface';
 
 @Component({
   tag: 'm-button',
@@ -29,11 +24,11 @@ export class MButton implements ComponentInterface {
   /**
    * The variant to use.
    */
-  @Prop() variant: 'pill' | 'block' | 'text' | 'ghost' = 'pill';
+  @Prop() variant?: ButtonVariant;
   /**
    * Flag to set the button as active.
    */
-  @Prop() state?: 'focus' | 'hover' | 'active' | 'disabled';
+  @Prop() state?: InputState;
   /**
    * The text to display.
    */
@@ -45,11 +40,11 @@ export class MButton implements ComponentInterface {
   /**
    * The type of the button.
    */
-  @Prop() mType: 'submit' | 'reset' | 'button' = 'button';
+  @Prop() mType: ButtonType = 'button';
   /**
-   * Flag to display outline button.
+   * Flag to switch to pill button border radius.
    */
-  @Prop() outline = false;
+  @Prop() pill = false;
 
   /**
    * Emitted when the button has been clicked.
@@ -61,14 +56,16 @@ export class MButton implements ComponentInterface {
   };
 
   private generateClasses(): ClassMap {
-    const variant = BTN_CLASS_VARIANT[this.variant];
+    const variantClass = this.variant
+      ? `btn-${this.variant}-${this.theme}`
+      : `btn-${this.theme}`;
     return {
       btn: true,
-      [`btn-${this.outline ? 'outline-' : ''}${this.theme}`]: true,
-      ...(variant && { [variant]: true }),
+      [variantClass]: true,
       ...(this.state && this.state !== 'disabled') && {
         [this.state]: true,
       },
+      'rounded-pill': this.pill,
     };
   }
 
@@ -76,7 +73,7 @@ export class MButton implements ComponentInterface {
     return {
       'btn-box': true,
       focus: this.state === 'focus',
-      'rounded-pill': this.variant === 'pill',
+      'rounded-pill': this.pill,
     };
   }
 

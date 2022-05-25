@@ -6,6 +6,8 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
+import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
+import { InputState } from "./utils/component-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -47,19 +49,19 @@ export namespace Components {
         /**
           * The type of the button.
          */
-        "mType": 'submit' | 'reset' | 'button';
+        "mType": ButtonType;
         /**
           * The value of the button.
          */
         "mValue": string;
         /**
-          * Flag to display outline button.
+          * Flag to switch to pill button border radius.
          */
-        "outline": boolean;
+        "pill": boolean;
         /**
           * Flag to set the button as active.
          */
-        "state"?: 'focus' | 'hover' | 'active' | 'disabled';
+        "state"?: InputState;
         /**
           * The text to display.
          */
@@ -71,7 +73,7 @@ export namespace Components {
         /**
           * The variant to use.
          */
-        "variant": 'pill' | 'block' | 'text' | 'ghost';
+        "variant"?: ButtonVariant;
     }
     interface MCard {
         /**
@@ -225,7 +227,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button.
          */
-        "mType"?: 'submit' | 'reset' | 'button';
+        "mType"?: ButtonType;
         /**
           * The value of the button.
          */
@@ -235,13 +237,13 @@ declare namespace LocalJSX {
          */
         "onMButtonClick"?: (event: CustomEvent<any>) => void;
         /**
-          * Flag to display outline button.
+          * Flag to switch to pill button border radius.
          */
-        "outline"?: boolean;
+        "pill"?: boolean;
         /**
           * Flag to set the button as active.
          */
-        "state"?: 'focus' | 'hover' | 'active' | 'disabled';
+        "state"?: InputState;
         /**
           * The text to display.
          */
@@ -253,7 +255,7 @@ declare namespace LocalJSX {
         /**
           * The variant to use.
          */
-        "variant"?: 'pill' | 'block' | 'text' | 'ghost';
+        "variant"?: ButtonVariant;
     }
     interface MCard {
         /**

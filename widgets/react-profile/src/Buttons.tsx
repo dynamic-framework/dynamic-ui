@@ -1,13 +1,14 @@
+import type { ButtonVariant } from '@modyo/design-system';
 import { MButton } from '@modyo/react-design-system';
 
 interface Props {
-  variant?: 'block' | 'pill' | 'text';
+  variant?: ButtonVariant;
   theme?: string;
 }
 
 export default function Buttons(
   {
-    variant = 'pill',
+    variant,
     theme = 'primary',
   }: Props,
 ) {
@@ -77,7 +78,7 @@ export default function Buttons(
       </div>
       <div className="row mt-3">
         <div className="col-md-12">
-          {`${variant} + ${theme} + outline`}
+          {`${variant} + ${theme} + pill`}
         </div>
       </div>
       <div className="row mt-3">
@@ -86,7 +87,7 @@ export default function Buttons(
             theme={theme}
             variant={variant}
             text="label"
-            outline
+            pill
             onMButtonClick={() => (
               console.log('button-clicked')
             )}
@@ -98,7 +99,7 @@ export default function Buttons(
             variant={variant}
             text="label"
             state="hover"
-            outline
+            pill
             onMButtonClick={() => (
               console.log('button-clicked')
             )}
@@ -110,7 +111,7 @@ export default function Buttons(
             variant={variant}
             text="label"
             state="focus"
-            outline
+            pill
             onMButtonClick={() => (
               console.log('button-clicked')
             )}
@@ -121,8 +122,9 @@ export default function Buttons(
             theme={theme}
             variant={variant}
             text="label"
+            className="active"
             state="active"
-            outline
+            pill
             onMButtonClick={() => (
               console.log('button-clicked')
             )}
@@ -134,7 +136,7 @@ export default function Buttons(
             variant={variant}
             text="label"
             state="disabled"
-            outline
+            pill
             onMButtonClick={() => (
               console.log('button-clicked')
             )}
