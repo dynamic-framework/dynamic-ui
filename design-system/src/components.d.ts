@@ -93,6 +93,56 @@ export namespace Components {
          */
         "value": string;
     }
+    interface MListItem {
+        /**
+          * Item list image.
+         */
+        "alternative": number | string | null;
+        /**
+          * Item list image.
+         */
+        "arrow": boolean;
+        /**
+          * Item list image.
+         */
+        "image": boolean;
+        /**
+          * Is active element.
+         */
+        "isActive": boolean;
+        /**
+          * Is Light theme.
+         */
+        "light": boolean;
+        /**
+          * Item list image.
+         */
+        "pill": boolean;
+        /**
+          * Item list image.
+         */
+        "radio": boolean;
+        /**
+          * Item list image.
+         */
+        "subtext": string;
+        /**
+          * Item list image.
+         */
+        "text": string;
+        /**
+          * Item list image.
+         */
+        "urlImage": string | null;
+        /**
+          * Item list image.
+         */
+        "value": number | string | null;
+        /**
+          * Item list image.
+         */
+        "variant": 'text' | 'complete';
+    }
     interface MText {
         /**
           * The theme to use
@@ -143,6 +193,12 @@ declare global {
         prototype: HTMLMInputElement;
         new (): HTMLMInputElement;
     };
+    interface HTMLMListItemElement extends Components.MListItem, HTMLStencilElement {
+    }
+    var HTMLMListItemElement: {
+        prototype: HTMLMListItemElement;
+        new (): HTMLMListItemElement;
+    };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
     var HTMLMTextElement: {
@@ -157,6 +213,7 @@ declare global {
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
         "m-input": HTMLMInputElement;
+        "m-list-item": HTMLMListItemElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -263,6 +320,56 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface MListItem {
+        /**
+          * Item list image.
+         */
+        "alternative"?: number | string | null;
+        /**
+          * Item list image.
+         */
+        "arrow"?: boolean;
+        /**
+          * Item list image.
+         */
+        "image"?: boolean;
+        /**
+          * Is active element.
+         */
+        "isActive"?: boolean;
+        /**
+          * Is Light theme.
+         */
+        "light"?: boolean;
+        /**
+          * Item list image.
+         */
+        "pill"?: boolean;
+        /**
+          * Item list image.
+         */
+        "radio"?: boolean;
+        /**
+          * Item list image.
+         */
+        "subtext"?: string;
+        /**
+          * Item list image.
+         */
+        "text"?: string;
+        /**
+          * Item list image.
+         */
+        "urlImage"?: string | null;
+        /**
+          * Item list image.
+         */
+        "value"?: number | string | null;
+        /**
+          * Item list image.
+         */
+        "variant"?: 'text' | 'complete';
+    }
     interface MText {
         /**
           * The theme to use
@@ -277,6 +384,7 @@ declare namespace LocalJSX {
         "m-button": MButton;
         "m-card": MCard;
         "m-input": MInput;
+        "m-list-item": MListItem;
         "m-text": MText;
     }
 }
@@ -291,6 +399,7 @@ declare module "@stencil/core" {
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
+            "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }

@@ -58,6 +58,22 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
 ]);
 
 
+export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-item', undefined, [
+  'light',
+  'text',
+  'subtext',
+  'value',
+  'alternative',
+  'pill',
+  'image',
+  'urlImage',
+  'arrow',
+  'radio',
+  'variant',
+  'isActive'
+]);
+
+
 export const MText = /*@__PURE__*/ defineContainer<JSX.MText>('m-text', undefined, [
   'theme'
 ]);

@@ -1,0 +1,23 @@
+@import "~bootstrap/scss/list-group";
+
+.list-group-item .list-group-item-picture {
+  --#{$prefix}list-group-item-img-width: #{$list-group-item-img-width};
+  --#{$prefix}list-group-item-img-height: #{$list-group-item-img-height};
+
+  width: var(--#{$prefix}list-group-item-img-width);
+  height: var(--#{$prefix}list-group-item-img-height);
+}
+
+.list-group-item .list-group-item-picture .list-group-item-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+
+}
+
+.list-group-item-light {
+  --#{$prefix}list-group-bg: #{$list-group-item-bg-light};
+  --#{$prefix}list-group-border-color: #{$middle-light};
+  --#{$prefix}border-color: #{$middle-light};
+  background-color: var(--#{$prefix}list-group-bg);
+}
