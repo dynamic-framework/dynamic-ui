@@ -95,15 +95,15 @@ export namespace Components {
     }
     interface MListItem {
         /**
-          * Item list image.
+          * Alternative value
          */
         "alternative": number | string | null;
         /**
-          * Item list image.
+          * Has arrow icon
          */
         "arrow": boolean;
         /**
-          * Item list image.
+          * Has image
          */
         "image": boolean;
         /**
@@ -111,35 +111,35 @@ export namespace Components {
          */
         "isActive": boolean;
         /**
-          * Is Light theme.
+          * Has Light theme.
          */
         "light": boolean;
         /**
-          * Item list image.
+          * Has borders rounded
          */
         "pill": boolean;
         /**
-          * Item list image.
+          * Has radio button
          */
         "radio": boolean;
         /**
-          * Item list image.
+          * Subtext of the list.
          */
         "subtext": string;
         /**
-          * Item list image.
+          * Main text of the list.
          */
         "text": string;
         /**
-          * Item list image.
+          * Url to replace the default icon image
          */
         "urlImage": string | null;
         /**
-          * Item list image.
+          * Value of the list
          */
         "value": number | string | null;
         /**
-          * Item list image.
+          * Variant for text item list or complete item list
          */
         "variant": 'text' | 'complete';
     }
@@ -322,15 +322,15 @@ declare namespace LocalJSX {
     }
     interface MListItem {
         /**
-          * Item list image.
+          * Alternative value
          */
         "alternative"?: number | string | null;
         /**
-          * Item list image.
+          * Has arrow icon
          */
         "arrow"?: boolean;
         /**
-          * Item list image.
+          * Has image
          */
         "image"?: boolean;
         /**
@@ -338,35 +338,35 @@ declare namespace LocalJSX {
          */
         "isActive"?: boolean;
         /**
-          * Is Light theme.
+          * Has Light theme.
          */
         "light"?: boolean;
         /**
-          * Item list image.
+          * Has borders rounded
          */
         "pill"?: boolean;
         /**
-          * Item list image.
+          * Has radio button
          */
         "radio"?: boolean;
         /**
-          * Item list image.
+          * Subtext of the list.
          */
         "subtext"?: string;
         /**
-          * Item list image.
+          * Main text of the list.
          */
         "text"?: string;
         /**
-          * Item list image.
+          * Url to replace the default icon image
          */
         "urlImage"?: string | null;
         /**
-          * Item list image.
+          * Value of the list
          */
         "value"?: number | string | null;
         /**
-          * Item list image.
+          * Variant for text item list or complete item list
          */
         "variant"?: 'text' | 'complete';
     }

@@ -10,57 +10,57 @@ import {
 })
 export class MListItem implements ComponentInterface {
   /**
-  * Is Light theme.
+  * Has Light theme.
   */
   @Prop() light = false;
 
   /**
-  * Item list image.
+  * Main text of the list.
   */
   @Prop() text = '';
 
   /**
-  * Item list image.
+  * Subtext of the list.
   */
   @Prop() subtext = '';
 
   /**
-  * Item list image.
+  * Value of the list
   */
   @Prop() value: number | string | null = null;
 
   /**
-  * Item list image.
+  * Alternative value
   */
   @Prop() alternative: number | string | null = null;
 
   /**
-  * Item list image.
+  * Has borders rounded
   */
   @Prop() pill = false;
 
   /**
-  * Item list image.
+  * Has image
   */
   @Prop() image = false;
 
   /**
-  * Item list image.
+  * Url to replace the default icon image
   */
   @Prop() urlImage: string | null = null;
 
   /**
-  * Item list image.
+  * Has arrow icon
   */
   @Prop() arrow = true;
 
   /**
-  * Item list image.
+  * Has radio button
   */
   @Prop() radio = false;
 
   /**
-  * Item list image.
+  * Variant for text item list or complete item list
   */
   @Prop() variant: 'text' | 'complete' = 'text';
 
@@ -102,7 +102,7 @@ export class MListItem implements ComponentInterface {
           <div class={'d-flex flex-column flex-grow-1'}>
             <span class={'d-block fw-bold fs-6 text-dark lh-3'}>{ this.text }</span>
             {
-              this.subtext !== '' ? <span class={'d-block text-middledark lh-3'}>{ this.subtext }</span> : null
+              this.subtext !== '' ? <small class={'d-block text-middledark lh-3'}>{ this.subtext }</small> : null
             }
           </div>
           {
