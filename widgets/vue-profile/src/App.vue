@@ -45,7 +45,7 @@
     <m-text>
       the new value is: {{value}}
     </m-text>
-    <div class="container">
+    <div>
       <div class="shadows-container pb-5">
       <h5>Test shadows</h5>
       <div class="d-flex justify-content-evenly align-items-center gap-5">
@@ -66,7 +66,6 @@
         <div class="rounded-circle">Circle</div>
         <div class="rounded-pill">Pill</div>
       </div>
-    </div>
     </div>
     <div class="badges-container py-5">
       <h5>Test Badge</h5>
@@ -93,6 +92,143 @@
       <m-badge theme="dark"></m-badge>
       <m-badge theme="light"></m-badge>
     </div>
+    <div class="row list-group py-5 px-2 gap-3">
+      <h6>Default + bg white</h6>
+      <m-list-item
+      text="List title"
+      image
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <h6>Pills + bg white</h6>
+      <m-list-item
+      pill
+      image
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <h6>Default + bg light</h6>
+      <m-list-item
+      light
+      image
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <h6>Pills + bg light</h6>
+      <m-list-item
+      light
+      pill
+      text="List title"
+      image
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <h6>With Image</h6>
+      <m-list-item
+      urlImage="https://via.placeholder.com/100/f0ff04?text=IMG"
+      light
+      pill
+      image
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <h6>Simple</h6>
+      <m-list-item
+      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      value="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+       Nulla lobortis sit amet diam bibendum consectetur."></m-list-item>
+      <m-list-item
+      text="Text"
+      value="Value"></m-list-item>
+      <h6>No value + No image</h6>
+      <m-list-item
+      light
+      pill
+      text="List title"
+      subtext="Sub title - extra info"
+      variant="complete"></m-list-item>
+      <h6>Radio</h6>
+      <m-list-item
+      light
+      pill
+      radio
+      image
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <h6>Image and text</h6>
+      <m-list-item
+      urlImage="https://via.placeholder.com/100/00ff9g?text=IMG"
+      light
+      pill
+      image
+      text="List title"
+      variant="complete"></m-list-item>
+      <h6>No arrow</h6>
+      <m-list-item
+      urlImage="https://via.placeholder.com/100/f0ff04?text=IMG"
+      light
+      pill
+      image
+      arrow="false"
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <h6>All</h6>
+      <m-list-item
+      light
+      pill
+      image
+      radio
+      urlImage="https://via.placeholder.com/100/ffdf6e?text=IMG"
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <m-list-item
+      pill
+      image
+      radio
+      urlImage="https://via.placeholder.com/100/ffdf6e?text=IMG"
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <m-list-item
+      light
+      image
+      radio
+      urlImage="https://via.placeholder.com/100/ffdf6e?text=IMG"
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+      <m-list-item
+      image
+      radio
+      urlImage="https://via.placeholder.com/100/ffdf6e?text=IMG"
+      text="List title"
+      subtext="Sub title - extra info"
+      value="USD 38.00"
+      alternative="Alternative"
+      variant="complete"></m-list-item>
+    </div>
+    </div>
   </m-app>
 </template>
 
@@ -107,6 +243,7 @@ import {
   MCard,
   MApp,
   MBadge,
+  MListItem,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -119,6 +256,7 @@ export default defineComponent({
     MCard,
     MApp,
     MBadge,
+    MListItem,
   },
   data() {
     return {
