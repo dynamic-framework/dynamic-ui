@@ -4,23 +4,23 @@
 // $font-family-base: var(--#{$prefix}font-sans-serif) !default;
 // $font-family-code: var(--#{$prefix}font-monospace) !default;
 
-// $font-size-root: null !default;
-// $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
-// $font-size-sm: $font-size-base * .875 !default;
-// $font-size-lg: $font-size-base * 1.25 !default;
+$font-size-root: 16px !default;
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-sm: $font-size-base * .75 !default;
+$font-size-lg: $font-size-base * 1.125 !default;
 
 // $font-weight-lighter: lighter !default;
 // $font-weight-light: 300 !default;
 $font-weight-normal: 400 !default;
 // $font-weight-semibold: 600 !default;
-// $font-weight-bold: 700 !default;
+$font-weight-bold: 700 !default;
 // $font-weight-bolder: bolder !default;
 
 // $font-weight-base: $font-weight-normal !default;
 
-// $line-height-base: 1.5 !default;
-// $line-height-sm: 1.25 !default;
-// $line-height-lg: 2 !default;
+$line-height-base: 1.5 !default;
+// $line-height-sm: 1.5 !default;
+// $line-height-lg: 1.2 !default;
 
 // $h1-font-size: $font-size-base * 2.5 !default;
 // $h2-font-size: $font-size-base * 2 !default;

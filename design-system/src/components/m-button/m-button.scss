@@ -1,1 +1,129 @@
 @import "~bootstrap/scss/buttons";
+
+:host,
+.btn-box {
+  --#{$prefix}btn-border-radius: #{$btn-border-radius};
+  --#{$prefix}btn-box-border-width: #{$btn-box-border-width};
+  --#{$prefix}btn-box-border-color: transparent;
+  --#{$prefix}btn-box-border: var(--#{$prefix}btn-box-border-width) solid var(--#{$prefix}btn-box-border-color);
+
+  display: inline-block;
+  padding: var(--#{$prefix}btn-box-border-width);
+  border: var(--#{$prefix}btn-box-border);
+
+  &:focus-within,
+  &.focus {
+    --#{$prefix}btn-box-border-color: var(--#{$prefix}accessibility);
+
+    border: var(--#{$prefix}btn-box-border);
+    border-radius: var(--#{$prefix}btn-border-radius);
+  }
+
+  // TODO: setup boundary box
+  // margin: $btn-boundary-box-margin-y $btn-boundary-box-margin-x;
+}
+
+.btn {
+  --#{$prefix}btn-icon-min-size: #{$btn-icon-min-size};
+  --#{$prefix}btn-hover-box-shadow: #{$btn-hover-box-shadow};
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}theme);
+  --#{$prefix}btn-focus-box-shadow: #{$btn-focus-box-shadow};
+  --#{$prefix}btn-active-shadow: #{$btn-active-box-shadow};
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+
+  // hover selectors
+  &:hover,
+  &.hover {
+    // copy of .btn:hover bootstrap
+    color: var(--#{$prefix}btn-hover-color);
+    text-decoration: if($link-hover-decoration == underline, none, null);
+    background-color: var(--#{$prefix}btn-hover-bg);
+    border-color: var(--#{$prefix}btn-hover-border-color);
+    // end copy
+    box-shadow: var(--#{$prefix}btn-hover-box-shadow);
+  }
+
+  // focus selectors
+  .btn-check:focus + &,
+  &:focus,
+  &.focus {
+    // copy of .btn:focus bootstrap
+    color: var(--#{$prefix}btn-hover-color);
+    @include gradient-bg(var(--#{$prefix}btn-hover-bg));
+    border-color: var(--#{$prefix}btn-hover-border-color);
+    outline: 0;
+    // end copy
+    box-shadow: var(--#{$prefix}btn-focus-box-shadow);
+  }
+
+  // active selectors
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  &.show {
+    // copy of .btn:active bootstrap
+    color: var(--#{$prefix}btn-active-color);
+    background-color: var(--#{$prefix}btn-active-bg);
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+    border-color: var(--#{$prefix}btn-active-border-color);
+    @include box-shadow(var(--#{$prefix}btn-active-shadow));
+    // end copy
+
+    &:focus {
+      box-shadow: var(--#{$prefix}btn-active-shadow);
+    }
+  }
+
+  // disabled selectors
+  &:disabled,
+  &.disabled,
+  fieldset:disabled & {
+    box-shadow: var(--#{$prefix}btn-box-shadow);
+  }
+}
+
+.btn-icon {
+  min-width: var(--#{$prefix}btn-icon-min-size);
+  min-height: var(--#{$prefix}btn-icon-min-size);
+}
+
+@each $color, $value in $theme-colors {
+  $value-rgb: map-get($theme-colors-rgb, $color);
+  $hover-value: map-get($theme-colors-hover, $color);
+  $hover-value-rgb: to-rgb($hover-value);
+
+  // setup colors of button variants
+  .btn-#{$color} {
+    --#{$prefix}theme: #{$value};
+    --#{$prefix}theme-rgb: #{$value-rgb};
+    --#{$prefix}theme-hover: #{$hover-value};
+    --#{$prefix}theme-hover-rgb: #{$hover-value-rgb};
+    --#{$prefix}btn-color: #{$color-contrast-light};
+    --#{$prefix}btn-hover-color: #{$color-contrast-light};
+    --#{$prefix}btn-hover-bg: var(--#{$prefix}theme-hover);
+    --#{$prefix}btn-active-color: #{$color-contrast-light};
+    --#{$prefix}btn-active-bg: var(--#{$prefix}theme);
+  }
+
+  // setup colors of outline button variants
+  .btn-outline-#{$color} {
+    --#{$prefix}theme: #{$value};
+    --#{$prefix}theme-rgb: #{$value-rgb};
+    --#{$prefix}theme-hover: #{$hover-value};
+    --#{$prefix}theme-hover-rgb: #{$hover-value-rgb};
+    --#{$prefix}btn-box-shadow: inset 0 0 0 2px rgba(var(--#{$prefix}theme-rgb), 1);
+    --#{$prefix}btn-hover-color: var(--#{$prefix}theme-hover);
+    --#{$prefix}btn-hover-bg: transparent;
+    --#{$prefix}btn-active-color: var(--#{$prefix}theme);
+    --#{$prefix}btn-active-bg: transparent;
+    --#{$prefix}btn-active-shadow: inset 0 0 0 2px rgba(var(--#{$prefix}theme-rgb), 1);
+  }
+}

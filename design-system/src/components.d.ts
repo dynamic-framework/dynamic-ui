@@ -45,17 +45,33 @@ export namespace Components {
     }
     interface MButton {
         /**
-          * Flag to disable the button.
+          * The type of the button.
          */
-        "disabled": boolean;
+        "mType": 'submit' | 'reset' | 'button';
         /**
-          * The text to display in the button.
+          * The value of the button.
+         */
+        "mValue": string;
+        /**
+          * Flag to display outline button.
+         */
+        "outline": boolean;
+        /**
+          * Flag to set the button as active.
+         */
+        "state"?: 'focus' | 'hover' | 'active' | 'disabled';
+        /**
+          * The text to display.
          */
         "text": string;
         /**
-          * The type of the button.
+          * The theme to use.
          */
-        "type": 'submit' | 'reset' | 'button';
+        "theme": string;
+        /**
+          * The variant to use.
+         */
+        "variant": 'pill' | 'block' | 'text' | 'ghost';
     }
     interface MCard {
         /**
@@ -207,21 +223,37 @@ declare namespace LocalJSX {
     }
     interface MButton {
         /**
-          * Flag to disable the button.
+          * The type of the button.
          */
-        "disabled"?: boolean;
+        "mType"?: 'submit' | 'reset' | 'button';
+        /**
+          * The value of the button.
+         */
+        "mValue"?: string;
         /**
           * Emitted when the button has been clicked.
          */
-        "onModButtonClick"?: (event: CustomEvent<any>) => void;
+        "onMButtonClick"?: (event: CustomEvent<any>) => void;
         /**
-          * The text to display in the button.
+          * Flag to display outline button.
+         */
+        "outline"?: boolean;
+        /**
+          * Flag to set the button as active.
+         */
+        "state"?: 'focus' | 'hover' | 'active' | 'disabled';
+        /**
+          * The text to display.
          */
         "text"?: string;
         /**
-          * The type of the button.
+          * The theme to use.
          */
-        "type"?: 'submit' | 'reset' | 'button';
+        "theme"?: string;
+        /**
+          * The variant to use.
+         */
+        "variant"?: 'pill' | 'block' | 'text' | 'ghost';
     }
     interface MCard {
         /**

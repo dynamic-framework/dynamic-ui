@@ -5,6 +5,7 @@ import {
   h,
   Prop,
 } from '@stencil/core';
+
 import { AlertAction } from '../m-alert/m-alert-interface';
 
 @Component({
@@ -28,7 +29,7 @@ export class MAlertAction implements ComponentInterface {
   render() {
     return (
       <m-button
-        onModButtonClick={this.clickHandler}
+        onMButtonClick={this.clickHandler}
         text={this.action.text}
       />
     );

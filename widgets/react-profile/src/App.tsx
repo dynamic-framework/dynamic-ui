@@ -1,63 +1,24 @@
-import { MApp, MText, MButton, MAlert, MInput, MCard } from '@modyo/react-design-system';
-import { useState } from 'react';
+import { MApp, MButton } from '@modyo/react-design-system';
+import Buttons from './Buttons';
 
 export default function App() {
-  const [value, setValue] = useState('initial');
   return (
     <MApp>
-      <MButton
-        text="click me!"
-        onModButtonClick={() => (
-          console.log('button-clicked')
-        )}
-      />
-      <br />
-      <br />
-      <MAlert
-        header="the title"
-        body="body prop text"
-        actions={[
-          { id: 'action 1', text: 'Action 1' },
-          { id: 'action 2', text: 'Action 2' },
-        ]}
-        onModActionClick={({ detail: alertAction }) => (
-          console.log('action-clicked', alertAction)
-        )}
-      >
-        children text
-      </MAlert>
-      <br />
-      <br />
-      <MCard
-        header="card header"
-        theme="warning"
-      >
-        card w/o shadow
-      </MCard>
-      <br />
-      <br />
-      <MCard
-        header="card header"
-        style={{
-          '--bs-primary-rgb': '255, 0, 0',
-        }}
-      >
-        card w style
-      </MCard>
-      <br />
-      <br />
-      <MInput
-        id="input-1"
-        placeholder="the placeholder"
-        type="text"
-        value={value}
-        onModChange={({ detail }) => setValue(detail)}
-      />
-      <br />
-      <br />
-      <MText theme="primary">
-        the new value is: {value}
-      </MText>
+      <Buttons />
+      <Buttons theme="secondary"/>
+      <Buttons theme="tertiary" />
+      <Buttons theme="success" />
+      <Buttons theme="warning" />
+      <Buttons theme="danger" />
+      <Buttons theme="info" />
+
+      <Buttons variant="block" />
+      <Buttons variant="block" theme="secondary"/>
+      <Buttons variant="block" theme="tertiary" />
+      <Buttons variant="block" theme="success" />
+      <Buttons variant="block" theme="warning" />
+      <Buttons variant="block" theme="danger" />
+      <Buttons variant="block" theme="info" />
     </MApp>
   );
 }
