@@ -45,15 +45,14 @@
     <m-text>
       the new value is: {{value}}
     </m-text>
-    <div>
-      <div class="shadows-container pb-5">
-      <h5>Test shadows</h5>
-      <div class="d-flex justify-content-evenly align-items-center gap-5">
-        <div class="shadow-none">None</div>
-        <div class="shadow-sm">Shadow sm</div>
-        <div class="shadow">Shadow</div>
-        <div class="shadow-lg">Shadow lg</div>
-      </div>
+    <div class="shadows-container pb-5">
+    <h5>Test shadows</h5>
+    <div class="d-flex justify-content-evenly align-items-center gap-5">
+      <div class="shadow-none">None</div>
+      <div class="shadow-sm">Shadow sm</div>
+      <div class="shadow">Shadow</div>
+      <div class="shadow-lg">Shadow lg</div>
+    </div>
     </div>
     <div class="rounded-container pb-5">
       <h5>Test rounded</h5>
@@ -228,6 +227,167 @@
       alternative="Alternative"
       variant="complete"></m-list-item>
     </div>
+    <div class="display-6">
+      Font Styles
+    </div>
+    <div class="row my-3 gy-5 align-items-center">
+      <div class="col-3">
+        <div class="h3"> Display 1 </div>
+        <p class="m-0">Size: 5rem </p>
+        <p class="m-0">Line height 1.3 </p>
+        <p class="m-0">Bold 700 </p>
+        </div>
+      <div class="col-9">
+        <div class="display-1">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3"> Display 2 </div>
+        <p class="m-0">Size: 4.5rem </p>
+        <p class="m-0">Line height 1.3 </p>
+        <p class="m-0">Bold 700 </p>
+        </div>
+      <div class="col-9">
+        <div class="display-2">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3"> Display 3 </div>
+        <p class="m-0">Size: 4rem </p>
+        <p class="m-0">Line height 1.3 </p>
+        <p class="m-0">Bold 700 </p>
+        </div>
+      <div class="col-9">
+        <div class="display-3">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3"> Display 4 </div>
+        <p class="m-0">Size: 3.5rem </p>
+        <p class="m-0">Line height 1.3 </p>
+        <p class="m-0">Bold 700 </p>
+        </div>
+      <div class="col-9">
+        <div class="display-4">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3"> Display 5 </div>
+        <p class="m-0">Size: 3rem </p>
+        <p class="m-0">Line height 1.3 </p>
+        <p class="m-0">Bold 700 </p>
+        </div>
+      <div class="col-9">
+        <div class="display-5">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3"> Display 6 </div>
+        <p class="m-0">Size: 2.5rem </p>
+        <p class="m-0">Line height 1.3 </p>
+        <p class="m-0">Bold 700 </p>
+        </div>
+      <div class="col-9">
+        <div class="display-6">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+    </div>
+    <div class="row my-3 gy-5 align-items-center">
+      <div class="col-3">
+        <div class="h3">Heading 1</div>
+        <p class="m-0">Size: 2.5rem </p>
+        <p class="m-0">Line height 1.2 </p>
+        <p class="m-0">Extra-Bold 800 </p>
+        </div>
+      <div class="col-9">
+        <div class="h1">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3">Heading 2</div>
+        <p class="m-0">Size: 2rem </p>
+        <p class="m-0">Line height 1.2 </p>
+        <p class="m-0">Extra-Bold 800 </p>
+        </div>
+      <div class="col-9">
+        <div class="h2">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3">Heading 3</div>
+        <p class="m-0">Size: 1.75rem </p>
+        <p class="m-0">Line height 1.2 </p>
+        <p class="m-0">Extra-Bold 800 </p>
+        </div>
+      <div class="col-9">
+        <div class="h3">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3">Heading 4</div>
+        <p class="m-0">Size: 1.5rem </p>
+        <p class="m-0">Line height 1.2 </p>
+        <p class="m-0">Bold 700 </p>
+        </div>
+      <div class="col-9">
+        <div class="h4">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3">Heading 5</div>
+        <p class="m-0">Size: 1.25rem </p>
+        <p class="m-0">Line height 1.2 </p>
+        <p class="m-0">SemiBold 600 </p>
+        </div>
+      <div class="col-9">
+        <div class="h5">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+      <div class="col-3">
+        <div class="h3">Heading 6</div>
+        <p class="m-0">Size: 1.125rem </p>
+        <p class="m-0">Line height 1.2 </p>
+        <p class="m-0">SemiBold 600 </p>
+        </div>
+      <div class="col-9">
+        <div class="h6">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</div>
+      </div>
+    </div>
+    <div class="row my-3 gy-5 align-items-center">
+      <div class="col-3">
+        <div class="h3">Body text</div>
+        <p class="m-0">Size: 1rem </p>
+        <p class="m-0">Line height 1.5 </p>
+        <p class="m-0">Regular 400 </p>
+        </div>
+      <div class="col-9">
+        <p>Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</p>
+      </div>
+      <div class="col-3">
+        <div class="h3">Small</div>
+        <p class="m-0">Size: 0.75rem </p>
+        <p class="m-0">Line height 1.5 </p>
+        <p class="m-0">Regular 400 </p>
+        </div>
+      <div class="col-9">
+        <small>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.</small>
+      </div>
     </div>
   </m-app>
 </template>
