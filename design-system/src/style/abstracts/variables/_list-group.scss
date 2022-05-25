@@ -1,8 +1,8 @@
 // $list-group-color: $gray-900 !default;
 // $list-group-bg: $white !default;
-// $list-group-border-color: rgba($black, .125) !default;
+$list-group-border-color: $light !default;
 // $list-group-border-width: $border-width !default;
-// $list-group-border-radius: $border-radius !default;
+$list-group-border-radius: $border-radius-sm !default;
 
 // $list-group-item-padding-y: $spacer * .5 !default;
 // $list-group-item-padding-x: $spacer !default;
@@ -22,3 +22,7 @@
 
 // $list-group-action-active-color: $body-color !default;
 // $list-group-action-active-bg: $gray-200 !default;
+
+$list-group-item-bg-light: $light !default;
+$list-group-item-img-width: 2.25rem !default;
+$list-group-item-img-height: 2.25rem !default;
