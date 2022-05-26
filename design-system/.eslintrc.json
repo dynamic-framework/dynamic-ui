@@ -10,6 +10,17 @@
   ],
   "rules": {
     "import/prefer-default-export": "off",
+    "react/jsx-first-prop-new-line": ["error", "multiline"],
+    "react/jsx-max-props-per-line": ["error", { "maximum": { "single": 1, "multi": 1 } }],
+    "react/jsx-closing-bracket-location": ["error", "line-aligned"],
+    "react/jsx-indent-props": ["error", 2],
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": true
+    }],
+    "react/jsx-curly-spacing": [2, { "when": "never", "attributes": { "allowMultiline": false }, "children": true }],
+    "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
+    "react/jsx-indent": ["error", 2, {"checkAttributes": true, "indentLogicalExpressions": true}],
     "import/order": ["error", {
       "newlines-between": "always"
     }],

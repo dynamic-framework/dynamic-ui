@@ -21,10 +21,10 @@
   ],
   "scripts": {
     "build": "stencil build --docs",
-    "build.watch": "stencil build --docs --watch",
+    "build:watch": "stencil build --docs",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll",
+    "test:watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "eslint": "eslint src/**/*{.ts,.tsx}",
     "stylelint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .cache/.stylelintcache --rd",

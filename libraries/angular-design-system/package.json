@@ -12,6 +12,7 @@
     "prepublishOnly": "npm run build",
     "prebuild": "rimraf ./dist",
     "build": "ng-packagr",
+    "build:watch": "ng-packagr",
     "watch": "tsc --watch",
     "version": "npm run build"
   },
