@@ -24,7 +24,9 @@ export class MBadge implements ComponentInterface {
   render() {
     return (
       <Host class="d-inline-block">
-        <span class={`badge ${this.text === '' ? 'badge-dot' : ''} bg-${this.theme}`}>{ this.text }</span>
+        <span class={`badge ${this.text === '' ? 'badge-dot' : ''} bg-${this.theme}`}>
+          {this.text}
+        </span>
       </Host>
     );
   }
