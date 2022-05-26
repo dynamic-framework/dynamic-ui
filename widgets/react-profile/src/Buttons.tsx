@@ -4,12 +4,14 @@ import { MButton } from '@modyo/react-design-system';
 interface Props {
   variant?: ButtonVariant;
   theme?: string;
+  pill?: boolean
 }
 
 export default function Buttons(
   {
     variant,
     theme = 'primary',
+    pill = false
   }: Props,
 ) {
   return (
@@ -76,73 +78,77 @@ export default function Buttons(
           />
         </div>
       </div>
-      <div className="row mt-3">
-        <div className="col-md-12">
-          {`${variant} + ${theme} + pill`}
-        </div>
-      </div>
-      <div className="row mt-3">
-        <div className="col">
-          <MButton
-            theme={theme}
-            variant={variant}
-            text="label"
-            pill
-            onMButtonClick={() => (
-              console.log('button-clicked')
-            )}
-          />
-        </div>
-        <div className="col">
-          <MButton
-            theme={theme}
-            variant={variant}
-            text="label"
-            state="hover"
-            pill
-            onMButtonClick={() => (
-              console.log('button-clicked')
-            )}
-          />
-        </div>
-        <div className="col">
-          <MButton
-            theme={theme}
-            variant={variant}
-            text="label"
-            state="focus"
-            pill
-            onMButtonClick={() => (
-              console.log('button-clicked')
-            )}
-          />
-        </div>
-        <div className="col">
-          <MButton
-            theme={theme}
-            variant={variant}
-            text="label"
-            className="active"
-            state="active"
-            pill
-            onMButtonClick={() => (
-              console.log('button-clicked')
-            )}
-          />
-        </div>
-        <div className="col">
-          <MButton
-            theme={theme}
-            variant={variant}
-            text="label"
-            state="disabled"
-            pill
-            onMButtonClick={() => (
-              console.log('button-clicked')
-            )}
-          />
-        </div>
-      </div>
+      {pill && (
+        <>
+          <div className="row mt-3">
+            <div className="col-md-12">
+              {`${variant} + ${theme} + pill`}
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className="col">
+              <MButton
+                theme={theme}
+                variant={variant}
+                text="label"
+                pill
+                onMButtonClick={() => (
+                  console.log('button-clicked')
+                )}
+              />
+            </div>
+            <div className="col">
+              <MButton
+                theme={theme}
+                variant={variant}
+                text="label"
+                state="hover"
+                pill
+                onMButtonClick={() => (
+                  console.log('button-clicked')
+                )}
+              />
+            </div>
+            <div className="col">
+              <MButton
+                theme={theme}
+                variant={variant}
+                text="label"
+                state="focus"
+                pill
+                onMButtonClick={() => (
+                  console.log('button-clicked')
+                )}
+              />
+            </div>
+            <div className="col">
+              <MButton
+                theme={theme}
+                variant={variant}
+                text="label"
+                className="active"
+                state="active"
+                pill
+                onMButtonClick={() => (
+                  console.log('button-clicked')
+                )}
+              />
+            </div>
+            <div className="col">
+              <MButton
+                theme={theme}
+                variant={variant}
+                text="label"
+                state="disabled"
+                pill
+                onMButtonClick={() => (
+                  console.log('button-clicked')
+                )}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
