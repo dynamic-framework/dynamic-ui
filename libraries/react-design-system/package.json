@@ -11,7 +11,8 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "npm run clean && npm run compile",
+    "build": "rimraf dist && tsc -p . && rollup -c rollup.config.js",
+    "build:watch": "tsc -p . && rollup -c rollup.config.js",
     "clean": "rimraf dist",
     "compile": "tsc -p . && rollup -c rollup.config.js"
   },
