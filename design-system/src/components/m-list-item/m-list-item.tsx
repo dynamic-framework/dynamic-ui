@@ -1,7 +1,19 @@
 import type { ComponentInterface } from '@stencil/core';
 import {
-  Component, h, Prop, Host,
+  Component,
+  h,
+  Prop,
+  Host,
 } from '@stencil/core';
+
+import type { ClassMap } from '../../utils/component-interface';
+
+import type {
+  ListItemVariant,
+  NavegableProps,
+  SelectableProps,
+} from './m-list-item-interface';
+import { tagType } from './m-list-item-interface';
 
 @Component({
   tag: 'm-list-item',
@@ -10,9 +22,9 @@ import {
 })
 export class MListItem implements ComponentInterface {
   /**
-  * Has Light theme.
+  * The theme to use.
   */
-  @Prop() light = false;
+  @Prop() theme?: string;
 
   /**
   * Main text of the list.
@@ -27,137 +39,144 @@ export class MListItem implements ComponentInterface {
   /**
   * Value of the list
   */
-  @Prop() value: number | string | null = null;
+  @Prop() value?: string | number;
 
   /**
   * Alternative value
   */
-  @Prop() alternative: number | string | null = null;
+  @Prop() alternativeValue?: string | number;
 
   /**
   * Has borders rounded
   */
-  @Prop() pill = false;
+  @Prop() isPill = false;
 
   /**
-  * Has image
+  * The icon to display
   */
-  @Prop() image = false;
+  @Prop() icon?: string;
 
   /**
   * Url to replace the default icon image
   */
-  @Prop() urlImage: string | null = null;
-
-  /**
-  * Has arrow icon
-  */
-  @Prop() arrow = true;
-
-  /**
-  * Has radio button
-  */
-  @Prop() radio = false;
+  @Prop() image: string | null = null;
 
   /**
   * Variant for text item list or complete item list
   */
-  @Prop() variant: 'text' | 'complete' = 'text';
+  @Prop() variant?: ListItemVariant;
+  // @Prop() variant: 'text' | 'complete' = 'text';
 
-  /**
-  * Is active element.
-  */
-  @Prop() isActive = false;
+  @Prop() selectableProps?: SelectableProps;
+
+  @Prop() navegableProps?: NavegableProps;
+
+  private getTagType(): string {
+    return this.variant ? tagType[this.variant] : tagType.default;
+  }
+
+  private getTagAttributes() {
+    switch (this.variant) {
+      case 'selectable': {
+        return {
+          htmlFor: this.selectableProps?.id,
+        };
+      }
+      case 'navegable': {
+        console.log('navegable', this.navegableProps);
+        return this.navegableProps;
+      }
+      default:
+        return {};
+    }
+  }
+
+  private generateHostClasses(): ClassMap {
+    return {
+      'list-group-item': true,
+      'list-group-item-variant': !!this.variant,
+      [`list-group-item-${this.theme}`]: !!this.theme,
+      'list-group-item-pill': this.isPill,
+    };
+  }
 
   render() {
-    if (this.variant === 'complete') {
+    const Tag = this.getTagType();
+    if (this.variant) {
       return (
-        <Host
-          class={{
-            'list-group-item': true,
-            'rounded-1 border mb-3': this.pill,
-            'border-0 border-bottom': !this.pill,
-            'd-flex align-items-center justify-content-between gap-2 p-3': true,
-            'list-group-item-light': this.light,
-            active: this.isActive,
-          }}
-          aria-current={this.isActive}
-        >
-          {
-            this.radio ? <input
-              type="radio"
-              name="list-group-item-radio"
-              id="list-group-item-radio"
-            /> : null
-          }
-          {
-            this.image
-              ? <div
-                  class={{
-                    'list-group-item-picture d-inline-flex justify-content-center align-items-center rounded-1': true,
-                    'bg-tertiary': this.urlImage === null,
-                  }}
+        <Host class={this.generateHostClasses()}>
+          <Tag
+            class="gap-2"
+            {...this.getTagAttributes()}
+          >
+            {this.variant === 'selectable' && (
+              <input
+                type="radio"
+                id={this.selectableProps!.id}
+                {...this.selectableProps!.name && {
+                  name: this.selectableProps!.name,
+                }}
+              />
+            )}
+            {(this.icon || this.image) && (
+              <div
+                class={{
+                  'list-group-item-picture-container d-inline-flex justify-content-center align-items-center overflow-hidden': true,
+                  'bg-tertiary': this.image === null,
+                }}
               >
-                {
-                    this.urlImage === null
-                      ? <i class="bi bi-heart-fill text-white fs-5" />
-                      : <img
-                          class="list-group-item-img rounded-1"
-                          src={this.urlImage}
-                          alt="picture item"
-                      />
-                  }
+                {/* TODO: use m-icon */}
+                {this.icon && <i class={`bi bi-${this.icon} text-white fs-5`} />}
+                {this.image && (
+                  <img
+                    class="list-group-item-picture"
+                    src={this.image}
+                    alt="picture item"
+                  />
+                )}
               </div>
-              : null
-          }
-          <div class={'d-flex flex-column flex-grow-1'}>
-            <span class={'d-block fw-bold fs-6 text-dark lh-3'}>
-              {this.text}
-            </span>
-            {
-              this.subtext !== '' ? <small class={'d-block text-middledark lh-3'}>
-                {this.subtext}
-              </small> : null
-            }
-          </div>
-          {
-            this.value !== null
-              ? <div class={'d-flex flex-column flex-grow-1 text-end'}>
-                <span class={'fw-bold fs-6 text-middledark lh-3'}>
+            )}
+            <div class={'d-flex flex-column flex-grow-1'}>
+              <span class={'d-block fw-bold fs-6 text-dark lh-3'}>
+                {this.text}
+              </span>
+              {!!this.subtext && (
+                <small class={'d-block text-gray lh-3'}>
+                  {this.subtext}
+                </small>
+              )}
+            </div>
+            {this.value !== null && (
+              <div class={'d-flex flex-column flex-grow-1 text-end'}>
+                <span class={'fw-bold fs-6 text-gray lh-3'}>
                   {this.value}
                 </span>
-                {
-                    this.alternative !== null ? <small class={'text-middledark lh-3'}>
-                      {this.alternative}
-                    </small> : null
-                  }
+                {this.alternativeValue !== null && (
+                  <small class={'text-gray lh-3'}>
+                    {this.alternativeValue}
+                  </small>
+                )}
               </div>
-              : null
-          }
-          {
-            this.arrow
-              ? <div class={'d-flex justify-content-center align-items-center text-middlelight'}>
-                <i class="bi bi-chevron-right" />
+            )}
+            {this.variant === 'navegable' && (
+              <div class={'d-flex justify-content-center align-items-center text-middlelight'}>
+                {/* TODO: use m-icon */}
+                <i class="bi bi-chevron-right"/>
               </div>
-              : null
-          }
+            )}
+          </Tag>
         </Host>
       );
     }
     return (
-      <Host
-        class={{
-          'list-group-item': true,
-          'd-flex align-items-center justify-content-between text-dark gap-3 border-0 p-1': true,
-          active: this.isActive,
-        }}
-        aria-current={this.isActive}
-      >
-        <span class="flex-grow-1 opacity-50">
-          {this.text}
-        </span>
-        <span class="flex-shrink-1">
-          {this.value}
+      <Host class="list-group-item">
+        <span class="gap-3">
+          <span class="flex-grow-1 opacity-40">
+            {this.text}
+          </span>
+          <span class="flex-shrink-1 text-end">
+            {this.value}
+          </span>
         </span>
       </Host>
     );

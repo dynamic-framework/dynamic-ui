@@ -1,12 +1,12 @@
-// $list-group-color: $gray-900 !default;
-// $list-group-bg: $white !default;
-$list-group-border-color: $light !default;
-// $list-group-border-width: $border-width !default;
-$list-group-border-radius: $border-radius-sm !default;
+$list-group-color: var(--#{$prefix}dark) !default;
+$list-group-bg: transparent !default;
+$list-group-border-color: var(--#{$prefix}light) !default;
+$list-group-border-width: 0 !default;
+$list-group-border-radius: var(--#{$prefix}border-radius-sm) !default;
 
-// $list-group-item-padding-y: $spacer * .5 !default;
-// $list-group-item-padding-x: $spacer !default;
-// $list-group-item-bg-scale: -80% !default;
+$list-group-item-padding-y: $spacer-1 !default;
+$list-group-item-padding-x: $spacer-1 !default;
+$list-group-item-bg-scale: 0% !default;
 // $list-group-item-color-scale: 40% !default;
 
 // $list-group-hover-bg: $gray-100 !default;
@@ -23,6 +23,12 @@ $list-group-border-radius: $border-radius-sm !default;
 // $list-group-action-active-color: $body-color !default;
 // $list-group-action-active-bg: $gray-200 !default;
 
+$list-group-item-border-radius: 0 !default;
+
 $list-group-item-bg-light: $light !default;
-$list-group-item-img-width: 2.25rem !default;
-$list-group-item-img-height: 2.25rem !default;
+$list-group-item-picture-width: 2.25rem !default;
+$list-group-item-picture-height: 2.25rem !default;
+$list-group-item-picture-border-radius: $border-radius-sm !default;
+
+$list-group-item-content-padding-y: $spacer-3 !default;
+$list-group-item-content-padding-x: $spacer-3 !default;

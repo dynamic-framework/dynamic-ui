@@ -7,20 +7,19 @@
 
 ## Properties
 
-| Property      | Attribute     | Description                                      | Type                       | Default  |
-| ------------- | ------------- | ------------------------------------------------ | -------------------------- | -------- |
-| `alternative` | `alternative` | Alternative value                                | `null \| number \| string` | `null`   |
-| `arrow`       | `arrow`       | Has arrow icon                                   | `boolean`                  | `true`   |
-| `image`       | `image`       | Has image                                        | `boolean`                  | `false`  |
-| `isActive`    | `is-active`   | Is active element.                               | `boolean`                  | `false`  |
-| `light`       | `light`       | Has Light theme.                                 | `boolean`                  | `false`  |
-| `pill`        | `pill`        | Has borders rounded                              | `boolean`                  | `false`  |
-| `radio`       | `radio`       | Has radio button                                 | `boolean`                  | `false`  |
-| `subtext`     | `subtext`     | Subtext of the list.                             | `string`                   | `''`     |
-| `text`        | `text`        | Main text of the list.                           | `string`                   | `''`     |
-| `urlImage`    | `url-image`   | Url to replace the default icon image            | `null \| string`           | `null`   |
-| `value`       | `value`       | Value of the list                                | `null \| number \| string` | `null`   |
-| `variant`     | `variant`     | Variant for text item list or complete item list | `"complete" \| "text"`     | `'text'` |
+| Property           | Attribute           | Description                                      | Type                                                           | Default     |
+| ------------------ | ------------------- | ------------------------------------------------ | -------------------------------------------------------------- | ----------- |
+| `alternativeValue` | `alternative-value` | Alternative value                                | `number \| string \| undefined`                                | `undefined` |
+| `icon`             | `icon`              | The icon to display                              | `string \| undefined`                                          | `undefined` |
+| `image`            | `image`             | Url to replace the default icon image            | `null \| string`                                               | `null`      |
+| `isPill`           | `is-pill`           | Has borders rounded                              | `boolean`                                                      | `false`     |
+| `navegableProps`   | --                  |                                                  | `undefined \| { href: string; target?: string \| undefined; }` | `undefined` |
+| `selectableProps`  | --                  |                                                  | `undefined \| { id: string; name?: string \| undefined; }`     | `undefined` |
+| `subtext`          | `subtext`           | Subtext of the list.                             | `string`                                                       | `''`        |
+| `text`             | `text`              | Main text of the list.                           | `string`                                                       | `''`        |
+| `theme`            | `theme`             | The theme to use.                                | `string \| undefined`                                          | `undefined` |
+| `value`            | `value`             | Value of the list                                | `number \| string \| undefined`                                | `undefined` |
+| `variant`          | `variant`           | Variant for text item list or complete item list | `"default" \| "navegable" \| "selectable" \| undefined`        | `undefined` |
 
 
 ----------------------------------------------

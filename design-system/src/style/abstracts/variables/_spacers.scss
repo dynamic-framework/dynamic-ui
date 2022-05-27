@@ -1,10 +1,16 @@
 $spacer: 1rem !default;
 
+$spacer-1: $spacer * .25 !default;
+$spacer-2: $spacer * .5, !default;
+$spacer-3: $spacer !default;
+$spacer-4: $spacer * 1.5 !default;
+$spacer-5: $spacer * 3 !default;
+
 $spacers: (
   0: 0,
-  1: $spacer * .25,
-  2: $spacer * .5,
-  3: $spacer,
-  4: $spacer * 1.5,
-  5: $spacer * 3,
+  1: $spacer-1,
+  2: $spacer-2,
+  3: $spacer-3,
+  4: $spacer-4,
+  5: $spacer-5,
 ) !default;

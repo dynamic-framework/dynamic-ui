@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
+import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -97,31 +98,21 @@ export namespace Components {
         /**
           * Alternative value
          */
-        "alternative": number | string | null;
+        "alternativeValue"?: string | number;
         /**
-          * Has arrow icon
+          * The icon to display
          */
-        "arrow": boolean;
+        "icon"?: string;
         /**
-          * Has image
+          * Url to replace the default icon image
          */
-        "image": boolean;
-        /**
-          * Is active element.
-         */
-        "isActive": boolean;
-        /**
-          * Has Light theme.
-         */
-        "light": boolean;
+        "image": string | null;
         /**
           * Has borders rounded
          */
-        "pill": boolean;
-        /**
-          * Has radio button
-         */
-        "radio": boolean;
+        "isPill": boolean;
+        "navegableProps"?: NavegableProps;
+        "selectableProps"?: SelectableProps;
         /**
           * Subtext of the list.
          */
@@ -131,17 +122,17 @@ export namespace Components {
          */
         "text": string;
         /**
-          * Url to replace the default icon image
+          * The theme to use.
          */
-        "urlImage": string | null;
+        "theme"?: string;
         /**
           * Value of the list
          */
-        "value": number | string | null;
+        "value"?: string | number;
         /**
           * Variant for text item list or complete item list
          */
-        "variant": 'text' | 'complete';
+        "variant"?: ListItemVariant;
     }
     interface MText {
         /**
@@ -324,31 +315,21 @@ declare namespace LocalJSX {
         /**
           * Alternative value
          */
-        "alternative"?: number | string | null;
+        "alternativeValue"?: string | number;
         /**
-          * Has arrow icon
+          * The icon to display
          */
-        "arrow"?: boolean;
+        "icon"?: string;
         /**
-          * Has image
+          * Url to replace the default icon image
          */
-        "image"?: boolean;
-        /**
-          * Is active element.
-         */
-        "isActive"?: boolean;
-        /**
-          * Has Light theme.
-         */
-        "light"?: boolean;
+        "image"?: string | null;
         /**
           * Has borders rounded
          */
-        "pill"?: boolean;
-        /**
-          * Has radio button
-         */
-        "radio"?: boolean;
+        "isPill"?: boolean;
+        "navegableProps"?: NavegableProps;
+        "selectableProps"?: SelectableProps;
         /**
           * Subtext of the list.
          */
@@ -358,17 +339,17 @@ declare namespace LocalJSX {
          */
         "text"?: string;
         /**
-          * Url to replace the default icon image
+          * The theme to use.
          */
-        "urlImage"?: string | null;
+        "theme"?: string;
         /**
           * Value of the list
          */
-        "value"?: number | string | null;
+        "value"?: string | number;
         /**
           * Variant for text item list or complete item list
          */
-        "variant"?: 'text' | 'complete';
+        "variant"?: ListItemVariant;
     }
     interface MText {
         /**

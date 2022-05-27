@@ -7,8 +7,6 @@ $warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-900 !default;
-$middle-dark: $gray-600 !default;
-$middle-light: $gray-300 !default;
 
 $theme-colors: (
   "primary": $primary,
@@ -19,9 +17,7 @@ $theme-colors: (
   "warning": $warning,
   "danger": $danger,
   "light": $light,
-  "dark": $dark,
-  "middledark": $middle-dark,
-  "middlelight": $middle-light,
+  "dark": $dark
 ) !default;
 
 
