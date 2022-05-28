@@ -4,7 +4,7 @@ import { MApp } from '@modyo/react-design-system';
 import Buttons from './Buttons';
 
 const THEMES = ['light', 'dark', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
-const VARIANTS: Partial<ButtonVariant[]> = ['outline', undefined];
+const VARIANTS: Partial<ButtonVariant[]> = ['outline', undefined, 'text', 'ghost'];
 
 export default function App() {
   return (
