@@ -91,7 +91,7 @@ export default function Buttons(
                 theme={theme}
                 variant={variant}
                 text="label"
-                pill
+                isPill
                 onMButtonClick={() => (
                   console.log('button-clicked')
                 )}
@@ -103,7 +103,7 @@ export default function Buttons(
                 variant={variant}
                 text="label"
                 state="hover"
-                pill
+                isPill
                 onMButtonClick={() => (
                   console.log('button-clicked')
                 )}
@@ -115,7 +115,7 @@ export default function Buttons(
                 variant={variant}
                 text="label"
                 state="focus"
-                pill
+                isPill
                 onMButtonClick={() => (
                   console.log('button-clicked')
                 )}
@@ -128,7 +128,7 @@ export default function Buttons(
                 text="label"
                 className="active"
                 state="active"
-                pill
+                isPill
                 onMButtonClick={() => (
                   console.log('button-clicked')
                 )}
@@ -140,7 +140,7 @@ export default function Buttons(
                 variant={variant}
                 text="label"
                 state="disabled"
-                pill
+                isPill
                 onMButtonClick={() => (
                   console.log('button-clicked')
                 )}

@@ -121,13 +121,13 @@ export declare interface MButton extends Components.MButton {
 
 @ProxyCmp({
   defineCustomElementFn: defineMButton,
-  inputs: ['mType', 'mValue', 'pill', 'state', 'text', 'theme', 'variant']
+  inputs: ['isPill', 'mType', 'mValue', 'state', 'text', 'theme', 'variant']
 })
 @Component({
   selector: 'm-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['mType', 'mValue', 'pill', 'state', 'text', 'theme', 'variant']
+  inputs: ['isPill', 'mType', 'mValue', 'state', 'text', 'theme', 'variant']
 })
 export class MButton {
   protected el: HTMLElement;

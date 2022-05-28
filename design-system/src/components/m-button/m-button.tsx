@@ -44,7 +44,7 @@ export class MButton implements ComponentInterface {
   /**
    * Flag to switch to pill button border radius.
    */
-  @Prop() pill = false;
+  @Prop() isPill = false;
 
   /**
    * Emitted when the button has been clicked.
@@ -65,7 +65,7 @@ export class MButton implements ComponentInterface {
       ...(this.state && this.state !== 'disabled') && {
         [this.state]: true,
       },
-      'rounded-pill': this.pill,
+      'rounded-pill': this.isPill,
     };
   }
 
@@ -73,7 +73,7 @@ export class MButton implements ComponentInterface {
     return {
       'btn-box': true,
       focus: this.state === 'focus',
-      'rounded-pill': this.pill,
+      'rounded-pill': this.isPill,
     };
   }
 

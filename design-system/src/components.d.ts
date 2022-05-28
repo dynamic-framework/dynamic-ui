@@ -47,6 +47,10 @@ export namespace Components {
     }
     interface MButton {
         /**
+          * Flag to switch to pill button border radius.
+         */
+        "isPill": boolean;
+        /**
           * The type of the button.
          */
         "mType": ButtonType;
@@ -54,10 +58,6 @@ export namespace Components {
           * The value of the button.
          */
         "mValue": string;
-        /**
-          * Flag to switch to pill button border radius.
-         */
-        "pill": boolean;
         /**
           * Flag to set the button as active.
          */
@@ -225,6 +225,10 @@ declare namespace LocalJSX {
     }
     interface MButton {
         /**
+          * Flag to switch to pill button border radius.
+         */
+        "isPill"?: boolean;
+        /**
           * The type of the button.
          */
         "mType"?: ButtonType;
@@ -236,10 +240,6 @@ declare namespace LocalJSX {
           * Emitted when the button has been clicked.
          */
         "onMButtonClick"?: (event: CustomEvent<any>) => void;
-        /**
-          * Flag to switch to pill button border radius.
-         */
-        "pill"?: boolean;
         /**
           * Flag to set the button as active.
          */
