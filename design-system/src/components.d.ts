@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { InputState } from "./utils/component-interface";
+import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -111,6 +112,46 @@ export namespace Components {
          */
         "value": string;
     }
+    interface MListItem {
+        /**
+          * Alternative value
+         */
+        "alternativeValue"?: string | number;
+        /**
+          * The icon to display
+         */
+        "icon"?: string;
+        /**
+          * Url to replace the default icon image
+         */
+        "image": string | null;
+        /**
+          * Has borders rounded
+         */
+        "isPill": boolean;
+        "navegableProps"?: NavegableProps;
+        "selectableProps"?: SelectableProps;
+        /**
+          * Subtext of the list.
+         */
+        "subtext": string;
+        /**
+          * Main text of the list.
+         */
+        "text": string;
+        /**
+          * The theme to use.
+         */
+        "theme"?: string;
+        /**
+          * Value of the list
+         */
+        "value"?: string | number;
+        /**
+          * Variant for text item list or complete item list
+         */
+        "variant"?: ListItemVariant;
+    }
     interface MText {
         /**
           * The theme to use
@@ -161,6 +202,12 @@ declare global {
         prototype: HTMLMInputElement;
         new (): HTMLMInputElement;
     };
+    interface HTMLMListItemElement extends Components.MListItem, HTMLStencilElement {
+    }
+    var HTMLMListItemElement: {
+        prototype: HTMLMListItemElement;
+        new (): HTMLMListItemElement;
+    };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
     var HTMLMTextElement: {
@@ -175,6 +222,7 @@ declare global {
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
         "m-input": HTMLMInputElement;
+        "m-list-item": HTMLMListItemElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -297,6 +345,46 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface MListItem {
+        /**
+          * Alternative value
+         */
+        "alternativeValue"?: string | number;
+        /**
+          * The icon to display
+         */
+        "icon"?: string;
+        /**
+          * Url to replace the default icon image
+         */
+        "image"?: string | null;
+        /**
+          * Has borders rounded
+         */
+        "isPill"?: boolean;
+        "navegableProps"?: NavegableProps;
+        "selectableProps"?: SelectableProps;
+        /**
+          * Subtext of the list.
+         */
+        "subtext"?: string;
+        /**
+          * Main text of the list.
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme"?: string;
+        /**
+          * Value of the list
+         */
+        "value"?: string | number;
+        /**
+          * Variant for text item list or complete item list
+         */
+        "variant"?: ListItemVariant;
+    }
     interface MText {
         /**
           * The theme to use
@@ -311,6 +399,7 @@ declare namespace LocalJSX {
         "m-button": MButton;
         "m-card": MCard;
         "m-input": MInput;
+        "m-list-item": MListItem;
         "m-text": MText;
     }
 }
@@ -325,6 +414,7 @@ declare module "@stencil/core" {
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
+            "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }

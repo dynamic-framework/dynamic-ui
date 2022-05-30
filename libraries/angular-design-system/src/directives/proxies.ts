@@ -12,6 +12,7 @@ import { defineCustomElement as defineMBadge } from '@modyo/design-system/compon
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
+import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
 import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
@@ -184,6 +185,27 @@ export class MInput {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['modChange']);
+  }
+}
+
+
+export declare interface MListItem extends Components.MListItem {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMListItem,
+  inputs: ['alternativeValue', 'icon', 'image', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'value', 'variant']
+})
+@Component({
+  selector: 'm-list-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['alternativeValue', 'icon', 'image', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'value', 'variant']
+})
+export class MListItem {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
 

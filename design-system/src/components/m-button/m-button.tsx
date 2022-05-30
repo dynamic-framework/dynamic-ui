@@ -90,7 +90,7 @@ export class MButton implements ComponentInterface {
           <div class="btn-icon btn-left-icon" />
           {this.text}
           {/* TODO: use m-icon component */}
-          <div class="btn-icon btn-right-icon"/>
+          <div class="btn-icon btn-right-icon" />
         </button>
       </Host>
     );

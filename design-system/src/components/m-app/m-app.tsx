@@ -1,5 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, h } from '@stencil/core';
+import {
+  Component, Host, h,
+} from '@stencil/core';
 
 @Component({
   tag: 'm-app',

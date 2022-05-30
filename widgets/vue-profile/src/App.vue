@@ -45,15 +45,14 @@
     <m-text>
       the new value is: {{value}}
     </m-text>
-    <div class="container">
-      <div class="shadows-container pb-5">
-      <h5>Test shadows</h5>
-      <div class="d-flex justify-content-evenly align-items-center gap-5">
-        <div class="shadow-none">None</div>
-        <div class="shadow-sm">Shadow sm</div>
-        <div class="shadow">Shadow</div>
-        <div class="shadow-lg">Shadow lg</div>
-      </div>
+    <div class="shadows-container pb-5">
+    <h5>Test shadows</h5>
+    <div class="d-flex justify-content-evenly align-items-center gap-5">
+      <div class="shadow-none">None</div>
+      <div class="shadow-sm">Shadow sm</div>
+      <div class="shadow">Shadow</div>
+      <div class="shadow-lg">Shadow lg</div>
+    </div>
     </div>
     <div class="rounded-container pb-5">
       <h5>Test rounded</h5>
@@ -66,7 +65,6 @@
         <div class="rounded-circle">Circle</div>
         <div class="rounded-pill">Pill</div>
       </div>
-    </div>
     </div>
     <div class="badges-container py-5">
       <h5>Test Badge</h5>
@@ -92,6 +90,166 @@
       <m-badge theme="info"></m-badge>
       <m-badge theme="dark"></m-badge>
       <m-badge theme="light"></m-badge>
+    </div>
+    <div class="row list-group py-5 px-2 gap-3">
+      <h6>Default + bg white</h6>
+      <m-list-item
+        text="List title"
+        icon="heart-fill"
+        subtext="Sub title - extra info"
+        value="USD 38.00"
+        alternative="Alternative"
+        variant="default"
+      />
+      <h6>Pills + bg white</h6>
+      <m-list-item
+        is-pill
+        icon="heart-fill"
+        text="List title"
+        subtext="Sub title - extra info"
+        value="USD 38.00"
+        alternative-value="Alternative"
+        variant="default"
+      />
+      <h6>Default + bg light</h6>
+      <m-list-item
+        theme="light"
+        icon="heart-fill"
+        text="List title"
+        subtext="Sub title - extra info"
+        value="USD 38.00"
+        alternative-value="Alternative"
+        variant="default"
+      />
+      <h6>Pills + bg light</h6>
+      <m-list-item
+        theme="light"
+        is-pill
+        text="List title"
+        icon="heart-fill"
+        subtext="Sub title - extra info"
+        value="USD 38.00"
+        alternative-value="Alternative"
+        variant="default"
+      />
+      <h6>With Image</h6>
+      <m-list-item
+        image="https://via.placeholder.com/100/f0ff04?text=IMG"
+        theme="light"
+        is-pill
+        text="List title"
+        subtext="Sub title - extra info"
+        value="USD 38.00"
+        alternative-value="Alternative"
+        variant="default"
+      />
+      <h6>Simple</h6>
+      <m-list-item
+        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        value="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+         Nulla lobortis sit amet diam bibendum consectetur."
+      />
+      <m-list-item
+        text="Text"
+        value="Value"
+      />
+      <h6>No value + No image</h6>
+      <m-list-item
+        theme="light"
+        is-pill
+        text="List title"
+        subtext="Sub title - extra info"
+        variant="default"
+      />
+      <h6>Radio</h6>
+      <m-list-item
+        theme="light"
+        is-pill
+        icon="heart-fill"
+        text="List title"
+        subtext="Sub title - extra info"
+        value="USD 38.00"
+        alternative-value="Alternative"
+        variant="selectable"
+        :selectable-props="{
+          'id': 'list-item-3',
+          'name': 'list-item-3',
+        }"
+      />
+      <h6>Image and text</h6>
+      <m-list-item
+        image="https://via.placeholder.com/100/00ff9g?text=IMG"
+        theme="light"
+        is-pill
+        text="List title"
+        variant="default"
+      />
+      <h6>No arrow</h6>
+      <m-list-item
+        image="https://via.placeholder.com/100/f0ff04?text=IMG"
+        theme="light"
+        is-pill
+        text="List title"
+        subtext="Sub title - extra info"
+        value="USD 38.00"
+        alternative-value="Alternative"
+        variant="default"
+      />
+      <h6>All</h6>
+      <ol class="list-group-numbered">
+        <m-list-item
+          theme="light"
+          is-pill
+          image="https://via.placeholder.com/100/ffdf6e?text=IMG"
+          text="List title"
+          subtext="Sub title - extra info"
+          value="USD 38.00"
+          alternative-value="Alternative"
+          variant="selectable"
+          :selectable-props="{
+            'id': 'list-item-2',
+            'name': 'list-item',
+          }"
+        />
+        <m-list-item
+          is-pill
+          image="https://via.placeholder.com/100/ffdf6e?text=IMG"
+          text="List title"
+          subtext="Sub title - extra info"
+          value="USD 38.00"
+          alternative-value="Alternative"
+          variant="selectable"
+          :selectable-props="{
+            'id': 'list-item-1',
+            'name': 'list-item',
+          }"
+        />
+        <m-list-item
+          theme="light"
+          image="https://via.placeholder.com/100/ffdf6e?text=IMG"
+          text="List title"
+          subtext="Sub title - extra info"
+          value="USD 38.00"
+          alternative-value="Alternative"
+          variant="navegable"
+          :navegable-props="{
+            'href': '#',
+            'target': '_blank'
+          }"
+        />
+        <m-list-item
+          image="https://via.placeholder.com/100/ffdf6e?text=IMG"
+          text="List title"
+          subtext="Sub title - extra info"
+          value="USD 38.00"
+          alternative-value="Alternative"
+          variant="navegable"
+          :navegable-props="{
+            'href': '#',
+            'target': '_blank'
+          }"
+        />
+      </ol>
     </div>
     <div class="display-6">
       Font Styles
@@ -269,6 +427,7 @@ import {
   MCard,
   MApp,
   MBadge,
+  MListItem,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -281,6 +440,7 @@ export default defineComponent({
     MCard,
     MApp,
     MBadge,
+    MListItem,
   },
   data() {
     return {
