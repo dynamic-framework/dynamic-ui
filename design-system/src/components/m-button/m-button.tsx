@@ -7,6 +7,10 @@ import {
   Host,
 } from '@stencil/core';
 
+import type { ClassMap, InputState } from '../../utils/component-interface';
+
+import type { ButtonType, ButtonVariant } from './m-button-interface';
+
 @Component({
   tag: 'm-button',
   styleUrl: 'm-button.scss',
@@ -14,37 +18,79 @@ import {
 })
 export class MButton implements ComponentInterface {
   /**
-   * The text to display in the button.
+   * The theme to use.
+   */
+  @Prop() theme = 'primary';
+  /**
+   * The variant to use.
+   */
+  @Prop() variant?: ButtonVariant;
+  /**
+   * Flag to set the button as active.
+   */
+  @Prop() state?: InputState;
+  /**
+   * The text to display.
    */
   @Prop() text = '';
   /**
+   * The value of the button.
+   */
+  @Prop() mValue = '';
+  /**
    * The type of the button.
    */
-  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+  @Prop() mType: ButtonType = 'button';
   /**
-   * Flag to disable the button.
+   * Flag to switch to pill button border radius.
    */
-  @Prop() disabled = false;
+  @Prop() isPill = false;
 
   /**
    * Emitted when the button has been clicked.
    */
-  @Event() modButtonClick!: EventEmitter;
+  @Event() mButtonClick!: EventEmitter;
 
   private buttonClickHandler = () => {
-    this.modButtonClick.emit();
+    this.mButtonClick.emit();
   };
+
+  private generateClasses(): ClassMap {
+    const variantClass = this.variant
+      ? `btn-${this.variant}-${this.theme}`
+      : `btn-${this.theme}`;
+    return {
+      btn: true,
+      [variantClass]: true,
+      ...(this.state && this.state !== 'disabled') && {
+        [this.state]: true,
+      },
+      'rounded-pill': this.isPill,
+    };
+  }
+
+  private generateHostClasses(): ClassMap {
+    return {
+      'btn-box': true,
+      focus: this.state === 'focus',
+      'rounded-pill': this.isPill,
+    };
+  }
 
   render() {
     return (
-      <Host class="m-button">
+      <Host class={this.generateHostClasses()}>
         <button
-          class="btn btn-primary"
-          type="button"
-          part="button"
+          class={this.generateClasses()}
+          type={this.mType}
+          disabled={this.state === 'disabled'}
           onClick={this.buttonClickHandler}
         >
+          {/* TODO: use m-icon component */}
+          <div class="btn-icon btn-left-icon" />
           {this.text}
+          {/* TODO: use m-icon component */}
+          <div class="btn-icon btn-right-icon"/>
         </button>
       </Host>
     );

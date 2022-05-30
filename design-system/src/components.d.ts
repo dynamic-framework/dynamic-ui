@@ -6,6 +6,8 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
+import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
+import { InputState } from "./utils/component-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -45,17 +47,33 @@ export namespace Components {
     }
     interface MButton {
         /**
-          * Flag to disable the button.
+          * Flag to switch to pill button border radius.
          */
-        "disabled": boolean;
-        /**
-          * The text to display in the button.
-         */
-        "text": string;
+        "isPill": boolean;
         /**
           * The type of the button.
          */
-        "type": 'submit' | 'reset' | 'button';
+        "mType": ButtonType;
+        /**
+          * The value of the button.
+         */
+        "mValue": string;
+        /**
+          * Flag to set the button as active.
+         */
+        "state"?: InputState;
+        /**
+          * The text to display.
+         */
+        "text": string;
+        /**
+          * The theme to use.
+         */
+        "theme": string;
+        /**
+          * The variant to use.
+         */
+        "variant"?: ButtonVariant;
     }
     interface MCard {
         /**
@@ -207,21 +225,37 @@ declare namespace LocalJSX {
     }
     interface MButton {
         /**
-          * Flag to disable the button.
+          * Flag to switch to pill button border radius.
          */
-        "disabled"?: boolean;
-        /**
-          * Emitted when the button has been clicked.
-         */
-        "onModButtonClick"?: (event: CustomEvent<any>) => void;
-        /**
-          * The text to display in the button.
-         */
-        "text"?: string;
+        "isPill"?: boolean;
         /**
           * The type of the button.
          */
-        "type"?: 'submit' | 'reset' | 'button';
+        "mType"?: ButtonType;
+        /**
+          * The value of the button.
+         */
+        "mValue"?: string;
+        /**
+          * Emitted when the button has been clicked.
+         */
+        "onMButtonClick"?: (event: CustomEvent<any>) => void;
+        /**
+          * Flag to set the button as active.
+         */
+        "state"?: InputState;
+        /**
+          * The text to display.
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme"?: string;
+        /**
+          * The variant to use.
+         */
+        "variant"?: ButtonVariant;
     }
     interface MCard {
         /**

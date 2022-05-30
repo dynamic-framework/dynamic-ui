@@ -115,26 +115,26 @@ export declare interface MButton extends Components.MButton {
   /**
    * Emitted when the button has been clicked. 
    */
-  modButtonClick: EventEmitter<CustomEvent<any>>;
+  mButtonClick: EventEmitter<CustomEvent<any>>;
 
 }
 
 @ProxyCmp({
   defineCustomElementFn: defineMButton,
-  inputs: ['disabled', 'text', 'type']
+  inputs: ['isPill', 'mType', 'mValue', 'state', 'text', 'theme', 'variant']
 })
 @Component({
   selector: 'm-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['disabled', 'text', 'type']
+  inputs: ['isPill', 'mType', 'mValue', 'state', 'text', 'theme', 'variant']
 })
 export class MButton {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['modButtonClick']);
+    proxyOutputs(this, this.el, ['mButtonClick']);
   }
 }
 
