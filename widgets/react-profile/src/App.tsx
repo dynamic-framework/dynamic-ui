@@ -1,63 +1,19 @@
-import { MApp, MText, MButton, MAlert, MInput, MCard } from '@modyo/react-design-system';
-import { useState } from 'react';
+import type { ButtonVariant } from '@modyo/design-system';
+import { MApp } from '@modyo/react-design-system';
+
+import Buttons from './Buttons';
+
+const THEMES = ['light', 'dark', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
+const VARIANTS: Partial<ButtonVariant[]> = ['outline', undefined, 'text', 'ghost'];
 
 export default function App() {
-  const [value, setValue] = useState('initial');
   return (
     <MApp>
-      <MButton
-        text="click me!"
-        onModButtonClick={() => (
-          console.log('button-clicked')
-        )}
-      />
-      <br />
-      <br />
-      <MAlert
-        header="the title"
-        body="body prop text"
-        actions={[
-          { id: 'action 1', text: 'Action 1' },
-          { id: 'action 2', text: 'Action 2' },
-        ]}
-        onModActionClick={({ detail: alertAction }) => (
-          console.log('action-clicked', alertAction)
-        )}
-      >
-        children text
-      </MAlert>
-      <br />
-      <br />
-      <MCard
-        header="card header"
-        theme="warning"
-      >
-        card w/o shadow
-      </MCard>
-      <br />
-      <br />
-      <MCard
-        header="card header"
-        style={{
-          '--bs-primary-rgb': '255, 0, 0',
-        }}
-      >
-        card w style
-      </MCard>
-      <br />
-      <br />
-      <MInput
-        id="input-1"
-        placeholder="the placeholder"
-        type="text"
-        value={value}
-        onModChange={({ detail }) => setValue(detail)}
-      />
-      <br />
-      <br />
-      <MText theme="primary">
-        the new value is: {value}
-      </MText>
+      {THEMES.map((theme) => (
+        VARIANTS.map((variant) => (
+          <Buttons theme={theme} variant={variant} pill />
+        ))
+      ))}
     </MApp>
   );
 }

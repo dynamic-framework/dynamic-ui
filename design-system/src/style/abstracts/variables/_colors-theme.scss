@@ -16,10 +16,11 @@ $theme-colors: (
   "info": $info,
   "warning": $warning,
   "danger": $danger,
-  "light": $light,
+  "light": $light, // TODO: check this, in design-system/src/components/m-button/m-button.scss it is $white
   "dark": $dark
 ) !default;
 
+$accessibility: #00b3cc !default;
 
 // TODO: Use hover-colors in components with :hover
 $primary-hover: #bc0956 !default;
@@ -30,7 +31,7 @@ $info-hover: #516182 !default;
 $warning-hover: #c38322 !default;
 $danger-hover: #c64e4e !default;
 
-$hover-colors: (
+$theme-colors-hover: (
   "primary": $primary-hover,
   "secondary": $secondary-hover,
   "tertiary": $tertiary-hover,
@@ -38,4 +39,6 @@ $hover-colors: (
   "info": $info-hover,
   "warning": $warning-hover,
   "danger": $danger-hover,
+  "light": $light,
+  "dark": $dark
 ) !default;

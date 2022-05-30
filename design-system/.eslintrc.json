@@ -4,23 +4,24 @@
   },
   "extends": [
     "plugin:@stencil/recommended",
-    "airbnb-base",
+    "airbnb",
     "airbnb-typescript/base",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended"
   ],
   "rules": {
-    "import/prefer-default-export": "off",
-    "react/jsx-first-prop-new-line": ["error", "multiline"],
-    "react/jsx-max-props-per-line": ["error", { "maximum": { "single": 1, "multi": 1 } }],
-    "react/jsx-closing-bracket-location": ["error", "line-aligned"],
-    "react/jsx-indent-props": ["error", 2],
-    "react/self-closing-comp": ["error", {
-      "component": true,
-      "html": true
+    "object-curly-newline": ["error", {
+      "ObjectExpression": "always",
+      "ObjectPattern": { "multiline": true, "minProperties": 3 },
+      "ImportDeclaration": { "multiline": true, "minProperties": 3 },
+      "ExportDeclaration": { "multiline": true, "minProperties": 3 }
     }],
-    "react/jsx-curly-spacing": [2, { "when": "never", "attributes": { "allowMultiline": false }, "children": true }],
-    "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
-    "react/jsx-indent": ["error", 2, {"checkAttributes": true, "indentLogicalExpressions": true}],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+    "react/no-unknown-property": "off",
+    "react/button-has-type": "off",
+    "react/jsx-max-props-per-line": ["error", { "maximum": { "single": 1, "multi": 1 } }],
+    "import/prefer-default-export": "off",
     "import/order": ["error", {
       "newlines-between": "always"
     }],
@@ -30,6 +31,7 @@
       { "exceptAfterSingleLine": true }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/space-before-blocks": "off" // disabled because of a bug of stencil https://github.com/ionic-team/stencil-eslint/issues/68
+    "@typescript-eslint/space-before-blocks": "off", // disabled because of a bug of stencil https://github.com/ionic-team/stencil-eslint/issues/68,
+    "@stencil/strict-boolean-conditions": "off" // disabled because we use !! https://airbnb.io/javascript/#coercion--booleans
   }
 }

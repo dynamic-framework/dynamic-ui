@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import '@modyo/design-system/dist/design-system/design-system.css';
-import './style.css';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';

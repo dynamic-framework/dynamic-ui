@@ -1,0 +1,8 @@
+:root {
+  --#{$prefix}accessibility: #{$accessibility};
+
+  @each $color, $value in $theme-colors-hover {
+    --#{$prefix}#{$color}-hover: #{$value};
+    --#{$prefix}#{$color}-hover-rgb: #{to-rgb($value)};
+  }
+}
