@@ -16,7 +16,7 @@ $theme-colors: (
   "info": $info,
   "warning": $warning,
   "danger": $danger,
-  "light": $white, // TODO: check this, in design-system/src/components/m-button/m-button.scss it is $white
+  "light": $light, // TODO: check this, in design-system/src/components/m-button/m-button.scss it is $white
   "dark": $dark
 ) !default;
 

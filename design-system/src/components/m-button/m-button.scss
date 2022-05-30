@@ -180,6 +180,10 @@
 
 // TODO: refactor light and dark variants, they are almost the same
 .btn-light {
+  // TODO: temporary link while we decide which is the light
+  --#{$prefix}light: var(--#{$prefix}white);
+  --#{$prefix}light-rgb: var(--#{$prefix}white-rgb);
+  // theme variables.
   --#{$prefix}theme: var(--#{$prefix}light);
   --#{$prefix}theme-rgb: var(--#{$prefix}light-rgb);
   --#{$prefix}theme-hover: var(--#{$prefix}light-hover);
@@ -200,6 +204,10 @@
 }
 
 .btn-outline-light {
+  // TODO: temporary link while we decide which is the light
+  --#{$prefix}light: var(--#{$prefix}white);
+  --#{$prefix}light-rgb: var(--#{$prefix}white-rgb);
+  // theme variables.
   --#{$prefix}theme: var(--#{$prefix}light);
   --#{$prefix}theme-rgb: var(--#{$prefix}light-rgb);
   --#{$prefix}theme-hover: var(--#{$prefix}light-hover);
@@ -219,6 +227,10 @@
 }
 
 .btn-text-light {
+  // TODO: temporary link while we decide which is the light
+  --#{$prefix}light: var(--#{$prefix}white);
+  --#{$prefix}light-rgb: var(--#{$prefix}white-rgb);
+  // theme variables.
   --#{$prefix}theme: var(--#{$prefix}light);
   --#{$prefix}theme-rgb: var(--#{$prefix}light-rgb);
   --#{$prefix}theme-hover: var(--#{$prefix}light-hover);
@@ -236,6 +248,10 @@
 }
 
 .btn-ghost-light {
+  // TODO: temporary link while we decide which is the light
+  --#{$prefix}light: var(--#{$prefix}white);
+  --#{$prefix}light-rgb: var(--#{$prefix}white-rgb);
+  // theme variables.
   --#{$prefix}theme: var(--#{$prefix}light);
   --#{$prefix}theme-rgb: var(--#{$prefix}light-rgb);
   --#{$prefix}theme-hover: var(--#{$prefix}light-hover);
