@@ -63,7 +63,7 @@ export class MAlert implements ComponentInterface {
           </m-text>
           <m-text>
             <p>
-              <slot></slot>
+              <slot />
             </p>
           </m-text>
           {this.actions.map(this.renderAction)}

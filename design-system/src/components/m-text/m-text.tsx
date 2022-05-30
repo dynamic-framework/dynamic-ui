@@ -18,9 +18,7 @@ export class MText implements ComponentInterface {
 
   render() {
     return (
-      <Host
-        {...this.theme && { class: `text-${this.theme}` }}
-      >
+      <Host class={`text-${this.theme}`}>
         <slot />
       </Host>
     );

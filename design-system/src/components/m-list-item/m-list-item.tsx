@@ -65,10 +65,15 @@ export class MListItem implements ComponentInterface {
   * Variant for text item list or complete item list
   */
   @Prop() variant?: ListItemVariant;
-  // @Prop() variant: 'text' | 'complete' = 'text';
 
+  /**
+   * Props for the list item selectable variant
+   */
   @Prop() selectableProps?: SelectableProps;
 
+  /**
+   * Props for the list item navegable variant
+   */
   @Prop() navegableProps?: NavegableProps;
 
   private getTagType(): string {
@@ -78,12 +83,9 @@ export class MListItem implements ComponentInterface {
   private getTagAttributes() {
     switch (this.variant) {
       case 'selectable': {
-        return {
-          htmlFor: this.selectableProps?.id,
-        };
+        return { htmlFor: this.selectableProps?.id };
       }
       case 'navegable': {
-        console.log('navegable', this.navegableProps);
         return this.navegableProps;
       }
       default:
@@ -112,10 +114,8 @@ export class MListItem implements ComponentInterface {
             {this.variant === 'selectable' && (
               <input
                 type="radio"
-                id={this.selectableProps!.id}
-                {...this.selectableProps!.name && {
-                  name: this.selectableProps!.name,
-                }}
+                {...this.selectableProps?.id && { id: this.selectableProps.id }}
+                {...this.selectableProps?.name && { name: this.selectableProps.name }}
               />
             )}
             {(this.icon || this.image) && (
@@ -131,37 +131,37 @@ export class MListItem implements ComponentInterface {
                   <img
                     class="list-group-item-picture"
                     src={this.image}
-                    alt="picture item"
+                    alt=""
                   />
                 )}
               </div>
             )}
-            <div class={'d-flex flex-column flex-grow-1'}>
-              <span class={'d-block fw-bold fs-6 text-dark lh-3'}>
+            <div class="d-flex flex-column flex-grow-1">
+              <span class="d-block fw-bold fs-6 text-dark lh-3">
                 {this.text}
               </span>
               {!!this.subtext && (
-                <small class={'d-block text-gray lh-3'}>
+                <small class="d-block text-gray lh-3">
                   {this.subtext}
                 </small>
               )}
             </div>
             {this.value !== null && (
-              <div class={'d-flex flex-column flex-grow-1 text-end'}>
-                <span class={'fw-bold fs-6 text-gray lh-3'}>
+              <div class="d-flex flex-column flex-grow-1 text-end">
+                <span class="fw-bold fs-6 text-gray lh-3">
                   {this.value}
                 </span>
                 {this.alternativeValue !== null && (
-                  <small class={'text-gray lh-3'}>
+                  <small class="text-gray lh-3">
                     {this.alternativeValue}
                   </small>
                 )}
               </div>
             )}
             {this.variant === 'navegable' && (
-              <div class={'d-flex justify-content-center align-items-center text-middlelight'}>
+              <div class="d-flex justify-content-center align-items-center text-middlelight">
                 {/* TODO: use m-icon */}
-                <i class="bi bi-chevron-right"/>
+                <i class="bi bi-chevron-right" />
               </div>
             )}
           </Tag>

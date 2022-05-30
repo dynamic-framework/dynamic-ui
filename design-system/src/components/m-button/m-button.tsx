@@ -62,9 +62,7 @@ export class MButton implements ComponentInterface {
     return {
       btn: true,
       [variantClass]: true,
-      ...(this.state && this.state !== 'disabled') && {
-        [this.state]: true,
-      },
+      ...(this.state && this.state !== 'disabled') && { [this.state]: true },
       'rounded-pill': this.isPill,
     };
   }
