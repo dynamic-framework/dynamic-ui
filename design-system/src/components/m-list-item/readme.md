@@ -13,8 +13,8 @@
 | `icon`             | `icon`              | The icon to display                              | `string \| undefined`                                          | `undefined` |
 | `image`            | `image`             | Url to replace the default icon image            | `null \| string`                                               | `null`      |
 | `isPill`           | `is-pill`           | Has borders rounded                              | `boolean`                                                      | `false`     |
-| `navegableProps`   | --                  |                                                  | `undefined \| { href: string; target?: string \| undefined; }` | `undefined` |
-| `selectableProps`  | --                  |                                                  | `undefined \| { id: string; name?: string \| undefined; }`     | `undefined` |
+| `navegableProps`   | --                  | Props for the list item navegable variant        | `undefined \| { href: string; target?: string \| undefined; }` | `undefined` |
+| `selectableProps`  | --                  | Props for the list item selectable variant       | `undefined \| { id: string; name?: string \| undefined; }`     | `undefined` |
 | `subtext`          | `subtext`           | Subtext of the list.                             | `string`                                                       | `''`        |
 | `text`             | `text`              | Main text of the list.                           | `string`                                                       | `''`        |
 | `theme`            | `theme`             | The theme to use.                                | `string \| undefined`                                          | `undefined` |

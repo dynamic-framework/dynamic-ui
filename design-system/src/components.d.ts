@@ -52,14 +52,6 @@ export namespace Components {
          */
         "isPill": boolean;
         /**
-          * The type of the button.
-         */
-        "mType": ButtonType;
-        /**
-          * The value of the button.
-         */
-        "mValue": string;
-        /**
           * Flag to set the button as active.
          */
         "state"?: InputState;
@@ -71,6 +63,14 @@ export namespace Components {
           * The theme to use.
          */
         "theme": string;
+        /**
+          * The type of the button.
+         */
+        "type": ButtonType;
+        /**
+          * The value of the button.
+         */
+        "value": string;
         /**
           * The variant to use.
          */
@@ -129,7 +129,13 @@ export namespace Components {
           * Has borders rounded
          */
         "isPill": boolean;
+        /**
+          * Props for the list item navegable variant
+         */
         "navegableProps"?: NavegableProps;
+        /**
+          * Props for the list item selectable variant
+         */
         "selectableProps"?: SelectableProps;
         /**
           * Subtext of the list.
@@ -277,14 +283,6 @@ declare namespace LocalJSX {
          */
         "isPill"?: boolean;
         /**
-          * The type of the button.
-         */
-        "mType"?: ButtonType;
-        /**
-          * The value of the button.
-         */
-        "mValue"?: string;
-        /**
           * Emitted when the button has been clicked.
          */
         "onMButtonClick"?: (event: CustomEvent<any>) => void;
@@ -300,6 +298,14 @@ declare namespace LocalJSX {
           * The theme to use.
          */
         "theme"?: string;
+        /**
+          * The type of the button.
+         */
+        "type"?: ButtonType;
+        /**
+          * The value of the button.
+         */
+        "value"?: string;
         /**
           * The variant to use.
          */
@@ -362,7 +368,13 @@ declare namespace LocalJSX {
           * Has borders rounded
          */
         "isPill"?: boolean;
+        /**
+          * Props for the list item navegable variant
+         */
         "navegableProps"?: NavegableProps;
+        /**
+          * Props for the list item selectable variant
+         */
         "selectableProps"?: SelectableProps;
         /**
           * Subtext of the list.

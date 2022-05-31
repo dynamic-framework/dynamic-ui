@@ -36,11 +36,11 @@ export class MButton implements ComponentInterface {
   /**
    * The value of the button.
    */
-  @Prop() mValue = '';
+  @Prop() value = '';
   /**
    * The type of the button.
    */
-  @Prop() mType: ButtonType = 'button';
+  @Prop() type: ButtonType = 'button';
   /**
    * Flag to switch to pill button border radius.
    */
@@ -80,8 +80,9 @@ export class MButton implements ComponentInterface {
       <Host class={this.generateHostClasses()}>
         <button
           class={this.generateClasses()}
-          type={this.mType}
+          type={this.type}
           disabled={this.state === 'disabled'}
+          {...this.value && { value: this.value }}
           onClick={this.buttonClickHandler}
         >
           {/* TODO: use m-icon component */}

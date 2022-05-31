@@ -38,8 +38,8 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'variant',
   'state',
   'text',
-  'mValue',
-  'mType',
+  'value',
+  'type',
   'isPill',
   'mButtonClick'
 ]);
