@@ -86,6 +86,20 @@ export namespace Components {
          */
         "theme": string;
     }
+    interface MCheckbox {
+        /**
+          * Checkbox is checked
+         */
+        "checked": boolean;
+        /**
+          * Checked
+         */
+        "idLabel": string;
+        /**
+          * The text to display in the switch.
+         */
+        "label": null;
+    }
     interface MInput {
         /**
           * Flag to disable the input
@@ -158,6 +172,12 @@ export namespace Components {
          */
         "variant"?: ListItemVariant;
     }
+    interface MSwitch {
+        /**
+          * The text to display in the switch.
+         */
+        "label": string;
+    }
     interface MText {
         /**
           * The theme to use
@@ -202,6 +222,12 @@ declare global {
         prototype: HTMLMCardElement;
         new (): HTMLMCardElement;
     };
+    interface HTMLMCheckboxElement extends Components.MCheckbox, HTMLStencilElement {
+    }
+    var HTMLMCheckboxElement: {
+        prototype: HTMLMCheckboxElement;
+        new (): HTMLMCheckboxElement;
+    };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
     var HTMLMInputElement: {
@@ -213,6 +239,12 @@ declare global {
     var HTMLMListItemElement: {
         prototype: HTMLMListItemElement;
         new (): HTMLMListItemElement;
+    };
+    interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
+    }
+    var HTMLMSwitchElement: {
+        prototype: HTMLMSwitchElement;
+        new (): HTMLMSwitchElement;
     };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
@@ -227,8 +259,10 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
+        "m-checkbox": HTMLMCheckboxElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
+        "m-switch": HTMLMSwitchElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -321,6 +355,20 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
+    interface MCheckbox {
+        /**
+          * Checkbox is checked
+         */
+        "checked"?: boolean;
+        /**
+          * Checked
+         */
+        "idLabel"?: string;
+        /**
+          * The text to display in the switch.
+         */
+        "label"?: null;
+    }
     interface MInput {
         /**
           * Flag to disable the input
@@ -397,6 +445,12 @@ declare namespace LocalJSX {
          */
         "variant"?: ListItemVariant;
     }
+    interface MSwitch {
+        /**
+          * The text to display in the switch.
+         */
+        "label"?: string;
+    }
     interface MText {
         /**
           * The theme to use
@@ -410,8 +464,10 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
+        "m-checkbox": MCheckbox;
         "m-input": MInput;
         "m-list-item": MListItem;
+        "m-switch": MSwitch;
         "m-text": MText;
     }
 }
@@ -425,8 +481,10 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
+            "m-checkbox": LocalJSX.MCheckbox & JSXBase.HTMLAttributes<HTMLMCheckboxElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
+            "m-switch": LocalJSX.MSwitch & JSXBase.HTMLAttributes<HTMLMSwitchElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }
