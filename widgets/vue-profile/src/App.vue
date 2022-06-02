@@ -81,6 +81,22 @@
         m-id="check15"
         disabled />
     </div>
+    <h5>No label</h5>
+    <div class="d-flex my-4 gap-5">
+      <m-checkbox
+        m-id="check16" />
+      <m-checkbox
+        state="danger"
+        m-id="check17" />
+      <m-checkbox
+        state="warning"
+        m-id="check18" />
+      <m-checkbox
+        state="success"
+        m-id="check18" />
+      <m-checkbox
+        m-id="check18" />
+    </div>
     <!-- <div class="d-flex my-4 gap-5">
       <m-checkbox
         loading

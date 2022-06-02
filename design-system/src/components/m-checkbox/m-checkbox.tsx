@@ -38,7 +38,27 @@ export class MCheckbox implements ComponentInterface {
   render() {
     return (
       <Host class="checkbox-box">
-        <div class="form-check">
+        { this.label && (
+          <div class="form-check">
+            <input
+              class={`form-check-input ${this.state ? `form-check-input-${this.state}` : ''}`}
+              type="checkbox"
+              value=""
+              id={this.mId}
+              checked={this.checked}
+              disabled={this.disabled}
+              indeterminate={this.indeterminate}
+            />
+            <label
+              class="form-check-label"
+              htmlFor={this.mId}
+            >
+              {this.label}
+            </label>
+          </div>
+        )}
+        { !this.label
+          && (
           <input
             class={`form-check-input ${this.state ? `form-check-input-${this.state}` : ''}`}
             type="checkbox"
@@ -48,15 +68,7 @@ export class MCheckbox implements ComponentInterface {
             disabled={this.disabled}
             indeterminate={this.indeterminate}
           />
-          {this.label && (
-            <label
-              class="form-check-label"
-              htmlFor={this.mId}
-            >
-              {this.label}
-            </label>
           )}
-        </div>
       </Host>
     );
   }
