@@ -413,6 +413,88 @@
           astronomical object known to harbor life.</small>
       </div>
     </div>
+    <div class="py-5 my-5">
+     <h5 class="fw-bold">Nav/Tabs</h5>
+     <h6 class="mt-4">No variant</h6>
+     <m-nav m-id="uno">
+       <m-nav-item>
+          <m-nav-link
+            text="Tab One"
+            icon="circle"
+          />
+       </m-nav-item>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab Two"
+            is-active
+          />
+       </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="Tab Three"
+            is-disabled
+          />
+       </m-nav-item>
+     </m-nav>
+     <h6 class="mt-4">Tabs variant</h6>
+     <m-nav m-id="uno" variant="tabs" is-vertical>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab One"
+            icon="circle"
+          />
+       </m-nav-item>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab Two"
+            is-active
+          />
+       </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="Tab Three"
+            is-disabled
+          />
+       </m-nav-item>
+     </m-nav>
+     <h6 class="mt-4">Pills variant</h6>
+     <m-nav m-id="dos" variant="pills" is-vertical>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab One"
+            is-active
+            icon="circle"
+          />
+       </m-nav-item>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab Two"
+            :navegableProps="{href: '#123', 'aria-current': 'true'}"
+          />
+       </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="Tab Three"
+            variant="option"
+            :optionProps="{
+              id: 'test',
+              type: 'button',
+              role: 'tab',
+              'data-bs-toggle': 'tab',
+              'data-bs-target': '#test',
+              'aria-controls': 'tab-test',
+              'aria-selected': 'true'
+            }"
+          />
+        </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="Tab Four"
+            is-disabled
+          />
+        </m-nav-item>
+     </m-nav>
+    </div>
   </m-app>
 </template>
 
@@ -428,6 +510,8 @@ import {
   MApp,
   MBadge,
   MListItem,
+  MNav,
+  MNavItem,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -441,6 +525,8 @@ export default defineComponent({
     MApp,
     MBadge,
     MListItem,
+    MNav,
+    MNavItem,
   },
   data() {
     return {
