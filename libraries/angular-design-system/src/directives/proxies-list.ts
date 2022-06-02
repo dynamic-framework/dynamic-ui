@@ -10,5 +10,8 @@ export const DIRECTIVES = [
   d.MCard,
   d.MInput,
   d.MListItem,
+  d.MNav,
+  d.MNavItem,
+  d.MNavLink,
   d.MText
 ];

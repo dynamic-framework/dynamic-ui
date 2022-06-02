@@ -9,6 +9,7 @@ import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { InputState } from "./utils/component-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
+import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -158,6 +159,56 @@ export namespace Components {
          */
         "variant"?: ListItemVariant;
     }
+    interface MNav {
+        /**
+          * Is vertical nav
+         */
+        "isVertical": boolean;
+        /**
+          * Id of nav
+         */
+        "mId": string;
+        /**
+          * Variant of nav
+         */
+        "variant"?: 'tabs' | 'pills';
+    }
+    interface MNavItem {
+        /**
+          * Test nav
+         */
+        "variant": string;
+    }
+    interface MNavLink {
+        /**
+          * The icon to display
+         */
+        "icon"?: string;
+        /**
+          * Is active nav link
+         */
+        "isActive": boolean;
+        /**
+          * Is disabled nav link
+         */
+        "isDisabled": boolean;
+        /**
+          * Props for the nav link navegable variant
+         */
+        "navegableProps"?: NavegableProps1;
+        /**
+          * Props for the nav link option variant
+         */
+        "optionProps"?: OptionProps;
+        /**
+          * Text of nav link
+         */
+        "text": string;
+        /**
+          * Variant of nav link
+         */
+        "variant": NavLinkVariant;
+    }
     interface MText {
         /**
           * The theme to use
@@ -214,6 +265,24 @@ declare global {
         prototype: HTMLMListItemElement;
         new (): HTMLMListItemElement;
     };
+    interface HTMLMNavElement extends Components.MNav, HTMLStencilElement {
+    }
+    var HTMLMNavElement: {
+        prototype: HTMLMNavElement;
+        new (): HTMLMNavElement;
+    };
+    interface HTMLMNavItemElement extends Components.MNavItem, HTMLStencilElement {
+    }
+    var HTMLMNavItemElement: {
+        prototype: HTMLMNavItemElement;
+        new (): HTMLMNavItemElement;
+    };
+    interface HTMLMNavLinkElement extends Components.MNavLink, HTMLStencilElement {
+    }
+    var HTMLMNavLinkElement: {
+        prototype: HTMLMNavLinkElement;
+        new (): HTMLMNavLinkElement;
+    };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
     var HTMLMTextElement: {
@@ -229,6 +298,9 @@ declare global {
         "m-card": HTMLMCardElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
+        "m-nav": HTMLMNavElement;
+        "m-nav-item": HTMLMNavItemElement;
+        "m-nav-link": HTMLMNavLinkElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -397,6 +469,56 @@ declare namespace LocalJSX {
          */
         "variant"?: ListItemVariant;
     }
+    interface MNav {
+        /**
+          * Is vertical nav
+         */
+        "isVertical"?: boolean;
+        /**
+          * Id of nav
+         */
+        "mId"?: string;
+        /**
+          * Variant of nav
+         */
+        "variant"?: 'tabs' | 'pills';
+    }
+    interface MNavItem {
+        /**
+          * Test nav
+         */
+        "variant"?: string;
+    }
+    interface MNavLink {
+        /**
+          * The icon to display
+         */
+        "icon"?: string;
+        /**
+          * Is active nav link
+         */
+        "isActive"?: boolean;
+        /**
+          * Is disabled nav link
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Props for the nav link navegable variant
+         */
+        "navegableProps"?: NavegableProps1;
+        /**
+          * Props for the nav link option variant
+         */
+        "optionProps"?: OptionProps;
+        /**
+          * Text of nav link
+         */
+        "text": string;
+        /**
+          * Variant of nav link
+         */
+        "variant"?: NavLinkVariant;
+    }
     interface MText {
         /**
           * The theme to use
@@ -412,6 +534,9 @@ declare namespace LocalJSX {
         "m-card": MCard;
         "m-input": MInput;
         "m-list-item": MListItem;
+        "m-nav": MNav;
+        "m-nav-item": MNavItem;
+        "m-nav-link": MNavLink;
         "m-text": MText;
     }
 }
@@ -427,6 +552,9 @@ declare module "@stencil/core" {
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
+            "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;
+            "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
+            "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }
