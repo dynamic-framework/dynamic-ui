@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { InputState } from "./utils/component-interface";
+import { CheckboxType } from "./components/m-checkbox/m-checkbox-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 export namespace Components {
     interface MAlert {
@@ -92,13 +93,25 @@ export namespace Components {
          */
         "checked": boolean;
         /**
-          * Checked
+          * Disabled state
          */
-        "idLabel": string;
+        "disabled": boolean;
+        /**
+          * If checkbox is indeterminated
+         */
+        "indeterminate"?: boolean;
         /**
           * The text to display in the switch.
          */
         "label": null;
+        /**
+          * Label identifier
+         */
+        "mId": string;
+        /**
+          * State of checkbox: Succeess, Error, Warning, Loading
+         */
+        "state"?: CheckboxType;
     }
     interface MInput {
         /**
@@ -361,13 +374,25 @@ declare namespace LocalJSX {
          */
         "checked"?: boolean;
         /**
-          * Checked
+          * Disabled state
          */
-        "idLabel"?: string;
+        "disabled"?: boolean;
+        /**
+          * If checkbox is indeterminated
+         */
+        "indeterminate"?: boolean;
         /**
           * The text to display in the switch.
          */
         "label"?: null;
+        /**
+          * Label identifier
+         */
+        "mId": string;
+        /**
+          * State of checkbox: Succeess, Error, Warning, Loading
+         */
+        "state"?: CheckboxType;
     }
     interface MInput {
         /**

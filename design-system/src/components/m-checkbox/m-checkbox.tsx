@@ -2,6 +2,8 @@ import {
   Component, Host, h, Prop, ComponentInterface,
 } from '@stencil/core';
 
+import type { CheckboxType } from './m-checkbox-interface';
+
 @Component({
   tag: 'm-checkbox',
   shadow: false,
@@ -17,25 +19,39 @@ export class MCheckbox implements ComponentInterface {
    */
   @Prop() checked = false;
   /**
-   * Checked
+   * Label identifier
    */
-  @Prop() idLabel = 'label';
+  @Prop() mId!: string;
+  /**
+   * Disabled state
+   */
+  @Prop() disabled = false;
+  /**
+   * State of checkbox: Succeess, Error, Warning, Loading
+   */
+  @Prop() state?: CheckboxType ;
+  /**
+   * If checkbox is indeterminated
+   */
+  @Prop() indeterminate?: boolean ;
 
   render() {
     return (
-      <Host class="m-checkbox">
+      <Host class="checkbox-box">
         <div class="form-check">
           <input
-            class="form-check-input"
+            class={`form-check-input ${this.state ? `form-check-input-${this.state}` : ''}`}
             type="checkbox"
             value=""
-            id={this.idLabel}
+            id={this.mId}
             checked={this.checked}
+            disabled={this.disabled}
+            indeterminate={this.indeterminate}
           />
           {this.label && (
             <label
               class="form-check-label"
-              htmlFor={this.idLabel}
+              htmlFor={this.mId}
             >
               {this.label}
             </label>

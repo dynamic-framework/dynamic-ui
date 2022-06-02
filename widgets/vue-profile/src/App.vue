@@ -4,8 +4,99 @@
       text="click me!"
       @mod-button-click="onButtonClick"
     />
-    <br />
-    <br />
+    <div class="d-flex my-4 gap-5">
+      <m-checkbox
+        label="Default Checkbox"
+        m-id="check1" />
+      <m-checkbox
+        label="Default Checkbox"
+        m-id="check2"
+        checked />
+      <m-checkbox
+        label="Default Checkbox"
+        m-id="check3"
+        disabled />
+    </div>
+    <div class="d-flex my-4 gap-5">
+      <m-checkbox
+        state="danger"
+        label="Danger Checkbox"
+        m-id="check4" />
+      <m-checkbox
+        state="danger"
+        label="Danger Checkbox"
+        m-id="check5"
+        checked />
+      <m-checkbox
+        state="danger"
+        label="Danger Checkbox"
+        m-id="check6"
+        disabled />
+    </div>
+    <div class="d-flex my-4 gap-5">
+      <m-checkbox
+        state="warning"
+        label="Warning Checkbox"
+        m-id="check7" />
+      <m-checkbox
+        state="warning"
+        label="Warning Checkbox"
+        m-id="check8"
+        checked />
+      <m-checkbox
+        state="warning"
+        label="Warning Checkbox"
+        m-id="check9"
+        disabled />
+    </div>
+    <div class="d-flex my-4 gap-5">
+      <m-checkbox
+        state="success"
+        label="Success Checkbox"
+        m-id="check10" />
+      <m-checkbox
+        state="success"
+        label="Success Checkbox"
+        m-id="check11"
+        checked />
+      <m-checkbox
+        state="success"
+        label="Success Checkbox"
+        m-id="check12"
+        disabled />
+    </div>
+    <div class="d-flex my-4 gap-5">
+      <m-checkbox
+        indeterminate
+        label="Indeterminate Checkbox"
+        m-id="check13" />
+      <m-checkbox
+        indeterminate
+        label="Indeterminate Checkbox"
+        m-id="check14"
+        checked />
+      <m-checkbox
+        indeterminate
+        label="Indeterminate Checkbox"
+        m-id="check15"
+        disabled />
+    </div>
+    <!-- <div class="d-flex my-4 gap-5">
+      <m-checkbox
+        loading
+        label="Loading Checkbox"
+        m-id="check13" />
+      <m-checkbox
+        loading
+        label="Loading Checkbox"
+        m-id="check14"
+        checked />
+      <m-checkbox
+        loading
+        label="Loading Checkbox"
+        m-id="check15"
+        disabled />
+    </div> -->
     <m-alert
       :header="title"
       body="body prop text"
@@ -428,6 +519,7 @@ import {
   MApp,
   MBadge,
   MListItem,
+  MCheckbox,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -441,6 +533,7 @@ export default defineComponent({
     MApp,
     MBadge,
     MListItem,
+    MCheckbox,
   },
   data() {
     return {
