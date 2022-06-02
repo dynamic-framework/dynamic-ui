@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { InputState } from "./utils/component-interface";
-import { CheckboxType } from "./components/m-checkbox/m-checkbox-interface";
+import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 export namespace Components {
     interface MAlert {
@@ -87,7 +87,7 @@ export namespace Components {
          */
         "theme": string;
     }
-    interface MCheckbox {
+    interface MFormCheck {
         /**
           * Checkbox is checked
          */
@@ -109,9 +109,17 @@ export namespace Components {
          */
         "mId": string;
         /**
+          * The text to display in the switch.
+         */
+        "name"?: string;
+        /**
           * State of checkbox: Succeess, Error, Warning, Loading
          */
-        "state"?: CheckboxType;
+        "state"?: FormCheckState;
+        /**
+          * The text to display in the switch.
+         */
+        "type": FormCheckType;
     }
     interface MInput {
         /**
@@ -235,11 +243,11 @@ declare global {
         prototype: HTMLMCardElement;
         new (): HTMLMCardElement;
     };
-    interface HTMLMCheckboxElement extends Components.MCheckbox, HTMLStencilElement {
+    interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
     }
-    var HTMLMCheckboxElement: {
-        prototype: HTMLMCheckboxElement;
-        new (): HTMLMCheckboxElement;
+    var HTMLMFormCheckElement: {
+        prototype: HTMLMFormCheckElement;
+        new (): HTMLMFormCheckElement;
     };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
@@ -272,7 +280,7 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
-        "m-checkbox": HTMLMCheckboxElement;
+        "m-form-check": HTMLMFormCheckElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
         "m-switch": HTMLMSwitchElement;
@@ -368,7 +376,7 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
-    interface MCheckbox {
+    interface MFormCheck {
         /**
           * Checkbox is checked
          */
@@ -390,9 +398,17 @@ declare namespace LocalJSX {
          */
         "mId": string;
         /**
+          * The text to display in the switch.
+         */
+        "name"?: string;
+        /**
           * State of checkbox: Succeess, Error, Warning, Loading
          */
-        "state"?: CheckboxType;
+        "state"?: FormCheckState;
+        /**
+          * The text to display in the switch.
+         */
+        "type": FormCheckType;
     }
     interface MInput {
         /**
@@ -489,7 +505,7 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
-        "m-checkbox": MCheckbox;
+        "m-form-check": MFormCheck;
         "m-input": MInput;
         "m-list-item": MListItem;
         "m-switch": MSwitch;
@@ -506,7 +522,7 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
-            "m-checkbox": LocalJSX.MCheckbox & JSXBase.HTMLAttributes<HTMLMCheckboxElement>;
+            "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-switch": LocalJSX.MSwitch & JSXBase.HTMLAttributes<HTMLMSwitchElement>;

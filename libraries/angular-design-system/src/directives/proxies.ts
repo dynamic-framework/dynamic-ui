@@ -11,7 +11,7 @@ import { defineCustomElement as defineMApp } from '@modyo/design-system/componen
 import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
-import { defineCustomElement as defineMCheckbox } from '@modyo/design-system/components/m-checkbox.js';
+import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMSwitch } from '@modyo/design-system/components/m-switch.js';
@@ -163,19 +163,19 @@ export class MCard {
 }
 
 
-export declare interface MCheckbox extends Components.MCheckbox {}
+export declare interface MFormCheck extends Components.MFormCheck {}
 
 @ProxyCmp({
-  defineCustomElementFn: defineMCheckbox,
-  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'state']
+  defineCustomElementFn: defineMFormCheck,
+  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type']
 })
 @Component({
-  selector: 'm-checkbox',
+  selector: 'm-form-check',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'state']
+  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type']
 })
-export class MCheckbox {
+export class MFormCheck {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();

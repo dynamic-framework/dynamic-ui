@@ -8,7 +8,7 @@ export const DIRECTIVES = [
   d.MBadge,
   d.MButton,
   d.MCard,
-  d.MCheckbox,
+  d.MFormCheck,
   d.MInput,
   d.MListItem,
   d.MSwitch,

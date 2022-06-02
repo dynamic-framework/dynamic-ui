@@ -11,7 +11,7 @@ import { defineCustomElement as defineMApp } from '@modyo/design-system/componen
 import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
-import { defineCustomElement as defineMCheckbox } from '@modyo/design-system/components/m-checkbox.js';
+import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMSwitch } from '@modyo/design-system/components/m-switch.js';
@@ -23,7 +23,7 @@ export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
 export const MCard = /*@__PURE__*/createReactComponent<JSX.MCard, HTMLMCardElement>('m-card', undefined, undefined, defineMCard);
-export const MCheckbox = /*@__PURE__*/createReactComponent<JSX.MCheckbox, HTMLMCheckboxElement>('m-checkbox', undefined, undefined, defineMCheckbox);
+export const MFormCheck = /*@__PURE__*/createReactComponent<JSX.MFormCheck, HTMLMFormCheckElement>('m-form-check', undefined, undefined, defineMFormCheck);
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
 export const MListItem = /*@__PURE__*/createReactComponent<JSX.MListItem, HTMLMListItemElement>('m-list-item', undefined, undefined, defineMListItem);
 export const MSwitch = /*@__PURE__*/createReactComponent<JSX.MSwitch, HTMLMSwitchElement>('m-switch', undefined, undefined, defineMSwitch);

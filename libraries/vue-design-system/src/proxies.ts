@@ -51,7 +51,9 @@ export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefine
 ]);
 
 
-export const MCheckbox = /*@__PURE__*/ defineContainer<JSX.MCheckbox>('m-checkbox', undefined, [
+export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
+  'type',
+  'name',
   'label',
   'checked',
   'mId',
