@@ -5,13 +5,18 @@ import {
   h,
   Prop,
   Host,
+  Element,
 } from '@stencil/core';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { Tab } from 'bootstrap';
 
 @Component({
   tag: 'm-nav',
   styleUrl: 'm-nav.scss',
 })
 export class MNav implements ComponentInterface {
+  @Element() el!: HTMLMNavElement;
   /** Id of nav */
   @Prop() mId = '';
 
@@ -20,6 +25,11 @@ export class MNav implements ComponentInterface {
 
   /** Is vertical nav */
   @Prop() isVertical = false;
+
+  connectedCallback() {
+    // eslint-disable-next-line no-new
+    new Tab(this.el);
+  }
 
   render() {
     return (

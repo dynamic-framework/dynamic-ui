@@ -495,6 +495,69 @@
         </m-nav-item>
      </m-nav>
     </div>
+    <m-nav
+      m-id="tapable"
+      variant="pills"
+    >
+      <m-nav-item>
+        <m-nav-link
+          text="Home"
+          variant="option"
+          :optionProps="{
+              id: 'home-btn',
+              type: 'button',
+              role: 'tab',
+              'data-bs-toggle': 'tab',
+              'data-bs-target': '#home',
+              'aria-controls': 'tab-test',
+              'aria-selected': 'true'
+            }"
+        />
+      </m-nav-item>
+      <m-nav-item>
+        <m-nav-link
+          text="About"
+          variant="option"
+          :optionProps="{
+              id: 'about-btn',
+              type: 'button',
+              role: 'tab',
+              'data-bs-toggle': 'tab',
+              'data-bs-target': '#about',
+              'aria-controls': 'tab-test',
+              'aria-selected': 'false'
+            }"
+        />
+      </m-nav-item>
+    </m-nav>
+    <div class="tab-content">
+      <div
+        class="tab-pane active"
+        id="home"
+        role="tabpanel"
+        aria-labelledby="home-tab"
+        tabindex="0"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Minima cumque est repellendus mollitia eaque placeat
+        possimus quidem, voluptas maxime, eveniet, in nisi
+        dolorem quos eligendi assumenda praesentium iure
+        deserunt. Home.
+      </div>
+      <div
+        class="tab-pane"
+        id="about"
+        role="tabpanel"
+        aria-labelledby="about-tab"
+        tabindex="0"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Minima cumque est repellendus mollitia eaque placeat
+        possimus quidem, voluptas maxime, eveniet, in nisi
+        dolorem quos eligendi assumenda praesentium iure
+        deserunt. About.
+      </div>
+    </div>
   </m-app>
 </template>
 
