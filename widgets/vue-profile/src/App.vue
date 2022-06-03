@@ -512,6 +512,7 @@ import {
   MListItem,
   MNav,
   MNavItem,
+  MNavLink,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -527,6 +528,7 @@ export default defineComponent({
     MListItem,
     MNav,
     MNavItem,
+    MNavLink,
   },
   data() {
     return {
