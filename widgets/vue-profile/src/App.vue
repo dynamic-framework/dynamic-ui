@@ -5,6 +5,24 @@
       @mod-button-click="onButtonClick"
     />
     <div>
+      <h3>Switches</h3>
+      <div class="d-flex my-4 gap-5">
+        <m-form-switch
+          m-id="switch16" />
+        <m-form-switch
+          label="Default switch"
+          m-id="switch1" />
+        <m-form-switch
+          label="Default switch"
+          m-id="switch2"
+          checked />
+        <m-form-switch
+          label="Default switch"
+          m-id="switch3"
+          disabled />
+      </div>
+    </div>
+    <div>
       <h3>Checkboxes</h3>
       <div class="d-flex my-4 gap-5">
         <m-form-check
@@ -647,6 +665,7 @@ import {
   MBadge,
   MListItem,
   MFormCheck,
+  MFormSwitch,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -661,6 +680,7 @@ export default defineComponent({
     MBadge,
     MListItem,
     MFormCheck,
+    MFormSwitch,
   },
   data() {
     return {

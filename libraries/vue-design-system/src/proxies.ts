@@ -63,6 +63,12 @@ export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-
 ]);
 
 
+export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-form-switch', undefined, [
+  'label',
+  'mId'
+]);
+
+
 export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
   'modId',
   'label',
@@ -86,11 +92,6 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
   'variant',
   'selectableProps',
   'navegableProps'
-]);
-
-
-export const MSwitch = /*@__PURE__*/ defineContainer<JSX.MSwitch>('m-switch', undefined, [
-  'label'
 ]);
 
 

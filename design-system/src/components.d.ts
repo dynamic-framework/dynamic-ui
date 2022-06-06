@@ -121,6 +121,16 @@ export namespace Components {
          */
         "type": FormCheckType;
     }
+    interface MFormSwitch {
+        /**
+          * The text to display in the switch.
+         */
+        "label": string;
+        /**
+          * Id
+         */
+        "mId": string;
+    }
     interface MInput {
         /**
           * Flag to disable the input
@@ -193,12 +203,6 @@ export namespace Components {
          */
         "variant"?: ListItemVariant;
     }
-    interface MSwitch {
-        /**
-          * The text to display in the switch.
-         */
-        "label": string;
-    }
     interface MText {
         /**
           * The theme to use
@@ -249,6 +253,12 @@ declare global {
         prototype: HTMLMFormCheckElement;
         new (): HTMLMFormCheckElement;
     };
+    interface HTMLMFormSwitchElement extends Components.MFormSwitch, HTMLStencilElement {
+    }
+    var HTMLMFormSwitchElement: {
+        prototype: HTMLMFormSwitchElement;
+        new (): HTMLMFormSwitchElement;
+    };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
     var HTMLMInputElement: {
@@ -260,12 +270,6 @@ declare global {
     var HTMLMListItemElement: {
         prototype: HTMLMListItemElement;
         new (): HTMLMListItemElement;
-    };
-    interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
-    }
-    var HTMLMSwitchElement: {
-        prototype: HTMLMSwitchElement;
-        new (): HTMLMSwitchElement;
     };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
@@ -281,9 +285,9 @@ declare global {
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
         "m-form-check": HTMLMFormCheckElement;
+        "m-form-switch": HTMLMFormSwitchElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
-        "m-switch": HTMLMSwitchElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -410,6 +414,16 @@ declare namespace LocalJSX {
          */
         "type": FormCheckType;
     }
+    interface MFormSwitch {
+        /**
+          * The text to display in the switch.
+         */
+        "label"?: string;
+        /**
+          * Id
+         */
+        "mId": string;
+    }
     interface MInput {
         /**
           * Flag to disable the input
@@ -486,12 +500,6 @@ declare namespace LocalJSX {
          */
         "variant"?: ListItemVariant;
     }
-    interface MSwitch {
-        /**
-          * The text to display in the switch.
-         */
-        "label"?: string;
-    }
     interface MText {
         /**
           * The theme to use
@@ -506,9 +514,9 @@ declare namespace LocalJSX {
         "m-button": MButton;
         "m-card": MCard;
         "m-form-check": MFormCheck;
+        "m-form-switch": MFormSwitch;
         "m-input": MInput;
         "m-list-item": MListItem;
-        "m-switch": MSwitch;
         "m-text": MText;
     }
 }
@@ -523,9 +531,9 @@ declare module "@stencil/core" {
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
+            "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
-            "m-switch": LocalJSX.MSwitch & JSXBase.HTMLAttributes<HTMLMSwitchElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }
