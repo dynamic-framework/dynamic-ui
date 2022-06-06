@@ -40,7 +40,6 @@
 }
 
 @each $color, $value in map-remove($theme-colors, "light", "dark", "info") {
-  $value-rgb: map-get($theme-colors-rgb, $color);
   $hover-value: map-get($theme-colors-hover, $color);
   $hover-value-rgb: to-rgb($hover-value);
 

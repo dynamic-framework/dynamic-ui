@@ -101,15 +101,15 @@ export namespace Components {
          */
         "indeterminate"?: boolean;
         /**
-          * The text to display in the switch.
+          * The text to display in the Check/Radio.
          */
-        "label": null;
+        "label"?: string;
         /**
-          * Label identifier
+          * Form control identifier
          */
         "mId": string;
         /**
-          * The text to display in the switch.
+          * The text to display in the Check/Radio.
          */
         "name"?: string;
         /**
@@ -117,7 +117,7 @@ export namespace Components {
          */
         "state"?: FormCheckState;
         /**
-          * The text to display in the switch.
+          * The text to display in the Check/Radio.
          */
         "type": FormCheckType;
     }
@@ -390,15 +390,15 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
-          * The text to display in the switch.
+          * The text to display in the Check/Radio.
          */
-        "label"?: null;
+        "label"?: string;
         /**
-          * Label identifier
+          * Form control identifier
          */
         "mId": string;
         /**
-          * The text to display in the switch.
+          * The text to display in the Check/Radio.
          */
         "name"?: string;
         /**
@@ -406,7 +406,7 @@ declare namespace LocalJSX {
          */
         "state"?: FormCheckState;
         /**
-          * The text to display in the switch.
+          * The text to display in the Check/Radio.
          */
         "type": FormCheckType;
     }

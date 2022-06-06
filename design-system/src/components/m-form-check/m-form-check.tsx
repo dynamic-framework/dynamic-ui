@@ -6,28 +6,28 @@ import type { FormCheckType, FormCheckState } from './m-form-check-interface';
 
 @Component({
   tag: 'm-form-check',
-  shadow: false,
   styleUrl: 'm-form-check.scss',
+  shadow: false,
 })
 export class MFormCheck implements ComponentInterface {
   /**
-   * The text to display in the switch.
+   * The text to display in the Check/Radio.
    */
   @Prop() type!: FormCheckType;
   /**
-   * The text to display in the switch.
+   * The text to display in the Check/Radio.
    */
   @Prop() name?: string;
   /**
-   * The text to display in the switch.
+   * The text to display in the Check/Radio.
    */
-  @Prop() label = null;
+  @Prop() label?: string;
   /**
    * Checkbox is checked
    */
   @Prop() checked = false;
   /**
-   * Label identifier
+   * Form control identifier
    */
   @Prop() mId!: string;
   /**
@@ -37,11 +37,11 @@ export class MFormCheck implements ComponentInterface {
   /**
    * State of checkbox: Succeess, Error, Warning, Loading
    */
-  @Prop() state?: FormCheckState ;
+  @Prop() state?: FormCheckState;
   /**
    * If checkbox is indeterminated
    */
-  @Prop() indeterminate?: boolean ;
+  @Prop() indeterminate?: boolean;
 
   private innerInput = (
     <input
@@ -58,7 +58,7 @@ export class MFormCheck implements ComponentInterface {
   render() {
     return (
       <Host class="form-check-box">
-        { this.label ? (
+        {this.label ? (
           <div class="form-check">
             { this.innerInput }
             <label
