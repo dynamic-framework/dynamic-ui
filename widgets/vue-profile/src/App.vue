@@ -437,7 +437,7 @@
        </m-nav-item>
      </m-nav>
      <h6 class="mt-4">Tabs variant</h6>
-     <m-nav m-id="uno" variant="tabs" is-vertical>
+     <m-nav m-id="uno" variant="tabs">
        <m-nav-item>
           <m-nav-link
             text="Tab One"
@@ -458,7 +458,7 @@
        </m-nav-item>
      </m-nav>
      <h6 class="mt-4">Pills variant</h6>
-     <m-nav m-id="dos" variant="pills" is-vertical>
+     <m-nav m-id="dos" variant="pills">
        <m-nav-item>
           <m-nav-link
             text="Tab One"
@@ -494,69 +494,122 @@
           />
         </m-nav-item>
      </m-nav>
-    </div>
-    <m-nav
-      m-id="tapable"
-      variant="pills"
-    >
-      <m-nav-item>
-        <m-nav-link
-          text="Home"
-          variant="option"
-          :optionProps="{
-              id: 'home-btn',
-              type: 'button',
-              role: 'tab',
-              'data-bs-toggle': 'tab',
-              'data-bs-target': '#home',
-              'aria-controls': 'tab-test',
-              'aria-selected': 'true'
-            }"
-        />
-      </m-nav-item>
-      <m-nav-item>
-        <m-nav-link
-          text="About"
-          variant="option"
-          :optionProps="{
-              id: 'about-btn',
-              type: 'button',
-              role: 'tab',
-              'data-bs-toggle': 'tab',
-              'data-bs-target': '#about',
-              'aria-controls': 'tab-test',
-              'aria-selected': 'false'
-            }"
-        />
-      </m-nav-item>
-    </m-nav>
-    <div class="tab-content">
-      <div
-        class="tab-pane active"
-        id="home"
-        role="tabpanel"
-        aria-labelledby="home-tab"
-        tabindex="0"
+      <h6 class="mt-4">Tabs with content</h6>
+      <m-nav
+      class="mb-2"
+        m-id="tapable"
+        variant="tabs"
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Minima cumque est repellendus mollitia eaque placeat
-        possimus quidem, voluptas maxime, eveniet, in nisi
-        dolorem quos eligendi assumenda praesentium iure
-        deserunt. Home.
-      </div>
-      <div
-        class="tab-pane"
-        id="about"
-        role="tabpanel"
-        aria-labelledby="about-tab"
-        tabindex="0"
+        <m-nav-item>
+          <m-nav-link
+            text="Home"
+            variant="option"
+            icon="house-fill"
+            :optionProps="{
+                id: 'home-btnn',
+                type: 'button',
+                role: 'tab',
+                'data-bs-toggle': 'tab',
+                'data-bs-target': '#home',
+                'aria-controls': 'tab-test',
+                'aria-selected': 'true'
+              }"
+              is-active
+          />
+        </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="About"
+            variant="option"
+            icon="info-circle-fill"
+            :optionProps="{
+                id: 'about-btn',
+                type: 'button',
+                role: 'tab',
+                'data-bs-toggle': 'tab',
+                'data-bs-target': '#about',
+                'aria-controls': 'tab-test',
+                'aria-selected': 'false'
+              }"
+          />
+        </m-nav-item>
+      </m-nav>
+      <m-nav-content m-id="content-tabs">
+        <m-nav-pane m-id="home" is-active
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Minima cumque est repellendus mollitia eaque placeat
+          possimus quidem, voluptas maxime, eveniet, in nisi
+          dolorem quos eligendi assumenda praesentium iure
+          deserunt. Home.
+        </m-nav-pane>
+        <m-nav-pane m-id="about"
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Minima cumque est repellendus mollitia eaque placeat
+          possimus quidem, voluptas maxime, eveniet, in nisi
+          dolorem quos eligendi assumenda praesentium iure
+          deserunt. About.
+        </m-nav-pane>
+      </m-nav-content>
+      <h6 class="mt-4">Pills with content</h6>
+      <m-nav
+      class="mb-2"
+        m-id="pillstaps"
+        variant="pills"
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Minima cumque est repellendus mollitia eaque placeat
-        possimus quidem, voluptas maxime, eveniet, in nisi
-        dolorem quos eligendi assumenda praesentium iure
-        deserunt. About.
-      </div>
+        <m-nav-item>
+          <m-nav-link
+            text="Home"
+            variant="option"
+            icon="house-fill"
+            :optionProps="{
+                id: 'home-btnn',
+                type: 'button',
+                role: 'tab',
+                'data-bs-toggle': 'tab',
+                'data-bs-target': '#home2',
+                'aria-controls': 'tab-test',
+                'aria-selected': 'false'
+              }"
+          />
+        </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="About"
+            variant="option"
+            icon="info-circle-fill"
+            :optionProps="{
+                id: 'about-btn',
+                type: 'button',
+                role: 'tab',
+                'data-bs-toggle': 'tab',
+                'data-bs-target': '#about2',
+                'aria-controls': 'tab-test',
+                'aria-selected': 'true'
+              }"
+              is-active
+          />
+        </m-nav-item>
+      </m-nav>
+      <m-nav-content m-id="content-tabs">
+        <m-nav-pane m-id="home2"
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Minima cumque est repellendus mollitia eaque placeat
+          possimus quidem, voluptas maxime, eveniet, in nisi
+          dolorem quos eligendi assumenda praesentium iure
+          deserunt. Home.
+        </m-nav-pane>
+        <m-nav-pane m-id="about2" is-active
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Minima cumque est repellendus mollitia eaque placeat
+          possimus quidem, voluptas maxime, eveniet, in nisi
+          dolorem quos eligendi assumenda praesentium iure
+          deserunt. About.
+        </m-nav-pane>
+      </m-nav-content>
     </div>
   </m-app>
 </template>
@@ -576,6 +629,8 @@ import {
   MNav,
   MNavItem,
   MNavLink,
+  MNavContent,
+  MNavPane,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -592,6 +647,8 @@ export default defineComponent({
     MNav,
     MNavItem,
     MNavLink,
+    MNavContent,
+    MNavPane,
   },
   data() {
     return {
