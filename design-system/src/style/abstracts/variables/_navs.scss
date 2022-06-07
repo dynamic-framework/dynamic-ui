@@ -5,7 +5,7 @@ $nav-link-font-weight: 400 !default;
 $nav-link-color: var(--#{$prefix}gray-300) !default;
 $nav-link-hover-color: var(--#{$prefix}gray-600) !default;
 // $nav-link-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out !default;
-$nav-link-disabled-color: $gray-200 !default;
+$nav-link-disabled-color: var(--#{$prefix}gray-200) !default;
 
 $nav-tabs-border-color: transparent !default;
 $nav-tabs-border-width: 0 !default;
