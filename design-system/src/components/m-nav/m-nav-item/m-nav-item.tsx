@@ -6,7 +6,9 @@ import {
   Host,
 } from '@stencil/core';
 
-@Component({ tag: 'm-nav-item' })
+@Component({
+  tag: 'm-nav-item',
+})
 
 export class MNavItem implements ComponentInterface {
   /**

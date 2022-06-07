@@ -83,13 +83,16 @@ export class MListItem implements ComponentInterface {
   private getTagAttributes() {
     switch (this.variant) {
       case 'selectable': {
-        return { htmlFor: this.selectableProps?.id };
+        return {
+          htmlFor: this.selectableProps?.id,
+        };
       }
       case 'navegable': {
         return this.navegableProps;
       }
       default:
-        return {};
+        return {
+        };
     }
   }
 
@@ -114,8 +117,12 @@ export class MListItem implements ComponentInterface {
             {this.variant === 'selectable' && (
               <input
                 type="radio"
-                {...this.selectableProps?.id && { id: this.selectableProps.id }}
-                {...this.selectableProps?.name && { name: this.selectableProps.name }}
+                {...this.selectableProps?.id && {
+                  id: this.selectableProps.id,
+                }}
+                {...this.selectableProps?.name && {
+                  name: this.selectableProps.name,
+                }}
               />
             )}
             {(this.icon || this.image) && (
