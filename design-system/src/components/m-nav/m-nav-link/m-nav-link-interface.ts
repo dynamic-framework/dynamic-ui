@@ -5,16 +5,6 @@ export const tagType = {
   navegable: 'a',
 };
 
-// <button
-// id="pills-home-tab"
-// data-bs-toggle="pill"
-// data-bs-target="#pills-home"
-// type="button"
-// role="tab"
-// aria-controls="pills-home"
-// aria-selected="true">
-// Home</button>
-
 export type OptionProps = {
   id: string;
   type: string,
@@ -22,15 +12,8 @@ export type OptionProps = {
   'data-bs-toggle': string,
   'data-bs-target': string,
   'aria-controls': string,
-  'aria-selected': boolean
+  'aria-selected': string
 };
-
-// <a
-// class="nav-link active"
-// aria-current="page"
-// href="#"
-// target="blank">
-// Active</a>
 
 export type NavegableProps = {
   href: string,
