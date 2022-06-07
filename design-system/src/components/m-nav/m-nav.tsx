@@ -28,8 +28,8 @@ export class MNav implements ComponentInterface {
   @Prop() isAriaVertical = false;
 
   connectedCallback() {
-    const mTab = new Tab(this.el);
-    mTab.show();
+    // eslint-disable-next-line no-new
+    new Tab(this.el);
   }
 
   render() {
