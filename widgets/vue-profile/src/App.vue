@@ -416,7 +416,7 @@
     <div class="py-5 my-5">
      <h5 class="fw-bold">Nav/Tabs</h5>
      <h6 class="mt-4">No variant</h6>
-     <m-nav m-id="uno">
+     <m-nav>
        <m-nav-item>
           <m-nav-link
             text="Tab One"
@@ -437,7 +437,7 @@
        </m-nav-item>
      </m-nav>
      <h6 class="mt-4">Tabs variant</h6>
-     <m-nav m-id="uno" variant="tabs">
+     <m-nav variant="tabs">
        <m-nav-item>
           <m-nav-link
             text="Tab One"
@@ -458,7 +458,7 @@
        </m-nav-item>
      </m-nav>
      <h6 class="mt-4">Pills variant</h6>
-     <m-nav m-id="dos" variant="pills">
+     <m-nav variant="pills">
        <m-nav-item>
           <m-nav-link
             text="Tab One"
@@ -497,7 +497,6 @@
       <h6 class="mt-4">Tabs with content</h6>
       <m-nav
       class="mb-2"
-        m-id="tapable"
         variant="tabs"
       >
         <m-nav-item>
@@ -534,7 +533,7 @@
           />
         </m-nav-item>
       </m-nav>
-      <m-nav-content m-id="content-tabs">
+      <m-nav-content>
         <m-nav-pane m-id="home" is-active
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -555,7 +554,6 @@
       <h6 class="mt-4">Pills with content</h6>
       <m-nav
       class="mb-2"
-        m-id="pillstaps"
         variant="pills"
       >
         <m-nav-item>
@@ -592,7 +590,7 @@
           />
         </m-nav-item>
       </m-nav>
-      <m-nav-content m-id="content-tabs">
+      <m-nav-content>
         <m-nav-pane m-id="home2"
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
