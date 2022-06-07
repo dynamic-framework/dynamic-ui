@@ -15,6 +15,7 @@ importers:
       '@stencil/react-output-target': ^0.3.1
       '@stencil/sass': ^1.5.2
       '@stencil/vue-output-target': ^0.6.0
+      '@types/bootstrap': ^5.1.12
       '@types/jest': ^27.0.3
       '@typescript-eslint/eslint-plugin': ^4.23.0
       '@typescript-eslint/parser': ^4.23.0
@@ -45,6 +46,7 @@ importers:
       '@stencil/react-output-target': 0.3.1_@stencil+core@2.15.2
       '@stencil/sass': 1.5.2_@stencil+core@2.15.2
       '@stencil/vue-output-target': 0.6.0_@stencil+core@2.15.2
+      '@types/bootstrap': 5.1.12
       '@types/jest': 27.5.0
       '@typescript-eslint/eslint-plugin': 4.33.0_cc617358c89d3f38c52462f6d809db4c
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.4.4
@@ -3737,7 +3739,6 @@ packages:
 
   /@popperjs/core/2.11.5:
     resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
-    dev: false
 
   /@rollup/plugin-babel/5.3.1_18dfcb1ca7050ba6f445f613f30091b1:
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
@@ -4228,6 +4229,12 @@ packages:
     resolution: {integrity: sha512-p7ienRMiS41Nu2/igbJxxLDWrSZ0WxM8UQgCeO9KhoVF7cOVFkrKsiDr1EsJIla8vV3oEEjGcz11jc5yimhzZw==}
     dependencies:
       '@types/node': 16.11.34
+
+  /@types/bootstrap/5.1.12:
+    resolution: {integrity: sha512-pSS5BGEgepwzdbsBGswBWFmgrnYpp7c4UfuYe1FJWwkrcjm/JVwfG4gBkOYtd92Otd3RdJK0ByBWMkBROfLEPw==}
+    dependencies:
+      '@popperjs/core': 2.11.5
+    dev: true
 
   /@types/component-emitter/1.2.11:
     resolution: {integrity: sha512-SRXjM+tfsSlA9VuG8hGO2nft2p8zjXCK1VcC6N4NXbBbYbSia9kzCChYQajIjzIqOOOuh5Ock6MmV2oux4jDZQ==}
