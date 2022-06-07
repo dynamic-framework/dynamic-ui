@@ -167,13 +167,13 @@ export declare interface MFormCheck extends Components.MFormCheck {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMFormCheck,
-  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type']
+  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 @Component({
   selector: 'm-form-check',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type']
+  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 export class MFormCheck {
   protected el: HTMLElement;

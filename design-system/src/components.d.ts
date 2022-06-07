@@ -89,19 +89,19 @@ export namespace Components {
     }
     interface MFormCheck {
         /**
-          * Checkbox is checked
+          * Set checkbox or radio button marked as selected or not
          */
         "checked": boolean;
         /**
-          * Disabled state
+          * Set input as disabled
          */
         "disabled": boolean;
         /**
-          * If checkbox is indeterminated
+          * Set view of checkbox as indeterminated
          */
         "indeterminate"?: boolean;
         /**
-          * The text to display in the Check/Radio.
+          * Text that will be displayed beside Check input or Radio input
          */
         "label"?: string;
         /**
@@ -109,17 +109,21 @@ export namespace Components {
          */
         "mId": string;
         /**
-          * The text to display in the Check/Radio.
+          * HTML Name to use within a form or JS reference
          */
         "name"?: string;
         /**
-          * State of checkbox: Succeess, Error, Warning, Loading
+          * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
          */
         "state"?: FormCheckState;
         /**
-          * The text to display in the Check/Radio.
+          * Set whether is a checkbox input or a radio input
          */
         "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
     }
     interface MInput {
         /**
@@ -378,19 +382,19 @@ declare namespace LocalJSX {
     }
     interface MFormCheck {
         /**
-          * Checkbox is checked
+          * Set checkbox or radio button marked as selected or not
          */
         "checked"?: boolean;
         /**
-          * Disabled state
+          * Set input as disabled
          */
         "disabled"?: boolean;
         /**
-          * If checkbox is indeterminated
+          * Set view of checkbox as indeterminated
          */
         "indeterminate"?: boolean;
         /**
-          * The text to display in the Check/Radio.
+          * Text that will be displayed beside Check input or Radio input
          */
         "label"?: string;
         /**
@@ -398,17 +402,21 @@ declare namespace LocalJSX {
          */
         "mId": string;
         /**
-          * The text to display in the Check/Radio.
+          * HTML Name to use within a form or JS reference
          */
         "name"?: string;
         /**
-          * State of checkbox: Succeess, Error, Warning, Loading
+          * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
          */
         "state"?: FormCheckState;
         /**
-          * The text to display in the Check/Radio.
+          * Set whether is a checkbox input or a radio input
          */
         "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
     }
     interface MInput {
         /**
