@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import type { ComponentInterface } from '@stencil/core';
 import {
   Component,
@@ -10,15 +9,22 @@ import {
 @Component({ tag: 'm-nav-item' })
 
 export class MNavItem implements ComponentInterface {
-  /** Test nav */
-  @Prop() variant = '';
+  /**
+   * Id of nav-item
+   * */
+  @Prop() mId!: string;
+
+  /**
+   * Role of nav-item
+   * */
+  @Prop() role = 'presentation';
 
   render() {
     return (
       <Host
+        id={this.mId}
         class="nav-item"
-        id="nav-tab"
-        role="presentation"
+        role={this.role}
       >
         <slot />
       </Host>

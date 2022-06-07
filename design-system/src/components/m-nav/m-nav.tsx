@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import type { ComponentInterface } from '@stencil/core';
 import {
   Component,
@@ -7,9 +6,9 @@ import {
   Host,
   Element,
 } from '@stencil/core';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { Tab } from 'bootstrap';
+
+import type { NavVariant } from './m-nav-interface';
 
 @Component({
   tag: 'm-nav',
@@ -17,18 +16,24 @@ import { Tab } from 'bootstrap';
 })
 export class MNav implements ComponentInterface {
   @Element() el!: HTMLMNavElement;
-  /** Id of nav */
+  /**
+   * Id of nav
+   * */
   @Prop() mId = '';
 
-  /** Variant of nav */
-  @Prop() variant?: 'tabs' | 'pills';
+  /**
+   * Variant of nav
+   * */
+  @Prop() variant?: NavVariant;
 
-  /** Is vertical nav */
-  @Prop() isVertical = false;
+  /**
+   * Is aria orientation vertical
+   * */
+  @Prop() isAriaVertical = false;
 
   connectedCallback() {
-    // eslint-disable-next-line no-new
-    new Tab(this.el);
+    const mTab = new Tab(this.el);
+    mTab.show();
   }
 
   render() {
@@ -40,7 +45,7 @@ export class MNav implements ComponentInterface {
           [`nav-${this.variant}`]: !!this.variant,
         }}
         role="tablist"
-        {...this.isVertical && { 'aria-orientation': 'vertical' }}
+        {...(this.isAriaVertical && { 'aria-orientation': 'vertical' })}
       >
         <slot />
       </Host>

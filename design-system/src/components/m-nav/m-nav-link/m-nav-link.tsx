@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import type { ComponentInterface } from '@stencil/core';
 import {
   Component,
@@ -17,7 +16,9 @@ import { tagType } from './m-nav-link-interface';
 @Component({ tag: 'm-nav-link' })
 
 export class MNavLink implements ComponentInterface {
-  /** Text of nav link */
+  /**
+   * Text of nav link
+   * */
   @Prop() text!: string;
 
   /**
@@ -25,13 +26,19 @@ export class MNavLink implements ComponentInterface {
   */
   @Prop() icon?: string;
 
-  /** Variant of nav link */
+  /**
+   * Variant of nav link
+   * */
   @Prop() variant: NavLinkVariant = 'navegable';
 
-  /** Is active nav link */
+  /**
+   * Is active nav link
+   * */
   @Prop() isActive = false;
 
-  /** Is disabled nav link */
+  /**
+   * Is disabled nav link
+   * */
   @Prop() isDisabled = false;
 
   /**
