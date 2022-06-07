@@ -9,6 +9,7 @@ import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { InputState } from "./utils/component-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
+import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
 export namespace Components {
     interface MAlert {
@@ -161,9 +162,9 @@ export namespace Components {
     }
     interface MNav {
         /**
-          * Is vertical nav
+          * Is aria orientation vertical
          */
-        "isVertical": boolean;
+        "isAriaVertical": boolean;
         /**
           * Id of nav
          */
@@ -171,13 +172,23 @@ export namespace Components {
         /**
           * Variant of nav
          */
-        "variant"?: 'tabs' | 'pills';
+        "variant"?: NavVariant;
+    }
+    interface MNavContent {
+        /**
+          * Id of the nav-content
+         */
+        "mId": string;
     }
     interface MNavItem {
         /**
-          * Test nav
+          * Id of nav-item
          */
-        "variant": string;
+        "mId": string;
+        /**
+          * Role of nav-item
+         */
+        "role": string;
     }
     interface MNavLink {
         /**
@@ -208,6 +219,24 @@ export namespace Components {
           * Variant of nav link
          */
         "variant": NavLinkVariant;
+    }
+    interface MNavPane {
+        /**
+          * Is the current active nav-pane
+         */
+        "isActive": boolean;
+        /**
+          * Id of the nav-pane
+         */
+        "mId": string;
+        /**
+          * Tab Index of the nav-pane
+         */
+        "mTabindex"?: number;
+        /**
+          * Role of the nav-pane
+         */
+        "role": string;
     }
     interface MText {
         /**
@@ -271,6 +300,12 @@ declare global {
         prototype: HTMLMNavElement;
         new (): HTMLMNavElement;
     };
+    interface HTMLMNavContentElement extends Components.MNavContent, HTMLStencilElement {
+    }
+    var HTMLMNavContentElement: {
+        prototype: HTMLMNavContentElement;
+        new (): HTMLMNavContentElement;
+    };
     interface HTMLMNavItemElement extends Components.MNavItem, HTMLStencilElement {
     }
     var HTMLMNavItemElement: {
@@ -282,6 +317,12 @@ declare global {
     var HTMLMNavLinkElement: {
         prototype: HTMLMNavLinkElement;
         new (): HTMLMNavLinkElement;
+    };
+    interface HTMLMNavPaneElement extends Components.MNavPane, HTMLStencilElement {
+    }
+    var HTMLMNavPaneElement: {
+        prototype: HTMLMNavPaneElement;
+        new (): HTMLMNavPaneElement;
     };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
@@ -299,8 +340,10 @@ declare global {
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
         "m-nav": HTMLMNavElement;
+        "m-nav-content": HTMLMNavContentElement;
         "m-nav-item": HTMLMNavItemElement;
         "m-nav-link": HTMLMNavLinkElement;
+        "m-nav-pane": HTMLMNavPaneElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -471,9 +514,9 @@ declare namespace LocalJSX {
     }
     interface MNav {
         /**
-          * Is vertical nav
+          * Is aria orientation vertical
          */
-        "isVertical"?: boolean;
+        "isAriaVertical"?: boolean;
         /**
           * Id of nav
          */
@@ -481,13 +524,23 @@ declare namespace LocalJSX {
         /**
           * Variant of nav
          */
-        "variant"?: 'tabs' | 'pills';
+        "variant"?: NavVariant;
+    }
+    interface MNavContent {
+        /**
+          * Id of the nav-content
+         */
+        "mId": string;
     }
     interface MNavItem {
         /**
-          * Test nav
+          * Id of nav-item
          */
-        "variant"?: string;
+        "mId": string;
+        /**
+          * Role of nav-item
+         */
+        "role"?: string;
     }
     interface MNavLink {
         /**
@@ -519,6 +572,24 @@ declare namespace LocalJSX {
          */
         "variant"?: NavLinkVariant;
     }
+    interface MNavPane {
+        /**
+          * Is the current active nav-pane
+         */
+        "isActive"?: boolean;
+        /**
+          * Id of the nav-pane
+         */
+        "mId": string;
+        /**
+          * Tab Index of the nav-pane
+         */
+        "mTabindex"?: number;
+        /**
+          * Role of the nav-pane
+         */
+        "role"?: string;
+    }
     interface MText {
         /**
           * The theme to use
@@ -535,8 +606,10 @@ declare namespace LocalJSX {
         "m-input": MInput;
         "m-list-item": MListItem;
         "m-nav": MNav;
+        "m-nav-content": MNavContent;
         "m-nav-item": MNavItem;
         "m-nav-link": MNavLink;
+        "m-nav-pane": MNavPane;
         "m-text": MText;
     }
 }
@@ -553,8 +626,10 @@ declare module "@stencil/core" {
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;
+            "m-nav-content": LocalJSX.MNavContent & JSXBase.HTMLAttributes<HTMLMNavContentElement>;
             "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
             "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
+            "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }

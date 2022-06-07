@@ -80,12 +80,18 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
 export const MNav = /*@__PURE__*/ defineContainer<JSX.MNav>('m-nav', undefined, [
   'mId',
   'variant',
-  'isVertical'
+  'isAriaVertical'
+]);
+
+
+export const MNavContent = /*@__PURE__*/ defineContainer<JSX.MNavContent>('m-nav-content', undefined, [
+  'mId'
 ]);
 
 
 export const MNavItem = /*@__PURE__*/ defineContainer<JSX.MNavItem>('m-nav-item', undefined, [
-  'variant'
+  'mId',
+  'role'
 ]);
 
 
@@ -97,6 +103,14 @@ export const MNavLink = /*@__PURE__*/ defineContainer<JSX.MNavLink>('m-nav-link'
   'isDisabled',
   'optionProps',
   'navegableProps'
+]);
+
+
+export const MNavPane = /*@__PURE__*/ defineContainer<JSX.MNavPane>('m-nav-pane', undefined, [
+  'mId',
+  'role',
+  'mTabindex',
+  'isActive'
 ]);
 
 

@@ -14,8 +14,10 @@ import { defineCustomElement as defineMCard } from '@modyo/design-system/compone
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
+import { defineCustomElement as defineMNavContent } from '@modyo/design-system/components/m-nav-content.js';
 import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
 import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
+import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
 import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
@@ -217,15 +219,36 @@ export declare interface MNav extends Components.MNav {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMNav,
-  inputs: ['isVertical', 'mId', 'variant']
+  inputs: ['isAriaVertical', 'mId', 'variant']
 })
 @Component({
   selector: 'm-nav',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['isVertical', 'mId', 'variant']
+  inputs: ['isAriaVertical', 'mId', 'variant']
 })
 export class MNav {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MNavContent extends Components.MNavContent {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMNavContent,
+  inputs: ['mId']
+})
+@Component({
+  selector: 'm-nav-content',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['mId']
+})
+export class MNavContent {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -238,13 +261,13 @@ export declare interface MNavItem extends Components.MNavItem {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMNavItem,
-  inputs: ['variant']
+  inputs: ['mId', 'role']
 })
 @Component({
   selector: 'm-nav-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['variant']
+  inputs: ['mId', 'role']
 })
 export class MNavItem {
   protected el: HTMLElement;
@@ -268,6 +291,27 @@ export declare interface MNavLink extends Components.MNavLink {}
   inputs: ['icon', 'isActive', 'isDisabled', 'navegableProps', 'optionProps', 'text', 'variant']
 })
 export class MNavLink {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MNavPane extends Components.MNavPane {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMNavPane,
+  inputs: ['isActive', 'mId', 'mTabindex', 'role']
+})
+@Component({
+  selector: 'm-nav-pane',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['isActive', 'mId', 'mTabindex', 'role']
+})
+export class MNavPane {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();

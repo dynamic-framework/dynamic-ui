@@ -14,8 +14,10 @@ import { defineCustomElement as defineMCard } from '@modyo/design-system/compone
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
+import { defineCustomElement as defineMNavContent } from '@modyo/design-system/components/m-nav-content.js';
 import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
 import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
+import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
 export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertElement>('m-alert', undefined, undefined, defineMAlert);
@@ -27,6 +29,8 @@ export const MCard = /*@__PURE__*/createReactComponent<JSX.MCard, HTMLMCardEleme
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
 export const MListItem = /*@__PURE__*/createReactComponent<JSX.MListItem, HTMLMListItemElement>('m-list-item', undefined, undefined, defineMListItem);
 export const MNav = /*@__PURE__*/createReactComponent<JSX.MNav, HTMLMNavElement>('m-nav', undefined, undefined, defineMNav);
+export const MNavContent = /*@__PURE__*/createReactComponent<JSX.MNavContent, HTMLMNavContentElement>('m-nav-content', undefined, undefined, defineMNavContent);
 export const MNavItem = /*@__PURE__*/createReactComponent<JSX.MNavItem, HTMLMNavItemElement>('m-nav-item', undefined, undefined, defineMNavItem);
 export const MNavLink = /*@__PURE__*/createReactComponent<JSX.MNavLink, HTMLMNavLinkElement>('m-nav-link', undefined, undefined, defineMNavLink);
+export const MNavPane = /*@__PURE__*/createReactComponent<JSX.MNavPane, HTMLMNavPaneElement>('m-nav-pane', undefined, undefined, defineMNavPane);
 export const MText = /*@__PURE__*/createReactComponent<JSX.MText, HTMLMTextElement>('m-text', undefined, undefined, defineMText);
