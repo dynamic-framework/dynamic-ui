@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type     | Default |
-| --------- | --------- | ----------- | -------- | ------- |
-| `variant` | `variant` | Test nav    | `string` | `''`    |
+| Property           | Attribute | Description      | Type     | Default          |
+| ------------------ | --------- | ---------------- | -------- | ---------------- |
+| `mId` _(required)_ | `m-id`    | Id of nav-item   | `string` | `undefined`      |
+| `role`             | `role`    | Role of nav-item | `string` | `'presentation'` |
 
 
 ----------------------------------------------
