@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property           | Attribute | Description                        | Type     | Default     |
-| ------------------ | --------- | ---------------------------------- | -------- | ----------- |
-| `label`            | `label`   | The text to display in the switch. | `string` | `''`        |
-| `mId` _(required)_ | `m-id`    | Id                                 | `string` | `undefined` |
+| Property             | Attribute | Description                        | Type     | Default     |
+| -------------------- | --------- | ---------------------------------- | -------- | ----------- |
+| `label` _(required)_ | `label`   | The text to display in the switch. | `string` | `undefined` |
+| `mId` _(required)_   | `m-id`    | Id                                 | `string` | `undefined` |
 
 
 ----------------------------------------------

@@ -418,7 +418,7 @@ declare namespace LocalJSX {
         /**
           * The text to display in the switch.
          */
-        "label"?: string;
+        "label": string;
         /**
           * Id
          */
