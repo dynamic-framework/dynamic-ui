@@ -219,13 +219,13 @@ export declare interface MNav extends Components.MNav {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMNav,
-  inputs: ['isAriaVertical', 'mId', 'variant']
+  inputs: ['isAriaVertical', 'variant']
 })
 @Component({
   selector: 'm-nav',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['isAriaVertical', 'mId', 'variant']
+  inputs: ['isAriaVertical', 'variant']
 })
 export class MNav {
   protected el: HTMLElement;
@@ -239,14 +239,12 @@ export class MNav {
 export declare interface MNavContent extends Components.MNavContent {}
 
 @ProxyCmp({
-  defineCustomElementFn: defineMNavContent,
-  inputs: ['mId']
+  defineCustomElementFn: defineMNavContent
 })
 @Component({
   selector: 'm-nav-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['mId']
+  template: '<ng-content></ng-content>'
 })
 export class MNavContent {
   protected el: HTMLElement;
@@ -260,14 +258,12 @@ export class MNavContent {
 export declare interface MNavItem extends Components.MNavItem {}
 
 @ProxyCmp({
-  defineCustomElementFn: defineMNavItem,
-  inputs: ['mId', 'role']
+  defineCustomElementFn: defineMNavItem
 })
 @Component({
   selector: 'm-nav-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['mId', 'role']
+  template: '<ng-content></ng-content>'
 })
 export class MNavItem {
   protected el: HTMLElement;

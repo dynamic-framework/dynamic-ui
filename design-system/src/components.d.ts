@@ -166,29 +166,13 @@ export namespace Components {
          */
         "isAriaVertical": boolean;
         /**
-          * Id of nav
-         */
-        "mId": string;
-        /**
           * Variant of nav
          */
         "variant"?: NavVariant;
     }
     interface MNavContent {
-        /**
-          * Id of the nav-content
-         */
-        "mId": string;
     }
     interface MNavItem {
-        /**
-          * Id of nav-item
-         */
-        "mId": string;
-        /**
-          * Role of nav-item
-         */
-        "role": string;
     }
     interface MNavLink {
         /**
@@ -518,29 +502,13 @@ declare namespace LocalJSX {
          */
         "isAriaVertical"?: boolean;
         /**
-          * Id of nav
-         */
-        "mId"?: string;
-        /**
           * Variant of nav
          */
         "variant"?: NavVariant;
     }
     interface MNavContent {
-        /**
-          * Id of the nav-content
-         */
-        "mId": string;
     }
     interface MNavItem {
-        /**
-          * Id of nav-item
-         */
-        "mId": string;
-        /**
-          * Role of nav-item
-         */
-        "role"?: string;
     }
     interface MNavLink {
         /**

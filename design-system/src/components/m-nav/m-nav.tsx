@@ -16,10 +16,6 @@ import type { NavVariant } from './m-nav-interface';
 })
 export class MNav implements ComponentInterface {
   @Element() el!: HTMLMNavElement;
-  /**
-   * Id of nav
-   * */
-  @Prop() mId = '';
 
   /**
    * Variant of nav
@@ -39,7 +35,6 @@ export class MNav implements ComponentInterface {
   render() {
     return (
       <Host
-        id={this.mId}
         class={{
           nav: true,
           [`nav-${this.variant}`]: !!this.variant,
