@@ -15,6 +15,7 @@ import { tagType } from './m-nav-link-interface';
 
 @Component({
   tag: 'm-nav-link',
+  shadow: false,
 })
 
 export class MNavLink implements ComponentInterface {

@@ -8,6 +8,7 @@ import {
 
 @Component({
   tag: 'm-nav-pane',
+  shadow: false,
 })
 
 export class MNavPane implements ComponentInterface {

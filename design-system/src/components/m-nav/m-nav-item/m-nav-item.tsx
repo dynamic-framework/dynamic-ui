@@ -7,6 +7,7 @@ import {
 
 @Component({
   tag: 'm-nav-item',
+  shadow: false,
 })
 
 export class MNavItem implements ComponentInterface {

@@ -40,9 +40,7 @@ export class MInput implements ComponentInterface {
   /**
    * Emitted when the input value has changed
    */
-  @Event({
-    eventName: 'modChange',
-  }) modChange!: EventEmitter<string>;
+  @Event({ eventName: 'modChange' }) modChange!: EventEmitter<string>;
 
   private changeHandler = (event: Event) => {
     this.modChange.emit((event.target as HTMLInputElement).value);

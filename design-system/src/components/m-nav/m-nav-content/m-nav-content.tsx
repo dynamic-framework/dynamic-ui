@@ -7,6 +7,7 @@ import {
 
 @Component({
   tag: 'm-nav-content',
+  shadow: false,
 })
 
 export class MNavContent implements ComponentInterface {

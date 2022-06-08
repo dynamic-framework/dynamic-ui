@@ -40,9 +40,7 @@ export class MNav implements ComponentInterface {
           [`nav-${this.variant}`]: !!this.variant,
         }}
         role="tablist"
-        {...(this.isAriaVertical && {
-          'aria-orientation': 'vertical',
-        })}
+        {...(this.isAriaVertical && { 'aria-orientation': 'vertical' })}
       >
         <slot />
       </Host>
