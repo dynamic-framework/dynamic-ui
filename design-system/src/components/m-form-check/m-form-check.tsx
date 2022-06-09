@@ -1,0 +1,88 @@
+import {
+  Component,
+  Host,
+  h,
+  Prop,
+  ComponentInterface,
+} from '@stencil/core';
+
+import type { FormCheckType, FormCheckState } from './m-form-check-interface';
+
+@Component({
+  tag: 'm-form-check',
+  styleUrl: 'm-form-check.scss',
+  shadow: false,
+})
+export class MFormCheck implements ComponentInterface {
+  /**
+   * Set whether is a checkbox input or a radio input
+   */
+  @Prop() type!: FormCheckType;
+  /**
+   * HTML Name to use within a form or JS reference
+   */
+  @Prop() name?: string;
+  /**
+   * Text that will be displayed beside Check input or Radio input
+   */
+  @Prop() label?: string;
+  /**
+   * Set checkbox or radio button marked as selected or not
+   */
+  @Prop() checked = false;
+  /**
+   * Form control identifier
+   */
+  @Prop() mId!: string;
+  /**
+   * Set input as disabled
+   */
+  @Prop() disabled = false;
+  /**
+   * State of checkbox or radio. The states could be:
+   * Success state
+   * Error state
+   * Warning state
+   * Loading state
+   */
+  @Prop() state?: FormCheckState;
+  /**
+   * Set view of checkbox as indeterminated
+   */
+  @Prop() indeterminate?: boolean;
+  /**
+   * A string representing the value of the checkbox or radio
+   */
+  @Prop() value?: string;
+
+  private innerInput = (
+    <input
+      class={`form-check-input ${this.state ? `form-check-input-${this.state}` : ''}`}
+      type={this.type}
+      name={this.name}
+      id={this.mId}
+      value={this.value}
+      checked={this.checked}
+      disabled={this.disabled}
+      indeterminate={this.indeterminate}
+    />
+  );
+
+  render() {
+    return (
+      <Host class="form-check-box">
+        {this.label ? (
+          <div class="form-check">
+            { this.innerInput }
+            <label
+              class="form-check-label"
+              htmlFor={this.mId}
+            >
+              {this.label}
+            </label>
+          </div>
+        ) : this.innerInput}
+      </Host>
+    );
+  }
+}

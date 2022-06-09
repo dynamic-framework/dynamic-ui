@@ -11,6 +11,7 @@ import { defineCustomElement as defineMApp } from '@modyo/design-system/componen
 import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
+import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
@@ -18,6 +19,7 @@ import { defineCustomElement as defineMNavContent } from '@modyo/design-system/c
 import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
 import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
 import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
+import { defineCustomElement as defineMSwitch } from '@modyo/design-system/components/m-switch.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
 import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
@@ -158,6 +160,27 @@ export declare interface MCard extends Components.MCard {}
   inputs: ['header', 'theme']
 })
 export class MCard {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MFormCheck extends Components.MFormCheck {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMFormCheck,
+  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
+})
+@Component({
+  selector: 'm-form-check',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
+})
+export class MFormCheck {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -307,7 +330,20 @@ export declare interface MNavPane extends Components.MNavPane {}
   template: '<ng-content></ng-content>',
   inputs: ['isActive', 'mId', 'mTabindex', 'role']
 })
-export class MNavPane {
+export class MNavPane {}
+export declare interface MSwitch extends Components.MSwitch {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMSwitch,
+  inputs: ['label']
+})
+@Component({
+  selector: 'm-switch',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['label']
+})
+export class MSwitch {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();

@@ -13,8 +13,7 @@
     ],
     "property-disallowed-list": [
       "border-bottom-right-radius",
-      "border-bottom-left-radius",
-      "transition"
+      "border-bottom-left-radius"
     ],
     "scss/dollar-variable-default": [
       true,

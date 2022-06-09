@@ -8,6 +8,7 @@ export const DIRECTIVES = [
   d.MBadge,
   d.MButton,
   d.MCard,
+  d.MFormCheck,
   d.MInput,
   d.MListItem,
   d.MNav,
@@ -15,5 +16,6 @@ export const DIRECTIVES = [
   d.MNavItem,
   d.MNavLink,
   d.MNavPane,
+  d.MSwitch,
   d.MText
 ];

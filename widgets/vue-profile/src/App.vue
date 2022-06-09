@@ -4,8 +4,226 @@
       text="click me!"
       @mod-button-click="onButtonClick"
     />
-    <br />
-    <br />
+    <div>
+      <h3>Checkboxes</h3>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="checkbox"
+          m-id="check16" />
+        <m-form-check
+          type="checkbox"
+          label="Default Checkbox"
+          m-id="check1" />
+        <m-form-check
+          type="checkbox"
+          label="Default Checkbox"
+          m-id="check2"
+          checked />
+        <m-form-check
+          type="checkbox"
+          label="Default Checkbox"
+          m-id="check3"
+          disabled />
+      </div>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="checkbox"
+          state="danger"
+          m-id="check17" />
+        <m-form-check
+          type="checkbox"
+          state="danger"
+          label="Danger Checkbox"
+          m-id="check4" />
+        <m-form-check
+          type="checkbox"
+          state="danger"
+          label="Danger Checkbox"
+          m-id="check5"
+          checked />
+        <m-form-check
+          type="checkbox"
+          state="danger"
+          label="Danger Checkbox"
+          m-id="check6"
+          disabled />
+      </div>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="checkbox"
+          state="warning"
+          m-id="check18" />
+        <m-form-check
+          type="checkbox"
+          state="warning"
+          label="Warning Checkbox"
+          m-id="check7" />
+        <m-form-check
+          type="checkbox"
+          state="warning"
+          label="Warning Checkbox"
+          m-id="check8"
+          checked />
+        <m-form-check
+          type="checkbox"
+          state="warning"
+          label="Warning Checkbox"
+          m-id="check9"
+          disabled />
+      </div>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="checkbox"
+          state="success"
+          m-id="check18" />
+        <m-form-check
+          type="checkbox"
+          state="success"
+          label="Success Checkbox"
+          m-id="check10" />
+        <m-form-check
+          type="checkbox"
+          state="success"
+          label="Success Checkbox"
+          m-id="check11"
+          checked />
+        <m-form-check
+          type="checkbox"
+          state="success"
+          label="Success Checkbox"
+          m-id="check12"
+          disabled />
+      </div>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="checkbox"
+          m-id="check18" />
+        <m-form-check
+          type="checkbox"
+          indeterminate
+          label="Indeterminate Checkbox"
+          m-id="check13" />
+        <m-form-check
+          type="checkbox"
+          indeterminate
+          label="Indeterminate Checkbox"
+          m-id="check14"
+          checked />
+        <m-form-check
+          type="checkbox"
+          indeterminate
+          label="Indeterminate Checkbox"
+          m-id="check15"
+          disabled />
+      </div>
+    </div>
+    <div>
+      <h3>Radios</h3>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="radio"
+          name="group1"
+          m-id="radio16" />
+        <m-form-check
+          type="radio"
+          name="group1"
+          label="Default radio"
+          m-id="radio1" />
+        <m-form-check
+          type="radio"
+          name="group1"
+          label="Default radio"
+          m-id="radio2"
+          checked />
+        <m-form-check
+          type="radio"
+          name="group1"
+          label="Default radio"
+          m-id="radio3"
+          disabled />
+      </div>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="radio"
+          name="group2"
+          state="danger"
+          m-id="radio17" />
+        <m-form-check
+          type="radio"
+          name="group2"
+          state="danger"
+          label="Danger radio"
+          m-id="radio4" />
+        <m-form-check
+          type="radio"
+          name="group2"
+          state="danger"
+          label="Danger radio"
+          m-id="radio5"
+          checked />
+        <m-form-check
+          type="radio"
+          name="group2"
+          state="danger"
+          label="Danger radio"
+          m-id="radio6"
+          disabled />
+      </div>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="radio"
+          name="group3"
+          state="warning"
+          m-id="radio18" />
+        <m-form-check
+          type="radio"
+          name="group3"
+          state="warning"
+          label="Warning radio"
+          m-id="radio7" />
+        <m-form-check
+          type="radio"
+          name="group3"
+          state="warning"
+          label="Warning radio"
+          m-id="radio8"
+          checked />
+        <m-form-check
+          type="radio"
+          name="group3"
+          state="warning"
+          label="Warning radio"
+          m-id="radio9"
+          disabled />
+      </div>
+      <div class="d-flex my-4 gap-5">
+        <m-form-check
+          type="radio"
+          name="group4"
+          state="success"
+          m-id="radio18" />
+        <m-form-check
+          type="radio"
+          state="success"
+          name="group4"
+          label="Success radio"
+          m-id="radio10" />
+        <m-form-check
+          type="radio"
+          state="success"
+          label="Success radio"
+          name="group4"
+          m-id="radio11"
+          checked />
+        <m-form-check
+          type="radio"
+          state="success"
+          label="Success radio"
+          m-id="radio12"
+          name="group4"
+          disabled />
+      </div>
+    </div>
     <m-alert
       :header="title"
       body="body prop text"
@@ -629,6 +847,7 @@ import {
   MNavLink,
   MNavContent,
   MNavPane,
+  MFormCheck,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -647,6 +866,7 @@ export default defineComponent({
     MNavLink,
     MNavContent,
     MNavPane,
+    MFormCheck,
   },
   data() {
     return {
