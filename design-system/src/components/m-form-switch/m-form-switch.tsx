@@ -4,7 +4,7 @@ import {
 
 @Component({
   tag: 'm-form-switch',
-  styleUrl: 'm-switch.scss',
+  styleUrl: 'm-form-switch.scss',
   shadow: false,
 })
 export class MFormSwitch implements ComponentInterface {
