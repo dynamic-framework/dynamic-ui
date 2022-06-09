@@ -51,6 +51,19 @@ export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefine
 ]);
 
 
+export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
+  'type',
+  'name',
+  'label',
+  'checked',
+  'mId',
+  'disabled',
+  'state',
+  'indeterminate',
+  'value'
+]);
+
+
 export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
   'modId',
   'label',
@@ -74,6 +87,11 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
   'variant',
   'selectableProps',
   'navegableProps'
+]);
+
+
+export const MSwitch = /*@__PURE__*/ defineContainer<JSX.MSwitch>('m-switch', undefined, [
+  'label'
 ]);
 
 

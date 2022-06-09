@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { InputState } from "./utils/component-interface";
+import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 export namespace Components {
     interface MAlert {
@@ -86,6 +87,44 @@ export namespace Components {
          */
         "theme": string;
     }
+    interface MFormCheck {
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "checked": boolean;
+        /**
+          * Set input as disabled
+         */
+        "disabled": boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "indeterminate"?: boolean;
+        /**
+          * Text that will be displayed beside Check input or Radio input
+         */
+        "label"?: string;
+        /**
+          * Form control identifier
+         */
+        "mId": string;
+        /**
+          * HTML Name to use within a form or JS reference
+         */
+        "name"?: string;
+        /**
+          * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
+         */
+        "state"?: FormCheckState;
+        /**
+          * Set whether is a checkbox input or a radio input
+         */
+        "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
+    }
     interface MInput {
         /**
           * Flag to disable the input
@@ -158,6 +197,12 @@ export namespace Components {
          */
         "variant"?: ListItemVariant;
     }
+    interface MSwitch {
+        /**
+          * The text to display in the switch.
+         */
+        "label": string;
+    }
     interface MText {
         /**
           * The theme to use
@@ -202,6 +247,12 @@ declare global {
         prototype: HTMLMCardElement;
         new (): HTMLMCardElement;
     };
+    interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
+    }
+    var HTMLMFormCheckElement: {
+        prototype: HTMLMFormCheckElement;
+        new (): HTMLMFormCheckElement;
+    };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
     var HTMLMInputElement: {
@@ -213,6 +264,12 @@ declare global {
     var HTMLMListItemElement: {
         prototype: HTMLMListItemElement;
         new (): HTMLMListItemElement;
+    };
+    interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
+    }
+    var HTMLMSwitchElement: {
+        prototype: HTMLMSwitchElement;
+        new (): HTMLMSwitchElement;
     };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
@@ -227,8 +284,10 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
+        "m-form-check": HTMLMFormCheckElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
+        "m-switch": HTMLMSwitchElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -321,6 +380,44 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
+    interface MFormCheck {
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "checked"?: boolean;
+        /**
+          * Set input as disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "indeterminate"?: boolean;
+        /**
+          * Text that will be displayed beside Check input or Radio input
+         */
+        "label"?: string;
+        /**
+          * Form control identifier
+         */
+        "mId": string;
+        /**
+          * HTML Name to use within a form or JS reference
+         */
+        "name"?: string;
+        /**
+          * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
+         */
+        "state"?: FormCheckState;
+        /**
+          * Set whether is a checkbox input or a radio input
+         */
+        "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
+    }
     interface MInput {
         /**
           * Flag to disable the input
@@ -397,6 +494,12 @@ declare namespace LocalJSX {
          */
         "variant"?: ListItemVariant;
     }
+    interface MSwitch {
+        /**
+          * The text to display in the switch.
+         */
+        "label"?: string;
+    }
     interface MText {
         /**
           * The theme to use
@@ -410,8 +513,10 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
+        "m-form-check": MFormCheck;
         "m-input": MInput;
         "m-list-item": MListItem;
+        "m-switch": MSwitch;
         "m-text": MText;
     }
 }
@@ -425,8 +530,10 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
+            "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
+            "m-switch": LocalJSX.MSwitch & JSXBase.HTMLAttributes<HTMLMSwitchElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }

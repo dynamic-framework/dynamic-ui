@@ -11,8 +11,10 @@ import { defineCustomElement as defineMApp } from '@modyo/design-system/componen
 import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
+import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
+import { defineCustomElement as defineMSwitch } from '@modyo/design-system/components/m-switch.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
 import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
@@ -161,6 +163,27 @@ export class MCard {
 }
 
 
+export declare interface MFormCheck extends Components.MFormCheck {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMFormCheck,
+  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
+})
+@Component({
+  selector: 'm-form-check',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
+})
+export class MFormCheck {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
 export declare interface MInput extends Components.MInput {
   /**
    * Emitted when the input value has changed 
@@ -202,6 +225,27 @@ export declare interface MListItem extends Components.MListItem {}
   inputs: ['alternativeValue', 'icon', 'image', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'value', 'variant']
 })
 export class MListItem {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MSwitch extends Components.MSwitch {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMSwitch,
+  inputs: ['label']
+})
+@Component({
+  selector: 'm-switch',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['label']
+})
+export class MSwitch {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
