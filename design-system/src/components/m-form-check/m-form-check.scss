@@ -20,12 +20,12 @@
 
 .form-check-input {
   // Base styles
-  --#{$prefix}form-check-input-border-color: #{$gray-300};
+  --#{$prefix}form-check-input-border-color: var(--#{$prefix}gray-300);
   --#{$prefix}form-check-input-border-hover-width: 1px;
 
   // Checked - No state
-  --#{$prefix}form-check-input-checked-bg: #{$tertiary};
-  --#{$prefix}form-check-input-checked-border: #{$tertiary};
+  --#{$prefix}form-check-input-checked-bg: var(--#{$prefix}tertiary);
+  --#{$prefix}form-check-input-checked-border: var(--#{$prefix}tertiary);
   transition: #{$form-check-transition};
 
   &:hover {
@@ -40,14 +40,11 @@
 }
 
 @each $color, $value in map-remove($theme-colors, "light", "dark", "info") {
-  $hover-value: map-get($theme-colors-hover, $color);
-  $hover-value-rgb: to-rgb($hover-value);
-
   // Checkbox-input
   .form-check-input-#{$color} {
-    --#{$prefix}form-check-input-border-color: #{$value};
+    --#{$prefix}form-check-input-border-color: var(--#{$prefix}#{$color});
     --#{$prefix}form-check-input-border-hover-width: 2px;
-    --#{$prefix}form-check-input-checked-bg: #{$value};
+    --#{$prefix}form-check-input-checked-bg: var(--#{$prefix}#{$color});
 
     &:hover {
       &:checked {

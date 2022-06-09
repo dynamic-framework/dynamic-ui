@@ -1,5 +1,9 @@
 import {
-  Component, Host, h, Prop, ComponentInterface,
+  Component,
+  Host,
+  h,
+  Prop,
+  ComponentInterface,
 } from '@stencil/core';
 
 import type { FormCheckType, FormCheckState } from './m-form-check-interface';
@@ -11,19 +15,19 @@ import type { FormCheckType, FormCheckState } from './m-form-check-interface';
 })
 export class MFormCheck implements ComponentInterface {
   /**
-   * The text to display in the Check/Radio.
+   * Set whether is a checkbox input or a radio input
    */
   @Prop() type!: FormCheckType;
   /**
-   * The text to display in the Check/Radio.
+   * HTML Name to use within a form or JS reference
    */
   @Prop() name?: string;
   /**
-   * The text to display in the Check/Radio.
+   * Text that will be displayed beside Check input or Radio input
    */
   @Prop() label?: string;
   /**
-   * Checkbox is checked
+   * Set checkbox or radio button marked as selected or not
    */
   @Prop() checked = false;
   /**
@@ -31,17 +35,25 @@ export class MFormCheck implements ComponentInterface {
    */
   @Prop() mId!: string;
   /**
-   * Disabled state
+   * Set input as disabled
    */
   @Prop() disabled = false;
   /**
-   * State of checkbox: Succeess, Error, Warning, Loading
+   * State of checkbox or radio. The states could be:
+   * Success state
+   * Error state
+   * Warning state
+   * Loading state
    */
   @Prop() state?: FormCheckState;
   /**
-   * If checkbox is indeterminated
+   * Set view of checkbox as indeterminated
    */
   @Prop() indeterminate?: boolean;
+  /**
+   * A string representing the value of the checkbox or radio
+   */
+  @Prop() value?: string;
 
   private innerInput = (
     <input
@@ -49,6 +61,7 @@ export class MFormCheck implements ComponentInterface {
       type={this.type}
       name={this.name}
       id={this.mId}
+      value={this.value}
       checked={this.checked}
       disabled={this.disabled}
       indeterminate={this.indeterminate}

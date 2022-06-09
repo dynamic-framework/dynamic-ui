@@ -78,7 +78,7 @@ $form-check-border-width-focus: .125rem !default;
 
 // Checkbox-input
 $form-check-input-width: 1.5em !default;
-$form-check-input-bg: #{$light} !default;
+$form-check-input-bg: var(--#{$prefix}light) !default;
 
 $form-check-input-border-color: var(--#{$prefix}form-check-input-border-color) !default;
 $form-check-input-border: 1px solid #{$form-check-input-border-color} !default;
@@ -99,9 +99,9 @@ $form-check-input-checked-border-color: $form-check-input-checked-bg-color !defa
 
 // Checkbox Indeterminate
 $form-check-input-indeterminate-color: #{$light} !default;
-$form-check-input-indeterminate-bg-color: #{$tertiary} !default;
+$form-check-input-indeterminate-bg-color: var(--#{$prefix}tertiary) !default;
 $form-check-input-indeterminate-border-color: #{$form-check-input-indeterminate-bg-color} !default;
-$form-check-input-indeterminate-border-hover-color: #{$gray-600} !default;
+$form-check-input-indeterminate-border-hover-color: var(--#{$prefix}gray-600) !default;
 $form-check-input-indeterminate-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$form-check-input-indeterminate-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>") !default;
 
 // $form-check-inline-margin-end: 1rem !default;
