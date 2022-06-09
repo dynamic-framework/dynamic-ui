@@ -120,6 +120,7 @@ export const MNavPane = /*@__PURE__*/ defineContainer<JSX.MNavPane>('m-nav-pane'
   'isActive'
 ]);
 
+
 export const MSwitch = /*@__PURE__*/ defineContainer<JSX.MSwitch>('m-switch', undefined, [
   'label'
 ]);

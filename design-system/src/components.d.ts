@@ -358,7 +358,7 @@ declare global {
     var HTMLMNavPaneElement: {
         prototype: HTMLMNavPaneElement;
         new (): HTMLMNavPaneElement;
-    }
+    };
     interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
     }
     var HTMLMSwitchElement: {
