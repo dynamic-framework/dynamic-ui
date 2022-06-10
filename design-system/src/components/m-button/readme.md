@@ -20,9 +20,9 @@
 
 ## Events
 
-| Event          | Description                               | Type               |
-| -------------- | ----------------------------------------- | ------------------ |
-| `mButtonClick` | Emitted when the button has been clicked. | `CustomEvent<any>` |
+| Event    | Description                               | Type               |
+| -------- | ----------------------------------------- | ------------------ |
+| `mClick` | Emitted when the button has been clicked. | `CustomEvent<any>` |
 
 
 ## Dependencies

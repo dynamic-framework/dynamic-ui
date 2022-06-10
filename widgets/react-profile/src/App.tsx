@@ -1,19 +1,26 @@
-import type { ButtonVariant } from '@modyo/design-system';
-import { MApp } from '@modyo/react-design-system';
+import { useState } from 'react';
 
-import Buttons from './Buttons';
+import { MApp, MInput } from '@modyo/react-design-system';
 
-const THEMES = ['light', 'dark', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
-const VARIANTS: Partial<ButtonVariant[]> = ['outline', undefined, 'text', 'ghost'];
+// import Buttons from './Buttons';
 
 export default function App() {
+  const [value, setValue] = useState('');
   return (
     <MApp>
-      {THEMES.map((theme) => (
-        VARIANTS.map((variant) => (
-          <Buttons theme={theme} variant={variant} pill />
-        ))
-      ))}
+      <br />
+      <br />
+      <MInput
+        mId="input-1"
+        placeholder="Placeholder"
+        value={value}
+        iconStart="@"
+        iconEnd="@"
+        hint="hint to display, also used to display validity feedback"
+        hintIconStart="@"
+        hintIconEnd="@"
+      />
+      {/* <Buttons pill /> */}
     </MApp>
   );
 }

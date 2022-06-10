@@ -118,7 +118,7 @@ export declare interface MButton extends Components.MButton {
   /**
    * Emitted when the button has been clicked. 
    */
-  mButtonClick: EventEmitter<CustomEvent<any>>;
+  mClick: EventEmitter<CustomEvent<any>>;
 
 }
 
@@ -137,7 +137,7 @@ export class MButton {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mButtonClick']);
+    proxyOutputs(this, this.el, ['mClick']);
   }
 }
 
@@ -188,26 +188,26 @@ export declare interface MInput extends Components.MInput {
   /**
    * Emitted when the input value has changed 
    */
-  modChange: EventEmitter<CustomEvent<string>>;
+  mChange: EventEmitter<CustomEvent<string>>;
 
 }
 
 @ProxyCmp({
   defineCustomElementFn: defineMInput,
-  inputs: ['disabled', 'label', 'modId', 'placeholder', 'type', 'value']
+  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'label', 'mId', 'placeholder', 'type', 'value']
 })
 @Component({
   selector: 'm-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['disabled', 'label', 'modId', 'placeholder', 'type', 'value']
+  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'label', 'mId', 'placeholder', 'type', 'value']
 })
 export class MInput {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['modChange']);
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 

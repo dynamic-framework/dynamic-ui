@@ -1,0 +1,91 @@
+@import "~bootstrap/scss/forms";
+
+.input-group {
+  --#{$prefix}input-box-shadow: #{$input-box-shadow};
+  --#{$prefix}input-border-color: #{$input-border-color};
+  --#{$prefix}input-hover-border-color: #{$input-hover-border-color};
+  // focus outline
+  --#{$prefix}input-group-outline-padding: #{$input-group-outline-padding};
+  --#{$prefix}input-group-outline-border-width: #{$input-group-outline-border-width-width};
+  --#{$prefix}input-group-outline-border-color: transparent;
+  --#{$prefix}input-group-outline-border: var(--#{$prefix}input-group-outline-border-width) solid var(--#{$prefix}input-group-outline-border-color);
+  --#{$prefix}input-group-border-radius: #{$input-border-radius};
+
+  position: relative;
+  gap: 8px;
+  background: #{$input-bg};
+  border: 1px solid var(--#{$prefix}input-border-color);
+  border-radius: $input-border-radius;
+
+  &::before {
+    $offset: calc((var(--#{$prefix}input-group-outline-padding) + var(--#{$prefix}input-group-outline-border-width)) * -1);
+    position: absolute;
+    top: $offset;
+    right: $offset;
+    bottom: $offset;
+    left: $offset;
+
+    content: " ";
+    border: var(--#{$prefix}input-group-outline-border);
+    border-radius: var(--#{$prefix}input-group-border-radius);
+  }
+
+  &:focus-within,
+  &:focus {
+    --#{$prefix}input-group-outline-border-color: var(--#{$prefix}accessibility);
+  }
+
+  > * {
+    &:first-child {
+      padding-left: $input-padding-y;
+    }
+
+    &:last-child {
+      padding-right: $input-padding-y;
+    }
+  }
+
+  &:hover {
+    border: 1px solid var(--#{$prefix}input-hover-border-color);
+  }
+}
+
+.input-group ~ .hint {
+  --#{$prefix}input-hint-padding: #{$input-hint-padding-y} #{$input-hint-padding-x};
+  --#{$prefix}input-hint-gap: #{$input-hint-gap};
+  display: inline-flex;
+  flex-direction: row;
+  gap: var(--#{$prefix}input-hint-gap);
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--#{$prefix}input-hint-padding);
+}
+
+.form-control-icon {
+  --#{$prefix}form-control-icon-size: #{$form-control-icon-size};
+
+  width: var(--#{$prefix}form-control-icon-size);
+  height: var(--#{$prefix}form-control-icon-size);
+  font-size: var(--#{$prefix}form-control-icon-size);
+  line-height: var(--#{$prefix}form-control-icon-size);
+}
+
+.form-control {
+  background: transparent;
+  border-width: 0;
+  box-shadow: none;
+}
+
+.input-group-text {
+  line-height: 1rem;
+  border-width: 0;
+}
+
+.input-group-sm {
+  border-radius: $input-border-radius-sm;
+}
+
+.input-group-lg {
+  border-radius: $input-border-radius-lg;
+}

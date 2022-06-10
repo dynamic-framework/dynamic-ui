@@ -131,13 +131,33 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Icon to display on hint right
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon to display on hint left
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon to display on input right
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon to display on input left
+         */
+        "iconStart"?: string;
+        /**
           * The label text
          */
         "label": string;
         /**
           * The id of the input
          */
-        "modId": string;
+        "mId": string;
         /**
           * The placeholder text
          */
@@ -344,7 +364,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the button has been clicked.
          */
-        "onMButtonClick"?: (event: CustomEvent<any>) => void;
+        "onMClick"?: (event: CustomEvent<any>) => void;
         /**
           * Flag to set the button as active.
          */
@@ -424,17 +444,37 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Icon to display on hint right
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon to display on hint left
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon to display on input right
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon to display on input left
+         */
+        "iconStart"?: string;
+        /**
           * The label text
          */
         "label"?: string;
         /**
           * The id of the input
          */
-        "modId"?: string;
+        "mId": string;
         /**
           * Emitted when the input value has changed
          */
-        "onModChange"?: (event: CustomEvent<string>) => void;
+        "onMChange"?: (event: CustomEvent<string>) => void;
         /**
           * The placeholder text
          */
