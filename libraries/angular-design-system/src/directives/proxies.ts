@@ -14,6 +14,11 @@ import { defineCustomElement as defineMCard } from '@modyo/design-system/compone
 import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
+import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
+import { defineCustomElement as defineMNavContent } from '@modyo/design-system/components/m-nav-content.js';
+import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
+import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
+import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
 import { defineCustomElement as defineMSwitch } from '@modyo/design-system/components/m-switch.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
@@ -225,6 +230,107 @@ export declare interface MListItem extends Components.MListItem {}
   inputs: ['alternativeValue', 'icon', 'image', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'value', 'variant']
 })
 export class MListItem {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MNav extends Components.MNav {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMNav,
+  inputs: ['isAriaVertical', 'variant']
+})
+@Component({
+  selector: 'm-nav',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['isAriaVertical', 'variant']
+})
+export class MNav {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MNavContent extends Components.MNavContent {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMNavContent
+})
+@Component({
+  selector: 'm-nav-content',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>'
+})
+export class MNavContent {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MNavItem extends Components.MNavItem {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMNavItem
+})
+@Component({
+  selector: 'm-nav-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>'
+})
+export class MNavItem {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MNavLink extends Components.MNavLink {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMNavLink,
+  inputs: ['icon', 'isActive', 'isDisabled', 'navegableProps', 'optionProps', 'text', 'variant']
+})
+@Component({
+  selector: 'm-nav-link',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['icon', 'isActive', 'isDisabled', 'navegableProps', 'optionProps', 'text', 'variant']
+})
+export class MNavLink {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MNavPane extends Components.MNavPane {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMNavPane,
+  inputs: ['isActive', 'mId', 'mTabindex', 'role']
+})
+@Component({
+  selector: 'm-nav-pane',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['isActive', 'mId', 'mTabindex', 'role']
+})
+export class MNavPane {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();

@@ -1,0 +1,47 @@
+@import "~bootstrap/scss/nav";
+
+:host {
+  display: block;
+}
+
+.nav-tabs {
+
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+
+    &::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: #{$nav-tabs-link-active-line-height};
+      content: "";
+      background: currentcolor;
+      border-radius: var(--#{$prefix}nav-tabs-border-radius);
+    }
+  }
+}
+
+.nav-pills {
+  --#{$prefix}nav-link-padding-x: #{$nav-pills-link-padding-x};
+  --#{$prefix}nav-link-padding-y: #{$nav-pills-link-padding-y};
+  --#{$prefix}nav-link-font-weight: #{$nav-pills-link-font-weight};
+  --#{$prefix}nav-pills-border: #{$nav-pills-link-border};
+  --#{$prefix}nav-link-color: #{$secondary};
+
+  .nav-link {
+    background: none;
+    border: var(--#{$prefix}nav-pills-border);
+
+    &:disabled,
+    &.disabled {
+      color: var(--#{$prefix}nav-link-disabled-color);
+      background-color: transparent;
+      border: transparent;
+    }
+  }
+}
