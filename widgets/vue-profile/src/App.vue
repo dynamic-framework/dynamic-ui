@@ -631,6 +631,202 @@
           astronomical object known to harbor life.</small>
       </div>
     </div>
+    <div class="py-5 my-5">
+     <h5 class="fw-bold">Nav/Tabs</h5>
+     <h6 class="mt-4">No variant</h6>
+     <m-nav>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab One"
+            icon="circle"
+          />
+       </m-nav-item>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab Two"
+            is-active
+          />
+       </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="Tab Three"
+            is-disabled
+          />
+       </m-nav-item>
+     </m-nav>
+     <h6 class="mt-4">Tabs variant</h6>
+     <m-nav variant="tabs">
+       <m-nav-item>
+          <m-nav-link
+            text="Tab One"
+            icon="circle"
+          />
+       </m-nav-item>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab Two"
+            is-active
+          />
+       </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="Tab Three"
+            is-disabled
+          />
+       </m-nav-item>
+     </m-nav>
+     <h6 class="mt-4">Pills variant</h6>
+     <m-nav variant="pills">
+       <m-nav-item>
+          <m-nav-link
+            text="Tab One"
+            is-active
+            icon="circle"
+          />
+       </m-nav-item>
+       <m-nav-item>
+          <m-nav-link
+            text="Tab Two"
+            :navegableProps="{href: '#123', 'aria-current': 'true'}"
+          />
+       </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="Tab Three"
+            variant="option"
+            :optionProps="{
+              id: 'test',
+              type: 'button',
+              role: 'tab',
+              'data-bs-toggle': 'tab',
+              'data-bs-target': '#test',
+              'aria-controls': 'tab-test',
+              'aria-selected': 'true'
+            }"
+          />
+        </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="Tab Four"
+            is-disabled
+          />
+        </m-nav-item>
+     </m-nav>
+      <h6 class="mt-4">Tabs with content</h6>
+      <m-nav
+      class="mb-2"
+        variant="tabs"
+      >
+        <m-nav-item>
+          <m-nav-link
+            text="Home"
+            variant="option"
+            icon="house-fill"
+            :optionProps="{
+                id: 'home-btnn',
+                type: 'button',
+                role: 'tab',
+                'data-bs-toggle': 'tab',
+                'data-bs-target': '#home',
+                'aria-controls': 'tab-test',
+                'aria-selected': 'true'
+              }"
+              is-active
+          />
+        </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="About"
+            variant="option"
+            icon="info-circle-fill"
+            :optionProps="{
+                id: 'about-btn',
+                type: 'button',
+                role: 'tab',
+                'data-bs-toggle': 'tab',
+                'data-bs-target': '#about',
+                'aria-controls': 'tab-test',
+                'aria-selected': 'false'
+              }"
+          />
+        </m-nav-item>
+      </m-nav>
+      <m-nav-content>
+        <m-nav-pane m-id="home" is-active
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Minima cumque est repellendus mollitia eaque placeat
+          possimus quidem, voluptas maxime, eveniet, in nisi
+          dolorem quos eligendi assumenda praesentium iure
+          deserunt. Home.
+        </m-nav-pane>
+        <m-nav-pane m-id="about"
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Minima cumque est repellendus mollitia eaque placeat
+          possimus quidem, voluptas maxime, eveniet, in nisi
+          dolorem quos eligendi assumenda praesentium iure
+          deserunt. About.
+        </m-nav-pane>
+      </m-nav-content>
+      <h6 class="mt-4">Pills with content</h6>
+      <m-nav
+      class="mb-2"
+        variant="pills"
+      >
+        <m-nav-item>
+          <m-nav-link
+            text="Home"
+            variant="option"
+            icon="house-fill"
+            :optionProps="{
+                id: 'home-btnn',
+                type: 'button',
+                role: 'tab',
+                'data-bs-toggle': 'tab',
+                'data-bs-target': '#home2',
+                'aria-controls': 'tab-test',
+                'aria-selected': 'false'
+              }"
+          />
+        </m-nav-item>
+        <m-nav-item>
+          <m-nav-link
+            text="About"
+            variant="option"
+            icon="info-circle-fill"
+            :optionProps="{
+                id: 'about-btn',
+                type: 'button',
+                role: 'tab',
+                'data-bs-toggle': 'tab',
+                'data-bs-target': '#about2',
+                'aria-controls': 'tab-test',
+                'aria-selected': 'true'
+              }"
+              is-active
+          />
+        </m-nav-item>
+      </m-nav>
+      <m-nav-content>
+        <m-nav-pane m-id="home2"
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Minima cumque est repellendus mollitia eaque placeat
+          possimus quidem, voluptas maxime, eveniet, in nisi
+          dolorem quos eligendi assumenda praesentium iure
+          deserunt. Home.
+        </m-nav-pane>
+        <m-nav-pane m-id="about2" is-active
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Minima cumque est repellendus mollitia eaque placeat
+          possimus quidem, voluptas maxime, eveniet, in nisi
+          dolorem quos eligendi assumenda praesentium iure
+          deserunt. About.
+        </m-nav-pane>
+      </m-nav-content>
+    </div>
   </m-app>
 </template>
 
@@ -646,6 +842,11 @@ import {
   MApp,
   MBadge,
   MListItem,
+  MNav,
+  MNavItem,
+  MNavLink,
+  MNavContent,
+  MNavPane,
   MFormCheck,
 } from '@modyo/vue-design-system';
 
@@ -660,6 +861,11 @@ export default defineComponent({
     MApp,
     MBadge,
     MListItem,
+    MNav,
+    MNavItem,
+    MNavLink,
+    MNavContent,
+    MNavPane,
     MFormCheck,
   },
   data() {

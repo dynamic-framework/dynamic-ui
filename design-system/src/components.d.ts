@@ -10,6 +10,8 @@ import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interf
 import { InputState } from "./utils/component-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
+import { NavVariant } from "./components/m-nav/m-nav-interface";
+import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -197,6 +199,68 @@ export namespace Components {
          */
         "variant"?: ListItemVariant;
     }
+    interface MNav {
+        /**
+          * Is aria orientation vertical
+         */
+        "isAriaVertical": boolean;
+        /**
+          * Variant of nav
+         */
+        "variant"?: NavVariant;
+    }
+    interface MNavContent {
+    }
+    interface MNavItem {
+    }
+    interface MNavLink {
+        /**
+          * The icon to display
+         */
+        "icon"?: string;
+        /**
+          * Is active nav link
+         */
+        "isActive": boolean;
+        /**
+          * Is disabled nav link
+         */
+        "isDisabled": boolean;
+        /**
+          * Props for the nav link navegable variant
+         */
+        "navegableProps"?: NavegableProps1;
+        /**
+          * Props for the nav link option variant
+         */
+        "optionProps"?: OptionProps;
+        /**
+          * Text of nav link
+         */
+        "text": string;
+        /**
+          * Variant of nav link
+         */
+        "variant": NavLinkVariant;
+    }
+    interface MNavPane {
+        /**
+          * Is the current active nav-pane
+         */
+        "isActive": boolean;
+        /**
+          * Id of the nav-pane
+         */
+        "mId": string;
+        /**
+          * Tab Index of the nav-pane
+         */
+        "mTabindex"?: number;
+        /**
+          * Role of the nav-pane
+         */
+        "role": string;
+    }
     interface MSwitch {
         /**
           * The text to display in the switch.
@@ -265,6 +329,36 @@ declare global {
         prototype: HTMLMListItemElement;
         new (): HTMLMListItemElement;
     };
+    interface HTMLMNavElement extends Components.MNav, HTMLStencilElement {
+    }
+    var HTMLMNavElement: {
+        prototype: HTMLMNavElement;
+        new (): HTMLMNavElement;
+    };
+    interface HTMLMNavContentElement extends Components.MNavContent, HTMLStencilElement {
+    }
+    var HTMLMNavContentElement: {
+        prototype: HTMLMNavContentElement;
+        new (): HTMLMNavContentElement;
+    };
+    interface HTMLMNavItemElement extends Components.MNavItem, HTMLStencilElement {
+    }
+    var HTMLMNavItemElement: {
+        prototype: HTMLMNavItemElement;
+        new (): HTMLMNavItemElement;
+    };
+    interface HTMLMNavLinkElement extends Components.MNavLink, HTMLStencilElement {
+    }
+    var HTMLMNavLinkElement: {
+        prototype: HTMLMNavLinkElement;
+        new (): HTMLMNavLinkElement;
+    };
+    interface HTMLMNavPaneElement extends Components.MNavPane, HTMLStencilElement {
+    }
+    var HTMLMNavPaneElement: {
+        prototype: HTMLMNavPaneElement;
+        new (): HTMLMNavPaneElement;
+    };
     interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
     }
     var HTMLMSwitchElement: {
@@ -287,6 +381,11 @@ declare global {
         "m-form-check": HTMLMFormCheckElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
+        "m-nav": HTMLMNavElement;
+        "m-nav-content": HTMLMNavContentElement;
+        "m-nav-item": HTMLMNavItemElement;
+        "m-nav-link": HTMLMNavLinkElement;
+        "m-nav-pane": HTMLMNavPaneElement;
         "m-switch": HTMLMSwitchElement;
         "m-text": HTMLMTextElement;
     }
@@ -494,6 +593,68 @@ declare namespace LocalJSX {
          */
         "variant"?: ListItemVariant;
     }
+    interface MNav {
+        /**
+          * Is aria orientation vertical
+         */
+        "isAriaVertical"?: boolean;
+        /**
+          * Variant of nav
+         */
+        "variant"?: NavVariant;
+    }
+    interface MNavContent {
+    }
+    interface MNavItem {
+    }
+    interface MNavLink {
+        /**
+          * The icon to display
+         */
+        "icon"?: string;
+        /**
+          * Is active nav link
+         */
+        "isActive"?: boolean;
+        /**
+          * Is disabled nav link
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Props for the nav link navegable variant
+         */
+        "navegableProps"?: NavegableProps1;
+        /**
+          * Props for the nav link option variant
+         */
+        "optionProps"?: OptionProps;
+        /**
+          * Text of nav link
+         */
+        "text": string;
+        /**
+          * Variant of nav link
+         */
+        "variant"?: NavLinkVariant;
+    }
+    interface MNavPane {
+        /**
+          * Is the current active nav-pane
+         */
+        "isActive"?: boolean;
+        /**
+          * Id of the nav-pane
+         */
+        "mId": string;
+        /**
+          * Tab Index of the nav-pane
+         */
+        "mTabindex"?: number;
+        /**
+          * Role of the nav-pane
+         */
+        "role"?: string;
+    }
     interface MSwitch {
         /**
           * The text to display in the switch.
@@ -516,6 +677,11 @@ declare namespace LocalJSX {
         "m-form-check": MFormCheck;
         "m-input": MInput;
         "m-list-item": MListItem;
+        "m-nav": MNav;
+        "m-nav-content": MNavContent;
+        "m-nav-item": MNavItem;
+        "m-nav-link": MNavLink;
+        "m-nav-pane": MNavPane;
         "m-switch": MSwitch;
         "m-text": MText;
     }
@@ -533,6 +699,11 @@ declare module "@stencil/core" {
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
+            "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;
+            "m-nav-content": LocalJSX.MNavContent & JSXBase.HTMLAttributes<HTMLMNavContentElement>;
+            "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
+            "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
+            "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
             "m-switch": LocalJSX.MSwitch & JSXBase.HTMLAttributes<HTMLMSwitchElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }

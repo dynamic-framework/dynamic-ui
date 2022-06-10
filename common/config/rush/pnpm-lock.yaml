@@ -7,6 +7,7 @@ importers:
 
   ../../design-system:
     specifiers:
+      '@popperjs/core': ^2.11.5
       '@stencil/angular-output-target': ^0.4.0
       '@stencil/core': ^2.15.2
       '@stencil/eslint-plugin': ^0.4.0
@@ -14,6 +15,7 @@ importers:
       '@stencil/react-output-target': ^0.3.1
       '@stencil/sass': ^1.5.2
       '@stencil/vue-output-target': ^0.6.0
+      '@types/bootstrap': ^5.1.12
       '@types/jest': ^27.0.3
       '@typescript-eslint/eslint-plugin': ^4.23.0
       '@typescript-eslint/parser': ^4.23.0
@@ -34,8 +36,9 @@ importers:
       stylelint-config-twbs-bootstrap: ^3.0.1
       typescript: ~4.4.4
     dependencies:
+      '@popperjs/core': 2.11.5
       '@stencil/core': 2.15.2
-      bootstrap: 5.2.0-beta1
+      bootstrap: 5.2.0-beta1_@popperjs+core@2.11.5
     devDependencies:
       '@stencil/angular-output-target': 0.4.0_@stencil+core@2.15.2
       '@stencil/eslint-plugin': 0.4.0_4f08c3b56943bb02e941136a8e9e8680
@@ -43,6 +46,7 @@ importers:
       '@stencil/react-output-target': 0.3.1_@stencil+core@2.15.2
       '@stencil/sass': 1.5.2_@stencil+core@2.15.2
       '@stencil/vue-output-target': 0.6.0_@stencil+core@2.15.2
+      '@types/bootstrap': 5.1.12
       '@types/jest': 27.5.0
       '@typescript-eslint/eslint-plugin': 4.33.0_cc617358c89d3f38c52462f6d809db4c
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.4.4
@@ -3733,6 +3737,9 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
+  /@popperjs/core/2.11.5:
+    resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
+
   /@rollup/plugin-babel/5.3.1_18dfcb1ca7050ba6f445f613f30091b1:
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
     engines: {node: '>= 10.0.0'}
@@ -4222,6 +4229,12 @@ packages:
     resolution: {integrity: sha512-p7ienRMiS41Nu2/igbJxxLDWrSZ0WxM8UQgCeO9KhoVF7cOVFkrKsiDr1EsJIla8vV3oEEjGcz11jc5yimhzZw==}
     dependencies:
       '@types/node': 16.11.34
+
+  /@types/bootstrap/5.1.12:
+    resolution: {integrity: sha512-pSS5BGEgepwzdbsBGswBWFmgrnYpp7c4UfuYe1FJWwkrcjm/JVwfG4gBkOYtd92Otd3RdJK0ByBWMkBROfLEPw==}
+    dependencies:
+      '@popperjs/core': 2.11.5
+    dev: true
 
   /@types/component-emitter/1.2.11:
     resolution: {integrity: sha512-SRXjM+tfsSlA9VuG8hGO2nft2p8zjXCK1VcC6N4NXbBbYbSia9kzCChYQajIjzIqOOOuh5Ock6MmV2oux4jDZQ==}
@@ -6209,10 +6222,12 @@ packages:
   /boolbase/1.0.0:
     resolution: {integrity: sha1-aN/1++YMUes3cl6p4+0xDcwed24=}
 
-  /bootstrap/5.2.0-beta1:
+  /bootstrap/5.2.0-beta1_@popperjs+core@2.11.5:
     resolution: {integrity: sha512-6qbgs177WZEFY4SLQUq3tEHayYG80nfDmyTpdKi0MJqRMdS+HAoq24+YKfx6wf+nHY0rx8zrh477J1lFu4WzOA==}
     peerDependencies:
       '@popperjs/core': ^2.11.5
+    dependencies:
+      '@popperjs/core': 2.11.5
     dev: false
 
   /brace-expansion/1.1.11:
@@ -9634,7 +9649,7 @@ packages:
       function-bind: 1.1.1
 
   /hash-sum/1.0.2:
-    resolution: {integrity: sha1-M7QHd3VMZDJXPBIMw4CLvRDUfwQ=}
+    resolution: {integrity: sha512-fUs4B4L+mlt8/XAtSOGMUO1TXmAelItBPtJG7CyHJfYTdDjwisntGO2JQz7oUsatOY9o68+57eziUVNw/mRHmA==}
     dev: true
 
   /hash-sum/2.0.0:

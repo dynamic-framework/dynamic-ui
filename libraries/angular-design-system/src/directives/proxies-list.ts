@@ -11,6 +11,11 @@ export const DIRECTIVES = [
   d.MFormCheck,
   d.MInput,
   d.MListItem,
+  d.MNav,
+  d.MNavContent,
+  d.MNavItem,
+  d.MNavLink,
+  d.MNavPane,
   d.MSwitch,
   d.MText
 ];
