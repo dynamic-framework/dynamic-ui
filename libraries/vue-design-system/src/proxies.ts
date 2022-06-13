@@ -41,7 +41,7 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'value',
   'type',
   'isPill',
-  'mButtonClick'
+  'mClick'
 ]);
 
 
@@ -65,13 +65,20 @@ export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-
 
 
 export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
-  'modId',
+  'mId',
   'label',
+  'labelIcon',
   'placeholder',
   'type',
   'value',
   'disabled',
-  'modChange'
+  'iconStart',
+  'iconEnd',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'layoutDirection',
+  'mChange'
 ]);
 
 

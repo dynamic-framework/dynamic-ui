@@ -49,10 +49,10 @@ export class MButton implements ComponentInterface {
   /**
    * Emitted when the button has been clicked.
    */
-  @Event() mButtonClick!: EventEmitter;
+  @Event() mClick!: EventEmitter;
 
-  private buttonClickHandler = () => {
-    this.mButtonClick.emit();
+  private clickHandler = () => {
+    this.mClick.emit();
   };
 
   private generateClasses(): ClassMap {
@@ -83,7 +83,7 @@ export class MButton implements ComponentInterface {
           type={this.type}
           disabled={this.state === 'disabled'}
           {...this.value && { value: this.value }}
-          onClick={this.buttonClickHandler}
+          onClick={this.clickHandler}
         >
           {/* TODO: use m-icon component */}
           <div class="btn-icon btn-left-icon" />
