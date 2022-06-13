@@ -827,6 +827,177 @@
         </m-nav-pane>
       </m-nav-content>
     </div>
+    <div class="row">
+      <div class="col">
+        <m-select>
+          <option value="{text:'buenas'}">A</option>
+          <option value="b">B</option>
+          <option value="c">C</option>
+        </m-select>
+      <div class="col d-flex flex-column gap-2 mt-3">
+        <h6 class="fw-bold">Variant full</h6>
+          <m-select
+          theme="primary"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          sub-label="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon start</b>
+          <m-select
+          theme="secondary"
+          variant="full"
+          label="Label"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          sub-label="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon middle</b>
+          <m-select
+          theme="tertiary"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-end="cup-fill"
+          sub-label="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon end</b>
+          <m-select
+          theme="success"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          sub-label="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin label</b>
+          <m-select
+          theme="warning"
+          variant="full"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          sub-label="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin sub label</b>
+          <m-select
+          theme="info"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Otro icono sub label</b>
+          <m-select
+          theme="danger"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          icon-sub-label="heart-fill"
+          sub-label="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+      </div>
+      <div class="col d-flex flex-column gap-2 mt-3">
+        <h6 class="fw-bold">Variant transparent</h6>
+          <m-select
+          theme="primary"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <m-select
+          theme="secondary"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <m-select
+          theme="tertiary"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <m-select
+          theme="success"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <m-select
+          theme="warning"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <m-select
+          theme="info"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <m-select
+          theme="danger"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+      </div>
+      </div>
+    </div>
   </m-app>
 </template>
 
@@ -848,6 +1019,7 @@ import {
   MNavContent,
   MNavPane,
   MFormCheck,
+  MSelect,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -867,6 +1039,7 @@ export default defineComponent({
     MNavContent,
     MNavPane,
     MFormCheck,
+    MSelect,
   },
   data() {
     return {
@@ -887,6 +1060,9 @@ export default defineComponent({
     },
     onInputChange(event: CustomEvent<string>) {
       this.value = event.detail;
+    },
+    print() {
+      console.log('hola');
     },
   },
 });
@@ -939,5 +1115,22 @@ export default defineComponent({
       }
     }
    }
+}
+
+button#je {
+  border-radius: 8px;
+}
+
+select#hola {
+  position: relative;
+  width: 100px;
+
+  &:focus {
+
+    box-shadow: none, none, none, red;
+    + button {
+      box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%), 0 0 0 0.25rem rgb(188 9 86 / 25%);
+    }
+  }
 }
 </style>

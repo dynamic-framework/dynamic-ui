@@ -290,6 +290,44 @@ export namespace Components {
          */
         "role": string;
     }
+    interface MSelect {
+        /**
+          * The variant of the select
+         */
+        "iconEnd"?: string;
+        /**
+          * The variant of the select
+         */
+        "iconMiddle"?: string;
+        /**
+          * The variant of the select
+         */
+        "iconStart"?: string;
+        /**
+          * The variant of the select
+         */
+        "iconSubLabel"?: string;
+        /**
+          * The variant of the select
+         */
+        "label"?: string;
+        /**
+          * The variant of the select
+         */
+        "placeholder"?: string;
+        /**
+          * The variant of the select
+         */
+        "subLabel"?: string;
+        /**
+          * The variant of the select
+         */
+        "theme": string;
+        /**
+          * The variant of the select
+         */
+        "variant": 'full' | 'transparent' | 'prime';
+    }
     interface MSwitch {
         /**
           * The text to display in the switch.
@@ -387,6 +425,12 @@ declare global {
     var HTMLMNavPaneElement: {
         prototype: HTMLMNavPaneElement;
         new (): HTMLMNavPaneElement;
+    }
+    interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
+    }
+    var HTMLMSelectElement: {
+        prototype: HTMLMSelectElement;
+        new (): HTMLMSelectElement;
     };
     interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
     }
@@ -415,6 +459,7 @@ declare global {
         "m-nav-item": HTMLMNavItemElement;
         "m-nav-link": HTMLMNavLinkElement;
         "m-nav-pane": HTMLMNavPaneElement;
+        "m-select": HTMLMSelectElement;
         "m-switch": HTMLMSwitchElement;
         "m-text": HTMLMTextElement;
     }
@@ -712,6 +757,44 @@ declare namespace LocalJSX {
          */
         "role"?: string;
     }
+    interface MSelect {
+        /**
+          * The variant of the select
+         */
+        "iconEnd"?: string;
+        /**
+          * The variant of the select
+         */
+        "iconMiddle"?: string;
+        /**
+          * The variant of the select
+         */
+        "iconStart"?: string;
+        /**
+          * The variant of the select
+         */
+        "iconSubLabel"?: string;
+        /**
+          * The variant of the select
+         */
+        "label"?: string;
+        /**
+          * The variant of the select
+         */
+        "placeholder"?: string;
+        /**
+          * The variant of the select
+         */
+        "subLabel"?: string;
+        /**
+          * The variant of the select
+         */
+        "theme"?: string;
+        /**
+          * The variant of the select
+         */
+        "variant"?: 'full' | 'transparent' | 'prime';
+    }
     interface MSwitch {
         /**
           * The text to display in the switch.
@@ -739,6 +822,7 @@ declare namespace LocalJSX {
         "m-nav-item": MNavItem;
         "m-nav-link": MNavLink;
         "m-nav-pane": MNavPane;
+        "m-select": MSelect;
         "m-switch": MSwitch;
         "m-text": MText;
     }
@@ -761,6 +845,7 @@ declare module "@stencil/core" {
             "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
             "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
+            "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
             "m-switch": LocalJSX.MSwitch & JSXBase.HTMLAttributes<HTMLMSwitchElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
