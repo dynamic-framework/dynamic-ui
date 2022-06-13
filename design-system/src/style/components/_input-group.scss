@@ -1,6 +1,15 @@
 @import "~bootstrap/scss/forms";
 
-.input-group {
+.form-control-layout {
+  --#{$prefix}form-control-flex-direction: column; // TODO: move to form-control-layout scss variable.
+  // label
+  --#{$prefix}form-label-color: #{$form-label-color};
+  --#{$prefix}form-label-font-weight: #{$form-label-font-weight};
+  --#{$prefix}form-label-font-size: #{$form-label-font-size};
+  --#{$prefix}form-label-padding-x: #{$form-label-padding-x};
+  --#{$prefix}form-label-padding-y: #{$form-label-padding-y};
+  --#{$prefix}form-label-gap: #{$form-label-gap};
+  // input
   --#{$prefix}input-box-shadow: #{$input-box-shadow};
   --#{$prefix}input-border-color: #{$input-border-color};
   --#{$prefix}input-hover-border-color: #{$input-hover-border-color};
@@ -8,9 +17,34 @@
   --#{$prefix}input-group-outline-padding: #{$input-group-outline-padding};
   --#{$prefix}input-group-outline-border-width: #{$input-group-outline-border-width-width};
   --#{$prefix}input-group-outline-border-color: transparent;
-  --#{$prefix}input-group-outline-border: var(--#{$prefix}input-group-outline-border-width) solid var(--#{$prefix}input-group-outline-border-color);
   --#{$prefix}input-group-border-radius: #{$input-border-radius};
+  // hint
+  --#{$prefix}input-hint-padding: #{$input-hint-padding-y} #{$input-hint-padding-x};
+  --#{$prefix}input-hint-gap: #{$input-hint-gap};
+  // icon
+  --#{$prefix}form-control-icon-size: #{$form-control-icon-size};
 
+  display: flex;
+  flex-direction: var(--#{$prefix}form-control-flex-direction);
+  align-items: start;
+
+  &.form-control-layout-horizontal {
+    --#{$prefix}form-control-flex-direction: row;
+  }
+
+  label {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--#{$prefix}form-label-gap);
+    align-items: center;
+    padding: var(--#{$prefix}form-label-padding-y) var(--#{$prefix}form-label-padding-x);
+    font-size: var(--#{$prefix}form-label-font-size);
+    font-weight: var(--#{$prefix}form-label-font-weight);
+    color: var(--#{$prefix}form-label-color);
+  }
+}
+
+.input-group {
   position: relative;
   gap: 8px;
   background: #{$input-bg};
@@ -26,7 +60,7 @@
     left: $offset;
 
     content: " ";
-    border: var(--#{$prefix}input-group-outline-border);
+    border: var(--#{$prefix}input-group-outline-border-width) solid var(--#{$prefix}input-group-outline-border-color);
     border-radius: var(--#{$prefix}input-group-border-radius);
   }
 
@@ -51,20 +85,15 @@
 }
 
 .input-group ~ .hint {
-  --#{$prefix}input-hint-padding: #{$input-hint-padding-y} #{$input-hint-padding-x};
-  --#{$prefix}input-hint-gap: #{$input-hint-gap};
   display: inline-flex;
   flex-direction: row;
   gap: var(--#{$prefix}input-hint-gap);
   align-items: center;
   justify-content: center;
-
   padding: var(--#{$prefix}input-hint-padding);
 }
 
 .form-control-icon {
-  --#{$prefix}form-control-icon-size: #{$form-control-icon-size};
-
   width: var(--#{$prefix}form-control-icon-size);
   height: var(--#{$prefix}form-control-icon-size);
   font-size: var(--#{$prefix}form-control-icon-size);

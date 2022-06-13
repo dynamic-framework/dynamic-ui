@@ -67,6 +67,7 @@ export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-
 export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
   'mId',
   'label',
+  'labelIcon',
   'placeholder',
   'type',
   'value',
@@ -76,6 +77,7 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'hint',
   'hintIconStart',
   'hintIconEnd',
+  'layoutDirection',
   'mChange'
 ]);
 

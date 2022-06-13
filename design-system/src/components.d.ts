@@ -9,6 +9,7 @@ import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { InputState } from "./utils/component-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
+import { FormControlLayoutDirection } from "./components/m-input/m-input-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
@@ -156,6 +157,14 @@ export namespace Components {
           * The label text
          */
         "label": string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
         /**
           * The id of the input
          */
@@ -566,6 +575,14 @@ declare namespace LocalJSX {
           * The label text
          */
         "label"?: string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
         /**
           * The id of the input
          */
