@@ -300,12 +300,6 @@ export namespace Components {
          */
         "role": string;
     }
-    interface MSwitch {
-        /**
-          * The text to display in the switch.
-         */
-        "label": string;
-    }
     interface MText {
         /**
           * The theme to use
@@ -403,12 +397,6 @@ declare global {
     var HTMLMNavPaneElement: {
         prototype: HTMLMNavPaneElement;
         new (): HTMLMNavPaneElement;
-    };
-    interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
-    }
-    var HTMLMSwitchElement: {
-        prototype: HTMLMSwitchElement;
-        new (): HTMLMSwitchElement;
     };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }

@@ -25,7 +25,7 @@ import { defineCustomElement as defineMText } from '@modyo/design-system/compone
 import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
 export declare interface MAlert extends Components.MAlert {
   /**
-   * Emitted when the action button is clicked.
+   * Emitted when the action button is clicked. 
    */
   modActionClick: EventEmitter<CustomEvent<IMAlertAlertAction>>;
 
@@ -53,7 +53,7 @@ export class MAlert {
 import type { AlertAction as IMAlertActionAlertAction } from '@modyo/design-system/components';
 export declare interface MAlertAction extends Components.MAlertAction {
   /**
-   * Emitted when the action button is clicked.
+   * Emitted when the action button is clicked. 
    */
   modClick: EventEmitter<CustomEvent<IMAlertActionAlertAction>>;
 
@@ -121,7 +121,7 @@ export class MBadge {
 
 export declare interface MButton extends Components.MButton {
   /**
-   * Emitted when the button has been clicked.
+   * Emitted when the button has been clicked. 
    */
   mClick: EventEmitter<CustomEvent<any>>;
 
@@ -212,7 +212,7 @@ export class MFormSwitch {
 
 export declare interface MInput extends Components.MInput {
   /**
-   * Emitted when the input value has changed
+   * Emitted when the input value has changed 
    */
   mChange: EventEmitter<CustomEvent<string>>;
 
@@ -358,6 +358,7 @@ export class MNavPane {
     this.el = r.nativeElement;
   }
 }
+
 
 export declare interface MText extends Components.MText {}
 
