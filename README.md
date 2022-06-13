@@ -4,7 +4,7 @@
 
 + `clone`
 + `cd ds-poc` to move to a cloned repo
-+ `rush update` to install dependencies
++ `rush install` to install dependencies
 + `rush build` to build all packages
 
 ## Packages

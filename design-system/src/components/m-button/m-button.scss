@@ -10,13 +10,11 @@
   display: inline-block;
   padding: var(--#{$prefix}btn-box-border-width);
   border: var(--#{$prefix}btn-box-border);
+  border-radius: var(--#{$prefix}btn-border-radius);
 
   &:focus-within,
   &.focus {
     --#{$prefix}btn-box-border-color: var(--#{$prefix}accessibility);
-
-    border: var(--#{$prefix}btn-box-border);
-    border-radius: var(--#{$prefix}btn-border-radius);
   }
 
   // TODO: setup boundary box

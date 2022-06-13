@@ -29,7 +29,7 @@ export class MAlertAction implements ComponentInterface {
   render() {
     return (
       <m-button
-        onMButtonClick={this.clickHandler}
+        onMClick={this.clickHandler}
         text={this.action.text}
       />
     );

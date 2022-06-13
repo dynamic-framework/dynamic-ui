@@ -41,7 +41,7 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'value',
   'type',
   'isPill',
-  'mButtonClick'
+  'mClick'
 ]);
 
 
@@ -71,13 +71,20 @@ export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-for
 
 
 export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
-  'modId',
+  'mId',
   'label',
+  'labelIcon',
   'placeholder',
   'type',
   'value',
   'disabled',
-  'modChange'
+  'iconStart',
+  'iconEnd',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'layoutDirection',
+  'mChange'
 ]);
 
 
@@ -93,6 +100,37 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
   'variant',
   'selectableProps',
   'navegableProps'
+]);
+
+
+export const MNav = /*@__PURE__*/ defineContainer<JSX.MNav>('m-nav', undefined, [
+  'variant',
+  'isAriaVertical'
+]);
+
+
+export const MNavContent = /*@__PURE__*/ defineContainer<JSX.MNavContent>('m-nav-content', undefined);
+
+
+export const MNavItem = /*@__PURE__*/ defineContainer<JSX.MNavItem>('m-nav-item', undefined);
+
+
+export const MNavLink = /*@__PURE__*/ defineContainer<JSX.MNavLink>('m-nav-link', undefined, [
+  'text',
+  'icon',
+  'variant',
+  'isActive',
+  'isDisabled',
+  'optionProps',
+  'navegableProps'
+]);
+
+
+export const MNavPane = /*@__PURE__*/ defineContainer<JSX.MNavPane>('m-nav-pane', undefined, [
+  'mId',
+  'role',
+  'mTabindex',
+  'isActive'
 ]);
 
 
