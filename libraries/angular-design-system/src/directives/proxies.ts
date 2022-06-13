@@ -331,7 +331,15 @@ export declare interface MNavPane extends Components.MNavPane {}
   template: '<ng-content></ng-content>',
   inputs: ['isActive', 'mId', 'mTabindex', 'role']
 })
-export class MNavPane {}
+export class MNavPane {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
 export declare interface MSelect extends Components.MSelect {}
 
 @ProxyCmp({

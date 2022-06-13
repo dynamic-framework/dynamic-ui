@@ -425,7 +425,7 @@ declare global {
     var HTMLMNavPaneElement: {
         prototype: HTMLMNavPaneElement;
         new (): HTMLMNavPaneElement;
-    }
+    };
     interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
     }
     var HTMLMSelectElement: {
