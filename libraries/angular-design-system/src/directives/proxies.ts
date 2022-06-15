@@ -340,23 +340,30 @@ export class MNavPane {
 }
 
 
-export declare interface MSelect extends Components.MSelect {}
+export declare interface MSelect extends Components.MSelect {
+  /**
+   * Emitted when the select value has changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMSelect,
-  inputs: ['iconEnd', 'iconMiddle', 'iconStart', 'iconSubLabel', 'label', 'placeholder', 'subLabel', 'theme', 'variant']
+  inputs: ['hint', 'hintIcon', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
 })
 @Component({
   selector: 'm-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['iconEnd', 'iconMiddle', 'iconStart', 'iconSubLabel', 'label', 'placeholder', 'subLabel', 'theme', 'variant']
+  inputs: ['hint', 'hintIcon', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
 })
 export class MSelect {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 

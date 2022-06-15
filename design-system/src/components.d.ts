@@ -13,6 +13,7 @@ import { FormControlLayoutDirection } from "./components/m-input/m-input-interfa
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
+import { FormControlLayoutDirection as FormControlLayoutDirection1, FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -292,41 +293,45 @@ export namespace Components {
     }
     interface MSelect {
         /**
-          * The variant of the select
+          * The hint of the select in full variant
+         */
+        "hint"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIcon"?: string;
+        /**
+          * The end icon for the select
          */
         "iconEnd"?: string;
         /**
-          * The variant of the select
+          * The middle icon for the select
          */
         "iconMiddle"?: string;
         /**
-          * The variant of the select
+          * The start icon for the select
          */
         "iconStart"?: string;
         /**
-          * The variant of the select
-         */
-        "iconSubLabel"?: string;
-        /**
-          * The variant of the select
+          * The label of the select in full variant
          */
         "label"?: string;
         /**
-          * The variant of the select
+          * Change the layout direction to put the label on top or left of select
          */
-        "placeholder"?: string;
+        "layoutDirection": FormControlLayoutDirection1;
         /**
-          * The variant of the select
+          * Id of the select
          */
-        "subLabel"?: string;
+        "mId": string;
         /**
-          * The variant of the select
+          * The theme of the select
          */
         "theme": string;
         /**
           * The variant of the select
          */
-        "variant": 'full' | 'transparent' | 'prime';
+        "variant": FormControlLayoutVariant;
     }
     interface MSwitch {
         /**
@@ -759,41 +764,49 @@ declare namespace LocalJSX {
     }
     interface MSelect {
         /**
-          * The variant of the select
+          * The hint of the select in full variant
+         */
+        "hint"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIcon"?: string;
+        /**
+          * The end icon for the select
          */
         "iconEnd"?: string;
         /**
-          * The variant of the select
+          * The middle icon for the select
          */
         "iconMiddle"?: string;
         /**
-          * The variant of the select
+          * The start icon for the select
          */
         "iconStart"?: string;
         /**
-          * The variant of the select
-         */
-        "iconSubLabel"?: string;
-        /**
-          * The variant of the select
+          * The label of the select in full variant
          */
         "label"?: string;
         /**
-          * The variant of the select
+          * Change the layout direction to put the label on top or left of select
          */
-        "placeholder"?: string;
+        "layoutDirection"?: FormControlLayoutDirection1;
         /**
-          * The variant of the select
+          * Id of the select
          */
-        "subLabel"?: string;
+        "mId": string;
         /**
-          * The variant of the select
+          * Emitted when the select value has changed
+         */
+        "onMChange"?: (event: CustomEvent<string>) => void;
+        /**
+          * The theme of the select
          */
         "theme"?: string;
         /**
           * The variant of the select
          */
-        "variant"?: 'full' | 'transparent' | 'prime';
+        "variant"?: FormControlLayoutVariant;
     }
     interface MSwitch {
         /**
