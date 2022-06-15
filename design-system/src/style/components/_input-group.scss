@@ -17,6 +17,8 @@
   --#{$prefix}input-group-outline-padding: #{$input-group-outline-padding};
   --#{$prefix}input-group-outline-border-width: #{$input-group-outline-border-width-width};
   --#{$prefix}input-group-outline-border-color: transparent;
+  // input group
+  --#{$prefix}input-group-bg: #{$input-bg};
   --#{$prefix}input-group-border-radius: #{$input-border-radius};
   // hint
   --#{$prefix}input-hint-padding: #{$input-hint-padding-y} #{$input-hint-padding-x};
@@ -42,14 +44,22 @@
     font-weight: var(--#{$prefix}form-label-font-weight);
     color: var(--#{$prefix}form-label-color);
   }
+
+  &.form-control-layout-pill {
+    --#{$prefix}input-group-border-radius: var(--#{$prefix}border-radius-pill);
+  }
+
+  &.form-control-layout-transparent {
+    --#{$prefix}input-group-bg: transparent;
+  }
 }
 
 .input-group {
   position: relative;
   gap: 8px;
-  background: #{$input-bg};
-  border: 1px solid var(--#{$prefix}input-border-color);
-  border-radius: $input-border-radius;
+  background: var(--#{$prefix}input-group-bg);
+  border: $input-border-width solid var(--#{$prefix}input-border-color);
+  border-radius: var(--#{$prefix}input-group-border-radius);
 
   &::before {
     $offset: calc((var(--#{$prefix}input-group-outline-padding) + var(--#{$prefix}input-group-outline-border-width)) * -1);
@@ -108,6 +118,7 @@
 
 .input-group-text {
   line-height: 1rem;
+  background: var(--#{$prefix}input-group-bg);
   border-width: 0;
 }
 
@@ -118,3 +129,4 @@
 .input-group-lg {
   border-radius: $input-border-radius-lg;
 }
+
