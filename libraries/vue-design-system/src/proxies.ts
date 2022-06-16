@@ -128,6 +128,19 @@ export const MNavPane = /*@__PURE__*/ defineContainer<JSX.MNavPane>('m-nav-pane'
 ]);
 
 
+export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-quick-action', undefined, [
+  'text',
+  'subtext',
+  'extraInfo',
+  'icon',
+  'image',
+  'variant',
+  'actionWord',
+  'actionIcon',
+  'state'
+]);
+
+
 export const MSwitch = /*@__PURE__*/ defineContainer<JSX.MSwitch>('m-switch', undefined, [
   'label'
 ]);

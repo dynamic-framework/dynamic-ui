@@ -1,0 +1,81 @@
+// Quick action component variables
+
+// Border
+$quick-action-border-color: var(--#{$prefix}light) !default;
+$quick-action-border-radius: var(--#{$prefix}border-radius-sm) !default;
+$quick-action-border-style: solid !default;
+$quick-action-border-width: $border-width !default;
+// Padding
+$quick-action-padding: calc($spacer - $border-width) !default;
+// Transition
+$quick-action-transition-delay: 500ms !default;
+// Cursor
+$quick-action-cursor: pointer !default;
+// Disabled state
+$quick-action-disabled-cursor: not-allowed !default;
+$quick-action-disabled-opacity: .3 !default;
+// Outline
+$quick-action-outline: var(--#{$prefix}accessibility) solid 3px !default;
+$quick-action-outline-offset: 3px !default;
+// Colors
+$quick-action-bg: var(--#{$prefix}white) !default;
+$quick-action-bg-icon: var(--#{$prefix}tertiary) !default;
+$quick-action-color-link: var(--#{$prefix}tertiary) !default;
+$quick-action-picture-color: var(--#{$prefix}white) !default;
+// Box shadow
+$quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !default;
+
+:host {
+  display: block;
+}
+
+.quick-action {
+  padding: $quick-action-padding;
+  cursor: $quick-action-cursor;
+  background-color: $quick-action-bg;
+  border: $quick-action-border-width $quick-action-border-style $quick-action-border-color;
+  border-radius: $quick-action-border-radius;
+  transition-duration: $quick-action-transition-delay;
+
+  &.quick-action-state-focus,
+  &:focus {
+    outline: $quick-action-outline;
+    outline-offset: $quick-action-outline-offset;
+  }
+
+  &.quick-action-state-hover,
+  &:hover {
+    box-shadow: $quick-action-box-shadow;
+  }
+
+  &.quick-action-state-disabled,
+  &:disabled {
+    pointer-events: none;
+    cursor: $quick-action-disabled-cursor;
+    user-select: none;
+    opacity: $quick-action-disabled-opacity;
+  }
+}
+
+.quick-action-picture {
+  color: $quick-action-picture-color;
+  border-radius: $quick-action-border-radius;
+
+  .quick-action-icon,
+  .quick-action-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: inherit;
+  }
+
+  .quick-action-icon {
+    background-color: $quick-action-bg-icon;
+  }
+}
+
+.quick-action-link {
+  color: $quick-action-color-link;
+}
