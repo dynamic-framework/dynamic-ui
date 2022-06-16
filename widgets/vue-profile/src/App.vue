@@ -826,6 +826,78 @@
           deserunt. About.
         </m-nav-pane>
       </m-nav-content>
+      <div class="row mt-4">
+        <div class="col-6 d-flex flex-column gap-3">
+          <h6 class="fw-bold">Variantes</h6>
+          <m-quick-action
+            text="Arrow por defecto"
+            subtext="Subtitle"
+            extra-info="extra info"
+          />
+          <m-quick-action
+            text="Arrow personalizado"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-icon="heart-fill"
+          />
+          <m-quick-action
+            text="Con texto"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-word="Action"
+          />
+           <m-quick-action
+            text="Variante Compact"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-word="Action"
+            variant="compact"
+          />
+          <m-quick-action
+            text="Con icono personalizado"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-word="Action"
+            variant="compact"
+            icon="emoji-smile"
+          />
+          <m-quick-action
+            text="Con imagen"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-word="Action"
+            variant="compact"
+            image="https://via.placeholder.com/100/00ffff?text=IMG"
+          />
+          <m-quick-action
+            text="Sin subtitle"
+            action-word="Action"
+            variant="compact"
+            image="https://via.placeholder.com/100/0f0?text=IMG"
+          />
+        </div>
+        <div class="col-6 d-flex flex-column gap-3">
+          <h6 class="fw-bold">Estados</h6>
+          <m-quick-action
+            text="Hover"
+            subtext="Subtitle"
+            extra-info="extra info"
+            state="hover"
+          />
+          <m-quick-action
+            text="Focus"
+            subtext="Subtitle"
+            extra-info="extra info"
+            state="focus"
+          />
+          <m-quick-action
+            text="Disabled"
+            subtext="Subtitle"
+            extra-info="extra info"
+            state="disabled"
+          />
+        </div>
+      </div>
     </div>
   </m-app>
 </template>
@@ -848,6 +920,7 @@ import {
   MNavContent,
   MNavPane,
   MFormCheck,
+  MQuickAction
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -867,6 +940,7 @@ export default defineComponent({
     MNavContent,
     MNavPane,
     MFormCheck,
+    MQuickAction,
   },
   data() {
     return {
