@@ -64,6 +64,17 @@ export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-
 ]);
 
 
+export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-form-switch', undefined, [
+  'label',
+  'labelOn',
+  'labelOff',
+  'mId',
+  'isChecked',
+  'isDisabled',
+  'mChange'
+]);
+
+
 export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
   'mId',
   'label',
@@ -71,7 +82,7 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'placeholder',
   'type',
   'value',
-  'disabled',
+  'isDisabled',
   'iconStart',
   'iconEnd',
   'hint',
@@ -125,11 +136,6 @@ export const MNavPane = /*@__PURE__*/ defineContainer<JSX.MNavPane>('m-nav-pane'
   'role',
   'mTabindex',
   'isActive'
-]);
-
-
-export const MSwitch = /*@__PURE__*/ defineContainer<JSX.MSwitch>('m-switch', undefined, [
-  'label'
 ]);
 
 
