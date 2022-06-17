@@ -5,6 +5,30 @@
       @mod-button-click="onButtonClick"
     />
     <div>
+      <h3>Switches</h3>
+      <div class="d-flex my-4 gap-5">
+        <m-form-switch
+          m-id="switch16"
+        />
+        <m-form-switch
+          label="Default switch"
+          m-id="switch1"
+          :is-checked="switchValue1"
+          @m-change="$event => this.switchValue1 = $event.detail"
+        />
+        <m-form-switch
+          label="Default switch"
+          m-id="switch2"
+          is-checked
+        />
+        <m-form-switch
+          label="Default switch"
+          m-id="switch3"
+          is-disabled
+        />
+      </div>
+    </div>
+    <div>
       <h3>Checkboxes</h3>
       <div class="d-flex my-4 gap-5">
         <m-form-check
@@ -1028,6 +1052,7 @@ import {
   MNavPane,
   MFormCheck,
   MSelect,
+  MFormSwitch,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -1048,6 +1073,7 @@ export default defineComponent({
     MNavPane,
     MFormCheck,
     MSelect,
+    MFormSwitch,
   },
   data() {
     return {
@@ -1057,6 +1083,7 @@ export default defineComponent({
         { id: 'action 2', text: 'Action 2' },
       ],
       value: 'initial',
+      switchValue1: true,
     };
   },
   methods: {
@@ -1126,22 +1153,5 @@ export default defineComponent({
       }
     }
    }
-}
-
-button#je {
-  border-radius: 8px;
-}
-
-select#hola {
-  position: relative;
-  width: 100px;
-
-  &:focus {
-
-    box-shadow: none, none, none, red;
-    + button {
-      box-shadow: inset 0 1px 2px rgb(0 0 0 / 8%), 0 0 0 0.25rem rgb(188 9 86 / 25%);
-    }
-  }
 }
 </style>

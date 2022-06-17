@@ -43,7 +43,7 @@ export class MInput implements ComponentInterface {
   /**
    * Flag to disable the input
    */
-  @Prop() disabled = false;
+  @Prop() isDisabled = false;
   /**
    * Icon to display on input left
    */
@@ -111,7 +111,7 @@ export class MInput implements ComponentInterface {
               class="form-control"
               placeholder={this.placeholder}
               aria-label={this.label}
-              disabled={this.disabled}
+              disabled={this.isDisabled}
               value={this.value}
               aria-describedby={`${this.mId}-add`}
               onInput={this.changeHandler}

@@ -12,6 +12,7 @@ import { defineCustomElement as defineMBadge } from '@modyo/design-system/compon
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
+import { defineCustomElement as defineMFormSwitch } from '@modyo/design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
@@ -30,6 +31,7 @@ export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeEl
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
 export const MCard = /*@__PURE__*/createReactComponent<JSX.MCard, HTMLMCardElement>('m-card', undefined, undefined, defineMCard);
 export const MFormCheck = /*@__PURE__*/createReactComponent<JSX.MFormCheck, HTMLMFormCheckElement>('m-form-check', undefined, undefined, defineMFormCheck);
+export const MFormSwitch = /*@__PURE__*/createReactComponent<JSX.MFormSwitch, HTMLMFormSwitchElement>('m-form-switch', undefined, undefined, defineMFormSwitch);
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
 export const MListItem = /*@__PURE__*/createReactComponent<JSX.MListItem, HTMLMListItemElement>('m-list-item', undefined, undefined, defineMListItem);
 export const MNav = /*@__PURE__*/createReactComponent<JSX.MNav, HTMLMNavElement>('m-nav', undefined, undefined, defineMNav);
