@@ -14,7 +14,7 @@
   }
 
   .form-check-switch:hover:not([disabled]) {
-    --#{$prefix}form-switch-border-hover-color: #{$tertiary};
-    border: var(--#{$prefix}form-check-input-border-hover-width) solid var(--bs-form-switch-border-hover-color);
+    --#{$prefix}form-switch-border-hover-color: var(--#{$prefix}tertiary);
+    border: var(--#{$prefix}form-check-input-border-hover-width) solid var(--#{$prefix}form-switch-border-hover-color);
   }
 }

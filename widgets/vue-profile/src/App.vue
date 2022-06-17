@@ -8,18 +8,24 @@
       <h3>Switches</h3>
       <div class="d-flex my-4 gap-5">
         <m-form-switch
-          m-id="switch16" />
+          m-id="switch16"
+        />
         <m-form-switch
           label="Default switch"
-          m-id="switch1" />
+          m-id="switch1"
+          :is-checked="switchValue1"
+          @m-change="$event => this.switchValue1 = $event.detail"
+        />
         <m-form-switch
           label="Default switch"
           m-id="switch2"
-          checked />
+          is-checked
+        />
         <m-form-switch
           label="Default switch"
           m-id="switch3"
-          disabled />
+          is-disabled
+        />
       </div>
     </div>
     <div>
@@ -896,6 +902,7 @@ export default defineComponent({
         { id: 'action 2', text: 'Action 2' },
       ],
       value: 'initial',
+      switchValue1: true,
     };
   },
   methods: {

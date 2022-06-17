@@ -130,19 +130,31 @@ export namespace Components {
     }
     interface MFormSwitch {
         /**
+          * Flag to change the check state
+         */
+        "isChecked": boolean;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
           * The text to display in the switch.
          */
         "label": string;
+        /**
+          * The text to display when the switch is off.
+         */
+        "labelOff": string;
+        /**
+          * The text to display when the switch is on.
+         */
+        "labelOn": string;
         /**
           * Id
          */
         "mId": string;
     }
     interface MInput {
-        /**
-          * Flag to disable the input
-         */
-        "disabled": boolean;
         /**
           * Hint to display, also used to display validity feedback
          */
@@ -163,6 +175,10 @@ export namespace Components {
           * Icon to display on input left
          */
         "iconStart"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
         /**
           * The label text
          */
@@ -552,19 +568,35 @@ declare namespace LocalJSX {
     }
     interface MFormSwitch {
         /**
+          * Flag to change the check state
+         */
+        "isChecked"?: boolean;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
           * The text to display in the switch.
          */
         "label": string;
         /**
+          * The text to display when the switch is off.
+         */
+        "labelOff"?: string;
+        /**
+          * The text to display when the switch is on.
+         */
+        "labelOn"?: string;
+        /**
           * Id
          */
         "mId": string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onMChange"?: (event: CustomEvent<boolean>) => void;
     }
     interface MInput {
-        /**
-          * Flag to disable the input
-         */
-        "disabled"?: boolean;
         /**
           * Hint to display, also used to display validity feedback
          */
@@ -585,6 +617,10 @@ declare namespace LocalJSX {
           * Icon to display on input left
          */
         "iconStart"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
         /**
           * The label text
          */

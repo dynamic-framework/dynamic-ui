@@ -36,7 +36,7 @@ $input-bg: var(--#{$prefix}white) !default;
 $input-color: var(--#{$prefix}gray) !default;
 $input-border-color: var(--#{$prefix}gray-light) !default;
 // $input-border-width: $input-btn-border-width !default;
-$input-box-shadow: none !default;
+$input-box-shadow: null !default;
 
 $input-border-radius: $border-radius-sm !default;
 $input-border-radius-sm: $border-radius-sm !default;

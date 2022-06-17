@@ -1,5 +1,12 @@
 import {
-  Component, Host, h, ComponentInterface, Prop, State,
+  Component,
+  Host,
+  h,
+  ComponentInterface,
+  Prop,
+  Event,
+  EventEmitter,
+  State,
 } from '@stencil/core';
 
 @Component({
@@ -13,14 +20,37 @@ export class MFormSwitch implements ComponentInterface {
    */
   @Prop() label!: string;
   /**
+   * The text to display when the switch is on.
+   */
+  @Prop() labelOn = 'On';
+  /**
+   * The text to display when the switch is off.
+   */
+  @Prop() labelOff = 'Off';
+  /**
    * Id
    */
   @Prop() mId! : string;
+  /**
+   * Flag to change the check state
+   */
+  @Prop() isChecked = false;
+  /**
+   * Flag to disable the input
+   */
+  @Prop() isDisabled = false;
 
-  @State() state = 'Off';
+  @State() checked: boolean = this.isChecked;
 
-  private toggle = () => {
-    this.state = this.state === 'On' ? 'Off' : 'On';
+  /**
+   * Emitted when the switch has changed
+   */
+  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<boolean>;
+
+  private changeHandler = (event: Event) => {
+    const value = (event.target as HTMLInputElement).checked;
+    this.checked = value;
+    this.mChange.emit(value);
   };
 
   render() {
@@ -34,13 +64,17 @@ export class MFormSwitch implements ComponentInterface {
             >
               {this.label}
             </label>
-            <span class="form-check-label fw-bold">{this.state}</span>
+            <span class="form-check-label fw-bold">
+              {this.checked ? this.labelOn : this.labelOff}
+            </span>
             <input
-              onChange={() => this.toggle()}
+              id={this.mId}
+              onChange={(event) => this.changeHandler(event)}
               class="form-check-input form-check-switch"
               type="checkbox"
               role="switch"
-              id={this.mId}
+              checked={this.isChecked}
+              disabled={this.isDisabled}
             />
           </div>
         </div>

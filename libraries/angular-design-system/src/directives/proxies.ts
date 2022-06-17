@@ -189,23 +189,30 @@ export class MFormCheck {
 }
 
 
-export declare interface MFormSwitch extends Components.MFormSwitch {}
+export declare interface MFormSwitch extends Components.MFormSwitch {
+  /**
+   * Emitted when the switch has changed 
+   */
+  mChange: EventEmitter<CustomEvent<boolean>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMFormSwitch,
-  inputs: ['label', 'mId']
+  inputs: ['isChecked', 'isDisabled', 'label', 'labelOff', 'labelOn', 'mId']
 })
 @Component({
   selector: 'm-form-switch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['label', 'mId']
+  inputs: ['isChecked', 'isDisabled', 'label', 'labelOff', 'labelOn', 'mId']
 })
 export class MFormSwitch {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 
@@ -220,13 +227,13 @@ export declare interface MInput extends Components.MInput {
 
 @ProxyCmp({
   defineCustomElementFn: defineMInput,
-  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
 })
 @Component({
   selector: 'm-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
 })
 export class MInput {
   protected el: HTMLElement;
