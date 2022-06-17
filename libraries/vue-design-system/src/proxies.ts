@@ -154,11 +154,6 @@ export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', un
 ]);
 
 
-export const MSwitch = /*@__PURE__*/ defineContainer<JSX.MSwitch>('m-switch', undefined, [
-  'label'
-]);
-
-
 export const MText = /*@__PURE__*/ defineContainer<JSX.MText>('m-text', undefined, [
   'theme'
 ]);

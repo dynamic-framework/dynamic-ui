@@ -21,7 +21,6 @@ import { defineCustomElement as defineMNavItem } from '@modyo/design-system/comp
 import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
 import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
 import { defineCustomElement as defineMSelect } from '@modyo/design-system/components/m-select.js';
-import { defineCustomElement as defineMSwitch } from '@modyo/design-system/components/m-switch.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
 import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
@@ -393,27 +392,6 @@ export class MSelect {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MSwitch extends Components.MSwitch {}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMSwitch,
-  inputs: ['label']
-})
-@Component({
-  selector: 'm-switch',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['label']
-})
-export class MSwitch {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
   }
 }
 

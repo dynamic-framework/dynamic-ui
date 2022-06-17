@@ -359,12 +359,6 @@ export namespace Components {
          */
         "variant": FormControlLayoutVariant;
     }
-    interface MSwitch {
-        /**
-          * The text to display in the switch.
-         */
-        "label": string;
-    }
     interface MText {
         /**
           * The theme to use
@@ -469,12 +463,6 @@ declare global {
         prototype: HTMLMSelectElement;
         new (): HTMLMSelectElement;
     };
-    interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
-    }
-    var HTMLMSwitchElement: {
-        prototype: HTMLMSwitchElement;
-        new (): HTMLMSwitchElement;
-    };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
     var HTMLMTextElement: {
@@ -498,7 +486,6 @@ declare global {
         "m-nav-link": HTMLMNavLinkElement;
         "m-nav-pane": HTMLMNavPaneElement;
         "m-select": HTMLMSelectElement;
-        "m-switch": HTMLMSwitchElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -871,12 +858,6 @@ declare namespace LocalJSX {
          */
         "variant"?: FormControlLayoutVariant;
     }
-    interface MSwitch {
-        /**
-          * The text to display in the switch.
-         */
-        "label"?: string;
-    }
     interface MText {
         /**
           * The theme to use
@@ -900,7 +881,6 @@ declare namespace LocalJSX {
         "m-nav-link": MNavLink;
         "m-nav-pane": MNavPane;
         "m-select": MSelect;
-        "m-switch": MSwitch;
         "m-text": MText;
     }
 }
@@ -924,7 +904,6 @@ declare module "@stencil/core" {
             "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
-            "m-switch": LocalJSX.MSwitch & JSXBase.HTMLAttributes<HTMLMSwitchElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }
