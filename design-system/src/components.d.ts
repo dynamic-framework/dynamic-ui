@@ -355,12 +355,6 @@ export namespace Components {
          */
         "variant"?: QuickActionVariant;
     }
-    interface MSwitch {
-        /**
-          * The text to display in the switch.
-         */
-        "label": string;
-    }
     interface MText {
         /**
           * The theme to use
@@ -465,12 +459,6 @@ declare global {
         prototype: HTMLMQuickActionElement;
         new (): HTMLMQuickActionElement;
     };
-    interface HTMLMSwitchElement extends Components.MSwitch, HTMLStencilElement {
-    }
-    var HTMLMSwitchElement: {
-        prototype: HTMLMSwitchElement;
-        new (): HTMLMSwitchElement;
-    };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
     var HTMLMTextElement: {
@@ -494,7 +482,6 @@ declare global {
         "m-nav-link": HTMLMNavLinkElement;
         "m-nav-pane": HTMLMNavPaneElement;
         "m-quick-action": HTMLMQuickActionElement;
-        "m-switch": HTMLMSwitchElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -859,12 +846,6 @@ declare namespace LocalJSX {
          */
         "variant"?: QuickActionVariant;
     }
-    interface MSwitch {
-        /**
-          * The text to display in the switch.
-         */
-        "label"?: string;
-    }
     interface MText {
         /**
           * The theme to use
@@ -888,7 +869,6 @@ declare namespace LocalJSX {
         "m-nav-link": MNavLink;
         "m-nav-pane": MNavPane;
         "m-quick-action": MQuickAction;
-        "m-switch": MSwitch;
         "m-text": MText;
     }
 }
@@ -912,7 +892,6 @@ declare module "@stencil/core" {
             "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
-            "m-switch": LocalJSX.MSwitch & JSXBase.HTMLAttributes<HTMLMSwitchElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }

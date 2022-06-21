@@ -944,7 +944,7 @@ import {
   MNavContent,
   MNavPane,
   MFormCheck,
-  MQuickAction
+  MQuickAction,
   MFormSwitch,
 } from '@modyo/vue-design-system';
 

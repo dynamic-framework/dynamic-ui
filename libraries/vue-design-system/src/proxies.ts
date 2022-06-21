@@ -152,11 +152,6 @@ export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-q
 ]);
 
 
-export const MSwitch = /*@__PURE__*/ defineContainer<JSX.MSwitch>('m-switch', undefined, [
-  'label'
-]);
-
-
 export const MText = /*@__PURE__*/ defineContainer<JSX.MText>('m-text', undefined, [
   'theme'
 ]);
