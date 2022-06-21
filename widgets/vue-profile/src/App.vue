@@ -856,6 +856,7 @@
         <h6 class="fw-bold">Variant Prime</h6>
         <div class="w-50">
           <m-select 
+          class="w-100"
           @m-change="onChange"
           >
           <option value="a">A</option>
@@ -910,6 +911,16 @@
           label="Label"
           icon-start="emoji-smile"
           icon-middle="circle-fill"
+          hint="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icons</b>
+          <m-select
+          theme="success"
+          variant="full"
+          label="Label"
           hint="Earth is the third planet from the Sun."
         >
           <option value="a" selected>A</option>
@@ -996,6 +1007,14 @@
           <option value="a" selected>A</option>
           <option value="b">B</option>
           <option value="c">C</option></m-select>
+          <b>Sin icons</b>
+          <m-select
+          theme="success"
+          variant="transparent"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
           <b>Con OnChange</b>
           <m-select
           theme="warning"
@@ -1024,6 +1043,7 @@
           icon-start="emoji-smile"
           icon-middle="circle-fill"
           icon-end="cup-fill"
+          hint="Earth is the third planet from the Sun."
         >
           <option value="a" selected>A</option>
           <option value="b">B</option>
