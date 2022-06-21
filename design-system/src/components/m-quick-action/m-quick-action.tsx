@@ -56,7 +56,8 @@ export class MQuickAction implements ComponentInterface {
     return (
       <div
         class={{
-          'quick-action d-flex align-items-center gap-2': true,
+          'quick-action': true,
+          [`quick-action-variant-${this.variant}`]: !!this.variant,
           [`quick-action-state-${this.state}`]: !!this.state,
         }}
         tabindex="0"
@@ -69,25 +70,15 @@ export class MQuickAction implements ComponentInterface {
           )}
           {this.image && (
             <img
-              class="quick-action-img overflow-hidden"
+              class="quick-action-img"
               src={this.image}
               alt="Quick action"
             />
           )}
         </div>
-        <div class={{
-          'quick-action-content d-flex w-100': true,
-          'flex-column': this.variant === 'compact',
-          'gap-2': this.variant === 'extended',
-        }}
-        >
-          <div class={{
-            'quick-action-text d-flex flex-grow-1': true,
-            'flex-column': this.variant === 'extended',
-            'align-items-center gap-2': this.variant === 'compact',
-          }}
-          >
-            <span class="quick-action-title fw-bold lh-base">
+        <div class="quick-action-content">
+          <div class="quick-action-text">
+            <span class="quick-action-title">
               {this.text}
             </span>
             {this.subtext && (
@@ -98,16 +89,12 @@ export class MQuickAction implements ComponentInterface {
             )}
           </div>
           {(this.actionIcon && !this.actionWord) && (
-            <small class={{ 'align-self-center': this.variant === 'extended', 'quick-action-link': true }}>
+            <small class="quick-action-link">
               <i class={`bi bi-${this.actionIcon}`} />
             </small>
           )}
           {this.actionWord && (
-            <small class={{
-              'quick-action-link': true,
-              'align-self-center': this.variant === 'extended',
-            }}
-            >
+            <small class="quick-action-link">
               {this.actionWord}
             </small>
           )}

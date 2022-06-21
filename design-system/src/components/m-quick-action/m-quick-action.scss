@@ -25,11 +25,10 @@ $quick-action-picture-color: var(--#{$prefix}white) !default;
 // Box shadow
 $quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !default;
 
-:host {
-  display: block;
-}
-
 .quick-action {
+  display: flex;
+  gap: $spacer-2;
+  align-items: center;
   padding: $quick-action-padding;
   cursor: $quick-action-cursor;
   background-color: $quick-action-bg;
@@ -71,11 +70,61 @@ $quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !
     border-radius: inherit;
   }
 
+  .quick-action-img {
+    overflow: hidden;
+  }
+
   .quick-action-icon {
     background-color: $quick-action-bg-icon;
   }
 }
 
+.quick-action-content {
+  display: flex;
+  width: 100%;
+}
+
+.quick-action-text {
+  display: flex;
+  flex-grow: 1;
+}
+
+.quick-action-title {
+  font-weight: $font-weight-bold;
+  line-height: $line-height-base;
+}
+
 .quick-action-link {
   color: $quick-action-color-link;
+}
+
+// Extended Variant
+
+.quick-action-variant-extended {
+
+  .quick-action-content {
+    gap: $spacer-2;
+  }
+
+  .quick-action-text {
+    flex-direction: column;
+  }
+
+  .quick-action-link {
+    align-self: center;
+  }
+}
+
+// Compact Variant
+
+.quick-action-variant-compact {
+
+  .quick-action-content {
+    flex-direction: column;
+  }
+
+  .quick-action-text {
+    gap: $spacer-2;
+    align-items: center;
+  }
 }
