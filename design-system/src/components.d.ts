@@ -129,11 +129,33 @@ export namespace Components {
          */
         "value"?: string;
     }
-    interface MInput {
+    interface MFormSwitch {
+        /**
+          * Flag to change the check state
+         */
+        "isChecked": boolean;
         /**
           * Flag to disable the input
          */
-        "disabled": boolean;
+        "isDisabled": boolean;
+        /**
+          * The text to display in the switch.
+         */
+        "label": string;
+        /**
+          * The text to display when the switch is off.
+         */
+        "labelOff": string;
+        /**
+          * The text to display when the switch is on.
+         */
+        "labelOn": string;
+        /**
+          * Id
+         */
+        "mId": string;
+    }
+    interface MInput {
         /**
           * Hint to display, also used to display validity feedback
          */
@@ -154,6 +176,10 @@ export namespace Components {
           * Icon to display on input left
          */
         "iconStart"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
         /**
           * The label text
          */
@@ -385,6 +411,12 @@ declare global {
         prototype: HTMLMFormCheckElement;
         new (): HTMLMFormCheckElement;
     };
+    interface HTMLMFormSwitchElement extends Components.MFormSwitch, HTMLStencilElement {
+    }
+    var HTMLMFormSwitchElement: {
+        prototype: HTMLMFormSwitchElement;
+        new (): HTMLMFormSwitchElement;
+    };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
     var HTMLMInputElement: {
@@ -453,6 +485,7 @@ declare global {
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
         "m-form-check": HTMLMFormCheckElement;
+        "m-form-switch": HTMLMFormSwitchElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
         "m-nav": HTMLMNavElement;
@@ -592,11 +625,37 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface MInput {
+    interface MFormSwitch {
+        /**
+          * Flag to change the check state
+         */
+        "isChecked"?: boolean;
         /**
           * Flag to disable the input
          */
-        "disabled"?: boolean;
+        "isDisabled"?: boolean;
+        /**
+          * The text to display in the switch.
+         */
+        "label": string;
+        /**
+          * The text to display when the switch is off.
+         */
+        "labelOff"?: string;
+        /**
+          * The text to display when the switch is on.
+         */
+        "labelOn"?: string;
+        /**
+          * Id
+         */
+        "mId": string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onMChange"?: (event: CustomEvent<boolean>) => void;
+    }
+    interface MInput {
         /**
           * Hint to display, also used to display validity feedback
          */
@@ -617,6 +676,10 @@ declare namespace LocalJSX {
           * Icon to display on input left
          */
         "iconStart"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
         /**
           * The label text
          */
@@ -816,6 +879,7 @@ declare namespace LocalJSX {
         "m-button": MButton;
         "m-card": MCard;
         "m-form-check": MFormCheck;
+        "m-form-switch": MFormSwitch;
         "m-input": MInput;
         "m-list-item": MListItem;
         "m-nav": MNav;
@@ -839,6 +903,7 @@ declare module "@stencil/core" {
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
+            "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;

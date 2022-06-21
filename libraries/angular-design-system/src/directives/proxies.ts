@@ -12,6 +12,7 @@ import { defineCustomElement as defineMBadge } from '@modyo/design-system/compon
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
+import { defineCustomElement as defineMFormSwitch } from '@modyo/design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
@@ -190,6 +191,34 @@ export class MFormCheck {
 }
 
 
+export declare interface MFormSwitch extends Components.MFormSwitch {
+  /**
+   * Emitted when the switch has changed 
+   */
+  mChange: EventEmitter<CustomEvent<boolean>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMFormSwitch,
+  inputs: ['isChecked', 'isDisabled', 'label', 'labelOff', 'labelOn', 'mId']
+})
+@Component({
+  selector: 'm-form-switch',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['isChecked', 'isDisabled', 'label', 'labelOff', 'labelOn', 'mId']
+})
+export class MFormSwitch {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
 export declare interface MInput extends Components.MInput {
   /**
    * Emitted when the input value has changed 
@@ -200,13 +229,13 @@ export declare interface MInput extends Components.MInput {
 
 @ProxyCmp({
   defineCustomElementFn: defineMInput,
-  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
 })
 @Component({
   selector: 'm-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
 })
 export class MInput {
   protected el: HTMLElement;
