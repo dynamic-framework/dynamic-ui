@@ -7,13 +7,12 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { InputState } from "./utils/component-interface";
+import { FormControlLayoutDirection, InputState } from "./utils/component-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
-import { FormControlLayoutDirection } from "./components/m-input/m-input-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
-import { FormControlLayoutDirection as FormControlLayoutDirection1, FormControlLayoutVariant } from "./components/m-select/m-select-interface";
+import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -345,7 +344,7 @@ export namespace Components {
         /**
           * Change the layout direction to put the label on top or left of select
          */
-        "layoutDirection": FormControlLayoutDirection1;
+        "layoutDirection": FormControlLayoutDirection;
         /**
           * Id of the select
          */
@@ -840,7 +839,7 @@ declare namespace LocalJSX {
         /**
           * Change the layout direction to put the label on top or left of select
          */
-        "layoutDirection"?: FormControlLayoutDirection1;
+        "layoutDirection"?: FormControlLayoutDirection;
         /**
           * Id of the select
          */
