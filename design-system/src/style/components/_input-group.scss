@@ -42,7 +42,7 @@
     padding: var(--#{$prefix}form-label-padding-y) var(--#{$prefix}form-label-padding-x);
     font-size: var(--#{$prefix}form-label-font-size);
     font-weight: var(--#{$prefix}form-label-font-weight);
-    // color: var(--#{$prefix}form-label-color);
+    color: var(--#{$prefix}form-label-color);
   }
 
   &.form-control-layout-pill {
