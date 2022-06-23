@@ -20,6 +20,13 @@
 | `variant`           | `variant`     | The variant of the quick action      | `"compact" \| "extended" \| undefined`          | `'extended'`      |
 
 
+## Events
+
+| Event    | Description                              | Type               |
+| -------- | ---------------------------------------- | ------------------ |
+| `mClick` | Emitted when the input value has changed | `CustomEvent<any>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

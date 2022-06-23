@@ -1,11 +1,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-import type { ComponentInterface } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import {
   Component,
-  // Host,
+  Event,
   h,
   Prop,
+  Host,
 } from '@stencil/core';
+
+import { ClassMap } from '../../utils/component-interface';
 
 import { QuickActionVariant, QuickActionState } from './m-quick-action-interface';
 
@@ -51,55 +54,76 @@ export class MQuickAction implements ComponentInterface {
    * The state of the quick action
    */
   @Prop() state?: QuickActionState;
+  /**
+   * Emitted when the input value has changed
+   */
+  @Event({ eventName: 'mClick' }) mClick!: EventEmitter;
+
+  private clickHandler = () => {
+    this.mClick.emit();
+  };
+
+  private generateHostClasses(): ClassMap {
+    return {
+      'quick-action-host': true,
+      disabled: this.state === 'disabled',
+    };
+  }
+
+  private generateButtonClasses(): ClassMap {
+    return {
+      'quick-action': true,
+      [`quick-action-variant-${this.variant}`]: !!this.variant,
+      [`quick-action-state-${this.state}`]: !!this.state,
+    };
+  }
 
   render() {
     return (
-      <div
-        class={{
-          'quick-action': true,
-          [`quick-action-variant-${this.variant}`]: !!this.variant,
-          [`quick-action-state-${this.state}`]: !!this.state,
-        }}
-        tabindex="0"
-      >
-        <div class="quick-action-picture">
-          {(this.icon && !this.image) && (
+      <Host class={this.generateHostClasses()}>
+        <button
+          class={this.generateButtonClasses()}
+          onClick={this.clickHandler}
+        >
+          <div class="quick-action-picture">
+            {(this.icon && !this.image) && (
             <span class="quick-action-icon">
               <i class={`bi bi-${this.icon}`} />
             </span>
-          )}
-          {this.image && (
+            )}
+            {this.image && (
             <img
               class="quick-action-img"
               src={this.image}
               alt="Quick action"
             />
-          )}
-        </div>
-        <div class="quick-action-content">
-          <div class="quick-action-text">
-            <span class="quick-action-title">
-              {this.text}
-            </span>
-            {this.subtext && (
+            )}
+          </div>
+          <div class="quick-action-content">
+            <div class="quick-action-text">
+              <span class="quick-action-title">
+                {this.text}
+              </span>
+              {this.subtext && (
               <small class="quick-action-subtitle">
                 {this.subtext}
                 {this.extraInfo && (` - ${this.extraInfo}`)}
               </small>
-            )}
-          </div>
-          {(this.actionIcon && !this.actionWord) && (
+              )}
+            </div>
+            {(this.actionIcon && !this.actionWord) && (
             <small class="quick-action-link">
               <i class={`bi bi-${this.actionIcon}`} />
             </small>
-          )}
-          {this.actionWord && (
+            )}
+            {this.actionWord && (
             <small class="quick-action-link">
               {this.actionWord}
             </small>
-          )}
-        </div>
-      </div>
+            )}
+          </div>
+        </button>
+      </Host>
     );
   }
 }
