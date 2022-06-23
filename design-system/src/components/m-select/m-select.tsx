@@ -83,7 +83,7 @@ export class MSelect implements ComponentInterface {
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
       [`form-control-layout-${this.variant}`]: !!this.variant,
       'form-control-layout-pill': this.variant !== 'full',
-      [`text-${this.theme}`]: this.variant !== 'prime',
+      [`form-control-theme-${this.theme}`]: this.variant !== 'prime',
     };
   }
 
@@ -101,18 +101,12 @@ export class MSelect implements ComponentInterface {
         )}
         <div class="form-control-input w-100">
           <div
-            class={{
-              'input-group': true,
-              [`border border-${this.theme} text-${this.theme}`]: this.variant !== 'prime',
-            }}
+            class="input-group"
           >
             {/** TODO: Use m-icon */}
             {this.iconStart && (
               <span
-                class={{
-                  'input-group-text': true,
-                  [`text-${this.theme}`]: this.variant !== 'prime',
-                }}
+                class="input-group-text"
                 id={`${this.mId}-add`}
               >
                 <span class="form-control-icon">
@@ -134,11 +128,7 @@ export class MSelect implements ComponentInterface {
             </select>
             {(this.iconMiddle || this.iconEnd) && (
               <span
-                class={{
-                  'input-group-text': true,
-                  [`text-${this.theme}`]: this.variant !== 'prime',
-
-                }}
+                class="input-group-text"
                 id={`${this.mId}-add`}
               >
                 {this.iconMiddle && (
