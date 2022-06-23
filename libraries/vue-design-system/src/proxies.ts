@@ -148,7 +148,8 @@ export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-q
   'variant',
   'actionWord',
   'actionIcon',
-  'state'
+  'state',
+  'mClick'
 ]);
 
 

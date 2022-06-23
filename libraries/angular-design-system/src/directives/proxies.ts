@@ -368,7 +368,13 @@ export class MNavPane {
 }
 
 
-export declare interface MQuickAction extends Components.MQuickAction {}
+export declare interface MQuickAction extends Components.MQuickAction {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mClick: EventEmitter<CustomEvent<any>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMQuickAction,
@@ -385,6 +391,7 @@ export class MQuickAction {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClick']);
   }
 }
 

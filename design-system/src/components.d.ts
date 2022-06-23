@@ -830,6 +830,10 @@ declare namespace LocalJSX {
          */
         "image"?: string;
         /**
+          * Emitted when the input value has changed
+         */
+        "onMClick"?: (event: CustomEvent<any>) => void;
+        /**
           * The state of the quick action
          */
         "state"?: QuickActionState;
