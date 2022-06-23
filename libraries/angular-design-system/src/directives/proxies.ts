@@ -376,13 +376,6 @@ export declare interface MQuickAction extends Components.MQuickAction {
   mClick: EventEmitter<CustomEvent<any>>;
 
 }
-export declare interface MSelect extends Components.MSelect {
-  /**
-   * Emitted when the select value has changed 
-   */
-  mChange: EventEmitter<CustomEvent<string>>;
-
-}
 
 @ProxyCmp({
   defineCustomElementFn: defineMQuickAction,
@@ -395,9 +388,27 @@ export declare interface MSelect extends Components.MSelect {
   inputs: ['actionIcon', 'actionWord', 'extraInfo', 'icon', 'image', 'state', 'subtext', 'text', 'variant']
 })
 export class MQuickAction {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClick']);
+  }
+}
+
+
+export declare interface MSelect extends Components.MSelect {
+  /**
+   * Emitted when the select value has changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+
+}
+
+@ProxyCmp({
   defineCustomElementFn: defineMSelect,
   inputs: ['hint', 'hintIcon', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
-}
+})
 @Component({
   selector: 'm-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -409,7 +420,6 @@ export class MSelect {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClick']);
     proxyOutputs(this, this.el, ['mChange']);
   }
 }

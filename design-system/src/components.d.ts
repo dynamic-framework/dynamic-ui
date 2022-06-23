@@ -500,7 +500,7 @@ declare global {
     var HTMLMQuickActionElement: {
         prototype: HTMLMQuickActionElement;
         new (): HTMLMQuickActionElement;
-    }
+    };
     interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
     }
     var HTMLMSelectElement: {
