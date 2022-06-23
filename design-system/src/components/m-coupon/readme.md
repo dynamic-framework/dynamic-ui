@@ -25,6 +25,13 @@
 | `type`               | `type`        | The type of the input   | `string`                                                                                              | `'text'`        |
 
 
+## Events
+
+| Event    | Description                              | Type                  |
+| -------- | ---------------------------------------- | --------------------- |
+| `mClick` | Emitted when the input value has changed | `CustomEvent<string>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -1,9 +1,10 @@
-import type { ComponentInterface } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import {
   Component,
   h,
   Prop,
   Host,
+  Event,
 } from '@stencil/core';
 
 import { InputState, InputThemes } from '../../utils/component-interface';
@@ -70,6 +71,28 @@ export class MCoupon implements ComponentInterface {
    * */
   @Prop() theme?: InputThemes = 'primary';
 
+  /**
+   * Emitted when the input value has changed
+   */
+  @Event({ eventName: 'mClick' }) mClick!: EventEmitter<string>;
+
+  /**
+   * HTML input elemet
+   */
+  private htmlInput?: HTMLInputElement;
+
+  /**
+   * HTML select elemet
+   */
+  private htmlSelect?: HTMLSelectElement;
+
+  private clickHandler = () => {
+    this.mClick.emit(JSON.stringify({
+      inputValue: this.htmlInput?.value,
+      selectValue: this.htmlSelect?.value,
+    }));
+  };
+
   render() {
     return (
       <Host class={`form-control-layout form-control-layout-coupon form-control-theme-${this.theme}`}>
@@ -96,11 +119,17 @@ export class MCoupon implements ComponentInterface {
               </span>
             )}
             {this.hasSelect && (
-              <select class="form-select">
+              <select
+               // eslint-disable-next-line no-return-assign
+                ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
+                class="form-select"
+              >
                 <slot />
               </select>
             )}
             <input
+              // eslint-disable-next-line no-return-assign
+              ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
               type={this.type}
               class="form-control"
@@ -119,7 +148,12 @@ export class MCoupon implements ComponentInterface {
                 </span>
               </span>
             )}
-            <button class={`btn btn-text-${this.theme} fw-semibold text-uppercase small`}>{this.textButton}</button>
+            <button
+              class={`btn btn-text-${this.theme} fw-semibold text-uppercase small`}
+              onClick={this.clickHandler}
+            >
+              {this.textButton}
+            </button>
             {this.iconEnd && (
               <span
                 class="input-group-text"
