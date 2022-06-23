@@ -11,6 +11,7 @@ import { defineCustomElement as defineMApp } from '@modyo/design-system/componen
 import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
+import { defineCustomElement as defineMCoupon } from '@modyo/design-system/components/m-coupon.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyo/design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
@@ -160,6 +161,27 @@ export declare interface MCard extends Components.MCard {}
   inputs: ['header', 'theme']
 })
 export class MCard {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MCoupon extends Components.MCoupon {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMCoupon,
+  inputs: ['hasSelect', 'hint', 'iconEnd', 'iconHint', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'mId', 'placeholder', 'state', 'textButton', 'theme', 'type']
+})
+@Component({
+  selector: 'm-coupon',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['hasSelect', 'hint', 'iconEnd', 'iconHint', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'mId', 'placeholder', 'state', 'textButton', 'theme', 'type']
+})
+export class MCoupon {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();

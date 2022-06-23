@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { InputState } from "./utils/component-interface";
+import { InputState, InputThemes } from "./utils/component-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { FormControlLayoutDirection } from "./components/m-input/m-input-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
@@ -89,6 +89,64 @@ export namespace Components {
           * The theme to use
          */
         "theme": string;
+    }
+    interface MCoupon {
+        /**
+          * Has a button select
+         */
+        "hasSelect": boolean;
+        /**
+          * Hint for the m-cupon
+         */
+        "hint"?: string;
+        /**
+          * Icon of the end side
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon for the hint text
+         */
+        "iconHint"?: string;
+        /**
+          * Icon for the label text
+         */
+        "iconLabel"?: string | undefined;
+        /**
+          * Icon of the middle side
+         */
+        "iconMiddle"?: string;
+        /**
+          * Icon of the left side
+         */
+        "iconStart"?: string;
+        /**
+          * Label for the m-cupon
+         */
+        "label": string;
+        /**
+          * Id for the m-cupon
+         */
+        "mId": string;
+        /**
+          * Placeholder for input
+         */
+        "placeholder"?: string;
+        /**
+          * State for the m-cupon
+         */
+        "state"?: InputState;
+        /**
+          * Text for the button
+         */
+        "textButton"?: string;
+        /**
+          * Theme for the m-cupon
+         */
+        "theme"?: InputThemes;
+        /**
+          * The type of the input
+         */
+        "type": string;
     }
     interface MFormCheck {
         /**
@@ -360,6 +418,12 @@ declare global {
         prototype: HTMLMCardElement;
         new (): HTMLMCardElement;
     };
+    interface HTMLMCouponElement extends Components.MCoupon, HTMLStencilElement {
+    }
+    var HTMLMCouponElement: {
+        prototype: HTMLMCouponElement;
+        new (): HTMLMCouponElement;
+    };
     interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
     }
     var HTMLMFormCheckElement: {
@@ -427,6 +491,7 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
+        "m-coupon": HTMLMCouponElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
         "m-input": HTMLMInputElement;
@@ -527,6 +592,64 @@ declare namespace LocalJSX {
           * The theme to use
          */
         "theme"?: string;
+    }
+    interface MCoupon {
+        /**
+          * Has a button select
+         */
+        "hasSelect"?: boolean;
+        /**
+          * Hint for the m-cupon
+         */
+        "hint"?: string;
+        /**
+          * Icon of the end side
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon for the hint text
+         */
+        "iconHint"?: string;
+        /**
+          * Icon for the label text
+         */
+        "iconLabel"?: string | undefined;
+        /**
+          * Icon of the middle side
+         */
+        "iconMiddle"?: string;
+        /**
+          * Icon of the left side
+         */
+        "iconStart"?: string;
+        /**
+          * Label for the m-cupon
+         */
+        "label": string;
+        /**
+          * Id for the m-cupon
+         */
+        "mId": string;
+        /**
+          * Placeholder for input
+         */
+        "placeholder"?: string;
+        /**
+          * State for the m-cupon
+         */
+        "state"?: InputState;
+        /**
+          * Text for the button
+         */
+        "textButton"?: string;
+        /**
+          * Theme for the m-cupon
+         */
+        "theme"?: InputThemes;
+        /**
+          * The type of the input
+         */
+        "type"?: string;
     }
     interface MFormCheck {
         /**
@@ -775,6 +898,7 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
+        "m-coupon": MCoupon;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
         "m-input": MInput;
@@ -797,6 +921,7 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
+            "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
