@@ -87,16 +87,16 @@ export class MQuickAction implements ComponentInterface {
         >
           <div class="quick-action-picture">
             {(this.icon && !this.image) && (
-            <span class="quick-action-icon">
-              <i class={`bi bi-${this.icon}`} />
-            </span>
+              <span class="quick-action-icon">
+                <i class={`bi bi-${this.icon}`} />
+              </span>
             )}
             {this.image && (
-            <img
-              class="quick-action-img"
-              src={this.image}
-              alt="Quick action"
-            />
+              <img
+                class="quick-action-img"
+                src={this.image}
+                alt="Quick action"
+              />
             )}
           </div>
           <div class="quick-action-content">
@@ -105,21 +105,21 @@ export class MQuickAction implements ComponentInterface {
                 {this.text}
               </span>
               {this.subtext && (
-              <small class="quick-action-subtitle">
-                {this.subtext}
-                {this.extraInfo && (` - ${this.extraInfo}`)}
-              </small>
+                <small class="quick-action-subtitle">
+                  {this.subtext}
+                  {this.extraInfo && (` - ${this.extraInfo}`)}
+                </small>
               )}
             </div>
             {(this.actionIcon && !this.actionWord) && (
-            <small class="quick-action-link">
-              <i class={`bi bi-${this.actionIcon}`} />
-            </small>
+              <small class="quick-action-link">
+                <i class={`bi bi-${this.actionIcon}`} />
+              </small>
             )}
             {this.actionWord && (
-            <small class="quick-action-link">
-              {this.actionWord}
-            </small>
+              <small class="quick-action-link">
+                {this.actionWord}
+              </small>
             )}
           </div>
         </button>
