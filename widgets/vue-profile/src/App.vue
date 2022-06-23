@@ -863,9 +863,10 @@
             theme="primary"
             hint="Earth is the third planet from the Sun."
             icon-hint="emoji-smile"
+            @m-click="print"
           >
-            <option value="a">aaaa</option>
-            <option value="a">aa</option>
+            <option value="aaa">aaa</option>
+            <option value="aa">aa</option>
             <option value="a">a</option>
           </m-coupon>
         </div>
@@ -1038,6 +1039,9 @@ export default defineComponent({
     },
     onInputChange(event: CustomEvent<string>) {
       this.value = event.detail;
+    },
+    print({ detail }: CustomEvent) {
+      console.log(JSON.parse(detail));
     },
   },
 });
