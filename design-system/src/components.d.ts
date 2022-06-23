@@ -7,12 +7,12 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { InputState } from "./utils/component-interface";
+import { FormControlLayoutDirection, InputState } from "./utils/component-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
-import { FormControlLayoutDirection } from "./components/m-input/m-input-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
+import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -316,6 +316,48 @@ export namespace Components {
          */
         "role": string;
     }
+    interface MSelect {
+        /**
+          * The hint of the select in full variant
+         */
+        "hint"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIcon"?: string;
+        /**
+          * The end icon for the select
+         */
+        "iconEnd"?: string;
+        /**
+          * The middle icon for the select
+         */
+        "iconMiddle"?: string;
+        /**
+          * The start icon for the select
+         */
+        "iconStart"?: string;
+        /**
+          * The label of the select in full variant
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of select
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * Id of the select
+         */
+        "mId": string;
+        /**
+          * The theme of the select
+         */
+        "theme": string;
+        /**
+          * The variant of the select
+         */
+        "variant": FormControlLayoutVariant;
+    }
     interface MText {
         /**
           * The theme to use
@@ -414,6 +456,12 @@ declare global {
         prototype: HTMLMNavPaneElement;
         new (): HTMLMNavPaneElement;
     };
+    interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
+    }
+    var HTMLMSelectElement: {
+        prototype: HTMLMSelectElement;
+        new (): HTMLMSelectElement;
+    };
     interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
     }
     var HTMLMTextElement: {
@@ -436,6 +484,7 @@ declare global {
         "m-nav-item": HTMLMNavItemElement;
         "m-nav-link": HTMLMNavLinkElement;
         "m-nav-pane": HTMLMNavPaneElement;
+        "m-select": HTMLMSelectElement;
         "m-text": HTMLMTextElement;
     }
 }
@@ -762,6 +811,52 @@ declare namespace LocalJSX {
          */
         "role"?: string;
     }
+    interface MSelect {
+        /**
+          * The hint of the select in full variant
+         */
+        "hint"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIcon"?: string;
+        /**
+          * The end icon for the select
+         */
+        "iconEnd"?: string;
+        /**
+          * The middle icon for the select
+         */
+        "iconMiddle"?: string;
+        /**
+          * The start icon for the select
+         */
+        "iconStart"?: string;
+        /**
+          * The label of the select in full variant
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of select
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * Id of the select
+         */
+        "mId": string;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onMChange"?: (event: CustomEvent<string>) => void;
+        /**
+          * The theme of the select
+         */
+        "theme"?: string;
+        /**
+          * The variant of the select
+         */
+        "variant"?: FormControlLayoutVariant;
+    }
     interface MText {
         /**
           * The theme to use
@@ -784,6 +879,7 @@ declare namespace LocalJSX {
         "m-nav-item": MNavItem;
         "m-nav-link": MNavLink;
         "m-nav-pane": MNavPane;
+        "m-select": MSelect;
         "m-text": MText;
     }
 }
@@ -806,6 +902,7 @@ declare module "@stencil/core" {
             "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
             "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
+            "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }

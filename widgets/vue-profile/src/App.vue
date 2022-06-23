@@ -851,6 +851,205 @@
         </m-nav-pane>
       </m-nav-content>
     </div>
+    <div class="row gap-3">
+      <div class="col-12">
+        <h6 class="fw-bold">Variant Prime</h6>
+        <div class="w-50">
+          <m-select 
+          class="w-100"
+          @m-change="onChange"
+          >
+          <option value="a">A</option>
+          <option value="b">B</option>
+          <option value="c">C</option>
+        </m-select>
+        </div>
+      </div>
+      <div class="col-5 d-flex flex-column gap-2 mt-3">
+        <h6 class="fw-bold">Variant full</h6>
+          <m-select
+          theme="primary"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          hint="Earth is the third planet from the Sun."
+          @m-change="onChange"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon start</b>
+          <m-select
+          theme="secondary"
+          variant="full"
+          label="Label"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          hint="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon middle</b>
+          <m-select
+          theme="tertiary"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-end="cup-fill"
+          hint="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon end</b>
+          <m-select
+          theme="success"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          hint="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icons</b>
+          <m-select
+          theme="success"
+          variant="full"
+          label="Label"
+          hint="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin label</b>
+          <m-select
+          theme="warning"
+          variant="full"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          hint="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin hint</b>
+          <m-select
+          theme="info"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Otro hint icon</b>
+          <m-select
+          theme="danger"
+          variant="full"
+          label="Label"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          hint-icon="heart-fill"
+          hint="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+      </div>
+      <div class="col-5 d-flex flex-column gap-2 mt-3">
+        <h6 class="fw-bold">Variant transparent</h6>
+          <m-select
+          theme="primary"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon start</b>
+          <m-select
+          theme="secondary"
+          variant="transparent"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon middle</b>
+          <m-select
+          theme="tertiary"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icon end</b>
+          <m-select
+          theme="success"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Sin icons</b>
+          <m-select
+          theme="success"
+          variant="transparent"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <b>Con OnChange</b>
+          <m-select
+          theme="warning"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          @m-change="onChange"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <m-select
+          theme="info"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+          <m-select
+          theme="danger"
+          variant="transparent"
+          icon-start="emoji-smile"
+          icon-middle="circle-fill"
+          icon-end="cup-fill"
+          hint="Earth is the third planet from the Sun."
+        >
+          <option value="a" selected>A</option>
+          <option value="b">B</option>
+          <option value="c">C</option></m-select>
+      </div>
+      </div>
   </m-app>
 </template>
 
@@ -872,6 +1071,7 @@ import {
   MNavContent,
   MNavPane,
   MFormCheck,
+  MSelect,
   MFormSwitch,
 } from '@modyo/vue-design-system';
 
@@ -892,6 +1092,7 @@ export default defineComponent({
     MNavContent,
     MNavPane,
     MFormCheck,
+    MSelect,
     MFormSwitch,
   },
   data() {
@@ -914,6 +1115,12 @@ export default defineComponent({
     },
     onInputChange(event: CustomEvent<string>) {
       this.value = event.detail;
+    },
+    print() {
+      console.log('hola');
+    },
+    onChange({ detail }: CustomEvent) {
+      console.log(detail);
     },
   },
 });

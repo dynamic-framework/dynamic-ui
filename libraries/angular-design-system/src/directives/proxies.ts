@@ -20,6 +20,7 @@ import { defineCustomElement as defineMNavContent } from '@modyo/design-system/c
 import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
 import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
 import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
+import { defineCustomElement as defineMSelect } from '@modyo/design-system/components/m-select.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
 import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
@@ -363,6 +364,34 @@ export class MNavPane {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MSelect extends Components.MSelect {
+  /**
+   * Emitted when the select value has changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMSelect,
+  inputs: ['hint', 'hintIcon', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
+})
+@Component({
+  selector: 'm-select',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['hint', 'hintIcon', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
+})
+export class MSelect {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 

@@ -139,6 +139,21 @@ export const MNavPane = /*@__PURE__*/ defineContainer<JSX.MNavPane>('m-nav-pane'
 ]);
 
 
+export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
+  'mId',
+  'variant',
+  'theme',
+  'label',
+  'iconStart',
+  'iconMiddle',
+  'iconEnd',
+  'hintIcon',
+  'hint',
+  'layoutDirection',
+  'mChange'
+]);
+
+
 export const MText = /*@__PURE__*/ defineContainer<JSX.MText>('m-text', undefined, [
   'theme'
 ]);
