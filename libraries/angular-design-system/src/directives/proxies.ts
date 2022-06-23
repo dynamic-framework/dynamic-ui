@@ -169,7 +169,13 @@ export class MCard {
 }
 
 
-export declare interface MCoupon extends Components.MCoupon {}
+export declare interface MCoupon extends Components.MCoupon {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mClick: EventEmitter<CustomEvent<string>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMCoupon,
@@ -186,6 +192,7 @@ export class MCoupon {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClick']);
   }
 }
 

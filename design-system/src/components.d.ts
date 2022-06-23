@@ -631,6 +631,10 @@ declare namespace LocalJSX {
          */
         "mId": string;
         /**
+          * Emitted when the input value has changed
+         */
+        "onMClick"?: (event: CustomEvent<string>) => void;
+        /**
           * Placeholder for input
          */
         "placeholder"?: string;
