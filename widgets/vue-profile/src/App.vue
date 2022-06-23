@@ -850,6 +850,128 @@
           deserunt. About.
         </m-nav-pane>
       </m-nav-content>
+      <div class="row py-5">
+        <div class="col-6">
+          <m-coupon
+            m-id="primary"
+            placeholder="primary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="primary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">aaaa</option>
+            <option value="a">aa</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            placeholder="secondary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="secondary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            placeholder="tertiary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="tertiary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            placeholder="success"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="success"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            placeholder="info"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="info"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            placeholder="warning"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="warning"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            placeholder="danger"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="danger"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+      </div>
     </div>
   </m-app>
 </template>
@@ -873,6 +995,7 @@ import {
   MNavPane,
   MFormCheck,
   MFormSwitch,
+  MCoupon,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -893,6 +1016,7 @@ export default defineComponent({
     MNavPane,
     MFormCheck,
     MFormSwitch,
+    MCoupon,
   },
   data() {
     return {
