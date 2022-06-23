@@ -857,6 +857,7 @@
             text="Arrow por defecto"
             subtext="Subtitle"
             extra-info="extra info"
+            @m-click="print"
           />
           <m-quick-action
             text="Arrow personalizado"
@@ -988,6 +989,9 @@ export default defineComponent({
     },
     onInputChange(event: CustomEvent<string>) {
       this.value = event.detail;
+    },
+    print(e: CustomEvent) {
+      console.log(e);
     },
   },
 });
