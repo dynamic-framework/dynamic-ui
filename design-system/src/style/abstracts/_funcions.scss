@@ -1,1 +1,16 @@
 // Theme functions
+@use "sass:math";
+
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return math.div($number, $number * 0 + 1);
+  }
+  @return $number;
+}
+
+@function to-rem($value-in-px, $base-in-px: $font-size-root) {
+  $value: strip-unit($value-in-px);
+  $base: strip-unit($base-in-px);
+  $result: math.div($value, $base) * 1rem;
+  @return $result;
+}
