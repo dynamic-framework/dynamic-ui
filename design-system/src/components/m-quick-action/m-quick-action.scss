@@ -1,42 +1,27 @@
-// Quick action component variables
+.quick-action-host {
+  background-color: $quick-action-bg;
+  border-radius: $quick-action-border-radius;
 
-// Border
-$quick-action-border-color: var(--#{$prefix}light) !default;
-$quick-action-border-radius: var(--#{$prefix}border-radius-sm) !default;
-$quick-action-border-style: solid !default;
-$quick-action-border-width: $border-width !default;
-// Padding
-$quick-action-padding: calc($spacer - $border-width) !default;
-// Transition
-$quick-action-transition-delay: 500ms !default;
-// Cursor
-$quick-action-cursor: pointer !default;
-// Disabled state
-$quick-action-disabled-cursor: not-allowed !default;
-$quick-action-disabled-opacity: .3 !default;
-// Outline
-$quick-action-outline: var(--#{$prefix}accessibility) solid 3px !default;
-$quick-action-outline-offset: 3px !default;
-// Colors
-$quick-action-bg: var(--#{$prefix}white) !default;
-$quick-action-bg-icon: var(--#{$prefix}tertiary) !default;
-$quick-action-color-link: var(--#{$prefix}tertiary) !default;
-$quick-action-picture-color: var(--#{$prefix}white) !default;
-// Box shadow
-$quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !default;
+  &.disabled {
+    opacity: $quick-action-disabled-opacity;
+  }
+}
 
 .quick-action {
   display: flex;
   gap: $spacer-2;
   align-items: center;
+  width: 100%;
   padding: $quick-action-padding;
   cursor: $quick-action-cursor;
   background-color: $quick-action-bg;
+  background-position: center;
   border: $quick-action-border-width $quick-action-border-style $quick-action-border-color;
   border-radius: $quick-action-border-radius;
-  transition-duration: $quick-action-transition-delay;
+  transition-duration: $quick-action-transition-duration;
 
   &.quick-action-state-focus,
+  &:focus:not(:focus-visible),
   &:focus {
     outline: $quick-action-outline;
     outline-offset: $quick-action-outline-offset;
@@ -44,6 +29,7 @@ $quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !
 
   &.quick-action-state-hover,
   &:hover {
+    background: $quick-action-bg radial-gradient(circle, transparent 1%, $quick-action-bg 1%) center/15000%;
     box-shadow: $quick-action-box-shadow;
   }
 
@@ -52,7 +38,12 @@ $quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !
     pointer-events: none;
     cursor: $quick-action-disabled-cursor;
     user-select: none;
-    opacity: $quick-action-disabled-opacity;
+  }
+
+  &:active {
+    background-color: rgba(var(--#{$prefix}tertiary-rgb), .2);
+    background-size: 100%;
+    transition: background 0s;
   }
 }
 
@@ -96,6 +87,7 @@ $quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !
 
 .quick-action-link {
   color: $quick-action-color-link;
+  text-align: start;
 }
 
 // Extended Variant
@@ -108,6 +100,7 @@ $quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !
 
   .quick-action-text {
     flex-direction: column;
+    text-align: start;
   }
 
   .quick-action-link {
@@ -126,5 +119,6 @@ $quick-action-box-shadow: 0 8px 12px rgba(var(--#{$prefix}dark-hover-rgb), .1) !
   .quick-action-text {
     gap: $spacer-2;
     align-items: center;
+    text-align: start;
   }
 }
