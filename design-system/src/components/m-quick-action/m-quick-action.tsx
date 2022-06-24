@@ -84,6 +84,7 @@ export class MQuickAction implements ComponentInterface {
         <button
           class={this.generateButtonClasses()}
           onClick={this.clickHandler}
+          disabled={this.state === 'disabled'}
         >
           <div class="quick-action-picture">
             {(this.icon && !this.image) && (

@@ -1,10 +1,30 @@
-.quick-action-host {
-  background-color: $quick-action-bg;
-  border-radius: $quick-action-border-radius;
+// .quick-action-host {
+//   border-radius: $quick-action-border-radius;
 
-  &.disabled {
-    opacity: $quick-action-disabled-opacity;
+//   &.disabled {
+//     opacity: $quick-action-disabled-opacity;
+//   }
+// }
+
+.quick-action-host {
+  --#{$prefix}btn-border-radius: #{$quick-action-border-radius};
+  --#{$prefix}btn-box-border-width: #{$quick-action-border-width};
+  --#{$prefix}btn-box-border-color: transparent;
+  --#{$prefix}btn-box-border: var(--#{$prefix}btn-box-border-width) solid var(--#{$prefix}btn-box-border-color);
+  display: inline-block;
+  padding: var(--#{$prefix}btn-box-border-width);
+
+  background-color: $quick-action-bg;
+  border: var(--#{$prefix}btn-box-border);
+  border-radius: var(--#{$prefix}btn-border-radius);
+
+  &:focus-within,
+  &.focus {
+    --#{$prefix}btn-box-border-color: var(--#{$prefix}accessibility);
   }
+
+  // TODO: setup boundary box
+  // margin: $btn-boundary-box-margin-y $btn-boundary-box-margin-x;
 }
 
 .quick-action {
@@ -18,14 +38,14 @@
   background-position: center;
   border: $quick-action-border-width $quick-action-border-style $quick-action-border-color;
   border-radius: $quick-action-border-radius;
-  transition-duration: $quick-action-transition-duration;
+  transition: background $quick-action-transition-duration;
 
-  &.quick-action-state-focus,
-  &:focus:not(:focus-visible),
-  &:focus {
-    outline: $quick-action-outline;
-    outline-offset: $quick-action-outline-offset;
-  }
+  // &.quick-action-state-focus,
+  // &:focus:not(:focus-visible),
+  // &:focus {
+  //   // outline: $quick-action-outline;
+  //   // outline-offset: $quick-action-outline-offset;
+  // }
 
   &.quick-action-state-hover,
   &:hover {
