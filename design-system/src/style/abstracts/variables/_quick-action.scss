@@ -6,7 +6,7 @@ $quick-action-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $quick-action-border-style: solid !default;
 $quick-action-border-width: $border-width !default;
 // Padding
-$quick-action-padding: calc($spacer - $border-width) !default;
+$quick-action-padding: calc(#{$spacer} - #{$border-width}) !default;
 // Transition
 $quick-action-transition-duration: 800ms !default;
 // Cursor
@@ -15,7 +15,7 @@ $quick-action-cursor: pointer !default;
 $quick-action-disabled-cursor: not-allowed !default;
 $quick-action-disabled-opacity: .3 !default;
 // Outline
-$quick-action-outline: var(--#{$prefix}accessibility) solid 3px !default;
+$quick-action-host-border-width: 3px !default;
 $quick-action-outline-offset: 3px !default;
 // Colors
 $quick-action-bg: var(--#{$prefix}white) !default;

@@ -851,7 +851,7 @@
         </m-nav-pane>
       </m-nav-content>
       <div class="row mt-4">
-        <div class="col-6 d-flex flex-column gap-3">
+        <div class="col-6 d-flex flex-column">
           <h6 class="fw-bold">Variantes</h6>
           <m-quick-action
             text="Arrow por defecto"
@@ -928,7 +928,7 @@
       <div class="col-12">
         <h6 class="fw-bold">Variant Prime</h6>
         <div class="w-50">
-          <m-select 
+          <m-select
           class="w-100"
           @m-change="onChange"
           >
