@@ -157,7 +157,7 @@ $form-select-padding-x: $input-padding-x !default;
 // $form-select-disabled-bg: $gray-200 !default;
 // $form-select-disabled-border-color: $input-disabled-border-color !default;
 $form-select-bg-position: right center !default;
-$form-select-bg-size: 24px !default; // In pixels because image dimensions
+$form-select-bg-size: var(--#{$prefix}form-select-bg-size) !default; // In pixels because image dimensions
 $form-select-bg-opacity: .1 !default;
 $form-select-indicator-color: $gray-600 !default;
 // $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>") !default;

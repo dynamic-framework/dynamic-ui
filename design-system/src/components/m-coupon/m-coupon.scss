@@ -4,16 +4,18 @@
 
 .form-control-layout-coupon {
 
+  .form-select {
+    --#{$prefix}form-select-bg-size: 16px; // In pixels because image dimensions
+
+    flex: none;
+    width: 3rem;
+  }
+
   .form-select,
   .form-control {
     border-width: 0;
     outline-width: 0;
     box-shadow: none;
-  }
-
-  .form-select {
-    flex: none;
-    width: 3rem;
   }
 
   .btn.small {
