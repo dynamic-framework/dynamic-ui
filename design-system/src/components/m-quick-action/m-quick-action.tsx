@@ -66,6 +66,7 @@ export class MQuickAction implements ComponentInterface {
   private generateHostClasses(): ClassMap {
     return {
       'quick-action-host': true,
+      focus: this.state === 'focus',
       disabled: this.state === 'disabled',
     };
   }
