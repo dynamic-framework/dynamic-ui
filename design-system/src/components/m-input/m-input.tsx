@@ -7,9 +7,7 @@ import {
   Host,
 } from '@stencil/core';
 
-import { ClassMap } from '../../utils/component-interface';
-
-import { FormControlLayoutDirection } from './m-input-interface';
+import { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
 
 @Component({
   tag: 'm-input',
