@@ -901,7 +901,7 @@
             image="https://via.placeholder.com/100/0f0?text=IMG"
           />
         </div>
-        <div class="col-6 d-flex flex-column gap-3">
+        <div class="col-6 d-flex flex-column">
           <h6 class="fw-bold">Estados</h6>
           <m-quick-action
             text="Hover"
