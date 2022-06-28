@@ -1,40 +1,33 @@
-// .quick-action-host {
-//   border-radius: $quick-action-border-radius;
-
-//   &.disabled {
-//     opacity: $quick-action-disabled-opacity;
-//   }
-// }
-
 .quick-action-host {
-  --#{$prefix}btn-border-radius: #{$quick-action-border-radius};
-  --#{$prefix}btn-box-border-width: #{$quick-action-host-border-width};
-  --#{$prefix}btn-box-border-color: transparent;
-  --#{$prefix}btn-box-border: var(--#{$prefix}btn-box-border-width) solid var(--#{$prefix}btn-box-border-color);
+  --#{$prefix}quick-action-border-radius: #{$quick-action-border-radius};
+  --#{$prefix}quick-action-host-border-width: #{$quick-action-host-border-width};
+  --#{$prefix}quick-action-border-color: transparent;
+  --#{$prefix}quick-action-border: var(--#{$prefix}quick-action-host-border-width) solid var(--#{$prefix}quick-action-border-color);
 
-  // background-color: $quick-action-bg;
   position: relative;
   display: inline-block;
-  padding: var(--#{$prefix}btn-box-border-width);
-  border: var(--#{$prefix}btn-box-border);
-  border-radius: var(--#{$prefix}btn-border-radius);
+  padding: var(--#{$prefix}quick-action-host-border-width);
+  border: var(--#{$prefix}quick-action-border);
+  border-radius: var(--#{$prefix}quick-action-border-radius);
 
   &:focus-within,
   &.focus {
-    --#{$prefix}btn-box-border-color: var(--#{$prefix}accessibility);
+    --#{$prefix}quick-action-border-color: var(--#{$prefix}accessibility);
+  }
+
+  &.disabled {
+    cursor: #{$quick-action-disabled-cursor};
+    opacity: $quick-action-disabled-opacity;
   }
 
   &::after {
     position: absolute;
-    inset: var(--#{$prefix}btn-box-border-width);
+    inset: var(--#{$prefix}quick-action-host-border-width);
     z-index: -1;
     content: "";
     background: $quick-action-bg;
-    border-radius: var(--#{$prefix}btn-border-radius);
+    border-radius: var(--#{$prefix}quick-action-border-radius);
   }
-
-  // TODO: setup boundary box
-  // margin: $btn-boundary-box-margin-y $btn-boundary-box-margin-x;
 }
 
 .quick-action {
@@ -51,7 +44,6 @@
   transition: background $quick-action-transition-duration;
 
   &.quick-action-state-focus,
-  &:focus:not(:focus-visible),
   &:focus {
     outline: 0;
   }
@@ -65,7 +57,6 @@
   &.quick-action-state-disabled,
   &:disabled {
     pointer-events: none;
-    cursor: $quick-action-disabled-cursor;
     user-select: none;
   }
 

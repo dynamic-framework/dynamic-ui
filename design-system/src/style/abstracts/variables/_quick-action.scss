@@ -6,7 +6,7 @@ $quick-action-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $quick-action-border-style: solid !default;
 $quick-action-border-width: $border-width !default;
 // Padding
-$quick-action-padding: calc(#{$spacer} - #{$border-width}) !default;
+$quick-action-padding: calc(#{$spacer} - #{$quick-action-border-width}) !default;
 // Transition
 $quick-action-transition-duration: 800ms !default;
 // Cursor
