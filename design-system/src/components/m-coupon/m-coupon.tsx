@@ -7,7 +7,9 @@ import {
   Event,
 } from '@stencil/core';
 
-import { InputState, InputThemes } from '../../utils/component-interface';
+import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
+
+import type { CouponEvent, CouponInputType } from './m-coupon-interface';
 
 @Component({
   tag: 'm-coupon',
@@ -15,66 +17,69 @@ import { InputState, InputThemes } from '../../utils/component-interface';
 })
 export class MCoupon implements ComponentInterface {
   /**
-   * Id for the m-cupon
+   * Id for the input
    * */
   @Prop() mId!: string;
   /**
-   * Label for the m-cupon
+   * Label for the input
    * */
-  @Prop() label!: string;
+  @Prop() label = '';
   /**
    * Icon for the label text
    * */
-  @Prop() iconLabel? = 'info-circle';
+  @Prop() iconLabel?: string = 'info-circle';
   /**
-   * Icon of the left side
+   * Icon of the left
    * */
   @Prop() iconStart?: string;
   /**
-   * Has a button select
+   * Icon of the middle
+   * */
+  @Prop() iconMiddle?: string;
+  /**
+   * Icon of the end
+   * */
+  @Prop() iconEnd?: string;
+  /**
+   * Has a select input
    * */
   @Prop() hasSelect = false;
   /**
-   * The type of the input
-   */
-  @Prop() type = 'text';
-  /**
-   * Placeholder for input
+   * Placeholder for the input
    * */
-  @Prop() placeholder?: string = 'placeholder';
+  @Prop() placeholder?: string = '';
   /**
-   * Icon of the middle side
-   * */
-  @Prop() iconMiddle?: string;
+   * * The type of the input
+  */
+  @Prop() type: CouponInputType = 'text';
   /**
    * Text for the button
    * */
   @Prop() textButton?: string = 'Apply';
   /**
-   * Icon of the end side
-   * */
-  @Prop() iconEnd?: string;
-  /**
-   * Icon for the hint text
-   * */
-  @Prop() iconHint?: string;
-  /**
    * Hint for the m-cupon
    * */
   @Prop() hint?: string;
   /**
-   * State for the m-cupon
+   * Icon start for the hint text
    * */
-  @Prop() state?: InputState;
+  @Prop() hintIconStart?: string;
+  /**
+   * Icon end for the hint text
+   * */
+  @Prop() hintIconEnd?: string;
   /**
    * Theme for the m-cupon
    * */
-  @Prop() theme?: InputThemes = 'primary';
-
+  @Prop() theme? = 'primary';
   /**
-   * Emitted when the input value has changed
+   * Change the layout direction to put the label on top or left of input
    */
-  @Event({ eventName: 'mClick' }) mClick!: EventEmitter<string>;
+  @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
+  /**
+   * Emitted when the button is clicked
+   */
+  @Event({ eventName: 'mClick' }) mClick!: EventEmitter<CouponEvent>;
 
   /**
    * HTML input elemet
@@ -86,16 +91,27 @@ export class MCoupon implements ComponentInterface {
    */
   private htmlSelect?: HTMLSelectElement;
 
+  /**
+   * Emit input and select values only when the button was clicked
+   */
   private clickHandler = () => {
-    this.mClick.emit(JSON.stringify({
+    this.mClick.emit({
       inputValue: this.htmlInput?.value,
       selectValue: this.htmlSelect?.value,
-    }));
+    });
   };
+
+  private generateHostClasses(): ClassMap {
+    return {
+      'form-control-layout form-control-layout-coupon': true,
+      [`form-control-theme-${this.theme}`]: true,
+      'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
+    };
+  }
 
   render() {
     return (
-      <Host class={`form-control-layout form-control-layout-coupon form-control-theme-${this.theme}`}>
+      <Host class={this.generateHostClasses()}>
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
@@ -168,13 +184,19 @@ export class MCoupon implements ComponentInterface {
           </div>
           {this.hint && (
             <small class="hint">
-              { this.iconHint && (
+              { this.hintIconStart && (
                 <span class="form-control-icon">
                   {/* TODO: use m-icon component */}
-                  <i class={`bi bi-${this.iconHint}`} />
+                  <i class={`bi bi-${this.hintIconStart}`} />
                 </span>
               )}
               {this.hint}
+              { this.hintIconEnd && (
+                <span class="form-control-icon">
+                  {/* TODO: use m-icon component */}
+                  <i class={`bi bi-${this.hintIconEnd}`} />
+                </span>
+              )}
             </small>
           )}
         </div>
