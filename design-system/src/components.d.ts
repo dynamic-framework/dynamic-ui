@@ -7,7 +7,8 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { FormControlLayoutDirection, InputState, InputThemes } from "./utils/component-interface";
+import { FormControlLayoutDirection, InputState } from "./utils/component-interface";
+import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
@@ -92,7 +93,7 @@ export namespace Components {
     }
     interface MCoupon {
         /**
-          * Has a button select
+          * Has a select input
          */
         "hasSelect": boolean;
         /**
@@ -100,41 +101,45 @@ export namespace Components {
          */
         "hint"?: string;
         /**
-          * Icon of the end side
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon of the end
          */
         "iconEnd"?: string;
         /**
-          * Icon for the hint text
-         */
-        "iconHint"?: string;
-        /**
           * Icon for the label text
          */
-        "iconLabel"?: string | undefined;
+        "iconLabel"?: string;
         /**
-          * Icon of the middle side
+          * Icon of the middle
          */
         "iconMiddle"?: string;
         /**
-          * Icon of the left side
+          * Icon of the left
          */
         "iconStart"?: string;
         /**
-          * Label for the m-cupon
+          * Label for the input
          */
         "label": string;
         /**
-          * Id for the m-cupon
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * Id for the input
          */
         "mId": string;
         /**
-          * Placeholder for input
+          * Placeholder for the input
          */
         "placeholder"?: string;
-        /**
-          * State for the m-cupon
-         */
-        "state"?: InputState;
         /**
           * Text for the button
          */
@@ -142,11 +147,11 @@ export namespace Components {
         /**
           * Theme for the m-cupon
          */
-        "theme"?: InputThemes;
+        "theme"?: string | undefined;
         /**
-          * The type of the input
+          * * The type of the input
          */
-        "type": string;
+        "type": CouponInputType;
     }
     interface MFormCheck {
         /**
@@ -644,7 +649,7 @@ declare namespace LocalJSX {
     }
     interface MCoupon {
         /**
-          * Has a button select
+          * Has a select input
          */
         "hasSelect"?: boolean;
         /**
@@ -652,45 +657,49 @@ declare namespace LocalJSX {
          */
         "hint"?: string;
         /**
-          * Icon of the end side
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon of the end
          */
         "iconEnd"?: string;
         /**
-          * Icon for the hint text
-         */
-        "iconHint"?: string;
-        /**
           * Icon for the label text
          */
-        "iconLabel"?: string | undefined;
+        "iconLabel"?: string;
         /**
-          * Icon of the middle side
+          * Icon of the middle
          */
         "iconMiddle"?: string;
         /**
-          * Icon of the left side
+          * Icon of the left
          */
         "iconStart"?: string;
         /**
-          * Label for the m-cupon
+          * Label for the input
          */
-        "label": string;
+        "label"?: string;
         /**
-          * Id for the m-cupon
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * Id for the input
          */
         "mId": string;
         /**
-          * Emitted when the input value has changed
+          * Emitted when the button is clicked
          */
-        "onMClick"?: (event: CustomEvent<string>) => void;
+        "onMClick"?: (event: CustomEvent<CouponEvent>) => void;
         /**
-          * Placeholder for input
+          * Placeholder for the input
          */
         "placeholder"?: string;
-        /**
-          * State for the m-cupon
-         */
-        "state"?: InputState;
         /**
           * Text for the button
          */
@@ -698,11 +707,11 @@ declare namespace LocalJSX {
         /**
           * Theme for the m-cupon
          */
-        "theme"?: InputThemes;
+        "theme"?: string | undefined;
         /**
-          * The type of the input
+          * * The type of the input
          */
-        "type"?: string;
+        "type"?: CouponInputType;
     }
     interface MFormCheck {
         /**

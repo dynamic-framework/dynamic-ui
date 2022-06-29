@@ -169,24 +169,24 @@ export class MCard {
   }
 }
 
-
+import type { CouponEvent as IMCouponCouponEvent } from '@modyo/design-system/components';
 export declare interface MCoupon extends Components.MCoupon {
   /**
-   * Emitted when the input value has changed 
+   * Emitted when the button is clicked 
    */
-  mClick: EventEmitter<CustomEvent<string>>;
+  mClick: EventEmitter<CustomEvent<IMCouponCouponEvent>>;
 
 }
 
 @ProxyCmp({
   defineCustomElementFn: defineMCoupon,
-  inputs: ['hasSelect', 'hint', 'iconEnd', 'iconHint', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'mId', 'placeholder', 'state', 'textButton', 'theme', 'type']
+  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'placeholder', 'textButton', 'theme', 'type']
 })
 @Component({
   selector: 'm-coupon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hasSelect', 'hint', 'iconEnd', 'iconHint', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'mId', 'placeholder', 'state', 'textButton', 'theme', 'type']
+  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'placeholder', 'textButton', 'theme', 'type']
 })
 export class MCoupon {
   protected el: HTMLElement;

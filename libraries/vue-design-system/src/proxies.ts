@@ -56,16 +56,17 @@ export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', un
   'label',
   'iconLabel',
   'iconStart',
-  'hasSelect',
-  'type',
-  'placeholder',
   'iconMiddle',
-  'textButton',
   'iconEnd',
-  'iconHint',
+  'hasSelect',
+  'placeholder',
+  'type',
+  'textButton',
   'hint',
-  'state',
+  'hintIconStart',
+  'hintIconEnd',
   'theme',
+  'layoutDirection',
   'mClick'
 ]);
 
