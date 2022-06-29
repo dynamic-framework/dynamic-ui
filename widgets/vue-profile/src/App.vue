@@ -1242,7 +1242,7 @@ export default defineComponent({
       this.value = event.detail;
     },
     print({ detail }: CustomEvent) {
-      console.log(JSON.parse(detail));
+      console.log(detail);
     },
     onChange({ detail }: CustomEvent) {
       console.log(detail);
