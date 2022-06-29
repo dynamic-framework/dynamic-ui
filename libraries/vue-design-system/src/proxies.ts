@@ -9,21 +9,6 @@ import { defineCustomElements } from '@modyo/design-system/loader';
 
 defineCustomElements();
 
-export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
-  'theme',
-  'header',
-  'body',
-  'actions',
-  'modActionClick'
-]);
-
-
-export const MAlertAction = /*@__PURE__*/ defineContainer<JSX.MAlertAction>('m-alert-action', undefined, [
-  'action',
-  'modClick'
-]);
-
-
 export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined);
 
 

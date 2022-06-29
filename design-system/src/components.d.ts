@@ -5,7 +5,6 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlertAction } from "./components/m-alert/m-alert-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState } from "./utils/component-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
@@ -14,30 +13,6 @@ import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
 import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
-    interface MAlert {
-        /**
-          * the action buttons
-         */
-        "actions": AlertAction[];
-        /**
-          * the body of alert render on top of the slot
-         */
-        "body": string;
-        /**
-          * The header text
-         */
-        "header": string;
-        /**
-          * The theme to use.
-         */
-        "theme": string;
-    }
-    interface MAlertAction {
-        /**
-          * The action to perform when the button is clicked.
-         */
-        "action": AlertAction;
-    }
     interface MApp {
     }
     interface MBadge {
@@ -366,18 +341,6 @@ export namespace Components {
     }
 }
 declare global {
-    interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
-    }
-    var HTMLMAlertElement: {
-        prototype: HTMLMAlertElement;
-        new (): HTMLMAlertElement;
-    };
-    interface HTMLMAlertActionElement extends Components.MAlertAction, HTMLStencilElement {
-    }
-    var HTMLMAlertActionElement: {
-        prototype: HTMLMAlertActionElement;
-        new (): HTMLMAlertActionElement;
-    };
     interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
     }
     var HTMLMAppElement: {
@@ -469,8 +432,6 @@ declare global {
         new (): HTMLMTextElement;
     };
     interface HTMLElementTagNameMap {
-        "m-alert": HTMLMAlertElement;
-        "m-alert-action": HTMLMAlertActionElement;
         "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
@@ -489,38 +450,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface MAlert {
-        /**
-          * the action buttons
-         */
-        "actions"?: AlertAction[];
-        /**
-          * the body of alert render on top of the slot
-         */
-        "body"?: string;
-        /**
-          * The header text
-         */
-        "header"?: string;
-        /**
-          * Emitted when the action button is clicked.
-         */
-        "onModActionClick"?: (event: CustomEvent<AlertAction>) => void;
-        /**
-          * The theme to use.
-         */
-        "theme"?: string;
-    }
-    interface MAlertAction {
-        /**
-          * The action to perform when the button is clicked.
-         */
-        "action": AlertAction;
-        /**
-          * Emitted when the action button is clicked.
-         */
-        "onModClick"?: (event: CustomEvent<AlertAction>) => void;
-    }
     interface MApp {
     }
     interface MBadge {
@@ -864,8 +793,6 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface IntrinsicElements {
-        "m-alert": MAlert;
-        "m-alert-action": MAlertAction;
         "m-app": MApp;
         "m-badge": MBadge;
         "m-button": MButton;
@@ -887,8 +814,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
-            "m-alert-action": LocalJSX.MAlertAction & JSXBase.HTMLAttributes<HTMLMAlertActionElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;

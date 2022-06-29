@@ -248,14 +248,6 @@
           disabled />
       </div>
     </div>
-    <m-alert
-      :header="title"
-      body="body prop text"
-      :actions="actions"
-      @mod-action-click="onActionClick"
-    >
-      children text
-    </m-alert>
     <br />
     <br />
     <m-card
@@ -855,7 +847,7 @@
       <div class="col-12">
         <h6 class="fw-bold">Variant Prime</h6>
         <div class="w-50">
-          <m-select 
+          <m-select
           class="w-100"
           @m-change="onChange"
           >
@@ -1059,7 +1051,6 @@ import { defineComponent } from 'vue';
 import {
   MButton,
   MText,
-  MAlert,
   MInput,
   MCard,
   MApp,
@@ -1080,7 +1071,6 @@ export default defineComponent({
   components: {
     MButton,
     MText,
-    MAlert,
     MInput,
     MCard,
     MApp,

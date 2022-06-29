@@ -5,8 +5,6 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 import type { Components } from '@modyo/design-system/components';
 
-import { defineCustomElement as defineMAlert } from '@modyo/design-system/components/m-alert.js';
-import { defineCustomElement as defineMAlertAction } from '@modyo/design-system/components/m-alert-action.js';
 import { defineCustomElement as defineMApp } from '@modyo/design-system/components/m-app.js';
 import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
@@ -22,62 +20,6 @@ import { defineCustomElement as defineMNavLink } from '@modyo/design-system/comp
 import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
 import { defineCustomElement as defineMSelect } from '@modyo/design-system/components/m-select.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
-
-import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
-export declare interface MAlert extends Components.MAlert {
-  /**
-   * Emitted when the action button is clicked. 
-   */
-  modActionClick: EventEmitter<CustomEvent<IMAlertAlertAction>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMAlert,
-  inputs: ['actions', 'body', 'header', 'theme']
-})
-@Component({
-  selector: 'm-alert',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['actions', 'body', 'header', 'theme']
-})
-export class MAlert {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['modActionClick']);
-  }
-}
-
-import type { AlertAction as IMAlertActionAlertAction } from '@modyo/design-system/components';
-export declare interface MAlertAction extends Components.MAlertAction {
-  /**
-   * Emitted when the action button is clicked. 
-   */
-  modClick: EventEmitter<CustomEvent<IMAlertActionAlertAction>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMAlertAction,
-  inputs: ['action']
-})
-@Component({
-  selector: 'm-alert-action',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['action']
-})
-export class MAlertAction {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['modClick']);
-  }
-}
 
 
 export declare interface MApp extends Components.MApp {}
