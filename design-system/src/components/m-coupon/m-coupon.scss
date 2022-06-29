@@ -1,7 +1,3 @@
-:host {
-  display: block;
-}
-
 .form-control-layout-coupon {
 
   .form-select {
@@ -42,10 +38,8 @@
 @each $color, $value in map-remove($theme-colors-hover, "light", "dark") {
   .form-control-layout-coupon:hover.form-control-theme-#{$color},
   .form-control-layout-coupon.hover.form-control-theme-#{$color} {
-    label,
     .input-group-text,
-    .input-group-icon,
-    .hint {
+    .input-group-icon {
       color: $value;
     }
 
