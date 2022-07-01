@@ -44,13 +44,9 @@ export class MSearch implements ComponentInterface {
     */
   @Prop() isDisabled = false;
   /**
-    * Flag to disable the input
+    * Flag to read only the input
     */
   @Prop() isReadOnly = false;
-  /**
-    * Icon to display on input left
-    */
-  @Prop() iconStart?: string;
   /**
     * Icon to display on input right
     */
@@ -68,11 +64,11 @@ export class MSearch implements ComponentInterface {
     */
   @Prop() hintIconEnd?: string;
   /**
-    * Icon to display on hint right
+    * Theme to use for the search
     */
   @Prop() theme?: string;
   /**
-    * Icon to display on hint right
+    * Variant to use for the search
     */
   @Prop() variant?: string;
   /**

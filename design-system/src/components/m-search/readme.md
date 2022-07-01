@@ -13,18 +13,17 @@
 | `hintIconEnd`      | `hint-icon-end`    | Icon to display on hint right                                        | `string \| undefined`        | `undefined`  |
 | `hintIconStart`    | `hint-icon-start`  | Icon to display on hint left                                         | `string \| undefined`        | `undefined`  |
 | `iconEnd`          | `icon-end`         | Icon to display on input right                                       | `string \| undefined`        | `undefined`  |
-| `iconStart`        | `icon-start`       | Icon to display on input left                                        | `string \| undefined`        | `undefined`  |
 | `isDisabled`       | `is-disabled`      | Flag to disable the input                                            | `boolean`                    | `false`      |
-| `isReadOnly`       | `is-read-only`     | Flag to disable the input                                            | `boolean`                    | `false`      |
+| `isReadOnly`       | `is-read-only`     | Flag to read only the input                                          | `boolean`                    | `false`      |
 | `label`            | `label`            | The label text                                                       | `string`                     | `''`         |
 | `labelIcon`        | `label-icon`       | Icon to display on label right                                       | `string \| undefined`        | `undefined`  |
 | `layoutDirection`  | `layout-direction` | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"` | `'vertical'` |
 | `mId` _(required)_ | `m-id`             | The id of the input                                                  | `string`                     | `undefined`  |
 | `placeholder`      | `placeholder`      | The placeholder text                                                 | `string`                     | `''`         |
-| `theme`            | `theme`            | Icon to display on hint right                                        | `string \| undefined`        | `undefined`  |
+| `theme`            | `theme`            | Theme to use for the search                                          | `string \| undefined`        | `undefined`  |
 | `type`             | `type`             | The type of the input                                                | `string`                     | `'text'`     |
 | `value`            | `value`            | The value of the input                                               | `string`                     | `''`         |
-| `variant`          | `variant`          | Icon to display on hint right                                        | `string \| undefined`        | `undefined`  |
+| `variant`          | `variant`          | Variant to use for the search                                        | `string \| undefined`        | `undefined`  |
 
 
 ## Events
