@@ -1,0 +1,40 @@
+# m-search
+
+
+
+<!-- Auto Generated Below -->
+
+
+## Properties
+
+| Property           | Attribute          | Description                                                          | Type                         | Default      |
+| ------------------ | ------------------ | -------------------------------------------------------------------- | ---------------------------- | ------------ |
+| `hint`             | `hint`             | Hint to display, also used to display validity feedback              | `string \| undefined`        | `undefined`  |
+| `hintIconEnd`      | `hint-icon-end`    | Icon to display on hint right                                        | `string \| undefined`        | `undefined`  |
+| `hintIconStart`    | `hint-icon-start`  | Icon to display on hint left                                         | `string \| undefined`        | `undefined`  |
+| `iconEnd`          | `icon-end`         | Icon to display on input right                                       | `string \| undefined`        | `undefined`  |
+| `iconStart`        | `icon-start`       | Icon to display on input left                                        | `string \| undefined`        | `undefined`  |
+| `isDisabled`       | `is-disabled`      | Flag to disable the input                                            | `boolean`                    | `false`      |
+| `isReadOnly`       | `is-read-only`     | Flag to disable the input                                            | `boolean`                    | `false`      |
+| `label`            | `label`            | The label text                                                       | `string`                     | `''`         |
+| `labelIcon`        | `label-icon`       | Icon to display on label right                                       | `string \| undefined`        | `undefined`  |
+| `layoutDirection`  | `layout-direction` | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"` | `'vertical'` |
+| `mId` _(required)_ | `m-id`             | The id of the input                                                  | `string`                     | `undefined`  |
+| `placeholder`      | `placeholder`      | The placeholder text                                                 | `string`                     | `''`         |
+| `theme`            | `theme`            | Icon to display on hint right                                        | `string \| undefined`        | `undefined`  |
+| `type`             | `type`             | The type of the input                                                | `string`                     | `'text'`     |
+| `value`            | `value`            | The value of the input                                               | `string`                     | `''`         |
+| `variant`          | `variant`          | Icon to display on hint right                                        | `string \| undefined`        | `undefined`  |
+
+
+## Events
+
+| Event     | Description                              | Type                  |
+| --------- | ---------------------------------------- | --------------------- |
+| `mChange` | Emitted when the input value has changed | `CustomEvent<string>` |
+| `mClick`  | Emitted when the button is clicked       | `CustomEvent<string>` |
+
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*
