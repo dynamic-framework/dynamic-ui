@@ -1049,7 +1049,293 @@
           <option value="b">B</option>
           <option value="c">C</option></m-select>
       </div>
+    </div>
+    <div class="row py-5">
+      <div class="col-12">
+        <h4 class="fw-bold">m-search</h4> <br>
+        <h6 class="fw-bold"> - Default</h6>
       </div>
+      <div class="col-6 mb-3">
+        <m-search
+          m-id="search"
+          label="Label"
+          placeholder="Default"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+          @m-click="onChange"
+          @m-change="onChange"
+        />
+      </div>
+       <div class="col-6 mb-3">
+        <m-search
+          m-id="search1"
+          :is-disabled="true"
+          label="Label"
+          placeholder="Disabled"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+       <div class="col-6 mb-3">
+        <m-search
+          m-id="search2"
+          :is-read-only="true"
+          label="Label"
+          placeholder="ReadOnly"
+          value="Read Only"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+        theme="danger"
+          m-id="search2"
+          label="Label"
+          placeholder="Danger"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+        theme="warning"
+          m-id="search2"
+          label="Label"
+          placeholder="Warning"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+        theme="tertiary"
+          m-id="search2"
+          label="Label"
+          placeholder="Tertiary"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+        theme="success"
+          m-id="search2"
+          label="Label"
+          placeholder="Success"
+          label-icon="info-circle"
+          icon-end="check"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+        theme="loading"
+          m-id="search2"
+          label="Label"
+          placeholder="Loading"
+          label-icon="info-circle"
+          icon-end="circle-half"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+    </div>
+    <div class="row py-5">
+      <div class="col-12">
+        <h6 class="fw-bold"> - Prime </h6>
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="prime"
+          m-id="search"
+          label="Label"
+          placeholder="Default"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+          @m-click="onChange"
+          @m-change="onChange"
+        />
+      </div>
+       <div class="col-6 mb-3">
+        <m-search
+          variant="prime"
+          m-id="search1"
+          :is-disabled="true"
+          label="Label"
+          placeholder="Disabled"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+       <div class="col-6 mb-3">
+        <m-search
+          variant="prime"
+          m-id="search2"
+          :is-read-only="true"
+          label="Label"
+          placeholder="ReadOnly"
+          value="Read Only"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="prime"
+        theme="danger"
+          m-id="search2"
+          label="Label"
+          placeholder="Danger"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="prime"
+        theme="warning"
+          m-id="search2"
+          label="Label"
+          placeholder="Warning"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="prime"
+        theme="tertiary"
+          m-id="search2"
+          label="Label"
+          placeholder="Tertiary"
+          label-icon="info-circle"
+          icon-end="circle-fill"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="prime"
+        theme="success"
+          m-id="search2"
+          label="Label"
+          placeholder="Success"
+          label-icon="info-circle"
+          icon-end="check"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="prime"
+        theme="loading"
+          m-id="search2"
+          label="Label"
+          placeholder="Loading"
+          label-icon="info-circle"
+          icon-end="circle-half"
+          hint-icon-start="emoji-smile"
+          hint="Earth is the third planet from the Sun."
+        />
+      </div>
+    </div>
+    <div class="row py-5">
+      <div class="col-12">
+        <h6 class="fw-bold"> - Secondary </h6>
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="secondary"
+          placeholder="Default"
+          icon-end="circle-fill"
+          @m-click="onChange"
+          @m-change="onChange"
+        />
+      </div>
+       <div class="col-6 mb-3">
+        <m-search
+          variant="secondary"
+          :is-disabled="true"
+          placeholder="Disabled"
+          icon-end="circle-fill"
+        />
+      </div>
+       <div class="col-6 mb-3">
+        <m-search
+          variant="secondary"
+          :is-read-only="true"
+          placeholder="ReadOnly"
+          value="Read Only"
+          icon-end="circle-fill"
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="secondary"
+          theme="danger"
+          placeholder="Danger"
+          icon-end="circle-fill"
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="secondary"
+          theme="warning"
+          placeholder="Warning"
+          icon-end="circle-fill"
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="secondary"
+          theme="tertiary"
+          placeholder="Tertiary"
+          icon-end="circle-fill"
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="secondary"
+          theme="success"
+          placeholder="Success"
+          icon-end="check"
+        />
+      </div>
+      <div class="col-6 mb-3">
+        <m-search
+          variant="secondary"
+          theme="loading"
+          placeholder="Loading"
+          icon-end="circle-half"
+        />
+      </div>
+    </div>
   </m-app>
 </template>
 
@@ -1073,6 +1359,7 @@ import {
   MFormCheck,
   MSelect,
   MFormSwitch,
+  MSearch,
 } from '@modyo/vue-design-system';
 
 export default defineComponent({
@@ -1094,6 +1381,7 @@ export default defineComponent({
     MFormCheck,
     MSelect,
     MFormSwitch,
+    MSearch,
   },
   data() {
     return {
