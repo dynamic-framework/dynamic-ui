@@ -316,6 +316,68 @@ export namespace Components {
          */
         "role": string;
     }
+    interface MSearch {
+        /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Icon to display on hint right
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon to display on hint left
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon to display on input right
+         */
+        "iconEnd"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The placeholder text
+         */
+        "placeholder": string;
+        /**
+          * Theme to use for the search
+         */
+        "theme"?: string;
+        /**
+          * The type of the input
+         */
+        "type": string;
+        /**
+          * The value of the input
+         */
+        "value": string;
+        /**
+          * Variant to use for the search
+         */
+        "variant"?: string;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -456,6 +518,12 @@ declare global {
         prototype: HTMLMNavPaneElement;
         new (): HTMLMNavPaneElement;
     };
+    interface HTMLMSearchElement extends Components.MSearch, HTMLStencilElement {
+    }
+    var HTMLMSearchElement: {
+        prototype: HTMLMSearchElement;
+        new (): HTMLMSearchElement;
+    };
     interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
     }
     var HTMLMSelectElement: {
@@ -484,6 +552,7 @@ declare global {
         "m-nav-item": HTMLMNavItemElement;
         "m-nav-link": HTMLMNavLinkElement;
         "m-nav-pane": HTMLMNavPaneElement;
+        "m-search": HTMLMSearchElement;
         "m-select": HTMLMSelectElement;
         "m-text": HTMLMTextElement;
     }
@@ -811,6 +880,76 @@ declare namespace LocalJSX {
          */
         "role"?: string;
     }
+    interface MSearch {
+        /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Icon to display on hint right
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon to display on hint left
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon to display on input right
+         */
+        "iconEnd"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMChange"?: (event: CustomEvent<string>) => void;
+        /**
+          * Emitted when the button is clicked
+         */
+        "onMClick"?: (event: CustomEvent<string>) => void;
+        /**
+          * The placeholder text
+         */
+        "placeholder"?: string;
+        /**
+          * Theme to use for the search
+         */
+        "theme"?: string;
+        /**
+          * The type of the input
+         */
+        "type"?: string;
+        /**
+          * The value of the input
+         */
+        "value"?: string;
+        /**
+          * Variant to use for the search
+         */
+        "variant"?: string;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -879,6 +1018,7 @@ declare namespace LocalJSX {
         "m-nav-item": MNavItem;
         "m-nav-link": MNavLink;
         "m-nav-pane": MNavPane;
+        "m-search": MSearch;
         "m-select": MSelect;
         "m-text": MText;
     }
@@ -902,6 +1042,7 @@ declare module "@stencil/core" {
             "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
             "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
+            "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }

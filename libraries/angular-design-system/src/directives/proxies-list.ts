@@ -17,6 +17,7 @@ export const DIRECTIVES = [
   d.MNavItem,
   d.MNavLink,
   d.MNavPane,
+  d.MSearch,
   d.MSelect,
   d.MText
 ];

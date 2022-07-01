@@ -20,6 +20,7 @@ import { defineCustomElement as defineMNavContent } from '@modyo/design-system/c
 import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
 import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
 import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
+import { defineCustomElement as defineMSearch } from '@modyo/design-system/components/m-search.js';
 import { defineCustomElement as defineMSelect } from '@modyo/design-system/components/m-select.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
@@ -364,6 +365,38 @@ export class MNavPane {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MSearch extends Components.MSearch {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when the button is clicked 
+   */
+  mClick: EventEmitter<CustomEvent<string>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMSearch,
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'isDisabled', 'isReadOnly', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'theme', 'type', 'value', 'variant']
+})
+@Component({
+  selector: 'm-search',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'isDisabled', 'isReadOnly', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'theme', 'type', 'value', 'variant']
+})
+export class MSearch {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange', 'mClick']);
   }
 }
 
