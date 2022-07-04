@@ -15,7 +15,7 @@
    * path segment in the "$schema" field for all your Rush config files.  This will ensure
    * correct error-underlining and tab-completion for editors such as VS Code.
    */
-  "rushVersion": "5.67.0",
+  "rushVersion": "5.75.0",
   /**
    * The next field selects which package manager should be installed and determines its version.
    * Rush installs its own local copy of the package manager to ensure that your build process
@@ -466,21 +466,21 @@
       "projectFolder": "design-system",
       "reviewCategory": "libraries",
       "tags": ["libraries"],
-      "shouldPublish": true
+      "versionPolicyName": "DesignSystem"
     },
     {
       "packageName": "@modyo/react-design-system",
       "projectFolder": "libraries/react-design-system",
       "reviewCategory": "libraries",
       "tags": ["libraries", "react"],
-      "shouldPublish": true
+      "versionPolicyName": "DesignSystem"
     },
     {
       "packageName": "@modyo/vue-design-system",
       "projectFolder": "libraries/vue-design-system",
       "reviewCategory": "libraries",
       "tags": ["libraries", "vue"],
-      "shouldPublish": true
+      "versionPolicyName": "DesignSystem"
     },
     {
       "packageName": "@modyo/angular-design-system",
