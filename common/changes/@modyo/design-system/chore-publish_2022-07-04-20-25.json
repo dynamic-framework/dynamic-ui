@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyo/design-system",
+      "comment": "chore: remove m-alert",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@modyo/design-system"
+}
