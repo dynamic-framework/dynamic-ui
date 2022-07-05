@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "chore: change org name and move components to root components directory",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
