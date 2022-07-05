@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { FormControlLayoutDirection, InputState } from "./utils/component-interface";
+import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
-import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
+import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
-import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
+import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MApp {
@@ -259,7 +259,7 @@ export namespace Components {
         /**
           * Props for the nav link navegable variant
          */
-        "navegableProps"?: NavegableProps1;
+        "navegableProps"?: NavegableProps;
         /**
           * Props for the nav link option variant
          */
@@ -339,6 +339,22 @@ export namespace Components {
          */
         "theme": string;
     }
+}
+export interface MButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMButtonElement;
+}
+export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMFormSwitchElement;
+}
+export interface MInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputElement;
+}
+export interface MSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMSelectElement;
 }
 declare global {
     interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
@@ -470,7 +486,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the button has been clicked.
          */
-        "onMClick"?: (event: CustomEvent<any>) => void;
+        "onMClick"?: (event: MButtonCustomEvent<any>) => void;
         /**
           * Flag to set the button as active.
          */
@@ -572,7 +588,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the switch has changed
          */
-        "onMChange"?: (event: CustomEvent<boolean>) => void;
+        "onMChange"?: (event: MFormSwitchCustomEvent<boolean>) => void;
     }
     interface MInput {
         /**
@@ -618,7 +634,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the input value has changed
          */
-        "onMChange"?: (event: CustomEvent<string>) => void;
+        "onMChange"?: (event: MInputCustomEvent<string>) => void;
         /**
           * The placeholder text
          */
@@ -708,7 +724,7 @@ declare namespace LocalJSX {
         /**
           * Props for the nav link navegable variant
          */
-        "navegableProps"?: NavegableProps1;
+        "navegableProps"?: NavegableProps;
         /**
           * Props for the nav link option variant
          */
@@ -776,7 +792,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: CustomEvent<string>) => void;
+        "onMChange"?: (event: MSelectCustomEvent<string>) => void;
         /**
           * The theme of the select
          */

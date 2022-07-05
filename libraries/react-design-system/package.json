@@ -1,5 +1,5 @@
 {
-  "name": "@modyo/react-design-system",
+  "name": "@modyolabs/react-design-system",
   "sideEffects": false,
   "version": "0.0.1",
   "private": true,
@@ -23,7 +23,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyo/design-system": "workspace:^0.0.1"
+    "@modyolabs/design-system": "workspace:^0.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.8.0",

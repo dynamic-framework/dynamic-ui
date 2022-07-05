@@ -1064,7 +1064,7 @@ import {
   MFormCheck,
   MSelect,
   MFormSwitch,
-} from '@modyo/vue-design-system';
+} from '@modyolabs/vue-design-system';
 
 export default defineComponent({
   name: 'App',

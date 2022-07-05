@@ -103,6 +103,6 @@
     "policyName": "DesignSystem",
     "definitionName": "lockStepVersion",
     "version": "0.0.1",
-    "mainProject": "@modyo/design-system"
+    "mainProject": "@modyolabs/design-system"
   }
 ]

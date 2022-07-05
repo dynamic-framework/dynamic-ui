@@ -462,49 +462,49 @@
     //   "tags": ["tools"]
     // }
     {
-      "packageName": "@modyo/design-system",
+      "packageName": "@modyolabs/design-system",
       "projectFolder": "design-system",
       "reviewCategory": "libraries",
       "tags": ["libraries"],
       "versionPolicyName": "DesignSystem"
     },
     {
-      "packageName": "@modyo/react-design-system",
+      "packageName": "@modyolabs/react-design-system",
       "projectFolder": "libraries/react-design-system",
       "reviewCategory": "libraries",
       "tags": ["libraries", "react"],
       "versionPolicyName": "DesignSystem"
     },
     {
-      "packageName": "@modyo/vue-design-system",
+      "packageName": "@modyolabs/vue-design-system",
       "projectFolder": "libraries/vue-design-system",
       "reviewCategory": "libraries",
       "tags": ["libraries", "vue"],
       "versionPolicyName": "DesignSystem"
     },
     {
-      "packageName": "@modyo/angular-design-system",
+      "packageName": "@modyolabs/angular-design-system",
       "projectFolder": "libraries/angular-design-system",
       "reviewCategory": "libraries",
       "tags": ["libraries", "angular"],
       "shouldPublish": false
     },
     {
-      "packageName": "@modyo/react-profile",
+      "packageName": "@modyolabs/react-profile",
       "projectFolder": "widgets/react-profile",
       "reviewCategory": "production",
       "tags": ["widgets", "react"],
       "shouldPublish": false
     },
     {
-      "packageName": "@modyo/vue-profile",
+      "packageName": "@modyolabs/vue-profile",
       "projectFolder": "widgets/vue-profile",
       "reviewCategory": "production",
       "tags": ["widgets", "vue"],
       "shouldPublish": false
     },
     {
-      "packageName": "@modyo/angular-profile",
+      "packageName": "@modyolabs/angular-profile",
       "projectFolder": "widgets/angular-profile",
       "reviewCategory": "production",
       "tags": ["widgets", "angular"],

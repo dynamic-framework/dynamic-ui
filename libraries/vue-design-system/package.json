@@ -1,5 +1,5 @@
 {
-  "name": "@modyo/vue-design-system",
+  "name": "@modyolabs/vue-design-system",
   "sideEffects": false,
   "version": "0.0.1",
   "private": true,
@@ -22,7 +22,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyo/design-system": "workspace:^0.0.1"
+    "@modyolabs/design-system": "workspace:^0.0.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
