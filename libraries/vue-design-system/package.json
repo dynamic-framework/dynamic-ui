@@ -1,7 +1,7 @@
 {
   "name": "@modyolabs/vue-design-system",
   "sideEffects": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Vue specific wrapper for component-library",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.0.1"
+    "@modyolabs/design-system": "workspace:^0.0.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",

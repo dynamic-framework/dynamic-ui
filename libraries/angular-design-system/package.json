@@ -32,7 +32,7 @@
   "homepage": "https://modyo.com/",
   "license": "MIT",
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.0.1"
+    "@modyolabs/design-system": "workspace:^0.0.2"
   },
   "devDependencies": {
     "@angular/core": "^13.3.6",
