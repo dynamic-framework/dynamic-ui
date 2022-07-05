@@ -2,11 +2,19 @@
   "name": "@modyolabs/vue-design-system",
   "sideEffects": false,
   "version": "0.0.1",
-  "private": true,
   "description": "Vue specific wrapper for component-library",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/ionic.git"
+    "url": "git+https://github.com/modyolabs/ds-poc.git"
+  },
+  "bugs": {
+    "type": "git",
+    "url": "https://github.com/modyolabs/ds-poc.git"
+  },
+  "author": {
+    "name": "Abraham José González Barboza",
+    "email": "agonzalez@modyo.com",
+    "url": "https://github.com/abe-modyo"
   },
   "scripts": {
     "test": "jest",
