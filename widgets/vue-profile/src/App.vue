@@ -248,14 +248,6 @@
           disabled />
       </div>
     </div>
-    <m-alert
-      :header="title"
-      body="body prop text"
-      :actions="actions"
-      @mod-action-click="onActionClick"
-    >
-      children text
-    </m-alert>
     <br />
     <br />
     <m-card
@@ -1132,7 +1124,6 @@ import { defineComponent } from 'vue';
 import {
   MButton,
   MText,
-  MAlert,
   MInput,
   MCard,
   MApp,
@@ -1147,14 +1138,13 @@ import {
   MQuickAction,
   MSelect,
   MFormSwitch,
-} from '@modyo/vue-design-system';
+} from '@modyolabs/vue-design-system';
 
 export default defineComponent({
   name: 'App',
   components: {
     MButton,
     MText,
-    MAlert,
     MInput,
     MCard,
     MApp,

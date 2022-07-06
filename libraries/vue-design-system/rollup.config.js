@@ -15,5 +15,5 @@ export default {
       sourcemap: true
     }
   ],
-  external: id => id.startsWith('vue') || id.startsWith('@modyo')
+  external: id => id.startsWith('vue') || id.startsWith('@modyolabs')
 };

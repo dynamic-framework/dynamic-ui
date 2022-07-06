@@ -3,29 +3,25 @@
 /* auto-generated react proxies */
 import { createReactComponent } from './react-component-lib';
 
-import type { JSX } from '@modyo/design-system/components';
+import type { JSX } from '@modyolabs/design-system/components';
 
-import { defineCustomElement as defineMAlert } from '@modyo/design-system/components/m-alert.js';
-import { defineCustomElement as defineMAlertAction } from '@modyo/design-system/components/m-alert-action.js';
-import { defineCustomElement as defineMApp } from '@modyo/design-system/components/m-app.js';
-import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
-import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
-import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
-import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
-import { defineCustomElement as defineMFormSwitch } from '@modyo/design-system/components/m-form-switch.js';
-import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
-import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
-import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
-import { defineCustomElement as defineMNavContent } from '@modyo/design-system/components/m-nav-content.js';
-import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
-import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
-import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
-import { defineCustomElement as defineMQuickAction } from '@modyo/design-system/components/m-quick-action.js';
-import { defineCustomElement as defineMSelect } from '@modyo/design-system/components/m-select.js';
-import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
+import { defineCustomElement as defineMApp } from '@modyolabs/design-system/components/m-app.js';
+import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
+import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
+import { defineCustomElement as defineMCard } from '@modyolabs/design-system/components/m-card.js';
+import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
+import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-system/components/m-form-switch.js';
+import { defineCustomElement as defineMInput } from '@modyolabs/design-system/components/m-input.js';
+import { defineCustomElement as defineMListItem } from '@modyolabs/design-system/components/m-list-item.js';
+import { defineCustomElement as defineMNav } from '@modyolabs/design-system/components/m-nav.js';
+import { defineCustomElement as defineMNavContent } from '@modyolabs/design-system/components/m-nav-content.js';
+import { defineCustomElement as defineMNavItem } from '@modyolabs/design-system/components/m-nav-item.js';
+import { defineCustomElement as defineMNavLink } from '@modyolabs/design-system/components/m-nav-link.js';
+import { defineCustomElement as defineMNavPane } from '@modyolabs/design-system/components/m-nav-pane.js';
+import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-system/components/m-quick-action.js';
+import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
+import { defineCustomElement as defineMText } from '@modyolabs/design-system/components/m-text.js';
 
-export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertElement>('m-alert', undefined, undefined, defineMAlert);
-export const MAlertAction = /*@__PURE__*/createReactComponent<JSX.MAlertAction, HTMLMAlertActionElement>('m-alert-action', undefined, undefined, defineMAlertAction);
 export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>('m-app', undefined, undefined, defineMApp);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
