@@ -154,6 +154,20 @@ export namespace Components {
          */
         "mId": string;
     }
+    interface MIcon {
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon": string;
+        /**
+          * Font size of the icon
+         */
+        "size"?: string;
+        /**
+          * Theme of the icon
+         */
+        "theme"?: string;
+    }
     interface MInput {
         /**
           * Hint to display, also used to display validity feedback
@@ -414,6 +428,12 @@ declare global {
         prototype: HTMLMFormSwitchElement;
         new (): HTMLMFormSwitchElement;
     };
+    interface HTMLMIconElement extends Components.MIcon, HTMLStencilElement {
+    }
+    var HTMLMIconElement: {
+        prototype: HTMLMIconElement;
+        new (): HTMLMIconElement;
+    };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
     var HTMLMInputElement: {
@@ -477,6 +497,7 @@ declare global {
         "m-card": HTMLMCardElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
+        "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
         "m-nav": HTMLMNavElement;
@@ -644,6 +665,20 @@ declare namespace LocalJSX {
           * Emitted when the switch has changed
          */
         "onMChange"?: (event: CustomEvent<boolean>) => void;
+    }
+    interface MIcon {
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon": string;
+        /**
+          * Font size of the icon
+         */
+        "size"?: string;
+        /**
+          * Theme of the icon
+         */
+        "theme"?: string;
     }
     interface MInput {
         /**
@@ -872,6 +907,7 @@ declare namespace LocalJSX {
         "m-card": MCard;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
+        "m-icon": MIcon;
         "m-input": MInput;
         "m-list-item": MListItem;
         "m-nav": MNav;
@@ -895,6 +931,7 @@ declare module "@stencil/core" {
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
+            "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;
