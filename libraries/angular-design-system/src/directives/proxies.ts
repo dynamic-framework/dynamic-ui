@@ -13,6 +13,7 @@ import { defineCustomElement as defineMButton } from '@modyo/design-system/compo
 import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyo/design-system/components/m-form-switch.js';
+import { defineCustomElement as defineMIcon } from '@modyo/design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
 import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
@@ -214,6 +215,27 @@ export class MFormSwitch {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MIcon extends Components.MIcon {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMIcon,
+  inputs: ['icon', 'size', 'theme']
+})
+@Component({
+  selector: 'm-icon',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['icon', 'size', 'theme']
+})
+export class MIcon {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
 
