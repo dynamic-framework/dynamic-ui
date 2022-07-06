@@ -1,6 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { defineCustomElements } from '@modyo/design-system/loader';
+import { defineCustomElements } from '@modyolabs/design-system/loader';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';

@@ -15,9 +15,7 @@ export class MApp implements ComponentInterface {
   render() {
     return (
       <Host class="m-app">
-        <div class="container">
-          <slot />
-        </div>
+        <slot />
       </Host>
     );
   }

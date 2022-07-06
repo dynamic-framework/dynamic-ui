@@ -2,8 +2,6 @@
 import * as d from './proxies';
 
 export const DIRECTIVES = [
-  d.MAlert,
-  d.MAlertAction,
   d.MApp,
   d.MBadge,
   d.MButton,
@@ -18,6 +16,7 @@ export const DIRECTIVES = [
   d.MNavItem,
   d.MNavLink,
   d.MNavPane,
+  d.MQuickAction,
   d.MSelect,
   d.MText
 ];

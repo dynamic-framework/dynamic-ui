@@ -1,6 +1,6 @@
 {
-  "name": "@modyo/design-system",
-  "version": "0.0.1",
+  "name": "@modyolabs/design-system",
+  "version": "0.0.3",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -12,7 +12,16 @@
   "unpkg": "dist/design-system/design-system.esm.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/stencil-component-starter.git"
+    "url": "git+https://github.com/modyolabs/ds-poc.git"
+  },
+  "bugs": {
+    "type": "git",
+    "url": "https://github.com/modyolabs/ds-poc.git"
+  },
+  "author": {
+    "name": "Abraham José González Barboza",
+    "email": "agonzalez@modyo.com",
+    "url": "https://github.com/abe-modyo"
   },
   "files": [
     "dist/",
@@ -62,10 +71,5 @@
     "stylelint-config-twbs-bootstrap": "^3.0.1",
     "lint-staged": "^12.4.1"
   },
-  "license": "MIT",
-  "author": {
-    "name": "Abraham José González Barboza",
-    "email": "agonzalez@modyo.com",
-    "url": "https://github.com/abe-modyo"
-  }
+  "license": "MIT"
 }

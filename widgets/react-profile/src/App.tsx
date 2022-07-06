@@ -1,4 +1,4 @@
-import { MApp } from '@modyo/react-design-system';
+import { MApp } from '@modyolabs/react-design-system';
 import Inputs from './Inputs';
 
 import Buttons from './Buttons';

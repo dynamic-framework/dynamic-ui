@@ -6,14 +6,18 @@ import {
   Host,
 } from '@stencil/core';
 
-import type { ClassMap } from '../../utils/component-interface';
+import type { ClassMap, NavegableProps } from '../../utils/component-interface';
 
 import type {
   ListItemVariant,
-  NavegableProps,
   SelectableProps,
 } from './m-list-item-interface';
-import { tagType } from './m-list-item-interface';
+
+const TAG_TYPE = {
+  default: 'div',
+  selectable: 'label',
+  navegable: 'a',
+};
 
 @Component({
   tag: 'm-list-item',
@@ -77,7 +81,7 @@ export class MListItem implements ComponentInterface {
   @Prop() navegableProps?: NavegableProps;
 
   private getTagType(): string {
-    return this.variant ? tagType[this.variant] : tagType.default;
+    return this.variant ? TAG_TYPE[this.variant] : TAG_TYPE.default;
   }
 
   private getTagAttributes() {

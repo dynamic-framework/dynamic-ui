@@ -1,13 +1,21 @@
 {
-  "name": "@modyo/react-design-system",
+  "name": "@modyolabs/react-design-system",
   "sideEffects": false,
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.0.3",
   "description": "React specific wrapper for component-library",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/stencil-ds-output-targets.git"
+    "url": "git+https://github.com/modyolabs/ds-poc.git"
+  },
+  "bugs": {
+    "type": "git",
+    "url": "https://github.com/modyolabs/ds-poc.git"
+  },
+  "author": {
+    "name": "Abraham José González Barboza",
+    "email": "agonzalez@modyo.com",
+    "url": "https://github.com/abe-modyo"
   },
   "scripts": {
     "test": "jest",
@@ -23,7 +31,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyo/design-system": "workspace:^0.0.1"
+    "@modyolabs/design-system": "workspace:^0.0.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.8.0",

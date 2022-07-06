@@ -8,13 +8,14 @@
       <h3>Switches</h3>
       <div class="d-flex my-4 gap-5">
         <m-form-switch
+          label="hey"
           m-id="switch16"
         />
         <m-form-switch
           label="Default switch"
           m-id="switch1"
           :is-checked="switchValue1"
-          @m-change="$event => this.switchValue1 = $event.detail"
+          @m-change="$event => switchValue1 = $event.detail"
         />
         <m-form-switch
           label="Default switch"
@@ -52,22 +53,22 @@
       <div class="d-flex my-4 gap-5">
         <m-form-check
           type="checkbox"
-          state="danger"
+          state="error"
           m-id="check17" />
         <m-form-check
           type="checkbox"
-          state="danger"
+          state="error"
           label="Danger Checkbox"
           m-id="check4" />
         <m-form-check
           type="checkbox"
-          state="danger"
+          state="error"
           label="Danger Checkbox"
           m-id="check5"
           checked />
         <m-form-check
           type="checkbox"
-          state="danger"
+          state="error"
           label="Danger Checkbox"
           m-id="check6"
           disabled />
@@ -170,25 +171,25 @@
         <m-form-check
           type="radio"
           name="group2"
-          state="danger"
+          state="error"
           m-id="radio17" />
         <m-form-check
           type="radio"
           name="group2"
-          state="danger"
+          state="error"
           label="Danger radio"
           m-id="radio4" />
         <m-form-check
           type="radio"
           name="group2"
-          state="danger"
+          state="error"
           label="Danger radio"
           m-id="radio5"
           checked />
         <m-form-check
           type="radio"
           name="group2"
-          state="danger"
+          state="error"
           label="Danger radio"
           m-id="radio6"
           disabled />
@@ -248,14 +249,6 @@
           disabled />
       </div>
     </div>
-    <m-alert
-      :header="title"
-      body="body prop text"
-      :actions="actions"
-      @mod-action-click="onActionClick"
-    >
-      children text
-    </m-alert>
     <br />
     <br />
     <m-card
@@ -276,7 +269,7 @@
     <br />
     <br />
     <m-input
-      id="input-1"
+      m-id="input-1"
       placeholder="the placeholder"
       type="text"
       :value="value"
@@ -850,12 +843,86 @@
           deserunt. About.
         </m-nav-pane>
       </m-nav-content>
+      <div class="row mt-4">
+        <div class="col-6 d-flex flex-column">
+          <h6 class="fw-bold">Variantes</h6>
+          <m-quick-action
+            text="Arrow por defecto"
+            subtext="Subtitle"
+            extra-info="extra info"
+            @m-click="print"
+          />
+          <m-quick-action
+            text="Arrow personalizado"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-icon="heart-fill"
+          />
+          <m-quick-action
+            text="Con texto"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-word="Action"
+          />
+           <m-quick-action
+            text="Variante Compact"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-word="Action"
+            variant="compact"
+          />
+          <m-quick-action
+            text="Con icono personalizado"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-word="Action"
+            variant="compact"
+            icon="emoji-smile"
+          />
+          <m-quick-action
+            text="Con imagen"
+            subtext="Subtitle"
+            extra-info="extra info"
+            action-word="Action"
+            variant="compact"
+            image="https://via.placeholder.com/100/00ffff?text=IMG"
+          />
+          <m-quick-action
+            text="Sin subtitle"
+            action-word="Action"
+            variant="compact"
+            image="https://via.placeholder.com/100/0f0?text=IMG"
+          />
+        </div>
+        <div class="col-6 d-flex flex-column">
+          <h6 class="fw-bold">Estados</h6>
+          <m-quick-action
+            text="Hover"
+            subtext="Subtitle"
+            extra-info="extra info"
+            state="hover"
+          />
+          <m-quick-action
+            text="Focus"
+            subtext="Subtitle"
+            extra-info="extra info"
+            state="focus"
+          />
+          <m-quick-action
+            text="Disabled"
+            subtext="Subtitle"
+            extra-info="extra info"
+            state="disabled"
+          />
+        </div>
+      </div>
     </div>
     <div class="row gap-3">
       <div class="col-12">
         <h6 class="fw-bold">Variant Prime</h6>
         <div class="w-50">
-          <m-select 
+          <m-select
+          m-id="selectOne"
           class="w-100"
           @m-change="onChange"
           >
@@ -868,6 +935,7 @@
       <div class="col-5 d-flex flex-column gap-2 mt-3">
         <h6 class="fw-bold">Variant full</h6>
           <m-select
+          m-id="selectTwo"
           theme="primary"
           variant="full"
           label="Label"
@@ -882,6 +950,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon start</b>
           <m-select
+          m-id="selectThree"
           theme="secondary"
           variant="full"
           label="Label"
@@ -894,6 +963,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon middle</b>
           <m-select
+          m-id="selectFour"
           theme="tertiary"
           variant="full"
           label="Label"
@@ -906,6 +976,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon end</b>
           <m-select
+          m-id="selectFive"
           theme="success"
           variant="full"
           label="Label"
@@ -918,6 +989,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icons</b>
           <m-select
+          m-id="selectSix"
           theme="success"
           variant="full"
           label="Label"
@@ -928,6 +1000,7 @@
           <option value="c">C</option></m-select>
           <b>Sin label</b>
           <m-select
+          m-id="selectSeven"
           theme="warning"
           variant="full"
           icon-start="emoji-smile"
@@ -940,6 +1013,7 @@
           <option value="c">C</option></m-select>
           <b>Sin hint</b>
           <m-select
+          m-id="selectEight"
           theme="info"
           variant="full"
           label="Label"
@@ -952,6 +1026,7 @@
           <option value="c">C</option></m-select>
           <b>Otro hint icon</b>
           <m-select
+          m-id="selectNine"
           theme="danger"
           variant="full"
           label="Label"
@@ -968,6 +1043,7 @@
       <div class="col-5 d-flex flex-column gap-2 mt-3">
         <h6 class="fw-bold">Variant transparent</h6>
           <m-select
+          m-id="selectTen"
           theme="primary"
           variant="transparent"
           icon-start="emoji-smile"
@@ -979,6 +1055,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon start</b>
           <m-select
+          m-id="selectEleven"
           theme="secondary"
           variant="transparent"
           icon-middle="circle-fill"
@@ -989,6 +1066,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon middle</b>
           <m-select
+          m-id="selectTwelve"
           theme="tertiary"
           variant="transparent"
           icon-start="emoji-smile"
@@ -999,6 +1077,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon end</b>
           <m-select
+          m-id="selectTenOne"
           theme="success"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1009,6 +1088,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icons</b>
           <m-select
+          m-id="selectTenTwo"
           theme="success"
           variant="transparent"
         >
@@ -1017,6 +1097,7 @@
           <option value="c">C</option></m-select>
           <b>Con OnChange</b>
           <m-select
+          m-id="selectTenThree"
           theme="warning"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1028,6 +1109,7 @@
           <option value="b">B</option>
           <option value="c">C</option></m-select>
           <m-select
+          m-id="selectTenFour"
           theme="info"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1038,6 +1120,7 @@
           <option value="b">B</option>
           <option value="c">C</option></m-select>
           <m-select
+          m-id="selectTenFive"
           theme="danger"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1088,7 +1171,6 @@ import { defineComponent } from 'vue';
 import {
   MButton,
   MText,
-  MAlert,
   MInput,
   MCard,
   MApp,
@@ -1100,17 +1182,17 @@ import {
   MNavContent,
   MNavPane,
   MFormCheck,
+  MQuickAction,
   MSelect,
   MFormSwitch,
   MIcon,
-} from '@modyo/vue-design-system';
+} from '@modyolabs/vue-design-system';
 
 export default defineComponent({
   name: 'App',
   components: {
     MButton,
     MText,
-    MAlert,
     MInput,
     MCard,
     MApp,
@@ -1122,6 +1204,7 @@ export default defineComponent({
     MNavContent,
     MNavPane,
     MFormCheck,
+    MQuickAction,
     MSelect,
     MFormSwitch,
     MIcon,
@@ -1147,8 +1230,8 @@ export default defineComponent({
     onInputChange(event: CustomEvent<string>) {
       this.value = event.detail;
     },
-    print() {
-      console.log('hola');
+    print(e: CustomEvent) {
+      console.log(e);
     },
     onChange({ detail }: CustomEvent) {
       console.log(detail);

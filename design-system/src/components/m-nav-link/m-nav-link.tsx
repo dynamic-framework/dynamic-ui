@@ -6,12 +6,17 @@ import {
   Host,
 } from '@stencil/core';
 
+import type { NavegableProps } from '../../utils/component-interface';
+
 import type {
   NavLinkVariant,
   OptionProps,
-  NavegableProps,
 } from './m-nav-link-interface';
-import { tagType } from './m-nav-link-interface';
+
+const TAG_TYPE = {
+  option: 'button',
+  navegable: 'a',
+};
 
 @Component({
   tag: 'm-nav-link',
@@ -55,7 +60,7 @@ export class MNavLink implements ComponentInterface {
   @Prop() navegableProps?: NavegableProps;
 
   private getTagType(): string {
-    return this.variant ? tagType[this.variant] : tagType.navegable;
+    return this.variant ? TAG_TYPE[this.variant] : TAG_TYPE.navegable;
   }
 
   private getTagAttributes() {
