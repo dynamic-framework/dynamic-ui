@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "chore: remove container from m-app",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
