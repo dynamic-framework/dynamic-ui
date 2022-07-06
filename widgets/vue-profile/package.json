@@ -1,5 +1,5 @@
 {
-  "name": "@modyo/vue-profile",
+  "name": "@modyolabs/vue-profile",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,8 +10,8 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
-    "@modyo/design-system": "workspace:^0.0.1",
-    "@modyo/vue-design-system": "workspace:^0.0.1"
+    "@modyolabs/design-system": "workspace:^0.0.3",
+    "@modyolabs/vue-design-system": "workspace:^0.0.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",

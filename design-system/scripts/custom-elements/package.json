@@ -1,5 +1,5 @@
 {
-  "name": "@modyo/design-system/components",
+  "name": "@modyolabs/design-system/components",
   "version": "0.0.0",
   "description": "Modyo Design System Components exported as custom elements, extending HTMLElement.",
   "main": "./index.js",

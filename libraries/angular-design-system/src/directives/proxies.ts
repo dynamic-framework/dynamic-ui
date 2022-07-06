@@ -3,82 +3,25 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone } from '@angular/core';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-import type { Components } from '@modyo/design-system/components';
+import type { Components } from '@modyolabs/design-system/components';
 
-import { defineCustomElement as defineMAlert } from '@modyo/design-system/components/m-alert.js';
-import { defineCustomElement as defineMAlertAction } from '@modyo/design-system/components/m-alert-action.js';
-import { defineCustomElement as defineMApp } from '@modyo/design-system/components/m-app.js';
-import { defineCustomElement as defineMBadge } from '@modyo/design-system/components/m-badge.js';
-import { defineCustomElement as defineMButton } from '@modyo/design-system/components/m-button.js';
-import { defineCustomElement as defineMCard } from '@modyo/design-system/components/m-card.js';
-import { defineCustomElement as defineMCoupon } from '@modyo/design-system/components/m-coupon.js';
-import { defineCustomElement as defineMFormCheck } from '@modyo/design-system/components/m-form-check.js';
-import { defineCustomElement as defineMFormSwitch } from '@modyo/design-system/components/m-form-switch.js';
-import { defineCustomElement as defineMInput } from '@modyo/design-system/components/m-input.js';
-import { defineCustomElement as defineMListItem } from '@modyo/design-system/components/m-list-item.js';
-import { defineCustomElement as defineMNav } from '@modyo/design-system/components/m-nav.js';
-import { defineCustomElement as defineMNavContent } from '@modyo/design-system/components/m-nav-content.js';
-import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
-import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
-import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
-import { defineCustomElement as defineMSelect } from '@modyo/design-system/components/m-select.js';
-import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
-
-import type { AlertAction as IMAlertAlertAction } from '@modyo/design-system/components';
-export declare interface MAlert extends Components.MAlert {
-  /**
-   * Emitted when the action button is clicked. 
-   */
-  modActionClick: EventEmitter<CustomEvent<IMAlertAlertAction>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMAlert,
-  inputs: ['actions', 'body', 'header', 'theme']
-})
-@Component({
-  selector: 'm-alert',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['actions', 'body', 'header', 'theme']
-})
-export class MAlert {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['modActionClick']);
-  }
-}
-
-import type { AlertAction as IMAlertActionAlertAction } from '@modyo/design-system/components';
-export declare interface MAlertAction extends Components.MAlertAction {
-  /**
-   * Emitted when the action button is clicked. 
-   */
-  modClick: EventEmitter<CustomEvent<IMAlertActionAlertAction>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMAlertAction,
-  inputs: ['action']
-})
-@Component({
-  selector: 'm-alert-action',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['action']
-})
-export class MAlertAction {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['modClick']);
-  }
-}
+import { defineCustomElement as defineMApp } from '@modyolabs/design-system/components/m-app.js';
+import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
+import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
+import { defineCustomElement as defineMCard } from '@modyolabs/design-system/components/m-card.js';
+import { defineCustomElement as defineMCoupon } from '@modyolabs/design-system/components/m-coupon.js';
+import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
+import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-system/components/m-form-switch.js';
+import { defineCustomElement as defineMInput } from '@modyolabs/design-system/components/m-input.js';
+import { defineCustomElement as defineMListItem } from '@modyolabs/design-system/components/m-list-item.js';
+import { defineCustomElement as defineMNav } from '@modyolabs/design-system/components/m-nav.js';
+import { defineCustomElement as defineMNavContent } from '@modyolabs/design-system/components/m-nav-content.js';
+import { defineCustomElement as defineMNavItem } from '@modyolabs/design-system/components/m-nav-item.js';
+import { defineCustomElement as defineMNavLink } from '@modyolabs/design-system/components/m-nav-link.js';
+import { defineCustomElement as defineMNavPane } from '@modyolabs/design-system/components/m-nav-pane.js';
+import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-system/components/m-quick-action.js';
+import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
+import { defineCustomElement as defineMText } from '@modyolabs/design-system/components/m-text.js';
 
 
 export declare interface MApp extends Components.MApp {}
@@ -169,7 +112,7 @@ export class MCard {
   }
 }
 
-import type { CouponEvent as IMCouponCouponEvent } from '@modyo/design-system/components';
+import type { CouponEvent as IMCouponCouponEvent } from '@modyolabs/design-system/components';
 export declare interface MCoupon extends Components.MCoupon {
   /**
    * Emitted when the button is clicked 
@@ -393,6 +336,34 @@ export class MNavPane {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MQuickAction extends Components.MQuickAction {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mClick: EventEmitter<CustomEvent<any>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMQuickAction,
+  inputs: ['actionIcon', 'actionWord', 'extraInfo', 'icon', 'image', 'state', 'subtext', 'text', 'variant']
+})
+@Component({
+  selector: 'm-quick-action',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['actionIcon', 'actionWord', 'extraInfo', 'icon', 'image', 'state', 'subtext', 'text', 'variant']
+})
+export class MQuickAction {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClick']);
   }
 }
 

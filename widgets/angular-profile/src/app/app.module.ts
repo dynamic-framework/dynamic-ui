@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AngularDesignSystemModule } from '@modyo/angular-design-system/dist';
+import { AngularDesignSystemModule } from '@modyolabs/angular-design-system/dist';
 
 import { AppComponent } from './app.component';
 
