@@ -20,6 +20,7 @@ import { defineCustomElement as defineMNavContent } from '@modyo/design-system/c
 import { defineCustomElement as defineMNavItem } from '@modyo/design-system/components/m-nav-item.js';
 import { defineCustomElement as defineMNavLink } from '@modyo/design-system/components/m-nav-link.js';
 import { defineCustomElement as defineMNavPane } from '@modyo/design-system/components/m-nav-pane.js';
+import { defineCustomElement as defineMQuickAction } from '@modyo/design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSelect } from '@modyo/design-system/components/m-select.js';
 import { defineCustomElement as defineMText } from '@modyo/design-system/components/m-text.js';
 
@@ -364,6 +365,34 @@ export class MNavPane {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MQuickAction extends Components.MQuickAction {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mClick: EventEmitter<CustomEvent<any>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMQuickAction,
+  inputs: ['actionIcon', 'actionWord', 'extraInfo', 'icon', 'image', 'state', 'subtext', 'text', 'variant']
+})
+@Component({
+  selector: 'm-quick-action',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['actionIcon', 'actionWord', 'extraInfo', 'icon', 'image', 'state', 'subtext', 'text', 'variant']
+})
+export class MQuickAction {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClick']);
   }
 }
 

@@ -12,6 +12,7 @@ import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-
 import { ListItemVariant, NavegableProps, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavegableProps as NavegableProps1, NavLinkVariant, OptionProps } from "./components/m-nav/m-nav-link/m-nav-link-interface";
+import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
 import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
@@ -316,6 +317,44 @@ export namespace Components {
          */
         "role": string;
     }
+    interface MQuickAction {
+        /**
+          * The action icon for the quick action
+         */
+        "actionIcon"?: string;
+        /**
+          * The action word for the quick action
+         */
+        "actionWord"?: string;
+        /**
+          * The extra info of the quick action
+         */
+        "extraInfo"?: string;
+        /**
+          * The icon of the quick action
+         */
+        "icon"?: string;
+        /**
+          * The image of the quick action
+         */
+        "image"?: string;
+        /**
+          * The state of the quick action
+         */
+        "state"?: QuickActionState;
+        /**
+          * The subtext of the quick action
+         */
+        "subtext"?: string;
+        /**
+          * The main text of the quick action
+         */
+        "text": string;
+        /**
+          * The variant of the quick action
+         */
+        "variant"?: QuickActionVariant;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -456,6 +495,12 @@ declare global {
         prototype: HTMLMNavPaneElement;
         new (): HTMLMNavPaneElement;
     };
+    interface HTMLMQuickActionElement extends Components.MQuickAction, HTMLStencilElement {
+    }
+    var HTMLMQuickActionElement: {
+        prototype: HTMLMQuickActionElement;
+        new (): HTMLMQuickActionElement;
+    };
     interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
     }
     var HTMLMSelectElement: {
@@ -484,6 +529,7 @@ declare global {
         "m-nav-item": HTMLMNavItemElement;
         "m-nav-link": HTMLMNavLinkElement;
         "m-nav-pane": HTMLMNavPaneElement;
+        "m-quick-action": HTMLMQuickActionElement;
         "m-select": HTMLMSelectElement;
         "m-text": HTMLMTextElement;
     }
@@ -811,6 +857,48 @@ declare namespace LocalJSX {
          */
         "role"?: string;
     }
+    interface MQuickAction {
+        /**
+          * The action icon for the quick action
+         */
+        "actionIcon"?: string;
+        /**
+          * The action word for the quick action
+         */
+        "actionWord"?: string;
+        /**
+          * The extra info of the quick action
+         */
+        "extraInfo"?: string;
+        /**
+          * The icon of the quick action
+         */
+        "icon"?: string;
+        /**
+          * The image of the quick action
+         */
+        "image"?: string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMClick"?: (event: CustomEvent<any>) => void;
+        /**
+          * The state of the quick action
+         */
+        "state"?: QuickActionState;
+        /**
+          * The subtext of the quick action
+         */
+        "subtext"?: string;
+        /**
+          * The main text of the quick action
+         */
+        "text": string;
+        /**
+          * The variant of the quick action
+         */
+        "variant"?: QuickActionVariant;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -879,6 +967,7 @@ declare namespace LocalJSX {
         "m-nav-item": MNavItem;
         "m-nav-link": MNavLink;
         "m-nav-pane": MNavPane;
+        "m-quick-action": MQuickAction;
         "m-select": MSelect;
         "m-text": MText;
     }
@@ -902,6 +991,7 @@ declare module "@stencil/core" {
             "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
             "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
+            "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
