@@ -2,6 +2,18 @@
   "name": "@modyolabs/design-system",
   "entries": [
     {
+      "version": "0.0.3",
+      "tag": "@modyolabs/design-system_v0.0.3",
+      "date": "Wed, 06 Jul 2022 02:17:55 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "chore: remove container from m-app"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.0.2",
       "tag": "@modyolabs/design-system_v0.0.2",
       "date": "Tue, 05 Jul 2022 21:25:48 GMT",
