@@ -124,6 +124,20 @@ export const MNavPane = /*@__PURE__*/ defineContainer<JSX.MNavPane>('m-nav-pane'
 ]);
 
 
+export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-quick-action', undefined, [
+  'text',
+  'subtext',
+  'extraInfo',
+  'icon',
+  'image',
+  'variant',
+  'actionWord',
+  'actionIcon',
+  'state',
+  'mClick'
+]);
+
+
 export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
   'mId',
   'variant',

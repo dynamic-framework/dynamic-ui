@@ -18,6 +18,7 @@ import { defineCustomElement as defineMNavContent } from '@modyolabs/design-syst
 import { defineCustomElement as defineMNavItem } from '@modyolabs/design-system/components/m-nav-item.js';
 import { defineCustomElement as defineMNavLink } from '@modyolabs/design-system/components/m-nav-link.js';
 import { defineCustomElement as defineMNavPane } from '@modyolabs/design-system/components/m-nav-pane.js';
+import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
 import { defineCustomElement as defineMText } from '@modyolabs/design-system/components/m-text.js';
 
@@ -34,5 +35,6 @@ export const MNavContent = /*@__PURE__*/createReactComponent<JSX.MNavContent, HT
 export const MNavItem = /*@__PURE__*/createReactComponent<JSX.MNavItem, HTMLMNavItemElement>('m-nav-item', undefined, undefined, defineMNavItem);
 export const MNavLink = /*@__PURE__*/createReactComponent<JSX.MNavLink, HTMLMNavLinkElement>('m-nav-link', undefined, undefined, defineMNavLink);
 export const MNavPane = /*@__PURE__*/createReactComponent<JSX.MNavPane, HTMLMNavPaneElement>('m-nav-pane', undefined, undefined, defineMNavPane);
+export const MQuickAction = /*@__PURE__*/createReactComponent<JSX.MQuickAction, HTMLMQuickActionElement>('m-quick-action', undefined, undefined, defineMQuickAction);
 export const MSelect = /*@__PURE__*/createReactComponent<JSX.MSelect, HTMLMSelectElement>('m-select', undefined, undefined, defineMSelect);
 export const MText = /*@__PURE__*/createReactComponent<JSX.MText, HTMLMTextElement>('m-text', undefined, undefined, defineMText);
