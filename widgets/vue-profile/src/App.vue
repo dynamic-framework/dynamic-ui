@@ -8,13 +8,14 @@
       <h3>Switches</h3>
       <div class="d-flex my-4 gap-5">
         <m-form-switch
+          label="hey"
           m-id="switch16"
         />
         <m-form-switch
           label="Default switch"
           m-id="switch1"
           :is-checked="switchValue1"
-          @m-change="$event => this.switchValue1 = $event.detail"
+          @m-change="$event => switchValue1 = $event.detail"
         />
         <m-form-switch
           label="Default switch"
@@ -52,22 +53,22 @@
       <div class="d-flex my-4 gap-5">
         <m-form-check
           type="checkbox"
-          state="danger"
+          state="error"
           m-id="check17" />
         <m-form-check
           type="checkbox"
-          state="danger"
+          state="error"
           label="Danger Checkbox"
           m-id="check4" />
         <m-form-check
           type="checkbox"
-          state="danger"
+          state="error"
           label="Danger Checkbox"
           m-id="check5"
           checked />
         <m-form-check
           type="checkbox"
-          state="danger"
+          state="error"
           label="Danger Checkbox"
           m-id="check6"
           disabled />
@@ -170,25 +171,25 @@
         <m-form-check
           type="radio"
           name="group2"
-          state="danger"
+          state="error"
           m-id="radio17" />
         <m-form-check
           type="radio"
           name="group2"
-          state="danger"
+          state="error"
           label="Danger radio"
           m-id="radio4" />
         <m-form-check
           type="radio"
           name="group2"
-          state="danger"
+          state="error"
           label="Danger radio"
           m-id="radio5"
           checked />
         <m-form-check
           type="radio"
           name="group2"
-          state="danger"
+          state="error"
           label="Danger radio"
           m-id="radio6"
           disabled />
@@ -268,7 +269,7 @@
     <br />
     <br />
     <m-input
-      id="input-1"
+      m-id="input-1"
       placeholder="the placeholder"
       type="text"
       :value="value"
@@ -921,6 +922,7 @@
         <h6 class="fw-bold">Variant Prime</h6>
         <div class="w-50">
           <m-select
+          m-id="selectOne"
           class="w-100"
           @m-change="onChange"
           >
@@ -933,6 +935,7 @@
       <div class="col-5 d-flex flex-column gap-2 mt-3">
         <h6 class="fw-bold">Variant full</h6>
           <m-select
+          m-id="selectTwo"
           theme="primary"
           variant="full"
           label="Label"
@@ -947,6 +950,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon start</b>
           <m-select
+          m-id="selectThree"
           theme="secondary"
           variant="full"
           label="Label"
@@ -959,6 +963,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon middle</b>
           <m-select
+          m-id="selectFour"
           theme="tertiary"
           variant="full"
           label="Label"
@@ -971,6 +976,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon end</b>
           <m-select
+          m-id="selectFive"
           theme="success"
           variant="full"
           label="Label"
@@ -983,6 +989,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icons</b>
           <m-select
+          m-id="selectSix"
           theme="success"
           variant="full"
           label="Label"
@@ -993,6 +1000,7 @@
           <option value="c">C</option></m-select>
           <b>Sin label</b>
           <m-select
+          m-id="selectSeven"
           theme="warning"
           variant="full"
           icon-start="emoji-smile"
@@ -1005,6 +1013,7 @@
           <option value="c">C</option></m-select>
           <b>Sin hint</b>
           <m-select
+          m-id="selectEight"
           theme="info"
           variant="full"
           label="Label"
@@ -1017,6 +1026,7 @@
           <option value="c">C</option></m-select>
           <b>Otro hint icon</b>
           <m-select
+          m-id="selectNine"
           theme="danger"
           variant="full"
           label="Label"
@@ -1033,6 +1043,7 @@
       <div class="col-5 d-flex flex-column gap-2 mt-3">
         <h6 class="fw-bold">Variant transparent</h6>
           <m-select
+          m-id="selectTen"
           theme="primary"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1044,6 +1055,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon start</b>
           <m-select
+          m-id="selectEleven"
           theme="secondary"
           variant="transparent"
           icon-middle="circle-fill"
@@ -1054,6 +1066,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon middle</b>
           <m-select
+          m-id="selectTwelve"
           theme="tertiary"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1064,6 +1077,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icon end</b>
           <m-select
+          m-id="selectTenOne"
           theme="success"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1074,6 +1088,7 @@
           <option value="c">C</option></m-select>
           <b>Sin icons</b>
           <m-select
+          m-id="selectTenTwo"
           theme="success"
           variant="transparent"
         >
@@ -1082,6 +1097,7 @@
           <option value="c">C</option></m-select>
           <b>Con OnChange</b>
           <m-select
+          m-id="selectTenThree"
           theme="warning"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1093,6 +1109,7 @@
           <option value="b">B</option>
           <option value="c">C</option></m-select>
           <m-select
+          m-id="selectTenFour"
           theme="info"
           variant="transparent"
           icon-start="emoji-smile"
@@ -1103,6 +1120,7 @@
           <option value="b">B</option>
           <option value="c">C</option></m-select>
           <m-select
+          m-id="selectTenFive"
           theme="danger"
           variant="transparent"
           icon-start="emoji-smile"
