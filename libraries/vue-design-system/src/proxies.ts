@@ -36,6 +36,26 @@ export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefine
 ]);
 
 
+export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', undefined, [
+  'mId',
+  'label',
+  'iconLabel',
+  'iconStart',
+  'iconMiddle',
+  'iconEnd',
+  'hasSelect',
+  'placeholder',
+  'type',
+  'textButton',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'theme',
+  'layoutDirection',
+  'mClick'
+]);
+
+
 export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
   'type',
   'name',

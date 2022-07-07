@@ -9,6 +9,7 @@ import { defineCustomElement as defineMApp } from '@modyolabs/design-system/comp
 import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyolabs/design-system/components/m-card.js';
+import { defineCustomElement as defineMCoupon } from '@modyolabs/design-system/components/m-coupon.js';
 import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMInput } from '@modyolabs/design-system/components/m-input.js';
@@ -108,6 +109,34 @@ export class MCard {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+  }
+}
+
+import type { CouponEvent as IMCouponCouponEvent } from '@modyolabs/design-system/components';
+export declare interface MCoupon extends Components.MCoupon {
+  /**
+   * Emitted when the button is clicked 
+   */
+  mClick: EventEmitter<CustomEvent<IMCouponCouponEvent>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMCoupon,
+  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'placeholder', 'textButton', 'theme', 'type']
+})
+@Component({
+  selector: 'm-coupon',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'placeholder', 'textButton', 'theme', 'type']
+})
+export class MCoupon {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClick']);
   }
 }
 

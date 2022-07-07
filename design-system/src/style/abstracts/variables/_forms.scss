@@ -157,12 +157,10 @@ $form-select-padding-x: $input-padding-x !default;
 // $form-select-disabled-bg: $gray-200 !default;
 // $form-select-disabled-border-color: $input-disabled-border-color !default;
 $form-select-bg-position: right center !default;
-$form-select-bg-size: 24px !default; // In pixels because image dimensions
+$form-select-bg-size: var(--#{$prefix}form-select-bg-size) !default; // In pixels because image dimensions
 $form-select-bg-opacity: .1 !default;
-$form-select-indicator-color: $dark !default;
-// $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$primary}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>") !default;
-// $form-select-indicator: var(--#{$prefix}url-form-select-indicator);
-// $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M0 2A2 2 0 012 0H22A2 2 0 0124 2V22A2 2 0 0122 24H2A2 2 0 010 22V2' fill='#c39dc9'/><path d='M5.646 8.646A.5.5 0 016.354 8.646L12 14.293 17.646 8.646A.5.5 0 0118.354 9.354L12.354 15.354A.5.5 0 0111.646 15.354L5.646 9.354A.5.5 0 015.646 8.646Z' fill='#fff'/></svg>") !default;
+$form-select-indicator-color: $gray-600 !default;
+// $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>") !default;
 
 // $form-select-feedback-icon-padding-end: $form-select-padding-x * 2.5 + $form-select-indicator-padding !default;
 // $form-select-feedback-icon-position: center right $form-select-indicator-padding !default;

@@ -6,6 +6,7 @@ export const DIRECTIVES = [
   d.MBadge,
   d.MButton,
   d.MCard,
+  d.MCoupon,
   d.MFormCheck,
   d.MFormSwitch,
   d.MInput,
