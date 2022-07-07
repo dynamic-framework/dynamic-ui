@@ -1161,6 +1161,10 @@
         Con color heredado del div <br>
         <MIcon icon="heart-fill"/>
       </div>
+      <div class="col-12 col-sm-6" style="color: var(--bs-tertiary);">
+        Con loading <br>
+        <MIcon icon="heart-fill" size="3rem" is-loading :duration="2"/>
+      </div>
     </div>
   </m-app>
 </template>
