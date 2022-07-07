@@ -6,7 +6,7 @@
     "types": [],
     "paths": {
       "@angular/*": [ "./node_modules/@angular/*" ],
-      "@modyo/*": [ "./node_modules/@modyo/*" ]
+      "@modyolabs/*": [ "./node_modules/@modyolabs/*" ]
     }
   },
   "files": [

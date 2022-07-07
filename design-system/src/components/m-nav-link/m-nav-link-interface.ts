@@ -1,10 +1,5 @@
 export type NavLinkVariant = 'option' | 'navegable';
 
-export const tagType = {
-  option: 'button',
-  navegable: 'a',
-};
-
 export type OptionProps = {
   id: string;
   type: string,
@@ -13,10 +8,4 @@ export type OptionProps = {
   'data-bs-target': string,
   'aria-controls': string,
   'aria-selected': string
-};
-
-export type NavegableProps = {
-  href: string,
-  target?: string,
-  'aria-current': string,
 };

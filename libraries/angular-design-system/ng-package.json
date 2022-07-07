@@ -4,6 +4,6 @@
     "entryFile": "src/index.ts"
   },
   "allowedNonPeerDependencies": [
-    "@modyo/design-system"
+    "@modyolabs/design-system"
   ]
 }

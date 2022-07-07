@@ -3,26 +3,11 @@
 /* auto-generated vue proxies */
 import { defineContainer } from './vue-component-lib/utils';
 
-import type { JSX } from '@modyo/design-system';
+import type { JSX } from '@modyolabs/design-system';
 
-import { defineCustomElements } from '@modyo/design-system/loader';
+import { defineCustomElements } from '@modyolabs/design-system/loader';
 
 defineCustomElements();
-
-export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
-  'theme',
-  'header',
-  'body',
-  'actions',
-  'modActionClick'
-]);
-
-
-export const MAlertAction = /*@__PURE__*/ defineContainer<JSX.MAlertAction>('m-alert-action', undefined, [
-  'action',
-  'modClick'
-]);
-
 
 export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined);
 
@@ -48,6 +33,26 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
 export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefined, [
   'theme',
   'header'
+]);
+
+
+export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', undefined, [
+  'mId',
+  'label',
+  'iconLabel',
+  'iconStart',
+  'iconMiddle',
+  'iconEnd',
+  'hasSelect',
+  'placeholder',
+  'type',
+  'textButton',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'theme',
+  'layoutDirection',
+  'mClick'
 ]);
 
 
@@ -136,6 +141,20 @@ export const MNavPane = /*@__PURE__*/ defineContainer<JSX.MNavPane>('m-nav-pane'
   'role',
   'mTabindex',
   'isActive'
+]);
+
+
+export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-quick-action', undefined, [
+  'text',
+  'subtext',
+  'extraInfo',
+  'icon',
+  'image',
+  'variant',
+  'actionWord',
+  'actionIcon',
+  'state',
+  'mClick'
 ]);
 
 
