@@ -184,14 +184,14 @@ export class MCoupon implements ComponentInterface {
           </div>
           {this.hint && (
             <small class="hint">
-              { this.hintIconStart && (
+              {this.hintIconStart && (
                 <span class="form-control-icon">
                   {/* TODO: use m-icon component */}
                   <i class={`bi bi-${this.hintIconStart}`} />
                 </span>
               )}
               {this.hint}
-              { this.hintIconEnd && (
+              {this.hintIconEnd && (
                 <span class="form-control-icon">
                   {/* TODO: use m-icon component */}
                   <i class={`bi bi-${this.hintIconEnd}`} />
