@@ -1,9 +1,10 @@
 import {
   Component,
-  Host,
   h,
   Prop,
 } from '@stencil/core';
+
+import type { ClassMap } from '../../utils/component-interface';
 
 @Component({
   tag: 'm-icon',
@@ -22,15 +23,35 @@ export class MIcon {
    * Font size of the icon
    * */
   @Prop() size?: string = '1rem';
+  /**
+   * Is loading
+   * */
+  @Prop() isLoading = false;
+  /**
+   * Loading animation duration
+   * */
+  @Prop() duration = 1.8;
+
+  private prefix = 'bs-';
+
+  private getClasses(): ClassMap {
+    return {
+      'bi m-icon': true,
+      [`bi-${this.icon}`]: true,
+      [`m-icon-${this.theme}`]: !!this.theme,
+      'm-icon-loading': this.isLoading,
+    };
+  }
 
   render() {
     return (
-      <Host>
-        <i
-          class={`bi bi-${this.icon} m-icon-${this.theme}`}
-          style={{ 'font-size': this.size }}
-        />
-      </Host>
+      <i
+        class={this.getClasses()}
+        style={{
+          [`--${this.prefix}m-icon-font-size`]: this.size,
+          [`--${this.prefix}m-icon-animation-duration`]: `${this.duration}s`,
+        }}
+      />
     );
   }
 }

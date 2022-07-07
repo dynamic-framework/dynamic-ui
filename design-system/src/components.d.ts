@@ -132,9 +132,17 @@ export namespace Components {
     }
     interface MIcon {
         /**
+          * Loading animation duration
+         */
+        "duration": number;
+        /**
           * Name of icon to use (in kebab-case)
          */
         "icon": string;
+        /**
+          * Is loading
+         */
+        "isLoading": boolean;
         /**
           * Font size of the icon
          */
@@ -663,9 +671,17 @@ declare namespace LocalJSX {
     }
     interface MIcon {
         /**
+          * Loading animation duration
+         */
+        "duration"?: number;
+        /**
           * Name of icon to use (in kebab-case)
          */
         "icon": string;
+        /**
+          * Is loading
+         */
+        "isLoading"?: boolean;
         /**
           * Font size of the icon
          */

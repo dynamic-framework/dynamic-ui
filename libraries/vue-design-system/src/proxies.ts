@@ -63,7 +63,9 @@ export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-for
 export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefined, [
   'icon',
   'theme',
-  'size'
+  'size',
+  'isLoading',
+  'duration'
 ]);
 
 

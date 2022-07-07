@@ -1,5 +1,24 @@
+.m-icon {
+  display: inline-flex;
+  font-size: var(--#{$prefix}m-icon-font-size);
+}
+
 @each $color, $value in $theme-colors {
   .m-icon-#{$color} {
-    color: $value;
+    color: var(--#{$prefix}#{$color});;
+  }
+}
+
+.m-icon-loading {
+  animation: loading-icon var(--#{$prefix}m-icon-animation-duration) infinite linear;
+}
+
+@keyframes loading-icon {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
