@@ -80,6 +80,15 @@ export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-for
 ]);
 
 
+export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefined, [
+  'icon',
+  'theme',
+  'size',
+  'isLoading',
+  'duration'
+]);
+
+
 export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
   'mId',
   'label',
