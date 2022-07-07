@@ -7,7 +7,7 @@ import { postcss } from '@stencil/postcss';
 // @ts-ignore
 import autoprefixer from 'autoprefixer';
 
-const componentCorePackage = '@modyo/design-system';
+const componentCorePackage = '@modyolabs/design-system';
 
 export const config: Config = {
   namespace: 'design-system',
