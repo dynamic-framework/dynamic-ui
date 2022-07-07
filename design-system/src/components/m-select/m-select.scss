@@ -1,4 +1,6 @@
 .form-select {
+  --#{$prefix}form-select-bg-size: 24px; // In pixels because image dimensions
+
   padding-right: $form-select-bg-size;
   background-color: var(--#{$prefix}input-group-bg);
   border: 0;
@@ -11,7 +13,7 @@
   }
 
   &.no-icons {
-    padding-right: $form-select-bg-size * 2;
+    padding-right: calc(#{$form-select-bg-size} * 2);
     background-position: right 1rem center;
   }
 }
@@ -88,7 +90,7 @@
   }
 
   .input-group .form-select {
-    padding-right: $form-select-bg-size * 2;
+    padding-right: calc(#{$form-select-bg-size} * 2);
     background-color: var(--#{$prefix}primary);
     background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5.646 8.646A.5.5 0 016.354 8.646L12 14.293 17.646 8.646A.5.5 0 0118.354 9.354L12.354 15.354A.5.5 0 0111.646 15.354L5.646 9.354A.5.5 0 015.646 8.646Z' fill='#{$white}'/></svg>"));
     background-position: right 1rem center;

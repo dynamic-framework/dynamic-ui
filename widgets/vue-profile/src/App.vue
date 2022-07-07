@@ -1,5 +1,6 @@
 <template>
   <m-app>
+    <div class="container">
     <m-button
       text="click me!"
       @mod-button-click="onButtonClick"
@@ -843,6 +844,135 @@
           deserunt. About.
         </m-nav-pane>
       </m-nav-content>
+    </div>
+      <div class="row py-5">
+        <div class="col-6">
+          <m-coupon
+            m-id="primary"
+            placeholder="primary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="primary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-click="print"
+          >
+            <option value="aaa">aaa</option>
+            <option value="aa">aa</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            m-id="1"
+            placeholder="secondary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="secondary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            m-id="2"
+            placeholder="tertiary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="tertiary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            m-id="3"
+            placeholder="success"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="success"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            m-id="4"
+            placeholder="info"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="info"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            m-id="5"
+            placeholder="warning"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="warning"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+        </div>
+        <div class="col-6">
+          <m-coupon
+            m-id="6"
+            placeholder="danger"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="danger"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+          >
+            <option value="a">a</option>
+            <option value="a">a</option>
+            <option value="a">a</option>
+          </m-coupon>
+      </div>
       <div class="row mt-4">
         <div class="col-6 d-flex flex-column">
           <h6 class="fw-bold">Variantes</h6>
@@ -1132,38 +1262,39 @@
           <option value="b">B</option>
           <option value="c">C</option></m-select>
       </div>
-      </div>
-    <div class="row py-5">
-      <div class="col-12">
-        <h3 class="fw-bold mb-4">m-icon</h3>
-      </div>
-      <div class="col-12 col-sm-6">
-        Sin color <br>
-        <MIcon icon="heart-fill"/>
-      </div>
-      <div class="col-12 col-sm-6">
-        Con size de 2rem <br>
-        <MIcon icon="heart-fill" size="2rem"/>
-      </div>
-      <div class="col-12 col-sm-6">
-        Temas <br>
-        <MIcon icon="heart-fill" theme="primary"/>
-        <MIcon icon="heart-fill" theme="secondary"/>
-        <MIcon icon="heart-fill" theme="tertiary"/>
-        <MIcon icon="heart-fill" theme="success"/>
-        <MIcon icon="heart-fill" theme="warning"/>
-        <MIcon icon="heart-fill" theme="info"/>
-        <MIcon icon="heart-fill" theme="danger"/>
-        <MIcon icon="heart-fill" theme="light"/>
-        <MIcon icon="heart-fill" theme="dark"/>
-      </div>
-      <div class="col-12 col-sm-6" style="color: red;">
-        Con color heredado del div <br>
-        <MIcon icon="heart-fill"/>
-      </div>
-      <div class="col-12 col-sm-6" style="color: var(--bs-tertiary);">
-        Con loading <br>
-        <MIcon icon="heart-fill" size="3rem" is-loading :duration="2"/>
+    </div>
+      <div class="row py-5">
+        <div class="col-12">
+          <h3 class="fw-bold mb-4">m-icon</h3>
+        </div>
+        <div class="col-12 col-sm-6">
+          Sin color <br>
+          <MIcon icon="heart-fill"/>
+        </div>
+        <div class="col-12 col-sm-6">
+          Con size de 2rem <br>
+          <MIcon icon="heart-fill" size="2rem"/>
+        </div>
+        <div class="col-12 col-sm-6">
+          Temas <br>
+          <MIcon icon="heart-fill" theme="primary"/>
+          <MIcon icon="heart-fill" theme="secondary"/>
+          <MIcon icon="heart-fill" theme="tertiary"/>
+          <MIcon icon="heart-fill" theme="success"/>
+          <MIcon icon="heart-fill" theme="warning"/>
+          <MIcon icon="heart-fill" theme="info"/>
+          <MIcon icon="heart-fill" theme="danger"/>
+          <MIcon icon="heart-fill" theme="light"/>
+          <MIcon icon="heart-fill" theme="dark"/>
+        </div>
+        <div class="col-12 col-sm-6" style="color: red;">
+          Con color heredado del div <br>
+          <MIcon icon="heart-fill"/>
+        </div>
+        <div class="col-12 col-sm-6" style="color: var(--bs-tertiary);">
+          Con loading <br>
+          <MIcon icon="heart-fill" size="3rem" is-loading :duration="2"/>
+        </div>
       </div>
     </div>
   </m-app>
@@ -1190,6 +1321,7 @@ import {
   MSelect,
   MFormSwitch,
   MIcon,
+  MCoupon,
 } from '@modyolabs/vue-design-system';
 
 export default defineComponent({
@@ -1212,6 +1344,7 @@ export default defineComponent({
     MSelect,
     MFormSwitch,
     MIcon,
+    MCoupon,
   },
   data() {
     return {
@@ -1234,8 +1367,8 @@ export default defineComponent({
     onInputChange(event: CustomEvent<string>) {
       this.value = event.detail;
     },
-    print(e: CustomEvent) {
-      console.log(e);
+    print({ detail }: CustomEvent) {
+      console.log(detail);
     },
     onChange({ detail }: CustomEvent) {
       console.log(detail);

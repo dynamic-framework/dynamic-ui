@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
+import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
@@ -65,6 +66,68 @@ export namespace Components {
           * The theme to use
          */
         "theme": string;
+    }
+    interface MCoupon {
+        /**
+          * Has a select input
+         */
+        "hasSelect": boolean;
+        /**
+          * Hint for the m-cupon
+         */
+        "hint"?: string;
+        /**
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon of the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon for the label text
+         */
+        "iconLabel"?: string;
+        /**
+          * Icon of the middle
+         */
+        "iconMiddle"?: string;
+        /**
+          * Icon of the left
+         */
+        "iconStart"?: string;
+        /**
+          * Label for the input
+         */
+        "label": string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * Placeholder for the input
+         */
+        "placeholder"?: string;
+        /**
+          * Text for the button
+         */
+        "textButton"?: string;
+        /**
+          * Theme for the m-cupon
+         */
+        "theme"?: string | undefined;
+        /**
+          * * The type of the input
+         */
+        "type": CouponInputType;
     }
     interface MFormCheck {
         /**
@@ -405,6 +468,10 @@ export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
 }
+export interface MCouponCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMCouponElement;
+}
 export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMFormSwitchElement;
@@ -445,6 +512,12 @@ declare global {
     var HTMLMCardElement: {
         prototype: HTMLMCardElement;
         new (): HTMLMCardElement;
+    };
+    interface HTMLMCouponElement extends Components.MCoupon, HTMLStencilElement {
+    }
+    var HTMLMCouponElement: {
+        prototype: HTMLMCouponElement;
+        new (): HTMLMCouponElement;
     };
     interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
     }
@@ -529,6 +602,7 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
+        "m-coupon": HTMLMCouponElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
         "m-icon": HTMLMIconElement;
@@ -600,6 +674,72 @@ declare namespace LocalJSX {
           * The theme to use
          */
         "theme"?: string;
+    }
+    interface MCoupon {
+        /**
+          * Has a select input
+         */
+        "hasSelect"?: boolean;
+        /**
+          * Hint for the m-cupon
+         */
+        "hint"?: string;
+        /**
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon of the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon for the label text
+         */
+        "iconLabel"?: string;
+        /**
+          * Icon of the middle
+         */
+        "iconMiddle"?: string;
+        /**
+          * Icon of the left
+         */
+        "iconStart"?: string;
+        /**
+          * Label for the input
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * Emitted when the button is clicked
+         */
+        "onMClick"?: (event: MCouponCustomEvent<CouponEvent>) => void;
+        /**
+          * Placeholder for the input
+         */
+        "placeholder"?: string;
+        /**
+          * Text for the button
+         */
+        "textButton"?: string;
+        /**
+          * Theme for the m-cupon
+         */
+        "theme"?: string | undefined;
+        /**
+          * * The type of the input
+         */
+        "type"?: CouponInputType;
     }
     interface MFormCheck {
         /**
@@ -956,6 +1096,7 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
+        "m-coupon": MCoupon;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
         "m-icon": MIcon;
@@ -979,6 +1120,7 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
+            "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
