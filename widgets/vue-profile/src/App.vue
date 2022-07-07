@@ -1548,8 +1548,41 @@
           icon-end="circle-half"
         />
       </div>
-    </div>
       </div>
+      <div class="row py-5">
+        <div class="col-12">
+          <h3 class="fw-bold mb-4">m-icon</h3>
+        </div>
+        <div class="col-12 col-sm-6">
+          Sin color <br>
+          <MIcon icon="heart-fill"/>
+        </div>
+        <div class="col-12 col-sm-6">
+          Con size de 2rem <br>
+          <MIcon icon="heart-fill" size="2rem"/>
+        </div>
+        <div class="col-12 col-sm-6">
+          Temas <br>
+          <MIcon icon="heart-fill" theme="primary"/>
+          <MIcon icon="heart-fill" theme="secondary"/>
+          <MIcon icon="heart-fill" theme="tertiary"/>
+          <MIcon icon="heart-fill" theme="success"/>
+          <MIcon icon="heart-fill" theme="warning"/>
+          <MIcon icon="heart-fill" theme="info"/>
+          <MIcon icon="heart-fill" theme="danger"/>
+          <MIcon icon="heart-fill" theme="light"/>
+          <MIcon icon="heart-fill" theme="dark"/>
+        </div>
+        <div class="col-12 col-sm-6" style="color: red;">
+          Con color heredado del div <br>
+          <MIcon icon="heart-fill"/>
+        </div>
+        <div class="col-12 col-sm-6" style="color: var(--bs-tertiary);">
+          Con loading <br>
+          <MIcon icon="heart-fill" size="3rem" is-loading :duration="2"/>
+        </div>
+      </div>
+    </div>
   </m-app>
 </template>
 
@@ -1573,6 +1606,7 @@ import {
   MQuickAction,
   MSelect,
   MFormSwitch,
+  MIcon,
   MCoupon,
   MSearch,
 } from '@modyolabs/vue-design-system';
@@ -1596,6 +1630,7 @@ export default defineComponent({
     MQuickAction,
     MSelect,
     MFormSwitch,
+    MIcon,
     MCoupon,
     MSearch,
   },
