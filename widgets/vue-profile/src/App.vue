@@ -1484,6 +1484,7 @@
       </div>
       <div class="col-6 mb-3">
         <m-search
+          m-id="s1"
           variant="secondary"
           placeholder="Default"
           icon-end="circle-fill"
@@ -1493,6 +1494,7 @@
       </div>
        <div class="col-6 mb-3">
         <m-search
+          m-id="s2"
           variant="secondary"
           :is-disabled="true"
           placeholder="Disabled"
@@ -1501,6 +1503,7 @@
       </div>
        <div class="col-6 mb-3">
         <m-search
+          m-id="s3"
           variant="secondary"
           :is-read-only="true"
           placeholder="ReadOnly"
@@ -1510,6 +1513,7 @@
       </div>
       <div class="col-6 mb-3">
         <m-search
+          m-id="s4"
           variant="secondary"
           theme="danger"
           placeholder="Danger"
@@ -1518,6 +1522,7 @@
       </div>
       <div class="col-6 mb-3">
         <m-search
+          m-id="s5"
           variant="secondary"
           theme="warning"
           placeholder="Warning"
@@ -1526,6 +1531,7 @@
       </div>
       <div class="col-6 mb-3">
         <m-search
+          m-id="s6"
           variant="secondary"
           theme="tertiary"
           placeholder="Tertiary"
@@ -1534,6 +1540,7 @@
       </div>
       <div class="col-6 mb-3">
         <m-search
+          m-id="s7"
           variant="secondary"
           theme="success"
           placeholder="Success"
@@ -1542,6 +1549,7 @@
       </div>
       <div class="col-6 mb-3">
         <m-search
+          m-id="s8"
           variant="secondary"
           theme="loading"
           placeholder="Loading"
