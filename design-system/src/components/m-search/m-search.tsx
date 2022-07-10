@@ -162,14 +162,14 @@ export class MSearch implements ComponentInterface {
           {this.hint && (
             <small class="hint">
               {/* TODO: use m-icon component */}
-              { this.hintIconStart && (
+              {this.hintIconStart && (
                 <span class="form-control-icon hint-icon">
                   <i class={`bi bi-${this.hintIconStart}`} />
                 </span>
               )}
               {this.hint}
               {/* TODO: use m-icon component */}
-              { this.hintIconEnd && (
+              {this.hintIconEnd && (
                 <span class="form-control-icon hint-icon">
                   <i class={`bi bi-${this.hintIconEnd}`} />
                 </span>
