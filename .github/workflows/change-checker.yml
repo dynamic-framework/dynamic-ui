@@ -24,4 +24,4 @@ jobs:
           scope: '@modyolabs'
       - name: Verify libraries changes
         run: |
-          node common/scripts/install-run-rush.js change -v --no-fetch
+          node common/scripts/install-run-rush.js change -v
