@@ -24,5 +24,4 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@modyolabs'
       - name: Verify libraries changes
-        run: |
-          node common/scripts/install-run-rush.js change -v
+        run: node common/scripts/install-run-rush.js change -v
