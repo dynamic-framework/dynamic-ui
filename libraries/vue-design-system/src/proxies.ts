@@ -202,8 +202,3 @@ export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', un
   'mChange'
 ]);
 
-
-export const MText = /*@__PURE__*/ defineContainer<JSX.MText>('m-text', undefined, [
-  'theme'
-]);
-

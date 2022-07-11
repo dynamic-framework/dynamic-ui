@@ -278,9 +278,6 @@
     />
     <br />
     <br />
-    <m-text>
-      the new value is: {{value}}
-    </m-text>
     <div class="shadows-container pb-5">
     <h5>Test shadows</h5>
     <div class="d-flex justify-content-evenly align-items-center gap-5">
@@ -1599,7 +1596,6 @@ import { defineComponent } from 'vue';
 
 import {
   MButton,
-  MText,
   MInput,
   MCard,
   MApp,
@@ -1623,7 +1619,6 @@ export default defineComponent({
   name: 'App',
   components: {
     MButton,
-    MText,
     MInput,
     MCard,
     MApp,

@@ -1,0 +1,42 @@
+name: Publish Packages
+
+on:
+  release:
+    types: [published]
+jobs:
+  publish-library:
+    name: Publish Job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+          scope: '@modyolabs'
+      - name: Verify libraries changes
+        run: node common/scripts/install-run-rush.js change -v
+      - name: Install dependencies
+        run: node common/scripts/install-run-rush.js install --no-link
+        env:
+          # And add the additional registry token here:
+          # FORTAWESOME_TOKEN: ${{secrets.FORTAWESOME_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.TOKEN_REG }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
+      - name: Linking Libraries
+        run: node common/scripts/install-run-rush.js link
+      - name: Build Libraries
+        run: node common/scripts/install-run-rush.js build --ship --verbose
+      - name: Versioning
+        run : |
+          git config user.email echo $EMAIL
+          git config user.name echo $NAME
+          node common/scripts/install-run-rush.js publish --apply
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          NAME: ${{ secrets.NAME }}
+      - name: Publish
+        run: node common/scripts/install-run-rush.js publish --publish
+        env:
+          NODE_AUTH_TOKEN: ${{github.token}}

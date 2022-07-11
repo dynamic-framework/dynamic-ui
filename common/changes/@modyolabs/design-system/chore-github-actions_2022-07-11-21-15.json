@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "chore: remove m-text",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
