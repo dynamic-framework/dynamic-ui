@@ -10,7 +10,7 @@ on:
 
 jobs:
   pr-labeler:
-    name: Labeler
+    name: Labeling Job
     runs-on: ubuntu-latest
     steps:
       - uses: TimonVS/pr-labeler-action@v3

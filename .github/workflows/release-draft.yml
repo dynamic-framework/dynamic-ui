@@ -8,7 +8,7 @@ on:
 
 jobs:
   update_release_draft:
-    name: Release drafter
+    name: Drafting Job
     runs-on: ubuntu-latest
     steps:
       # Drafts your next Release notes as Pull Requests are merged into "master"
