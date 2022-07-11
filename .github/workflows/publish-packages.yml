@@ -18,14 +18,12 @@ jobs:
       - name: Verify libraries changes
         run: node common/scripts/install-run-rush.js change -v
       - name: Install dependencies
-        run: node common/scripts/install-run-rush.js install --no-link
+        run: node common/scripts/install-run-rush.js install
         env:
           # And add the additional registry token here:
           # FORTAWESOME_TOKEN: ${{secrets.FORTAWESOME_TOKEN}}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
-      - name: Linking Libraries
-        run: node common/scripts/install-run-rush.js link
       - name: Build Libraries
         run: node common/scripts/install-run-rush.js build --ship --verbose
       - name: Versioning
