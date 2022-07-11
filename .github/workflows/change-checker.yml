@@ -4,7 +4,8 @@ on:
     types: [opened]
 
 jobs:
-  pr-labeler:
+  change-checker:
+    name: Change Checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

@@ -5,6 +5,7 @@ on:
 
 jobs:
   pr-labeler:
+    name: Labeler
     runs-on: ubuntu-latest
     steps:
       - uses: TimonVS/pr-labeler-action@v3

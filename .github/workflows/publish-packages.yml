@@ -5,6 +5,7 @@ on:
     types: [published]
 jobs:
   publish-library:
+    name: Publish Packages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
