@@ -4,13 +4,10 @@ on:
     branches:
       - master
     types: [
-      opened
+      opened,
+      edited,
+      synchronize
     ]
-
-permissions:
-  contents: read
-  pull-requests: write
-  packages: write
 
 jobs:
   version-library:
@@ -34,7 +31,7 @@ jobs:
         env:
           # And add the additional registry token here:
           # FORTAWESOME_TOKEN: ${{secrets.FORTAWESOME_TOKEN}}
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
+          NPM_AUTH_TOKEN: ${{ secrets.TEMPORAL_GITHUB_TOKEN }} # This gets generated automatically
       - name: Versioning
         run : |
           git config user.email echo $EMAIL
