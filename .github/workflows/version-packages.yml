@@ -31,8 +31,6 @@ jobs:
           # FORTAWESOME_TOKEN: ${{secrets.FORTAWESOME_TOKEN}}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
-      - name: Build Libraries
-        run: node common/scripts/install-run-rush.js rebuild --verbose
       - name: Versioning
         run : |
           git config user.email echo $EMAIL
