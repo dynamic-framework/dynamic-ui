@@ -10,6 +10,7 @@ import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/co
 import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyolabs/design-system/components/m-card.js';
 import { defineCustomElement as defineMCoupon } from '@modyolabs/design-system/components/m-coupon.js';
+import { defineCustomElement as defineMCurrency } from '@modyolabs/design-system/components/m-currency.js';
 import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMIcon } from '@modyolabs/design-system/components/m-icon.js';
@@ -138,6 +139,34 @@ export class MCoupon {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mClick']);
+  }
+}
+
+import type { CurrencyEvent as IMCurrencyCurrencyEvent } from '@modyolabs/design-system/components';
+export declare interface MCurrency extends Components.MCurrency {
+  /**
+   * Emitted when the inputs change 
+   */
+  mChange: EventEmitter<CustomEvent<IMCurrencyCurrencyEvent>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMCurrency,
+  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'theme', 'type', 'value']
+})
+@Component({
+  selector: 'm-currency',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'theme', 'type', 'value']
+})
+export class MCurrency {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 

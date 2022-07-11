@@ -1,0 +1,59 @@
+.form-control-layout-currency {
+
+  .form-select {
+    --#{$prefix}form-select-bg-size: 12px; // In pixels because image dimensions
+
+    flex: none;
+    width: max-content;
+  }
+
+  .form-select,
+  .form-control {
+    border-width: 0;
+    outline-width: 0;
+    box-shadow: none;
+  }
+
+  .form-control-icon {
+    --#{$prefix}-form-control-icon-size: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn.small {
+    --#{$prefix}btn-font-size: .625rem;
+    --#{$prefix}btn-font-weight: $font-weight-semibold;
+  }
+}
+
+@each $color, $value in map-remove($theme-colors, "light", "dark") {
+  .form-control-layout-currency.form-control-theme-#{$color} {
+    label,
+    .input-group-text,
+    .input-group-icon,
+    .hint {
+      color: $value;
+    }
+
+    .input-group {
+      border-color: $value;
+    }
+  }
+}
+
+@each $color, $value in map-remove($theme-colors-hover, "light", "dark") {
+  .form-control-layout-currency:hover.form-control-theme-#{$color},
+  .form-control-layout-currency.hover.form-control-theme-#{$color} {
+    .input-group-text,
+    .input-group-icon {
+      color: $value;
+    }
+
+    .input-group {
+      border-color: $value;
+      box-shadow: 0 0 0 1px $value;
+    }
+  }
+}

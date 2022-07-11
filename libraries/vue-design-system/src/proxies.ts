@@ -56,6 +56,28 @@ export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', un
 ]);
 
 
+export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currency', undefined, [
+  'mId',
+  'label',
+  'iconLabel',
+  'iconStart',
+  'iconMiddle',
+  'iconEnd',
+  'hasSelect',
+  'placeholder',
+  'type',
+  'value',
+  'minValue',
+  'maxValue',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'theme',
+  'layoutDirection',
+  'mChange'
+]);
+
+
 export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
   'type',
   'name',
