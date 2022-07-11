@@ -18,4 +18,4 @@ jobs:
       - name: Publish
         run: node common/scripts/install-run-rush.js publish --publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
