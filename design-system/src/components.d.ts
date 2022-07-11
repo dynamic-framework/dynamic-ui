@@ -486,6 +486,68 @@ export namespace Components {
          */
         "variant"?: QuickActionVariant;
     }
+    interface MSearch {
+        /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Icon to display on hint right
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon to display on hint left
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon to display on input right
+         */
+        "iconEnd"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The placeholder text
+         */
+        "placeholder": string;
+        /**
+          * Theme to use for the search
+         */
+        "theme"?: string;
+        /**
+          * The type of the input
+         */
+        "type": string;
+        /**
+          * The value of the input
+         */
+        "value": string;
+        /**
+          * Variant to use for the search
+         */
+        "variant"?: string;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -558,6 +620,10 @@ export interface MInputCustomEvent<T> extends CustomEvent<T> {
 export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionElement;
+}
+export interface MSearchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMSearchElement;
 }
 export interface MSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -666,6 +732,12 @@ declare global {
         prototype: HTMLMQuickActionElement;
         new (): HTMLMQuickActionElement;
     };
+    interface HTMLMSearchElement extends Components.MSearch, HTMLStencilElement {
+    }
+    var HTMLMSearchElement: {
+        prototype: HTMLMSearchElement;
+        new (): HTMLMSearchElement;
+    };
     interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
     }
     var HTMLMSelectElement: {
@@ -696,6 +768,7 @@ declare global {
         "m-nav-link": HTMLMNavLinkElement;
         "m-nav-pane": HTMLMNavPaneElement;
         "m-quick-action": HTMLMQuickActionElement;
+        "m-search": HTMLMSearchElement;
         "m-select": HTMLMSelectElement;
         "m-text": HTMLMTextElement;
     }
@@ -1195,6 +1268,76 @@ declare namespace LocalJSX {
          */
         "variant"?: QuickActionVariant;
     }
+    interface MSearch {
+        /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Icon to display on hint right
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon to display on hint left
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon to display on input right
+         */
+        "iconEnd"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMChange"?: (event: MSearchCustomEvent<string>) => void;
+        /**
+          * Emitted when the button is clicked
+         */
+        "onMClick"?: (event: MSearchCustomEvent<string>) => void;
+        /**
+          * The placeholder text
+         */
+        "placeholder"?: string;
+        /**
+          * Theme to use for the search
+         */
+        "theme"?: string;
+        /**
+          * The type of the input
+         */
+        "type"?: string;
+        /**
+          * The value of the input
+         */
+        "value"?: string;
+        /**
+          * Variant to use for the search
+         */
+        "variant"?: string;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -1265,6 +1408,7 @@ declare namespace LocalJSX {
         "m-nav-link": MNavLink;
         "m-nav-pane": MNavPane;
         "m-quick-action": MQuickAction;
+        "m-search": MSearch;
         "m-select": MSelect;
         "m-text": MText;
     }
@@ -1290,6 +1434,7 @@ declare module "@stencil/core" {
             "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
+            "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
             "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }

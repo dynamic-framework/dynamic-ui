@@ -189,6 +189,27 @@ export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-q
 ]);
 
 
+export const MSearch = /*@__PURE__*/ defineContainer<JSX.MSearch>('m-search', undefined, [
+  'mId',
+  'label',
+  'labelIcon',
+  'placeholder',
+  'type',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'iconEnd',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'theme',
+  'variant',
+  'layoutDirection',
+  'mChange',
+  'mClick'
+]);
+
+
 export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
   'mId',
   'variant',

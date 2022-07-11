@@ -1,0 +1,25 @@
+// label
+$search-label-color: var(--#{$prefix}gray) !default;
+$search-label-icon-color: var(--#{$prefix}info) !default;
+// hint
+$search-hint-color: var(--#{$prefix}gray) !default;
+$search-hint-icon-color: var(--#{$prefix}dark) !default;
+// button
+$search-button-color: var(--#{$prefix}dark) !default;
+$search-button-hover-color: var(--#{$prefix}button-search-color) !default;
+$search-button-disabled-color: var(--#{$prefix}gray) !default;
+$search-button-disabled-opacity: 1 !default;
+$search-button-readonly-color: var(--#{$prefix}gray-light) !default;
+$search-button-state-color: var(--#{$prefix}gray) !default;
+$search-button-state-size: .875rem !default;
+$search-button-state-size-sm: .75rem !default;
+$search-button-state-size-lg: 1.5rem !default;
+// input-group
+$search-input-group-border-color: var(--#{$prefix}input-border-color) !default;
+$search-input-group-hover-border-color: var(--#{$prefix}input-hover-border-color) !default;
+$search-input-group-focus-border-color: $tertiary !default;
+$search-input-group-hover-box-shadow: 0 0 0 .5px $search-input-group-hover-border-color !default;
+$search-input-group-disabled-bg: var(--#{$prefix}light) !default;
+// form-control
+$search-form-control-disabled-bg: var(--#{$prefix}light) !default;
+$search-form-control-readonly-bg: var(--#{$prefix}white) !default;
