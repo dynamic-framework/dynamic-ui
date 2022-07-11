@@ -1,7 +1,12 @@
 name: Change Checker
 on:
   pull_request:
-    types: [opened]
+    types: [
+      opened,
+      edited,
+      reopened,
+      synchronize
+    ]
 
 jobs:
   change-checker:
