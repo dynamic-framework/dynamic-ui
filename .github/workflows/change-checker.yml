@@ -13,7 +13,7 @@ jobs:
     name: Checking Job
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - name: Setup Node.js 16.x
         uses: actions/setup-node@v1
         with:
@@ -22,5 +22,4 @@ jobs:
           scope: '@modyolabs'
       - name: Verify libraries changes
         run: |
-          git fetch origin master:refs/remotes/origin/master -a
           node common/scripts/install-run-rush.js change -v --no-fetch
