@@ -22,5 +22,5 @@ jobs:
           scope: '@modyolabs'
       - name: Verify libraries changes
         run: |
-          git fetch origin main:refs/remotes/origin/main -a
+          git fetch origin master:refs/remotes/origin/master -a
           node common/scripts/install-run-rush.js change -v --no-fetch
