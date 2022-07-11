@@ -7,6 +7,11 @@ on:
       opened
     ]
 
+permissions:
+  contents: read
+  pull-requests: write
+  packages: write
+
 jobs:
   version-library:
     name: Versioning Job
