@@ -12,16 +12,13 @@ jobs:
   change-checker:
     name: Checking Job
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js 16.x
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
           registry-url: https://npm.pkg.github.com/
           scope: '@modyolabs'
       - name: Verify libraries changes
-        run: node common/scripts/install-run-rush.js change -v
+        run: node common/scripts/install-run-rush.js change -v --no-fetch
