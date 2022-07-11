@@ -1262,7 +1262,7 @@
           <option value="b">B</option>
           <option value="c">C</option></m-select>
       </div>
-    </div>
+      </div>
       <div class="row py-5">
         <div class="col-12">
           <h3 class="fw-bold mb-4">m-icon</h3>
@@ -1296,6 +1296,42 @@
           <MIcon icon="heart-fill" size="3rem" is-loading :duration="2"/>
         </div>
       </div>
+      <div class="roe">
+        <div class="col-6">
+          <m-currency
+            m-id="primary"
+            placeholder="primary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="primary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+          >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="secondary"
+            placeholder="secondary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="secondary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+      </div>
     </div>
   </m-app>
 </template>
@@ -1322,6 +1358,7 @@ import {
   MFormSwitch,
   MIcon,
   MCoupon,
+  MCurrency,
 } from '@modyolabs/vue-design-system';
 
 export default defineComponent({
@@ -1345,6 +1382,7 @@ export default defineComponent({
     MFormSwitch,
     MIcon,
     MCoupon,
+    MCurrency,
   },
   data() {
     return {
