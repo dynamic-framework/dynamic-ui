@@ -519,12 +519,6 @@ export namespace Components {
          */
         "variant": FormControlLayoutVariant;
     }
-    interface MText {
-        /**
-          * The theme to use
-         */
-        "theme": string;
-    }
 }
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -663,12 +657,6 @@ declare global {
         prototype: HTMLMSelectElement;
         new (): HTMLMSelectElement;
     };
-    interface HTMLMTextElement extends Components.MText, HTMLStencilElement {
-    }
-    var HTMLMTextElement: {
-        prototype: HTMLMTextElement;
-        new (): HTMLMTextElement;
-    };
     interface HTMLElementTagNameMap {
         "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
@@ -688,7 +676,6 @@ declare global {
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
         "m-select": HTMLMSelectElement;
-        "m-text": HTMLMTextElement;
     }
 }
 declare namespace LocalJSX {
@@ -1228,12 +1215,6 @@ declare namespace LocalJSX {
          */
         "variant"?: FormControlLayoutVariant;
     }
-    interface MText {
-        /**
-          * The theme to use
-         */
-        "theme"?: string;
-    }
     interface IntrinsicElements {
         "m-app": MApp;
         "m-badge": MBadge;
@@ -1253,7 +1234,6 @@ declare namespace LocalJSX {
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
         "m-select": MSelect;
-        "m-text": MText;
     }
 }
 export { LocalJSX as JSX };
@@ -1278,7 +1258,6 @@ declare module "@stencil/core" {
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
-            "m-text": LocalJSX.MText & JSXBase.HTMLAttributes<HTMLMTextElement>;
         }
     }
 }

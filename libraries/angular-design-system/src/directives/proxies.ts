@@ -23,7 +23,6 @@ import { defineCustomElement as defineMNavPane } from '@modyolabs/design-system/
 import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/components/m-search.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
-import { defineCustomElement as defineMText } from '@modyolabs/design-system/components/m-text.js';
 
 
 export declare interface MApp extends Components.MApp {}
@@ -447,26 +446,5 @@ export class MSelect {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MText extends Components.MText {}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMText,
-  inputs: ['theme']
-})
-@Component({
-  selector: 'm-text',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['theme']
-})
-export class MText {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
   }
 }

@@ -23,7 +23,6 @@ import { defineCustomElement as defineMNavPane } from '@modyolabs/design-system/
 import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/components/m-search.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
-import { defineCustomElement as defineMText } from '@modyolabs/design-system/components/m-text.js';
 
 export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>('m-app', undefined, undefined, defineMApp);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
@@ -43,4 +42,3 @@ export const MNavPane = /*@__PURE__*/createReactComponent<JSX.MNavPane, HTMLMNav
 export const MQuickAction = /*@__PURE__*/createReactComponent<JSX.MQuickAction, HTMLMQuickActionElement>('m-quick-action', undefined, undefined, defineMQuickAction);
 export const MSearch = /*@__PURE__*/createReactComponent<JSX.MSearch, HTMLMSearchElement>('m-search', undefined, undefined, defineMSearch);
 export const MSelect = /*@__PURE__*/createReactComponent<JSX.MSelect, HTMLMSelectElement>('m-select', undefined, undefined, defineMSelect);
-export const MText = /*@__PURE__*/createReactComponent<JSX.MText, HTMLMTextElement>('m-text', undefined, undefined, defineMText);
