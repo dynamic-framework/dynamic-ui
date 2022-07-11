@@ -22,7 +22,7 @@ jobs:
         env:
           # And add the additional registry token here:
           # FORTAWESOME_TOKEN: ${{secrets.FORTAWESOME_TOKEN}}
-          NODE_AUTH_TOKEN: ${{ secrets.TOKEN_REG }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
       - name: Linking Libraries
         run: node common/scripts/install-run-rush.js link
@@ -39,4 +39,4 @@ jobs:
       - name: Publish
         run: node common/scripts/install-run-rush.js publish --publish
         env:
-          NODE_AUTH_TOKEN: ${{github.token}}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
