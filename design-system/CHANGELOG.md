@@ -1,6 +1,13 @@
 # Change Log - @modyolabs/design-system
 
-This log was last generated on Wed, 06 Jul 2022 02:17:55 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Jul 2022 01:15:33 GMT and should not be manually modified.
+
+## 0.0.4
+Tue, 12 Jul 2022 01:15:33 GMT
+
+### Patches
+
+- chore: remove m-text
 
 ## 0.0.3
 Wed, 06 Jul 2022 02:17:55 GMT
