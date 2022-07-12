@@ -1,4 +1,4 @@
-name: Publish Packages
+name: Version Packages
 on:
   pull_request:
     branches:
