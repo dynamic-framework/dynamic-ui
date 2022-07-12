@@ -2,6 +2,18 @@
   "name": "@modyolabs/design-system",
   "entries": [
     {
+      "version": "0.0.4",
+      "tag": "@modyolabs/design-system_v0.0.4",
+      "date": "Tue, 12 Jul 2022 01:15:33 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "chore: remove m-text"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.0.3",
       "tag": "@modyolabs/design-system_v0.0.3",
       "date": "Wed, 06 Jul 2022 02:17:55 GMT",

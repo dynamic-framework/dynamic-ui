@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.0.3",
+    "@modyolabs/design-system": "workspace:^0.0.4",
     "@modyolabs/angular-design-system": "workspace:^0.0.1",
     "@angular/animations": "~13.3.6",
     "@angular/common": "~13.3.6",
