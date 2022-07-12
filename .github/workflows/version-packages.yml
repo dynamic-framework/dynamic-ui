@@ -9,6 +9,11 @@ on:
       synchronize
     ]
 
+permissions:
+  contents: write
+  pull-requests: write
+  packages: read
+
 jobs:
   version-library:
     name: Versioning Job
@@ -31,13 +36,13 @@ jobs:
         env:
           # And add the additional registry token here:
           # FORTAWESOME_TOKEN: ${{secrets.FORTAWESOME_TOKEN}}
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
       - name: Versioning
         run : |
           git config user.email echo $EMAIL
           git config user.name echo $NAME
-          node common/scripts/install-run-rush.js publish --apply
+          node common/scripts/install-run-rush.js publish --apply --target-branch $GITHUB_BASE_REF
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
           EMAIL: ${{ secrets.EMAIL }}
           NAME: ${{ secrets.NAME }}

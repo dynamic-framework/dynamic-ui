@@ -3,6 +3,12 @@ name: Publish Packages
 on:
   release:
     types: [published]
+
+permissions:
+  contents: read
+  pull-requests: write
+  packages: read
+
 jobs:
   publish-library:
     name: Publishing Job
@@ -18,4 +24,4 @@ jobs:
       - name: Publish
         run: node common/scripts/install-run-rush.js publish --publish
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
