@@ -3,7 +3,13 @@
     <div class="container">
     <m-button
       text="click me!"
-      @mod-button-click="onButtonClick"
+      @m-click="onButtonClick"
+    />
+    <m-button
+    class="fw-bold"
+      icon-left="arrow-right"
+      is-pill
+      @m-click="onButtonClick"
     />
     <div>
       <h3>Switches</h3>
@@ -1488,6 +1494,8 @@
           variant="secondary"
           placeholder="Default"
           icon-end="circle-fill"
+          :value="test"
+          :model-value="true"
           @m-click="onChange"
           @m-change="onChange"
         />
@@ -1569,7 +1577,7 @@
           Con size de 2rem <br>
           <MIcon icon="heart-fill" size="2rem"/>
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-sm-6 flex-row">
           Temas <br>
           <MIcon icon="heart-fill" theme="primary"/>
           <MIcon icon="heart-fill" theme="secondary"/>
@@ -1590,7 +1598,11 @@
           <MIcon icon="heart-fill" size="3rem" is-loading :duration="2"/>
         </div>
       </div>
-      <div class="roe">
+      <div class="row py-5">
+        <div class="col-12">
+          <h3 class="fw-bold mb-3">m-currency</h3>
+          <h6 class="fw-bold"> -default</h6>
+        </div>
         <div class="col-6">
           <m-currency
             m-id="primary"
@@ -1623,6 +1635,191 @@
             icon-hint="emoji-smile"
             @m-change="print"
             >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="tertiary"
+            placeholder="tertiary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="tertiary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="success"
+            placeholder="success"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="success"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="warning"
+            placeholder="warning"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="warning"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="info"
+            placeholder="info"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="info"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="danger"
+            placeholder="danger"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="danger"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-12 my-3">
+          <h6 class="fw-bold"> -prime</h6>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="primary"
+            placeholder="primary"
+            icon-middle="circle-fill"
+            :has-select="true"
+            theme="primary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+          >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="secondary"
+            placeholder="secondary"
+            icon-middle="circle-fill"
+            theme="secondary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="tertiary"
+            placeholder="tertiary"
+            icon-middle="circle-fill"
+            :has-select="true"
+            theme="tertiary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+          >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="success"
+            placeholder="success"
+            icon-middle="circle-fill"
+            theme="success"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="info"
+            placeholder="info"
+            icon-middle="circle-fill"
+            :has-select="true"
+            theme="info"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+          >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="warning"
+            placeholder="warning"
+            icon-middle="circle-fill"
+            theme="warning"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="danger"
+            placeholder="danger"
+            icon-middle="heart-fill"
+            theme="danger"
+            has-select
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+            >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
           </m-currency>
         </div>
       </div>
@@ -1689,6 +1886,7 @@ export default defineComponent({
       ],
       value: 'initial',
       switchValue1: true,
+      test: 'johannes',
     };
   },
   methods: {
@@ -1705,7 +1903,8 @@ export default defineComponent({
       console.log(detail);
     },
     onChange({ detail }: CustomEvent) {
-      console.log(detail);
+      this.test = detail;
+      console.log('var test = ', this.test);
     },
   },
 });
