@@ -15,16 +15,53 @@
   }
 
   .form-control-icon {
-    --#{$prefix}-form-control-icon-size: auto;
-
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .btn.small {
-    --#{$prefix}btn-font-size: .625rem;
-    --#{$prefix}btn-font-weight: $font-weight-semibold;
+  &.form-control-layout-currency-prime {
+
+    --#{$prefix}input-group-bg: transparent;
+    --#{$prefix}input-group-border-radius: 0;
+
+    .form-select,
+    .form-control:focus {
+      background-color: var(--#{$prefix}input-group-bg);
+    }
+
+    .form-control {
+      padding-top: 3px;
+      padding-bottom: 3px;
+      font-size: 2rem;
+      line-height: 3rem;
+      text-align: center;
+    }
+
+    .form-control-input {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .input-group {
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: var(--#{$prefix}input-border-color);
+      border-left-color: transparent;
+    }
+
+    .input-group:focus-within,
+    .input-group:focus {
+      border-color: var(--#{$prefix}input-border-color);
+      --#{$prefix}input-group-bg: var(--#{$prefix}white);
+      --#{$prefix}input-group-border-radius: #{$border-radius-sm};
+    }
+
+    .input-group:hover {
+      box-shadow: none;
+    }
   }
 }
 
@@ -34,11 +71,11 @@
     .input-group-text,
     .input-group-icon,
     .hint {
-      color: $value;
+      color: var(--#{$prefix}#{$color});
     }
 
     .input-group {
-      border-color: $value;
+      --#{$prefix}input-border-color: var(--#{$prefix}#{$color});
     }
   }
 }
@@ -48,12 +85,16 @@
   .form-control-layout-currency.hover.form-control-theme-#{$color} {
     .input-group-text,
     .input-group-icon {
-      color: $value;
+      color: var(--#{$prefix}#{$color}-hover);
     }
 
     .input-group {
-      border-color: $value;
-      box-shadow: 0 0 0 1px $value;
+      --#{$prefix}input-hover-border-color: var(--#{$prefix}#{$color}-hover);
+      --#{$prefix}input-border-color: var(--#{$prefix}#{$color}-hover);
+    }
+
+    &:not(.form-control-layout-currency-prime) .input-group {
+      box-shadow: 0 0 0 1px var(--#{$prefix}#{$color}-hover);
     }
   }
 }

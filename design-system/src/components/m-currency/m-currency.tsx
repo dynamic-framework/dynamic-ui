@@ -9,7 +9,7 @@ import {
 
 import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
 
-import type { CurrencyEvent } from './m-currency-interface';
+import type { CurrencyEvent, CurrencyVariant } from './m-currency-interface';
 
 @Component({
   tag: 'm-currency',
@@ -81,6 +81,10 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() theme? = 'primary';
   /**
+   * Variant for the m-currency
+   * */
+  @Prop() variant?: CurrencyVariant;
+  /**
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
@@ -100,7 +104,7 @@ export class MCurrency implements ComponentInterface {
   private htmlSelect?: HTMLSelectElement;
 
   /**
-   * Emit input and select values only when the button was clicked
+   * Emit input and select values when the values change
    */
   private changeHandler = () => {
     this.mChange.emit({
@@ -115,6 +119,7 @@ export class MCurrency implements ComponentInterface {
     return {
       'form-control-layout form-control-layout-currency': true,
       [`form-control-theme-${this.theme}`]: true,
+      [`form-control-layout-currency-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
     };
   }
