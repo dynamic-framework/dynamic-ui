@@ -20,12 +20,28 @@
 
 ### Used by
 
+ - [m-button](../m-button)
+ - [m-coupon](../m-coupon)
  - [m-currency](../m-currency)
+ - [m-input](../m-input)
+ - [m-list-item](../m-list-item)
+ - [m-nav-link](../m-nav-link)
+ - [m-quick-action](../m-quick-action)
+ - [m-search](../m-search)
+ - [m-select](../m-select)
 
 ### Graph
 ```mermaid
 graph TD;
+  m-button --> m-icon
+  m-coupon --> m-icon
   m-currency --> m-icon
+  m-input --> m-icon
+  m-list-item --> m-icon
+  m-nav-link --> m-icon
+  m-quick-action --> m-icon
+  m-search --> m-icon
+  m-select --> m-icon
   style m-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
