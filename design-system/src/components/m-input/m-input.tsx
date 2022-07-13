@@ -89,8 +89,13 @@ export class MInput implements ComponentInterface {
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
-            {/* TODO: use m-icon component */}
-            <span class="form-control-icon">{this.labelIcon}</span>
+            {this.labelIcon && (
+              <span class="form-control-icon">
+                <m-icon
+                  icon={this.labelIcon}
+                />
+              </span>
+            )}
           </label>
         )}
         <div class="form-control-input">
@@ -100,8 +105,13 @@ export class MInput implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                {/* TODO: use m-icon component */}
-                <span class="form-control-icon">{this.iconStart}</span>
+                {this.iconStart && (
+                  <span class="form-control-icon">
+                    <m-icon
+                      icon={this.iconStart}
+                    />
+                  </span>
+                )}
               </span>
             )}
             <input
@@ -119,18 +129,33 @@ export class MInput implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                {/* TODO: use m-icon component */}
-                <span class="form-control-icon">{this.iconEnd}</span>
+                {this.iconEnd && (
+                  <span class="form-control-icon">
+                    <m-icon
+                      icon={this.iconEnd}
+                    />
+                  </span>
+                )}
               </span>
             )}
           </div>
           {this.hint && (
             <small class="hint">
-              {/* TODO: use m-icon component */}
-              <span class="form-control-icon">{this.hintIconStart}</span>
+              {this.hintIconStart && (
+                <span class="form-control-icon">
+                  <m-icon
+                    icon={this.hintIconStart}
+                  />
+                </span>
+              )}
               {this.hint}
-              {/* TODO: use m-icon component */}
-              <span class="form-control-icon">{this.hintIconEnd}</span>
+              {this.hintIconEnd && (
+                <span class="form-control-icon">
+                  <m-icon
+                    icon={this.hintIconEnd}
+                  />
+                </span>
+              )}
             </small>
           )}
         </div>

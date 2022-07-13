@@ -129,8 +129,12 @@ export class MListItem implements ComponentInterface {
                   'bg-tertiary': this.image === null,
                 }}
               >
-                {/* TODO: use m-icon */}
-                {this.icon && <i class={`bi bi-${this.icon} text-white fs-5`} />}
+                {this.icon && (
+                  <m-icon
+                    class="text-white fs-5"
+                    icon={this.icon}
+                  />
+                )}
                 {this.image && (
                   <img
                     class="list-group-item-picture"
@@ -163,9 +167,10 @@ export class MListItem implements ComponentInterface {
               </div>
             )}
             {this.variant === 'navegable' && (
-              <div class="d-flex justify-content-center align-items-center text-middlelight">
-                {/* TODO: use m-icon */}
-                <i class="bi bi-chevron-right" />
+              <div class="d-flex justify-content-center align-items-center text-gray-light fs-5">
+                <m-icon
+                  icon="chevron-right"
+                />
               </div>
             )}
           </Tag>

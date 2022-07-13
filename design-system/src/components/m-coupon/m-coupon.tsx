@@ -115,10 +115,13 @@ export class MCoupon implements ComponentInterface {
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
-            {/* TODO: use m-icon component */}
-            <span class="form-control-icon">
-              <i class={`bi bi-${this.iconLabel}`} />
-            </span>
+            {this.iconLabel && (
+              <span class="form-control-icon">
+                <m-icon
+                  icon={this.iconLabel}
+                />
+              </span>
+            )}
           </label>
         )}
         <div class="form-control-input">
@@ -128,10 +131,13 @@ export class MCoupon implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                {/* TODO: use m-icon component */}
-                <span class="form-control-icon">
-                  <i class={`bi bi-${this.iconStart}`} />
-                </span>
+                {this.iconStart && (
+                  <span class="form-control-icon">
+                    <m-icon
+                      icon={this.iconStart}
+                    />
+                  </span>
+                )}
               </span>
             )}
             {this.hasSelect && (
@@ -158,9 +164,10 @@ export class MCoupon implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                {/* TODO: use m-icon component */}
                 <span class="form-control-icon">
-                  <i class={`bi bi-${this.iconMiddle}`} />
+                  <m-icon
+                    icon={this.iconMiddle}
+                  />
                 </span>
               </span>
             )}
@@ -175,9 +182,10 @@ export class MCoupon implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                {/* TODO: use m-icon component */}
                 <span class="form-control-icon">
-                  <i class={`bi bi-${this.iconEnd}`} />
+                  <m-icon
+                    icon={this.iconEnd}
+                  />
                 </span>
               </span>
             )}
@@ -186,15 +194,17 @@ export class MCoupon implements ComponentInterface {
             <small class="hint">
               {this.hintIconStart && (
                 <span class="form-control-icon">
-                  {/* TODO: use m-icon component */}
-                  <i class={`bi bi-${this.hintIconStart}`} />
+                  <m-icon
+                    icon={this.hintIconStart}
+                  />
                 </span>
               )}
               {this.hint}
               {this.hintIconEnd && (
                 <span class="form-control-icon">
-                  {/* TODO: use m-icon component */}
-                  <i class={`bi bi-${this.hintIconEnd}`} />
+                  <m-icon
+                    icon={this.hintIconEnd}
+                  />
                 </span>
               )}
             </small>

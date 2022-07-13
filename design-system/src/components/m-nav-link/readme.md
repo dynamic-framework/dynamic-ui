@@ -18,6 +18,19 @@
 | `variant`           | `variant`     | Variant of nav link                      | `"navegable" \| "option"`                                                                                                                                        | `'navegable'` |
 
 
+## Dependencies
+
+### Depends on
+
+- [m-icon](../m-icon)
+
+### Graph
+```mermaid
+graph TD;
+  m-nav-link --> m-icon
+  style m-nav-link fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
-import { CurrencyEvent } from "./components/m-currency/m-currency-interface";
+import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
@@ -29,6 +29,14 @@ export namespace Components {
         "theme": string;
     }
     interface MButton {
+        /**
+          * Icon left to display
+         */
+        "iconLeft"?: string;
+        /**
+          * Icon right to display
+         */
+        "iconRight"?: string;
         /**
           * Flag to switch to pill button border radius.
          */
@@ -199,6 +207,10 @@ export namespace Components {
           * * The value of the input
          */
         "value"?: number;
+        /**
+          * Variant for the m-currency
+         */
+        "variant"?: CurrencyVariant;
     }
     interface MFormCheck {
         /**
@@ -788,6 +800,14 @@ declare namespace LocalJSX {
     }
     interface MButton {
         /**
+          * Icon left to display
+         */
+        "iconLeft"?: string;
+        /**
+          * Icon right to display
+         */
+        "iconRight"?: string;
+        /**
           * Flag to switch to pill button border radius.
          */
         "isPill"?: boolean;
@@ -969,6 +989,10 @@ declare namespace LocalJSX {
           * * The value of the input
          */
         "value"?: number;
+        /**
+          * Variant for the m-currency
+         */
+        "variant"?: CurrencyVariant;
     }
     interface MFormCheck {
         /**

@@ -22,6 +22,19 @@
 | `variant`          | `variant`           | Variant for text item list or complete item list | `"default" \| "navegable" \| "selectable" \| undefined`                                              | `undefined` |
 
 
+## Dependencies
+
+### Depends on
+
+- [m-icon](../m-icon)
+
+### Graph
+```mermaid
+graph TD;
+  m-list-item --> m-icon
+  style m-list-item fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

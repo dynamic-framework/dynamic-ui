@@ -23,6 +23,8 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'variant',
   'state',
   'text',
+  'iconLeft',
+  'iconRight',
   'value',
   'type',
   'isPill',
@@ -73,6 +75,7 @@ export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currenc
   'hintIconStart',
   'hintIconEnd',
   'theme',
+  'variant',
   'layoutDirection',
   'mChange'
 ]);

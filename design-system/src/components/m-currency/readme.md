@@ -26,6 +26,7 @@
 | `theme`            | `theme`            | Theme for the m-currency                                             | `string \| undefined`        | `'primary'`     |
 | `type`             | `type`             | * The type of the input                                              | `string`                     | `'number'`      |
 | `value`            | `value`            | * The value of the input                                             | `number \| undefined`        | `undefined`     |
+| `variant`          | `variant`          | Variant for the m-currency                                           | `"prime" \| undefined`       | `undefined`     |
 
 
 ## Events

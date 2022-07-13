@@ -34,6 +34,19 @@
 | `mClick`  | Emitted when the button is clicked       | `CustomEvent<string>` |
 
 
+## Dependencies
+
+### Depends on
+
+- [m-icon](../m-icon)
+
+### Graph
+```mermaid
+graph TD;
+  m-search --> m-icon
+  style m-search fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
