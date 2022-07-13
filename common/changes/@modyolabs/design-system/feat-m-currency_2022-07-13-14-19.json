@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "chore: add m-currency component and fix styles",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
