@@ -1,10 +1,10 @@
 .form-control-layout-currency {
 
   .form-select {
-    --#{$prefix}form-select-bg-size: 12px; // In pixels because image dimensions
+    --#{$prefix}form-select-bg-size: #{$currency-form-select-bg-size}; // In pixels because image dimensions
 
     flex: none;
-    width: max-content;
+    width: #{$currency-form-select-width};
   }
 
   .form-select,
@@ -22,20 +22,20 @@
 
   &.form-control-layout-currency-prime {
 
-    --#{$prefix}input-group-bg: transparent;
-    --#{$prefix}input-group-border-radius: 0;
+    --#{$prefix}input-group-bg: #{$currency-prime-input-group-bg};
+    --#{$prefix}input-group-border-radius: #{$currency-prime-input-group-border-radius};
 
     .form-select,
     .form-control:focus {
-      background-color: var(--#{$prefix}input-group-bg);
+      background-color: #{$currency-prime-focus-form-control-bg};
     }
 
     .form-control {
-      padding-top: 3px;
-      padding-bottom: 3px;
-      font-size: 2rem;
-      line-height: 3rem;
-      text-align: center;
+      padding-top: #{$currency-prime-form-control-padding-y};
+      padding-bottom: #{$currency-prime-form-control-padding-y};
+      font-size: #{$currency-prime-form-control-font-size};
+      line-height: #{$currency-prime-form-control-line-height};
+      text-align: #{$currency-prime-form-control-text-align};
     }
 
     .form-control-input {
@@ -55,8 +55,8 @@
     .input-group:focus-within,
     .input-group:focus {
       border-color: var(--#{$prefix}input-border-color);
-      --#{$prefix}input-group-bg: var(--#{$prefix}white);
-      --#{$prefix}input-group-border-radius: #{$border-radius-sm};
+      --#{$prefix}input-group-bg: #{$currency-prime-focus-input-group-bg};
+      --#{$prefix}input-group-border-radius: #{$currency-prime-focus-input-group-border-radius};
     }
 
     .input-group:hover {
@@ -78,9 +78,7 @@
       --#{$prefix}input-border-color: var(--#{$prefix}#{$color});
     }
   }
-}
 
-@each $color, $value in map-remove($theme-colors-hover, "light", "dark") {
   .form-control-layout-currency:hover.form-control-theme-#{$color},
   .form-control-layout-currency.hover.form-control-theme-#{$color} {
     .input-group-text,
