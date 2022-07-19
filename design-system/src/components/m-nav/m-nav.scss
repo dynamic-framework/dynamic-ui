@@ -31,7 +31,7 @@
   --#{$prefix}nav-link-padding-y: #{$nav-pills-link-padding-y};
   --#{$prefix}nav-link-font-weight: #{$nav-pills-link-font-weight};
   --#{$prefix}nav-pills-border: #{$nav-pills-link-border};
-  --#{$prefix}nav-link-color: #{$secondary};
+  --#{$prefix}nav-link-color: var(--#{$prefix}secondary);
 
   .nav-link {
     background: none;

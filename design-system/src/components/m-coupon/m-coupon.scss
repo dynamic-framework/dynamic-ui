@@ -26,11 +26,11 @@
     .input-group-text,
     .input-group-icon,
     .hint {
-      color: $value;
+      color: var(--#{$prefix}#{$color});
     }
 
     .input-group {
-      border-color: $value;
+      border-color: var(--#{$prefix}#{$color});
     }
   }
 }
@@ -40,12 +40,12 @@
   .form-control-layout-coupon.hover.form-control-theme-#{$color} {
     .input-group-text,
     .input-group-icon {
-      color: $value;
+      color: var(--#{$prefix}#{$color});
     }
 
     .input-group {
-      border-color: $value;
-      box-shadow: 0 0 0 1px $value;
+      border-color: var(--#{$prefix}#{$color});
+      box-shadow: 0 0 0 1px var(--#{$prefix}#{$color});
     }
   }
 }

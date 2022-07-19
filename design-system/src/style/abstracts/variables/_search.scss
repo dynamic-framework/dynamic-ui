@@ -17,7 +17,7 @@ $search-button-state-size-lg: 1.5rem !default;
 // input-group
 $search-input-group-border-color: var(--#{$prefix}input-border-color) !default;
 $search-input-group-hover-border-color: var(--#{$prefix}input-hover-border-color) !default;
-$search-input-group-focus-border-color: $tertiary !default;
+$search-input-group-focus-border-color: var(--#{$prefix}tertiary) !default;
 $search-input-group-hover-box-shadow: 0 0 0 .5px $search-input-group-hover-border-color !default;
 $search-input-group-disabled-bg: var(--#{$prefix}light) !default;
 // form-control
