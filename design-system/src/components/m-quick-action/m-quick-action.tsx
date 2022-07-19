@@ -89,11 +89,10 @@ export class MQuickAction implements ComponentInterface {
         >
           <div class="quick-action-picture">
             {(this.icon && !this.image) && (
-              <span class="quick-action-icon">
-                <m-icon
-                  icon={this.icon}
-                />
-              </span>
+              <m-icon
+                class="quick-action-icon"
+                icon={this.icon}
+              />
             )}
             {this.image && (
               <img
@@ -116,11 +115,10 @@ export class MQuickAction implements ComponentInterface {
               )}
             </div>
             {(this.actionIcon && !this.actionWord) && (
-              <small class="quick-action-link">
-                <m-icon
-                  icon={this.actionIcon}
-                />
-              </small>
+              <m-icon
+                class="quick-action-link small"
+                icon={this.actionIcon}
+              />
             )}
             {this.actionWord && (
               <small class="quick-action-link">

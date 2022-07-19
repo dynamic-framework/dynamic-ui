@@ -118,11 +118,10 @@ export class MSearch implements ComponentInterface {
           <label htmlFor={this.mId}>
             {this.label}
             {this.labelIcon && (
-              <span class="form-control-icon label-icon">
-                <m-icon
-                  icon={this.labelIcon}
-                />
-              </span>
+              <m-icon
+                class="form-control-icon label-icon"
+                icon={this.labelIcon}
+              />
             )}
           </label>
         )}
@@ -148,11 +147,10 @@ export class MSearch implements ComponentInterface {
                 id={`${this.mId}-add`}
               >
                 {this.iconEnd && (
-                  <span class="form-control-icon search-state">
-                    <m-icon
-                      icon={this.iconEnd}
-                    />
-                  </span>
+                  <m-icon
+                    class="form-control-icon search-state"
+                    icon={this.iconEnd}
+                  />
                 )}
               </span>
             )}
@@ -169,19 +167,17 @@ export class MSearch implements ComponentInterface {
           {this.hint && (
             <small class="hint">
               {this.hintIconStart && (
-                <span class="form-control-icon hint-icon">
-                  <m-icon
-                    icon={this.hintIconStart}
-                  />
-                </span>
+                <m-icon
+                  class="form-control-icon hint-icon"
+                  icon={this.hintIconStart}
+                />
               )}
               {this.hint}
               {this.hintIconEnd && (
-                <span class="form-control-icon hint-icon">
-                  <m-icon
-                    icon={this.hintIconEnd}
-                  />
-                </span>
+                <m-icon
+                  class="form-control-icon hint-icon"
+                  icon={this.hintIconEnd}
+                />
               )}
             </small>
           )}

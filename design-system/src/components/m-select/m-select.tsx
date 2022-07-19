@@ -93,12 +93,11 @@ export class MSelect implements ComponentInterface {
         {(this.label) && (
           <label htmlFor={this.mId}>
             {this.label}
-            <small class="form-control-icon">
-              {/** TODO: Implements popover/tooltip */}
-              <m-icon
-                icon="info-circle"
-              />
-            </small>
+            {/** TODO: Implements popover/tooltip */}
+            <m-icon
+              class="form-control-icon small"
+              icon="info-circle"
+            />
           </label>
         )}
         <div class="form-control-input w-100">
@@ -110,11 +109,10 @@ export class MSelect implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                <span class="form-control-icon">
-                  <m-icon
-                    icon={this.iconStart}
-                  />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconStart}
+                />
               </span>
             )}
             <select
@@ -135,18 +133,16 @@ export class MSelect implements ComponentInterface {
                 id={`${this.mId}-add`}
               >
                 {this.iconMiddle && (
-                  <span class="form-control-icon">
-                    <m-icon
-                      icon={this.iconMiddle}
-                    />
-                  </span>
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.iconMiddle}
+                  />
                 )}
                 {this.iconEnd && (
-                  <span class="form-control-icon">
-                    <m-icon
-                      icon={this.iconEnd}
-                    />
-                  </span>
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.iconEnd}
+                  />
                 )}
               </span>
             )}
@@ -155,11 +151,10 @@ export class MSelect implements ComponentInterface {
             <div class="d-flex gap-2 hint text-start">
               <small>
                 {this.hintIcon && (
-                  <span class="form-control-icon">
-                    <m-icon
-                      icon={this.hintIcon}
-                    />
-                  </span>
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.hintIcon}
+                  />
                 )}
                 {this.hint}
               </small>

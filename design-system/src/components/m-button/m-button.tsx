@@ -94,19 +94,17 @@ export class MButton implements ComponentInterface {
           onClick={this.clickHandler}
         >
           {this.iconLeft && (
-            <div class="btn-icon btn-left-icon">
-              <m-icon
-                icon={this.iconLeft}
-              />
-            </div>
+            <m-icon
+              class="btn-icon btn-left-icon"
+              icon={this.iconLeft}
+            />
           )}
           {this.text}
           {this.iconRight && (
-            <div class="btn-icon btn-right-icon">
-              <m-icon
-                icon={this.iconRight}
-              />
-            </div>
+            <m-icon
+              class="btn-icon btn-right-icon"
+              icon={this.iconRight}
+            />
           )}
         </button>
       </Host>

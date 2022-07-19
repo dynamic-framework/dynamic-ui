@@ -167,11 +167,10 @@ export class MListItem implements ComponentInterface {
               </div>
             )}
             {this.variant === 'navegable' && (
-              <div class="d-flex justify-content-center align-items-center text-gray-light fs-5">
-                <m-icon
-                  icon="chevron-right"
-                />
-              </div>
+              <m-icon
+                class="text-gray-light fs-5"
+                icon="chevron-right"
+              />
             )}
           </Tag>
         </Host>

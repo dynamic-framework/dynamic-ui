@@ -130,11 +130,10 @@ export class MCurrency implements ComponentInterface {
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
-            <span class="form-control-icon">
-              <m-icon
-                icon={this.iconLabel}
-              />
-            </span>
+            <m-icon
+              class="form-control-icon"
+              icon={this.iconLabel}
+            />
           </label>
         )}
         <div class="form-control-input">
@@ -144,11 +143,10 @@ export class MCurrency implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                <span class="form-control-icon">
-                  <m-icon
-                    icon={this.iconStart}
-                  />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconStart}
+                />
               </span>
             )}
             {this.hasSelect && (
@@ -180,11 +178,10 @@ export class MCurrency implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                <span class="form-control-icon">
-                  <m-icon
-                    icon={this.iconMiddle}
-                  />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconMiddle}
+                />
               </span>
             )}
             {this.iconEnd && (
@@ -192,30 +189,27 @@ export class MCurrency implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                <span class="form-control-icon">
-                  <m-icon
-                    icon={this.iconEnd}
-                  />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconEnd}
+                />
               </span>
             )}
           </div>
           {this.hint && (
             <small class="hint">
               {this.hintIconStart && (
-                <span class="form-control-icon">
-                  <m-icon
-                    icon={this.hintIconStart}
-                  />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.hintIconStart}
+                />
               )}
               {this.hint}
               {this.hintIconEnd && (
-                <span class="form-control-icon">
-                  <m-icon
-                    icon={this.hintIconEnd}
-                  />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.hintIconEnd}
+                />
               )}
             </small>
           )}
