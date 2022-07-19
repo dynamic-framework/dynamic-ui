@@ -3,6 +3,8 @@
     <div class="container">
     <m-button
       text="click me!"
+      icon-left="arrow-right"
+      icon-right="arrow-right"
       @m-click="onButtonClick"
     />
     <m-button
