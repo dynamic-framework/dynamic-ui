@@ -33,6 +33,19 @@
 | `mClick` | Emitted when the button is clicked | `CustomEvent<{ inputValue: string \| undefined; selectValue: string \| undefined; }>` |
 
 
+## Dependencies
+
+### Depends on
+
+- [m-icon](../m-icon)
+
+### Graph
+```mermaid
+graph TD;
+  m-coupon --> m-icon
+  style m-coupon fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

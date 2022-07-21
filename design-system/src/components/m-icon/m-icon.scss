@@ -1,5 +1,7 @@
 .m-icon {
-  display: inline-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--#{$prefix}m-icon-font-size);
 }
 

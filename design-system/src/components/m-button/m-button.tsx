@@ -34,6 +34,14 @@ export class MButton implements ComponentInterface {
    */
   @Prop() text = '';
   /**
+   * Icon left to display
+   */
+  @Prop() iconLeft?: string;
+  /**
+   * Icon right to display
+   */
+  @Prop() iconRight?: string;
+  /**
    * The value of the button.
    */
   @Prop() value = '';
@@ -85,11 +93,19 @@ export class MButton implements ComponentInterface {
           {...this.value && { value: this.value }}
           onClick={this.clickHandler}
         >
-          {/* TODO: use m-icon component */}
-          <div class="btn-icon btn-left-icon" />
+          {this.iconLeft && (
+            <m-icon
+              class="btn-icon btn-left-icon"
+              icon={this.iconLeft}
+            />
+          )}
           {this.text}
-          {/* TODO: use m-icon component */}
-          <div class="btn-icon btn-right-icon" />
+          {this.iconRight && (
+            <m-icon
+              class="btn-icon btn-right-icon"
+              icon={this.iconRight}
+            />
+          )}
         </button>
       </Host>
     );

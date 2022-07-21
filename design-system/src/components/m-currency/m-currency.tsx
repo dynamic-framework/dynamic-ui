@@ -9,13 +9,13 @@ import {
 
 import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
 
-import type { CouponEvent, CouponInputType } from './m-coupon-interface';
+import type { CurrencyEvent, CurrencyVariant } from './m-currency-interface';
 
 @Component({
-  tag: 'm-coupon',
-  styleUrl: 'm-coupon.scss',
+  tag: 'm-currency',
+  styleUrl: 'm-currency.scss',
 })
-export class MCoupon implements ComponentInterface {
+export class MCurrency implements ComponentInterface {
   /**
    * Id for the input
    * */
@@ -27,17 +27,17 @@ export class MCoupon implements ComponentInterface {
   /**
    * Icon for the label text
    * */
-  @Prop() iconLabel?: string = 'info-circle';
+  @Prop() iconLabel = 'info-circle';
   /**
-   * Icon of the left
+   * Icon for the left
    * */
   @Prop() iconStart?: string;
   /**
-   * Icon of the middle
+   * Icon for the middle
    * */
   @Prop() iconMiddle?: string;
   /**
-   * Icon of the end
+   * Icon for the end
    * */
   @Prop() iconEnd?: string;
   /**
@@ -51,13 +51,21 @@ export class MCoupon implements ComponentInterface {
   /**
    * * The type of the input
   */
-  @Prop() type: CouponInputType = 'text';
+  @Prop() type = 'number';
   /**
-   * Text for the button
-   * */
-  @Prop() textButton?: string = 'Apply';
+   * * The value of the input
+  */
+  @Prop() value?: number;
   /**
-   * Hint for the m-cupon
+   * * The min value of the input
+  */
+  @Prop() minValue?: number;
+  /**
+   * * The max value of the input
+  */
+  @Prop() maxValue?: number;
+  /**
+   * Hint text for the m-currency
    * */
   @Prop() hint?: string;
   /**
@@ -69,17 +77,21 @@ export class MCoupon implements ComponentInterface {
    * */
   @Prop() hintIconEnd?: string;
   /**
-   * Theme for the m-cupon
+   * Theme for the m-currency
    * */
   @Prop() theme? = 'primary';
+  /**
+   * Variant for the m-currency
+   * */
+  @Prop() variant?: CurrencyVariant;
   /**
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
   /**
-   * Emitted when the button is clicked
+   * Emitted when the inputs change
    */
-  @Event({ eventName: 'mClick' }) mClick!: EventEmitter<CouponEvent>;
+  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<CurrencyEvent>;
 
   /**
    * HTML input elemet
@@ -92,19 +104,22 @@ export class MCoupon implements ComponentInterface {
   private htmlSelect?: HTMLSelectElement;
 
   /**
-   * Emit input and select values only when the button was clicked
+   * Emit input and select values when the values change
    */
-  private clickHandler = () => {
-    this.mClick.emit({
-      inputValue: this.htmlInput?.value,
-      selectValue: this.htmlSelect?.value,
+  private changeHandler = () => {
+    this.mChange.emit({
+      amount: (this.htmlInput && this.htmlInput.value)
+        ? parseFloat(this.htmlInput.value)
+        : 0,
+      currency: this.htmlSelect?.value,
     });
   };
 
   private generateHostClasses(): ClassMap {
     return {
-      'form-control-layout form-control-layout-coupon': true,
+      'form-control-layout form-control-layout-currency': true,
       [`form-control-theme-${this.theme}`]: true,
+      [`form-control-layout-currency-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
     };
   }
@@ -115,12 +130,10 @@ export class MCoupon implements ComponentInterface {
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
-            {this.iconLabel && (
-              <m-icon
-                class="form-control-icon"
-                icon={this.iconLabel}
-              />
-            )}
+            <m-icon
+              class="form-control-icon"
+              icon={this.iconLabel}
+            />
           </label>
         )}
         <div class="form-control-input">
@@ -130,12 +143,10 @@ export class MCoupon implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                {this.iconStart && (
-                  <m-icon
-                    class="form-control-icon"
-                    icon={this.iconStart}
-                  />
-                )}
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconStart}
+                />
               </span>
             )}
             {this.hasSelect && (
@@ -143,6 +154,7 @@ export class MCoupon implements ComponentInterface {
                // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
+                onInput={this.changeHandler}
               >
                 <slot />
               </select>
@@ -152,10 +164,14 @@ export class MCoupon implements ComponentInterface {
               ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
               type={this.type}
+              value={this.value}
+              min={this.minValue}
+              max={this.maxValue}
               class="form-control"
               placeholder={this.placeholder}
               aria-label={this.label}
               aria-describedby={`${this.mId}-add`}
+              onInput={this.changeHandler}
             />
             {this.iconMiddle && (
               <span
@@ -168,12 +184,6 @@ export class MCoupon implements ComponentInterface {
                 />
               </span>
             )}
-            <button
-              class={`btn btn-text-${this.theme} fw-semibold text-uppercase small`}
-              onClick={this.clickHandler}
-            >
-              {this.textButton}
-            </button>
             {this.iconEnd && (
               <span
                 class="input-group-text"

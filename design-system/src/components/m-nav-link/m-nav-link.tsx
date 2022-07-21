@@ -91,7 +91,12 @@ export class MNavLink implements ComponentInterface {
           {...this.getTagAttributes()}
           disabled={this.isDisabled}
         >
-          {this.icon && <small><i class={`bi bi-${this.icon}`} /></small>}
+          {this.icon && (
+            <m-icon
+              class="small"
+              icon={this.icon}
+            />
+          )}
           {this.text}
         </Tag>
       </Host>

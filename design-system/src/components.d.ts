@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
+import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
@@ -28,6 +29,14 @@ export namespace Components {
         "theme": string;
     }
     interface MButton {
+        /**
+          * Icon left to display
+         */
+        "iconLeft"?: string;
+        /**
+          * Icon right to display
+         */
+        "iconRight"?: string;
         /**
           * Flag to switch to pill button border radius.
          */
@@ -128,6 +137,80 @@ export namespace Components {
           * * The type of the input
          */
         "type": CouponInputType;
+    }
+    interface MCurrency {
+        /**
+          * Has a select input
+         */
+        "hasSelect": boolean;
+        /**
+          * Hint text for the m-currency
+         */
+        "hint"?: string;
+        /**
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon for the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon for the label text
+         */
+        "iconLabel": string;
+        /**
+          * Icon for the middle
+         */
+        "iconMiddle"?: string;
+        /**
+          * Icon for the left
+         */
+        "iconStart"?: string;
+        /**
+          * Label for the input
+         */
+        "label": string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * * The max value of the input
+         */
+        "maxValue"?: number;
+        /**
+          * * The min value of the input
+         */
+        "minValue"?: number;
+        /**
+          * Placeholder for the input
+         */
+        "placeholder"?: string;
+        /**
+          * Theme for the m-currency
+         */
+        "theme"?: string | undefined;
+        /**
+          * * The type of the input
+         */
+        "type": string;
+        /**
+          * * The value of the input
+         */
+        "value"?: number;
+        /**
+          * Variant for the m-currency
+         */
+        "variant"?: CurrencyVariant;
     }
     interface MFormCheck {
         /**
@@ -528,6 +611,10 @@ export interface MCouponCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCouponElement;
 }
+export interface MCurrencyCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMCurrencyElement;
+}
 export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMFormSwitchElement;
@@ -578,6 +665,12 @@ declare global {
     var HTMLMCouponElement: {
         prototype: HTMLMCouponElement;
         new (): HTMLMCouponElement;
+    };
+    interface HTMLMCurrencyElement extends Components.MCurrency, HTMLStencilElement {
+    }
+    var HTMLMCurrencyElement: {
+        prototype: HTMLMCurrencyElement;
+        new (): HTMLMCurrencyElement;
     };
     interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
     }
@@ -663,6 +756,7 @@ declare global {
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
         "m-coupon": HTMLMCouponElement;
+        "m-currency": HTMLMCurrencyElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
         "m-icon": HTMLMIconElement;
@@ -692,6 +786,14 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface MButton {
+        /**
+          * Icon left to display
+         */
+        "iconLeft"?: string;
+        /**
+          * Icon right to display
+         */
+        "iconRight"?: string;
         /**
           * Flag to switch to pill button border radius.
          */
@@ -800,6 +902,84 @@ declare namespace LocalJSX {
           * * The type of the input
          */
         "type"?: CouponInputType;
+    }
+    interface MCurrency {
+        /**
+          * Has a select input
+         */
+        "hasSelect"?: boolean;
+        /**
+          * Hint text for the m-currency
+         */
+        "hint"?: string;
+        /**
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon for the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon for the label text
+         */
+        "iconLabel"?: string;
+        /**
+          * Icon for the middle
+         */
+        "iconMiddle"?: string;
+        /**
+          * Icon for the left
+         */
+        "iconStart"?: string;
+        /**
+          * Label for the input
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * * The max value of the input
+         */
+        "maxValue"?: number;
+        /**
+          * * The min value of the input
+         */
+        "minValue"?: number;
+        /**
+          * Emitted when the inputs change
+         */
+        "onMChange"?: (event: MCurrencyCustomEvent<CurrencyEvent>) => void;
+        /**
+          * Placeholder for the input
+         */
+        "placeholder"?: string;
+        /**
+          * Theme for the m-currency
+         */
+        "theme"?: string | undefined;
+        /**
+          * * The type of the input
+         */
+        "type"?: string;
+        /**
+          * * The value of the input
+         */
+        "value"?: number;
+        /**
+          * Variant for the m-currency
+         */
+        "variant"?: CurrencyVariant;
     }
     interface MFormCheck {
         /**
@@ -1221,6 +1401,7 @@ declare namespace LocalJSX {
         "m-button": MButton;
         "m-card": MCard;
         "m-coupon": MCoupon;
+        "m-currency": MCurrency;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
         "m-icon": MIcon;
@@ -1245,6 +1426,7 @@ declare module "@stencil/core" {
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
+            "m-currency": LocalJSX.MCurrency & JSXBase.HTMLAttributes<HTMLMCurrencyElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;

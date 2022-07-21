@@ -93,25 +93,26 @@ export class MSelect implements ComponentInterface {
         {(this.label) && (
           <label htmlFor={this.mId}>
             {this.label}
-            <small class="form-control-icon">
-              {/** TODO: Use m-icon and implements popover/tooltip */}
-              <i class="bi bi-info-circle" />
-            </small>
+            {/** TODO: Implements popover/tooltip */}
+            <m-icon
+              class="form-control-icon small"
+              icon="info-circle"
+            />
           </label>
         )}
         <div class="form-control-input w-100">
           <div
             class="input-group"
           >
-            {/** TODO: Use m-icon */}
             {this.iconStart && (
               <span
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                <span class="form-control-icon">
-                  <i class={`bi bi-${this.iconStart}`} />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconStart}
+                />
               </span>
             )}
             <select
@@ -132,27 +133,29 @@ export class MSelect implements ComponentInterface {
                 id={`${this.mId}-add`}
               >
                 {this.iconMiddle && (
-                  <span class="form-control-icon">
-                    {/** TODO: Use m-icon */}
-                    <i class={`bi bi-${this.iconMiddle}`} />
-                  </span>
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.iconMiddle}
+                  />
                 )}
                 {this.iconEnd && (
-                  <span class="form-control-icon">
-                    {/** TODO: Use m-icon */}
-                    <i class={`bi bi-${this.iconEnd}`} />
-                  </span>
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.iconEnd}
+                  />
                 )}
               </span>
             )}
           </div>
           {(this.hint) && (
             <div class="d-flex gap-2 hint text-start">
-              <small class="form-control-icon">
-                {/** TODO: Use m-icon */}
-                <i class={`bi bi-${this.hintIcon}`} />
-              </small>
               <small>
+                {this.hintIcon && (
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.hintIcon}
+                  />
+                )}
                 {this.hint}
               </small>
             </div>

@@ -117,10 +117,12 @@ export class MSearch implements ComponentInterface {
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
-            {/* TODO: use m-icon component */}
-            <span class="form-control-icon label-icon">
-              <i class={`bi bi-${this.labelIcon}`} />
-            </span>
+            {this.labelIcon && (
+              <m-icon
+                class="form-control-icon label-icon"
+                icon={this.labelIcon}
+              />
+            )}
           </label>
         )}
         <div class="form-control-input">
@@ -144,35 +146,38 @@ export class MSearch implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}-add`}
               >
-                {/* TODO: use m-icon component */}
-                <span class="form-control-icon search-state">
-                  <i class={`bi bi-${this.iconEnd}`} />
-                </span>
+                {this.iconEnd && (
+                  <m-icon
+                    class="form-control-icon search-state"
+                    icon={this.iconEnd}
+                  />
+                )}
               </span>
             )}
             <button
               class="btn btn-text btn-search"
               disabled={this.isDisabled}
               onClick={this.clickHandler}
-              tabIndex={-1}
             >
-              <i class="bi bi-search" />
+              <m-icon
+                icon="search"
+              />
             </button>
           </div>
           {this.hint && (
             <small class="hint">
-              {/* TODO: use m-icon component */}
               {this.hintIconStart && (
-                <span class="form-control-icon hint-icon">
-                  <i class={`bi bi-${this.hintIconStart}`} />
-                </span>
+                <m-icon
+                  class="form-control-icon hint-icon"
+                  icon={this.hintIconStart}
+                />
               )}
               {this.hint}
-              {/* TODO: use m-icon component */}
               {this.hintIconEnd && (
-                <span class="form-control-icon hint-icon">
-                  <i class={`bi bi-${this.hintIconEnd}`} />
-                </span>
+                <m-icon
+                  class="form-control-icon hint-icon"
+                  icon={this.hintIconEnd}
+                />
               )}
             </small>
           )}
