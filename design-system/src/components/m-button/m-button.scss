@@ -116,9 +116,12 @@
     --#{$prefix}theme-hover-rgb: var(--#{$prefix}#{$color}-hover-rgb);
     // button variables
     --#{$prefix}btn-color: #{$color-contrast-light};
+    --#{$prefix}btn-bg: var(--#{$prefix}theme);
+    --#{$prefix}btn-border-color: var(--#{$prefix}theme);
     --#{$prefix}btn-hover-color: #{$color-contrast-light};
     --#{$prefix}btn-hover-bg: var(--#{$prefix}theme-hover);
     --#{$prefix}btn-active-color: #{$color-contrast-light};
+    --#{$prefix}btn-disabled-bg: var(--#{$prefix}theme);
     --#{$prefix}btn-active-bg: var(--#{$prefix}theme);
   }
 

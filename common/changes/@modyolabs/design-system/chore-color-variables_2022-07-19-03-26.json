@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "patch: change scss variables for css variables",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
