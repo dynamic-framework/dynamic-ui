@@ -461,13 +461,13 @@ export declare interface MSelect extends Components.MSelect {
 
 @ProxyCmp({
   defineCustomElementFn: defineMSelect,
-  inputs: ['hint', 'hintIcon', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
 })
 @Component({
   selector: 'm-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIcon', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
 })
 export class MSelect {
   protected el: HTMLElement;

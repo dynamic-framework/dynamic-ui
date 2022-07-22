@@ -56,7 +56,12 @@ export class MSelect implements ComponentInterface {
   /**
    * The hint icon for the select in full variant
    */
-  @Prop() hintIcon?: string = 'emoji-smile';
+  @Prop() hintIconStart?: string;
+
+  /**
+   * The hint icon for the select in full variant
+   */
+  @Prop() hintIconEnd?: string;
 
   /**
    * The hint of the select in full variant
@@ -107,7 +112,7 @@ export class MSelect implements ComponentInterface {
             {this.iconStart && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-start`}
               >
                 <m-icon
                   class="form-control-icon"
@@ -122,15 +127,15 @@ export class MSelect implements ComponentInterface {
                 'no-icons': !this.iconStart && !this.iconMiddle && !this.iconEnd,
                 [`form-select-${this.theme}`]: this.variant !== 'prime',
               }}
-              aria-describedby={`${this.mId}-add`}
+              aria-describedby={`${this.mId}-select`}
               onChange={this.changeHandler}
             >
               <slot />
             </select>
-            {(this.iconMiddle || this.iconEnd) && (
+            {(this.iconMiddle) && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-middle`}
               >
                 {this.iconMiddle && (
                   <m-icon
@@ -138,6 +143,13 @@ export class MSelect implements ComponentInterface {
                     icon={this.iconMiddle}
                   />
                 )}
+              </span>
+            )}
+            {(this.iconEnd) && (
+              <span
+                class="input-group-text"
+                id={`${this.mId}-end`}
+              >
                 {this.iconEnd && (
                   <m-icon
                     class="form-control-icon"
@@ -150,13 +162,19 @@ export class MSelect implements ComponentInterface {
           {(this.hint) && (
             <div class="d-flex gap-2 hint text-start">
               <small>
-                {this.hintIcon && (
+                {this.hintIconStart && (
                   <m-icon
                     class="form-control-icon"
-                    icon={this.hintIcon}
+                    icon={this.hintIconStart}
                   />
                 )}
                 {this.hint}
+                {this.hintIconEnd && (
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.hintIconEnd}
+                  />
+                )}
               </small>
             </div>
           )}

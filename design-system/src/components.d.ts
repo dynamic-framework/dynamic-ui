@@ -568,7 +568,11 @@ export namespace Components {
         /**
           * The hint icon for the select in full variant
          */
-        "hintIcon"?: string;
+        "hintIconEnd"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIconStart"?: string;
         /**
           * The end icon for the select
          */
@@ -1357,7 +1361,11 @@ declare namespace LocalJSX {
         /**
           * The hint icon for the select in full variant
          */
-        "hintIcon"?: string;
+        "hintIconEnd"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIconStart"?: string;
         /**
           * The end icon for the select
          */
