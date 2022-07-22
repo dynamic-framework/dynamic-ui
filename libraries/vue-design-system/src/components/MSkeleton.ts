@@ -1,8 +1,8 @@
 import { h, defineComponent } from 'vue';
 import { ContentLoader } from "vue-content-loader"
 
-export const Skeleton = /*@__PURE__*/ defineComponent({
-  name: 'Skeleton',
+export const MSkeleton = /*@__PURE__*/ defineComponent({
+  name: 'MSkeleton',
   props: {
     viewBox: {
       type: String,
