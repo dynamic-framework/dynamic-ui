@@ -1,0 +1,65 @@
+@import "~bootstrap/scss/alert";
+@import "~bootstrap/scss/close";
+@import "~bootstrap/scss/transitions";
+
+
+@each $color, $value in $theme-colors {
+  @if $color == "light" {
+    .alert-#{$color} {
+      --#{$prefix}alert-bg: var(--#{$prefix}#{$color});
+      --#{$prefix}alert-color: var(--#{$prefix}gray);
+      --#{$prefix}alert-icon-bg: var(--#{$prefix}alert-color);
+      --#{$prefix}alert-icon-color: var(--#{$prefix}white);
+      --#{$prefix}alert-separator: var(--#{$prefix}gray);
+      --#{$prefix}close-color: var(--#{$prefix}dark);
+      --#{$prefix}close-focus-shadow: rgba(var(--#{$prefix}dark-rgb), .3);
+    }
+  }
+  @else {
+    .alert-#{$color} {
+      --#{$prefix}alert-bg: var(--#{$prefix}#{$color});
+      --#{$prefix}alert-color: var(--#{$prefix}white);
+      --#{$prefix}alert-icon-bg: var(--#{$prefix}white);
+      --#{$prefix}alert-icon-color: var(--#{$prefix}alert-bg);
+      --#{$prefix}alert-separator: var(--#{$prefix}white);
+      --#{$prefix}close-color: var(--#{$prefix}white);
+
+    }
+  }
+}
+
+.alert {
+  --#{$prefix}alert-border: 0;
+}
+
+.btn-close {
+  color: var(--#{$prefix}alert-color);
+  background: none;
+}
+
+.separator {
+  width: 1px;
+  height: 36px;
+  background: var(--#{$prefix}alert-separator);
+  opacity: .3;
+}
+
+.alert-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 25px;
+  min-height: 25px;
+  color: var(--#{$prefix}alert-icon-color);
+  vertical-align: middle;
+  background-color: var(--#{$prefix}alert-icon-bg);
+  border: 0;
+  border-radius: #{$border-radius-pill};
+}
+
+.alert-text {
+  --#{$prefix}alert-font-size: 1rem;
+  --#{$prefix}alert-line-height: 24px;
+  font-size: var(--#{$prefix}alert-font-size);
+  line-height: var(--#{$prefix}alert-line-height);
+}

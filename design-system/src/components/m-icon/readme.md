@@ -20,6 +20,7 @@
 
 ### Used by
 
+ - [m-alert](../m-alert)
  - [m-button](../m-button)
  - [m-coupon](../m-coupon)
  - [m-currency](../m-currency)
@@ -33,6 +34,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  m-alert --> m-icon
   m-button --> m-icon
   m-coupon --> m-icon
   m-currency --> m-icon
