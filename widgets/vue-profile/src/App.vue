@@ -1,6 +1,8 @@
 <template>
   <m-app>
     <div class="container">
+    <m-calendar v-model="date"/>
+
     <m-skeleton
       view-box="0 0 580 100"
     >
@@ -1859,6 +1861,7 @@ import {
   MCurrency,
   MSearch,
   MSkeleton,
+  MCalendar,
 } from '@modyolabs/vue-design-system';
 
 export default defineComponent({
@@ -1884,6 +1887,7 @@ export default defineComponent({
     MCurrency,
     MSearch,
     MSkeleton,
+    MCalendar,
   },
   data() {
     return {
@@ -1895,6 +1899,7 @@ export default defineComponent({
       value: 'initial',
       switchValue1: true,
       test: 'johannes',
+      date: new Date(),
     };
   },
   methods: {
