@@ -9,6 +9,14 @@ import { defineCustomElements } from '@modyolabs/design-system/loader';
 
 defineCustomElements();
 
+export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
+  'theme',
+  'icon',
+  'iconSize',
+  'close'
+]);
+
+
 export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined);
 
 

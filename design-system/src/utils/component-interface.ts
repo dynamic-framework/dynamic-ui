@@ -6,3 +6,11 @@ export type NavegableProps = {
   target?: string,
   'aria-current'?: string,
 };
+
+export const IconState = {
+  warning: 'exclamation-circle',
+  danger: 'exclamation-triangle',
+  success: 'check-lg',
+  info: 'info-circle',
+  light: 'info-circle',
+};

@@ -5,6 +5,7 @@ import { createReactComponent } from './react-component-lib';
 
 import type { JSX } from '@modyolabs/design-system/components';
 
+import { defineCustomElement as defineMAlert } from '@modyolabs/design-system/components/m-alert.js';
 import { defineCustomElement as defineMApp } from '@modyolabs/design-system/components/m-app.js';
 import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
@@ -25,6 +26,7 @@ import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-sys
 import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/components/m-search.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
 
+export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertElement>('m-alert', undefined, undefined, defineMAlert);
 export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>('m-app', undefined, undefined, defineMApp);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);

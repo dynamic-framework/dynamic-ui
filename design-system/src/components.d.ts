@@ -16,6 +16,24 @@ import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
 import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
+    interface MAlert {
+        /**
+          * Has close button
+         */
+        "close"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "icon": boolean;
+        /**
+          * Icon font-size class
+         */
+        "iconSize"?: string;
+        /**
+          * Theme for the alert
+         */
+        "theme"?: string;
+    }
     interface MApp {
     }
     interface MBadge {
@@ -636,6 +654,12 @@ export interface MSelectCustomEvent<T> extends CustomEvent<T> {
     target: HTMLMSelectElement;
 }
 declare global {
+    interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
+    }
+    var HTMLMAlertElement: {
+        prototype: HTMLMAlertElement;
+        new (): HTMLMAlertElement;
+    };
     interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
     }
     var HTMLMAppElement: {
@@ -751,6 +775,7 @@ declare global {
         new (): HTMLMSelectElement;
     };
     interface HTMLElementTagNameMap {
+        "m-alert": HTMLMAlertElement;
         "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
@@ -773,6 +798,24 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface MAlert {
+        /**
+          * Has close button
+         */
+        "close"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "icon"?: boolean;
+        /**
+          * Icon font-size class
+         */
+        "iconSize"?: string;
+        /**
+          * Theme for the alert
+         */
+        "theme"?: string;
+    }
     interface MApp {
     }
     interface MBadge {
@@ -1396,6 +1439,7 @@ declare namespace LocalJSX {
         "variant"?: FormControlLayoutVariant;
     }
     interface IntrinsicElements {
+        "m-alert": MAlert;
         "m-app": MApp;
         "m-badge": MBadge;
         "m-button": MButton;
@@ -1421,6 +1465,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
