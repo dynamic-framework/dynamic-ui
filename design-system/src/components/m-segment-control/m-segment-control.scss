@@ -1,0 +1,90 @@
+@import "~bootstrap/scss/forms/form-check";
+
+.segment-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: #{$segment-control-width};
+  height: #{$segment-control-height};
+  overflow: hidden;
+  font-size: #{$segment-control-font-size};
+  font-weight: #{$segment-control-font-weight};
+  line-height: #{$segment-control-line-height};
+  letter-spacing: #{$segment-control-letter-spacing};
+  background-color: #{$segment-control-bg};
+  border-radius: #{$segment-control-border-radius};
+}
+
+.segment-control-item {
+  --#{$prefix}segment-control-item-bg: #{$segment-control-item-bg};
+  --#{$prefix}segment-control-item-color: #{$segment-control-item-color};
+  --#{$prefix}segment-control-item-cursor: #{$segment-control-item-cursor};
+
+  padding: #{$segment-control-item-padding-y} #{$segment-control-item-padding-x};
+
+  color: var(--#{$prefix}segment-control-item-color);
+  cursor: var(--#{$prefix}segment-control-item-cursor);
+  background-color: var(--#{$prefix}segment-control-item-bg);
+  border: #{$segment-control-item-border};
+  border-radius: #{$segment-control-item-border-radius};
+}
+
+// Default
+.segment-control input:hover + .segment-control-item,
+.segment-control .hover + .segment-control-item {
+  --#{$prefix}segment-control-item-bg: #{$segment-control-item-hover-bg};
+}
+
+.segment-control input:focus + .segment-control-item,
+.segment-control .focus + .segment-control-item {
+  border-color: #{$segment-control-item-focus-border-color};
+}
+
+.segment-control input:active + .segment-control-item,
+.segment-control .active + .segment-control-item {
+  --#{$prefix}segment-control-item-bg: #{$segment-control-item-active-bg};
+  --#{$prefix}segment-control-item-color: #{$segment-control-item-active-color};
+}
+
+// Checked
+.segment-control input:checked + .segment-control-item {
+  --#{$prefix}segment-control-item-bg: #{$segment-control-item-checked-bg};
+  --#{$prefix}segment-control-item-color: #{$segment-control-item-checked-color};
+}
+
+.segment-control input:hover:checked + .segment-control-item,
+.segment-control .hover:checked + .segment-control-item {
+  border-color: #{$segment-control-item-checked-hover-border-color};
+}
+
+// Disabled
+.segment-control input:disabled + .segment-control-item,
+.segment-control input:disabled:checked + .segment-control-item,
+.segment-control .disabled + .segment-control-item,
+.segment-control .disabled:checked + .segment-control-item {
+
+  --#{$prefix}segment-control-item-bg: #{$segment-control-item-disabled-bg};
+  --#{$prefix}segment-control-item-color: #{$segment-control-item-disabled-color};
+  --#{$prefix}segment-control-item-cursor: #{$segment-control-item-disabled-cursor};
+  pointer-events: none;
+
+  border-color: #{$segment-control-item-disabled-border-color};
+}
+
+// Separator
+.separator {
+  display: inline-flex;
+
+  width: #{$segment-control-separator-width};
+  height: #{$segment-control-separator-height};
+  margin: 0 #{$segment-control-separator-margin-x};
+  vertical-align: middle;
+  background-color: #{$segment-control-separator-bg};
+  border-radius: #{$segment-control-separator-border-radius};
+  opacity: #{$segment-control-separator-opacity};
+}
+
+.segment-control *:last-child .segment-control-item + .separator {
+  display: none;
+}
