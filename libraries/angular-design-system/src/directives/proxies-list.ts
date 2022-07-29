@@ -20,5 +20,7 @@ export const DIRECTIVES = [
   d.MNavPane,
   d.MQuickAction,
   d.MSearch,
+  d.MSegmentControl,
+  d.MSegmentControlItem,
   d.MSelect
 ];

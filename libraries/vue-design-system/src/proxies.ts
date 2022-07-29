@@ -213,6 +213,23 @@ export const MSearch = /*@__PURE__*/ defineContainer<JSX.MSearch>('m-search', un
 ]);
 
 
+export const MSegmentControl = /*@__PURE__*/ defineContainer<JSX.MSegmentControl>('m-segment-control', undefined, [
+  'description'
+]);
+
+
+export const MSegmentControlItem = /*@__PURE__*/ defineContainer<JSX.MSegmentControlItem>('m-segment-control-item', undefined, [
+  'mId',
+  'name',
+  'label',
+  'value',
+  'disabled',
+  'checked',
+  'state',
+  'mChange'
+]);
+
+
 export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
   'mId',
   'variant',
