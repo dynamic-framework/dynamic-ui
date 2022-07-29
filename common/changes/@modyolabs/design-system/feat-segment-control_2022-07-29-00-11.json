@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: add m-segment-control and m-segment-control-item components",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
