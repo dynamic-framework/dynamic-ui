@@ -1,0 +1,31 @@
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/close";
+
+.modal-dialog .modal-content .modal-header-bg-image {
+  background-image: var(--#{$prefix}header-bg-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-clip: border-box;
+  background-size: cover;
+
+  .btn-close {
+    margin: 0;
+    background-color: var(--#{$prefix}white);
+  }
+}
+
+.btn-close-text {
+  --#{$prefix}btn-close-color: var(--#{$prefix}secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  font-size: #{$font-size-sm};
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--#{$prefix}btn-close-color);
+  letter-spacing: -.5%;
+  background: none;
+  border: 0;
+}
