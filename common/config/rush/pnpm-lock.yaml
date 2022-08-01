@@ -74,7 +74,7 @@ importers:
       '@angular/core': ^13.3.6
       '@angular/forms': ^13.3.6
       '@angular/platform-browser': ^13.3.6
-      '@modyolabs/design-system': workspace:^0.0.3
+      '@modyolabs/design-system': workspace:^0.0.4
       ng-packagr: ^13.3.1
       rxjs: ^7.5.5
       tslib: ^2.4.0
@@ -97,7 +97,7 @@ importers:
 
   ../../libraries/react-design-system:
     specifiers:
-      '@modyolabs/design-system': workspace:^0.0.3
+      '@modyolabs/design-system': workspace:^0.0.4
       '@rollup/plugin-node-resolve': ^13.3.0
       '@testing-library/jest-dom': ^5.8.0
       '@testing-library/react': ^10.0.4
@@ -132,7 +132,7 @@ importers:
 
   ../../libraries/vue-design-system:
     specifiers:
-      '@modyolabs/design-system': workspace:^0.0.3
+      '@modyolabs/design-system': workspace:^0.0.4
       '@rollup/plugin-commonjs': ^22.0.0
       '@rollup/plugin-node-resolve': ^13.3.0
       '@types/jest': ^26.0.23
@@ -172,7 +172,7 @@ importers:
       '@angular/platform-browser-dynamic': ~13.3.6
       '@angular/router': ~13.3.0
       '@modyolabs/angular-design-system': workspace:^0.0.1
-      '@modyolabs/design-system': workspace:^0.0.3
+      '@modyolabs/design-system': workspace:^0.0.4
       '@types/jasmine': ~3.10.0
       '@types/node': ^12.11.1
       jasmine-core: ~4.0.0
@@ -216,11 +216,50 @@ importers:
       typescript: 4.6.4
       webpack: 5.73.0
 
+  ../../widgets/modyo-widget-retail-pay-debt:
+    specifiers:
+      '@craco/craco': ^7.0.0-alpha.3
+      '@modyolabs/design-system': workspace:^0.0.4
+      '@modyolabs/react-design-system': workspace:^0.0.4
+      '@testing-library/jest-dom': ^5.16.4
+      '@testing-library/react': ^13.3.0
+      '@testing-library/user-event': ^13.5.0
+      '@types/jest': ^27.0.1
+      '@types/node': ^16.7.13
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-scripts: 5.0.1
+      sass: ~1.54.0
+      typescript: ^4.6.4
+      web-vitals: ^2.1.4
+      webpack: ^5.64.4
+    dependencies:
+      '@modyolabs/design-system': link:../../design-system
+      '@modyolabs/react-design-system': link:../../libraries/react-design-system
+      '@testing-library/jest-dom': 5.16.4
+      '@testing-library/react': 13.3.0_react-dom@18.2.0+react@18.2.0
+      '@testing-library/user-event': 13.5.0
+      '@types/jest': 27.5.2
+      '@types/node': 16.11.43
+      '@types/react': 18.0.14
+      '@types/react-dom': 18.0.5
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-scripts: 5.0.1_a56d7c7dad20aa83be1f870efe40a3ad
+      sass: 1.54.0
+      typescript: 4.7.4
+      web-vitals: 2.1.4
+    devDependencies:
+      '@craco/craco': 7.0.0-alpha.7_86d25405e8a17eaaffe80f1f2531fe5e
+      webpack: 5.73.0
+
   ../../widgets/react-profile:
     specifiers:
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/design-system': workspace:^0.0.3
-      '@modyolabs/react-design-system': workspace:^0.0.3
+      '@modyolabs/design-system': workspace:^0.0.4
+      '@modyolabs/react-design-system': workspace:^0.0.4
       '@testing-library/jest-dom': ^5.14.1
       '@testing-library/react': ^13.0.0
       '@testing-library/user-event': ^13.2.1
@@ -255,8 +294,8 @@ importers:
 
   ../../widgets/vue-profile:
     specifiers:
-      '@modyolabs/design-system': workspace:^0.0.3
-      '@modyolabs/vue-design-system': workspace:^0.0.3
+      '@modyolabs/design-system': workspace:^0.0.4
+      '@modyolabs/vue-design-system': workspace:^0.0.4
       '@typescript-eslint/eslint-plugin': ^5.4.0
       '@typescript-eslint/parser': ^5.4.0
       '@vue/cli-plugin-babel': ~5.0.0
@@ -2933,7 +2972,7 @@ packages:
       cosmiconfig-typescript-loader: 2.0.2_ec16c184f78e162e44f93fec0620bc1a
       cross-spawn: 7.0.3
       lodash: 4.17.21
-      react-scripts: 5.0.1_react@18.2.0+typescript@4.7.4
+      react-scripts: 5.0.1_a56d7c7dad20aa83be1f870efe40a3ad
       semver: 7.3.7
       webpack-merge: 5.8.0
     transitivePeerDependencies:
@@ -10087,7 +10126,6 @@ packages:
 
   /immutable/4.1.0:
     resolution: {integrity: sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==}
-    dev: true
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -14782,6 +14820,100 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /react-scripts/5.0.1_a56d7c7dad20aa83be1f870efe40a3ad:
+    resolution: {integrity: sha512-8VAmEm/ZAwQzJ+GOMLbBsTdDKOpuZh7RPs0UymvBR2vRk4iZWCskjbFnxqjrzoIvlNNRZ3QJFx6/qDSi6zSnaQ==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
+    peerDependencies:
+      react: '>= 16'
+      typescript: ^3.2.1 || ^4
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@babel/core': 7.18.6
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.7_41c7cfa01acd197e4cea588c32e4897a
+      '@svgr/webpack': 5.5.0
+      babel-jest: 27.5.1_@babel+core@7.18.6
+      babel-loader: 8.2.5_2cad51bbe9c2876396f118aa6395be78
+      babel-plugin-named-asset-import: 0.3.8_@babel+core@7.18.6
+      babel-preset-react-app: 10.0.1
+      bfj: 7.0.2
+      browserslist: 4.21.1
+      camelcase: 6.3.0
+      case-sensitive-paths-webpack-plugin: 2.4.0
+      css-loader: 6.7.1_webpack@5.73.0
+      css-minimizer-webpack-plugin: 3.4.1_webpack@5.73.0
+      dotenv: 10.0.0
+      dotenv-expand: 5.1.0
+      eslint: 8.19.0
+      eslint-config-react-app: 7.0.1_ad4831811ad1a992b2bf48a16623fe95
+      eslint-webpack-plugin: 3.2.0_eslint@8.19.0+webpack@5.73.0
+      file-loader: 6.2.0_webpack@5.73.0
+      fs-extra: 10.1.0
+      html-webpack-plugin: 5.5.0_webpack@5.73.0
+      identity-obj-proxy: 3.0.0
+      jest: 27.5.1
+      jest-resolve: 27.5.1
+      jest-watch-typeahead: 1.1.0_jest@27.5.1
+      mini-css-extract-plugin: 2.6.1_webpack@5.73.0
+      postcss: 8.4.14
+      postcss-flexbugs-fixes: 5.0.2_postcss@8.4.14
+      postcss-loader: 6.2.1_postcss@8.4.14+webpack@5.73.0
+      postcss-normalize: 10.0.1_ac1b38e48e1855962a70bd4c84c66657
+      postcss-preset-env: 7.7.2_postcss@8.4.14
+      prompts: 2.4.2
+      react: 18.2.0
+      react-app-polyfill: 3.0.0
+      react-dev-utils: 12.0.1_ae6b10aa1786a87a29ac96b46a8757b4
+      react-refresh: 0.11.0
+      resolve: 1.22.1
+      resolve-url-loader: 4.0.0
+      sass-loader: 12.6.0_sass@1.54.0+webpack@5.73.0
+      semver: 7.3.7
+      source-map-loader: 3.0.1_webpack@5.73.0
+      style-loader: 3.3.1_webpack@5.73.0
+      tailwindcss: 3.1.4
+      terser-webpack-plugin: 5.3.3_webpack@5.73.0
+      typescript: 4.7.4
+      webpack: 5.73.0
+      webpack-dev-server: 4.9.3_webpack@5.73.0
+      webpack-manifest-plugin: 4.1.1_webpack@5.73.0
+      workbox-webpack-plugin: 6.5.3_webpack@5.73.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    transitivePeerDependencies:
+      - '@babel/plugin-syntax-flow'
+      - '@babel/plugin-transform-react-jsx'
+      - '@parcel/css'
+      - '@swc/core'
+      - '@types/babel__core'
+      - '@types/webpack'
+      - bufferutil
+      - canvas
+      - clean-css
+      - csso
+      - debug
+      - esbuild
+      - fibers
+      - node-notifier
+      - node-sass
+      - rework
+      - rework-visit
+      - sass
+      - sass-embedded
+      - sockjs-client
+      - supports-color
+      - ts-node
+      - type-fest
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+      - webpack-hot-middleware
+      - webpack-plugin-serve
+    dev: false
+
   /react-scripts/5.0.1_react@18.2.0+typescript@4.7.4:
     resolution: {integrity: sha512-8VAmEm/ZAwQzJ+GOMLbBsTdDKOpuZh7RPs0UymvBR2vRk4iZWCskjbFnxqjrzoIvlNNRZ3QJFx6/qDSi6zSnaQ==}
     engines: {node: '>=14.0.0'}
@@ -15331,6 +15463,31 @@ packages:
       sass: 1.53.0
     dev: true
 
+  /sass-loader/12.6.0_sass@1.54.0+webpack@5.73.0:
+    resolution: {integrity: sha512-oLTaH0YCtX4cfnJZxKSLAyglED0naiYfNG1iXfU5w1LNZ+ukoA5DtyDIN5zmKVZwYNJP4KRc5Y3hkWga+7tYfA==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      fibers: '>= 3.1.0'
+      node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+      sass: ^1.3.0
+      sass-embedded: '*'
+      webpack: ^5.0.0
+    peerDependenciesMeta:
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+    dependencies:
+      klona: 2.0.5
+      neo-async: 2.6.2
+      sass: 1.54.0
+      webpack: 5.73.0
+    dev: false
+
   /sass-loader/12.6.0_webpack@5.73.0:
     resolution: {integrity: sha512-oLTaH0YCtX4cfnJZxKSLAyglED0naiYfNG1iXfU5w1LNZ+ukoA5DtyDIN5zmKVZwYNJP4KRc5Y3hkWga+7tYfA==}
     engines: {node: '>= 12.13.0'}
@@ -15374,6 +15531,16 @@ packages:
       immutable: 4.1.0
       source-map-js: 1.0.2
     dev: true
+
+  /sass/1.54.0:
+    resolution: {integrity: sha512-C4zp79GCXZfK0yoHZg+GxF818/aclhp9F48XBu/+bm9vXEVAYov9iU3FBVRMq3Hx3OA4jfKL+p2K9180mEh0xQ==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    dependencies:
+      chokidar: 3.5.3
+      immutable: 4.1.0
+      source-map-js: 1.0.2
+    dev: false
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
