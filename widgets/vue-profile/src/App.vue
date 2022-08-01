@@ -1822,6 +1822,54 @@
           </m-currency>
         </div>
       </div>
+      <div class="row my-5">
+        <div class="col-12 mb-3">
+          <h3 class="fw-bold">m-modal</h3>
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-primary w-100"
+        data-bs-toggle="modal" data-bs-target="#supermodal">
+          Launch demo modal
+        </button>
+        </div>
+      </div>
+      <div class="row-modal">
+        <m-modal
+        mId="supermodal"
+        header
+        body
+        footer
+        centered
+        static
+        scrollable
+        fullscreen
+        image-header="https://i0.wp.com/imgs.hipertextual.com/wp-content/uploads/2017/03/color-degradado-fondos-degradados-multicolor-51200.jpg?fit=1200%2C750&quality=50&strip=all&ssl=1"
+        >
+          <h4 slot="header" class="fw-bold">
+            Modal Title
+          </h4>
+          <p slot="body" class="text-secondary">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Curabitur consectetur metus eu sem sodales, ullamcorper
+            aliquam eros ornare. Sed at nunc at ligula lacinia viverra
+            vel quis enim. Nam eget dolor tortor.
+          </p>
+          <div
+            slot="footer"
+            class="d-flex" >
+            <m-button
+              is-pill
+              text="Close"
+              variant="outline"
+              data-bs-dismiss="modal"
+            />
+            <m-button
+              is-pill
+              text="Confirm"
+            />
+          </div>
+        </m-modal>
+      </div>
     </div>
   </m-app>
 </template>
@@ -1849,6 +1897,7 @@ import {
   MCoupon,
   MCurrency,
   MSearch,
+  MModal,
 } from '@modyolabs/vue-design-system';
 
 export default defineComponent({
@@ -1873,6 +1922,7 @@ export default defineComponent({
     MCoupon,
     MCurrency,
     MSearch,
+    MModal,
   },
   data() {
     return {
