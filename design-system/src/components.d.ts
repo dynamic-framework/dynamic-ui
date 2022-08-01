@@ -11,6 +11,7 @@ import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-int
 import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
+import { FullScreenSize, ModalSize } from "./components/m-modal/m-modal-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
@@ -398,6 +399,52 @@ export namespace Components {
          */
         "variant"?: ListItemVariant;
     }
+    interface MModal {
+        /**
+          * Has body
+         */
+        "body"?: boolean;
+        /**
+          * Is modal centered
+         */
+        "centered"?: boolean;
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * Has footer
+         */
+        "footer"?: boolean;
+        /**
+          * Is modal fullscreen or size to apply
+         */
+        "fullscreen"?: FullScreenSize | boolean;
+        /**
+          * Has header
+         */
+        "header"?: boolean;
+        /**
+          * Background image header
+         */
+        "imageHeader"?: string;
+        /**
+          * Id of the modal
+         */
+        "mId": string;
+        /**
+          * Is modal scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * Modal size
+         */
+        "size"?: ModalSize;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
+    }
     interface MNav {
         /**
           * Is aria orientation vertical
@@ -702,6 +749,12 @@ declare global {
         prototype: HTMLMListItemElement;
         new (): HTMLMListItemElement;
     };
+    interface HTMLMModalElement extends Components.MModal, HTMLStencilElement {
+    }
+    var HTMLMModalElement: {
+        prototype: HTMLMModalElement;
+        new (): HTMLMModalElement;
+    };
     interface HTMLMNavElement extends Components.MNav, HTMLStencilElement {
     }
     var HTMLMNavElement: {
@@ -762,6 +815,7 @@ declare global {
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
+        "m-modal": HTMLMModalElement;
         "m-nav": HTMLMNavElement;
         "m-nav-content": HTMLMNavContentElement;
         "m-nav-item": HTMLMNavItemElement;
@@ -1175,6 +1229,52 @@ declare namespace LocalJSX {
          */
         "variant"?: ListItemVariant;
     }
+    interface MModal {
+        /**
+          * Has body
+         */
+        "body"?: boolean;
+        /**
+          * Is modal centered
+         */
+        "centered"?: boolean;
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * Has footer
+         */
+        "footer"?: boolean;
+        /**
+          * Is modal fullscreen or size to apply
+         */
+        "fullscreen"?: FullScreenSize | boolean;
+        /**
+          * Has header
+         */
+        "header"?: boolean;
+        /**
+          * Background image header
+         */
+        "imageHeader"?: string;
+        /**
+          * Id of the modal
+         */
+        "mId": string;
+        /**
+          * Is modal scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * Modal size
+         */
+        "size"?: ModalSize;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
+    }
     interface MNav {
         /**
           * Is aria orientation vertical
@@ -1407,6 +1507,7 @@ declare namespace LocalJSX {
         "m-icon": MIcon;
         "m-input": MInput;
         "m-list-item": MListItem;
+        "m-modal": MModal;
         "m-nav": MNav;
         "m-nav-content": MNavContent;
         "m-nav-item": MNavItem;
@@ -1432,6 +1533,7 @@ declare module "@stencil/core" {
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
+            "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;
             "m-nav-content": LocalJSX.MNavContent & JSXBase.HTMLAttributes<HTMLMNavContentElement>;
             "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
