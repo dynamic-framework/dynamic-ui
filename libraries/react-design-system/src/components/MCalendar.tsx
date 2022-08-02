@@ -8,7 +8,11 @@ export declare interface CalendarProps {
   calendarContainer?: React.FC
 }
 
-export const MCalendar = ({setDate, date, calendarContainer }: CalendarProps) => {
+export default function MCalendar({
+  setDate,
+  date,
+  calendarContainer
+}: CalendarProps) {
   return (
     <DatePicker
       selected={date}
