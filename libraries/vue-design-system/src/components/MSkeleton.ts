@@ -1,5 +1,5 @@
 import { h, defineComponent } from 'vue';
-import { ContentLoader } from "vue-content-loader"
+import { ContentLoader } from 'vue-content-loader';
 
 export const MSkeleton = /*@__PURE__*/ defineComponent({
   name: 'MSkeleton',
@@ -12,31 +12,33 @@ export const MSkeleton = /*@__PURE__*/ defineComponent({
       type: Number,
       default: 2
     },
-    primaryColor: {
+    backgroundColor: {
       type: String,
       default: "#f3f3f3"
     },
-    secondaryColor: {
+    foregroundColor: {
       type: String,
       default: "#ecebeb"
-    },
-    interval: {
-      type: Number,
-    },
-    gradientRatio: {
-      type: Number,
     }
   },
-  setup(props, { slots }) {
+  setup({
+    viewBox,
+    speed,
+    backgroundColor,
+    foregroundColor
+  }, { slots }) {
     return () => {
       return h(
         ContentLoader,
         {
-          ...props,
+          viewBox,
+          speed,
+          primaryColor: backgroundColor,
+          secondaryColor: foregroundColor,
           ['class']: '',
         },
         () =>  slots.default && slots.default()
-      )
-    }
+      );
+    };
   }
 });
