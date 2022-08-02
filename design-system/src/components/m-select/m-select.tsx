@@ -127,7 +127,7 @@ export class MSelect implements ComponentInterface {
                 'no-icons': !this.iconStart && !this.iconMiddle && !this.iconEnd,
                 [`form-select-${this.theme}`]: this.variant !== 'prime',
               }}
-              aria-describedby={`${this.mId}-select`}
+              aria-describedby={`${this.mId}-start`}
               onChange={this.changeHandler}
             >
               <slot />
