@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { MSkeleton } from './components/m-skeleton/m-skeleton.component';
 import { ContentLoaderModule } from '@ngneat/content-loader';
+
+import { MSkeleton } from './components/m-skeleton/m-skeleton.component';
 
 import { DIRECTIVES } from './directives/proxies-list';
 
