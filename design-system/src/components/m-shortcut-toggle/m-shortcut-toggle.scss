@@ -4,7 +4,6 @@
   border-radius: #{$shortcut-border-radius};
 
   input[type="radio"] {
-
     position: absolute;
     opacity: 0;
 
@@ -17,7 +16,6 @@
   }
 
   .shortcut-toggle {
-
     display: flex;
     flex-direction: column;
     align-items: center;
