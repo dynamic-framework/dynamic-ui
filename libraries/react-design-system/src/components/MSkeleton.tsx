@@ -1,20 +1,28 @@
-import React from 'react'
-import ContentLoader from "react-content-loader"
+import React, { PropsWithChildren, ReactNode } from 'react';
+import ContentLoader from 'react-content-loader';
 
-export declare interface SkeletonProps {
+export type Props = PropsWithChildren<{
   speed?: number;
   viewBox?: string;
   backgroundColor?: string;
   foregroundColor?: string;
-  children?: JSX.Element;
-}
+}>;
 
-export const MSkeleton = (props: SkeletonProps ) => {
+export default function MSkeleton({
+  speed = 2,
+  viewBox,
+  backgroundColor = '#f3f3f3',
+  foregroundColor = '#ecebeb',
+  children
+}: Props) {
   return (
     <ContentLoader
-      {...props}
+      speed={speed}
+      viewBox={viewBox}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}
     >
-    { props.children }
+    { children }
   </ContentLoader>
-  )
+  );
 }

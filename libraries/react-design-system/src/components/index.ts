@@ -1,3 +1,3 @@
 export * from './proxies';
-export { MSkeleton } from './MSkeleton';
-export { MCalendar } from './MCalendar';
+export { default as MCalendar } from './MCalendar';
+export { default as MSkeleton } from './MSkeleton';
