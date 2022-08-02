@@ -1,2 +1,2 @@
 export * from './proxies';
-export { MSkeleton } from './MSkeleton';
+export { default as MSkeleton } from './MSkeleton';
