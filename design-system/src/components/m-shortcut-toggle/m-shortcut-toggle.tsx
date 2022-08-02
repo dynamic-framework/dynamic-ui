@@ -55,11 +55,6 @@ export class MShortcutToggle implements ComponentInterface {
   @Prop() state?: InputState;
 
   /**
-   * Type of the input
-   */
-  private inputType = 'radio';
-
-  /**
    * Emitted when the select value has changed
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
@@ -79,7 +74,7 @@ export class MShortcutToggle implements ComponentInterface {
       >
         <input
           id={this.mId}
-          type={this.inputType}
+          type="radio"
           name={this.name}
           value={this.value}
           checked={this.isChecked}
@@ -89,14 +84,14 @@ export class MShortcutToggle implements ComponentInterface {
         {((this.text || this.label) && !this.icon) && (
           <div class="shortcut-toggle">
             { this.label && (
-            <span class="shortcut-label d-block">
-              {this.label}
-            </span>
+              <span class="shortcut-label d-block">
+                {this.label}
+              </span>
             )}
             {this.text && (
-            <span class="shortcut-text d-block small">
-              { this.text}
-            </span>
+              <span class="shortcut-text d-block small">
+                { this.text}
+              </span>
             )}
           </div>
         )}
