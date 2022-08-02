@@ -6,3 +6,4 @@ export type NavegableProps = {
   target?: string,
   'aria-current'?: string,
 };
+export const prefixBS = 'bs-';
