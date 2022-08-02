@@ -7,12 +7,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MSkeleton implements OnInit {
   @Input() viewBox!: string;
   @Input() speed?: number= 2;
-  @Input() backgroundColor?: string = "#f3f3f3"
-  @Input() foregroundColor?: string = "#ecebeb"
+  @Input() backgroundColor?: string = "#f3f3f3";
+  @Input() foregroundColor?: string = "#ecebeb";
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }
