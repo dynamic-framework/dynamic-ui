@@ -31,7 +31,8 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.0.4"
+    "@modyolabs/design-system": "workspace:^0.0.4",
+    "react-content-loader": "~6.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.8.0",

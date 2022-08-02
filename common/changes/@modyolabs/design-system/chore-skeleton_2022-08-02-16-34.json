@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: add m-skeleton component",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
