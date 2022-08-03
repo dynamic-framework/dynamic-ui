@@ -31,7 +31,8 @@
   ],
   "dependencies": {
     "@modyolabs/design-system": "workspace:^0.0.4",
-    "vue-content-loader": "~2.0.1"
+    "vue-content-loader": "~2.0.1",
+    "@vuepic/vue-datepicker": "~3.3.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
