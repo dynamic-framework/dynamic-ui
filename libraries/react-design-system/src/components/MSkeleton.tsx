@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { PropsWithChildren } from 'react';
 import ContentLoader from 'react-content-loader';
 
 export type Props = PropsWithChildren<{
