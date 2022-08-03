@@ -24,6 +24,7 @@ import { defineCustomElement as defineMNavPane } from '@modyolabs/design-system/
 import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/components/m-search.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
+import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/design-system/components/m-shortcut-toggle.js';
 
 
 export declare interface MApp extends Components.MApp {}
@@ -470,6 +471,34 @@ export declare interface MSelect extends Components.MSelect {
   inputs: ['hint', 'hintIcon', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
 })
 export class MSelect {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MShortcutToggle extends Components.MShortcutToggle {
+  /**
+   * Emitted when the select value has changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMShortcutToggle,
+  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value']
+})
+@Component({
+  selector: 'm-shortcut-toggle',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value']
+})
+export class MShortcutToggle {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
