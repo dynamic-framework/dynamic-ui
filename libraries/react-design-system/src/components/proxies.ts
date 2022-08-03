@@ -26,6 +26,7 @@ import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/c
 import { defineCustomElement as defineMSegmentControl } from '@modyolabs/design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyolabs/design-system/components/m-segment-control-item.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
+import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/design-system/components/m-shortcut-toggle.js';
 
 export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>('m-app', undefined, undefined, defineMApp);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
@@ -48,3 +49,4 @@ export const MSearch = /*@__PURE__*/createReactComponent<JSX.MSearch, HTMLMSearc
 export const MSegmentControl = /*@__PURE__*/createReactComponent<JSX.MSegmentControl, HTMLMSegmentControlElement>('m-segment-control', undefined, undefined, defineMSegmentControl);
 export const MSegmentControlItem = /*@__PURE__*/createReactComponent<JSX.MSegmentControlItem, HTMLMSegmentControlItemElement>('m-segment-control-item', undefined, undefined, defineMSegmentControlItem);
 export const MSelect = /*@__PURE__*/createReactComponent<JSX.MSelect, HTMLMSelectElement>('m-select', undefined, undefined, defineMSelect);
+export const MShortcutToggle = /*@__PURE__*/createReactComponent<JSX.MShortcutToggle, HTMLMShortcutToggleElement>('m-shortcut-toggle', undefined, undefined, defineMShortcutToggle);

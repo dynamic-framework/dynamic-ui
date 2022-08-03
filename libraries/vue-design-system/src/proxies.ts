@@ -238,9 +238,23 @@ export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', un
   'iconStart',
   'iconMiddle',
   'iconEnd',
-  'hintIcon',
+  'hintIconStart',
+  'hintIconEnd',
   'hint',
   'layoutDirection',
+  'mChange'
+]);
+
+
+export const MShortcutToggle = /*@__PURE__*/ defineContainer<JSX.MShortcutToggle>('m-shortcut-toggle', undefined, [
+  'mId',
+  'name',
+  'value',
+  'label',
+  'text',
+  'icon',
+  'isChecked',
+  'state',
   'mChange'
 ]);
 

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "patch: add ids for icons span",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}

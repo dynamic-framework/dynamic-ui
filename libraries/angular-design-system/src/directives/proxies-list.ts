@@ -22,5 +22,6 @@ export const DIRECTIVES = [
   d.MSearch,
   d.MSegmentControl,
   d.MSegmentControlItem,
-  d.MSelect
+  d.MSelect,
+  d.MShortcutToggle
 ];
