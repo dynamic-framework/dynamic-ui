@@ -4,6 +4,7 @@
     "entryFile": "src/index.ts"
   },
   "allowedNonPeerDependencies": [
-    "@modyolabs/design-system"
+    "@modyolabs/design-system",
+    "@ngneat/content-loader"
   ]
 }

@@ -1,6 +1,16 @@
 <template>
   <m-app>
     <div class="container">
+    <m-skeleton
+      view-box="0 0 580 100"
+    >
+      <rect x="48" y="8" rx="3" ry="3" width="88" height="6" />
+      <rect x="48" y="26" rx="3" ry="3" width="52" height="6" />
+      <rect x="0" y="56" rx="3" ry="3" width="410" height="6" />
+      <rect x="0" y="72" rx="3" ry="3" width="380" height="6" />
+      <rect x="0" y="88" rx="3" ry="3" width="178" height="6" />
+      <circle cx="20" cy="20" r="20" />
+    </m-skeleton>
     <m-button
       text="click me!"
       icon-left="arrow-right"
@@ -1988,7 +1998,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 import {
   MButton,
   MInput,
@@ -2010,6 +2019,7 @@ import {
   MCurrency,
   MSearch,
   MShortcutToggle,
+  MSkeleton,
 } from '@modyolabs/vue-design-system';
 
 export default defineComponent({
@@ -2035,6 +2045,7 @@ export default defineComponent({
     MCurrency,
     MSearch,
     MShortcutToggle,
+    MSkeleton,
   },
   data() {
     return {
