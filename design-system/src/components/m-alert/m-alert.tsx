@@ -40,8 +40,7 @@ export class MAlert {
 
   private generateClasses(): ClassMap {
     return {
-      'alert d-flex align-items-center justify-content-center gap-3': true,
-      [`alert-${this.theme}`]: true,
+      [`alert alert-${this.theme}`]: true,
       'fade show': !!this.close,
     };
   }

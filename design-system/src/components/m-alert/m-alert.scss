@@ -1,6 +1,4 @@
 @import "~bootstrap/scss/alert";
-@import "~bootstrap/scss/close";
-@import "~bootstrap/scss/transitions";
 
 @each $color, $value in map-remove($theme-colors, "light") {
   .alert-#{$color} {
@@ -25,6 +23,11 @@
 
 .alert {
   --#{$prefix}alert-border: 0;
+  --#{$prefix}alert-gap: #{$spacer-3};
+  display: flex;
+  gap: var(--#{$prefix}alert-gap);
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-close {
