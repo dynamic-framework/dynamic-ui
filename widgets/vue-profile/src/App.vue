@@ -1,6 +1,8 @@
 <template>
   <m-app>
     <div class="container">
+    <m-calendar v-model="date"/>
+
     <m-skeleton
       view-box="0 0 580 100"
     >
@@ -15,6 +17,7 @@
       text="click me!"
       icon-left="arrow-right"
       icon-right="arrow-right"
+      theme="primary-gradient"
       @m-click="onButtonClick"
     />
     <m-button
@@ -1832,6 +1835,165 @@
           </m-currency>
         </div>
       </div>
+      <div class="row gap-2 mb-5">
+        <div class="col-12">
+          <h3 class="fw-bold mb-3">m-shortcut-toogle</h3>
+          <h6 class="fw-bold">-default</h6>
+        </div>
+        <div class="col-12 d-flex gap-4">
+          <m-shortcut-toggle
+            mId="1erT"
+            value="a"
+            name="abc"
+            text="Shortcut 1"
+            label="Label"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="2erT"
+            value="b"
+            name="abc"
+            text="Shortcut 2"
+            label="Label"
+            state="hover"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="3erT"
+            value="c"
+            name="abc"
+            text="Shortcut 3"
+            label="Label"
+            state="focus"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="4erT"
+            value="d"
+            name="abc"
+            text="Shortcut 4"
+            label="Label"
+            state="active"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="5erT"
+            value="e"
+            name="abc"
+            text="Shortcut 5"
+            label="Label"
+            state="disabled"
+            @m-change="print"
+          />
+        </div>
+        <div class="col-12 mt-3">
+          <h6 class="fw-bold">-checked</h6>
+        </div>
+        <div class="col-12 d-flex gap-4">
+          <m-shortcut-toggle
+            mId="11erT"
+            value="a"
+            name="abc1"
+            text="Shortcut 1"
+            label="Label"
+            is-checked
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="12erT"
+            value="b"
+            name="abc2"
+            text="Shortcut 2"
+            label="Label"
+            is-checked
+            state="hover"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="13erT"
+            value="c"
+            name="abc3"
+            text="Shortcut 3"
+            label="Label"
+            is-checked
+            state="focus"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="14erT"
+            value="d"
+            name="abc4"
+            text="Shortcut 4"
+            label="Label"
+            is-checked
+            state="active"
+            @m-change="print"
+          />
+           <m-shortcut-toggle
+            mId="15erT"
+            value="e"
+            name="abc5"
+            text="Shortcut 5"
+            label="Label"
+            is-checked
+            state="disabled"
+            @m-change="print"
+          />
+        </div>
+         <div class="col-12 mt-3">
+          <h6 class="fw-bold">-icon</h6>
+        </div>
+        <div class="col-12 d-flex gap-4">
+          <m-shortcut-toggle
+            mId="21erT"
+            value="a"
+            name="abc11"
+            icon="emoji-smile"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="22erT"
+            value="b"
+            name="abc11"
+            icon="emoji-smile"
+             state="hover"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="23erT"
+            value="c"
+            name="abc11"
+            icon="emoji-smile"
+            state="focus"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="24erT"
+            value="d"
+            name="abc11"
+            icon="emoji-smile"
+            state="active"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="25erT"
+            value="e"
+            name="abc12"
+            icon="emoji-smile"
+            is-checked
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="26erT"
+            value="f"
+            name="abc11"
+            icon="emoji-smile"
+            state="disabled"
+            @m-change="print"
+          />
+        </div>
+
+      </div>
     </div>
   </m-app>
 </template>
@@ -1858,7 +2020,9 @@ import {
   MCoupon,
   MCurrency,
   MSearch,
+  MShortcutToggle,
   MSkeleton,
+  MCalendar,
 } from '@modyolabs/vue-design-system';
 
 export default defineComponent({
@@ -1883,7 +2047,9 @@ export default defineComponent({
     MCoupon,
     MCurrency,
     MSearch,
+    MShortcutToggle,
     MSkeleton,
+    MCalendar,
   },
   data() {
     return {
@@ -1895,6 +2061,7 @@ export default defineComponent({
       value: 'initial',
       switchValue1: true,
       test: 'johannes',
+      date: new Date(),
     };
   },
   methods: {

@@ -1,0 +1,88 @@
+.shortcut {
+  padding: #{$shortcut-padding};
+  border: #{$shortcut-border};
+  border-radius: #{$shortcut-border-radius};
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+
+    ~ .shortcut-toggle {
+      padding: #{$shortcut-toggle-padding};
+      background-color: #{$shortcut-toggle-bg};
+      border: #{$shortcut-toggle-border};
+      border-radius: #{$shortcut-toggle-border-radius};
+    }
+  }
+
+  .shortcut-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: #{$shortcut-toggle-transition};
+
+    .shortcut-label {
+      font-size: #{$shortcut-toggle-label-font-size};
+      line-height: #{$shortcut-toggle-label-line-height};
+      color: #{$shortcut-toggle-label-color};
+    }
+
+    .shortcut-text {
+      font-weight: #{$shortcut-toggle-text-font-weight};
+      line-height: #{$shortcut-toggle-text-line-height};
+      color: #{$shortcut-toggle-text-color};
+    }
+
+    .shortcut-icon {
+      color: #{$shortcut-toggle-icon-color};
+    }
+  }
+}
+
+.shortcut input[type="radio"]:checked {
+
+  ~ .shortcut-toggle {
+    background-color: #{$shortcut-toggle-checked-bg};
+
+    .shortcut-label {
+      color: #{$shortcut-toggle-label-checked-color};
+    }
+
+    .shortcut-text {
+      color: #{$shortcut-toggle-text-checked-color};
+    }
+
+    .shortcut-icon {
+      color: #{$shortcut-toggle-icon-checked-color};
+    }
+  }
+}
+
+.shortcut:focus,
+.shortcut:focus-within,
+.shortcut.focus {
+  border-color: #{$shortcut-focus-border-color};
+}
+
+.shortcut:hover,
+.shortcut.hover {
+
+  .shortcut-toggle {
+    box-shadow: #{$shortcut-toggle-hover-box-shadow};
+  }
+}
+
+.shortcut input[type="radio"]:active,
+.shortcut.active input[type="radio"] {
+
+  ~ .shortcut-toggle {
+    box-shadow: #{$shortcut-toggle-active-box-shadow};
+  }
+}
+
+.shortcut.disabled {
+  pointer-events: none;
+  cursor: #{$shortcut-disabled-cursor};
+  opacity: #{$shortcut-disabled-opacity};
+}
