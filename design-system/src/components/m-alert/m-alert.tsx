@@ -7,7 +7,7 @@ import {
 import { Alert } from 'bootstrap';
 
 import type { ClassMap } from '../../utils/component-interface';
-import { IconState } from '../../utils/component-interface';
+import { ICON_STATE } from '../../utils/component-interface';
 
 @Component({
   tag: 'm-alert',
@@ -46,7 +46,7 @@ export class MAlert {
   }
 
   private iconState(): string {
-    return IconState[this.theme] || '';
+    return ICON_STATE[this.theme] || '';
   }
 
   render() {

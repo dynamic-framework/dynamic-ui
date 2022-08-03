@@ -8,7 +8,7 @@ export type NavegableProps = {
   'aria-current'?: string,
 };
 
-export const IconState: IconStateMap = {
+export const ICON_STATE: IconStateMap = {
   warning: 'exclamation-circle',
   danger: 'exclamation-triangle',
   success: 'check-lg',
