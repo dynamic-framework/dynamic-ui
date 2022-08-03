@@ -6,7 +6,7 @@ export declare interface CalendarProps {
   date: Date;
   setDate: Function;
   calendarContainer?: React.FC;
-};
+}
 
 export default function MCalendar({
   setDate,
