@@ -586,7 +586,11 @@ export namespace Components {
         /**
           * The hint icon for the select in full variant
          */
-        "hintIcon"?: string;
+        "hintIconEnd"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIconStart"?: string;
         /**
           * The end icon for the select
          */
@@ -620,6 +624,40 @@ export namespace Components {
          */
         "variant": FormControlLayoutVariant;
     }
+    interface MShortcutToggle {
+        /**
+          * Shortcut icon
+         */
+        "icon"?: string;
+        /**
+          * Is checked
+         */
+        "isChecked"?: boolean;
+        /**
+          * Shortcut label
+         */
+        "label"?: string;
+        /**
+          * Id of the input
+         */
+        "mId": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Input and shortcut state
+         */
+        "state"?: InputState;
+        /**
+          * Shortcut text
+         */
+        "text"?: string;
+        /**
+          * Input value
+         */
+        "value": string;
+    }
 }
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -652,6 +690,10 @@ export interface MSearchCustomEvent<T> extends CustomEvent<T> {
 export interface MSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMSelectElement;
+}
+export interface MShortcutToggleCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMShortcutToggleElement;
 }
 declare global {
     interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
@@ -774,6 +816,12 @@ declare global {
         prototype: HTMLMSelectElement;
         new (): HTMLMSelectElement;
     };
+    interface HTMLMShortcutToggleElement extends Components.MShortcutToggle, HTMLStencilElement {
+    }
+    var HTMLMShortcutToggleElement: {
+        prototype: HTMLMShortcutToggleElement;
+        new (): HTMLMShortcutToggleElement;
+    };
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
         "m-app": HTMLMAppElement;
@@ -795,6 +843,7 @@ declare global {
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
         "m-select": HTMLMSelectElement;
+        "m-shortcut-toggle": HTMLMShortcutToggleElement;
     }
 }
 declare namespace LocalJSX {
@@ -1400,7 +1449,11 @@ declare namespace LocalJSX {
         /**
           * The hint icon for the select in full variant
          */
-        "hintIcon"?: string;
+        "hintIconEnd"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIconStart"?: string;
         /**
           * The end icon for the select
          */
@@ -1438,6 +1491,44 @@ declare namespace LocalJSX {
          */
         "variant"?: FormControlLayoutVariant;
     }
+    interface MShortcutToggle {
+        /**
+          * Shortcut icon
+         */
+        "icon"?: string;
+        /**
+          * Is checked
+         */
+        "isChecked"?: boolean;
+        /**
+          * Shortcut label
+         */
+        "label"?: string;
+        /**
+          * Id of the input
+         */
+        "mId": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onMChange"?: (event: MShortcutToggleCustomEvent<string>) => void;
+        /**
+          * Input and shortcut state
+         */
+        "state"?: InputState;
+        /**
+          * Shortcut text
+         */
+        "text"?: string;
+        /**
+          * Input value
+         */
+        "value": string;
+    }
     interface IntrinsicElements {
         "m-alert": MAlert;
         "m-app": MApp;
@@ -1459,6 +1550,7 @@ declare namespace LocalJSX {
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
         "m-select": MSelect;
+        "m-shortcut-toggle": MShortcutToggle;
     }
 }
 export { LocalJSX as JSX };
@@ -1485,6 +1577,7 @@ declare module "@stencil/core" {
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
+            "m-shortcut-toggle": LocalJSX.MShortcutToggle & JSXBase.HTMLAttributes<HTMLMShortcutToggleElement>;
         }
     }
 }

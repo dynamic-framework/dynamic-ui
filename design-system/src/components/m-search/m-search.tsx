@@ -144,7 +144,7 @@ export class MSearch implements ComponentInterface {
             {(this.iconEnd && !!this.theme) && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-end`}
               >
                 {this.iconEnd && (
                   <m-icon

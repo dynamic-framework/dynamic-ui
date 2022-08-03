@@ -102,7 +102,7 @@ export class MInput implements ComponentInterface {
             {this.iconStart && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-start`}
               >
                 {this.iconStart && (
                   <m-icon
@@ -125,7 +125,7 @@ export class MInput implements ComponentInterface {
             {this.iconEnd && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-end`}
               >
                 {this.iconEnd && (
                   <m-icon

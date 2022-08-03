@@ -1,35 +1,28 @@
 <m-app>
-  <m-button
-    text="click me!"
-    (modButtonClick)="onButtonClick()"
-  >
+  <m-skeleton viewBox="0 0 1400 80" backgroundColor="#ff0000" foregroundColor="#0000ff" [speed]=0.5>
+    <svg:rect x="48" y="8" rx="3" ry="3" width="88" height="6" />
+    <svg:rect x="48" y="26" rx="3" ry="3" width="52" height="6" />
+    <svg:rect x="0" y="56" rx="3" ry="3" width="410" height="6" />
+    <svg:rect x="0" y="72" rx="3" ry="3" width="380" height="6" />
+    <svg:rect x="0" y="88" rx="3" ry="3" width="178" height="6" />
+    <svg:circle cx="20" cy="20" r="20" />
+  </m-skeleton>
+  <audio controls src="https://freesfx.co.uk/sound/15545_1460473088.mp3"></audio>
+  <m-button text="click me!" (modButtonClick)="onButtonClick()">
   </m-button>
   <br />
   <br />
-  <m-card
-    header="card header"
-    theme="warning"
-  >
+  <m-card header="card header" theme="warning">
     card w/o shadow
   </m-card>
   <br />
   <br />
-  <m-card
-    header="card header"
-    theme="warning"
-    [style]="{'--bs-dark-rgb': '255, 0, 0'}"
-  >
+  <m-card header="card header" theme="warning" [style]="{'--bs-dark-rgb': '255, 0, 0'}">
     card w style
   </m-card>
   <br />
   <br />
-  <m-input
-    id="input-1"
-    placeholder="the placeholder"
-    type="text"
-    [value]="value"
-    (modChange)="onInputChange($event)"
-  >
+  <m-input id="input-1" placeholder="the placeholder" type="text" [value]="value" (modChange)="onInputChange($event)">
   </m-input>
   <br />
   <br />

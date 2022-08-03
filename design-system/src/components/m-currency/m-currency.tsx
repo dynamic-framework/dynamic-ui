@@ -141,7 +141,7 @@ export class MCurrency implements ComponentInterface {
             {this.iconStart && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-start`}
               >
                 <m-icon
                   class="form-control-icon"
@@ -176,7 +176,7 @@ export class MCurrency implements ComponentInterface {
             {this.iconMiddle && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-middle`}
               >
                 <m-icon
                   class="form-control-icon"
@@ -187,7 +187,7 @@ export class MCurrency implements ComponentInterface {
             {this.iconEnd && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-end`}
               >
                 <m-icon
                   class="form-control-icon"

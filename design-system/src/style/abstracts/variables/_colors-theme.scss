@@ -42,3 +42,5 @@ $theme-colors-hover: (
   "light": $light,
   "dark": $dark
 ) !default;
+
+$gradient-primary: linear-gradient(96.85deg, $primary 0%, $primary-hover 100%) !default;

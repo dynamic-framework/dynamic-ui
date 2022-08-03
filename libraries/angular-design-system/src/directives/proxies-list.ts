@@ -21,5 +21,6 @@ export const DIRECTIVES = [
   d.MNavPane,
   d.MQuickAction,
   d.MSearch,
-  d.MSelect
+  d.MSelect,
+  d.MShortcutToggle
 ];

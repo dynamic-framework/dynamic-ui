@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: add shortcut-toggle component and primary gradient button",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
