@@ -82,7 +82,6 @@ export class MSegmentControlItem implements ComponentInterface{
         >
           {this.label}
         </label>
-        <div class="separator" />
       </Host>
     );
   }

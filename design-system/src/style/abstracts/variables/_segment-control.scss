@@ -11,9 +11,10 @@ $segment-control-letter-spacing: -.5% !default;
 $segment-control-item-bg: var(--#{$prefix}gray-light) !default;
 $segment-control-item-color: var(--#{$prefix}white) !default;
 $segment-control-item-border-width: 2px !default;
-$segment-control-item-border: $segment-control-item-border-width solid var(--#{$prefix}gray-light) !default;
-$segment-control-item-padding-x: add($spacer-3, -$segment-control-item-border-width) !default;
-$segment-control-item-padding-y: add($spacer-2, -$segment-control-item-border-width) !default;
+$segment-control-item-border-color: var(--#{$prefix}segment-control-item-border-color) !default;
+$segment-control-item-border: $segment-control-item-border-width solid $segment-control-item-border-color !default;
+$segment-control-item-padding-x: subtract($spacer-3, $segment-control-item-border-width) !default;
+$segment-control-item-padding-y: subtract($spacer-2, $segment-control-item-border-width) !default;
 $segment-control-item-border-radius: $segment-control-border-radius !default;
 $segment-control-item-cursor: pointer !default;
 // Segment Control Item :hover

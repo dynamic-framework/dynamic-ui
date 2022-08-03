@@ -1,33 +1,46 @@
 @import "~bootstrap/scss/forms/form-check";
 
 .segment-control {
+
+  --#{$prefix}segment-control-width: #{$segment-control-width};
+  --#{$prefix}segment-control-height: #{$segment-control-height};
+  --#{$prefix}segment-control-font-size: #{$segment-control-font-size};
+  --#{$prefix}segment-control-font-weight: #{$segment-control-font-weight};
+  --#{$prefix}segment-control-line-height: #{$segment-control-line-height};
+  --#{$prefix}segment-control-letter-spacing: #{$segment-control-letter-spacing};
+  --#{$prefix}segment-control-bg: #{$segment-control-bg};
+  --#{$prefix}segment-control-border-radius: #{$segment-control-border-radius};
+  --#{$prefix}segment-control-item-border-color: var(--#{$prefix}gray-light);
+
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: #{$segment-control-width};
-  height: #{$segment-control-height};
+  width: var(--#{$prefix}segment-control-width);
+  height: var(--#{$prefix}segment-control-height);
   overflow: hidden;
-  font-size: #{$segment-control-font-size};
-  font-weight: #{$segment-control-font-weight};
-  line-height: #{$segment-control-line-height};
-  letter-spacing: #{$segment-control-letter-spacing};
-  background-color: #{$segment-control-bg};
-  border-radius: #{$segment-control-border-radius};
+  font-size: var(--#{$prefix}segment-control-font-size);
+  font-weight: var(--#{$prefix}segment-control-font-weight);
+  line-height: var(--#{$prefix}segment-control-line-height);
+  letter-spacing: var(--#{$prefix}segment-control-letter-spacing);
+  background-color: var(--#{$prefix}segment-control-bg);
+  border-radius: var(--#{$prefix}segment-control-border-radius);
 }
 
 .segment-control-item {
   --#{$prefix}segment-control-item-bg: #{$segment-control-item-bg};
   --#{$prefix}segment-control-item-color: #{$segment-control-item-color};
   --#{$prefix}segment-control-item-cursor: #{$segment-control-item-cursor};
-
-  padding: #{$segment-control-item-padding-y} #{$segment-control-item-padding-x};
+  --#{$prefix}segment-control-item-padding: #{$segment-control-item-padding-y} #{$segment-control-item-padding-x};
+  --#{$prefix}segment-control-item-border: #{$segment-control-item-border};
+  --#{$prefix}segment-control-item-border-radius: #{$segment-control-item-border-radius};
+  padding: var(--#{$prefix}segment-control-item-padding);
 
   color: var(--#{$prefix}segment-control-item-color);
   cursor: var(--#{$prefix}segment-control-item-cursor);
   background-color: var(--#{$prefix}segment-control-item-bg);
-  border: #{$segment-control-item-border};
-  border-radius: #{$segment-control-item-border-radius};
+  border: var(--#{$prefix}segment-control-item-border);
+  border-radius: var(--#{$prefix}segment-control-item-border-radius);
 }
 
 // Default
@@ -38,7 +51,7 @@
 
 .segment-control input:focus + .segment-control-item,
 .segment-control .focus + .segment-control-item {
-  border-color: #{$segment-control-item-focus-border-color};
+  --#{$prefix}segment-control-item-border-color: #{$segment-control-item-focus-border-color};
 }
 
 .segment-control input:active + .segment-control-item,
@@ -55,7 +68,7 @@
 
 .segment-control input:hover:checked + .segment-control-item,
 .segment-control .hover:checked + .segment-control-item {
-  border-color: #{$segment-control-item-checked-hover-border-color};
+  --#{$prefix}segment-control-item-border-color: #{$segment-control-item-checked-hover-border-color};
 }
 
 // Disabled
@@ -67,24 +80,27 @@
   --#{$prefix}segment-control-item-bg: #{$segment-control-item-disabled-bg};
   --#{$prefix}segment-control-item-color: #{$segment-control-item-disabled-color};
   --#{$prefix}segment-control-item-cursor: #{$segment-control-item-disabled-cursor};
-  pointer-events: none;
+  --#{$prefix}segment-control-item-border-color: #{$segment-control-item-disabled-border-color};
 
-  border-color: #{$segment-control-item-disabled-border-color};
+  pointer-events: none;
 }
 
 // Separator
-.separator {
+.segment-control > :not(:last-child)::after {
+  --#{$prefix}segment-control-separator-width: #{$segment-control-separator-width};
+  --#{$prefix}segment-control-separator-height: #{$segment-control-separator-height};
+  --#{$prefix}segment-control-separator-margin-x: #{$segment-control-separator-margin-x};
+  --#{$prefix}segment-control-separator-bg: #{$segment-control-separator-bg};
+  --#{$prefix}segment-control-separator-border-radius: #{$segment-control-separator-border-radius};
+  --#{$prefix}segment-control-separator-opacity: #{$segment-control-separator-opacity};
   display: inline-flex;
-
-  width: #{$segment-control-separator-width};
-  height: #{$segment-control-separator-height};
-  margin: 0 #{$segment-control-separator-margin-x};
+  width: var(--#{$prefix}segment-control-separator-width);
+  height: var(--#{$prefix}segment-control-separator-height);
+  margin: 0 var(--#{$prefix}segment-control-separator-margin-x);
   vertical-align: middle;
-  background-color: #{$segment-control-separator-bg};
-  border-radius: #{$segment-control-separator-border-radius};
-  opacity: #{$segment-control-separator-opacity};
-}
 
-.segment-control *:last-child .segment-control-item + .separator {
-  display: none;
+  content: "";
+  background-color: var(--#{$prefix}segment-control-separator-bg);
+  border-radius: var(--#{$prefix}segment-control-separator-border-radius);
+  opacity: var(--#{$prefix}segment-control-separator-opacity);
 }
