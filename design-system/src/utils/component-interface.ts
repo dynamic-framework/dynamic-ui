@@ -1,4 +1,5 @@
 export type ClassMap = { [className: string]: boolean };
+export type IconStateMap = { [state: string]: string };
 export type InputState = 'focus' | 'hover' | 'active' | 'disabled';
 export type FormControlLayoutDirection = 'horizontal' | 'vertical';
 export type NavegableProps = {
@@ -7,7 +8,7 @@ export type NavegableProps = {
   'aria-current'?: string,
 };
 
-export const IconState = {
+export const IconState: IconStateMap = {
   warning: 'exclamation-circle',
   danger: 'exclamation-triangle',
   success: 'check-lg',

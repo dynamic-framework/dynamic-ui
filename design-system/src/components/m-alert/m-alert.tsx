@@ -19,7 +19,7 @@ export class MAlert {
   /**
    * Theme for the alert
    */
-  @Prop() theme?: string = 'warning';
+  @Prop() theme = 'warning';
   /**
    * Show icon theme in the alert
    */
@@ -47,20 +47,7 @@ export class MAlert {
   }
 
   private iconState(): string {
-    switch (this.theme) {
-      case 'warning':
-        return IconState.warning;
-      case 'danger':
-        return IconState.danger;
-      case 'success':
-        return IconState.success;
-      case 'info':
-        return IconState.info;
-      case 'light':
-        return IconState.light;
-      default:
-        return '';
-    }
+    return IconState[this.theme] || '';
   }
 
   render() {

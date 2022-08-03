@@ -2,30 +2,25 @@
 @import "~bootstrap/scss/close";
 @import "~bootstrap/scss/transitions";
 
-
-@each $color, $value in $theme-colors {
-  @if $color == "light" {
-    .alert-#{$color} {
-      --#{$prefix}alert-bg: var(--#{$prefix}#{$color});
-      --#{$prefix}alert-color: var(--#{$prefix}gray);
-      --#{$prefix}alert-icon-bg: var(--#{$prefix}alert-color);
-      --#{$prefix}alert-icon-color: var(--#{$prefix}white);
-      --#{$prefix}alert-separator: var(--#{$prefix}gray);
-      --#{$prefix}close-color: var(--#{$prefix}dark);
-      --#{$prefix}close-focus-shadow: rgba(var(--#{$prefix}dark-rgb), .3);
-    }
+@each $color, $value in map-remove($theme-colors, "light") {
+  .alert-#{$color} {
+    --#{$prefix}alert-bg: var(--#{$prefix}#{$color});
+    --#{$prefix}alert-color: var(--#{$prefix}white);
+    --#{$prefix}alert-icon-bg: var(--#{$prefix}white);
+    --#{$prefix}alert-icon-color: var(--#{$prefix}alert-bg);
+    --#{$prefix}alert-separator: var(--#{$prefix}white);
+    --#{$prefix}close-color: var(--#{$prefix}white);
   }
-  @else {
-    .alert-#{$color} {
-      --#{$prefix}alert-bg: var(--#{$prefix}#{$color});
-      --#{$prefix}alert-color: var(--#{$prefix}white);
-      --#{$prefix}alert-icon-bg: var(--#{$prefix}white);
-      --#{$prefix}alert-icon-color: var(--#{$prefix}alert-bg);
-      --#{$prefix}alert-separator: var(--#{$prefix}white);
-      --#{$prefix}close-color: var(--#{$prefix}white);
+}
 
-    }
-  }
+.alert-light {
+  --#{$prefix}alert-bg: var(--#{$prefix}light);
+  --#{$prefix}alert-color: var(--#{$prefix}gray);
+  --#{$prefix}alert-icon-bg: var(--#{$prefix}alert-color);
+  --#{$prefix}alert-icon-color: var(--#{$prefix}white);
+  --#{$prefix}alert-separator: var(--#{$prefix}gray);
+  --#{$prefix}close-color: var(--#{$prefix}dark);
+  --#{$prefix}close-focus-shadow: rgba(var(--#{$prefix}dark-rgb), .3);
 }
 
 .alert {

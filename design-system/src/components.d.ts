@@ -32,7 +32,7 @@ export namespace Components {
         /**
           * Theme for the alert
          */
-        "theme"?: string;
+        "theme": string;
     }
     interface MApp {
     }

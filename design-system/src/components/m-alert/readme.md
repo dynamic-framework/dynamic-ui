@@ -12,7 +12,7 @@
 | `close`    | `close`     | Has close button             | `boolean \| undefined` | `undefined` |
 | `icon`     | `icon`      | Show icon theme in the alert | `boolean`              | `false`     |
 | `iconSize` | `icon-size` | Icon font-size class         | `string \| undefined`  | `'small'`   |
-| `theme`    | `theme`     | Theme for the alert          | `string \| undefined`  | `'warning'` |
+| `theme`    | `theme`     | Theme for the alert          | `string`               | `'warning'` |
 
 
 ## Dependencies
