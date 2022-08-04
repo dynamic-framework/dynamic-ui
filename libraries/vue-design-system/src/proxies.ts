@@ -147,6 +147,19 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
 ]);
 
 
+export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
+  'mId',
+  'closeText',
+  'static',
+  'scrollable',
+  'centered',
+  'fullScreen',
+  'fullScreenSize',
+  'modalSize',
+  'imageHeader'
+]);
+
+
 export const MNav = /*@__PURE__*/ defineContainer<JSX.MNav>('m-nav', undefined, [
   'variant',
   'isAriaVertical'
