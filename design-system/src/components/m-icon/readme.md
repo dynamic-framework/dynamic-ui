@@ -29,6 +29,7 @@
  - [m-quick-action](../m-quick-action)
  - [m-search](../m-search)
  - [m-select](../m-select)
+ - [m-shortcut-toggle](../m-shortcut-toggle)
 
 ### Graph
 ```mermaid
@@ -42,6 +43,7 @@ graph TD;
   m-quick-action --> m-icon
   m-search --> m-icon
   m-select --> m-icon
+  m-shortcut-toggle --> m-icon
   style m-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -18,6 +18,12 @@
         "ignore": "local"
       }
     ],
-    "scss/selector-no-union-class-name": true
+    "scss/selector-no-union-class-name": true,
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": ["attribute", "class", "id"]
+      }
+    ]
   }
 }
