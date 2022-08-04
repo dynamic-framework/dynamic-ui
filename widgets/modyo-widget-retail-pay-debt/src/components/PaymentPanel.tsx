@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
   MCurrency,
-  MButton
+  MButton,
+  MFormSwitch
 } from '@modyolabs/react-design-system';
 const PaymentPanel = ({ base = 1000 }) => {
   const [amountAvailable, setAmountAvailable] = useState(base);
@@ -60,10 +61,36 @@ const PaymentPanel = ({ base = 1000 }) => {
           </div>
         </div>
         <div className="pb-4">
-          More options
+          <div className="collapse" id="moreOptions">
+            <div className="px-3 py-2 border rounded-1 mb-2">
+              <MFormSwitch
+                class='d-inline-flex'
+                mId='schedulePayment'
+                label='Schedule'
+                 />
+              <p className='small m-0 text-info'>This payment will be instant</p>
+            </div>
+            <div className="px-3 py-2 border rounded-1 mb-2">
+              <MFormSwitch
+                class='d-inline-flex'
+                mId='reucrrentPayment'
+                label='Recurrent'
+                 />
+              <p className='small m-0 text-info'>This payment will not autorepeat</p>
+            </div>
+          </div>
+          <MButton
+            variant='text'
+            theme='info'
+            text='More Options'
+            iconRight='chevron-down'
+            data-bs-toggle="collapse"
+            data-bs-target="#moreOptions"
+            aria-expanded="false"
+            aria-controls="collapseExample"/>
         </div>
         <div className="d-flex justify-content-center pt-4">
-          <MButton text='Pay _/' theme='primary' isPill iconRight='_' iconLeft='_' />
+          <MButton text='Pay' theme='primary' isPill iconRight='check-lg' />
         </div>
       </div>
     </>
