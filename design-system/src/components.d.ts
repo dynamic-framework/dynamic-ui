@@ -401,10 +401,6 @@ export namespace Components {
     }
     interface MModal {
         /**
-          * Has body
-         */
-        "body"?: boolean;
-        /**
           * Is modal centered
          */
         "centered"?: boolean;
@@ -413,17 +409,13 @@ export namespace Components {
          */
         "closeText"?: string;
         /**
-          * Has footer
+          * Is fullscreen in all sizes
          */
-        "footer"?: boolean;
+        "fullScreen"?: boolean;
         /**
-          * Is modal fullscreen or size to apply
+          * Size to apply the fullscreen
          */
-        "fullscreen"?: FullScreenSize | boolean;
-        /**
-          * Has header
-         */
-        "header"?: boolean;
+        "fullScreenSize"?: FullScreenSize;
         /**
           * Background image header
          */
@@ -433,13 +425,13 @@ export namespace Components {
          */
         "mId": string;
         /**
+          * Modal size
+         */
+        "modalSize"?: ModalSize;
+        /**
           * Is modal scrollable
          */
         "scrollable"?: boolean;
-        /**
-          * Modal size
-         */
-        "size"?: ModalSize;
         /**
           * Is backdrop static
          */
@@ -1231,10 +1223,6 @@ declare namespace LocalJSX {
     }
     interface MModal {
         /**
-          * Has body
-         */
-        "body"?: boolean;
-        /**
           * Is modal centered
          */
         "centered"?: boolean;
@@ -1243,17 +1231,13 @@ declare namespace LocalJSX {
          */
         "closeText"?: string;
         /**
-          * Has footer
+          * Is fullscreen in all sizes
          */
-        "footer"?: boolean;
+        "fullScreen"?: boolean;
         /**
-          * Is modal fullscreen or size to apply
+          * Size to apply the fullscreen
          */
-        "fullscreen"?: FullScreenSize | boolean;
-        /**
-          * Has header
-         */
-        "header"?: boolean;
+        "fullScreenSize"?: FullScreenSize;
         /**
           * Background image header
          */
@@ -1263,13 +1247,13 @@ declare namespace LocalJSX {
          */
         "mId": string;
         /**
+          * Modal size
+         */
+        "modalSize"?: ModalSize;
+        /**
           * Is modal scrollable
          */
         "scrollable"?: boolean;
-        /**
-          * Modal size
-         */
-        "size"?: ModalSize;
         /**
           * Is backdrop static
          */

@@ -150,14 +150,12 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
 export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
   'mId',
   'closeText',
-  'header',
-  'body',
-  'footer',
   'static',
   'scrollable',
   'centered',
-  'fullscreen',
-  'size',
+  'fullScreen',
+  'fullScreenSize',
+  'modalSize',
   'imageHeader'
 ]);
 

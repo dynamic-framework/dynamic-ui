@@ -1836,13 +1836,11 @@
       <div class="row-modal">
         <m-modal
         mId="supermodal"
-        header
-        body
-        footer
         centered
         static
         scrollable
         fullscreen
+        full-screen-size="sm"
         image-header="https://i0.wp.com/imgs.hipertextual.com/wp-content/uploads/2017/03/color-degradado-fondos-degradados-multicolor-51200.jpg?fit=1200%2C750&quality=50&strip=all&ssl=1"
         >
           <h4 slot="header" class="fw-bold">

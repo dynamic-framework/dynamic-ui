@@ -2,6 +2,7 @@ import {
   Component,
   h,
   Prop,
+  Element,
 } from '@stencil/core';
 
 import { prefixBS, ClassMap } from '../../utils/component-interface';
@@ -14,6 +15,8 @@ import { ModalSize, FullScreenSize } from './m-modal-interface';
   shadow: false,
 })
 export class MModal {
+  @Element() el!: HTMLMModalElement;
+
   /**
    * Id of the modal
    */
@@ -23,21 +26,6 @@ export class MModal {
    * Close button text
    */
   @Prop() closeText?: string;
-
-  /**
-   * Has header
-   */
-  @Prop() header?: boolean;
-
-  /**
-   * Has body
-   */
-  @Prop() body?: boolean;
-
-  /**
-   * Has footer
-   */
-  @Prop() footer?: boolean;
 
   /**
    * Is backdrop static
@@ -55,38 +43,53 @@ export class MModal {
   @Prop() centered?: boolean;
 
   /**
-   * Is modal fullscreen or size to apply
+   * Is fullscreen in all sizes
    */
-  @Prop() fullscreen?: FullScreenSize | boolean;
+  @Prop() fullScreen?: boolean;
+
+  /**
+   * Size to apply the fullscreen
+   */
+  @Prop() fullScreenSize?: FullScreenSize;
 
   /**
    * Modal size
    */
-  @Prop() size?: ModalSize;
+  @Prop() modalSize?: ModalSize;
 
   /**
    * Background image header
    */
   @Prop() imageHeader?: string;
 
+  private header!: boolean;
+  private body!: boolean;
+  private footer!: boolean;
+
   private fullScreenClass(): string {
-    if (this.fullscreen) {
-      if (this.fullscreen === true) {
-        return 'modal-fullscreen';
+    if (this.fullScreen) {
+      if (this.fullScreenSize) {
+        return `modal-fullscreen-${this.fullScreenSize}-down`;
       }
-      return `modal-fullscreen-${this.fullscreen}-down`;
+      return 'modal-fullscreen';
     }
     return '';
   }
 
-  private modalClasses(): ClassMap {
+  private generateModalDialogClasses(): ClassMap {
     return {
       'modal-dialog': true,
       'modal-dialog-centered': !!this.centered,
       'modal-dialog-scrollable': !!this.scrollable,
-      [`modal-${this.size}`]: !!this.size,
-      [this.fullScreenClass()]: !!this.fullscreen,
+      [`modal-${this.modalSize}`]: !!this.modalSize,
+      [this.fullScreenClass()]: !!this.fullScreen,
     };
+  }
+
+  componentWillLoad() {
+    this.header = !!this.el.querySelector('[slot="header"]');
+    this.body = !!this.el.querySelector('[slot="body"]');
+    this.footer = !!this.el.querySelector('[slot="footer"]');
   }
 
   render() {
@@ -103,7 +106,7 @@ export class MModal {
         })}
       >
         <div
-          class={this.modalClasses()}
+          class={this.generateModalDialogClasses()}
           {...this.imageHeader && ({ style: { [`--${prefixBS}header-bg-image`]: `url("${this.imageHeader}")` } })}
         >
           <div class="modal-content">
@@ -129,9 +132,9 @@ export class MModal {
               </div>
             )}
             {this.body && (
-            <div class="modal-body">
-              <slot name="body" />
-            </div>
+              <div class="modal-body">
+                <slot name="body" />
+              </div>
             )}
             {this.footer && (
               <div class="modal-footer">
