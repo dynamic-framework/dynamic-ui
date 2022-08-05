@@ -1852,8 +1852,8 @@
         centered
         static
         scrollable
-        fullscreen
-        full-screen-size="sm"
+        full-screen
+        full-screen-from="sm"
         image-header="https://i0.wp.com/imgs.hipertextual.com/wp-content/uploads/2017/03/color-degradado-fondos-degradados-multicolor-51200.jpg?fit=1200%2C750&quality=50&strip=all&ssl=1"
         >
           <h4 slot="header" class="fw-bold">

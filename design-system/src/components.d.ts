@@ -11,7 +11,7 @@ import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-int
 import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
-import { FullScreenSize, ModalSize } from "./components/m-modal/m-modal-interface";
+import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
@@ -413,9 +413,9 @@ export namespace Components {
          */
         "fullScreen"?: boolean;
         /**
-          * Size to apply the fullscreen
+          * Minimum size to apply the fullscreen
          */
-        "fullScreenSize"?: FullScreenSize;
+        "fullScreenFrom"?: FullScreenFrom;
         /**
           * Background image header
          */
@@ -1284,9 +1284,9 @@ declare namespace LocalJSX {
          */
         "fullScreen"?: boolean;
         /**
-          * Size to apply the fullscreen
+          * Minimum size to apply the fullscreen
          */
-        "fullScreenSize"?: FullScreenSize;
+        "fullScreenFrom"?: FullScreenFrom;
         /**
           * Background image header
          */

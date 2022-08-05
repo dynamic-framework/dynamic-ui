@@ -7,7 +7,7 @@ import {
 
 import { prefixBS, ClassMap } from '../../utils/component-interface';
 
-import { ModalSize, FullScreenSize } from './m-modal-interface';
+import { ModalSize, FullScreenFrom } from './m-modal-interface';
 
 @Component({
   tag: 'm-modal',
@@ -48,9 +48,9 @@ export class MModal {
   @Prop() fullScreen?: boolean;
 
   /**
-   * Size to apply the fullscreen
+   * Minimum size to apply the fullscreen
    */
-  @Prop() fullScreenSize?: FullScreenSize;
+  @Prop() fullScreenFrom?: FullScreenFrom;
 
   /**
    * Modal size
@@ -68,8 +68,8 @@ export class MModal {
 
   private fullScreenClass(): string {
     if (this.fullScreen) {
-      if (this.fullScreenSize) {
-        return `modal-fullscreen-${this.fullScreenSize}-down`;
+      if (this.fullScreenFrom) {
+        return `modal-fullscreen-${this.fullScreenFrom}-down`;
       }
       return 'modal-fullscreen';
     }
