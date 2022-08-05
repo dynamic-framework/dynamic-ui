@@ -25,6 +25,8 @@ import { defineCustomElement as defineMNavLink } from '@modyolabs/design-system/
 import { defineCustomElement as defineMNavPane } from '@modyolabs/design-system/components/m-nav-pane.js';
 import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/components/m-search.js';
+import { defineCustomElement as defineMSegmentControl } from '@modyolabs/design-system/components/m-segment-control.js';
+import { defineCustomElement as defineMSegmentControlItem } from '@modyolabs/design-system/components/m-segment-control-item.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
 import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/design-system/components/m-shortcut-toggle.js';
 
@@ -48,5 +50,7 @@ export const MNavLink = /*@__PURE__*/createReactComponent<JSX.MNavLink, HTMLMNav
 export const MNavPane = /*@__PURE__*/createReactComponent<JSX.MNavPane, HTMLMNavPaneElement>('m-nav-pane', undefined, undefined, defineMNavPane);
 export const MQuickAction = /*@__PURE__*/createReactComponent<JSX.MQuickAction, HTMLMQuickActionElement>('m-quick-action', undefined, undefined, defineMQuickAction);
 export const MSearch = /*@__PURE__*/createReactComponent<JSX.MSearch, HTMLMSearchElement>('m-search', undefined, undefined, defineMSearch);
+export const MSegmentControl = /*@__PURE__*/createReactComponent<JSX.MSegmentControl, HTMLMSegmentControlElement>('m-segment-control', undefined, undefined, defineMSegmentControl);
+export const MSegmentControlItem = /*@__PURE__*/createReactComponent<JSX.MSegmentControlItem, HTMLMSegmentControlItemElement>('m-segment-control-item', undefined, undefined, defineMSegmentControlItem);
 export const MSelect = /*@__PURE__*/createReactComponent<JSX.MSelect, HTMLMSelectElement>('m-select', undefined, undefined, defineMSelect);
 export const MShortcutToggle = /*@__PURE__*/createReactComponent<JSX.MShortcutToggle, HTMLMShortcutToggleElement>('m-shortcut-toggle', undefined, undefined, defineMShortcutToggle);

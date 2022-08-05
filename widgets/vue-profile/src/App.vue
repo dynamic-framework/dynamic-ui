@@ -1835,6 +1835,106 @@
           </m-currency>
         </div>
       </div>
+      <div class="row my-5">
+        <div class="col-12">
+          <h3 class="fw-bold">m-segment-control</h3>
+          <h6 class="fw-bold">-default</h6>
+        </div>
+        <div class="col-12">
+          <m-segment-control>
+            <m-segment-control-item
+              m-id="seg1"
+              name="box"
+              label="Label"
+              value="111"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg2"
+              name="box"
+              label="Label"
+              value="222"
+              state="hover"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg3"
+              name="box"
+              label="Label"
+              value="333"
+              state="focus"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg4"
+              name="box"
+              label="Label"
+              value="444"
+              state="active"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg5"
+              name="box"
+              label="Label"
+              value="555"
+              state="disabled"
+              @m-change="print"
+            />
+          </m-segment-control>
+        </div>
+        <div class="col-12">
+          <h6 class="fw-bold">-checked</h6>
+        </div>
+        <div class="col-12">
+          <m-segment-control>
+            <m-segment-control-item
+              m-id="seg11"
+              name="box1"
+              label="Label"
+              value="111"
+              checked
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg12"
+              name="box2"
+              label="Label"
+              value="222"
+              checked
+              state="hover"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg13"
+              name="box3"
+              label="Label"
+              value="333"
+              checked
+              state="focus"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg14"
+              name="box4"
+              label="Label"
+              value="444"
+              checked
+              state="active"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg15"
+              name="box5"
+              label="Label"
+              checked
+              value="555"
+              state="disabled"
+              @m-change="print"
+            />
+          </m-segment-control>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
           <h3 class="fw-bold">m-alert</h3>
@@ -2168,6 +2268,8 @@ import {
   MCoupon,
   MCurrency,
   MSearch,
+  MSegmentControl,
+  MSegmentControlItem,
   MAlert,
   MModal,
   MShortcutToggle,
@@ -2197,6 +2299,8 @@ export default defineComponent({
     MCoupon,
     MCurrency,
     MSearch,
+    MSegmentControl,
+    MSegmentControlItem,
     MAlert,
     MModal,
     MShortcutToggle,
