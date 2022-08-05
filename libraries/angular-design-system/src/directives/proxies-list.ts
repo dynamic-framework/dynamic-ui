@@ -14,6 +14,7 @@ export const DIRECTIVES = [
   d.MIcon,
   d.MInput,
   d.MListItem,
+  d.MModal,
   d.MNav,
   d.MNavContent,
   d.MNavItem,

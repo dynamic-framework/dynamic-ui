@@ -15,3 +15,5 @@ export const ICON_STATE: IconStateMap = {
   info: 'info-circle',
   light: 'info-circle',
 };
+
+export const prefixBS = 'bs-';

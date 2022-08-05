@@ -17,6 +17,7 @@ import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-syst
 import { defineCustomElement as defineMIcon } from '@modyolabs/design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyolabs/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyolabs/design-system/components/m-list-item.js';
+import { defineCustomElement as defineMModal } from '@modyolabs/design-system/components/m-modal.js';
 import { defineCustomElement as defineMNav } from '@modyolabs/design-system/components/m-nav.js';
 import { defineCustomElement as defineMNavContent } from '@modyolabs/design-system/components/m-nav-content.js';
 import { defineCustomElement as defineMNavItem } from '@modyolabs/design-system/components/m-nav-item.js';
@@ -305,6 +306,27 @@ export declare interface MListItem extends Components.MListItem {}
   inputs: ['alternativeValue', 'icon', 'image', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'value', 'variant']
 })
 export class MListItem {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MModal extends Components.MModal {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMModal,
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'scrollable', 'static']
+})
+@Component({
+  selector: 'm-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'scrollable', 'static']
+})
+export class MModal {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
