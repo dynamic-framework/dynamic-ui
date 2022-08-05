@@ -16,6 +16,7 @@
 | `imageHeader`      | `image-header`     | Background image header              | `string \| undefined`                                | `undefined` |
 | `mId` _(required)_ | `m-id`             | Id of the modal                      | `string`                                             | `undefined` |
 | `modalSize`        | `modal-size`       | Modal size                           | `"lg" \| "sm" \| "xl" \| undefined`                  | `undefined` |
+| `noCloseButton`    | `no-close-button`  | No display close button              | `boolean \| undefined`                               | `undefined` |
 | `scrollable`       | `scrollable`       | Is modal scrollable                  | `boolean \| undefined`                               | `undefined` |
 | `static`           | `static`           | Is backdrop static                   | `boolean \| undefined`                               | `undefined` |
 

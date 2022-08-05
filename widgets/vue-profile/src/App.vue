@@ -1835,6 +1835,109 @@
           </m-currency>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12">
+          <h3 class="fw-bold">m-alert</h3>
+          <h6 class="fw-bold">-simple</h6>
+        </div>
+        <div class="col-12">
+          <m-alert>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="success">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="danger">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="info">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="light">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        </div>
+        <div class="col-12">
+          <h6 class="fw-bold">-icon</h6>
+        </div>
+        <div class="col-12">
+          <m-alert icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="success" icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="danger" icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="info" icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="light" icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        </div>
+        <div class="col-12">
+          <h6 class="fw-bold">-close</h6>
+        </div>
+        <div class="col-12">
+          <m-alert close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="success" close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="danger" close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="info" close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="light" close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        </div>
+        <div class="col-12">
+          <h6 class="fw-bold">-icon + close</h6>
+        </div>
+        <div class="col-12">
+          <m-alert icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="success" icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="danger" icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="info" icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="light" icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        </div>
+      </div>
       <div class="row my-5">
         <div class="col-12 mb-3">
           <h3 class="fw-bold">m-modal</h3>
@@ -2038,7 +2141,6 @@
             @m-change="print"
           />
         </div>
-
       </div>
     </div>
   </m-app>
@@ -2066,6 +2168,7 @@ import {
   MCoupon,
   MCurrency,
   MSearch,
+  MAlert,
   MModal,
   MShortcutToggle,
   MSkeleton,
@@ -2094,6 +2197,7 @@ export default defineComponent({
     MCoupon,
     MCurrency,
     MSearch,
+    MAlert,
     MModal,
     MShortcutToggle,
     MSkeleton,

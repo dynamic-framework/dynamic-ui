@@ -5,6 +5,7 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 import type { Components } from '@modyolabs/design-system/components';
 
+import { defineCustomElement as defineMAlert } from '@modyolabs/design-system/components/m-alert.js';
 import { defineCustomElement as defineMApp } from '@modyolabs/design-system/components/m-app.js';
 import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
@@ -26,6 +27,27 @@ import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-sys
 import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/components/m-search.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
 import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/design-system/components/m-shortcut-toggle.js';
+
+
+export declare interface MAlert extends Components.MAlert {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMAlert,
+  inputs: ['close', 'icon', 'iconSize', 'theme']
+})
+@Component({
+  selector: 'm-alert',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['close', 'icon', 'iconSize', 'theme']
+})
+export class MAlert {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
 
 
 export declare interface MApp extends Components.MApp {}
@@ -296,13 +318,13 @@ export declare interface MModal extends Components.MModal {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMModal,
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'scrollable', 'static']
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'noCloseButton', 'scrollable', 'static']
 })
 @Component({
   selector: 'm-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'scrollable', 'static']
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'noCloseButton', 'scrollable', 'static']
 })
 export class MModal {
   protected el: HTMLElement;
