@@ -1,4 +1,19 @@
-html, body, #root{
+html,
+body,
+#root {
   height: 100%;
   background-color: #F9FAFA;
+
+  .scroll-h {
+    overflow: hidden;
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .shortcut-toggle {
+      height: 60px;
+      width: 86px;
+    }
+  }
 }
