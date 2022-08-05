@@ -4,6 +4,8 @@ import {
   MButton,
   MFormSwitch
 } from '@modyolabs/react-design-system';
+import ModalPaymentAlternatives from './ModalPaymentAlternatives';
+import ModalSchedule from './ModalSchedule';
 const PaymentPanel = ({ base = 1000 }) => {
   const [amountAvailable, setAmountAvailable] = useState(base);
   const [amountUsed, setAmountUsed] = useState(undefined);
@@ -56,7 +58,10 @@ const PaymentPanel = ({ base = 1000 }) => {
           <div className="col-4">
             Total
           </div>
-          <div className="col-4">
+          <div
+            className="col-4"
+            data-bs-toggle="modal"
+            data-bs-target="#paymentAlt">
             Payments Alternatives
           </div>
         </div>
@@ -64,10 +69,11 @@ const PaymentPanel = ({ base = 1000 }) => {
           <div className="collapse" id="moreOptions">
             <div className="px-3 py-2 border rounded-1 mb-2">
               <MFormSwitch
+                data-bs-toggle="modal" data-bs-target="#modalSchedulePayment"
                 class='d-inline-flex'
                 mId='schedulePayment'
                 label='Schedule'
-                 />
+              />
               <p className='small m-0 text-info'>This payment will be instant</p>
             </div>
             <div className="px-3 py-2 border rounded-1 mb-2">
@@ -93,6 +99,8 @@ const PaymentPanel = ({ base = 1000 }) => {
           <MButton text='Pay' theme='primary' isPill iconRight='check-lg' />
         </div>
       </div>
+      <ModalPaymentAlternatives />
+      <ModalSchedule />
     </>
   )
 }
