@@ -447,6 +447,10 @@ export namespace Components {
          */
         "modalSize"?: ModalSize;
         /**
+          * No display close button
+         */
+        "noCloseButton"?: boolean;
+        /**
           * Is modal scrollable
          */
         "scrollable"?: boolean;
@@ -1342,6 +1346,10 @@ declare namespace LocalJSX {
           * Modal size
          */
         "modalSize"?: ModalSize;
+        /**
+          * No display close button
+         */
+        "noCloseButton"?: boolean;
         /**
           * Is modal scrollable
          */

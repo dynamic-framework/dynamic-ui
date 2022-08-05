@@ -62,6 +62,11 @@ export class MModal {
    */
   @Prop() imageHeader?: string;
 
+  /**
+   * No display close button
+   */
+  @Prop() noCloseButton?: boolean;
+
   private header!: boolean;
   private body!: boolean;
   private footer!: boolean;
@@ -118,17 +123,19 @@ export class MModal {
                 }}
               >
                 <slot name="header" />
-                <button
-                  type="button"
-                  class={{
-                    'btn-close': true,
-                    'btn-close-text': !!this.closeText,
-                  }}
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  {this.closeText && (this.closeText)}
-                </button>
+                {!this.noCloseButton && (
+                  <button
+                    type="button"
+                    class={{
+                      'btn-close': true,
+                      'btn-close-text': !!this.closeText,
+                    }}
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    {this.closeText && (this.closeText)}
+                  </button>
+                )}
               </div>
             )}
             {this.body && (

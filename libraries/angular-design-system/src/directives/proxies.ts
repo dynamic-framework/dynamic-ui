@@ -318,13 +318,13 @@ export declare interface MModal extends Components.MModal {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMModal,
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'scrollable', 'static']
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'noCloseButton', 'scrollable', 'static']
 })
 @Component({
   selector: 'm-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'scrollable', 'static']
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'noCloseButton', 'scrollable', 'static']
 })
 export class MModal {
   protected el: HTMLElement;

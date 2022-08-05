@@ -164,7 +164,8 @@ export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undef
   'fullScreen',
   'fullScreenFrom',
   'modalSize',
-  'imageHeader'
+  'imageHeader',
+  'noCloseButton'
 ]);
 
 

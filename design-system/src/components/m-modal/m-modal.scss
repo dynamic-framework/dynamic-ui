@@ -1,5 +1,12 @@
 @import "~bootstrap/scss/modal";
 
+.modal {
+
+  .btn-close {
+    --#{$prefix}close-focus-shadow: rgba(var(--#{$prefix}dark-rgb), .3);
+  }
+}
+
 .modal-dialog .modal-content .modal-header-bg-image {
   background-image: var(--#{$prefix}header-bg-image);
   background-repeat: no-repeat;

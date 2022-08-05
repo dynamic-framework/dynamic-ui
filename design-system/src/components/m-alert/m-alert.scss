@@ -7,7 +7,7 @@
     --#{$prefix}alert-icon-bg: var(--#{$prefix}white);
     --#{$prefix}alert-icon-color: var(--#{$prefix}alert-bg);
     --#{$prefix}alert-separator: var(--#{$prefix}white);
-    --#{$prefix}close-color: var(--#{$prefix}white);
+    --#{$prefix}btn-close-color: var(--#{$prefix}white);
   }
 }
 
@@ -17,7 +17,7 @@
   --#{$prefix}alert-icon-bg: var(--#{$prefix}alert-color);
   --#{$prefix}alert-icon-color: var(--#{$prefix}white);
   --#{$prefix}alert-separator: var(--#{$prefix}gray);
-  --#{$prefix}close-color: var(--#{$prefix}dark);
+  --#{$prefix}btn-close-color: var(--#{$prefix}dark);
   --#{$prefix}close-focus-shadow: rgba(var(--#{$prefix}dark-rgb), .3);
 }
 
@@ -28,36 +28,36 @@
   gap: var(--#{$prefix}alert-gap);
   align-items: center;
   justify-content: center;
-}
 
-.btn-close {
-  color: var(--#{$prefix}alert-color);
-  background: none;
-}
+  .btn-close {
+    color: var(--#{$prefix}alert-color);
+    background: none;
+  }
 
-.separator {
-  width: 1px;
-  height: 36px;
-  background: var(--#{$prefix}alert-separator);
-  opacity: .3;
-}
+  .separator {
+    width: 1px;
+    height: 36px;
+    background: var(--#{$prefix}alert-separator);
+    opacity: .3;
+  }
 
-.alert-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 25px;
-  min-height: 25px;
-  color: var(--#{$prefix}alert-icon-color);
-  vertical-align: middle;
-  background-color: var(--#{$prefix}alert-icon-bg);
-  border: 0;
-  border-radius: #{$border-radius-pill};
-}
+  .alert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 25px;
+    min-height: 25px;
+    color: var(--#{$prefix}alert-icon-color);
+    vertical-align: middle;
+    background-color: var(--#{$prefix}alert-icon-bg);
+    border: 0;
+    border-radius: #{$border-radius-pill};
+  }
 
-.alert-text {
-  --#{$prefix}alert-font-size: 1rem;
-  --#{$prefix}alert-line-height: 24px;
-  font-size: var(--#{$prefix}alert-font-size);
-  line-height: var(--#{$prefix}alert-line-height);
+  .alert-text {
+    --#{$prefix}alert-font-size: 1rem;
+    --#{$prefix}alert-line-height: 24px;
+    font-size: var(--#{$prefix}alert-font-size);
+    line-height: var(--#{$prefix}alert-line-height);
+  }
 }
