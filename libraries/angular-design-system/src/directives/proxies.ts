@@ -25,6 +25,8 @@ import { defineCustomElement as defineMNavLink } from '@modyolabs/design-system/
 import { defineCustomElement as defineMNavPane } from '@modyolabs/design-system/components/m-nav-pane.js';
 import { defineCustomElement as defineMQuickAction } from '@modyolabs/design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/components/m-search.js';
+import { defineCustomElement as defineMSegmentControl } from '@modyolabs/design-system/components/m-segment-control.js';
+import { defineCustomElement as defineMSegmentControlItem } from '@modyolabs/design-system/components/m-segment-control-item.js';
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
 import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/design-system/components/m-shortcut-toggle.js';
 
@@ -492,6 +494,55 @@ export class MSearch {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mChange', 'mClick']);
+  }
+}
+
+
+export declare interface MSegmentControl extends Components.MSegmentControl {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMSegmentControl,
+  inputs: ['description']
+})
+@Component({
+  selector: 'm-segment-control',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['description']
+})
+export class MSegmentControl {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MSegmentControlItem extends Components.MSegmentControlItem {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMSegmentControlItem,
+  inputs: ['checked', 'disabled', 'label', 'mId', 'name', 'state', 'value']
+})
+@Component({
+  selector: 'm-segment-control-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['checked', 'disabled', 'label', 'mId', 'name', 'state', 'value']
+})
+export class MSegmentControlItem {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 

@@ -621,6 +621,42 @@ export namespace Components {
          */
         "variant"?: string;
     }
+    interface MSegmentControl {
+        /**
+          * Aria label to describe the segment control
+         */
+        "description"?: string;
+    }
+    interface MSegmentControlItem {
+        /**
+          * Is checked
+         */
+        "checked"?: boolean;
+        /**
+          * Is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * Label of the radio
+         */
+        "label": string;
+        /**
+          * Id of the radio
+         */
+        "mId": string;
+        /**
+          * Name of the radio
+         */
+        "name": string;
+        /**
+          * State of the input
+         */
+        "state"?: InputState;
+        /**
+          * Value of the radio
+         */
+        "value": string;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -729,6 +765,10 @@ export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
 export interface MSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMSearchElement;
+}
+export interface MSegmentControlItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMSegmentControlItemElement;
 }
 export interface MSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -859,6 +899,18 @@ declare global {
         prototype: HTMLMSearchElement;
         new (): HTMLMSearchElement;
     };
+    interface HTMLMSegmentControlElement extends Components.MSegmentControl, HTMLStencilElement {
+    }
+    var HTMLMSegmentControlElement: {
+        prototype: HTMLMSegmentControlElement;
+        new (): HTMLMSegmentControlElement;
+    };
+    interface HTMLMSegmentControlItemElement extends Components.MSegmentControlItem, HTMLStencilElement {
+    }
+    var HTMLMSegmentControlItemElement: {
+        prototype: HTMLMSegmentControlItemElement;
+        new (): HTMLMSegmentControlItemElement;
+    };
     interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
     }
     var HTMLMSelectElement: {
@@ -892,6 +944,8 @@ declare global {
         "m-nav-pane": HTMLMNavPaneElement;
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
+        "m-segment-control": HTMLMSegmentControlElement;
+        "m-segment-control-item": HTMLMSegmentControlItemElement;
         "m-select": HTMLMSelectElement;
         "m-shortcut-toggle": HTMLMShortcutToggleElement;
     }
@@ -1533,6 +1587,46 @@ declare namespace LocalJSX {
          */
         "variant"?: string;
     }
+    interface MSegmentControl {
+        /**
+          * Aria label to describe the segment control
+         */
+        "description"?: string;
+    }
+    interface MSegmentControlItem {
+        /**
+          * Is checked
+         */
+        "checked"?: boolean;
+        /**
+          * Is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * Label of the radio
+         */
+        "label": string;
+        /**
+          * Id of the radio
+         */
+        "mId": string;
+        /**
+          * Name of the radio
+         */
+        "name": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMChange"?: (event: MSegmentControlItemCustomEvent<string>) => void;
+        /**
+          * State of the input
+         */
+        "state"?: InputState;
+        /**
+          * Value of the radio
+         */
+        "value": string;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -1642,6 +1736,8 @@ declare namespace LocalJSX {
         "m-nav-pane": MNavPane;
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
+        "m-segment-control": MSegmentControl;
+        "m-segment-control-item": MSegmentControlItem;
         "m-select": MSelect;
         "m-shortcut-toggle": MShortcutToggle;
     }
@@ -1670,6 +1766,8 @@ declare module "@stencil/core" {
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
+            "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
+            "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
             "m-shortcut-toggle": LocalJSX.MShortcutToggle & JSXBase.HTMLAttributes<HTMLMShortcutToggleElement>;
         }
