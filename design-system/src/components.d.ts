@@ -11,12 +11,30 @@ import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-int
 import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
-import { FullScreenSize, ModalSize } from "./components/m-modal/m-modal-interface";
+import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
 import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
+    interface MAlert {
+        /**
+          * Has close button
+         */
+        "close"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "icon": boolean;
+        /**
+          * Icon font-size class
+         */
+        "iconSize"?: string;
+        /**
+          * Theme for the alert
+         */
+        "theme": string;
+    }
     interface MApp {
     }
     interface MBadge {
@@ -413,9 +431,9 @@ export namespace Components {
          */
         "fullScreen"?: boolean;
         /**
-          * Size to apply the fullscreen
+          * Minimum size to apply the fullscreen
          */
-        "fullScreenSize"?: FullScreenSize;
+        "fullScreenFrom"?: FullScreenFrom;
         /**
           * Background image header
          */
@@ -428,6 +446,10 @@ export namespace Components {
           * Modal size
          */
         "modalSize"?: ModalSize;
+        /**
+          * No display close button
+         */
+        "noCloseButton"?: boolean;
         /**
           * Is modal scrollable
          */
@@ -717,6 +739,12 @@ export interface MShortcutToggleCustomEvent<T> extends CustomEvent<T> {
     target: HTMLMShortcutToggleElement;
 }
 declare global {
+    interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
+    }
+    var HTMLMAlertElement: {
+        prototype: HTMLMAlertElement;
+        new (): HTMLMAlertElement;
+    };
     interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
     }
     var HTMLMAppElement: {
@@ -844,6 +872,7 @@ declare global {
         new (): HTMLMShortcutToggleElement;
     };
     interface HTMLElementTagNameMap {
+        "m-alert": HTMLMAlertElement;
         "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
@@ -868,6 +897,24 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface MAlert {
+        /**
+          * Has close button
+         */
+        "close"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "icon"?: boolean;
+        /**
+          * Icon font-size class
+         */
+        "iconSize"?: string;
+        /**
+          * Theme for the alert
+         */
+        "theme"?: string;
+    }
     interface MApp {
     }
     interface MBadge {
@@ -1284,9 +1331,9 @@ declare namespace LocalJSX {
          */
         "fullScreen"?: boolean;
         /**
-          * Size to apply the fullscreen
+          * Minimum size to apply the fullscreen
          */
-        "fullScreenSize"?: FullScreenSize;
+        "fullScreenFrom"?: FullScreenFrom;
         /**
           * Background image header
          */
@@ -1299,6 +1346,10 @@ declare namespace LocalJSX {
           * Modal size
          */
         "modalSize"?: ModalSize;
+        /**
+          * No display close button
+         */
+        "noCloseButton"?: boolean;
         /**
           * Is modal scrollable
          */
@@ -1571,6 +1622,7 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface IntrinsicElements {
+        "m-alert": MAlert;
         "m-app": MApp;
         "m-badge": MBadge;
         "m-button": MButton;
@@ -1598,6 +1650,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;

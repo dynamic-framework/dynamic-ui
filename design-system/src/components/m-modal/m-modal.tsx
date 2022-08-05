@@ -7,7 +7,7 @@ import {
 
 import { prefixBS, ClassMap } from '../../utils/component-interface';
 
-import { ModalSize, FullScreenSize } from './m-modal-interface';
+import { ModalSize, FullScreenFrom } from './m-modal-interface';
 
 @Component({
   tag: 'm-modal',
@@ -48,9 +48,9 @@ export class MModal {
   @Prop() fullScreen?: boolean;
 
   /**
-   * Size to apply the fullscreen
+   * Minimum size to apply the fullscreen
    */
-  @Prop() fullScreenSize?: FullScreenSize;
+  @Prop() fullScreenFrom?: FullScreenFrom;
 
   /**
    * Modal size
@@ -62,14 +62,19 @@ export class MModal {
    */
   @Prop() imageHeader?: string;
 
+  /**
+   * No display close button
+   */
+  @Prop() noCloseButton?: boolean;
+
   private header!: boolean;
   private body!: boolean;
   private footer!: boolean;
 
   private fullScreenClass(): string {
     if (this.fullScreen) {
-      if (this.fullScreenSize) {
-        return `modal-fullscreen-${this.fullScreenSize}-down`;
+      if (this.fullScreenFrom) {
+        return `modal-fullscreen-${this.fullScreenFrom}-down`;
       }
       return 'modal-fullscreen';
     }
@@ -118,17 +123,19 @@ export class MModal {
                 }}
               >
                 <slot name="header" />
-                <button
-                  type="button"
-                  class={{
-                    'btn-close': true,
-                    'btn-close-text': !!this.closeText,
-                  }}
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  {this.closeText && (this.closeText)}
-                </button>
+                {!this.noCloseButton && (
+                  <button
+                    type="button"
+                    class={{
+                      'btn-close': true,
+                      'btn-close-text': !!this.closeText,
+                    }}
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    {this.closeText && (this.closeText)}
+                  </button>
+                )}
               </div>
             )}
             {this.body && (
