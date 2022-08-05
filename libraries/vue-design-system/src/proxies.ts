@@ -9,6 +9,14 @@ import { defineCustomElements } from '@modyolabs/design-system/loader';
 
 defineCustomElements();
 
+export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
+  'theme',
+  'icon',
+  'iconSize',
+  'close'
+]);
+
+
 export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined);
 
 
@@ -144,6 +152,20 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
   'variant',
   'selectableProps',
   'navegableProps'
+]);
+
+
+export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
+  'mId',
+  'closeText',
+  'static',
+  'scrollable',
+  'centered',
+  'fullScreen',
+  'fullScreenFrom',
+  'modalSize',
+  'imageHeader',
+  'noCloseButton'
 ]);
 
 

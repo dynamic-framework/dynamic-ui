@@ -11,11 +11,30 @@ import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-int
 import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
+import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
 import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
+    interface MAlert {
+        /**
+          * Has close button
+         */
+        "close"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "icon": boolean;
+        /**
+          * Icon font-size class
+         */
+        "iconSize"?: string;
+        /**
+          * Theme for the alert
+         */
+        "theme": string;
+    }
     interface MApp {
     }
     interface MBadge {
@@ -398,6 +417,48 @@ export namespace Components {
          */
         "variant"?: ListItemVariant;
     }
+    interface MModal {
+        /**
+          * Is modal centered
+         */
+        "centered"?: boolean;
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * Is fullscreen in all sizes
+         */
+        "fullScreen"?: boolean;
+        /**
+          * Minimum size to apply the fullscreen
+         */
+        "fullScreenFrom"?: FullScreenFrom;
+        /**
+          * Background image header
+         */
+        "imageHeader"?: string;
+        /**
+          * Id of the modal
+         */
+        "mId": string;
+        /**
+          * Modal size
+         */
+        "modalSize"?: ModalSize;
+        /**
+          * No display close button
+         */
+        "noCloseButton"?: boolean;
+        /**
+          * Is modal scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
+    }
     interface MNav {
         /**
           * Is aria orientation vertical
@@ -678,6 +739,12 @@ export interface MShortcutToggleCustomEvent<T> extends CustomEvent<T> {
     target: HTMLMShortcutToggleElement;
 }
 declare global {
+    interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
+    }
+    var HTMLMAlertElement: {
+        prototype: HTMLMAlertElement;
+        new (): HTMLMAlertElement;
+    };
     interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
     }
     var HTMLMAppElement: {
@@ -744,6 +811,12 @@ declare global {
         prototype: HTMLMListItemElement;
         new (): HTMLMListItemElement;
     };
+    interface HTMLMModalElement extends Components.MModal, HTMLStencilElement {
+    }
+    var HTMLMModalElement: {
+        prototype: HTMLMModalElement;
+        new (): HTMLMModalElement;
+    };
     interface HTMLMNavElement extends Components.MNav, HTMLStencilElement {
     }
     var HTMLMNavElement: {
@@ -799,6 +872,7 @@ declare global {
         new (): HTMLMShortcutToggleElement;
     };
     interface HTMLElementTagNameMap {
+        "m-alert": HTMLMAlertElement;
         "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
@@ -810,6 +884,7 @@ declare global {
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
+        "m-modal": HTMLMModalElement;
         "m-nav": HTMLMNavElement;
         "m-nav-content": HTMLMNavContentElement;
         "m-nav-item": HTMLMNavItemElement;
@@ -822,6 +897,24 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface MAlert {
+        /**
+          * Has close button
+         */
+        "close"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "icon"?: boolean;
+        /**
+          * Icon font-size class
+         */
+        "iconSize"?: string;
+        /**
+          * Theme for the alert
+         */
+        "theme"?: string;
+    }
     interface MApp {
     }
     interface MBadge {
@@ -1224,6 +1317,48 @@ declare namespace LocalJSX {
          */
         "variant"?: ListItemVariant;
     }
+    interface MModal {
+        /**
+          * Is modal centered
+         */
+        "centered"?: boolean;
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * Is fullscreen in all sizes
+         */
+        "fullScreen"?: boolean;
+        /**
+          * Minimum size to apply the fullscreen
+         */
+        "fullScreenFrom"?: FullScreenFrom;
+        /**
+          * Background image header
+         */
+        "imageHeader"?: string;
+        /**
+          * Id of the modal
+         */
+        "mId": string;
+        /**
+          * Modal size
+         */
+        "modalSize"?: ModalSize;
+        /**
+          * No display close button
+         */
+        "noCloseButton"?: boolean;
+        /**
+          * Is modal scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
+    }
     interface MNav {
         /**
           * Is aria orientation vertical
@@ -1487,6 +1622,7 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface IntrinsicElements {
+        "m-alert": MAlert;
         "m-app": MApp;
         "m-badge": MBadge;
         "m-button": MButton;
@@ -1498,6 +1634,7 @@ declare namespace LocalJSX {
         "m-icon": MIcon;
         "m-input": MInput;
         "m-list-item": MListItem;
+        "m-modal": MModal;
         "m-nav": MNav;
         "m-nav-content": MNavContent;
         "m-nav-item": MNavItem;
@@ -1513,6 +1650,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
@@ -1524,6 +1662,7 @@ declare module "@stencil/core" {
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
+            "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;
             "m-nav-content": LocalJSX.MNavContent & JSXBase.HTMLAttributes<HTMLMNavContentElement>;
             "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;

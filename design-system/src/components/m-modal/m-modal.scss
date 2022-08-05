@@ -1,0 +1,41 @@
+@import "~bootstrap/scss/modal";
+
+.modal {
+
+  .btn-close {
+    --#{$prefix}close-focus-shadow: rgba(var(--#{$prefix}dark-rgb), .3);
+  }
+}
+
+.modal-dialog .modal-content .modal-header-bg-image {
+  background-image: var(--#{$prefix}header-bg-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-clip: border-box;
+  background-size: cover;
+
+  .btn-close {
+    margin: 0;
+    background-color: var(--#{$prefix}white);
+  }
+}
+
+.btn-close-text {
+  --#{$prefix}btn-close-color: var(--#{$prefix}secondary);
+  --#{$prefix}btn-close-font-size: #{$font-size-sm};
+  --#{$prefix}btn-close-font-weight: #{$font-weight-normal};
+  --#{$prefix}btn-close-line-height: 1.125rem;
+  --#{$prefix}btn-close-letter-spacing: -.5%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  font-size: var(--#{$prefix}btn-close-font-size);
+  font-weight: var(--#{$prefix}btn-close-font-weight);
+  line-height: var(--#{$prefix}btn-close-line-height);
+  color: var(--#{$prefix}btn-close-color);
+  letter-spacing: var(--#{$prefix}btn-close-letter-spacing);
+  background: none;
+  border: 0;
+}

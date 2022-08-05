@@ -5,6 +5,7 @@ import { createReactComponent } from './react-component-lib';
 
 import type { JSX } from '@modyolabs/design-system/components';
 
+import { defineCustomElement as defineMAlert } from '@modyolabs/design-system/components/m-alert.js';
 import { defineCustomElement as defineMApp } from '@modyolabs/design-system/components/m-app.js';
 import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
@@ -16,6 +17,7 @@ import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-syst
 import { defineCustomElement as defineMIcon } from '@modyolabs/design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyolabs/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyolabs/design-system/components/m-list-item.js';
+import { defineCustomElement as defineMModal } from '@modyolabs/design-system/components/m-modal.js';
 import { defineCustomElement as defineMNav } from '@modyolabs/design-system/components/m-nav.js';
 import { defineCustomElement as defineMNavContent } from '@modyolabs/design-system/components/m-nav-content.js';
 import { defineCustomElement as defineMNavItem } from '@modyolabs/design-system/components/m-nav-item.js';
@@ -26,6 +28,7 @@ import { defineCustomElement as defineMSearch } from '@modyolabs/design-system/c
 import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/components/m-select.js';
 import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/design-system/components/m-shortcut-toggle.js';
 
+export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertElement>('m-alert', undefined, undefined, defineMAlert);
 export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>('m-app', undefined, undefined, defineMApp);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
@@ -37,6 +40,7 @@ export const MFormSwitch = /*@__PURE__*/createReactComponent<JSX.MFormSwitch, HT
 export const MIcon = /*@__PURE__*/createReactComponent<JSX.MIcon, HTMLMIconElement>('m-icon', undefined, undefined, defineMIcon);
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
 export const MListItem = /*@__PURE__*/createReactComponent<JSX.MListItem, HTMLMListItemElement>('m-list-item', undefined, undefined, defineMListItem);
+export const MModal = /*@__PURE__*/createReactComponent<JSX.MModal, HTMLMModalElement>('m-modal', undefined, undefined, defineMModal);
 export const MNav = /*@__PURE__*/createReactComponent<JSX.MNav, HTMLMNavElement>('m-nav', undefined, undefined, defineMNav);
 export const MNavContent = /*@__PURE__*/createReactComponent<JSX.MNavContent, HTMLMNavContentElement>('m-nav-content', undefined, undefined, defineMNavContent);
 export const MNavItem = /*@__PURE__*/createReactComponent<JSX.MNavItem, HTMLMNavItemElement>('m-nav-item', undefined, undefined, defineMNavItem);

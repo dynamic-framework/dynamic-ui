@@ -1,10 +1,13 @@
+import { useState } from 'react';
+
 import {
   MApp,
   MSelect,
   MListItem,
   MButton
 } from '@modyolabs/react-design-system';
-import { useState } from 'react';
+
+import ModalAccountSelector from './components/ModalAccountSelector';
 import PaymentPanel from './components/PaymentPanel';
 
 function App() {
@@ -29,6 +32,8 @@ function App() {
             mId='selectAccount'
             variant='transparent'
             theme="info"
+            data-bs-toggle="modal"
+            data-bs-target="#accountSelector"
           >
             {
               accounts.map(({ id, name }) => (
@@ -42,6 +47,7 @@ function App() {
         </div>
         <PaymentPanel />
       </div>
+      <ModalAccountSelector />
     </MApp>
   );
 }
