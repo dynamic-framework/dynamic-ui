@@ -40,5 +40,14 @@ body,
 
   .alerta {
     z-index: 100;
+    .alert {
+      .alert-text{
+        --bs-alert-font-size: 12px;
+        --bs-alert-line-height: 18px;
+      }
+      .m-icon {
+        font-size: 12px;
+      }
+    }
   }
 }
