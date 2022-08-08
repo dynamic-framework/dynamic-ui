@@ -16,6 +16,21 @@ body,
     }
   }
 
+  .account-selector {
+    .btn {
+      --bs-btn-padding-x: 1.5rem;
+      font-weight: 400;
+
+    }
+    .btn-outline-info {
+      // --bs-info-rgb: rgb(192, 192, 209);
+      width: 100%;
+    }
+    span {
+      flex-grow: 1;
+    }
+  }
+
   .btn {
 
     &.btn-primary-gradient {

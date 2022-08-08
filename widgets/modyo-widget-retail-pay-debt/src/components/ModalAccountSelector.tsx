@@ -50,7 +50,7 @@ const ModalAccountSelector = () => {
         <MButton
           data-bs-dismiss="modal"
           class='my-4'
-          text='Cancel'
+          text='Confirm'
           theme='primary'
           isPill />
       </div>

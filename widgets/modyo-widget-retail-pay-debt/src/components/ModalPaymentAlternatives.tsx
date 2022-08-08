@@ -13,6 +13,7 @@ const ModalPaymentAlternatives = () => {
         className='d-flex flex-column justify-content-center align-items-center'>
         <MQuickAction
           variant='extended'
+          data-bs-dismiss="modal"
           class='w-100'
           icon=""
           text='Skip installement'
@@ -20,6 +21,7 @@ const ModalPaymentAlternatives = () => {
         />
         <MQuickAction
           variant='extended'
+          data-bs-dismiss="modal"
           class='w-100'
           icon=""
           text='Flexible payment'
@@ -27,6 +29,7 @@ const ModalPaymentAlternatives = () => {
         />
         <MQuickAction
           variant='extended'
+          data-bs-dismiss="modal"
           class='w-100'
           icon=""
           text='Renegotiate debt'

@@ -7,6 +7,7 @@ const ModalSchedule = () => {
       mId='modalSchedulePayment'
       centered
       static
+      noCloseButton={true}
     >
       <div slot='header' className='m-3'>
         Schedule $ammount
