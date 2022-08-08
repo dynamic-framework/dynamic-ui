@@ -7,6 +7,7 @@ import {
 } from '@modyolabs/react-design-system';
 import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
+import ModalRecurrentPay from './ModalRecurrentPay';
 const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }) => {
   const [amountAvailable, setAmountAvailable] = useState(base);
   const [amountUsed, setAmountUsed] = useState(undefined);
@@ -115,6 +116,8 @@ const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }
               className="px-3 py-2 border rounded-1 mb-2"
             >
               <MFormSwitch
+                data-bs-toggle="modal"
+                data-bs-target="#recurrentPayment"
                 class='d-inline-flex'
                 mId='reucrrentPayment'
                 label='Recurrent'
@@ -147,6 +150,7 @@ const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }
       </div>
       <ModalPaymentAlternatives />
       <ModalSchedule />
+      <ModalRecurrentPay />
     </>
   )
 }
