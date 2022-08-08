@@ -4,7 +4,8 @@ import {
   MApp,
   MSelect,
   MListItem,
-  MButton
+  MButton,
+  MAlert
 } from '@modyolabs/react-design-system';
 
 import ModalAccountSelector from './components/ModalAccountSelector';
@@ -21,7 +22,7 @@ function App() {
   }])
   return (
     <MApp>
-      <div className="container">
+      <div className="container pb-5 mb-5">
         <div className='pb-3 px-4'>
           <div className='d-flex justify-content-between align-items-center mb-5 mt-4'>
             <MButton iconLeft='arrow-left' isPill theme='info' variant='text'></MButton>
@@ -47,7 +48,13 @@ function App() {
         </div>
         <PaymentPanel />
       </div>
+      <div className="alerta fixed-bottom p-3 w-100">
+        <MAlert icon close theme='info' >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </MAlert>
+      </div>
       <ModalAccountSelector />
+
     </MApp>
   );
 }

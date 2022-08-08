@@ -45,6 +45,8 @@ const PaymentPanel = ({ base = 1000 }) => {
   };
 
   useEffect(() => {
+    console.log(amountUsed);
+
     if (amountUsed) {
       if (amountUsed === 0) {
         setAmountAvailable(base);
@@ -100,23 +102,36 @@ const PaymentPanel = ({ base = 1000 }) => {
           </div>
         </div>
         <div className="pb-4">
-          <div className="collapse" id="moreOptions">
-            <div className="px-3 py-2 border rounded-1 mb-2">
+          <div
+            className="collapse"
+            id="moreOptions">
+            <div
+              className="px-3 py-2 border rounded-1 mb-2">
               <MFormSwitch
-                data-bs-toggle="modal" data-bs-target="#modalSchedulePayment"
+                data-bs-toggle="modal"
+                data-bs-target="#modalSchedulePayment"
                 class='d-inline-flex'
                 mId='schedulePayment'
                 label='Schedule'
               />
-              <p className='small m-0 text-info'>This payment will be instant</p>
+              <p
+                className='small m-0 text-info'
+              >
+                This payment will be instant
+              </p>
             </div>
-            <div className="px-3 py-2 border rounded-1 mb-2">
+            <div
+              className="px-3 py-2 border rounded-1 mb-2"
+            >
               <MFormSwitch
                 class='d-inline-flex'
                 mId='reucrrentPayment'
                 label='Recurrent'
               />
-              <p className='small m-0 text-info'>This payment will not autorepeat</p>
+              <p
+                className='small m-0 text-info'>
+                This payment will not autorepeat
+              </p>
             </div>
           </div>
           <MButton
@@ -129,8 +144,14 @@ const PaymentPanel = ({ base = 1000 }) => {
             aria-expanded="false"
             aria-controls="collapseExample" />
         </div>
-        <div className="d-flex justify-content-center pt-4">
-          <MButton text='Pay' theme='primary' isPill iconRight='check-lg' />
+        <div
+          className="d-flex justify-content-center pt-4">
+          <MButton
+            text='Pay'
+            theme='primary-gradient'
+            isPill
+            iconRight='check-lg'
+          />
         </div>
       </div>
       <ModalPaymentAlternatives />
