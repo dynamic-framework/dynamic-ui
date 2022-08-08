@@ -20,6 +20,7 @@ function App() {
     id: 2,
     name: 'Savings ···  345'
   }])
+
   return (
     <MApp>
       <div className="container pb-5 mb-5">
@@ -28,13 +29,21 @@ function App() {
             <MButton iconLeft='arrow-left' isPill theme='info' variant='text'></MButton>
             <h6 className='fw-bold m-0 flex-grow-1 text-center'>Paying Visa ···456</h6>
           </div>
+          <MButton
+            class='account-selector d-block d-lg-none mb-3'
+            text='From: Savings ···  245'
+            theme='info'
+            iconRight='chevron-down'
+            isPill
+            data-bs-toggle="modal"
+            data-bs-target="#accountSelector"
+            variant='outline'/>
+
           <MSelect
-            class='mb-3'
+            class='mb-3 d-none d-lg-block'
             mId='selectAccount'
             variant='transparent'
             theme="info"
-            data-bs-toggle="modal"
-            data-bs-target="#accountSelector"
           >
             {
               accounts.map(({ id, name }) => (
