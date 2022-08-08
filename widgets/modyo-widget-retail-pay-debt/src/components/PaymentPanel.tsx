@@ -45,7 +45,7 @@ const PaymentPanel = ({ base = 1000 }) => {
   };
 
   useEffect(() => {
-    if (amountUsed) {
+    if (amountUsed !== undefined ) {
       if (amountUsed === 0) {
         setAmountAvailable(base);
         setTheme('info');
@@ -71,7 +71,7 @@ const PaymentPanel = ({ base = 1000 }) => {
           mId='debtInput'
           placeholder='How much?'
           theme={theme}
-          hint={`${amountAvailable}`}
+          hint={`$ ${amountAvailable} remaining`}
           iconLabel='currency-dollar'
           hintIconStart='info-circle'
           minValue={0}
