@@ -2,6 +2,44 @@
   "name": "@modyolabs/design-system",
   "entries": [
     {
+      "version": "0.1.0",
+      "tag": "@modyolabs/design-system_v0.1.0",
+      "date": "Mon, 08 Aug 2022 16:34:01 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "minor: add m-calendar component"
+          },
+          {
+            "comment": "minor: add m-skeleton component"
+          },
+          {
+            "comment": "minor: add m-alert component"
+          },
+          {
+            "comment": "minor: add m-currency component and fix styles"
+          },
+          {
+            "comment": "minor: m-modal component"
+          },
+          {
+            "comment": "minor: add m-segment-control and m-segment-control-item components"
+          },
+          {
+            "comment": "minor: add shortcut-toggle component and primary gradient button"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "patch: add ids for icons span"
+          },
+          {
+            "comment": "patch: change scss variables for css variables"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.0.4",
       "tag": "@modyolabs/design-system_v0.0.4",
       "date": "Tue, 12 Jul 2022 01:15:33 GMT",
