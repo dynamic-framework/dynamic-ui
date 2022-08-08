@@ -1,7 +1,17 @@
-import { MButton, MListItem, MModal, MQuickAction } from '@modyolabs/react-design-system'
+import { MButton, MListItem, MModal } from '@modyolabs/react-design-system'
 import React from 'react'
 
-const ModalAccountSelector = () => {
+interface Props {
+  accounts: Array<any>;
+  onSelect: (account: any) => void;
+}
+
+const ModalAccountSelector = (
+  {
+    accounts,
+    onSelect
+  }: Props
+) => {
   return (
     <MModal
       mId='accountSelector'
@@ -11,48 +21,29 @@ const ModalAccountSelector = () => {
       <div
         slot='body'
         className='d-flex flex-column justify-content-center align-items-center'>
-        <MListItem
-          variant='selectable'
-          class='w-100'
-          icon=""
-          value="$ 1,234.00"
-          selectableProps={{
-            id: 'account1',
-            name: 'radioAccounts'
-          }}
-          text='{Savings}'
-          subtext='··· 654'
-        />
-        <MListItem
-          variant='selectable'
-          class='w-100'
-          icon=""
-          value="$ 1,234.00"
-          selectableProps={{
-            id: 'account2',
-            name: 'radioAccounts'
-          }}
-          text='{Checking}'
-          subtext='···653'
-        />
-        <MListItem
-          variant='selectable'
-          class='w-100'
-          icon=""
-          value="$ 1,234.00"
-          selectableProps={{
-            id: 'account3',
-            name: 'radioAccounts'
-          }}
-          text='{Current}'
-          subtext='···876'
-        />
+        {accounts.map((account) => (
+          <MListItem
+            key={account.id}
+            variant='selectable'
+            class='w-100'
+            icon=""
+            value={account.value}
+            selectableProps={{
+              id: `account${account.id}`,
+              name: 'radioAccounts'
+            }}
+            text={`{${account.type}}`}
+            subtext={`··· ${account.last}`}
+            onClick={() => onSelect(account)}
+          />
+        ))}
         <MButton
           data-bs-dismiss="modal"
           class='my-4'
           text='Confirm'
           theme='primary'
-          isPill />
+          isPill
+        />
       </div>
     </MModal>
   )

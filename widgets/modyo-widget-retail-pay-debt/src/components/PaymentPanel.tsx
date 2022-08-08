@@ -8,11 +8,20 @@ import {
 import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
 import ModalRecurrentPay from './ModalRecurrentPay';
-const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }) => {
+const PaymentPanel = (
+  {
+    base = 1000,
+    minimumPayment = 200,
+    totalPayment = 4954
+  }
+) => {
   const [amountAvailable, setAmountAvailable] = useState(base);
   const [amountUsed, setAmountUsed] = useState(undefined);
   const [theme, setTheme] = useState('info');
 
+  useEffect(() => {
+    setAmountAvailable(base);
+  }, [base]);
 
   const handlerChange = ({ detail: { amount } }: CustomEvent) => {
     setAmountUsed(amount);
