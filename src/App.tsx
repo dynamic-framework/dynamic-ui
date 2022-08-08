@@ -11,15 +11,32 @@ import {
 import ModalAccountSelector from './components/ModalAccountSelector';
 import PaymentPanel from './components/PaymentPanel';
 
-function App() {
-  const [accounts, setAccounts] = useState([{
+const ACCOUNTS = [
+  {
     id: 1,
-    name: 'Savings ···  245'
+    value: '$ 1,200.00',
+    valueNumber: 1200,
+    last: 654,
+    type: 'Saving'
   },
   {
     id: 2,
-    name: 'Savings ···  345'
-  }])
+    value: '$ 1,500.00',
+    valueNumber: 1500,
+    type: 'Checking',
+    last: 653
+  },
+  {
+    id: 3,
+    value: '$ 1,000.00',
+    valueNumber: 1000,
+    type: 'Current',
+    last: 876,
+  }
+];
+
+function App() {
+  const [account, setAccount] = useState(ACCOUNTS[0]);
 
   return (
     <MApp>
@@ -31,38 +48,35 @@ function App() {
           </div>
           <MButton
             class='account-selector d-block d-lg-none mb-3'
-            text='From: Savings ···  245'
+            text={`From: ${account.type} ... ${account.last}`}
             theme='info'
             iconRight='chevron-down'
             isPill
             data-bs-toggle="modal"
             data-bs-target="#accountSelector"
-            variant='outline'/>
-
+            variant='outline'
+          />
           <MSelect
             class='mb-3 d-none d-lg-block'
             mId='selectAccount'
             variant='transparent'
             theme="info"
           >
-            {
-              accounts.map(({ id, name }) => (
-                <option key={id} value={id}>From: {name}</option>
-              ))
-            }
+            {ACCOUNTS.map(({ id, type, last }) => (
+              <option key={id} value={id}>From: {type} ... {last}</option>
+            ))}
           </MSelect>
-
           <MListItem value="12/31/22" text="Pay until" class='mb-2 p-1' />
           <MListItem value="$4,956.00" text="To be payed" class="p-1" />
         </div>
-        <PaymentPanel />
+        <PaymentPanel base={account.valueNumber} />
       </div>
       <div className="alerta fixed-bottom p-3 w-100">
         <MAlert icon close theme='info' >
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </MAlert>
       </div>
-      <ModalAccountSelector />
+      <ModalAccountSelector accounts={ACCOUNTS} onSelect={setAccount} />
 
     </MApp>
   );
