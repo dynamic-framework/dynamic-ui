@@ -60,7 +60,7 @@ const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }
           value={amountUsed}
         />
         <div className="row g-0 m-0 p-0 pt-4 pb-2">
-          <div className="col-12 scroll-h pb-2 mx-auto">
+          <div className="col-12 justify-content-between scroll-h pb-2 mx-auto">
             <MShortcutToggle
               key="1"
               mId="minimumOption"
