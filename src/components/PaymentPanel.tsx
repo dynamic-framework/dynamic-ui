@@ -7,34 +7,11 @@ import {
 } from '@modyolabs/react-design-system';
 import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
-const PaymentPanel = ({ base = 1000 }) => {
+const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }) => {
   const [amountAvailable, setAmountAvailable] = useState(base);
   const [amountUsed, setAmountUsed] = useState(undefined);
   const [theme, setTheme] = useState('info');
 
-  const [paymentOptions, setPaymentOptions] = useState([
-    {
-      id: '1',
-      label: 'Minimum',
-      text: '$100',
-      name: 'paymentOption',
-      value: '1',
-    },
-    {
-      id: '2',
-      label: 'Total',
-      text: '$4,000',
-      name: 'paymentOption',
-      value: '2',
-    },
-    {
-      id: '3',
-      label: 'Payment Alternatives',
-      text: '...',
-      name: 'paymentOption',
-      value: '3',
-    },
-  ]);
 
   const handlerChange = ({ detail: { amount } }: CustomEvent) => {
     setAmountUsed(amount);
@@ -82,21 +59,35 @@ const PaymentPanel = ({ base = 1000 }) => {
         />
         <div className="row g-0 m-0 p-0 pt-4 pb-2">
           <div className="col-12 scroll-h pb-2 mx-auto">
-            {
-              paymentOptions.map(({ id, label, text, value, name }) => {
-                return (
-                  <MShortcutToggle
-                    key={id}
-                    mId={id}
-                    name={name}
-                    label={label}
-                    text={text}
-                    value={value}
-                    onMChange={handlerPaymentOption}
-                  />
-                )
-              })
-            }
+            <MShortcutToggle
+              key="1"
+              mId="minimumOption"
+              name="paymentOption"
+              label="Minimum"
+              text={minimumPayment.toString()}
+              value="minimumOption"
+              onMChange={handlerPaymentOption}
+            />
+            <MShortcutToggle
+              key="2"
+              mId="totalOption"
+              name="paymentOption"
+              label="Total"
+              text={totalPayment.toString()}
+              value="totalOption"
+              onMChange={handlerPaymentOption}
+            />
+            <MShortcutToggle
+              key="3"
+              mId="alternativeOption"
+              name="paymentOption"
+              label="Payment Alternatives"
+              text="..."
+              data-bs-toggle="modal"
+              data-bs-target="#paymentAlt"
+              value="alternativeOption"
+              onMChange={handlerPaymentOption}
+            />
           </div>
         </div>
         <div className="pb-4">
