@@ -99,7 +99,7 @@ export class MButton implements ComponentInterface {
               icon={this.iconLeft}
             />
           )}
-          {this.text}
+          <span>{this.text}</span>
           {this.iconRight && (
             <m-icon
               class="btn-icon btn-right-icon"
