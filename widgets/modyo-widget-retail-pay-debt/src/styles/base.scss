@@ -23,7 +23,6 @@ body,
 
     }
     .btn-outline-info {
-      // --bs-info-rgb: rgb(192, 192, 209);
       width: 100%;
     }
     span {
@@ -35,6 +34,10 @@ body,
 
     &.btn-primary-gradient {
       --bs-btn-padding-x: 4rem;
+
+      &:disabled {
+        color: var(--bs-white);
+      }
     }
   }
 
@@ -48,6 +51,12 @@ body,
       .m-icon {
         font-size: 12px;
       }
+    }
+  }
+
+  .btn-result {
+    .btn {
+      --bs-btn-padding-x: 1.75rem;
     }
   }
 }
