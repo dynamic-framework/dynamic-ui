@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useState } from 'react';
 
 import {
@@ -16,6 +17,7 @@ interface Props {
   base?: number;
   minimumPayment?: number;
   totalPayment?: number;
+  setIsPaid: (value: boolean) => void,
 }
 
 export default function PaymentPanel(
@@ -23,6 +25,7 @@ export default function PaymentPanel(
     base = 1000,
     minimumPayment = 200,
     totalPayment = 4954,
+    setIsPaid,
   }: Props,
 ) {
   const [amountAvailable, setAmountAvailable] = useState(base);
@@ -83,6 +86,7 @@ export default function PaymentPanel(
           <div className="col-12 justify-content-between scroll-h pb-2 mx-auto">
             <MShortcutToggle
               key="1"
+              {...minimumPayment === 0 && { state: 'disabled' }}
               mId="minimumOption"
               name="paymentOption"
               label="Minimum"
@@ -92,6 +96,7 @@ export default function PaymentPanel(
             />
             <MShortcutToggle
               key="2"
+              {...minimumPayment === 0 && { state: 'disabled' }}
               mId="totalOption"
               name="paymentOption"
               label="Total"
@@ -105,8 +110,11 @@ export default function PaymentPanel(
               name="paymentOption"
               label="Payment Alternatives"
               text="..."
-              data-bs-toggle="modal"
-              data-bs-target="#paymentAlt"
+              {...minimumPayment === 0 && { state: 'disabled' }}
+              {...minimumPayment > 0 && {
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#paymentAlt',
+              }}
               value="alternativeOption"
               onMChange={handlerPaymentOption}
             />
@@ -165,6 +173,8 @@ export default function PaymentPanel(
           className="d-flex justify-content-center pt-4"
         >
           <MButton
+            {...minimumPayment === 0 && { state: 'disabled' }}
+            onMClick={() => setIsPaid(true)}
             text="Pay"
             theme="primary-gradient"
             isPill
