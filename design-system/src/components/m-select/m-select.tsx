@@ -9,7 +9,7 @@ import {
 
 import type { FormControlLayoutDirection, ClassMap } from '../../utils/component-interface';
 
-import type { FormControlLayoutVariant } from './m-select-interface';
+import type { SelectLayoutVariant } from './m-select-interface';
 
 @Component({
   tag: 'm-select',
@@ -26,7 +26,12 @@ export class MSelect implements ComponentInterface {
   /**
    * The variant of the select
    */
-  @Prop() variant: FormControlLayoutVariant = 'prime';
+  @Prop() variant: SelectLayoutVariant = 'prime';
+
+  /**
+   * The select options
+   */
+  @Prop() options: Array<any> = [];
 
   /**
    * The theme of the select
@@ -74,12 +79,26 @@ export class MSelect implements ComponentInterface {
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
 
   /**
+   * Callback to extract the value from the option
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() valueExtractor: (item: any) => string | number = (item) => item?.value;
+
+  /**
+   * Callback to extract the label from the option
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() labelExtractor: (item: any) => string = (item) => item?.label;
+
+  /**
    * Emitted when the select value has changed
    */
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<any>;
 
   private changeHandler = (event: Event) => {
-    this.mChange.emit((event.target as HTMLInputElement).value);
+    const { value } = event.target as HTMLInputElement;
+    this.mChange.emit(this.options.find((option) => option.value === value));
   };
 
   private generateHostClasses(): ClassMap {
@@ -130,7 +149,11 @@ export class MSelect implements ComponentInterface {
               aria-describedby={`${this.mId}-start`}
               onChange={this.changeHandler}
             >
-              <slot />
+              {this.options.map((option) => (
+                <option value={this.valueExtractor(option)}>
+                  {this.labelExtractor(option)}
+                </option>
+              ))}
             </select>
             {(this.iconMiddle) && (
               <span

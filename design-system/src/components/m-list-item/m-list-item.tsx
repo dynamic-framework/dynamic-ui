@@ -120,6 +120,8 @@ export class MListItem implements ComponentInterface {
                 type="radio"
                 {...this.selectableProps?.id && { id: this.selectableProps.id }}
                 {...this.selectableProps?.name && { name: this.selectableProps.name }}
+                {...this.selectableProps?.value && { value: this.selectableProps.value }}
+                {...this.selectableProps?.checked && { checked: this.selectableProps.checked }}
               />
             )}
             {(this.icon || this.image) && (
