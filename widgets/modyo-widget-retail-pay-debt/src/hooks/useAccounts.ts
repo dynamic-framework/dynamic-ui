@@ -32,6 +32,7 @@ export default function useAccounts() {
   const [accounts, setAccounts] = useState<Array<Account>>([]);
   const [accountSelected, setAccountSelected] = useState<Account | undefined>(undefined);
   const [loading, setLoading] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -49,5 +50,7 @@ export default function useAccounts() {
     accounts,
     accountSelected,
     setAccountSelected,
+    isPaid,
+    setIsPaid,
   };
 }
