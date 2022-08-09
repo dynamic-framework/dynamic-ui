@@ -1,52 +1,59 @@
-import { MButton, MListItem, MModal } from '@modyolabs/react-design-system'
-import React from 'react'
+import { useState } from 'react';
+
+import { MButton, MListItem, MModal } from '@modyolabs/react-design-system';
+
+import type { Account } from '../hooks/useAccounts';
 
 interface Props {
-  accounts: Array<any>;
-  onSelect: (account: any) => void;
+  accounts: Array<Account>;
+  selected: Account;
+  onSelect: (account: Account) => void;
 }
 
-const ModalAccountSelector = (
+export default function ModalAccountSelector(
   {
     accounts,
-    onSelect
-  }: Props
-) => {
+    selected,
+    onSelect,
+  }: Props,
+) {
+  const [value, setValue] = useState<Account>(selected);
   return (
     <MModal
-      mId='accountSelector'
+      mId="accountSelector"
       centered
       static
     >
       <div
-        slot='body'
-        className='d-flex flex-column justify-content-center align-items-center'>
+        slot="body"
+        className="d-flex flex-column justify-content-center align-items-center"
+      >
         {accounts.map((account) => (
           <MListItem
             key={account.id}
-            variant='selectable'
-            class='w-100'
-            icon=""
+            variant="selectable"
+            class="w-100"
             value={account.value}
             selectableProps={{
               id: `account${account.id}`,
-              name: 'radioAccounts'
+              name: 'radioAccounts',
+              value: account.id,
+              checked: value.id === account.id,
             }}
             text={`{${account.type}}`}
-            subtext={`··· ${account.last}`}
-            onClick={() => onSelect(account)}
+            subtext={account.mask}
+            onClick={() => setValue(account)}
           />
         ))}
         <MButton
           data-bs-dismiss="modal"
-          class='my-4'
-          text='Confirm'
-          theme='primary'
+          class="my-4"
+          text="Confirm"
+          theme="primary"
           isPill
+          onClick={() => onSelect(value)}
         />
       </div>
     </MModal>
-  )
+  );
 }
-
-export default ModalAccountSelector
