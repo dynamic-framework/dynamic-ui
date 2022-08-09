@@ -1,24 +1,43 @@
 import { useEffect, useState } from 'react';
+
 import {
   MCurrency,
   MButton,
   MFormSwitch,
   MShortcutToggle,
 } from '@modyolabs/react-design-system';
+import type { CurrencyEvent } from '@modyolabs/design-system';
+
 import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
 import ModalRecurrentPay from './ModalRecurrentPay';
-const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }) => {
+
+interface Props {
+  base?: number;
+  minimumPayment?: number;
+  totalPayment?: number;
+}
+
+export default function PaymentPanel(
+  {
+    base = 1000,
+    minimumPayment = 200,
+    totalPayment = 4954,
+  }: Props,
+) {
   const [amountAvailable, setAmountAvailable] = useState(base);
-  const [amountUsed, setAmountUsed] = useState(undefined);
+  const [amountUsed, setAmountUsed] = useState<number | undefined>(undefined);
   const [theme, setTheme] = useState('info');
 
+  useEffect(() => {
+    setAmountAvailable(base);
+  }, [base]);
 
-  const handlerChange = ({ detail: { amount } }: CustomEvent) => {
+  const handlerChange = ({ detail: { amount } }: CustomEvent<CurrencyEvent>) => {
     setAmountUsed(amount);
   };
 
-  const handlerPaymentOption = ({ detail }: CustomEvent) => {
+  const handlerPaymentOption = ({ detail }: CustomEvent<string>) => {
     console.log('Payment option selected:', detail);
   };
 
@@ -33,27 +52,27 @@ const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }
         setAmountAvailable(base - amountUsed);
       }
     }
-  }, [amountUsed]);
+  }, [amountUsed, base]);
 
   useEffect(() => {
     if (amountAvailable >= 0) {
-      setTheme('info')
+      setTheme('info');
     } else {
-      setTheme('danger')
+      setTheme('danger');
     }
   }, [amountAvailable]);
 
   return (
     <>
-      <div className='p-4 bg-white text-center rounded'>
+      <div className="p-4 bg-white text-center rounded">
         <MCurrency
-          class='pb-4'
-          mId='debtInput'
-          placeholder='How much?'
+          class="pb-4"
+          mId="debtInput"
+          placeholder="How much?"
           theme={theme}
           hint={`$ ${amountAvailable} remaining`}
-          iconLabel='currency-dollar'
-          hintIconStart='info-circle'
+          iconLabel="currency-dollar"
+          hintIconStart="info-circle"
           minValue={0}
           maxValue={base}
           variant="prime"
@@ -96,18 +115,20 @@ const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }
         <div className="pb-4">
           <div
             className="collapse"
-            id="moreOptions">
+            id="moreOptions"
+          >
             <div
-              className="px-3 py-2 border rounded-1 mb-2">
+              className="px-3 py-2 border rounded-1 mb-2"
+            >
               <MFormSwitch
                 data-bs-toggle="modal"
                 data-bs-target="#modalSchedulePayment"
-                class='d-inline-flex'
-                mId='schedulePayment'
-                label='Schedule'
+                class="d-inline-flex"
+                mId="schedulePayment"
+                label="Schedule"
               />
               <p
-                className='small m-0 text-info'
+                className="small m-0 text-info"
               >
                 This payment will be instant
               </p>
@@ -118,33 +139,36 @@ const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }
               <MFormSwitch
                 data-bs-toggle="modal"
                 data-bs-target="#recurrentPayment"
-                class='d-inline-flex'
-                mId='reucrrentPayment'
-                label='Recurrent'
+                class="d-inline-flex"
+                mId="reucrrentPayment"
+                label="Recurrent"
               />
               <p
-                className='small m-0 text-info'>
+                className="small m-0 text-info"
+              >
                 This payment will not autorepeat
               </p>
             </div>
           </div>
           <MButton
-            variant='text'
-            theme='info'
-            text='More Options'
-            iconRight='chevron-down'
+            variant="text"
+            theme="info"
+            text="More Options"
+            iconRight="chevron-down"
             data-bs-toggle="collapse"
             data-bs-target="#moreOptions"
             aria-expanded="false"
-            aria-controls="collapseExample" />
+            aria-controls="collapseExample"
+          />
         </div>
         <div
-          className="d-flex justify-content-center pt-4">
+          className="d-flex justify-content-center pt-4"
+        >
           <MButton
-            text='Pay'
-            theme='primary-gradient'
+            text="Pay"
+            theme="primary-gradient"
             isPill
-            iconRight='check-lg'
+            iconRight="check-lg"
           />
         </div>
       </div>
@@ -152,7 +176,5 @@ const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }
       <ModalSchedule />
       <ModalRecurrentPay />
     </>
-  )
+  );
 }
-
-export default PaymentPanel
