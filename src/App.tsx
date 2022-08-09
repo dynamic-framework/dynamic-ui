@@ -9,7 +9,7 @@ import {
 import ModalAccountSelector from './components/ModalAccountSelector';
 import PaymentPanel from './components/PaymentPanel';
 import useAccounts, { Account } from './hooks/useAccounts';
-import { PaymentResult } from './components/PaymentResult';
+import PaymentResult from './components/PaymentResult';
 
 const TOTAL_PAYMENT = 4956;
 
