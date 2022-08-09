@@ -25,7 +25,7 @@ const PaymentPanel = ({ base = 1000, minimumPayment = 200, totalPayment = 4954 }
   useEffect(() => {
     console.log(amountUsed);
 
-    if (amountUsed !== undefined ) {
+    if (amountUsed !== undefined) {
       if (amountUsed === 0) {
         setAmountAvailable(base);
         setTheme('info');

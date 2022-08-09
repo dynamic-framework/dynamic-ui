@@ -10,6 +10,7 @@ import {
 
 import ModalAccountSelector from './components/ModalAccountSelector';
 import PaymentPanel from './components/PaymentPanel';
+import { PaymentResult } from './components/PaymentResult';
 
 function App() {
   const [accounts, setAccounts] = useState([{
@@ -37,7 +38,7 @@ function App() {
             isPill
             data-bs-toggle="modal"
             data-bs-target="#accountSelector"
-            variant='outline'/>
+            variant='outline' />
 
           <MSelect
             class='mb-3 d-none d-lg-block'
@@ -56,6 +57,7 @@ function App() {
           <MListItem value="$4,956.00" text="To be payed" class="p-1" />
         </div>
         <PaymentPanel />
+        <PaymentResult />
       </div>
       <div className="alerta fixed-bottom p-3 w-100">
         <MAlert icon close theme='info' >
@@ -63,7 +65,6 @@ function App() {
         </MAlert>
       </div>
       <ModalAccountSelector />
-
     </MApp>
   );
 }
