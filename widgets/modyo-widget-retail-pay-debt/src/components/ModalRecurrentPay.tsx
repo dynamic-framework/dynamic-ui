@@ -5,7 +5,7 @@ import {
   MSegmentControlItem,
 } from '@modyolabs/react-design-system';
 
-function ModalRecurrentPay() {
+export default function ModalRecurrentPay() {
   return (
     <MModal
       mId="recurrentPayment"
@@ -86,5 +86,3 @@ function ModalRecurrentPay() {
 
   );
 }
-
-export default ModalRecurrentPay;
