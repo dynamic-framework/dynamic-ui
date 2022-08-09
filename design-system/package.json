@@ -40,7 +40,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "@stencil/core": "^2.15.2",
+    "@stencil/core": "^2.17.3",
     "bootstrap": "^5.2.0-beta1",
     "@popperjs/core": "^2.11.5"
   },

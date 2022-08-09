@@ -1,61 +1,59 @@
-import { MButton, MListItem, MModal, MQuickAction } from '@modyolabs/react-design-system'
-import React from 'react'
+import { useState } from 'react';
 
-const ModalAccountSelector = () => {
+import { MButton, MListItem, MModal } from '@modyolabs/react-design-system';
+
+import type { Account } from '../hooks/useAccounts';
+
+interface Props {
+  accounts: Array<Account>;
+  selected: Account;
+  onSelect: (account: Account) => void;
+}
+
+export default function ModalAccountSelector(
+  {
+    accounts,
+    selected,
+    onSelect,
+  }: Props,
+) {
+  const [value, setValue] = useState<Account>(selected);
   return (
     <MModal
-      mId='accountSelector'
+      mId="accountSelector"
       centered
       static
     >
       <div
-        slot='body'
-        className='d-flex flex-column justify-content-center align-items-center'>
-        <MListItem
-          variant='selectable'
-          class='w-100'
-          icon=""
-          value="$ 1,234.00"
-          selectableProps={{
-            id: 'account1',
-            name: 'radioAccounts'
-          }}
-          text='{Savings}'
-          subtext='··· 654'
-        />
-        <MListItem
-          variant='selectable'
-          class='w-100'
-          icon=""
-          value="$ 1,234.00"
-          selectableProps={{
-            id: 'account2',
-            name: 'radioAccounts'
-          }}
-          text='{Checking}'
-          subtext='···653'
-        />
-        <MListItem
-          variant='selectable'
-          class='w-100'
-          icon=""
-          value="$ 1,234.00"
-          selectableProps={{
-            id: 'account3',
-            name: 'radioAccounts'
-          }}
-          text='{Current}'
-          subtext='···876'
-        />
+        slot="body"
+        className="d-flex flex-column justify-content-center align-items-center"
+      >
+        {accounts.map((account) => (
+          <MListItem
+            key={account.id}
+            variant="selectable"
+            class="w-100"
+            value={account.value}
+            selectableProps={{
+              id: `account${account.id}`,
+              name: 'radioAccounts',
+              value: account.id,
+              checked: value.id === account.id,
+            }}
+            text={`{${account.type}}`}
+            subtext={account.mask}
+            onClick={() => setValue(account)}
+          />
+        ))}
         <MButton
           data-bs-dismiss="modal"
-          class='my-4'
-          text='Confirm'
-          theme='primary'
-          isPill />
+          class="my-4"
+          text="Confirm"
+          theme="primary"
+          isPill
+          onClick={() => onSelect(value)}
+        />
       </div>
     </MModal>
-  )
+  );
 }
-
-export default ModalAccountSelector

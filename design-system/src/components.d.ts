@@ -15,7 +15,7 @@ import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interfac
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
-import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
+import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -687,6 +687,10 @@ export namespace Components {
          */
         "label"?: string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor": (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of select
          */
         "layoutDirection": FormControlLayoutDirection;
@@ -695,13 +699,21 @@ export namespace Components {
          */
         "mId": string;
         /**
+          * The select options
+         */
+        "options": Array<any>;
+        /**
           * The theme of the select
          */
         "theme": string;
         /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor": (item: any) => string | number;
+        /**
           * The variant of the select
          */
-        "variant": FormControlLayoutVariant;
+        "variant": SelectLayoutVariant;
     }
     interface MShortcutToggle {
         /**
@@ -1657,6 +1669,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor"?: (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of select
          */
         "layoutDirection"?: FormControlLayoutDirection;
@@ -1667,15 +1683,23 @@ declare namespace LocalJSX {
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MSelectCustomEvent<string>) => void;
+        "onMChange"?: (event: MSelectCustomEvent<any>) => void;
+        /**
+          * The select options
+         */
+        "options"?: Array<any>;
         /**
           * The theme of the select
          */
         "theme"?: string;
         /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor"?: (item: any) => string | number;
+        /**
           * The variant of the select
          */
-        "variant"?: FormControlLayoutVariant;
+        "variant"?: SelectLayoutVariant;
     }
     interface MShortcutToggle {
         /**
