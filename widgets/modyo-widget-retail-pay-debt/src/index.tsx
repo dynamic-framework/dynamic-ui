@@ -5,12 +5,15 @@ import './styles/base.scss';
 import '@modyolabs/design-system/dist/design-system/design-system.css';
 
 import App from './App';
+import AppContextProvider from './providers/AppContext';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as Element);
 root.render(
   <React.StrictMode>
-    <App />
+    <AppContextProvider>
+      <App />
+    </AppContextProvider>
   </React.StrictMode>,
 );
 

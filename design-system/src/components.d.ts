@@ -217,7 +217,7 @@ export namespace Components {
         /**
           * Theme for the m-currency
          */
-        "theme"?: string | undefined;
+        "theme": string;
         /**
           * * The type of the input
          */
@@ -273,7 +273,7 @@ export namespace Components {
         /**
           * Flag to change the check state
          */
-        "isChecked": boolean;
+        "isChecked"?: boolean;
         /**
           * Flag to disable the input
          */
@@ -1175,7 +1175,7 @@ declare namespace LocalJSX {
         /**
           * Theme for the m-currency
          */
-        "theme"?: string | undefined;
+        "theme"?: string;
         /**
           * * The type of the input
          */

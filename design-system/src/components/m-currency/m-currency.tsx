@@ -5,6 +5,8 @@ import {
   Prop,
   Host,
   Event,
+  Watch,
+  State,
 } from '@stencil/core';
 
 import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
@@ -79,7 +81,7 @@ export class MCurrency implements ComponentInterface {
   /**
    * Theme for the m-currency
    * */
-  @Prop() theme? = 'primary';
+  @Prop() theme = 'primary';
   /**
    * Variant for the m-currency
    * */
@@ -93,13 +95,15 @@ export class MCurrency implements ComponentInterface {
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<CurrencyEvent>;
 
+  @State() internalTheme?: string;
+
   /**
-   * HTML input elemet
+   * HTML input element
    */
   private htmlInput?: HTMLInputElement;
 
   /**
-   * HTML select elemet
+   * HTML select element
    */
   private htmlSelect?: HTMLSelectElement;
 
@@ -115,10 +119,43 @@ export class MCurrency implements ComponentInterface {
     });
   };
 
+  private isValid(value?: number): boolean {
+    if (value === undefined) {
+      return true;
+    }
+
+    if (this.type === 'number') {
+      return (
+        (this.minValue !== undefined ? value >= this.minValue : true)
+        && (this.maxValue !== undefined ? value <= this.maxValue : true)
+      );
+    }
+
+    return true;
+  }
+
+  @Watch('value')
+  watchValueHandler(newValue: number) {
+    if (!this.isValid(newValue)) {
+      this.internalTheme = 'danger';
+      return;
+    }
+    this.internalTheme = this.theme;
+  }
+
+  @Watch('theme')
+  watchThemeHandler(newValue: string) {
+    this.internalTheme = newValue;
+  }
+
+  connectedCallback() {
+    this.internalTheme = this.theme;
+  }
+
   private generateHostClasses(): ClassMap {
     return {
       'form-control-layout form-control-layout-currency': true,
-      [`form-control-theme-${this.theme}`]: true,
+      [`form-control-theme-${this.internalTheme}`]: true,
       [`form-control-layout-currency-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
     };

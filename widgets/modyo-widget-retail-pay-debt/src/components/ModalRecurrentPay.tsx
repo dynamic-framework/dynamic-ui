@@ -5,10 +5,18 @@ import {
   MSegmentControlItem,
 } from '@modyolabs/react-design-system';
 
-export default function ModalRecurrentPay() {
+interface Props {
+  onAccept: (accepted: boolean) => void;
+}
+
+export default function ModalRecurrentPay(
+  {
+    onAccept,
+  }: Props,
+) {
   return (
     <MModal
-      mId="recurrentPayment"
+      mId="modalRecurrentPayment"
       centered
       static
       closeText="Cancel"
@@ -76,10 +84,12 @@ export default function ModalRecurrentPay() {
       </div>
       <div slot="footer" className="w-100 text-center">
         <MButton
+          data-bs-dismiss="modal"
           class="mb-2"
           text="Confirm"
           theme="primary"
           isPill
+          onClick={() => onAccept(true)}
         />
       </div>
     </MModal>

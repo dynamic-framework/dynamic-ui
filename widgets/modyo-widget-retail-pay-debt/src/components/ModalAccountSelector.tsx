@@ -1,23 +1,16 @@
 import { useState } from 'react';
-
 import { MButton, MListItem, MModal } from '@modyolabs/react-design-system';
 
-import type { Account } from '../hooks/useAccounts';
+import { useAppContext } from '../providers/AppContext';
+import type { Account } from '../providers/AppContext';
 
-interface Props {
-  accounts: Array<Account>;
-  selected: Account;
-  onSelect: (account: Account) => void;
-}
-
-export default function ModalAccountSelector(
-  {
+export default function ModalAccountSelector() {
+  const {
     accounts,
-    selected,
-    onSelect,
-  }: Props,
-) {
-  const [value, setValue] = useState<Account>(selected);
+    accountSelected,
+    setAccountSelected,
+  } = useAppContext();
+  const [value, setValue] = useState<Account | undefined>(accountSelected);
   return (
     <MModal
       mId="accountSelector"
@@ -38,7 +31,7 @@ export default function ModalAccountSelector(
               id: `account${account.id}`,
               name: 'radioAccounts',
               value: account.id,
-              checked: value.id === account.id,
+              checked: value?.id === account.id,
             }}
             text={`{${account.type}}`}
             subtext={account.mask}
@@ -51,7 +44,7 @@ export default function ModalAccountSelector(
           text="Confirm"
           theme="primary"
           isPill
-          onClick={() => onSelect(value)}
+          onClick={() => setAccountSelected(value)}
         />
       </div>
     </MModal>

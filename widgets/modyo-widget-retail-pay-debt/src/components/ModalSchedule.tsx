@@ -1,6 +1,20 @@
 import { MButton, MModal } from '@modyolabs/react-design-system';
 
-export default function ModalSchedule() {
+import type { Account } from '../providers/AppContext';
+
+interface Props {
+  accountSelected?: Account,
+  amountUsed?: number,
+  onAccept: (accepted: boolean) => void;
+}
+
+export default function ModalSchedule(
+  {
+    accountSelected,
+    amountUsed,
+    onAccept,
+  }: Props,
+) {
   return (
     <MModal
       mId="modalSchedulePayment"
@@ -9,22 +23,27 @@ export default function ModalSchedule() {
       noCloseButton
     >
       <div slot="header" className="m-3">
-        Schedule $ammount
+        {amountUsed && (
+          `Schedule ${amountUsed}`
+        )}
       </div>
       <div
         slot="body"
         className="d-flex flex-column justify-content-center align-items-center mx-3"
       >
-        You are scheduling to pay target2Pay from your Savings Account ··· 345
+        {accountSelected?.id && (
+          `You are scheduling to pay ${accountSelected.type} ${accountSelected.mask} from your Savings Account ··· 345`
+        )}
       </div>
       <div slot="footer" className="d-flex flex-column align-items-center w-100 m-3">
         <MButton
+          data-bs-dismiss="modal"
           class="mb-2"
           text="Schedule"
           theme="primary"
           isPill
+          onClick={() => onAccept(true)}
         />
-
         <MButton
           data-bs-dismiss="modal"
           class="mb-2"
@@ -32,6 +51,7 @@ export default function ModalSchedule() {
           theme="primary"
           variant="outline"
           isPill
+          onClick={() => onAccept(false)}
         />
       </div>
     </MModal>

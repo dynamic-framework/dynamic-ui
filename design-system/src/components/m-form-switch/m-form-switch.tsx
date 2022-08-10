@@ -7,6 +7,7 @@ import {
   Event,
   EventEmitter,
   State,
+  Watch,
 } from '@stencil/core';
 
 @Component({
@@ -34,13 +35,13 @@ export class MFormSwitch implements ComponentInterface {
   /**
    * Flag to change the check state
    */
-  @Prop() isChecked = false;
+  @Prop() isChecked?: boolean;
   /**
    * Flag to disable the input
    */
   @Prop() isDisabled = false;
 
-  @State() checked: boolean = this.isChecked;
+  @State() internalIsChecked?: boolean;
 
   /**
    * Emitted when the switch has changed
@@ -49,9 +50,18 @@ export class MFormSwitch implements ComponentInterface {
 
   private changeHandler = (event: Event) => {
     const value = (event.target as HTMLInputElement).checked;
-    this.checked = value;
+    this.internalIsChecked = value;
     this.mChange.emit(value);
   };
+
+  @Watch('isChecked')
+  watchIsCheckedHandler(newValue: boolean) {
+    this.internalIsChecked = newValue;
+  }
+
+  connectedCallback() {
+    this.internalIsChecked = this.isChecked;
+  }
 
   render() {
     return (
@@ -65,7 +75,7 @@ export class MFormSwitch implements ComponentInterface {
               {this.label}
             </label>
             <span class="form-check-label fw-bold">
-              {this.checked ? this.labelOn : this.labelOff}
+              {this.internalIsChecked ? this.labelOn : this.labelOff}
             </span>
             <input
               id={this.mId}
@@ -73,7 +83,7 @@ export class MFormSwitch implements ComponentInterface {
               class="form-check-input form-check-switch"
               type="checkbox"
               role="switch"
-              checked={this.isChecked}
+              checked={this.internalIsChecked}
               disabled={this.isDisabled}
             />
           </div>
