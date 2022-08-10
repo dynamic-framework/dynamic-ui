@@ -1,11 +1,5 @@
-import { useEffect, useState } from 'react';
-
-export type Account = {
-  id: number;
-  value: number;
-  mask: string;
-  type: string;
-};
+import { useEffect } from 'react';
+import { useAppContext } from '../providers/AppContext';
 
 const ACCOUNTS = [
   {
@@ -13,44 +7,38 @@ const ACCOUNTS = [
     value: 1200,
     mask: '+++ 654',
     type: 'Saving',
+    totalPayment: 4956,
+    minimumPayment: 200,
   },
   {
     id: 2,
     value: 1500,
     mask: '+++ 653',
     type: 'Checking',
+    totalPayment: 3250,
+    minimumPayment: 240,
   },
   {
     id: 3,
     value: 1000,
     mask: '+++ 876',
     type: 'Current',
+    totalPayment: 6853,
+    minimumPayment: 343,
   },
 ];
 
 export default function useAccounts() {
-  const [accounts, setAccounts] = useState<Array<Account>>([]);
-  const [accountSelected, setAccountSelected] = useState<Account | undefined>(undefined);
-  const [loading, setLoading] = useState(false);
-  const [isPaid, setIsPaid] = useState(false);
+  const {
+    setAccounts,
+    setAccountSelected,
+  } = useAppContext();
 
   useEffect(() => {
-    setLoading(true);
-
     const timer = setTimeout(() => {
       setAccounts(ACCOUNTS);
       setAccountSelected(ACCOUNTS[2]);
-      setLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
   }, [setAccountSelected, setAccounts]);
-
-  return {
-    loading,
-    accounts,
-    accountSelected,
-    setAccountSelected,
-    isPaid,
-    setIsPaid,
-  };
 }

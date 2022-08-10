@@ -1,69 +1,35 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useEffect, useState } from 'react';
-
+import { useState } from 'react';
 import {
   MCurrency,
   MButton,
   MFormSwitch,
   MShortcutToggle,
 } from '@modyolabs/react-design-system';
-import type { CurrencyEvent } from '@modyolabs/design-system';
 
 import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
 import ModalRecurrentPay from './ModalRecurrentPay';
+import usePaymentInput from '../hooks/usePaymentInput';
+import { useAppContext } from '../providers/AppContext';
 
-interface Props {
-  base?: number;
-  minimumPayment?: number;
-  totalPayment?: number;
-  setIsPaid: (value: boolean) => void,
-}
-
-export default function PaymentPanel(
-  {
-    base = 1000,
-    minimumPayment = 200,
-    totalPayment = 4954,
+export default function PaymentPanel() {
+  const {
     setIsPaid,
-  }: Props,
-) {
-  const [amountAvailable, setAmountAvailable] = useState(base);
-  const [amountUsed, setAmountUsed] = useState<number | undefined>(undefined);
-  const [theme, setTheme] = useState('info');
+    accountSelected,
+  } = useAppContext();
 
-  useEffect(() => {
-    setAmountAvailable(base);
-  }, [base]);
+  const {
+    amountAvailable,
+    amountUsed,
+    setAmountUsed,
+  } = usePaymentInput(accountSelected?.value);
+  const [isScheduled, setIsScheduled] = useState(false);
+  const [isRecurrent, setIsRecurrent] = useState(false);
 
-  const handlerChange = ({ detail: { amount } }: CustomEvent<CurrencyEvent>) => {
-    setAmountUsed(amount);
-  };
-
-  const handlerPaymentOption = ({ detail }: CustomEvent<string>) => {
-    console.log('Payment option selected:', detail);
-  };
-
-  useEffect(() => {
-    console.log(amountUsed);
-
-    if (amountUsed !== undefined) {
-      if (amountUsed === 0) {
-        setAmountAvailable(base);
-        setTheme('info');
-      } else {
-        setAmountAvailable(base - amountUsed);
-      }
-    }
-  }, [amountUsed, base]);
-
-  useEffect(() => {
-    if (amountAvailable >= 0) {
-      setTheme('info');
-    } else {
-      setTheme('danger');
-    }
-  }, [amountAvailable]);
+  if (!accountSelected) {
+    return <div>placeholder</div>;
+  }
 
   return (
     <>
@@ -71,38 +37,38 @@ export default function PaymentPanel(
         <MCurrency
           class="pb-4"
           mId="debtInput"
+          theme="info"
           placeholder="How much?"
-          theme={theme}
           hint={`$ ${amountAvailable} remaining`}
           iconLabel="currency-dollar"
           hintIconStart="info-circle"
           minValue={0}
-          maxValue={base}
+          maxValue={accountSelected?.value}
           variant="prime"
-          onMChange={handlerChange}
+          onMChange={({ detail: { amount } }) => setAmountUsed(amount)}
           value={amountUsed}
         />
         <div className="row g-0 m-0 p-0 pt-4 pb-2">
           <div className="col-12 justify-content-between scroll-h pb-2 mx-auto">
             <MShortcutToggle
               key="1"
-              {...minimumPayment === 0 && { state: 'disabled' }}
+              {...accountSelected.minimumPayment === 0 && { state: 'disabled' }}
               mId="minimumOption"
               name="paymentOption"
               label="Minimum"
-              text={minimumPayment.toString()}
+              text={accountSelected.minimumPayment.toString()}
               value="minimumOption"
-              onMChange={handlerPaymentOption}
+              onMChange={() => setAmountUsed(accountSelected.minimumPayment)}
             />
             <MShortcutToggle
               key="2"
-              {...minimumPayment === 0 && { state: 'disabled' }}
+              {...accountSelected.minimumPayment === 0 && { state: 'disabled' }}
               mId="totalOption"
               name="paymentOption"
               label="Total"
-              text={totalPayment.toString()}
+              text={accountSelected.totalPayment.toString()}
               value="totalOption"
-              onMChange={handlerPaymentOption}
+              onMChange={() => setAmountUsed(accountSelected.totalPayment)}
             />
             <MShortcutToggle
               key="3"
@@ -110,13 +76,12 @@ export default function PaymentPanel(
               name="paymentOption"
               label="Payment Alternatives"
               text="..."
-              {...minimumPayment === 0 && { state: 'disabled' }}
-              {...minimumPayment > 0 && {
+              {...accountSelected.minimumPayment === 0 && { state: 'disabled' }}
+              {...accountSelected.minimumPayment > 0 && {
                 'data-bs-toggle': 'modal',
                 'data-bs-target': '#paymentAlt',
               }}
               value="alternativeOption"
-              onMChange={handlerPaymentOption}
             />
           </div>
         </div>
@@ -127,13 +92,15 @@ export default function PaymentPanel(
           >
             <div
               className="px-3 py-2 border rounded-1 mb-2"
+              data-bs-toggle="modal"
+              data-bs-target="#modalSchedulePayment"
             >
               <MFormSwitch
-                data-bs-toggle="modal"
-                data-bs-target="#modalSchedulePayment"
                 class="d-inline-flex"
                 mId="schedulePayment"
                 label="Schedule"
+                isDisabled
+                isChecked={isScheduled}
               />
               <p
                 className="small m-0 text-info"
@@ -143,13 +110,15 @@ export default function PaymentPanel(
             </div>
             <div
               className="px-3 py-2 border rounded-1 mb-2"
+              data-bs-toggle="modal"
+              data-bs-target="#modalRecurrentPayment"
             >
               <MFormSwitch
-                data-bs-toggle="modal"
-                data-bs-target="#recurrentPayment"
                 class="d-inline-flex"
-                mId="reucrrentPayment"
+                mId="recurrentPayment"
                 label="Recurrent"
+                isDisabled
+                isChecked={isRecurrent}
               />
               <p
                 className="small m-0 text-info"
@@ -173,7 +142,7 @@ export default function PaymentPanel(
           className="d-flex justify-content-center pt-4"
         >
           <MButton
-            {...minimumPayment === 0 && { state: 'disabled' }}
+            {...accountSelected.minimumPayment === 0 && { state: 'disabled' }}
             onMClick={() => setIsPaid(true)}
             text="Pay"
             theme="primary-gradient"
@@ -183,8 +152,12 @@ export default function PaymentPanel(
         </div>
       </div>
       <ModalPaymentAlternatives />
-      <ModalSchedule />
-      <ModalRecurrentPay />
+      <ModalSchedule
+        accountSelected={accountSelected}
+        amountUsed={amountUsed}
+        onAccept={setIsScheduled}
+      />
+      <ModalRecurrentPay onAccept={setIsRecurrent} />
     </>
   );
 }
