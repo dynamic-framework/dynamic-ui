@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/base.scss';
 
 import '@modyolabs/design-system/dist/design-system/design-system.css';
+
+import './styles/base.scss';
+import './config/liquidConfig';
+import './config/i18nConfig';
 
 import App from './App';
 import AppContextProvider from './providers/AppContext';

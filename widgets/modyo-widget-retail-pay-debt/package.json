@@ -17,7 +17,10 @@
     "react-scripts": "5.0.1",
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.4",
-    "sass": "~1.54.0"
+    "sass": "~1.54.0",
+    "react-i18next": "~11.18.3",
+    "i18next": "~21.9.0",
+    "liquidjs": "^9.39.2"
   },
   "devDependencies": {
     "@craco/craco": "^7.0.0-alpha.3",

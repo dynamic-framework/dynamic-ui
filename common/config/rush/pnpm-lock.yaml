@@ -17,6 +17,7 @@ importers:
       '@stencil/vue-output-target': ^0.6.0
       '@types/bootstrap': ^5.1.12
       '@types/jest': ^27.0.3
+      '@types/node': ^18.7.1
       '@typescript-eslint/eslint-plugin': ^4.23.0
       '@typescript-eslint/parser': ^4.23.0
       autoprefixer: ^10.4.7
@@ -30,6 +31,7 @@ importers:
       jest: ^27.4.5
       jest-cli: ^27.4.5
       lint-staged: ^12.4.1
+      liquidjs: ^9.39.2
       puppeteer: ^14.0.0
       sass: ^1.51.0
       stylelint: ^14.8.2
@@ -39,6 +41,7 @@ importers:
       '@popperjs/core': 2.11.5
       '@stencil/core': 2.17.3
       bootstrap: 5.2.0-beta1_@popperjs+core@2.11.5
+      liquidjs: 9.39.2
     devDependencies:
       '@stencil/angular-output-target': 0.4.0_@stencil+core@2.17.3
       '@stencil/eslint-plugin': 0.4.0_55de8b811f43e817ce48e89b535a0555
@@ -48,6 +51,7 @@ importers:
       '@stencil/vue-output-target': 0.6.1_@stencil+core@2.17.3
       '@types/bootstrap': 5.1.12
       '@types/jest': 27.5.2
+      '@types/node': 18.7.1
       '@typescript-eslint/eslint-plugin': 4.33.0_cc617358c89d3f38c52462f6d809db4c
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.4.4
       autoprefixer: 10.4.7
@@ -108,11 +112,13 @@ importers:
       '@types/react': ^18.0.8
       '@types/react-datepicker': ~4.4.2
       '@types/react-dom': ^18.0.3
+      i18next: ~21.9.0
       jest: ^26.1.0
       react: ^18.1.0
       react-content-loader: ~6.2.0
       react-datepicker: ~4.8.0
       react-dom: ^18.1.0
+      react-i18next: ~11.18.3
       rimraf: ^2.6.3
       rollup: ^2.72.1
       tslib: ^2.4.0
@@ -120,6 +126,7 @@ importers:
     dependencies:
       '@modyolabs/design-system': link:../../design-system
       '@types/react-datepicker': 4.4.2_react-dom@18.2.0+react@18.2.0
+      i18next: 21.9.0
       react-content-loader: 6.2.0_react@18.2.0
       react-datepicker: 4.8.0_react-dom@18.2.0+react@18.2.0
     devDependencies:
@@ -133,6 +140,7 @@ importers:
       jest: 26.6.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-i18next: 11.18.3_275196c95c51eb60330623a601fda6ca
       rimraf: 2.7.1
       rollup: 2.75.7
       tslib: 2.4.0
@@ -249,8 +257,11 @@ importers:
       eslint-plugin-jsx-a11y: ^6.5.1
       eslint-plugin-react: ^7.28.0
       eslint-plugin-react-hooks: ^4.3.0
+      i18next: ~21.9.0
+      liquidjs: ^9.39.2
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-i18next: ~11.18.3
       react-scripts: 5.0.1
       sass: ~1.54.0
       typescript: ^4.6.4
@@ -266,8 +277,11 @@ importers:
       '@types/node': 16.11.43
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
+      i18next: 21.9.0
+      liquidjs: 9.39.2
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-i18next: 11.18.3_275196c95c51eb60330623a601fda6ca
       react-scripts: 5.0.1_a56d7c7dad20aa83be1f870efe40a3ad
       sass: 1.54.0
       typescript: 4.7.4
@@ -4507,6 +4521,10 @@ packages:
 
   /@types/node/18.0.1:
     resolution: {integrity: sha512-CmR8+Tsy95hhwtZBKJBs0/FFq4XX7sDZHlGGf+0q+BRZfMbOTkzkj0AFAuTyXbObDIoanaBBW0+KEW+m3N16Wg==}
+
+  /@types/node/18.7.1:
+    resolution: {integrity: sha512-GKX1Qnqxo4S+Z/+Z8KKPLpH282LD7jLHWJcVryOflnsnH+BtSDfieR6ObwBMwpnNws0bUK8GI7z0unQf9bARNQ==}
+    dev: true
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -9968,6 +9986,11 @@ packages:
       relateurl: 0.2.7
       terser: 5.14.1
 
+  /html-parse-stringify/3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+
   /html-tags/2.0.0:
     resolution: {integrity: sha512-+Il6N8cCo2wB/Vd3gqy/8TZhTD3QvcVeQLCnZiGkGCH3JP28IgGAY41giccp2W4R3jfyJPAP318FQTa1yU7K7g==}
     engines: {node: '>=4'}
@@ -10159,6 +10182,12 @@ packages:
     dependencies:
       ms: 2.1.3
     dev: true
+
+  /i18next/21.9.0:
+    resolution: {integrity: sha512-B+6/yd7rCpJidyPuBaEApUECx7G8Ai6+tqYhrChsY4MmQqJhG7qJ4eT6Lm1OnRhieVelEtfxh4aAQktdNVZtDA==}
+    dependencies:
+      '@babel/runtime': 7.18.6
+    dev: false
 
   /iconv-lite/0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -12079,6 +12108,12 @@ packages:
     transitivePeerDependencies:
       - enquirer
     dev: true
+
+  /liquidjs/9.39.2:
+    resolution: {integrity: sha512-7fdd8hn7U/FUANGWaBbF41LmsRS40uXj/jFldyddYqgLDGMyZSYJsajOvZIZGkAxJdUYbZksrHRU4Q8kg8sTPg==}
+    engines: {node: '>=4.8.7'}
+    hasBin: true
+    dev: false
 
   /listr2/4.0.5:
     resolution: {integrity: sha512-juGHV1doQdpNT3GSTs9IUN43QJb7KHdF9uqg7Vufs/tG9VTzpFphqF4pm/ICdAABGQxsyNn9CiYA3StkI6jpwA==}
@@ -14940,6 +14975,25 @@ packages:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
     dev: false
 
+  /react-i18next/11.18.3_275196c95c51eb60330623a601fda6ca:
+    resolution: {integrity: sha512-EttTX31HbqzZymUM3SIrMPuvamfSXFZVsDHm/ZAqoDfTLjhzlwyxqfbDNxcKNAGOi2mjZaXfR7hSNMlvLNpB/g==}
+    peerDependencies:
+      i18next: '>= 19.0.0'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.18.6
+      html-parse-stringify: 3.0.1
+      i18next: 21.9.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -17412,6 +17466,10 @@ packages:
     resolution: {integrity: sha512-qZKX4RnBzH2ugr8Lxa7x+0V6XD9Sb/ouARtiasEQCHB1EVU4NXtmHsDDrx1dO4ne5fc3J6EW05BP1Dl0z0iung==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /void-elements/3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
 
   /vue-content-loader/2.0.1_vue@3.2.37:
     resolution: {integrity: sha512-pkof4+q2xmzNEdhqelxtJejeP/vQUJtLle4/v2ueG+HURqM9Q/GIGC8GJ2bVVWeLfTDET51jqimwQdmxJTlu0g==}
