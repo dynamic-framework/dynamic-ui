@@ -1,17 +1,22 @@
-/* eslint-disable react/jsx-no-bind */
 import {
   MButton,
   MIcon,
   MListItem,
 } from '@modyolabs/react-design-system';
 
+import { useAppContext } from '../providers/AppContext';
+
 export default function PaymentResult() {
+  const {
+    cardToPay,
+    amountUsed,
+  } = useAppContext();
+
   return (
     <div className="container">
       <div className="d-flex justify-content-between align-items-center py-4 px-1">
         <MButton iconLeft="arrow-left" isPill theme="info" variant="text" />
         <h6 className="fw-bold m-0 flex-grow-1 text-center">Recipient</h6>
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <MButton iconLeft="share" isPill theme="tertiary" variant="ghost" />
       </div>
       <div className="d-flex flex-column align-items-center gap-4">
@@ -26,9 +31,7 @@ export default function PaymentResult() {
             </h5>
           </div>
           <div className="d-flex flex-column gap-1 text-center p-3 border-1 border-bottom">
-            <span className="text-gray fw-bold">
-              $38.00
-            </span>
+            <span className="text-gray fw-bold">{`$ ${amountUsed ?? 0}`}</span>
             <small className="text-dark">
               Money payed
             </small>
@@ -38,7 +41,7 @@ export default function PaymentResult() {
           >
             <MListItem
               text="Product Payed"
-              value="{Aliasname}"
+              value={`${cardToPay.franchise} ${cardToPay.mask}`}
             />
             <MListItem
               text="Transaction ID"

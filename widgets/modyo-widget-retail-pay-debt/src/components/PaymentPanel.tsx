@@ -12,12 +12,13 @@ import ModalSchedule from './ModalSchedule';
 import ModalRecurrentPay from './ModalRecurrentPay';
 import usePaymentInput from '../hooks/usePaymentInput';
 import { useAppContext } from '../providers/AppContext';
+import ModalConfirmPayment from './ModalConfirmPayment';
 
 export default function PaymentPanel() {
   const {
-    setIsPaid,
     accountSelected,
     cardToPay,
+    setIsPaid,
   } = useAppContext();
 
   const {
@@ -144,7 +145,8 @@ export default function PaymentPanel() {
         >
           <MButton
             {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
-            onMClick={() => setIsPaid(true)}
+            data-bs-toggle="modal"
+            data-bs-target="#modalConfirmPayment"
             text="Pay"
             theme="primary-gradient"
             isPill
@@ -160,6 +162,12 @@ export default function PaymentPanel() {
         onAccept={setIsScheduled}
       />
       <ModalRecurrentPay onAccept={setIsRecurrent} />
+      <ModalConfirmPayment
+        setIsPaid={setIsPaid}
+        amountUsed={amountUsed}
+        accountSelected={accountSelected}
+        cardToPay={cardToPay}
+      />
     </>
   );
 }

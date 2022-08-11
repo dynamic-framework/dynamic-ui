@@ -22,8 +22,16 @@ export type Card = {
   minimumPayment: number;
 };
 
+const CARD_TO_PAY = {
+  id: 1,
+  franchise: 'Visa',
+  mask: '*** 456',
+  totalPayment: 3250,
+  minimumPayment: 240,
+};
+
 type AppContextType = {
-  cardToPay?: Card;
+  cardToPay: Card;
   setCardToPay: Dispatch<Card>;
   accounts: Array<Account>;
   setAccounts: Dispatch<Array<Account>>;
@@ -41,7 +49,7 @@ export const useAppContext = () => useContext(AppContext) as AppContextType;
 
 export default function AppContextProvider({ children }: PropsWithChildren) {
   const [accounts, setAccounts] = useState<Array<Account>>([]);
-  const [cardToPay, setCardToPay] = useState<Card | undefined>(undefined);
+  const [cardToPay, setCardToPay] = useState<Card>(CARD_TO_PAY);
   const [accountSelected, setAccountSelected] = useState<Account | undefined>(undefined);
   const [amountUsed, setAmountUsed] = useState<number | undefined>(undefined);
   const [isPaid, setIsPaid] = useState<boolean>(false);
