@@ -12,6 +12,7 @@ import type { Account } from '../providers/AppContext';
 
 export default function Payment() {
   const {
+    cardToPay,
     accounts,
     accountSelected,
     setAccountSelected,
@@ -22,7 +23,12 @@ export default function Payment() {
         <div className="pb-3 px-4">
           <div className="d-flex justify-content-between align-items-center mb-5 mt-4">
             <MButton iconLeft="arrow-left" isPill theme="info" variant="text" />
-            <h6 className="fw-bold m-0 flex-grow-1 text-center">Paying Visa ···456</h6>
+            <h6 className="fw-bold m-0 flex-grow-1 text-center">
+              Paying
+              { ' ' }
+              { cardToPay?.franchise }
+              { cardToPay?.mask}
+            </h6>
           </div>
           {accountSelected && (
             <MButton
@@ -48,13 +54,13 @@ export default function Payment() {
             }
           />
           <MListItem value="12/31/22" text="Pay until" class="mb-2 p-1" />
-          {!!accountSelected?.totalPayment && (
-            <MListItem value={accountSelected.totalPayment} text="To be payed" class="p-1" />
+          {!!cardToPay?.totalPayment && (
+            <MListItem value={cardToPay.totalPayment} text="To be payed" class="p-1" />
           )}
         </div>
         <PaymentPanel />
       </div>
-      {(accountSelected && accountSelected?.minimumPayment <= 0) && (
+      {(cardToPay && cardToPay?.minimumPayment <= 0) && (
         <div className="alerta fixed-bottom p-3 w-100">
           <MAlert icon close theme="info">
             You have nothing to pay yet

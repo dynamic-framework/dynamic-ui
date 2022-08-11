@@ -17,6 +17,7 @@ export default function PaymentPanel() {
   const {
     setIsPaid,
     accountSelected,
+    cardToPay,
   } = useAppContext();
 
   const {
@@ -27,7 +28,7 @@ export default function PaymentPanel() {
   const [isScheduled, setIsScheduled] = useState(false);
   const [isRecurrent, setIsRecurrent] = useState(false);
 
-  if (!accountSelected) {
+  if (!accountSelected || !cardToPay) {
     return <div>placeholder</div>;
   }
 
@@ -52,23 +53,23 @@ export default function PaymentPanel() {
           <div className="col-12 justify-content-between scroll-h pb-2 mx-auto">
             <MShortcutToggle
               key="1"
-              {...accountSelected.minimumPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
               mId="minimumOption"
               name="paymentOption"
               label="Minimum"
-              text={accountSelected.minimumPayment.toString()}
+              text={cardToPay.minimumPayment.toString()}
               value="minimumOption"
-              onMChange={() => setAmountUsed(accountSelected.minimumPayment)}
+              onMChange={() => setAmountUsed(cardToPay.minimumPayment)}
             />
             <MShortcutToggle
               key="2"
-              {...accountSelected.minimumPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
               mId="totalOption"
               name="paymentOption"
               label="Total"
-              text={accountSelected.totalPayment.toString()}
+              text={cardToPay.totalPayment.toString()}
               value="totalOption"
-              onMChange={() => setAmountUsed(accountSelected.totalPayment)}
+              onMChange={() => setAmountUsed(cardToPay.totalPayment)}
             />
             <MShortcutToggle
               key="3"
@@ -76,8 +77,8 @@ export default function PaymentPanel() {
               name="paymentOption"
               label="Payment Alternatives"
               text="..."
-              {...accountSelected.minimumPayment === 0 && { state: 'disabled' }}
-              {...accountSelected.minimumPayment > 0 && {
+              {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.minimumPayment > 0 && {
                 'data-bs-toggle': 'modal',
                 'data-bs-target': '#paymentAlt',
               }}
@@ -142,7 +143,7 @@ export default function PaymentPanel() {
           className="d-flex justify-content-center pt-4"
         >
           <MButton
-            {...accountSelected.minimumPayment === 0 && { state: 'disabled' }}
+            {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
             onMClick={() => setIsPaid(true)}
             text="Pay"
             theme="primary-gradient"
@@ -153,6 +154,7 @@ export default function PaymentPanel() {
       </div>
       <ModalPaymentAlternatives />
       <ModalSchedule
+        cardToPay={cardToPay}
         accountSelected={accountSelected}
         amountUsed={amountUsed}
         onAccept={setIsScheduled}
