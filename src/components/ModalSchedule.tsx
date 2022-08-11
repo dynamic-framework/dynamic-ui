@@ -1,15 +1,17 @@
 import { MButton, MModal } from '@modyolabs/react-design-system';
 
-import type { Account } from '../providers/AppContext';
+import type { Account, Card } from '../providers/AppContext';
 
 interface Props {
   accountSelected?: Account,
   amountUsed?: number,
   onAccept: (accepted: boolean) => void;
+  cardToPay: Card;
 }
 
 export default function ModalSchedule(
   {
+    cardToPay,
     accountSelected,
     amountUsed,
     onAccept,
@@ -32,7 +34,7 @@ export default function ModalSchedule(
         className="d-flex flex-column justify-content-center align-items-center mx-3"
       >
         {accountSelected?.id && (
-          `You are scheduling to pay ${accountSelected.type} ${accountSelected.mask} from your Savings Account ··· 345`
+          `You are scheduling to pay ${cardToPay.franchise} ${cardToPay.mask} from your ${accountSelected.type} ${accountSelected.mask}`
         )}
       </div>
       <div slot="footer" className="d-flex flex-column align-items-center w-100 m-3">
