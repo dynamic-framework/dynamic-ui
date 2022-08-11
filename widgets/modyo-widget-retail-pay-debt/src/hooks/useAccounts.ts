@@ -21,28 +21,17 @@ const ACCOUNTS = [
     type: 'Current',
   },
 ];
-
-const CARD_TO_PAY = {
-  id: 1,
-  franchise: 'Visa',
-  mask: '*** 456',
-  totalPayment: 3250,
-  minimumPayment: 240,
-};
-
 export default function useAccounts() {
   const {
-    setCardToPay,
     setAccounts,
     setAccountSelected,
   } = useAppContext();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setCardToPay(CARD_TO_PAY);
       setAccounts(ACCOUNTS);
       setAccountSelected(ACCOUNTS[2]);
     }, 1000);
     return () => clearTimeout(timer);
-  }, [setAccountSelected, setAccounts, setCardToPay]);
+  }, [setAccountSelected, setAccounts]);
 }
