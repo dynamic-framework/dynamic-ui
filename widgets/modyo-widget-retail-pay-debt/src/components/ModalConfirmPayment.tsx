@@ -35,7 +35,7 @@ export default function ModalConfirmPayment(
         className="d-flex flex-column justify-content-center align-items-start px-3 gap-3"
       >
         {accountSelected?.id && (
-          `You are scheduling to pay ${cardToPay.franchise} ${cardToPay.mask} from your ${accountSelected.type} ${accountSelected.mask}`
+          `You are paying ${cardToPay.franchise} ${cardToPay.mask} from your ${accountSelected.type} ${accountSelected.mask}`
         )}
       </div>
       <div slot="footer" className="d-flex align-items-center w-100 m-3">
