@@ -12,11 +12,27 @@ export type Account = {
   value: number;
   mask: string;
   type: string;
+};
+
+export type Card = {
+  id: number;
+  franchise: string;
+  mask: string;
   totalPayment: number;
   minimumPayment: number;
 };
 
+const CARD_TO_PAY = {
+  id: 1,
+  franchise: 'Visa',
+  mask: '*** 456',
+  totalPayment: 3250,
+  minimumPayment: 240,
+};
+
 type AppContextType = {
+  cardToPay: Card;
+  setCardToPay: Dispatch<Card>;
   accounts: Array<Account>;
   setAccounts: Dispatch<Array<Account>>;
   accountSelected?: Account;
@@ -33,11 +49,14 @@ export const useAppContext = () => useContext(AppContext) as AppContextType;
 
 export default function AppContextProvider({ children }: PropsWithChildren) {
   const [accounts, setAccounts] = useState<Array<Account>>([]);
+  const [cardToPay, setCardToPay] = useState<Card>(CARD_TO_PAY);
   const [accountSelected, setAccountSelected] = useState<Account | undefined>(undefined);
   const [amountUsed, setAmountUsed] = useState<number | undefined>(undefined);
   const [isPaid, setIsPaid] = useState<boolean>(false);
 
   const value = useMemo(() => ({
+    cardToPay,
+    setCardToPay,
     accounts,
     setAccounts,
     accountSelected,
@@ -46,7 +65,7 @@ export default function AppContextProvider({ children }: PropsWithChildren) {
     setAmountUsed,
     isPaid,
     setIsPaid,
-  }), [accountSelected, accounts, amountUsed, isPaid]);
+  }), [accountSelected, accounts, amountUsed, isPaid, cardToPay]);
 
   return (
     <AppContext.Provider value={value}>
