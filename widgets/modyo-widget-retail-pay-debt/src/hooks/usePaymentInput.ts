@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useAppContext } from '../providers/AppContext';
 
 export default function usePaymentInput(defaultAmountAvailable = 0) {
+  const {
+    amountUsed,
+    setAmountUsed,
+  } = useAppContext();
+
   const [amountAvailable, setAmountAvailable] = useState<number>(defaultAmountAvailable);
-  const [amountUsed, setAmountUsed] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     setAmountAvailable(defaultAmountAvailable);
