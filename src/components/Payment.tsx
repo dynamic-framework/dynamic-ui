@@ -25,9 +25,9 @@ export default function Payment() {
             <MButton iconLeft="arrow-left" isPill theme="info" variant="text" />
             <h6 className="fw-bold m-0 flex-grow-1 text-center">
               Paying
-              { ' ' }
-              { cardToPay?.franchise }
-              { cardToPay?.mask}
+              {' '}
+              {cardToPay.franchise}
+              {cardToPay.mask}
             </h6>
           </div>
           {accountSelected && (
@@ -54,13 +54,11 @@ export default function Payment() {
             }
           />
           <MListItem value="12/31/22" text="Pay until" class="mb-2 p-1" />
-          {!!cardToPay?.totalPayment && (
-            <MListItem value={cardToPay.totalPayment} text="To be payed" class="p-1" />
-          )}
+          <MListItem value={cardToPay.totalPayment} text="To be payed" class="p-1" />
         </div>
         <PaymentPanel />
       </div>
-      {(cardToPay && cardToPay?.minimumPayment <= 0) && (
+      {cardToPay.minimumPayment <= 0 && (
         <div className="alerta fixed-bottom p-3 w-100">
           <MAlert icon close theme="info">
             You have nothing to pay yet
