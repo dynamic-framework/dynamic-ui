@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-class LiquidParserClass {
-  /** context of liquid drops in local */
-  private library: any = {};
-  private engine;
+export default {
+  library: {},
+  engine: undefined as any,
+  useEngine: false,
+  init(library: any, useEngine = false) {
+    this.library = library;
+    this.useEngine = useEngine;
 
-  constructor() {
-    if (process.env.NODE_ENV !== 'production') {
+    if (this.useEngine) {
       // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
       const Liquid = require('liquidjs');
       this.engine = new Liquid.Liquid({
@@ -13,53 +15,41 @@ class LiquidParserClass {
         strictVariables: true,
       });
     }
-  }
-
-  setLibrary(library: any) {
-    this.library = library;
-  }
-
+  },
   /**
    * Parse a liquid string
    * @param liquidString Target Content Space UID
    * @returns a usable object or string
    */
-  async parseLiquidAsync(liquidString: string) {
+  async parseLiquidAsync(liquidString: string): Promise<string> {
     try {
       return this.engine.parseAndRender(liquidString, this.library);
-    } catch (error) {
-      return error;
+    } catch (error: any) {
+      return error.message;
     }
-  }
-
+  },
   /**
    * Parse a liquid string
    * @param liquidString Target Content Space UID
    * @returns a usable object or string
    */
-  parseLiquid(liquidString: string) {
+  parseLiquid(liquidString: string): string {
     try {
       return this.engine.parseAndRenderSync(liquidString, this.library);
-    } catch (error) {
-      return error;
+    } catch (error: any) {
+      return error.message;
     }
-  }
-
-  parse(liquidString: string) {
-    if (process.env.NODE_ENV !== 'production') {
+  },
+  parse(liquidString: string): string {
+    if (this.useEngine) {
       return this.parseLiquid(liquidString);
     }
     return liquidString;
-  }
-
-  parseAsync(liquidString: string) {
-    if (process.env.NODE_ENV !== 'production') {
+  },
+  async parseAsync(liquidString: string): Promise<string> {
+    if (this.useEngine) {
       return this.parseLiquidAsync(liquidString);
     }
     return liquidString;
-  }
-}
-
-const liquidParser = new LiquidParserClass();
-
-export default liquidParser;
+  },
+};
