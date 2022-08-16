@@ -65,7 +65,7 @@ export default function Payment() {
         </div>
         <PaymentPanel />
       </div>
-      {(cardToPay && cardToPay?.minimumPayment <= 0) && (
+      {cardToPay.minimumPayment <= 0 && (
         <div className="alerta fixed-bottom p-3 w-100">
           <MAlert icon close theme="info">
             {t('alert.noPay')}

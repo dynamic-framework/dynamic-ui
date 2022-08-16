@@ -1,7 +1,5 @@
-import liquidParser from '../shame/liquidParser';
+import { liquidParser } from '@modyolabs/design-system';
 
 import liquidConfig from './liquid.json';
 
-// eslint-disable-next-line max-len
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-liquidParser.setLibrary(liquidConfig);
+liquidParser.init(liquidConfig, process.env.NODE_ENV !== 'production');

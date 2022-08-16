@@ -31,7 +31,7 @@ export default function PaymentPanel() {
   const [isScheduled, setIsScheduled] = useState(false);
   const [isRecurrent, setIsRecurrent] = useState(false);
 
-  if (!accountSelected || !cardToPay) {
+  if (!accountSelected) {
     return <div>placeholder</div>;
   }
 
