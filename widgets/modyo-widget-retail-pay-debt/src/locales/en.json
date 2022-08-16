@@ -1,6 +1,6 @@
 {
   "cardToPay": "Paying {{{ card }}}",
-  "payFrom": "From {{{ product }}}",
+  "payFrom": "From: {{{ product }}}",
   "payUntil": "Pay until",
   "toBePayed": "To be payed",
   "currencyInput": {
