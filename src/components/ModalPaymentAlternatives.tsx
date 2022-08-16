@@ -1,6 +1,9 @@
 import { MButton, MModal, MQuickAction } from '@modyolabs/react-design-system';
+import { useTranslation } from 'react-i18next';
 
 export default function ModalPaymentAlternatives() {
+  const { t } = useTranslation();
+
   return (
     <MModal
       mId="paymentAlt"
@@ -16,29 +19,29 @@ export default function ModalPaymentAlternatives() {
           data-bs-dismiss="modal"
           class="w-100"
           icon=""
-          text="Skip installement"
-          subtext="2 grace month remaining"
+          text={t('modal.paymentAlternatives.skip')}
+          subtext={t('modal.paymentAlternatives.skipLabel')}
         />
         <MQuickAction
           variant="extended"
           data-bs-dismiss="modal"
           class="w-100"
           icon=""
-          text="Flexible payment"
-          subtext="Pay debt in installements"
+          text={t('modal.paymentAlternatives.flexible')}
+          subtext={t('modal.paymentAlternatives.flexibleLabel')}
         />
         <MQuickAction
           variant="extended"
           data-bs-dismiss="modal"
           class="w-100"
           icon=""
-          text="Renegotiate debt"
-          subtext="Pay your total future debt"
+          text={t('modal.paymentAlternatives.renegotiate')}
+          subtext={t('modal.paymentAlternatives.renegotiateLabel')}
         />
         <MButton
           data-bs-dismiss="modal"
           class="my-4"
-          text="Cancel"
+          text={t('button.cancel')}
           theme="primary"
           isPill
         />

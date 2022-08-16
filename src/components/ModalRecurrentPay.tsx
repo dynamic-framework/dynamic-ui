@@ -4,6 +4,7 @@ import {
   MSegmentControl,
   MSegmentControlItem,
 } from '@modyolabs/react-design-system';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onAccept: (accepted: boolean) => void;
@@ -14,6 +15,8 @@ export default function ModalRecurrentPay(
     onAccept,
   }: Props,
 ) {
+  const { t } = useTranslation();
+
   return (
     <MModal
       mId="modalRecurrentPayment"

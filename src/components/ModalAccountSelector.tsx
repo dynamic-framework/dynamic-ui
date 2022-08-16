@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MButton, MListItem, MModal } from '@modyolabs/react-design-system';
+import { useTranslation } from 'react-i18next';
 
 import { useAppContext } from '../providers/AppContext';
 import type { Account } from '../providers/AppContext';
@@ -11,6 +12,8 @@ export default function ModalAccountSelector() {
     setAccountSelected,
   } = useAppContext();
   const [value, setValue] = useState<Account | undefined>(accountSelected);
+  const { t } = useTranslation();
+
   return (
     <MModal
       mId="accountSelector"
@@ -33,7 +36,7 @@ export default function ModalAccountSelector() {
               value: account.id,
               checked: value?.id === account.id,
             }}
-            text={`{${account.type}}`}
+            text={`${account.type}`}
             subtext={account.mask}
             onClick={() => setValue(account)}
           />
@@ -41,7 +44,7 @@ export default function ModalAccountSelector() {
         <MButton
           data-bs-dismiss="modal"
           class="my-4"
-          text="Confirm"
+          text={t('button.confirm')}
           theme="primary"
           isPill
           onClick={() => setAccountSelected(value)}

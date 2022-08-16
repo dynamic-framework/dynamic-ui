@@ -1,3 +1,79 @@
 {
-  "test": "prueba"
+  "cardToPay": "Paying {{{ card }}}",
+  "payFrom": "From: {{{ product }}}",
+  "payUntil": "Pay until",
+  "toBePayed": "To be payed",
+  "currencyInput": {
+    "placeholder": "How much?",
+    "remainingValid": "{{{ remaining }}} remaining",
+    "remainingInvalid": "Number not allowed"
+  },
+  "shortCutToggle": {
+    "minimum": "Minimum",
+    "total": "Total",
+    "paymentAlternative": "Payments Alternatives"
+  },
+  "collapse": {
+    "moreOptions": "More Options",
+    "lessOptions": "Less Options",
+    "schedule": "Schedule",
+    "recurrent": "Recurrent",
+    "yesLabel": "Yes",
+    "noLabel": "No",
+    "noScheduleLabel": "This payment will be instant",
+    "noRecurrentLabel": "This payment will not auto-repeat",
+    "yesScheduleLabel": "{{date}}",
+    "yesRecurrentLabel": "This payment will auto-repeat"
+  },
+  "button": {
+    "pay": "Pay",
+    "schedule": "Schedule",
+    "cancel": "Cancel",
+    "back": "Back",
+    "confirm": "Confirm"
+  },
+  "alert": {
+    "schedule": "You are scheduling to pay the X amount on that date",
+    "notPay": "You have nothing to pay yet"
+  },
+  "modal": {
+    "paymentAlternatives": {
+      "skip": "Skip installment",
+      "skipLabel": "2 grace month remaining",
+      "flexible": "Flexible payment",
+      "flexibleLabel": "Pay debt in installments",
+      "renegotiate": "Renegotiate debt",
+      "renegotiateLabel": "Pay your total future debt"
+    },
+    "pay": {
+      "title": "Pay {{{amount}}}?",
+      "text": "You are paying {{{card}}} from your {{{product}}}"
+    },
+    "schedule": {
+      "title": "Schedule {{{amount}}}?",
+      "text": "You are scheduling to pay {{{card}}} from your {{{product}}}"
+    },
+    "recurrent": {
+      "title": "Recurrent",
+      "repeat": "Repeat",
+      "weekly": "weekly",
+      "monthly": "Monthly",
+      "custom": "Custom",
+      "ends": "Ends",
+      "never": "Never",
+      "date": "Date",
+      "occurrences": "Occurrences"
+    }
+  },
+  "paid": {
+    "success": "Payment successful",
+    "moneyPayed": "Money paid",
+    "productPayed": "Product paid",
+    "transactionId": "Transaction ID",
+    "timeDate": "Time & Date",
+    "terms": {
+      "text": "All your transactions are safe and fast.",
+      "link": "Terms & Conditions."
+    }
+  }
 }

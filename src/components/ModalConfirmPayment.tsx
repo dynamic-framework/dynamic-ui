@@ -1,4 +1,5 @@
 import { MButton, MModal } from '@modyolabs/react-design-system';
+import { useTranslation } from 'react-i18next';
 import type { Account, Card } from '../providers/AppContext';
 
 interface Props {
@@ -16,6 +17,8 @@ export default function ModalConfirmPayment(
     cardToPay,
   }: Props,
 ) {
+  const { t } = useTranslation();
+
   return (
     <MModal
       mId="modalConfirmPayment"
@@ -26,7 +29,7 @@ export default function ModalConfirmPayment(
       <div slot="header" className="p-3">
         <h5>
           {amountUsed && (
-            `Pay ${amountUsed}`
+            t('modal.pay.title', { amount: amountUsed })
           )}
         </h5>
       </div>
@@ -35,14 +38,17 @@ export default function ModalConfirmPayment(
         className="d-flex flex-column justify-content-center align-items-start px-3 gap-3"
       >
         {accountSelected?.id && (
-          `You are scheduling to pay ${cardToPay.franchise} ${cardToPay.mask} from your ${accountSelected.type} ${accountSelected.mask}`
+          t('modal.pay.text', {
+            card: `${cardToPay.franchise} ${cardToPay.mask}`,
+            product: `${accountSelected.type} ${accountSelected.mask}`,
+          })
         )}
       </div>
       <div slot="footer" className="d-flex align-items-center w-100 m-3">
         <MButton
           data-bs-dismiss="modal"
           class="mb-2"
-          text="Cancel"
+          text={t('button.cancel')}
           theme="primary"
           variant="outline"
           isPill
@@ -50,7 +56,7 @@ export default function ModalConfirmPayment(
         <MButton
           data-bs-dismiss="modal"
           class="mb-2"
-          text="Pay"
+          text={t('button.pay')}
           theme="primary"
           isPill
           onClick={() => setIsPaid(true)}
