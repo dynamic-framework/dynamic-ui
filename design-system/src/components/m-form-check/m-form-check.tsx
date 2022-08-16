@@ -4,7 +4,11 @@ import {
   h,
   Prop,
   ComponentInterface,
+  Event,
+  EventEmitter,
 } from '@stencil/core';
+
+import { ClassMap } from '../../utils/component-interface';
 
 import type { FormCheckType, FormCheckState } from './m-form-check-interface';
 
@@ -54,34 +58,68 @@ export class MFormCheck implements ComponentInterface {
    * A string representing the value of the checkbox or radio
    */
   @Prop() value?: string;
+  /**
+   * Set checkbox as toggle button
+   */
+  @Prop() isButton = false;
 
-  private innerInput = (
-    <input
-      class={`form-check-input ${this.state ? `form-check-input-${this.state}` : ''}`}
-      type={this.type}
-      name={this.name}
-      id={this.mId}
-      value={this.value}
-      checked={this.checked}
-      disabled={this.disabled}
-      indeterminate={this.indeterminate}
-    />
-  );
+  /**
+   * Emitted when the switch has changed
+   */
+  @Event({ eventName: 'mChange' }) mChange!: EventEmitter;
+
+  private changeHandler = (event: Event) => {
+    const { checked, value } = (event.target as HTMLInputElement);
+    this.mChange.emit({
+      isChecked: checked,
+      value,
+    });
+  };
+
+  private generateClasses(): ClassMap {
+    return {
+      'form-check-input': !this.isButton,
+      [`form-check-input-${this.state}`]: !!this.state && !this.isButton,
+      'form-check-box-input': this.isButton,
+    };
+  }
 
   render() {
     return (
       <Host class="form-check-box">
         {this.label ? (
-          <div class="form-check">
-            { this.innerInput }
+          <div class={this.isButton ? '' : 'form-check'}>
+            <input
+              onChange={(event) => this.changeHandler(event)}
+              class={this.generateClasses()}
+              type={this.type}
+              name={this.name}
+              id={this.mId}
+              value={this.value}
+              checked={this.checked}
+              disabled={this.disabled}
+              indeterminate={this.indeterminate}
+            />
             <label
-              class="form-check-label"
+              class={this.isButton ? 'form-check-box-label' : 'form-check-label'}
               htmlFor={this.mId}
             >
               {this.label}
             </label>
           </div>
-        ) : this.innerInput}
+        ) : (
+          <input
+            onChange={(event) => this.changeHandler(event)}
+            class={this.generateClasses()}
+            type={this.type}
+            name={this.name}
+            id={this.mId}
+            value={this.value}
+            checked={this.checked}
+            disabled={this.disabled}
+            indeterminate={this.indeterminate}
+          />
+        )}
       </Host>
     );
   }
