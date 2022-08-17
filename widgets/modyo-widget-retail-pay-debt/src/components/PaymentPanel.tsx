@@ -7,6 +7,7 @@ import {
   MShortcutToggle,
 } from '@modyolabs/react-design-system';
 
+import { useTranslation } from 'react-i18next';
 import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
 import ModalRecurrentPay from './ModalRecurrentPay';
@@ -15,6 +16,7 @@ import { useAppContext } from '../providers/AppContext';
 import ModalConfirmPayment from './ModalConfirmPayment';
 
 export default function PaymentPanel() {
+  const { t } = useTranslation();
   const {
     accountSelected,
     cardToPay,
@@ -40,8 +42,12 @@ export default function PaymentPanel() {
           class="pb-4"
           mId="debtInput"
           theme="info"
-          placeholder="How much?"
-          hint={`$ ${amountAvailable} remaining`}
+          placeholder={t('currencyInput.placeholder')}
+          hint={
+            amountAvailable > 0
+              ? t('currencyInput.remainingValid', { remaining: amountAvailable })
+              : t('currencyInput.remainingInvalid')
+          }
           iconLabel="currency-dollar"
           hintIconStart="info-circle"
           minValue={0}
@@ -58,7 +64,7 @@ export default function PaymentPanel() {
               {...cardToPay.minimumPayment === amountUsed && { isChecked: true }}
               mId="minimumOption"
               name="paymentOption"
-              label="Minimum"
+              label={t('shortCutToggle.minimum')}
               text={cardToPay.minimumPayment.toString()}
               value="minimumOption"
               onMChange={() => setAmountUsed(cardToPay.minimumPayment)}
@@ -69,7 +75,7 @@ export default function PaymentPanel() {
               {...cardToPay.totalPayment === amountUsed && { isChecked: true }}
               mId="totalOption"
               name="paymentOption"
-              label="Total"
+              label={t('shortCutToggle.total')}
               text={cardToPay.totalPayment.toString()}
               value="totalOption"
               onMChange={() => setAmountUsed(cardToPay.totalPayment)}
@@ -78,7 +84,7 @@ export default function PaymentPanel() {
               key="3"
               mId="alternativeOption"
               name="paymentOption"
-              label="Payment Alternatives"
+              label={t('shortCutToggle.paymentAlternative')}
               text="..."
               {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
               {...cardToPay.minimumPayment > 0 && {
@@ -104,15 +110,19 @@ export default function PaymentPanel() {
               <MFormSwitch
                 class="d-inline-flex"
                 mId="schedulePayment"
-                label="Schedule"
+                label={t('collapse.schedule')}
                 isDisabled
                 isChecked={isScheduled}
+                {...isScheduled && ({ labelOn: t('collapse.yesLabel') })}
+                {...!isScheduled && ({ labelOff: t('collapse.noLabel') })}
               />
-              <p
-                className="small m-0 text-info"
+              <small
+                className="d-block text-info text-start"
               >
-                This payment will be instant
-              </p>
+                {isScheduled
+                  ? t('collapse.yesScheduleLabel')
+                  : t('collapse.noScheduleLabel')}
+              </small>
             </div>
             <div
               className="px-3 py-2 border rounded-1 mb-2"
@@ -124,30 +134,36 @@ export default function PaymentPanel() {
               <MFormSwitch
                 class="d-inline-flex"
                 mId="recurrentPayment"
-                label="Recurrent"
+                label={t('collapse.recurrent')}
                 isDisabled
                 isChecked={isRecurrent}
+                {...isRecurrent && ({ labelOn: t('collapse.yesLabel') })}
+                {...!isRecurrent && ({ labelOff: t('collapse.noLabel') })}
               />
-              <p
-                className="small m-0 text-info"
+              <small
+                className="d-block text-info text-start"
               >
-                This payment will not autorepeat
-              </p>
+                {isRecurrent
+                  ? t('collapse.yesRecurrentLabel')
+                  : t('collapse.noRecurrentLabel')}
+              </small>
             </div>
           </div>
           <MButton
+            className="more-options-btn"
             variant="text"
             theme="info"
-            text="More Options"
+            text={t('collapse.moreOptions')}
             iconRight="chevron-down"
             data-bs-toggle="collapse"
             data-bs-target="#moreOptions"
             aria-expanded="false"
             aria-controls="collapseExample"
+            data-bs-delay="{'show':1000,'hide':1000}"
           />
         </div>
         <div
-          className="d-flex justify-content-center pt-4"
+          className="d-flex justify-content-center"
         >
           {/* Pointer events?  */}
           <MButton
@@ -157,7 +173,7 @@ export default function PaymentPanel() {
               'data-bs-target': '#modalConfirmPayment',
             }}
             text={
-              isScheduled ? 'Schedule' : 'Pay'
+              isScheduled ? t('button.schedule') : t('button.pay')
             }
             theme="primary-gradient"
             isPill

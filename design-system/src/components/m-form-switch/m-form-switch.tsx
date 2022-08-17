@@ -31,7 +31,7 @@ export class MFormSwitch implements ComponentInterface {
   /**
    * Id
    */
-  @Prop() mId! : string;
+  @Prop() mId!: string;
   /**
    * Flag to change the check state
    */
@@ -66,17 +66,17 @@ export class MFormSwitch implements ComponentInterface {
   render() {
     return (
       <Host class="form-switch-box">
-        <div class="d-flex">
-          <div class="form-check form-switch form-check-reverse">
-            <label
-              class="form-check-label me-2"
-              htmlFor={this.mId}
-            >
-              {this.label}
-            </label>
-            <span class="form-check-label fw-bold">
-              {this.internalIsChecked ? this.labelOn : this.labelOff}
-            </span>
+        <div class="form-check form-switch form-check-reverse">
+          <label
+            class="form-switch-box-label"
+            htmlFor={this.mId}
+          >
+            <div class="d-flex gap-3 justify-content-start flex-grow-1">
+              <span class="form-check-label">{this.label}</span>
+              <span class="form-check-label fw-bold">
+                {this.internalIsChecked ? this.labelOn : this.labelOff}
+              </span>
+            </div>
             <input
               id={this.mId}
               onChange={(event) => this.changeHandler(event)}
@@ -86,7 +86,7 @@ export class MFormSwitch implements ComponentInterface {
               checked={this.internalIsChecked}
               disabled={this.isDisabled}
             />
-          </div>
+          </label>
         </div>
       </Host>
     );
