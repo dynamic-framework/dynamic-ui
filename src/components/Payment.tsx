@@ -23,8 +23,8 @@ export default function Payment() {
     <>
       <div className="container pb-5 mb-5">
         <div className="pb-3 px-4">
-          <div className="d-flex justify-content-between align-items-center mb-5 mt-4">
-            <MButton iconLeft="arrow-left" isPill theme="info" variant="text" />
+          <div className="d-flex justify-content-between align-items-center my-4">
+            <MButton className="btn-icon" iconLeft="arrow-left" isPill theme="info" variant="text" />
             <h6 className="fw-bold m-0 flex-grow-1 text-center">
               {t('cardToPay', {
                 card: `${cardToPay.franchise} ${cardToPay.mask}`,
@@ -66,7 +66,7 @@ export default function Payment() {
         <PaymentPanel />
       </div>
       {cardToPay.minimumPayment <= 0 && (
-        <div className="alerta fixed-bottom p-3 w-100">
+        <div className="custom-alert fixed-bottom p-3 w-100">
           <MAlert icon close theme="info">
             {t('alert.noPay')}
           </MAlert>

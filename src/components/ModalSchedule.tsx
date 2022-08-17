@@ -46,7 +46,7 @@ export default function ModalSchedule(
       <div slot="footer" className="d-flex flex-column align-items-center w-100 m-3">
         <MButton
           data-bs-dismiss="modal"
-          class="mb-2"
+          class="mb-2 w-50"
           text={t('button.schedule')}
           theme="primary"
           isPill
@@ -54,7 +54,7 @@ export default function ModalSchedule(
         />
         <MButton
           data-bs-dismiss="modal"
-          class="mb-2"
+          class="w-50"
           text={t('button.cancel')}
           theme="primary"
           variant="outline"

@@ -47,7 +47,7 @@ export default function ModalConfirmPayment(
       <div slot="footer" className="d-flex align-items-center w-100 m-3">
         <MButton
           data-bs-dismiss="modal"
-          class="mb-2"
+          class="mb-2 w-50"
           text={t('button.cancel')}
           theme="primary"
           variant="outline"
@@ -55,7 +55,7 @@ export default function ModalConfirmPayment(
         />
         <MButton
           data-bs-dismiss="modal"
-          class="mb-2"
+          class="mb-2 w-50"
           text={t('button.pay')}
           theme="primary"
           isPill
