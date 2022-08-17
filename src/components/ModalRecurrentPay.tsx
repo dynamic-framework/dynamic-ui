@@ -5,6 +5,8 @@ import {
   MSegmentControl,
   MSegmentControlItem,
 } from '@modyolabs/react-design-system';
+
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
 interface Props {
@@ -33,6 +35,8 @@ export default function ModalRecurrentPay(
   };
 
   const [days, setDays] = useState<Record<string, Day>>(initialState);
+
+  const { t } = useTranslation();
 
   function handleChange(day: Day) {
     setDays((prev) => ({

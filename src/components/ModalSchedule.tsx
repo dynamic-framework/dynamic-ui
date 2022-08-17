@@ -1,4 +1,5 @@
 import { MButton, MModal } from '@modyolabs/react-design-system';
+import { useTranslation } from 'react-i18next';
 
 import type { Account, Card } from '../providers/AppContext';
 
@@ -17,6 +18,8 @@ export default function ModalSchedule(
     onAccept,
   }: Props,
 ) {
+  const { t } = useTranslation();
+
   return (
     <MModal
       mId="modalSchedulePayment"
@@ -26,7 +29,7 @@ export default function ModalSchedule(
     >
       <div slot="header" className="m-3">
         {amountUsed && (
-          `Schedule ${amountUsed}`
+          t('modal.schedule.title', { amount: amountUsed })
         )}
       </div>
       <div
@@ -34,22 +37,25 @@ export default function ModalSchedule(
         className="d-flex flex-column justify-content-center align-items-center mx-3"
       >
         {accountSelected?.id && (
-          `You are scheduling to pay ${cardToPay.franchise} ${cardToPay.mask} from your ${accountSelected.type} ${accountSelected.mask}`
+          t('modal.schedule.text', {
+            card: `${cardToPay.franchise} ${cardToPay.mask}`,
+            product: `${accountSelected.type} ${accountSelected.mask}`,
+          })
         )}
       </div>
       <div slot="footer" className="d-flex flex-column align-items-center w-100 m-3">
         <MButton
           data-bs-dismiss="modal"
-          class="mb-2"
-          text="Schedule"
+          class="mb-2 w-50"
+          text={t('button.schedule')}
           theme="primary"
           isPill
           onClick={() => onAccept(true)}
         />
         <MButton
           data-bs-dismiss="modal"
-          class="mb-2"
-          text="Cancel"
+          class="w-50"
+          text={t('button.cancel')}
           theme="primary"
           variant="outline"
           isPill
