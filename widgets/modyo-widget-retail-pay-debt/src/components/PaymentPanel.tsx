@@ -11,20 +11,18 @@ import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
 import ModalRecurrentPay from './ModalRecurrentPay';
 import usePaymentInput from '../hooks/usePaymentInput';
-import { useAppContext } from '../providers/AppContext';
 import ModalConfirmPayment from './ModalConfirmPayment';
+import { useAppSelector } from '../store/hooks';
+import { getAccountSelected, getCardToPay } from '../store/selectors/widget';
 
 export default function PaymentPanel() {
-  const {
-    accountSelected,
-    cardToPay,
-    setIsPaid,
-  } = useAppContext();
+  const accountSelected = useAppSelector(getAccountSelected);
+  const cardToPay = useAppSelector(getCardToPay);
 
   const {
     amountAvailable,
-    amountUsed,
-    setAmountUsed,
+    amount,
+    setAmount,
   } = usePaymentInput(accountSelected?.value);
   const [isScheduled, setIsScheduled] = useState(false);
   const [isRecurrent, setIsRecurrent] = useState(false);
@@ -47,8 +45,8 @@ export default function PaymentPanel() {
           minValue={0}
           maxValue={accountSelected?.value}
           variant="prime"
-          onMChange={({ detail: { amount } }) => setAmountUsed(amount)}
-          value={amountUsed}
+          onMChange={({ detail: { amount: value } }) => setAmount(value)}
+          value={amount}
         />
         <div className="row g-0 m-0 p-0 pt-4 pb-2">
           <div className="col-12 justify-content-between scroll-h pb-2 mx-auto">
@@ -60,7 +58,7 @@ export default function PaymentPanel() {
               label="Minimum"
               text={cardToPay.minimumPayment.toString()}
               value="minimumOption"
-              onMChange={() => setAmountUsed(cardToPay.minimumPayment)}
+              onMChange={() => setAmount(cardToPay.minimumPayment)}
             />
             <MShortcutToggle
               key="2"
@@ -70,7 +68,7 @@ export default function PaymentPanel() {
               label="Total"
               text={cardToPay.totalPayment.toString()}
               value="totalOption"
-              onMChange={() => setAmountUsed(cardToPay.totalPayment)}
+              onMChange={() => setAmount(cardToPay.totalPayment)}
             />
             <MShortcutToggle
               key="3"
@@ -155,19 +153,9 @@ export default function PaymentPanel() {
         </div>
       </div>
       <ModalPaymentAlternatives />
-      <ModalSchedule
-        cardToPay={cardToPay}
-        accountSelected={accountSelected}
-        amountUsed={amountUsed}
-        onAccept={setIsScheduled}
-      />
+      <ModalSchedule onAccept={setIsScheduled} />
       <ModalRecurrentPay onAccept={setIsRecurrent} />
-      <ModalConfirmPayment
-        setIsPaid={setIsPaid}
-        amountUsed={amountUsed}
-        accountSelected={accountSelected}
-        cardToPay={cardToPay}
-      />
+      <ModalConfirmPayment />
     </>
   );
 }

@@ -4,13 +4,12 @@ import {
   MListItem,
 } from '@modyolabs/react-design-system';
 
-import { useAppContext } from '../providers/AppContext';
+import { useAppSelector } from '../store/hooks';
+import { getAmountUsed, getCardToPay } from '../store/selectors/widget';
 
 export default function PaymentResult() {
-  const {
-    cardToPay,
-    amountUsed,
-  } = useAppContext();
+  const cardToPay = useAppSelector(getCardToPay);
+  const amountUsed = useAppSelector(getAmountUsed);
 
   return (
     <div className="container">

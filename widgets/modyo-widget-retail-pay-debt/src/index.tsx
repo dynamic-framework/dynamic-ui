@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 
 import '@modyolabs/design-system/dist/design-system/design-system.css';
 
@@ -8,15 +9,15 @@ import './config/liquidConfig';
 import './config/i18nConfig';
 
 import App from './App';
-import AppContextProvider from './providers/AppContext';
 import reportWebVitals from './reportWebVitals';
+import store from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as Element);
 root.render(
   <React.StrictMode>
-    <AppContextProvider>
+    <Provider store={store}>
       <App />
-    </AppContextProvider>
+    </Provider>
   </React.StrictMode>,
 );
 

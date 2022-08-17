@@ -7,16 +7,17 @@ import {
 
 import PaymentPanel from './PaymentPanel';
 import ModalAccountSelector from './ModalAccountSelector';
-import { useAppContext } from '../providers/AppContext';
-import type { Account } from '../providers/AppContext';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { getAccounts, getAccountSelected, getCardToPay } from '../store/selectors/widget';
+import type { Account } from '../store/slices/widget';
+import { setAccountSelected } from '../store/slices/widget';
 
 export default function Payment() {
-  const {
-    cardToPay,
-    accounts,
-    accountSelected,
-    setAccountSelected,
-  } = useAppContext();
+  const dispatch = useAppDispatch();
+  const cardToPay = useAppSelector(getCardToPay);
+  const accounts = useAppSelector(getAccounts);
+  const accountSelected = useAppSelector(getAccountSelected);
+
   return (
     <>
       <div className="container pb-5 mb-5">
@@ -50,7 +51,7 @@ export default function Payment() {
             labelExtractor={({ type, mask }: Account) => `From: ${type} ${mask}`}
             options={accounts}
             onMChange={
-              ({ detail: account }: CustomEvent<Account>) => setAccountSelected(account)
+              ({ detail: account }: CustomEvent<Account>) => dispatch(setAccountSelected(account))
             }
           />
           <MListItem value="12/31/22" text="Pay until" class="mb-2 p-1" />
