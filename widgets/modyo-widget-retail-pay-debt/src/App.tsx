@@ -3,11 +3,12 @@ import { MApp } from '@modyolabs/react-design-system';
 import useAccounts from './hooks/useAccounts';
 import PaymentResult from './components/PaymentResult';
 import Payment from './components/Payment';
-import { useAppContext } from './providers/AppContext';
+import { useAppSelector } from './store/hooks';
+import { getIsPaid } from './store/selectors';
 
 export default function App() {
   useAccounts();
-  const { isPaid } = useAppContext();
+  const isPaid = useAppSelector(getIsPaid);
 
   return (
     <MApp>

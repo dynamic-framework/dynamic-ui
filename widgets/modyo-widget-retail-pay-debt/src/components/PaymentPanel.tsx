@@ -7,27 +7,25 @@ import {
   MShortcutToggle,
   MSkeleton,
 } from '@modyolabs/react-design-system';
-
 import { useTranslation } from 'react-i18next';
+
 import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
 import ModalRecurrentPay from './ModalRecurrentPay';
 import usePaymentInput from '../hooks/usePaymentInput';
-import { useAppContext } from '../providers/AppContext';
 import ModalConfirmPayment from './ModalConfirmPayment';
+import { useAppSelector } from '../store/hooks';
+import { getAccountSelected, getCardToPay } from '../store/selectors';
 
 export default function PaymentPanel() {
   const { t } = useTranslation();
-  const {
-    accountSelected,
-    cardToPay,
-    setIsPaid,
-  } = useAppContext();
+  const accountSelected = useAppSelector(getAccountSelected);
+  const cardToPay = useAppSelector(getCardToPay);
 
   const {
     amountAvailable,
-    amountUsed,
-    setAmountUsed,
+    amount,
+    setAmount,
   } = usePaymentInput(accountSelected?.value);
   const [isScheduled, setIsScheduled] = useState(false);
   const [isRecurrent, setIsRecurrent] = useState(false);
@@ -69,30 +67,32 @@ export default function PaymentPanel() {
           minValue={0}
           maxValue={accountSelected?.value}
           variant="prime"
-          onMChange={({ detail: { amount } }) => setAmountUsed(amount)}
-          value={amountUsed}
+          onMChange={({ detail: { amount: value } }) => setAmount(value)}
+          value={amount}
         />
         <div className="row g-0 m-0 p-0 pt-4 pb-2">
           <div className="col-12 justify-content-between scroll-h pb-2 mx-auto">
             <MShortcutToggle
               key="1"
               {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.minimumPayment === amount && { isChecked: true }}
               mId="minimumOption"
               name="paymentOption"
               label={t('shortCutToggle.minimum')}
               text={cardToPay.minimumPayment.toString()}
               value="minimumOption"
-              onMChange={() => setAmountUsed(cardToPay.minimumPayment)}
+              onMChange={() => setAmount(cardToPay.minimumPayment)}
             />
             <MShortcutToggle
               key="2"
-              {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.totalPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.totalPayment === amount && { isChecked: true }}
               mId="totalOption"
               name="paymentOption"
               label={t('shortCutToggle.total')}
               text={cardToPay.totalPayment.toString()}
               value="totalOption"
-              onMChange={() => setAmountUsed(cardToPay.totalPayment)}
+              onMChange={() => setAmount(cardToPay.totalPayment)}
             />
             <MShortcutToggle
               key="3"
@@ -116,8 +116,10 @@ export default function PaymentPanel() {
           >
             <div
               className="px-3 py-2 border rounded-1 mb-2"
-              data-bs-toggle="modal"
-              data-bs-target="#modalSchedulePayment"
+              {...(cardToPay.minimumPayment > 0 && amount && amountAvailable >= 0) && {
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#modalSchedulePayment',
+              }}
             >
               <MFormSwitch
                 class="d-inline-flex"
@@ -138,8 +140,10 @@ export default function PaymentPanel() {
             </div>
             <div
               className="px-3 py-2 border rounded-1 mb-2"
-              data-bs-toggle="modal"
-              data-bs-target="#modalRecurrentPayment"
+              {...(cardToPay.minimumPayment > 0 && amount && amountAvailable >= 0) && {
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#modalRecurrentPayment',
+              }}
             >
               <MFormSwitch
                 class="d-inline-flex"
@@ -175,11 +179,16 @@ export default function PaymentPanel() {
         <div
           className="d-flex justify-content-center"
         >
+          {/* Pointer events?  */}
           <MButton
-            {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
-            data-bs-toggle="modal"
-            data-bs-target="#modalConfirmPayment"
-            text={t('button.pay')}
+            {...(cardToPay.minimumPayment === 0 || !amount || amountAvailable < 0) && { state: 'disabled' }}
+            {...(cardToPay.minimumPayment > 0 && amount && amountAvailable >= 0) && {
+              'data-bs-toggle': 'modal',
+              'data-bs-target': '#modalConfirmPayment',
+            }}
+            text={
+              isScheduled ? t('button.schedule') : t('button.pay')
+            }
             theme="primary-gradient"
             isPill
             iconRight="check-lg"
@@ -187,19 +196,9 @@ export default function PaymentPanel() {
         </div>
       </div>
       <ModalPaymentAlternatives />
-      <ModalSchedule
-        cardToPay={cardToPay}
-        accountSelected={accountSelected}
-        amountUsed={amountUsed}
-        onAccept={setIsScheduled}
-      />
+      <ModalSchedule onAccept={setIsScheduled} />
       <ModalRecurrentPay onAccept={setIsRecurrent} />
-      <ModalConfirmPayment
-        setIsPaid={setIsPaid}
-        amountUsed={amountUsed}
-        accountSelected={accountSelected}
-        cardToPay={cardToPay}
-      />
+      <ModalConfirmPayment />
     </>
   );
 }

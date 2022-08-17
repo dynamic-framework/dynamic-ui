@@ -98,7 +98,9 @@ export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-
   'disabled',
   'state',
   'indeterminate',
-  'value'
+  'value',
+  'isButton',
+  'mChange'
 ]);
 
 

@@ -4,21 +4,21 @@ import {
   MListItem,
   MSelect,
 } from '@modyolabs/react-design-system';
-
 import { useTranslation } from 'react-i18next';
+
 import PaymentPanel from './PaymentPanel';
 import ModalAccountSelector from './ModalAccountSelector';
-import { useAppContext } from '../providers/AppContext';
-import type { Account } from '../providers/AppContext';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { getAccounts, getAccountSelected, getCardToPay } from '../store/selectors';
+import type { Account } from '../store/slice';
+import { setAccountSelected } from '../store/slice';
 
 export default function Payment() {
   const { t } = useTranslation();
-  const {
-    cardToPay,
-    accounts,
-    accountSelected,
-    setAccountSelected,
-  } = useAppContext();
+  const dispatch = useAppDispatch();
+  const cardToPay = useAppSelector(getCardToPay);
+  const accounts = useAppSelector(getAccounts);
+  const accountSelected = useAppSelector(getAccountSelected);
   return (
     <>
       <div className="container pb-5 mb-5">
@@ -55,7 +55,7 @@ export default function Payment() {
             })}
             options={accounts}
             onMChange={
-              ({ detail: account }: CustomEvent<Account>) => setAccountSelected(account)
+              ({ detail: account }: CustomEvent<Account>) => dispatch(setAccountSelected(account))
             }
           />
           {(!!cardToPay?.totalPayment && accountSelected) && (

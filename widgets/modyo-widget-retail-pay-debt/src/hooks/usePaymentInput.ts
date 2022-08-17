@@ -1,13 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useAppContext } from '../providers/AppContext';
+import { useEffect, useState, useRef } from 'react';
+import debounce from 'lodash.debounce';
+
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { getAmountUsed } from '../store/selectors';
+import { setAmountUsed } from '../store/slice';
 
 export default function usePaymentInput(defaultAmountAvailable = 0) {
-  const {
-    amountUsed,
-    setAmountUsed,
-  } = useAppContext();
-
+  const dispatch = useAppDispatch();
+  const amountUsed = useAppSelector(getAmountUsed);
+  const [amount, setAmount] = useState<number | undefined>(amountUsed);
   const [amountAvailable, setAmountAvailable] = useState<number>(defaultAmountAvailable);
+
+  const debounceSetAmount = useRef(debounce((value: number | undefined) => {
+    dispatch(setAmountUsed(value));
+  }, 500));
+
+  useEffect(() => {
+    debounceSetAmount.current(amount);
+  }, [amount]);
 
   useEffect(() => {
     setAmountAvailable(defaultAmountAvailable);
@@ -25,7 +35,7 @@ export default function usePaymentInput(defaultAmountAvailable = 0) {
 
   return {
     amountAvailable,
-    amountUsed,
-    setAmountUsed,
+    amount,
+    setAmount,
   };
 }

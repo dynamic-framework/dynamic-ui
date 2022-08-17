@@ -9,7 +9,8 @@
     "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
   },
   "rules": {
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
   },
   "overrides": [
     {

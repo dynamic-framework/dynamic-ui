@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { useAppContext } from '../providers/AppContext';
+import { useAppDispatch } from '../store/hooks';
+import { setAccounts, setAccountSelected } from '../store/slice';
 
 const ACCOUNTS = [
   {
@@ -21,17 +22,15 @@ const ACCOUNTS = [
     type: 'Current',
   },
 ];
+
 export default function useAccounts() {
-  const {
-    setAccounts,
-    setAccountSelected,
-  } = useAppContext();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setAccounts(ACCOUNTS);
-      setAccountSelected(ACCOUNTS[2]);
+      dispatch(setAccounts(ACCOUNTS));
+      dispatch(setAccountSelected(ACCOUNTS[2]));
     }, 1000);
     return () => clearTimeout(timer);
-  }, [setAccountSelected, setAccounts]);
+  }, [dispatch]);
 }

@@ -94,11 +94,13 @@ export class MSelect implements ComponentInterface {
    * Emitted when the select value has changed
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<any>;
+  @Event({ eventName: 'mChange' }) mChange!: EventEmitter;
 
   private changeHandler = (event: Event) => {
     const { value } = event.target as HTMLInputElement;
-    this.mChange.emit(this.options.find((option) => option.value === value));
+    this.mChange.emit(
+      this.options.find((option) => this.valueExtractor(option).toString() === value),
+    );
   };
 
   private generateHostClasses(): ClassMap {
