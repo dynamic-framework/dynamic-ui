@@ -58,9 +58,11 @@ export default function Payment() {
               ({ detail: account }: CustomEvent<Account>) => setAccountSelected(account)
             }
           />
-          <MListItem value="12/31/22" text={t('payUntil')} class="mb-2 p-1" />
-          {!!cardToPay?.totalPayment && (
-            <MListItem value={cardToPay.totalPayment} text={t('toBePayed')} class="p-1" />
+          {(!!cardToPay?.totalPayment && accountSelected) && (
+            <>
+              <MListItem value="12/31/22" text={t('payUntil')} class="mb-2 p-1" />
+              <MListItem value={cardToPay.totalPayment} text={t('toBePayed')} class="p-1" />
+            </>
           )}
         </div>
         <PaymentPanel />
