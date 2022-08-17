@@ -55,6 +55,7 @@ export default function PaymentPanel() {
             <MShortcutToggle
               key="1"
               {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.minimumPayment === amountUsed && { isChecked: true }}
               mId="minimumOption"
               name="paymentOption"
               label="Minimum"
@@ -64,7 +65,8 @@ export default function PaymentPanel() {
             />
             <MShortcutToggle
               key="2"
-              {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.totalPayment === 0 && { state: 'disabled' }}
+              {...cardToPay.totalPayment === amountUsed && { isChecked: true }}
               mId="totalOption"
               name="paymentOption"
               label="Total"
@@ -94,8 +96,10 @@ export default function PaymentPanel() {
           >
             <div
               className="px-3 py-2 border rounded-1 mb-2"
-              data-bs-toggle="modal"
-              data-bs-target="#modalSchedulePayment"
+              {...(cardToPay.minimumPayment > 0 && amountUsed && amountAvailable >= 0) && {
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#modalSchedulePayment',
+              }}
             >
               <MFormSwitch
                 class="d-inline-flex"
@@ -112,8 +116,10 @@ export default function PaymentPanel() {
             </div>
             <div
               className="px-3 py-2 border rounded-1 mb-2"
-              data-bs-toggle="modal"
-              data-bs-target="#modalRecurrentPayment"
+              {...(cardToPay.minimumPayment > 0 && amountUsed && amountAvailable >= 0) && {
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#modalRecurrentPayment',
+              }}
             >
               <MFormSwitch
                 class="d-inline-flex"
@@ -143,11 +149,16 @@ export default function PaymentPanel() {
         <div
           className="d-flex justify-content-center pt-4"
         >
+          {/* Pointer events?  */}
           <MButton
-            {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
-            data-bs-toggle="modal"
-            data-bs-target="#modalConfirmPayment"
-            text="Pay"
+            {...(cardToPay.minimumPayment === 0 || !amountUsed || amountAvailable < 0) && { state: 'disabled' }}
+            {...(cardToPay.minimumPayment > 0 && amountUsed && amountAvailable >= 0) && {
+              'data-bs-toggle': 'modal',
+              'data-bs-target': '#modalConfirmPayment',
+            }}
+            text={
+              isScheduled ? 'Schedule' : 'Pay'
+            }
             theme="primary-gradient"
             isPill
             iconRight="check-lg"
