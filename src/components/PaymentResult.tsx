@@ -3,6 +3,7 @@ import {
   MIcon,
   MListItem,
 } from '@modyolabs/react-design-system';
+import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from '../store/hooks';
 import { getAmountUsed, getCardToPay } from '../store/selectors/widget';
@@ -10,6 +11,8 @@ import { getAmountUsed, getCardToPay } from '../store/selectors/widget';
 export default function PaymentResult() {
   const cardToPay = useAppSelector(getCardToPay);
   const amountUsed = useAppSelector(getAmountUsed);
+
+  const { t } = useTranslation();
 
   return (
     <div className="container">
@@ -26,28 +29,28 @@ export default function PaymentResult() {
               size="3rem"
             />
             <h5 className="text-dark fw-semibold">
-              Payment Succesful
+              {t('paid.success')}
             </h5>
           </div>
           <div className="d-flex flex-column gap-1 text-center p-3 border-1 border-bottom">
             <span className="text-gray fw-bold">{`$ ${amountUsed ?? 0}`}</span>
             <small className="text-dark">
-              Money payed
+              {t('paid.moneyPayed')}
             </small>
           </div>
           <div
             className="d-flex flex-column gap-2 small"
           >
             <MListItem
-              text="Product Payed"
+              text={t('paid.productPayed')}
               value={`${cardToPay.franchise} ${cardToPay.mask}`}
             />
             <MListItem
-              text="Transaction ID"
+              text={t('paid.transactionId')}
               value="99484733"
             />
             <MListItem
-              text="Time & Date"
+              text={t('paid.timeDate')}
               value="01/03/22 , 11:00 AM"
             />
           </div>
@@ -62,18 +65,18 @@ export default function PaymentResult() {
             <p
               className="m-0"
             >
-              All your transactions are safe and fast.
+              {t('paid.terms.text')}
               <span
-                className="text-secondary"
+                className="text-secondary ms-1"
               >
-                Terms & Conditions
+                {t('paid.terms.link')}
               </span>
             </p>
           </div>
         </div>
         <MButton
           className="btn-result"
-          text="Back"
+          text={t('button.back')}
           theme="primary"
           variant="outline"
           isPill
