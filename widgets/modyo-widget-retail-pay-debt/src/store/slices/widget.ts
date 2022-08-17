@@ -21,7 +21,7 @@ type WidgetState = {
   accounts: Array<Account>;
   accountSelected?: Account;
   amountUsed?: number | undefined;
-  isPaid: boolean;
+  isPaid?: boolean;
 };
 
 const initialState = {
@@ -32,6 +32,7 @@ const initialState = {
     totalPayment: 3250,
     minimumPayment: 240,
   },
+  accounts: [],
 } as WidgetState;
 
 const slice = createSlice({
