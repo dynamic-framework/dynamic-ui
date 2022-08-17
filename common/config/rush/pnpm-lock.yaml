@@ -16,12 +16,14 @@ importers:
       '@stencil/sass': ^1.5.2
       '@stencil/vue-output-target': ^0.6.0
       '@types/bootstrap': ^5.1.12
+      '@types/dinero.js': ~1.9.0
       '@types/jest': ^27.0.3
       '@types/node': ^18.7.1
       '@typescript-eslint/eslint-plugin': ^4.23.0
       '@typescript-eslint/parser': ^4.23.0
       autoprefixer: ^10.4.7
       bootstrap: ^5.2.0-beta1
+      dinero.js: ~1.9.1
       eslint: ^7.32.0
       eslint-config-airbnb: ^18.2.0
       eslint-config-airbnb-typescript: ^17.0.0
@@ -40,7 +42,9 @@ importers:
     dependencies:
       '@popperjs/core': 2.11.5
       '@stencil/core': 2.17.3
+      '@types/dinero.js': 1.9.0
       bootstrap: 5.2.0-beta1_@popperjs+core@2.11.5
+      dinero.js: 1.9.1
       liquidjs: 9.39.2
     devDependencies:
       '@stencil/angular-output-target': 0.4.0_@stencil+core@2.17.3
@@ -4443,6 +4447,10 @@ packages:
     resolution: {integrity: sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==}
     dev: true
 
+  /@types/dinero.js/1.9.0:
+    resolution: {integrity: sha512-H2XdE6N/A2wJ/TJhGqeHDMUhCaey2R/Lcq9ichGBncKsFGvqrroXZWPNdDkCcgQOBPoCD4n9QuSBUC/35wuJiw==}
+    dev: false
+
   /@types/eslint-scope/3.7.4:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
@@ -7767,6 +7775,10 @@ packages:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
     dev: true
+
+  /dinero.js/1.9.1:
+    resolution: {integrity: sha512-1HXiF2vv3ZeRQ23yr+9lFxj/PbZqutuYWJnE0qfCB9xYBPnuaJ8lXtli1cJM0TvUXW1JTOaePldmqN5JVNxKSA==}
+    dev: false
 
   /dir-glob/3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}

@@ -197,23 +197,30 @@ export class MCurrency {
 }
 
 
-export declare interface MFormCheck extends Components.MFormCheck {}
+export declare interface MFormCheck extends Components.MFormCheck {
+  /**
+   * Emitted when the switch has changed 
+   */
+  mChange: EventEmitter<CustomEvent<any>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMFormCheck,
-  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
+  inputs: ['checked', 'disabled', 'indeterminate', 'isButton', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 @Component({
   selector: 'm-form-check',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
+  inputs: ['checked', 'disabled', 'indeterminate', 'isButton', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 export class MFormCheck {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 

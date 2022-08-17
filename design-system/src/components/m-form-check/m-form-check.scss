@@ -12,8 +12,26 @@
     border-radius: var(--#{$prefix}checkbox-box-border-radius);
     box-shadow: 0 0 0 var(--#{$prefix}form-check-border-width-focus) var(--#{$prefix}form-check-border-color-focus);
   }
-}
 
+  .form-check-box-label {
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: var(--#{$prefix}white);
+    text-align: center;
+    background-color: var(--#{$prefix}gray-light);
+    border-radius: var(--#{$prefix}border-radius-pill);
+  }
+  .form-check-box-input {
+    position: absolute;
+    opacity: 0;
+  }
+  .form-check-box-input:checked ~ .form-check-box-label{
+    background-color: var(--#{$prefix}tertiary);
+  }
+}
 .form-check {
   border-radius: #{$form-check-input-border-radius};
 }

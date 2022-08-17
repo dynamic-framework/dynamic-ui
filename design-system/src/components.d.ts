@@ -245,6 +245,10 @@ export namespace Components {
          */
         "indeterminate"?: boolean;
         /**
+          * Set checkbox as toggle button
+         */
+        "isButton": boolean;
+        /**
           * Text that will be displayed beside Check input or Radio input
          */
         "label"?: string;
@@ -762,6 +766,10 @@ export interface MCurrencyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCurrencyElement;
 }
+export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMFormCheckElement;
+}
 export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMFormSwitchElement;
@@ -1203,6 +1211,10 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
+          * Set checkbox as toggle button
+         */
+        "isButton"?: boolean;
+        /**
           * Text that will be displayed beside Check input or Radio input
          */
         "label"?: string;
@@ -1214,6 +1226,10 @@ declare namespace LocalJSX {
           * HTML Name to use within a form or JS reference
          */
         "name"?: string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onMChange"?: (event: MFormCheckCustomEvent<any>) => void;
         /**
           * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
          */

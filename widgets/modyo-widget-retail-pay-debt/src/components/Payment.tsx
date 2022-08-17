@@ -4,6 +4,7 @@ import {
   MListItem,
   MSelect,
 } from '@modyolabs/react-design-system';
+import { useTranslation } from 'react-i18next';
 
 import PaymentPanel from './PaymentPanel';
 import ModalAccountSelector from './ModalAccountSelector';
@@ -13,28 +14,29 @@ import type { Account } from '../store/slices/widget';
 import { setAccountSelected } from '../store/slices/widget';
 
 export default function Payment() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const cardToPay = useAppSelector(getCardToPay);
   const accounts = useAppSelector(getAccounts);
   const accountSelected = useAppSelector(getAccountSelected);
-
   return (
     <>
       <div className="container pb-5 mb-5">
         <div className="pb-3 px-4">
-          <div className="d-flex justify-content-between align-items-center mb-5 mt-4">
-            <MButton iconLeft="arrow-left" isPill theme="info" variant="text" />
+          <div className="d-flex justify-content-between align-items-center my-4">
+            <MButton className="btn-icon" iconLeft="arrow-left" isPill theme="info" variant="text" />
             <h6 className="fw-bold m-0 flex-grow-1 text-center">
-              Paying
-              {' '}
-              {cardToPay.franchise}
-              {cardToPay.mask}
+              {t('cardToPay', {
+                card: `${cardToPay.franchise} ${cardToPay.mask}`,
+              })}
             </h6>
           </div>
           {accountSelected && (
             <MButton
               class="account-selector d-block d-lg-none mb-3"
-              text={`From: ${accountSelected.type} ${accountSelected.mask}`}
+              text={t('payFrom', {
+                product: `${accountSelected.type} ${accountSelected.mask}`,
+              })}
               theme="info"
               iconRight="chevron-down"
               isPill
@@ -48,21 +50,25 @@ export default function Payment() {
             mId="selectAccount"
             variant="transparent"
             theme="info"
-            labelExtractor={({ type, mask }: Account) => `From: ${type} ${mask}`}
+            labelExtractor={({ type, mask }: Account) => t('payFrom', {
+              product: `${type} ${mask}`,
+            })}
             options={accounts}
             onMChange={
               ({ detail: account }: CustomEvent<Account>) => dispatch(setAccountSelected(account))
             }
           />
-          <MListItem value="12/31/22" text="Pay until" class="mb-2 p-1" />
-          <MListItem value={cardToPay.totalPayment} text="To be payed" class="p-1" />
+          <MListItem value="12/31/22" text={t('payUntil')} class="mb-2 p-1" />
+          {!!cardToPay?.totalPayment && (
+            <MListItem value={cardToPay.totalPayment} text={t('toBePayed')} class="p-1" />
+          )}
         </div>
         <PaymentPanel />
       </div>
       {cardToPay.minimumPayment <= 0 && (
-        <div className="alerta fixed-bottom p-3 w-100">
+        <div className="custom-alert fixed-bottom p-3 w-100">
           <MAlert icon close theme="info">
-            You have nothing to pay yet
+            {t('alert.noPay')}
           </MAlert>
         </div>
       )}
