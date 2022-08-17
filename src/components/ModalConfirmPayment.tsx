@@ -1,21 +1,15 @@
 import { MButton, MModal } from '@modyolabs/react-design-system';
-import type { Account, Card } from '../providers/AppContext';
 
-interface Props {
-  setIsPaid: (state: boolean) => void,
-  amountUsed: number | undefined,
-  accountSelected: Account,
-  cardToPay: Card;
-}
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { setIsPaid } from '../store/slices/widget';
+import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors/widget';
 
-export default function ModalConfirmPayment(
-  {
-    setIsPaid,
-    amountUsed,
-    accountSelected,
-    cardToPay,
-  }: Props,
-) {
+export default function ModalConfirmPayment() {
+  const dispatch = useAppDispatch();
+  const amountUsed = useAppSelector(getAmountUsed);
+  const cardToPay = useAppSelector(getCardToPay);
+  const accountSelected = useAppSelector(getAccountSelected);
+
   return (
     <MModal
       mId="modalConfirmPayment"
@@ -53,7 +47,7 @@ export default function ModalConfirmPayment(
           text="Pay"
           theme="primary"
           isPill
-          onClick={() => setIsPaid(true)}
+          onClick={() => dispatch(setIsPaid(true))}
         />
       </div>
     </MModal>

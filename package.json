@@ -20,7 +20,10 @@
     "sass": "~1.54.0",
     "react-i18next": "~11.18.3",
     "i18next": "~21.9.0",
-    "liquidjs": "^9.39.2"
+    "liquidjs": "^9.39.2",
+    "@reduxjs/toolkit": "^1.8.4",
+    "react-redux": "^8.0.2",
+    "lodash.debounce": "^4.0.8"
   },
   "devDependencies": {
     "@craco/craco": "^7.0.0-alpha.3",
@@ -33,7 +36,9 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
-    "@typescript-eslint/parser": "^5.0.0"
+    "@typescript-eslint/parser": "^5.0.0",
+    "@types/webpack-env": "^1.18.0",
+    "@types/lodash.debounce": "^4.0.7"
   },
   "scripts": {
     "start": "craco start",
