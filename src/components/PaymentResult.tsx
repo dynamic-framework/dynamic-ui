@@ -5,13 +5,12 @@ import {
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
-import { useAppContext } from '../providers/AppContext';
+import { useAppSelector } from '../store/hooks';
+import { getAmountUsed, getCardToPay } from '../store/selectors';
 
 export default function PaymentResult() {
-  const {
-    cardToPay,
-    amountUsed,
-  } = useAppContext();
+  const cardToPay = useAppSelector(getCardToPay);
+  const amountUsed = useAppSelector(getAmountUsed);
 
   const { t } = useTranslation();
 

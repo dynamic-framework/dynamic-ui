@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { MButton, MListItem, MModal } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
-import { useAppContext } from '../providers/AppContext';
-import type { Account } from '../providers/AppContext';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { getAccounts, getAccountSelected } from '../store/selectors';
+import { setAccountSelected } from '../store/slice';
+import type { Account } from '../store/slice';
 
 export default function ModalAccountSelector() {
-  const {
-    accounts,
-    accountSelected,
-    setAccountSelected,
-  } = useAppContext();
-  const [value, setValue] = useState<Account | undefined>(accountSelected);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const accounts = useAppSelector(getAccounts);
+  const accountSelected = useAppSelector(getAccountSelected);
+  const [value, setValue] = useState<Account | undefined>(accountSelected);
 
   return (
     <MModal
@@ -47,7 +47,7 @@ export default function ModalAccountSelector() {
           text={t('button.confirm')}
           theme="primary"
           isPill
-          onClick={() => setAccountSelected(value)}
+          onClick={() => dispatch(setAccountSelected(value))}
         />
       </div>
     </MModal>

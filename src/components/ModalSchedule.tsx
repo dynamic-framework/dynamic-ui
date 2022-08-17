@@ -1,24 +1,22 @@
 import { MButton, MModal } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
-import type { Account, Card } from '../providers/AppContext';
+import { useAppSelector } from '../store/hooks';
+import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors';
 
 interface Props {
-  accountSelected?: Account,
-  amountUsed?: number,
   onAccept: (accepted: boolean) => void;
-  cardToPay: Card;
 }
 
 export default function ModalSchedule(
   {
-    cardToPay,
-    accountSelected,
-    amountUsed,
     onAccept,
   }: Props,
 ) {
   const { t } = useTranslation();
+  const cardToPay = useAppSelector(getCardToPay);
+  const accountSelected = useAppSelector(getAccountSelected);
+  const amountUsed = useAppSelector(getAmountUsed);
 
   return (
     <MModal

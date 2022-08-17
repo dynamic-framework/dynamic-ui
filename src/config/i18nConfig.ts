@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { liquidParser } from '@modyolabs/design-system';
 import { configureI18n } from '@modyolabs/react-design-system';
 
@@ -11,6 +12,4 @@ const resources = {
 
 const LANG = liquidParser.parse('{{site.language}}');
 
-configureI18n(resources, { lng: LANG })
-  .then(console.log)
-  .catch(console.error);
+configureI18n(resources, { lng: LANG });
