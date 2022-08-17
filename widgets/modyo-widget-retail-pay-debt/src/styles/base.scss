@@ -1,7 +1,7 @@
 html,
 body,
 #root {
-  height: 100%;
+  height: 100vh;
   background-color: #F9FAFA;
 
   .scroll-h {
@@ -22,9 +22,11 @@ body,
       font-weight: 400;
 
     }
+
     .btn-outline-info {
       width: 100%;
     }
+
     span {
       flex-grow: 1;
     }
@@ -32,6 +34,7 @@ body,
 
   .btn {
 
+    width: 100%;
     &.btn-primary-gradient {
       --bs-btn-padding-x: 4rem;
 
@@ -41,13 +44,15 @@ body,
     }
   }
 
-  .alerta {
+  .custom-alert {
     z-index: 100;
+
     .alert {
-      .alert-text{
+      .alert-text {
         --bs-alert-font-size: 12px;
         --bs-alert-line-height: 18px;
       }
+
       .m-icon {
         font-size: 12px;
       }
@@ -59,7 +64,15 @@ body,
       --bs-btn-padding-x: 1.75rem;
     }
   }
+
   .shortcut .shortcut-toggle .shortcut-label {
     font-weight: 600;
+  }
+
+  .more-options-btn {
+    .btn {
+      --bs-btn-font-weight: 400;
+      --bs-btn-font-size: 0.75rem;
+    }
   }
 }

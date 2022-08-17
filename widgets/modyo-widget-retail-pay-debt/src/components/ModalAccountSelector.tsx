@@ -43,7 +43,7 @@ export default function ModalAccountSelector() {
         ))}
         <MButton
           data-bs-dismiss="modal"
-          class="my-4"
+          class="mt-4 mb-3 w-50"
           text={t('button.confirm')}
           theme="primary"
           isPill

@@ -137,14 +137,14 @@ export default function PaymentPanel() {
               <small
                 className="d-block text-info text-start"
               >
-                {isScheduled
+                {isRecurrent
                   ? t('collapse.yesRecurrentLabel')
                   : t('collapse.noRecurrentLabel')}
               </small>
             </div>
           </div>
           <MButton
-            className="fw-normal"
+            className="more-options-btn"
             variant="text"
             theme="info"
             text={t('collapse.moreOptions')}
@@ -153,10 +153,11 @@ export default function PaymentPanel() {
             data-bs-target="#moreOptions"
             aria-expanded="false"
             aria-controls="collapseExample"
+            data-bs-delay="{'show':1000,'hide':1000}"
           />
         </div>
         <div
-          className="d-flex justify-content-center pt-4"
+          className="d-flex justify-content-center"
         >
           <MButton
             {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}

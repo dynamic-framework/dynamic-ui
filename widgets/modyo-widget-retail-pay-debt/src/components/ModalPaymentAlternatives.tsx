@@ -40,7 +40,7 @@ export default function ModalPaymentAlternatives() {
         />
         <MButton
           data-bs-dismiss="modal"
-          class="my-4"
+          class="mt-4 mb-3 w-50"
           text={t('button.cancel')}
           theme="primary"
           isPill
