@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import widget from './slice';
+import slice from './slice';
 
 const reducer = combineReducers({
-  widget,
+  widget: slice,
 });
 
 const store = configureStore({ reducer });
