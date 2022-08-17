@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next';
 import PaymentPanel from './PaymentPanel';
 import ModalAccountSelector from './ModalAccountSelector';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getAccounts, getAccountSelected, getCardToPay } from '../store/selectors/widget';
-import type { Account } from '../store/slices/widget';
-import { setAccountSelected } from '../store/slices/widget';
+import { getAccounts, getAccountSelected, getCardToPay } from '../store/selectors';
+import type { Account } from '../store/slice';
+import { setAccountSelected } from '../store/slice';
 
 export default function Payment() {
   const { t } = useTranslation();

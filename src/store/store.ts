@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import widget from './slices/widget';
+import widget from './slice';
 
 const reducer = combineReducers({
   widget,

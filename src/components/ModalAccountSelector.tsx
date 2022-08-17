@@ -3,9 +3,9 @@ import { MButton, MListItem, MModal } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getAccounts, getAccountSelected } from '../store/selectors/widget';
-import { setAccountSelected } from '../store/slices/widget';
-import type { Account } from '../store/slices/widget';
+import { getAccounts, getAccountSelected } from '../store/selectors';
+import { setAccountSelected } from '../store/slice';
+import type { Account } from '../store/slice';
 
 export default function ModalAccountSelector() {
   const { t } = useTranslation();

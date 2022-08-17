@@ -14,7 +14,7 @@ import ModalRecurrentPay from './ModalRecurrentPay';
 import usePaymentInput from '../hooks/usePaymentInput';
 import ModalConfirmPayment from './ModalConfirmPayment';
 import { useAppSelector } from '../store/hooks';
-import { getAccountSelected, getCardToPay } from '../store/selectors/widget';
+import { getAccountSelected, getCardToPay } from '../store/selectors';
 
 export default function PaymentPanel() {
   const { t } = useTranslation();

@@ -2,7 +2,7 @@ import { MButton, MModal } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from '../store/hooks';
-import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors/widget';
+import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors';
 
 interface Props {
   onAccept: (accepted: boolean) => void;

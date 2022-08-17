@@ -4,7 +4,7 @@ import useAccounts from './hooks/useAccounts';
 import PaymentResult from './components/PaymentResult';
 import Payment from './components/Payment';
 import { useAppSelector } from './store/hooks';
-import { getIsPaid } from './store/selectors/widget';
+import { getIsPaid } from './store/selectors';
 
 export default function App() {
   useAccounts();
