@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '../store/hooks';
-import { setAccounts, setAccountSelected } from '../store/slices/widget';
+import { setAccounts, setAccountSelected } from '../store/slice';
 
 const ACCOUNTS = [
   {

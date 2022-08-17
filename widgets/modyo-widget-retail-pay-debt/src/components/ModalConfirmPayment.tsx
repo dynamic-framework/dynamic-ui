@@ -2,8 +2,8 @@ import { MButton, MModal } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setIsPaid } from '../store/slices/widget';
-import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors/widget';
+import { setIsPaid } from '../store/slice';
+import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors';
 
 export default function ModalConfirmPayment() {
   const { t } = useTranslation();

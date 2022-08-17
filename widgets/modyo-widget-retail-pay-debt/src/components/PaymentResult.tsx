@@ -6,7 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from '../store/hooks';
-import { getAmountUsed, getCardToPay } from '../store/selectors/widget';
+import { getAmountUsed, getCardToPay } from '../store/selectors';
 
 export default function PaymentResult() {
   const cardToPay = useAppSelector(getCardToPay);

@@ -1,6 +1,6 @@
 import { createDraftSafeSelector } from '@reduxjs/toolkit';
 
-import { RootState } from '../store';
+import { RootState } from './store';
 
 const getState = (state: RootState) => state.widget;
 

@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import debounce from 'lodash.debounce';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getAmountUsed } from '../store/selectors/widget';
-import { setAmountUsed } from '../store/slices/widget';
+import { getAmountUsed } from '../store/selectors';
+import { setAmountUsed } from '../store/slice';
 
 export default function usePaymentInput(defaultAmountAvailable = 0) {
   const dispatch = useAppDispatch();
