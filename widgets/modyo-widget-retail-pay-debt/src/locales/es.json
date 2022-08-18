@@ -1,29 +1,31 @@
 {
   "cardToPay": "Paying {{{ card }}}",
   "payFrom": "From: {{{ product }}}",
-  "payUntil": "Pay until",
-  "toBePayed": "To be payed",
+  "nextPayment": "Next payment date",
+  "balance": "Balance",
+  "conversionRate": "Conversion rate",
   "currencyInput": {
     "placeholder": "How much?",
     "remainingValid": "{{{ remaining }}} remaining",
-    "remainingInvalid": "Number not allowed"
+    "remainingInvalid": "{{{ amount }}} over limit",
+    "insufficient": "Insufficient funds"
   },
   "shortCutToggle": {
     "minimum": "Minimum",
     "total": "Total",
-    "paymentAlternative": "Payments Alternatives"
+    "paymentAlternatives": "Payment Alternatives"
   },
   "collapse": {
     "moreOptions": "More Options",
     "lessOptions": "Less Options",
     "schedule": "Schedule",
-    "recurrent": "Recurrent",
+    "recurring": "Recurring",
     "yesLabel": "Yes",
     "noLabel": "No",
-    "noScheduleLabel": "This payment will be instant",
-    "noRecurrentLabel": "This payment will not auto-repeat",
-    "yesScheduleLabel": "{{date}}",
-    "yesRecurrentLabel": "This payment will auto-repeat"
+    "noScheduleLabel": "This is a one time payment",
+    "noRecurrentLabel": "This payment will not repeat",
+    "yesScheduleLabel": "To be paid {{{ date }}}",
+    "yesRecurrentLabel": "This payment will repeat"
   },
   "button": {
     "pay": "Pay",
@@ -33,17 +35,18 @@
     "confirm": "Confirm"
   },
   "alert": {
-    "schedule": "You are scheduling to pay the X amount on that date",
-    "notPay": "You have nothing to pay yet"
+    "schedule": "You are scheduling to pay the {{{ amount }}} amount on {{{ date }}}",
+    "notPay": "You have nothing to pay yet",
+    "wrong": "Oops! Something Went Wrong"
   },
   "modal": {
     "paymentAlternatives": {
       "skip": "Skip installment",
-      "skipLabel": "2 grace month remaining",
+      "skipLabel": "2 grace months remaining",
       "flexible": "Flexible payment",
-      "flexibleLabel": "Pay debt in installments",
+      "flexibleLabel": "Pay in installments",
       "renegotiate": "Renegotiate debt",
-      "renegotiateLabel": "Pay your total future debt"
+      "renegotiateLabel": "Pay your future total"
     },
     "pay": {
       "title": "Pay {{{amount}}}?",
@@ -53,22 +56,24 @@
       "title": "Schedule {{{amount}}}?",
       "text": "You are scheduling to pay {{{card}}} from your {{{product}}}"
     },
-    "recurrent": {
-      "title": "Recurrent",
+    "recurring": {
+      "title": "Recurring",
       "repeat": "Repeat",
-      "weekly": "weekly",
+      "on": "On",
+      "weekly": "Weekly",
       "monthly": "Monthly",
       "custom": "Custom",
       "ends": "Ends",
       "never": "Never",
       "date": "Date",
-      "occurrences": "Occurrences"
+      "repeats": "Repeats"
     }
   },
   "paid": {
     "success": "Payment successful",
-    "moneyPayed": "Money paid",
-    "productPayed": "Product paid",
+    "failed": "Payment failed",
+    "moneyPaid": "Money paid",
+    "paidTo": "Paid to",
     "transactionId": "Transaction ID",
     "timeDate": "Time & Date",
     "terms": {

@@ -60,8 +60,8 @@ export default function Payment() {
           />
           {(!!cardToPay?.totalPayment && accountSelected) && (
             <>
-              <MListItem value="12/31/22" text={t('payUntil')} class="mb-2 p-1" />
-              <MListItem value={cardToPay.totalPayment} text={t('toBePayed')} class="p-1" />
+              <MListItem value="12/31/22" text={t('nextPayment')} class="mb-2 p-1" />
+              <MListItem value={cardToPay.totalPayment} text={t('balance')} class="p-1" />
             </>
           )}
         </div>
@@ -70,7 +70,7 @@ export default function Payment() {
       {cardToPay.minimumPayment <= 0 && (
         <div className="custom-alert fixed-bottom p-3 w-100">
           <MAlert icon close theme="info">
-            {t('alert.noPay')}
+            {t('alert.notPay')}
           </MAlert>
         </div>
       )}

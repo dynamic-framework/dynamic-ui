@@ -60,7 +60,7 @@ export default function PaymentPanel() {
           hint={
             amountAvailable > 0
               ? t('currencyInput.remainingValid', { remaining: amountAvailable })
-              : t('currencyInput.remainingInvalid')
+              : t('currencyInput.remainingInvalid', { amount })
           }
           iconLabel="currency-dollar"
           hintIconStart="info-circle"
@@ -98,7 +98,7 @@ export default function PaymentPanel() {
               key="3"
               mId="alternativeOption"
               name="paymentOption"
-              label={t('shortCutToggle.paymentAlternative')}
+              label={t('shortCutToggle.paymentAlternatives')}
               text="..."
               {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
               {...cardToPay.minimumPayment > 0 && {
@@ -134,7 +134,7 @@ export default function PaymentPanel() {
                 className="d-block text-info text-start"
               >
                 {isScheduled
-                  ? t('collapse.yesScheduleLabel')
+                  ? t('collapse.yesScheduleLabel', { date: '18/04/22' })
                   : t('collapse.noScheduleLabel')}
               </small>
             </div>
@@ -148,7 +148,7 @@ export default function PaymentPanel() {
               <MFormSwitch
                 class="d-inline-flex"
                 mId="recurrentPayment"
-                label={t('collapse.recurrent')}
+                label={t('collapse.recurring')}
                 isDisabled
                 isChecked={isRecurrent}
                 {...isRecurrent && ({ labelOn: t('collapse.yesLabel') })}
