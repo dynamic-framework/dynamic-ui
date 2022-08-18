@@ -53,17 +53,19 @@ export default function ModalRecurrentPay(
       mId="modalRecurrentPayment"
       centered
       static
-      closeText="Cancel"
+      closeText={t('button.cancel')}
     >
       <div slot="header" className="p-3">
-        <h5>Recurrent</h5>
+        <h5>{t('recurring.title')}</h5>
       </div>
       <div
         slot="body"
         className="px-3"
       >
         <div className="mb-3">
-          <small className="text-info px-2 py-1">Repeat</small>
+          <small className="text-info px-2 py-1">
+            {t('recurring.repeat')}
+          </small>
           <MSegmentControl>
             <MSegmentControlItem
               class="flex-grow-1"
@@ -71,27 +73,27 @@ export default function ModalRecurrentPay(
               name="repeatTime"
               mId="weekly"
               value="8"
-              label="Weekly"
+              label={t('recurring.weekly')}
             />
             <MSegmentControlItem
               class="flex-grow-1"
               name="repeatTime"
               mId="monthly"
               value="30"
-              label="Monthly"
+              label={t('recurring.monthly')}
             />
             <MSegmentControlItem
               class="flex-grow-1"
               name="repeatTime"
               mId="custom"
               value="custom"
-              label="Custom"
+              label={t('recurring.custom')}
             />
           </MSegmentControl>
         </div>
         <div className="mb-3 mx-2">
           <small className="text-dark px-2 py-1">
-            On
+            {t('recurring.on')}
           </small>
           <div className="d-flex justify-content-between">
             {Object.values(days).map((day) => (
@@ -109,7 +111,9 @@ export default function ModalRecurrentPay(
           </div>
         </div>
         <div className="mb-3">
-          <small className="text-info px-2 py-1">Ends</small>
+          <small className="text-info px-2 py-1">
+            {t('recurring.ends')}
+          </small>
           <MSegmentControl>
             <MSegmentControlItem
               class="flex-grow-1"
@@ -117,21 +121,21 @@ export default function ModalRecurrentPay(
               name="endTime"
               mId="never"
               value="never"
-              label="Never"
+              label={t('recurring.never')}
             />
             <MSegmentControlItem
               class="flex-grow-1"
               name="endTime"
               mId="date"
               value="date"
-              label="Date"
+              label={t('recurring.date')}
             />
             <MSegmentControlItem
               class="flex-grow-1"
               name="endTime"
-              mId="occurrencies"
-              value="occurrencies"
-              label="Occurencies"
+              mId="repeats"
+              value="repeats"
+              label={t('recurring.repeats')}
             />
           </MSegmentControl>
         </div>
@@ -140,13 +144,12 @@ export default function ModalRecurrentPay(
         <MButton
           data-bs-dismiss="modal"
           class="mb-2"
-          text="Confirm"
+          text={t('button.confirm')}
           theme="primary"
           isPill
           onClick={() => onAccept(true)}
         />
       </div>
     </MModal>
-
   );
 }

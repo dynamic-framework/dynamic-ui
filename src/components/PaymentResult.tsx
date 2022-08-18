@@ -35,14 +35,14 @@ export default function PaymentResult() {
           <div className="d-flex flex-column gap-1 text-center p-3 border-1 border-bottom">
             <span className="text-gray fw-bold">{`$ ${amountUsed ?? 0}`}</span>
             <small className="text-dark">
-              {t('paid.moneyPayed')}
+              {t('paid.moneyPaid')}
             </small>
           </div>
           <div
             className="d-flex flex-column gap-2 small"
           >
             <MListItem
-              text={t('paid.productPayed')}
+              text={t('paid.paidTo')}
               value={`${cardToPay.franchise} ${cardToPay.mask}`}
             />
             <MListItem
