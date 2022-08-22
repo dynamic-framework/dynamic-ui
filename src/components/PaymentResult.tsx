@@ -18,7 +18,9 @@ export default function PaymentResult() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center py-4 px-1">
         <MButton iconLeft="arrow-left" isPill theme="info" variant="text" />
-        <h6 className="fw-bold m-0 flex-grow-1 text-center">Recipient</h6>
+        <h6 className="fw-bold m-0 flex-grow-1 text-center">
+          {t('paid.title')}
+        </h6>
         <MButton iconLeft="share" isPill theme="tertiary" variant="ghost" />
       </div>
       <div className="d-flex flex-column align-items-center gap-4">
