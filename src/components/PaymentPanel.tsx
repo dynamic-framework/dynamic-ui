@@ -6,6 +6,7 @@ import {
   MFormSwitch,
   MShortcutToggle,
   MSkeleton,
+  MAlert,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -67,6 +68,7 @@ export default function PaymentPanel() {
           minValue={0}
           maxValue={accountSelected?.value}
           variant="prime"
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           onMChange={({ detail: { amount: value } }) => setAmount(value)}
           value={amount}
         />
@@ -198,7 +200,17 @@ export default function PaymentPanel() {
       <ModalPaymentAlternatives />
       <ModalSchedule onAccept={setIsScheduled} />
       <ModalRecurrentPay onAccept={setIsRecurrent} />
-      <ModalConfirmPayment />
+      <ModalConfirmPayment isScheduled={isScheduled} />
+      {/* TODO: Add schedule option to store */}
+      {isScheduled && (
+        <MAlert
+          className="custom-alert fixed-bottom p-3 w-100"
+          theme="info"
+          close
+        >
+          {t('alert.schedule', { amount, date: '12/12/12' })}
+        </MAlert>
+      )}
     </>
   );
 }
