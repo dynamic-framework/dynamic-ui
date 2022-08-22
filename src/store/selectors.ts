@@ -33,3 +33,8 @@ export const getSchedule = createDraftSafeSelector(
   getState,
   (widget) => widget.schedule,
 );
+
+export const getRecurring = createDraftSafeSelector(
+  getState,
+  (widget) => widget.recurring,
+);

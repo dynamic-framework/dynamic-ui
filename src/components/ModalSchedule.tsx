@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { setSchedule } from '../store/slice';
-import { getSchedule } from '../store/selectors';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppDispatch } from '../store/hooks';
 
 interface Props {
   onAccept: (accepted: boolean) => void;
@@ -19,24 +18,20 @@ export default function ModalSchedule(
   const dispatch = useAppDispatch();
 
   const [date, setDate] = useState(new Date());
-  const currentSchedule: any = useAppSelector(getSchedule);
 
   const scheduleDate = (option: boolean) => {
     if (option) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       dispatch(setSchedule({
-        ...currentSchedule,
-        is: true,
+        isScheduled: true,
         date: date.toISOString(),
+        dateShow: date.toISOString().split('T')[0], // TODO: add date formatter
       }));
     } else {
       dispatch(setSchedule({
-        is: false,
+        isScheduled: false,
         date: null,
-        repeat: {
-          start: null,
-          end: null,
-        },
+        dateShow: null,
       }));
     }
     onAccept(option);
