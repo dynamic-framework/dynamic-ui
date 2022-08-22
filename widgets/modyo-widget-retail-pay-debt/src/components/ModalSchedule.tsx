@@ -20,20 +20,12 @@ export default function ModalSchedule(
   const [date, setDate] = useState(new Date());
 
   const scheduleDate = (option: boolean) => {
-    if (option) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      dispatch(setSchedule({
-        isScheduled: true,
-        date: date.toISOString(),
-        dateShow: date.toISOString().split('T')[0], // TODO: add date formatter
-      }));
-    } else {
-      dispatch(setSchedule({
-        isScheduled: false,
-        date: null,
-        dateShow: null,
-      }));
-    }
+    const newSchedule = {
+      isScheduled: option,
+      date: option ? date.toISOString() : null,
+      dateShow: option ? date.toISOString().split('T')[0] : null, // TODO: add date formatter
+    };
+    dispatch(setSchedule(newSchedule));
     onAccept(option);
   };
 

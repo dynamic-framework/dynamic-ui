@@ -69,31 +69,18 @@ export default function ModalRecurrentPay(
   const shortCutEndHandler = ({ detail }: CustomEvent) => setRecurringEnd(detail as string);
 
   const setPaymentScheduled = (action: boolean) => {
-    if (action) {
-      dispatch(setRecurring({
-        isRecurring: action,
-        start: {
-          frequency: recurringStart,
-          option: null,
-        },
-        end: {
-          frequency: recurringEnd,
-          option: null,
-        },
-      }));
-    } else {
-      dispatch(setRecurring({
-        isRecurring: action,
-        start: {
-          frequency: null,
-          option: null,
-        },
-        end: {
-          frequency: null,
-          option: null,
-        },
-      }));
-    }
+    const newRecurring = {
+      isRecurring: action,
+      start: {
+        frequency: action ? recurringStart : null,
+        option: null,
+      },
+      end: {
+        frequency: action ? recurringEnd : null,
+        option: null,
+      },
+    };
+    dispatch(setRecurring(newRecurring));
     onAccept(action);
   };
 
