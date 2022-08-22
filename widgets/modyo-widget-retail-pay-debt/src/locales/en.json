@@ -56,6 +56,9 @@
       "title": "Schedule {{{amount}}}?",
       "text": "You are scheduling to pay {{{card}}} from your {{{product}}}"
     },
+    "scheduleCalendar": {
+      "title": " Schedule"
+    },
     "recurring": {
       "title": "Recurring",
       "repeat": "Repeat",
@@ -70,6 +73,7 @@
     }
   },
   "paid": {
+    "title": "Recipient",
     "success": "Payment successful",
     "failed": "Payment failed",
     "moneyPaid": "Money paid",

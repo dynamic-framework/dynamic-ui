@@ -73,6 +73,7 @@
     }
   },
   "paid": {
+    "title": "Resultado",
     "success": "Pago exitoso",
     "failed": "Payment fallido",
     "moneyPaid": "Valor pagado",
