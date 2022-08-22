@@ -5,7 +5,7 @@ export default function formatCurrency(
   language = 'en-US',
   currency: Dinero.Currency = 'USD',
   hasDecimals = true,
-) {
+): string {
   return Dinero({
     currency,
     amount,
