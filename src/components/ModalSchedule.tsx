@@ -1,8 +1,10 @@
-import { MButton, MModal } from '@modyolabs/react-design-system';
+import { MButton, MModal, MCalendar } from '@modyolabs/react-design-system';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useAppSelector } from '../store/hooks';
-import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors';
+import { setSchedule } from '../store/slice';
+import { getSchedule } from '../store/selectors';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 interface Props {
   onAccept: (accepted: boolean) => void;
@@ -14,9 +16,35 @@ export default function ModalSchedule(
   }: Props,
 ) {
   const { t } = useTranslation();
-  const cardToPay = useAppSelector(getCardToPay);
-  const accountSelected = useAppSelector(getAccountSelected);
-  const amountUsed = useAppSelector(getAmountUsed);
+  const dispatch = useAppDispatch();
+
+  const [date, setDate] = useState(new Date());
+  const currentSchedule: any = useAppSelector(getSchedule);
+
+  const scheduleDate = (option: boolean) => {
+    if (option) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      dispatch(setSchedule({
+        ...currentSchedule,
+        is: true,
+        date: date.toISOString(),
+      }));
+    } else {
+      dispatch(setSchedule({
+        is: false,
+        date: null,
+        repeat: {
+          start: null,
+          end: null,
+        },
+      }));
+    }
+    onAccept(option);
+  };
+
+  useEffect(() => {
+    console.log(date);
+  }, [date]);
 
   return (
     <MModal
@@ -26,20 +54,17 @@ export default function ModalSchedule(
       noCloseButton
     >
       <div slot="header" className="m-3">
-        {amountUsed && (
-          t('modal.schedule.title', { amount: amountUsed })
-        )}
+        {t('modal.scheduleCalendar.title')}
       </div>
       <div
         slot="body"
-        className="d-flex flex-column justify-content-center align-items-center mx-3"
+        className="d-flex justify-content-center align-items-center"
       >
-        {accountSelected?.id && (
-          t('modal.schedule.text', {
-            card: `${cardToPay.franchise} ${cardToPay.mask}`,
-            product: `${accountSelected.type} ${accountSelected.mask}`,
-          })
-        )}
+        <MCalendar
+          date={date}
+          setDate={setDate}
+          inline
+        />
       </div>
       <div slot="footer" className="d-flex flex-column align-items-center w-100 m-3">
         <MButton
@@ -48,7 +73,7 @@ export default function ModalSchedule(
           text={t('button.schedule')}
           theme="primary"
           isPill
-          onClick={() => onAccept(true)}
+          onClick={() => scheduleDate(true)}
         />
         <MButton
           data-bs-dismiss="modal"
@@ -57,7 +82,7 @@ export default function ModalSchedule(
           theme="primary"
           variant="outline"
           isPill
-          onClick={() => onAccept(false)}
+          onClick={() => scheduleDate(false)}
         />
       </div>
     </MModal>

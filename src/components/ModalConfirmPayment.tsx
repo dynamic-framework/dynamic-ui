@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setIsPaid } from '../store/slice';
 import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors';
 
-export default function ModalConfirmPayment() {
+// eslint-disable-next-line react/prop-types
+export default function ModalConfirmPayment({ isScheduled = false }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const amountUsed = useAppSelector(getAmountUsed);
@@ -22,7 +23,7 @@ export default function ModalConfirmPayment() {
       <div slot="header" className="p-3">
         <h5>
           {amountUsed && (
-            t('modal.pay.title', { amount: amountUsed })
+            t(isScheduled ? 'modal.schedule.title' : 'modal.pay.title', { amount: amountUsed })
           )}
         </h5>
       </div>
@@ -31,7 +32,7 @@ export default function ModalConfirmPayment() {
         className="d-flex flex-column justify-content-center align-items-start px-3 gap-3"
       >
         {accountSelected?.id && (
-          t('modal.pay.text', {
+          t(isScheduled ? 'modal.schedule.text' : 'modal.pay.text', {
             card: `${cardToPay.franchise} ${cardToPay.mask}`,
             product: `${accountSelected.type} ${accountSelected.mask}`,
           })
@@ -49,7 +50,7 @@ export default function ModalConfirmPayment() {
         <MButton
           data-bs-dismiss="modal"
           class="mb-2 w-50"
-          text={t('button.pay')}
+          text={t(isScheduled ? 'button.schedule' : 'button.pay')}
           theme="primary"
           isPill
           onClick={() => dispatch(setIsPaid(true))}
