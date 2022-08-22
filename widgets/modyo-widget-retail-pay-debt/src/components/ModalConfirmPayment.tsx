@@ -18,10 +18,10 @@ export default function ModalConfirmPayment({ isScheduled = false }) {
       mId="modalConfirmPayment"
       centered
       static
-      closeText="Cancel"
+      noCloseButton
     >
       <div slot="header" className="p-3">
-        <h5>
+        <h5 className="fw-semibold">
           {amountUsed && (
             t(isScheduled ? 'modal.schedule.title' : 'modal.pay.title', { amount: amountUsed })
           )}

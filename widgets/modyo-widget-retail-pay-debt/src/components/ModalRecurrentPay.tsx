@@ -85,7 +85,9 @@ export default function ModalRecurrentPay(
       closeText={t('button.cancel')}
     >
       <div slot="header" className="p-3">
-        <h5>{t('modal.recurring.title')}</h5>
+        <h5 className="fw-semibold">
+          {t('modal.recurring.title')}
+        </h5>
       </div>
       <div
         slot="body"

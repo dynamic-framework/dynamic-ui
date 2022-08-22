@@ -1,5 +1,5 @@
 import { MButton, MModal, MCalendar } from '@modyolabs/react-design-system';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { setSchedule } from '../store/slice';
@@ -42,10 +42,6 @@ export default function ModalSchedule(
     onAccept(option);
   };
 
-  useEffect(() => {
-    console.log(date);
-  }, [date]);
-
   return (
     <MModal
       mId="modalSchedulePayment"
@@ -53,8 +49,10 @@ export default function ModalSchedule(
       static
       noCloseButton
     >
-      <div slot="header" className="m-3">
-        {t('modal.scheduleCalendar.title')}
+      <div slot="header" className="w-100 mt-3 mb-0 mx-2">
+        <h5 className="fw-semibold text-start m-0">
+          {t('modal.scheduleCalendar.title')}
+        </h5>
       </div>
       <div
         slot="body"
