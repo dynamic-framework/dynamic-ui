@@ -16,6 +16,11 @@ body,
     }
   }
 
+  .segment-control {
+    @extend .scroll-h;
+    justify-content: flex-start;
+  }
+
   .account-selector {
     .btn {
       --bs-btn-padding-x: 1.5rem;
