@@ -28,3 +28,8 @@ export const getIsPaid = createDraftSafeSelector(
   getState,
   (widget) => widget.isPaid,
 );
+
+export const getSchedule = createDraftSafeSelector(
+  getState,
+  (widget) => widget.schedule,
+);

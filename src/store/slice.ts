@@ -22,6 +22,7 @@ type WidgetState = {
   accountSelected?: Account;
   amountUsed?: number | undefined;
   isPaid?: boolean;
+  schedule: unknown;
 };
 
 const initialState = {
@@ -33,6 +34,14 @@ const initialState = {
     minimumPayment: 240,
   },
   accounts: [],
+  schedule: {
+    is: false,
+    date: null,
+    repeat: {
+      start: null,
+      end: null,
+    },
+  },
 } as WidgetState;
 
 const slice = createSlice({
@@ -51,6 +60,10 @@ const slice = createSlice({
     setIsPaid(state, action: PayloadAction<boolean>) {
       state.isPaid = action.payload;
     },
+    setSchedule(state, action: PayloadAction<any>) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      state.schedule = action.payload;
+    },
   },
 });
 
@@ -59,5 +72,6 @@ export const {
   setAccountSelected,
   setAmountUsed,
   setIsPaid,
+  setSchedule,
 } = slice.actions;
 export default slice.reducer;
