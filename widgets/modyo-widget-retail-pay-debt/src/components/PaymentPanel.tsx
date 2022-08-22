@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
 import {
@@ -16,13 +18,17 @@ import ModalRecurrentPay from './ModalRecurrentPay';
 import usePaymentInput from '../hooks/usePaymentInput';
 import ModalConfirmPayment from './ModalConfirmPayment';
 import { useAppSelector } from '../store/hooks';
-import { getAccountSelected, getCardToPay } from '../store/selectors';
+import {
+  getAccountSelected, getCardToPay, getSchedule, getRecurring,
+} from '../store/selectors';
 import useFormatCurrency from '../hooks/useFormatCurrency';
 
 export default function PaymentPanel() {
   const { t } = useTranslation();
   const accountSelected = useAppSelector(getAccountSelected);
   const cardToPay = useAppSelector(getCardToPay);
+  const schedule: any = useAppSelector(getSchedule);
+  const recurring: any = useAppSelector(getRecurring);
 
   const {
     amountAvailable,
@@ -148,7 +154,7 @@ export default function PaymentPanel() {
                 className="d-block text-info text-start"
               >
                 {isScheduled
-                  ? t('collapse.yesScheduleLabel', { date: '18/04/22' })
+                  ? t('collapse.yesScheduleLabel', { date: schedule.dateShow })
                   : t('collapse.noScheduleLabel')}
               </small>
             </div>
@@ -172,7 +178,7 @@ export default function PaymentPanel() {
                 className="d-block text-info text-start"
               >
                 {isRecurrent
-                  ? t('collapse.yesRecurrentLabel')
+                  ? t('collapse.yesRecurrentLabel', { frequency: recurring.start.frequency })
                   : t('collapse.noRecurrentLabel')}
               </small>
             </div>
@@ -220,7 +226,7 @@ export default function PaymentPanel() {
           theme="info"
           close
         >
-          {t('alert.schedule', { amount, date: '12/12/12' })}
+          {t('alert.schedule', { amount, date: schedule.dateShow })}
         </MAlert>
       )}
     </>

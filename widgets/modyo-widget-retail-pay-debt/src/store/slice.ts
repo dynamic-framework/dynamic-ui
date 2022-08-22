@@ -22,7 +22,26 @@ type WidgetState = {
   accountSelected?: Account;
   amountUsed?: number | undefined;
   isPaid?: boolean;
-  schedule: unknown;
+  schedule?: Schedule;
+  recurring?: Recurring;
+};
+
+type Schedule = {
+  isScheduled: boolean;
+  date: string | null;
+  dateShow: string | null;
+};
+
+type Recurring = {
+  isRecurring: boolean;
+  start: {
+    frequency: string | null;
+    option: any;
+  },
+  end: {
+    frequency: string | null;
+    option: any;
+  },
 };
 
 const initialState = {
@@ -35,11 +54,19 @@ const initialState = {
   },
   accounts: [],
   schedule: {
-    is: false,
+    isScheduled: false,
     date: null,
-    repeat: {
-      start: null,
-      end: null,
+    dateShow: null,
+  },
+  recurring: {
+    isRecurring: false,
+    start: {
+      frequency: null,
+      option: null,
+    },
+    end: {
+      frequency: null,
+      option: null,
     },
   },
 } as WidgetState;
@@ -60,9 +87,11 @@ const slice = createSlice({
     setIsPaid(state, action: PayloadAction<boolean>) {
       state.isPaid = action.payload;
     },
-    setSchedule(state, action: PayloadAction<any>) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    setSchedule(state, action: PayloadAction<Schedule>) {
       state.schedule = action.payload;
+    },
+    setRecurring(state, action: PayloadAction<Recurring>) {
+      state.recurring = action.payload;
     },
   },
 });
@@ -73,5 +102,6 @@ export const {
   setAmountUsed,
   setIsPaid,
   setSchedule,
+  setRecurring,
 } = slice.actions;
 export default slice.reducer;
