@@ -10,6 +10,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
+import { useAppDispatch } from '../store/hooks';
+import { setRecurring } from '../store/slice';
+
 interface Props {
   onAccept: (accepted: boolean) => void;
 }
@@ -26,6 +29,7 @@ export default function ModalRecurrentPay(
   }: Props,
 ) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const initialState = {
     saturday: { id: 'saturday', name: 'S', checked: false },
@@ -40,6 +44,16 @@ export default function ModalRecurrentPay(
   const [days, setDays] = useState<Record<string, Day>>(initialState);
   const [recurringStart, setRecurringStart] = useState('weekly');
   const [recurringEnd, setRecurringEnd] = useState('never');
+  const [repeat, setRepeat] = useState(1);
+
+  const setRepeatHandler = (action: boolean) => {
+    if (action) {
+      setRepeat(repeat + 1);
+    } else {
+      const temp = repeat - 1;
+      setRepeat(temp < 0 ? 0 : temp);
+    }
+  };
 
   function handleChange(day: Day) {
     setDays((prev) => ({
@@ -53,6 +67,35 @@ export default function ModalRecurrentPay(
 
   const shortCutRepeatHandler = ({ detail }: CustomEvent) => setRecurringStart(detail as string);
   const shortCutEndHandler = ({ detail }: CustomEvent) => setRecurringEnd(detail as string);
+
+  const setPaymentScheduled = (action: boolean) => {
+    if (action) {
+      dispatch(setRecurring({
+        isRecurring: action,
+        start: {
+          frequency: recurringStart,
+          option: null,
+        },
+        end: {
+          frequency: recurringEnd,
+          option: null,
+        },
+      }));
+    } else {
+      dispatch(setRecurring({
+        isRecurring: action,
+        start: {
+          frequency: null,
+          option: null,
+        },
+        end: {
+          frequency: null,
+          option: null,
+        },
+      }));
+    }
+    onAccept(action);
+  };
 
   const monthlyOptions = [
     {
@@ -204,18 +247,17 @@ export default function ModalRecurrentPay(
         </div>
         <div className="d-flex w-100">
           {
-            (recurringEnd === 'never') && (
-              <small>Not ends</small>
-            )
-          }
-          {
             (recurringEnd === 'date') && (
               <input type="date" name="dateEnd" id="dateEndId" className="small w-100" />
             )
           }
           {
             (recurringEnd === 'repeats') && (
-              <small>Occurrences</small>
+              <div className="d-flex justify-content-center align-items-center gap-2 border border-info rounded-1 w-100 px-3 py-2">
+                <MButton iconLeft="dash" theme="tertiary" variant="outline" onMClick={() => setRepeatHandler(false)} />
+                <span className="body-3 fw-semibold text-info">{repeat}</span>
+                <MButton iconLeft="plus" theme="tertiary" variant="outline" onMClick={() => setRepeatHandler(true)} />
+              </div>
             )
           }
         </div>
@@ -223,11 +265,20 @@ export default function ModalRecurrentPay(
       <div slot="footer" className="w-100 text-center">
         <MButton
           data-bs-dismiss="modal"
-          class="mb-2"
+          class="mb-2 w-50"
+          text={t('button.cancel')}
+          theme="primary"
+          variant="outline"
+          isPill
+          onClick={() => setPaymentScheduled(false)}
+        />
+        <MButton
+          data-bs-dismiss="modal"
+          class="mb-2 w-50"
           text={t('button.confirm')}
           theme="primary"
           isPill
-          onClick={() => onAccept(true)}
+          onClick={() => setPaymentScheduled(true)}
         />
       </div>
     </MModal>

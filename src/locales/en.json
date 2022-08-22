@@ -25,7 +25,7 @@
     "noScheduleLabel": "This is a one time payment",
     "noRecurrentLabel": "This payment will not repeat",
     "yesScheduleLabel": "To be paid {{{ date }}}",
-    "yesRecurrentLabel": "This payment will repeat"
+    "yesRecurrentLabel": "This payment will repeat {{{ frequency }}}"
   },
   "button": {
     "pay": "Pay",

@@ -25,7 +25,7 @@
     "noScheduleLabel": "Este pago se realizará automáticamente una sola vez en la fecha configurada ",
     "noRecurrentLabel": "Este pago sólo se realizará hasta la fecha configurada",
     "yesScheduleLabel": "Fecha de pago {{{ date }}}",
-    "yesRecurrentLabel": "Estás programando un pago recurrente"
+    "yesRecurrentLabel": "Estás programando un pago {{{ frequency }}}"
   },
   "button": {
     "pay": "Pagar",
