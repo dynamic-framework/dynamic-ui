@@ -1,84 +1,87 @@
 {
-  "cardToPay": "Paying {{{ card }}}",
-  "payFrom": "From: {{{ product }}}",
-  "nextPayment": "Next payment date",
-  "balance": "Balance",
-  "conversionRate": "Conversion rate",
+  "cardToPay": "Pagar {{{ card }}}",
+  "payFrom": "Desde: {{{ product }}}",
+  "nextPayment": "Próximo pago",
+  "balance": "Valor a pagar",
+  "conversionRate": "Tasa de conversión",
   "currencyInput": {
-    "placeholder": "How much?",
-    "remainingValid": "{{{ remaining }}} remaining",
-    "remainingInvalid": "{{{ amount }}} over limit",
-    "insufficient": "Insufficient funds"
+    "placeholder": "¿Cuánto?",
+    "remainingValid": "{{{ remaining }}} restante",
+    "remainingInvalid": "{{{ amount }}} sobrepasa lo disponible",
+    "insufficient": "Fondos insuficientes"
   },
   "shortCutToggle": {
-    "minimum": "Minimum",
-    "total": "Total",
-    "paymentAlternatives": "Payment Alternatives"
+    "minimum": "Pago mínimo",
+    "total": "Pago total",
+    "paymentAlternatives": "Otras alternativas de pago"
   },
   "collapse": {
-    "moreOptions": "More Options",
-    "lessOptions": "Less Options",
-    "schedule": "Schedule",
-    "recurring": "Recurring",
-    "yesLabel": "Yes",
+    "moreOptions": "Programar pagos",
+    "lessOptions": "No programar",
+    "schedule": "Por fecha",
+    "recurring": "Por recurrencia",
+    "yesLabel": "Si",
     "noLabel": "No",
-    "noScheduleLabel": "This is a one time payment",
-    "noRecurrentLabel": "This payment will not repeat",
-    "yesScheduleLabel": "To be paid {{{ date }}}",
-    "yesRecurrentLabel": "This payment will repeat"
+    "noScheduleLabel": "Este pago se realizará automáticamente una sola vez en la fecha configurada ",
+    "noRecurrentLabel": "Este pago sólo se realizará hasta la fecha configurada",
+    "yesScheduleLabel": "Fecha de pago {{{ date }}}",
+    "yesRecurrentLabel": "Estás programando un pago recurrente"
   },
   "button": {
-    "pay": "Pay",
-    "schedule": "Schedule",
-    "cancel": "Cancel",
-    "back": "Back",
-    "confirm": "Confirm"
+    "pay": "Pagar",
+    "schedule": "Programar",
+    "cancel": "Cancelar",
+    "back": "Volver",
+    "confirm": "Continuar"
   },
   "alert": {
-    "schedule": "You are scheduling to pay the {{{ amount }}} amount on {{{ date }}}",
-    "notPay": "You have nothing to pay yet",
-    "wrong": "Oops! Something Went Wrong"
+    "schedule": "Estás programando el pago de tu tarjeta de crédito por valor de  {{{ amount }}} el día {{{ date }}}",
+    "notPay": "No tienes pagos pendientes por realizar",
+    "wrong": "Oops! Algo salió mal"
   },
   "modal": {
     "paymentAlternatives": {
-      "skip": "Skip installment",
-      "skipLabel": "2 grace months remaining",
-      "flexible": "Flexible payment",
-      "flexibleLabel": "Pay in installments",
-      "renegotiate": "Renegotiate debt",
-      "renegotiateLabel": "Pay your future total"
+      "skip": "Saltar próxima cuota",
+      "skipLabel": "Esta opción permite solicitar períodos de gracia",
+      "flexible": "Rediferir cuotas",
+      "flexibleLabel": "Esta opción permite modificar el número de cuotas para pago",
+      "renegotiate": "Renegociar deuda",
+      "renegotiateLabel": "Esta opción permite establecer un acuerdo de pago"
     },
     "pay": {
-      "title": "Pay {{{amount}}}?",
-      "text": "You are paying {{{card}}} from your {{{product}}}"
+      "title": "Pagar {{{amount}}}?",
+      "text": "Estás realizando el pago de la tarjeta {{{card}}} desde tu cuenta {{{product}}}"
     },
     "schedule": {
-      "title": "Schedule {{{amount}}}?",
-      "text": "You are scheduling to pay {{{card}}} from your {{{product}}}"
+      "title": " Programar pago {{{amount}}}?",
+      "text": "Estás programando el pago de la tarjeta {{{card}}} desde tu cuenta {{{product}}}"
+    },
+    "scheduleCalendar": {
+      "title": " Programar"
     },
     "recurring": {
-      "title": "Recurring",
-      "repeat": "Repeat",
-      "on": "On",
-      "weekly": "Weekly",
-      "monthly": "Monthly",
-      "custom": "Custom",
-      "ends": "Ends",
-      "never": "Never",
-      "date": "Date",
-      "repeats": "Repeats"
+      "title": "Configurar recurrencia",
+      "repeat": "Repetir ",
+      "on": "Los dias",
+      "weekly": "Semanalmente",
+      "monthly": "Mensualmente",
+      "custom": "Personalizar",
+      "ends": "Finalizar",
+      "never": "Nunca",
+      "date": " Fecha",
+      "repeats": "Frecuencia"
     }
   },
   "paid": {
-    "success": "Payment successful",
-    "failed": "Payment failed",
-    "moneyPaid": "Money paid",
-    "paidTo": "Paid to",
-    "transactionId": "Transaction ID",
-    "timeDate": "Time & Date",
+    "success": "Pago exitoso",
+    "failed": "Payment fallido",
+    "moneyPaid": "Valor pagado",
+    "paidTo": "Producto pagado",
+    "transactionId": "ID de la transacción",
+    "timeDate": "Fecha/hora del pago",
     "terms": {
-      "text": "All your transactions are safe and fast.",
-      "link": "Terms & Conditions."
+      "text": "Todas tus transacciones se realizan de manera rápida y segura.",
+      "link": "Términos y condiciones."
     }
   }
 }
