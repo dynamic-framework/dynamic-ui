@@ -13,7 +13,7 @@ export default function PaymentResult() {
   const cardToPay = useAppSelector(getCardToPay);
   const amountUsed = useAppSelector(getAmountUsed);
 
-  const [amountUsedFormated] = useFormatCurrency(amountUsed);
+  const { values: [amountUsedFormatted] } = useFormatCurrency(amountUsed);
 
   const { t } = useTranslation();
 
@@ -36,7 +36,7 @@ export default function PaymentResult() {
             </h5>
           </div>
           <div className="d-flex flex-column gap-1 text-center p-3 border-1 border-bottom">
-            <span className="text-gray fw-bold">{`${amountUsedFormated}`}</span>
+            <span className="text-gray fw-bold">{`${amountUsedFormatted}`}</span>
             <small className="text-dark">
               {t('paid.moneyPaid')}
             </small>
