@@ -51,7 +51,7 @@ export default function ModalRecurrentPay(
       setRepeat(repeat + 1);
     } else {
       const temp = repeat - 1;
-      setRepeat(temp < 0 ? 0 : temp);
+      setRepeat(temp < 1 ? 1 : temp);
     }
   };
 
