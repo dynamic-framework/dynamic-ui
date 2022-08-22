@@ -59,7 +59,7 @@ export default function PaymentPanel() {
           theme="info"
           placeholder={t('currencyInput.placeholder')}
           hint={
-            amountAvailable > 0
+            amountAvailable >= 0
               ? t('currencyInput.remainingValid', { remaining: amountAvailable })
               : t('currencyInput.remainingInvalid', { amount })
           }
