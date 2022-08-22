@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getAccounts, getAccountSelected } from '../store/selectors';
 import { setAccountSelected } from '../store/slice';
 import type { Account } from '../store/slice';
+import useFormatCurrency from '../hooks/useFormatCurrency';
 
 export default function ModalAccountSelector() {
   const { t } = useTranslation();
@@ -13,6 +14,8 @@ export default function ModalAccountSelector() {
   const accounts = useAppSelector(getAccounts);
   const accountSelected = useAppSelector(getAccountSelected);
   const [value, setValue] = useState<Account | undefined>(accountSelected);
+
+  const { format } = useFormatCurrency();
 
   return (
     <MModal
@@ -29,7 +32,7 @@ export default function ModalAccountSelector() {
             key={account.id}
             variant="selectable"
             class="w-100"
-            value={account.value}
+            value={format(account.value)}
             selectableProps={{
               id: `account${account.id}`,
               name: 'radioAccounts',

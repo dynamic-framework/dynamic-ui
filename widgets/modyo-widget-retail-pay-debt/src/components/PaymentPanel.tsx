@@ -31,11 +31,13 @@ export default function PaymentPanel() {
   } = usePaymentInput(accountSelected?.value);
   const [isScheduled, setIsScheduled] = useState(false);
   const [isRecurrent, setIsRecurrent] = useState(false);
-  const [
-    minimumPayment,
-    totalPayment,
-    availableFormated,
-  ] = useFormatCurrency(
+  const {
+    values: [
+      minimumPayment,
+      totalPayment,
+      availableFormatted,
+    ],
+  } = useFormatCurrency(
     cardToPay.minimumPayment,
     cardToPay.totalPayment,
     amountAvailable,
@@ -70,7 +72,7 @@ export default function PaymentPanel() {
           placeholder={t('currencyInput.placeholder')}
           hint={
             amountAvailable >= 0
-              ? t('currencyInput.remainingValid', { remaining: availableFormated })
+              ? t('currencyInput.remainingValid', { remaining: availableFormatted })
               : t('currencyInput.remainingInvalid', { amount })
           }
           iconLabel="currency-dollar"

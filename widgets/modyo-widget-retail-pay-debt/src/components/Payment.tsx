@@ -21,7 +21,7 @@ export default function Payment() {
   const accounts = useAppSelector(getAccounts);
   const accountSelected = useAppSelector(getAccountSelected);
 
-  const [totalPayment] = useFormatCurrency(cardToPay.totalPayment);
+  const { values: [totalPayment] } = useFormatCurrency(cardToPay.totalPayment);
 
   return (
     <>

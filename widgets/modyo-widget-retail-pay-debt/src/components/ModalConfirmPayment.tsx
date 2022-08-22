@@ -14,7 +14,7 @@ export default function ModalConfirmPayment({ isScheduled = false }) {
   const cardToPay = useAppSelector(getCardToPay);
   const accountSelected = useAppSelector(getAccountSelected);
 
-  const [amountUsedFormated] = useFormatCurrency(amountUsed);
+  const { values: [amountUsedFormatted] } = useFormatCurrency(amountUsed);
 
   return (
     <MModal
@@ -26,7 +26,7 @@ export default function ModalConfirmPayment({ isScheduled = false }) {
       <div slot="header" className="p-3">
         <h5 className="fw-semibold">
           {amountUsed && (
-            t(isScheduled ? 'modal.schedule.title' : 'modal.pay.title', { amount: amountUsedFormated })
+            t(isScheduled ? 'modal.schedule.title' : 'modal.pay.title', { amount: amountUsedFormatted })
           )}
         </h5>
       </div>
