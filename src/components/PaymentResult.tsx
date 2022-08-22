@@ -4,6 +4,7 @@ import {
   MListItem,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
+import useFormatCurrency from '../hooks/useFormatCurrency';
 
 import { useAppSelector } from '../store/hooks';
 import { getAmountUsed, getCardToPay } from '../store/selectors';
@@ -11,6 +12,8 @@ import { getAmountUsed, getCardToPay } from '../store/selectors';
 export default function PaymentResult() {
   const cardToPay = useAppSelector(getCardToPay);
   const amountUsed = useAppSelector(getAmountUsed);
+
+  const [amountUsedFormated] = useFormatCurrency(amountUsed);
 
   const { t } = useTranslation();
 
@@ -33,7 +36,7 @@ export default function PaymentResult() {
             </h5>
           </div>
           <div className="d-flex flex-column gap-1 text-center p-3 border-1 border-bottom">
-            <span className="text-gray fw-bold">{`$ ${amountUsed ?? 0}`}</span>
+            <span className="text-gray fw-bold">{`${amountUsedFormated}`}</span>
             <small className="text-dark">
               {t('paid.moneyPaid')}
             </small>

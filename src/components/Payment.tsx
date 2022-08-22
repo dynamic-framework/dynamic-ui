@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getAccounts, getAccountSelected, getCardToPay } from '../store/selectors';
 import type { Account } from '../store/slice';
 import { setAccountSelected } from '../store/slice';
+import useFormatCurrency from '../hooks/useFormatCurrency';
 
 export default function Payment() {
   const { t } = useTranslation();
@@ -19,6 +20,9 @@ export default function Payment() {
   const cardToPay = useAppSelector(getCardToPay);
   const accounts = useAppSelector(getAccounts);
   const accountSelected = useAppSelector(getAccountSelected);
+
+  const [totalPayment] = useFormatCurrency(cardToPay.totalPayment);
+
   return (
     <>
       <div className="container pb-5 mb-5">
@@ -61,7 +65,7 @@ export default function Payment() {
           {(!!cardToPay?.totalPayment && accountSelected) && (
             <>
               <MListItem value="12/31/22" text={t('nextPayment')} class="mb-2 p-1" />
-              <MListItem value={cardToPay.totalPayment} text={t('balance')} class="p-1" />
+              <MListItem value={totalPayment} text={t('balance')} class="p-1" />
             </>
           )}
         </div>

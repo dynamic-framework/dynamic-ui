@@ -17,6 +17,7 @@ import usePaymentInput from '../hooks/usePaymentInput';
 import ModalConfirmPayment from './ModalConfirmPayment';
 import { useAppSelector } from '../store/hooks';
 import { getAccountSelected, getCardToPay } from '../store/selectors';
+import useFormatCurrency from '../hooks/useFormatCurrency';
 
 export default function PaymentPanel() {
   const { t } = useTranslation();
@@ -30,6 +31,15 @@ export default function PaymentPanel() {
   } = usePaymentInput(accountSelected?.value);
   const [isScheduled, setIsScheduled] = useState(false);
   const [isRecurrent, setIsRecurrent] = useState(false);
+  const [
+    minimumPayment,
+    totalPayment,
+    availableFormated,
+  ] = useFormatCurrency(
+    cardToPay.minimumPayment,
+    cardToPay.totalPayment,
+    amountAvailable,
+  );
 
   if (!accountSelected) {
     return (
@@ -60,7 +70,7 @@ export default function PaymentPanel() {
           placeholder={t('currencyInput.placeholder')}
           hint={
             amountAvailable >= 0
-              ? t('currencyInput.remainingValid', { remaining: amountAvailable })
+              ? t('currencyInput.remainingValid', { remaining: availableFormated })
               : t('currencyInput.remainingInvalid', { amount })
           }
           iconLabel="currency-dollar"
@@ -81,7 +91,7 @@ export default function PaymentPanel() {
               mId="minimumOption"
               name="paymentOption"
               label={t('shortCutToggle.minimum')}
-              text={cardToPay.minimumPayment.toString()}
+              text={minimumPayment}
               value="minimumOption"
               onMChange={() => setAmount(cardToPay.minimumPayment)}
             />
@@ -92,7 +102,7 @@ export default function PaymentPanel() {
               mId="totalOption"
               name="paymentOption"
               label={t('shortCutToggle.total')}
-              text={cardToPay.totalPayment.toString()}
+              text={totalPayment}
               value="totalOption"
               onMChange={() => setAmount(cardToPay.totalPayment)}
             />
