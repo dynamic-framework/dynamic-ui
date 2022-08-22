@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setIsPaid } from '../store/slice';
 import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors';
+import useFormatCurrency from '../hooks/useFormatCurrency';
 
 // eslint-disable-next-line react/prop-types
 export default function ModalConfirmPayment({ isScheduled = false }) {
@@ -12,6 +13,8 @@ export default function ModalConfirmPayment({ isScheduled = false }) {
   const amountUsed = useAppSelector(getAmountUsed);
   const cardToPay = useAppSelector(getCardToPay);
   const accountSelected = useAppSelector(getAccountSelected);
+
+  const [amountUsedFormated] = useFormatCurrency(amountUsed);
 
   return (
     <MModal
@@ -23,7 +26,7 @@ export default function ModalConfirmPayment({ isScheduled = false }) {
       <div slot="header" className="p-3">
         <h5 className="fw-semibold">
           {amountUsed && (
-            t(isScheduled ? 'modal.schedule.title' : 'modal.pay.title', { amount: amountUsed })
+            t(isScheduled ? 'modal.schedule.title' : 'modal.pay.title', { amount: amountUsedFormated })
           )}
         </h5>
       </div>
