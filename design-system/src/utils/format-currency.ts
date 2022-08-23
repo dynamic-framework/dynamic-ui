@@ -5,11 +5,12 @@ export default function formatCurrency(
   language = 'en-US',
   currency: Dinero.Currency = 'USD',
   hasDecimals = true,
+  precision = 2,
 ): string {
   return Dinero({
     currency,
     amount,
-    precision: 2,
+    precision,
   })
     .setLocale(language)
     .toFormat(hasDecimals ? '$0,0.00' : '$0,0');
