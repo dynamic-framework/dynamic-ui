@@ -16,7 +16,7 @@
     "paymentAlternatives": "Otras alternativas de pago"
   },
   "collapse": {
-    "moreOptions": "Programar pagos",
+    "options": "Programar transacción",
     "lessOptions": "No programar",
     "schedule": "Por fecha",
     "recurring": "Por recurrencia",

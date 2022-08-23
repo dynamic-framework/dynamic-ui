@@ -16,7 +16,7 @@
     "paymentAlternatives": "Payment Alternatives"
   },
   "collapse": {
-    "moreOptions": "More Options",
+    "options": "Schedule transaction",
     "lessOptions": "Less Options",
     "schedule": "Schedule",
     "recurring": "Recurring",
