@@ -9,7 +9,9 @@ import { useTranslation } from 'react-i18next';
 import PaymentPanel from './PaymentPanel';
 import ModalAccountSelector from './ModalAccountSelector';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getAccounts, getAccountSelected, getCardToPay } from '../store/selectors';
+import {
+  getAccounts, getAccountSelected, getCardToPay,
+} from '../store/selectors';
 import type { Account } from '../store/slice';
 import { setAccountSelected } from '../store/slice';
 import useFormatCurrency from '../hooks/useFormatCurrency';
@@ -35,41 +37,52 @@ export default function Payment() {
               })}
             </h6>
           </div>
-          {accountSelected && (
-            <MButton
-              class="account-selector d-block d-lg-none mb-3"
-              text={t('payFrom', {
-                product: `${accountSelected.type} ${accountSelected.mask}`,
-              })}
+          <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1">
+            {(!!cardToPay?.totalPayment && accountSelected) && (
+              <>
+                <MListItem value="12/31/22" text={t('nextPayment')} class="p-1" />
+                <MListItem value={totalPayment} text={t('balance')} class="p-1" />
+                {
+                  true && <MListItem value="€1 = USD $1,4" text="Convertion rate" class="p-1" />
+                }
+              </>
+            )}
+          </div>
+          <div className="m-3">
+            {accountSelected && (
+              <div className="d-flex flex-column d-lg-none">
+                <p className="fw-semibold text-info mb-0 px-2 pb-2">Pay from</p>
+                <MButton
+                  class="account-selector mb-3"
+                  text={t('payFrom', {
+                    product: `${accountSelected.type} ${accountSelected.mask}`,
+                  })}
+                  theme="info"
+                  iconRight="chevron-down"
+                  data-bs-toggle="modal"
+                  data-bs-target="#accountSelector"
+                  variant="outline"
+                />
+              </div>
+            )}
+            <MSelect
+              class="mb-3 d-none d-lg-block"
+              mId="selectAccount"
+              variant="full"
               theme="info"
-              iconRight="chevron-down"
-              isPill
-              data-bs-toggle="modal"
-              data-bs-target="#accountSelector"
-              variant="outline"
+              label="Pay From"
+              hint="Available"
+              labelExtractor={({ type, mask }: Account) => t('payFrom', {
+                product: `${type} ${mask}`,
+              })}
+              options={accounts}
+              onMChange={
+                ({ detail: account }: CustomEvent<Account>) => dispatch(setAccountSelected(account))
+              }
             />
-          )}
-          <MSelect
-            class="mb-3 d-none d-lg-block"
-            mId="selectAccount"
-            variant="transparent"
-            theme="info"
-            labelExtractor={({ type, mask }: Account) => t('payFrom', {
-              product: `${type} ${mask}`,
-            })}
-            options={accounts}
-            onMChange={
-              ({ detail: account }: CustomEvent<Account>) => dispatch(setAccountSelected(account))
-            }
-          />
-          {(!!cardToPay?.totalPayment && accountSelected) && (
-            <>
-              <MListItem value="12/31/22" text={t('nextPayment')} class="mb-2 p-1" />
-              <MListItem value={totalPayment} text={t('balance')} class="p-1" />
-            </>
-          )}
+            <PaymentPanel />
+          </div>
         </div>
-        <PaymentPanel />
       </div>
       {cardToPay.minimumPayment <= 0 && (
         <div className="custom-alert fixed-bottom p-3 w-100">
