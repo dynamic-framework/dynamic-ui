@@ -3,7 +3,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
 import {
-  MCurrency,
   MButton,
   MFormSwitch,
   MShortcutToggle,
@@ -41,7 +40,6 @@ export default function PaymentPanel() {
     values: [
       minimumPayment,
       totalPayment,
-      availableFormatted,
     ],
   } = useFormatCurrency(
     cardToPay.minimumPayment,
@@ -71,25 +69,6 @@ export default function PaymentPanel() {
   return (
     <>
       <div className="p-4 bg-white text-center rounded">
-        <MCurrency
-          class="pb-4"
-          mId="debtInput"
-          theme="info"
-          placeholder={t('currencyInput.placeholder')}
-          hint={
-            amountAvailable >= 0
-              ? t('currencyInput.remainingValid', { remaining: availableFormatted })
-              : t('currencyInput.remainingInvalid', { amount })
-          }
-          iconLabel="currency-dollar"
-          hintIconStart="info-circle"
-          minValue={0}
-          maxValue={accountSelected?.value}
-          variant="prime"
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          onMChange={({ detail: { amount: value } }) => setAmount(value)}
-          value={amount}
-        />
         <div className="row g-0 m-0 p-0 pt-4 pb-2">
           <div className="col-12 justify-content-between scroll-h pb-2 mx-auto">
             <MShortcutToggle
@@ -187,7 +166,7 @@ export default function PaymentPanel() {
             className="more-options-btn"
             variant="text"
             theme="info"
-            text={t('collapse.moreOptions')}
+            text={t('collapse.options')}
             iconRight="chevron-down"
             data-bs-toggle="collapse"
             data-bs-target="#moreOptions"
