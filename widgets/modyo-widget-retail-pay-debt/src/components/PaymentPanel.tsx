@@ -8,6 +8,7 @@ import {
   MShortcutToggle,
   MSkeleton,
   MAlert,
+  MCurrency,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -42,6 +43,7 @@ export default function PaymentPanel() {
     values: [
       minimumPayment,
       totalPayment,
+      availableFormatted,
     ],
   } = useFormatCurrency(
     cardToPay.minimumPayment,
@@ -146,7 +148,6 @@ export default function PaymentPanel() {
               }}
               value="alternativeOption"
               onMChange={({ detail }: CustomEvent) => setShortcut(detail as string)}
-              white
             />
           </div>
         </div>
