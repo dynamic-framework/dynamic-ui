@@ -6,6 +6,7 @@ export type Account = {
   value: number;
   mask: string;
   type: string;
+  currency: string;
 };
 
 type Card = {
@@ -24,6 +25,7 @@ type WidgetState = {
   isPaid?: boolean;
   schedule?: Schedule;
   recurring?: Recurring;
+  selectedCurrency: string;
 };
 
 type Schedule = {
@@ -69,6 +71,7 @@ const initialState = {
       option: null,
     },
   },
+  selectedCurrency: 'USD',
 } as WidgetState;
 
 const slice = createSlice({
