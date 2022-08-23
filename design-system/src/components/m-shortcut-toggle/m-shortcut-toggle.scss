@@ -1,4 +1,5 @@
 .shortcut {
+  width: 100%;
   padding: #{$shortcut-padding};
   border: #{$shortcut-border};
   border-radius: #{$shortcut-border-radius};
@@ -7,15 +8,25 @@
     position: absolute;
     opacity: 0;
 
-    ~ .shortcut-toggle {
-      padding: #{$shortcut-toggle-padding};
-      background-color: #{$shortcut-toggle-bg};
-      border: #{$shortcut-toggle-border};
-      border-radius: #{$shortcut-toggle-border-radius};
+    ~ {
+      .shortcut-toggle {
+        padding: #{$shortcut-toggle-padding};
+        background-color: #{$shortcut-toggle-bg};
+        border: #{$shortcut-toggle-border};
+        border-radius: #{$shortcut-toggle-border-radius};
+      }
+
+      .shortcut-toggle-white {
+        padding: calc(#{$shortcut-toggle-padding} - 1px);
+        background-color: var(--#{$prefix}white);
+        border: 1px solid var(--#{$prefix}light);
+        border-radius: #{$shortcut-toggle-border-radius};
+      }
     }
   }
 
-  .shortcut-toggle {
+  .shortcut-toggle,
+  .shortcut-toggle-white {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,7 +53,8 @@
 
 .shortcut input[type="radio"]:checked {
 
-  ~ .shortcut-toggle {
+  ~ .shortcut-toggle,
+  ~ .shortcut-toggle-white {
     background-color: #{$shortcut-toggle-checked-bg};
 
     .shortcut-label {
@@ -68,7 +80,8 @@
 .shortcut:hover,
 .shortcut.hover {
 
-  .shortcut-toggle {
+  .shortcut-toggle,
+  .shortcut-toggle-white {
     box-shadow: #{$shortcut-toggle-hover-box-shadow};
   }
 }
@@ -76,7 +89,8 @@
 .shortcut input[type="radio"]:active,
 .shortcut.active input[type="radio"] {
 
-  ~ .shortcut-toggle {
+  ~ .shortcut-toggle,
+  ~ .shortcut-toggle-white {
     box-shadow: #{$shortcut-toggle-active-box-shadow};
   }
 }

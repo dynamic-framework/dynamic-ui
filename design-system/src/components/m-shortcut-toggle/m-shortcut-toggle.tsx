@@ -55,6 +55,11 @@ export class MShortcutToggle implements ComponentInterface {
   @Prop() state?: InputState;
 
   /**
+   * Theme
+   */
+  @Prop() white = false;
+
+  /**
    * Emitted when the select value has changed
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
@@ -82,7 +87,7 @@ export class MShortcutToggle implements ComponentInterface {
           disabled={this.state === 'disabled'}
         />
         {((this.text || this.label) && !this.icon) && (
-          <div class="shortcut-toggle">
+          <div class={this.white ? 'shortcut-toggle-white' : 'shortcut-toggle'}>
             { this.label && (
               <span class="shortcut-label d-block">
                 {this.label}

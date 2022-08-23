@@ -17,6 +17,7 @@
 | `state`              | `state`      | Input and shortcut state | `"active" \| "disabled" \| "focus" \| "hover" \| undefined` | `undefined` |
 | `text`               | `text`       | Shortcut text            | `string \| undefined`                                       | `undefined` |
 | `value` _(required)_ | `value`      | Input value              | `string`                                                    | `undefined` |
+| `white`              | `white`      | Theme                    | `boolean`                                                   | `false`     |
 
 
 ## Events

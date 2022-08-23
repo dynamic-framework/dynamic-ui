@@ -5,7 +5,7 @@
   "balance": "Valor a pagar",
   "conversionRate": "Tasa de conversión",
   "currencyInput": {
-    "placeholder": "¿Cuánto?",
+    "placeholder": "Monto",
     "remainingValid": "{{{ remaining }}} restante",
     "remainingInvalid": "{{{ amount }}} sobrepasa lo disponible",
     "insufficient": "Fondos insuficientes"
@@ -13,7 +13,9 @@
   "shortCutToggle": {
     "minimum": "Pago mínimo",
     "total": "Pago total",
-    "paymentAlternatives": "Otras alternativas de pago"
+    "paymentAlternatives": "Otras alternativas de pago",
+    "other": "Otro",
+    "amount": "Monto"
   },
   "collapse": {
     "options": "Programar transacción",
