@@ -752,6 +752,10 @@ export namespace Components {
           * Input value
          */
         "value": string;
+        /**
+          * Theme
+         */
+        "white": boolean;
     }
 }
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
@@ -1754,6 +1758,10 @@ declare namespace LocalJSX {
           * Input value
          */
         "value": string;
+        /**
+          * Theme
+         */
+        "white"?: boolean;
     }
     interface IntrinsicElements {
         "m-alert": MAlert;
