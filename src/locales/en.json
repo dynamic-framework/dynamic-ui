@@ -5,7 +5,7 @@
   "balance": "Balance",
   "conversionRate": "Conversion rate",
   "currencyInput": {
-    "placeholder": "How much?",
+    "placeholder": "Amount",
     "remainingValid": "{{{ remaining }}} remaining",
     "remainingInvalid": "{{{ amount }}} over limit",
     "insufficient": "Insufficient funds"
@@ -13,10 +13,12 @@
   "shortCutToggle": {
     "minimum": "Minimum",
     "total": "Total",
-    "paymentAlternatives": "Payment Alternatives"
+    "paymentAlternatives": "Payment Alternatives",
+    "other": "Other",
+    "amount": "Amount"
   },
   "collapse": {
-    "moreOptions": "More Options",
+    "moreOptions": "Schedule transaction",
     "lessOptions": "Less Options",
     "schedule": "Schedule",
     "recurring": "Recurring",
