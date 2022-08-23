@@ -1,4 +1,5 @@
 import { createDraftSafeSelector } from '@reduxjs/toolkit';
+import { Account } from './slice';
 
 import { RootState } from './store';
 
@@ -9,9 +10,17 @@ export const getCardToPay = createDraftSafeSelector(
   (widget) => widget.cardToPay,
 );
 
+export const getSelectedCurrency = createDraftSafeSelector(
+  getState,
+  (widget) => widget.selectedCurrency,
+);
+
 export const getAccounts = createDraftSafeSelector(
   getState,
-  (widget) => widget.accounts,
+  getSelectedCurrency,
+  (widget, selectedCurrency) => widget.accounts.filter(
+    (account) => account.currency === selectedCurrency,
+  ),
 );
 
 export const getAccountSelected = createDraftSafeSelector(
