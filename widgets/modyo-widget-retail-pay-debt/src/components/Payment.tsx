@@ -1,6 +1,7 @@
 import {
   MAlert,
   MButton,
+  MIcon,
   MListItem,
   MSelect,
 } from '@modyolabs/react-design-system';
@@ -48,38 +49,45 @@ export default function Payment() {
               </>
             )}
           </div>
-          <div className="m-3">
+          <div className="m-3 pt-3">
             {accountSelected && (
-              <div className="d-flex flex-column d-lg-none">
-                <p className="fw-semibold text-info mb-0 px-2 pb-2">Pay from</p>
-                <MButton
-                  class="account-selector mb-3"
-                  text={t('payFrom', {
-                    product: `${accountSelected.type} ${accountSelected.mask}`,
-                  })}
+              <>
+                <div className="d-flex flex-column d-lg-none">
+                  <p className="fw-semibold text-info mb-0 px-2 pb-2 text-gray">Pay from</p>
+                  <MButton
+                    class="account-selector"
+                    text={t('payFrom', {
+                      product: `${accountSelected.type} ${accountSelected.mask}`,
+                    })}
+                    theme="info"
+                    iconRight="chevron-down"
+                    data-bs-toggle="modal"
+                    data-bs-target="#accountSelector"
+                    variant="outline"
+                  />
+                  <small className="text-dark d-flex gap-2 align-items-center p-1">
+                    <MIcon icon="info-circle" />
+                    <span>13213 available</span>
+                  </small>
+                </div>
+                <MSelect
+                  class="mb-3 d-none d-lg-block"
+                  mId="selectAccount"
+                  variant="full"
                   theme="info"
-                  iconRight="chevron-down"
-                  data-bs-toggle="modal"
-                  data-bs-target="#accountSelector"
-                  variant="outline"
+                  label="Pay From"
+                  hint="Available"
+                  labelExtractor={({ type, mask }: Account) => t('payFrom', {
+                    product: `${type} ${mask}`,
+                  })}
+                  options={accounts}
+                  onMChange={
+                    ({ detail: account }:
+                    CustomEvent<Account>) => dispatch(setAccountSelected(account))
+                  }
                 />
-              </div>
+              </>
             )}
-            <MSelect
-              class="mb-3 d-none d-lg-block"
-              mId="selectAccount"
-              variant="full"
-              theme="info"
-              label="Pay From"
-              hint="Available"
-              labelExtractor={({ type, mask }: Account) => t('payFrom', {
-                product: `${type} ${mask}`,
-              })}
-              options={accounts}
-              onMChange={
-                ({ detail: account }: CustomEvent<Account>) => dispatch(setAccountSelected(account))
-              }
-            />
             <PaymentPanel />
           </div>
         </div>
