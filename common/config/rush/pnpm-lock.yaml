@@ -82,7 +82,7 @@ importers:
       '@angular/core': ^13.3.6
       '@angular/forms': ^13.3.6
       '@angular/platform-browser': ^13.3.6
-      '@modyolabs/design-system': workspace:^0.0.4
+      '@modyolabs/design-system': workspace:^0.1.0
       '@ngneat/content-loader': ~7.0.0
       ng-packagr: ^13.3.1
       rxjs: ^7.5.5
@@ -107,7 +107,7 @@ importers:
 
   ../../libraries/react-design-system:
     specifiers:
-      '@modyolabs/design-system': workspace:^0.0.4
+      '@modyolabs/design-system': workspace:^0.1.0
       '@rollup/plugin-node-resolve': ^13.3.0
       '@testing-library/jest-dom': ^5.8.0
       '@testing-library/react': ^10.0.4
@@ -152,7 +152,7 @@ importers:
 
   ../../libraries/vue-design-system:
     specifiers:
-      '@modyolabs/design-system': workspace:^0.0.4
+      '@modyolabs/design-system': workspace:^0.1.0
       '@rollup/plugin-commonjs': ^22.0.0
       '@rollup/plugin-node-resolve': ^13.3.0
       '@types/jest': ^26.0.23
@@ -196,7 +196,7 @@ importers:
       '@angular/platform-browser-dynamic': ~13.3.6
       '@angular/router': ~13.3.0
       '@modyolabs/angular-design-system': workspace:^0.0.1
-      '@modyolabs/design-system': workspace:^0.0.4
+      '@modyolabs/design-system': workspace:^0.1.0
       '@types/jasmine': ~3.10.0
       '@types/node': ^12.11.1
       jasmine-core: ~4.0.0
@@ -316,8 +316,8 @@ importers:
   ../../widgets/react-profile:
     specifiers:
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/design-system': workspace:^0.0.4
-      '@modyolabs/react-design-system': workspace:^0.0.4
+      '@modyolabs/design-system': workspace:^0.1.0
+      '@modyolabs/react-design-system': workspace:^0.1.0
       '@testing-library/jest-dom': ^5.14.1
       '@testing-library/react': ^13.0.0
       '@testing-library/user-event': ^13.2.1
@@ -352,8 +352,8 @@ importers:
 
   ../../widgets/vue-profile:
     specifiers:
-      '@modyolabs/design-system': workspace:^0.0.4
-      '@modyolabs/vue-design-system': workspace:^0.0.4
+      '@modyolabs/design-system': workspace:^0.1.0
+      '@modyolabs/vue-design-system': workspace:^0.1.0
       '@typescript-eslint/eslint-plugin': ^5.4.0
       '@typescript-eslint/parser': ^5.4.0
       '@vue/cli-plugin-babel': ~5.0.0
@@ -10058,6 +10058,7 @@ packages:
     resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
     dependencies:
       void-elements: 3.1.0
+    dev: true
 
   /html-tags/2.0.0:
     resolution: {integrity: sha512-+Il6N8cCo2wB/Vd3gqy/8TZhTD3QvcVeQLCnZiGkGCH3JP28IgGAY41giccp2W4R3jfyJPAP318FQTa1yU7K7g==}
@@ -15061,6 +15062,7 @@ packages:
       i18next: 21.9.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: true
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -17591,6 +17593,11 @@ packages:
 
   /void-elements/2.0.1:
     resolution: {integrity: sha512-qZKX4RnBzH2ugr8Lxa7x+0V6XD9Sb/ouARtiasEQCHB1EVU4NXtmHsDDrx1dO4ne5fc3J6EW05BP1Dl0z0iung==}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
+  /void-elements/3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
     engines: {node: '>=0.10.0'}
     dev: true
 
