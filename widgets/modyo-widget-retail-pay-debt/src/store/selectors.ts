@@ -23,6 +23,11 @@ export const getAccounts = createDraftSafeSelector(
   ),
 );
 
+export const getCurrencies = createDraftSafeSelector(
+  // TODO
+  () => false,
+);
+
 export const getAccountSelected = createDraftSafeSelector(
   getState,
   (widget) => widget.accountSelected,
