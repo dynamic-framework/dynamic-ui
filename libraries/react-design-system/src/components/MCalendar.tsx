@@ -6,18 +6,20 @@ export declare interface CalendarProps {
   date: Date;
   setDate: Function;
   calendarContainer?: React.FC;
+  inline?: boolean;
 }
 
 export default function MCalendar({
   setDate,
   date,
-  calendarContainer
+  calendarContainer,
 }: CalendarProps) {
   return (
     <DatePicker
       selected={date}
       onChange={(date:Date) => setDate(date)}
       calendarContainer={calendarContainer}
+      inline={true}
     />
   );
 }

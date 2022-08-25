@@ -101,7 +101,7 @@ $form-check-input-focus-border: none !default;
 $form-check-input-focus-box-shadow: none !default;
 
 // Checkbox-input:checked
-$form-check-input-checked-bg-color: var(--#{$prefix}form-check-input-checked-bg) !default;
+$form-check-input-checked-bg-color: var(--#{$prefix}form-check-input-checked-bg, var(--#{$prefix}tertiary)) !default;
 $form-check-input-checked-border-color: $form-check-input-checked-bg-color !default;
 
 // Checkbox Indeterminate

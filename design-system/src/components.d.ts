@@ -15,7 +15,7 @@ import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interfac
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
-import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
+import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -217,7 +217,7 @@ export namespace Components {
         /**
           * Theme for the m-currency
          */
-        "theme"?: string | undefined;
+        "theme": string;
         /**
           * * The type of the input
          */
@@ -244,6 +244,10 @@ export namespace Components {
           * Set view of checkbox as indeterminated
          */
         "indeterminate"?: boolean;
+        /**
+          * Set checkbox as toggle button
+         */
+        "isButton": boolean;
         /**
           * Text that will be displayed beside Check input or Radio input
          */
@@ -273,7 +277,7 @@ export namespace Components {
         /**
           * Flag to change the check state
          */
-        "isChecked": boolean;
+        "isChecked"?: boolean;
         /**
           * Flag to disable the input
          */
@@ -687,6 +691,10 @@ export namespace Components {
          */
         "label"?: string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor": (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of select
          */
         "layoutDirection": FormControlLayoutDirection;
@@ -695,13 +703,21 @@ export namespace Components {
          */
         "mId": string;
         /**
+          * The select options
+         */
+        "options": Array<any>;
+        /**
           * The theme of the select
          */
         "theme": string;
         /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor": (item: any) => string | number;
+        /**
           * The variant of the select
          */
-        "variant": FormControlLayoutVariant;
+        "variant": SelectLayoutVariant;
     }
     interface MShortcutToggle {
         /**
@@ -736,6 +752,10 @@ export namespace Components {
           * Input value
          */
         "value": string;
+        /**
+          * Theme
+         */
+        "white": boolean;
     }
 }
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
@@ -749,6 +769,10 @@ export interface MCouponCustomEvent<T> extends CustomEvent<T> {
 export interface MCurrencyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCurrencyElement;
+}
+export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMFormCheckElement;
 }
 export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1163,7 +1187,7 @@ declare namespace LocalJSX {
         /**
           * Theme for the m-currency
          */
-        "theme"?: string | undefined;
+        "theme"?: string;
         /**
           * * The type of the input
          */
@@ -1191,6 +1215,10 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
+          * Set checkbox as toggle button
+         */
+        "isButton"?: boolean;
+        /**
           * Text that will be displayed beside Check input or Radio input
          */
         "label"?: string;
@@ -1202,6 +1230,10 @@ declare namespace LocalJSX {
           * HTML Name to use within a form or JS reference
          */
         "name"?: string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onMChange"?: (event: MFormCheckCustomEvent<any>) => void;
         /**
           * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
          */
@@ -1657,6 +1689,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor"?: (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of select
          */
         "layoutDirection"?: FormControlLayoutDirection;
@@ -1667,15 +1703,23 @@ declare namespace LocalJSX {
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MSelectCustomEvent<string>) => void;
+        "onMChange"?: (event: MSelectCustomEvent<any>) => void;
+        /**
+          * The select options
+         */
+        "options"?: Array<any>;
         /**
           * The theme of the select
          */
         "theme"?: string;
         /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor"?: (item: any) => string | number;
+        /**
           * The variant of the select
          */
-        "variant"?: FormControlLayoutVariant;
+        "variant"?: SelectLayoutVariant;
     }
     interface MShortcutToggle {
         /**
@@ -1714,6 +1758,10 @@ declare namespace LocalJSX {
           * Input value
          */
         "value": string;
+        /**
+          * Theme
+         */
+        "white"?: boolean;
     }
     interface IntrinsicElements {
         "m-alert": MAlert;
