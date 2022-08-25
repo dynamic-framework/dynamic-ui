@@ -1,9 +1,9 @@
 {
   "references": [
-    { "path": "./design-system" },
-    { "path": "./libraries/angular-design-system" },
-    { "path": "./libraries/react-design-system" },
-    { "path": "./libraries/vue-design-system" }
+    { "path": "../design-system"},
+    { "path": "../libraries/angular-design-system"},
+    { "path": "../libraries/react-design-system"},
+    { "path": "../libraries/vue-design-system"}
   ],
   "compilerOptions": {
     "paths": {
