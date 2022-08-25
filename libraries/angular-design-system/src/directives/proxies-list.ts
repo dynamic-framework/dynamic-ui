@@ -2,16 +2,19 @@
 import * as d from './proxies';
 
 export const DIRECTIVES = [
+  d.MAlert,
   d.MApp,
   d.MBadge,
   d.MButton,
   d.MCard,
   d.MCoupon,
+  d.MCurrency,
   d.MFormCheck,
   d.MFormSwitch,
   d.MIcon,
   d.MInput,
   d.MListItem,
+  d.MModal,
   d.MNav,
   d.MNavContent,
   d.MNavItem,
@@ -19,5 +22,8 @@ export const DIRECTIVES = [
   d.MNavPane,
   d.MQuickAction,
   d.MSearch,
-  d.MSelect
+  d.MSegmentControl,
+  d.MSegmentControlItem,
+  d.MSelect,
+  d.MShortcutToggle
 ];

@@ -8,13 +8,33 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
+import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
+import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
-import { FormControlLayoutVariant } from "./components/m-select/m-select-interface";
+import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
+    interface MAlert {
+        /**
+          * Has close button
+         */
+        "close"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "icon": boolean;
+        /**
+          * Icon font-size class
+         */
+        "iconSize"?: string;
+        /**
+          * Theme for the alert
+         */
+        "theme": string;
+    }
     interface MApp {
     }
     interface MBadge {
@@ -28,6 +48,14 @@ export namespace Components {
         "theme": string;
     }
     interface MButton {
+        /**
+          * Icon left to display
+         */
+        "iconLeft"?: string;
+        /**
+          * Icon right to display
+         */
+        "iconRight"?: string;
         /**
           * Flag to switch to pill button border radius.
          */
@@ -129,6 +157,80 @@ export namespace Components {
          */
         "type": CouponInputType;
     }
+    interface MCurrency {
+        /**
+          * Has a select input
+         */
+        "hasSelect": boolean;
+        /**
+          * Hint text for the m-currency
+         */
+        "hint"?: string;
+        /**
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon for the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon for the label text
+         */
+        "iconLabel": string;
+        /**
+          * Icon for the middle
+         */
+        "iconMiddle"?: string;
+        /**
+          * Icon for the left
+         */
+        "iconStart"?: string;
+        /**
+          * Label for the input
+         */
+        "label": string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * * The max value of the input
+         */
+        "maxValue"?: number;
+        /**
+          * * The min value of the input
+         */
+        "minValue"?: number;
+        /**
+          * Placeholder for the input
+         */
+        "placeholder"?: string;
+        /**
+          * Theme for the m-currency
+         */
+        "theme": string;
+        /**
+          * * The type of the input
+         */
+        "type": string;
+        /**
+          * * The value of the input
+         */
+        "value"?: number;
+        /**
+          * Variant for the m-currency
+         */
+        "variant"?: CurrencyVariant;
+    }
     interface MFormCheck {
         /**
           * Set checkbox or radio button marked as selected or not
@@ -142,6 +244,10 @@ export namespace Components {
           * Set view of checkbox as indeterminated
          */
         "indeterminate"?: boolean;
+        /**
+          * Set checkbox as toggle button
+         */
+        "isButton": boolean;
         /**
           * Text that will be displayed beside Check input or Radio input
          */
@@ -171,7 +277,7 @@ export namespace Components {
         /**
           * Flag to change the check state
          */
-        "isChecked": boolean;
+        "isChecked"?: boolean;
         /**
           * Flag to disable the input
          */
@@ -314,6 +420,48 @@ export namespace Components {
           * Variant for text item list or complete item list
          */
         "variant"?: ListItemVariant;
+    }
+    interface MModal {
+        /**
+          * Is modal centered
+         */
+        "centered"?: boolean;
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * Is fullscreen in all sizes
+         */
+        "fullScreen"?: boolean;
+        /**
+          * Minimum size to apply the fullscreen
+         */
+        "fullScreenFrom"?: FullScreenFrom;
+        /**
+          * Background image header
+         */
+        "imageHeader"?: string;
+        /**
+          * Id of the modal
+         */
+        "mId": string;
+        /**
+          * Modal size
+         */
+        "modalSize"?: ModalSize;
+        /**
+          * No display close button
+         */
+        "noCloseButton"?: boolean;
+        /**
+          * Is modal scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
     }
     interface MNav {
         /**
@@ -477,6 +625,42 @@ export namespace Components {
          */
         "variant"?: string;
     }
+    interface MSegmentControl {
+        /**
+          * Aria label to describe the segment control
+         */
+        "description"?: string;
+    }
+    interface MSegmentControlItem {
+        /**
+          * Is checked
+         */
+        "checked"?: boolean;
+        /**
+          * Is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * Label of the radio
+         */
+        "label": string;
+        /**
+          * Id of the radio
+         */
+        "mId": string;
+        /**
+          * Name of the radio
+         */
+        "name": string;
+        /**
+          * State of the input
+         */
+        "state"?: InputState;
+        /**
+          * Value of the radio
+         */
+        "value": string;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -485,7 +669,11 @@ export namespace Components {
         /**
           * The hint icon for the select in full variant
          */
-        "hintIcon"?: string;
+        "hintIconEnd"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIconStart"?: string;
         /**
           * The end icon for the select
          */
@@ -503,6 +691,10 @@ export namespace Components {
          */
         "label"?: string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor": (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of select
          */
         "layoutDirection": FormControlLayoutDirection;
@@ -511,13 +703,59 @@ export namespace Components {
          */
         "mId": string;
         /**
+          * The select options
+         */
+        "options": Array<any>;
+        /**
           * The theme of the select
          */
         "theme": string;
         /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor": (item: any) => string | number;
+        /**
           * The variant of the select
          */
-        "variant": FormControlLayoutVariant;
+        "variant": SelectLayoutVariant;
+    }
+    interface MShortcutToggle {
+        /**
+          * Shortcut icon
+         */
+        "icon"?: string;
+        /**
+          * Is checked
+         */
+        "isChecked"?: boolean;
+        /**
+          * Shortcut label
+         */
+        "label"?: string;
+        /**
+          * Id of the input
+         */
+        "mId": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Input and shortcut state
+         */
+        "state"?: InputState;
+        /**
+          * Shortcut text
+         */
+        "text"?: string;
+        /**
+          * Input value
+         */
+        "value": string;
+        /**
+          * Theme
+         */
+        "white": boolean;
     }
 }
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
@@ -527,6 +765,14 @@ export interface MButtonCustomEvent<T> extends CustomEvent<T> {
 export interface MCouponCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCouponElement;
+}
+export interface MCurrencyCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMCurrencyElement;
+}
+export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMFormCheckElement;
 }
 export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -544,11 +790,25 @@ export interface MSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMSearchElement;
 }
+export interface MSegmentControlItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMSegmentControlItemElement;
+}
 export interface MSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMSelectElement;
 }
+export interface MShortcutToggleCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMShortcutToggleElement;
+}
 declare global {
+    interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
+    }
+    var HTMLMAlertElement: {
+        prototype: HTMLMAlertElement;
+        new (): HTMLMAlertElement;
+    };
     interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
     }
     var HTMLMAppElement: {
@@ -579,6 +839,12 @@ declare global {
         prototype: HTMLMCouponElement;
         new (): HTMLMCouponElement;
     };
+    interface HTMLMCurrencyElement extends Components.MCurrency, HTMLStencilElement {
+    }
+    var HTMLMCurrencyElement: {
+        prototype: HTMLMCurrencyElement;
+        new (): HTMLMCurrencyElement;
+    };
     interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
     }
     var HTMLMFormCheckElement: {
@@ -608,6 +874,12 @@ declare global {
     var HTMLMListItemElement: {
         prototype: HTMLMListItemElement;
         new (): HTMLMListItemElement;
+    };
+    interface HTMLMModalElement extends Components.MModal, HTMLStencilElement {
+    }
+    var HTMLMModalElement: {
+        prototype: HTMLMModalElement;
+        new (): HTMLMModalElement;
     };
     interface HTMLMNavElement extends Components.MNav, HTMLStencilElement {
     }
@@ -651,23 +923,44 @@ declare global {
         prototype: HTMLMSearchElement;
         new (): HTMLMSearchElement;
     };
+    interface HTMLMSegmentControlElement extends Components.MSegmentControl, HTMLStencilElement {
+    }
+    var HTMLMSegmentControlElement: {
+        prototype: HTMLMSegmentControlElement;
+        new (): HTMLMSegmentControlElement;
+    };
+    interface HTMLMSegmentControlItemElement extends Components.MSegmentControlItem, HTMLStencilElement {
+    }
+    var HTMLMSegmentControlItemElement: {
+        prototype: HTMLMSegmentControlItemElement;
+        new (): HTMLMSegmentControlItemElement;
+    };
     interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
     }
     var HTMLMSelectElement: {
         prototype: HTMLMSelectElement;
         new (): HTMLMSelectElement;
     };
+    interface HTMLMShortcutToggleElement extends Components.MShortcutToggle, HTMLStencilElement {
+    }
+    var HTMLMShortcutToggleElement: {
+        prototype: HTMLMShortcutToggleElement;
+        new (): HTMLMShortcutToggleElement;
+    };
     interface HTMLElementTagNameMap {
+        "m-alert": HTMLMAlertElement;
         "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
         "m-coupon": HTMLMCouponElement;
+        "m-currency": HTMLMCurrencyElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
+        "m-modal": HTMLMModalElement;
         "m-nav": HTMLMNavElement;
         "m-nav-content": HTMLMNavContentElement;
         "m-nav-item": HTMLMNavItemElement;
@@ -675,10 +968,31 @@ declare global {
         "m-nav-pane": HTMLMNavPaneElement;
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
+        "m-segment-control": HTMLMSegmentControlElement;
+        "m-segment-control-item": HTMLMSegmentControlItemElement;
         "m-select": HTMLMSelectElement;
+        "m-shortcut-toggle": HTMLMShortcutToggleElement;
     }
 }
 declare namespace LocalJSX {
+    interface MAlert {
+        /**
+          * Has close button
+         */
+        "close"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "icon"?: boolean;
+        /**
+          * Icon font-size class
+         */
+        "iconSize"?: string;
+        /**
+          * Theme for the alert
+         */
+        "theme"?: string;
+    }
     interface MApp {
     }
     interface MBadge {
@@ -692,6 +1006,14 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface MButton {
+        /**
+          * Icon left to display
+         */
+        "iconLeft"?: string;
+        /**
+          * Icon right to display
+         */
+        "iconRight"?: string;
         /**
           * Flag to switch to pill button border radius.
          */
@@ -801,6 +1123,84 @@ declare namespace LocalJSX {
          */
         "type"?: CouponInputType;
     }
+    interface MCurrency {
+        /**
+          * Has a select input
+         */
+        "hasSelect"?: boolean;
+        /**
+          * Hint text for the m-currency
+         */
+        "hint"?: string;
+        /**
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Icon for the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon for the label text
+         */
+        "iconLabel"?: string;
+        /**
+          * Icon for the middle
+         */
+        "iconMiddle"?: string;
+        /**
+          * Icon for the left
+         */
+        "iconStart"?: string;
+        /**
+          * Label for the input
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * * The max value of the input
+         */
+        "maxValue"?: number;
+        /**
+          * * The min value of the input
+         */
+        "minValue"?: number;
+        /**
+          * Emitted when the inputs change
+         */
+        "onMChange"?: (event: MCurrencyCustomEvent<CurrencyEvent>) => void;
+        /**
+          * Placeholder for the input
+         */
+        "placeholder"?: string;
+        /**
+          * Theme for the m-currency
+         */
+        "theme"?: string;
+        /**
+          * * The type of the input
+         */
+        "type"?: string;
+        /**
+          * * The value of the input
+         */
+        "value"?: number;
+        /**
+          * Variant for the m-currency
+         */
+        "variant"?: CurrencyVariant;
+    }
     interface MFormCheck {
         /**
           * Set checkbox or radio button marked as selected or not
@@ -815,6 +1215,10 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
+          * Set checkbox as toggle button
+         */
+        "isButton"?: boolean;
+        /**
           * Text that will be displayed beside Check input or Radio input
          */
         "label"?: string;
@@ -826,6 +1230,10 @@ declare namespace LocalJSX {
           * HTML Name to use within a form or JS reference
          */
         "name"?: string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onMChange"?: (event: MFormCheckCustomEvent<any>) => void;
         /**
           * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
          */
@@ -994,6 +1402,48 @@ declare namespace LocalJSX {
           * Variant for text item list or complete item list
          */
         "variant"?: ListItemVariant;
+    }
+    interface MModal {
+        /**
+          * Is modal centered
+         */
+        "centered"?: boolean;
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * Is fullscreen in all sizes
+         */
+        "fullScreen"?: boolean;
+        /**
+          * Minimum size to apply the fullscreen
+         */
+        "fullScreenFrom"?: FullScreenFrom;
+        /**
+          * Background image header
+         */
+        "imageHeader"?: string;
+        /**
+          * Id of the modal
+         */
+        "mId": string;
+        /**
+          * Modal size
+         */
+        "modalSize"?: ModalSize;
+        /**
+          * No display close button
+         */
+        "noCloseButton"?: boolean;
+        /**
+          * Is modal scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
     }
     interface MNav {
         /**
@@ -1169,6 +1619,46 @@ declare namespace LocalJSX {
          */
         "variant"?: string;
     }
+    interface MSegmentControl {
+        /**
+          * Aria label to describe the segment control
+         */
+        "description"?: string;
+    }
+    interface MSegmentControlItem {
+        /**
+          * Is checked
+         */
+        "checked"?: boolean;
+        /**
+          * Is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * Label of the radio
+         */
+        "label": string;
+        /**
+          * Id of the radio
+         */
+        "mId": string;
+        /**
+          * Name of the radio
+         */
+        "name": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMChange"?: (event: MSegmentControlItemCustomEvent<string>) => void;
+        /**
+          * State of the input
+         */
+        "state"?: InputState;
+        /**
+          * Value of the radio
+         */
+        "value": string;
+    }
     interface MSelect {
         /**
           * The hint of the select in full variant
@@ -1177,7 +1667,11 @@ declare namespace LocalJSX {
         /**
           * The hint icon for the select in full variant
          */
-        "hintIcon"?: string;
+        "hintIconEnd"?: string;
+        /**
+          * The hint icon for the select in full variant
+         */
+        "hintIconStart"?: string;
         /**
           * The end icon for the select
          */
@@ -1195,6 +1689,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor"?: (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of select
          */
         "layoutDirection"?: FormControlLayoutDirection;
@@ -1205,27 +1703,80 @@ declare namespace LocalJSX {
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MSelectCustomEvent<string>) => void;
+        "onMChange"?: (event: MSelectCustomEvent<any>) => void;
+        /**
+          * The select options
+         */
+        "options"?: Array<any>;
         /**
           * The theme of the select
          */
         "theme"?: string;
         /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor"?: (item: any) => string | number;
+        /**
           * The variant of the select
          */
-        "variant"?: FormControlLayoutVariant;
+        "variant"?: SelectLayoutVariant;
+    }
+    interface MShortcutToggle {
+        /**
+          * Shortcut icon
+         */
+        "icon"?: string;
+        /**
+          * Is checked
+         */
+        "isChecked"?: boolean;
+        /**
+          * Shortcut label
+         */
+        "label"?: string;
+        /**
+          * Id of the input
+         */
+        "mId": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onMChange"?: (event: MShortcutToggleCustomEvent<string>) => void;
+        /**
+          * Input and shortcut state
+         */
+        "state"?: InputState;
+        /**
+          * Shortcut text
+         */
+        "text"?: string;
+        /**
+          * Input value
+         */
+        "value": string;
+        /**
+          * Theme
+         */
+        "white"?: boolean;
     }
     interface IntrinsicElements {
+        "m-alert": MAlert;
         "m-app": MApp;
         "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
         "m-coupon": MCoupon;
+        "m-currency": MCurrency;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
         "m-icon": MIcon;
         "m-input": MInput;
         "m-list-item": MListItem;
+        "m-modal": MModal;
         "m-nav": MNav;
         "m-nav-content": MNavContent;
         "m-nav-item": MNavItem;
@@ -1233,23 +1784,29 @@ declare namespace LocalJSX {
         "m-nav-pane": MNavPane;
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
+        "m-segment-control": MSegmentControl;
+        "m-segment-control-item": MSegmentControlItem;
         "m-select": MSelect;
+        "m-shortcut-toggle": MShortcutToggle;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
+            "m-currency": LocalJSX.MCurrency & JSXBase.HTMLAttributes<HTMLMCurrencyElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
+            "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;
             "m-nav-content": LocalJSX.MNavContent & JSXBase.HTMLAttributes<HTMLMNavContentElement>;
             "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
@@ -1257,7 +1814,10 @@ declare module "@stencil/core" {
             "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
+            "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
+            "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
+            "m-shortcut-toggle": LocalJSX.MShortcutToggle & JSXBase.HTMLAttributes<HTMLMShortcutToggleElement>;
         }
     }
 }

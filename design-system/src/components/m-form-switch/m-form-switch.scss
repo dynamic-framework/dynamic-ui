@@ -4,6 +4,7 @@
   --#{$prefix}form-check-border-color-focus: #{$form-check-border-color-focus};
   --#{$prefix}checkbox-box-border-width: 3px;
   --#{$prefix}checkbox-box-border-radius: #{$form-check-input-border-radius};
+  width: 100%;
 
   padding: var(--#{$prefix}checkbox-box-border-width);
 
@@ -13,8 +14,21 @@
     box-shadow: 0 0 0 var(--#{$prefix}form-check-border-width-focus) var(--#{$prefix}form-check-border-color-focus);
   }
 
+  .form-check,
+  .form-switch {
+    width: 100%;
+  }
+
   .form-check-switch:hover:not([disabled]) {
     --#{$prefix}form-switch-border-hover-color: var(--#{$prefix}tertiary);
     border: var(--#{$prefix}form-check-input-border-hover-width) solid var(--#{$prefix}form-switch-border-hover-color);
+  }
+
+  .form-switch-box-label {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
   }
 }

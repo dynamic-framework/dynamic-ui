@@ -22,7 +22,7 @@ export class MIcon {
   /**
    * Font size of the icon
    * */
-  @Prop() size?: string = '1rem';
+  @Prop() size?: string = 'inherit';
   /**
    * Is loading
    * */

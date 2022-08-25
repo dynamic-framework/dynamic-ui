@@ -98,6 +98,10 @@
   }
 }
 
+.form-control-input {
+  width: 100%;
+}
+
 .input-group ~ .hint {
   display: inline-flex;
   flex-direction: row;
@@ -108,8 +112,8 @@
 }
 
 .form-control-icon {
-  width: var(--#{$prefix}form-control-icon-size);
-  height: var(--#{$prefix}form-control-icon-size);
+  // width: var(--#{$prefix}form-control-icon-size);
+  // height: var(--#{$prefix}form-control-icon-size);
   font-size: var(--#{$prefix}form-control-icon-size);
   line-height: var(--#{$prefix}form-control-icon-size);
 }

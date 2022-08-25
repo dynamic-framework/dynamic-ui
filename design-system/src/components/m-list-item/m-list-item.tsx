@@ -117,9 +117,12 @@ export class MListItem implements ComponentInterface {
           >
             {this.variant === 'selectable' && (
               <input
+                class="form-check-input"
                 type="radio"
                 {...this.selectableProps?.id && { id: this.selectableProps.id }}
                 {...this.selectableProps?.name && { name: this.selectableProps.name }}
+                {...this.selectableProps?.value && { value: this.selectableProps.value }}
+                {...this.selectableProps?.checked && { checked: this.selectableProps.checked }}
               />
             )}
             {(this.icon || this.image) && (
@@ -129,8 +132,12 @@ export class MListItem implements ComponentInterface {
                   'bg-tertiary': this.image === null,
                 }}
               >
-                {/* TODO: use m-icon */}
-                {this.icon && <i class={`bi bi-${this.icon} text-white fs-5`} />}
+                {this.icon && (
+                  <m-icon
+                    class="text-white fs-5"
+                    icon={this.icon}
+                  />
+                )}
                 {this.image && (
                   <img
                     class="list-group-item-picture"
@@ -163,10 +170,10 @@ export class MListItem implements ComponentInterface {
               </div>
             )}
             {this.variant === 'navegable' && (
-              <div class="d-flex justify-content-center align-items-center text-middlelight">
-                {/* TODO: use m-icon */}
-                <i class="bi bi-chevron-right" />
-              </div>
+              <m-icon
+                class="text-gray-light fs-5"
+                icon="chevron-right"
+              />
             )}
           </Tag>
         </Host>

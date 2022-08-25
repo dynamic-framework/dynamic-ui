@@ -183,15 +183,15 @@
 @each $color,
   $value in map-remove($theme-colors, "light", "dark", "primary", "secondary", "success", "info") {
   .form-control-layout-search-#{$color} {
-    --#{$prefix}search-label-color: #{$value};
-    --#{$prefix}label-icon-color: #{$value};
-    --#{$prefix}hint-icon-color: #{$value};
-    --#{$prefix}button-search-color: #{$value};
-    --#{$prefix}input-group-search-border-color: #{$value};
-    --#{$prefix}input-border-color: #{$value};
+    --#{$prefix}search-label-color: var(--#{$prefix}#{$color});
+    --#{$prefix}label-icon-color: var(--#{$prefix}#{$color});
+    --#{$prefix}hint-icon-color: var(--#{$prefix}#{$color});
+    --#{$prefix}button-search-color: var(--#{$prefix}#{$color});
+    --#{$prefix}input-group-search-border-color: var(--#{$prefix}#{$color});
+    --#{$prefix}input-border-color: var(--#{$prefix}#{$color});
     --#{$prefix}button-search-hover-color: var(--#{$prefix}#{$color}-hover);
     --#{$prefix}input-hover-border-color: var(--#{$prefix}#{$color}-hover);
-    --#{$prefix}search-state-color: #{$value};
+    --#{$prefix}search-state-color: var(--#{$prefix}#{$color});
   }
 }
 
@@ -199,7 +199,6 @@
   .form-control-icon.search-state {
     --#{$prefix}search-state-color: var(--#{$prefix}info);
     --#{$prefix}search-state-size: #{$search-button-state-size};
-    // animation: loading 1.8s infinite linear;
   }
 }
 
@@ -210,12 +209,3 @@
     --#{$prefix}search-state-size: #{$search-button-state-size-lg};
   }
 }
-
-// @keyframes loading {
-//     from {
-//         transform: rotate(0deg);
-//     }
-//     to {
-//         transform: rotate(360deg);
-//     }
-// }

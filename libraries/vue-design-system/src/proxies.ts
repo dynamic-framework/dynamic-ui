@@ -9,6 +9,14 @@ import { defineCustomElements } from '@modyolabs/design-system/loader';
 
 defineCustomElements();
 
+export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
+  'theme',
+  'icon',
+  'iconSize',
+  'close'
+]);
+
+
 export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined);
 
 
@@ -23,6 +31,8 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'variant',
   'state',
   'text',
+  'iconLeft',
+  'iconRight',
   'value',
   'type',
   'isPill',
@@ -56,6 +66,29 @@ export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', un
 ]);
 
 
+export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currency', undefined, [
+  'mId',
+  'label',
+  'iconLabel',
+  'iconStart',
+  'iconMiddle',
+  'iconEnd',
+  'hasSelect',
+  'placeholder',
+  'type',
+  'value',
+  'minValue',
+  'maxValue',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'theme',
+  'variant',
+  'layoutDirection',
+  'mChange'
+]);
+
+
 export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
   'type',
   'name',
@@ -65,7 +98,9 @@ export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-
   'disabled',
   'state',
   'indeterminate',
-  'value'
+  'value',
+  'isButton',
+  'mChange'
 ]);
 
 
@@ -119,6 +154,20 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
   'variant',
   'selectableProps',
   'navegableProps'
+]);
+
+
+export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
+  'mId',
+  'closeText',
+  'static',
+  'scrollable',
+  'centered',
+  'fullScreen',
+  'fullScreenFrom',
+  'modalSize',
+  'imageHeader',
+  'noCloseButton'
 ]);
 
 
@@ -188,17 +237,52 @@ export const MSearch = /*@__PURE__*/ defineContainer<JSX.MSearch>('m-search', un
 ]);
 
 
+export const MSegmentControl = /*@__PURE__*/ defineContainer<JSX.MSegmentControl>('m-segment-control', undefined, [
+  'description'
+]);
+
+
+export const MSegmentControlItem = /*@__PURE__*/ defineContainer<JSX.MSegmentControlItem>('m-segment-control-item', undefined, [
+  'mId',
+  'name',
+  'label',
+  'value',
+  'disabled',
+  'checked',
+  'state',
+  'mChange'
+]);
+
+
 export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
   'mId',
   'variant',
+  'options',
   'theme',
   'label',
   'iconStart',
   'iconMiddle',
   'iconEnd',
-  'hintIcon',
+  'hintIconStart',
+  'hintIconEnd',
   'hint',
   'layoutDirection',
+  'valueExtractor',
+  'labelExtractor',
+  'mChange'
+]);
+
+
+export const MShortcutToggle = /*@__PURE__*/ defineContainer<JSX.MShortcutToggle>('m-shortcut-toggle', undefined, [
+  'mId',
+  'name',
+  'value',
+  'label',
+  'text',
+  'icon',
+  'isChecked',
+  'state',
+  'white',
   'mChange'
 ]);
 

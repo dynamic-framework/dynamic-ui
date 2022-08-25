@@ -1,9 +1,30 @@
 <template>
   <m-app>
     <div class="container">
+    <m-calendar v-model="date"/>
+
+    <m-skeleton
+      view-box="0 0 580 100"
+    >
+      <rect x="48" y="8" rx="3" ry="3" width="88" height="6" />
+      <rect x="48" y="26" rx="3" ry="3" width="52" height="6" />
+      <rect x="0" y="56" rx="3" ry="3" width="410" height="6" />
+      <rect x="0" y="72" rx="3" ry="3" width="380" height="6" />
+      <rect x="0" y="88" rx="3" ry="3" width="178" height="6" />
+      <circle cx="20" cy="20" r="20" />
+    </m-skeleton>
     <m-button
       text="click me!"
-      @mod-button-click="onButtonClick"
+      icon-left="arrow-right"
+      icon-right="arrow-right"
+      theme="primary-gradient"
+      @m-click="onButtonClick"
+    />
+    <m-button
+    class="fw-bold"
+      icon-left="arrow-right"
+      is-pill
+      @m-click="onButtonClick"
     />
     <div>
       <h3>Switches</h3>
@@ -1485,6 +1506,8 @@
           variant="secondary"
           placeholder="Default"
           icon-end="circle-fill"
+          :value="test"
+          :model-value="true"
           @m-click="onChange"
           @m-change="onChange"
         />
@@ -1566,7 +1589,7 @@
           Con size de 2rem <br>
           <MIcon icon="heart-fill" size="2rem"/>
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-sm-6 flex-row">
           Temas <br>
           <MIcon icon="heart-fill" theme="primary"/>
           <MIcon icon="heart-fill" theme="secondary"/>
@@ -1587,13 +1610,644 @@
           <MIcon icon="heart-fill" size="3rem" is-loading :duration="2"/>
         </div>
       </div>
+      <div class="row py-5">
+        <div class="col-12">
+          <h3 class="fw-bold mb-3">m-currency</h3>
+          <h6 class="fw-bold"> -default</h6>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="primary"
+            placeholder="primary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            :has-select="true"
+            theme="primary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+          >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="secondary"
+            placeholder="secondary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="secondary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="tertiary"
+            placeholder="tertiary"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="tertiary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="success"
+            placeholder="success"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="success"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="warning"
+            placeholder="warning"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="warning"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="info"
+            placeholder="info"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="info"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="danger"
+            placeholder="danger"
+            icon-start="emoji-smile"
+            icon-middle="circle-fill"
+            icon-end="emoji-smile"
+            label="Label"
+            theme="danger"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-12 my-3">
+          <h6 class="fw-bold"> -prime</h6>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="primary"
+            placeholder="primary"
+            icon-middle="circle-fill"
+            :has-select="true"
+            theme="primary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+          >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="secondary"
+            placeholder="secondary"
+            icon-middle="circle-fill"
+            theme="secondary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="tertiary"
+            placeholder="tertiary"
+            icon-middle="circle-fill"
+            :has-select="true"
+            theme="tertiary"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+          >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="success"
+            placeholder="success"
+            icon-middle="circle-fill"
+            theme="success"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="info"
+            placeholder="info"
+            icon-middle="circle-fill"
+            :has-select="true"
+            theme="info"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+          >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="warning"
+            placeholder="warning"
+            icon-middle="circle-fill"
+            theme="warning"
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+            >
+          </m-currency>
+        </div>
+        <div class="col-6">
+          <m-currency
+            m-id="danger"
+            placeholder="danger"
+            icon-middle="heart-fill"
+            theme="danger"
+            has-select
+            hint="Earth is the third planet from the Sun."
+            icon-hint="emoji-smile"
+            variant="prime"
+            @m-change="print"
+            >
+            <option value="USD">USD</option>
+            <option value="CLP">CLP</option>
+            <option value="COP">COP</option>
+          </m-currency>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-12">
+          <h3 class="fw-bold">m-segment-control</h3>
+          <h6 class="fw-bold">-default</h6>
+        </div>
+        <div class="col-12">
+          <m-segment-control>
+            <m-segment-control-item
+              m-id="seg1"
+              name="box"
+              label="Label"
+              value="111"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg2"
+              name="box"
+              label="Label"
+              value="222"
+              state="hover"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg3"
+              name="box"
+              label="Label"
+              value="333"
+              state="focus"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg4"
+              name="box"
+              label="Label"
+              value="444"
+              state="active"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg5"
+              name="box"
+              label="Label"
+              value="555"
+              state="disabled"
+              @m-change="print"
+            />
+          </m-segment-control>
+        </div>
+        <div class="col-12">
+          <h6 class="fw-bold">-checked</h6>
+        </div>
+        <div class="col-12">
+          <m-segment-control>
+            <m-segment-control-item
+              m-id="seg11"
+              name="box1"
+              label="Label"
+              value="111"
+              checked
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg12"
+              name="box2"
+              label="Label"
+              value="222"
+              checked
+              state="hover"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg13"
+              name="box3"
+              label="Label"
+              value="333"
+              checked
+              state="focus"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg14"
+              name="box4"
+              label="Label"
+              value="444"
+              checked
+              state="active"
+              @m-change="print"
+            />
+            <m-segment-control-item
+              m-id="seg15"
+              name="box5"
+              label="Label"
+              checked
+              value="555"
+              state="disabled"
+              @m-change="print"
+            />
+          </m-segment-control>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h3 class="fw-bold">m-alert</h3>
+          <h6 class="fw-bold">-simple</h6>
+        </div>
+        <div class="col-12">
+          <m-alert>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="success">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="danger">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="info">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="light">
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        </div>
+        <div class="col-12">
+          <h6 class="fw-bold">-icon</h6>
+        </div>
+        <div class="col-12">
+          <m-alert icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="success" icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="danger" icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="info" icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="light" icon>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        </div>
+        <div class="col-12">
+          <h6 class="fw-bold">-close</h6>
+        </div>
+        <div class="col-12">
+          <m-alert close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="success" close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="danger" close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="info" close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="light" close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        </div>
+        <div class="col-12">
+          <h6 class="fw-bold">-icon + close</h6>
+        </div>
+        <div class="col-12">
+          <m-alert icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="success" icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="danger" icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="info" icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        <m-alert theme="light" icon close>
+          Earth is the third planet from the Sun and the only
+          astronomical object known to harbor life.
+        </m-alert>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-12 mb-3">
+          <h3 class="fw-bold">m-modal</h3>
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-primary w-100"
+        data-bs-toggle="modal" data-bs-target="#supermodal">
+          Launch demo modal
+        </button>
+        </div>
+      </div>
+      <div class="row-modal">
+        <m-modal
+        mId="supermodal"
+        centered
+        static
+        scrollable
+        full-screen
+        full-screen-from="sm"
+        image-header="https://i0.wp.com/imgs.hipertextual.com/wp-content/uploads/2017/03/color-degradado-fondos-degradados-multicolor-51200.jpg?fit=1200%2C750&quality=50&strip=all&ssl=1"
+        >
+          <h4 slot="header" class="fw-bold">
+            Modal Title
+          </h4>
+          <p slot="body" class="text-secondary">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Curabitur consectetur metus eu sem sodales, ullamcorper
+            aliquam eros ornare. Sed at nunc at ligula lacinia viverra
+            vel quis enim. Nam eget dolor tortor.
+          </p>
+          <div
+            slot="footer"
+            class="d-flex" >
+            <m-button
+              is-pill
+              text="Close"
+              variant="outline"
+              data-bs-dismiss="modal"
+            />
+            <m-button
+              is-pill
+              text="Confirm"
+            />
+          </div>
+        </m-modal>
+      </div>
+      <div class="row gap-2 mb-5">
+        <div class="col-12">
+          <h3 class="fw-bold mb-3">m-shortcut-toogle</h3>
+          <h6 class="fw-bold">-default</h6>
+        </div>
+        <div class="col-12 d-flex gap-4">
+          <m-shortcut-toggle
+            mId="1erT"
+            value="a"
+            name="abc"
+            text="Shortcut 1"
+            label="Label"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="2erT"
+            value="b"
+            name="abc"
+            text="Shortcut 2"
+            label="Label"
+            state="hover"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="3erT"
+            value="c"
+            name="abc"
+            text="Shortcut 3"
+            label="Label"
+            state="focus"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="4erT"
+            value="d"
+            name="abc"
+            text="Shortcut 4"
+            label="Label"
+            state="active"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="5erT"
+            value="e"
+            name="abc"
+            text="Shortcut 5"
+            label="Label"
+            state="disabled"
+            @m-change="print"
+          />
+        </div>
+        <div class="col-12 mt-3">
+          <h6 class="fw-bold">-checked</h6>
+        </div>
+        <div class="col-12 d-flex gap-4">
+          <m-shortcut-toggle
+            mId="11erT"
+            value="a"
+            name="abc1"
+            text="Shortcut 1"
+            label="Label"
+            is-checked
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="12erT"
+            value="b"
+            name="abc2"
+            text="Shortcut 2"
+            label="Label"
+            is-checked
+            state="hover"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="13erT"
+            value="c"
+            name="abc3"
+            text="Shortcut 3"
+            label="Label"
+            is-checked
+            state="focus"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="14erT"
+            value="d"
+            name="abc4"
+            text="Shortcut 4"
+            label="Label"
+            is-checked
+            state="active"
+            @m-change="print"
+          />
+           <m-shortcut-toggle
+            mId="15erT"
+            value="e"
+            name="abc5"
+            text="Shortcut 5"
+            label="Label"
+            is-checked
+            state="disabled"
+            @m-change="print"
+          />
+        </div>
+         <div class="col-12 mt-3">
+          <h6 class="fw-bold">-icon</h6>
+        </div>
+        <div class="col-12 d-flex gap-4">
+          <m-shortcut-toggle
+            mId="21erT"
+            value="a"
+            name="abc11"
+            icon="emoji-smile"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="22erT"
+            value="b"
+            name="abc11"
+            icon="emoji-smile"
+             state="hover"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="23erT"
+            value="c"
+            name="abc11"
+            icon="emoji-smile"
+            state="focus"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="24erT"
+            value="d"
+            name="abc11"
+            icon="emoji-smile"
+            state="active"
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="25erT"
+            value="e"
+            name="abc12"
+            icon="emoji-smile"
+            is-checked
+            @m-change="print"
+          />
+          <m-shortcut-toggle
+            mId="26erT"
+            value="f"
+            name="abc11"
+            icon="emoji-smile"
+            state="disabled"
+            @m-change="print"
+          />
+        </div>
+      </div>
     </div>
   </m-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 import {
   MButton,
   MInput,
@@ -1612,7 +2266,15 @@ import {
   MFormSwitch,
   MIcon,
   MCoupon,
+  MCurrency,
   MSearch,
+  MSegmentControl,
+  MSegmentControlItem,
+  MAlert,
+  MModal,
+  MShortcutToggle,
+  MSkeleton,
+  MCalendar,
 } from '@modyolabs/vue-design-system';
 
 export default defineComponent({
@@ -1635,7 +2297,15 @@ export default defineComponent({
     MFormSwitch,
     MIcon,
     MCoupon,
+    MCurrency,
     MSearch,
+    MSegmentControl,
+    MSegmentControlItem,
+    MAlert,
+    MModal,
+    MShortcutToggle,
+    MSkeleton,
+    MCalendar,
   },
   data() {
     return {
@@ -1646,6 +2316,8 @@ export default defineComponent({
       ],
       value: 'initial',
       switchValue1: true,
+      test: 'johannes',
+      date: new Date(),
     };
   },
   methods: {
@@ -1662,7 +2334,8 @@ export default defineComponent({
       console.log(detail);
     },
     onChange({ detail }: CustomEvent) {
-      console.log(detail);
+      this.test = detail;
+      console.log('var test = ', this.test);
     },
   },
 });

@@ -1,0 +1,15 @@
+// Default
+$currency-form-select-bg-size: 12px !default;
+$currency-form-select-width: max-content !default;
+// Prime
+$currency-prime-input-group-bg: transparent !default;
+$currency-prime-input-group-border-radius: 0 !default;
+$currency-prime-form-control-font-size: 2rem !default;
+$currency-prime-form-control-line-height: 3rem !default;
+$currency-prime-form-control-text-align: center !default;
+$currency-prime-form-control-padding-y: calc((56px - (#{$currency-prime-form-control-line-height} + #{$border-width * 2})) / 2) !default;
+$currency-prime-input-group-border-color: var(--#{$prefix}input-border-color) !default;
+// Prime :focus
+$currency-prime-focus-form-control-bg: var(--#{$prefix}input-group-bg) !default;
+$currency-prime-focus-input-group-bg: var(--#{$prefix}white) !default;
+$currency-prime-focus-input-group-border-radius: $border-radius-sm !default;

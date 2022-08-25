@@ -1,6 +1,6 @@
 {
   "name": "@modyolabs/design-system",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -40,9 +40,12 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "@stencil/core": "^2.15.2",
+    "@stencil/core": "^2.17.3",
     "bootstrap": "^5.2.0-beta1",
-    "@popperjs/core": "^2.11.5"
+    "@popperjs/core": "^2.11.5",
+    "liquidjs": "^9.39.2",
+    "dinero.js": "~1.9.1",
+    "@types/dinero.js": "~1.9.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
@@ -69,7 +72,8 @@
     "eslint-plugin-react": "^7.30.0",
     "stylelint": "^14.8.2",
     "stylelint-config-twbs-bootstrap": "^3.0.1",
-    "lint-staged": "^12.4.1"
+    "lint-staged": "^12.4.1",
+    "@types/node": "^18.7.1"
   },
   "license": "MIT"
 }

@@ -59,18 +59,18 @@
     &.form-control-theme-#{$color} {
 
       label {
-        --#{$prefix}form-label-color: #{$value};
+        --#{$prefix}form-label-color: var(--#{$prefix}#{$color});
       }
 
       .input-group,
       .input-group-text,
       .form-control-icon,
       .hint {
-        color: #{$value};
+        color: var(--#{$prefix}#{$color});
       }
 
       .input-group {
-        border-color: #{$value};
+        border-color: var(--#{$prefix}#{$color});
       }
 
       .input-group:hover {

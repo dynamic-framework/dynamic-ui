@@ -43,7 +43,7 @@ $component-active-bg: $primary-hover !default;
 // $caret-spacing: $caret-width * .85 !default;
 
 // $transition-base: all .2s ease-in-out !default;
-// $transition-fade: opacity .15s linear !default;
+$transition-fade: opacity .3s linear !default;
 
 // $transition-collapse: height .35s ease !default;
 // $transition-collapse-width: width .35s ease !default;
@@ -113,3 +113,7 @@ $input-btn-border-width: $border-width !default;
 @import "code";
 @import "search";
 @import "quick-action";
+@import "currency";
+@import "segment-control";
+@import "shortcut-toggle";
+

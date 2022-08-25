@@ -6,7 +6,24 @@ on:
       - master
 
 jobs:
+  get_version:
+    name: Get Release Version
+    runs-on: ubuntu-latest
+    outputs:
+      policy-version: ${{ steps.read-version.outputs.policy-version }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - id: read-version
+        run: |
+          JSON=$(cat ./common/config/rush/version-policies.json | sed "/\/\*.*\*\//d;/\/\*/,/\*\// d;/\/\//d;")
+          VERSION=v$(echo ${JSON//[$'\t\r\n ']} | jq -r '.[0] .version')
+          echo "::set-output name=policy-version::${VERSION}"
+
   update_release_draft:
+    needs: get_version
     name: Drafting Job
     runs-on: ubuntu-latest
     steps:
@@ -15,5 +32,6 @@ jobs:
         with:
           # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
           config-name: release-drafter.yml
+          version: ${{needs.get_version.outputs.policy_version}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -115,10 +115,12 @@ export class MCoupon implements ComponentInterface {
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
-            {/* TODO: use m-icon component */}
-            <span class="form-control-icon">
-              <i class={`bi bi-${this.iconLabel}`} />
-            </span>
+            {this.iconLabel && (
+              <m-icon
+                class="form-control-icon"
+                icon={this.iconLabel}
+              />
+            )}
           </label>
         )}
         <div class="form-control-input">
@@ -126,12 +128,14 @@ export class MCoupon implements ComponentInterface {
             {this.iconStart && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-start`}
               >
-                {/* TODO: use m-icon component */}
-                <span class="form-control-icon">
-                  <i class={`bi bi-${this.iconStart}`} />
-                </span>
+                {this.iconStart && (
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.iconStart}
+                  />
+                )}
               </span>
             )}
             {this.hasSelect && (
@@ -156,12 +160,12 @@ export class MCoupon implements ComponentInterface {
             {this.iconMiddle && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-middle`}
               >
-                {/* TODO: use m-icon component */}
-                <span class="form-control-icon">
-                  <i class={`bi bi-${this.iconMiddle}`} />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconMiddle}
+                />
               </span>
             )}
             <button
@@ -173,29 +177,29 @@ export class MCoupon implements ComponentInterface {
             {this.iconEnd && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-end`}
               >
-                {/* TODO: use m-icon component */}
-                <span class="form-control-icon">
-                  <i class={`bi bi-${this.iconEnd}`} />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconEnd}
+                />
               </span>
             )}
           </div>
           {this.hint && (
             <small class="hint">
               {this.hintIconStart && (
-                <span class="form-control-icon">
-                  {/* TODO: use m-icon component */}
-                  <i class={`bi bi-${this.hintIconStart}`} />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.hintIconStart}
+                />
               )}
               {this.hint}
               {this.hintIconEnd && (
-                <span class="form-control-icon">
-                  {/* TODO: use m-icon component */}
-                  <i class={`bi bi-${this.hintIconEnd}`} />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.hintIconEnd}
+                />
               )}
             </small>
           )}

@@ -1,6 +1,25 @@
 # Change Log - @modyolabs/design-system
 
-This log was last generated on Tue, 12 Jul 2022 01:15:33 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Aug 2022 16:40:52 GMT and should not be manually modified.
+
+## 0.1.0
+Thu, 25 Aug 2022 16:40:52 GMT
+
+### Minor changes
+
+- minor: add m-calendar component
+- minor: add m-skeleton component
+- minor: add m-alert component
+- minor: add m-currency component and fix styles
+- minor: m-modal component
+- minor: add m-segment-control and m-segment-control-item components
+- minor: add shortcut-toggle component and primary gradient button
+- changes to m-button, m-currency, m-form-check, m-form-switch, m-list-item, m-segment-control, m-select, m-shorcut-toggle and utils for the pay-debt widget
+
+### Patches
+
+- patch: add ids for icons span
+- patch: change scss variables for css variables
 
 ## 0.0.4
 Tue, 12 Jul 2022 01:15:33 GMT

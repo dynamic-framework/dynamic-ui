@@ -9,7 +9,7 @@ import {
 
 import type { FormControlLayoutDirection, ClassMap } from '../../utils/component-interface';
 
-import type { FormControlLayoutVariant } from './m-select-interface';
+import type { SelectLayoutVariant } from './m-select-interface';
 
 @Component({
   tag: 'm-select',
@@ -26,7 +26,12 @@ export class MSelect implements ComponentInterface {
   /**
    * The variant of the select
    */
-  @Prop() variant: FormControlLayoutVariant = 'prime';
+  @Prop() variant: SelectLayoutVariant = 'prime';
+
+  /**
+   * The select options
+   */
+  @Prop() options: Array<any> = [];
 
   /**
    * The theme of the select
@@ -56,7 +61,12 @@ export class MSelect implements ComponentInterface {
   /**
    * The hint icon for the select in full variant
    */
-  @Prop() hintIcon?: string = 'emoji-smile';
+  @Prop() hintIconStart?: string;
+
+  /**
+   * The hint icon for the select in full variant
+   */
+  @Prop() hintIconEnd?: string;
 
   /**
    * The hint of the select in full variant
@@ -69,12 +79,28 @@ export class MSelect implements ComponentInterface {
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
 
   /**
+   * Callback to extract the value from the option
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() valueExtractor: (item: any) => string | number = (item) => item?.value;
+
+  /**
+   * Callback to extract the label from the option
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() labelExtractor: (item: any) => string = (item) => item?.label;
+
+  /**
    * Emitted when the select value has changed
    */
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Event({ eventName: 'mChange' }) mChange!: EventEmitter;
 
   private changeHandler = (event: Event) => {
-    this.mChange.emit((event.target as HTMLInputElement).value);
+    const { value } = event.target as HTMLInputElement;
+    this.mChange.emit(
+      this.options.find((option) => this.valueExtractor(option).toString() === value),
+    );
   };
 
   private generateHostClasses(): ClassMap {
@@ -93,25 +119,26 @@ export class MSelect implements ComponentInterface {
         {(this.label) && (
           <label htmlFor={this.mId}>
             {this.label}
-            <small class="form-control-icon">
-              {/** TODO: Use m-icon and implements popover/tooltip */}
-              <i class="bi bi-info-circle" />
-            </small>
+            {/** TODO: Implements popover/tooltip */}
+            <m-icon
+              class="form-control-icon small"
+              icon="info-circle"
+            />
           </label>
         )}
         <div class="form-control-input w-100">
           <div
             class="input-group"
           >
-            {/** TODO: Use m-icon */}
             {this.iconStart && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-start`}
               >
-                <span class="form-control-icon">
-                  <i class={`bi bi-${this.iconStart}`} />
-                </span>
+                <m-icon
+                  class="form-control-icon"
+                  icon={this.iconStart}
+                />
               </span>
             )}
             <select
@@ -121,39 +148,58 @@ export class MSelect implements ComponentInterface {
                 'no-icons': !this.iconStart && !this.iconMiddle && !this.iconEnd,
                 [`form-select-${this.theme}`]: this.variant !== 'prime',
               }}
-              aria-describedby={`${this.mId}-add`}
+              aria-describedby={`${this.mId}-start`}
               onChange={this.changeHandler}
             >
-              <slot />
+              {this.options.map((option) => (
+                <option value={this.valueExtractor(option)}>
+                  {this.labelExtractor(option)}
+                </option>
+              ))}
             </select>
-            {(this.iconMiddle || this.iconEnd) && (
+            {(this.iconMiddle) && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-add`}
+                id={`${this.mId}-middle`}
               >
                 {this.iconMiddle && (
-                  <span class="form-control-icon">
-                    {/** TODO: Use m-icon */}
-                    <i class={`bi bi-${this.iconMiddle}`} />
-                  </span>
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.iconMiddle}
+                  />
                 )}
+              </span>
+            )}
+            {(this.iconEnd) && (
+              <span
+                class="input-group-text"
+                id={`${this.mId}-end`}
+              >
                 {this.iconEnd && (
-                  <span class="form-control-icon">
-                    {/** TODO: Use m-icon */}
-                    <i class={`bi bi-${this.iconEnd}`} />
-                  </span>
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.iconEnd}
+                  />
                 )}
               </span>
             )}
           </div>
           {(this.hint) && (
             <div class="d-flex gap-2 hint text-start">
-              <small class="form-control-icon">
-                {/** TODO: Use m-icon */}
-                <i class={`bi bi-${this.hintIcon}`} />
-              </small>
               <small>
+                {this.hintIconStart && (
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.hintIconStart}
+                  />
+                )}
                 {this.hint}
+                {this.hintIconEnd && (
+                  <m-icon
+                    class="form-control-icon"
+                    icon={this.hintIconEnd}
+                  />
+                )}
               </small>
             </div>
           )}
