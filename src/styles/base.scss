@@ -1,0 +1,83 @@
+html,
+body,
+#root {
+  height: 100vh;
+
+  .scroll-h {
+    overflow: hidden;
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .amount-options {
+    .shortcut-toggle, .shortcut-toggle-white {
+      align-items: flex-start
+    }
+  }
+
+  .segment-control {
+    @extend .scroll-h;
+    justify-content: flex-start;
+  }
+
+  .account-selector {
+    .btn {
+      --bs-btn-padding-x: 1.5rem;
+      font-weight: 400;
+
+    }
+
+    .btn-outline-info {
+      width: 100%;
+    }
+
+    span {
+      flex-grow: 1;
+    }
+  }
+
+  .btn {
+
+    width: 100%;
+    &.btn-primary-gradient {
+      --bs-btn-padding-x: 4rem;
+
+      &:disabled {
+        color: var(--bs-white);
+      }
+    }
+  }
+
+  .custom-alert {
+    z-index: 100;
+
+    .alert {
+      .alert-text {
+        --bs-alert-font-size: 12px;
+        --bs-alert-line-height: 18px;
+      }
+
+      .m-icon {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .btn-result {
+    .btn {
+      --bs-btn-padding-x: 1.75rem;
+    }
+  }
+
+  .shortcut .shortcut-toggle .shortcut-label {
+    font-weight: 600;
+  }
+
+  .more-options-btn {
+    .btn {
+      --bs-btn-font-weight: 400;
+      --bs-btn-font-size: 0.75rem;
+    }
+  }
+}
