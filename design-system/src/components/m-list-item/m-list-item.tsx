@@ -117,9 +117,12 @@ export class MListItem implements ComponentInterface {
           >
             {this.variant === 'selectable' && (
               <input
+                class="form-check-input"
                 type="radio"
                 {...this.selectableProps?.id && { id: this.selectableProps.id }}
                 {...this.selectableProps?.name && { name: this.selectableProps.name }}
+                {...this.selectableProps?.value && { value: this.selectableProps.value }}
+                {...this.selectableProps?.checked && { checked: this.selectableProps.checked }}
               />
             )}
             {(this.icon || this.image) && (

@@ -98,7 +98,9 @@ export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-
   'disabled',
   'state',
   'indeterminate',
-  'value'
+  'value',
+  'isButton',
+  'mChange'
 ]);
 
 
@@ -255,6 +257,7 @@ export const MSegmentControlItem = /*@__PURE__*/ defineContainer<JSX.MSegmentCon
 export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
   'mId',
   'variant',
+  'options',
   'theme',
   'label',
   'iconStart',
@@ -264,6 +267,8 @@ export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', un
   'hintIconEnd',
   'hint',
   'layoutDirection',
+  'valueExtractor',
+  'labelExtractor',
   'mChange'
 ]);
 
@@ -277,6 +282,7 @@ export const MShortcutToggle = /*@__PURE__*/ defineContainer<JSX.MShortcutToggle
   'icon',
   'isChecked',
   'state',
+  'white',
   'mChange'
 ]);
 

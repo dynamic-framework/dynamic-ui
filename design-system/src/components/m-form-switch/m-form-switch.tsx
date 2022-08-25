@@ -7,6 +7,7 @@ import {
   Event,
   EventEmitter,
   State,
+  Watch,
 } from '@stencil/core';
 
 @Component({
@@ -30,17 +31,17 @@ export class MFormSwitch implements ComponentInterface {
   /**
    * Id
    */
-  @Prop() mId! : string;
+  @Prop() mId!: string;
   /**
    * Flag to change the check state
    */
-  @Prop() isChecked = false;
+  @Prop() isChecked?: boolean;
   /**
    * Flag to disable the input
    */
   @Prop() isDisabled = false;
 
-  @State() checked: boolean = this.isChecked;
+  @State() internalIsChecked?: boolean;
 
   /**
    * Emitted when the switch has changed
@@ -49,34 +50,43 @@ export class MFormSwitch implements ComponentInterface {
 
   private changeHandler = (event: Event) => {
     const value = (event.target as HTMLInputElement).checked;
-    this.checked = value;
+    this.internalIsChecked = value;
     this.mChange.emit(value);
   };
+
+  @Watch('isChecked')
+  watchIsCheckedHandler(newValue: boolean) {
+    this.internalIsChecked = newValue;
+  }
+
+  connectedCallback() {
+    this.internalIsChecked = this.isChecked;
+  }
 
   render() {
     return (
       <Host class="form-switch-box">
-        <div class="d-flex">
-          <div class="form-check form-switch form-check-reverse">
-            <label
-              class="form-check-label me-2"
-              htmlFor={this.mId}
-            >
-              {this.label}
-            </label>
-            <span class="form-check-label fw-bold">
-              {this.checked ? this.labelOn : this.labelOff}
-            </span>
+        <div class="form-check form-switch form-check-reverse">
+          <label
+            class="form-switch-box-label"
+            htmlFor={this.mId}
+          >
+            <div class="d-flex gap-3 justify-content-start flex-grow-1">
+              <span class="form-check-label">{this.label}</span>
+              <span class="form-check-label fw-bold">
+                {this.internalIsChecked ? this.labelOn : this.labelOff}
+              </span>
+            </div>
             <input
               id={this.mId}
               onChange={(event) => this.changeHandler(event)}
               class="form-check-input form-check-switch"
               type="checkbox"
               role="switch"
-              checked={this.isChecked}
+              checked={this.internalIsChecked}
               disabled={this.isDisabled}
             />
-          </div>
+          </label>
         </div>
       </Host>
     );

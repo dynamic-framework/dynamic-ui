@@ -94,7 +94,7 @@ export class MBadge {
 
 export declare interface MButton extends Components.MButton {
   /**
-   * Emitted when the button has been clicked. 
+   * Emitted when the button has been clicked.
    */
   mClick: EventEmitter<CustomEvent<any>>;
 
@@ -143,7 +143,7 @@ export class MCard {
 import type { CouponEvent as IMCouponCouponEvent } from '@modyolabs/design-system/components';
 export declare interface MCoupon extends Components.MCoupon {
   /**
-   * Emitted when the button is clicked 
+   * Emitted when the button is clicked
    */
   mClick: EventEmitter<CustomEvent<IMCouponCouponEvent>>;
 
@@ -171,7 +171,7 @@ export class MCoupon {
 import type { CurrencyEvent as IMCurrencyCurrencyEvent } from '@modyolabs/design-system/components';
 export declare interface MCurrency extends Components.MCurrency {
   /**
-   * Emitted when the inputs change 
+   * Emitted when the inputs change
    */
   mChange: EventEmitter<CustomEvent<IMCurrencyCurrencyEvent>>;
 
@@ -197,30 +197,37 @@ export class MCurrency {
 }
 
 
-export declare interface MFormCheck extends Components.MFormCheck {}
+export declare interface MFormCheck extends Components.MFormCheck {
+  /**
+   * Emitted when the switch has changed
+   */
+  mChange: EventEmitter<CustomEvent<any>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMFormCheck,
-  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
+  inputs: ['checked', 'disabled', 'indeterminate', 'isButton', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 @Component({
   selector: 'm-form-check',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'disabled', 'indeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
+  inputs: ['checked', 'disabled', 'indeterminate', 'isButton', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 export class MFormCheck {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 
 
 export declare interface MFormSwitch extends Components.MFormSwitch {
   /**
-   * Emitted when the switch has changed 
+   * Emitted when the switch has changed
    */
   mChange: EventEmitter<CustomEvent<boolean>>;
 
@@ -269,7 +276,7 @@ export class MIcon {
 
 export declare interface MInput extends Components.MInput {
   /**
-   * Emitted when the input value has changed 
+   * Emitted when the input value has changed
    */
   mChange: EventEmitter<CustomEvent<string>>;
 
@@ -440,7 +447,7 @@ export class MNavPane {
 
 export declare interface MQuickAction extends Components.MQuickAction {
   /**
-   * Emitted when the input value has changed 
+   * Emitted when the input value has changed
    */
   mClick: EventEmitter<CustomEvent<any>>;
 
@@ -468,11 +475,11 @@ export class MQuickAction {
 
 export declare interface MSearch extends Components.MSearch {
   /**
-   * Emitted when the input value has changed 
+   * Emitted when the input value has changed
    */
   mChange: EventEmitter<CustomEvent<string>>;
   /**
-   * Emitted when the button is clicked 
+   * Emitted when the button is clicked
    */
   mClick: EventEmitter<CustomEvent<string>>;
 
@@ -521,7 +528,7 @@ export class MSegmentControl {
 
 export declare interface MSegmentControlItem extends Components.MSegmentControlItem {
   /**
-   * Emitted when the input value has changed 
+   * Emitted when the input value has changed
    */
   mChange: EventEmitter<CustomEvent<string>>;
 
@@ -549,21 +556,21 @@ export class MSegmentControlItem {
 
 export declare interface MSelect extends Components.MSelect {
   /**
-   * Emitted when the select value has changed 
+   * Emitted when the select value has changed
    */
-  mChange: EventEmitter<CustomEvent<string>>;
+  mChange: EventEmitter<CustomEvent<any>>;
 
 }
 
 @ProxyCmp({
   defineCustomElementFn: defineMSelect,
-  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'options', 'theme', 'valueExtractor', 'variant']
 })
 @Component({
   selector: 'm-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'theme', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'options', 'theme', 'valueExtractor', 'variant']
 })
 export class MSelect {
   protected el: HTMLElement;
@@ -577,7 +584,7 @@ export class MSelect {
 
 export declare interface MShortcutToggle extends Components.MShortcutToggle {
   /**
-   * Emitted when the select value has changed 
+   * Emitted when the select value has changed
    */
   mChange: EventEmitter<CustomEvent<string>>;
 
@@ -585,13 +592,13 @@ export declare interface MShortcutToggle extends Components.MShortcutToggle {
 
 @ProxyCmp({
   defineCustomElementFn: defineMShortcutToggle,
-  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value']
+  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value', 'white']
 })
 @Component({
   selector: 'm-shortcut-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value']
+  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value', 'white']
 })
 export class MShortcutToggle {
   protected el: HTMLElement;

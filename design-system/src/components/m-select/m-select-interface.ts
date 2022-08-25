@@ -1,1 +1,1 @@
-export type FormControlLayoutVariant = 'full' | 'transparent' | 'prime';
+export type SelectLayoutVariant = 'full' | 'transparent' | 'prime';

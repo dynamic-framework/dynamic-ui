@@ -2,7 +2,7 @@
 
 .segment-control {
 
-  --#{$prefix}segment-control-width: #{$segment-control-width};
+  --#{$prefix}segment-control-width: 100%;
   --#{$prefix}segment-control-height: #{$segment-control-height};
   --#{$prefix}segment-control-font-size: #{$segment-control-font-size};
   --#{$prefix}segment-control-font-weight: #{$segment-control-font-weight};
@@ -28,19 +28,25 @@
 }
 
 .segment-control-item {
+  --#{$prefix}segment-control-item-width: calc(100% - 4px);
   --#{$prefix}segment-control-item-bg: #{$segment-control-item-bg};
   --#{$prefix}segment-control-item-color: #{$segment-control-item-color};
   --#{$prefix}segment-control-item-cursor: #{$segment-control-item-cursor};
   --#{$prefix}segment-control-item-padding: #{$segment-control-item-padding-y} #{$segment-control-item-padding-x};
   --#{$prefix}segment-control-item-border: #{$segment-control-item-border};
   --#{$prefix}segment-control-item-border-radius: #{$segment-control-item-border-radius};
+  width: var(--#{$prefix}segment-control-item-width);
   padding: var(--#{$prefix}segment-control-item-padding);
-
   color: var(--#{$prefix}segment-control-item-color);
+  text-align: center;
   cursor: var(--#{$prefix}segment-control-item-cursor);
   background-color: var(--#{$prefix}segment-control-item-bg);
   border: var(--#{$prefix}segment-control-item-border);
   border-radius: var(--#{$prefix}segment-control-item-border-radius);
+}
+
+.segment-control > *:last-child .segment-control-item{
+  --#{$prefix}segment-control-item-width: 100%;
 }
 
 // Default

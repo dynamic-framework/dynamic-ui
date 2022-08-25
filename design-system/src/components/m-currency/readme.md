@@ -23,7 +23,7 @@
 | `maxValue`         | `max-value`        | * The max value of the input                                         | `number \| undefined`        | `undefined`     |
 | `minValue`         | `min-value`        | * The min value of the input                                         | `number \| undefined`        | `undefined`     |
 | `placeholder`      | `placeholder`      | Placeholder for the input                                            | `string \| undefined`        | `''`            |
-| `theme`            | `theme`            | Theme for the m-currency                                             | `string \| undefined`        | `'primary'`     |
+| `theme`            | `theme`            | Theme for the m-currency                                             | `string`                     | `'primary'`     |
 | `type`             | `type`             | * The type of the input                                              | `string`                     | `'number'`      |
 | `value`            | `value`            | * The value of the input                                             | `number \| undefined`        | `undefined`     |
 | `variant`          | `variant`          | Variant for the m-currency                                           | `"prime" \| undefined`       | `undefined`     |
