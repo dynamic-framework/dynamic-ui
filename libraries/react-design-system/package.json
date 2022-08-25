@@ -1,7 +1,7 @@
 {
   "name": "@modyolabs/react-design-system",
   "sideEffects": false,
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "React specific wrapper for component-library",
   "license": "MIT",
   "repository": {
@@ -31,7 +31,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.0.4",
+    "@modyolabs/design-system": "workspace:^0.1.0",
     "react-content-loader": "~6.2.0",
     "react-datepicker": "~4.8.0",
     "@types/react-datepicker": "~4.4.2",
