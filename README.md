@@ -1,77 +1,70 @@
-# Stencil widget factory
+# Getting Started with Create React App
 
-## Setup
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-+ `clone`
-+ `cd ds-poc` to move to a cloned repo
-+ `rush install` to install dependencies
-+ `rush build` to build all packages
+## Available Scripts
 
-## Packages
-| Project                   | Package                      | Version  | Links                                                    |
-|---------------------------|------------------------------|----------|----------------------------------------------------------|
-| **Design System**         | @modyo/design-system         | --       | [`README.md`](design-system/README.md)                   |
-| **Angular Design System** | @modyo/angular-design-system | --       | [`README.md`](libraries/angular-design-system/README.md) |
-| **Vue Design System**     | @modyo/vue-design-system     | --       | [`README.md`](libraries/vue-design-system/README.md)     |
-| **React Design System**   | @modyo/react-design-system   | --       | [`README.md`](libraries/react-design-system/README.md)   |
+In the project directory, you can run:
 
-## How to run a widget
+### `npm start`
 
-+ Move to a widget folder, e.g. `cd widgets/react-profile`
-+ `rushx` to see the available commands
-+ `rushx start` or `rushx serve` to run the widget
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-> You can also use `npm run`, but only `npm run` and no other `npm` commands. [Rush caveats](https://rushjs.io/pages/developer/new_developer/#a-couple-caveats)
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## How to add a new widget
+### `npm test`
 
-+ Use the recommended tool for the selected framework for convenience
-  + [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app)
-  + [angular cli](https://angular.io/cli)
-  + [vue cli](https://cli.vuejs.org/guide/installation.html)
-> If you are going to use a builder or cli, create the widget in a folder external to the repo to avoid conflicts with rush.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-> You can use any tool to create a widget, you can even configure it from scratch by creating your own webpack configuration for example.
+### `npm run build`
 
-+ Delete the local shrinkwrap file, since it's superseded by Rush's common shrinkwrap file
-+ Consider deleting the project's `.npmrc` file, since Rush operations always use `common/config/rush/.npmrc`
-+ Consider deleting the project's Git config files unless they contain rules that are really specific to that project
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-´´´shell
-rm -f shrinkwrap.yaml npm-shrinkwrap.json package-lock.json yarn.lock
-rm -f .npmrc          # (if it makes sense)
-rm -f .gitattributes  # (if it makes sense)
-rm -f .gitignore      # (if it makes sense)
-´´´
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-+ Move the new widget folder to the `widgets` folder in the repo
-+ Add the widget to the project array in the `rush.json` file
-+ Run `rush update` to install dependencies
-+ Run `rush build` to verify that the widget builds
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-> These steps can be found in the [rush documentation](https://rushjs.io/pages/maintainer/add_to_repo/#step-4-add-your-first-project)
+### `npm run eject`
 
-## How to build a rush tag
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-+ `rush build --to tag:angular` to build all the packages with angular tag
-+ `rush build --to tag:vue` to build all the packages with vue tag
-+ `rush build --to tag:libraries` to build all the packages with libraries tag
-+ `rush build --to tag:widgets` to build all the packages with widgets tag
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## How to build from or to a specific package
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-+ `rush build --to @modyo/vue-profile` or `rush build -t @modyo/vue-profile` to build the package `@modyo/vue-profile` and all its dependencies
-+ `rush build --from @modyo/vue-design-system` or `rush build -f @modyo/vue-design-system` to build the package from `@modyo/vue-design-system` and all its dependencies
-+ `rush build --to-except @modyo/vue-profile` or `rush build -T @modyo/vue-profile` to build the dependencies of `@modyo/vue-profile`
-+ `rush build --only @modyo/react-profile` or `rush build -o @modyo/react-profile` to build only `@modyo/react-profile` w/o its dependencies
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Other links
+## Learn More
 
-+ [POC](POC.md)
-+ Rush [documentation](https://rushjs.io/pages/intro/get_started/)
-+ Stencil [documentation](https://stenciljs.com/docs/overview)
-+ Stencil GitHub [repository](https://github.com/ionic-team/stencil)
-+ Stencil output target GitHub [repository](https://github.com/ionic-team/stencil-ds-output-targets)
-+ (reference) Ionic Framework GitHub [repository](https://github.com/ionic-team/ionic-framework)
-+ (reference) Baloise design system GitHub [repository](https://github.com/baloise/design-system)
-+ (reference) Bulmil design system GitHub [repository](https://github.com/Gomah/bulmil)
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
