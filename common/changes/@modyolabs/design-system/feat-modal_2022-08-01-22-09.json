@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: m-modal component",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
