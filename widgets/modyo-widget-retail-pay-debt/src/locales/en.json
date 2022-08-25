@@ -1,0 +1,90 @@
+{
+  "cardToPay": "Paying {{{ card }}}",
+  "payFrom": "From: {{{ product }}}",
+  "nextPayment": "Next payment date",
+  "balance": "Balance",
+  "conversionRate": "Conversion rate",
+  "currencyInput": {
+    "placeholder": "Amount",
+    "remainingValid": "{{{ remaining }}} remaining",
+    "remainingInvalid": "{{{ amount }}} over limit",
+    "insufficient": "Insufficient funds"
+  },
+  "shortCutToggle": {
+    "minimum": "Minimum",
+    "total": "Total",
+    "paymentAlternatives": "Payment Alternatives",
+    "other": "Other",
+    "amount": "Amount"
+  },
+  "collapse": {
+    "options": "Schedule transaction",
+    "lessOptions": "Less Options",
+    "schedule": "Schedule",
+    "recurring": "Recurring",
+    "yesLabel": "Yes",
+    "noLabel": "No",
+    "noScheduleLabel": "This is a one time payment",
+    "noRecurrentLabel": "This payment will not repeat",
+    "yesScheduleLabel": "To be paid {{{ date }}}",
+    "yesRecurrentLabel": "This payment will repeat {{{ frequency }}}"
+  },
+  "button": {
+    "pay": "Pay",
+    "schedule": "Schedule",
+    "cancel": "Cancel",
+    "back": "Back",
+    "confirm": "Confirm"
+  },
+  "alert": {
+    "schedule": "You are scheduling to pay the {{{ amount }}} amount on {{{ date }}}",
+    "notPay": "You have nothing to pay yet",
+    "wrong": "Oops! Something Went Wrong"
+  },
+  "modal": {
+    "paymentAlternatives": {
+      "skip": "Skip installment",
+      "skipLabel": "2 grace months remaining",
+      "flexible": "Flexible payment",
+      "flexibleLabel": "Pay in installments",
+      "renegotiate": "Renegotiate debt",
+      "renegotiateLabel": "Pay your future total"
+    },
+    "pay": {
+      "title": "Pay {{{amount}}}?",
+      "text": "You are paying {{{card}}} from your {{{product}}}"
+    },
+    "schedule": {
+      "title": "Schedule {{{amount}}}?",
+      "text": "You are scheduling to pay {{{card}}} from your {{{product}}}"
+    },
+    "scheduleCalendar": {
+      "title": " Schedule"
+    },
+    "recurring": {
+      "title": "Recurring",
+      "repeat": "Repeat",
+      "on": "On",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "custom": "Custom",
+      "ends": "Ends",
+      "never": "Never",
+      "date": "Date",
+      "repeats": "Repeats"
+    }
+  },
+  "paid": {
+    "title": "Recipient",
+    "success": "Payment successful",
+    "failed": "Payment failed",
+    "moneyPaid": "Money paid",
+    "paidTo": "Paid to",
+    "transactionId": "Transaction ID",
+    "timeDate": "Time & Date",
+    "terms": {
+      "text": "All your transactions are safe and fast.",
+      "link": "Terms & Conditions."
+    }
+  }
+}
