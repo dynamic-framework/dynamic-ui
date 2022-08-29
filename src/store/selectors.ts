@@ -1,5 +1,4 @@
 import { createDraftSafeSelector } from '@reduxjs/toolkit';
-import { Account } from './slice';
 
 import { RootState } from './store';
 
@@ -51,4 +50,9 @@ export const getSchedule = createDraftSafeSelector(
 export const getRecurring = createDraftSafeSelector(
   getState,
   (widget) => widget.recurring,
+);
+
+export const getUser = createDraftSafeSelector(
+  getState,
+  (widget) => widget.user,
 );
