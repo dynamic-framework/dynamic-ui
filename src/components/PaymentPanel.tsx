@@ -237,8 +237,7 @@ export default function PaymentPanel() {
       <ModalPaymentAlternatives />
       <ModalSchedule onAccept={setIsScheduled} />
       <ModalRecurrentPay onAccept={setIsRecurrent} />
-      <ModalConfirmPayment isScheduled={isScheduled} />
-      {/* TODO: Add schedule option to store */}
+      <ModalConfirmPayment />
       {isScheduled && (
         <MAlert
           className="custom-alert fixed-bottom p-3 w-100"

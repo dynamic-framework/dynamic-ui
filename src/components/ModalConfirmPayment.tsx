@@ -3,16 +3,22 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setIsPaid } from '../store/slice';
-import { getAccountSelected, getAmountUsed, getCardToPay } from '../store/selectors';
+import {
+  getAccountSelected,
+  getAmountUsed,
+  getCardToPay,
+  getSchedule,
+} from '../store/selectors';
 import useFormatCurrency from '../hooks/useFormatCurrency';
 
 // eslint-disable-next-line react/prop-types
-export default function ModalConfirmPayment({ isScheduled = false }) {
+export default function ModalConfirmPayment() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const amountUsed = useAppSelector(getAmountUsed);
   const cardToPay = useAppSelector(getCardToPay);
   const accountSelected = useAppSelector(getAccountSelected);
+  const isScheduled = useAppSelector(getSchedule)?.isScheduled;
 
   const { values: [amountUsedFormatted] } = useFormatCurrency(amountUsed);
 
