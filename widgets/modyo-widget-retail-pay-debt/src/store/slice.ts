@@ -9,6 +9,13 @@ export type Account = {
   currency: string;
 };
 
+type UserOptions = {
+  hasPaymentAlternatives: boolean;
+  hasExternalPayment: boolean;
+  canPayOtherAmount: boolean;
+  canPayMultipleCurrencies: boolean;
+};
+
 type Card = {
   id: number;
   franchise: string;
@@ -26,6 +33,7 @@ type WidgetState = {
   schedule?: Schedule;
   recurring?: Recurring;
   selectedCurrency: string;
+  user: UserOptions;
 };
 
 type Schedule = {
@@ -53,6 +61,12 @@ const initialState = {
     mask: '*** 456',
     totalPayment: 3250,
     minimumPayment: 240,
+  },
+  user: {
+    hasPaymentAlternatives: false,
+    hasExternalPayment: false,
+    canPayOtherAmount: false,
+    canPayMultipleCurrencies: false,
   },
   accounts: [],
   schedule: {
@@ -96,6 +110,9 @@ const slice = createSlice({
     setRecurring(state, action: PayloadAction<Recurring>) {
       state.recurring = action.payload;
     },
+    setUserPayment(state, action: PayloadAction<UserOptions>) {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -106,5 +123,6 @@ export const {
   setIsPaid,
   setSchedule,
   setRecurring,
+  setUserPayment,
 } = slice.actions;
 export default slice.reducer;
