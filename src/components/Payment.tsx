@@ -11,7 +11,7 @@ import PaymentPanel from './PaymentPanel';
 import ModalAccountSelector from './ModalAccountSelector';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
-  getAccounts, getAccountSelected, getCardToPay,
+  getAccounts, getAccountSelected, getCardToPay, getCurrencies,
 } from '../store/selectors';
 import type { Account } from '../store/slice';
 import { setAccountSelected } from '../store/slice';
@@ -23,8 +23,17 @@ export default function Payment() {
   const cardToPay = useAppSelector(getCardToPay);
   const accounts = useAppSelector(getAccounts);
   const accountSelected = useAppSelector(getAccountSelected);
+  const hasMultipleCurrencies = useAppSelector(getCurrencies);
 
-  const { values: [totalPayment] } = useFormatCurrency(cardToPay.totalPayment);
+  const {
+    values: [
+      totalPayment,
+      amountAvailable,
+    ],
+  } = useFormatCurrency(
+    cardToPay.totalPayment,
+    accountSelected?.value,
+  );
 
   return (
     <>
@@ -41,10 +50,10 @@ export default function Payment() {
           <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1">
             {(!!cardToPay?.totalPayment && accountSelected) && (
               <>
-                <MListItem value="12/31/22" text={t('nextPayment')} class="p-1" />
+                <MListItem value={cardToPay.date} text={t('nextPayment')} class="p-1" />
                 <MListItem value={totalPayment} text={t('balance')} class="p-1" />
                 {
-                  true && <MListItem value="€1 = USD $1,4" text="Convertion rate" class="p-1" />
+                  hasMultipleCurrencies && <MListItem value="€1 = USD $1,4" text="Convertion rate" class="p-1" />
                 }
               </>
             )}
@@ -65,9 +74,9 @@ export default function Payment() {
                     data-bs-target="#accountSelector"
                     variant="outline"
                   />
-                  <small className="text-dark d-flex gap-2 align-items-center p-1">
+                  <small className="text-gray d-flex gap-2 align-items-center p-1">
                     <MIcon icon="info-circle" />
-                    <span>13213 available</span>
+                    <span>{`${amountAvailable} available`}</span>
                   </small>
                 </div>
                 <MSelect
