@@ -25,7 +25,15 @@ export default function Payment() {
   const accountSelected = useAppSelector(getAccountSelected);
   const hasMultipleCurrencies = useAppSelector(getCurrencies);
 
-  const { values: [totalPayment] } = useFormatCurrency(cardToPay.totalPayment);
+  const {
+    values: [
+      totalPayment,
+      amountAvailable,
+    ],
+  } = useFormatCurrency(
+    cardToPay.totalPayment,
+    accountSelected?.value,
+  );
 
   return (
     <>
@@ -68,7 +76,7 @@ export default function Payment() {
                   />
                   <small className="text-gray d-flex gap-2 align-items-center p-1">
                     <MIcon icon="info-circle" />
-                    <span>13213 available</span>
+                    <span>{`${amountAvailable} available`}</span>
                   </small>
                 </div>
                 <MSelect
