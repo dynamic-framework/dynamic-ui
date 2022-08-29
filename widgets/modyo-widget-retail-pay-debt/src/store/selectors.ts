@@ -52,6 +52,11 @@ export const getRecurring = createDraftSafeSelector(
   (widget) => widget.recurring,
 );
 
+export const getResult = createDraftSafeSelector(
+  getState,
+  (widget) => widget.result,
+);
+
 export const getUser = createDraftSafeSelector(
   getState,
   (widget) => widget.user,

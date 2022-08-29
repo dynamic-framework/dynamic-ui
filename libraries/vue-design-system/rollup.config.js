@@ -15,5 +15,7 @@ export default {
       sourcemap: true
     }
   ],
-  external: id => id.startsWith('vue') || id.startsWith('@modyolabs')
+  external: id => id.startsWith('vue')
+    || id.startsWith('@modyolabs')
+    || id.startsWith('@vuepic/vue-datepicker')
 };

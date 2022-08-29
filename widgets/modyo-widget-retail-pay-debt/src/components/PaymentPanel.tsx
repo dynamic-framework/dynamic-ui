@@ -27,9 +27,9 @@ export default function PaymentPanel() {
   const { t } = useTranslation();
   const accountSelected = useAppSelector(getAccountSelected);
   const cardToPay = useAppSelector(getCardToPay);
-  const schedule: any = useAppSelector(getSchedule);
+  const schedule = useAppSelector(getSchedule);
   const user = useAppSelector(getUser);
-  const recurring: any = useAppSelector(getRecurring);
+  const recurring = useAppSelector(getRecurring);
 
   const {
     amountAvailable,
@@ -40,7 +40,6 @@ export default function PaymentPanel() {
   const [isRecurrent, setIsRecurrent] = useState(false);
   const [shortcut, setShortcut] = useState('');
   const {
-    format,
     values: [
       minimumPayment,
       totalPayment,
@@ -246,8 +245,7 @@ export default function PaymentPanel() {
       <ModalPaymentAlternatives />
       <ModalSchedule onAccept={setIsScheduled} />
       <ModalRecurrentPay onAccept={setIsRecurrent} />
-      <ModalConfirmPayment isScheduled={isScheduled} />
-      {/* TODO: Add schedule option to store */}
+      <ModalConfirmPayment />
       {isScheduled && (
         <MAlert
           className="custom-alert fixed-bottom p-3 w-100"
