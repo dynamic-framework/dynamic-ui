@@ -15,6 +15,7 @@ type Card = {
   mask: string;
   totalPayment: number;
   minimumPayment: number;
+  date: string;
 };
 
 type WidgetState = {
@@ -26,6 +27,15 @@ type WidgetState = {
   schedule?: Schedule;
   recurring?: Recurring;
   selectedCurrency: string;
+  result?: {
+    status: number;
+    date?: string;
+    transactionID?: string;
+    error?: {
+      message: string,
+      solution: string,
+    }
+  }
 };
 
 type Schedule = {
@@ -53,6 +63,7 @@ const initialState = {
     mask: '*** 456',
     totalPayment: 3250,
     minimumPayment: 240,
+    date: new Date().toISOString().split('T')[0],
   },
   accounts: [],
   schedule: {
@@ -69,6 +80,13 @@ const initialState = {
     end: {
       frequency: null,
       option: null,
+    },
+  },
+  result: {
+    status: 200,
+    error: {
+      message: '[Error message]',
+      solution: '[Error solution]',
     },
   },
   selectedCurrency: 'USD',
@@ -95,6 +113,10 @@ const slice = createSlice({
     },
     setRecurring(state, action: PayloadAction<Recurring>) {
       state.recurring = action.payload;
+    },
+    setResult(state, action: PayloadAction<any>) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      state.result = action.payload;
     },
   },
 });
