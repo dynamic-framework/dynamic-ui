@@ -1,5 +1,8 @@
 {
-  "extends": "../tsconfig.json",
+  "references": [
+    { "path": "../design-system"},
+    { "path": "../libraries/vue-design-system"}
+  ],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
@@ -17,9 +20,9 @@
       "webpack-env"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "@modyolabs/design-system": ["./design-system/src"],
+      "@modyolabs/vue-design-system": ["./libraries/vue-design-system/src"]
     },
     "lib": [
       "esnext",

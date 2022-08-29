@@ -243,8 +243,8 @@ importers:
   ../../widgets/modyo-widget-retail-pay-debt:
     specifiers:
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/design-system': ^0.1.0
-      '@modyolabs/react-design-system': ^0.1.0
+      '@modyolabs/design-system': workspace:^0.1.0
+      '@modyolabs/react-design-system': workspace:^0.1.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -273,12 +273,13 @@ importers:
       react-redux: ^8.0.2
       react-scripts: 5.0.1
       sass: ~1.54.0
+      tsconfig-paths-webpack-plugin: ^4.0.0
       typescript: ^4.6.4
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyolabs/design-system': 0.1.0
-      '@modyolabs/react-design-system': 0.1.0_ae547f1a3173f5a5daa8fd9ac0dd3b25
+      '@modyolabs/design-system': link:../../design-system
+      '@modyolabs/react-design-system': link:../../libraries/react-design-system
       '@reduxjs/toolkit': 1.8.5_react-redux@8.0.2+react@18.2.0
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.3.0_react-dom@18.2.0+react@18.2.0
@@ -311,6 +312,7 @@ importers:
       eslint-plugin-jsx-a11y: 6.6.1_eslint@8.22.0
       eslint-plugin-react: 7.31.0_eslint@8.22.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.22.0
+      tsconfig-paths-webpack-plugin: 4.0.0
       webpack: 5.74.0
 
   ../../widgets/react-profile:
@@ -3773,34 +3775,6 @@ packages:
 
   /@leichtgewicht/ip-codec/2.0.4:
     resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
-
-  /@modyolabs/design-system/0.1.0:
-    resolution: {integrity: sha512-EJKS/BW1MOLxt/Up+wIaZy6yQjk04zoiOxmpgPdeknozWpkZhTNrbzZSpGR25sI38GwiUtyTfvT1X3OKG2GktQ==, tarball: download/@modyolabs/design-system/0.1.0/30ec23c003dea219480f0d9b0731b692ba595e9a}
-    dependencies:
-      '@popperjs/core': 2.11.6
-      '@stencil/core': 2.17.4
-      '@types/dinero.js': 1.9.0
-      bootstrap: 5.2.0_@popperjs+core@2.11.6
-      dinero.js: 1.9.1
-      liquidjs: 9.41.0
-    dev: false
-
-  /@modyolabs/react-design-system/0.1.0_ae547f1a3173f5a5daa8fd9ac0dd3b25:
-    resolution: {integrity: sha512-3rAFcfrHTAQcluIcMEYlM4am56ytZf77dq3M7g5uxqBI/gChYWxl22omRivhF33BiAjnExPcRuox8tfQ75n0WA==, tarball: download/@modyolabs/react-design-system/0.1.0/949422ba60b88a77dd3c8235f1b96658eab88c81}
-    peerDependencies:
-      react: ^18.1.0
-      react-dom: ^18.1.0
-      react-i18next: ~11.18.3
-    dependencies:
-      '@modyolabs/design-system': 0.1.0
-      '@types/react-datepicker': 4.4.2_react-dom@18.2.0+react@18.2.0
-      i18next: 21.9.1
-      react: 18.2.0
-      react-content-loader: 6.2.0_react@18.2.0
-      react-datepicker: 4.8.0_react-dom@18.2.0+react@18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-i18next: 11.18.4_e49030d8a7237b1fcef41c6afa03cd9e
-    dev: false
 
   /@ngneat/content-loader/7.0.0_@angular+core@13.3.11:
     resolution: {integrity: sha512-CfwsDxh2hsQfUwca3SWnyjQD5jcG6Vb6Ew0JIztj/spr3YIC9Obz7AqEVMDYPKch4QzPJiJ6OVRuLRM2DKiG9g==}
@@ -17337,6 +17311,15 @@ packages:
       yn: 3.1.1
     dev: true
 
+  /tsconfig-paths-webpack-plugin/4.0.0:
+    resolution: {integrity: sha512-fw/7265mIWukrSHd0i+wSwx64kYUSAKPfxRDksjKIYTxSAp9W9/xcZVBF4Kl0eqQd5eBpAQ/oQrc5RyM/0c1GQ==}
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      chalk: 4.1.2
+      enhanced-resolve: 5.10.0
+      tsconfig-paths: 4.1.0
+    dev: true
+
   /tsconfig-paths/3.14.1:
     resolution: {integrity: sha512-fxDhWnFSLt3VuTwtvJt5fpwxBHg5AdKWMsgcPOOIilyjymcYVZoCQF8fvFRezCNfblEXmi+PcM1eYHeOAgXCOQ==}
     dependencies:
@@ -17344,6 +17327,15 @@ packages:
       json5: 1.0.1
       minimist: 1.2.6
       strip-bom: 3.0.0
+
+  /tsconfig-paths/4.1.0:
+    resolution: {integrity: sha512-AHx4Euop/dXFC+Vx589alFba8QItjF+8hf8LtmuiCwHyI4rHXQtOOENaM8kvYf5fR0dRChy3wzWIZ9WbB7FWow==}
+    engines: {node: '>=6'}
+    dependencies:
+      json5: 2.2.1
+      minimist: 1.2.6
+      strip-bom: 3.0.0
+    dev: true
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
