@@ -32,7 +32,7 @@ jobs:
       - name: Verify libraries changes
         run: node common/scripts/install-run-rush.js change -v
       - name: Install dependencies
-        run: node common/scripts/install-run-rush.js install
+        run: node common/scripts/install-run-rush.js update
         env:
           # And add the additional registry token here:
           # FORTAWESOME_TOKEN: ${{secrets.FORTAWESOME_TOKEN}}
