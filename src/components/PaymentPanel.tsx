@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   MButton,
   MFormSwitch,
@@ -40,6 +40,7 @@ export default function PaymentPanel() {
   const [isRecurrent, setIsRecurrent] = useState(false);
   const [shortcut, setShortcut] = useState('');
   const {
+    format,
     values: [
       minimumPayment,
       totalPayment,
@@ -53,6 +54,16 @@ export default function PaymentPanel() {
     setShortcut(detail as string);
     setAmount(value);
   };
+
+  const buttonPaymentAmountMessage = useMemo(() => {
+    if (isScheduled) {
+      return t('button.schedule');
+    }
+    if (!amount) {
+      return t('button.pay');
+    }
+    return t('button.payAmount', { amount: format(amount ?? 0) });
+  }, [isScheduled, amount, t, format]);
 
   if (!accountSelected) {
     return (
@@ -234,9 +245,7 @@ export default function PaymentPanel() {
             'data-bs-toggle': 'modal',
             'data-bs-target': '#modalConfirmPayment',
           }}
-          text={
-              isScheduled ? t('button.schedule') : t('button.pay')
-            }
+          text={buttonPaymentAmountMessage}
           theme="primary-gradient"
           isPill
           iconRight="check-lg"
