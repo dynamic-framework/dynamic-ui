@@ -30,7 +30,7 @@
     "yesRecurrentLabel": "Estás programando un pago {{{ frequency }}}"
   },
   "button": {
-    "pay": "Pagar",
+    "pay": "Pagar {{{ amount }}}",
     "schedule": "Programar",
     "cancel": "Cancelar",
     "back": "Volver",

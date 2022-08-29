@@ -30,7 +30,7 @@
     "yesRecurrentLabel": "This payment will repeat {{{ frequency }}}"
   },
   "button": {
-    "pay": "Pay",
+    "pay": "Pay {{{ amount }}}",
     "schedule": "Schedule",
     "cancel": "Cancel",
     "back": "Back",
