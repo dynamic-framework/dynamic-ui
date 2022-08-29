@@ -34,7 +34,7 @@ export const getAccountSelected = createDraftSafeSelector(
 
 export const getAmountUsed = createDraftSafeSelector(
   getState,
-  (widget) => widget.amountUsed,
+  (widget) => widget.amountUsed ?? 0,
 );
 
 export const getIsPaid = createDraftSafeSelector(
