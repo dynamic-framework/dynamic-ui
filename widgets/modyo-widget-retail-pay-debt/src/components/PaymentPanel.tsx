@@ -19,7 +19,7 @@ import usePaymentInput from '../hooks/usePaymentInput';
 import ModalConfirmPayment from './ModalConfirmPayment';
 import { useAppSelector } from '../store/hooks';
 import {
-  getAccountSelected, getCardToPay, getSchedule, getRecurring,
+  getAccountSelected, getCardToPay, getSchedule, getRecurring, getUser,
 } from '../store/selectors';
 import useFormatCurrency from '../hooks/useFormatCurrency';
 
@@ -28,6 +28,7 @@ export default function PaymentPanel() {
   const accountSelected = useAppSelector(getAccountSelected);
   const cardToPay = useAppSelector(getCardToPay);
   const schedule: any = useAppSelector(getSchedule);
+  const user = useAppSelector(getUser);
   const recurring: any = useAppSelector(getRecurring);
 
   const {
@@ -43,12 +44,10 @@ export default function PaymentPanel() {
     values: [
       minimumPayment,
       totalPayment,
-      availableFormatted,
     ],
   } = useFormatCurrency(
     cardToPay.minimumPayment,
     cardToPay.totalPayment,
-    amountAvailable,
   );
 
   const setSelectedOption = ({ detail }: CustomEvent, value: number) => {
@@ -77,9 +76,9 @@ export default function PaymentPanel() {
 
   return (
     <>
-      <div className="pt-4 pb-2">
+      <div className="pt-4">
         <div className="d-flex flex-column justify-content-between pb-2 mx-auto amount-options">
-          <p className="px-2 text-gray fw-semibold">Amount</p>
+          <p className="px-3 text-gray fw-semibold">Amount</p>
           <MShortcutToggle
             class="d-block"
             key="1"
@@ -104,50 +103,60 @@ export default function PaymentPanel() {
             value="totalOption"
             onMChange={(e: CustomEvent) => setSelectedOption(e, cardToPay.totalPayment)}
           />
-          <MShortcutToggle
-            className={
-                shortcut !== 'otherAmount' ? 'd-block' : 'd-none'
-              }
-            key="3"
-            {...cardToPay.totalPayment === 0 && { state: 'disabled' }}
-            mId="otherAmountOption"
-            name="paymentOption"
-            label={t('shortCutToggle.other')}
-            text={t('shortCutToggle.amount')}
-            value="otherAmount"
-            onMChange={(e: CustomEvent) => setSelectedOption(e, cardToPay.minimumPayment)}
-          />
-          <MCurrency
-            className={
-                shortcut === 'otherAmount' ? 'd-block mx-2' : 'd-none'
-              }
-            mId="debtInput"
-            theme="info"
-            placeholder={t('currencyInput.placeholder')}
-            iconLabel="currency-dollar"
-            hintIconStart="info-circle"
-            minValue={cardToPay.minimumPayment}
-            maxValue={accountSelected?.value}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            onMChange={({ detail: { amount: value } }) => setAmount(value)}
-            value={amount}
-          />
-          <MShortcutToggle
-            class="d-block"
-            key="4"
-            mId="alternativeOption"
-            name="paymentOption"
-            label={t('shortCutToggle.paymentAlternatives')}
-            text="..."
-            {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
-            {...cardToPay.minimumPayment > 0 && {
-              'data-bs-toggle': 'modal',
-              'data-bs-target': '#paymentAlt',
-            }}
-            value="alternativeOption"
-            onMChange={({ detail }: CustomEvent) => setShortcut(detail as string)}
-            white
-          />
+          {
+            user.canPayOtherAmount && (
+              <>
+                <MShortcutToggle
+                  className={
+                      shortcut !== 'otherAmount' ? 'd-block' : 'd-none'
+                    }
+                  key="3"
+                  {...cardToPay.totalPayment === 0 && { state: 'disabled' }}
+                  mId="otherAmountOption"
+                  name="paymentOption"
+                  label={t('shortCutToggle.other')}
+                  text={t('shortCutToggle.amount')}
+                  value="otherAmount"
+                  onMChange={(e: CustomEvent) => setSelectedOption(e, cardToPay.minimumPayment)}
+                />
+                <MCurrency
+                  className={
+                      shortcut === 'otherAmount' ? 'd-block m-2' : 'd-none'
+                    }
+                  mId="debtInput"
+                  theme="info"
+                  placeholder={t('currencyInput.placeholder')}
+                  iconLabel="currency-dollar"
+                  hintIconStart="info-circle"
+                  minValue={cardToPay.minimumPayment}
+                  maxValue={accountSelected?.value}
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                  onMChange={({ detail: { amount: value } }) => setAmount(value)}
+                  value={amount}
+                />
+              </>
+            )
+          }
+          {
+            user.hasPaymentAlternatives && (
+              <MShortcutToggle
+                class="d-block"
+                key="4"
+                mId="alternativeOption"
+                name="paymentOption"
+                label={t('shortCutToggle.paymentAlternatives')}
+                text="..."
+                {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
+                {...cardToPay.minimumPayment > 0 && {
+                  'data-bs-toggle': 'modal',
+                  'data-bs-target': '#paymentAlt',
+                }}
+                value="alternativeOption"
+                onMChange={({ detail }: CustomEvent) => setShortcut(detail as string)}
+                white
+              />
+            )
+          }
         </div>
       </div>
       <div className="pb-4 text-center">
