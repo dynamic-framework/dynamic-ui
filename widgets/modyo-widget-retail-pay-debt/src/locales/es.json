@@ -30,11 +30,12 @@
     "yesRecurrentLabel": "Estás programando un pago {{{ frequency }}}"
   },
   "button": {
-    "pay": "Pagar",
+    "pay": "Pagar {{{ amount }}}",
     "schedule": "Programar",
     "cancel": "Cancelar",
     "back": "Volver",
-    "confirm": "Continuar"
+    "confirm": "Continuar",
+    "retry": "Reintentar"
   },
   "alert": {
     "schedule": "Estás programando el pago de tu tarjeta de crédito por valor de  {{{ amount }}} el día {{{ date }}}",
@@ -74,10 +75,17 @@
       "repeats": "Frecuencia"
     }
   },
-  "paid": {
+  "result": {
     "title": "Resultado",
-    "success": "Pago exitoso",
-    "failed": "Payment fallido",
+    "paySuccess": "Pago exitoso",
+    "payFailed": "Pago fallido",
+    "scheduleSuccess": "Agendamiento exitoso",
+    "scheduleFailed": "Agendamiento fallido",
+    "scheduledToPay": "Progamado para pagar",
+    "scheduledOn": "{{{ amount }}} para {{{ date }}}",
+    "payErrorMessage": "We couldn’t complete your payment due to {{{ message }}}",
+    "scheduleErrorMessage": "We couldn’t complete your scheduling due to {{{ message }}}",
+    "errorSolution": "Please {{{ solution }}}",
     "moneyPaid": "Valor pagado",
     "paidTo": "Producto pagado",
     "transactionId": "ID de la transacción",

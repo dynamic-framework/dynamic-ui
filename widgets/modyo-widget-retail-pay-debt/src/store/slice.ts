@@ -9,12 +9,30 @@ export type Account = {
   currency: string;
 };
 
+type UserOptions = {
+  hasPaymentAlternatives: boolean;
+  hasExternalPayment: boolean;
+  canPayOtherAmount: boolean;
+  canPayMultipleCurrencies: boolean;
+};
+
 type Card = {
   id: number;
   franchise: string;
   mask: string;
   totalPayment: number;
   minimumPayment: number;
+  date: string;
+};
+
+type TransactionResult = {
+  status: number;
+  date?: string;
+  transactionID?: string;
+  error?: {
+    message: string,
+    solution: string,
+  }
 };
 
 type WidgetState = {
@@ -23,26 +41,28 @@ type WidgetState = {
   accountSelected?: Account;
   amountUsed?: number | undefined;
   isPaid?: boolean;
-  schedule?: Schedule;
-  recurring?: Recurring;
+  schedule: Schedule;
+  recurring: Recurring;
   selectedCurrency: string;
+  result?: TransactionResult;
+  user: UserOptions;
 };
 
-type Schedule = {
+export type Schedule = {
   isScheduled: boolean;
   date: string | null;
   dateShow: string | null;
 };
 
-type Recurring = {
+export type Recurring = {
   isRecurring: boolean;
   start: {
     frequency: string | null;
-    option: any;
+    option: unknown;
   },
   end: {
     frequency: string | null;
-    option: any;
+    option: unknown;
   },
 };
 
@@ -53,6 +73,13 @@ const initialState = {
     mask: '*** 456',
     totalPayment: 3250,
     minimumPayment: 240,
+    date: new Date().toISOString().split('T')[0],
+  },
+  user: {
+    hasPaymentAlternatives: false,
+    hasExternalPayment: false,
+    canPayOtherAmount: false,
+    canPayMultipleCurrencies: false,
   },
   accounts: [],
   schedule: {
@@ -69,6 +96,13 @@ const initialState = {
     end: {
       frequency: null,
       option: null,
+    },
+  },
+  result: {
+    status: 200,
+    error: {
+      message: '[Error message]',
+      solution: '[Error solution]',
     },
   },
   selectedCurrency: 'USD',
@@ -96,6 +130,12 @@ const slice = createSlice({
     setRecurring(state, action: PayloadAction<Recurring>) {
       state.recurring = action.payload;
     },
+    setResult(state, action: PayloadAction<TransactionResult>) {
+      state.result = action.payload;
+    },
+    setUserPayment(state, action: PayloadAction<UserOptions>) {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -106,5 +146,6 @@ export const {
   setIsPaid,
   setSchedule,
   setRecurring,
+  setUserPayment,
 } = slice.actions;
 export default slice.reducer;

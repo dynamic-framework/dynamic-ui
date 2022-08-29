@@ -30,11 +30,12 @@
     "yesRecurrentLabel": "This payment will repeat {{{ frequency }}}"
   },
   "button": {
-    "pay": "Pay",
+    "pay": "Pay {{{ amount }}}",
     "schedule": "Schedule",
     "cancel": "Cancel",
     "back": "Back",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "retry": "Retry"
   },
   "alert": {
     "schedule": "You are scheduling to pay the {{{ amount }}} amount on {{{ date }}}",
@@ -74,10 +75,17 @@
       "repeats": "Repeats"
     }
   },
-  "paid": {
+  "result": {
     "title": "Recipient",
-    "success": "Payment successful",
-    "failed": "Payment failed",
+    "paySuccess": "Payment successful",
+    "payFailed": "Payment failure",
+    "scheduleSuccess": "Scheduled successful",
+    "scheduleFailed": "Scheduling failure",
+    "scheduledToPay": "Scheduled to pay",
+    "scheduledOn": "{{{ amount }}} on {{{ date }}}",
+    "payErrorMessage": "We couldn’t complete your payment due to {{{ message }}}",
+    "scheduleErrorMessage": "We couldn’t complete your scheduling due to {{{ message }}}",
+    "errorSolution": "Please {{{ solution }}}",
     "moneyPaid": "Money paid",
     "paidTo": "Paid to",
     "transactionId": "Transaction ID",
