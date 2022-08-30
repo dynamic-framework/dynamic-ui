@@ -11,6 +11,7 @@ export const DIRECTIVES = [
   d.MCurrency,
   d.MFormCheck,
   d.MFormSwitch,
+  d.MHint,
   d.MIcon,
   d.MInput,
   d.MListItem,

@@ -14,6 +14,7 @@ import { defineCustomElement as defineMCoupon } from '@modyolabs/design-system/c
 import { defineCustomElement as defineMCurrency } from '@modyolabs/design-system/components/m-currency.js';
 import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-system/components/m-form-switch.js';
+import { defineCustomElement as defineMHint } from '@modyolabs/design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyolabs/design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyolabs/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyolabs/design-system/components/m-list-item.js';
@@ -249,6 +250,27 @@ export class MFormSwitch {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MHint extends Components.MHint {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMHint,
+  inputs: ['iconEnd', 'iconSize', 'iconStart', 'text', 'theme']
+})
+@Component({
+  selector: 'm-hint',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['iconEnd', 'iconSize', 'iconStart', 'text', 'theme']
+})
+export class MHint {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
 
