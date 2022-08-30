@@ -30,7 +30,8 @@
     "yesRecurrentLabel": "Estás programando un pago {{{ frequency }}}"
   },
   "button": {
-    "pay": "Pagar {{{ amount }}}",
+    "payAmount": "Pagar {{{ amount }}}",
+    "pay": "Pagar",
     "schedule": "Programar",
     "cancel": "Cancelar",
     "back": "Volver",
@@ -70,9 +71,9 @@
       "monthly": "Mensualmente",
       "custom": "Personalizar",
       "ends": "Finalizar",
-      "never": "Nunca",
+      "oneYear": "1 Año",
       "date": " Fecha",
-      "repeats": "Frecuencia"
+      "occurencies": "Ocurrencias"
     }
   },
   "result": {

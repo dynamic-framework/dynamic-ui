@@ -1,5 +1,8 @@
 {
-  "extends": "../tsconfig.json",
+  "references": [
+    { "path": "../design-system"},
+    { "path": "../libraries/react-design-system"}
+  ],
   "compilerOptions": {
     "target": "es2017",
     "lib": [
@@ -19,7 +22,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@modyolabs/design-system": ["./design-system/src"],
+      "@modyolabs/react-design-system": ["./libraries/react-design-system/src"]
+    }
   },
   "include": [
     "src"

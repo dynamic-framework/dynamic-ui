@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   MButton,
   MFormSwitch,
@@ -15,12 +15,11 @@ import { useTranslation } from 'react-i18next';
 
 import ModalPaymentAlternatives from './ModalPaymentAlternatives';
 import ModalSchedule from './ModalSchedule';
-import ModalRecurrentPay from './ModalRecurrentPay';
 import usePaymentInput from '../hooks/usePaymentInput';
 import ModalConfirmPayment from './ModalConfirmPayment';
 import { useAppSelector } from '../store/hooks';
 import {
-  getAccountSelected, getCardToPay, getSchedule, getRecurring, getUser,
+  getAccountSelected, getCardToPay, getSchedule, getUser,
 } from '../store/selectors';
 import useFormatCurrency from '../hooks/useFormatCurrency';
 
@@ -30,7 +29,6 @@ export default function PaymentPanel() {
   const cardToPay = useAppSelector(getCardToPay);
   const schedule = useAppSelector(getSchedule);
   const user = useAppSelector(getUser);
-  const recurring = useAppSelector(getRecurring);
 
   const {
     amountAvailable,
@@ -38,9 +36,9 @@ export default function PaymentPanel() {
     setAmount,
   } = usePaymentInput(accountSelected?.value);
   const [isScheduled, setIsScheduled] = useState(false);
-  const [isRecurrent, setIsRecurrent] = useState(false);
   const [shortcut, setShortcut] = useState('');
   const {
+    format,
     values: [
       minimumPayment,
       totalPayment,
@@ -54,6 +52,16 @@ export default function PaymentPanel() {
     setShortcut(detail as string);
     setAmount(value);
   };
+
+  const buttonPaymentAmountMessage = useMemo(() => {
+    if (isScheduled) {
+      return t('button.schedule');
+    }
+    if (!amount) {
+      return t('button.pay');
+    }
+    return t('button.payAmount', { amount: format(amount ?? 0) });
+  }, [isScheduled, amount, t, format]);
 
   if (!accountSelected) {
     return (
@@ -188,30 +196,6 @@ export default function PaymentPanel() {
                 : t('collapse.noScheduleLabel')}
             </small>
           </div>
-          <div
-            className="px-3 py-2 border rounded-1 mb-2"
-            {...(cardToPay.minimumPayment > 0 && amount && amountAvailable >= 0) && {
-              'data-bs-toggle': 'modal',
-              'data-bs-target': '#modalRecurrentPayment',
-            }}
-          >
-            <MFormSwitch
-              class="d-inline-flex"
-              mId="recurrentPayment"
-              label={t('collapse.recurring')}
-              isDisabled
-              isChecked={isRecurrent}
-              {...isRecurrent && ({ labelOn: t('collapse.yesLabel') })}
-              {...!isRecurrent && ({ labelOff: t('collapse.noLabel') })}
-            />
-            <small
-              className="d-block text-info text-start"
-            >
-              {isRecurrent
-                ? t('collapse.yesRecurrentLabel', { frequency: recurring.start.frequency })
-                : t('collapse.noRecurrentLabel')}
-            </small>
-          </div>
         </div>
         <MButton
           className="more-options-btn"
@@ -243,9 +227,7 @@ export default function PaymentPanel() {
             'data-bs-toggle': 'modal',
             'data-bs-target': '#modalConfirmPayment',
           }}
-          text={
-              isScheduled ? t('button.schedule') : t('button.pay')
-            }
+          text={buttonPaymentAmountMessage}
           theme="primary-gradient"
           isPill
           iconRight="check-lg"
@@ -253,7 +235,6 @@ export default function PaymentPanel() {
       </div>
       <ModalPaymentAlternatives />
       <ModalSchedule onAccept={setIsScheduled} />
-      <ModalRecurrentPay onAccept={setIsRecurrent} />
       <ModalConfirmPayment />
       {isScheduled && (
         <MAlert

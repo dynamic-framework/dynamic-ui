@@ -1,6 +1,9 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "extends": "../tsconfig.json",
+  "references": [
+    { "path": "../design-system"},
+    { "path": "../libraries/angular-design-system"}
+  ],
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
@@ -23,7 +26,11 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@modyolabs/design-system": ["./design-system/src"],
+      "@modyolabs/angular-design-system": ["./libraries/angular-design-system/src"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
