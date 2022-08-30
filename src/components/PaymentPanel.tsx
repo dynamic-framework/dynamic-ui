@@ -75,6 +75,31 @@ export default function PaymentPanel() {
     return t('alert.schedule', { amount, date: schedule.dateShow });
   }, [amount, schedule, isScheduled, recurringStart, t]);
 
+  const hintCurrency = useMemo(() => {
+    if (amount && amount > cardToPay.totalPayment) {
+      return {
+        message: 'You are paying more than the billed amount',
+        icon: 'emoji-smile',
+      };
+    }
+    if (amount && accountSelected && amount > accountSelected?.value) {
+      return {
+        message: 'You don’t have enough funds to pay this amount',
+        icon: 'emoji-smile',
+      };
+    }
+    if (amount === 0) {
+      return {
+        message: 'Enter an amount to pay',
+        icon: 'info-circle',
+      };
+    }
+    return {
+      message: '',
+      icon: '',
+    };
+  }, [accountSelected, amount, cardToPay]);
+
   if (!accountSelected) {
     return (
       <div className="d-flex flex-column justify-content-center align-items-center gap-3 w-100">
@@ -98,7 +123,7 @@ export default function PaymentPanel() {
     <>
       <div className="pt-4">
         <div className="d-flex flex-column justify-content-between pb-2 mx-auto amount-options">
-          <p className="px-3 text-gray fw-semibold">Amount</p>
+          <p className="px-3 mb-1 text-gray fw-semibold">Amount</p>
           <MShortcutToggle
             class="d-block"
             key="1"
@@ -141,39 +166,29 @@ export default function PaymentPanel() {
                 />
                 <MCurrency
                   className={
-                      shortcut === 'otherAmount' ? 'd-block m-2' : 'd-none'
-                    }
+                    shortcut === 'otherAmount' ? 'd-block m-2' : 'd-none'
+                  }
                   mId="debtInput"
                   theme="info"
                   placeholder={t('currencyInput.placeholder')}
                   iconLabel="currency-dollar"
-                  hint="Test for the hint message"
-                  hintIconStart="info-circle"
-                  hintIconEnd="info-circle"
+                  hint={hintCurrency.message}
+                  hintIconStart={hintCurrency.icon}
                   minValue={cardToPay.minimumPayment}
                   maxValue={accountSelected?.value}
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                  onMChange={({ detail: { amount: value } }) => setAmount(value)}
+                  onMChange={({ detail: { amount: value } }) => setAmount(value as number)}
                   value={amount}
                 />
               </>
             )
           }
           {
-            amountAvailable < 0 && (
+            ((shortcut === 'totalOption' && accountSelected?.value < cardToPay.totalPayment)
+            || (shortcut === 'minimumOption' && accountSelected?.value < cardToPay.minimumPayment)) && (
               <MHint
                 text="You don’t have enough funds to pay this amount"
                 iconStart="info-circle"
                 theme="danger"
-              />
-            )
-          }
-          {
-            (amount ?? 0) > cardToPay.totalPayment && (
-              <MHint
-                text="You are paying more than the billed amount"
-                iconStart="emoji-smile"
-                theme="warning"
               />
             )
           }
