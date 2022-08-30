@@ -14,6 +14,7 @@ import { defineCustomElement as defineMCoupon } from '@modyolabs/design-system/c
 import { defineCustomElement as defineMCurrency } from '@modyolabs/design-system/components/m-currency.js';
 import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-system/components/m-form-switch.js';
+import { defineCustomElement as defineMHint } from '@modyolabs/design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyolabs/design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyolabs/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyolabs/design-system/components/m-list-item.js';
@@ -39,6 +40,7 @@ export const MCoupon = /*@__PURE__*/createReactComponent<JSX.MCoupon, HTMLMCoupo
 export const MCurrency = /*@__PURE__*/createReactComponent<JSX.MCurrency, HTMLMCurrencyElement>('m-currency', undefined, undefined, defineMCurrency);
 export const MFormCheck = /*@__PURE__*/createReactComponent<JSX.MFormCheck, HTMLMFormCheckElement>('m-form-check', undefined, undefined, defineMFormCheck);
 export const MFormSwitch = /*@__PURE__*/createReactComponent<JSX.MFormSwitch, HTMLMFormSwitchElement>('m-form-switch', undefined, undefined, defineMFormSwitch);
+export const MHint = /*@__PURE__*/createReactComponent<JSX.MHint, HTMLMHintElement>('m-hint', undefined, undefined, defineMHint);
 export const MIcon = /*@__PURE__*/createReactComponent<JSX.MIcon, HTMLMIconElement>('m-icon', undefined, undefined, defineMIcon);
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
 export const MListItem = /*@__PURE__*/createReactComponent<JSX.MListItem, HTMLMListItemElement>('m-list-item', undefined, undefined, defineMListItem);

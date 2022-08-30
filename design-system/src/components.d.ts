@@ -299,6 +299,28 @@ export namespace Components {
          */
         "mId": string;
     }
+    interface MHint {
+        /**
+          * Right icon for the hint
+         */
+        "iconEnd"?: string;
+        /**
+          * Size for the icons
+         */
+        "iconSize": string;
+        /**
+          * Left icon for the hint
+         */
+        "iconStart"?: string;
+        /**
+          * Hint text
+         */
+        "text": string;
+        /**
+          * Theme for the hint
+         */
+        "theme": string;
+    }
     interface MIcon {
         /**
           * Loading animation duration
@@ -857,6 +879,12 @@ declare global {
         prototype: HTMLMFormSwitchElement;
         new (): HTMLMFormSwitchElement;
     };
+    interface HTMLMHintElement extends Components.MHint, HTMLStencilElement {
+    }
+    var HTMLMHintElement: {
+        prototype: HTMLMHintElement;
+        new (): HTMLMHintElement;
+    };
     interface HTMLMIconElement extends Components.MIcon, HTMLStencilElement {
     }
     var HTMLMIconElement: {
@@ -957,6 +985,7 @@ declare global {
         "m-currency": HTMLMCurrencyElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
+        "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
@@ -1276,6 +1305,28 @@ declare namespace LocalJSX {
           * Emitted when the switch has changed
          */
         "onMChange"?: (event: MFormSwitchCustomEvent<boolean>) => void;
+    }
+    interface MHint {
+        /**
+          * Right icon for the hint
+         */
+        "iconEnd"?: string;
+        /**
+          * Size for the icons
+         */
+        "iconSize"?: string;
+        /**
+          * Left icon for the hint
+         */
+        "iconStart"?: string;
+        /**
+          * Hint text
+         */
+        "text": string;
+        /**
+          * Theme for the hint
+         */
+        "theme"?: string;
     }
     interface MIcon {
         /**
@@ -1773,6 +1824,7 @@ declare namespace LocalJSX {
         "m-currency": MCurrency;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
+        "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
         "m-list-item": MListItem;
@@ -1803,6 +1855,7 @@ declare module "@stencil/core" {
             "m-currency": LocalJSX.MCurrency & JSXBase.HTMLAttributes<HTMLMCurrencyElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
+            "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;

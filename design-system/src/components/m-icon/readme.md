@@ -24,6 +24,7 @@
  - [m-button](../m-button)
  - [m-coupon](../m-coupon)
  - [m-currency](../m-currency)
+ - [m-hint](../m-hint)
  - [m-input](../m-input)
  - [m-list-item](../m-list-item)
  - [m-nav-link](../m-nav-link)
@@ -39,6 +40,7 @@ graph TD;
   m-button --> m-icon
   m-coupon --> m-icon
   m-currency --> m-icon
+  m-hint --> m-icon
   m-input --> m-icon
   m-list-item --> m-icon
   m-nav-link --> m-icon

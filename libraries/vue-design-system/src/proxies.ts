@@ -115,6 +115,15 @@ export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-for
 ]);
 
 
+export const MHint = /*@__PURE__*/ defineContainer<JSX.MHint>('m-hint', undefined, [
+  'iconStart',
+  'iconEnd',
+  'text',
+  'theme',
+  'iconSize'
+]);
+
+
 export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefined, [
   'icon',
   'theme',
