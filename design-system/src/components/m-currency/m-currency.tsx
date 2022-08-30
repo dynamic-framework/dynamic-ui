@@ -188,7 +188,7 @@ export class MCurrency implements ComponentInterface {
             )}
             {this.hasSelect && (
               <select
-               // eslint-disable-next-line no-return-assign
+                // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
                 onInput={this.changeHandler}
@@ -234,21 +234,12 @@ export class MCurrency implements ComponentInterface {
             )}
           </div>
           {this.hint && (
-            <small class="hint">
-              {this.hintIconStart && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.hintIconStart}
-                />
-              )}
-              {this.hint}
-              {this.hintIconEnd && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.hintIconEnd}
-                />
-              )}
-            </small>
+            <m-hint
+              text={this.hint}
+              theme={this.internalTheme}
+              {...(this.hintIconStart && ({ iconStart: this.hintIconStart }))}
+              {...(this.hintIconEnd && ({ iconEnd: this.hintIconEnd }))}
+            />
           )}
         </div>
       </Host>

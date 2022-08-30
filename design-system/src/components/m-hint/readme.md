@@ -18,6 +18,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [m-currency](../m-currency)
+
 ### Depends on
 
 - [m-icon](../m-icon)
@@ -26,6 +30,7 @@
 ```mermaid
 graph TD;
   m-hint --> m-icon
+  m-currency --> m-hint
   style m-hint fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
