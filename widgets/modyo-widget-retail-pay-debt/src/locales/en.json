@@ -71,9 +71,9 @@
       "monthly": "Monthly",
       "custom": "Custom",
       "ends": "Ends",
-      "never": "Never",
+      "oneYear": "1 Year",
       "date": "Date",
-      "repeats": "Repeats"
+      "occurencies": "Occurencies"
     }
   },
   "result": {

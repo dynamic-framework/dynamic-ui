@@ -71,9 +71,9 @@
       "monthly": "Mensualmente",
       "custom": "Personalizar",
       "ends": "Finalizar",
-      "never": "Nunca",
+      "oneYear": "1 Año",
       "date": " Fecha",
-      "repeats": "Frecuencia"
+      "occurencies": "Ocurrencias"
     }
   },
   "result": {
