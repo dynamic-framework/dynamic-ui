@@ -48,15 +48,11 @@ export default function Payment() {
             </h6>
           </div>
           <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1">
-            {(!!cardToPay?.totalPayment && accountSelected) && (
-              <>
-                <MListItem value={cardToPay.date} text={t('nextPayment')} class="p-1" />
-                <MListItem value={totalPayment} text={t('balance')} class="p-1" />
-                {
-                  hasMultipleCurrencies && <MListItem value="€1 = USD $1,4" text="Convertion rate" class="p-1" />
-                }
-              </>
-            )}
+            <MListItem value={cardToPay.date} text={t('nextPayment')} class="p-1" />
+            <MListItem value={totalPayment} text={t('balance')} class="p-1" />
+            {
+              hasMultipleCurrencies && <MListItem value="€1 = USD $1,4" text="Convertion rate" class="p-1" />
+            }
           </div>
           <div className="m-3 pt-3">
             {accountSelected && (
