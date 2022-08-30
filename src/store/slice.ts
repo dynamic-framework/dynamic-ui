@@ -16,6 +16,12 @@ type UserOptions = {
   canPayMultipleCurrencies: boolean;
 };
 
+export type Day = {
+  id: string;
+  name: string;
+  checked: boolean;
+};
+
 type Card = {
   id: number;
   franchise: string;
@@ -42,7 +48,8 @@ type WidgetState = {
   amountUsed?: number | undefined;
   isPaid?: boolean;
   schedule: Schedule;
-  recurring: Recurring;
+  startRepeat: StartRepeat;
+  endRepeat: EndRepeat;
   selectedCurrency: string;
   result?: TransactionResult;
   user: UserOptions;
@@ -54,16 +61,16 @@ export type Schedule = {
   dateShow: string | null;
 };
 
-export type Recurring = {
-  isRecurring: boolean;
-  start: {
-    frequency: string | null;
-    option: unknown;
-  },
-  end: {
-    frequency: string | null;
-    option: unknown;
-  },
+export type StartRepeat = {
+  enabled: boolean;
+  frequency: string | null;
+  option: unknown;
+};
+
+export type EndRepeat = {
+  enabled: boolean;
+  frequency: string | null;
+  option: unknown;
 };
 
 const initialState = {
@@ -87,16 +94,15 @@ const initialState = {
     date: null,
     dateShow: null,
   },
-  recurring: {
-    isRecurring: false,
-    start: {
-      frequency: null,
-      option: null,
-    },
-    end: {
-      frequency: null,
-      option: null,
-    },
+  startRepeat: {
+    enabled: false,
+    frequency: null,
+    option: null,
+  },
+  endRepeat: {
+    enabled: false,
+    frequency: null,
+    option: null,
   },
   result: {
     status: 200,
@@ -127,8 +133,11 @@ const slice = createSlice({
     setSchedule(state, action: PayloadAction<Schedule>) {
       state.schedule = action.payload;
     },
-    setRecurring(state, action: PayloadAction<Recurring>) {
-      state.recurring = action.payload;
+    setAutoRepeat(state, action: PayloadAction<StartRepeat>) {
+      state.startRepeat = action.payload;
+    },
+    setEndRepeat(state, action: PayloadAction<EndRepeat>) {
+      state.endRepeat = action.payload;
     },
     setResult(state, action: PayloadAction<TransactionResult>) {
       state.result = action.payload;
@@ -145,7 +154,8 @@ export const {
   setAmountUsed,
   setIsPaid,
   setSchedule,
-  setRecurring,
+  setAutoRepeat,
+  setEndRepeat,
   setUserPayment,
 } = slice.actions;
 export default slice.reducer;

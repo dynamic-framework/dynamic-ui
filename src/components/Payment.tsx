@@ -32,7 +32,7 @@ export default function Payment() {
     ],
   } = useFormatCurrency(
     cardToPay.totalPayment,
-    accountSelected?.value,
+    accountSelected?.value ?? 0,
   );
 
   return (

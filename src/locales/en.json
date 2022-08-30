@@ -30,7 +30,8 @@
     "yesRecurrentLabel": "This payment will repeat {{{ frequency }}}"
   },
   "button": {
-    "pay": "Pay {{{ amount }}}",
+    "payAmount": "Pay {{{ amount }}}",
+    "pay": "Pay",
     "schedule": "Schedule",
     "cancel": "Cancel",
     "back": "Back",
@@ -70,9 +71,9 @@
       "monthly": "Monthly",
       "custom": "Custom",
       "ends": "Ends",
-      "never": "Never",
+      "oneYear": "1 Year",
       "date": "Date",
-      "repeats": "Repeats"
+      "occurencies": "Occurencies"
     }
   },
   "result": {

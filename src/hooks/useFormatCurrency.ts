@@ -1,20 +1,19 @@
 import { formatCurrency } from '@modyolabs/design-system';
+import { useCallback } from 'react';
 
-export default function useFormatCurrency(...args: Array<number | undefined>) {
+export default function useFormatCurrency(...args: Array<number>) {
   const language = 'en-US';
   const currency = 'USD';
   const hasDecimals = true;
 
-  function format(value: number) {
-    return formatCurrency(value, language, currency, hasDecimals);
-  }
+  const format = useCallback(
+    (value: number) => formatCurrency(value, language, currency, hasDecimals),
+    [language, currency, hasDecimals],
+  );
 
-  let values: Array<string> = [];
-  if (args.length > 0) {
-    values = args.map((value) => (
-      formatCurrency(value ?? 0, language, currency, hasDecimals)
-    ));
-  }
+  const values = (args || []).map((value) => (
+    formatCurrency(value ?? 0, language, currency, hasDecimals)
+  ));
 
   return {
     format,
