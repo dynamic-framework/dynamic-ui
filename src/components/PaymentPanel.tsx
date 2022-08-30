@@ -9,6 +9,7 @@ import {
   MSkeleton,
   MAlert,
   MCurrency,
+  MHint,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -223,6 +224,14 @@ export default function PaymentPanel() {
           aria-expanded="false"
           aria-controls="collapseExample"
         />
+      </div>
+      <div>
+        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="dark" />
+        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="success" />
+        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="danger" />
+        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="warning" />
+        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="info" />
+        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="tertiary" />
       </div>
       <div
         className="d-flex justify-content-center"
