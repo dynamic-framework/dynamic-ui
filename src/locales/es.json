@@ -40,6 +40,7 @@
   },
   "alert": {
     "schedule": "Estás programando el pago de tu tarjeta de crédito por valor de  {{{ amount }}} el día {{{ date }}}",
+    "scheduleAndRecurring": "Estás programando el pago de tu tarjeta de crédito por valor de  {{{ amount }}} el día {{{ date }}} {{{ repeatType }}}",
     "notPay": "No tienes pagos pendientes por realizar",
     "wrong": "Oops! Algo salió mal"
   },

@@ -18,7 +18,11 @@ import usePaymentInput from '../hooks/usePaymentInput';
 import ModalConfirmPayment from './ModalConfirmPayment';
 import { useAppSelector } from '../store/hooks';
 import {
-  getAccountSelected, getCardToPay, getSchedule, getUser,
+  getAccountSelected,
+  getAutoRepeat,
+  getCardToPay,
+  getSchedule,
+  getUser,
 } from '../store/selectors';
 import useFormatCurrency from '../hooks/useFormatCurrency';
 
@@ -27,6 +31,7 @@ export default function PaymentPanel() {
   const accountSelected = useAppSelector(getAccountSelected);
   const cardToPay = useAppSelector(getCardToPay);
   const schedule = useAppSelector(getSchedule);
+  const recurringStart = useAppSelector(getAutoRepeat);
   const user = useAppSelector(getUser);
 
   const {
@@ -61,6 +66,13 @@ export default function PaymentPanel() {
     }
     return t('button.payAmount', { amount: format(amount ?? 0) });
   }, [isScheduled, amount, t, format]);
+
+  const alertMessageSchedule = useMemo(() => {
+    if (isScheduled && recurringStart.enabled) {
+      return t('alert.scheduleAndRecurring', { amount, date: schedule.dateShow, repeatType: recurringStart.frequency });
+    }
+    return t('alert.schedule', { amount, date: schedule.dateShow });
+  }, [amount, schedule, isScheduled, recurringStart, t]);
 
   if (!accountSelected) {
     return (
@@ -233,7 +245,7 @@ export default function PaymentPanel() {
           theme="info"
           close
         >
-          {t('alert.schedule', { amount, date: schedule.dateShow })}
+          {alertMessageSchedule}
         </MAlert>
       )}
     </>
