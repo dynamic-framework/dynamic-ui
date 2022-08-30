@@ -147,7 +147,9 @@ export default function PaymentPanel() {
                   theme="info"
                   placeholder={t('currencyInput.placeholder')}
                   iconLabel="currency-dollar"
+                  hint="Test for the hint message"
                   hintIconStart="info-circle"
+                  hintIconEnd="info-circle"
                   minValue={cardToPay.minimumPayment}
                   maxValue={accountSelected?.value}
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

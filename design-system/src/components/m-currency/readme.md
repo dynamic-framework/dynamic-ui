@@ -41,11 +41,14 @@
 ### Depends on
 
 - [m-icon](../m-icon)
+- [m-hint](../m-hint)
 
 ### Graph
 ```mermaid
 graph TD;
   m-currency --> m-icon
+  m-currency --> m-hint
+  m-hint --> m-icon
   style m-currency fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
