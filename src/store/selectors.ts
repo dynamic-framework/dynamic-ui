@@ -47,9 +47,14 @@ export const getSchedule = createDraftSafeSelector(
   (widget) => widget.schedule,
 );
 
-export const getRecurring = createDraftSafeSelector(
+export const getAutoRepeat = createDraftSafeSelector(
   getState,
-  (widget) => widget.recurring,
+  (widget) => widget.startRepeat,
+);
+
+export const getEndRepeat = createDraftSafeSelector(
+  getState,
+  (widget) => widget.endRepeat,
 );
 
 export const getResult = createDraftSafeSelector(
