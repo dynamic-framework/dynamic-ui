@@ -158,6 +158,24 @@ export default function PaymentPanel() {
             )
           }
           {
+            amountAvailable < 0 && (
+              <MHint
+                text="You don’t have enough funds to pay this amount"
+                iconStart="info-circle"
+                theme="danger"
+              />
+            )
+          }
+          {
+            (amount ?? 0) > cardToPay.totalPayment && (
+              <MHint
+                text="You are paying more than the billed amount"
+                iconStart="emoji-smile"
+                theme="warning"
+              />
+            )
+          }
+          {
             user.hasPaymentAlternatives && (
               <MShortcutToggle
                 class="d-block"
@@ -220,14 +238,6 @@ export default function PaymentPanel() {
           aria-expanded="false"
           aria-controls="collapseExample"
         />
-      </div>
-      <div>
-        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="dark" />
-        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="success" />
-        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="danger" />
-        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="warning" />
-        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="info" />
-        <MHint text="Holanda" iconStart="info-circle" iconEnd="info-circle" theme="tertiary" />
       </div>
       <div
         className="d-flex justify-content-center"
