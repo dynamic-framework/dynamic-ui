@@ -104,22 +104,7 @@ export default function PaymentPanel() {
   }, [accountSelected, amount, cardToPay]);
 
   if (!accountSelected) {
-    return (
-      <div className="d-flex flex-column justify-content-center align-items-center gap-3 w-100">
-        <MSkeleton viewBox="0 0 320 68" backgroundColor="#e9e9ff" foregroundColor="#f8f8fb">
-          <rect x="35" y="0" rx="8" ry="8" width="247" height="67" />
-        </MSkeleton>
-        <div className="bg-white rounded py-4 w-100">
-          <MSkeleton viewBox="0 0 320 355" backgroundColor="#e9e9ff" foregroundColor="#f8f8fb">
-            <rect x="35" y="0" rx="8" ry="8" width="247" height="67" />
-            <rect x="80" y="77" rx="8" ry="8" width="164" height="18" />
-            <rect x="35" y="110" rx="8" ry="8" width="68" height="54" />
-            <rect x="124" y="110" rx="8" ry="8" width="68" height="54" />
-            <rect x="210" y="110" rx="8" ry="8" width="68" height="54" />
-          </MSkeleton>
-        </div>
-      </div>
-    );
+    return (null);
   }
 
   return (
