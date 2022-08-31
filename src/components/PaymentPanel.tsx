@@ -59,6 +59,9 @@ export default function PaymentPanel() {
   };
 
   const buttonPaymentAmountMessage = useMemo(() => {
+    if (user.canPayWithoutDebt) {
+      return t('button.back');
+    }
     if (isScheduled) {
       return t('button.schedule');
     }
@@ -66,7 +69,7 @@ export default function PaymentPanel() {
       return t('button.pay');
     }
     return t('button.payAmount', { amount: format(amount ?? 0) });
-  }, [isScheduled, amount, t, format]);
+  }, [isScheduled, amount, t, format, user]);
 
   const alertMessageSchedule = useMemo(() => {
     if (isScheduled && recurringStart.enabled) {
@@ -261,7 +264,7 @@ export default function PaymentPanel() {
       >
         {/* Pointer events?  */}
         <MButton
-          {...(cardToPay.minimumPayment === 0 || !amount || amountAvailable < 0) && { state: 'disabled' }}
+          {...(cardToPay.minimumPayment === 0 || !amount || amountAvailable < 0) && !user.canPayWithoutDebt && { state: 'disabled' }}
           {...(cardToPay.minimumPayment > 0 && amount && amountAvailable >= 0) && {
             'data-bs-toggle': 'modal',
             'data-bs-target': '#modalConfirmPayment',
