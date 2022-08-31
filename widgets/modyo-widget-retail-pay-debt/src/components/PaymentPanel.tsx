@@ -165,7 +165,7 @@ export default function PaymentPanel() {
                   label={t('shortCutToggle.other')}
                   text={t('shortCutToggle.amount')}
                   value="otherAmount"
-                  onMChange={(e: CustomEvent) => setSelectedOption(e, cardToPay.minimumPayment)}
+                  onMChange={(e: CustomEvent) => setSelectedOption(e, 0)}
                 />
                 <MCurrency
                   className={
