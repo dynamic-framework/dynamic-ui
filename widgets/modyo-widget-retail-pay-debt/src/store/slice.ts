@@ -32,7 +32,7 @@ type Card = {
   date: Date;
 };
 
-type TransactionResult = {
+export type TransactionResult = {
   status: number;
   date?: string;
   transactionID?: string;
@@ -155,6 +155,7 @@ export const {
   setAccountSelected,
   setAmountUsed,
   setIsPaid,
+  setResult,
   setSchedule,
   setAutoRepeat,
   setEndRepeat,
