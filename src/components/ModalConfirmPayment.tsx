@@ -2,7 +2,7 @@ import { MButton, MModal } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setIsPaid } from '../store/slice';
+import { setIsPaid, setResult } from '../store/slice';
 import {
   getAccountSelected,
   getAmountUsed,
@@ -21,6 +21,31 @@ export default function ModalConfirmPayment() {
   const isScheduled = useAppSelector(getSchedule)?.isScheduled;
 
   const { values: [amountUsedFormatted] } = useFormatCurrency(amountUsed);
+
+  function handlePaid() {
+    const rand = Math.round(Math.random());
+    const transactionResult = {
+      status: rand ? 200 : 300,
+      date: Intl.DateTimeFormat('default', {
+        day: 'numeric',
+        month: 'numeric',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(new Date()),
+      ...(rand && {
+        transactionID: `${Math.floor(Math.random() * 1000001)}`,
+      }),
+      ...(!rand && {
+        error: {
+          message: 'error network.',
+          solution: 'Try again in a while',
+        },
+      }),
+    };
+    dispatch(setResult(transactionResult));
+    dispatch(setIsPaid(true));
+  }
 
   return (
     <MModal
@@ -62,7 +87,7 @@ export default function ModalConfirmPayment() {
           text={t(isScheduled ? 'button.schedule' : 'button.pay')}
           theme="primary"
           isPill
-          onClick={() => dispatch(setIsPaid(true))}
+          onClick={() => handlePaid()}
         />
       </div>
     </MModal>
