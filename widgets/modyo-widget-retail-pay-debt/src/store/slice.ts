@@ -14,6 +14,7 @@ type UserOptions = {
   hasExternalPayment: boolean;
   canPayOtherAmount: boolean;
   canPayMultipleCurrencies: boolean;
+  canPayWithoutDebt: boolean;
 };
 
 export type Day = {
@@ -28,7 +29,7 @@ type Card = {
   mask: string;
   totalPayment: number;
   minimumPayment: number;
-  date: string;
+  date: Date;
 };
 
 type TransactionResult = {
@@ -78,15 +79,16 @@ const initialState = {
     id: 1,
     franchise: 'Visa',
     mask: '*** 456',
-    totalPayment: 3250,
-    minimumPayment: 240,
-    date: new Date().toISOString().split('T')[0],
+    totalPayment: 2000,
+    minimumPayment: 140,
+    date: new Date(),
   },
   user: {
     hasPaymentAlternatives: false,
     hasExternalPayment: false,
     canPayOtherAmount: false,
     canPayMultipleCurrencies: false,
+    canPayWithoutDebt: false,
   },
   accounts: [],
   schedule: {
