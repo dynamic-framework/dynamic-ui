@@ -18,6 +18,7 @@ importers:
       '@types/bootstrap': ^5.1.12
       '@types/dinero.js': ~1.9.0
       '@types/jest': ^27.0.3
+      '@types/luxon': ~3.0.1
       '@types/node': ^18.7.1
       '@typescript-eslint/eslint-plugin': ^4.23.0
       '@typescript-eslint/parser': ^4.23.0
@@ -34,6 +35,7 @@ importers:
       jest-cli: ^27.4.5
       lint-staged: ^12.4.1
       liquidjs: ^9.39.2
+      luxon: ~3.0.3
       puppeteer: ^14.0.0
       sass: ^1.51.0
       stylelint: ^14.8.2
@@ -43,9 +45,11 @@ importers:
       '@popperjs/core': 2.11.6
       '@stencil/core': 2.17.4
       '@types/dinero.js': 1.9.0
+      '@types/luxon': 3.0.1
       bootstrap: 5.2.0_@popperjs+core@2.11.6
       dinero.js: 1.9.1
       liquidjs: 9.41.0
+      luxon: 3.0.3
     devDependencies:
       '@stencil/angular-output-target': 0.4.0_@stencil+core@2.17.4
       '@stencil/eslint-plugin': 0.4.0_cf9d0625bf28a0cc8cd510f6b4cc4c20
@@ -273,7 +277,6 @@ importers:
       react-redux: ^8.0.2
       react-scripts: 5.0.1
       sass: ~1.54.0
-      tsconfig-paths-webpack-plugin: ^4.0.0
       typescript: ^4.6.4
       web-vitals: ^2.1.4
       webpack: ^5.64.4
@@ -312,7 +315,6 @@ importers:
       eslint-plugin-jsx-a11y: 6.6.1_eslint@8.22.0
       eslint-plugin-react: 7.31.0_eslint@8.22.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.22.0
-      tsconfig-paths-webpack-plugin: 4.0.0
       webpack: 5.74.0
 
   ../../widgets/react-profile:
@@ -4592,6 +4594,10 @@ packages:
   /@types/lodash/4.14.184:
     resolution: {integrity: sha512-RoZphVtHbxPZizt4IcILciSWiC6dcn+eZ8oX9IWEYfDMcocdd42f7NPI6fQj+6zI8y4E0L7gu2pcZKLGTRaV9Q==}
     dev: true
+
+  /@types/luxon/3.0.1:
+    resolution: {integrity: sha512-/LAvk1cMOJt0ghzMFrZEvByUhsiEfeeT2IF53Le+Ki3A538yEL9pRZ7a6MuCxdrYK+YNqNIDmrKU/r2nnw04zQ==}
+    dev: false
 
   /@types/mime/3.0.1:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
@@ -12418,6 +12424,11 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /luxon/3.0.3:
+    resolution: {integrity: sha512-+EfHWnF+UT7GgTnq5zXg3ldnTKL2zdv7QJgsU5bjjpbH17E3qi/puMhQyJVYuCq+FRkogvB5WB6iVvUr+E4a7w==}
+    engines: {node: '>=12'}
+    dev: false
+
   /lz-string/1.4.4:
     resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}
     hasBin: true
@@ -17311,15 +17322,6 @@ packages:
       yn: 3.1.1
     dev: true
 
-  /tsconfig-paths-webpack-plugin/4.0.0:
-    resolution: {integrity: sha512-fw/7265mIWukrSHd0i+wSwx64kYUSAKPfxRDksjKIYTxSAp9W9/xcZVBF4Kl0eqQd5eBpAQ/oQrc5RyM/0c1GQ==}
-    engines: {node: '>=10.13.0'}
-    dependencies:
-      chalk: 4.1.2
-      enhanced-resolve: 5.10.0
-      tsconfig-paths: 4.1.0
-    dev: true
-
   /tsconfig-paths/3.14.1:
     resolution: {integrity: sha512-fxDhWnFSLt3VuTwtvJt5fpwxBHg5AdKWMsgcPOOIilyjymcYVZoCQF8fvFRezCNfblEXmi+PcM1eYHeOAgXCOQ==}
     dependencies:
@@ -17327,15 +17329,6 @@ packages:
       json5: 1.0.1
       minimist: 1.2.6
       strip-bom: 3.0.0
-
-  /tsconfig-paths/4.1.0:
-    resolution: {integrity: sha512-AHx4Euop/dXFC+Vx589alFba8QItjF+8hf8LtmuiCwHyI4rHXQtOOENaM8kvYf5fR0dRChy3wzWIZ9WbB7FWow==}
-    engines: {node: '>=6'}
-    dependencies:
-      json5: 2.2.1
-      minimist: 1.2.6
-      strip-bom: 3.0.0
-    dev: true
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
