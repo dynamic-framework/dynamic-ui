@@ -10,6 +10,7 @@ import { defineCustomElement as defineMApp } from '@modyolabs/design-system/comp
 import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyolabs/design-system/components/m-card.js';
+import { defineCustomElement as defineMCounter } from '@modyolabs/design-system/components/m-counter.js';
 import { defineCustomElement as defineMCoupon } from '@modyolabs/design-system/components/m-coupon.js';
 import { defineCustomElement as defineMCurrency } from '@modyolabs/design-system/components/m-currency.js';
 import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
@@ -36,6 +37,7 @@ export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
 export const MCard = /*@__PURE__*/createReactComponent<JSX.MCard, HTMLMCardElement>('m-card', undefined, undefined, defineMCard);
+export const MCounter = /*@__PURE__*/createReactComponent<JSX.MCounter, HTMLMCounterElement>('m-counter', undefined, undefined, defineMCounter);
 export const MCoupon = /*@__PURE__*/createReactComponent<JSX.MCoupon, HTMLMCouponElement>('m-coupon', undefined, undefined, defineMCoupon);
 export const MCurrency = /*@__PURE__*/createReactComponent<JSX.MCurrency, HTMLMCurrencyElement>('m-currency', undefined, undefined, defineMCurrency);
 export const MFormCheck = /*@__PURE__*/createReactComponent<JSX.MFormCheck, HTMLMFormCheckElement>('m-form-check', undefined, undefined, defineMFormCheck);
