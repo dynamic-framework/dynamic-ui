@@ -66,9 +66,8 @@ export default function useSchedule(onAccept: (accepted: boolean) => void) {
     }));
   }
 
-  function handleOccurencies(action: boolean) {
-    const newRepeat = occurencies + (action ? 1 : -1);
-    setOccurencies(newRepeat < 1 ? 1 : newRepeat);
+  function handleOccurencies(value: number) {
+    setOccurencies(value);
   }
 
   const [date, setDate] = useState(new Date());
