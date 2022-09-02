@@ -7,6 +7,7 @@ import {
   MSegmentControlItem,
   MFormCheck,
   MSelect,
+  MCounter,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 import useSchedule from '../hooks/useSchedule';
@@ -40,12 +41,17 @@ export default function ModalSchedule(
     scheduleDate,
   } = useSchedule(onAccept);
 
+  const counterHandler = ({ detail }: CustomEvent) => {
+    handleOccurencies(detail as number);
+  };
+
   return (
     <MModal
       mId="modalSchedulePayment"
       centered
       static
       closeText="Cancel"
+      scrollable
     >
       <div slot="header" className="w-100 mt-3 mb-0 mx-2">
         <h5 className="fw-semibold text-start m-0">
@@ -180,23 +186,7 @@ export default function ModalSchedule(
                 <input type="date" name="dateEnd" id="dateEndId" className="small w-100" />
                 )}
                 { endRepeatType === 'occurencies' && (
-                <div className="d-flex justify-content-center align-items-center gap-2 border border-info rounded-1 w-100 px-3 py-2">
-                  <MButton
-                    iconLeft="dash"
-                    theme="tertiary"
-                    variant="outline"
-                    onMClick={() => handleOccurencies(false)}
-                  />
-                  <span className="body-3 fw-semibold text-info">
-                    {occurencies}
-                  </span>
-                  <MButton
-                    iconLeft="plus"
-                    theme="tertiary"
-                    variant="outline"
-                    onMClick={() => handleOccurencies(true)}
-                  />
-                </div>
+                  <MCounter className="w-100" mId="counterOccurrences" min={1} max={100} value={occurencies} onMClick={counterHandler} onMInput={counterHandler} />
                 )}
               </div>
             </>
