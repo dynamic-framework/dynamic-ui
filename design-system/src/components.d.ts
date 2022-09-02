@@ -97,23 +97,23 @@ export namespace Components {
     }
     interface MCounter {
         /**
-          * Change the layout direction to put the label on top or left of input
+          * Is disabled counter
          */
         "disabled": boolean;
         /**
-          * Id of the input
+          * Hint text
          */
         "hint"?: string;
         /**
-          * Id of the input
+          * Right icon of the hint text
          */
         "hintIconEnd"?: string;
         /**
-          * Id of the input
+          * Left icon of the hint text
          */
         "hintIconStart"?: string;
         /**
-          * Id of the input
+          * Label of the input
          */
         "label"?: string;
         /**
@@ -125,23 +125,23 @@ export namespace Components {
          */
         "mId": string;
         /**
-          * Id of the input
+          * Maximum value for the input
          */
         "max": number;
         /**
-          * Id of the input
+          * Minimum value for the input
          */
         "min": number;
         /**
-          * Id of the input
+          * Theme of the counter
          */
         "theme": string;
         /**
-          * Id of the input
+          * Value of the input
          */
         "value": number;
         /**
-          * Id of the input
+          * Variant of the counter
          */
         "variant": 'default' | 'prime';
     }
@@ -1149,23 +1149,23 @@ declare namespace LocalJSX {
     }
     interface MCounter {
         /**
-          * Change the layout direction to put the label on top or left of input
+          * Is disabled counter
          */
         "disabled"?: boolean;
         /**
-          * Id of the input
+          * Hint text
          */
         "hint"?: string;
         /**
-          * Id of the input
+          * Right icon of the hint text
          */
         "hintIconEnd"?: string;
         /**
-          * Id of the input
+          * Left icon of the hint text
          */
         "hintIconStart"?: string;
         /**
-          * Id of the input
+          * Label of the input
          */
         "label"?: string;
         /**
@@ -1177,11 +1177,11 @@ declare namespace LocalJSX {
          */
         "mId": string;
         /**
-          * Id of the input
+          * Maximum value for the input
          */
         "max": number;
         /**
-          * Id of the input
+          * Minimum value for the input
          */
         "min": number;
         /**
@@ -1193,15 +1193,15 @@ declare namespace LocalJSX {
          */
         "onMInput"?: (event: MCounterCustomEvent<any>) => void;
         /**
-          * Id of the input
+          * Theme of the counter
          */
         "theme"?: string;
         /**
-          * Id of the input
+          * Value of the input
          */
         "value": number;
         /**
-          * Id of the input
+          * Variant of the counter
          */
         "variant"?: 'default' | 'prime';
     }

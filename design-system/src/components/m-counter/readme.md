@@ -9,18 +9,18 @@
 
 | Property             | Attribute          | Description                                                          | Type                         | Default      |
 | -------------------- | ------------------ | -------------------------------------------------------------------- | ---------------------------- | ------------ |
-| `disabled`           | `disabled`         | Change the layout direction to put the label on top or left of input | `boolean`                    | `false`      |
-| `hint`               | `hint`             | Id of the input                                                      | `string \| undefined`        | `undefined`  |
-| `hintIconEnd`        | `hint-icon-end`    | Id of the input                                                      | `string \| undefined`        | `undefined`  |
-| `hintIconStart`      | `hint-icon-start`  | Id of the input                                                      | `string \| undefined`        | `undefined`  |
-| `label`              | `label`            | Id of the input                                                      | `string \| undefined`        | `undefined`  |
+| `disabled`           | `disabled`         | Is disabled counter                                                  | `boolean`                    | `false`      |
+| `hint`               | `hint`             | Hint text                                                            | `string \| undefined`        | `undefined`  |
+| `hintIconEnd`        | `hint-icon-end`    | Right icon of the hint text                                          | `string \| undefined`        | `undefined`  |
+| `hintIconStart`      | `hint-icon-start`  | Left icon of the hint text                                           | `string \| undefined`        | `undefined`  |
+| `label`              | `label`            | Label of the input                                                   | `string \| undefined`        | `undefined`  |
 | `layoutDirection`    | `layout-direction` | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"` | `'vertical'` |
 | `mId` _(required)_   | `m-id`             | Id of the input                                                      | `string`                     | `undefined`  |
-| `max` _(required)_   | `max`              | Id of the input                                                      | `number`                     | `undefined`  |
-| `min` _(required)_   | `min`              | Id of the input                                                      | `number`                     | `undefined`  |
-| `theme`              | `theme`            | Id of the input                                                      | `string`                     | `'info'`     |
-| `value` _(required)_ | `value`            | Id of the input                                                      | `number`                     | `undefined`  |
-| `variant`            | `variant`          | Id of the input                                                      | `"default" \| "prime"`       | `'default'`  |
+| `max` _(required)_   | `max`              | Maximum value for the input                                          | `number`                     | `undefined`  |
+| `min` _(required)_   | `min`              | Minimum value for the input                                          | `number`                     | `undefined`  |
+| `theme`              | `theme`            | Theme of the counter                                                 | `string`                     | `'info'`     |
+| `value` _(required)_ | `value`            | Value of the input                                                   | `number`                     | `undefined`  |
+| `variant`            | `variant`          | Variant of the counter                                               | `"default" \| "prime"`       | `'default'`  |
 
 
 ## Events

@@ -24,47 +24,47 @@ export class MCounter {
   @Prop() mId!: string;
 
   /**
-   * Id of the input
+   * Label of the input
    */
   @Prop() label?: string;
 
   /**
-  * Id of the input
+  * Hint text
   */
   @Prop() hint?: string;
 
   /**
-   * Id of the input
+   * Left icon of the hint text
    */
   @Prop() hintIconStart?: string;
 
   /**
-  * Id of the input
+  * Right icon of the hint text
   */
   @Prop() hintIconEnd?: string;
 
   /**
-   * Id of the input
+   * Theme of the counter
    */
   @Prop() theme = 'info';
 
   /**
-   * Id of the input
+   * Minimum value for the input
    */
   @Prop() min!: number;
 
   /**
-   * Id of the input
+   * Maximum value for the input
    */
   @Prop() max!: number;
 
   /**
-   * Id of the input
+   * Value of the input
    */
   @Prop() value!: number;
 
   /**
-   * Id of the input
+   * Variant of the counter
    */
   @Prop() variant: 'default' | 'prime' = 'default';
 
@@ -74,7 +74,7 @@ export class MCounter {
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
 
   /**
-   * Change the layout direction to put the label on top or left of input
+   * Is disabled counter
    */
   @Prop() disabled = false;
 
@@ -89,7 +89,7 @@ export class MCounter {
   @Event({ eventName: 'mClick' }) mClick?: EventEmitter;
 
   /**
-   * Id of the input
+   * State to show the icon in valid states
    */
   @State() state?: string;
 
