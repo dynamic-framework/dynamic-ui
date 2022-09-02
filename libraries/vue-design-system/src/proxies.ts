@@ -46,6 +46,24 @@ export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefine
 ]);
 
 
+export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter', undefined, [
+  'mId',
+  'label',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'theme',
+  'min',
+  'max',
+  'value',
+  'variant',
+  'layoutDirection',
+  'disabled',
+  'mInput',
+  'mClick'
+]);
+
+
 export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', undefined, [
   'mId',
   'label',
@@ -112,6 +130,15 @@ export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-for
   'isChecked',
   'isDisabled',
   'mChange'
+]);
+
+
+export const MHint = /*@__PURE__*/ defineContainer<JSX.MHint>('m-hint', undefined, [
+  'iconStart',
+  'iconEnd',
+  'text',
+  'theme',
+  'iconSize'
 ]);
 
 

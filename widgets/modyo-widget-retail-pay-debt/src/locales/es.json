@@ -30,7 +30,8 @@
     "yesRecurrentLabel": "Estás programando un pago {{{ frequency }}}"
   },
   "button": {
-    "pay": "Pagar {{{ amount }}}",
+    "payAmount": "Pagar {{{ amount }}}",
+    "pay": "Pagar",
     "schedule": "Programar",
     "cancel": "Cancelar",
     "back": "Volver",
@@ -39,6 +40,7 @@
   },
   "alert": {
     "schedule": "Estás programando el pago de tu tarjeta de crédito por valor de  {{{ amount }}} el día {{{ date }}}",
+    "scheduleAndRecurring": "Estás programando el pago de tu tarjeta de crédito por valor de  {{{ amount }}} el día {{{ date }}} {{{ repeatType }}}",
     "notPay": "No tienes pagos pendientes por realizar",
     "wrong": "Oops! Algo salió mal"
   },
@@ -70,9 +72,9 @@
       "monthly": "Mensualmente",
       "custom": "Personalizar",
       "ends": "Finalizar",
-      "never": "Nunca",
+      "oneYear": "1 Año",
       "date": " Fecha",
-      "repeats": "Frecuencia"
+      "occurrences": "Ocurrencias"
     }
   },
   "result": {
