@@ -8,6 +8,7 @@ import {
   MFormCheck,
   MSelect,
 } from '@modyolabs/react-design-system';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useSchedule from '../hooks/useSchedule';
 
@@ -40,6 +41,7 @@ export default function ModalSchedule(
     scheduleDate,
   } = useSchedule(onAccept);
 
+  const [date, setDate] = useState(new Date());
   return (
     <MModal
       mId="modalSchedulePayment"
@@ -71,7 +73,7 @@ export default function ModalSchedule(
             onMChange={() => setToggleAutoRepeat((state) => !state)}
           />
         </div>
-        { toggleAutoRepeat && (
+        {toggleAutoRepeat && (
           <>
             <div className="mb-3 w-100">
               <MSegmentControl class="scroll-h">
@@ -105,7 +107,7 @@ export default function ModalSchedule(
               </MSegmentControl>
             </div>
             <div className="d-flex w-100 mb-4">
-              { autoRepeatType === 'weekly' && (
+              {autoRepeatType === 'weekly' && (
                 <div className="d-flex justify-content-between w-100 m-2">
                   {Object.values(weekDays).map((day) => (
                     <MFormCheck
@@ -121,7 +123,7 @@ export default function ModalSchedule(
                   ))}
                 </div>
               )}
-              { autoRepeatType === 'monthly' && (
+              {autoRepeatType === 'monthly' && (
                 <MSelect
                   className="w-100"
                   mId="selectMonthlyRecurring"
@@ -142,7 +144,7 @@ export default function ModalSchedule(
                 onMChange={() => setToggleEndRepeat((state) => !state)}
               />
             </div>
-            { toggleEndRepeat && (
+            {toggleEndRepeat && (
             <>
               <div className="mb-3 w-100">
                 <MSegmentControl class="scroll-h">
@@ -175,28 +177,28 @@ export default function ModalSchedule(
                   />
                 </MSegmentControl>
               </div>
-              <div className="d-flex w-100">
+              <div className="d-flex w-100 justify-content-center">
                 {endRepeatType === 'date' && (
-                <input type="date" name="dateEnd" id="dateEndId" className="small w-100" />
+                  <MCalendar date={date} setDate={setDate} inline={false} />
                 )}
-                { endRepeatType === 'occurencies' && (
-                <div className="d-flex justify-content-center align-items-center gap-2 border border-info rounded-1 w-100 px-3 py-2">
-                  <MButton
-                    iconLeft="dash"
-                    theme="tertiary"
-                    variant="outline"
-                    onMClick={() => handleOccurencies(false)}
-                  />
-                  <span className="body-3 fw-semibold text-info">
-                    {occurencies}
-                  </span>
-                  <MButton
-                    iconLeft="plus"
-                    theme="tertiary"
-                    variant="outline"
-                    onMClick={() => handleOccurencies(true)}
-                  />
-                </div>
+                {endRepeatType === 'occurencies' && (
+                  <div className="d-flex justify-content-center align-items-center gap-2 border border-info rounded-1 w-100 px-3 py-2">
+                    <MButton
+                      iconLeft="dash"
+                      theme="tertiary"
+                      variant="outline"
+                      onMClick={() => handleOccurencies(false)}
+                    />
+                    <span className="body-3 fw-semibold text-info">
+                      {occurencies}
+                    </span>
+                    <MButton
+                      iconLeft="plus"
+                      theme="tertiary"
+                      variant="outline"
+                      onMClick={() => handleOccurencies(true)}
+                    />
+                  </div>
                 )}
               </div>
             </>
