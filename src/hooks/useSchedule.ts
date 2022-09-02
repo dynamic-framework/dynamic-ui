@@ -51,7 +51,7 @@ export default function useSchedule(onAccept: (accepted: boolean) => void) {
   const [endRepeatType, setEndRepeatType] = useState('oneYear');
 
   const [weekDays, setWeekDays] = useState<Record<string, Day>>(weekDaysInitial);
-  const [occurencies, setOccurencies] = useState(1);
+  const [occurrences, setOccurrences] = useState(1);
 
   const handleAutoRepeatType = ({ detail }: CustomEvent) => setAutoRepeatType(detail as string);
   const handleEndRepeatType = ({ detail }: CustomEvent) => setEndRepeatType(detail as string);
@@ -66,8 +66,8 @@ export default function useSchedule(onAccept: (accepted: boolean) => void) {
     }));
   }
 
-  function handleOccurencies(value: number) {
-    setOccurencies(value);
+  function handleOccurrences(value: number) {
+    setOccurrences(value);
   }
 
   const [date, setDate] = useState(new Date());
@@ -113,8 +113,8 @@ export default function useSchedule(onAccept: (accepted: boolean) => void) {
     setToggleEndRepeat,
     endRepeatType,
     handleEndRepeatType,
-    occurencies,
-    handleOccurencies,
+    occurrences,
+    handleOccurrences,
     scheduleDate,
   };
 }
