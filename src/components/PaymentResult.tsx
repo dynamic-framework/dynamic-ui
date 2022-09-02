@@ -80,11 +80,11 @@ export default function PaymentResult() {
                 />
                 <MListItem
                   text={t('result.transactionId')}
-                  value="99484733"
+                  value={result.transactionID}
                 />
                 <MListItem
                   text={t('result.timeDate')}
-                  value="01/03/22 , 11:00 AM"
+                  value={result.date}
                 />
               </div>
               <div

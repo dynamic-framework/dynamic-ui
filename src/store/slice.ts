@@ -14,6 +14,13 @@ type UserOptions = {
   hasExternalPayment: boolean;
   canPayOtherAmount: boolean;
   canPayMultipleCurrencies: boolean;
+  canPayWithoutDebt: boolean;
+};
+
+export type Day = {
+  id: string;
+  name: string;
+  checked: boolean;
 };
 
 type Card = {
@@ -22,10 +29,10 @@ type Card = {
   mask: string;
   totalPayment: number;
   minimumPayment: number;
-  date: string;
+  date: Date;
 };
 
-type TransactionResult = {
+export type TransactionResult = {
   status: number;
   date?: string;
   transactionID?: string;
@@ -42,7 +49,8 @@ type WidgetState = {
   amountUsed?: number | undefined;
   isPaid?: boolean;
   schedule: Schedule;
-  recurring: Recurring;
+  startRepeat: StartRepeat;
+  endRepeat: EndRepeat;
   selectedCurrency: string;
   result?: TransactionResult;
   user: UserOptions;
@@ -54,16 +62,16 @@ export type Schedule = {
   dateShow: string | null;
 };
 
-export type Recurring = {
-  isRecurring: boolean;
-  start: {
-    frequency: string | null;
-    option: unknown;
-  },
-  end: {
-    frequency: string | null;
-    option: unknown;
-  },
+export type StartRepeat = {
+  enabled: boolean;
+  frequency: string | null;
+  option: unknown;
+};
+
+export type EndRepeat = {
+  enabled: boolean;
+  frequency: string | null;
+  option: unknown;
 };
 
 const initialState = {
@@ -71,15 +79,16 @@ const initialState = {
     id: 1,
     franchise: 'Visa',
     mask: '*** 456',
-    totalPayment: 3250,
-    minimumPayment: 240,
-    date: new Date().toISOString().split('T')[0],
+    totalPayment: 2000,
+    minimumPayment: 140,
+    date: new Date(),
   },
   user: {
     hasPaymentAlternatives: false,
     hasExternalPayment: false,
     canPayOtherAmount: false,
     canPayMultipleCurrencies: false,
+    canPayWithoutDebt: false,
   },
   accounts: [],
   schedule: {
@@ -87,16 +96,15 @@ const initialState = {
     date: null,
     dateShow: null,
   },
-  recurring: {
-    isRecurring: false,
-    start: {
-      frequency: null,
-      option: null,
-    },
-    end: {
-      frequency: null,
-      option: null,
-    },
+  startRepeat: {
+    enabled: false,
+    frequency: null,
+    option: null,
+  },
+  endRepeat: {
+    enabled: false,
+    frequency: null,
+    option: null,
   },
   result: {
     status: 200,
@@ -127,8 +135,11 @@ const slice = createSlice({
     setSchedule(state, action: PayloadAction<Schedule>) {
       state.schedule = action.payload;
     },
-    setRecurring(state, action: PayloadAction<Recurring>) {
-      state.recurring = action.payload;
+    setAutoRepeat(state, action: PayloadAction<StartRepeat>) {
+      state.startRepeat = action.payload;
+    },
+    setEndRepeat(state, action: PayloadAction<EndRepeat>) {
+      state.endRepeat = action.payload;
     },
     setResult(state, action: PayloadAction<TransactionResult>) {
       state.result = action.payload;
@@ -144,8 +155,10 @@ export const {
   setAccountSelected,
   setAmountUsed,
   setIsPaid,
+  setResult,
   setSchedule,
-  setRecurring,
+  setAutoRepeat,
+  setEndRepeat,
   setUserPayment,
 } = slice.actions;
 export default slice.reducer;

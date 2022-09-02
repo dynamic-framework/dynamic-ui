@@ -34,7 +34,7 @@ export const getAccountSelected = createDraftSafeSelector(
 
 export const getAmountUsed = createDraftSafeSelector(
   getState,
-  (widget) => widget.amountUsed,
+  (widget) => widget.amountUsed ?? 0,
 );
 
 export const getIsPaid = createDraftSafeSelector(
@@ -47,9 +47,15 @@ export const getSchedule = createDraftSafeSelector(
   (widget) => widget.schedule,
 );
 
-export const getRecurring = createDraftSafeSelector(
+export const getAutoRepeat = createDraftSafeSelector(
   getState,
-  (widget) => widget.recurring,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  (widget) => widget.startRepeat,
+);
+
+export const getEndRepeat = createDraftSafeSelector(
+  getState,
+  (widget) => widget.endRepeat,
 );
 
 export const getResult = createDraftSafeSelector(

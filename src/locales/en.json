@@ -30,7 +30,8 @@
     "yesRecurrentLabel": "This payment will repeat {{{ frequency }}}"
   },
   "button": {
-    "pay": "Pay {{{ amount }}}",
+    "payAmount": "Pay {{{ amount }}}",
+    "pay": "Pay",
     "schedule": "Schedule",
     "cancel": "Cancel",
     "back": "Back",
@@ -39,6 +40,7 @@
   },
   "alert": {
     "schedule": "You are scheduling to pay the {{{ amount }}} amount on {{{ date }}}",
+    "scheduleAndRecurring": "You are scheduling to pay the {{{ amount }}} amount on {{{ date }}} {{{ repeatType }}}",
     "notPay": "You have nothing to pay yet",
     "wrong": "Oops! Something Went Wrong"
   },
@@ -70,9 +72,9 @@
       "monthly": "Monthly",
       "custom": "Custom",
       "ends": "Ends",
-      "never": "Never",
+      "oneYear": "1 Year",
       "date": "Date",
-      "repeats": "Repeats"
+      "occurrences": "Occurrences"
     }
   },
   "result": {
