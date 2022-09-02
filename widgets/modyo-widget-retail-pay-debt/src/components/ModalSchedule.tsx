@@ -36,13 +36,13 @@ export default function ModalSchedule(
     setToggleEndRepeat,
     endRepeatType,
     handleEndRepeatType,
-    occurencies,
-    handleOccurencies,
+    occurrences,
+    handleOccurrences,
     scheduleDate,
   } = useSchedule(onAccept);
 
   const counterHandler = ({ detail }: CustomEvent) => {
-    handleOccurencies(detail as number);
+    handleOccurrences(detail as number);
   };
 
   return (
@@ -171,12 +171,12 @@ export default function ModalSchedule(
                     onMChange={handleEndRepeatType}
                   />
                   <MSegmentControlItem
-                    checked={endRepeatType === 'occurencies'}
+                    checked={endRepeatType === 'occurrences'}
                     class="flex-grow-1"
                     name="endTime"
-                    mId="occurencies"
-                    value="occurencies"
-                    label={t('modal.recurring.occurencies')}
+                    mId="occurrences"
+                    value="occurrences"
+                    label={t('modal.recurring.occurrences')}
                     onMChange={handleEndRepeatType}
                   />
                 </MSegmentControl>
@@ -185,8 +185,8 @@ export default function ModalSchedule(
                 {endRepeatType === 'date' && (
                 <input type="date" name="dateEnd" id="dateEndId" className="small w-100" />
                 )}
-                { endRepeatType === 'occurencies' && (
-                  <MCounter className="w-100" mId="counterOccurrences" min={1} max={100} value={occurencies} onMClick={counterHandler} onMInput={counterHandler} />
+                { endRepeatType === 'occurrences' && (
+                  <MCounter className="w-100" mId="counterOccurrences" min={1} max={100} value={occurrences} onMClick={counterHandler} onMInput={counterHandler} />
                 )}
               </div>
             </>
