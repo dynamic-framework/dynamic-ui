@@ -7,6 +7,7 @@ import {
   MSegmentControlItem,
   MFormCheck,
   MSelect,
+  MCounter,
 } from '@modyolabs/react-design-system';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,18 +37,23 @@ export default function ModalSchedule(
     setToggleEndRepeat,
     endRepeatType,
     handleEndRepeatType,
-    occurencies,
-    handleOccurencies,
+    occurrences,
+    handleOccurrences,
     scheduleDate,
   } = useSchedule(onAccept);
 
   const [date, setDate] = useState(new Date());
+  const counterHandler = ({ detail }: CustomEvent) => {
+    handleOccurrences(detail as number);
+  };
+
   return (
     <MModal
       mId="modalSchedulePayment"
       centered
       static
       closeText="Cancel"
+      scrollable
     >
       <div slot="header" className="w-100 mt-3 mb-0 mx-2">
         <h5 className="fw-semibold text-start m-0">
@@ -167,12 +173,12 @@ export default function ModalSchedule(
                     onMChange={handleEndRepeatType}
                   />
                   <MSegmentControlItem
-                    checked={endRepeatType === 'occurencies'}
+                    checked={endRepeatType === 'occurrences'}
                     class="flex-grow-1"
                     name="endTime"
-                    mId="occurencies"
-                    value="occurencies"
-                    label={t('modal.recurring.occurencies')}
+                    mId="occurrences"
+                    value="occurrences"
+                    label={t('modal.recurring.occurrences')}
                     onMChange={handleEndRepeatType}
                   />
                 </MSegmentControl>
@@ -181,24 +187,8 @@ export default function ModalSchedule(
                 {endRepeatType === 'date' && (
                   <MCalendar date={date} setDate={setDate} inline={false} />
                 )}
-                {endRepeatType === 'occurencies' && (
-                  <div className="d-flex justify-content-center align-items-center gap-2 border border-info rounded-1 w-100 px-3 py-2">
-                    <MButton
-                      iconLeft="dash"
-                      theme="tertiary"
-                      variant="outline"
-                      onMClick={() => handleOccurencies(false)}
-                    />
-                    <span className="body-3 fw-semibold text-info">
-                      {occurencies}
-                    </span>
-                    <MButton
-                      iconLeft="plus"
-                      theme="tertiary"
-                      variant="outline"
-                      onMClick={() => handleOccurencies(true)}
-                    />
-                  </div>
+                { endRepeatType === 'occurrences' && (
+                  <MCounter className="w-100" mId="counterOccurrences" min={1} max={100} value={occurrences} onMClick={counterHandler} onMInput={counterHandler} />
                 )}
               </div>
             </>

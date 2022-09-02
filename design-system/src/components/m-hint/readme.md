@@ -20,6 +20,7 @@
 
 ### Used by
 
+ - [m-counter](../m-counter)
  - [m-currency](../m-currency)
 
 ### Depends on
@@ -30,6 +31,7 @@
 ```mermaid
 graph TD;
   m-hint --> m-icon
+  m-counter --> m-hint
   m-currency --> m-hint
   style m-hint fill:#f9f,stroke:#333,stroke-width:4px
 ```

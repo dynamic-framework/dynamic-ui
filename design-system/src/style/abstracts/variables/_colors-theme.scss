@@ -20,6 +20,13 @@ $theme-colors: (
   "dark": $dark
 ) !default;
 
+$state-colors: (
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+) !default;
+
 $accessibility: #00b3cc !default;
 
 // TODO: Use hover-colors in components with :hover

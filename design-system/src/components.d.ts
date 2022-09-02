@@ -95,6 +95,56 @@ export namespace Components {
          */
         "theme": string;
     }
+    interface MCounter {
+        /**
+          * Is disabled counter
+         */
+        "disabled": boolean;
+        /**
+          * Hint text
+         */
+        "hint"?: string;
+        /**
+          * Right icon of the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Left icon of the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Label of the input
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * Id of the input
+         */
+        "mId": string;
+        /**
+          * Maximum value for the input
+         */
+        "max": number;
+        /**
+          * Minimum value for the input
+         */
+        "min": number;
+        /**
+          * Theme of the counter
+         */
+        "theme": string;
+        /**
+          * Value of the input
+         */
+        "value": number;
+        /**
+          * Variant of the counter
+         */
+        "variant": 'default' | 'prime';
+    }
     interface MCoupon {
         /**
           * Has a select input
@@ -784,6 +834,10 @@ export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
 }
+export interface MCounterCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMCounterElement;
+}
 export interface MCouponCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCouponElement;
@@ -854,6 +908,12 @@ declare global {
     var HTMLMCardElement: {
         prototype: HTMLMCardElement;
         new (): HTMLMCardElement;
+    };
+    interface HTMLMCounterElement extends Components.MCounter, HTMLStencilElement {
+    }
+    var HTMLMCounterElement: {
+        prototype: HTMLMCounterElement;
+        new (): HTMLMCounterElement;
     };
     interface HTMLMCouponElement extends Components.MCoupon, HTMLStencilElement {
     }
@@ -981,6 +1041,7 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
+        "m-counter": HTMLMCounterElement;
         "m-coupon": HTMLMCouponElement;
         "m-currency": HTMLMCurrencyElement;
         "m-form-check": HTMLMFormCheckElement;
@@ -1085,6 +1146,64 @@ declare namespace LocalJSX {
           * The theme to use
          */
         "theme"?: string;
+    }
+    interface MCounter {
+        /**
+          * Is disabled counter
+         */
+        "disabled"?: boolean;
+        /**
+          * Hint text
+         */
+        "hint"?: string;
+        /**
+          * Right icon of the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Left icon of the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Label of the input
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * Id of the input
+         */
+        "mId": string;
+        /**
+          * Maximum value for the input
+         */
+        "max": number;
+        /**
+          * Minimum value for the input
+         */
+        "min": number;
+        /**
+          * Event for button pressed
+         */
+        "onMClick"?: (event: MCounterCustomEvent<any>) => void;
+        /**
+          * Event for input change
+         */
+        "onMInput"?: (event: MCounterCustomEvent<any>) => void;
+        /**
+          * Theme of the counter
+         */
+        "theme"?: string;
+        /**
+          * Value of the input
+         */
+        "value": number;
+        /**
+          * Variant of the counter
+         */
+        "variant"?: 'default' | 'prime';
     }
     interface MCoupon {
         /**
@@ -1820,6 +1939,7 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
+        "m-counter": MCounter;
         "m-coupon": MCoupon;
         "m-currency": MCurrency;
         "m-form-check": MFormCheck;
@@ -1851,6 +1971,7 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
+            "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;
             "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
             "m-currency": LocalJSX.MCurrency & JSXBase.HTMLAttributes<HTMLMCurrencyElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;

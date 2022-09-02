@@ -10,6 +10,7 @@ import { defineCustomElement as defineMApp } from '@modyolabs/design-system/comp
 import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyolabs/design-system/components/m-card.js';
+import { defineCustomElement as defineMCounter } from '@modyolabs/design-system/components/m-counter.js';
 import { defineCustomElement as defineMCoupon } from '@modyolabs/design-system/components/m-coupon.js';
 import { defineCustomElement as defineMCurrency } from '@modyolabs/design-system/components/m-currency.js';
 import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
@@ -138,6 +139,38 @@ export class MCard {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MCounter extends Components.MCounter {
+  /**
+   * Event for input change 
+   */
+  mInput: EventEmitter<CustomEvent<any>>;
+  /**
+   * Event for button pressed 
+   */
+  mClick: EventEmitter<CustomEvent<any>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMCounter,
+  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'label', 'layoutDirection', 'mId', 'max', 'min', 'theme', 'value', 'variant']
+})
+@Component({
+  selector: 'm-counter',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'label', 'layoutDirection', 'mId', 'max', 'min', 'theme', 'value', 'variant']
+})
+export class MCounter {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mInput', 'mClick']);
   }
 }
 
