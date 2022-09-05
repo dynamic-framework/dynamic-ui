@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import '@modyolabs/design-system/dist/design-system/design-system.css';
+import { LiquidContextProvider } from '@modyolabs/react-design-system';
 
 import './styles/base.scss';
 import './config/liquidConfig';
@@ -15,9 +16,11 @@ import store from './store/store';
 const root = ReactDOM.createRoot(document.getElementById('root') as Element);
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <LiquidContextProvider>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </LiquidContextProvider>
   </React.StrictMode>,
 );
 
