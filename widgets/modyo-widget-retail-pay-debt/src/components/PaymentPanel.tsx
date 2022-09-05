@@ -6,10 +6,10 @@ import {
   MButton,
   MFormSwitch,
   MShortcutToggle,
-  MSkeleton,
   MAlert,
   MCurrency,
   MHint,
+  useFormatCurrency,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -22,18 +22,18 @@ import {
   getAccountSelected,
   getAutoRepeat,
   getCardToPay,
+  getDebt,
   getSchedule,
   getUser,
 } from '../store/selectors';
-import useFormatCurrency from '../hooks/useFormatCurrency';
 
 export default function PaymentPanel() {
   const { t } = useTranslation();
   const accountSelected = useAppSelector(getAccountSelected);
-  const cardToPay = useAppSelector(getCardToPay);
   const schedule = useAppSelector(getSchedule);
   const recurringStart = useAppSelector(getAutoRepeat);
   const user = useAppSelector(getUser);
+  const debt = useAppSelector(getDebt);
 
   const {
     amountAvailable,
@@ -49,8 +49,8 @@ export default function PaymentPanel() {
       totalPayment,
     ],
   } = useFormatCurrency(
-    cardToPay.minimumPayment,
-    cardToPay.totalPayment,
+    debt.minimumPayment,
+    debt.totalPayment,
   );
 
   const setSelectedOption = ({ detail }: CustomEvent, value: number) => {
@@ -79,7 +79,7 @@ export default function PaymentPanel() {
   }, [amount, schedule, isScheduled, recurringStart, t]);
 
   const hintCurrency = useMemo(() => {
-    if (amount && amount > cardToPay.totalPayment) {
+    if (amount && amount > debt.totalPayment) {
       return {
         message: 'You are paying more than the billed amount',
         icon: 'emoji-smile',
@@ -101,7 +101,7 @@ export default function PaymentPanel() {
       message: '',
       icon: '',
     };
-  }, [accountSelected, amount, cardToPay]);
+  }, [accountSelected, amount, debt]);
 
   if (!accountSelected) {
     return (null);
@@ -115,26 +115,26 @@ export default function PaymentPanel() {
           <MShortcutToggle
             class="d-block"
             key="1"
-            {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
-            {...cardToPay.minimumPayment === amount && { isChecked: true }}
+            {...debt.minimumPayment === 0 && { state: 'disabled' }}
+            {...debt.minimumPayment === amount && { isChecked: true }}
             mId="minimumOption"
             name="paymentOption"
             label={t('shortCutToggle.minimum')}
             text={minimumPayment}
             value="minimumOption"
-            onMChange={(e: CustomEvent) => setSelectedOption(e, cardToPay.minimumPayment)}
+            onMChange={(e: CustomEvent) => setSelectedOption(e, debt.minimumPayment)}
           />
           <MShortcutToggle
             class="d-block"
             key="2"
-            {...cardToPay.totalPayment === 0 && { state: 'disabled' }}
-            {...cardToPay.totalPayment === amount && { isChecked: true }}
+            {...debt.totalPayment === 0 && { state: 'disabled' }}
+            {...debt.totalPayment === amount && { isChecked: true }}
             mId="totalOption"
             name="paymentOption"
             label={t('shortCutToggle.total')}
             text={totalPayment}
             value="totalOption"
-            onMChange={(e: CustomEvent) => setSelectedOption(e, cardToPay.totalPayment)}
+            onMChange={(e: CustomEvent) => setSelectedOption(e, debt.totalPayment)}
           />
           {
             user.canPayOtherAmount && (
@@ -144,7 +144,7 @@ export default function PaymentPanel() {
                       shortcut !== 'otherAmount' ? 'd-block' : 'd-none'
                     }
                   key="3"
-                  {...cardToPay.totalPayment === 0 && { state: 'disabled' }}
+                  {...debt.totalPayment === 0 && { state: 'disabled' }}
                   mId="otherAmountOption"
                   name="paymentOption"
                   label={t('shortCutToggle.other')}
@@ -162,7 +162,7 @@ export default function PaymentPanel() {
                   iconLabel="currency-dollar"
                   hint={hintCurrency.message}
                   hintIconStart={hintCurrency.icon}
-                  minValue={cardToPay.minimumPayment}
+                  minValue={debt.minimumPayment}
                   maxValue={accountSelected?.value}
                   onMChange={({ detail: { amount: value } }) => setAmount(value as number)}
                   value={amount}
@@ -171,8 +171,8 @@ export default function PaymentPanel() {
             )
           }
           {
-            ((shortcut === 'totalOption' && accountSelected?.value < cardToPay.totalPayment)
-            || (shortcut === 'minimumOption' && accountSelected?.value < cardToPay.minimumPayment)) && (
+            ((shortcut === 'totalOption' && accountSelected?.value < debt.totalPayment)
+            || (shortcut === 'minimumOption' && accountSelected?.value < debt.minimumPayment)) && (
               <MHint
                 text="You don’t have enough funds to pay this amount"
                 iconStart="info-circle"
@@ -189,8 +189,8 @@ export default function PaymentPanel() {
                 name="paymentOption"
                 label={t('shortCutToggle.paymentAlternatives')}
                 text="..."
-                {...cardToPay.minimumPayment === 0 && { state: 'disabled' }}
-                {...cardToPay.minimumPayment > 0 && {
+                {...debt.minimumPayment === 0 && { state: 'disabled' }}
+                {...debt.minimumPayment > 0 && {
                   'data-bs-toggle': 'modal',
                   'data-bs-target': '#paymentAlt',
                 }}
@@ -209,7 +209,7 @@ export default function PaymentPanel() {
         >
           <div
             className="px-3 py-2 border rounded-1 mb-2"
-            {...(cardToPay.minimumPayment > 0 && amount && amountAvailable >= 0) && {
+            {...(debt.minimumPayment > 0 && amount && amountAvailable >= 0) && {
               'data-bs-toggle': 'modal',
               'data-bs-target': '#modalSchedulePayment',
             }}
@@ -249,8 +249,8 @@ export default function PaymentPanel() {
       >
         {/* Pointer events?  */}
         <MButton
-          {...(cardToPay.minimumPayment === 0 || !amount || amountAvailable < 0) && !user.canPayWithoutDebt && { state: 'disabled' }}
-          {...(cardToPay.minimumPayment > 0 && amount && amountAvailable >= 0) && {
+          {...(debt.minimumPayment === 0 || !amount || amountAvailable < 0) && !user.canPayWithoutDebt && { state: 'disabled' }}
+          {...(debt.minimumPayment > 0 && amount && amountAvailable >= 0) && {
             'data-bs-toggle': 'modal',
             'data-bs-target': '#modalConfirmPayment',
           }}

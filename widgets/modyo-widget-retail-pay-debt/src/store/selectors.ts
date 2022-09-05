@@ -9,22 +9,25 @@ export const getCardToPay = createDraftSafeSelector(
   (widget) => widget.cardToPay,
 );
 
+export const getAccounts = createDraftSafeSelector(
+  getState,
+  (widget) => widget.accounts,
+);
+
 export const getSelectedCurrency = createDraftSafeSelector(
   getState,
   (widget) => widget.selectedCurrency,
 );
 
-export const getAccounts = createDraftSafeSelector(
+export const getDebt = createDraftSafeSelector(
   getState,
   getSelectedCurrency,
-  (widget, selectedCurrency) => widget.accounts.filter(
-    (account) => account.currency === selectedCurrency,
-  ),
+  (widget, selectedCurrency) => widget.cardToPay.debt[selectedCurrency as keyof object],
 );
 
 export const getCurrencies = createDraftSafeSelector(
-  // TODO
-  () => false,
+  getState,
+  (widget) => Object.keys(widget.cardToPay.debt),
 );
 
 export const getAccountSelected = createDraftSafeSelector(

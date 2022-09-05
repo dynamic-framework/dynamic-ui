@@ -27,9 +27,8 @@ type Card = {
   id: number;
   franchise: string;
   mask: string;
-  totalPayment: number;
-  minimumPayment: number;
-  date: Date;
+  debt: Record<string, Debt>;
+  date: string;
 };
 
 export type TransactionResult = {
@@ -37,9 +36,14 @@ export type TransactionResult = {
   date?: string;
   transactionID?: string;
   error?: {
-    message: string,
-    solution: string,
+    message: string;
+    solution: string;
   }
+};
+
+type Debt = {
+  totalPayment: number;
+  minimumPayment: number;
 };
 
 type WidgetState = {
@@ -79,9 +83,17 @@ const initialState = {
     id: 1,
     franchise: 'Visa',
     mask: '*** 456',
-    totalPayment: 2000,
-    minimumPayment: 140,
-    date: new Date(),
+    debt: {
+      USD: {
+        totalPayment: 2000,
+        minimumPayment: 140,
+      },
+      EUR: {
+        totalPayment: 300,
+        minimumPayment: 20,
+      },
+    },
+    date: new Date().toISOString().split('T')[0],
   },
   user: {
     hasPaymentAlternatives: false,
@@ -147,6 +159,9 @@ const slice = createSlice({
     setUserPayment(state, action: PayloadAction<UserOptions>) {
       state.user = action.payload;
     },
+    setSelectedCurrency(state, action: PayloadAction<string>) {
+      state.selectedCurrency = action.payload;
+    },
   },
 });
 
@@ -160,5 +175,6 @@ export const {
   setAutoRepeat,
   setEndRepeat,
   setUserPayment,
+  setSelectedCurrency,
 } = slice.actions;
 export default slice.reducer;
