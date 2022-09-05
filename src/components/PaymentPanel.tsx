@@ -20,7 +20,6 @@ import { useAppSelector } from '../store/hooks';
 import {
   getAccountSelected,
   getAutoRepeat,
-  getCardToPay,
   getDebt,
   getSchedule,
   getUser,
