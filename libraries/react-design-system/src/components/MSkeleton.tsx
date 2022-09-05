@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import ContentLoader from 'react-content-loader';
 
 export type Props = PropsWithChildren<{
@@ -13,7 +13,7 @@ export default function MSkeleton({
   viewBox,
   backgroundColor = '#f3f3f3',
   foregroundColor = '#ecebeb',
-  children
+  children,
 }: Props) {
   return (
     <ContentLoader
@@ -22,7 +22,7 @@ export default function MSkeleton({
       backgroundColor={backgroundColor}
       foregroundColor={foregroundColor}
     >
-    { children }
-  </ContentLoader>
+      { children }
+    </ContentLoader>
   );
 }

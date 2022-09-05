@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export declare interface CalendarProps {
   date: Date;
-  setDate: Function;
+  setDate: (date: Date) => void;
   calendarContainer?: React.FC;
   inline?: boolean;
 }
@@ -13,13 +13,14 @@ export default function MCalendar({
   setDate,
   date,
   calendarContainer,
+  inline,
 }: CalendarProps) {
   return (
     <DatePicker
       selected={date}
-      onChange={(date:Date) => setDate(date)}
+      onChange={(value: Date) => setDate(value)}
       calendarContainer={calendarContainer}
-      inline={true}
+      inline={inline}
     />
   );
 }

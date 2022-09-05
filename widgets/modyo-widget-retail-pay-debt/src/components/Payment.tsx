@@ -5,6 +5,7 @@ import {
   MListItem,
   MSelect,
   MSkeleton,
+  useFormatCurrency,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -12,11 +13,14 @@ import PaymentPanel from './PaymentPanel';
 import ModalAccountSelector from './ModalAccountSelector';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
-  getAccounts, getAccountSelected, getCardToPay, getCurrencies, getUser,
+  getAccounts,
+  getAccountSelected,
+  getCardToPay,
+  getCurrencies,
+  getUser,
 } from '../store/selectors';
 import type { Account } from '../store/slice';
 import { setAccountSelected } from '../store/slice';
-import useFormatCurrency from '../hooks/useFormatCurrency';
 
 export default function Payment() {
   const { t } = useTranslation();
