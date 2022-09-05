@@ -18,6 +18,7 @@ importers:
       '@types/bootstrap': ^5.1.12
       '@types/dinero.js': ~1.9.0
       '@types/jest': ^27.0.3
+      '@types/luxon': ~3.0.1
       '@types/node': ^18.7.1
       '@typescript-eslint/eslint-plugin': ^4.23.0
       '@typescript-eslint/parser': ^4.23.0
@@ -34,6 +35,7 @@ importers:
       jest-cli: ^27.4.5
       lint-staged: ^12.4.1
       liquidjs: ^9.39.2
+      luxon: ~3.0.3
       puppeteer: ^14.0.0
       sass: ^1.51.0
       stylelint: ^14.8.2
@@ -45,6 +47,7 @@ importers:
       bootstrap: 5.2.0_@popperjs+core@2.11.6
       dinero.js: 1.9.1
       liquidjs: 9.42.0
+      luxon: 3.0.3
     devDependencies:
       '@stencil/angular-output-target': 0.4.0_@stencil+core@2.17.4
       '@stencil/eslint-plugin': 0.4.0_c8f234f4a5eb7afc548153f8540f1367
@@ -55,6 +58,7 @@ importers:
       '@types/bootstrap': 5.2.3
       '@types/dinero.js': 1.9.0
       '@types/jest': 27.5.2
+      '@types/luxon': 3.0.1
       '@types/node': 18.7.15
       '@typescript-eslint/eslint-plugin': 4.33.0_cc617358c89d3f38c52462f6d809db4c
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.4.4
@@ -4614,6 +4618,10 @@ packages:
 
   /@types/lodash/4.14.184:
     resolution: {integrity: sha512-RoZphVtHbxPZizt4IcILciSWiC6dcn+eZ8oX9IWEYfDMcocdd42f7NPI6fQj+6zI8y4E0L7gu2pcZKLGTRaV9Q==}
+    dev: true
+
+  /@types/luxon/3.0.1:
+    resolution: {integrity: sha512-/LAvk1cMOJt0ghzMFrZEvByUhsiEfeeT2IF53Le+Ki3A538yEL9pRZ7a6MuCxdrYK+YNqNIDmrKU/r2nnw04zQ==}
     dev: true
 
   /@types/mime/3.0.1:
@@ -12685,6 +12693,11 @@ packages:
     resolution: {integrity: sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ==}
     engines: {node: '>=12'}
     dev: true
+
+  /luxon/3.0.3:
+    resolution: {integrity: sha512-+EfHWnF+UT7GgTnq5zXg3ldnTKL2zdv7QJgsU5bjjpbH17E3qi/puMhQyJVYuCq+FRkogvB5WB6iVvUr+E4a7w==}
+    engines: {node: '>=12'}
+    dev: false
 
   /lz-string/1.4.4:
     resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}

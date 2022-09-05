@@ -4,11 +4,11 @@ import {
   MIcon,
   MListItem,
   MSelect,
-  MSkeleton,
   useFormatCurrency,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
+import { useMemo } from 'react';
 import PaymentPanel from './PaymentPanel';
 import ModalAccountSelector from './ModalAccountSelector';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -16,11 +16,14 @@ import {
   getAccounts,
   getAccountSelected,
   getCardToPay,
-  getCurrencies,
+  getDebt,
   getUser,
+  getCurrencies,
 } from '../store/selectors';
 import type { Account } from '../store/slice';
 import { setAccountSelected } from '../store/slice';
+import SkeletonLoader from './SkeletonLoader';
+import CurrenciesSelector from './CurrenciesSelector';
 
 export default function Payment() {
   const { t } = useTranslation();
@@ -28,8 +31,9 @@ export default function Payment() {
   const cardToPay = useAppSelector(getCardToPay);
   const accounts = useAppSelector(getAccounts);
   const accountSelected = useAppSelector(getAccountSelected);
-  const hasMultipleCurrencies = useAppSelector(getCurrencies);
   const user = useAppSelector(getUser);
+  const debt = useAppSelector(getDebt);
+  const currencies = useAppSelector(getCurrencies);
 
   const {
     values: [
@@ -37,15 +41,15 @@ export default function Payment() {
       amountAvailable,
     ],
   } = useFormatCurrency(
-    cardToPay.totalPayment,
+    debt.totalPayment,
     accountSelected?.value ?? 0,
   );
 
-  const dateToPayCard = Intl.DateTimeFormat('en-US', {
+  const dateToPayCard = useMemo(() => Intl.DateTimeFormat('en-US', {
     year: '2-digit',
     month: 'numeric',
     day: 'numeric',
-  }).format(cardToPay.date);
+  }).format(new Date(cardToPay.date)), [cardToPay]);
 
   return (
     <>
@@ -60,29 +64,16 @@ export default function Payment() {
             </h6>
           </div>
 
-          {!accountSelected && (
-            <div className="d-flex flex-column justify-content-center align-items-center gap-3 w-100">
-              <MSkeleton viewBox="0 0 320 70" backgroundColor="#e9e9ff" foregroundColor="#f8f8fb">
-                <rect x="0" y="0" rx="8" ry="8" width="320" height="70" />
-              </MSkeleton>
-              <div className="bg-white rounded py-4 w-100">
-                <MSkeleton viewBox="0 0 320 355" backgroundColor="#e9e9ff" foregroundColor="#f8f8fb">
-                  <rect x="0" y="0" rx="8" ry="8" width="320" height="54" />
-                  <rect x="80" y="65" rx="8" ry="8" width="164" height="18" />
-                  <rect x="0" y="120" rx="8" ry="8" width="320" height="54" />
-                  <rect x="0" y="200" rx="8" ry="8" width="320" height="54" />
-                  <rect x="0" y="280" rx="8" ry="8" width="320" height="54" />
-                </MSkeleton>
-              </div>
-            </div>
-          )}
+          {!accountSelected && <SkeletonLoader />}
 
           {accountSelected && (
             <>
+              {currencies.length >= 2 && <CurrenciesSelector />}
               <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1">
                 <MListItem value={dateToPayCard} text={t('nextPayment')} class="p-1" />
                 <MListItem value={totalPayment} text={t('balance')} class="p-1" />
-                {hasMultipleCurrencies && <MListItem value="€1 = USD $1,4" text="Conversion rate" class="p-1" />}
+                {/* TODO Conversion rate */}
+                {currencies.length >= 2 && <MListItem value="€1 = USD $1,4" text="Conversion rate" class="p-1" />}
               </div>
               <div className="m-3 pt-3">
                 {!user.canPayWithoutDebt && (
@@ -127,7 +118,7 @@ export default function Payment() {
           )}
         </div>
       </div>
-      {cardToPay.minimumPayment <= 0 && (
+      {debt.minimumPayment <= 0 && (
         <div className="custom-alert fixed-bottom p-3 w-100">
           <MAlert icon close theme="info">
             {t('alert.notPay')}
