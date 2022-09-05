@@ -3,9 +3,9 @@ import {
   MButton,
   MIcon,
   MListItem,
+  useFormatCurrency,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
-import useFormatCurrency from '../hooks/useFormatCurrency';
 
 import { useAppSelector } from '../store/hooks';
 import {
