@@ -22,6 +22,7 @@ import {
   getAutoRepeat,
   getDebt,
   getSchedule,
+  getSelectedCurrency,
   getUser,
 } from '../store/selectors';
 import useFormatCurrency from '../hooks/useFormatCurrency';
@@ -33,6 +34,7 @@ export default function PaymentPanel() {
   const recurringStart = useAppSelector(getAutoRepeat);
   const user = useAppSelector(getUser);
   const debt = useAppSelector(getDebt);
+  const selectedCurrency = useAppSelector(getSelectedCurrency);
 
   const {
     amountAvailable,
@@ -50,6 +52,11 @@ export default function PaymentPanel() {
   } = useFormatCurrency(
     debt.minimumPayment,
     debt.totalPayment,
+  );
+
+  const paySameCurrency = useMemo(
+    () => selectedCurrency === accountSelected?.currency,
+    [selectedCurrency, accountSelected],
   );
 
   const setSelectedOption = ({ detail }: CustomEvent, value: number) => {
@@ -120,6 +127,9 @@ export default function PaymentPanel() {
             name="paymentOption"
             label={t('shortCutToggle.minimum')}
             text={minimumPayment}
+            {...!paySameCurrency && {
+              subtext: `(${accountSelected.currency} ${debt.minimumPayment * 1.02})`,
+            }}
             value="minimumOption"
             onMChange={(e: CustomEvent) => setSelectedOption(e, debt.minimumPayment)}
           />
@@ -128,6 +138,9 @@ export default function PaymentPanel() {
             key="2"
             {...debt.totalPayment === 0 && { state: 'disabled' }}
             {...debt.totalPayment === amount && { isChecked: true }}
+            {...!paySameCurrency && {
+              subtext: `(${accountSelected.currency} ${debt.totalPayment * 1.02})`,
+            }}
             mId="totalOption"
             name="paymentOption"
             label={t('shortCutToggle.total')}
@@ -157,6 +170,9 @@ export default function PaymentPanel() {
                   }
                   mId="debtInput"
                   theme="info"
+                  selectOptions={!paySameCurrency ? [
+                    { value: accountSelected.currency, label: accountSelected.currency },
+                  ] : []}
                   placeholder={t('currencyInput.placeholder')}
                   iconLabel="currency-dollar"
                   hint={hintCurrency.message}
