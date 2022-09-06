@@ -67,7 +67,7 @@ export default function ModalSchedule(
         <div className="mb-4">
           <MCalendar
             date={scheduleDay}
-            setDate={setScheduleDay}
+            setDate={(value: Date) => setScheduleDay(value)}
             inline
           />
         </div>

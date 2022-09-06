@@ -1,4 +1,4 @@
-import { MButton, MModal } from '@modyolabs/react-design-system';
+import { MButton, MModal, useFormatCurrency } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -9,7 +9,6 @@ import {
   getCardToPay,
   getSchedule,
 } from '../store/selectors';
-import useFormatCurrency from '../hooks/useFormatCurrency';
 
 // eslint-disable-next-line react/prop-types
 export default function ModalConfirmPayment() {
