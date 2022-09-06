@@ -308,6 +308,7 @@ export const MShortcutToggle = /*@__PURE__*/ defineContainer<JSX.MShortcutToggle
   'value',
   'label',
   'text',
+  'subtext',
   'icon',
   'isChecked',
   'state',

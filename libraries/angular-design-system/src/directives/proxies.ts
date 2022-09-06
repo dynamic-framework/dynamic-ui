@@ -647,13 +647,13 @@ export declare interface MShortcutToggle extends Components.MShortcutToggle {
 
 @ProxyCmp({
   defineCustomElementFn: defineMShortcutToggle,
-  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value', 'white']
+  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'subtext', 'text', 'value', 'white']
 })
 @Component({
   selector: 'm-shortcut-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value', 'white']
+  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'subtext', 'text', 'value', 'white']
 })
 export class MShortcutToggle {
   protected el: HTMLElement;

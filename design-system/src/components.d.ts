@@ -827,6 +827,10 @@ export namespace Components {
         /**
           * Shortcut text
          */
+        "subtext"?: string;
+        /**
+          * Shortcut text
+         */
         "text"?: string;
         /**
           * Input value
@@ -1936,6 +1940,10 @@ declare namespace LocalJSX {
           * Input and shortcut state
          */
         "state"?: InputState;
+        /**
+          * Shortcut text
+         */
+        "subtext"?: string;
         /**
           * Shortcut text
          */
