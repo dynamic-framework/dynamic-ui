@@ -9,6 +9,7 @@ import {
   MAlert,
   MCurrency,
   MHint,
+  useFormatCurrency,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -25,7 +26,6 @@ import {
   getSelectedCurrency,
   getUser,
 } from '../store/selectors';
-import useFormatCurrency from '../hooks/useFormatCurrency';
 
 export default function PaymentPanel() {
   const { t } = useTranslation();

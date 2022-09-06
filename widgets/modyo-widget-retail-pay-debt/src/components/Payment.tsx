@@ -4,6 +4,7 @@ import {
   MIcon,
   MListItem,
   MSelect,
+  useFormatCurrency,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -21,7 +22,6 @@ import {
 } from '../store/selectors';
 import type { Account } from '../store/slice';
 import { setAccountSelected } from '../store/slice';
-import useFormatCurrency from '../hooks/useFormatCurrency';
 import SkeletonLoader from './SkeletonLoader';
 import CurrenciesSelector from './CurrenciesSelector';
 
