@@ -213,13 +213,13 @@ export declare interface MCurrency extends Components.MCurrency {
 
 @ProxyCmp({
   defineCustomElementFn: defineMCurrency,
-  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'theme', 'type', 'value', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'type', 'value', 'valueExtractor', 'variant']
 })
 @Component({
   selector: 'm-currency',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'theme', 'type', 'value', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'type', 'value', 'valueExtractor', 'variant']
 })
 export class MCurrency {
   protected el: HTMLElement;
