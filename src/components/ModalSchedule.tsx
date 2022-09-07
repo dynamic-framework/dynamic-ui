@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   MButton,
   MModal,
@@ -9,18 +11,16 @@ import {
   MSelect,
   MCounter,
 } from '@modyolabs/react-design-system';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import useSchedule from '../hooks/useSchedule';
+import type { ModalProps } from '@modyolabs/react-design-system';
 
-interface Props {
-  onAccept: (accepted: boolean) => void;
-}
+import useSchedule from '../hooks/useSchedule';
 
 export default function ModalSchedule(
   {
-    onAccept,
-  }: Props,
+    payload: {
+      onAccept,
+    },
+  }: ModalProps,
 ) {
   const { t } = useTranslation();
   const {
@@ -40,6 +40,7 @@ export default function ModalSchedule(
     occurrences,
     handleOccurrences,
     scheduleDate,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   } = useSchedule(onAccept);
 
   const [date, setDate] = useState(new Date());
@@ -49,7 +50,7 @@ export default function ModalSchedule(
 
   return (
     <MModal
-      mId="modalSchedulePayment"
+      name="modalSchedulePayment"
       centered
       static
       closeText="Cancel"

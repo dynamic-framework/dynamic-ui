@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   MButton,
   MFormSwitch,
@@ -9,19 +9,15 @@ import {
   MAlert,
   MCurrency,
   MHint,
-  useFormatCurrency,
+  useFormatCurrency, useModalContext,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
-import ModalPaymentAlternatives from './ModalPaymentAlternatives';
-import ModalSchedule from './ModalSchedule';
 import usePaymentInput from '../hooks/usePaymentInput';
-import ModalConfirmPayment from './ModalConfirmPayment';
 import { useAppSelector } from '../store/hooks';
 import {
   getAccountSelected,
   getAutoRepeat,
-  getCardToPay,
   getDebt,
   getSchedule,
   getUser,
@@ -29,19 +25,20 @@ import {
 
 export default function PaymentPanel() {
   const { t } = useTranslation();
+  const { openModal } = useModalContext();
   const accountSelected = useAppSelector(getAccountSelected);
   const schedule = useAppSelector(getSchedule);
   const recurringStart = useAppSelector(getAutoRepeat);
   const user = useAppSelector(getUser);
   const debt = useAppSelector(getDebt);
-
+  const [isScheduled, setIsScheduled] = useState(false);
+  const [shortcut, setShortcut] = useState('');
   const {
     amountAvailable,
     amount,
     setAmount,
   } = usePaymentInput(accountSelected?.value);
-  const [isScheduled, setIsScheduled] = useState(false);
-  const [shortcut, setShortcut] = useState('');
+
   const {
     format,
     values: [
@@ -53,8 +50,8 @@ export default function PaymentPanel() {
     debt.totalPayment,
   );
 
-  const setSelectedOption = ({ detail }: CustomEvent, value: number) => {
-    setShortcut(detail as string);
+  const setSelectedOption = ({ detail }: CustomEvent<string>, value: number) => {
+    setShortcut(detail);
     setAmount(value);
   };
 
@@ -122,7 +119,7 @@ export default function PaymentPanel() {
             label={t('shortCutToggle.minimum')}
             text={minimumPayment}
             value="minimumOption"
-            onMChange={(e: CustomEvent) => setSelectedOption(e, debt.minimumPayment)}
+            onMChange={(e: CustomEvent<string>) => setSelectedOption(e, debt.minimumPayment)}
           />
           <MShortcutToggle
             class="d-block"
@@ -134,7 +131,7 @@ export default function PaymentPanel() {
             label={t('shortCutToggle.total')}
             text={totalPayment}
             value="totalOption"
-            onMChange={(e: CustomEvent) => setSelectedOption(e, debt.totalPayment)}
+            onMChange={(e: CustomEvent<string>) => setSelectedOption(e, debt.totalPayment)}
           />
           {
             user.canPayOtherAmount && (
@@ -150,7 +147,7 @@ export default function PaymentPanel() {
                   label={t('shortCutToggle.other')}
                   text={t('shortCutToggle.amount')}
                   value="otherAmount"
-                  onMChange={(e: CustomEvent) => setSelectedOption(e, 0)}
+                  onMChange={(e: CustomEvent<string>) => setSelectedOption(e, 0)}
                 />
                 <MCurrency
                   className={
@@ -170,36 +167,35 @@ export default function PaymentPanel() {
               </>
             )
           }
-          {
-            ((shortcut === 'totalOption' && accountSelected?.value < debt.totalPayment)
-            || (shortcut === 'minimumOption' && accountSelected?.value < debt.minimumPayment)) && (
-              <MHint
-                text="You don’t have enough funds to pay this amount"
-                iconStart="info-circle"
-                theme="danger"
-              />
-            )
-          }
-          {
-            user.hasPaymentAlternatives && (
-              <MShortcutToggle
-                class="d-block"
-                key="4"
-                mId="alternativeOption"
-                name="paymentOption"
-                label={t('shortCutToggle.paymentAlternatives')}
-                text="..."
-                {...debt.minimumPayment === 0 && { state: 'disabled' }}
-                {...debt.minimumPayment > 0 && {
-                  'data-bs-toggle': 'modal',
-                  'data-bs-target': '#paymentAlt',
-                }}
-                value="alternativeOption"
-                onMChange={({ detail }: CustomEvent) => setShortcut(detail as string)}
-                white
-              />
-            )
-          }
+          {(
+            (shortcut === 'totalOption' && accountSelected?.value < debt.totalPayment)
+            || (shortcut === 'minimumOption' && accountSelected?.value < debt.minimumPayment)
+          ) && (
+            <MHint
+              text="You don’t have enough funds to pay this amount"
+              iconStart="info-circle"
+              theme="danger"
+            />
+          )}
+          {user.hasPaymentAlternatives && (
+            <MShortcutToggle
+              class="d-block"
+              key="4"
+              mId="alternativeOption"
+              name="paymentOption"
+              label={t('shortCutToggle.paymentAlternatives')}
+              text="..."
+              {...debt.minimumPayment === 0 && { state: 'disabled' }}
+              value="alternativeOption"
+              onMChange={({ detail }: CustomEvent<string>) => {
+                setShortcut(detail);
+                if (debt.minimumPayment > 0) {
+                  openModal('paymentAlternatives');
+                }
+              }}
+              white
+            />
+          )}
         </div>
       </div>
       <div className="pb-4 text-center">
@@ -209,15 +205,15 @@ export default function PaymentPanel() {
         >
           <div
             className="px-3 py-2 border rounded-1 mb-2"
-            {...(debt.minimumPayment > 0 && amount && amountAvailable >= 0) && {
-              'data-bs-toggle': 'modal',
-              'data-bs-target': '#modalSchedulePayment',
-            }}
+            onClick={() => openModal('schedulePayment')}
+            onKeyDown={() => {}}
+            tabIndex={0}
+            role="button"
           >
             <MFormSwitch
               class="d-inline-flex"
               mId="schedulePayment"
-              label={t('collapse.schedule')}
+              label={t('collapse.schedule', { onAccept: setIsScheduled })}
               isDisabled
               isChecked={isScheduled}
               {...isScheduled && ({ labelOn: t('collapse.yesLabel') })}
@@ -250,19 +246,17 @@ export default function PaymentPanel() {
         {/* Pointer events?  */}
         <MButton
           {...(debt.minimumPayment === 0 || !amount || amountAvailable < 0) && !user.canPayWithoutDebt && { state: 'disabled' }}
-          {...(debt.minimumPayment > 0 && amount && amountAvailable >= 0) && {
-            'data-bs-toggle': 'modal',
-            'data-bs-target': '#modalConfirmPayment',
-          }}
           text={buttonPaymentAmountMessage}
           theme="primary-gradient"
           isPill
           iconRight="check-lg"
+          onClick={() => {
+            if ((debt.minimumPayment > 0 && amount && amountAvailable >= 0)) {
+              openModal('confirmPayment');
+            }
+          }}
         />
       </div>
-      <ModalPaymentAlternatives />
-      <ModalSchedule onAccept={setIsScheduled} />
-      <ModalConfirmPayment />
       {isScheduled && (
         <MAlert
           className="custom-alert fixed-bottom p-3 w-100"

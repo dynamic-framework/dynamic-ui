@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   MButton,
   MListItem,
   MModal,
   useFormatCurrency,
 } from '@modyolabs/react-design-system';
+import type { ModalProps } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -12,7 +13,7 @@ import { getAccounts, getAccountSelected } from '../store/selectors';
 import { setAccountSelected } from '../store/slice';
 import type { Account } from '../store/slice';
 
-export default function ModalAccountSelector() {
+export default function ModalAccountSelector({ closeModal }: ModalProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const accounts = useAppSelector(getAccounts);
@@ -21,9 +22,14 @@ export default function ModalAccountSelector() {
 
   const { format } = useFormatCurrency();
 
+  const onConfirm = useCallback(() => {
+    dispatch(setAccountSelected(value));
+    closeModal();
+  }, [closeModal, dispatch, value]);
+
   return (
     <MModal
-      mId="accountSelector"
+      name="accountSelector"
       centered
       static
     >
@@ -54,7 +60,7 @@ export default function ModalAccountSelector() {
           text={t('button.confirm')}
           theme="primary"
           isPill
-          onClick={() => dispatch(setAccountSelected(value))}
+          onClick={onConfirm}
         />
       </div>
     </MModal>

@@ -1,12 +1,18 @@
-import { MButton, MModal, MQuickAction } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
+import {
+  MButton,
+  MModal,
+  MQuickAction,
+  useModalContext,
+} from '@modyolabs/react-design-system';
 
 export default function ModalPaymentAlternatives() {
   const { t } = useTranslation();
+  const { closeModal } = useModalContext();
 
   return (
     <MModal
-      mId="paymentAlt"
+      name="paymentAlternatives"
       centered
       static
     >
@@ -39,11 +45,11 @@ export default function ModalPaymentAlternatives() {
           subtext={t('modal.paymentAlternatives.renegotiateLabel')}
         />
         <MButton
-          data-bs-dismiss="modal"
           class="mt-4 mb-3 w-50"
           text={t('button.cancel')}
           theme="primary"
           isPill
+          onClick={() => closeModal()}
         />
       </div>
     </MModal>
