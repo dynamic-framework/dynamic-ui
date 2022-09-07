@@ -45,6 +45,12 @@
       color: #{$shortcut-toggle-text-color};
     }
 
+    .shortcut-subtext {
+      font-weight: 300;
+      line-height: #{$shortcut-toggle-text-line-height};
+      color: #{$shortcut-toggle-text-color};
+    }
+
     .shortcut-icon {
       color: #{$shortcut-toggle-icon-color};
     }
