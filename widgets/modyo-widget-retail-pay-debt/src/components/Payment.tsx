@@ -5,6 +5,7 @@ import {
   MListItem,
   MSelect,
   useFormatCurrency,
+  useModalContext,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -28,6 +29,7 @@ import CurrenciesSelector from './CurrenciesSelector';
 export default function Payment() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { openModal } = useModalContext();
   const cardToPay = useAppSelector(getCardToPay);
   const accounts = useAppSelector(getAccounts);
   const accountSelected = useAppSelector(getAccountSelected);
@@ -63,9 +65,7 @@ export default function Payment() {
               })}
             </h6>
           </div>
-
           {!accountSelected && <SkeletonLoader />}
-
           {accountSelected && (
             <>
               {currencies.length >= 2 && <CurrenciesSelector />}
@@ -86,9 +86,8 @@ export default function Payment() {
                       })}
                       theme="info"
                       iconRight="chevron-down"
-                      data-bs-toggle="modal"
-                      data-bs-target="#accountSelector"
                       variant="outline"
+                      onClick={() => openModal('accountSelector')}
                     />
                     <small className="text-gray d-flex gap-2 align-items-center p-1">
                       <MIcon icon="info-circle" />
@@ -125,7 +124,6 @@ export default function Payment() {
           </MAlert>
         </div>
       )}
-      {accountSelected && <ModalAccountSelector />}
     </>
   );
 }

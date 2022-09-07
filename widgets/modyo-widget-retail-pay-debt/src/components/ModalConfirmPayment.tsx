@@ -1,4 +1,5 @@
 import { MButton, MModal, useFormatCurrency } from '@modyolabs/react-design-system';
+import type { ModalProps } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -10,8 +11,7 @@ import {
   getSchedule,
 } from '../store/selectors';
 
-// eslint-disable-next-line react/prop-types
-export default function ModalConfirmPayment() {
+export default function ModalConfirmPayment({ closeModal }: ModalProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const amountUsed = useAppSelector(getAmountUsed);
@@ -44,11 +44,12 @@ export default function ModalConfirmPayment() {
     };
     dispatch(setResult(transactionResult));
     dispatch(setIsPaid(true));
+    closeModal();
   }
 
   return (
     <MModal
-      mId="modalConfirmPayment"
+      name="modalConfirmPayment"
       centered
       static
       noCloseButton
@@ -73,15 +74,14 @@ export default function ModalConfirmPayment() {
       </div>
       <div slot="footer" className="d-flex align-items-center w-100 m-3">
         <MButton
-          data-bs-dismiss="modal"
           class="mb-2 w-50"
           text={t('button.cancel')}
           theme="primary"
           variant="outline"
           isPill
+          onClick={() => closeModal()}
         />
         <MButton
-          data-bs-dismiss="modal"
           class="mb-2 w-50"
           text={t(isScheduled ? 'button.schedule' : 'button.pay')}
           theme="primary"

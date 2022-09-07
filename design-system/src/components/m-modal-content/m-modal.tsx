@@ -18,9 +18,9 @@ export class MModal {
   @Element() el!: HTMLMModalElement;
 
   /**
-   * Id of the modal
+   * the name of the modal
    */
-  @Prop() mId!: string;
+  @Prop() name!: string;
 
   /**
    * Close button text
@@ -100,11 +100,11 @@ export class MModal {
   render() {
     return (
       <div
-        class="modal fade"
-        id={this.mId}
+        class="modal fade show d-block"
+        id={this.name}
         tabindex="-1"
-        aria-labelledby={`${this.mId}Label`}
-        aria-hidden="true"
+        aria-labelledby={`${this.name}Label`}
+        aria-hidden="false"
         {...this.static && ({
           [`data-${prefixBS}backdrop`]: 'static',
           [`data-${prefixBS}keyboard`]: 'false',

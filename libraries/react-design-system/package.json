@@ -35,7 +35,8 @@
     "i18next": "~21.9.0",
     "react-content-loader": "~6.2.0",
     "react-datepicker": "~4.8.0",
-    "dinero.js": "~1.9.1"
+    "dinero.js": "~1.9.1",
+    "lodash.camelcase": "^4.3.0"
   },
   "devDependencies": {
     "@modyolabs/design-system": "workspace:^0.1.0",
@@ -46,6 +47,7 @@
     "@types/node": "^15.12.2",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
+    "@types/lodash.camelcase": "^4.3.7",
     "jest": "^26.1.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -63,7 +65,8 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
-    "@typescript-eslint/parser": "^5.0.0"
+    "@typescript-eslint/parser": "^5.0.0",
+    "@simbathesailor/use-what-changed": "^2.0.0"
   },
   "peerDependencies": {
     "react": "^18.1.0",
