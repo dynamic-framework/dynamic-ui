@@ -7,6 +7,7 @@ export declare interface CalendarProps {
   setDate: (date: Date) => void;
   calendarContainer?: React.FC;
   inline?: boolean;
+  withPortal?: boolean;
 }
 
 export default function MCalendar({
@@ -14,6 +15,7 @@ export default function MCalendar({
   date,
   calendarContainer,
   inline,
+  withPortal,
 }: CalendarProps) {
   return (
     <DatePicker
@@ -21,6 +23,7 @@ export default function MCalendar({
       onChange={(value: Date) => setDate(value)}
       calendarContainer={calendarContainer}
       inline={inline}
+      withPortal={withPortal}
     />
   );
 }
