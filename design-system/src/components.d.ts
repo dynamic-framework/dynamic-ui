@@ -11,7 +11,7 @@ import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-int
 import { CurrencyEvent, CurrencyVariant, SelectProps } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
-import { FullScreenFrom, ModalSize } from "./components/m-modal-content/m-modal-interface";
+import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { NavVariant } from "./components/m-nav/m-nav-interface";
 import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
@@ -531,13 +531,13 @@ export namespace Components {
          */
         "name": string;
         /**
-          * No display close button
-         */
-        "noCloseButton"?: boolean;
-        /**
           * Is modal scrollable
          */
         "scrollable"?: boolean;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
         /**
           * Is backdrop static
          */
@@ -869,6 +869,10 @@ export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMModalElement;
 }
 export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1623,13 +1627,17 @@ declare namespace LocalJSX {
          */
         "name": string;
         /**
-          * No display close button
+          * Emitted when the input value has changed
          */
-        "noCloseButton"?: boolean;
+        "onMClose"?: (event: MModalCustomEvent<void>) => void;
         /**
           * Is modal scrollable
          */
         "scrollable"?: boolean;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
         /**
           * Is backdrop static
          */

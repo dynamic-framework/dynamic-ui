@@ -378,23 +378,30 @@ export class MListItem {
 }
 
 
-export declare interface MModal extends Components.MModal {}
+export declare interface MModal extends Components.MModal {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mClose: EventEmitter<CustomEvent<void>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMModal,
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'modalSize', 'name', 'noCloseButton', 'scrollable', 'static']
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'modalSize', 'name', 'scrollable', 'showCloseButton', 'static']
 })
 @Component({
   selector: 'm-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'modalSize', 'name', 'noCloseButton', 'scrollable', 'static']
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'modalSize', 'name', 'scrollable', 'showCloseButton', 'static']
 })
 export class MModal {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClose']);
   }
 }
 

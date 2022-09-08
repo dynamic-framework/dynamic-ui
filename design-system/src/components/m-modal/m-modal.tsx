@@ -2,7 +2,7 @@ import {
   Component,
   h,
   Prop,
-  Element,
+  Element, Event, EventEmitter,
 } from '@stencil/core';
 
 import { prefixBS, ClassMap } from '../../utils/component-interface';
@@ -65,11 +65,20 @@ export class MModal {
   /**
    * No display close button
    */
-  @Prop() noCloseButton?: boolean;
+  @Prop() showCloseButton?: boolean;
+
+  /**
+   * Emitted when the input value has changed
+   */
+  @Event({ eventName: 'mClose' }) mClose!: EventEmitter<void>;
 
   private header!: boolean;
   private body!: boolean;
   private footer!: boolean;
+
+  private closeHandler = () => {
+    this.mClose.emit();
+  };
 
   private fullScreenClass(): string {
     if (this.fullScreen) {
@@ -123,15 +132,15 @@ export class MModal {
                 }}
               >
                 <slot name="header" />
-                {!this.noCloseButton && (
+                {this.showCloseButton && (
                   <button
                     type="button"
                     class={{
                       'btn-close': true,
                       'btn-close-text': !!this.closeText,
                     }}
-                    data-bs-dismiss="modal"
                     aria-label="Close"
+                    onClick={this.closeHandler}
                   >
                     {this.closeText && (this.closeText)}
                   </button>
