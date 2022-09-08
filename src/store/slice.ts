@@ -17,12 +17,6 @@ type UserOptions = {
   canPayWithoutDebt: boolean;
 };
 
-export type Day = {
-  id: string;
-  name: string;
-  checked?: boolean;
-};
-
 type Card = {
   id: number;
   franchise: string;
@@ -66,16 +60,24 @@ export type Schedule = {
   dateShow: string | null;
 };
 
+export type OptionRepeatValue = {
+  id: string;
+  name: string;
+  value?: any;
+};
+
+export type OptionRepeat = Record<OptionRepeatValue['id'], OptionRepeatValue>;
+
 export type StartRepeat = {
   enabled: boolean;
   frequency: string | null;
-  option: { [name: string]: { [key: string]: string | boolean } } | null;
+  option: OptionRepeat;
 };
 
 export type EndRepeat = {
   enabled: boolean;
   frequency: string | null;
-  option: { [key: string]: string | boolean | number | Date } | null;
+  option: OptionRepeat;
 };
 
 const initialState = {
@@ -111,12 +113,12 @@ const initialState = {
   startRepeat: {
     enabled: false,
     frequency: null,
-    option: null,
+    option: {},
   },
   endRepeat: {
     enabled: false,
     frequency: null,
-    option: null,
+    option: {},
   },
   result: {
     status: 200,

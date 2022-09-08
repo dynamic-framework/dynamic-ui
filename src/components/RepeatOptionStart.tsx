@@ -1,15 +1,35 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+import { Dispatch, SetStateAction } from 'react';
+
 import { MFormCheck, MSelect } from '@modyolabs/react-design-system';
-import { Day } from '../store/slice';
+
+import { OptionRepeat, OptionRepeatValue } from '../store/slice';
+
+const REPEAT_START_OPTIONS = {
+  weekly: [
+    { id: 'saturday', name: 'S' },
+    { id: 'monday', name: 'M' },
+    { id: 'tuesday', name: 'T' },
+    { id: 'wednesday', name: 'W' },
+    { id: 'thursday', name: 'T' },
+    { id: 'friday', name: 'F' },
+    { id: 'sunday', name: 'S' },
+  ],
+  monthly: [
+    { id: '1-month', name: 'Every month' },
+    { id: '2-month', name: 'Every other month' },
+    { id: '3-month', name: 'Every 3 months' },
+    { id: '6-month', name: 'Every 6 months' },
+    { id: '12-month', name: 'Every 12 months' },
+  ],
+  custom: [
+    { id: 'custom', name: 'Custom', checked: true },
+  ],
+};
 
 interface Props {
   frequency: string;
-  option: { [name: string]: { [key: string]: string | boolean } };
-  setOption: (option: any) => void;
+  option: OptionRepeat;
+  setOption: Dispatch<SetStateAction<OptionRepeat>>;
 }
 
 export default function StartRepeatOptions({
@@ -17,36 +37,31 @@ export default function StartRepeatOptions({
   option,
   setOption,
 }: Props) {
-  const handleWeekDays = (day: Day): void => {
-    setOption((prev: any) => ({
-      ...prev,
-      [day.id]: {
-        ...day,
-        checked: !day.checked,
-      },
-    }));
-  };
-
-  const handleMonthly = (id: any): void => {
-    let newOption = {};
-    // eslint-disable-next-line array-callback-return
-    Object.values(option).map((a) => {
-      newOption = {
-        ...newOption,
-        [`${a.id}`]: {
-          ...a,
-          checked: a.id === id,
-        },
+  const handleWeekDays = (day: OptionRepeatValue): void => {
+    setOption((prev: OptionRepeat) => {
+      if (prev[day.id]) {
+        const {
+          [day.id]: ignored,
+          ...otherDays
+        } = prev;
+        return otherDays;
+      }
+      return {
+        ...prev,
+        [day.id]: day,
       };
     });
-    setOption(newOption);
+  };
+
+  const handleMonthly = (month: OptionRepeatValue): void => {
+    setOption({ [month.id]: month });
   };
 
   return (
     <div className="d-flex flex-column w-100 mb-4">
       {frequency === 'weekly' && (
         <div className="d-flex justify-content-between w-100 m-2">
-          {Object.values(option).map((day: any) => (
+          {REPEAT_START_OPTIONS[frequency].map((day: OptionRepeatValue) => (
             <MFormCheck
               key={day.id}
               type="checkbox"
@@ -54,7 +69,7 @@ export default function StartRepeatOptions({
               value={day.name}
               label={day.name}
               isButton
-              checked={day.checked}
+              checked={!!option[day.id]}
               onMChange={() => handleWeekDays(day)}
             />
           ))}
@@ -64,14 +79,14 @@ export default function StartRepeatOptions({
         <MSelect
           className="w-100"
           mId="selectMonthlyRecurring"
-          options={Object.values(option)}
+          options={REPEAT_START_OPTIONS[frequency]}
           variant="full"
           theme="info"
-          onMChange={({ detail }: CustomEvent<{ id: string, name: string }>) => {
-            handleMonthly(detail.id);
+          onMChange={({ detail }: CustomEvent<OptionRepeatValue>) => {
+            handleMonthly(detail);
           }}
-          labelExtractor={(item) => item?.name}
-          valueExtractor={(item) => item?.id}
+          labelExtractor={(item: OptionRepeatValue) => item.name}
+          valueExtractor={(item: OptionRepeatValue) => item.id}
         />
       )}
       {frequency === 'custom' && (

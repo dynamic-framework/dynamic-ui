@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
-import { useAppDispatch } from '../store/hooks';
+import { useModalContext } from '@modyolabs/react-design-system';
 
+import { useAppDispatch } from '../store/hooks';
 import {
   setAutoRepeat,
   setEndRepeat,
@@ -12,6 +12,7 @@ import useRepeatStart from './useRepeatStart';
 
 export default function useSchedule(onAccept: (accepted: boolean) => void) {
   const dispatch = useAppDispatch();
+  const { closeModal } = useModalContext();
   const [scheduleDay, setScheduleDay] = useState(new Date());
 
   const {
@@ -61,6 +62,7 @@ export default function useSchedule(onAccept: (accepted: boolean) => void) {
       }
     }
     onAccept(true);
+    closeModal();
   };
 
   return {
