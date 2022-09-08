@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   MButton,
   MFormSwitch,
@@ -20,6 +18,7 @@ import {
   getAutoRepeat,
   getDebt,
   getSchedule,
+  getSelectedCurrency,
   getUser,
 } from '../store/selectors';
 
@@ -31,13 +30,15 @@ export default function PaymentPanel() {
   const recurringStart = useAppSelector(getAutoRepeat);
   const user = useAppSelector(getUser);
   const debt = useAppSelector(getDebt);
-  const [isScheduled, setIsScheduled] = useState(false);
-  const [shortcut, setShortcut] = useState('');
+  const selectedCurrency = useAppSelector(getSelectedCurrency);
+
   const {
     amountAvailable,
     amount,
     setAmount,
   } = usePaymentInput(accountSelected?.value);
+  const [isScheduled, setIsScheduled] = useState(false);
+  const [shortcut, setShortcut] = useState('');
 
   const {
     format,
@@ -48,6 +49,11 @@ export default function PaymentPanel() {
   } = useFormatCurrency(
     debt.minimumPayment,
     debt.totalPayment,
+  );
+
+  const paySameCurrency = useMemo(
+    () => selectedCurrency === accountSelected?.currency,
+    [selectedCurrency, accountSelected],
   );
 
   const setSelectedOption = ({ detail }: CustomEvent<string>, value: number) => {
@@ -118,6 +124,9 @@ export default function PaymentPanel() {
             name="paymentOption"
             label={t('shortCutToggle.minimum')}
             text={minimumPayment}
+            {...!paySameCurrency && {
+              subtext: `(${accountSelected.currency} ${debt.minimumPayment * 1.02})`,
+            }}
             value="minimumOption"
             onMChange={(e: CustomEvent<string>) => setSelectedOption(e, debt.minimumPayment)}
           />
@@ -126,6 +135,9 @@ export default function PaymentPanel() {
             key="2"
             {...debt.totalPayment === 0 && { state: 'disabled' }}
             {...debt.totalPayment === amount && { isChecked: true }}
+            {...!paySameCurrency && {
+              subtext: `(${accountSelected.currency} ${debt.totalPayment * 1.02})`,
+            }}
             mId="totalOption"
             name="paymentOption"
             label={t('shortCutToggle.total')}
@@ -155,6 +167,9 @@ export default function PaymentPanel() {
                   }
                   mId="debtInput"
                   theme="info"
+                  selectOptions={!paySameCurrency ? [
+                    { value: accountSelected.currency, label: accountSelected.currency },
+                  ] : []}
                   placeholder={t('currencyInput.placeholder')}
                   iconLabel="currency-dollar"
                   hint={hintCurrency.message}

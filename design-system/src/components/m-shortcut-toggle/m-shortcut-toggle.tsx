@@ -40,6 +40,11 @@ export class MShortcutToggle implements ComponentInterface {
   @Prop() text?: string;
 
   /**
+   * Shortcut text
+   */
+  @Prop() subtext?: string = '';
+
+  /**
    * Shortcut icon
    */
   @Prop() icon?: string;
@@ -94,9 +99,13 @@ export class MShortcutToggle implements ComponentInterface {
               </span>
             )}
             {this.text && (
-              <span class="shortcut-text d-block small">
-                { this.text}
-              </span>
+              <div class="d-block small">
+                <span class="shortcut-text">
+                  {this.text}
+                  {' '}
+                </span>
+                <span class="shortcut-subtext">{this.subtext}</span>
+              </div>
             )}
           </div>
         )}

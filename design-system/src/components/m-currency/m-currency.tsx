@@ -11,7 +11,9 @@ import {
 
 import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
 
-import type { CurrencyEvent, CurrencyVariant } from './m-currency-interface';
+import type {
+  CurrencyEvent, CurrencyVariant, SelectProps,
+} from './m-currency-interface';
 
 @Component({
   tag: 'm-currency',
@@ -43,9 +45,19 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() iconEnd?: string;
   /**
-   * Has a select input
+   * Select options
    * */
-  @Prop() hasSelect = false;
+  @Prop() selectOptions: Array<SelectProps> = [];
+  /**
+   * Callback to extract the value from the option
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() valueExtractor: (item: any) => string | number = (item) => item?.value;
+  /**
+   * Callback to extract the label from the option
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() labelExtractor: (item: any) => string = (item) => item?.label;
   /**
    * Placeholder for the input
    * */
@@ -186,14 +198,18 @@ export class MCurrency implements ComponentInterface {
                 />
               </span>
             )}
-            {this.hasSelect && (
+            {this.selectOptions.length > 0 && (
               <select
                 // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
                 onInput={this.changeHandler}
               >
-                <slot />
+                {this.selectOptions.map((opt) => (
+                  <option value={this.valueExtractor(opt)}>
+                    {this.labelExtractor(opt)}
+                  </option>
+                ))}
               </select>
             )}
             <input

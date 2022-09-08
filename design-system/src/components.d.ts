@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
-import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
+import { CurrencyEvent, CurrencyVariant, SelectProps } from "./components/m-currency/m-currency-interface";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal-content/m-modal-interface";
@@ -209,10 +209,6 @@ export namespace Components {
     }
     interface MCurrency {
         /**
-          * Has a select input
-         */
-        "hasSelect": boolean;
-        /**
           * Hint text for the m-currency
          */
         "hint"?: string;
@@ -245,6 +241,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor": (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of input
          */
         "layoutDirection": FormControlLayoutDirection;
@@ -265,6 +265,10 @@ export namespace Components {
          */
         "placeholder"?: string;
         /**
+          * Select options
+         */
+        "selectOptions": Array<SelectProps>;
+        /**
           * Theme for the m-currency
          */
         "theme": string;
@@ -276,6 +280,10 @@ export namespace Components {
           * * The value of the input
          */
         "value"?: number;
+        /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor": (item: any) => string | number;
         /**
           * Variant for the m-currency
          */
@@ -819,6 +827,10 @@ export namespace Components {
         /**
           * Shortcut text
          */
+        "subtext"?: string;
+        /**
+          * Shortcut text
+         */
         "text"?: string;
         /**
           * Input value
@@ -1273,10 +1285,6 @@ declare namespace LocalJSX {
     }
     interface MCurrency {
         /**
-          * Has a select input
-         */
-        "hasSelect"?: boolean;
-        /**
           * Hint text for the m-currency
          */
         "hint"?: string;
@@ -1309,6 +1317,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor"?: (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of input
          */
         "layoutDirection"?: FormControlLayoutDirection;
@@ -1333,6 +1345,10 @@ declare namespace LocalJSX {
          */
         "placeholder"?: string;
         /**
+          * Select options
+         */
+        "selectOptions"?: Array<SelectProps>;
+        /**
           * Theme for the m-currency
          */
         "theme"?: string;
@@ -1344,6 +1360,10 @@ declare namespace LocalJSX {
           * * The value of the input
          */
         "value"?: number;
+        /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor"?: (item: any) => string | number;
         /**
           * Variant for the m-currency
          */
@@ -1920,6 +1940,10 @@ declare namespace LocalJSX {
           * Input and shortcut state
          */
         "state"?: InputState;
+        /**
+          * Shortcut text
+         */
+        "subtext"?: string;
         /**
           * Shortcut text
          */
