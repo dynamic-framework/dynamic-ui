@@ -40,8 +40,8 @@ export default function ModalSchedule(
     occurrences,
     handleOccurrences,
     scheduleDate,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  } = useSchedule(onAccept);
+    // TODO: use generic type to pass the type of ModalPayload
+  } = useSchedule(onAccept as (accepted: boolean) => void);
 
   const [date, setDate] = useState(new Date());
   const counterHandler = ({ detail }: CustomEvent) => {

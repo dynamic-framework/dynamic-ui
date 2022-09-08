@@ -47,12 +47,6 @@
     "eject": "craco eject",
     "eslint": "eslint src/**/*{.ts,.tsx}"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

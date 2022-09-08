@@ -7,7 +7,6 @@ import {
 } from 'react';
 import type { PropsWithChildren, FC } from 'react';
 import { createPortal } from 'react-dom';
-import camelcase from 'lodash.camelcase';
 
 import useStackState from '../hooks/useStackState';
 
@@ -37,40 +36,38 @@ export type ModalConfig = {
   payload: ModalPayload;
   callbacks?: ModalCallbacks;
 };
+export type OpenModalFunction = (name: string, config?: ModalConfig) => void;
+export type CloseModalFunction = (context?: ModalCallbackContext) => void;
 export type ModalContextType = {
   stack: ModalStackItem[];
-  openModal: (name: string, config?: ModalConfig) => void;
-  closeModal: (context?: ModalCallbackContext) => void;
+  openModal: OpenModalFunction;
+  closeModal: CloseModalFunction;
 };
 export type ModalProps = {
   name: string;
   payload: ModalPayload;
-  openModal: ModalContextType['openModal'];
-  closeModal: ModalContextType['closeModal'];
+  openModal: OpenModalFunction;
+  closeModal: CloseModalFunction;
 };
 
 export const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 function enhanceModal(
   Modal: ModalComponent,
-  modalName: string,
   callbacks?: ModalCallbacks,
 ) {
-  const enhancedModalName = `Enhanced${camelcase(modalName)}`;
-  return ({
-    [enhancedModalName]({ name, payload, ...otherProps }: ModalProps) {
-      useEffect(() => {
-        callbacks?.onAfterOpen(payload);
-        return () => {
-          callbacks?.onAfterClose({ fromModal: false }, payload);
-        };
-      }, [payload]);
-      return (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        <Modal name={name} payload={payload} {...otherProps} />
-      );
-    },
-  })[enhancedModalName];
+  return function EnhancedModal({ name, payload, ...otherProps }: ModalProps) {
+    useEffect(() => {
+      callbacks?.onAfterOpen(payload);
+      return () => {
+        callbacks?.onAfterClose({ fromModal: false }, payload);
+      };
+    }, [payload]);
+    return (
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <Modal name={name} payload={payload} {...otherProps} />
+    );
+  };
 }
 
 export function ModalContextProvider(
@@ -153,7 +150,7 @@ export function ModalContextProvider(
               payload,
             },
           ) => {
-            const EnhancedComponent = enhanceModal(Component, modalName, callbacks);
+            const EnhancedComponent = enhanceModal(Component, callbacks);
             return (
               <EnhancedComponent
                 key={modalName}

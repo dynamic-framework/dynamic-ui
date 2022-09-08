@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { MNav, MNavItem, MNavLink } from '@modyolabs/react-design-system';
+
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   getCurrencies,

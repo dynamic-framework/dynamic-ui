@@ -35,8 +35,7 @@
     "i18next": "~21.9.0",
     "react-content-loader": "~6.2.0",
     "react-datepicker": "~4.8.0",
-    "dinero.js": "~1.9.1",
-    "lodash.camelcase": "^4.3.0"
+    "dinero.js": "~1.9.1"
   },
   "devDependencies": {
     "@modyolabs/design-system": "workspace:^0.1.0",
