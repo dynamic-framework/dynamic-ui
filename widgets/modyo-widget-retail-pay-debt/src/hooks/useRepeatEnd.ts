@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
 import { useAppSelector } from '../store/hooks';
 import { getEndRepeat } from '../store/selectors';
+import { EndRepeat } from '../store/slice';
 
 export default function useRepeatEnd() {
   // START
@@ -16,7 +16,7 @@ export default function useRepeatEnd() {
 
   const [toggleEnd, setToggleEnd] = useState(enabled ?? false);
   const [frequencyEnd, setFrequencyEnd] = useState(frequency ?? 'oneYear');
-  const [optionEnd, setOptionEnd] = useState(
+  const [optionEnd, setOptionEnd] = useState<EndRepeat['option']>(
     option ?? { ...initialEndRepeat.oneYear },
   );
 
