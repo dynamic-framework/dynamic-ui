@@ -52,7 +52,6 @@ export const getSchedule = createDraftSafeSelector(
 
 export const getAutoRepeat = createDraftSafeSelector(
   getState,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   (widget) => widget.startRepeat,
 );
 

@@ -205,7 +205,7 @@ export default function PaymentPanel() {
         >
           <div
             className="px-3 py-2 border rounded-1 mb-2"
-            onClick={() => openModal('schedulePayment')}
+            onClick={() => openModal('schedule', { payload: { onAccept: setIsScheduled } })}
             onKeyDown={() => {}}
             tabIndex={0}
             role="button"
@@ -213,7 +213,7 @@ export default function PaymentPanel() {
             <MFormSwitch
               class="d-inline-flex"
               mId="schedulePayment"
-              label={t('collapse.schedule', { onAccept: setIsScheduled })}
+              label={t('collapse.schedule')}
               isDisabled
               isChecked={isScheduled}
               {...isScheduled && ({ labelOn: t('collapse.yesLabel') })}

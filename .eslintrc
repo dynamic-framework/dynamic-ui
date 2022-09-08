@@ -2,6 +2,7 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
+    "plugin:react/recommended",
     "plugin:react/jsx-runtime"
   ],
   "parserOptions": {
