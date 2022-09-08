@@ -52,7 +52,6 @@ export default function ModalConfirmPayment({ closeModal }: ModalProps) {
       name="modalConfirmPayment"
       centered
       static
-      noCloseButton
     >
       <div slot="header" className="p-3">
         <h5 className="fw-semibold">

@@ -20,7 +20,7 @@ type UserOptions = {
 export type Day = {
   id: string;
   name: string;
-  checked: boolean;
+  checked?: boolean;
 };
 
 type Card = {
@@ -69,13 +69,13 @@ export type Schedule = {
 export type StartRepeat = {
   enabled: boolean;
   frequency: string | null;
-  option: unknown;
+  option: { [name: string]: { [key: string]: string | boolean } } | null;
 };
 
 export type EndRepeat = {
   enabled: boolean;
   frequency: string | null;
-  option: unknown;
+  option: { [key: string]: string | boolean | number | Date } | null;
 };
 
 const initialState = {
