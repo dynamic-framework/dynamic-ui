@@ -10,7 +10,7 @@ export type Account = {
   currency: string;
 };
 
-type UserOptions = {
+export type UserOptions = {
   hasPaymentAlternatives: boolean;
   hasExternalPayment: boolean;
   canPayOtherAmount: boolean;
@@ -18,7 +18,7 @@ type UserOptions = {
   canPayWithoutDebt: boolean;
 };
 
-type Card = {
+export type Card = {
   id: number;
   franchise: string;
   mask: string;
@@ -36,18 +36,18 @@ export type TransactionResult = {
   }
 };
 
-type Debt = {
+export type Debt = {
   totalPayment: number;
   minimumPayment: number;
 };
 
-type WidgetState = {
+export type WidgetState = {
   cardToPay: Card;
   accounts: Array<Account>;
   accountSelected?: Account;
   amountUsed?: number | undefined;
   isPaid?: boolean;
-  schedule: Schedule;
+  schedule?: Schedule;
   startRepeat: StartRepeat;
   endRepeat: EndRepeat;
   selectedCurrency: string;
@@ -57,14 +57,13 @@ type WidgetState = {
 
 export type Schedule = {
   isScheduled: boolean;
-  date: string | null;
-  dateShow: string | null;
+  date: string;
 };
 
 export type OptionRepeatValue = {
   id: string;
   name: string;
-  value?: number | Date;
+  value?: number | string;
 };
 
 export type OptionRepeat = Record<OptionRepeatValue['id'], OptionRepeatValue>;
@@ -106,11 +105,6 @@ const initialState = {
     canPayWithoutDebt: false,
   },
   accounts: [],
-  schedule: {
-    isScheduled: false,
-    date: null,
-    dateShow: null,
-  },
   startRepeat: {
     enabled: false,
     frequency: null,

@@ -40,7 +40,6 @@ export default function useSchedule(onAccept: (accepted: boolean) => void) {
     const newSchedule = {
       isScheduled: true,
       date: scheduleDay,
-      dateShow: scheduleDay,
     };
 
     dispatch(setSchedule(newSchedule));

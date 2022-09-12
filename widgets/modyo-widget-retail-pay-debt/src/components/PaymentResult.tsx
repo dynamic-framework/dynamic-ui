@@ -56,7 +56,7 @@ export default function PaymentResult() {
                 {schedule?.isScheduled && (
                   <>
                     <span className="text-gray fw-bold">
-                      {t('result.scheduledOn', { amount: amountUsedFormatted, date: schedule.dateShow })}
+                      {t('result.scheduledOn', { amount: amountUsedFormatted, date: schedule.date })}
                     </span>
                     <small className="text-dark">
                       {t('result.scheduledToPay')}
