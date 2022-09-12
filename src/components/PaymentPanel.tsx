@@ -231,8 +231,8 @@ export default function PaymentPanel() {
               label={t('collapse.schedule')}
               isDisabled
               isChecked={isScheduled}
-              {...isScheduled && ({ labelOn: t('collapse.yesLabel') })}
-              {...!isScheduled && ({ labelOff: t('collapse.noLabel') })}
+              labelOn={t('collapse.yesLabel')}
+              labelOff={t('collapse.noLabel')}
             />
             <small
               className="d-block text-info text-start"
