@@ -47,7 +47,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "eslint": "eslint src/**/*{.ts,.tsx}"
+    "eslint": "eslint src/**/*{.ts,.tsx}",
+    "push": "DEBUG=* modyo-cli push --disable-liquid --publish"
   },
   "browserslist": {
     "production": [
