@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 import useSchedule from '../hooks/useSchedule';
 import StartRepeatOptions from './RepeatOptionStart';
+import RepeatOptionEnd from './RepeatOptionEnd';
 
 export default function ModalSchedule(
   {
@@ -34,6 +35,8 @@ export default function ModalSchedule(
     toggleEnd,
     setToggleEnd,
     frequencyEnd,
+    optionEnd,
+    setOptionEnd,
     handleRepeatEnd,
     // TODO: use generic type to pass the type of ModalPayload
   } = useSchedule(onAccept as (accepted: boolean) => void);
@@ -64,7 +67,6 @@ export default function ModalSchedule(
             inline
           />
         </div>
-        {/* <StartRepeatSelector /> */}
         <div className="d-flex w-100 mb-3">
           <MFormSwitch
             mId="autoRepeat"
@@ -124,37 +126,44 @@ export default function ModalSchedule(
               />
             </div>
             {toggleEnd && (
-              <div className="mb-3 w-100">
-                <MSegmentControl class="scroll-h">
-                  <MSegmentControlItem
-                    class="flex-grow-1"
-                    checked={frequencyEnd === 'oneYear'}
-                    name="endTime"
-                    mId="oneYear"
-                    value="oneYear"
-                    label={t('modal.recurring.oneYear')}
-                    onMChange={handleRepeatEnd}
-                  />
-                  <MSegmentControlItem
-                    class="flex-grow-1"
-                    checked={frequencyEnd === 'date'}
-                    name="endTime"
-                    mId="date"
-                    value="date"
-                    label={t('modal.recurring.date')}
-                    onMChange={handleRepeatEnd}
-                  />
-                  <MSegmentControlItem
-                    checked={frequencyEnd === 'occurrences'}
-                    class="flex-grow-1"
-                    name="endTime"
-                    mId="occurrences"
-                    value="occurrences"
-                    label={t('modal.recurring.occurrences')}
-                    onMChange={handleRepeatEnd}
-                  />
-                </MSegmentControl>
-              </div>
+              <>
+                <div className="mb-3 w-100">
+                  <MSegmentControl class="scroll-h">
+                    <MSegmentControlItem
+                      class="flex-grow-1"
+                      checked={frequencyEnd === 'oneYear'}
+                      name="endTime"
+                      mId="oneYear"
+                      value="oneYear"
+                      label={t('modal.recurring.oneYear')}
+                      onMChange={handleRepeatEnd}
+                    />
+                    <MSegmentControlItem
+                      class="flex-grow-1"
+                      checked={frequencyEnd === 'date'}
+                      name="endTime"
+                      mId="date"
+                      value="date"
+                      label={t('modal.recurring.date')}
+                      onMChange={handleRepeatEnd}
+                    />
+                    <MSegmentControlItem
+                      checked={frequencyEnd === 'occurrences'}
+                      class="flex-grow-1"
+                      name="endTime"
+                      mId="occurrences"
+                      value="occurrences"
+                      label={t('modal.recurring.occurrences')}
+                      onMChange={handleRepeatEnd}
+                    />
+                  </MSegmentControl>
+                </div>
+                <RepeatOptionEnd
+                  frequency={frequencyEnd}
+                  option={optionEnd}
+                  setOption={setOptionEnd}
+                />
+              </>
             )}
           </>
         )}
