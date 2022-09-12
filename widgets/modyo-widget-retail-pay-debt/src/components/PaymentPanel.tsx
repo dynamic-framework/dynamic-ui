@@ -177,7 +177,8 @@ export default function PaymentPanel() {
                   minValue={debt.minimumPayment}
                   maxValue={accountSelected?.value}
                   onMChange={({ detail: { amount: value } }) => setAmount(value as number)}
-                  value={amount}
+                  value={amount ?? debt.minimumPayment}
+                  currencyOptions={{ currency: 'USD', format: '$0,0.00' }}
                 />
               </>
             )
@@ -260,7 +261,7 @@ export default function PaymentPanel() {
       >
         {/* Pointer events?  */}
         <MButton
-          {...(debt.minimumPayment === 0 || !amount || amountAvailable < 0) && !user.canPayWithoutDebt && { state: 'disabled' }}
+          {...(debt.minimumPayment === 0 || !amount || amountAvailable < 0 || amount < debt.minimumPayment) && !user.canPayWithoutDebt && { state: 'disabled' }}
           text={buttonPaymentAmountMessage}
           theme="primary-gradient"
           isPill
