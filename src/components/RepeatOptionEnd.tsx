@@ -1,10 +1,11 @@
 import { MCalendar, MCounter } from '@modyolabs/react-design-system';
+import { DateTime } from 'luxon';
 import { Dispatch, SetStateAction } from 'react';
-import { OptionRepeat, OptionRepeatValue } from '../store/slice';
+import { OptionRepeat } from '../store/slice';
 
 const REPEAT_END_OPTIONS = {
   oneYear: { id: 'year', name: 'Year' },
-  date: { id: 'date', name: 'Date', value: new Date() },
+  date: { id: 'date', name: 'Date', value: DateTime.now().toISO() },
   occurrences: { id: 'occurrences', name: 'Occurrences', value: 1 },
 };
 
@@ -19,7 +20,7 @@ export default function RepeatOptionEnd({
   option,
   setOption,
 }: Props) {
-  const handleDate = (newDate: Date) => {
+  const handleDate = (newDate: string) => {
     setOption({
       date: {
         ...REPEAT_END_OPTIONS.date,
@@ -41,7 +42,7 @@ export default function RepeatOptionEnd({
     <div className="d-flex w-100">
       {frequency === 'date' && (
         <MCalendar
-          date={option.date?.value as Date ?? REPEAT_END_OPTIONS.date.value}
+          date={option.date?.value as string ?? REPEAT_END_OPTIONS.date.value}
           setDate={handleDate}
           withPortal
         />

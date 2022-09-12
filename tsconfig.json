@@ -1,8 +1,4 @@
 {
-  "references": [
-    { "path": "../design-system"},
-    { "path": "../libraries/react-design-system"}
-  ],
   "compilerOptions": {
     "target": "es2017",
     "lib": [

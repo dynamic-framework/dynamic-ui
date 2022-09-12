@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { DateTime } from 'luxon';
 
 export type Account = {
   id: number;
@@ -9,7 +10,7 @@ export type Account = {
   currency: string;
 };
 
-type UserOptions = {
+export type UserOptions = {
   hasPaymentAlternatives: boolean;
   hasExternalPayment: boolean;
   canPayOtherAmount: boolean;
@@ -17,7 +18,7 @@ type UserOptions = {
   canPayWithoutDebt: boolean;
 };
 
-type Card = {
+export type Card = {
   id: number;
   franchise: string;
   mask: string;
@@ -27,7 +28,7 @@ type Card = {
 
 export type TransactionResult = {
   status: number;
-  date?: string;
+  date: string;
   transactionID?: string;
   error?: {
     message: string;
@@ -35,18 +36,18 @@ export type TransactionResult = {
   }
 };
 
-type Debt = {
+export type Debt = {
   totalPayment: number;
   minimumPayment: number;
 };
 
-type WidgetState = {
+export type WidgetState = {
   cardToPay: Card;
   accounts: Array<Account>;
   accountSelected?: Account;
   amountUsed?: number | undefined;
   isPaid?: boolean;
-  schedule: Schedule;
+  schedule?: Schedule;
   startRepeat: StartRepeat;
   endRepeat: EndRepeat;
   selectedCurrency: string;
@@ -56,14 +57,13 @@ type WidgetState = {
 
 export type Schedule = {
   isScheduled: boolean;
-  date: string | null;
-  dateShow: string | null;
+  date: string;
 };
 
 export type OptionRepeatValue = {
   id: string;
   name: string;
-  value?: number | Date;
+  value?: number | string;
 };
 
 export type OptionRepeat = Record<OptionRepeatValue['id'], OptionRepeatValue>;
@@ -95,7 +95,7 @@ const initialState = {
         minimumPayment: 20,
       },
     },
-    date: new Date().toISOString().split('T')[0],
+    date: DateTime.now().toFormat('MM/dd/yy'),
   },
   user: {
     hasPaymentAlternatives: false,
@@ -105,11 +105,6 @@ const initialState = {
     canPayWithoutDebt: false,
   },
   accounts: [],
-  schedule: {
-    isScheduled: false,
-    date: null,
-    dateShow: null,
-  },
   startRepeat: {
     enabled: false,
     frequency: null,
@@ -119,13 +114,6 @@ const initialState = {
     enabled: false,
     frequency: null,
     option: {},
-  },
-  result: {
-    status: 200,
-    error: {
-      message: '[Error message]',
-      solution: '[Error solution]',
-    },
   },
   selectedCurrency: 'USD',
 } as WidgetState;

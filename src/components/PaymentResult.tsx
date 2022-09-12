@@ -5,6 +5,7 @@ import {
   MListItem,
   useFormatCurrency,
 } from '@modyolabs/react-design-system';
+import { DateTime } from 'luxon';
 import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from '../store/hooks';
@@ -55,7 +56,7 @@ export default function PaymentResult() {
                 {schedule?.isScheduled && (
                   <>
                     <span className="text-gray fw-bold">
-                      {t('result.scheduledOn', { amount: amountUsedFormatted, date: schedule.dateShow })}
+                      {t('result.scheduledOn', { amount: amountUsedFormatted, date: schedule.date })}
                     </span>
                     <small className="text-dark">
                       {t('result.scheduledToPay')}
@@ -84,7 +85,7 @@ export default function PaymentResult() {
                 />
                 <MListItem
                   text={t('result.timeDate')}
-                  value={result.date}
+                  value={DateTime.fromISO(result.date).toFormat('MM/dd/yy, hh:mm a')}
                 />
               </div>
               <div

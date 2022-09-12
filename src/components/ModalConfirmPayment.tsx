@@ -25,13 +25,7 @@ export default function ModalConfirmPayment({ closeModal }: ModalProps) {
     const rand = Math.round(Math.random());
     const transactionResult = {
       status: rand ? 200 : 300,
-      date: Intl.DateTimeFormat('default', {
-        day: 'numeric',
-        month: 'numeric',
-        year: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(new Date()),
+      date: new Date().toISOString(),
       ...(rand && {
         transactionID: `${Math.floor(Math.random() * 1000001)}`,
       }),

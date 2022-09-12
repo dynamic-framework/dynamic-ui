@@ -17,7 +17,8 @@
     "liquidjs": "^9.39.2",
     "@reduxjs/toolkit": "^1.8.4",
     "react-redux": "^8.0.2",
-    "lodash.debounce": "^4.0.8"
+    "lodash.debounce": "^4.0.8",
+    "luxon": "~3.0.3"
   },
   "devDependencies": {
     "typescript": "^4.6.4",
@@ -38,7 +39,8 @@
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@types/webpack-env": "^1.18.0",
-    "@types/lodash.debounce": "^4.0.7"
+    "@types/lodash.debounce": "^4.0.7",
+    "@types/luxon": "~3.0.1"
   },
   "scripts": {
     "start": "craco start",
