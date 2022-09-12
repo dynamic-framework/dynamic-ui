@@ -11,6 +11,7 @@ import {
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
+import { DateTime } from 'luxon';
 import usePaymentInput from '../hooks/usePaymentInput';
 import { useAppSelector } from '../store/hooks';
 import {
@@ -75,10 +76,13 @@ export default function PaymentPanel() {
   }, [isScheduled, amount, t, format, user]);
 
   const alertMessageSchedule = useMemo(() => {
-    if (isScheduled && recurringStart.enabled) {
-      return t('alert.scheduleAndRecurring', { amount, date: schedule.dateShow, repeatType: recurringStart.frequency });
+    if (!schedule) {
+      return '';
     }
-    return t('alert.schedule', { amount, date: schedule.dateShow });
+    if (isScheduled && recurringStart.enabled) {
+      return t('alert.scheduleAndRecurring', { amount, date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy'), repeatType: recurringStart.frequency });
+    }
+    return t('alert.schedule', { amount, date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy') });
   }, [amount, schedule, isScheduled, recurringStart, t]);
 
   const hintCurrency = useMemo(() => {
@@ -238,8 +242,8 @@ export default function PaymentPanel() {
             <small
               className="d-block text-info text-start"
             >
-              {isScheduled
-                ? t('collapse.yesScheduleLabel', { date: schedule.dateShow })
+              {isScheduled && schedule
+                ? t('collapse.yesScheduleLabel', { date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy') })
                 : t('collapse.noScheduleLabel')}
             </small>
           </div>
@@ -259,7 +263,6 @@ export default function PaymentPanel() {
       <div
         className="d-flex justify-content-center"
       >
-        {/* Pointer events?  */}
         <MButton
           {...(debt.minimumPayment === 0 || !amount || amountAvailable < 0 || amount < debt.minimumPayment) && !user.canPayWithoutDebt && { state: 'disabled' }}
           text={buttonPaymentAmountMessage}

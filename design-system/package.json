@@ -44,8 +44,7 @@
     "bootstrap": "^5.2.0",
     "@popperjs/core": "^2.11.5",
     "liquidjs": "^9.39.2",
-    "dinero.js": "~1.9.1",
-    "luxon": "~3.0.3"
+    "dinero.js": "~1.9.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
@@ -58,6 +57,7 @@
     "@types/jest": "^27.0.3",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
+    "luxon": "~3.0.3",
     "puppeteer": "^14.0.0",
     "sass": "^1.51.0",
     "typescript": "~4.4.4",
@@ -76,6 +76,9 @@
     "@types/node": "^18.7.1",
     "@types/dinero.js": "~1.9.0",
     "@types/luxon": "~3.0.1"
+  },
+  "peerDependencies": {
+    "luxon": "~3.0.3"
   },
   "license": "MIT"
 }
