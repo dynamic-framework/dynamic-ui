@@ -90,7 +90,7 @@ export default function StartRepeatOptions({
         />
       )}
       {frequency === 'custom' && (
-        <small>{option.custom.name}</small>
+        <small>Custom</small>
       )}
     </div>
   );
