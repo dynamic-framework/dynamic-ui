@@ -209,6 +209,10 @@ export namespace Components {
     }
     interface MCurrency {
         /**
+          * Variant for the m-currency
+         */
+        "currencyOptions": Record<string, string | number | boolean>;
+        /**
           * Hint text for the m-currency
          */
         "hint"?: string;
@@ -273,13 +277,9 @@ export namespace Components {
          */
         "theme": string;
         /**
-          * * The type of the input
-         */
-        "type": string;
-        /**
           * * The value of the input
          */
-        "value"?: number;
+        "value": number;
         /**
           * Callback to extract the value from the option
          */
@@ -1289,6 +1289,10 @@ declare namespace LocalJSX {
     }
     interface MCurrency {
         /**
+          * Variant for the m-currency
+         */
+        "currencyOptions": Record<string, string | number | boolean>;
+        /**
           * Hint text for the m-currency
          */
         "hint"?: string;
@@ -1357,13 +1361,9 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
         /**
-          * * The type of the input
-         */
-        "type"?: string;
-        /**
           * * The value of the input
          */
-        "value"?: number;
+        "value": number;
         /**
           * Callback to extract the value from the option
          */

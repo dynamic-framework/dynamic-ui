@@ -95,7 +95,6 @@ export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currenc
   'valueExtractor',
   'labelExtractor',
   'placeholder',
-  'type',
   'value',
   'minValue',
   'maxValue',
@@ -104,6 +103,7 @@ export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currenc
   'hintIconEnd',
   'theme',
   'variant',
+  'currencyOptions',
   'layoutDirection',
   'mChange'
 ]);

@@ -8,6 +8,7 @@ import {
   Watch,
   State,
 } from '@stencil/core';
+import Dinero from 'dinero.js';
 
 import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
 
@@ -63,13 +64,9 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() placeholder?: string = '';
   /**
-   * * The type of the input
-  */
-  @Prop() type = 'number';
-  /**
    * * The value of the input
   */
-  @Prop() value?: number;
+  @Prop() value!: number;
   /**
    * * The min value of the input
   */
@@ -99,6 +96,10 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() variant?: CurrencyVariant;
   /**
+   * Variant for the m-currency
+   * */
+  @Prop() currencyOptions!: Record<string, string | number | boolean>;
+  /**
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
@@ -109,10 +110,12 @@ export class MCurrency implements ComponentInterface {
 
   @State() internalTheme?: string;
 
+  @State() internalValue = 0;
+
   /**
    * HTML input element
    */
-  private htmlInput?: HTMLInputElement;
+  private htmlInput!: HTMLInputElement;
 
   /**
    * HTML select element
@@ -131,12 +134,28 @@ export class MCurrency implements ComponentInterface {
     });
   };
 
+  private onBlurEvent = (ev: any) => {
+    this.internalValue = ev.target.valueAsNumber;
+    const { format, ...options } = this.currencyOptions;
+    const dinero = Dinero({
+      ...options,
+      amount: ev.target.valueAsNumber,
+    }).toFormat(format as string);
+    this.htmlInput.setAttribute('type', 'text');
+    this.htmlInput.value = dinero;
+  };
+
+  private onFocusEvent = () => {
+    this.htmlInput.setAttribute('type', 'number');
+    this.htmlInput.value = `${this.internalValue}`;
+  };
+
   private isValid(value?: number): boolean {
     if (value === undefined) {
       return true;
     }
 
-    if (this.type === 'number') {
+    if (this.htmlInput.getAttribute('type') === 'number') {
       return (
         (this.minValue !== undefined ? value >= this.minValue : true)
         && (this.maxValue !== undefined ? value <= this.maxValue : true)
@@ -162,6 +181,7 @@ export class MCurrency implements ComponentInterface {
 
   connectedCallback() {
     this.internalTheme = this.theme;
+    this.internalValue = this.value;
   }
 
   private generateHostClasses(): ClassMap {
@@ -216,7 +236,7 @@ export class MCurrency implements ComponentInterface {
               // eslint-disable-next-line no-return-assign
               ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
-              type={this.type}
+              type="number"
               value={this.value}
               min={this.minValue}
               max={this.maxValue}
@@ -225,6 +245,8 @@ export class MCurrency implements ComponentInterface {
               aria-label={this.label}
               aria-describedby={`${this.mId}-add`}
               onInput={this.changeHandler}
+              onBlur={this.onBlurEvent}
+              onFocus={this.onFocusEvent}
             />
             {this.iconMiddle && (
               <span
