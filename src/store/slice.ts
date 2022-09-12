@@ -63,7 +63,7 @@ export type Schedule = {
 export type OptionRepeatValue = {
   id: string;
   name: string;
-  value?: any;
+  value?: number | Date;
 };
 
 export type OptionRepeat = Record<OptionRepeatValue['id'], OptionRepeatValue>;
