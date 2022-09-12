@@ -60,11 +60,10 @@ export default function ModalSchedule(
         <div className="mb-4">
           <MCalendar
             date={scheduleDay}
-            setDate={(value: Date) => setScheduleDay(value)}
+            setDate={(value: string) => setScheduleDay(value)}
             inline
           />
         </div>
-        {/* <StartRepeatSelector /> */}
         <div className="d-flex w-100 mb-3">
           <MFormSwitch
             mId="autoRepeat"

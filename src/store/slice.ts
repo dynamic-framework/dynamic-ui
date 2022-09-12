@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { DateTime } from 'luxon';
 
 export type Account = {
   id: number;
@@ -27,7 +28,7 @@ type Card = {
 
 export type TransactionResult = {
   status: number;
-  date?: string;
+  date: string;
   transactionID?: string;
   error?: {
     message: string;
@@ -95,7 +96,7 @@ const initialState = {
         minimumPayment: 20,
       },
     },
-    date: new Date().toISOString().split('T')[0],
+    date: DateTime.now().toFormat('MM/dd/yy'),
   },
   user: {
     hasPaymentAlternatives: false,
@@ -119,13 +120,6 @@ const initialState = {
     enabled: false,
     frequency: null,
     option: {},
-  },
-  result: {
-    status: 200,
-    error: {
-      message: '[Error message]',
-      solution: '[Error solution]',
-    },
   },
   selectedCurrency: 'USD',
 } as WidgetState;

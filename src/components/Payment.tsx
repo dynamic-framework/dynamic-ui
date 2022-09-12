@@ -9,9 +9,7 @@ import {
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
-import { useMemo } from 'react';
 import PaymentPanel from './PaymentPanel';
-import ModalAccountSelector from './ModalAccountSelector';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   getAccounts,
@@ -47,12 +45,6 @@ export default function Payment() {
     accountSelected?.value ?? 0,
   );
 
-  const dateToPayCard = useMemo(() => Intl.DateTimeFormat('en-US', {
-    year: '2-digit',
-    month: 'numeric',
-    day: 'numeric',
-  }).format(new Date(cardToPay.date)), [cardToPay]);
-
   return (
     <>
       <div className="container pb-5 mb-5">
@@ -70,7 +62,7 @@ export default function Payment() {
             <>
               {currencies.length >= 2 && <CurrenciesSelector />}
               <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1">
-                <MListItem value={dateToPayCard} text={t('nextPayment')} class="p-1" />
+                <MListItem value={cardToPay.date} text={t('nextPayment')} class="p-1" />
                 <MListItem value={totalPayment} text={t('balance')} class="p-1" />
                 {/* TODO Conversion rate */}
                 {currencies.length >= 2 && <MListItem value="€1 = USD $1,4" text="Conversion rate" class="p-1" />}
