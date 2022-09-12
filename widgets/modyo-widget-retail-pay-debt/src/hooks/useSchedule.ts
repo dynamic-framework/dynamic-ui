@@ -51,6 +51,12 @@ export default function useSchedule(onAccept: (accepted: boolean) => void) {
           frequency: frequencyStart,
           option: optionStart,
         }));
+      } else {
+        dispatch(setAutoRepeat({
+          enabled: toggleStart,
+          frequency: null,
+          option: {},
+        }));
       }
 
       if (toggleEnd) {
@@ -58,6 +64,12 @@ export default function useSchedule(onAccept: (accepted: boolean) => void) {
           enabled: toggleEnd,
           frequency: frequencyEnd,
           option: optionEnd,
+        }));
+      } else {
+        dispatch(setEndRepeat({
+          enabled: toggleEnd,
+          frequency: null,
+          option: {},
         }));
       }
     }
