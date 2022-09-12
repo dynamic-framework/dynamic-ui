@@ -47,7 +47,6 @@ importers:
       bootstrap: 5.2.1_@popperjs+core@2.11.6
       dinero.js: 1.9.1
       liquidjs: 9.42.0
-      luxon: 3.0.3
     devDependencies:
       '@stencil/angular-output-target': 0.4.0_@stencil+core@2.17.4
       '@stencil/eslint-plugin': 0.4.0_4b1d121dc3c04bb07eec65d888b82a4b
@@ -72,6 +71,7 @@ importers:
       jest: 27.5.1
       jest-cli: 27.5.1
       lint-staged: 12.5.0
+      luxon: 3.0.3
       puppeteer: 14.4.1
       sass: 1.54.9
       stylelint: 14.11.0
@@ -119,6 +119,7 @@ importers:
       '@types/dinero.js': ~1.9.0
       '@types/jest': 23.3.9
       '@types/lodash.camelcase': ^4.3.7
+      '@types/luxon': ~3.0.1
       '@types/node': ^15.12.2
       '@types/react': ^18.0.8
       '@types/react-datepicker': ~4.4.2
@@ -135,6 +136,7 @@ importers:
       eslint-plugin-react-hooks: ^4.3.0
       i18next: ~21.9.0
       jest: ^26.1.0
+      luxon: ~3.0.3
       react: ^18.1.0
       react-content-loader: ~6.2.0
       react-datepicker: ~4.8.0
@@ -159,6 +161,7 @@ importers:
       '@types/dinero.js': 1.9.0
       '@types/jest': 23.3.9
       '@types/lodash.camelcase': 4.3.7
+      '@types/luxon': 3.0.1
       '@types/node': 15.14.9
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -172,6 +175,7 @@ importers:
       eslint-plugin-react: 7.31.7_eslint@8.22.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.22.0
       jest: 26.6.3
+      luxon: 3.0.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.5_e49030d8a7237b1fcef41c6afa03cd9e
@@ -281,6 +285,7 @@ importers:
       '@testing-library/user-event': ^13.5.0
       '@types/jest': ^27.0.1
       '@types/lodash.debounce': ^4.0.7
+      '@types/luxon': ~3.0.1
       '@types/node': ^16.7.13
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
@@ -297,6 +302,7 @@ importers:
       i18next: ~21.9.0
       liquidjs: ^9.39.2
       lodash.debounce: ^4.0.8
+      luxon: ~3.0.3
       react: ^18.2.0
       react-dom: ^18.2.0
       react-i18next: ~11.18.3
@@ -316,6 +322,7 @@ importers:
       i18next: 21.9.1
       liquidjs: 9.42.0
       lodash.debounce: 4.0.8
+      luxon: 3.0.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.5_e49030d8a7237b1fcef41c6afa03cd9e
@@ -326,6 +333,7 @@ importers:
       '@craco/craco': 7.0.0-alpha.7_4bbde2e723832342bff4a31e3de52621
       '@types/jest': 27.5.2
       '@types/lodash.debounce': 4.0.7
+      '@types/luxon': 3.0.1
       '@types/node': 16.11.58
       '@types/react': 18.0.18
       '@types/react-dom': 18.0.6
@@ -12716,7 +12724,6 @@ packages:
   /luxon/3.0.3:
     resolution: {integrity: sha512-+EfHWnF+UT7GgTnq5zXg3ldnTKL2zdv7QJgsU5bjjpbH17E3qi/puMhQyJVYuCq+FRkogvB5WB6iVvUr+E4a7w==}
     engines: {node: '>=12'}
-    dev: false
 
   /lz-string/1.4.4:
     resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}

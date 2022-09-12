@@ -48,6 +48,7 @@
     "@types/react-dom": "^18.0.3",
     "@types/lodash.camelcase": "^4.3.7",
     "jest": "^26.1.0",
+    "luxon": "~3.0.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "~11.18.3",
@@ -65,12 +66,14 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "@simbathesailor/use-what-changed": "^2.0.0"
+    "@simbathesailor/use-what-changed": "^2.0.0",
+    "@types/luxon": "~3.0.1"
   },
   "peerDependencies": {
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "~11.18.3",
+    "luxon": "~3.0.3",
     "@modyolabs/design-system": "workspace:^0.1.0"
   },
   "jest": {
