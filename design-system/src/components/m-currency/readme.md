@@ -9,7 +9,7 @@
 
 | Property                       | Attribute          | Description                                                          | Type                                            | Default                 |
 | ------------------------------ | ------------------ | -------------------------------------------------------------------- | ----------------------------------------------- | ----------------------- |
-| `currencyOptions` _(required)_ | --                 | Variant for the m-currency                                           | `{ [x: string]: string \| number \| boolean; }` | `undefined`             |
+| `currencyOptions` _(required)_ | --                 | Options for the m-currency                                           | `{ [x: string]: string \| number \| boolean; }` | `undefined`             |
 | `hint`                         | `hint`             | Hint text for the m-currency                                         | `string \| undefined`                           | `undefined`             |
 | `hintIconEnd`                  | `hint-icon-end`    | Icon end for the hint text                                           | `string \| undefined`                           | `undefined`             |
 | `hintIconStart`                | `hint-icon-start`  | Icon start for the hint text                                         | `string \| undefined`                           | `undefined`             |

@@ -96,7 +96,7 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() variant?: CurrencyVariant;
   /**
-   * Variant for the m-currency
+   * Options for the m-currency
    * */
   @Prop() currencyOptions!: Record<string, string | number | boolean>;
   /**

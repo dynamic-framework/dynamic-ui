@@ -209,7 +209,7 @@ export namespace Components {
     }
     interface MCurrency {
         /**
-          * Variant for the m-currency
+          * Options for the m-currency
          */
         "currencyOptions": Record<string, string | number | boolean>;
         /**
@@ -1289,7 +1289,7 @@ declare namespace LocalJSX {
     }
     interface MCurrency {
         /**
-          * Variant for the m-currency
+          * Options for the m-currency
          */
         "currencyOptions": Record<string, string | number | boolean>;
         /**
