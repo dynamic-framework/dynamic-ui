@@ -12,6 +12,6 @@ const resources = {
 
 // FIXME
 // const LANG = liquidParser.parse('{{site.language}}');
-const LANG = 'es';
+const LANG = 'en';
 
 configureI18n(resources, { lng: LANG });

@@ -90,10 +90,13 @@ const initialState = {
         totalPayment: 2000,
         minimumPayment: 140,
       },
+      /*
+      // FIXME
       EUR: {
         totalPayment: 300,
         minimumPayment: 20,
       },
+      */
     },
     date: DateTime.now().toFormat('MM/dd/yy'),
   },
