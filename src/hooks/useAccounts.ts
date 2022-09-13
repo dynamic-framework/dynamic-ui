@@ -6,22 +6,30 @@ const ACCOUNTS = [
   {
     id: 1,
     value: 1200,
-    mask: '*** 654',
+    mask: '••• 654',
     type: 'Saving',
     currency: 'USD',
   },
   {
     id: 2,
     value: 1500,
-    mask: '*** 653',
+    mask: '••• 653',
     type: 'Checking',
     currency: 'EUR',
   },
   {
     id: 3,
     value: 1000,
-    mask: '*** 876',
+    mask: '••• 876',
     type: 'Current',
+    currency: 'USD',
+  },
+  // TODO: Remove value on paypal and add dinamically on liquid user.hasExternalPayment
+  {
+    id: 4,
+    value: 10000,
+    mask: '',
+    type: 'Paypal',
     currency: 'USD',
   },
 ];

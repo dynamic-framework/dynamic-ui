@@ -9,6 +9,7 @@ import {
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
+import { useMemo } from 'react';
 import PaymentPanel from './PaymentPanel';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
@@ -34,6 +35,7 @@ export default function Payment() {
   const user = useAppSelector(getUser);
   const debt = useAppSelector(getDebt);
   const currencies = useAppSelector(getCurrencies);
+  const isPaypal = useMemo(() => accountSelected?.type === 'Paypal', [accountSelected]);
 
   const {
     values: [
@@ -73,9 +75,11 @@ export default function Payment() {
                     <p className="fw-semibold text-info mb-0 px-2 pb-2 text-gray">Pay from</p>
                     <MButton
                       class="account-selector"
-                      text={t('payFrom', {
-                        product: `${accountSelected.type} ${accountSelected.mask}`,
-                      })}
+                      text={`${accountSelected.type} ${accountSelected.mask}`}
+                      // eslint-disable-next-line react/jsx-props-no-spreading
+                      {...isPaypal && {
+                        iconLeft: 'paypal',
+                      }}
                       theme="info"
                       iconRight="chevron-down"
                       variant="outline"
