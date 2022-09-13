@@ -7,7 +7,8 @@ import {
   MAlert,
   MCurrency,
   MHint,
-  useFormatCurrency, useModalContext,
+  useFormatCurrency,
+  useModalContext,
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
@@ -32,6 +33,8 @@ export default function PaymentPanel() {
   const user = useAppSelector(getUser);
   const debt = useAppSelector(getDebt);
   const selectedCurrency = useAppSelector(getSelectedCurrency);
+
+  const isPaypal = useMemo(() => accountSelected?.type === 'Paypal', [accountSelected]);
 
   const {
     amountAvailable,
@@ -63,6 +66,9 @@ export default function PaymentPanel() {
   };
 
   const buttonPaymentAmountMessage = useMemo(() => {
+    if (isPaypal) {
+      return t('button.payPaypal');
+    }
     if (user.canPayWithoutDebt) {
       return t('button.back');
     }
@@ -73,7 +79,7 @@ export default function PaymentPanel() {
       return t('button.pay');
     }
     return t('button.payAmount', { amount: format(amount ?? 0) });
-  }, [isScheduled, amount, t, format, user]);
+  }, [isScheduled, amount, t, format, user, isPaypal]);
 
   const alertMessageSchedule = useMemo(() => {
     if (!schedule) {
@@ -266,9 +272,13 @@ export default function PaymentPanel() {
         <MButton
           {...(debt.minimumPayment === 0 || !amount || amountAvailable < 0 || amount < debt.minimumPayment) && !user.canPayWithoutDebt && { state: 'disabled' }}
           text={buttonPaymentAmountMessage}
-          theme="primary-gradient"
+          className="payment-button"
           isPill
-          iconRight="check-lg"
+          theme={isPaypal ? 'secondary-gradient' : 'primary-gradient'}
+          {...isPaypal
+            ? { iconLeft: 'paypal' }
+            : { iconRight: 'check-lg' }
+          }
           onClick={() => {
             if ((debt.minimumPayment > 0 && amount && amountAvailable >= 0)) {
               openModal('confirmPayment');

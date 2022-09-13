@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useCallback, useState } from 'react';
 import {
   MButton,
@@ -19,7 +20,6 @@ export default function ModalAccountSelector({ closeModal }: ModalProps) {
   const accounts = useAppSelector(getAccounts);
   const accountSelected = useAppSelector(getAccountSelected);
   const [value, setValue] = useState<Account | undefined>(accountSelected);
-
   const { format } = useFormatCurrency();
 
   const onConfirm = useCallback(() => {
@@ -42,16 +42,19 @@ export default function ModalAccountSelector({ closeModal }: ModalProps) {
             key={account.id}
             variant="selectable"
             class="w-100"
-            value={format(account.value)}
+            {...account.type !== 'Paypal' && {
+              value: format(account.value),
+            }}
             selectableProps={{
               id: `account${account.id}`,
               name: 'radioAccounts',
               value: account.id,
               checked: value?.id === account.id,
             }}
-            text={`${account.type}`}
+            text={`${account.type === 'Paypal' ? 'Pay with ' : ''}${account.type}`}
             subtext={account.mask}
             onClick={() => setValue(account)}
+            {...account.type === 'Paypal' && { image: 'https://www.svgrepo.com/show/349473/paypal.svg' }}
           />
         ))}
         <MButton
