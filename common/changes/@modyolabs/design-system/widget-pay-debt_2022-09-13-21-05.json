@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: add decimal property for m-currency",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
