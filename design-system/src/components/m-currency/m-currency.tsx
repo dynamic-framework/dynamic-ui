@@ -136,10 +136,14 @@ export class MCurrency implements ComponentInterface {
 
   private onBlurEvent = (ev: any) => {
     this.internalValue = ev.target.valueAsNumber;
-    const { format, ...options } = this.currencyOptions;
+    const {
+      format,
+      decimals,
+      ...options
+    } = this.currencyOptions;
     const dinero = Dinero({
       ...options,
-      amount: ev.target.valueAsNumber,
+      amount: ev.target.valueAsNumber * Number(decimals),
     }).toFormat(format as string);
     this.htmlInput.setAttribute('type', 'text');
     this.htmlInput.value = dinero;
