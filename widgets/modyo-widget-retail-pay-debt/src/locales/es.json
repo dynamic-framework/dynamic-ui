@@ -32,6 +32,7 @@
   "button": {
     "payAmount": "Pagar {{{ amount }}}",
     "pay": "Pagar",
+    "payPaypal": "Continuar con Paypal",
     "schedule": "Programar",
     "cancel": "Cancelar",
     "back": "Volver",

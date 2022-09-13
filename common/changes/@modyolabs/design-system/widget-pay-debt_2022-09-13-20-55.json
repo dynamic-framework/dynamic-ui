@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: add close event on modal and set new layout",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
