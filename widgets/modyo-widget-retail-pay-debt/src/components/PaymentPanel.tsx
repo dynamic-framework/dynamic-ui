@@ -188,7 +188,7 @@ export default function PaymentPanel() {
                   maxValue={accountSelected?.value}
                   onMChange={({ detail: { amount: value } }) => setAmount(value as number)}
                   value={amount ?? debt.minimumPayment}
-                  currencyOptions={{ currency: 'USD', format: '$0,0.00' }}
+                  currencyOptions={{ currency: 'USD', format: '$0,0.00', decimals: 100 }}
                 />
               </>
             )
