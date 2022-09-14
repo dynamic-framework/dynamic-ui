@@ -9,6 +9,12 @@ export declare interface CalendarProps {
   calendarContainer?: React.FC;
   inline?: boolean;
   withPortal?: boolean;
+  minDate?: string;
+  showTimeInput?: boolean;
+  calendarStartDay?: number;
+  timeInputLabel?: string;
+  className?: string;
+  dateFormat?: string | string[];
 }
 
 export default function MCalendar({
@@ -17,17 +23,29 @@ export default function MCalendar({
   calendarContainer,
   inline,
   withPortal,
+  minDate,
+  showTimeInput,
+  calendarStartDay,
+  timeInputLabel,
+  dateFormat,
+  className,
 }: CalendarProps) {
-  const dateJS = DateTime.fromISO(date).toJSDate();
+  const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
 
   return (
     <DatePicker
-      selected={dateJS}
+      selected={dateJS(date)}
       onChange={(value: Date) => setDate(DateTime.fromJSDate(value).toISO())}
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       calendarContainer={calendarContainer}
       inline={inline}
       withPortal={withPortal}
+      minDate={minDate ? dateJS(minDate) : undefined}
+      showTimeInput={showTimeInput}
+      calendarStartDay={calendarStartDay}
+      timeInputLabel={timeInputLabel}
+      dateFormat={dateFormat}
+      className={className}
     />
   );
 }
