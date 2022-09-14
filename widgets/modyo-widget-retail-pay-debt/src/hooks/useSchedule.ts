@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useModalContext } from '@modyolabs/react-design-system';
 
 import { DateTime } from 'luxon';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { getSchedule } from '../store/selectors';
 import {
   setAutoRepeat,
   setEndRepeat,
@@ -13,8 +14,9 @@ import useRepeatStart from './useRepeatStart';
 
 export default function useSchedule(onAccept: (accepted: boolean) => void) {
   const dispatch = useAppDispatch();
+  const schedule = useAppSelector(getSchedule);
   const { closeModal } = useModalContext();
-  const [scheduleDay, setScheduleDay] = useState(DateTime.now().toISO());
+  const [scheduleDay, setScheduleDay] = useState(schedule?.date ?? DateTime.now().toISO());
 
   const {
     toggleStart,
