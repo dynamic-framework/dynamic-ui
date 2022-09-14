@@ -26,7 +26,18 @@ body,
     @extend .scroll-h;
     justify-content: flex-start;
   }
-
+  .selectAccount {
+    .form-control-input {
+      .form-control-icon {
+        color: #27346A;
+        --bs-form-control-icon-size: 1.5rem;
+        background-color: transparent;
+      }
+    }
+    .form-select {
+      background-position-x: 98%;
+    }
+  }
   .account-selector {
     .btn {
       --bs-btn-padding-x: 1.5rem;
