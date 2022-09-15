@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import {
   MAlert,
   MButton,
@@ -76,7 +77,6 @@ export default function Payment() {
                     <MButton
                       class="account-selector"
                       text={`${accountSelected.type} ${accountSelected.mask}`}
-                      // eslint-disable-next-line react/jsx-props-no-spreading
                       {...isPaypal && {
                         iconLeft: 'paypal',
                       }}
@@ -85,28 +85,30 @@ export default function Payment() {
                       variant="outline"
                       onClick={() => openModal('accountSelector')}
                     />
-                    <small className="text-gray d-flex gap-2 align-items-center p-1">
-                      <MIcon icon="info-circle" />
-                      <span>{`${amountAvailable} available`}</span>
-                    </small>
                   </div>
                 )}
                 <MSelect
-                  class="mb-3 d-none d-lg-block"
+                  class="mb-1 d-none d-lg-block selectAccount"
                   mId="selectAccount"
                   variant="full"
                   theme="info"
                   label="Pay From"
-                  hint="Available"
-                  labelExtractor={({ type, mask }: Account) => t('payFrom', {
-                    product: `${type} ${mask}`,
-                  })}
+                  {...isPaypal && {
+                    iconStart: 'paypal',
+                  }}
+                  labelExtractor={({ type, mask }: Account) => `${type} ${mask}`}
                   options={accounts}
                   onMChange={
                     // eslint-disable-next-line max-len
                     ({ detail: account }: CustomEvent<Account>) => dispatch(setAccountSelected(account))
                   }
                 />
+                { !isPaypal && (
+                  <small className="text-gray d-flex gap-2 align-items-center p-1">
+                    <MIcon icon="info-circle" />
+                    <span>{`${amountAvailable} available`}</span>
+                  </small>
+                )}
                 <PaymentPanel />
               </div>
             </>

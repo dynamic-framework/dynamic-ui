@@ -9,6 +9,8 @@ import {
 import type { ModalProps } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
+import { DateTime } from 'luxon';
+
 import useSchedule from '../hooks/useSchedule';
 import StartRepeatOptions from './RepeatOptionStart';
 import RepeatOptionEnd from './RepeatOptionEnd';
@@ -64,6 +66,9 @@ export default function ModalSchedule(
           <MCalendar
             date={scheduleDay}
             setDate={(value: string) => setScheduleDay(value)}
+            minDate={DateTime.now().toISO()}
+            showTimeInput
+            timeInputLabel=""
             inline
           />
         </div>
