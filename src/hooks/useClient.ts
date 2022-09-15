@@ -4,11 +4,11 @@ import { useAppDispatch } from '../store/hooks';
 import { setUserPayment } from '../store/slice';
 
 const OPTIONS = {
-  hasPaymentAlternatives: !liquidParser.parse('{{user.paymentAlternatives}}') || true,
-  canPayOtherAmount: !liquidParser.parse('{{user.freeAmountAvailable}}') || true,
-  canPayMultipleCurrencies: !liquidParser.parse('{{user.payWithMultipleCurrencies}}') || false,
-  hasExternalPayment: !liquidParser.parse('{{user.payWithExternal}}') || false,
-  canPayWithoutDebt: !liquidParser.parse('{{user.payWithoutDebt}}') || false,
+  hasPaymentAlternatives: liquidParser.parse('{{vars.paymentAlternatives}}') === 'true',
+  canPayOtherAmount: liquidParser.parse('{{vars.freeAmountAvailable}}') === 'true',
+  canPayMultipleCurrencies: liquidParser.parse('{{vars.payWithMultipleCurrencies}}') === 'true',
+  hasExternalPayment: liquidParser.parse('{{vars.payWithExternal}}') === 'true',
+  canPayWithoutDebt: liquidParser.parse('{{vars.payWithoutDebt}}') === 'true',
 };
 
 export default function useClient() {
