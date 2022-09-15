@@ -1,13 +1,13 @@
 {
-  "cardToPay": "Pagar {{{ card }}}",
-  "payFrom": "Desde: {{{ product }}}",
+  "cardToPay": "Pagar {card}",
+  "payFrom": "Desde: {product}",
   "nextPayment": "Próximo pago",
   "balance": "Valor a pagar",
   "conversionRate": "Tasa de conversión",
   "currencyInput": {
     "placeholder": "Monto",
-    "remainingValid": "{{{ remaining }}} restante",
-    "remainingInvalid": "{{{ amount }}} sobrepasa lo disponible",
+    "remainingValid": "{remaining} restante",
+    "remainingInvalid": "{amount} sobrepasa lo disponible",
     "insufficient": "Fondos insuficientes"
   },
   "shortCutToggle": {
@@ -26,11 +26,11 @@
     "noLabel": "No",
     "noScheduleLabel": "Este pago se realizará automáticamente una sola vez en la fecha configurada ",
     "noRecurrentLabel": "Este pago sólo se realizará hasta la fecha configurada",
-    "yesScheduleLabel": "Fecha de pago {{{ date }}}",
-    "yesRecurrentLabel": "Estás programando un pago {{{ frequency }}}"
+    "yesScheduleLabel": "Fecha de pago {date}",
+    "yesRecurrentLabel": "Estás programando un pago {frequency}"
   },
   "button": {
-    "payAmount": "Pagar {{{ amount }}}",
+    "payAmount": "Pagar {amount}",
     "pay": "Pagar",
     "payPaypal": "Continuar con Paypal",
     "schedule": "Programar",
@@ -40,8 +40,8 @@
     "retry": "Reintentar"
   },
   "alert": {
-    "schedule": "Estás programando el pago de tu tarjeta de crédito por valor de  {{{ amount }}} el día {{{ date }}}",
-    "scheduleAndRecurring": "Estás programando el pago de tu tarjeta de crédito por valor de  {{{ amount }}} el día {{{ date }}} {{{ repeatType }}}",
+    "schedule": "Estás programando el pago de tu tarjeta de crédito por valor de  {amount} el día {date}",
+    "scheduleAndRecurring": "Estás programando el pago de tu tarjeta de crédito por valor de  {amount} el día {date} {repeatType}",
     "notPay": "No tienes pagos pendientes por realizar",
     "wrong": "Oops! Algo salió mal"
   },
@@ -85,10 +85,10 @@
     "scheduleSuccess": "Agendamiento exitoso",
     "scheduleFailed": "Agendamiento fallido",
     "scheduledToPay": "Progamado para pagar",
-    "scheduledOn": "{{{ amount }}} para {{{ date }}}",
-    "payErrorMessage": "We couldn’t complete your payment due to {{{ message }}}",
-    "scheduleErrorMessage": "We couldn’t complete your scheduling due to {{{ message }}}",
-    "errorSolution": "Please {{{ solution }}}",
+    "scheduledOn": "{amount} para {date}",
+    "payErrorMessage": "We couldn’t complete your payment due to {message}",
+    "scheduleErrorMessage": "We couldn’t complete your scheduling due to {message}",
+    "errorSolution": "Please {solution}",
     "moneyPaid": "Valor pagado",
     "paidTo": "Producto pagado",
     "transactionId": "ID de la transacción",

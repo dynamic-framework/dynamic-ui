@@ -1,13 +1,13 @@
 {
-  "cardToPay": "Paying {{{ card }}}",
-  "payFrom": "From: {{{ product }}}",
+  "cardToPay": "Paying {card}",
+  "payFrom": "From: {product}",
   "nextPayment": "Next payment date",
   "balance": "Balance",
   "conversionRate": "Conversion rate",
   "currencyInput": {
     "placeholder": "Amount",
-    "remainingValid": "{{{ remaining }}} remaining",
-    "remainingInvalid": "{{{ amount }}} over limit",
+    "remainingValid": "{remaining} remaining",
+    "remainingInvalid": "{amount} over limit",
     "insufficient": "Insufficient funds"
   },
   "shortCutToggle": {
@@ -26,11 +26,11 @@
     "noLabel": "No",
     "noScheduleLabel": "This is a one time payment",
     "noRecurrentLabel": "This payment will not repeat",
-    "yesScheduleLabel": "To be paid {{{ date }}}",
-    "yesRecurrentLabel": "This payment will repeat {{{ frequency }}}"
+    "yesScheduleLabel": "To be paid {date}",
+    "yesRecurrentLabel": "This payment will repeat {frequency}"
   },
   "button": {
-    "payAmount": "Pay {{{ amount }}}",
+    "payAmount": "Pay {amount}",
     "pay": "Pay",
     "payPaypal": "Continue with Paypal",
     "schedule": "Schedule",
@@ -40,8 +40,8 @@
     "retry": "Retry"
   },
   "alert": {
-    "schedule": "You are scheduling to pay the {{{ amount }}} amount on {{{ date }}}",
-    "scheduleAndRecurring": "You are scheduling to pay the {{{ amount }}} amount on {{{ date }}} {{{ repeatType }}}",
+    "schedule": "You are scheduling to pay the {amount} amount on {date}",
+    "scheduleAndRecurring": "You are scheduling to pay the {amount} amount on {date} {repeatType}",
     "notPay": "You have nothing to pay yet",
     "wrong": "Oops! Something Went Wrong"
   },
@@ -55,12 +55,12 @@
       "renegotiateLabel": "Pay your future total"
     },
     "pay": {
-      "title": "Pay {{{amount}}}?",
-      "text": "You are paying {{{card}}} from your {{{product}}}"
+      "title": "Pay {amount}?",
+      "text": "You are paying {card} from your {product}"
     },
     "schedule": {
-      "title": "Schedule {{{amount}}}?",
-      "text": "You are scheduling to pay {{{card}}} from your {{{product}}}"
+      "title": "Schedule {amount}?",
+      "text": "You are scheduling to pay {card} from your {product}"
     },
     "scheduleCalendar": {
       "title": " Schedule"
@@ -85,10 +85,10 @@
     "scheduleSuccess": "Scheduled successful",
     "scheduleFailed": "Scheduling failure",
     "scheduledToPay": "Scheduled to pay",
-    "scheduledOn": "{{{ amount }}} on {{{ date }}}",
-    "payErrorMessage": "We couldn’t complete your payment due to {{{ message }}}",
-    "scheduleErrorMessage": "We couldn’t complete your scheduling due to {{{ message }}}",
-    "errorSolution": "Please {{{ solution }}}",
+    "scheduledOn": "{amount} on {date}",
+    "payErrorMessage": "We couldn’t complete your payment due to {message}",
+    "scheduleErrorMessage": "We couldn’t complete your scheduling due to {message}",
+    "errorSolution": "Please {solution}",
     "moneyPaid": "Money paid",
     "paidTo": "Paid to",
     "transactionId": "Transaction ID",
