@@ -86,10 +86,10 @@ export default function PaymentPanel() {
       return '';
     }
     if (isScheduled && recurringStart.enabled) {
-      return t('alert.scheduleAndRecurring', { amount, date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy'), repeatType: recurringStart.frequency });
+      return t('alert.scheduleAndRecurring', { amount: format(amount ?? 0), date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy, HH:mm'), repeatType: recurringStart.frequency });
     }
-    return t('alert.schedule', { amount, date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy') });
-  }, [amount, schedule, isScheduled, recurringStart, t]);
+    return t('alert.schedule', { amount: format(amount ?? 0), date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy, HH:mm') });
+  }, [amount, schedule, isScheduled, recurringStart, t, format]);
 
   const hintCurrency = useMemo(() => {
     if (amount && amount > debt.totalPayment) {
@@ -160,8 +160,8 @@ export default function PaymentPanel() {
               <>
                 <MShortcutToggle
                   className={
-                      shortcut !== 'otherAmount' ? 'd-block' : 'd-none'
-                    }
+                    shortcut !== 'otherAmount' ? 'd-block' : 'd-none'
+                  }
                   key="3"
                   {...debt.totalPayment === 0 && { state: 'disabled' }}
                   mId="otherAmountOption"
@@ -202,11 +202,11 @@ export default function PaymentPanel() {
             (shortcut === 'totalOption' && accountSelected?.value < debt.totalPayment)
             || (shortcut === 'minimumOption' && accountSelected?.value < debt.minimumPayment)
           ) && (
-            <MHint
-              text="You don’t have enough funds to pay this amount"
-              iconStart="info-circle"
-              theme="danger"
-            />
+          <MHint
+            text="You don’t have enough funds to pay this amount"
+            iconStart="info-circle"
+            theme="danger"
+          />
           )}
           {user.hasPaymentAlternatives && (
             <MShortcutToggle
@@ -231,13 +231,13 @@ export default function PaymentPanel() {
       </div>
       <div className="pb-4 text-center">
         <div
-          className="collapse"
+          className={`collapse ${amount && amount >= debt.minimumPayment ? '' : 'd-none'}`}
           id="moreOptions"
         >
           <div
             className="px-3 py-2 border rounded-1 mb-2"
             onClick={() => openModal('schedule', { payload: { onAccept: setIsScheduled } })}
-            onKeyDown={() => {}}
+            onKeyDown={() => { }}
             tabIndex={0}
             role="button"
           >
@@ -254,7 +254,7 @@ export default function PaymentPanel() {
               className="d-block text-info text-start"
             >
               {isScheduled && schedule
-                ? t('collapse.yesScheduleLabel', { date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy') })
+                ? t('collapse.yesScheduleLabel', { date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy, HH:mm') })
                 : t('collapse.noScheduleLabel')}
             </small>
           </div>
@@ -265,10 +265,12 @@ export default function PaymentPanel() {
           theme="info"
           text={t('collapse.options')}
           iconRight="chevron-down"
-          data-bs-toggle="collapse"
-          data-bs-target="#moreOptions"
-          aria-expanded="false"
-          aria-controls="collapseExample"
+          {...amount && amount >= debt.minimumPayment && ({
+            'data-bs-toggle': 'collapse',
+            'data-bs-target': '#moreOptions',
+            'aria-expanded': 'false',
+            'aria-controls': 'collapseExample',
+          })}
         />
       </div>
       <div
