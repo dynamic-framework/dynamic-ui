@@ -98,7 +98,7 @@ const initialState = {
       },
       */
     },
-    date: DateTime.now().toFormat('MM/dd/yy'),
+    date: DateTime.now().toFormat('MM/dd/yy, HH:mm'),
   },
   user: {
     hasPaymentAlternatives: false,
