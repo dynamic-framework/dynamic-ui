@@ -39,11 +39,15 @@ export default function RepeatOptionEnd({
   };
 
   return (
-    <div className="d-flex w-100">
+    <div className="d-flex w-100 repeat-end-container">
       {frequency === 'date' && (
         <MCalendar
+          className="input-date"
           date={option.date?.value as string ?? REPEAT_END_OPTIONS.date.value}
           setDate={handleDate}
+          minDate={DateTime.now().toISO()}
+          showTimeInput
+          timeInputLabel=""
           withPortal
         />
       )}
