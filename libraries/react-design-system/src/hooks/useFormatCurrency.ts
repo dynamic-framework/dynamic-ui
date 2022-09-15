@@ -4,19 +4,15 @@ import { formatCurrency } from '@modyolabs/design-system';
 import { useLiquidContext } from '../contexts';
 
 export default function useFormatCurrency(...args: Array<number>) {
-  const {
-    language,
-    currency,
-    currencyWithDecimals,
-  } = useLiquidContext();
+  const { currency } = useLiquidContext();
 
   const format = useCallback(
-    (value: number) => formatCurrency(value, language, currency, currencyWithDecimals),
-    [language, currency, currencyWithDecimals],
+    (value: number) => formatCurrency(value, currency),
+    [currency],
   );
 
   const values = (args || []).map((value) => (
-    formatCurrency(value ?? 0, language, currency, currencyWithDecimals)
+    formatCurrency(value ?? 0, currency)
   ));
 
   return {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-// import { liquidParser } from '@modyolabs/design-system';
+import { liquidParser } from '@modyolabs/design-system';
 import { configureI18n } from '@modyolabs/react-design-system';
 
 import es from '../locales/es.json';
@@ -10,8 +10,6 @@ const resources = {
   en: { translation: en },
 };
 
-// FIXME
-// const LANG = liquidParser.parse('{{site.language}}');
-const LANG = 'en';
+const LANG = liquidParser.parse('{{site.language}}');
 
 configureI18n(resources, { lng: LANG });

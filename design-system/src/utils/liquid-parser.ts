@@ -2,14 +2,11 @@
 export default {
   library: {},
   engine: undefined as any,
-  useEngine: false,
-  init(library: any, useEngine = false) {
+  init(library: any, Liquid: any) {
     this.library = library;
-    this.useEngine = useEngine;
 
-    if (this.useEngine) {
+    if (Liquid) {
       // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
-      const Liquid = require('liquidjs');
       this.engine = new Liquid.Liquid({
         strictFilters: true,
         strictVariables: true,
@@ -41,13 +38,13 @@ export default {
     }
   },
   parse(liquidString: string): string {
-    if (this.useEngine) {
+    if (this.engine) {
       return this.parseLiquid(liquidString);
     }
     return liquidString;
   },
   async parseAsync(liquidString: string): Promise<string> {
-    if (this.useEngine) {
+    if (this.engine) {
       return this.parseLiquidAsync(liquidString);
     }
     return liquidString;

@@ -4,20 +4,27 @@ import {
   useMemo,
 } from 'react';
 import type { PropsWithChildren } from 'react';
-import type { Currency } from 'dinero.js';
 
-// import { liquidParser } from '@modyolabs/design-system';
+import { liquidParser } from '@modyolabs/design-system';
 
 interface LiquidContextInterface {
   language: string;
-  currency: Currency;
-  currencyWithDecimals: boolean;
+  currency: {
+    symbol: string;
+    precision: number;
+    separator: string;
+    decimal: string;
+  }
 }
 
 export const LiquidContext = createContext<LiquidContextInterface>({
   language: 'en-US',
-  currency: 'USD' as Currency,
-  currencyWithDecimals: true,
+  currency: {
+    symbol: '$',
+    precision: 2,
+    separator: ',',
+    decimal: '.',
+  },
 });
 
 export function LiquidContextProvider(
@@ -25,19 +32,14 @@ export function LiquidContextProvider(
     children,
   }: PropsWithChildren,
 ) {
-  /*
-  // FIXME
   const value = useMemo(() => ({
     language: liquidParser.parse('{{site.language}}'),
-    currency: liquidParser.parse('{{site.currency}}') as Currency,
-    currencyWithDecimals: liquidParser.parse('{{site.currencyWithDecimals}}') as unknown as boolean,
-  }), []);
-  */
-
-  const value = useMemo(() => ({
-    language: 'en-US',
-    currency: 'USD' as Currency,
-    currencyWithDecimals: true,
+    currency: {
+      symbol: liquidParser.parse('{{vars.currency-symbol}}'),
+      precision: parseInt(liquidParser.parse('{{vars.currency-precision}}'), 10),
+      separator: liquidParser.parse('{{vars.currency-separator}}'),
+      decimal: liquidParser.parse('{{vars.currency-decimal}}'),
+    },
   }), []);
 
   return (

@@ -8,7 +8,8 @@ import {
   Watch,
   State,
 } from '@stencil/core';
-import Dinero from 'dinero.js';
+import currency from 'currency.js';
+import type { Options } from 'currency.js';
 
 import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
 
@@ -98,7 +99,7 @@ export class MCurrency implements ComponentInterface {
   /**
    * Options for the m-currency
    * */
-  @Prop() currencyOptions!: Record<string, string | number | boolean>;
+  @Prop() currencyOptions!: Options;
   /**
    * Change the layout direction to put the label on top or left of input
    */
@@ -134,19 +135,11 @@ export class MCurrency implements ComponentInterface {
     });
   };
 
-  private onBlurEvent = (ev: any) => {
-    this.internalValue = ev.target.valueAsNumber;
-    const {
-      format,
-      decimals,
-      ...options
-    } = this.currencyOptions;
-    const dinero = Dinero({
-      ...options,
-      amount: ev.target.valueAsNumber * Number(decimals),
-    }).toFormat(format as string);
+  private onBlurEvent = (event: any) => {
+    this.internalValue = event.target.valueAsNumber;
+    const value = currency(event.target.valueAsNumber, this.currencyOptions).format();
     this.htmlInput.setAttribute('type', 'text');
-    this.htmlInput.value = dinero;
+    this.htmlInput.value = value;
   };
 
   private onFocusEvent = () => {

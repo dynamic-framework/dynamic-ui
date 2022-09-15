@@ -9,6 +9,7 @@ import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interf
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
 import { CurrencyEvent, CurrencyVariant, SelectProps } from "./components/m-currency/m-currency-interface";
+import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
@@ -211,7 +212,7 @@ export namespace Components {
         /**
           * Options for the m-currency
          */
-        "currencyOptions": Record<string, string | number | boolean>;
+        "currencyOptions": Options;
         /**
           * Hint text for the m-currency
          */
@@ -1291,7 +1292,7 @@ declare namespace LocalJSX {
         /**
           * Options for the m-currency
          */
-        "currencyOptions": Record<string, string | number | boolean>;
+        "currencyOptions": Options;
         /**
           * Hint text for the m-currency
          */

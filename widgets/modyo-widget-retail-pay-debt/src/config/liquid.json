@@ -2,7 +2,6 @@
   "site": {
     "name": "My Site",
     "language": "en-US",
-    "currency": "USD",
     "url": "https://un.modyo.cloud/testing"
   },
   "account": {
@@ -10,5 +9,11 @@
   },
   "user": {
     "access_token": null
+  },
+  "vars": {
+    "currency-symbol": "$",
+    "currency-precision": 2,
+    "currency-separator": ".",
+    "currency-decimal": ","
   }
 }
