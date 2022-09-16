@@ -64,7 +64,7 @@ export default function Payment() {
           {accountSelected && (
             <>
               {currencies.length >= 2 && <CurrenciesSelector />}
-              <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1">
+              <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1 small">
                 <MListItem value={cardToPay.date} text={t('nextPayment')} class="p-1" />
                 <MListItem value={totalPayment} text={t('balance')} class="p-1" />
                 {/* TODO Conversion rate */}
