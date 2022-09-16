@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: remove icon class on modal close",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}

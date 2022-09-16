@@ -136,7 +136,7 @@ export class MModal {
                   <button
                     type="button"
                     class={{
-                      'btn-close': true,
+                      'btn-close': !this.closeText,
                       'btn-close-text': !!this.closeText,
                     }}
                     aria-label="Close"
