@@ -37,7 +37,8 @@
     "cancel": "Cancelar",
     "back": "Volver",
     "confirm": "Continuar",
-    "retry": "Reintentar"
+    "retry": "Reintentar",
+    "continue": "Continuar"
   },
   "alert": {
     "schedule": "Estás programando el pago de tu tarjeta de crédito por valor de  {amount} el día {date}",
@@ -57,6 +58,10 @@
     "pay": {
       "title": "Pagar {{{amount}}}?",
       "text": "Estás realizando el pago de la tarjeta {{{card}}} desde tu cuenta {{{product}}}"
+    },
+    "paypal": {
+      "title": "Continuar con Paypal?",
+      "text": "Estás a punto de pagar {card} en Paypal"
     },
     "schedule": {
       "title": " Programar pago {{{amount}}}?",

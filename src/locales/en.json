@@ -37,7 +37,8 @@
     "cancel": "Cancel",
     "back": "Back",
     "confirm": "Confirm",
-    "retry": "Retry"
+    "retry": "Retry",
+    "continue": "Continue"
   },
   "alert": {
     "schedule": "You are scheduling to pay the {amount} amount on {date}",
@@ -57,6 +58,10 @@
     "pay": {
       "title": "Pay {amount}?",
       "text": "You are paying {card} from your {product}"
+    },
+    "paypal": {
+      "title": "Continue with Paypal?",
+      "text": "Your are about to set a payment of {card} on Paypal"
     },
     "schedule": {
       "title": "Schedule {amount}?",
