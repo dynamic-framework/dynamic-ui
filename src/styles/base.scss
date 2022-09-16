@@ -3,9 +3,11 @@
 html,
 body,
 #root {
-
   height: 100vh;
 
+  .max-width {
+    max-width: 1000px;
+  }
   .scroll-h {
     overflow: hidden;
     overflow-x: auto;

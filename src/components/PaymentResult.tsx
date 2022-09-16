@@ -26,7 +26,7 @@ export default function PaymentResult() {
   const resultTransaction = result?.status === 200;
 
   return (
-    <div className="container bg-light h-100">
+    <div className="container bg-light h-100 max-width">
       <div className="d-flex justify-content-between align-items-center py-4 px-1">
         <MButton iconLeft="arrow-left" isPill theme="info" variant="text" />
         <h6 className="fw-bold m-0 flex-grow-1 text-center">
