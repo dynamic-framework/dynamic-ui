@@ -2,6 +2,7 @@ import { MButton, MModal, useFormatCurrency } from '@modyolabs/react-design-syst
 import type { ModalProps } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
+import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setIsPaid, setResult } from '../store/slice';
 import {
@@ -41,6 +42,45 @@ export default function ModalConfirmPayment({ closeModal }: ModalProps) {
     closeModal();
   }
 
+  const isPaypalAccount = accountSelected?.type === 'Paypal';
+
+  const confirmationHeader = () => {
+    if (isPaypalAccount) {
+      return t('modal.paypal.title');
+    }
+    if (isScheduled) {
+      return t('modal.schedule.title', { amount: amountUsedFormatted });
+    }
+    return t('modal.pay.title', { amount: amountUsedFormatted });
+  };
+
+  const confirmationBody = () => {
+    if (!accountSelected) {
+      return '';
+    }
+    const cardDetail = {
+      card: `${cardToPay.franchise} ${cardToPay.mask}`,
+      product: `${accountSelected.type} ${accountSelected.mask}`,
+    };
+    if (isPaypalAccount) {
+      return t('modal.paypal.text', { ...cardDetail });
+    }
+    if (isScheduled) {
+      return t('modal.schedule.text', cardDetail);
+    }
+    return t('modal.pay.text', cardDetail);
+  };
+
+  const continueButton = () => {
+    if (isScheduled) {
+      return t('button.schedule');
+    }
+    if (isPaypalAccount) {
+      return t('button.continue');
+    }
+    return t('button.pay');
+  };
+
   return (
     <MModal
       name="modalConfirmPayment"
@@ -48,24 +88,20 @@ export default function ModalConfirmPayment({ closeModal }: ModalProps) {
       static
     >
       <div slot="header" className="p-3">
-        <h5 className="fw-semibold">
-          {amountUsed && (
-            t(isScheduled ? 'modal.schedule.title' : 'modal.pay.title', { amount: amountUsedFormatted })
-          )}
+        <h5 className="fw-semibold m-0">
+          {confirmationHeader()}
         </h5>
       </div>
       <div
         slot="body"
         className="d-flex flex-column justify-content-center align-items-start px-3 gap-3"
       >
-        {accountSelected?.id && (
-          t(isScheduled ? 'modal.schedule.text' : 'modal.pay.text', {
-            card: `${cardToPay.franchise} ${cardToPay.mask}`,
-            product: `${accountSelected.type} ${accountSelected.mask}`,
-          })
-        )}
+        {confirmationBody()}
       </div>
-      <div slot="footer" className="d-flex align-items-center w-100 m-3">
+      <div
+        slot="footer"
+        className={`d-flex align-items-center w-100 m-3 ${(isScheduled || isPaypalAccount) ? 'flex-column-reverse' : ''}`}
+      >
         <MButton
           class="mb-2 w-50"
           text={t('button.cancel')}
@@ -76,7 +112,7 @@ export default function ModalConfirmPayment({ closeModal }: ModalProps) {
         />
         <MButton
           class="mb-2 w-50"
-          text={t(isScheduled ? 'button.schedule' : 'button.pay')}
+          text={continueButton()}
           theme="primary"
           isPill
           onClick={() => handlePaid()}
