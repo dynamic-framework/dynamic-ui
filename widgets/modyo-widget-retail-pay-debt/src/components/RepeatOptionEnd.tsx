@@ -48,6 +48,7 @@ export default function RepeatOptionEnd({
           minDate={DateTime.now().toISO()}
           showTimeInput
           timeInputLabel=""
+          dateFormat="MM/dd/yy, HH:mm a"
           withPortal
         />
       )}
