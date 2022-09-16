@@ -50,7 +50,7 @@ export default function Payment() {
 
   return (
     <>
-      <div className="container pb-5 mb-5">
+      <div className="container pb-5 mb-5 max-width">
         <div className="pb-3 px-4">
           <div className="d-flex justify-content-between align-items-center my-4">
             <MButton className="btn-icon" iconLeft="arrow-left" isPill theme="info" variant="text" />
