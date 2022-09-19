@@ -13,8 +13,12 @@ export default function App() {
   const isPaid = useAppSelector(getIsPaid);
 
   return (
-    <MApp>
-      {!isPaid ? <Payment /> : <PaymentResult />}
+    <MApp className="h-100">
+      <div className={`container mb-5 h-100 ${isPaid ? 'bg-light' : ''}`}>
+        <div className="row m-0 p-0 g-0 mx-auto justify-content-center">
+          {!isPaid ? <Payment /> : <PaymentResult />}
+        </div>
+      </div>
     </MApp>
   );
 }

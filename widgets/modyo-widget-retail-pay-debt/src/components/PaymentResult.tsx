@@ -30,15 +30,11 @@ export default function PaymentResult() {
       title: `Payment ${cardToPay.franchise} ${cardToPay.mask}`,
       text: `Your payment was ${resultTransaction ? 'successful' : 'failed'}`,
       url: 'https://newdynamic.modyo.cloud/private',
-    }
+    };
     if (navigator.share) {
-      try {
-        await navigator
-          .share(shareData)
-          .then(() => console.log('Hooray! Your content was shared to tha world'));
-      } catch (error) {
-        console.log(`Oops! I couldn't share to the world because: ${error}`);
-      }
+      await navigator
+        .share(shareData)
+        .then(() => console.log('Hooray! Your content was shared to tha world'));
     } else {
       console.log(
         'Web share is currently not supported on this browser. Please provide a callback',
@@ -47,16 +43,16 @@ export default function PaymentResult() {
   };
 
   return (
-    <div className="container bg-light h-100 max-width">
+    <div className="col-12 col-md-6 h-100">
       <div className="d-flex justify-content-between align-items-center py-4 px-1">
-        <MButton iconLeft="arrow-left" isPill theme="info" variant="text" />
+        <MButton className="btn-icon d-md-none" iconLeft="arrow-left" isPill theme="info" variant="text" />
         <h6 className="fw-bold m-0 flex-grow-1 text-center">
           {t('result.title')}
         </h6>
         <MButton onClick={handleSharing} iconLeft="share" isPill theme="tertiary" variant="ghost" />
       </div>
       <div className="d-flex flex-column align-items-center gap-4">
-        <div className="rounded bg-white d-flex flex-column p-4 gap-4">
+        <div className="rounded bg-white d-flex flex-column m-4 p-4 gap-4">
           <div className={`d-flex flex-column gap-3 text-center w-50 mx-auto text-${resultTransaction ? 'success' : 'danger'}`}>
             <MIcon
               icon={resultTransaction ? 'check-circle-fill' : 'x-circle-fill'}
