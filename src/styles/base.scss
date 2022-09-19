@@ -3,17 +3,7 @@
 html,
 body,
 #root {
-  height: 100vh;
-
-  .max-width {
-    max-width: 1000px;
-  }
-  .scroll-h {
-    overflow: hidden;
-    overflow-x: auto;
-    display: flex;
-    align-items: center;
-  }
+  height: 100%;
 
   .amount-options {
     gap: 6px;
@@ -24,10 +14,6 @@ body,
     }
   }
 
-  .segment-control {
-    @extend .scroll-h;
-    justify-content: flex-start;
-  }
   .selectAccount {
     .form-control-input {
       .form-control-icon {
@@ -71,27 +57,23 @@ body,
   }
 
   .btn {
-
     width: 100%;
-
-    &.btn-primary-gradient {
+    &.btn-primary-gradient, &.btn-secondary-gradient {
       --bs-btn-padding-x: 4rem;
-
       &:disabled {
         color: var(--bs-white);
+        box-shadow: none;
       }
     }
   }
 
   .custom-alert {
     z-index: 100;
-
     .alert {
       .alert-text {
         --bs-alert-font-size: 12px;
         --bs-alert-line-height: 18px;
       }
-
       .m-icon {
         font-size: 12px;
       }
