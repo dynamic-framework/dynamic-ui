@@ -111,10 +111,8 @@ importers:
     specifiers:
       '@modyolabs/design-system': workspace:^0.1.0
       '@rollup/plugin-node-resolve': ^13.3.0
-      '@simbathesailor/use-what-changed': ^2.0.0
       '@testing-library/jest-dom': ^5.8.0
       '@testing-library/react': ^10.0.4
-      '@types/dinero.js': ~1.9.0
       '@types/jest': 23.3.9
       '@types/lodash.camelcase': ^4.3.7
       '@types/luxon': ~3.0.1
@@ -124,7 +122,6 @@ importers:
       '@types/react-dom': ^18.0.3
       '@typescript-eslint/eslint-plugin': ^5.13.0
       '@typescript-eslint/parser': ^5.0.0
-      dinero.js: ~1.9.1
       eslint: 8.22.0
       eslint-config-airbnb: 19.0.4
       eslint-config-airbnb-typescript: ^17.0.0
@@ -145,23 +142,20 @@ importers:
       tslib: ^2.4.0
       typescript: ^4.6.4
     dependencies:
-      '@types/react-datepicker': 4.4.2_react-dom@18.2.0+react@18.2.0
-      dinero.js: 1.9.1
       i18next: 21.9.1
       react-content-loader: 6.2.0_react@18.2.0
       react-datepicker: 4.8.0_react-dom@18.2.0+react@18.2.0
     devDependencies:
       '@modyolabs/design-system': link:../../design-system
       '@rollup/plugin-node-resolve': 13.3.0_rollup@2.79.0
-      '@simbathesailor/use-what-changed': 2.0.0_react@18.2.0
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 10.4.9_react-dom@18.2.0+react@18.2.0
-      '@types/dinero.js': 1.9.0
       '@types/jest': 23.3.9
       '@types/lodash.camelcase': 4.3.7
       '@types/luxon': 3.0.1
       '@types/node': 15.14.9
       '@types/react': 18.0.20
+      '@types/react-datepicker': 4.4.2_react-dom@18.2.0+react@18.2.0
       '@types/react-dom': 18.0.6
       '@typescript-eslint/eslint-plugin': 5.37.0_33b413bef603ac2f0c2516edfbed2ac1
       '@typescript-eslint/parser': 5.37.0_eslint@8.22.0+typescript@4.8.3
@@ -4103,14 +4097,6 @@ packages:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
     dev: true
 
-  /@simbathesailor/use-what-changed/2.0.0_react@18.2.0:
-    resolution: {integrity: sha512-ulBNrPSvfho9UN6zS2fii3AsdEcp2fMaKeqUZZeCNPaZbB6aXyTUhpEN9atjMAbu/eyK3AY8L4SYJUG62Ekocw==}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      react: 18.2.0
-    dev: true
-
   /@sinclair/typebox/0.24.41:
     resolution: {integrity: sha512-TJCgQurls4FipFvHeC+gfAzb+GGstL0TDwYJKQVtTeSvJIznWzP7g3bAd5gEBlr8+bIxqnWS9VGVWREDhmE8jA==}
 
@@ -4492,10 +4478,6 @@ packages:
     resolution: {integrity: sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==}
     dev: true
 
-  /@types/dinero.js/1.9.0:
-    resolution: {integrity: sha512-H2XdE6N/A2wJ/TJhGqeHDMUhCaey2R/Lcq9ichGBncKsFGvqrroXZWPNdDkCcgQOBPoCD4n9QuSBUC/35wuJiw==}
-    dev: true
-
   /@types/eslint-scope/3.7.4:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
@@ -4664,7 +4646,7 @@ packages:
     transitivePeerDependencies:
       - react
       - react-dom
-    dev: false
+    dev: true
 
   /@types/react-dom/18.0.6:
     resolution: {integrity: sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==}
@@ -7655,7 +7637,6 @@ packages:
   /date-fns/2.29.3:
     resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
     engines: {node: '>=0.11'}
-    dev: false
 
   /date-format/4.0.13:
     resolution: {integrity: sha512-bnYCwf8Emc3pTD8pXnre+wfnjGtfi5ncMDKy7+cWZXbmRAsdWkOQHrfC1yz/KiwP5thDp2kCHWYWKBX4HP1hoQ==}
@@ -7889,10 +7870,6 @@ packages:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
     dev: true
-
-  /dinero.js/1.9.1:
-    resolution: {integrity: sha512-1HXiF2vv3ZeRQ23yr+9lFxj/PbZqutuYWJnE0qfCB9xYBPnuaJ8lXtli1cJM0TvUXW1JTOaePldmqN5JVNxKSA==}
-    dev: false
 
   /dir-glob/3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
@@ -15261,7 +15238,6 @@ packages:
 
   /react-fast-compare/3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
-    dev: false
 
   /react-i18next/11.18.6_e49030d8a7237b1fcef41c6afa03cd9e:
     resolution: {integrity: sha512-yHb2F9BiT0lqoQDt8loZ5gWP331GwctHz9tYQ8A2EIEUu+CcEdjBLQWli1USG3RdWQt3W+jqQLg/d4rrQR96LA==}
@@ -15313,7 +15289,6 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       react-fast-compare: 3.2.0
       warning: 4.0.3
-    dev: false
 
   /react-redux/8.0.2_f1e2f1cffc6d2819e9684c8a8c92bb15:
     resolution: {integrity: sha512-nBwiscMw3NoP59NFCXFf02f8xdo+vSHT/uZ1ldDwF7XaTpzm+Phk97VT4urYBl5TYAPNVaFm12UHAEyzkpNzRA==}
@@ -17923,7 +17898,6 @@ packages:
     resolution: {integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /watchpack/2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}
