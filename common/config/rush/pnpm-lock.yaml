@@ -16,7 +16,6 @@ importers:
       '@stencil/sass': ^1.5.2
       '@stencil/vue-output-target': ^0.6.0
       '@types/bootstrap': ^5.1.12
-      '@types/dinero.js': ~1.9.0
       '@types/jest': ^27.0.3
       '@types/luxon': ~3.0.1
       '@types/node': ^18.7.1
@@ -54,7 +53,6 @@ importers:
       '@stencil/sass': 1.5.2_@stencil+core@2.18.0
       '@stencil/vue-output-target': 0.6.2_@stencil+core@2.18.0
       '@types/bootstrap': 5.2.4
-      '@types/dinero.js': 1.9.0
       '@types/jest': 27.5.2
       '@types/luxon': 3.0.1
       '@types/node': 18.7.18
