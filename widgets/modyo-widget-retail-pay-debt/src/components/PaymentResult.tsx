@@ -43,7 +43,7 @@ export default function PaymentResult() {
   };
 
   return (
-    <div className="col-12 col-md-6 h-100">
+    <div className="col-12 col-lg-6 h-100">
       <div className="d-flex justify-content-between align-items-center py-4 px-1">
         <MButton className="btn-icon d-md-none" iconLeft="arrow-left" isPill theme="info" variant="text" />
         <h6 className="fw-bold m-0 flex-grow-1 text-center">
