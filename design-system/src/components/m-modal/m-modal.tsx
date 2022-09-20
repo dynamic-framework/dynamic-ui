@@ -72,6 +72,12 @@ export class MModal {
    */
   @Event({ eventName: 'mClose' }) mClose!: EventEmitter<void>;
 
+  componentWillLoad() {
+    this.header = !!this.el.querySelector('[slot="header"]');
+    this.body = !!this.el.querySelector('[slot="body"]');
+    this.footer = !!this.el.querySelector('[slot="footer"]');
+  }
+
   private header!: boolean;
   private body!: boolean;
   private footer!: boolean;
@@ -98,12 +104,6 @@ export class MModal {
       [`modal-${this.modalSize}`]: !!this.modalSize,
       [this.fullScreenClass()]: !!this.fullScreen,
     };
-  }
-
-  componentWillLoad() {
-    this.header = !!this.el.querySelector('[slot="header"]');
-    this.body = !!this.el.querySelector('[slot="body"]');
-    this.footer = !!this.el.querySelector('[slot="footer"]');
   }
 
   render() {
