@@ -2,7 +2,9 @@ import {
   Component,
   h,
   Prop,
-  Element, Event, EventEmitter,
+  Element,
+  Event,
+  EventEmitter,
 } from '@stencil/core';
 
 import { prefixBS, ClassMap } from '../../utils/component-interface';
