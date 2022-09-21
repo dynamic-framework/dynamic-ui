@@ -1,8 +1,4 @@
 {
-  "references": [
-    { "path": "../design-system"},
-    { "path": "../libraries/vue-design-system"}
-  ],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
@@ -19,11 +15,6 @@
     "types": [
       "webpack-env"
     ],
-    "paths": {
-      "@/*": ["src/*"],
-      "@modyolabs/design-system": ["./design-system/src"],
-      "@modyolabs/vue-design-system": ["./libraries/vue-design-system/src"]
-    },
     "lib": [
       "esnext",
       "dom",

@@ -1,8 +1,4 @@
 {
-  "references": [
-    { "path": "../design-system"},
-    { "path": "../libraries/react-design-system"}
-  ],
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -22,11 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "paths": {
-      "@modyolabs/design-system": ["./design-system/src"],
-      "@modyolabs/react-design-system": ["./libraries/react-design-system/src"]
-    }
+    "jsx": "react-jsx"
   },
   "include": [
     "src"
