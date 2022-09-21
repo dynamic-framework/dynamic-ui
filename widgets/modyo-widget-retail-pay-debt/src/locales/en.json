@@ -4,6 +4,7 @@
   "nextPayment": "Next payment date",
   "balance": "Balance",
   "conversionRate": "Conversion rate",
+  "payFromLabel": "Pay From",
   "currencyInput": {
     "placeholder": "Amount",
     "remainingValid": "{remaining} remaining",

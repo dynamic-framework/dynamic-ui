@@ -72,7 +72,7 @@ export default function Payment() {
             <div className="m-3 pt-3">
               {!user.canPayWithoutDebt && (
                 <div className="d-flex flex-column d-lg-none">
-                  <p className="fw-semibold text-info mb-0 px-2 pb-2 text-gray">Pay from</p>
+                  <p className="fw-semibold mb-0 px-2 pb-2 text-gray">{t('payFromLabel')}</p>
                   <MButton
                     class="account-selector"
                     text={`${accountSelected.type} ${accountSelected.mask}`}

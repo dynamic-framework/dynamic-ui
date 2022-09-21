@@ -4,6 +4,7 @@
   "nextPayment": "Próximo pago",
   "balance": "Valor a pagar",
   "conversionRate": "Tasa de conversión",
+  "payFromLabel": "Pagar desde",
   "currencyInput": {
     "placeholder": "Monto",
     "remainingValid": "{remaining} restante",
