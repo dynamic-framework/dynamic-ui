@@ -1,7 +1,7 @@
 {
   "name": "@modyolabs/vue-design-system",
   "sideEffects": false,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Vue specific wrapper for component-library",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.1.0",
+    "@modyolabs/design-system": "workspace:^0.2.0",
     "@vuepic/vue-datepicker": "~3.3.1",
     "vue-content-loader": "~2.0.1"
   },
