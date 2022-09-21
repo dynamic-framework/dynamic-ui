@@ -33,7 +33,7 @@ export default function PaymentPanel() {
   const user = useAppSelector(getUser);
   const debt = useAppSelector(getDebt);
   const selectedCurrency = useAppSelector(getSelectedCurrency);
-
+  const [toggleCollapse, setToggleCollapse] = useState(false);
   const isPaypal = useMemo(() => accountSelected?.type === 'Paypal', [accountSelected]);
 
   const {
@@ -231,7 +231,7 @@ export default function PaymentPanel() {
       </div>
       <div className="pb-4 text-center">
         <div
-          className={`collapse ${amount && amount >= debt.minimumPayment ? '' : 'd-none'}`}
+          className={toggleCollapse && amount && amount >= debt.minimumPayment ? '' : 'd-none'}
           id="moreOptions"
         >
           <div
@@ -260,17 +260,15 @@ export default function PaymentPanel() {
           </div>
         </div>
         <MButton
-          className="more-options-btn"
+          className={`more-options-btn ${(!amount || amount < debt.minimumPayment) ? 'pe-none' : ''}`}
           variant="text"
           theme="info"
           text={t('collapse.options')}
           iconRight="chevron-down"
-          {...amount && amount >= debt.minimumPayment && ({
-            'data-bs-toggle': 'collapse',
-            'data-bs-target': '#moreOptions',
-            'aria-expanded': 'false',
-            'aria-controls': 'collapseExample',
-          })}
+          onClick={() => setToggleCollapse((toggle) => !toggle)}
+          {...(!amount || amount < debt.minimumPayment) && {
+            state: 'disabled',
+          }}
         />
       </div>
       <div
