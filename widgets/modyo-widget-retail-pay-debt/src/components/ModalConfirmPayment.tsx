@@ -2,7 +2,6 @@ import { MButton, MModal, useFormatCurrency } from '@modyolabs/react-design-syst
 import type { ModalProps } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
-import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setIsPaid, setResult } from '../store/slice';
 import {
