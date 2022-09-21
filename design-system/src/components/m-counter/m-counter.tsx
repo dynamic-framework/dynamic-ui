@@ -29,8 +29,8 @@ export class MCounter {
   @Prop() label?: string;
 
   /**
-  * Hint text
-  */
+   * Hint text
+   */
   @Prop() hint?: string;
 
   /**
@@ -39,8 +39,8 @@ export class MCounter {
   @Prop() hintIconStart?: string;
 
   /**
-  * Right icon of the hint text
-  */
+   * Right icon of the hint text
+   */
   @Prop() hintIconEnd?: string;
 
   /**
@@ -84,8 +84,8 @@ export class MCounter {
   @Event({ eventName: 'mInput' }) mInput!: EventEmitter;
 
   /**
-  * Event for button pressed
-  */
+   * Event for button pressed
+   */
   @Event({ eventName: 'mClick' }) mClick?: EventEmitter;
 
   /**
@@ -93,16 +93,18 @@ export class MCounter {
    */
   @State() state?: string;
 
-  private validStates = Object.keys(ICON_STATE).filter((k) => k !== 'light');
-
   @Watch('theme')
   watchThemeHandler(newValue: string) {
     this.state = this.validStates.includes(newValue) ? newValue : undefined;
   }
 
-  private htmlInput!: HTMLInputElement;
+  connectedCallback() {
+    this.state = this.validStates.includes(this.theme) ? this.theme : undefined;
+  }
 
-  // Events
+  private validStates = Object.keys(ICON_STATE).filter((k) => k !== 'light');
+
+  private htmlInput!: HTMLInputElement;
 
   private inputHandler = (event: Event) => {
     this.mInput.emit((event.target as HTMLInputElement).value);
@@ -118,10 +120,6 @@ export class MCounter {
       this.mInput.emit(temp >= this.min ? temp : this.min);
     }
   };
-
-  connectedCallback() {
-    this.state = this.validStates.includes(this.theme) ? this.theme : undefined;
-  }
 
   private generateHostClasses(): ClassMap {
     return {

@@ -113,6 +113,25 @@ export class MCurrency implements ComponentInterface {
 
   @State() internalValue = 0;
 
+  @Watch('value')
+  watchValueHandler(newValue: number) {
+    if (!this.isValid(newValue)) {
+      this.internalTheme = 'danger';
+      return;
+    }
+    this.internalTheme = this.theme;
+  }
+
+  @Watch('theme')
+  watchThemeHandler(newValue: string) {
+    this.internalTheme = newValue;
+  }
+
+  connectedCallback() {
+    this.internalTheme = this.theme;
+    this.internalValue = this.value;
+  }
+
   /**
    * HTML input element
    */
@@ -160,25 +179,6 @@ export class MCurrency implements ComponentInterface {
     }
 
     return true;
-  }
-
-  @Watch('value')
-  watchValueHandler(newValue: number) {
-    if (!this.isValid(newValue)) {
-      this.internalTheme = 'danger';
-      return;
-    }
-    this.internalTheme = this.theme;
-  }
-
-  @Watch('theme')
-  watchThemeHandler(newValue: string) {
-    this.internalTheme = newValue;
-  }
-
-  connectedCallback() {
-    this.internalTheme = this.theme;
-    this.internalValue = this.value;
   }
 
   private generateHostClasses(): ClassMap {
