@@ -20,6 +20,13 @@ $theme-colors: (
   "dark": $dark
 ) !default;
 
+$state-colors: (
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+) !default;
+
 $accessibility: #00b3cc !default;
 
 // TODO: Use hover-colors in components with :hover
@@ -43,4 +50,8 @@ $theme-colors-hover: (
   "dark": $dark
 ) !default;
 
+$gradient-secondary-start: #404ece !default;
+$gradient-secondary-end: #0966bc !default;
+
 $gradient-primary: linear-gradient(96.85deg, $primary 0%, $primary-hover 100%) !default;
+$gradient-secondary: linear-gradient(96.85deg, $gradient-secondary-start 0%, $gradient-secondary-end 100%) !default;

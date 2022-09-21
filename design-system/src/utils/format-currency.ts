@@ -1,17 +1,9 @@
-import Dinero from 'dinero.js';
+import currency from 'currency.js';
+import type { Options } from 'currency.js';
 
 export default function formatCurrency(
   amount: number,
-  language = 'en-US',
-  currency: Dinero.Currency = 'USD',
-  hasDecimals = true,
-  precision = 2,
+  options: Options,
 ): string {
-  return Dinero({
-    currency,
-    amount,
-    precision,
-  })
-    .setLocale(language)
-    .toFormat(hasDecimals ? '$0,0.00' : '$0,0');
+  return currency(amount, options).format();
 }

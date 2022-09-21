@@ -32,7 +32,7 @@
   "homepage": "https://modyo.com/",
   "license": "MIT",
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.1.0",
+    "@modyolabs/design-system": "workspace:^0.2.0",
     "@ngneat/content-loader": "~7.0.0"
   },
   "devDependencies": {

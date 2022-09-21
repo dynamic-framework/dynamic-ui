@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export default function App() {
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState('');
 
   return (
     <MApp>

@@ -3,6 +3,8 @@ import {
   h,
   Prop,
   Element,
+  Event,
+  EventEmitter,
 } from '@stencil/core';
 
 import { prefixBS, ClassMap } from '../../utils/component-interface';
@@ -18,9 +20,9 @@ export class MModal {
   @Element() el!: HTMLMModalElement;
 
   /**
-   * Id of the modal
+   * the name of the modal
    */
-  @Prop() mId!: string;
+  @Prop() name!: string;
 
   /**
    * Close button text
@@ -65,11 +67,26 @@ export class MModal {
   /**
    * No display close button
    */
-  @Prop() noCloseButton?: boolean;
+  @Prop() showCloseButton?: boolean;
+
+  /**
+   * Emitted when the input value has changed
+   */
+  @Event({ eventName: 'mClose' }) mClose!: EventEmitter<void>;
+
+  componentWillLoad() {
+    this.header = !!this.el.querySelector('[slot="header"]');
+    this.body = !!this.el.querySelector('[slot="body"]');
+    this.footer = !!this.el.querySelector('[slot="footer"]');
+  }
 
   private header!: boolean;
   private body!: boolean;
   private footer!: boolean;
+
+  private closeHandler = () => {
+    this.mClose.emit();
+  };
 
   private fullScreenClass(): string {
     if (this.fullScreen) {
@@ -91,20 +108,14 @@ export class MModal {
     };
   }
 
-  componentWillLoad() {
-    this.header = !!this.el.querySelector('[slot="header"]');
-    this.body = !!this.el.querySelector('[slot="body"]');
-    this.footer = !!this.el.querySelector('[slot="footer"]');
-  }
-
   render() {
     return (
       <div
-        class="modal fade"
-        id={this.mId}
+        class="modal fade show d-block"
+        id={this.name}
         tabindex="-1"
-        aria-labelledby={`${this.mId}Label`}
-        aria-hidden="true"
+        aria-labelledby={`${this.name}Label`}
+        aria-hidden="false"
         {...this.static && ({
           [`data-${prefixBS}backdrop`]: 'static',
           [`data-${prefixBS}keyboard`]: 'false',
@@ -123,15 +134,15 @@ export class MModal {
                 }}
               >
                 <slot name="header" />
-                {!this.noCloseButton && (
+                {this.showCloseButton && (
                   <button
                     type="button"
                     class={{
-                      'btn-close': true,
+                      'btn-close': !this.closeText,
                       'btn-close-text': !!this.closeText,
                     }}
-                    data-bs-dismiss="modal"
                     aria-label="Close"
+                    onClick={this.closeHandler}
                   >
                     {this.closeText && (this.closeText)}
                   </button>

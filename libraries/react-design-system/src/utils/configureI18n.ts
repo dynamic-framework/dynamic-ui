@@ -1,5 +1,6 @@
 import i18n, { InitOptions, Resource, TFunction } from 'i18next';
 import { initReactI18next } from 'react-i18next';
+
 import { liquidParser } from '@modyolabs/design-system';
 
 const LANG = liquidParser.parse('{{site.language}}');
@@ -10,19 +11,20 @@ export default async function configureI8n(
     lng = LANG,
     fallbackLng = 'es',
     ...config
-  }: InitOptions | undefined = {}
+  }: InitOptions | undefined = {},
 ): Promise<TFunction> {
   return i18n
     .use(initReactI18next)
     .init({
       resources,
       lng,
-      initImmediate: false,
+      initImmediate: true,
       fallbackLng,
       interpolation: {
         escapeValue: false, // react already safes from xss
-        prefix: '{{{',
-        suffix: '}}}',
+        prefix: '{',
+        suffix: '}',
+        // skipOnVariables: false,
       },
       ...config,
     })

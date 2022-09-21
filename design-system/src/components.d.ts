@@ -8,7 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
-import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
+import { CurrencyEvent, CurrencyVariant, SelectProps } from "./components/m-currency/m-currency-interface";
+import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
@@ -95,6 +96,56 @@ export namespace Components {
          */
         "theme": string;
     }
+    interface MCounter {
+        /**
+          * Is disabled counter
+         */
+        "disabled": boolean;
+        /**
+          * Hint text
+         */
+        "hint"?: string;
+        /**
+          * Right icon of the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Left icon of the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Label of the input
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection": FormControlLayoutDirection;
+        /**
+          * Id of the input
+         */
+        "mId": string;
+        /**
+          * Maximum value for the input
+         */
+        "max": number;
+        /**
+          * Minimum value for the input
+         */
+        "min": number;
+        /**
+          * Theme of the counter
+         */
+        "theme": string;
+        /**
+          * Value of the input
+         */
+        "value": number;
+        /**
+          * Variant of the counter
+         */
+        "variant": 'default' | 'prime';
+    }
     interface MCoupon {
         /**
           * Has a select input
@@ -159,9 +210,9 @@ export namespace Components {
     }
     interface MCurrency {
         /**
-          * Has a select input
+          * Options for the m-currency
          */
-        "hasSelect": boolean;
+        "currencyOptions": Options;
         /**
           * Hint text for the m-currency
          */
@@ -195,6 +246,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor": (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of input
          */
         "layoutDirection": FormControlLayoutDirection;
@@ -215,17 +270,21 @@ export namespace Components {
          */
         "placeholder"?: string;
         /**
+          * Select options
+         */
+        "selectOptions": Array<SelectProps>;
+        /**
           * Theme for the m-currency
          */
         "theme": string;
         /**
-          * * The type of the input
-         */
-        "type": string;
-        /**
           * * The value of the input
          */
-        "value"?: number;
+        "value": number;
+        /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor": (item: any) => string | number;
         /**
           * Variant for the m-currency
          */
@@ -298,6 +357,28 @@ export namespace Components {
           * Id
          */
         "mId": string;
+    }
+    interface MHint {
+        /**
+          * Right icon for the hint
+         */
+        "iconEnd"?: string;
+        /**
+          * Size for the icons
+         */
+        "iconSize": string;
+        /**
+          * Left icon for the hint
+         */
+        "iconStart"?: string;
+        /**
+          * Hint text
+         */
+        "text": string;
+        /**
+          * Theme for the hint
+         */
+        "theme": string;
     }
     interface MIcon {
         /**
@@ -443,21 +524,21 @@ export namespace Components {
          */
         "imageHeader"?: string;
         /**
-          * Id of the modal
-         */
-        "mId": string;
-        /**
           * Modal size
          */
         "modalSize"?: ModalSize;
         /**
-          * No display close button
+          * the name of the modal
          */
-        "noCloseButton"?: boolean;
+        "name": string;
         /**
           * Is modal scrollable
          */
         "scrollable"?: boolean;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
         /**
           * Is backdrop static
          */
@@ -747,6 +828,10 @@ export namespace Components {
         /**
           * Shortcut text
          */
+        "subtext"?: string;
+        /**
+          * Shortcut text
+         */
         "text"?: string;
         /**
           * Input value
@@ -761,6 +846,10 @@ export namespace Components {
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
+}
+export interface MCounterCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMCounterElement;
 }
 export interface MCouponCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -781,6 +870,10 @@ export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMModalElement;
 }
 export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -833,6 +926,12 @@ declare global {
         prototype: HTMLMCardElement;
         new (): HTMLMCardElement;
     };
+    interface HTMLMCounterElement extends Components.MCounter, HTMLStencilElement {
+    }
+    var HTMLMCounterElement: {
+        prototype: HTMLMCounterElement;
+        new (): HTMLMCounterElement;
+    };
     interface HTMLMCouponElement extends Components.MCoupon, HTMLStencilElement {
     }
     var HTMLMCouponElement: {
@@ -856,6 +955,12 @@ declare global {
     var HTMLMFormSwitchElement: {
         prototype: HTMLMFormSwitchElement;
         new (): HTMLMFormSwitchElement;
+    };
+    interface HTMLMHintElement extends Components.MHint, HTMLStencilElement {
+    }
+    var HTMLMHintElement: {
+        prototype: HTMLMHintElement;
+        new (): HTMLMHintElement;
     };
     interface HTMLMIconElement extends Components.MIcon, HTMLStencilElement {
     }
@@ -953,10 +1058,12 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-card": HTMLMCardElement;
+        "m-counter": HTMLMCounterElement;
         "m-coupon": HTMLMCouponElement;
         "m-currency": HTMLMCurrencyElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
+        "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
@@ -1057,6 +1164,64 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
+    interface MCounter {
+        /**
+          * Is disabled counter
+         */
+        "disabled"?: boolean;
+        /**
+          * Hint text
+         */
+        "hint"?: string;
+        /**
+          * Right icon of the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Left icon of the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Label of the input
+         */
+        "label"?: string;
+        /**
+          * Change the layout direction to put the label on top or left of input
+         */
+        "layoutDirection"?: FormControlLayoutDirection;
+        /**
+          * Id of the input
+         */
+        "mId": string;
+        /**
+          * Maximum value for the input
+         */
+        "max": number;
+        /**
+          * Minimum value for the input
+         */
+        "min": number;
+        /**
+          * Event for button pressed
+         */
+        "onMClick"?: (event: MCounterCustomEvent<any>) => void;
+        /**
+          * Event for input change
+         */
+        "onMInput"?: (event: MCounterCustomEvent<any>) => void;
+        /**
+          * Theme of the counter
+         */
+        "theme"?: string;
+        /**
+          * Value of the input
+         */
+        "value": number;
+        /**
+          * Variant of the counter
+         */
+        "variant"?: 'default' | 'prime';
+    }
     interface MCoupon {
         /**
           * Has a select input
@@ -1125,9 +1290,9 @@ declare namespace LocalJSX {
     }
     interface MCurrency {
         /**
-          * Has a select input
+          * Options for the m-currency
          */
-        "hasSelect"?: boolean;
+        "currencyOptions": Options;
         /**
           * Hint text for the m-currency
          */
@@ -1161,6 +1326,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor"?: (item: any) => string;
+        /**
           * Change the layout direction to put the label on top or left of input
          */
         "layoutDirection"?: FormControlLayoutDirection;
@@ -1185,17 +1354,21 @@ declare namespace LocalJSX {
          */
         "placeholder"?: string;
         /**
+          * Select options
+         */
+        "selectOptions"?: Array<SelectProps>;
+        /**
           * Theme for the m-currency
          */
         "theme"?: string;
         /**
-          * * The type of the input
-         */
-        "type"?: string;
-        /**
           * * The value of the input
          */
-        "value"?: number;
+        "value": number;
+        /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor"?: (item: any) => string | number;
         /**
           * Variant for the m-currency
          */
@@ -1276,6 +1449,28 @@ declare namespace LocalJSX {
           * Emitted when the switch has changed
          */
         "onMChange"?: (event: MFormSwitchCustomEvent<boolean>) => void;
+    }
+    interface MHint {
+        /**
+          * Right icon for the hint
+         */
+        "iconEnd"?: string;
+        /**
+          * Size for the icons
+         */
+        "iconSize"?: string;
+        /**
+          * Left icon for the hint
+         */
+        "iconStart"?: string;
+        /**
+          * Hint text
+         */
+        "text": string;
+        /**
+          * Theme for the hint
+         */
+        "theme"?: string;
     }
     interface MIcon {
         /**
@@ -1425,21 +1620,25 @@ declare namespace LocalJSX {
          */
         "imageHeader"?: string;
         /**
-          * Id of the modal
-         */
-        "mId": string;
-        /**
           * Modal size
          */
         "modalSize"?: ModalSize;
         /**
-          * No display close button
+          * the name of the modal
          */
-        "noCloseButton"?: boolean;
+        "name": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMClose"?: (event: MModalCustomEvent<void>) => void;
         /**
           * Is modal scrollable
          */
         "scrollable"?: boolean;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
         /**
           * Is backdrop static
          */
@@ -1753,6 +1952,10 @@ declare namespace LocalJSX {
         /**
           * Shortcut text
          */
+        "subtext"?: string;
+        /**
+          * Shortcut text
+         */
         "text"?: string;
         /**
           * Input value
@@ -1769,10 +1972,12 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-card": MCard;
+        "m-counter": MCounter;
         "m-coupon": MCoupon;
         "m-currency": MCurrency;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
+        "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
         "m-list-item": MListItem;
@@ -1799,10 +2004,12 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
+            "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;
             "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
             "m-currency": LocalJSX.MCurrency & JSXBase.HTMLAttributes<HTMLMCurrencyElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
+            "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
