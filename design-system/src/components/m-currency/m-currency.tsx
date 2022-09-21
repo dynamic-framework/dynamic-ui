@@ -8,10 +8,14 @@ import {
   Watch,
   State,
 } from '@stencil/core';
+import currency from 'currency.js';
+import type { Options } from 'currency.js';
 
 import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
 
-import type { CurrencyEvent, CurrencyVariant } from './m-currency-interface';
+import type {
+  CurrencyEvent, CurrencyVariant, SelectProps,
+} from './m-currency-interface';
 
 @Component({
   tag: 'm-currency',
@@ -43,21 +47,27 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() iconEnd?: string;
   /**
-   * Has a select input
+   * Select options
    * */
-  @Prop() hasSelect = false;
+  @Prop() selectOptions: Array<SelectProps> = [];
+  /**
+   * Callback to extract the value from the option
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() valueExtractor: (item: any) => string | number = (item) => item?.value;
+  /**
+   * Callback to extract the label from the option
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() labelExtractor: (item: any) => string = (item) => item?.label;
   /**
    * Placeholder for the input
    * */
   @Prop() placeholder?: string = '';
   /**
-   * * The type of the input
-  */
-  @Prop() type = 'number';
-  /**
    * * The value of the input
   */
-  @Prop() value?: number;
+  @Prop() value!: number;
   /**
    * * The min value of the input
   */
@@ -87,6 +97,10 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() variant?: CurrencyVariant;
   /**
+   * Options for the m-currency
+   * */
+  @Prop() currencyOptions!: Options;
+  /**
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
@@ -97,10 +111,31 @@ export class MCurrency implements ComponentInterface {
 
   @State() internalTheme?: string;
 
+  @State() internalValue = 0;
+
+  @Watch('value')
+  watchValueHandler(newValue: number) {
+    if (!this.isValid(newValue)) {
+      this.internalTheme = 'danger';
+      return;
+    }
+    this.internalTheme = this.theme;
+  }
+
+  @Watch('theme')
+  watchThemeHandler(newValue: string) {
+    this.internalTheme = newValue;
+  }
+
+  connectedCallback() {
+    this.internalTheme = this.theme;
+    this.internalValue = this.value;
+  }
+
   /**
    * HTML input element
    */
-  private htmlInput?: HTMLInputElement;
+  private htmlInput!: HTMLInputElement;
 
   /**
    * HTML select element
@@ -119,12 +154,24 @@ export class MCurrency implements ComponentInterface {
     });
   };
 
+  private onBlurEvent = (event: any) => {
+    this.internalValue = event.target.valueAsNumber;
+    const value = currency(event.target.valueAsNumber, this.currencyOptions).format();
+    this.htmlInput.setAttribute('type', 'text');
+    this.htmlInput.value = value;
+  };
+
+  private onFocusEvent = () => {
+    this.htmlInput.setAttribute('type', 'number');
+    this.htmlInput.value = `${this.internalValue}`;
+  };
+
   private isValid(value?: number): boolean {
     if (value === undefined) {
       return true;
     }
 
-    if (this.type === 'number') {
+    if (this.htmlInput.getAttribute('type') === 'number') {
       return (
         (this.minValue !== undefined ? value >= this.minValue : true)
         && (this.maxValue !== undefined ? value <= this.maxValue : true)
@@ -132,24 +179,6 @@ export class MCurrency implements ComponentInterface {
     }
 
     return true;
-  }
-
-  @Watch('value')
-  watchValueHandler(newValue: number) {
-    if (!this.isValid(newValue)) {
-      this.internalTheme = 'danger';
-      return;
-    }
-    this.internalTheme = this.theme;
-  }
-
-  @Watch('theme')
-  watchThemeHandler(newValue: string) {
-    this.internalTheme = newValue;
-  }
-
-  connectedCallback() {
-    this.internalTheme = this.theme;
   }
 
   private generateHostClasses(): ClassMap {
@@ -186,21 +215,25 @@ export class MCurrency implements ComponentInterface {
                 />
               </span>
             )}
-            {this.hasSelect && (
+            {this.selectOptions.length > 0 && (
               <select
-               // eslint-disable-next-line no-return-assign
+                // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
                 onInput={this.changeHandler}
               >
-                <slot />
+                {this.selectOptions.map((opt) => (
+                  <option value={this.valueExtractor(opt)}>
+                    {this.labelExtractor(opt)}
+                  </option>
+                ))}
               </select>
             )}
             <input
               // eslint-disable-next-line no-return-assign
               ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
-              type={this.type}
+              type="number"
               value={this.value}
               min={this.minValue}
               max={this.maxValue}
@@ -209,6 +242,8 @@ export class MCurrency implements ComponentInterface {
               aria-label={this.label}
               aria-describedby={`${this.mId}-add`}
               onInput={this.changeHandler}
+              onBlur={this.onBlurEvent}
+              onFocus={this.onFocusEvent}
             />
             {this.iconMiddle && (
               <span
@@ -234,21 +269,12 @@ export class MCurrency implements ComponentInterface {
             )}
           </div>
           {this.hint && (
-            <small class="hint">
-              {this.hintIconStart && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.hintIconStart}
-                />
-              )}
-              {this.hint}
-              {this.hintIconEnd && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.hintIconEnd}
-                />
-              )}
-            </small>
+            <m-hint
+              text={this.hint}
+              theme={this.internalTheme}
+              {...(this.hintIconStart && ({ iconStart: this.hintIconStart }))}
+              {...(this.hintIconEnd && ({ iconEnd: this.hintIconEnd }))}
+            />
           )}
         </div>
       </Host>

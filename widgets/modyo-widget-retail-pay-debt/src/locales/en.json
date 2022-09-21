@@ -1,0 +1,106 @@
+{
+  "cardToPay": "Paying {card}",
+  "payFrom": "From: {product}",
+  "nextPayment": "Next payment date",
+  "balance": "Balance",
+  "conversionRate": "Conversion rate",
+  "currencyInput": {
+    "placeholder": "Amount",
+    "remainingValid": "{remaining} remaining",
+    "remainingInvalid": "{amount} over limit",
+    "insufficient": "Insufficient funds"
+  },
+  "shortCutToggle": {
+    "minimum": "Minimum",
+    "total": "Total",
+    "paymentAlternatives": "Payment Alternatives",
+    "other": "Other",
+    "amount": "Amount"
+  },
+  "collapse": {
+    "options": "Schedule transaction",
+    "lessOptions": "Less Options",
+    "schedule": "Schedule",
+    "recurring": "Recurring",
+    "yesLabel": "Yes",
+    "noLabel": "No",
+    "noScheduleLabel": "This is a one time payment",
+    "noRecurrentLabel": "This payment will not repeat",
+    "yesScheduleLabel": "To be paid {date}",
+    "yesRecurrentLabel": "This payment will repeat {frequency}"
+  },
+  "button": {
+    "payAmount": "Pay {amount}",
+    "pay": "Pay",
+    "payPaypal": "Continue with Paypal",
+    "schedule": "Schedule",
+    "cancel": "Cancel",
+    "back": "Back",
+    "confirm": "Confirm",
+    "retry": "Retry",
+    "continue": "Continue"
+  },
+  "alert": {
+    "schedule": "You are scheduling to pay the {amount} amount on {date}",
+    "scheduleAndRecurring": "You are scheduling to pay the {amount} amount on {date} {repeatType}",
+    "notPay": "You have nothing to pay yet",
+    "wrong": "Oops! Something Went Wrong"
+  },
+  "modal": {
+    "paymentAlternatives": {
+      "skip": "Skip installment",
+      "skipLabel": "2 grace months remaining",
+      "flexible": "Flexible payment",
+      "flexibleLabel": "Pay in installments",
+      "renegotiate": "Renegotiate debt",
+      "renegotiateLabel": "Pay your future total"
+    },
+    "pay": {
+      "title": "Pay {amount}?",
+      "text": "You are paying {card} from your {product}"
+    },
+    "paypal": {
+      "title": "Continue with Paypal?",
+      "text": "Your are about to set a payment of {card} on Paypal"
+    },
+    "schedule": {
+      "title": "Schedule {amount}?",
+      "text": "You are scheduling to pay {card} from your {product}"
+    },
+    "scheduleCalendar": {
+      "title": " Schedule"
+    },
+    "recurring": {
+      "title": "Recurring",
+      "repeat": "Repeat",
+      "on": "On",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "custom": "Custom",
+      "ends": "Ends",
+      "oneYear": "1 Year",
+      "date": "Date",
+      "occurrences": "Occurrences"
+    }
+  },
+  "result": {
+    "title": "Recipient",
+    "paySuccess": "Payment successful",
+    "payFailed": "Payment failure",
+    "scheduleSuccess": "Scheduled successful",
+    "scheduleFailed": "Scheduling failure",
+    "scheduledToPay": "Scheduled to pay",
+    "scheduledOn": "{amount} on {date}",
+    "payErrorMessage": "We couldn’t complete your payment due to {message}",
+    "scheduleErrorMessage": "We couldn’t complete your scheduling due to {message}",
+    "errorSolution": "Please {solution}",
+    "moneyPaid": "Money paid",
+    "paidTo": "Paid to",
+    "transactionId": "Transaction ID",
+    "timeDate": "Time & Date",
+    "terms": {
+      "text": "All your transactions are safe and fast.",
+      "link": "Terms & Conditions."
+    }
+  }
+}

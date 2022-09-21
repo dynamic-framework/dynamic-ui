@@ -509,6 +509,13 @@
       "reviewCategory": "production",
       "tags": ["widgets", "angular"],
       "shouldPublish": false
+    },
+    {
+      "packageName": "@modyolabs/retail-pay-debt",
+      "projectFolder": "widgets/modyo-widget-retail-pay-debt",
+      "reviewCategory": "production",
+      "tags": ["widgets", "react"],
+      "shouldPublish": false
     }
   ]
 }

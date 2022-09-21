@@ -46,6 +46,24 @@ export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefine
 ]);
 
 
+export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter', undefined, [
+  'mId',
+  'label',
+  'hint',
+  'hintIconStart',
+  'hintIconEnd',
+  'theme',
+  'min',
+  'max',
+  'value',
+  'variant',
+  'layoutDirection',
+  'disabled',
+  'mInput',
+  'mClick'
+]);
+
+
 export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', undefined, [
   'mId',
   'label',
@@ -73,9 +91,10 @@ export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currenc
   'iconStart',
   'iconMiddle',
   'iconEnd',
-  'hasSelect',
+  'selectOptions',
+  'valueExtractor',
+  'labelExtractor',
   'placeholder',
-  'type',
   'value',
   'minValue',
   'maxValue',
@@ -84,6 +103,7 @@ export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currenc
   'hintIconEnd',
   'theme',
   'variant',
+  'currencyOptions',
   'layoutDirection',
   'mChange'
 ]);
@@ -112,6 +132,15 @@ export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-for
   'isChecked',
   'isDisabled',
   'mChange'
+]);
+
+
+export const MHint = /*@__PURE__*/ defineContainer<JSX.MHint>('m-hint', undefined, [
+  'iconStart',
+  'iconEnd',
+  'text',
+  'theme',
+  'iconSize'
 ]);
 
 
@@ -158,7 +187,7 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
 
 
 export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
-  'mId',
+  'name',
   'closeText',
   'static',
   'scrollable',
@@ -167,7 +196,8 @@ export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undef
   'fullScreenFrom',
   'modalSize',
   'imageHeader',
-  'noCloseButton'
+  'showCloseButton',
+  'mClose'
 ]);
 
 
@@ -279,6 +309,7 @@ export const MShortcutToggle = /*@__PURE__*/ defineContainer<JSX.MShortcutToggle
   'value',
   'label',
   'text',
+  'subtext',
   'icon',
   'isChecked',
   'state',

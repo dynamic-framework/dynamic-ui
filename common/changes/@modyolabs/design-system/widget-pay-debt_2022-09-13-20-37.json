@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: add secondary gradient button ",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
