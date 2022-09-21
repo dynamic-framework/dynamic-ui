@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: update base color",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
