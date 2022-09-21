@@ -1,6 +1,6 @@
 {
   "name": "@modyolabs/design-system",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -31,7 +31,6 @@
   "scripts": {
     "build": "stencil build --docs",
     "build:watch": "stencil build --docs",
-    "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test:watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
