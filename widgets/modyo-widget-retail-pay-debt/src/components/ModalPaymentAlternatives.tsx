@@ -22,7 +22,6 @@ export default function ModalPaymentAlternatives() {
       >
         <MQuickAction
           variant="extended"
-          data-bs-dismiss="modal"
           class="w-100"
           icon=""
           text={t('modal.paymentAlternatives.skip')}
@@ -30,7 +29,6 @@ export default function ModalPaymentAlternatives() {
         />
         <MQuickAction
           variant="extended"
-          data-bs-dismiss="modal"
           class="w-100"
           icon=""
           text={t('modal.paymentAlternatives.flexible')}
@@ -38,7 +36,6 @@ export default function ModalPaymentAlternatives() {
         />
         <MQuickAction
           variant="extended"
-          data-bs-dismiss="modal"
           class="w-100"
           icon=""
           text={t('modal.paymentAlternatives.renegotiate')}

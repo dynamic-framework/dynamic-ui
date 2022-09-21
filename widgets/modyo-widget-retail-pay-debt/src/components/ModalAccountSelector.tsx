@@ -58,7 +58,6 @@ export default function ModalAccountSelector({ closeModal }: ModalProps) {
           />
         ))}
         <MButton
-          data-bs-dismiss="modal"
           class="mt-4 mb-3 w-50"
           text={t('button.confirm')}
           theme="primary"

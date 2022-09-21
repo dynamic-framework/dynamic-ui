@@ -175,7 +175,6 @@ export default function ModalSchedule(
       </div>
       <div slot="footer" className="d-flex flex-column align-items-center w-100 m-3">
         <MButton
-          data-bs-dismiss="modal"
           class="mb-2 w-50"
           text={t('button.confirm')}
           theme="primary"
