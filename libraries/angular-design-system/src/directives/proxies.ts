@@ -10,10 +10,12 @@ import { defineCustomElement as defineMApp } from '@modyolabs/design-system/comp
 import { defineCustomElement as defineMBadge } from '@modyolabs/design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/design-system/components/m-button.js';
 import { defineCustomElement as defineMCard } from '@modyolabs/design-system/components/m-card.js';
+import { defineCustomElement as defineMCounter } from '@modyolabs/design-system/components/m-counter.js';
 import { defineCustomElement as defineMCoupon } from '@modyolabs/design-system/components/m-coupon.js';
 import { defineCustomElement as defineMCurrency } from '@modyolabs/design-system/components/m-currency.js';
 import { defineCustomElement as defineMFormCheck } from '@modyolabs/design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyolabs/design-system/components/m-form-switch.js';
+import { defineCustomElement as defineMHint } from '@modyolabs/design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyolabs/design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyolabs/design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyolabs/design-system/components/m-list-item.js';
@@ -140,6 +142,38 @@ export class MCard {
   }
 }
 
+
+export declare interface MCounter extends Components.MCounter {
+  /**
+   * Event for input change 
+   */
+  mInput: EventEmitter<CustomEvent<any>>;
+  /**
+   * Event for button pressed 
+   */
+  mClick: EventEmitter<CustomEvent<any>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMCounter,
+  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'label', 'layoutDirection', 'mId', 'max', 'min', 'theme', 'value', 'variant']
+})
+@Component({
+  selector: 'm-counter',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconStart', 'label', 'layoutDirection', 'mId', 'max', 'min', 'theme', 'value', 'variant']
+})
+export class MCounter {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mInput', 'mClick']);
+  }
+}
+
 import type { CouponEvent as IMCouponCouponEvent } from '@modyolabs/design-system/components';
 export declare interface MCoupon extends Components.MCoupon {
   /**
@@ -179,13 +213,13 @@ export declare interface MCurrency extends Components.MCurrency {
 
 @ProxyCmp({
   defineCustomElementFn: defineMCurrency,
-  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'theme', 'type', 'value', 'variant']
+  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
 })
 @Component({
   selector: 'm-currency',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'theme', 'type', 'value', 'variant']
+  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconLabel', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
 })
 export class MCurrency {
   protected el: HTMLElement;
@@ -249,6 +283,27 @@ export class MFormSwitch {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MHint extends Components.MHint {}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMHint,
+  inputs: ['iconEnd', 'iconSize', 'iconStart', 'text', 'theme']
+})
+@Component({
+  selector: 'm-hint',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['iconEnd', 'iconSize', 'iconStart', 'text', 'theme']
+})
+export class MHint {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
 
@@ -323,23 +378,30 @@ export class MListItem {
 }
 
 
-export declare interface MModal extends Components.MModal {}
+export declare interface MModal extends Components.MModal {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mClose: EventEmitter<CustomEvent<void>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMModal,
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'noCloseButton', 'scrollable', 'static']
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'modalSize', 'name', 'scrollable', 'showCloseButton', 'static']
 })
 @Component({
   selector: 'm-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'mId', 'modalSize', 'noCloseButton', 'scrollable', 'static']
+  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'modalSize', 'name', 'scrollable', 'showCloseButton', 'static']
 })
 export class MModal {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClose']);
   }
 }
 
@@ -592,13 +654,13 @@ export declare interface MShortcutToggle extends Components.MShortcutToggle {
 
 @ProxyCmp({
   defineCustomElementFn: defineMShortcutToggle,
-  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value', 'white']
+  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'subtext', 'text', 'value', 'white']
 })
 @Component({
   selector: 'm-shortcut-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'text', 'value', 'white']
+  inputs: ['icon', 'isChecked', 'label', 'mId', 'name', 'state', 'subtext', 'text', 'value', 'white']
 })
 export class MShortcutToggle {
   protected el: HTMLElement;

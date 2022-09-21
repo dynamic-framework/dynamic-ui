@@ -365,3 +365,21 @@
   background: var(--#{$prefix}btn-bg);
   box-shadow: none;
 }
+
+.btn-secondary-gradient {
+  --#{$prefix}theme: var(--#{$prefix}secondary);
+  --#{$prefix}theme-rgb: var(--#{$prefix}secondary-rgb);
+  --#{$prefix}theme-hover: var(--#{$prefix}secondary-hover);
+  --#{$prefix}theme-hover-rgb: var(--#{$prefix}secondary-hover-rgb);
+  // button variables
+  --#{$prefix}btn-color: #{$color-contrast-light};
+  --#{$prefix}btn-bg: #{$gradient-secondary};
+  --#{$prefix}btn-border-color: var(--#{$prefix}theme);
+  --#{$prefix}btn-hover-color: #{$color-contrast-light};
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}theme-hover);
+  --#{$prefix}btn-active-color: #{$color-contrast-light};
+  --#{$prefix}btn-disabled-bg: var(--#{$prefix}theme);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}theme);
+  background: var(--#{$prefix}btn-bg);
+  box-shadow: none;
+}

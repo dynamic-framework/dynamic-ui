@@ -1,0 +1,24 @@
+{
+  "site": {
+    "name": "My Site",
+    "language": "en-US",
+    "url": "https://un.modyo.cloud/testing"
+  },
+  "account": {
+    "url": "https://un.modyo.cloud"
+  },
+  "user": {
+    "access_token": null
+  },
+  "vars": {
+    "currency-symbol": "$",
+    "currency-precision": 2,
+    "currency-separator": ".",
+    "currency-decimal": ",",
+    "paymentAlternatives": false,
+    "freeAmountAvailable": true,
+    "payWithMultipleCurrencies": false,
+    "payWithExternal": false,
+    "payWithoutDebt": false
+  }
+}

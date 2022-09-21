@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "es2017",
     "strict": true,
     "allowUnreachableCode": false,
     "allowSyntheticDefaultImports": true,
@@ -7,9 +8,13 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "lib": ["dom", "es2015"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "importHelpers": true,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -20,8 +25,7 @@
     "removeComments": false,
     "inlineSources": true,
     "sourceMap": true,
-    "jsx": "react",
-    "target": "es2017"
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "compileOnSave": false,

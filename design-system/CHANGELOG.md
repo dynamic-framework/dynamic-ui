@@ -1,6 +1,19 @@
 # Change Log - @modyolabs/design-system
 
-This log was last generated on Thu, 25 Aug 2022 16:40:52 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Sep 2022 02:55:12 GMT and should not be manually modified.
+
+## 0.2.0
+Wed, 21 Sep 2022 02:55:12 GMT
+
+### Minor changes
+
+- minor: add secondary gradient button 
+- minor: add new components m-hint and m-counter
+- minor:set new layout m-form-switch
+- minor: add close event on modal and set new layout
+- minor: add subtext to m-shortcut-toggle
+- minor: add decimal property for m-currency
+- minor: remove icon class on modal close
 
 ## 0.1.0
 Thu, 25 Aug 2022 16:40:52 GMT

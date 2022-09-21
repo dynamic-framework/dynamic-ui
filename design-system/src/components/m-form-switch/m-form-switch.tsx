@@ -41,18 +41,12 @@ export class MFormSwitch implements ComponentInterface {
    */
   @Prop() isDisabled = false;
 
-  @State() internalIsChecked?: boolean;
-
   /**
    * Emitted when the switch has changed
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<boolean>;
 
-  private changeHandler = (event: Event) => {
-    const value = (event.target as HTMLInputElement).checked;
-    this.internalIsChecked = value;
-    this.mChange.emit(value);
-  };
+  @State() internalIsChecked?: boolean;
 
   @Watch('isChecked')
   watchIsCheckedHandler(newValue: boolean) {
@@ -63,6 +57,12 @@ export class MFormSwitch implements ComponentInterface {
     this.internalIsChecked = this.isChecked;
   }
 
+  private changeHandler = (event: Event) => {
+    const value = (event.target as HTMLInputElement).checked;
+    this.internalIsChecked = value;
+    this.mChange.emit(value);
+  };
+
   render() {
     return (
       <Host class="form-switch-box">
@@ -71,7 +71,7 @@ export class MFormSwitch implements ComponentInterface {
             class="form-switch-box-label"
             htmlFor={this.mId}
           >
-            <div class="d-flex gap-3 justify-content-start flex-grow-1">
+            <div class="d-flex gap-3 justify-content-between flex-grow-1">
               <span class="form-check-label">{this.label}</span>
               <span class="form-check-label fw-bold">
                 {this.internalIsChecked ? this.labelOn : this.labelOff}

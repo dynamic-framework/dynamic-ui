@@ -5,6 +5,7 @@ import {
 } from '@stencil/core';
 
 import type { ClassMap } from '../../utils/component-interface';
+import { prefixBS } from '../../utils/component-interface';
 
 @Component({
   tag: 'm-icon',
@@ -32,9 +33,7 @@ export class MIcon {
    * */
   @Prop() duration = 1.8;
 
-  private prefix = 'bs-';
-
-  private getClasses(): ClassMap {
+  private generateClasses(): ClassMap {
     return {
       'bi m-icon': true,
       [`bi-${this.icon}`]: true,
@@ -46,10 +45,10 @@ export class MIcon {
   render() {
     return (
       <i
-        class={this.getClasses()}
+        class={this.generateClasses()}
         style={{
-          [`--${this.prefix}m-icon-font-size`]: this.size,
-          [`--${this.prefix}m-icon-animation-duration`]: `${this.duration}s`,
+          [`--${prefixBS}m-icon-font-size`]: this.size,
+          [`--${prefixBS}m-icon-animation-duration`]: `${this.duration}s`,
         }}
       />
     );
