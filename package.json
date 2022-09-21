@@ -1,11 +1,13 @@
 {
   "name": "root",
   "private": true,
-  "workspaces": [
-
-  ],
+  "workspaces": [],
   "devDependencies": {
+    "husky": "^8.0.1",
     "lerna": "^5.5.1",
     "nx": "^14.7.6"
+  },
+  "scripts": {
+    "prepare": "husky install"
   }
 }
