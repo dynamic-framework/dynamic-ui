@@ -67,7 +67,7 @@ export default function Payment() {
               <MListItem value={cardToPay.date} text={t('nextPayment')} class="p-1" />
               <MListItem value={totalPayment} text={t('balance')} class="p-1" />
               {/* TODO Conversion rate */}
-              {currencies.length >= 2 && <MListItem value="€1 = USD $1,4" text="Conversion rate" class="p-1" />}
+              {currencies.length >= 2 && <MListItem value="€1 = USD $1,4" text={t('conversionRate')} class="p-1" />}
             </div>
             <div className="m-3 pt-3">
               {!user.canPayWithoutDebt && (
@@ -91,7 +91,7 @@ export default function Payment() {
                 mId="selectAccount"
                 variant="full"
                 theme="info"
-                label="Pay From"
+                label={t('payFromLabel')}
                 {...isPaypal && {
                   iconStart: 'paypal',
                 }}
