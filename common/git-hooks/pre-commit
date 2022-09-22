@@ -1,1 +1,0 @@
-node common/scripts/install-run-rush.js lint-staged || exit $?
