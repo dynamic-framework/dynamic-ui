@@ -1,9 +1,12 @@
 name: Release
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - master
+#  pull_request:
+#    types: [closed]
+#    branches:
+#      - master
 
 permissions:
   contents: write
@@ -13,7 +16,7 @@ permissions:
 jobs:
   process:
     name: Version and Publish
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -37,7 +40,10 @@ jobs:
       - name: Build packages
         run: pnpm exec lerna run build --no-private
       - name: Version packages
-        run: pnpm exec lerna version --yes
+        run:
+          git config --local user.email "$(git log --format='%ae' HEAD^!)"
+          git config --local user.name "$(git log --format='%an' HEAD^!)"
+          pnpm exec lerna version --yes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
