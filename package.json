@@ -9,5 +9,8 @@
   },
   "scripts": {
     "prepare": "husky install"
+  },
+  "dependencies": {
+    "conventional-changelog-conventionalcommits": "^5.0.0"
   }
 }
