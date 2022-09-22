@@ -49,7 +49,7 @@ export default function ModalSchedule(
       centered
       static
       showCloseButton
-      closeText="Cancel"
+      closeText={t('button.cancel')}
       onMClose={() => closeModal({ fromModal: true })}
       scrollable
     >

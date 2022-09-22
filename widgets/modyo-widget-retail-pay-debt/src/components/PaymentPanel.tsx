@@ -140,7 +140,7 @@ export default function PaymentPanel() {
     <>
       <div className="pt-4">
         <div className="d-flex flex-column justify-content-between pb-2 mx-auto amount-options">
-          <p className="px-3 mb-1 text-gray fw-semibold">Amount</p>
+          <p className="px-3 mb-1 text-gray fw-semibold">{t('shortCutToggle.title')}</p>
           <MShortcutToggle
             class="d-block"
             key="1"
@@ -273,6 +273,13 @@ export default function PaymentPanel() {
                 ? t('collapse.yesScheduleLabel', { date: DateTime.fromISO(schedule.date).toFormat('MM/dd/yy, HH:mm') })
                 : t('collapse.noScheduleLabel')}
             </small>
+            <small
+              className="d-block text-info text-start"
+            >
+              {recurringStart.enabled
+                ? t('collapse.yesRecurrentLabel', { frequency: recurringStart.frequency })
+                : t('collapse.noRecurrentLabel')}
+            </small>
           </div>
         </div>
         <MButton
@@ -280,7 +287,7 @@ export default function PaymentPanel() {
           variant="text"
           theme="info"
           text={t('collapse.options')}
-          iconRight="chevron-down"
+          iconRight={toggleCollapse ? 'chevron-up' : 'chevron-down'}
           onClick={() => setToggleCollapse((toggle) => !toggle)}
           {...(!amount || amount < debt.minimumPayment) && {
             state: 'disabled',
