@@ -6,8 +6,8 @@
   "version": "independent",
   "command": {
     "version": {
-      "allowBranch": ["master", "develop"],
-      "message": "chore(release): publish %s",
+      "allowBranch": ["master"],
+      "message": "chore(release): update versions",
       "private": false,
       "noPush": false,
       "noGitTagVersion": false,
