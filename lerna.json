@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useNx": true,
+  "useWorkspaces": true,
+  "npmClient": "pnpm",
+  "version": "independent",
+  "command": {
+    "version": {
+      "allowBranch": ["main"],
+      "message": "chore(release): publish %s",
+      "private": false,
+      "noPush": true,
+      "noGitTagVersion": true,
+      "conventionalCommits": true,
+      "changelogPreset": "conventionalcommits",
+      "createRelease": "github"
+    }
+  }
+}

@@ -30,7 +30,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.2.0",
+    "@modyolabs/design-system": "^0.2.0",
     "@vuepic/vue-datepicker": "~3.3.1",
     "vue-content-loader": "~2.0.1"
   },
