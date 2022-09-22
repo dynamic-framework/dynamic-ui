@@ -1,6 +1,7 @@
 {
   "name": "@modyolabs/angular-design-system",
   "version": "0.0.1",
+  "private": true,
   "description": "Angular output target for @stencil/core components.",
   "files": [
     "dist/"
