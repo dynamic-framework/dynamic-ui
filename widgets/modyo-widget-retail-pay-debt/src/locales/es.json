@@ -12,6 +12,7 @@
     "insufficient": "Fondos insuficientes"
   },
   "shortCutToggle": {
+    "title": "Monto",
     "minimum": "Pago mínimo",
     "total": "Pago total",
     "paymentAlternatives": "Otras alternativas de pago",
