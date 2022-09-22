@@ -5,6 +5,15 @@ body,
 #root {
   height: 100%;
 
+  .Toastify__toast {
+    box-shadow: none;
+    cursor: default;
+    padding: 0;
+  }
+  .Toastify__toast-theme--light {
+    background-color: transparent;
+    color: transparent;
+  }
   .amount-options {
     gap: 6px;
 
@@ -66,17 +75,13 @@ body,
       }
     }
   }
-
-  .custom-alert {
-    z-index: 100;
-    .alert {
-      .alert-text {
-        --bs-alert-font-size: 12px;
-        --bs-alert-line-height: 18px;
-      }
-      .m-icon {
-        font-size: 12px;
-      }
+  .alert {
+    .alert-text {
+      --bs-alert-font-size: 12px;
+      --bs-alert-line-height: 18px;
+    }
+    .m-icon {
+      font-size: 12px;
     }
   }
 
