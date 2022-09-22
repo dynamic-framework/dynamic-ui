@@ -1,7 +1,8 @@
 {
   "name": "@modyolabs/vue-design-system",
-  "sideEffects": false,
   "version": "0.2.0",
+  "private": true,
+  "sideEffects": false,
   "description": "Vue specific wrapper for component-library",
   "repository": {
     "type": "git",
