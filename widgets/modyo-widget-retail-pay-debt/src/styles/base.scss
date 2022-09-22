@@ -29,6 +29,7 @@ body,
   .account-selector {
     .btn {
       --bs-btn-padding-x: 1.5rem;
+      --bs-btn-hover-bg: transparent !important;
       font-weight: 400;
       text-align: left;
       color: var(--bs-gray);
@@ -94,6 +95,8 @@ body,
     .btn {
       --bs-btn-font-weight: 400;
       --bs-btn-font-size: 0.75rem;
+      --bs-btn-disabled-border-color: transparent;
+      --bs-btn-active-border-color: transparent;
     }
   }
 }
