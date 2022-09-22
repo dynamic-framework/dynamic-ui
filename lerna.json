@@ -9,8 +9,8 @@
       "allowBranch": ["main"],
       "message": "chore(release): publish %s",
       "private": false,
-      "noPush": true,
-      "noGitTagVersion": true,
+      "noPush": false,
+      "noGitTagVersion": false,
       "conventionalCommits": true,
       "changelogPreset": "conventionalcommits",
       "createRelease": "github"
