@@ -137,6 +137,7 @@ importers:
       react-datepicker: ~4.8.0
       react-dom: ^18.1.0
       react-i18next: ~11.18.3
+      react-toastify: ~9.0.8
       rimraf: ^2.6.3
       rollup: ^2.72.1
       tslib: ^2.4.0
@@ -171,6 +172,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_e49030d8a7237b1fcef41c6afa03cd9e
+      react-toastify: 9.0.8_react-dom@18.2.0+react@18.2.0
       rimraf: 2.7.1
       rollup: 2.79.0
       tslib: 2.4.0
@@ -300,6 +302,7 @@ importers:
       react-i18next: ~11.18.3
       react-redux: ^8.0.2
       react-scripts: 5.0.1
+      react-toastify: ~9.0.8
       sass: ~1.54.0
       typescript: ^4.6.4
       web-vitals: ^2.1.4
@@ -319,6 +322,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_e49030d8a7237b1fcef41c6afa03cd9e
       react-redux: 8.0.2_f1e2f1cffc6d2819e9684c8a8c92bb15
+      react-toastify: 9.0.8_react-dom@18.2.0+react@18.2.0
       web-vitals: 2.1.4
     devDependencies:
       '@craco/craco': 7.0.0-alpha.7_187ce80b087ea78253543324206d0006
@@ -7001,6 +7005,10 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
     dev: true
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
 
   /co/4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -15514,6 +15522,16 @@ packages:
       - webpack-hot-middleware
       - webpack-plugin-serve
     dev: false
+
+  /react-toastify/9.0.8_react-dom@18.2.0+react@18.2.0:
+    resolution: {integrity: sha512-EwM+teWt49HSHx+67qI08yLAW1zAsBxCXLCsUfxHYv1W7/R3ZLhrqKalh7j+kjgPna1h5LQMSMwns4tB4ww2yQ==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      clsx: 1.2.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
 
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
