@@ -6,7 +6,7 @@
   "version": "independent",
   "command": {
     "version": {
-      "allowBranch": ["main"],
+      "allowBranch": ["master", "develop"],
       "message": "chore(release): publish %s",
       "private": false,
       "noPush": false,
