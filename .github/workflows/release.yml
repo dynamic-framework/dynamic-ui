@@ -40,7 +40,7 @@ jobs:
       - name: Build packages
         run: pnpm exec lerna run build --no-private
       - name: Version packages
-        run:
+        run: |
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           pnpm exec lerna version --yes
