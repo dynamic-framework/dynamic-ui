@@ -12,6 +12,8 @@
       "noPush": false,
       "noGitTagVersion": false,
       "conventionalCommits": true,
+      "noCommitHooks": true,
+      "yes": true,
       "changelogPreset": "conventionalcommits",
       "createRelease": "github"
     }
