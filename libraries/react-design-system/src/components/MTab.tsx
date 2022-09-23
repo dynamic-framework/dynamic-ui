@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 import {
   Tab,
   TabProps,
@@ -9,12 +9,14 @@ import { MIcon } from './proxies';
 export interface MTabProps extends TabProps {
   icon?: string;
   children?: ReactNode | undefined;
+  onClick?: MouseEventHandler<HTMLLIElement>;
 }
 
 function MTab({
   className,
   children,
   icon,
+  onClick,
   ...attrs
 }: MTabProps) {
   return (
@@ -26,6 +28,7 @@ function MTab({
         className ? className as string : '',
         icon ? 'react-tabs__tab-icon' : '',
       ]}
+      onClick={onClick}
     >
       {icon && (
         <MIcon icon={icon} />
