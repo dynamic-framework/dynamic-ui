@@ -110,3 +110,7 @@ body,
     --bs-btn-padding-x: 2rem;
   }
 }
+.list-group-item-variant {
+  border: 0 !important;
+  border-bottom: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color) !important;
+}
