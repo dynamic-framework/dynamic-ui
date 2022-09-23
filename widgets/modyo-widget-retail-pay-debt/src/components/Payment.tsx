@@ -10,7 +10,8 @@ import {
 } from '@modyolabs/react-design-system';
 import { useTranslation } from 'react-i18next';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { toast } from 'react-toastify';
 import PaymentPanel from './PaymentPanel';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
@@ -38,6 +39,22 @@ export default function Payment() {
   const currencies = useAppSelector(getCurrencies);
   const isPaypal = useMemo(() => accountSelected?.type === 'Paypal', [accountSelected]);
 
+  useEffect(() => {
+    if (accountSelected && debt.minimumPayment <= 0) {
+      toast(({ closeToast }) => (
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        <MAlert
+          close
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          onMClose={closeToast}
+          theme="info"
+        >
+          {t('alert.notPay')}
+        </MAlert>
+      ));
+    }
+  }, [debt.minimumPayment, accountSelected, t]);
+
   const {
     values: [
       totalPayment,
@@ -49,77 +66,68 @@ export default function Payment() {
   );
 
   return (
-    <>
-      <div className="col-12 col-lg-6 pb-3 px-4">
-        <div className="d-flex justify-content-between align-items-center my-4">
-          <MButton className="btn-icon d-md-none" iconLeft="arrow-left" isPill theme="info" variant="text" />
-          <h6 className="fw-bold m-0 flex-grow-1 text-center">
-            {t('cardToPay', {
-              card: `${cardToPay.franchise} ${cardToPay.mask}`,
-            })}
-          </h6>
+    <div className="col-12 col-lg-6 pb-3 px-4">
+      <div className="d-flex justify-content-between align-items-center my-4">
+        <MButton className="btn-icon d-md-none" iconLeft="arrow-left" isPill theme="info" variant="text" />
+        <h6 className="fw-bold m-0 flex-grow-1 text-center">
+          {t('cardToPay', {
+            card: `${cardToPay.franchise} ${cardToPay.mask}`,
+          })}
+        </h6>
+      </div>
+      {!accountSelected && <SkeletonLoader />}
+      {accountSelected && (
+      <>
+        {currencies.length >= 2 && <CurrenciesSelector />}
+        <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1 small">
+          <MListItem value={cardToPay.date} text={t('nextPayment')} class="p-1" />
+          <MListItem value={totalPayment} text={t('balance')} class="p-1" />
+          {/* TODO Conversion rate */}
+          {currencies.length >= 2 && <MListItem value="€1 = USD $1,4" text={t('conversionRate')} class="p-1" />}
         </div>
-        {!accountSelected && <SkeletonLoader />}
-        {accountSelected && (
-          <>
-            {currencies.length >= 2 && <CurrenciesSelector />}
-            <div className="d-flex flex-column gap-2 bg-light p-3 rounded-1 small">
-              <MListItem value={cardToPay.date} text={t('nextPayment')} class="p-1" />
-              <MListItem value={totalPayment} text={t('balance')} class="p-1" />
-              {/* TODO Conversion rate */}
-              {currencies.length >= 2 && <MListItem value="€1 = USD $1,4" text={t('conversionRate')} class="p-1" />}
-            </div>
-            <div className="m-3 pt-3">
-              {!user.canPayWithoutDebt && (
-                <div className="d-flex flex-column d-lg-none">
-                  <p className="fw-semibold mb-0 px-2 pb-2 text-gray">{t('payFromLabel')}</p>
-                  <MButton
-                    class="account-selector"
-                    text={`${accountSelected.type} ${accountSelected.mask}`}
-                    {...isPaypal && {
-                      iconLeft: 'paypal',
-                    }}
-                    theme="info"
-                    iconRight="chevron-down"
-                    variant="outline"
-                    onClick={() => openModal('accountSelector')}
-                  />
-                </div>
-              )}
-              <MSelect
-                class="mb-1 d-none d-lg-block selectAccount"
-                mId="selectAccount"
-                variant="full"
-                theme="info"
-                label={t('payFromLabel')}
-                {...isPaypal && {
-                  iconStart: 'paypal',
-                }}
-                labelExtractor={({ type, mask }: Account) => `${type} ${mask}`}
-                options={accounts}
-                onMChange={
+        <div className="m-3 pt-3">
+          {!user.canPayWithoutDebt && (
+          <div className="d-flex flex-column d-lg-none">
+            <p className="fw-semibold mb-0 px-2 pb-2 text-gray">{t('payFromLabel')}</p>
+            <MButton
+              class="account-selector"
+              text={`${accountSelected.type} ${accountSelected.mask}`}
+              {...isPaypal && {
+                iconLeft: 'paypal',
+              }}
+              theme="info"
+              iconRight="chevron-down"
+              variant="outline"
+              onClick={() => openModal('accountSelector')}
+            />
+          </div>
+          )}
+          <MSelect
+            class="mb-1 d-none d-lg-block selectAccount"
+            mId="selectAccount"
+            variant="full"
+            theme="info"
+            label={t('payFromLabel')}
+            {...isPaypal && {
+              iconStart: 'paypal',
+            }}
+            labelExtractor={({ type, mask }: Account) => `${type} ${mask}`}
+            options={accounts}
+            onMChange={
                   // eslint-disable-next-line max-len
                   ({ detail: account }: CustomEvent<Account>) => dispatch(setAccountSelected(account))
                 }
-              />
-              {!isPaypal && (
-                <small className="text-gray d-flex gap-2 align-items-center p-1">
-                  <MIcon icon="info-circle" />
-                  <span>{`${amountAvailable} available`}</span>
-                </small>
-              )}
-              <PaymentPanel />
-            </div>
-          </>
-        )}
-      </div>
-      {debt.minimumPayment <= 0 && (
-        <div className="custom-alert fixed-bottom p-3 w-100">
-          <MAlert icon close theme="info">
-            {t('alert.notPay')}
-          </MAlert>
+          />
+          {!isPaypal && (
+          <small className="text-gray d-flex gap-2 align-items-center p-1">
+            <MIcon icon="info-circle" />
+            <span>{`${amountAvailable} available`}</span>
+          </small>
+          )}
+          <PaymentPanel />
         </div>
+      </>
       )}
-    </>
+    </div>
   );
 }

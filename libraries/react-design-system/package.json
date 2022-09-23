@@ -65,13 +65,15 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "@types/luxon": "~3.0.1"
+    "@types/luxon": "~3.0.1",
+    "react-toastify": "~9.0.8"
   },
   "peerDependencies": {
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "~11.18.3",
     "luxon": "~3.0.3",
+    "react-toastify": "~9.0.8",
     "@modyolabs/design-system": "workspace:^0.1.0"
   },
   "jest": {

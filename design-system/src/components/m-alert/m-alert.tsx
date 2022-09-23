@@ -1,10 +1,10 @@
 import {
   Component,
   Prop,
-  Element,
   h,
+  EventEmitter,
+  Event,
 } from '@stencil/core';
-import { Alert } from 'bootstrap';
 
 import type { ClassMap } from '../../utils/component-interface';
 import { ICON_STATE } from '../../utils/component-interface';
@@ -15,7 +15,6 @@ import { ICON_STATE } from '../../utils/component-interface';
   shadow: false,
 })
 export class MAlert {
-  @Element() el!: HTMLMAlertElement;
   /**
    * Theme for the alert
    */
@@ -32,11 +31,14 @@ export class MAlert {
    * Has close button
    */
   @Prop() close?: boolean;
+  /**
+   * Emitted when the button has been clicked.
+   */
+  @Event() mClose!: EventEmitter;
 
-  connectedCallback() {
-    // eslint-disable-next-line no-new
-    new Alert(this.el);
-  }
+  private clickHandler = () => {
+    this.mClose.emit();
+  };
 
   private generateClasses(): ClassMap {
     return {
@@ -72,8 +74,8 @@ export class MAlert {
           <button
             type="button"
             class="btn-close fs-4"
-            data-bs-dismiss="alert"
             aria-label="Close"
+            onClick={this.clickHandler}
           >
             <m-icon
               icon="x-lg"

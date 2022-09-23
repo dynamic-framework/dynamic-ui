@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import '@modyolabs/design-system/dist/design-system/design-system.css';
-import { LiquidContextProvider, ModalContextProvider } from '@modyolabs/react-design-system';
+import {
+  LiquidContextProvider,
+  ModalContextProvider,
+  MToastContainer,
+} from '@modyolabs/react-design-system';
 
 import './styles/base.scss';
 import './config/liquidConfig';
@@ -32,6 +36,7 @@ root.render(
           }}
         >
           <App />
+          <MToastContainer />
         </ModalContextProvider>
       </Provider>
     </LiquidContextProvider>

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   MButton,
   MFormSwitch,
@@ -13,6 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { DateTime } from 'luxon';
+import { toast } from 'react-toastify';
 import usePaymentInput from '../hooks/usePaymentInput';
 import { useAppSelector } from '../store/hooks';
 import {
@@ -115,6 +116,21 @@ export default function PaymentPanel() {
       icon: '',
     };
   }, [accountSelected, amount, debt]);
+
+  useEffect(() => {
+    if (isScheduled) {
+      toast(({ closeToast }) => (
+        <MAlert
+          theme="info"
+          close
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          onMClose={closeToast}
+        >
+          {alertMessageSchedule}
+        </MAlert>
+      ));
+    }
+  }, [isScheduled, alertMessageSchedule]);
 
   if (!accountSelected) {
     return (null);
@@ -298,15 +314,6 @@ export default function PaymentPanel() {
           }}
         />
       </div>
-      {isScheduled && (
-        <MAlert
-          className="custom-alert fixed-bottom p-3 w-100"
-          theme="info"
-          close
-        >
-          {alertMessageSchedule}
-        </MAlert>
-      )}
     </>
   );
 }

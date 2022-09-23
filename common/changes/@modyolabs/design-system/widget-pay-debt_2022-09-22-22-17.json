@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@modyolabs/design-system",
+      "comment": "minor: change hex info color",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@modyolabs/design-system"
+}
