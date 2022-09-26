@@ -24,6 +24,7 @@
       {
         "ignore": ["attribute", "class", "id"]
       }
-    ]
+    ],
+    "selector-class-pattern": null
   }
 }

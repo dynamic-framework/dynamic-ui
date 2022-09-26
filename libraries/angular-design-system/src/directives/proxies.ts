@@ -33,7 +33,13 @@ import { defineCustomElement as defineMSelect } from '@modyolabs/design-system/c
 import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/design-system/components/m-shortcut-toggle.js';
 
 
-export declare interface MAlert extends Components.MAlert {}
+export declare interface MAlert extends Components.MAlert {
+  /**
+   * Emitted when the button has been clicked. 
+   */
+  mClose: EventEmitter<CustomEvent<any>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMAlert,
@@ -50,6 +56,7 @@ export class MAlert {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClose']);
   }
 }
 
