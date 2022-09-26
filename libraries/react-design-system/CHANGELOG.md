@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.0](https://github.com/modyolabs/ds-poc/compare/@modyolabs/react-design-system@0.3.0...@modyolabs/react-design-system@0.4.0) (2022-09-26)
+
+
+### Features
+
+* add m-tabs components in react library ([49b3fff](https://github.com/modyolabs/ds-poc/commit/49b3fffc0dc6a26ba357ef7e00a2071dd75ca759))
+* add showClose argument to toast ([177c18e](https://github.com/modyolabs/ds-poc/commit/177c18ee2bbeae1057e196416c26fb3cbad93e36))
+* change toast usage ([396edce](https://github.com/modyolabs/ds-poc/commit/396edceb38680c2b0cddf1de017a4bfd3233a685))
+
+
+
 ## 0.3.0 (2022-09-26)
 
 
