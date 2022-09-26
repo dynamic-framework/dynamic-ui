@@ -1,12 +1,9 @@
 name: Release
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - master
-#  pull_request:
-#    types: [closed]
-#    branches:
-#      - master
 
 permissions:
   contents: write
@@ -15,7 +12,7 @@ permissions:
 jobs:
   process:
     name: Version and Publish
-#    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
