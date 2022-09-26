@@ -15,6 +15,13 @@
 | `theme`    | `theme`     | Theme for the alert          | `string`               | `'warning'` |
 
 
+## Events
+
+| Event    | Description                               | Type               |
+| -------- | ----------------------------------------- | ------------------ |
+| `mClose` | Emitted when the button has been clicked. | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Depends on

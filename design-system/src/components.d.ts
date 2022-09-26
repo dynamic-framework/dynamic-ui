@@ -843,6 +843,10 @@ export namespace Components {
         "white": boolean;
     }
 }
+export interface MAlertCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMAlertElement;
+}
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
@@ -1095,6 +1099,10 @@ declare namespace LocalJSX {
           * Icon font-size class
          */
         "iconSize"?: string;
+        /**
+          * Emitted when the button has been clicked.
+         */
+        "onMClose"?: (event: MAlertCustomEvent<any>) => void;
         /**
           * Theme for the alert
          */

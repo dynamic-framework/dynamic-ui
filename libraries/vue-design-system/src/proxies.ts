@@ -13,7 +13,8 @@ export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undef
   'theme',
   'icon',
   'iconSize',
-  'close'
+  'close',
+  'mClose'
 ]);
 
 
