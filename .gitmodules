@@ -1,0 +1,4 @@
+[submodule "modyo-widget-retail-pay-debt"]
+	path = widgets/modyo-widget-retail-pay-debt
+	url = git@github.com:modyolabs/modyo-widget-retail-pay-debt.git
+	branch = chore/lerna

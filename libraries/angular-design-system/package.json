@@ -1,6 +1,7 @@
 {
   "name": "@modyolabs/angular-design-system",
   "version": "0.0.1",
+  "private": true,
   "description": "Angular output target for @stencil/core components.",
   "files": [
     "dist/"
@@ -32,7 +33,7 @@
   "homepage": "https://modyo.com/",
   "license": "MIT",
   "dependencies": {
-    "@modyolabs/design-system": "workspace:^0.1.0",
+    "@modyolabs/design-system": "^0.2.0",
     "@ngneat/content-loader": "~7.0.0"
   },
   "devDependencies": {
