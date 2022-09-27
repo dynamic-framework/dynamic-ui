@@ -8,12 +8,12 @@
 + `pnpm exec lerna run build --no-private` to build all the no private packages.
 
 ## Packages
-| Project                   | Package                      | Version  | Links                                                         |
-|---------------------------|------------------------------|----------|---------------------------------------------------------------|
-| **Design System**         | @modyo/design-system         | --       | [`README.md`](libraries/modyo-design-system/README.md)        |
-| **Angular Design System** | @modyo/angular-design-system | --       | [`README.md`](libraries/modyo-design-system-angular/README.md) |
-| **Vue Design System**     | @modyo/vue-design-system     | --       | [`README.md`](libraries/modyo-design-system-vue/README.md)    |
-| **React Design System**   | @modyo/react-design-system   | --       | [`README.md`](libraries/modyo-design-system-react/README.md)  |
+| Project                   | Package                      | Version                                                                                                                                       | Links                                                         |
+|---------------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
+| **Design System**         | @modyo/design-system         | ![GitHub](https://img.shields.io/github/package-json/v/modyolabs/modyo-design-system?filename=libraries%2Fmodyo-design-system%2Fpackage.json&label=Github&style=flat-square)        |
+| **Angular Design System** | @modyo/angular-design-system | --                                                                                                                                            | [`README.md`](libraries/modyo-design-system-angular/README.md) |
+| **Vue Design System**     | @modyo/vue-design-system     | --                                                                                                                                            | [`README.md`](libraries/modyo-design-system-vue/README.md)    |
+| **React Design System**   | @modyo/react-design-system   | --                                                                                                                                            | [`README.md`](libraries/modyo-design-system-react/README.md)  |
 
 ## How to run a widget
 
