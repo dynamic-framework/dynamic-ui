@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "lib": {
+    "entryFile": "src/index.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@modyolabs/modyo-design-system",
+    "@ngneat/content-loader"
+  ]
+}

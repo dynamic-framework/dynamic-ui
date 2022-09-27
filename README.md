@@ -1,19 +1,19 @@
-# Stencil widget factory
+# Design system and widget factory
 
 ## Setup
 
-+ `clone`
-+ `cd ds-poc` to move to a cloned repo
-+ `rush install` to install dependencies
-+ `rush build` to build all packages
++ `git clone --recurse-submodules git@github.com:modyolabs/modyo-design-system.git` use `--recurse-submodules` to clone the widgets submodules to
++ `cd modyo-design-system` to move to the cloned repository
++ `pnpm install` to install dependencies
++ `pnpm exec lerna run build --no-private` to build all the no private packages.
 
 ## Packages
-| Project                   | Package                      | Version  | Links                                                    |
-|---------------------------|------------------------------|----------|----------------------------------------------------------|
-| **Design System**         | @modyo/design-system         | --       | [`README.md`](libraries/design-system/README.md)                   |
-| **Angular Design System** | @modyo/angular-design-system | --       | [`README.md`](libraries/angular-design-system/README.md) |
-| **Vue Design System**     | @modyo/vue-design-system     | --       | [`README.md`](libraries/vue-design-system/README.md)     |
-| **React Design System**   | @modyo/react-design-system   | --       | [`README.md`](libraries/react-design-system/README.md)   |
+| Project                   | Package                      | Version  | Links                                                         |
+|---------------------------|------------------------------|----------|---------------------------------------------------------------|
+| **Design System**         | @modyo/design-system         | --       | [`README.md`](libraries/modyo-design-system/README.md)        |
+| **Angular Design System** | @modyo/angular-design-system | --       | [`README.md`](libraries/modyo-design-system-angular/README.md) |
+| **Vue Design System**     | @modyo/vue-design-system     | --       | [`README.md`](libraries/modyo-design-system-vue/README.md)    |
+| **React Design System**   | @modyo/react-design-system   | --       | [`README.md`](libraries/modyo-design-system-react/README.md)  |
 
 ## How to run a widget
 

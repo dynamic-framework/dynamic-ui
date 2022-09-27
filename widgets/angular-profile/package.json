@@ -1,6 +1,7 @@
 {
   "name": "@modyolabs/angular-profile",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,10 +9,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
-  "private": true,
   "dependencies": {
-    "@modyolabs/design-system": "^0.2.0",
-    "@modyolabs/angular-design-system": "^0.0.1",
+    "@modyolabs/modyo-design-system": "*",
+    "@modyolabs/modyo-design-system-angular": "*",
     "@angular/animations": "~13.3.6",
     "@angular/common": "~13.3.6",
     "@angular/compiler": "~13.3.6",

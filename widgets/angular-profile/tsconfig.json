@@ -1,8 +1,8 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "references": [
-    { "path": "../design-system"},
-    { "path": "../libraries/angular-design-system"}
+    { "path": "../modyo-design-system"},
+    { "path": "../libraries/modyo-design-system-angular"}
   ],
   "compileOnSave": false,
   "compilerOptions": {
@@ -28,8 +28,8 @@
       "dom"
     ],
     "paths": {
-      "@modyolabs/design-system": ["./design-system/src"],
-      "@modyolabs/angular-design-system": ["./libraries/angular-design-system/src"]
+      "@modyolabs/modyo-design-system": ["./modyo-design-system/src"],
+      "@modyolabs/modyo-design-system-angular": ["./libraries/modyo-design-system-angular/src"]
     }
   },
   "angularCompilerOptions": {
