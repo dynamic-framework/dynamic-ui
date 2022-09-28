@@ -1,36 +1,79 @@
-import { ReactNode } from 'react';
 import {
-  Tabs,
-  TabsProps,
-} from 'react-tabs';
+  createContext,
+  useState,
+  useCallback,
+  useContext,
+} from 'react';
+import type { PropsWithChildren } from 'react';
+import classnames from 'classnames';
 
-import '../../src/styles/MTabs.scss';
+export type TabOption = {
+  label: string;
+  tab: string;
+  icon?: string;
+};
 
-export interface MTabsProps extends TabsProps {
-  children?: ReactNode | undefined;
-}
+type Props = PropsWithChildren<{
+  onChange: (option: TabOption) => void;
+  options: Array<TabOption>;
+  defaultSelected: string;
+}>;
 
-function MTabs({
-  className,
-  children,
-  onSelect,
-  ...attrs
-}: MTabsProps) {
+const TabContext = createContext<string>('');
+
+export default function MTabs(
+  {
+    onChange,
+    options,
+    defaultSelected,
+    children,
+  }: Props,
+) {
+  const [selected, setSelected] = useState<string>(defaultSelected);
+
+  const onSelect = useCallback((option: TabOption) => {
+    if (option.tab) {
+      setSelected(option.tab);
+    }
+    onChange(option);
+  }, [onChange]);
+
   return (
-    <Tabs
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...attrs}
-      onSelect={onSelect}
-      className={[
-        'react-tabs test-tabs',
-        className ? className as string : '',
-      ]}
-    >
+    <TabContext.Provider value={selected}>
+      <nav>
+        <div
+          className="nav nav-tabs"
+          role="tablist"
+        >
+          {options.map((option) => (
+            <button
+              key={option.label}
+              className={classnames(
+                'nav-link',
+                {
+                  active: option.tab === selected,
+                },
+              )}
+              type="button"
+              role="tab"
+              onClick={() => onSelect(option)}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </nav>
       {children}
-    </Tabs>
+    </TabContext.Provider>
   );
 }
 
-MTabs.tabsRole = 'Tabs';
+export function useTabContext() {
+  const context = useContext(TabContext);
 
-export default MTabs;
+  if (context === undefined) {
+    throw new Error('useTabContext was used outside of MTab');
+  }
+
+  return context;
+}
