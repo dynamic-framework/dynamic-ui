@@ -4,6 +4,8 @@ import {
   TabsProps,
 } from 'react-tabs';
 
+import '../../src/styles/MTabs.scss';
+
 export interface MTabsProps extends TabsProps {
   children?: ReactNode | undefined;
 }
@@ -20,7 +22,7 @@ function MTabs({
       {...attrs}
       onSelect={onSelect}
       className={[
-        'react-tabs',
+        'react-tabs test-tabs',
         className ? className as string : '',
       ]}
     >

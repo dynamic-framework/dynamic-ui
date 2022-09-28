@@ -1,4 +1,5 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
   input: {
@@ -18,8 +19,12 @@ export default {
       sourcemap: true
     }
   ],
-  external: (id) => !/^(\.|\/)/.test(id),
   plugins: [
-    nodeResolve()
+    postcss({
+      extract: false,
+      minimize: true,
+    }),
+    nodeResolve(),
   ],
+  external: (id) => !/^(\.|\/)/.test(id),
 };
