@@ -11,22 +11,27 @@ export type TabOption = {
   label: string;
   tab: string;
   icon?: string;
+  disabled?: boolean;
 };
 
 type Props = PropsWithChildren<{
   onChange: (option: TabOption) => void;
   options: Array<TabOption>;
   defaultSelected: string;
+  variant?: 'pills' | 'group' | undefined;
+  className?: string;
 }>;
 
 const TabContext = createContext<string>('');
 
 export default function MTabs(
   {
+    children,
+    className,
+    defaultSelected,
     onChange,
     options,
-    defaultSelected,
-    children,
+    variant,
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -40,22 +45,33 @@ export default function MTabs(
 
   return (
     <TabContext.Provider value={selected}>
-      <nav>
+      <nav className="tabs">
         <div
-          className="nav nav-tabs"
+          className={
+            classnames(
+              'tab-list',
+              {
+                [`${variant}`]: !!variant,
+              },
+              className
+            )
+          }
           role="tablist"
         >
           {options.map((option) => (
             <button
               key={option.label}
-              className={classnames(
-                'nav-link',
-                {
-                  active: option.tab === selected,
-                },
-              )}
+              className={
+                classnames(
+                  'tab',
+                  {
+                    selected: option.tab === selected,
+                  }
+                )
+              }
               type="button"
               role="tab"
+              disabled={option.disabled}
               onClick={() => onSelect(option)}
             >
               {option.label}
