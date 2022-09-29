@@ -13,8 +13,6 @@ import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
-import { NavVariant } from "./components/m-nav/m-nav-interface";
-import { NavLinkVariant, OptionProps } from "./components/m-nav-link/m-nav-link-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
 import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
@@ -544,68 +542,6 @@ export namespace Components {
          */
         "static"?: boolean;
     }
-    interface MNav {
-        /**
-          * Is aria orientation vertical
-         */
-        "isAriaVertical": boolean;
-        /**
-          * Variant of nav
-         */
-        "variant"?: NavVariant;
-    }
-    interface MNavContent {
-    }
-    interface MNavItem {
-    }
-    interface MNavLink {
-        /**
-          * The icon to display
-         */
-        "icon"?: string;
-        /**
-          * Is active nav link
-         */
-        "isActive": boolean;
-        /**
-          * Is disabled nav link
-         */
-        "isDisabled": boolean;
-        /**
-          * Props for the nav link navegable variant
-         */
-        "navegableProps"?: NavegableProps;
-        /**
-          * Props for the nav link option variant
-         */
-        "optionProps"?: OptionProps;
-        /**
-          * Text of nav link
-         */
-        "text": string;
-        /**
-          * Variant of nav link
-         */
-        "variant": NavLinkVariant;
-    }
-    interface MNavPane {
-        /**
-          * Is the current active nav-pane
-         */
-        "isActive": boolean;
-        /**
-          * Id of the nav-pane
-         */
-        "mId": string;
-        /**
-          * Tab Index of the nav-pane
-         */
-        "mTabindex"?: number;
-        /**
-          * Role of the nav-pane
-         */
-        "role": string;
-    }
     interface MQuickAction {
         /**
           * The action icon for the quick action
@@ -990,36 +926,6 @@ declare global {
         prototype: HTMLMModalElement;
         new (): HTMLMModalElement;
     };
-    interface HTMLMNavElement extends Components.MNav, HTMLStencilElement {
-    }
-    var HTMLMNavElement: {
-        prototype: HTMLMNavElement;
-        new (): HTMLMNavElement;
-    };
-    interface HTMLMNavContentElement extends Components.MNavContent, HTMLStencilElement {
-    }
-    var HTMLMNavContentElement: {
-        prototype: HTMLMNavContentElement;
-        new (): HTMLMNavContentElement;
-    };
-    interface HTMLMNavItemElement extends Components.MNavItem, HTMLStencilElement {
-    }
-    var HTMLMNavItemElement: {
-        prototype: HTMLMNavItemElement;
-        new (): HTMLMNavItemElement;
-    };
-    interface HTMLMNavLinkElement extends Components.MNavLink, HTMLStencilElement {
-    }
-    var HTMLMNavLinkElement: {
-        prototype: HTMLMNavLinkElement;
-        new (): HTMLMNavLinkElement;
-    };
-    interface HTMLMNavPaneElement extends Components.MNavPane, HTMLStencilElement {
-    }
-    var HTMLMNavPaneElement: {
-        prototype: HTMLMNavPaneElement;
-        new (): HTMLMNavPaneElement;
-    };
     interface HTMLMQuickActionElement extends Components.MQuickAction, HTMLStencilElement {
     }
     var HTMLMQuickActionElement: {
@@ -1072,11 +978,6 @@ declare global {
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
-        "m-nav": HTMLMNavElement;
-        "m-nav-content": HTMLMNavContentElement;
-        "m-nav-item": HTMLMNavItemElement;
-        "m-nav-link": HTMLMNavLinkElement;
-        "m-nav-pane": HTMLMNavPaneElement;
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
         "m-segment-control": HTMLMSegmentControlElement;
@@ -1652,68 +1553,6 @@ declare namespace LocalJSX {
          */
         "static"?: boolean;
     }
-    interface MNav {
-        /**
-          * Is aria orientation vertical
-         */
-        "isAriaVertical"?: boolean;
-        /**
-          * Variant of nav
-         */
-        "variant"?: NavVariant;
-    }
-    interface MNavContent {
-    }
-    interface MNavItem {
-    }
-    interface MNavLink {
-        /**
-          * The icon to display
-         */
-        "icon"?: string;
-        /**
-          * Is active nav link
-         */
-        "isActive"?: boolean;
-        /**
-          * Is disabled nav link
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Props for the nav link navegable variant
-         */
-        "navegableProps"?: NavegableProps;
-        /**
-          * Props for the nav link option variant
-         */
-        "optionProps"?: OptionProps;
-        /**
-          * Text of nav link
-         */
-        "text": string;
-        /**
-          * Variant of nav link
-         */
-        "variant"?: NavLinkVariant;
-    }
-    interface MNavPane {
-        /**
-          * Is the current active nav-pane
-         */
-        "isActive"?: boolean;
-        /**
-          * Id of the nav-pane
-         */
-        "mId": string;
-        /**
-          * Tab Index of the nav-pane
-         */
-        "mTabindex"?: number;
-        /**
-          * Role of the nav-pane
-         */
-        "role"?: string;
-    }
     interface MQuickAction {
         /**
           * The action icon for the quick action
@@ -1990,11 +1829,6 @@ declare namespace LocalJSX {
         "m-input": MInput;
         "m-list-item": MListItem;
         "m-modal": MModal;
-        "m-nav": MNav;
-        "m-nav-content": MNavContent;
-        "m-nav-item": MNavItem;
-        "m-nav-link": MNavLink;
-        "m-nav-pane": MNavPane;
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
         "m-segment-control": MSegmentControl;
@@ -2022,11 +1856,6 @@ declare module "@stencil/core" {
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
-            "m-nav": LocalJSX.MNav & JSXBase.HTMLAttributes<HTMLMNavElement>;
-            "m-nav-content": LocalJSX.MNavContent & JSXBase.HTMLAttributes<HTMLMNavContentElement>;
-            "m-nav-item": LocalJSX.MNavItem & JSXBase.HTMLAttributes<HTMLMNavItemElement>;
-            "m-nav-link": LocalJSX.MNavLink & JSXBase.HTMLAttributes<HTMLMNavLinkElement>;
-            "m-nav-pane": LocalJSX.MNavPane & JSXBase.HTMLAttributes<HTMLMNavPaneElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
