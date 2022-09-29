@@ -6,6 +6,7 @@ import {
 } from 'react';
 import type { PropsWithChildren } from 'react';
 import classnames from 'classnames';
+import { MIcon } from './proxies';
 
 export type TabOption = {
   label: string;
@@ -66,6 +67,7 @@ export default function MTabs(
                   'tab',
                   {
                     selected: option.tab === selected,
+                    'tab-icon': !!option.icon,
                   }
                 )
               }
@@ -74,6 +76,9 @@ export default function MTabs(
               disabled={option.disabled}
               onClick={() => onSelect(option)}
             >
+              {option.icon && (
+                <MIcon icon={option.icon} />
+              )}
               {option.label}
             </button>
           ))}
