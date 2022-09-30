@@ -31,10 +31,10 @@
     "dist/"
   ],
   "dependencies": {
+    "classnames": "^2.3.2",
     "i18next": "~21.9.0",
     "react-content-loader": "~6.2.0",
-    "react-datepicker": "~4.8.0",
-    "react-tabs": "^5.1.0"
+    "react-datepicker": "~4.8.0"
   },
   "devDependencies": {
     "@modyolabs/modyo-design-system": "^0.3.1",
