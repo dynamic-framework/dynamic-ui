@@ -28,7 +28,6 @@
  - [m-hint](../m-hint)
  - [m-input](../m-input)
  - [m-list-item](../m-list-item)
- - [m-nav-link](../m-nav-link)
  - [m-quick-action](../m-quick-action)
  - [m-search](../m-search)
  - [m-select](../m-select)
@@ -45,7 +44,6 @@ graph TD;
   m-hint --> m-icon
   m-input --> m-icon
   m-list-item --> m-icon
-  m-nav-link --> m-icon
   m-quick-action --> m-icon
   m-search --> m-icon
   m-select --> m-icon

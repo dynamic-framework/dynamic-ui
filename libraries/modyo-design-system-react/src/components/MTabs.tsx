@@ -1,34 +1,100 @@
-import { ReactNode } from 'react';
 import {
-  Tabs,
-  TabsProps,
-} from 'react-tabs';
+  createContext,
+  useState,
+  useCallback,
+  useContext,
+} from 'react';
+import type { PropsWithChildren } from 'react';
+import classnames from 'classnames';
+import { MIcon } from './proxies';
 
-export interface MTabsProps extends TabsProps {
-  children?: ReactNode | undefined;
-}
+export type TabOption = {
+  label: string;
+  tab: string;
+  icon?: string;
+  disabled?: boolean;
+};
 
-function MTabs({
-  className,
-  children,
-  onSelect,
-  ...attrs
-}: MTabsProps) {
+type Props = PropsWithChildren<{
+  onChange: (option: TabOption) => void;
+  options: Array<TabOption>;
+  defaultSelected: string;
+  variant?: 'pills' | 'group' | undefined;
+  className?: string;
+}>;
+
+const TabContext = createContext<string>('');
+
+export default function MTabs(
+  {
+    children,
+    className,
+    defaultSelected,
+    onChange,
+    options,
+    variant,
+  }: Props,
+) {
+  const [selected, setSelected] = useState<string>(defaultSelected);
+
+  const onSelect = useCallback((option: TabOption) => {
+    if (option.tab) {
+      setSelected(option.tab);
+    }
+    onChange(option);
+  }, [onChange]);
+
   return (
-    <Tabs
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...attrs}
-      onSelect={onSelect}
-      className={[
-        'react-tabs',
-        className ? className as string : '',
-      ]}
-    >
+    <TabContext.Provider value={selected}>
+      <nav className="tabs">
+        <div
+          className={
+            classnames(
+              'tab-list',
+              {
+                [`${variant}`]: !!variant,
+              },
+              className
+            )
+          }
+          role="tablist"
+        >
+          {options.map((option) => (
+            <button
+              key={option.label}
+              className={
+                classnames(
+                  'tab',
+                  {
+                    selected: option.tab === selected,
+                    'tab-icon': !!option.icon,
+                  }
+                )
+              }
+              type="button"
+              role="tab"
+              disabled={option.disabled}
+              onClick={() => onSelect(option)}
+            >
+              {option.icon && (
+                <MIcon icon={option.icon} />
+              )}
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </nav>
       {children}
-    </Tabs>
+    </TabContext.Provider>
   );
 }
 
-MTabs.tabsRole = 'Tabs';
+export function useTabContext() {
+  const context = useContext(TabContext);
 
-export default MTabs;
+  if (context === undefined) {
+    throw new Error('useTabContext was used outside of MTab');
+  }
+
+  return context;
+}

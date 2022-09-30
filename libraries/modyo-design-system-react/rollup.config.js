@@ -9,17 +9,17 @@ export default {
       dir: 'dist/',
       entryFileNames: '[name].esm.js',
       format: 'es',
-      sourcemap: true
+      sourcemap: true,
     },
     {
       dir: 'dist/',
       format: 'commonjs',
       preferConst: true,
-      sourcemap: true
-    }
+      sourcemap: true,
+    },
+  ],
+  plugins: [
+    nodeResolve(),
   ],
   external: (id) => !/^(\.|\/)/.test(id),
-  plugins: [
-    nodeResolve()
-  ],
 };
