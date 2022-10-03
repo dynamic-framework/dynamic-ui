@@ -163,9 +163,9 @@ export class MCounter {
                   class="form-control-counter-input"
                   type="number"
                   id={this.mId}
-                  value={this.value}
                   min={this.min}
                   max={this.max}
+                  value={this.value}
                   onInput={this.inputHandler}
                   disabled={this.disabled}
                 />

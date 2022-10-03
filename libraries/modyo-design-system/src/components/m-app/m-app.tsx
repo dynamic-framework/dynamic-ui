@@ -6,7 +6,6 @@ import {
 @Component({
   tag: 'm-app',
   styleUrl: 'm-app.scss',
-  // shadow: { delegatesFocus: true }
   shadow: false,
   scoped: false,
 })

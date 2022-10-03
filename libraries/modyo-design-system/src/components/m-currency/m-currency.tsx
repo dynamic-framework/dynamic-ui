@@ -236,10 +236,10 @@ export class MCurrency implements ComponentInterface {
               ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
               type="number"
-              value={this.value}
               min={this.minValue}
               max={this.maxValue}
               class="form-control"
+              value={this.value}
               placeholder={this.placeholder}
               aria-label={this.label}
               aria-describedby={`${this.mId}-add`}

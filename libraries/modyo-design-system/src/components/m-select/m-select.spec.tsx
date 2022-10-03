@@ -18,9 +18,9 @@ it('should render my component', async () => {
   <m-select class="form-control-layout form-control-layout-pill form-control-layout-prime">
     <div class="form-control-input w-100">
       <div class="input-group">
-        <select 
-          aria-describedby="${select.mId}-start" 
-          class="form-select no-icons" 
+        <select
+          aria-describedby="${select.mId}-start"
+          class="form-select no-icons"
           id="${select.mId}"
         >
         </select>
@@ -50,9 +50,9 @@ it('should render my component with options', async () => {
   <m-select class="form-control-layout form-control-layout-pill form-control-layout-prime">
     <div class="form-control-input w-100">
       <div class="input-group">
-        <select 
-          aria-describedby="${select.mId}-start" 
-          class="form-select no-icons" 
+        <select
+          aria-describedby="${select.mId}-start"
+          class="form-select no-icons"
           id="${select.mId}"
         >
           <option value=${options[0].value}>
