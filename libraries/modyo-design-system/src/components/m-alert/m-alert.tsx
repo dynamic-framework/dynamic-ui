@@ -24,10 +24,6 @@ export class MAlert {
    */
   @Prop() showIcon = false;
   /**
-   * Icon font-size class
-   */
-  @Prop() iconSize?: string = 'small';
-  /**
    * Show close button
    */
   @Prop() showClose?: boolean;
@@ -58,7 +54,7 @@ export class MAlert {
         role="alert"
       >
         {this.showIcon && (
-          <div class={`alert-icon ${this.iconSize}`}>
+          <div class="alert-icon small">
             <m-icon
               icon={this.iconState()}
             />

@@ -18,10 +18,6 @@ import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
         /**
-          * Icon font-size class
-         */
-        "iconSize"?: string;
-        /**
           * Show close button
          */
         "showClose"?: boolean;
@@ -988,10 +984,6 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MAlert {
-        /**
-          * Icon font-size class
-         */
-        "iconSize"?: string;
         /**
           * Emitted when the button has been clicked.
          */

@@ -9,7 +9,6 @@
 
 | Property    | Attribute    | Description                  | Type                   | Default     |
 | ----------- | ------------ | ---------------------------- | ---------------------- | ----------- |
-| `iconSize`  | `icon-size`  | Icon font-size class         | `string \| undefined`  | `'small'`   |
 | `showClose` | `show-close` | Show close button            | `boolean \| undefined` | `undefined` |
 | `showIcon`  | `show-icon`  | Show icon theme in the alert | `boolean`              | `false`     |
 | `theme`     | `theme`      | Theme for the alert          | `string`               | `'warning'` |
