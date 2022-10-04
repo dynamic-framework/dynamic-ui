@@ -1,21 +1,22 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { MButton, MApp } from '../../components';
+import { MButton } from '../../components';
+import { ICONS, THEMES } from '../constants';
 
-export default {
+const config: ComponentMeta<typeof MButton> = {
   title: 'Stencil/Button',
   component: MButton,
-  decorators: [
-    (Story) => (
-      <MApp>
-        <Story />
-      </MApp>
-    ),
-  ],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Design System Button',
+      },
+    },
+  },
   argTypes: {
     theme: {
       control: 'select',
-      options: ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
     },
     variant: {
@@ -36,8 +37,28 @@ export default {
       },
       options: [undefined, 'focus', 'hover', 'active', 'disabled'],
     },
+    iconLeft: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
+    iconRight: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
   },
-} as ComponentMeta<typeof MButton>;
+};
+
+export default config;
 
 const Template: ComponentStory<typeof MButton> = (args) => <MButton {...args} />;
 

@@ -1,17 +1,10 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { MApp, MTabs, MTabContent } from '../../components';
+import { MTabs, MTabContent } from '../../components';
 
-export default {
+const config: ComponentMeta<typeof MTabs> = {
   title: 'React/Tabs',
   component: MTabs,
-  decorators: [
-    (Story) => (
-      <MApp>
-        <Story />
-      </MApp>
-    ),
-  ],
   argTypes: {
     defaultSelected: {
       control: {
@@ -33,7 +26,9 @@ export default {
       control: 'text',
     },
   },
-} as ComponentMeta<typeof MTabs>;
+};
+
+export default config;
 
 const Template: ComponentStory<typeof MTabs> = (args) => (
   <MTabs
