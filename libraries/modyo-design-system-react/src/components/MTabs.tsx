@@ -3,9 +3,11 @@ import {
   useState,
   useCallback,
   useContext,
+  useEffect,
 } from 'react';
 import type { PropsWithChildren } from 'react';
 import classnames from 'classnames';
+
 import { MIcon } from './proxies';
 
 export type TabOption = {
@@ -44,6 +46,10 @@ export default function MTabs(
     onChange(option);
   }, [onChange]);
 
+  useEffect(() => {
+    setSelected(defaultSelected);
+  }, [defaultSelected]);
+
   return (
     <TabContext.Provider value={selected}>
       <nav className="tabs">
@@ -52,9 +58,9 @@ export default function MTabs(
             classnames(
               'tab-list',
               {
-                [`${variant}`]: !!variant,
+                [variant as string]: !!variant,
               },
-              className
+              className,
             )
           }
           role="tablist"
@@ -68,7 +74,7 @@ export default function MTabs(
                   {
                     selected: option.tab === selected,
                     'tab-icon': !!option.icon,
-                  }
+                  },
                 )
               }
               type="button"
