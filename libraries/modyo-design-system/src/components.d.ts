@@ -18,17 +18,17 @@ import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
         /**
-          * Has close button
-         */
-        "close"?: boolean;
-        /**
-          * Show icon theme in the alert
-         */
-        "icon": boolean;
-        /**
           * Icon font-size class
          */
         "iconSize"?: string;
+        /**
+          * Show close button
+         */
+        "showClose"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "showIcon": boolean;
         /**
           * Theme for the alert
          */
@@ -989,14 +989,6 @@ declare global {
 declare namespace LocalJSX {
     interface MAlert {
         /**
-          * Has close button
-         */
-        "close"?: boolean;
-        /**
-          * Show icon theme in the alert
-         */
-        "icon"?: boolean;
-        /**
           * Icon font-size class
          */
         "iconSize"?: string;
@@ -1004,6 +996,14 @@ declare namespace LocalJSX {
           * Emitted when the button has been clicked.
          */
         "onMClose"?: (event: MAlertCustomEvent<any>) => void;
+        /**
+          * Show close button
+         */
+        "showClose"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "showIcon"?: boolean;
         /**
           * Theme for the alert
          */

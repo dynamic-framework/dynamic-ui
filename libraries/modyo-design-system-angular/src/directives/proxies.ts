@@ -38,13 +38,13 @@ export declare interface MAlert extends Components.MAlert {
 
 @ProxyCmp({
   defineCustomElementFn: defineMAlert,
-  inputs: ['close', 'icon', 'iconSize', 'theme']
+  inputs: ['iconSize', 'showClose', 'showIcon', 'theme']
 })
 @Component({
   selector: 'm-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['close', 'icon', 'iconSize', 'theme']
+  inputs: ['iconSize', 'showClose', 'showIcon', 'theme']
 })
 export class MAlert {
   protected el: HTMLElement;
