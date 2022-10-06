@@ -1,13 +1,13 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { MCoupon } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { MInput } from '../../components';
+import { ICONS } from '../constants';
 
-const config: ComponentMeta<typeof MCoupon> = {
-  title: 'Stencil/Coupon',
-  component: MCoupon,
+const config: ComponentMeta<typeof MInput> = {
+  title: 'Stencil/Input',
+  component: MInput,
   argTypes: {
-    iconLabel: {
+    labelIcon: {
       control: {
         type: 'select',
         labels: {
@@ -15,17 +15,15 @@ const config: ComponentMeta<typeof MCoupon> = {
         },
       },
       options: [undefined, ...ICONS],
+    },
+    isDisabled: {
+      control: 'boolean',
+    },
+    type: {
+      control: 'select',
+      options: ['text', 'email', 'number'],
     },
     iconStart: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      options: [undefined, ...ICONS],
-    },
-    iconMiddle: {
       control: {
         type: 'select',
         labels: {
@@ -42,19 +40,6 @@ const config: ComponentMeta<typeof MCoupon> = {
         },
       },
       options: [undefined, ...ICONS],
-    },
-    hasSelect: {
-      control: 'boolean',
-    },
-    placeholder: {
-      control: 'text',
-    },
-    type: {
-      control: 'select',
-      options: ['text', 'number'],
-    },
-    textButton: {
-      control: 'text',
     },
     hint: {
       control: 'text',
@@ -77,11 +62,6 @@ const config: ComponentMeta<typeof MCoupon> = {
       },
       options: [undefined, ...ICONS],
     },
-    theme: {
-      control: 'select',
-      options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
-    },
     layoutDirection: {
       control: 'select',
       options: ['horizontal', 'vertical'],
@@ -91,10 +71,14 @@ const config: ComponentMeta<typeof MCoupon> = {
 
 export default config;
 
-const Template: ComponentStory<typeof MCoupon> = (args) => <MCoupon {...args} />;
+const Template: ComponentStory<typeof MInput> = (args) => <MInput {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   mId: 'componentId',
   label: 'the label',
+  placeholder: 'the placeholder',
+  type: 'text',
+  value: 'the value',
+  layoutDirection: 'vertical',
 };

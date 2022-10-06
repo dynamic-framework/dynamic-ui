@@ -1,13 +1,13 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { MCoupon } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { MSearch } from '../../components';
+import { ICONS } from '../constants';
 
-const config: ComponentMeta<typeof MCoupon> = {
-  title: 'Stencil/Coupon',
-  component: MCoupon,
+const config: ComponentMeta<typeof MSearch> = {
+  title: 'Stencil/Search',
+  component: MSearch,
   argTypes: {
-    iconLabel: {
+    labelIcon: {
       control: {
         type: 'select',
         labels: {
@@ -16,23 +16,17 @@ const config: ComponentMeta<typeof MCoupon> = {
       },
       options: [undefined, ...ICONS],
     },
-    iconStart: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      options: [undefined, ...ICONS],
+    placeholder: {
+      control: 'text',
     },
-    iconMiddle: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      options: [undefined, ...ICONS],
+    value: {
+      control: 'text',
+    },
+    isDisabled: {
+      control: 'boolean',
+    },
+    isReadOnly: {
+      control: 'boolean',
     },
     iconEnd: {
       control: {
@@ -42,19 +36,6 @@ const config: ComponentMeta<typeof MCoupon> = {
         },
       },
       options: [undefined, ...ICONS],
-    },
-    hasSelect: {
-      control: 'boolean',
-    },
-    placeholder: {
-      control: 'text',
-    },
-    type: {
-      control: 'select',
-      options: ['text', 'number'],
-    },
-    textButton: {
-      control: 'text',
     },
     hint: {
       control: 'text',
@@ -78,9 +59,22 @@ const config: ComponentMeta<typeof MCoupon> = {
       options: [undefined, ...ICONS],
     },
     theme: {
-      control: 'select',
-      options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
+      control: {
+        type: 'theme',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, 'warning', 'danger'],
+    },
+    variant: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, 'prime', 'secondary'],
     },
     layoutDirection: {
       control: 'select',
@@ -91,10 +85,11 @@ const config: ComponentMeta<typeof MCoupon> = {
 
 export default config;
 
-const Template: ComponentStory<typeof MCoupon> = (args) => <MCoupon {...args} />;
+const Template: ComponentStory<typeof MSearch> = (args) => <MSearch {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   mId: 'componentId',
-  label: 'the label',
+  placeholder: 'the placeholder',
+  layoutDirection: 'vertical',
 };

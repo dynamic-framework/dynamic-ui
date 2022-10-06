@@ -56,7 +56,7 @@ const Template: ComponentStory<typeof MCounter> = (args) => <MCounter {...args} 
 
 export const Default = Template.bind({});
 Default.args = {
-  id: 'componentId',
+  mId: 'componentId',
   theme: 'info',
   min: 0,
   max: 100,

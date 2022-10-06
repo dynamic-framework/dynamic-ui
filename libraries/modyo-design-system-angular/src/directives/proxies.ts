@@ -9,7 +9,6 @@ import { defineCustomElement as defineMAlert } from '@modyolabs/modyo-design-sys
 import { defineCustomElement as defineMApp } from '@modyolabs/modyo-design-system/components/m-app.js';
 import { defineCustomElement as defineMBadge } from '@modyolabs/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineMCard } from '@modyolabs/modyo-design-system/components/m-card.js';
 import { defineCustomElement as defineMCounter } from '@modyolabs/modyo-design-system/components/m-counter.js';
 import { defineCustomElement as defineMCoupon } from '@modyolabs/modyo-design-system/components/m-coupon.js';
 import { defineCustomElement as defineMCurrency } from '@modyolabs/modyo-design-system/components/m-currency.js';
@@ -120,27 +119,6 @@ export class MButton {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mClick']);
-  }
-}
-
-
-export declare interface MCard extends Components.MCard {}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMCard,
-  inputs: ['header', 'theme']
-})
-@Component({
-  selector: 'm-card',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['header', 'theme']
-})
-export class MCard {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
   }
 }
 

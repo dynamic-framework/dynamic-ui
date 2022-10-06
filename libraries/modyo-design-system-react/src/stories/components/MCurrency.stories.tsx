@@ -1,21 +1,12 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { MCoupon } from '../../components';
+import { MCurrency } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MCoupon> = {
-  title: 'Stencil/Coupon',
-  component: MCoupon,
+const config: ComponentMeta<typeof MCurrency> = {
+  title: 'Stencil/Currency',
+  component: MCurrency,
   argTypes: {
-    iconLabel: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      options: [undefined, ...ICONS],
-    },
     iconStart: {
       control: {
         type: 'select',
@@ -43,19 +34,6 @@ const config: ComponentMeta<typeof MCoupon> = {
       },
       options: [undefined, ...ICONS],
     },
-    hasSelect: {
-      control: 'boolean',
-    },
-    placeholder: {
-      control: 'text',
-    },
-    type: {
-      control: 'select',
-      options: ['text', 'number'],
-    },
-    textButton: {
-      control: 'text',
-    },
     hint: {
       control: 'text',
     },
@@ -79,8 +57,17 @@ const config: ComponentMeta<typeof MCoupon> = {
     },
     theme: {
       control: 'select',
-      options: THEMES,
+      options: THEMES.filter((theme) => !['light', 'dark'].includes(theme)),
       table: { defaultValue: { summary: 'primary' } },
+    },
+    variant: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, 'prime'],
     },
     layoutDirection: {
       control: 'select',
@@ -91,10 +78,25 @@ const config: ComponentMeta<typeof MCoupon> = {
 
 export default config;
 
-const Template: ComponentStory<typeof MCoupon> = (args) => <MCoupon {...args} />;
+const Template: ComponentStory<typeof MCurrency> = (args) => <MCurrency {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   mId: 'componentId',
   label: 'the label',
+  selectOptions: [
+    { label: 'USD', value: 'USD' },
+    { label: 'CLP', value: 'CLP' },
+  ],
+  placeholder: 'the placeholder',
+  value: 123,
+  minValue: 0,
+  maxValue: 100000,
+  currencyOptions: {
+    symbol: '$',
+    precision: 2,
+    separator: ',',
+    decimal: '.',
+  },
+  layoutDirection: 'vertical',
 };

@@ -1,20 +1,26 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { MCoupon } from '../../components';
+import { MSelect } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MCoupon> = {
-  title: 'Stencil/Coupon',
-  component: MCoupon,
+const config: ComponentMeta<typeof MSelect> = {
+  title: 'Stencil/Select',
+  component: MSelect,
   argTypes: {
-    iconLabel: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      options: [undefined, ...ICONS],
+    mId: {
+      control: 'text',
+    },
+    variant: {
+      control: 'select',
+      options: ['prime', 'full', 'transparent'],
+    },
+    theme: {
+      control: 'select',
+      options: THEMES,
+      table: { defaultValue: { summary: 'primary' } },
+    },
+    label: {
+      control: 'text',
     },
     iconStart: {
       control: {
@@ -43,19 +49,6 @@ const config: ComponentMeta<typeof MCoupon> = {
       },
       options: [undefined, ...ICONS],
     },
-    hasSelect: {
-      control: 'boolean',
-    },
-    placeholder: {
-      control: 'text',
-    },
-    type: {
-      control: 'select',
-      options: ['text', 'number'],
-    },
-    textButton: {
-      control: 'text',
-    },
     hint: {
       control: 'text',
     },
@@ -77,11 +70,6 @@ const config: ComponentMeta<typeof MCoupon> = {
       },
       options: [undefined, ...ICONS],
     },
-    theme: {
-      control: 'select',
-      options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
-    },
     layoutDirection: {
       control: 'select',
       options: ['horizontal', 'vertical'],
@@ -91,10 +79,15 @@ const config: ComponentMeta<typeof MCoupon> = {
 
 export default config;
 
-const Template: ComponentStory<typeof MCoupon> = (args) => <MCoupon {...args} />;
+const Template: ComponentStory<typeof MSelect> = (args) => <MSelect {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   mId: 'componentId',
-  label: 'the label',
+  variant: 'prime',
+  options: [
+    { label: 'option 1', value: '1' },
+    { label: 'option 2', value: '2' },
+  ],
+  layoutDirection: 'vertical',
 };

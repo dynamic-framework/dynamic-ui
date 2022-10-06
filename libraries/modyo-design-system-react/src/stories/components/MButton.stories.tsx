@@ -1,7 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { MButton } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { ICONS, INPUT_STATE, THEMES } from '../constants';
 
 const config: ComponentMeta<typeof MButton> = {
   title: 'Stencil/Button',
@@ -35,7 +35,7 @@ const config: ComponentMeta<typeof MButton> = {
           undefined: 'empty',
         },
       },
-      options: [undefined, 'focus', 'hover', 'active', 'disabled'],
+      options: [undefined, ...INPUT_STATE],
     },
     iconLeft: {
       control: {

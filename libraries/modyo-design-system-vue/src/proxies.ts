@@ -40,12 +40,6 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
 ]);
 
 
-export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefined, [
-  'theme',
-  'header'
-]);
-
-
 export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter', undefined, [
   'mId',
   'label',
