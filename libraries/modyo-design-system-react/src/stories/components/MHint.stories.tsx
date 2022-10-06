@@ -25,6 +25,9 @@ const config: ComponentMeta<typeof MHint> = {
       },
       options: [undefined, ...ICONS],
     },
+    text: {
+      control: 'text',
+    },
     theme: {
       control: 'select',
       options: THEMES.filter((theme) => (

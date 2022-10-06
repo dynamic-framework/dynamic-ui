@@ -7,6 +7,9 @@ const config: ComponentMeta<typeof MBadge> = {
   title: 'Stencil/Badge',
   component: MBadge,
   argTypes: {
+    text: {
+      control: 'text',
+    },
     theme: {
       control: 'select',
       options: THEMES,

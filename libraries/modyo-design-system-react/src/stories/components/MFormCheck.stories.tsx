@@ -13,8 +13,14 @@ const config: ComponentMeta<typeof MFormCheck> = {
     name: {
       control: 'text',
     },
+    label: {
+      control: 'text',
+    },
     checked: {
       control: 'boolean',
+    },
+    mId: {
+      control: 'text',
     },
     disabled: {
       control: 'boolean',
@@ -31,11 +37,11 @@ const config: ComponentMeta<typeof MFormCheck> = {
     indeterminate: {
       control: 'boolean',
     },
-    isButton: {
-      control: 'boolean',
-    },
     value: {
       control: 'text',
+    },
+    isButton: {
+      control: 'boolean',
     },
   },
 };

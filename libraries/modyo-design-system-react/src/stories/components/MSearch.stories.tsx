@@ -7,6 +7,12 @@ const config: ComponentMeta<typeof MSearch> = {
   title: 'Stencil/Search',
   component: MSearch,
   argTypes: {
+    mId: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
     labelIcon: {
       control: {
         type: 'select',

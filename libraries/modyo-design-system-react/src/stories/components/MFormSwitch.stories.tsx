@@ -6,10 +6,16 @@ const config: ComponentMeta<typeof MFormSwitch> = {
   title: 'Stencil/FormSwitch',
   component: MFormSwitch,
   argTypes: {
+    label: {
+      control: 'text',
+    },
     labelOn: {
       control: 'text',
     },
     labelOff: {
+      control: 'text',
+    },
+    mId: {
       control: 'text',
     },
     isChecked: {

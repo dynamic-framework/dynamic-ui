@@ -37,6 +37,9 @@ const config: ComponentMeta<typeof MButton> = {
       },
       options: [undefined, ...INPUT_STATE],
     },
+    text: {
+      control: 'text',
+    },
     iconLeft: {
       control: {
         type: 'select',
@@ -55,6 +58,16 @@ const config: ComponentMeta<typeof MButton> = {
       },
       options: [undefined, ...ICONS],
     },
+    value: {
+      control: 'text',
+    },
+    type: {
+      control: 'select',
+      options: ['submit', 'reset', 'button'],
+    },
+    isPill: {
+      control: 'boolean',
+    },
   },
 };
 
@@ -66,5 +79,5 @@ export const Default = Template.bind({});
 Default.args = {
   theme: 'primary',
   text: 'default',
-  isPill: false,
+  type: 'button',
 };

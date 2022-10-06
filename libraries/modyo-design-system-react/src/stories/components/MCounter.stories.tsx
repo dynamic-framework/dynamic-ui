@@ -7,10 +7,8 @@ const config: ComponentMeta<typeof MCounter> = {
   title: 'Stencil/Counter',
   component: MCounter,
   argTypes: {
-    theme: {
-      control: 'select',
-      options: ['info', 'warning', 'danger'],
-      table: { defaultValue: { summary: 'info' } },
+    mId: {
+      control: 'text',
     },
     label: {
       control: 'text',
@@ -35,6 +33,20 @@ const config: ComponentMeta<typeof MCounter> = {
         },
       },
       options: [undefined, ...ICONS],
+    },
+    theme: {
+      control: 'select',
+      options: ['info', 'warning', 'danger'],
+      table: { defaultValue: { summary: 'info' } },
+    },
+    min: {
+      control: 'number',
+    },
+    max: {
+      control: 'number',
+    },
+    value: {
+      control: 'number',
     },
     variant: {
       control: 'select',

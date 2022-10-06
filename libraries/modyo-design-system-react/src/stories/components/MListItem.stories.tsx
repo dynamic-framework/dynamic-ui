@@ -12,6 +12,12 @@ const config: ComponentMeta<typeof MListItem> = {
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
     },
+    text: {
+      control: 'text',
+    },
+    subtext: {
+      control: 'text',
+    },
     value: {
       control: 'text',
     },
@@ -21,9 +27,6 @@ const config: ComponentMeta<typeof MListItem> = {
     isPill: {
       control: 'boolean',
     },
-    image: {
-      control: 'text',
-    },
     icon: {
       control: {
         type: 'select',
@@ -32,6 +35,9 @@ const config: ComponentMeta<typeof MListItem> = {
         },
       },
       options: [undefined, ...ICONS],
+    },
+    image: {
+      control: 'text',
     },
     variant: {
       control: 'select',

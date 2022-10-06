@@ -131,7 +131,6 @@ importers:
       '@storybook/addon-links': ^6.5.12
       '@storybook/addon-viewport': ^6.5.12
       '@storybook/builder-webpack5': ^6.5.12
-      '@storybook/core-common': ^6.5.12
       '@storybook/manager-webpack5': ^6.5.12
       '@storybook/react': ^6.5.12
       '@storybook/testing-library': ^0.0.13
@@ -183,7 +182,6 @@ importers:
       '@storybook/addon-links': 6.5.12_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-viewport': 6.5.12_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 6.5.12_y66dtv237bptkd6osu2wu4zbsa
-      '@storybook/core-common': 6.5.12_y66dtv237bptkd6osu2wu4zbsa
       '@storybook/manager-webpack5': 6.5.12_y66dtv237bptkd6osu2wu4zbsa
       '@storybook/react': 6.5.12_nyzjqeigxylj4gozglw2kqpyxy
       '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
@@ -305,6 +303,81 @@ importers:
       karma-jasmine: 4.0.2_karma@6.3.20
       karma-jasmine-html-reporter: 1.7.0_hmebq5lwkw4tdptkw7fxmrit24
       typescript: 4.6.4
+      webpack: 5.74.0
+
+  widgets/modyo-widget-product-detail:
+    specifiers:
+      '@babel/plugin-syntax-flow': ^7.14.5
+      '@babel/plugin-transform-react-jsx': ^7.14.9
+      '@craco/craco': ^7.0.0-alpha.3
+      '@modyolabs/modyo-design-system': ^0.3.1
+      '@modyolabs/modyo-design-system-react': ^0.4.0
+      '@reduxjs/toolkit': ^1.8.4
+      '@testing-library/jest-dom': ^5.16.4
+      '@testing-library/react': ^13.3.0
+      '@testing-library/user-event': ^13.5.0
+      '@types/jest': ^27.0.1
+      '@types/node': ^16.7.13
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      '@types/webpack-env': ^1.18.0
+      '@typescript-eslint/eslint-plugin': ^5.13.0
+      '@typescript-eslint/parser': ^5.0.0
+      eslint: 8.22.0
+      eslint-config-airbnb: 19.0.4
+      eslint-config-airbnb-typescript: ^17.0.0
+      eslint-plugin-import: ^2.25.3
+      eslint-plugin-jsx-a11y: ^6.5.1
+      eslint-plugin-react: ^7.28.0
+      eslint-plugin-react-hooks: ^4.3.0
+      i18next: ~21.9.0
+      liquidjs: ^9.39.2
+      postcss: ^8.1.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-i18next: ~11.18.3
+      react-redux: ^8.0.2
+      react-scripts: 5.0.1
+      sass: ~1.54.0
+      typescript: ^4.6.4
+      web-vitals: ^2.1.4
+      webpack: ^5.64.4
+    dependencies:
+      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@reduxjs/toolkit': 1.8.5_kuo2ie247izvzll3jejufdtq3q
+      '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
+      '@testing-library/user-event': 13.5.0_znccgeejomvff3jrsk3ljovfpu
+      i18next: 21.9.2
+      liquidjs: 9.42.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
+      react-redux: 8.0.4_5uumaiclxbdbzaqafclbf6maf4
+      web-vitals: 2.1.4
+    devDependencies:
+      '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.3
+      '@babel/plugin-transform-react-jsx': 7.19.0_@babel+core@7.19.3
+      '@craco/craco': 7.0.0-alpha.7_oahfkk4zujx4osdj7s4pxeut2a
+      '@types/jest': 27.5.2
+      '@types/node': 16.11.62
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
+      '@types/webpack-env': 1.18.0
+      '@typescript-eslint/eslint-plugin': 5.38.1_aubk5xaymcbrsxse4f5cco5mne
+      '@typescript-eslint/parser': 5.38.1_76twfck5d7crjqrmw4yltga7zm
+      eslint: 8.22.0
+      eslint-config-airbnb: 19.0.4_u65hcuijnk5qhkqg2dixtc2kt4
+      eslint-config-airbnb-typescript: 17.0.0_tmjkmd5uqy6zmop7iybwk4c3ay
+      eslint-plugin-import: 2.26.0_ytwgaeopvuidmx4bzggs2vzff4
+      eslint-plugin-jsx-a11y: 6.6.1_eslint@8.22.0
+      eslint-plugin-react: 7.31.8_eslint@8.22.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.22.0
+      postcss: 8.4.16
+      react-scripts: 5.0.1_r727nmttzgvwuocpb6eyxi2m5i
+      sass: 1.54.9
+      typescript: 4.8.3
       webpack: 5.74.0
 
   widgets/modyo-widget-retail-pay-debt:
@@ -1382,7 +1455,7 @@ packages:
       '@babel/helper-annotate-as-pure': 7.18.6
       '@babel/helper-environment-visitor': 7.18.9
       '@babel/helper-wrap-function': 7.19.0
-      '@babel/types': 7.19.3
+      '@babel/types': 7.19.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6523,7 +6596,7 @@ packages:
     dependencies:
       immer: 9.0.15
       react: 18.2.0
-      react-redux: 8.0.4_yfr4m6wk75wdra335rld4tkrbu
+      react-redux: 8.0.4_5uumaiclxbdbzaqafclbf6maf4
       redux: 4.2.0
       redux-thunk: 2.4.1_redux@4.2.0
       reselect: 4.1.6
@@ -11475,7 +11548,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -22838,6 +22911,17 @@ packages:
         optional: true
     dev: true
 
+  /promise-inflight/1.0.1_bluebird@3.7.2:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dependencies:
+      bluebird: 3.7.2
+    dev: true
+
   /promise-retry/2.0.1:
     resolution: {integrity: sha512-y+WKFlBR8BGXnsNlIHFGPZmyDf3DFMoLhaflAnyZgV6rG6xu+JwesTo2Q9R6XwYmtmwAFCkAk3e35jEdoeh/3g==}
     engines: {node: '>=10'}
@@ -23276,6 +23360,39 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       react-fast-compare: 3.2.0
       warning: 4.0.3
+
+  /react-redux/8.0.4_5uumaiclxbdbzaqafclbf6maf4:
+    resolution: {integrity: sha512-yMfQ7mX6bWuicz2fids6cR1YT59VTuT8MKyyE310wJQlINKENCeT1UcPdEiX6znI5tF8zXyJ/VYvDgeGuaaNwQ==}
+    peerDependencies:
+      '@types/react': ^16.8 || ^17.0 || ^18.0
+      '@types/react-dom': ^16.8 || ^17.0 || ^18.0
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+      react-native: '>=0.59'
+      redux: ^4
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+      redux:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.19.0
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
+      '@types/use-sync-external-store': 0.0.3
+      hoist-non-react-statics: 3.3.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-is: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
 
   /react-redux/8.0.4_yfr4m6wk75wdra335rld4tkrbu:
     resolution: {integrity: sha512-yMfQ7mX6bWuicz2fids6cR1YT59VTuT8MKyyE310wJQlINKENCeT1UcPdEiX6znI5tF8zXyJ/VYvDgeGuaaNwQ==}

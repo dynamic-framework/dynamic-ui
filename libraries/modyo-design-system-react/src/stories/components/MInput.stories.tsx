@@ -7,6 +7,12 @@ const config: ComponentMeta<typeof MInput> = {
   title: 'Stencil/Input',
   component: MInput,
   argTypes: {
+    mId: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
     labelIcon: {
       control: {
         type: 'select',
@@ -16,12 +22,18 @@ const config: ComponentMeta<typeof MInput> = {
       },
       options: [undefined, ...ICONS],
     },
-    isDisabled: {
-      control: 'boolean',
+    placeholder: {
+      control: 'text',
     },
     type: {
       control: 'select',
       options: ['text', 'email', 'number'],
+    },
+    value: {
+      control: 'text',
+    },
+    isDisabled: {
+      control: 'boolean',
     },
     iconStart: {
       control: {

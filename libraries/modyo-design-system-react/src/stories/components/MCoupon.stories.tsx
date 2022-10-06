@@ -7,6 +7,12 @@ const config: ComponentMeta<typeof MCoupon> = {
   title: 'Stencil/Coupon',
   component: MCoupon,
   argTypes: {
+    mId: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
     iconLabel: {
       control: {
         type: 'select',

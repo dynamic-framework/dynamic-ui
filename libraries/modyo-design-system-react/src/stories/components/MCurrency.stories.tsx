@@ -7,6 +7,21 @@ const config: ComponentMeta<typeof MCurrency> = {
   title: 'Stencil/Currency',
   component: MCurrency,
   argTypes: {
+    mId: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
+    iconLabel: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
     iconStart: {
       control: {
         type: 'select',
@@ -33,6 +48,18 @@ const config: ComponentMeta<typeof MCurrency> = {
         },
       },
       options: [undefined, ...ICONS],
+    },
+    placeholder: {
+      control: 'text',
+    },
+    value: {
+      control: 'number',
+    },
+    minValue: {
+      control: 'number',
+    },
+    maxValue: {
+      control: 'number',
     },
     hint: {
       control: 'text',
