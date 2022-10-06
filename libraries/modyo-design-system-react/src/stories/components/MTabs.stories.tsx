@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { MTabs, MTabContent } from '../../components';
 
 const config: ComponentMeta<typeof MTabs> = {
-  title: 'React/Tabs',
+  title: 'React/Components/Tabs',
   component: MTabs,
   argTypes: {
     defaultSelected: {
