@@ -11,9 +11,8 @@ defineCustomElements();
 
 export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
   'theme',
-  'icon',
-  'iconSize',
-  'close',
+  'showIcon',
+  'showClose',
   'mClose'
 ]);
 
@@ -38,12 +37,6 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'type',
   'isPill',
   'mClick'
-]);
-
-
-export const MCard = /*@__PURE__*/ defineContainer<JSX.MCard>('m-card', undefined, [
-  'theme',
-  'header'
 ]);
 
 

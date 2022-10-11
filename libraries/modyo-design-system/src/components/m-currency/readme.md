@@ -24,7 +24,7 @@
 | `maxValue`                     | `max-value`        | * The max value of the input                                         | `number \| undefined`             | `undefined`             |
 | `minValue`                     | `min-value`        | * The min value of the input                                         | `number \| undefined`             | `undefined`             |
 | `placeholder`                  | `placeholder`      | Placeholder for the input                                            | `string \| undefined`             | `''`                    |
-| `selectOptions`                | --                 | Select options                                                       | `SelectProps[]`                   | `[]`                    |
+| `selectOptions`                | --                 | Select options                                                       | `any[]`                           | `[]`                    |
 | `theme`                        | `theme`            | Theme for the m-currency                                             | `string`                          | `'primary'`             |
 | `value` _(required)_           | `value`            | * The value of the input                                             | `number`                          | `undefined`             |
 | `valueExtractor`               | --                 | Callback to extract the value from the option                        | `(item: any) => string \| number` | `(item) => item?.value` |
