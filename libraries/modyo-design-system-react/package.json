@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
-    "@modyolabs/modyo-design-system": "^0.3.1",
+    "@modyolabs/modyo-design-system": "*",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
@@ -85,21 +85,11 @@
     "typescript": "^4.6.4"
   },
   "peerDependencies": {
+    "@modyolabs/modyo-design-system": "*",
     "luxon": "~3.0.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "~11.18.3",
     "react-toastify": "~9.0.8"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "preset": "ts-jest/presets/js-with-ts",
-    "setupFilesAfterEnv": [
-      "<rootDir>/tests/setupTests.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "node_modules",
-      "dist"
-    ]
   }
 }

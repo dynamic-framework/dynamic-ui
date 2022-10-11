@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 
-import MSkeleton from '../src/components/MSkeleton';
+import MSkeleton from '../../src/components/MSkeleton';
 
-describe('Base skeleton', () => {
+describe('MSkeleton', () => {
   test('renders without crashing', () => {
     render(
       <MSkeleton>
