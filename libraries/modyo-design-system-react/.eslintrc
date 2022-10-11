@@ -11,7 +11,8 @@
   },
   "rules": {
     "react/require-default-props": "off",
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+    "import/prefer-default-export": "off"
   },
   "overrides": [
     {

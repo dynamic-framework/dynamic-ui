@@ -24,7 +24,8 @@
     "clean": "rimraf dist",
     "compile": "tsc -p . && rollup -c rollup.config.js",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "eslint": "eslint src/**/*{.ts,.tsx}"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
