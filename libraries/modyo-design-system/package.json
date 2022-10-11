@@ -36,7 +36,7 @@
     "test:watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "eslint": "eslint src/**/*{.ts,.tsx}",
-    "stylelint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .cache/.stylelintcache --rd",
+    "stylelint": "stylelint \"**/*.{css,scss}\" --rd",
     "lint-staged": "lint-staged"
   },
   "dependencies": {
