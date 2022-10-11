@@ -4,8 +4,3 @@ export type CurrencyEvent = {
 };
 
 export type CurrencyVariant = 'prime';
-
-export type SelectProps = {
-  value: string,
-  label: string,
-};

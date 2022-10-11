@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute   | Description                  | Type                   | Default     |
-| ---------- | ----------- | ---------------------------- | ---------------------- | ----------- |
-| `close`    | `close`     | Has close button             | `boolean \| undefined` | `undefined` |
-| `icon`     | `icon`      | Show icon theme in the alert | `boolean`              | `false`     |
-| `iconSize` | `icon-size` | Icon font-size class         | `string \| undefined`  | `'small'`   |
-| `theme`    | `theme`     | Theme for the alert          | `string`               | `'warning'` |
+| Property    | Attribute    | Description                  | Type                   | Default     |
+| ----------- | ------------ | ---------------------------- | ---------------------- | ----------- |
+| `showClose` | `show-close` | Show close button            | `boolean \| undefined` | `undefined` |
+| `showIcon`  | `show-icon`  | Show icon theme in the alert | `boolean`              | `false`     |
+| `theme`     | `theme`      | Theme for the alert          | `string`               | `'warning'` |
 
 
 ## Events

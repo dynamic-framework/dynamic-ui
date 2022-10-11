@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
-import { CurrencyEvent, CurrencyVariant, SelectProps } from "./components/m-currency/m-currency-interface";
+import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
@@ -18,17 +18,13 @@ import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
     interface MAlert {
         /**
-          * Has close button
+          * Show close button
          */
-        "close"?: boolean;
+        "showClose"?: boolean;
         /**
           * Show icon theme in the alert
          */
-        "icon": boolean;
-        /**
-          * Icon font-size class
-         */
-        "iconSize"?: string;
+        "showIcon": boolean;
         /**
           * Theme for the alert
          */
@@ -83,16 +79,6 @@ export namespace Components {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
-    }
-    interface MCard {
-        /**
-          * The header text
-         */
-        "header"?: string;
-        /**
-          * The theme to use
-         */
-        "theme": string;
     }
     interface MCounter {
         /**
@@ -270,7 +256,7 @@ export namespace Components {
         /**
           * Select options
          */
-        "selectOptions": Array<SelectProps>;
+        "selectOptions": Array<any>;
         /**
           * Theme for the m-currency
          */
@@ -860,12 +846,6 @@ declare global {
         prototype: HTMLMButtonElement;
         new (): HTMLMButtonElement;
     };
-    interface HTMLMCardElement extends Components.MCard, HTMLStencilElement {
-    }
-    var HTMLMCardElement: {
-        prototype: HTMLMCardElement;
-        new (): HTMLMCardElement;
-    };
     interface HTMLMCounterElement extends Components.MCounter, HTMLStencilElement {
     }
     var HTMLMCounterElement: {
@@ -967,7 +947,6 @@ declare global {
         "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
-        "m-card": HTMLMCardElement;
         "m-counter": HTMLMCounterElement;
         "m-coupon": HTMLMCouponElement;
         "m-currency": HTMLMCurrencyElement;
@@ -989,21 +968,17 @@ declare global {
 declare namespace LocalJSX {
     interface MAlert {
         /**
-          * Has close button
-         */
-        "close"?: boolean;
-        /**
-          * Show icon theme in the alert
-         */
-        "icon"?: boolean;
-        /**
-          * Icon font-size class
-         */
-        "iconSize"?: string;
-        /**
           * Emitted when the button has been clicked.
          */
         "onMClose"?: (event: MAlertCustomEvent<any>) => void;
+        /**
+          * Show close button
+         */
+        "showClose"?: boolean;
+        /**
+          * Show icon theme in the alert
+         */
+        "showIcon"?: boolean;
         /**
           * Theme for the alert
          */
@@ -1062,16 +1037,6 @@ declare namespace LocalJSX {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
-    }
-    interface MCard {
-        /**
-          * The header text
-         */
-        "header"?: string;
-        /**
-          * The theme to use
-         */
-        "theme"?: string;
     }
     interface MCounter {
         /**
@@ -1265,7 +1230,7 @@ declare namespace LocalJSX {
         /**
           * Select options
          */
-        "selectOptions"?: Array<SelectProps>;
+        "selectOptions"?: Array<any>;
         /**
           * Theme for the m-currency
          */
@@ -1818,7 +1783,6 @@ declare namespace LocalJSX {
         "m-app": MApp;
         "m-badge": MBadge;
         "m-button": MButton;
-        "m-card": MCard;
         "m-counter": MCounter;
         "m-coupon": MCoupon;
         "m-currency": MCurrency;
@@ -1845,7 +1809,6 @@ declare module "@stencil/core" {
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
-            "m-card": LocalJSX.MCard & JSXBase.HTMLAttributes<HTMLMCardElement>;
             "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;
             "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
             "m-currency": LocalJSX.MCurrency & JSXBase.HTMLAttributes<HTMLMCurrencyElement>;

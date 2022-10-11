@@ -9,7 +9,6 @@ import { defineCustomElement as defineMAlert } from '@modyolabs/modyo-design-sys
 import { defineCustomElement as defineMApp } from '@modyolabs/modyo-design-system/components/m-app.js';
 import { defineCustomElement as defineMBadge } from '@modyolabs/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineMCard } from '@modyolabs/modyo-design-system/components/m-card.js';
 import { defineCustomElement as defineMCounter } from '@modyolabs/modyo-design-system/components/m-counter.js';
 import { defineCustomElement as defineMCoupon } from '@modyolabs/modyo-design-system/components/m-coupon.js';
 import { defineCustomElement as defineMCurrency } from '@modyolabs/modyo-design-system/components/m-currency.js';
@@ -31,7 +30,6 @@ export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertEl
 export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>('m-app', undefined, undefined, defineMApp);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
-export const MCard = /*@__PURE__*/createReactComponent<JSX.MCard, HTMLMCardElement>('m-card', undefined, undefined, defineMCard);
 export const MCounter = /*@__PURE__*/createReactComponent<JSX.MCounter, HTMLMCounterElement>('m-counter', undefined, undefined, defineMCounter);
 export const MCoupon = /*@__PURE__*/createReactComponent<JSX.MCoupon, HTMLMCouponElement>('m-coupon', undefined, undefined, defineMCoupon);
 export const MCurrency = /*@__PURE__*/createReactComponent<JSX.MCurrency, HTMLMCurrencyElement>('m-currency', undefined, undefined, defineMCurrency);

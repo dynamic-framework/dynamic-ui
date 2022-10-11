@@ -8,7 +8,7 @@ export default function useToast() {
     reactToast(({ closeToast }) => (
       <MAlert
         theme={theme}
-        close={showClose}
+        showClose={showClose}
         onMClose={closeToast}
       >
         {message}
