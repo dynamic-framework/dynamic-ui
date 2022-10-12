@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { MButton, MModal } from '../../components';
 import { ModalContextProvider, useModalContext } from '../../contexts';
-import { ModalProps } from '../../../dist/types';
+import type { ModalProps } from '../../contexts';
 
 const ExampleModal = (
   {

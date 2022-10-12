@@ -46,7 +46,9 @@ const config: ComponentMeta<typeof MSegmentControlItem> = {
 
 export default config;
 
-const Template: ComponentStory<typeof MSegmentControlItem> = (args) => <MSegmentControlItem {...args} />;
+const Template: ComponentStory<typeof MSegmentControlItem> = (args) => (
+  <MSegmentControlItem {...args} />
+);
 
 export const Default = Template.bind({});
 Default.args = {

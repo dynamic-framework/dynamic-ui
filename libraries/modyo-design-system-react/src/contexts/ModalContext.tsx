@@ -16,6 +16,7 @@ type Props = PropsWithChildren<{
   portalName: string;
   availableModals: ModalAvailableList
 }>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ModalPayload = Record<string, any>;
 export type ModalCallbackContext = {
   fromModal: boolean;

@@ -162,7 +162,7 @@ export class MListItem implements ComponentInterface {
                 <span class="fw-bold fs-6 text-gray lh-3">
                   {this.value}
                 </span>
-                {this.alternativeValue !== null && (
+                {this.alternativeValue !== undefined && (
                   <small class="text-gray lh-3">
                     {this.alternativeValue}
                   </small>
