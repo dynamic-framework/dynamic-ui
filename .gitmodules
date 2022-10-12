@@ -2,12 +2,12 @@
 	path = widgets/modyo-widget-retail-pay-debt
 	url = git@github.com:modyolabs/modyo-widget-retail-pay-debt.git
 	branch = chore/lerna
-[submodule "widgets/modyo-widget-product-detail"]
-	path = widgets/modyo-widget-product-detail
-	url = git@github.com:modyolabs/modyo-widget-product-detail.git
 [submodule "widgets/modyo-widget-retail-dashboard"]
 	path = widgets/modyo-widget-retail-dashboard
 	url = git@github.com:modyolabs/modyo-widget-retail-dashboard.git
 [submodule "widgets/modyo-widget-retail-transfer"]
 	path = widgets/modyo-widget-retail-transfer
 	url = git@github.com:modyolabs/modyo-widget-retail-transfer.git
+[submodule "widgets/modyo-widget-retail-product-detail"]
+	path = widgets/modyo-widget-retail-product-detail
+	url = git@github.com:modyolabs/modyo-widget-retail-product-detail.git
