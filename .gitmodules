@@ -8,3 +8,6 @@
 [submodule "widgets/modyo-widget-retail-dashboard"]
 	path = widgets/modyo-widget-retail-dashboard
 	url = git@github.com:modyolabs/modyo-widget-retail-dashboard.git
+[submodule "widgets/modyo-widget-retail-transfer"]
+	path = widgets/modyo-widget-retail-transfer
+	url = git@github.com:modyolabs/modyo-widget-retail-transfer.git
