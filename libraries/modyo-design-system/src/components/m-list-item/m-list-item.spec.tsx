@@ -57,7 +57,7 @@ it('should render my component with variant default', async () => {
           </small>
         </div>
         <div class="d-flex flex-column flex-grow-1 text-end">
-          <span class="fs-6 fw-bold lh-3 text-gray">
+          <span class="fw-bold lh-3 text-gray">
             ${listItem.value}
           </span>
         </div>
