@@ -478,6 +478,10 @@ export namespace Components {
          */
         "theme"?: string;
         /**
+          * Theme to apply in the list value
+         */
+        "themeValue"?: string;
+        /**
           * Value of the list
          */
         "value"?: string | number;
@@ -1463,6 +1467,10 @@ declare namespace LocalJSX {
           * The theme to use.
          */
         "theme"?: string;
+        /**
+          * Theme to apply in the list value
+         */
+        "themeValue"?: string;
         /**
           * Value of the list
          */

@@ -18,6 +18,7 @@
 | `subtext`          | `subtext`           | Subtext of the list.                             | `string`                                                                                                            | `''`        |
 | `text`             | `text`              | Main text of the list.                           | `string`                                                                                                            | `''`        |
 | `theme`            | `theme`             | The theme to use.                                | `string \| undefined`                                                                                               | `undefined` |
+| `themeValue`       | `theme-value`       | Theme to apply in the list value                 | `string \| undefined`                                                                                               | `'gray'`    |
 | `value`            | `value`             | Value of the list                                | `number \| string \| undefined`                                                                                     | `undefined` |
 | `variant`          | `variant`           | Variant for text item list or complete item list | `"default" \| "navegable" \| "selectable" \| undefined`                                                             | `undefined` |
 

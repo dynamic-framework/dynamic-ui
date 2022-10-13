@@ -176,6 +176,7 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
   'image',
   'variant',
   'selectableProps',
+  'themeValue',
   'navegableProps'
 ]);
 

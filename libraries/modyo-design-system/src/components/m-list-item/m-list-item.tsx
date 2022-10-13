@@ -76,6 +76,11 @@ export class MListItem implements ComponentInterface {
   @Prop() selectableProps?: SelectableProps;
 
   /**
+   * Theme to apply in the list value
+   */
+  @Prop() themeValue?: string = 'gray';
+
+  /**
    * Props for the list item navegable variant
    */
   @Prop() navegableProps?: NavegableProps;
@@ -159,7 +164,7 @@ export class MListItem implements ComponentInterface {
             </div>
             {this.value !== null && (
               <div class="d-flex flex-column flex-grow-1 text-end">
-                <span class="fw-bold fs-6 text-gray lh-3">
+                <span class={`fw-bold lh-3 text-${this.themeValue}`}>
                   {this.value}
                 </span>
                 {this.alternativeValue !== undefined && (
