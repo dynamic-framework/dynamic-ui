@@ -16,7 +16,7 @@ export default function createMockedRequest<T>(
     abortController: {
       abort: () => {
         deferred.reject(new Error('AbortError'));
-        clearInterval(timer);
+        clearTimeout(timer);
       },
     },
     perform: async (): Promise<AxiosResponse<T>> => {
