@@ -16,7 +16,6 @@ import type { ClassMap, FormControlLayoutDirection } from '../../utils/component
 import type {
   CurrencyEvent,
   CurrencyVariant,
-  SelectProps,
 } from './m-currency-interface';
 
 @Component({
@@ -51,7 +50,8 @@ export class MCurrency implements ComponentInterface {
   /**
    * Select options
    * */
-  @Prop() selectOptions: Array<SelectProps> = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Prop() selectOptions: Array<any> = [];
   /**
    * Callback to extract the value from the option
    */
@@ -156,6 +156,7 @@ export class MCurrency implements ComponentInterface {
     });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private onBlurEvent = (event: any) => {
     this.internalValue = event.target.valueAsNumber;
     const value = currency(event.target.valueAsNumber, this.currencyOptions).format();
@@ -236,10 +237,10 @@ export class MCurrency implements ComponentInterface {
               ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
               type="number"
-              value={this.value}
               min={this.minValue}
               max={this.maxValue}
               class="form-control"
+              value={this.value}
               placeholder={this.placeholder}
               aria-label={this.label}
               aria-describedby={`${this.mId}-add`}

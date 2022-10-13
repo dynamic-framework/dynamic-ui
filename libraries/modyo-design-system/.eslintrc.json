@@ -1,6 +1,6 @@
 {
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "**/tsconfig.json"
   },
   "extends": [
     "plugin:@stencil/recommended",
@@ -10,26 +10,72 @@
     "plugin:import/recommended"
   ],
   "rules": {
-    "object-curly-newline": ["error", {
-      "ObjectExpression": { "multiline": true, "minProperties": 3},
-      "ObjectPattern": { "multiline": true, "minProperties": 3 },
-      "ImportDeclaration": { "multiline": true, "minProperties": 3 },
-      "ExportDeclaration": { "multiline": true, "minProperties": 3 }
-    }],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": {
+          "multiline": true,
+          "minProperties": 3
+        },
+        "ObjectPattern": {
+          "multiline": true,
+          "minProperties": 3
+        },
+        "ImportDeclaration": {
+          "multiline": true,
+          "minProperties": 3
+        },
+        "ExportDeclaration": {
+          "multiline": true,
+          "minProperties": 3
+        }
+      }
+    ],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
     "react/no-unknown-property": "off",
     "react/button-has-type": "off",
-    "react/jsx-max-props-per-line": ["error", { "maximum": { "single": 1, "multi": 1 } }],
+    "react/jsx-max-props-per-line": [
+      "error",
+      {
+        "maximum": {
+          "single": 1,
+          "multi": 1
+        }
+      }
+    ],
     "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
     "import/prefer-default-export": "off",
-    "import/order": ["error", {
-      "newlines-between": "always"
-    }],
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always"
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
     "@typescript-eslint/lines-between-class-members": [
       "error",
       "always",
-      { "exceptAfterSingleLine": true }
+      {
+        "exceptAfterSingleLine": true
+      }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/space-before-blocks": "off", // disabled because of a bug of stencil https://github.com/ionic-team/stencil-eslint/issues/68,
@@ -38,6 +84,28 @@
   "settings": {
     "react": {
       "version": "18"
+    },
+    "import/extensions": [
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx"
+    ],
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
     }
   }
 }

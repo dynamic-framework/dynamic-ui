@@ -22,15 +22,11 @@ export class MAlert {
   /**
    * Show icon theme in the alert
    */
-  @Prop() icon = false;
+  @Prop() showIcon = false;
   /**
-   * Icon font-size class
+   * Show close button
    */
-  @Prop() iconSize?: string = 'small';
-  /**
-   * Has close button
-   */
-  @Prop() close?: boolean;
+  @Prop() showClose?: boolean;
   /**
    * Emitted when the button has been clicked.
    */
@@ -43,7 +39,7 @@ export class MAlert {
   private generateClasses(): ClassMap {
     return {
       [`alert alert-${this.theme}`]: true,
-      'fade show': !!this.close,
+      'fade show': !!this.showClose,
     };
   }
 
@@ -57,8 +53,8 @@ export class MAlert {
         class={this.generateClasses()}
         role="alert"
       >
-        {this.icon && (
-          <div class={`alert-icon ${this.iconSize}`}>
+        {this.showIcon && (
+          <div class="alert-icon small">
             <m-icon
               icon={this.iconState()}
             />
@@ -67,10 +63,10 @@ export class MAlert {
         <div class="alert-text flex-grow-1">
           <slot />
         </div>
-        {this.close && (
+        {this.showClose && (
           <div class="separator" />
         )}
-        {this.close && (
+        {this.showClose && (
           <button
             type="button"
             class="btn-close fs-4"

@@ -93,7 +93,7 @@ export class MShortcutToggle implements ComponentInterface {
         />
         {((this.text || this.label) && !this.icon) && (
           <div class={this.white ? 'shortcut-toggle-white' : 'shortcut-toggle'}>
-            { this.label && (
+            {this.label && (
               <span class="shortcut-label d-block">
                 {this.label}
               </span>

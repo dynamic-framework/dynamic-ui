@@ -25,7 +25,8 @@
     "removeComments": false,
     "inlineSources": true,
     "sourceMap": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowJs": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "compileOnSave": false,
