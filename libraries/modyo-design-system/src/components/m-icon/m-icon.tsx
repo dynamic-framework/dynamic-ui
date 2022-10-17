@@ -32,6 +32,14 @@ export class MIcon {
    * Loading animation duration
    * */
   @Prop() duration = 1.8;
+  /**
+   * To set css color
+   * */
+  @Prop() color?: string;
+  /**
+   * To set background color
+   * */
+  @Prop() backgroundColor?: string;
 
   private generateClasses(): ClassMap {
     return {
@@ -49,6 +57,8 @@ export class MIcon {
         style={{
           [`--${prefixBS}m-icon-font-size`]: this.size,
           [`--${prefixBS}m-icon-animation-duration`]: `${this.duration}s`,
+          ...this.color && { [`--${prefixBS}m-icon-color`]: this.color },
+          ...this.backgroundColor && { [`--${prefixBS}m-icon-bg-color`]: this.backgroundColor },
         }}
       />
     );

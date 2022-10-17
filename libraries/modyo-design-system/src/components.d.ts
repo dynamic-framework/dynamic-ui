@@ -366,6 +366,14 @@ export namespace Components {
     }
     interface MIcon {
         /**
+          * To set background color
+         */
+        "backgroundColor"?: string;
+        /**
+          * To set css color
+         */
+        "color"?: string;
+        /**
           * Loading animation duration
          */
         "duration": number;
@@ -1351,6 +1359,14 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface MIcon {
+        /**
+          * To set background color
+         */
+        "backgroundColor"?: string;
+        /**
+          * To set css color
+         */
+        "color"?: string;
         /**
           * Loading animation duration
          */
