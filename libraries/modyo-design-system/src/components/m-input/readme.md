@@ -19,16 +19,18 @@
 | `labelIcon`        | `label-icon`       | Icon to display on label right                                       | `string \| undefined`        | `undefined`  |
 | `layoutDirection`  | `layout-direction` | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"` | `'vertical'` |
 | `mId` _(required)_ | `m-id`             | The id of the input                                                  | `string`                     | `undefined`  |
+| `name`             | `name`             | The name of the input                                                | `string \| undefined`        | `undefined`  |
 | `placeholder`      | `placeholder`      | The placeholder text                                                 | `string`                     | `''`         |
 | `type`             | `type`             | The type of the input                                                | `string`                     | `'text'`     |
-| `value`            | `value`            | The value of the input                                               | `string`                     | `''`         |
+| `value`            | `value`            | The value of the input                                               | `number \| string`           | `''`         |
 
 
 ## Events
 
-| Event     | Description                              | Type                  |
-| --------- | ---------------------------------------- | --------------------- |
-| `mChange` | Emitted when the input value has changed | `CustomEvent<string>` |
+| Event     | Description                              | Type                            |
+| --------- | ---------------------------------------- | ------------------------------- |
+| `mBlur`   | Emitted when blur the input              | `CustomEvent<any>`              |
+| `mChange` | Emitted when the input value has changed | `CustomEvent<number \| string>` |
 
 
 ## Dependencies
