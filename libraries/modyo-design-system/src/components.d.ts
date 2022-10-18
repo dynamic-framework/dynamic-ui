@@ -436,6 +436,10 @@ export namespace Components {
          */
         "mId": string;
         /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
           * The placeholder text
          */
         "placeholder": string;
@@ -446,7 +450,7 @@ export namespace Components {
         /**
           * The value of the input
          */
-        "value": string;
+        "value": string | number;
     }
     interface MListItem {
         /**
@@ -718,6 +722,10 @@ export namespace Components {
          */
         "mId": string;
         /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
           * The select options
          */
         "options": Array<any>;
@@ -732,7 +740,7 @@ export namespace Components {
         /**
           * The variant of the select
          */
-        "variant": SelectLayoutVariant;
+        "variant"?: SelectLayoutVariant;
     }
     interface MShortcutToggle {
         /**
@@ -1430,9 +1438,17 @@ declare namespace LocalJSX {
          */
         "mId": string;
         /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Emitted when blur the input
+         */
+        "onMBlur"?: (event: MInputCustomEvent<any>) => void;
+        /**
           * Emitted when the input value has changed
          */
-        "onMChange"?: (event: MInputCustomEvent<string>) => void;
+        "onMChange"?: (event: MInputCustomEvent<string | number>) => void;
         /**
           * The placeholder text
          */
@@ -1444,7 +1460,7 @@ declare namespace LocalJSX {
         /**
           * The value of the input
          */
-        "value"?: string;
+        "value"?: string | number;
     }
     interface MListItem {
         /**
@@ -1735,6 +1751,14 @@ declare namespace LocalJSX {
           * Id of the select
          */
         "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Emitted when blur the input
+         */
+        "onMBlur"?: (event: MSelectCustomEvent<any>) => void;
         /**
           * Emitted when the select value has changed
          */

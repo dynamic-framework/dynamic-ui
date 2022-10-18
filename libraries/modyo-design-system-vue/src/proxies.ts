@@ -151,6 +151,7 @@ export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefine
 
 export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
   'mId',
+  'name',
   'label',
   'labelIcon',
   'placeholder',
@@ -163,7 +164,8 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'hintIconStart',
   'hintIconEnd',
   'layoutDirection',
-  'mChange'
+  'mChange',
+  'mBlur'
 ]);
 
 
@@ -252,6 +254,7 @@ export const MSegmentControlItem = /*@__PURE__*/ defineContainer<JSX.MSegmentCon
 
 export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
   'mId',
+  'name',
   'variant',
   'options',
   'theme',
@@ -265,7 +268,8 @@ export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', un
   'layoutDirection',
   'valueExtractor',
   'labelExtractor',
-  'mChange'
+  'mChange',
+  'mBlur'
 ]);
 
 

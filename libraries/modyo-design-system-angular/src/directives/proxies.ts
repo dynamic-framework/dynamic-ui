@@ -313,26 +313,30 @@ export declare interface MInput extends Components.MInput {
   /**
    * Emitted when the input value has changed 
    */
-  mChange: EventEmitter<CustomEvent<string>>;
+  mChange: EventEmitter<CustomEvent<string | number>>;
+  /**
+   * Emitted when blur the input 
+   */
+  mBlur: EventEmitter<CustomEvent<any>>;
 
 }
 
 @ProxyCmp({
   defineCustomElementFn: defineMInput,
-  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'name', 'placeholder', 'type', 'value']
 })
 @Component({
   selector: 'm-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'name', 'placeholder', 'type', 'value']
 })
 export class MInput {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['mChange', 'mBlur']);
   }
 }
 
@@ -500,25 +504,29 @@ export declare interface MSelect extends Components.MSelect {
    * Emitted when the select value has changed 
    */
   mChange: EventEmitter<CustomEvent<any>>;
+  /**
+   * Emitted when blur the input 
+   */
+  mBlur: EventEmitter<CustomEvent<any>>;
 
 }
 
 @ProxyCmp({
   defineCustomElementFn: defineMSelect,
-  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'options', 'theme', 'valueExtractor', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'name', 'options', 'theme', 'valueExtractor', 'variant']
 })
 @Component({
   selector: 'm-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'options', 'theme', 'valueExtractor', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconMiddle', 'iconStart', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'name', 'options', 'theme', 'valueExtractor', 'variant']
 })
 export class MSelect {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['mChange', 'mBlur']);
   }
 }
 
