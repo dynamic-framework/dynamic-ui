@@ -28,7 +28,7 @@
     "jsx": "react-jsx",
     "allowJs": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "@types"],
   "compileOnSave": false,
   "buildOnSave": false
 }

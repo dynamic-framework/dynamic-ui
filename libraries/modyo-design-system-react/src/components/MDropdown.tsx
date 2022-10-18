@@ -1,5 +1,6 @@
 import { CSSProperties, Dispatch, SetStateAction } from 'react';
 import type { PropsWithChildren } from 'react';
+
 import { MIcon } from './proxies';
 
 type Props = PropsWithChildren<{

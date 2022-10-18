@@ -6,3 +6,5 @@ export { default as MTabContent } from './MTabContent';
 export { default as MToastContainer } from './MToastContainer';
 export { default as MDropdown } from './MDropdown';
 export { default as MCurrencyText } from './MCurrencyText';
+export { default as MFormikInput } from './MFormikInput';
+export { default as MFormikSelect } from './MFormikSelect';

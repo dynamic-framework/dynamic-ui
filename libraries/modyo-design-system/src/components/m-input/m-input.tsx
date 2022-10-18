@@ -19,6 +19,10 @@ export class MInput implements ComponentInterface {
    */
   @Prop() mId!: string;
   /**
+   * The name of the input
+   */
+  @Prop() name?: string;
+  /**
    * The label text
    */
   @Prop() label = '';
@@ -37,7 +41,7 @@ export class MInput implements ComponentInterface {
   /**
    * The value of the input
    */
-  @Prop() value = '';
+  @Prop() value: string | number = '';
   /**
    * Flag to disable the input
    */
@@ -70,10 +74,19 @@ export class MInput implements ComponentInterface {
   /**
    * Emitted when the input value has changed
    */
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
+  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string | number>;
+
+  /**
+   * Emitted when blur the input
+   */
+  @Event({ eventName: 'mBlur' }) mBlur!: EventEmitter;
 
   private changeHandler = (event: Event) => {
     this.mChange.emit((event.target as HTMLInputElement).value);
+  };
+
+  private blurHandler = (event: Event) => {
+    this.mBlur.emit(event);
   };
 
   private generateHostClasses(): ClassMap {
@@ -113,6 +126,8 @@ export class MInput implements ComponentInterface {
               </span>
             )}
             <input
+              id={this.mId}
+              name={this.name}
               type={this.type}
               class="form-control"
               placeholder={this.placeholder}
@@ -121,6 +136,7 @@ export class MInput implements ComponentInterface {
               value={this.value}
               aria-describedby={`${this.mId}-add`}
               onInput={this.changeHandler}
+              onBlur={this.blurHandler}
             />
             {this.iconEnd && (
               <span
