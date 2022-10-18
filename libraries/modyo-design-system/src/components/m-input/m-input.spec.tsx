@@ -26,13 +26,14 @@ it('should render my component', async () => {
       </label>
       <div class="form-control-input">
         <div class="input-group">
-          <input 
-            aria-describedby="${input.mId}-add" 
-            aria-label="${input.label}" 
-            placeholder="${input.placeholder}" 
+          <input
+            aria-describedby="${input.mId}-add"
+            aria-label="${input.label}"
+            placeholder="${input.placeholder}"
             value="${input.value}"
-            class="form-control" 
-            type="text" 
+            class="form-control"
+            type="text"
+            id=${input.mId}
           >
         </div>
       </div>
