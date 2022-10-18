@@ -143,7 +143,9 @@ export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefine
   'theme',
   'size',
   'isLoading',
-  'duration'
+  'duration',
+  'color',
+  'backgroundColor'
 ]);
 
 

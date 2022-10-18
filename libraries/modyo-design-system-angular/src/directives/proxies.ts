@@ -292,13 +292,13 @@ export declare interface MIcon extends Components.MIcon {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMIcon,
-  inputs: ['duration', 'icon', 'isLoading', 'size', 'theme']
+  inputs: ['backgroundColor', 'color', 'duration', 'icon', 'isLoading', 'size', 'theme']
 })
 @Component({
   selector: 'm-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['duration', 'icon', 'isLoading', 'size', 'theme']
+  inputs: ['backgroundColor', 'color', 'duration', 'icon', 'isLoading', 'size', 'theme']
 })
 export class MIcon {
   protected el: HTMLElement;

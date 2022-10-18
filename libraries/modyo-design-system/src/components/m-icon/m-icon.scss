@@ -1,8 +1,14 @@
 .m-icon {
+  --#{$prefix}m-icon-color: inherit;
+  --#{$prefix}m-icon-bg-color: inherit;
+
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: var(--#{$prefix}m-icon-font-size);
+
+  color: var(--#{$prefix}m-icon-color);
+  background-color: var(--#{$prefix}m-icon-bg-color);
 }
 
 @each $color, $value in $theme-colors {
