@@ -22,11 +22,15 @@ export class MSelect implements ComponentInterface {
    * Id of the select
    */
   @Prop() mId!: string;
+  /**
+   * The name of the input
+   */
+  @Prop() name?: string;
 
   /**
    * The variant of the select
    */
-  @Prop() variant: SelectLayoutVariant = 'prime';
+  @Prop() variant?: SelectLayoutVariant = 'prime';
 
   /**
    * The select options
@@ -97,11 +101,21 @@ export class MSelect implements ComponentInterface {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter;
 
+  /**
+   * Emitted when blur the input
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Event({ eventName: 'mBlur' }) mBlur!: EventEmitter;
+
   private changeHandler = (event: Event) => {
     const { value } = event.target as HTMLInputElement;
     this.mChange.emit(
       this.options.find((option) => this.valueExtractor(option).toString() === value),
     );
+  };
+
+  private blurHandler = (event: Event) => {
+    this.mBlur.emit(event);
   };
 
   private generateHostClasses(): ClassMap {
@@ -144,6 +158,7 @@ export class MSelect implements ComponentInterface {
             )}
             <select
               id={this.mId}
+              name={this.name}
               class={{
                 'form-select': true,
                 'no-icons': !this.iconStart && !this.iconMiddle && !this.iconEnd,
@@ -151,6 +166,7 @@ export class MSelect implements ComponentInterface {
               }}
               aria-describedby={`${this.mId}-start`}
               onChange={this.changeHandler}
+              onBlur={this.blurHandler}
             >
               {this.options.map((option) => (
                 <option value={this.valueExtractor(option)}>
