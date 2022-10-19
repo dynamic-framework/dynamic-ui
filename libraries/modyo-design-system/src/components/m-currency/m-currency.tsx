@@ -69,7 +69,7 @@ export class MCurrency implements ComponentInterface {
   /**
    * * The value of the input
   */
-  @Prop() value!: number;
+  @Prop() value?: number;
   /**
    * * The min value of the input
   */
@@ -113,7 +113,7 @@ export class MCurrency implements ComponentInterface {
 
   @State() internalTheme?: string;
 
-  @State() internalValue = 0;
+  @State() internalValue?: number;
 
   @Watch('value')
   watchValueHandler(newValue: number) {
@@ -151,22 +151,30 @@ export class MCurrency implements ComponentInterface {
     this.mChange.emit({
       amount: (this.htmlInput && this.htmlInput.value)
         ? parseFloat(this.htmlInput.value)
-        : 0,
+        : undefined,
       currency: this.htmlSelect?.value,
     });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private onBlurEvent = (event: any) => {
-    this.internalValue = event.target.valueAsNumber;
-    const value = currency(event.target.valueAsNumber, this.currencyOptions).format();
-    this.htmlInput.setAttribute('type', 'text');
-    this.htmlInput.value = value;
+    if (!Number.isNaN(event.target.valueAsNumber)) {
+      this.internalValue = event.target.valueAsNumber;
+      const value = currency(event.target.valueAsNumber, this.currencyOptions).format();
+      this.htmlInput.setAttribute('type', 'text');
+      this.htmlInput.value = value;
+    } else {
+      this.internalValue = undefined;
+      this.value = undefined;
+      this.htmlInput.value = '';
+    }
   };
 
   private onFocusEvent = () => {
     this.htmlInput.setAttribute('type', 'number');
-    this.htmlInput.value = `${this.internalValue}`;
+    if (this.internalValue !== undefined) {
+      this.htmlInput.value = `${this.internalValue}`;
+    }
   };
 
   private isValid(value?: number): boolean {
