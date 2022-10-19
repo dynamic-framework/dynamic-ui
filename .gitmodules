@@ -11,3 +11,6 @@
 [submodule "widgets/modyo-widget-retail-product-detail"]
 	path = widgets/modyo-widget-retail-product-detail
 	url = git@github.com:modyolabs/modyo-widget-retail-product-detail.git
+[submodule "packages/modyo-service-retail"]
+	path = packages/modyo-service-retail
+	url = git@github.com:modyolabs/modyo-service-retail.git
