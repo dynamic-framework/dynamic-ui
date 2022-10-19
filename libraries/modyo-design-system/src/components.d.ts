@@ -264,7 +264,7 @@ export namespace Components {
         /**
           * * The value of the input
          */
-        "value": number;
+        "value"?: number;
         /**
           * Callback to extract the value from the option
          */
@@ -1258,7 +1258,7 @@ declare namespace LocalJSX {
         /**
           * * The value of the input
          */
-        "value": number;
+        "value"?: number;
         /**
           * Callback to extract the value from the option
          */

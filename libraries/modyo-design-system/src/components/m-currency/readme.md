@@ -26,7 +26,7 @@
 | `placeholder`                  | `placeholder`      | Placeholder for the input                                            | `string \| undefined`             | `''`                    |
 | `selectOptions`                | --                 | Select options                                                       | `any[]`                           | `[]`                    |
 | `theme`                        | `theme`            | Theme for the m-currency                                             | `string`                          | `'primary'`             |
-| `value` _(required)_           | `value`            | * The value of the input                                             | `number`                          | `undefined`             |
+| `value`                        | `value`            | * The value of the input                                             | `number \| undefined`             | `undefined`             |
 | `valueExtractor`               | --                 | Callback to extract the value from the option                        | `(item: any) => string \| number` | `(item) => item?.value` |
 | `variant`                      | `variant`          | Variant for the m-currency                                           | `"prime" \| undefined`            | `undefined`             |
 
