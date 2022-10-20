@@ -14,6 +14,12 @@
     box-shadow: none;
   }
 
+  .form-control::-webkit-inner-spin-button,
+  .form-control::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
   .form-control-icon {
     display: flex;
     align-items: center;
