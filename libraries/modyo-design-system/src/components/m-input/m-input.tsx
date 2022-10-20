@@ -70,6 +70,10 @@ export class MInput implements ComponentInterface {
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
+  /**
+   * Add is-invalid class
+   */
+  @Prop() isInvalid = false;
 
   /**
    * Emitted when the input value has changed
@@ -111,7 +115,12 @@ export class MInput implements ComponentInterface {
           </label>
         )}
         <div class="form-control-input">
-          <div class="input-group">
+          <div
+            class={{
+              'input-group': true,
+              'has-validation': this.isInvalid,
+            }}
+          >
             {this.iconStart && (
               <span
                 class="input-group-text"
@@ -129,7 +138,10 @@ export class MInput implements ComponentInterface {
               id={this.mId}
               name={this.name}
               type={this.type}
-              class="form-control"
+              class={{
+                'form-control': true,
+                'is-invalid': this.isInvalid,
+              }}
               placeholder={this.placeholder}
               aria-label={this.label}
               disabled={this.isDisabled}

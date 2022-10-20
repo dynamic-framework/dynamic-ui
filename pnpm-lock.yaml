@@ -3662,7 +3662,7 @@ packages:
       cosmiconfig-typescript-loader: 4.1.1_57p4ffo6mde7i3kjzwnk24oodi
       cross-spawn: 7.0.3
       lodash: 4.17.21
-      react-scripts: 5.0.1_h2buydad674acmir54pnz74fza
+      react-scripts: 5.0.1_yvoaqnk55zffewzeqr3mdlniky
       semver: 7.3.8
       webpack-merge: 5.8.0
     transitivePeerDependencies:
@@ -23730,6 +23730,7 @@ packages:
       - webpack-cli
       - webpack-hot-middleware
       - webpack-plugin-serve
+    dev: false
 
   /react-scripts/5.0.1_yvoaqnk55zffewzeqr3mdlniky:
     resolution: {integrity: sha512-8VAmEm/ZAwQzJ+GOMLbBsTdDKOpuZh7RPs0UymvBR2vRk4iZWCskjbFnxqjrzoIvlNNRZ3QJFx6/qDSi6zSnaQ==}
@@ -24573,6 +24574,7 @@ packages:
       klona: 2.0.5
       neo-async: 2.6.2
       webpack: 5.74.0
+    dev: false
 
   /sass/1.49.9:
     resolution: {integrity: sha512-YlYWkkHP9fbwaFRZQRXgDi3mXZShslVmmo+FVK3kHLUELHHEYrCmL1x6IUjC7wLS6VuJSAFXRQS/DxdsC4xL1A==}

@@ -164,6 +164,7 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'hintIconStart',
   'hintIconEnd',
   'layoutDirection',
+  'isInvalid',
   'mChange',
   'mBlur'
 ]);

@@ -420,6 +420,10 @@ export namespace Components {
          */
         "isDisabled": boolean;
         /**
+          * Add is-invalid class
+         */
+        "isInvalid": boolean;
+        /**
           * The label text
          */
         "label": string;
@@ -1421,6 +1425,10 @@ declare namespace LocalJSX {
           * Flag to disable the input
          */
         "isDisabled"?: boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid"?: boolean;
         /**
           * The label text
          */
