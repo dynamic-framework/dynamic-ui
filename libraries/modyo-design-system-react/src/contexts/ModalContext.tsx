@@ -22,10 +22,10 @@ export type ModalCallbackContext = {
   fromModal: boolean;
 };
 export type ModalCallbacks = {
-  onBeforeOpen: (payload?: ModalPayload) => void;
-  onAfterOpen: (payload?: ModalPayload) => void;
-  onBeforeClose: (context: ModalCallbackContext, payload?: ModalPayload) => void;
-  onAfterClose: (context: ModalCallbackContext, payload?: ModalPayload) => void;
+  onBeforeOpen?: (payload?: ModalPayload) => void;
+  onAfterOpen?: (payload?: ModalPayload) => void;
+  onBeforeClose?: (context: ModalCallbackContext, payload?: ModalPayload) => void;
+  onAfterClose?: (context: ModalCallbackContext, payload?: ModalPayload) => void;
 };
 export type ModalStackItem = {
   modalName: keyof ModalAvailableList;
@@ -59,9 +59,13 @@ function enhanceModal(
 ) {
   return function EnhancedModal({ name, payload, ...otherProps }: ModalProps) {
     useEffect(() => {
-      callbacks?.onAfterOpen(payload);
+      if (callbacks?.onAfterOpen) {
+        callbacks.onAfterOpen(payload);
+      }
       return () => {
-        callbacks?.onAfterClose({ fromModal: false }, payload);
+        if (callbacks?.onAfterClose) {
+          callbacks.onAfterClose({ fromModal: false }, payload);
+        }
       };
     }, [payload]);
     return (
@@ -114,7 +118,9 @@ export function ModalContextProvider(
         payload,
         callbacks,
       };
-      callbacks?.onBeforeOpen(payload);
+      if (callbacks?.onBeforeOpen) {
+        callbacks.onBeforeOpen(payload);
+      }
       push(stackItem);
     },
     [availableModals, push],
@@ -126,7 +132,9 @@ export function ModalContextProvider(
       if (!stackItem) {
         return;
       }
-      stackItem.callbacks?.onBeforeClose(context, stackItem.payload);
+      if (stackItem.callbacks?.onBeforeClose) {
+        stackItem.callbacks.onBeforeClose(context, stackItem.payload);
+      }
       pop();
     },
     [peek, pop],
