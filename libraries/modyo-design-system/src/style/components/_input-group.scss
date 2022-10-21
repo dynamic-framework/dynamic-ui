@@ -54,6 +54,20 @@
   }
 }
 
+.form-control-layout[is-invalid="true"] {
+  --#{$prefix}input-border-color: var(--#{$prefix}danger);
+
+  label {
+    color: var(--#{$prefix}danger);
+  }
+
+  .input-group {
+    &:hover {
+      border: 1px solid var(--#{$prefix}danger-hover);
+    }
+  }
+}
+
 .input-group {
   position: relative;
   gap: $spacer-2;
@@ -138,4 +152,3 @@
 .input-group-lg {
   border-radius: $input-border-radius-lg;
 }
-

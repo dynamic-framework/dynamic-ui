@@ -323,13 +323,13 @@ export declare interface MInput extends Components.MInput {
 
 @ProxyCmp({
   defineCustomElementFn: defineMInput,
-  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'name', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'isInvalid', 'label', 'labelIcon', 'layoutDirection', 'mId', 'name', 'placeholder', 'type', 'value']
 })
 @Component({
   selector: 'm-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'label', 'labelIcon', 'layoutDirection', 'mId', 'name', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'hintIconEnd', 'hintIconStart', 'iconEnd', 'iconStart', 'isDisabled', 'isInvalid', 'label', 'labelIcon', 'layoutDirection', 'mId', 'name', 'placeholder', 'type', 'value']
 })
 export class MInput {
   protected el: HTMLElement;

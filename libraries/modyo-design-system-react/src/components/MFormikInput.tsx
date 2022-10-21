@@ -23,7 +23,7 @@ export default function MFormikInput(
     iconStart,
   }: Props,
 ) {
-  const [field,, helpers] = useField<string | number>(name);
+  const [field, meta, helpers] = useField<string | number>(name);
   return (
     <MInput
       mId={mId}
@@ -35,6 +35,7 @@ export default function MFormikInput(
       iconStart={iconStart}
       onMChange={({ detail }) => helpers.setValue(detail)}
       onMBlur={({ detail }) => field.onBlur(detail)}
+      isInvalid={!!meta.error}
     />
   );
 }
