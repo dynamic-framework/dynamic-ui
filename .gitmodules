@@ -14,3 +14,6 @@
 [submodule "packages/modyo-service-retail"]
 	path = packages/modyo-service-retail
 	url = git@github.com:modyolabs/modyo-service-retail.git
+[submodule "widgets/modyo-widget-retail-loan-application"]
+	path = widgets/modyo-widget-retail-loan-application
+	url = git@github.com:modyolabs/modyo-widget-retail-loan-application.git
