@@ -79,6 +79,11 @@ export class MSelect implements ComponentInterface {
   @Prop() hint?: string;
 
   /**
+   * The value selected of the component
+   */
+  @Prop() selectedValue?: string | number;
+
+  /**
    * Change the layout direction to put the label on top or left of select
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
@@ -169,7 +174,10 @@ export class MSelect implements ComponentInterface {
               onBlur={this.blurHandler}
             >
               {this.options.map((option) => (
-                <option value={this.valueExtractor(option)}>
+                <option
+                  value={this.valueExtractor(option)}
+                  selected={this.valueExtractor(option) === this.selectedValue}
+                >
                   {this.labelExtractor(option)}
                 </option>
               ))}

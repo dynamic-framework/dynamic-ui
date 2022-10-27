@@ -734,6 +734,10 @@ export namespace Components {
          */
         "options": Array<any>;
         /**
+          * The value selected of the component
+         */
+        "selectedValue"?: string | number;
+        /**
           * The theme of the select
          */
         "theme": string;
@@ -1775,6 +1779,10 @@ declare namespace LocalJSX {
           * The select options
          */
         "options"?: Array<any>;
+        /**
+          * The value selected of the component
+         */
+        "selectedValue"?: string | number;
         /**
           * The theme of the select
          */
