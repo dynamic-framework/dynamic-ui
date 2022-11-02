@@ -732,7 +732,11 @@ export namespace Components {
         /**
           * The select options
          */
-        "options": Array<any>;
+        "options": Array<Record<string, unknown>>;
+        /**
+          * The value selected of the component
+         */
+        "selectedOption"?: Record<string, unknown>;
         /**
           * The theme of the select
          */
@@ -1774,7 +1778,11 @@ declare namespace LocalJSX {
         /**
           * The select options
          */
-        "options"?: Array<any>;
+        "options"?: Array<Record<string, unknown>>;
+        /**
+          * The value selected of the component
+         */
+        "selectedOption"?: Record<string, unknown>;
         /**
           * The theme of the select
          */

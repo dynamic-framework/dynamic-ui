@@ -36,7 +36,7 @@ export class MSelect implements ComponentInterface {
    * The select options
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  @Prop() options: Array<any> = [];
+  @Prop() options: Array<Record<string, unknown>> = [];
 
   /**
    * The theme of the select
@@ -77,6 +77,11 @@ export class MSelect implements ComponentInterface {
    * The hint of the select in full variant
    */
   @Prop() hint?: string;
+
+  /**
+   * The value selected of the component
+   */
+  @Prop() selectedOption?: Record<string, unknown>;
 
   /**
    * Change the layout direction to put the label on top or left of select
@@ -169,7 +174,12 @@ export class MSelect implements ComponentInterface {
               onBlur={this.blurHandler}
             >
               {this.options.map((option) => (
-                <option value={this.valueExtractor(option)}>
+                <option
+                  value={this.valueExtractor(option)}
+                  selected={
+                    this.valueExtractor(option) === this.valueExtractor(this.selectedOption)
+                  }
+                >
                   {this.labelExtractor(option)}
                 </option>
               ))}
