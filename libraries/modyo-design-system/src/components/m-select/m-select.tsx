@@ -54,9 +54,29 @@ export class MSelect implements ComponentInterface {
   @Prop() iconStart?: string;
 
   /**
+   * Left icon family class
+   */
+  @Prop() iconStartFamilyClass?: string;
+
+  /**
+   * Left icon family class
+   */
+  @Prop() iconStartFamilyPrefix?: string;
+
+  /**
    * The middle icon for the select
    */
   @Prop() iconMiddle?: string;
+
+  /**
+   * Middle icon family class
+   */
+  @Prop() iconMiddleFamilyClass?: string;
+
+  /**
+   * Middle icon family class
+   */
+  @Prop() iconMiddleFamilyPrefix?: string;
 
   /**
    * The end icon for the select
@@ -64,14 +84,44 @@ export class MSelect implements ComponentInterface {
   @Prop() iconEnd?: string;
 
   /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyClass?: string;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyPrefix?: string;
+
+  /**
    * The hint icon for the select in full variant
    */
   @Prop() hintIconStart?: string;
 
   /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyClass?: string;
+
+  /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyPrefix?: string;
+
+  /**
    * The hint icon for the select in full variant
    */
   @Prop() hintIconEnd?: string;
+
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyClass?: string;
+
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyPrefix?: string;
 
   /**
    * The hint of the select in full variant
@@ -158,6 +208,8 @@ export class MSelect implements ComponentInterface {
                 <m-icon
                   class="form-control-icon"
                   icon={this.iconStart}
+                  familyClass={this.iconStartFamilyClass}
+                  familyPrefix={this.iconStartFamilyPrefix}
                 />
               </span>
             )}
@@ -193,6 +245,8 @@ export class MSelect implements ComponentInterface {
                   <m-icon
                     class="form-control-icon"
                     icon={this.iconMiddle}
+                    familyClass={this.iconMiddleFamilyClass}
+                    familyPrefix={this.iconMiddleFamilyPrefix}
                   />
                 )}
               </span>
@@ -206,6 +260,8 @@ export class MSelect implements ComponentInterface {
                   <m-icon
                     class="form-control-icon"
                     icon={this.iconEnd}
+                    familyClass={this.iconEndFamilyClass}
+                    familyPrefix={this.iconEndFamilyPrefix}
                   />
                 )}
               </span>
@@ -218,6 +274,8 @@ export class MSelect implements ComponentInterface {
                   <m-icon
                     class="form-control-icon"
                     icon={this.hintIconStart}
+                    familyClass={this.hintIconStartFamilyClass}
+                    familyPrefix={this.hintIconStartFamilyPrefix}
                   />
                 )}
                 {this.hint}
@@ -225,6 +283,8 @@ export class MSelect implements ComponentInterface {
                   <m-icon
                     class="form-control-icon"
                     icon={this.hintIconEnd}
+                    familyClass={this.hintIconEndFamilyClass}
+                    familyPrefix={this.hintIconEndFamilyPrefix}
                   />
                 )}
               </small>

@@ -50,6 +50,16 @@ export class MShortcutToggle implements ComponentInterface {
   @Prop() icon?: string;
 
   /**
+   * Icon family class
+   */
+  @Prop() iconFamilyClass?: string;
+
+  /**
+   * Icon family class
+   */
+  @Prop() iconFamilyPrefix?: string;
+
+  /**
    * Is checked
    */
   @Prop() isChecked?: boolean;
@@ -114,6 +124,8 @@ export class MShortcutToggle implements ComponentInterface {
             <m-icon
               class="shortcut-icon"
               icon={this.icon}
+              familyClass={this.iconFamilyClass}
+              familyPrefix={this.iconFamilyPrefix}
             />
           </div>
         )}

@@ -61,6 +61,16 @@ export class MListItem implements ComponentInterface {
   @Prop() icon?: string;
 
   /**
+   * Icon family class
+   */
+  @Prop() iconFamilyClass?: string;
+
+  /**
+   * Icon family class
+   */
+  @Prop() iconFamilyPrefix?: string;
+
+  /**
   * Url to replace the default icon image
   */
   @Prop() image: string | null = null;
@@ -141,6 +151,8 @@ export class MListItem implements ComponentInterface {
                   <m-icon
                     class="text-white fs-5"
                     icon={this.icon}
+                    familyClass={this.iconFamilyClass}
+                    familyPrefix={this.iconFamilyPrefix}
                   />
                 )}
                 {this.image && (
