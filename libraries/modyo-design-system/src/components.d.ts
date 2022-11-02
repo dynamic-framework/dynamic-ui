@@ -736,7 +736,7 @@ export namespace Components {
         /**
           * The value selected of the component
          */
-        "selectedValue"?: string | number;
+        "selectedOption"?: Record<string, unknown>;
         /**
           * The theme of the select
          */
@@ -1782,7 +1782,7 @@ declare namespace LocalJSX {
         /**
           * The value selected of the component
          */
-        "selectedValue"?: string | number;
+        "selectedOption"?: Record<string, unknown>;
         /**
           * The theme of the select
          */

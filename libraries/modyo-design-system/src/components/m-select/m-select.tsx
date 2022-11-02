@@ -81,7 +81,7 @@ export class MSelect implements ComponentInterface {
   /**
    * The value selected of the component
    */
-  @Prop() selectedValue?: string | number;
+  @Prop() selectedOption?: Record<string, unknown>;
 
   /**
    * Change the layout direction to put the label on top or left of select
@@ -176,7 +176,9 @@ export class MSelect implements ComponentInterface {
               {this.options.map((option) => (
                 <option
                   value={this.valueExtractor(option)}
-                  selected={this.valueExtractor(option) === this.selectedValue}
+                  selected={
+                    this.valueExtractor(option) === this.valueExtractor(this.selectedOption)
+                  }
                 >
                   {this.labelExtractor(option)}
                 </option>
