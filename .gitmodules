@@ -17,3 +17,6 @@
 [submodule "widgets/modyo-widget-retail-loan-application"]
 	path = widgets/modyo-widget-retail-loan-application
 	url = git@github.com:modyolabs/modyo-widget-retail-loan-application.git
+[submodule "widgets/modyo-widget-retail-loan-approval"]
+	path = widgets/modyo-widget-retail-loan-approval
+	url = git@github.com:modyolabs/modyo-widget-retail-loan-approval.git
