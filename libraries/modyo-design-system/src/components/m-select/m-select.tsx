@@ -36,7 +36,7 @@ export class MSelect implements ComponentInterface {
    * The select options
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  @Prop() options: Array<any> = [];
+  @Prop() options: Array<Record<string, unknown>> = [];
 
   /**
    * The theme of the select

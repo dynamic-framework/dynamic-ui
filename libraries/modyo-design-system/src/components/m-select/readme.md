@@ -20,7 +20,7 @@
 | `layoutDirection`  | `layout-direction` | Change the layout direction to put the label on top or left of select | `"horizontal" \| "vertical"`                      | `'vertical'`            |
 | `mId` _(required)_ | `m-id`             | Id of the select                                                      | `string`                                          | `undefined`             |
 | `name`             | `name`             | The name of the input                                                 | `string \| undefined`                             | `undefined`             |
-| `options`          | --                 | The select options                                                    | `any[]`                                           | `[]`                    |
+| `options`          | --                 | The select options                                                    | `Record<string, unknown>[]`                       | `[]`                    |
 | `selectedOption`   | --                 | The value selected of the component                                   | `undefined \| { [x: string]: unknown; }`          | `undefined`             |
 | `theme`            | `theme`            | The theme of the select                                               | `string`                                          | `'tertiary'`            |
 | `valueExtractor`   | --                 | Callback to extract the value from the option                         | `(item: any) => string \| number`                 | `(item) => item?.value` |

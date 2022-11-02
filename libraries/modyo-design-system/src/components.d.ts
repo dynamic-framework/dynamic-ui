@@ -732,7 +732,7 @@ export namespace Components {
         /**
           * The select options
          */
-        "options": Array<any>;
+        "options": Array<Record<string, unknown>>;
         /**
           * The value selected of the component
          */
@@ -1778,7 +1778,7 @@ declare namespace LocalJSX {
         /**
           * The select options
          */
-        "options"?: Array<any>;
+        "options"?: Array<Record<string, unknown>>;
         /**
           * The value selected of the component
          */
