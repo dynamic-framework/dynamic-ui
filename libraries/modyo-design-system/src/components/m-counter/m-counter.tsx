@@ -39,9 +39,29 @@ export class MCounter {
   @Prop() hintIconStart?: string;
 
   /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyClass?: string;
+
+  /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyPrefix?: string;
+
+  /**
    * Right icon of the hint text
    */
   @Prop() hintIconEnd?: string;
+
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyClass?: string;
+
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyPrefix?: string;
 
   /**
    * Theme of the counter
@@ -194,8 +214,16 @@ export class MCounter {
             <m-hint
               text={this.hint}
               theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : 'info'}
-              {...(this.hintIconStart && ({ iconStart: this.hintIconStart }))}
-              {...(this.hintIconEnd && ({ iconEnd: this.hintIconEnd }))}
+              {...(this.hintIconStart && ({
+                iconStart: this.hintIconStart,
+                iconStartFamilyClass: this.hintIconStartFamilyClass,
+                iconStartFamilyPrefix: this.hintIconStartFamilyPrefix,
+              }))}
+              {...(this.hintIconEnd && ({
+                iconEnd: this.hintIconEnd,
+                iconEndFamilyClass: this.hintIconEndFamilyClass,
+                iconEndFamilyPrefix: this.hintIconEndFamilyPrefix,
+              }))}
             />
           )}
         </div>
