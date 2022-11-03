@@ -195,13 +195,13 @@ export declare interface MCurrency extends Components.MCurrency {
 
 @ProxyCmp({
   defineCustomElementFn: defineMCurrency,
-  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconLabel', 'iconLabelFamilyClass', 'iconLabelFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
+  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconLabel', 'iconLabelFamilyClass', 'iconLabelFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
 })
 @Component({
   selector: 'm-currency',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconLabel', 'iconLabelFamilyClass', 'iconLabelFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
+  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconLabel', 'iconLabelFamilyClass', 'iconLabelFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
 })
 export class MCurrency {
   protected el: HTMLElement;

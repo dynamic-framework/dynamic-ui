@@ -29,6 +29,7 @@
 | `iconStart`                    | `icon-start`                    | Icon for the left                                                    | `string \| undefined`             | `undefined`             |
 | `iconStartFamilyClass`         | `icon-start-family-class`       | Left icon family class                                               | `string \| undefined`             | `undefined`             |
 | `iconStartFamilyPrefix`        | `icon-start-family-prefix`      | Left icon family class                                               | `string \| undefined`             | `undefined`             |
+| `isDisabled`                   | `is-disabled`                   | The input is disabled                                                | `boolean`                         | `false`                 |
 | `label`                        | `label`                         | Label for the input                                                  | `string`                          | `''`                    |
 | `labelExtractor`               | --                              | Callback to extract the label from the option                        | `(item: any) => string`           | `(item) => item?.label` |
 | `layoutDirection`              | `layout-direction`              | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"`      | `'vertical'`            |
