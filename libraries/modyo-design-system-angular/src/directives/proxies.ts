@@ -515,13 +515,13 @@ export declare interface MSelect extends Components.MSelect {
 
 @ProxyCmp({
   defineCustomElementFn: defineMSelect,
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'name', 'options', 'selectedOption', 'theme', 'valueExtractor', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'name', 'options', 'selectedOption', 'theme', 'valueExtractor', 'variant']
 })
 @Component({
   selector: 'm-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'name', 'options', 'selectedOption', 'theme', 'valueExtractor', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'name', 'options', 'selectedOption', 'theme', 'valueExtractor', 'variant']
 })
 export class MSelect {
   protected el: HTMLElement;

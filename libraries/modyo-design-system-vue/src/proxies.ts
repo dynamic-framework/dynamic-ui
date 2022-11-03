@@ -341,6 +341,7 @@ export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', un
   'hint',
   'selectedOption',
   'layoutDirection',
+  'isDisabled',
   'valueExtractor',
   'labelExtractor',
   'mChange',

@@ -139,6 +139,11 @@ export class MSelect implements ComponentInterface {
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
 
   /**
+   * The select is disabled
+   */
+  @Prop() isDisabled = false;
+
+  /**
    * Callback to extract the value from the option
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -198,7 +203,10 @@ export class MSelect implements ComponentInterface {
         )}
         <div class="form-control-input w-100">
           <div
-            class="input-group"
+            class={{
+              'input-group': true,
+              disabled: this.isDisabled,
+            }}
           >
             {this.iconStart && (
               <span
@@ -222,6 +230,7 @@ export class MSelect implements ComponentInterface {
                 [`form-select-${this.theme}`]: this.variant !== 'prime',
               }}
               aria-describedby={`${this.mId}-start`}
+              disabled={this.isDisabled}
               onChange={this.changeHandler}
               onBlur={this.blurHandler}
             >

@@ -25,6 +25,7 @@
 | `iconStart`                 | `icon-start`                    | The start icon for the select                                         | `string \| undefined`                             | `undefined`             |
 | `iconStartFamilyClass`      | `icon-start-family-class`       | Left icon family class                                                | `string \| undefined`                             | `undefined`             |
 | `iconStartFamilyPrefix`     | `icon-start-family-prefix`      | Left icon family class                                                | `string \| undefined`                             | `undefined`             |
+| `isDisabled`                | `is-disabled`                   | The select is disabled                                                | `boolean`                                         | `false`                 |
 | `label`                     | `label`                         | The label of the select in full variant                               | `string \| undefined`                             | `undefined`             |
 | `labelExtractor`            | --                              | Callback to extract the label from the option                         | `(item: any) => string`                           | `(item) => item?.label` |
 | `layoutDirection`           | `layout-direction`              | Change the layout direction to put the label on top or left of select | `"horizontal" \| "vertical"`                      | `'vertical'`            |

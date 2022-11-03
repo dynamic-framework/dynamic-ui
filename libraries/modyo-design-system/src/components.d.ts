@@ -999,6 +999,10 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The select is disabled
+         */
+        "isDisabled": boolean;
+        /**
           * The label of the select in full variant
          */
         "label"?: string;
@@ -2332,6 +2336,10 @@ declare namespace LocalJSX {
           * Left icon family class
          */
         "iconStartFamilyPrefix"?: string;
+        /**
+          * The select is disabled
+         */
+        "isDisabled"?: boolean;
         /**
           * The label of the select in full variant
          */
