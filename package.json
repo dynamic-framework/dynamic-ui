@@ -13,6 +13,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "lerna run build --no-private",
+    "clean": "lerna clean",
     "storybook:react": "pnpm run --filter=@modyolabs/modyo-design-system-react storybook"
   }
 }
