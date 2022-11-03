@@ -15,6 +15,7 @@
 | `iconEnd`          | `icon-end`         | The end icon for the select                                           | `string \| undefined`                             | `undefined`             |
 | `iconMiddle`       | `icon-middle`      | The middle icon for the select                                        | `string \| undefined`                             | `undefined`             |
 | `iconStart`        | `icon-start`       | The start icon for the select                                         | `string \| undefined`                             | `undefined`             |
+| `isDisabled`       | `is-disabled`      | The select is disabled                                                | `boolean`                                         | `false`                 |
 | `label`            | `label`            | The label of the select in full variant                               | `string \| undefined`                             | `undefined`             |
 | `labelExtractor`   | --                 | Callback to extract the label from the option                         | `(item: any) => string`                           | `(item) => item?.label` |
 | `layoutDirection`  | `layout-direction` | Change the layout direction to put the label on top or left of select | `"horizontal" \| "vertical"`                      | `'vertical'`            |

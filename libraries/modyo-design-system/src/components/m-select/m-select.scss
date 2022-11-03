@@ -73,7 +73,7 @@
         border-color: var(--#{$prefix}#{$color});
       }
 
-      .input-group:hover {
+      .input-group:hover:not(.disabled) {
         border-color: var(--#{$prefix}#{$color}-hover);
         box-shadow: 0 0 0 .5px var(--#{$prefix}#{$color}-hover);
       }
@@ -100,11 +100,30 @@
     border-color: var(--#{$prefix}primary);
   }
 
-  .input-group:hover {
+  .input-group:hover:not(.disabled) {
     border-color: var(--#{$prefix}primary-hover);
 
     .form-select {
       background-color: var(--#{$prefix}primary-hover);
     }
+  }
+
+  .form-select:disabled {
+    background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5.646 8.646A.5.5 0 016.354 8.646L12 14.293 17.646 8.646A.5.5 0 0118.354 9.354L12.354 15.354A.5.5 0 0111.646 15.354L5.646 9.354A.5.5 0 015.646 8.646Z' fill='#{$gray-300}'/></svg>"));
+  }
+}
+
+.form-control-layout-full,
+.form-control-layout-transparent,
+.form-control-layout-prime {
+
+  .input-group.disabled {
+    background-color: var(--#{$prefix}light);
+    border-color: var(--#{$prefix}gray-light);
+  }
+
+  .form-select:disabled {
+    color: var(--#{$prefix}gray-light);
+    background-color: var(--#{$prefix}light);
   }
 }

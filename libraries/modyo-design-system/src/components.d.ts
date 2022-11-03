@@ -710,6 +710,10 @@ export namespace Components {
          */
         "iconStart"?: string;
         /**
+          * The select is disabled
+         */
+        "isDisabled": boolean;
+        /**
           * The label of the select in full variant
          */
         "label"?: string;
@@ -1747,6 +1751,10 @@ declare namespace LocalJSX {
           * The start icon for the select
          */
         "iconStart"?: string;
+        /**
+          * The select is disabled
+         */
+        "isDisabled"?: boolean;
         /**
           * The label of the select in full variant
          */
