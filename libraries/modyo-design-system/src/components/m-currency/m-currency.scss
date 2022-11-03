@@ -26,6 +26,19 @@
     justify-content: center;
   }
 
+  .input-group.disabled .form-control:disabled {
+    pointer-events: none;
+    background-color: var(--#{$prefix}light);
+  }
+
+  .input-group.disabled {
+    border-color: var(--#{$prefix}gray-light);
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
   &.form-control-layout-currency-prime {
 
     --#{$prefix}input-group-bg: #{$currency-prime-input-group-bg};
@@ -97,7 +110,7 @@
       --#{$prefix}input-border-color: var(--#{$prefix}#{$color}-hover);
     }
 
-    &:not(.form-control-layout-currency-prime) .input-group {
+    &:not(.form-control-layout-currency-prime) .input-group:not(.disabled) {
       box-shadow: 0 0 0 1px var(--#{$prefix}#{$color}-hover);
     }
   }

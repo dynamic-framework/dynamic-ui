@@ -107,6 +107,10 @@ export class MCurrency implements ComponentInterface {
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
   /**
+   * The input is disabled
+   */
+  @Prop() isDisabled = false;
+  /**
    * Emitted when the inputs change
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<CurrencyEvent>;
@@ -214,7 +218,11 @@ export class MCurrency implements ComponentInterface {
           </label>
         )}
         <div class="form-control-input">
-          <div class="input-group">
+          <div class={{
+            'input-group': true,
+            disabled: this.isDisabled,
+          }}
+          >
             {this.iconStart && (
               <span
                 class="input-group-text"
@@ -231,6 +239,7 @@ export class MCurrency implements ComponentInterface {
                 // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
+                disabled={this.isDisabled}
                 onInput={this.changeHandler}
               >
                 {this.selectOptions.map((opt) => (
@@ -245,6 +254,7 @@ export class MCurrency implements ComponentInterface {
               ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
               type="number"
+              disabled={this.isDisabled}
               min={this.minValue}
               max={this.maxValue}
               class="form-control"

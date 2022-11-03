@@ -226,6 +226,10 @@ export namespace Components {
          */
         "iconStart"?: string;
         /**
+          * The input is disabled
+         */
+        "isDisabled": boolean;
+        /**
           * Label for the input
          */
         "label": string;
@@ -1223,6 +1227,10 @@ declare namespace LocalJSX {
           * Icon for the left
          */
         "iconStart"?: string;
+        /**
+          * The input is disabled
+         */
+        "isDisabled"?: boolean;
         /**
           * Label for the input
          */
