@@ -42,6 +42,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.5",
     "@stencil/core": "^2.18.0",
+    "@stencil/store": "^2.0.1",
     "bootstrap": "^5.2.0",
     "currency.js": "^2.0.4"
   },

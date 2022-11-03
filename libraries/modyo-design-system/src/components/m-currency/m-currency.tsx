@@ -36,17 +36,49 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() iconLabel = 'info-circle';
   /**
+   * Icon label family class
+   */
+  @Prop() iconLabelFamilyClass?: string;
+  /**
+   * Icon label family class
+   */
+  @Prop() iconLabelFamilyPrefix?: string;
+  /**
    * Icon for the left
    * */
   @Prop() iconStart?: string;
+  /**
+   * Left icon family class
+   */
+  @Prop() iconStartFamilyClass?: string;
+  /**
+   * Left icon family class
+   */
+  @Prop() iconStartFamilyPrefix?: string;
   /**
    * Icon for the middle
    * */
   @Prop() iconMiddle?: string;
   /**
+   * Middle icon family class
+   */
+  @Prop() iconMiddleFamilyClass?: string;
+  /**
+   * Middle icon family class
+   */
+  @Prop() iconMiddleFamilyPrefix?: string;
+  /**
    * Icon for the end
    * */
   @Prop() iconEnd?: string;
+  /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyClass?: string;
+  /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyPrefix?: string;
   /**
    * Select options
    * */
@@ -87,9 +119,25 @@ export class MCurrency implements ComponentInterface {
    * */
   @Prop() hintIconStart?: string;
   /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyClass?: string;
+  /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyPrefix?: string;
+  /**
    * Icon end for the hint text
    * */
   @Prop() hintIconEnd?: string;
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyClass?: string;
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyPrefix?: string;
   /**
    * Theme for the m-currency
    * */
@@ -106,6 +154,10 @@ export class MCurrency implements ComponentInterface {
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
+  /**
+   * The input is disabled
+   */
+  @Prop() isDisabled = false;
   /**
    * Emitted when the inputs change
    */
@@ -210,11 +262,17 @@ export class MCurrency implements ComponentInterface {
             <m-icon
               class="form-control-icon"
               icon={this.iconLabel}
+              familyClass={this.iconLabelFamilyClass}
+              familyPrefix={this.iconLabelFamilyPrefix}
             />
           </label>
         )}
         <div class="form-control-input">
-          <div class="input-group">
+          <div class={{
+            'input-group': true,
+            disabled: this.isDisabled,
+          }}
+          >
             {this.iconStart && (
               <span
                 class="input-group-text"
@@ -223,6 +281,8 @@ export class MCurrency implements ComponentInterface {
                 <m-icon
                   class="form-control-icon"
                   icon={this.iconStart}
+                  familyClass={this.iconStartFamilyClass}
+                  familyPrefix={this.iconStartFamilyPrefix}
                 />
               </span>
             )}
@@ -231,6 +291,7 @@ export class MCurrency implements ComponentInterface {
                 // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
+                disabled={this.isDisabled}
                 onInput={this.changeHandler}
               >
                 {this.selectOptions.map((opt) => (
@@ -245,6 +306,7 @@ export class MCurrency implements ComponentInterface {
               ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
               type="number"
+              disabled={this.isDisabled}
               min={this.minValue}
               max={this.maxValue}
               class="form-control"
@@ -264,6 +326,8 @@ export class MCurrency implements ComponentInterface {
                 <m-icon
                   class="form-control-icon"
                   icon={this.iconMiddle}
+                  familyClass={this.iconMiddleFamilyClass}
+                  familyPrefix={this.iconMiddleFamilyPrefix}
                 />
               </span>
             )}
@@ -275,6 +339,8 @@ export class MCurrency implements ComponentInterface {
                 <m-icon
                   class="form-control-icon"
                   icon={this.iconEnd}
+                  familyClass={this.iconEndFamilyClass}
+                  familyPrefix={this.iconEndFamilyPrefix}
                 />
               </span>
             )}
@@ -282,9 +348,17 @@ export class MCurrency implements ComponentInterface {
           {this.hint && (
             <m-hint
               text={this.hint}
-              theme={this.internalTheme}
-              {...(this.hintIconStart && ({ iconStart: this.hintIconStart }))}
-              {...(this.hintIconEnd && ({ iconEnd: this.hintIconEnd }))}
+              theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : 'info'}
+              {...(this.hintIconStart && ({
+                iconStart: this.hintIconStart,
+                iconStartFamilyClass: this.hintIconStartFamilyClass,
+                iconStartFamilyPrefix: this.hintIconStartFamilyPrefix,
+              }))}
+              {...(this.hintIconEnd && ({
+                iconEnd: this.hintIconEnd,
+                iconEndFamilyClass: this.hintIconEndFamilyClass,
+                iconEndFamilyPrefix: this.hintIconEndFamilyPrefix,
+              }))}
             />
           )}
         </div>

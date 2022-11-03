@@ -35,6 +35,14 @@ export class MQuickAction implements ComponentInterface {
    */
   @Prop() icon?: string = 'heart-fill';
   /**
+   * Icon family class
+   */
+  @Prop() iconFamilyClass?: string;
+  /**
+   * Icon family class
+   */
+  @Prop() iconFamilyPrefix?: string;
+  /**
    * The image of the quick action
    */
   @Prop() image?: string;
@@ -118,6 +126,8 @@ export class MQuickAction implements ComponentInterface {
               <m-icon
                 class="quick-action-link small"
                 icon={this.actionIcon}
+                familyClass={this.iconFamilyClass}
+                familyPrefix={this.iconFamilyPrefix}
               />
             )}
             {this.actionWord && (

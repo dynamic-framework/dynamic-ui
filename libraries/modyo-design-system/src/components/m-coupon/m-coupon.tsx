@@ -29,17 +29,49 @@ export class MCoupon implements ComponentInterface {
    * */
   @Prop() iconLabel?: string = 'info-circle';
   /**
+   * Icon label family class
+   */
+  @Prop() iconLabelFamilyClass?: string;
+  /**
+   * Icon label family class
+   */
+  @Prop() iconLabelFamilyPrefix?: string;
+  /**
    * Icon of the left
    * */
   @Prop() iconStart?: string;
+  /**
+   * Left icon family class
+   */
+  @Prop() iconStartFamilyClass?: string;
+  /**
+   * Left icon family class
+   */
+  @Prop() iconStartFamilyPrefix?: string;
   /**
    * Icon of the middle
    * */
   @Prop() iconMiddle?: string;
   /**
+   * Middle icon family class
+   */
+  @Prop() iconMiddleFamilyClass?: string;
+  /**
+   * Middle icon family class
+   */
+  @Prop() iconMiddleFamilyPrefix?: string;
+  /**
    * Icon of the end
    * */
   @Prop() iconEnd?: string;
+  /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyClass?: string;
+  /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyPrefix?: string;
   /**
    * Has a select input
    * */
@@ -65,9 +97,25 @@ export class MCoupon implements ComponentInterface {
    * */
   @Prop() hintIconStart?: string;
   /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyClass?: string;
+  /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyPrefix?: string;
+  /**
    * Icon end for the hint text
    * */
   @Prop() hintIconEnd?: string;
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyClass?: string;
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyPrefix?: string;
   /**
    * Theme for the m-cupon
    * */
@@ -119,6 +167,8 @@ export class MCoupon implements ComponentInterface {
               <m-icon
                 class="form-control-icon"
                 icon={this.iconLabel}
+                familyClass={this.iconLabelFamilyClass}
+                familyPrefix={this.iconLabelFamilyPrefix}
               />
             )}
           </label>
@@ -134,6 +184,8 @@ export class MCoupon implements ComponentInterface {
                   <m-icon
                     class="form-control-icon"
                     icon={this.iconStart}
+                    familyClass={this.iconStartFamilyClass}
+                    familyPrefix={this.iconStartFamilyPrefix}
                   />
                 )}
               </span>
@@ -165,6 +217,8 @@ export class MCoupon implements ComponentInterface {
                 <m-icon
                   class="form-control-icon"
                   icon={this.iconMiddle}
+                  familyClass={this.iconMiddleFamilyClass}
+                  familyPrefix={this.iconMiddleFamilyPrefix}
                 />
               </span>
             )}
@@ -182,26 +236,27 @@ export class MCoupon implements ComponentInterface {
                 <m-icon
                   class="form-control-icon"
                   icon={this.iconEnd}
+                  familyClass={this.iconEndFamilyClass}
+                  familyPrefix={this.iconEndFamilyPrefix}
                 />
               </span>
             )}
           </div>
           {this.hint && (
-            <small class="hint">
-              {this.hintIconStart && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.hintIconStart}
-                />
-              )}
-              {this.hint}
-              {this.hintIconEnd && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.hintIconEnd}
-                />
-              )}
-            </small>
+            <m-hint
+              text={this.hint}
+              theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : 'info'}
+              {...(this.hintIconStart && ({
+                iconStart: this.hintIconStart,
+                iconStartFamilyClass: this.hintIconStartFamilyClass,
+                iconStartFamilyPrefix: this.hintIconStartFamilyPrefix,
+              }))}
+              {...(this.hintIconEnd && ({
+                iconEnd: this.hintIconEnd,
+                iconEndFamilyClass: this.hintIconEndFamilyClass,
+                iconEndFamilyPrefix: this.hintIconEndFamilyPrefix,
+              }))}
+            />
           )}
         </div>
       </Host>

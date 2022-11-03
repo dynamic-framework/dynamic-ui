@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { IconSettings } from "./utils/store";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
@@ -31,6 +32,10 @@ export namespace Components {
         "theme": string;
     }
     interface MApp {
+        /**
+          * Icon settings
+         */
+        "iconSettings"?: IconSettings;
     }
     interface MBadge {
         /**
@@ -48,9 +53,25 @@ export namespace Components {
          */
         "iconLeft"?: string;
         /**
+          * Icon left family class
+         */
+        "iconLeftFamilyClass"?: string;
+        /**
+          * Icon left family prefix
+         */
+        "iconLeftFamilyPrefix"?: string;
+        /**
           * Icon right to display
          */
         "iconRight"?: string;
+        /**
+          * Icon right family class
+         */
+        "iconRightFamilyClass"?: string;
+        /**
+          * Icon right family prefix
+         */
+        "iconRightFamilyPrefix"?: string;
         /**
           * Flag to switch to pill button border radius.
          */
@@ -94,9 +115,25 @@ export namespace Components {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Left icon of the hint text
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * Label of the input
          */
@@ -144,25 +181,73 @@ export namespace Components {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Icon start for the hint text
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * Icon of the end
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * Icon for the label text
          */
         "iconLabel"?: string;
+        /**
+          * Icon label family class
+         */
+        "iconLabelFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "iconLabelFamilyPrefix"?: string;
         /**
           * Icon of the middle
          */
         "iconMiddle"?: string;
         /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyClass"?: string;
+        /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyPrefix"?: string;
+        /**
           * Icon of the left
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * Label for the input
          */
@@ -206,25 +291,77 @@ export namespace Components {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Icon start for the hint text
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * Icon for the end
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * Icon for the label text
          */
         "iconLabel": string;
+        /**
+          * Icon label family class
+         */
+        "iconLabelFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "iconLabelFamilyPrefix"?: string;
         /**
           * Icon for the middle
          */
         "iconMiddle"?: string;
         /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyClass"?: string;
+        /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyPrefix"?: string;
+        /**
           * Icon for the left
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * The input is disabled
+         */
+        "isDisabled": boolean;
         /**
           * Label for the input
          */
@@ -348,6 +485,14 @@ export namespace Components {
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * Size for the icons
          */
         "iconSize": string;
@@ -355,6 +500,14 @@ export namespace Components {
           * Left icon for the hint
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * Hint text
          */
@@ -377,6 +530,14 @@ export namespace Components {
           * Loading animation duration
          */
         "duration": number;
+        /**
+          * Family class
+         */
+        "familyClass": string;
+        /**
+          * Family prefix
+         */
+        "familyPrefix": string;
         /**
           * Name of icon to use (in kebab-case)
          */
@@ -404,17 +565,49 @@ export namespace Components {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Icon to display on hint left
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * Icon to display on input right
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * Icon to display on input left
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * Flag to disable the input
          */
@@ -431,6 +624,14 @@ export namespace Components {
           * Icon to display on label right
          */
         "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of input
          */
@@ -465,6 +666,14 @@ export namespace Components {
           * The icon to display
          */
         "icon"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyPrefix"?: string;
         /**
           * Url to replace the default icon image
          */
@@ -566,6 +775,14 @@ export namespace Components {
          */
         "icon"?: string;
         /**
+          * Icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
           * The image of the quick action
          */
         "image"?: string;
@@ -596,13 +813,37 @@ export namespace Components {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Icon to display on hint left
          */
         "hintIconStart"?: string;
         /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
+        /**
           * Icon to display on input right
          */
         "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
         /**
           * Flag to disable the input
          */
@@ -619,6 +860,14 @@ export namespace Components {
           * Icon to display on label right
          */
         "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of input
          */
@@ -694,21 +943,61 @@ export namespace Components {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * The hint icon for the select in full variant
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * The end icon for the select
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * The middle icon for the select
          */
         "iconMiddle"?: string;
         /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyClass"?: string;
+        /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyPrefix"?: string;
+        /**
           * The start icon for the select
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * The select is disabled
          */
@@ -759,6 +1048,14 @@ export namespace Components {
           * Shortcut icon
          */
         "icon"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyPrefix"?: string;
         /**
           * Is checked
          */
@@ -1017,6 +1314,10 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface MApp {
+        /**
+          * Icon settings
+         */
+        "iconSettings"?: IconSettings;
     }
     interface MBadge {
         /**
@@ -1034,9 +1335,25 @@ declare namespace LocalJSX {
          */
         "iconLeft"?: string;
         /**
+          * Icon left family class
+         */
+        "iconLeftFamilyClass"?: string;
+        /**
+          * Icon left family prefix
+         */
+        "iconLeftFamilyPrefix"?: string;
+        /**
           * Icon right to display
          */
         "iconRight"?: string;
+        /**
+          * Icon right family class
+         */
+        "iconRightFamilyClass"?: string;
+        /**
+          * Icon right family prefix
+         */
+        "iconRightFamilyPrefix"?: string;
         /**
           * Flag to switch to pill button border radius.
          */
@@ -1084,9 +1401,25 @@ declare namespace LocalJSX {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Left icon of the hint text
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * Label of the input
          */
@@ -1142,25 +1475,73 @@ declare namespace LocalJSX {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Icon start for the hint text
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * Icon of the end
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * Icon for the label text
          */
         "iconLabel"?: string;
+        /**
+          * Icon label family class
+         */
+        "iconLabelFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "iconLabelFamilyPrefix"?: string;
         /**
           * Icon of the middle
          */
         "iconMiddle"?: string;
         /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyClass"?: string;
+        /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyPrefix"?: string;
+        /**
           * Icon of the left
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * Label for the input
          */
@@ -1208,25 +1589,77 @@ declare namespace LocalJSX {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Icon start for the hint text
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * Icon for the end
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * Icon for the label text
          */
         "iconLabel"?: string;
+        /**
+          * Icon label family class
+         */
+        "iconLabelFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "iconLabelFamilyPrefix"?: string;
         /**
           * Icon for the middle
          */
         "iconMiddle"?: string;
         /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyClass"?: string;
+        /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyPrefix"?: string;
+        /**
           * Icon for the left
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * The input is disabled
+         */
+        "isDisabled"?: boolean;
         /**
           * Label for the input
          */
@@ -1362,6 +1795,14 @@ declare namespace LocalJSX {
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * Size for the icons
          */
         "iconSize"?: string;
@@ -1369,6 +1810,14 @@ declare namespace LocalJSX {
           * Left icon for the hint
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * Hint text
          */
@@ -1391,6 +1840,14 @@ declare namespace LocalJSX {
           * Loading animation duration
          */
         "duration"?: number;
+        /**
+          * Family class
+         */
+        "familyClass"?: string;
+        /**
+          * Family prefix
+         */
+        "familyPrefix"?: string;
         /**
           * Name of icon to use (in kebab-case)
          */
@@ -1418,17 +1875,49 @@ declare namespace LocalJSX {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Icon to display on hint left
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * Icon to display on input right
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * Icon to display on input left
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * Flag to disable the input
          */
@@ -1445,6 +1934,14 @@ declare namespace LocalJSX {
           * Icon to display on label right
          */
         "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of input
          */
@@ -1487,6 +1984,14 @@ declare namespace LocalJSX {
           * The icon to display
          */
         "icon"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyPrefix"?: string;
         /**
           * Url to replace the default icon image
          */
@@ -1592,6 +2097,14 @@ declare namespace LocalJSX {
          */
         "icon"?: string;
         /**
+          * Icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
           * The image of the quick action
          */
         "image"?: string;
@@ -1626,13 +2139,37 @@ declare namespace LocalJSX {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * Icon to display on hint left
          */
         "hintIconStart"?: string;
         /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
+        /**
           * Icon to display on input right
          */
         "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
         /**
           * Flag to disable the input
          */
@@ -1649,6 +2186,14 @@ declare namespace LocalJSX {
           * Icon to display on label right
          */
         "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of input
          */
@@ -1736,21 +2281,61 @@ declare namespace LocalJSX {
          */
         "hintIconEnd"?: string;
         /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
           * The hint icon for the select in full variant
          */
         "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
         /**
           * The end icon for the select
          */
         "iconEnd"?: string;
         /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
           * The middle icon for the select
          */
         "iconMiddle"?: string;
         /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyClass"?: string;
+        /**
+          * Middle icon family class
+         */
+        "iconMiddleFamilyPrefix"?: string;
+        /**
           * The start icon for the select
          */
         "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * The select is disabled
          */
@@ -1809,6 +2394,14 @@ declare namespace LocalJSX {
           * Shortcut icon
          */
         "icon"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "iconFamilyPrefix"?: string;
         /**
           * Is checked
          */

@@ -28,6 +28,14 @@ export class MSearch implements ComponentInterface {
     */
   @Prop() labelIcon?: string;
   /**
+   * Icon label family class
+   */
+  @Prop() labelIconFamilyClass?: string;
+  /**
+   * Icon label family class
+   */
+  @Prop() labelIconFamilyPrefix?: string;
+  /**
     * The placeholder text
     */
   @Prop() placeholder = '';
@@ -52,6 +60,14 @@ export class MSearch implements ComponentInterface {
     */
   @Prop() iconEnd?: string;
   /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyClass?: string;
+  /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyPrefix?: string;
+  /**
     * Hint to display, also used to display validity feedback
     */
   @Prop() hint?: string;
@@ -60,9 +76,25 @@ export class MSearch implements ComponentInterface {
     */
   @Prop() hintIconStart?: string;
   /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyClass?: string;
+  /**
+   * Hint left icon family class
+   */
+  @Prop() hintIconStartFamilyPrefix?: string;
+  /**
     * Icon to display on hint right
     */
   @Prop() hintIconEnd?: string;
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyClass?: string;
+  /**
+   * Hint right icon family class
+   */
+  @Prop() hintIconEndFamilyPrefix?: string;
   /**
     * Theme to use for the search
     */
@@ -121,6 +153,8 @@ export class MSearch implements ComponentInterface {
               <m-icon
                 class="form-control-icon label-icon"
                 icon={this.labelIcon}
+                familyClass={this.labelIconFamilyClass}
+                familyPrefix={this.labelIconFamilyPrefix}
               />
             )}
           </label>
@@ -150,6 +184,8 @@ export class MSearch implements ComponentInterface {
                   <m-icon
                     class="form-control-icon search-state"
                     icon={this.iconEnd}
+                    familyClass={this.iconEndFamilyClass}
+                    familyPrefix={this.iconEndFamilyPrefix}
                   />
                 )}
               </span>
@@ -170,6 +206,8 @@ export class MSearch implements ComponentInterface {
                 <m-icon
                   class="form-control-icon hint-icon"
                   icon={this.hintIconStart}
+                  familyClass={this.hintIconStartFamilyClass}
+                  familyPrefix={this.hintIconStartFamilyPrefix}
                 />
               )}
               {this.hint}
@@ -177,6 +215,8 @@ export class MSearch implements ComponentInterface {
                 <m-icon
                   class="form-control-icon hint-icon"
                   icon={this.hintIconEnd}
+                  familyClass={this.hintIconEndFamilyClass}
+                  familyPrefix={this.hintIconEndFamilyPrefix}
                 />
               )}
             </small>

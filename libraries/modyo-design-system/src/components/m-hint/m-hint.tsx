@@ -15,9 +15,25 @@ export class MHint {
    */
   @Prop() iconStart?: string;
   /**
+   * Left icon family class
+   */
+  @Prop() iconStartFamilyClass?: string;
+  /**
+   * Left icon family class
+   */
+  @Prop() iconStartFamilyPrefix?: string;
+  /**
    * Right icon for the hint
    */
   @Prop() iconEnd?: string;
+  /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyClass?: string;
+  /**
+   * Right icon family class
+   */
+  @Prop() iconEndFamilyPrefix?: string;
   /**
    * Hint text
    */
@@ -39,6 +55,8 @@ export class MHint {
             icon={this.iconStart}
             theme={this.theme}
             size={this.iconSize}
+            familyClass={this.iconStartFamilyClass}
+            familyPrefix={this.iconStartFamilyPrefix}
           />
         )}
         <span>
@@ -49,6 +67,8 @@ export class MHint {
             icon={this.iconEnd}
             theme={this.theme}
             size={this.iconSize}
+            familyClass={this.iconEndFamilyClass}
+            familyPrefix={this.iconEndFamilyPrefix}
           />
         )}
       </small>
