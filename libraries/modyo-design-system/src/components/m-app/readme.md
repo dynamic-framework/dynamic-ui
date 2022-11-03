@@ -18,6 +18,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property       | Attribute | Description   | Type                                                                                      | Default     |
+| -------------- | --------- | ------------- | ----------------------------------------------------------------------------------------- | ----------- |
+| `iconSettings` | --        | Icon settings | `undefined \| { familyClass?: string \| undefined; familyPrefix?: string \| undefined; }` | `undefined` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -4,6 +4,7 @@ import {
   Prop,
 } from '@stencil/core';
 
+import state from '../../utils/store';
 import type { ClassMap } from '../../utils/component-interface';
 import { prefixBS } from '../../utils/component-interface';
 
@@ -40,11 +41,20 @@ export class MIcon {
    * To set background color
    * */
   @Prop() backgroundColor?: string;
+  /**
+   * Family class
+   * */
+  @Prop() familyClass: string = state.iconFamilyClass;
+  /**
+   * Family prefix
+   * */
+  @Prop() familyPrefix: string = state.iconFamilyPrefix;
 
   private generateClasses(): ClassMap {
     return {
-      'bi m-icon': true,
-      [`bi-${this.icon}`]: true,
+      'm-icon': true,
+      [this.familyClass]: true,
+      [`${this.familyPrefix}${this.icon}`]: true,
       [`m-icon-${this.theme}`]: !!this.theme,
       'm-icon-loading': this.isLoading,
     };

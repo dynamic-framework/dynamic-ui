@@ -13,7 +13,7 @@
 
 @each $color, $value in $theme-colors {
   .m-icon-#{$color} {
-    color: var(--#{$prefix}#{$color});;
+    color: var(--#{$prefix}#{$color});
   }
 }
 

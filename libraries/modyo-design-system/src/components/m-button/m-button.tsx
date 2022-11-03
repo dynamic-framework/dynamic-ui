@@ -38,9 +38,25 @@ export class MButton implements ComponentInterface {
    */
   @Prop() iconLeft?: string;
   /**
+   * Icon left family class
+   */
+  @Prop() iconLeftFamilyClass?: string;
+  /**
+   * Icon left family prefix
+   */
+  @Prop() iconLeftFamilyPrefix?: string;
+  /**
    * Icon right to display
    */
   @Prop() iconRight?: string;
+  /**
+   * Icon right family class
+   */
+  @Prop() iconRightFamilyClass?: string;
+  /**
+   * Icon right family prefix
+   */
+  @Prop() iconRightFamilyPrefix?: string;
   /**
    * The value of the button.
    */
@@ -97,6 +113,8 @@ export class MButton implements ComponentInterface {
             <m-icon
               class="btn-icon btn-left-icon"
               icon={this.iconLeft}
+              familyClass={this.iconLeftFamilyClass}
+              familyPrefix={this.iconLeftFamilyPrefix}
             />
           )}
           {this.text && (
@@ -106,6 +124,8 @@ export class MButton implements ComponentInterface {
             <m-icon
               class="btn-icon btn-right-icon"
               icon={this.iconRight}
+              familyClass={this.iconRightFamilyClass}
+              familyPrefix={this.iconRightFamilyPrefix}
             />
           )}
         </button>
