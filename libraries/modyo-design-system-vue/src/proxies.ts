@@ -99,6 +99,7 @@ export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currenc
   'variant',
   'currencyOptions',
   'layoutDirection',
+  'isDisabled',
   'mChange'
 ]);
 
