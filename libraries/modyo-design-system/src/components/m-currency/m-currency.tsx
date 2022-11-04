@@ -87,12 +87,12 @@ export class MCurrency implements ComponentInterface {
   /**
    * Callback to extract the value from the option
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
   @Prop() valueExtractor: (item: any) => string | number = (item) => item?.value;
   /**
    * Callback to extract the label from the option
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
   @Prop() labelExtractor: (item: any) => string = (item) => item?.label;
   /**
    * Placeholder for the input
