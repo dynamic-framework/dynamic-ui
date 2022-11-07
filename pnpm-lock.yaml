@@ -337,6 +337,7 @@ importers:
     specifiers:
       '@types/eslint': ^8.4.9
       '@types/jest': ^27.0.2
+      '@types/node': ^18.11.9
       '@typescript-eslint/eslint-plugin': ^5.42.0
       '@typescript-eslint/parser': ^5.42.0
       eslint: ^8.26.0
@@ -356,6 +357,7 @@ importers:
     devDependencies:
       '@types/eslint': 8.4.9
       '@types/jest': 27.5.2
+      '@types/node': 18.11.9
       '@typescript-eslint/eslint-plugin': 5.42.0_6xw5wg2354iw4zujk2f3vyfrzu
       '@typescript-eslint/parser': 5.42.0_wyqvi574yv7oiwfeinomdzmc3m
       eslint: 8.26.0
