@@ -23,7 +23,7 @@ importers:
       '@popperjs/core': ^2.11.5
       '@stencil/angular-output-target': ^0.4.0
       '@stencil/core': ^2.18.0
-      '@stencil/eslint-plugin': ^0.4.0
+      '@stencil/eslint-plugin': workspace:^0.4.0
       '@stencil/postcss': ^2.1.0
       '@stencil/react-output-target': ^0.3.1
       '@stencil/sass': ^1.5.2
@@ -590,6 +590,7 @@ importers:
       '@craco/craco': ^7.0.0-alpha.3
       '@modyolabs/modyo-design-system': ^0.3.1
       '@modyolabs/modyo-design-system-react': ^0.4.0
+      '@modyolabs/modyo-service-retail': ^0.1.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -601,6 +602,7 @@ importers:
       '@types/webpack-env': ^1.18.0
       '@typescript-eslint/eslint-plugin': ^5.13.0
       '@typescript-eslint/parser': ^5.0.0
+      axios: ^1.1.2
       eslint: 8.22.0
       eslint-config-airbnb: 19.0.4
       eslint-config-airbnb-typescript: ^17.0.0
@@ -623,10 +625,12 @@ importers:
     dependencies:
       '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyolabs/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 13.5.0_aaq3sbffpfe3jnxzm2zngsddei
+      axios: 1.1.3
       i18next: 21.9.2
       liquidjs: 9.42.1
       react: 18.2.0
