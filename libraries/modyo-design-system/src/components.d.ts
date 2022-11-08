@@ -49,29 +49,29 @@ export namespace Components {
     }
     interface MButton {
         /**
-          * Icon left to display
-         */
-        "iconLeft"?: string;
-        /**
-          * Icon left family class
-         */
-        "iconLeftFamilyClass"?: string;
-        /**
-          * Icon left family prefix
-         */
-        "iconLeftFamilyPrefix"?: string;
-        /**
           * Icon right to display
          */
-        "iconRight"?: string;
+        "iconEnd"?: string;
         /**
           * Icon right family class
          */
-        "iconRightFamilyClass"?: string;
+        "iconEndFamilyClass"?: string;
         /**
           * Icon right family prefix
          */
-        "iconRightFamilyPrefix"?: string;
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Icon left to display
+         */
+        "iconStart"?: string;
+        /**
+          * Icon left family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Icon left family prefix
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * Flag to switch to pill button border radius.
          */
@@ -1331,29 +1331,29 @@ declare namespace LocalJSX {
     }
     interface MButton {
         /**
-          * Icon left to display
-         */
-        "iconLeft"?: string;
-        /**
-          * Icon left family class
-         */
-        "iconLeftFamilyClass"?: string;
-        /**
-          * Icon left family prefix
-         */
-        "iconLeftFamilyPrefix"?: string;
-        /**
           * Icon right to display
          */
-        "iconRight"?: string;
+        "iconEnd"?: string;
         /**
           * Icon right family class
          */
-        "iconRightFamilyClass"?: string;
+        "iconEndFamilyClass"?: string;
         /**
           * Icon right family prefix
          */
-        "iconRightFamilyPrefix"?: string;
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Icon left to display
+         */
+        "iconStart"?: string;
+        /**
+          * Icon left family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Icon left family prefix
+         */
+        "iconStartFamilyPrefix"?: string;
         /**
           * Flag to switch to pill button border radius.
          */

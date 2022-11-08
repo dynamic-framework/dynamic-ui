@@ -36,27 +36,27 @@ export class MButton implements ComponentInterface {
   /**
    * Icon left to display
    */
-  @Prop() iconLeft?: string;
+  @Prop() iconStart?: string;
   /**
    * Icon left family class
    */
-  @Prop() iconLeftFamilyClass?: string;
+  @Prop() iconStartFamilyClass?: string;
   /**
    * Icon left family prefix
    */
-  @Prop() iconLeftFamilyPrefix?: string;
+  @Prop() iconStartFamilyPrefix?: string;
   /**
    * Icon right to display
    */
-  @Prop() iconRight?: string;
+  @Prop() iconEnd?: string;
   /**
    * Icon right family class
    */
-  @Prop() iconRightFamilyClass?: string;
+  @Prop() iconEndFamilyClass?: string;
   /**
    * Icon right family prefix
    */
-  @Prop() iconRightFamilyPrefix?: string;
+  @Prop() iconEndFamilyPrefix?: string;
   /**
    * The value of the button.
    */
@@ -109,23 +109,23 @@ export class MButton implements ComponentInterface {
           {...this.value && { value: this.value }}
           onClick={this.clickHandler}
         >
-          {this.iconLeft && (
+          {this.iconStart && (
             <m-icon
               class="btn-icon btn-left-icon"
-              icon={this.iconLeft}
-              familyClass={this.iconLeftFamilyClass}
-              familyPrefix={this.iconLeftFamilyPrefix}
+              icon={this.iconStart}
+              familyClass={this.iconStartFamilyClass}
+              familyPrefix={this.iconStartFamilyPrefix}
             />
           )}
           {this.text && (
             <span>{this.text}</span>
           )}
-          {this.iconRight && (
+          {this.iconEnd && (
             <m-icon
               class="btn-icon btn-right-icon"
-              icon={this.iconRight}
-              familyClass={this.iconRightFamilyClass}
-              familyPrefix={this.iconRightFamilyPrefix}
+              icon={this.iconEnd}
+              familyClass={this.iconEndFamilyClass}
+              familyPrefix={this.iconEndFamilyPrefix}
             />
           )}
         </button>

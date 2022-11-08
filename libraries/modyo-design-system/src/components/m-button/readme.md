@@ -9,12 +9,12 @@
 
 | Property                | Attribute                  | Description                                  | Type                                                        | Default     |
 | ----------------------- | -------------------------- | -------------------------------------------- | ----------------------------------------------------------- | ----------- |
-| `iconLeft`              | `icon-left`                | Icon left to display                         | `string \| undefined`                                       | `undefined` |
-| `iconLeftFamilyClass`   | `icon-left-family-class`   | Icon left family class                       | `string \| undefined`                                       | `undefined` |
-| `iconLeftFamilyPrefix`  | `icon-left-family-prefix`  | Icon left family prefix                      | `string \| undefined`                                       | `undefined` |
-| `iconRight`             | `icon-right`               | Icon right to display                        | `string \| undefined`                                       | `undefined` |
-| `iconRightFamilyClass`  | `icon-right-family-class`  | Icon right family class                      | `string \| undefined`                                       | `undefined` |
-| `iconRightFamilyPrefix` | `icon-right-family-prefix` | Icon right family prefix                     | `string \| undefined`                                       | `undefined` |
+| `iconEnd`               | `icon-end`                 | Icon right to display                        | `string \| undefined`                                       | `undefined` |
+| `iconEndFamilyClass`    | `icon-end-family-class`    | Icon right family class                      | `string \| undefined`                                       | `undefined` |
+| `iconEndFamilyPrefix`   | `icon-end-family-prefix`   | Icon right family prefix                     | `string \| undefined`                                       | `undefined` |
+| `iconStart`             | `icon-start`               | Icon left to display                         | `string \| undefined`                                       | `undefined` |
+| `iconStartFamilyClass`  | `icon-start-family-class`  | Icon left family class                       | `string \| undefined`                                       | `undefined` |
+| `iconStartFamilyPrefix` | `icon-start-family-prefix` | Icon left family prefix                      | `string \| undefined`                                       | `undefined` |
 | `isPill`                | `is-pill`                  | Flag to switch to pill button border radius. | `boolean`                                                   | `false`     |
 | `state`                 | `state`                    | Flag to set the button as active.            | `"active" \| "disabled" \| "focus" \| "hover" \| undefined` | `undefined` |
 | `text`                  | `text`                     | The text to display.                         | `string`                                                    | `''`        |

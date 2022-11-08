@@ -40,7 +40,7 @@ const config: ComponentMeta<typeof MButton> = {
     text: {
       control: 'text',
     },
-    iconLeft: {
+    iconStart: {
       control: {
         type: 'select',
         labels: {
@@ -49,7 +49,7 @@ const config: ComponentMeta<typeof MButton> = {
       },
       options: [undefined, ...ICONS],
     },
-    iconRight: {
+    iconEnd: {
       control: {
         type: 'select',
         labels: {
