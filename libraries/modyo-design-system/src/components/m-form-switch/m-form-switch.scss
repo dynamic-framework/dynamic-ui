@@ -4,8 +4,9 @@
   --#{$prefix}form-check-border-color-focus: #{$form-check-border-color-focus};
   --#{$prefix}checkbox-box-border-width: 3px;
   --#{$prefix}checkbox-box-border-radius: #{$form-check-input-border-radius};
-  width: 100%;
+  display: block;
 
+  width: 100%;
   padding: var(--#{$prefix}checkbox-box-border-width);
 
   &:focus-within,

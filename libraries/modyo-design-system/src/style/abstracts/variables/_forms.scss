@@ -80,7 +80,7 @@ $form-check-label-disabled-opacity: .3 !default;
 $form-check-btn-check-disabled-opacity: $btn-disabled-opacity !default;
 
 // Checkbox :focus
-$form-check-border-color-focus: $accessibility !default;
+$form-check-border-color-focus: var(--#{$prefix}accessibility) !default;
 $form-check-border-width-focus: .125rem !default;
 
 // Checkbox-input
