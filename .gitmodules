@@ -20,3 +20,6 @@
 [submodule "widgets/modyo-widget-retail-loan-approval"]
 	path = widgets/modyo-widget-retail-loan-approval
 	url = git@github.com:modyolabs/modyo-widget-retail-loan-approval.git
+[submodule "packages/stencil-eslint-plugin"]
+	path = packages/stencil-eslint-plugin
+	url = https://github.com/modyolabs/stencil-eslint-plugin.git

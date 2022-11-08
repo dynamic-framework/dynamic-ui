@@ -22,8 +22,8 @@ export class MApp implements ComponentInterface {
    * */
   @Prop() iconSettings?: IconSettings;
 
-  @Watch('iconSettings')
   // eslint-disable-next-line class-methods-use-this
+  @Watch('iconSettings')
   watchIconSettingsHandler(newValue: IconSettings) {
     setIconSettings({
       familyClass: newValue.familyClass,
