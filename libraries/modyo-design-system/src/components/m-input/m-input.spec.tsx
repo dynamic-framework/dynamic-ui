@@ -22,7 +22,8 @@ it('should render my component', async () => {
   expect(page.root).toEqualHtml(`
     <m-input class="form-control-layout">
       <label htmlfor="${input.mId}">
-      ${input.label}
+        ${input.label}
+        <m-icon class="form-control-icon" icon="info-circle"></m-icon>
       </label>
       <div class="form-control-input">
         <div class="input-group">
