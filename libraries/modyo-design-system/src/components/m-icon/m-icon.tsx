@@ -17,34 +17,42 @@ export class MIcon {
    * Name of icon to use (in kebab-case)
    * */
   @Prop() icon!: string;
+
   /**
    * Theme of the icon
    * */
   @Prop() theme?: string;
+
   /**
    * Font size of the icon
    * */
   @Prop() size?: string = 'inherit';
+
   /**
    * Is loading
    * */
   @Prop() isLoading = false;
+
   /**
    * Loading animation duration
    * */
   @Prop() duration = 1.8;
+
   /**
    * To set css color
    * */
   @Prop() color?: string;
+
   /**
    * To set background color
    * */
   @Prop() backgroundColor?: string;
+
   /**
    * Family class
    * */
   @Prop() familyClass: string = state.iconFamilyClass;
+
   /**
    * Family prefix
    * */

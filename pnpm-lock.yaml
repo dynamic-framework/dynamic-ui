@@ -620,6 +620,7 @@ importers:
       react-i18next: ~11.18.3
       react-redux: ^8.0.2
       react-scripts: 5.0.1
+      react-verification-input: ^3.1.1
       sass: ~1.54.0
       typescript: ^4.6.4
       web-vitals: ^2.1.4
@@ -639,6 +640,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
       react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-verification-input: 3.1.1_biqbaboplfbrettd7655fr4n2y
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -24652,6 +24654,16 @@ packages:
       clsx: 1.2.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+
+  /react-verification-input/3.1.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-uFCstwy6fM4VyWjIQjE70JzS4eg1rgogAbH6h8ujuJNB807VGDp7ycajjY8/ZatzOu7iwoZ27JVuLLAP7U8UOQ==}
+    peerDependencies:
+      react: 16.8.0 - 18.x.x
+      react-dom: 16.8.0 - 18.x.x
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}

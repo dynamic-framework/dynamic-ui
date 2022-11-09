@@ -9,8 +9,9 @@
 
 | Property                    | Attribute                       | Description                                                          | Type                         | Default         |
 | --------------------------- | ------------------------------- | -------------------------------------------------------------------- | ---------------------------- | --------------- |
+| `buttonText`                | `button-text`                   | Text for the button                                                  | `string`                     | `'Apply'`       |
 | `hasSelect`                 | `has-select`                    | Has a select input                                                   | `boolean`                    | `false`         |
-| `hint`                      | `hint`                          | Hint for the m-cupon                                                 | `string \| undefined`        | `undefined`     |
+| `hint`                      | `hint`                          | Hint for the m-coupon                                                | `string \| undefined`        | `undefined`     |
 | `hintIconEnd`               | `hint-icon-end`                 | Icon end for the hint text                                           | `string \| undefined`        | `undefined`     |
 | `hintIconEndFamilyClass`    | `hint-icon-end-family-class`    | Hint right icon family class                                         | `string \| undefined`        | `undefined`     |
 | `hintIconEndFamilyPrefix`   | `hint-icon-end-family-prefix`   | Hint right icon family class                                         | `string \| undefined`        | `undefined`     |
@@ -20,9 +21,6 @@
 | `iconEnd`                   | `icon-end`                      | Icon of the end                                                      | `string \| undefined`        | `undefined`     |
 | `iconEndFamilyClass`        | `icon-end-family-class`         | Right icon family class                                              | `string \| undefined`        | `undefined`     |
 | `iconEndFamilyPrefix`       | `icon-end-family-prefix`        | Right icon family class                                              | `string \| undefined`        | `undefined`     |
-| `iconLabel`                 | `icon-label`                    | Icon for the label text                                              | `string \| undefined`        | `'info-circle'` |
-| `iconLabelFamilyClass`      | `icon-label-family-class`       | Icon label family class                                              | `string \| undefined`        | `undefined`     |
-| `iconLabelFamilyPrefix`     | `icon-label-family-prefix`      | Icon label family class                                              | `string \| undefined`        | `undefined`     |
 | `iconMiddle`                | `icon-middle`                   | Icon of the middle                                                   | `string \| undefined`        | `undefined`     |
 | `iconMiddleFamilyClass`     | `icon-middle-family-class`      | Middle icon family class                                             | `string \| undefined`        | `undefined`     |
 | `iconMiddleFamilyPrefix`    | `icon-middle-family-prefix`     | Middle icon family class                                             | `string \| undefined`        | `undefined`     |
@@ -30,10 +28,12 @@
 | `iconStartFamilyClass`      | `icon-start-family-class`       | Left icon family class                                               | `string \| undefined`        | `undefined`     |
 | `iconStartFamilyPrefix`     | `icon-start-family-prefix`      | Left icon family class                                               | `string \| undefined`        | `undefined`     |
 | `label`                     | `label`                         | Label for the input                                                  | `string`                     | `''`            |
+| `labelIcon`                 | `label-icon`                    | Icon for the label text                                              | `string`                     | `'info-circle'` |
+| `labelIconFamilyClass`      | `label-icon-family-class`       | Icon label family class                                              | `string \| undefined`        | `undefined`     |
+| `labelIconFamilyPrefix`     | `label-icon-family-prefix`      | Icon label family class                                              | `string \| undefined`        | `undefined`     |
 | `layoutDirection`           | `layout-direction`              | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"` | `'vertical'`    |
 | `mId` _(required)_          | `m-id`                          | Id for the input                                                     | `string`                     | `undefined`     |
 | `placeholder`               | `placeholder`                   | Placeholder for the input                                            | `string \| undefined`        | `''`            |
-| `textButton`                | `text-button`                   | Text for the button                                                  | `string \| undefined`        | `'Apply'`       |
 | `theme`                     | `theme`                         | Theme for the m-cupon                                                | `string \| undefined`        | `'primary'`     |
 | `type`                      | `type`                          | * The type of the input                                              | `"number" \| "text"`         | `'text'`        |
 

@@ -8,8 +8,8 @@ import { MCounter } from './m-counter';
 it('should render base counter', async () => {
   const props = {
     mId: 'counter',
-    min: 0,
-    max: 10,
+    minValue: 0,
+    maxValue: 10,
     value: 0,
   };
   const page = await newSpecPage({
@@ -32,7 +32,7 @@ it('should render base counter', async () => {
                   <i class="bi bi-dash m-icon" style="--bs-m-icon-font-size: inherit; --bs-m-icon-animation-duration: 1.8s;"></i>
                 </m-icon>
               </button>
-              <input class="form-control-counter-input" id="${props.mId}" max="${props.max}" min="${props.min}" type="number" value="${props.value}" >
+              <input class="form-control-counter-input" id="${props.mId}" max="${props.maxValue}" min="${props.minValue}" type="number" value="${props.value}" >
               <button
                 class="form-control-counter-btn">
                 <m-icon>

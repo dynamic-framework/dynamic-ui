@@ -139,13 +139,13 @@ export declare interface MCounter extends Components.MCounter {
 
 @ProxyCmp({
   defineCustomElementFn: defineMCounter,
-  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'label', 'layoutDirection', 'mId', 'max', 'min', 'theme', 'value', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'isDisabled', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'theme', 'value', 'variant']
 })
 @Component({
   selector: 'm-counter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['disabled', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'label', 'layoutDirection', 'mId', 'max', 'min', 'theme', 'value', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'isDisabled', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'theme', 'value', 'variant']
 })
 export class MCounter {
   protected el: HTMLElement;
@@ -167,13 +167,13 @@ export declare interface MCoupon extends Components.MCoupon {
 
 @ProxyCmp({
   defineCustomElementFn: defineMCoupon,
-  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconLabel', 'iconLabelFamilyClass', 'iconLabelFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'label', 'layoutDirection', 'mId', 'placeholder', 'textButton', 'theme', 'type']
+  inputs: ['buttonText', 'hasSelect', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'placeholder', 'theme', 'type']
 })
 @Component({
   selector: 'm-coupon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hasSelect', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconLabel', 'iconLabelFamilyClass', 'iconLabelFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'label', 'layoutDirection', 'mId', 'placeholder', 'textButton', 'theme', 'type']
+  inputs: ['buttonText', 'hasSelect', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'placeholder', 'theme', 'type']
 })
 export class MCoupon {
   protected el: HTMLElement;
@@ -195,13 +195,13 @@ export declare interface MCurrency extends Components.MCurrency {
 
 @ProxyCmp({
   defineCustomElementFn: defineMCurrency,
-  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconLabel', 'iconLabelFamilyClass', 'iconLabelFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
+  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
 })
 @Component({
   selector: 'm-currency',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconLabel', 'iconLabelFamilyClass', 'iconLabelFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
+  inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
 })
 export class MCurrency {
   protected el: HTMLElement;
@@ -223,13 +223,13 @@ export declare interface MFormCheck extends Components.MFormCheck {
 
 @ProxyCmp({
   defineCustomElementFn: defineMFormCheck,
-  inputs: ['checked', 'disabled', 'indeterminate', 'isButton', 'label', 'mId', 'name', 'state', 'type', 'value']
+  inputs: ['isButton', 'isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 @Component({
   selector: 'm-form-check',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'disabled', 'indeterminate', 'isButton', 'label', 'mId', 'name', 'state', 'type', 'value']
+  inputs: ['isButton', 'isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 export class MFormCheck {
   protected el: HTMLElement;
@@ -374,13 +374,13 @@ export declare interface MModal extends Components.MModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineMModal,
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'modalSize', 'name', 'scrollable', 'showCloseButton', 'static']
+  inputs: ['closeText', 'fullScreenFrom', 'imageHeader', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
 })
 @Component({
   selector: 'm-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['centered', 'closeText', 'fullScreen', 'fullScreenFrom', 'imageHeader', 'modalSize', 'name', 'scrollable', 'showCloseButton', 'static']
+  inputs: ['closeText', 'fullScreenFrom', 'imageHeader', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
 })
 export class MModal {
   protected el: HTMLElement;
@@ -483,13 +483,13 @@ export declare interface MSegmentControlItem extends Components.MSegmentControlI
 
 @ProxyCmp({
   defineCustomElementFn: defineMSegmentControlItem,
-  inputs: ['checked', 'disabled', 'label', 'mId', 'name', 'state', 'value']
+  inputs: ['isChecked', 'isDisabled', 'label', 'mId', 'name', 'state', 'value']
 })
 @Component({
   selector: 'm-segment-control-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'disabled', 'label', 'mId', 'name', 'state', 'value']
+  inputs: ['isChecked', 'isDisabled', 'label', 'mId', 'name', 'state', 'value']
 })
 export class MSegmentControlItem {
   protected el: HTMLElement;
@@ -515,13 +515,13 @@ export declare interface MSelect extends Components.MSelect {
 
 @ProxyCmp({
   defineCustomElementFn: defineMSelect,
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'name', 'options', 'selectedOption', 'theme', 'valueExtractor', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'name', 'options', 'selectedOption', 'theme', 'valueExtractor', 'variant']
 })
 @Component({
   selector: 'm-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'layoutDirection', 'mId', 'name', 'options', 'selectedOption', 'theme', 'valueExtractor', 'variant']
+  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'name', 'options', 'selectedOption', 'theme', 'valueExtractor', 'variant']
 })
 export class MSelect {
   protected el: HTMLElement;

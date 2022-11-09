@@ -26,10 +26,10 @@ const config: ComponentMeta<typeof MSegmentControlItem> = {
     value: {
       control: 'text',
     },
-    disabled: {
+    isDisabled: {
       control: 'boolean',
     },
-    checked: {
+    isChecked: {
       control: 'boolean',
     },
     state: {
