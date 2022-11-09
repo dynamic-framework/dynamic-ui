@@ -5,6 +5,7 @@
   --#{$prefix}checkbox-box-border-width: 2px;
   --#{$prefix}checkbox-box-border-radius: #{$form-check-input-border-radius};
 
+  display: block;
   padding: var(--#{$prefix}checkbox-box-border-width);
 
   &:focus-within,
