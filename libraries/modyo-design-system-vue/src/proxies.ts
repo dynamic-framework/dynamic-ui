@@ -235,7 +235,11 @@ export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-it
   'variant',
   'selectableProps',
   'themeValue',
-  'navegableProps'
+  'rightIconCustomAction',
+  'rightIconCustomActionClass',
+  'isLoading',
+  'navegableProps',
+  'mCustomClick'
 ]);
 
 

@@ -343,23 +343,30 @@ export class MInput {
 }
 
 
-export declare interface MListItem extends Components.MListItem {}
+export declare interface MListItem extends Components.MListItem {
+  /**
+   * Emitted when the right custom icon has been clicked. 
+   */
+  mCustomClick: EventEmitter<CustomEvent<any>>;
+
+}
 
 @ProxyCmp({
   defineCustomElementFn: defineMListItem,
-  inputs: ['alternativeValue', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
+  inputs: ['alternativeValue', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isLoading', 'isPill', 'navegableProps', 'rightIconCustomAction', 'rightIconCustomActionClass', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
 })
 @Component({
   selector: 'm-list-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['alternativeValue', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
+  inputs: ['alternativeValue', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isLoading', 'isPill', 'navegableProps', 'rightIconCustomAction', 'rightIconCustomActionClass', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
 })
 export class MListItem {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mCustomClick']);
   }
 }
 

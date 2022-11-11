@@ -679,6 +679,10 @@ export namespace Components {
          */
         "image": string | null;
         /**
+          * Right custom icon clickable
+         */
+        "isLoading"?: boolean;
+        /**
           * Has borders rounded
          */
         "isPill": boolean;
@@ -686,6 +690,14 @@ export namespace Components {
           * Props for the list item navegable variant
          */
         "navegableProps"?: NavegableProps;
+        /**
+          * Right custom icon clickable
+         */
+        "rightIconCustomAction"?: string;
+        /**
+          * Right custom icon class
+         */
+        "rightIconCustomActionClass"?: string;
         /**
           * Props for the list item selectable variant
          */
@@ -1125,6 +1137,10 @@ export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MListItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMListItemElement;
 }
 export interface MModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1997,6 +2013,10 @@ declare namespace LocalJSX {
          */
         "image"?: string | null;
         /**
+          * Right custom icon clickable
+         */
+        "isLoading"?: boolean;
+        /**
           * Has borders rounded
          */
         "isPill"?: boolean;
@@ -2004,6 +2024,18 @@ declare namespace LocalJSX {
           * Props for the list item navegable variant
          */
         "navegableProps"?: NavegableProps;
+        /**
+          * Emitted when the right custom icon has been clicked.
+         */
+        "onMCustomClick"?: (event: MListItemCustomEvent<any>) => void;
+        /**
+          * Right custom icon clickable
+         */
+        "rightIconCustomAction"?: string;
+        /**
+          * Right custom icon class
+         */
+        "rightIconCustomActionClass"?: string;
         /**
           * Props for the list item selectable variant
          */
