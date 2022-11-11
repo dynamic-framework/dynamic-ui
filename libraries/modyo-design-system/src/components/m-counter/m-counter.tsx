@@ -29,6 +29,21 @@ export class MCounter {
   @Prop() label?: string;
 
   /**
+   * Icon for the label text
+   * */
+  @Prop() labelIcon = 'info-circle';
+
+  /**
+   * Icon label family class
+   */
+  @Prop() labelIconFamilyClass?: string;
+
+  /**
+   * Icon label family class
+   */
+  @Prop() labelIconFamilyPrefix?: string;
+
+  /**
    * Hint text
    */
   @Prop() hint?: string;
@@ -71,12 +86,12 @@ export class MCounter {
   /**
    * Minimum value for the input
    */
-  @Prop() min!: number;
+  @Prop() minValue!: number;
 
   /**
    * Maximum value for the input
    */
-  @Prop() max!: number;
+  @Prop() maxValue!: number;
 
   /**
    * Value of the input
@@ -96,7 +111,7 @@ export class MCounter {
   /**
    * Is disabled counter
    */
-  @Prop() disabled = false;
+  @Prop() isDisabled = false;
 
   /**
    * Event for input change
@@ -134,10 +149,10 @@ export class MCounter {
     const currentValue = this.htmlInput.value;
     if (action) {
       const temp = Number(currentValue) + 1;
-      this.mInput.emit(temp <= this.max ? temp : this.max);
+      this.mInput.emit(temp <= this.maxValue ? temp : this.maxValue);
     } else {
       const temp = Number(currentValue) - 1;
-      this.mInput.emit(temp >= this.min ? temp : this.min);
+      this.mInput.emit(temp >= this.minValue ? temp : this.minValue);
     }
   };
 
@@ -147,7 +162,7 @@ export class MCounter {
       [`form-control-theme-${this.theme}`]: true,
       [`form-control-layout-counter-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
-      'form-control-layout-counter-disabled': this.disabled,
+      'form-control-layout-counter-disabled': this.isDisabled,
     };
   }
 
@@ -157,10 +172,14 @@ export class MCounter {
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
-            <m-icon
-              class="form-control-icon"
-              icon="info-circle"
-            />
+            {this.labelIcon && (
+              <m-icon
+                class="form-control-icon"
+                icon={this.labelIcon}
+                familyClass={this.labelIconFamilyClass}
+                familyPrefix={this.labelIconFamilyPrefix}
+              />
+            )}
           </label>
         )}
         <div class="form-control-input">
@@ -171,7 +190,7 @@ export class MCounter {
                 <button
                   class="form-control-counter-btn"
                   onClick={() => this.clickHandler(false)}
-                  disabled={this.disabled}
+                  disabled={this.isDisabled}
                 >
                   <m-icon
                     icon="dash"
@@ -183,16 +202,16 @@ export class MCounter {
                   class="form-control-counter-input"
                   type="number"
                   id={this.mId}
-                  min={this.min}
-                  max={this.max}
+                  min={this.minValue}
+                  max={this.maxValue}
                   value={this.value}
                   onInput={this.inputHandler}
-                  disabled={this.disabled}
+                  disabled={this.isDisabled}
                 />
                 <button
                   class="form-control-counter-btn"
                   onClick={() => this.clickHandler(true)}
-                  disabled={this.disabled}
+                  disabled={this.isDisabled}
                 >
                   <m-icon
                     icon="plus"

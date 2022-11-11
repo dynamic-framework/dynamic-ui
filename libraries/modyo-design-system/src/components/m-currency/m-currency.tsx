@@ -27,137 +27,170 @@ export class MCurrency implements ComponentInterface {
    * Id for the input
    * */
   @Prop() mId!: string;
+
   /**
    * Label for the input
    * */
   @Prop() label = '';
+
   /**
    * Icon for the label text
    * */
-  @Prop() iconLabel = 'info-circle';
+  @Prop() labelIcon = 'info-circle';
+
   /**
    * Icon label family class
    */
-  @Prop() iconLabelFamilyClass?: string;
+  @Prop() labelIconFamilyClass?: string;
+
   /**
    * Icon label family class
    */
-  @Prop() iconLabelFamilyPrefix?: string;
+  @Prop() labelIconFamilyPrefix?: string;
+
   /**
    * Icon for the left
    * */
   @Prop() iconStart?: string;
+
   /**
    * Left icon family class
    */
   @Prop() iconStartFamilyClass?: string;
+
   /**
    * Left icon family class
    */
   @Prop() iconStartFamilyPrefix?: string;
+
   /**
    * Icon for the middle
    * */
   @Prop() iconMiddle?: string;
+
   /**
    * Middle icon family class
    */
   @Prop() iconMiddleFamilyClass?: string;
+
   /**
    * Middle icon family class
    */
   @Prop() iconMiddleFamilyPrefix?: string;
+
   /**
    * Icon for the end
    * */
   @Prop() iconEnd?: string;
+
   /**
    * Right icon family class
    */
   @Prop() iconEndFamilyClass?: string;
+
   /**
    * Right icon family class
    */
   @Prop() iconEndFamilyPrefix?: string;
+
   /**
    * Select options
-   * */
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Prop() selectOptions: Array<any> = [];
+
   /**
    * Callback to extract the value from the option
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
   @Prop() valueExtractor: (item: any) => string | number = (item) => item?.value;
+
   /**
    * Callback to extract the label from the option
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
   @Prop() labelExtractor: (item: any) => string = (item) => item?.label;
+
   /**
    * Placeholder for the input
    * */
   @Prop() placeholder?: string = '';
+
   /**
    * * The value of the input
   */
   @Prop() value?: number;
+
   /**
    * * The min value of the input
   */
   @Prop() minValue?: number;
+
   /**
    * * The max value of the input
   */
   @Prop() maxValue?: number;
+
   /**
    * Hint text for the m-currency
    * */
   @Prop() hint?: string;
+
   /**
    * Icon start for the hint text
    * */
   @Prop() hintIconStart?: string;
+
   /**
    * Hint left icon family class
    */
   @Prop() hintIconStartFamilyClass?: string;
+
   /**
    * Hint left icon family class
    */
   @Prop() hintIconStartFamilyPrefix?: string;
+
   /**
    * Icon end for the hint text
    * */
   @Prop() hintIconEnd?: string;
+
   /**
    * Hint right icon family class
    */
   @Prop() hintIconEndFamilyClass?: string;
+
   /**
    * Hint right icon family class
    */
   @Prop() hintIconEndFamilyPrefix?: string;
+
   /**
    * Theme for the m-currency
    * */
   @Prop() theme = 'primary';
+
   /**
    * Variant for the m-currency
    * */
   @Prop() variant?: CurrencyVariant;
+
   /**
    * Options for the m-currency
    * */
   @Prop() currencyOptions!: Options;
+
   /**
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
+
   /**
    * The input is disabled
    */
   @Prop() isDisabled = false;
+
   /**
    * Emitted when the inputs change
    */
@@ -261,9 +294,9 @@ export class MCurrency implements ComponentInterface {
             {this.label}
             <m-icon
               class="form-control-icon"
-              icon={this.iconLabel}
-              familyClass={this.iconLabelFamilyClass}
-              familyPrefix={this.iconLabelFamilyPrefix}
+              icon={this.labelIcon}
+              familyClass={this.labelIconFamilyClass}
+              familyPrefix={this.labelIconFamilyPrefix}
             />
           </label>
         )}

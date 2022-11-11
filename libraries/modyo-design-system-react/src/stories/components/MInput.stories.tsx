@@ -89,6 +89,7 @@ export const Default = Template.bind({});
 Default.args = {
   mId: 'componentId',
   label: 'the label',
+  labelIcon: undefined,
   placeholder: 'the placeholder',
   type: 'text',
   value: 'the value',

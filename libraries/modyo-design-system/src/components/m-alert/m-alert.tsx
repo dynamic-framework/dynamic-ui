@@ -19,14 +19,17 @@ export class MAlert {
    * Theme for the alert
    */
   @Prop() theme = 'warning';
+
   /**
    * Show icon theme in the alert
    */
   @Prop() showIcon = false;
+
   /**
    * Show close button
    */
   @Prop() showClose?: boolean;
+
   /**
    * Emitted when the button has been clicked.
    */

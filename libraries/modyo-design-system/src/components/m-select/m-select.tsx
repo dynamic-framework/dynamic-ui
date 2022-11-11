@@ -22,6 +22,7 @@ export class MSelect implements ComponentInterface {
    * Id of the select
    */
   @Prop() mId!: string;
+
   /**
    * The name of the input
    */
@@ -47,6 +48,21 @@ export class MSelect implements ComponentInterface {
    * The label of the select in full variant
    */
   @Prop() label?: string;
+
+  /**
+   * Icon for the label text
+   * */
+  @Prop() labelIcon = 'info-circle';
+
+  /**
+   * Icon label family class
+   */
+  @Prop() labelIconFamilyClass?: string;
+
+  /**
+   * Icon label family class
+   */
+  @Prop() labelIconFamilyPrefix?: string;
 
   /**
    * The start icon for the select
@@ -194,11 +210,14 @@ export class MSelect implements ComponentInterface {
         {(this.label) && (
           <label htmlFor={this.mId}>
             {this.label}
-            {/** TODO: Implements popover/tooltip */}
-            <m-icon
-              class="form-control-icon small"
-              icon="info-circle"
-            />
+            {this.labelIcon && (
+              <m-icon
+                class="form-control-icon small"
+                icon={this.labelIcon}
+                familyClass={this.labelIconFamilyClass}
+                familyPrefix={this.labelIconFamilyPrefix}
+              />
+            )}
           </label>
         )}
         <div class="form-control-input w-100">

@@ -14,34 +14,42 @@ export class MHint {
    * Left icon for the hint
    */
   @Prop() iconStart?: string;
+
   /**
    * Left icon family class
    */
   @Prop() iconStartFamilyClass?: string;
+
   /**
    * Left icon family class
    */
   @Prop() iconStartFamilyPrefix?: string;
+
   /**
    * Right icon for the hint
    */
   @Prop() iconEnd?: string;
+
   /**
    * Right icon family class
    */
   @Prop() iconEndFamilyClass?: string;
+
   /**
    * Right icon family class
    */
   @Prop() iconEndFamilyPrefix?: string;
+
   /**
    * Hint text
    */
   @Prop() text!: string;
+
   /**
    * Theme for the hint
    */
   @Prop() theme = 'info';
+
   /**
    * Size for the icons
    */

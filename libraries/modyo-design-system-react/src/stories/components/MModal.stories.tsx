@@ -11,8 +11,8 @@ const ExampleModal = (
 ) => (
   <MModal
     name="example"
-    centered
-    static
+    isCentered
+    isStatic
     showCloseButton
     onMClose={() => closeModal()}
   >

@@ -15,6 +15,7 @@ export class MSegmentControl {
    * Aria label to describe the segment control
    */
   @Prop() description?: string;
+
   render() {
     return (
       <div

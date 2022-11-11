@@ -32,22 +32,22 @@ export class MModal {
   /**
    * Is backdrop static
    */
-  @Prop() static?: boolean;
+  @Prop() isStatic?: boolean;
 
   /**
    * Is modal scrollable
    */
-  @Prop() scrollable?: boolean;
+  @Prop() isScrollable?: boolean;
 
   /**
    * Is modal centered
    */
-  @Prop() centered?: boolean;
+  @Prop() isCentered?: boolean;
 
   /**
    * Is fullscreen in all sizes
    */
-  @Prop() fullScreen?: boolean;
+  @Prop() isFullScreen?: boolean;
 
   /**
    * Minimum size to apply the fullscreen
@@ -89,7 +89,7 @@ export class MModal {
   };
 
   private fullScreenClass(): string {
-    if (this.fullScreen) {
+    if (this.isFullScreen) {
       if (this.fullScreenFrom) {
         return `modal-fullscreen-${this.fullScreenFrom}-down`;
       }
@@ -101,10 +101,10 @@ export class MModal {
   private generateModalDialogClasses(): ClassMap {
     return {
       'modal-dialog': true,
-      'modal-dialog-centered': !!this.centered,
-      'modal-dialog-scrollable': !!this.scrollable,
+      'modal-dialog-centered': !!this.isCentered,
+      'modal-dialog-scrollable': !!this.isScrollable,
       [`modal-${this.modalSize}`]: !!this.modalSize,
-      [this.fullScreenClass()]: !!this.fullScreen,
+      [this.fullScreenClass()]: !!this.isFullScreen,
     };
   }
 
@@ -116,7 +116,7 @@ export class MModal {
         tabindex="-1"
         aria-labelledby={`${this.name}Label`}
         aria-hidden="false"
-        {...this.static && ({
+        {...this.isStatic && ({
           [`data-${prefixBS}backdrop`]: 'static',
           [`data-${prefixBS}keyboard`]: 'false',
         })}

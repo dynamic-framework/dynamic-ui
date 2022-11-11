@@ -22,26 +22,32 @@ export class MFormCheck implements ComponentInterface {
    * Set whether is a checkbox input or a radio input
    */
   @Prop() type!: FormCheckType;
+
   /**
    * HTML Name to use within a form or JS reference
    */
   @Prop() name?: string;
+
   /**
    * Text that will be displayed beside Check input or Radio input
    */
   @Prop() label?: string;
+
   /**
    * Set checkbox or radio button marked as selected or not
    */
-  @Prop() checked = false;
+  @Prop() isChecked = false;
+
   /**
    * Form control identifier
    */
   @Prop() mId!: string;
+
   /**
    * Set input as disabled
    */
-  @Prop() disabled = false;
+  @Prop() isDisabled = false;
+
   /**
    * State of checkbox or radio. The states could be:
    * Success state
@@ -50,14 +56,17 @@ export class MFormCheck implements ComponentInterface {
    * Loading state
    */
   @Prop() state?: FormCheckState;
+
   /**
    * Set view of checkbox as indeterminated
    */
-  @Prop() indeterminate?: boolean;
+  @Prop() isIndeterminate?: boolean;
+
   /**
    * A string representing the value of the checkbox or radio
    */
   @Prop() value?: string;
+
   /**
    * Set checkbox as toggle button
    */
@@ -96,9 +105,9 @@ export class MFormCheck implements ComponentInterface {
               name={this.name}
               id={this.mId}
               value={this.value}
-              checked={this.checked}
-              disabled={this.disabled}
-              indeterminate={this.indeterminate}
+              checked={this.isChecked}
+              disabled={this.isDisabled}
+              indeterminate={this.isIndeterminate}
             />
             <label
               class={this.isButton ? 'form-check-box-label' : 'form-check-label'}
@@ -115,9 +124,9 @@ export class MFormCheck implements ComponentInterface {
             name={this.name}
             id={this.mId}
             value={this.value}
-            checked={this.checked}
-            disabled={this.disabled}
-            indeterminate={this.indeterminate}
+            checked={this.isChecked}
+            disabled={this.isDisabled}
+            indeterminate={this.isIndeterminate}
           />
         )}
       </Host>

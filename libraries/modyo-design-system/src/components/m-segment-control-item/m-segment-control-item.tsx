@@ -38,12 +38,12 @@ export class MSegmentControlItem implements ComponentInterface{
   /**
    * Is disabled
    */
-  @Prop() disabled?: boolean;
+  @Prop() isDisabled?: boolean;
 
   /**
    * Is checked
    */
-  @Prop() checked?: boolean;
+  @Prop() isChecked?: boolean;
 
   /**
    * State of the input
@@ -73,8 +73,8 @@ export class MSegmentControlItem implements ComponentInterface{
           value={this.value}
           autocomplete="off"
           onChange={this.changeHandler}
-          disabled={this.disabled || this.state === 'disabled'}
-          checked={this.checked}
+          disabled={this.isDisabled || this.state === 'disabled'}
+          checked={this.isChecked}
         />
         <label
           class="segment-control-item"
