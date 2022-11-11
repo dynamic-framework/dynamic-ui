@@ -1,9 +1,12 @@
-import type { ComponentInterface } from '@stencil/core';
 import {
   Component,
   h,
   Prop,
   Host,
+  ComponentInterface,
+  Event,
+  EventEmitter,
+  Fragment,
 } from '@stencil/core';
 
 import type { ClassMap, NavegableProps } from '../../utils/component-interface';
@@ -91,9 +94,43 @@ export class MListItem implements ComponentInterface {
   @Prop() themeValue?: string = 'gray';
 
   /**
+   * End custom icon
+   */
+  @Prop() customActionEndIcon?: string;
+
+  /**
+   * Class for button custom action
+   */
+  @Prop() customActionClass?: string;
+
+  /**
+   * Family class for custom action icon
+   */
+  @Prop() customActionEndIconFamilyClass?: string;
+
+  /**
+   * Family prefix for custom action icon
+   */
+  @Prop() customActionEndIconFamilyPrefix?: string;
+
+  /**
+   * Right custom icon clickable
+   */
+  @Prop() isLoading?: boolean;
+
+  /**
    * Props for the list item navegable variant
    */
   @Prop() navegableProps?: NavegableProps;
+
+  /**
+   * Emitted when the right custom icon has been clicked.
+   */
+  @Event() mCustomClick?: EventEmitter;
+
+  private clickHandler = () => {
+    this.mCustomClick?.emit();
+  };
 
   private getTagType(): string {
     return this.variant ? TAG_TYPE[this.variant] : TAG_TYPE.default;
@@ -187,10 +224,29 @@ export class MListItem implements ComponentInterface {
               </div>
             )}
             {this.variant === 'navegable' && (
-              <m-icon
-                class="text-gray-light fs-5"
-                icon="chevron-right"
-              />
+              <Fragment>
+                {this.customActionEndIcon && (
+                  <button
+                    class={`p-0 m-0 border-0 bg-transparent rounded-pill ${this.customActionClass}`}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      this.clickHandler();
+                    }}
+                  >
+                    <m-icon
+                      class="text-tertiary fs-5"
+                      icon={this.customActionEndIcon}
+                      isLoading={this.isLoading}
+                      familyClass={this.customActionEndIconFamilyClass}
+                      familyPrefix={this.customActionEndIconFamilyPrefix}
+                    />
+                  </button>
+                )}
+                <m-icon
+                  class="text-gray-light fs-5"
+                  icon="chevron-right"
+                />
+              </Fragment>
             )}
           </Tag>
         </Host>
