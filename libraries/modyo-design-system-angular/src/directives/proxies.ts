@@ -353,13 +353,13 @@ export declare interface MListItem extends Components.MListItem {
 
 @ProxyCmp({
   defineCustomElementFn: defineMListItem,
-  inputs: ['alternativeValue', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isLoading', 'isPill', 'navegableProps', 'rightIconCustomAction', 'rightIconCustomActionClass', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
+  inputs: ['alternativeValue', 'customActionClass', 'customActionEndIcon', 'customActionEndIconFamilyClass', 'customActionEndIconFamilyPrefix', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isLoading', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
 })
 @Component({
   selector: 'm-list-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['alternativeValue', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isLoading', 'isPill', 'navegableProps', 'rightIconCustomAction', 'rightIconCustomActionClass', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
+  inputs: ['alternativeValue', 'customActionClass', 'customActionEndIcon', 'customActionEndIconFamilyClass', 'customActionEndIconFamilyPrefix', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isLoading', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
 })
 export class MListItem {
   protected el: HTMLElement;

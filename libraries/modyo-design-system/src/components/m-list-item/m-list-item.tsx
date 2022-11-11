@@ -94,14 +94,24 @@ export class MListItem implements ComponentInterface {
   @Prop() themeValue?: string = 'gray';
 
   /**
-   * Right custom icon clickable
+   * End custom icon
    */
-  @Prop() rightIconCustomAction?: string;
+  @Prop() customActionEndIcon?: string;
 
   /**
-   * Right custom icon class
+   * Class for button custom action
    */
-  @Prop() rightIconCustomActionClass?: string;
+  @Prop() customActionClass?: string;
+
+  /**
+   * Family class for custom action icon
+   */
+  @Prop() customActionEndIconFamilyClass?: string;
+
+  /**
+   * Family prefix for custom action icon
+   */
+  @Prop() customActionEndIconFamilyPrefix?: string;
 
   /**
    * Right custom icon clickable
@@ -215,9 +225,9 @@ export class MListItem implements ComponentInterface {
             )}
             {this.variant === 'navegable' && (
               <Fragment>
-                {this.rightIconCustomAction && (
+                {this.customActionEndIcon && (
                   <button
-                    class={`p-0 m-0 border-0 bg-transparent rounded-pill ${this.rightIconCustomActionClass}`}
+                    class={`p-0 m-0 border-0 bg-transparent rounded-pill ${this.customActionClass}`}
                     onClick={(event) => {
                       event.stopPropagation();
                       this.clickHandler();
@@ -225,8 +235,10 @@ export class MListItem implements ComponentInterface {
                   >
                     <m-icon
                       class="text-tertiary fs-5"
-                      icon={this.rightIconCustomAction}
+                      icon={this.customActionEndIcon}
                       isLoading={this.isLoading}
+                      familyClass={this.customActionEndIconFamilyClass}
+                      familyPrefix={this.customActionEndIconFamilyPrefix}
                     />
                   </button>
                 )}
