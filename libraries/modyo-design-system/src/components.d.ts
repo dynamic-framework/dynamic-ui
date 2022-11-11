@@ -675,6 +675,22 @@ export namespace Components {
          */
         "alternativeValue"?: string | number;
         /**
+          * Class for button custom action
+         */
+        "customActionClass"?: string;
+        /**
+          * End custom icon
+         */
+        "customActionEndIcon"?: string;
+        /**
+          * Family class for custom action icon
+         */
+        "customActionEndIconFamilyClass"?: string;
+        /**
+          * Family prefix for custom action icon
+         */
+        "customActionEndIconFamilyPrefix"?: string;
+        /**
           * The icon to display
          */
         "icon"?: string;
@@ -690,6 +706,10 @@ export namespace Components {
           * Url to replace the default icon image
          */
         "image": string | null;
+        /**
+          * Right custom icon clickable
+         */
+        "isLoading"?: boolean;
         /**
           * Has borders rounded
          */
@@ -1149,6 +1169,10 @@ export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MListItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMListItemElement;
 }
 export interface MModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -2017,6 +2041,22 @@ declare namespace LocalJSX {
          */
         "alternativeValue"?: string | number;
         /**
+          * Class for button custom action
+         */
+        "customActionClass"?: string;
+        /**
+          * End custom icon
+         */
+        "customActionEndIcon"?: string;
+        /**
+          * Family class for custom action icon
+         */
+        "customActionEndIconFamilyClass"?: string;
+        /**
+          * Family prefix for custom action icon
+         */
+        "customActionEndIconFamilyPrefix"?: string;
+        /**
           * The icon to display
          */
         "icon"?: string;
@@ -2033,6 +2073,10 @@ declare namespace LocalJSX {
          */
         "image"?: string | null;
         /**
+          * Right custom icon clickable
+         */
+        "isLoading"?: boolean;
+        /**
           * Has borders rounded
          */
         "isPill"?: boolean;
@@ -2040,6 +2084,10 @@ declare namespace LocalJSX {
           * Props for the list item navegable variant
          */
         "navegableProps"?: NavegableProps;
+        /**
+          * Emitted when the right custom icon has been clicked.
+         */
+        "onMCustomClick"?: (event: MListItemCustomEvent<any>) => void;
         /**
           * Props for the list item selectable variant
          */
