@@ -6,7 +6,6 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { IconSettings } from "./utils";
-import { PositionToggleFrom } from "./components/m-aside/m-aside-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
@@ -15,6 +14,7 @@ import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
+import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
 import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
@@ -37,32 +37,6 @@ export namespace Components {
           * Icon settings
          */
         "iconSettings"?: IconSettings;
-    }
-    interface MAside {
-        /**
-          * Close button text
-         */
-        "closeText"?: string;
-        /**
-          * the name of the aside
-         */
-        "name": string;
-        /**
-          * Position to show aside from
-         */
-        "openFrom": PositionToggleFrom;
-        /**
-          * Is aside scrollable
-         */
-        "scrollable"?: boolean;
-        /**
-          * No display close button
-         */
-        "showCloseButton"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "static"?: boolean;
     }
     interface MBadge {
         /**
@@ -796,6 +770,32 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
+    interface MOffcanvas {
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * the name of the offcanvas
+         */
+        "name": string;
+        /**
+          * Position to show offcanvas from
+         */
+        "openFrom": PositionToggleFrom;
+        /**
+          * Is offcanvas scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
+    }
     interface MQuickAction {
         /**
           * The action icon for the quick action
@@ -1149,10 +1149,6 @@ export interface MAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMAlertElement;
 }
-export interface MAsideCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMAsideElement;
-}
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
@@ -1184,6 +1180,10 @@ export interface MInputCustomEvent<T> extends CustomEvent<T> {
 export interface MModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMModalElement;
+}
+export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMOffcanvasElement;
 }
 export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1217,12 +1217,6 @@ declare global {
     var HTMLMAppElement: {
         prototype: HTMLMAppElement;
         new (): HTMLMAppElement;
-    };
-    interface HTMLMAsideElement extends Components.MAside, HTMLStencilElement {
-    }
-    var HTMLMAsideElement: {
-        prototype: HTMLMAsideElement;
-        new (): HTMLMAsideElement;
     };
     interface HTMLMBadgeElement extends Components.MBadge, HTMLStencilElement {
     }
@@ -1296,6 +1290,12 @@ declare global {
         prototype: HTMLMModalElement;
         new (): HTMLMModalElement;
     };
+    interface HTMLMOffcanvasElement extends Components.MOffcanvas, HTMLStencilElement {
+    }
+    var HTMLMOffcanvasElement: {
+        prototype: HTMLMOffcanvasElement;
+        new (): HTMLMOffcanvasElement;
+    };
     interface HTMLMQuickActionElement extends Components.MQuickAction, HTMLStencilElement {
     }
     var HTMLMQuickActionElement: {
@@ -1335,7 +1335,6 @@ declare global {
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
         "m-app": HTMLMAppElement;
-        "m-aside": HTMLMAsideElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-counter": HTMLMCounterElement;
@@ -1348,6 +1347,7 @@ declare global {
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
+        "m-offcanvas": HTMLMOffcanvasElement;
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
         "m-segment-control": HTMLMSegmentControlElement;
@@ -1380,36 +1380,6 @@ declare namespace LocalJSX {
           * Icon settings
          */
         "iconSettings"?: IconSettings;
-    }
-    interface MAside {
-        /**
-          * Close button text
-         */
-        "closeText"?: string;
-        /**
-          * the name of the aside
-         */
-        "name": string;
-        /**
-          * Emitted when the input value has changed
-         */
-        "onMClose"?: (event: MAsideCustomEvent<void>) => void;
-        /**
-          * Position to show aside from
-         */
-        "openFrom"?: PositionToggleFrom;
-        /**
-          * Is aside scrollable
-         */
-        "scrollable"?: boolean;
-        /**
-          * No display close button
-         */
-        "showCloseButton"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "static"?: boolean;
     }
     interface MBadge {
         /**
@@ -2183,6 +2153,36 @@ declare namespace LocalJSX {
          */
         "showCloseButton"?: boolean;
     }
+    interface MOffcanvas {
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * the name of the offcanvas
+         */
+        "name": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMClose"?: (event: MOffcanvasCustomEvent<void>) => void;
+        /**
+          * Position to show offcanvas from
+         */
+        "openFrom"?: PositionToggleFrom;
+        /**
+          * Is offcanvas scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
+    }
     interface MQuickAction {
         /**
           * The action icon for the quick action
@@ -2562,7 +2562,6 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "m-alert": MAlert;
         "m-app": MApp;
-        "m-aside": MAside;
         "m-badge": MBadge;
         "m-button": MButton;
         "m-counter": MCounter;
@@ -2575,6 +2574,7 @@ declare namespace LocalJSX {
         "m-input": MInput;
         "m-list-item": MListItem;
         "m-modal": MModal;
+        "m-offcanvas": MOffcanvas;
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
         "m-segment-control": MSegmentControl;
@@ -2589,7 +2589,6 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
-            "m-aside": LocalJSX.MAside & JSXBase.HTMLAttributes<HTMLMAsideElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;
@@ -2602,6 +2601,7 @@ declare module "@stencil/core" {
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
+            "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;

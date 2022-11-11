@@ -4,7 +4,6 @@ import * as d from './proxies';
 export const DIRECTIVES = [
   d.MAlert,
   d.MApp,
-  d.MAside,
   d.MBadge,
   d.MButton,
   d.MCounter,
@@ -17,6 +16,7 @@ export const DIRECTIVES = [
   d.MInput,
   d.MListItem,
   d.MModal,
+  d.MOffcanvas,
   d.MQuickAction,
   d.MSearch,
   d.MSegmentControl,

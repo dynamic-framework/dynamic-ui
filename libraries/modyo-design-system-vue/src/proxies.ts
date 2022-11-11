@@ -22,17 +22,6 @@ export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined, 
 ]);
 
 
-export const MAside = /*@__PURE__*/ defineContainer<JSX.MAside>('m-aside', undefined, [
-  'name',
-  'closeText',
-  'static',
-  'scrollable',
-  'showCloseButton',
-  'openFrom',
-  'mClose'
-]);
-
-
 export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undefined, [
   'theme',
   'text'
@@ -264,6 +253,17 @@ export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undef
   'modalSize',
   'imageHeader',
   'showCloseButton',
+  'mClose'
+]);
+
+
+export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offcanvas', undefined, [
+  'name',
+  'closeText',
+  'static',
+  'scrollable',
+  'showCloseButton',
+  'openFrom',
   'mClose'
 ]);
 

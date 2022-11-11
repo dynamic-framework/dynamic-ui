@@ -9,18 +9,18 @@ import {
 
 import { prefixBS } from '../../utils/component-interface';
 
-import { PositionToggleFrom } from './m-aside-interface';
+import { PositionToggleFrom } from './m-offcanvas-interface';
 
 @Component({
-  tag: 'm-aside',
-  styleUrl: 'm-aside.scss',
+  tag: 'm-offcanvas',
+  styleUrl: 'm-offcanvas.scss',
   shadow: false,
 })
-export class MAside {
-  @Element() el!: HTMLMAsideElement;
+export class MOffcanvas {
+  @Element() el!: HTMLMOffcanvasElement;
 
   /**
-   * the name of the aside
+   * the name of the offcanvas
    */
   @Prop() name!: string;
 
@@ -35,7 +35,7 @@ export class MAside {
   @Prop() static?: boolean;
 
   /**
-   * Is aside scrollable
+   * Is offcanvas scrollable
    */
   @Prop() scrollable?: boolean;
 
@@ -45,7 +45,7 @@ export class MAside {
   @Prop() showCloseButton?: boolean;
 
   /**
-   * Position to show aside from
+   * Position to show offcanvas from
    */
   @Prop() openFrom: PositionToggleFrom = 'start';
 
