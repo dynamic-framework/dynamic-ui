@@ -1,3 +1,3 @@
 export { default as LiquidContext, useLiquidContext, LiquidContextProvider } from './LiquidContext';
 export * from './ModalContext';
-export * from './AsideContext';
+export * from './OffcanvasContext';
