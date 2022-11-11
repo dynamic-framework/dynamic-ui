@@ -20,110 +20,137 @@ export class MCoupon implements ComponentInterface {
    * Id for the input
    * */
   @Prop() mId!: string;
+
   /**
    * Label for the input
    * */
   @Prop() label = '';
+
   /**
    * Icon for the label text
    * */
-  @Prop() iconLabel?: string = 'info-circle';
+  @Prop() labelIcon = 'info-circle';
+
   /**
    * Icon label family class
    */
-  @Prop() iconLabelFamilyClass?: string;
+  @Prop() labelIconFamilyClass?: string;
+
   /**
    * Icon label family class
    */
-  @Prop() iconLabelFamilyPrefix?: string;
+  @Prop() labelIconFamilyPrefix?: string;
+
   /**
    * Icon of the left
    * */
   @Prop() iconStart?: string;
+
   /**
    * Left icon family class
    */
   @Prop() iconStartFamilyClass?: string;
+
   /**
    * Left icon family class
    */
   @Prop() iconStartFamilyPrefix?: string;
+
   /**
    * Icon of the middle
    * */
   @Prop() iconMiddle?: string;
+
   /**
    * Middle icon family class
    */
   @Prop() iconMiddleFamilyClass?: string;
+
   /**
    * Middle icon family class
    */
   @Prop() iconMiddleFamilyPrefix?: string;
+
   /**
    * Icon of the end
    * */
   @Prop() iconEnd?: string;
+
   /**
    * Right icon family class
    */
   @Prop() iconEndFamilyClass?: string;
+
   /**
    * Right icon family class
    */
   @Prop() iconEndFamilyPrefix?: string;
+
   /**
    * Has a select input
    * */
   @Prop() hasSelect = false;
+
   /**
    * Placeholder for the input
    * */
   @Prop() placeholder?: string = '';
+
   /**
    * * The type of the input
   */
   @Prop() type: CouponInputType = 'text';
+
   /**
-   * Text for the button
+   * Text for the coupon button
    * */
-  @Prop() textButton?: string = 'Apply';
+  @Prop() buttonText = 'Apply';
+
   /**
-   * Hint for the m-cupon
+   * Hint for the m-coupon
    * */
   @Prop() hint?: string;
+
   /**
    * Icon start for the hint text
    * */
   @Prop() hintIconStart?: string;
+
   /**
    * Hint left icon family class
    */
   @Prop() hintIconStartFamilyClass?: string;
+
   /**
    * Hint left icon family class
    */
   @Prop() hintIconStartFamilyPrefix?: string;
+
   /**
    * Icon end for the hint text
    * */
   @Prop() hintIconEnd?: string;
+
   /**
    * Hint right icon family class
    */
   @Prop() hintIconEndFamilyClass?: string;
+
   /**
    * Hint right icon family class
    */
   @Prop() hintIconEndFamilyPrefix?: string;
+
   /**
    * Theme for the m-cupon
    * */
   @Prop() theme? = 'primary';
+
   /**
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
+
   /**
    * Emitted when the button is clicked
    */
@@ -163,12 +190,12 @@ export class MCoupon implements ComponentInterface {
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
-            {this.iconLabel && (
+            {this.labelIcon && (
               <m-icon
                 class="form-control-icon"
-                icon={this.iconLabel}
-                familyClass={this.iconLabelFamilyClass}
-                familyPrefix={this.iconLabelFamilyPrefix}
+                icon={this.labelIcon}
+                familyClass={this.labelIconFamilyClass}
+                familyPrefix={this.labelIconFamilyPrefix}
               />
             )}
           </label>
@@ -226,7 +253,7 @@ export class MCoupon implements ComponentInterface {
               class={`btn btn-text-${this.theme} fw-semibold text-uppercase small`}
               onClick={this.clickHandler}
             >
-              {this.textButton}
+              {this.buttonText}
             </button>
             {this.iconEnd && (
               <span

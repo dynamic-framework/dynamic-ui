@@ -22,46 +22,57 @@ export class MQuickAction implements ComponentInterface {
    * The main text of the quick action
    */
   @Prop() text!: string;
+
   /**
    * The subtext of the quick action
    */
   @Prop() subtext?: string;
+
   /**
    * The extra info of the quick action
    */
   @Prop() extraInfo?: string;
+
   /**
    * The icon of the quick action
    */
   @Prop() icon?: string = 'heart-fill';
+
   /**
    * Icon family class
    */
   @Prop() iconFamilyClass?: string;
+
   /**
    * Icon family class
    */
   @Prop() iconFamilyPrefix?: string;
+
   /**
    * The image of the quick action
    */
   @Prop() image?: string;
+
   /**
    * The variant of the quick action
    */
   @Prop() variant?: QuickActionVariant = 'extended';
+
   /**
    * The action word for the quick action
    */
   @Prop() actionWord?: string;
+
   /**
    * The action icon for the quick action
    */
   @Prop() actionIcon?: string = 'chevron-right';
+
   /**
    * The state of the quick action
    */
   @Prop() state?: QuickActionState;
+
   /**
    * Emitted when the input value has changed
    */

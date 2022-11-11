@@ -7,8 +7,8 @@ import {
   Watch,
 } from '@stencil/core';
 
-import { setIconSettings } from '../../utils/store';
-import type { IconSettings } from '../../utils/store';
+import { setIconSettings } from '../../utils';
+import type { IconSettings } from '../../utils';
 
 @Component({
   tag: 'm-app',

@@ -18,98 +18,122 @@ export class MInput implements ComponentInterface {
    * The id of the input
    */
   @Prop() mId!: string;
+
   /**
    * The name of the input
    */
   @Prop() name?: string;
+
   /**
    * The label text
    */
   @Prop() label = '';
+
   /**
-   * Icon to display on label right
-   */
-  @Prop() labelIcon?: string;
+   * Icon for the label text
+   * */
+  @Prop() labelIcon = 'info-circle';
+
   /**
    * Icon label family class
    */
   @Prop() labelIconFamilyClass?: string;
+
   /**
    * Icon label family class
    */
   @Prop() labelIconFamilyPrefix?: string;
+
   /**
    * The placeholder text
    */
   @Prop() placeholder = '';
+
   /**
    * The type of the input
    */
   @Prop() type = 'text';
+
   /**
    * The value of the input
    */
   @Prop() value: string | number = '';
+
   /**
    * Flag to disable the input
    */
   @Prop() isDisabled = false;
+
   /**
    * Icon to display on input left
    */
   @Prop() iconStart?: string;
+
   /**
    * Left icon family class
    */
   @Prop() iconStartFamilyClass?: string;
+
   /**
    * Left icon family class
    */
   @Prop() iconStartFamilyPrefix?: string;
+
   /**
    * Icon to display on input right
    */
   @Prop() iconEnd?: string;
+
   /**
    * Right icon family class
    */
   @Prop() iconEndFamilyClass?: string;
+
   /**
    * Right icon family class
    */
   @Prop() iconEndFamilyPrefix?: string;
+
   /**
    * Hint to display, also used to display validity feedback
    */
   @Prop() hint?: string;
+
   /**
    * Icon to display on hint left
    */
   @Prop() hintIconStart?: string;
+
   /**
    * Hint left icon family class
    */
   @Prop() hintIconStartFamilyClass?: string;
+
   /**
    * Hint left icon family class
    */
   @Prop() hintIconStartFamilyPrefix?: string;
+
   /**
    * Icon to display on hint right
    */
   @Prop() hintIconEnd?: string;
+
   /**
    * Hint right icon family class
    */
   @Prop() hintIconEndFamilyClass?: string;
+
   /**
    * Hint right icon family class
    */
   @Prop() hintIconEndFamilyPrefix?: string;
+
   /**
    * Change the layout direction to put the label on top or left of input
    */
   @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
+
   /**
    * Add is-invalid class
    */

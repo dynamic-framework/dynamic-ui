@@ -13,7 +13,7 @@ const config: ComponentMeta<typeof MCurrency> = {
     label: {
       control: 'text',
     },
-    iconLabel: {
+    labelIcon: {
       control: {
         type: 'select',
         labels: {

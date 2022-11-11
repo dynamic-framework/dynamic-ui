@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { IconSettings } from "./utils/store";
+import { IconSettings } from "./utils";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
@@ -103,10 +103,6 @@ export namespace Components {
     }
     interface MCounter {
         /**
-          * Is disabled counter
-         */
-        "disabled": boolean;
-        /**
           * Hint text
          */
         "hint"?: string;
@@ -135,9 +131,25 @@ export namespace Components {
          */
         "hintIconStartFamilyPrefix"?: string;
         /**
+          * Is disabled counter
+         */
+        "isDisabled": boolean;
+        /**
           * Label of the input
          */
         "label"?: string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon": string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of input
          */
@@ -149,11 +161,11 @@ export namespace Components {
         /**
           * Maximum value for the input
          */
-        "max": number;
+        "maxValue": number;
         /**
           * Minimum value for the input
          */
-        "min": number;
+        "minValue": number;
         /**
           * Theme of the counter
          */
@@ -169,11 +181,15 @@ export namespace Components {
     }
     interface MCoupon {
         /**
+          * Text for the coupon button
+         */
+        "buttonText": string;
+        /**
           * Has a select input
          */
         "hasSelect": boolean;
         /**
-          * Hint for the m-cupon
+          * Hint for the m-coupon
          */
         "hint"?: string;
         /**
@@ -213,18 +229,6 @@ export namespace Components {
          */
         "iconEndFamilyPrefix"?: string;
         /**
-          * Icon for the label text
-         */
-        "iconLabel"?: string;
-        /**
-          * Icon label family class
-         */
-        "iconLabelFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "iconLabelFamilyPrefix"?: string;
-        /**
           * Icon of the middle
          */
         "iconMiddle"?: string;
@@ -253,6 +257,18 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Icon for the label text
+         */
+        "labelIcon": string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
           * Change the layout direction to put the label on top or left of input
          */
         "layoutDirection": FormControlLayoutDirection;
@@ -264,10 +280,6 @@ export namespace Components {
           * Placeholder for the input
          */
         "placeholder"?: string;
-        /**
-          * Text for the button
-         */
-        "textButton"?: string;
         /**
           * Theme for the m-cupon
          */
@@ -323,18 +335,6 @@ export namespace Components {
          */
         "iconEndFamilyPrefix"?: string;
         /**
-          * Icon for the label text
-         */
-        "iconLabel": string;
-        /**
-          * Icon label family class
-         */
-        "iconLabelFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "iconLabelFamilyPrefix"?: string;
-        /**
           * Icon for the middle
          */
         "iconMiddle"?: string;
@@ -370,6 +370,18 @@ export namespace Components {
           * Callback to extract the label from the option
          */
         "labelExtractor": (item: any) => string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon": string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of input
          */
@@ -413,21 +425,21 @@ export namespace Components {
     }
     interface MFormCheck {
         /**
-          * Set checkbox or radio button marked as selected or not
-         */
-        "checked": boolean;
-        /**
-          * Set input as disabled
-         */
-        "disabled": boolean;
-        /**
-          * Set view of checkbox as indeterminated
-         */
-        "indeterminate"?: boolean;
-        /**
           * Set checkbox as toggle button
          */
         "isButton": boolean;
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "isChecked": boolean;
+        /**
+          * Set input as disabled
+         */
+        "isDisabled": boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "isIndeterminate"?: boolean;
         /**
           * Text that will be displayed beside Check input or Radio input
          */
@@ -621,9 +633,9 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Icon to display on label right
+          * Icon for the label text
          */
-        "labelIcon"?: string;
+        "labelIcon": string;
         /**
           * Icon label family class
          */
@@ -729,17 +741,9 @@ export namespace Components {
     }
     interface MModal {
         /**
-          * Is modal centered
-         */
-        "centered"?: boolean;
-        /**
           * Close button text
          */
         "closeText"?: string;
-        /**
-          * Is fullscreen in all sizes
-         */
-        "fullScreen"?: boolean;
         /**
           * Minimum size to apply the fullscreen
          */
@@ -749,6 +753,22 @@ export namespace Components {
          */
         "imageHeader"?: string;
         /**
+          * Is modal centered
+         */
+        "isCentered"?: boolean;
+        /**
+          * Is fullscreen in all sizes
+         */
+        "isFullScreen"?: boolean;
+        /**
+          * Is modal scrollable
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
           * Modal size
          */
         "modalSize"?: ModalSize;
@@ -757,17 +777,9 @@ export namespace Components {
          */
         "name": string;
         /**
-          * Is modal scrollable
-         */
-        "scrollable"?: boolean;
-        /**
           * No display close button
          */
         "showCloseButton"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "static"?: boolean;
     }
     interface MQuickAction {
         /**
@@ -919,11 +931,11 @@ export namespace Components {
         /**
           * Is checked
          */
-        "checked"?: boolean;
+        "isChecked"?: boolean;
         /**
           * Is disabled
          */
-        "disabled"?: boolean;
+        "isDisabled"?: boolean;
         /**
           * Label of the radio
          */
@@ -1022,6 +1034,18 @@ export namespace Components {
           * Callback to extract the label from the option
          */
         "labelExtractor": (item: any) => string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon": string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of select
          */
@@ -1405,10 +1429,6 @@ declare namespace LocalJSX {
     }
     interface MCounter {
         /**
-          * Is disabled counter
-         */
-        "disabled"?: boolean;
-        /**
           * Hint text
          */
         "hint"?: string;
@@ -1437,9 +1457,25 @@ declare namespace LocalJSX {
          */
         "hintIconStartFamilyPrefix"?: string;
         /**
+          * Is disabled counter
+         */
+        "isDisabled"?: boolean;
+        /**
           * Label of the input
          */
         "label"?: string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of input
          */
@@ -1451,11 +1487,11 @@ declare namespace LocalJSX {
         /**
           * Maximum value for the input
          */
-        "max": number;
+        "maxValue": number;
         /**
           * Minimum value for the input
          */
-        "min": number;
+        "minValue": number;
         /**
           * Event for button pressed
          */
@@ -1479,11 +1515,15 @@ declare namespace LocalJSX {
     }
     interface MCoupon {
         /**
+          * Text for the coupon button
+         */
+        "buttonText"?: string;
+        /**
           * Has a select input
          */
         "hasSelect"?: boolean;
         /**
-          * Hint for the m-cupon
+          * Hint for the m-coupon
          */
         "hint"?: string;
         /**
@@ -1523,18 +1563,6 @@ declare namespace LocalJSX {
          */
         "iconEndFamilyPrefix"?: string;
         /**
-          * Icon for the label text
-         */
-        "iconLabel"?: string;
-        /**
-          * Icon label family class
-         */
-        "iconLabelFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "iconLabelFamilyPrefix"?: string;
-        /**
           * Icon of the middle
          */
         "iconMiddle"?: string;
@@ -1563,6 +1591,18 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
           * Change the layout direction to put the label on top or left of input
          */
         "layoutDirection"?: FormControlLayoutDirection;
@@ -1578,10 +1618,6 @@ declare namespace LocalJSX {
           * Placeholder for the input
          */
         "placeholder"?: string;
-        /**
-          * Text for the button
-         */
-        "textButton"?: string;
         /**
           * Theme for the m-cupon
          */
@@ -1637,18 +1673,6 @@ declare namespace LocalJSX {
          */
         "iconEndFamilyPrefix"?: string;
         /**
-          * Icon for the label text
-         */
-        "iconLabel"?: string;
-        /**
-          * Icon label family class
-         */
-        "iconLabelFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "iconLabelFamilyPrefix"?: string;
-        /**
           * Icon for the middle
          */
         "iconMiddle"?: string;
@@ -1684,6 +1708,18 @@ declare namespace LocalJSX {
           * Callback to extract the label from the option
          */
         "labelExtractor"?: (item: any) => string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of input
          */
@@ -1731,21 +1767,21 @@ declare namespace LocalJSX {
     }
     interface MFormCheck {
         /**
-          * Set checkbox or radio button marked as selected or not
-         */
-        "checked"?: boolean;
-        /**
-          * Set input as disabled
-         */
-        "disabled"?: boolean;
-        /**
-          * Set view of checkbox as indeterminated
-         */
-        "indeterminate"?: boolean;
-        /**
           * Set checkbox as toggle button
          */
         "isButton"?: boolean;
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "isChecked"?: boolean;
+        /**
+          * Set input as disabled
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "isIndeterminate"?: boolean;
         /**
           * Text that will be displayed beside Check input or Radio input
          */
@@ -1947,7 +1983,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Icon to display on label right
+          * Icon for the label text
          */
         "labelIcon"?: string;
         /**
@@ -2067,17 +2103,9 @@ declare namespace LocalJSX {
     }
     interface MModal {
         /**
-          * Is modal centered
-         */
-        "centered"?: boolean;
-        /**
           * Close button text
          */
         "closeText"?: string;
-        /**
-          * Is fullscreen in all sizes
-         */
-        "fullScreen"?: boolean;
         /**
           * Minimum size to apply the fullscreen
          */
@@ -2086,6 +2114,22 @@ declare namespace LocalJSX {
           * Background image header
          */
         "imageHeader"?: string;
+        /**
+          * Is modal centered
+         */
+        "isCentered"?: boolean;
+        /**
+          * Is fullscreen in all sizes
+         */
+        "isFullScreen"?: boolean;
+        /**
+          * Is modal scrollable
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
         /**
           * Modal size
          */
@@ -2099,17 +2143,9 @@ declare namespace LocalJSX {
          */
         "onMClose"?: (event: MModalCustomEvent<void>) => void;
         /**
-          * Is modal scrollable
-         */
-        "scrollable"?: boolean;
-        /**
           * No display close button
          */
         "showCloseButton"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "static"?: boolean;
     }
     interface MQuickAction {
         /**
@@ -2273,11 +2309,11 @@ declare namespace LocalJSX {
         /**
           * Is checked
          */
-        "checked"?: boolean;
+        "isChecked"?: boolean;
         /**
           * Is disabled
          */
-        "disabled"?: boolean;
+        "isDisabled"?: boolean;
         /**
           * Label of the radio
          */
@@ -2380,6 +2416,18 @@ declare namespace LocalJSX {
           * Callback to extract the label from the option
          */
         "labelExtractor"?: (item: any) => string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
         /**
           * Change the layout direction to put the label on top or left of select
          */
