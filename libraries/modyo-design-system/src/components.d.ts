@@ -14,6 +14,7 @@ import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
+import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
 import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
@@ -789,6 +790,32 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
+    interface MOffcanvas {
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * Is body scrollable while offcanvas is active
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
+          * the name of the offcanvas
+         */
+        "name": string;
+        /**
+          * Position to show offcanvas from
+         */
+        "openFrom": PositionToggleFrom;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+    }
     interface MQuickAction {
         /**
           * The action icon for the quick action
@@ -1178,6 +1205,10 @@ export interface MModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMModalElement;
 }
+export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMOffcanvasElement;
+}
 export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionElement;
@@ -1283,6 +1314,12 @@ declare global {
         prototype: HTMLMModalElement;
         new (): HTMLMModalElement;
     };
+    interface HTMLMOffcanvasElement extends Components.MOffcanvas, HTMLStencilElement {
+    }
+    var HTMLMOffcanvasElement: {
+        prototype: HTMLMOffcanvasElement;
+        new (): HTMLMOffcanvasElement;
+    };
     interface HTMLMQuickActionElement extends Components.MQuickAction, HTMLStencilElement {
     }
     var HTMLMQuickActionElement: {
@@ -1334,6 +1371,7 @@ declare global {
         "m-input": HTMLMInputElement;
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
+        "m-offcanvas": HTMLMOffcanvasElement;
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
         "m-segment-control": HTMLMSegmentControlElement;
@@ -2163,6 +2201,36 @@ declare namespace LocalJSX {
          */
         "showCloseButton"?: boolean;
     }
+    interface MOffcanvas {
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * Is body scrollable while offcanvas is active
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
+          * the name of the offcanvas
+         */
+        "name": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMClose"?: (event: MOffcanvasCustomEvent<void>) => void;
+        /**
+          * Position to show offcanvas from
+         */
+        "openFrom"?: PositionToggleFrom;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+    }
     interface MQuickAction {
         /**
           * The action icon for the quick action
@@ -2554,6 +2622,7 @@ declare namespace LocalJSX {
         "m-input": MInput;
         "m-list-item": MListItem;
         "m-modal": MModal;
+        "m-offcanvas": MOffcanvas;
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
         "m-segment-control": MSegmentControl;
@@ -2580,6 +2649,7 @@ declare module "@stencil/core" {
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
+            "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;

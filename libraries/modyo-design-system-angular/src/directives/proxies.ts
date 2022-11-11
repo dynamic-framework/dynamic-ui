@@ -19,6 +19,7 @@ import { defineCustomElement as defineMIcon } from '@modyolabs/modyo-design-syst
 import { defineCustomElement as defineMInput } from '@modyolabs/modyo-design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyolabs/modyo-design-system/components/m-list-item.js';
 import { defineCustomElement as defineMModal } from '@modyolabs/modyo-design-system/components/m-modal.js';
+import { defineCustomElement as defineMOffcanvas } from '@modyolabs/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMQuickAction } from '@modyolabs/modyo-design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyolabs/modyo-design-system/components/m-search.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyolabs/modyo-design-system/components/m-segment-control.js';
@@ -390,6 +391,34 @@ export declare interface MModal extends Components.MModal {
   inputs: ['closeText', 'fullScreenFrom', 'imageHeader', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
 })
 export class MModal {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClose']);
+  }
+}
+
+
+export declare interface MOffcanvas extends Components.MOffcanvas {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mClose: EventEmitter<CustomEvent<void>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMOffcanvas,
+  inputs: ['closeText', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
+})
+@Component({
+  selector: 'm-offcanvas',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['closeText', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
+})
+export class MOffcanvas {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();

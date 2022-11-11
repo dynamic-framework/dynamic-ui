@@ -19,6 +19,7 @@ import { defineCustomElement as defineMIcon } from '@modyolabs/modyo-design-syst
 import { defineCustomElement as defineMInput } from '@modyolabs/modyo-design-system/components/m-input.js';
 import { defineCustomElement as defineMListItem } from '@modyolabs/modyo-design-system/components/m-list-item.js';
 import { defineCustomElement as defineMModal } from '@modyolabs/modyo-design-system/components/m-modal.js';
+import { defineCustomElement as defineMOffcanvas } from '@modyolabs/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMQuickAction } from '@modyolabs/modyo-design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyolabs/modyo-design-system/components/m-search.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyolabs/modyo-design-system/components/m-segment-control.js';
@@ -40,6 +41,7 @@ export const MIcon = /*@__PURE__*/createReactComponent<JSX.MIcon, HTMLMIconEleme
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
 export const MListItem = /*@__PURE__*/createReactComponent<JSX.MListItem, HTMLMListItemElement>('m-list-item', undefined, undefined, defineMListItem);
 export const MModal = /*@__PURE__*/createReactComponent<JSX.MModal, HTMLMModalElement>('m-modal', undefined, undefined, defineMModal);
+export const MOffcanvas = /*@__PURE__*/createReactComponent<JSX.MOffcanvas, HTMLMOffcanvasElement>('m-offcanvas', undefined, undefined, defineMOffcanvas);
 export const MQuickAction = /*@__PURE__*/createReactComponent<JSX.MQuickAction, HTMLMQuickActionElement>('m-quick-action', undefined, undefined, defineMQuickAction);
 export const MSearch = /*@__PURE__*/createReactComponent<JSX.MSearch, HTMLMSearchElement>('m-search', undefined, undefined, defineMSearch);
 export const MSegmentControl = /*@__PURE__*/createReactComponent<JSX.MSegmentControl, HTMLMSegmentControlElement>('m-segment-control', undefined, undefined, defineMSegmentControl);

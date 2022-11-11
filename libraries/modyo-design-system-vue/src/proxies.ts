@@ -263,6 +263,17 @@ export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undef
 ]);
 
 
+export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offcanvas', undefined, [
+  'name',
+  'closeText',
+  'isStatic',
+  'isScrollable',
+  'showCloseButton',
+  'openFrom',
+  'mClose'
+]);
+
+
 export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-quick-action', undefined, [
   'text',
   'subtext',
