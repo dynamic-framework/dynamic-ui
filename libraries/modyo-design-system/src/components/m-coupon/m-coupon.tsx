@@ -102,7 +102,7 @@ export class MCoupon implements ComponentInterface {
   @Prop() type: CouponInputType = 'text';
 
   /**
-   * Text for the button
+   * Text for the coupon button
    * */
   @Prop() buttonText = 'Apply';
 

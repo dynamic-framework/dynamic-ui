@@ -181,7 +181,7 @@ export namespace Components {
     }
     interface MCoupon {
         /**
-          * Text for the button
+          * Text for the coupon button
          */
         "buttonText": string;
         /**
@@ -1499,7 +1499,7 @@ declare namespace LocalJSX {
     }
     interface MCoupon {
         /**
-          * Text for the button
+          * Text for the coupon button
          */
         "buttonText"?: string;
         /**

@@ -9,7 +9,7 @@
 
 | Property                    | Attribute                       | Description                                                          | Type                         | Default         |
 | --------------------------- | ------------------------------- | -------------------------------------------------------------------- | ---------------------------- | --------------- |
-| `buttonText`                | `button-text`                   | Text for the button                                                  | `string`                     | `'Apply'`       |
+| `buttonText`                | `button-text`                   | Text for the coupon button                                           | `string`                     | `'Apply'`       |
 | `hasSelect`                 | `has-select`                    | Has a select input                                                   | `boolean`                    | `false`         |
 | `hint`                      | `hint`                          | Hint for the m-coupon                                                | `string \| undefined`        | `undefined`     |
 | `hintIconEnd`               | `hint-icon-end`                 | Icon end for the hint text                                           | `string \| undefined`        | `undefined`     |
