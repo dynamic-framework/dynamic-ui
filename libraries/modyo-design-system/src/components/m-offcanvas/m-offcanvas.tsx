@@ -32,12 +32,12 @@ export class MOffcanvas {
   /**
    * Is backdrop static
    */
-  @Prop() static?: boolean;
+  @Prop() isStatic?: boolean;
 
   /**
-   * Is offcanvas scrollable
+   * Is body scrollable while offcanvas is active
    */
-  @Prop() scrollable?: boolean;
+  @Prop() isScrollable?: boolean;
 
   /**
    * No display close button
@@ -76,8 +76,12 @@ export class MOffcanvas {
         tabindex="-1"
         aria-labelledby={`${this.name}Label`}
         aria-hidden="false"
-        {...this.static && ({
+        {...this.isStatic && ({
           [`data-${prefixBS}backdrop`]: 'static',
+          [`data-${prefixBS}keyboard`]: 'false',
+        })}
+        {...this.isScrollable && ({
+          [`data-${prefixBS}scroll`]: 'true',
           [`data-${prefixBS}keyboard`]: 'false',
         })}
       >

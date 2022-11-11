@@ -796,6 +796,14 @@ export namespace Components {
          */
         "closeText"?: string;
         /**
+          * Is body scrollable while offcanvas is active
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
           * the name of the offcanvas
          */
         "name": string;
@@ -804,17 +812,9 @@ export namespace Components {
          */
         "openFrom": PositionToggleFrom;
         /**
-          * Is offcanvas scrollable
-         */
-        "scrollable"?: boolean;
-        /**
           * No display close button
          */
         "showCloseButton"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "static"?: boolean;
     }
     interface MQuickAction {
         /**
@@ -2207,6 +2207,14 @@ declare namespace LocalJSX {
          */
         "closeText"?: string;
         /**
+          * Is body scrollable while offcanvas is active
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
           * the name of the offcanvas
          */
         "name": string;
@@ -2219,17 +2227,9 @@ declare namespace LocalJSX {
          */
         "openFrom"?: PositionToggleFrom;
         /**
-          * Is offcanvas scrollable
-         */
-        "scrollable"?: boolean;
-        /**
           * No display close button
          */
         "showCloseButton"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "static"?: boolean;
     }
     interface MQuickAction {
         /**

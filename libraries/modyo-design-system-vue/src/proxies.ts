@@ -266,8 +266,8 @@ export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undef
 export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offcanvas', undefined, [
   'name',
   'closeText',
-  'static',
-  'scrollable',
+  'isStatic',
+  'isScrollable',
   'showCloseButton',
   'openFrom',
   'mClose'

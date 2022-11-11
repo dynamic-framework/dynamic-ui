@@ -410,13 +410,13 @@ export declare interface MOffcanvas extends Components.MOffcanvas {
 
 @ProxyCmp({
   defineCustomElementFn: defineMOffcanvas,
-  inputs: ['closeText', 'name', 'openFrom', 'scrollable', 'showCloseButton', 'static']
+  inputs: ['closeText', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
 })
 @Component({
   selector: 'm-offcanvas',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['closeText', 'name', 'openFrom', 'scrollable', 'showCloseButton', 'static']
+  inputs: ['closeText', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
 })
 export class MOffcanvas {
   protected el: HTMLElement;
