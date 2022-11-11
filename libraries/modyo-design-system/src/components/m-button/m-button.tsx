@@ -21,50 +21,62 @@ export class MButton implements ComponentInterface {
    * The theme to use.
    */
   @Prop() theme = 'primary';
+
   /**
    * The variant to use.
    */
   @Prop() variant?: ButtonVariant;
+
   /**
    * Flag to set the button as active.
    */
   @Prop() state?: InputState;
+
   /**
    * The text to display.
    */
   @Prop() text = '';
+
   /**
    * Icon left to display
    */
   @Prop() iconStart?: string;
+
   /**
    * Icon left family class
    */
   @Prop() iconStartFamilyClass?: string;
+
   /**
    * Icon left family prefix
    */
   @Prop() iconStartFamilyPrefix?: string;
+
   /**
    * Icon right to display
    */
   @Prop() iconEnd?: string;
+
   /**
    * Icon right family class
    */
   @Prop() iconEndFamilyClass?: string;
+
   /**
    * Icon right family prefix
    */
   @Prop() iconEndFamilyPrefix?: string;
+
   /**
    * The value of the button.
    */
   @Prop() value = '';
+
   /**
    * The type of the button.
    */
   @Prop() type: ButtonType = 'button';
+
   /**
    * Flag to switch to pill button border radius.
    */

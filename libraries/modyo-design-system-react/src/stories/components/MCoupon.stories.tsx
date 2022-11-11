@@ -13,7 +13,7 @@ const config: ComponentMeta<typeof MCoupon> = {
     label: {
       control: 'text',
     },
-    iconLabel: {
+    labelIcon: {
       control: {
         type: 'select',
         labels: {
@@ -59,7 +59,7 @@ const config: ComponentMeta<typeof MCoupon> = {
       control: 'select',
       options: ['text', 'number'],
     },
-    textButton: {
+    buttonText: {
       control: 'text',
     },
     hint: {

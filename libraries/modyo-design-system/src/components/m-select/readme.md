@@ -28,6 +28,9 @@
 | `isDisabled`                | `is-disabled`                   | The select is disabled                                                | `boolean`                                         | `false`                 |
 | `label`                     | `label`                         | The label of the select in full variant                               | `string \| undefined`                             | `undefined`             |
 | `labelExtractor`            | --                              | Callback to extract the label from the option                         | `(item: any) => string`                           | `(item) => item?.label` |
+| `labelIcon`                 | `label-icon`                    | Icon for the label text                                               | `string`                                          | `'info-circle'`         |
+| `labelIconFamilyClass`      | `label-icon-family-class`       | Icon label family class                                               | `string \| undefined`                             | `undefined`             |
+| `labelIconFamilyPrefix`     | `label-icon-family-prefix`      | Icon label family class                                               | `string \| undefined`                             | `undefined`             |
 | `layoutDirection`           | `layout-direction`              | Change the layout direction to put the label on top or left of select | `"horizontal" \| "vertical"`                      | `'vertical'`            |
 | `mId` _(required)_          | `m-id`                          | Id of the select                                                      | `string`                                          | `undefined`             |
 | `name`                      | `name`                          | The name of the input                                                 | `string \| undefined`                             | `undefined`             |

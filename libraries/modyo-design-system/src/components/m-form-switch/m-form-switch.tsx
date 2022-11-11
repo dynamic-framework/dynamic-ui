@@ -20,22 +20,27 @@ export class MFormSwitch implements ComponentInterface {
    * The text to display in the switch.
    */
   @Prop() label!: string;
+
   /**
    * The text to display when the switch is on.
    */
   @Prop() labelOn = 'On';
+
   /**
    * The text to display when the switch is off.
    */
   @Prop() labelOff = 'Off';
+
   /**
    * Id
    */
   @Prop() mId!: string;
+
   /**
    * Flag to change the check state
    */
   @Prop() isChecked?: boolean;
+
   /**
    * Flag to disable the input
    */

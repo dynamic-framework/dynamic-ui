@@ -16,6 +16,7 @@ export class MBadge implements ComponentInterface {
    * The theme to use.
    */
   @Prop() theme = 'primary';
+
   /**
    * The text of badge
    */

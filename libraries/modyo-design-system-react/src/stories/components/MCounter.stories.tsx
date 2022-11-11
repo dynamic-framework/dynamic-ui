@@ -39,10 +39,10 @@ const config: ComponentMeta<typeof MCounter> = {
       options: ['info', 'warning', 'danger'],
       table: { defaultValue: { summary: 'info' } },
     },
-    min: {
+    minValue: {
       control: 'number',
     },
-    max: {
+    maxValue: {
       control: 'number',
     },
     value: {
@@ -56,7 +56,7 @@ const config: ComponentMeta<typeof MCounter> = {
       control: 'select',
       options: ['horizontal', 'vertical'],
     },
-    disabled: {
+    isDisabled: {
       control: 'boolean',
     },
   },
@@ -70,8 +70,8 @@ export const Default = Template.bind({});
 Default.args = {
   mId: 'componentId',
   theme: 'info',
-  min: 0,
-  max: 100,
+  minValue: 0,
+  maxValue: 100,
   value: 3,
   variant: 'default',
   layoutDirection: 'vertical',

@@ -20,9 +20,6 @@
 | `iconEnd`                      | `icon-end`                      | Icon for the end                                                     | `string \| undefined`             | `undefined`             |
 | `iconEndFamilyClass`           | `icon-end-family-class`         | Right icon family class                                              | `string \| undefined`             | `undefined`             |
 | `iconEndFamilyPrefix`          | `icon-end-family-prefix`        | Right icon family class                                              | `string \| undefined`             | `undefined`             |
-| `iconLabel`                    | `icon-label`                    | Icon for the label text                                              | `string`                          | `'info-circle'`         |
-| `iconLabelFamilyClass`         | `icon-label-family-class`       | Icon label family class                                              | `string \| undefined`             | `undefined`             |
-| `iconLabelFamilyPrefix`        | `icon-label-family-prefix`      | Icon label family class                                              | `string \| undefined`             | `undefined`             |
 | `iconMiddle`                   | `icon-middle`                   | Icon for the middle                                                  | `string \| undefined`             | `undefined`             |
 | `iconMiddleFamilyClass`        | `icon-middle-family-class`      | Middle icon family class                                             | `string \| undefined`             | `undefined`             |
 | `iconMiddleFamilyPrefix`       | `icon-middle-family-prefix`     | Middle icon family class                                             | `string \| undefined`             | `undefined`             |
@@ -32,6 +29,9 @@
 | `isDisabled`                   | `is-disabled`                   | The input is disabled                                                | `boolean`                         | `false`                 |
 | `label`                        | `label`                         | Label for the input                                                  | `string`                          | `''`                    |
 | `labelExtractor`               | --                              | Callback to extract the label from the option                        | `(item: any) => string`           | `(item) => item?.label` |
+| `labelIcon`                    | `label-icon`                    | Icon for the label text                                              | `string`                          | `'info-circle'`         |
+| `labelIconFamilyClass`         | `label-icon-family-class`       | Icon label family class                                              | `string \| undefined`             | `undefined`             |
+| `labelIconFamilyPrefix`        | `label-icon-family-prefix`      | Icon label family class                                              | `string \| undefined`             | `undefined`             |
 | `layoutDirection`              | `layout-direction`              | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"`      | `'vertical'`            |
 | `mId` _(required)_             | `m-id`                          | Id for the input                                                     | `string`                          | `undefined`             |
 | `maxValue`                     | `max-value`                     | * The max value of the input                                         | `number \| undefined`             | `undefined`             |
