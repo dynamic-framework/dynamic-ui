@@ -7,6 +7,7 @@ import type { JSX } from '@modyolabs/modyo-design-system/components';
 
 import { defineCustomElement as defineMAlert } from '@modyolabs/modyo-design-system/components/m-alert.js';
 import { defineCustomElement as defineMApp } from '@modyolabs/modyo-design-system/components/m-app.js';
+import { defineCustomElement as defineMAside } from '@modyolabs/modyo-design-system/components/m-aside.js';
 import { defineCustomElement as defineMBadge } from '@modyolabs/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/modyo-design-system/components/m-button.js';
 import { defineCustomElement as defineMCounter } from '@modyolabs/modyo-design-system/components/m-counter.js';
@@ -28,6 +29,7 @@ import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/modyo-d
 
 export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertElement>('m-alert', undefined, undefined, defineMAlert);
 export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>('m-app', undefined, undefined, defineMApp);
+export const MAside = /*@__PURE__*/createReactComponent<JSX.MAside, HTMLMAsideElement>('m-aside', undefined, undefined, defineMAside);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
 export const MCounter = /*@__PURE__*/createReactComponent<JSX.MCounter, HTMLMCounterElement>('m-counter', undefined, undefined, defineMCounter);

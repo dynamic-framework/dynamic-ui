@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { IconSettings } from "./utils/store";
+import { PositionToggleFrom } from "./components/m-aside/m-aside-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
@@ -36,6 +37,32 @@ export namespace Components {
           * Icon settings
          */
         "iconSettings"?: IconSettings;
+    }
+    interface MAside {
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * the name of the aside
+         */
+        "name": string;
+        /**
+          * Position to show aside from
+         */
+        "openFrom": PositionToggleFrom;
+        /**
+          * Is aside scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
     }
     interface MBadge {
         /**
@@ -1098,6 +1125,10 @@ export interface MAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMAlertElement;
 }
+export interface MAsideCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMAsideElement;
+}
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
@@ -1162,6 +1193,12 @@ declare global {
     var HTMLMAppElement: {
         prototype: HTMLMAppElement;
         new (): HTMLMAppElement;
+    };
+    interface HTMLMAsideElement extends Components.MAside, HTMLStencilElement {
+    }
+    var HTMLMAsideElement: {
+        prototype: HTMLMAsideElement;
+        new (): HTMLMAsideElement;
     };
     interface HTMLMBadgeElement extends Components.MBadge, HTMLStencilElement {
     }
@@ -1274,6 +1311,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
         "m-app": HTMLMAppElement;
+        "m-aside": HTMLMAsideElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-counter": HTMLMCounterElement;
@@ -1318,6 +1356,36 @@ declare namespace LocalJSX {
           * Icon settings
          */
         "iconSettings"?: IconSettings;
+    }
+    interface MAside {
+        /**
+          * Close button text
+         */
+        "closeText"?: string;
+        /**
+          * the name of the aside
+         */
+        "name": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMClose"?: (event: MAsideCustomEvent<void>) => void;
+        /**
+          * Position to show aside from
+         */
+        "openFrom"?: PositionToggleFrom;
+        /**
+          * Is aside scrollable
+         */
+        "scrollable"?: boolean;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "static"?: boolean;
     }
     interface MBadge {
         /**
@@ -2446,6 +2514,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "m-alert": MAlert;
         "m-app": MApp;
+        "m-aside": MAside;
         "m-badge": MBadge;
         "m-button": MButton;
         "m-counter": MCounter;
@@ -2472,6 +2541,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
+            "m-aside": LocalJSX.MAside & JSXBase.HTMLAttributes<HTMLMAsideElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;

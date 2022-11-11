@@ -7,6 +7,7 @@ import type { Components } from '@modyolabs/modyo-design-system/components';
 
 import { defineCustomElement as defineMAlert } from '@modyolabs/modyo-design-system/components/m-alert.js';
 import { defineCustomElement as defineMApp } from '@modyolabs/modyo-design-system/components/m-app.js';
+import { defineCustomElement as defineMAside } from '@modyolabs/modyo-design-system/components/m-aside.js';
 import { defineCustomElement as defineMBadge } from '@modyolabs/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyolabs/modyo-design-system/components/m-button.js';
 import { defineCustomElement as defineMCounter } from '@modyolabs/modyo-design-system/components/m-counter.js';
@@ -72,6 +73,34 @@ export class MApp {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface MAside extends Components.MAside {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mClose: EventEmitter<CustomEvent<void>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMAside,
+  inputs: ['closeText', 'name', 'openFrom', 'scrollable', 'showCloseButton', 'static']
+})
+@Component({
+  selector: 'm-aside',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['closeText', 'name', 'openFrom', 'scrollable', 'showCloseButton', 'static']
+})
+export class MAside {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClose']);
   }
 }
 
