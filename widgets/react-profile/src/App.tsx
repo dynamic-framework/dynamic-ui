@@ -1,4 +1,4 @@
-import { MApp, MCalendar, MSkeleton } from '@modyolabs/modyo-design-system-react';
+import { MApp, MCalendar, MSkeleton } from '@modyo-dynamic/modyo-design-system-react';
 import Inputs from './Inputs';
 
 import Buttons from './Buttons';

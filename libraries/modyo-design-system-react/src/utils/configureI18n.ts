@@ -1,7 +1,7 @@
 import i18n, { InitOptions, Resource, TFunction } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import { liquidParser } from '@modyolabs/modyo-design-system';
+import { liquidParser } from '@modyo-dynamic/modyo-design-system';
 
 const LANG = liquidParser.parse('{{site.language}}');
 

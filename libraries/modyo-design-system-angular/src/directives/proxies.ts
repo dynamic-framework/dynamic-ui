@@ -3,29 +3,29 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone } from '@angular/core';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-import type { Components } from '@modyolabs/modyo-design-system/components';
+import type { Components } from '@modyo-dynamic/modyo-design-system/components';
 
-import { defineCustomElement as defineMAlert } from '@modyolabs/modyo-design-system/components/m-alert.js';
-import { defineCustomElement as defineMApp } from '@modyolabs/modyo-design-system/components/m-app.js';
-import { defineCustomElement as defineMBadge } from '@modyolabs/modyo-design-system/components/m-badge.js';
-import { defineCustomElement as defineMButton } from '@modyolabs/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineMCounter } from '@modyolabs/modyo-design-system/components/m-counter.js';
-import { defineCustomElement as defineMCoupon } from '@modyolabs/modyo-design-system/components/m-coupon.js';
-import { defineCustomElement as defineMCurrency } from '@modyolabs/modyo-design-system/components/m-currency.js';
-import { defineCustomElement as defineMFormCheck } from '@modyolabs/modyo-design-system/components/m-form-check.js';
-import { defineCustomElement as defineMFormSwitch } from '@modyolabs/modyo-design-system/components/m-form-switch.js';
-import { defineCustomElement as defineMHint } from '@modyolabs/modyo-design-system/components/m-hint.js';
-import { defineCustomElement as defineMIcon } from '@modyolabs/modyo-design-system/components/m-icon.js';
-import { defineCustomElement as defineMInput } from '@modyolabs/modyo-design-system/components/m-input.js';
-import { defineCustomElement as defineMListItem } from '@modyolabs/modyo-design-system/components/m-list-item.js';
-import { defineCustomElement as defineMModal } from '@modyolabs/modyo-design-system/components/m-modal.js';
-import { defineCustomElement as defineMOffcanvas } from '@modyolabs/modyo-design-system/components/m-offcanvas.js';
-import { defineCustomElement as defineMQuickAction } from '@modyolabs/modyo-design-system/components/m-quick-action.js';
-import { defineCustomElement as defineMSearch } from '@modyolabs/modyo-design-system/components/m-search.js';
-import { defineCustomElement as defineMSegmentControl } from '@modyolabs/modyo-design-system/components/m-segment-control.js';
-import { defineCustomElement as defineMSegmentControlItem } from '@modyolabs/modyo-design-system/components/m-segment-control-item.js';
-import { defineCustomElement as defineMSelect } from '@modyolabs/modyo-design-system/components/m-select.js';
-import { defineCustomElement as defineMShortcutToggle } from '@modyolabs/modyo-design-system/components/m-shortcut-toggle.js';
+import { defineCustomElement as defineMAlert } from '@modyo-dynamic/modyo-design-system/components/m-alert.js';
+import { defineCustomElement as defineMApp } from '@modyo-dynamic/modyo-design-system/components/m-app.js';
+import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
+import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
+import { defineCustomElement as defineMCounter } from '@modyo-dynamic/modyo-design-system/components/m-counter.js';
+import { defineCustomElement as defineMCoupon } from '@modyo-dynamic/modyo-design-system/components/m-coupon.js';
+import { defineCustomElement as defineMCurrency } from '@modyo-dynamic/modyo-design-system/components/m-currency.js';
+import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
+import { defineCustomElement as defineMFormSwitch } from '@modyo-dynamic/modyo-design-system/components/m-form-switch.js';
+import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
+import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
+import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
+import { defineCustomElement as defineMListItem } from '@modyo-dynamic/modyo-design-system/components/m-list-item.js';
+import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
+import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
+import { defineCustomElement as defineMQuickAction } from '@modyo-dynamic/modyo-design-system/components/m-quick-action.js';
+import { defineCustomElement as defineMSearch } from '@modyo-dynamic/modyo-design-system/components/m-search.js';
+import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
+import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
+import { defineCustomElement as defineMSelect } from '@modyo-dynamic/modyo-design-system/components/m-select.js';
+import { defineCustomElement as defineMShortcutToggle } from '@modyo-dynamic/modyo-design-system/components/m-shortcut-toggle.js';
 
 
 export declare interface MAlert extends Components.MAlert {
@@ -157,7 +157,7 @@ export class MCounter {
   }
 }
 
-import type { CouponEvent as IMCouponCouponEvent } from '@modyolabs/modyo-design-system/components';
+import type { CouponEvent as IMCouponCouponEvent } from '@modyo-dynamic/modyo-design-system/components';
 export declare interface MCoupon extends Components.MCoupon {
   /**
    * Emitted when the button is clicked 
@@ -185,7 +185,7 @@ export class MCoupon {
   }
 }
 
-import type { CurrencyEvent as IMCurrencyCurrencyEvent } from '@modyolabs/modyo-design-system/components';
+import type { CurrencyEvent as IMCurrencyCurrencyEvent } from '@modyo-dynamic/modyo-design-system/components';
 export declare interface MCurrency extends Components.MCurrency {
   /**
    * Emitted when the inputs change 

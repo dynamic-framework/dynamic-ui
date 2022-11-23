@@ -1,5 +1,5 @@
 {
-  "name": "@modyolabs/modyo-design-system-vue",
+  "name": "@modyo-dynamic/modyo-design-system-vue",
   "version": "0.2.0",
   "private": true,
   "sideEffects": false,
@@ -31,7 +31,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyolabs/modyo-design-system": "*",
+    "@modyo-dynamic/modyo-design-system": "*",
     "@vuepic/vue-datepicker": "~3.3.1",
     "vue-content-loader": "~2.0.1"
   },

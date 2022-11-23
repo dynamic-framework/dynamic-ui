@@ -1,5 +1,5 @@
 {
-  "name": "@modyolabs/angular-profile",
+  "name": "@modyo-dynamic/angular-profile",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,8 +10,8 @@
     "test": "ng test"
   },
   "dependencies": {
-    "@modyolabs/modyo-design-system": "*",
-    "@modyolabs/modyo-design-system-angular": "*",
+    "@modyo-dynamic/modyo-design-system": "*",
+    "@modyo-dynamic/modyo-design-system-angular": "*",
     "@angular/animations": "~13.3.6",
     "@angular/common": "~13.3.6",
     "@angular/compiler": "~13.3.6",

@@ -1,13 +1,15 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { Config } from '@stencil/core';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
 import { sass } from '@stencil/sass';
 import { postcss } from '@stencil/postcss';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import autoprefixer from 'autoprefixer';
 
-const componentCorePackage = '@modyolabs/modyo-design-system';
+const componentCorePackage = '@modyo-dynamic/modyo-design-system';
 
 export const config: Config = {
   namespace: 'design-system',
@@ -31,7 +33,7 @@ export const config: Config = {
       componentCorePackage,
       directivesProxyFile: '../modyo-design-system-angular/src/directives/proxies.ts',
       directivesArrayFile: '../modyo-design-system-angular/src/directives/proxies-list.ts',
-      includeImportCustomElements: true
+      includeImportCustomElements: true,
     }),
     {
       type: 'dist',
@@ -43,29 +45,20 @@ export const config: Config = {
       copy: [{
         src: '../scripts/custom-elements',
         dest: 'components',
-        warn: true
+        warn: true,
       }],
-      includeGlobalScripts: false
+      includeGlobalScripts: false,
     },
-    {
-      type: 'docs-readme',
-    }
+    { type: 'docs-readme' },
   ],
-  extras: {
-    // dynamicImportShim: true,
-    // initializeNextTick: true,
-    // scriptDataOpts: true
-  },
   globalScript: 'src/global/initialize.ts',
   globalStyle: 'src/style/global-style.scss',
   plugins: [
-    postcss({
-      plugins: [autoprefixer()]
-    }),
+    postcss({ plugins: [autoprefixer()] }),
     sass({
       injectGlobalPaths: [
-        'src/style/global-path.scss'
-      ]
-    })
-  ]
+        'src/style/global-path.scss',
+      ],
+    }),
+  ],
 };
