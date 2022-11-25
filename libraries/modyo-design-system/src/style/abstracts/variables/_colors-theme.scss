@@ -2,7 +2,7 @@ $primary: $pink !default;
 $secondary: $purple !default;
 $tertiary: $indigo !default;
 $success: $green !default;
-$info: $gray-400 !default;
+$info: $blue !default;
 $warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;
@@ -16,9 +16,9 @@ $theme-colors: (
   "info": $info,
   "warning": $warning,
   "danger": $danger,
-  "light": $light, // TODO: check this, in design-system/src/components/m-button/m-button.scss it is $white
-  "dark": $dark
-) !default;
+  "light": $light,
+  // TODO: check this, in design-system/src/components/m-button/m-button.scss it is $white
+  "dark": $dark) !default;
 
 $state-colors: (
   "success": $success,
@@ -47,8 +47,7 @@ $theme-colors-hover: (
   "warning": $warning-hover,
   "danger": $danger-hover,
   "light": $light,
-  "dark": $dark
-) !default;
+  "dark": $dark) !default;
 
 $gradient-secondary-start: #404ece !default;
 $gradient-secondary-end: #0966bc !default;

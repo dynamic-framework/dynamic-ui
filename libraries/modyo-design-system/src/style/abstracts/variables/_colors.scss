@@ -19,9 +19,9 @@ $grays: (
   "600": $gray-600,
   "700": $gray-700,
   "800": $gray-800,
-  "900": $gray-900
-) !default;
+  "900": $gray-900) !default;
 
+$blue: #4778d9 !default;
 $indigo: #4848b7 !default;
 $purple: #525298 !default;
 $pink: #e60063 !default;
@@ -40,5 +40,4 @@ $colors: (
   "white": $white,
   "gray": $gray-600,
   "gray-dark": $gray-800,
-  "gray-light": $gray-300
-) !default;
+  "gray-light": $gray-300) !default;
