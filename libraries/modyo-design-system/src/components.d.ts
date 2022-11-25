@@ -1104,7 +1104,7 @@ export namespace Components {
         /**
           * The theme of the select
          */
-        "theme": string;
+        "theme"?: string;
         /**
           * Callback to extract the value from the option
          */
