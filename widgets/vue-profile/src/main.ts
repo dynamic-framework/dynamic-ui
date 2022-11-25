@@ -1,8 +1,8 @@
 import { createApp } from 'vue';
-import { DesignSystem } from '../../../libraries/modyo-design-system-vue';
-import { defineCustomElements } from '@modyolabs/modyo-design-system/loader';
+import { DesignSystem } from '@modyo-dynamic/modyo-design-system-vue';
+import { defineCustomElements } from '@modyo-dynamic/modyo-design-system/loader';
 
-import '@modyolabs/modyo-design-system/dist/design-system/design-system.css';
+import '@modyo-dynamic/modyo-design-system/dist/design-system/design-system.css';
 
 import App from './App.vue';
 

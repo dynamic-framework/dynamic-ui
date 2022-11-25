@@ -1,4 +1,4 @@
-import { MInput } from '@modyolabs/modyo-design-system-react';
+import { MInput } from '@modyo-dynamic/modyo-design-system-react';
 import { useState } from 'react';
 
 export default function Inputs() {

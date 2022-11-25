@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
 import { useField } from 'formik';
-import { SelectLayoutVariant } from '@modyolabs/modyo-design-system';
+import { SelectLayoutVariant } from '@modyo-dynamic/modyo-design-system';
 
 import { MSelect } from './proxies';
 

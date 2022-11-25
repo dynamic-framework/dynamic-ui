@@ -101,7 +101,7 @@ importers:
       '@angular/core': ^13.3.6
       '@angular/forms': ^13.3.6
       '@angular/platform-browser': ^13.3.6
-      '@modyolabs/modyo-design-system': '*'
+      '@modyo-dynamic/modyo-design-system': '*'
       '@ngneat/content-loader': ~7.0.0
       ng-packagr: ^13.3.1
       rxjs: ^7.5.5
@@ -109,7 +109,7 @@ importers:
       typescript: ~4.6.4
       zone.js: ^0.11.5
     dependencies:
-      '@modyolabs/modyo-design-system': link:../modyo-design-system
+      '@modyo-dynamic/modyo-design-system': link:../modyo-design-system
       '@ngneat/content-loader': 7.0.0_@angular+core@13.3.11
     devDependencies:
       '@angular/common': 13.3.11_bhhwnklxwrazs27rzqzgvujy7y
@@ -127,7 +127,7 @@ importers:
   libraries/modyo-design-system-react:
     specifiers:
       '@babel/core': ^7.19.3
-      '@modyolabs/modyo-design-system': '*'
+      '@modyo-dynamic/modyo-design-system': '*'
       '@rollup/plugin-node-resolve': ^13.3.0
       '@storybook/addon-actions': ^6.5.12
       '@storybook/addon-essentials': ^6.5.12
@@ -184,7 +184,7 @@ importers:
       react-datepicker: 4.8.0_biqbaboplfbrettd7655fr4n2y
     devDependencies:
       '@babel/core': 7.19.6
-      '@modyolabs/modyo-design-system': link:../modyo-design-system
+      '@modyo-dynamic/modyo-design-system': link:../modyo-design-system
       '@rollup/plugin-node-resolve': 13.3.0_rollup@2.79.1
       '@storybook/addon-actions': 6.5.13_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-essentials': 6.5.13_j26qcikrtlj4v54ty3uima2nae
@@ -231,7 +231,7 @@ importers:
 
   libraries/modyo-design-system-vue:
     specifiers:
-      '@modyolabs/modyo-design-system': '*'
+      '@modyo-dynamic/modyo-design-system': '*'
       '@rollup/plugin-commonjs': ^22.0.0
       '@rollup/plugin-node-resolve': ^13.3.0
       '@types/jest': ^26.0.23
@@ -245,7 +245,7 @@ importers:
       vue: ^3.2.13
       vue-content-loader: ~2.0.1
     dependencies:
-      '@modyolabs/modyo-design-system': link:../modyo-design-system
+      '@modyo-dynamic/modyo-design-system': link:../modyo-design-system
       '@vuepic/vue-datepicker': 3.3.1_vue@3.2.41
       vue-content-loader: 2.0.1_vue@3.2.41
     devDependencies:
@@ -263,7 +263,7 @@ importers:
   packages/modyo-service-retail:
     specifiers:
       '@babel/core': ^7.19.3
-      '@modyolabs/modyo-design-system': '*'
+      '@modyo-dynamic/modyo-design-system': '*'
       '@reduxjs/toolkit': ^1.8.4
       '@rollup/plugin-json': ^5.0.0
       '@rollup/plugin-node-resolve': ^13.3.0
@@ -301,7 +301,7 @@ importers:
       lodash.uniqueid: 4.0.1
     devDependencies:
       '@babel/core': 7.19.6
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@reduxjs/toolkit': 1.8.6_react@18.2.0
       '@rollup/plugin-json': 5.0.1_rollup@2.79.1
       '@rollup/plugin-node-resolve': 13.3.0_rollup@2.79.1
@@ -384,8 +384,8 @@ importers:
       '@angular/platform-browser': ~13.3.6
       '@angular/platform-browser-dynamic': ~13.3.6
       '@angular/router': ~13.3.0
-      '@modyolabs/modyo-design-system': '*'
-      '@modyolabs/modyo-design-system-angular': '*'
+      '@modyo-dynamic/modyo-design-system': '*'
+      '@modyo-dynamic/modyo-design-system-angular': '*'
       '@types/jasmine': ~3.10.0
       '@types/node': ^12.11.1
       jasmine-core: ~4.0.0
@@ -408,8 +408,8 @@ importers:
       '@angular/platform-browser': 13.3.11_dontfr2itdbwnai2bloqfkk3ui
       '@angular/platform-browser-dynamic': 13.3.11_ovunbf5pfqpgs344qovmyresle
       '@angular/router': 13.3.11_s6ofle4rnazb4kwevmg47377ym
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-angular': link:../../libraries/modyo-design-system-angular
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-angular': link:../../libraries/modyo-design-system-angular
       rxjs: 7.5.7
       tslib: 2.4.1
       zone.js: 0.11.8
@@ -434,9 +434,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/modyo-design-system': ^0.3.1
-      '@modyolabs/modyo-design-system-react': ^0.4.0
-      '@modyolabs/modyo-service-retail': ^0.1.0
+      '@modyo-dynamic/modyo-design-system': ^0.3.1
+      '@modyo-dynamic/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-service-retail': ^0.1.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -470,9 +470,9 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyolabs/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -515,8 +515,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/modyo-design-system': ^0.3.1
-      '@modyolabs/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-design-system': ^0.3.1
+      '@modyo-dynamic/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-service-retail': ^0.1.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -548,8 +549,9 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -590,9 +592,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/modyo-design-system': ^0.3.1
-      '@modyolabs/modyo-design-system-react': ^0.4.0
-      '@modyolabs/modyo-service-retail': ^0.1.0
+      '@modyo-dynamic/modyo-design-system': ^0.3.1
+      '@modyo-dynamic/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-service-retail': ^0.1.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -626,9 +628,9 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyolabs/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -671,8 +673,8 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/modyo-design-system': ^0.3.1
-      '@modyolabs/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-design-system': ^0.3.1
+      '@modyo-dynamic/modyo-design-system-react': ^0.4.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -714,8 +716,8 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
       '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -766,9 +768,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/modyo-design-system': ^0.3.1
-      '@modyolabs/modyo-design-system-react': ^0.4.0
-      '@modyolabs/modyo-service-retail': ^0.1.0
+      '@modyo-dynamic/modyo-design-system': ^0.3.1
+      '@modyo-dynamic/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-service-retail': ^0.1.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -804,9 +806,9 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyolabs/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -851,9 +853,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/modyo-design-system': ^0.3.1
-      '@modyolabs/modyo-design-system-react': ^0.4.0
-      '@modyolabs/modyo-service-retail': ^0.1.0
+      '@modyo-dynamic/modyo-design-system': ^0.3.1
+      '@modyo-dynamic/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-service-retail': ^0.1.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -894,9 +896,9 @@ importers:
       webpack: ^5.64.4
       yup: ^0.32.11
     dependencies:
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyolabs/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -944,8 +946,8 @@ importers:
   widgets/react-profile:
     specifiers:
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyolabs/modyo-design-system': '*'
-      '@modyolabs/modyo-design-system-react': '*'
+      '@modyo-dynamic/modyo-design-system': '*'
+      '@modyo-dynamic/modyo-design-system-react': '*'
       '@testing-library/jest-dom': ^5.14.1
       '@testing-library/react': ^13.0.0
       '@testing-library/user-event': ^13.2.1
@@ -960,8 +962,8 @@ importers:
       web-vitals: ^2.1.0
       webpack: ^5.64.4
     dependencies:
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 13.5.0_aaq3sbffpfe3jnxzm2zngsddei
@@ -980,8 +982,8 @@ importers:
 
   widgets/vue-profile:
     specifiers:
-      '@modyolabs/modyo-design-system': '*'
-      '@modyolabs/modyo-design-system-vue': '*'
+      '@modyo-dynamic/modyo-design-system': '*'
+      '@modyo-dynamic/modyo-design-system-vue': '*'
       '@typescript-eslint/eslint-plugin': ^5.4.0
       '@typescript-eslint/parser': ^5.4.0
       '@vue/cli-plugin-babel': ~5.0.0
@@ -1000,8 +1002,8 @@ importers:
       typescript: ^4.6.4
       vue: ^3.2.13
     dependencies:
-      '@modyolabs/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyolabs/modyo-design-system-vue': link:../../libraries/modyo-design-system-vue
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-vue': link:../../libraries/modyo-design-system-vue
       core-js: 3.26.0
       vue: 3.2.41
     devDependencies:

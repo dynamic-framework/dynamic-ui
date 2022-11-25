@@ -28,8 +28,8 @@
       "dom"
     ],
     "paths": {
-      "@modyolabs/modyo-design-system": ["./modyo-design-system/src"],
-      "@modyolabs/modyo-design-system-angular": ["./libraries/modyo-design-system-angular/src"]
+      "@modyo-dynamic/modyo-design-system": ["./modyo-design-system/src"],
+      "@modyo-dynamic/modyo-design-system-angular": ["./libraries/modyo-design-system-angular/src"]
     }
   },
   "angularCompilerOptions": {
