@@ -410,7 +410,7 @@ export namespace Components {
         /**
           * Theme for the m-currency
          */
-        "theme": string;
+        "theme"?: string;
         /**
           * * The value of the input
          */
