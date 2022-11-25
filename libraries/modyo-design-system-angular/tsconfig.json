@@ -33,7 +33,7 @@
     "baseUrl": ".",
     "paths": {
       "@angular/*": [ "./node_modules/@angular/*" ],
-      "@modyolabs/*": [ "./node_modules/@modyolabs/*" ]
+      "@modyo-dynamic/*": [ "./node_modules/@modyo-dynamic/*" ]
     }
   },
   "exclude": ["node_modules"],

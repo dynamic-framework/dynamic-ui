@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.4.0](https://github.com/modyolabs/modyo-design-system/compare/@modyolabs/react-design-system@0.3.0...@modyolabs/react-design-system@0.4.0) (2022-09-26)
+## [0.4.0](https://github.com/modyolabs/modyo-design-system/compare/@modyo-dynamic/react-design-system@0.3.0...@modyo-dynamic/react-design-system@0.4.0) (2022-09-26)
 
 
 ### Features

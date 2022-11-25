@@ -26,7 +26,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           registry-url: https://npm.pkg.github.com/
-          scope: '@modyolabs'
+          scope: '@modyo-dynamic'
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -36,7 +36,7 @@ jobs:
         run: pnpm exec lerna run build --no-private
       - name: Version and publish packages
         run: |
-          pnpm set @modyolabs:registry=https://npm.pkg.github.com/
+          pnpm set @modyo-dynamic:registry=https://npm.pkg.github.com/
           pnpm set "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}"
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"

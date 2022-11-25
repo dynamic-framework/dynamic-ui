@@ -5,7 +5,7 @@ import {
 } from 'react';
 import type { PropsWithChildren } from 'react';
 
-import { liquidParser } from '@modyolabs/modyo-design-system';
+import { liquidParser } from '@modyo-dynamic/modyo-design-system';
 
 interface LiquidContextInterface {
   language: string;
