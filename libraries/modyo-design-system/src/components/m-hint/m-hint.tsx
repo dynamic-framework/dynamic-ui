@@ -57,7 +57,10 @@ export class MHint {
 
   render() {
     return (
-      <small class={`m-hint ${this.theme ? `m-hint-${this.theme}` : ''}`}>
+      <small class={{
+         'm-hint': true,
+         [`m-hint-${this.theme}`]: !!this.theme,
+      }}>
         {this.iconStart && (
           <m-icon
             icon={this.iconStart}
