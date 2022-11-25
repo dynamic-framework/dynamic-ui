@@ -9,9 +9,11 @@
   justify-content: flex-start;
   width: 100%;
   padding: var(--#{$prefix}hint-padding-y) var(--#{$prefix}hint-padding-x);
+  color: $gray-600;
 }
 
-@each $color, $value in map-remove($theme-colors, "light", "primary", "secondary") {
+@each $color,
+  $value in map-remove($theme-colors, "light", "primary", "secondary") {
   .m-hint-#{$color} {
     color: var(--#{$prefix}#{$color});
   }

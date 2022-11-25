@@ -528,7 +528,7 @@ export namespace Components {
         /**
           * Theme for the hint
          */
-        "theme": string;
+        "theme"?: string;
     }
     interface MIcon {
         /**

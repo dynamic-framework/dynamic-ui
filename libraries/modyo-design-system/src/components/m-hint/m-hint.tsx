@@ -48,7 +48,7 @@ export class MHint {
   /**
    * Theme for the hint
    */
-  @Prop() theme = 'info';
+  @Prop() theme?: string;
 
   /**
    * Size for the icons
@@ -57,7 +57,7 @@ export class MHint {
 
   render() {
     return (
-      <small class={`m-hint m-hint-${this.theme}`}>
+      <small class={`m-hint ${this.theme ? `m-hint-${this.theme}` : ''}`}>
         {this.iconStart && (
           <m-icon
             icon={this.iconStart}
