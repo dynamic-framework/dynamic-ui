@@ -8,3 +8,4 @@ export { default as MDropdown } from './MDropdown';
 export { default as MCurrencyText } from './MCurrencyText';
 export { default as MFormikInput } from './MFormikInput';
 export { default as MFormikSelect } from './MFormikSelect';
+export { default as MTooltip } from './MTooltip';
