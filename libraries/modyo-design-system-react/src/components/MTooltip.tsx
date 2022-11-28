@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, ReactNode, useState } from 'react';
 import {
   autoUpdate,
   offset,
@@ -24,7 +24,7 @@ type Props = PropsWithChildren<{
   withFocus?: boolean;
   withClick?: boolean;
   placement?: Placement;
-  text: string;
+  Component?: JSX.Element | ReactNode;
 }>;
 
 const DEFAULT_TOOLTIP_CLASSES = 'bg-tertiary rounded-1 px-3 py-1 text-white';
@@ -39,12 +39,17 @@ export default function MTooltip({
   withClick,
   withHover = true,
   placement = 'top',
-  text,
+  Component,
   children,
 }: Props) {
   const [open, setOpen] = useState(false);
   const {
-    x, y, reference, floating, strategy, context,
+    x,
+    y,
+    reference,
+    floating,
+    strategy,
+    context,
   } = useFloating({
     open,
     onOpenChange: setOpen,
@@ -83,7 +88,7 @@ export default function MTooltip({
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...getReferenceProps()}
       >
-        {text}
+        {Component}
       </button>
       <FloatingPortal>
         {open && (
