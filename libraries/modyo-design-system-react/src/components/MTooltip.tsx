@@ -24,7 +24,7 @@ type Props = PropsWithChildren<{
   withFocus?: boolean;
   withClick?: boolean;
   placement?: Placement;
-  Component?: JSX.Element | ReactNode;
+  Component: JSX.Element | ReactNode;
 }>;
 
 const DEFAULT_TOOLTIP_CLASSES = 'bg-tertiary rounded-1 px-3 py-1 text-white';
