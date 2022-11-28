@@ -4,27 +4,38 @@
 $utilities: map-merge(
   $utilities,
   (
-    "opacity": map-merge(
+    "opacity":
+    map-merge(
       map-get($utilities, "opacity"),
       (
-        values: map-merge(
+        values:
+        map-merge(
           map-get(map-get($utilities, "opacity"), "values"),
           (
             40: .4,
           )
-        )
+        ),
       )
     ),
-    "color": map-merge(
+    "color":
+    map-merge(
       map-get($utilities, "color"),
       (
-        values: map-merge(
-          map-get(map-get($utilities, "color"), "values"),
-          (
-            $colors
-          )
-        )
+        values: map-merge(map-get(map-get($utilities, "color"), "values"), ($colors)),
       )
-    )
+    ),
+    "text-opacity":
+    map-merge(
+      map-get($utilities, "text-opacity"),
+      (
+        values:
+        map-merge(
+          map-get(map-get($utilities, "text-opacity"), "values"),
+          (
+            40: .4,
+          )
+        ),
+      )
+    ),
   )
 );
