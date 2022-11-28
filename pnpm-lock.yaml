@@ -145,7 +145,7 @@ importers:
       '@types/luxon': ~3.0.1
       '@types/node': ^15.12.2
       '@types/react': ^18.0.8
-      '@types/react-datepicker': 4.8.0
+      '@types/react-datepicker': ~4.8.0
       '@types/react-dom': ^18.0.3
       '@typescript-eslint/eslint-plugin': ^5.13.0
       '@typescript-eslint/parser': ^5.0.0
@@ -167,7 +167,7 @@ importers:
       luxon: ~3.0.3
       react: ^18.1.0
       react-content-loader: ~6.2.0
-      react-datepicker: 4.8.0
+      react-datepicker: ~4.8.0
       react-dom: ^18.1.0
       react-i18next: ~11.18.3
       react-toastify: ~9.0.8
