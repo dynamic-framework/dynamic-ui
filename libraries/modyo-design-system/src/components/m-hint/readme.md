@@ -17,7 +17,7 @@
 | `iconStartFamilyClass`  | `icon-start-family-class`  | Left icon family class  | `string \| undefined` | `undefined` |
 | `iconStartFamilyPrefix` | `icon-start-family-prefix` | Left icon family class  | `string \| undefined` | `undefined` |
 | `text` _(required)_     | `text`                     | Hint text               | `string`              | `undefined` |
-| `theme`                 | `theme`                    | Theme for the hint      | `string`              | `'info'`    |
+| `theme`                 | `theme`                    | Theme for the hint      | `string \| undefined` | `undefined` |
 
 
 ## Dependencies

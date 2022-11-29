@@ -15,7 +15,7 @@ it('should render help hint', async () => {
   });
   expect(page.root).toEqualHtml(`
   <m-hint>
-    <small class="m-hint m-hint-info">
+    <small class="m-hint">
       <span>
         ${props.text}
       </span>

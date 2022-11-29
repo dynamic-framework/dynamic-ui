@@ -36,7 +36,7 @@
 | `name`                      | `name`                          | The name of the input                                                 | `string \| undefined`                             | `undefined`             |
 | `options`                   | --                              | The select options                                                    | `Record<string, unknown>[]`                       | `[]`                    |
 | `selectedOption`            | --                              | The value selected of the component                                   | `undefined \| { [x: string]: unknown; }`          | `undefined`             |
-| `theme`                     | `theme`                         | The theme of the select                                               | `string`                                          | `'tertiary'`            |
+| `theme`                     | `theme`                         | The theme of the select                                               | `string \| undefined`                             | `undefined`             |
 | `valueExtractor`            | --                              | Callback to extract the value from the option                         | `(item: any) => string \| number`                 | `(item) => item?.value` |
 | `variant`                   | `variant`                       | The variant of the select                                             | `"full" \| "prime" \| "transparent" \| undefined` | `'prime'`               |
 

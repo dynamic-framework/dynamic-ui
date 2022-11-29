@@ -42,7 +42,7 @@ export class MSelect implements ComponentInterface {
   /**
    * The theme of the select
    */
-  @Prop() theme = 'tertiary';
+  @Prop() theme?: string;
 
   /**
    * The label of the select in full variant
@@ -200,7 +200,7 @@ export class MSelect implements ComponentInterface {
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
       [`form-control-layout-${this.variant}`]: !!this.variant,
       'form-control-layout-pill': this.variant !== 'full',
-      [`form-control-theme-${this.theme}`]: this.variant !== 'prime',
+      [`form-control-theme-${this.theme}`]: this.variant !== 'prime' && !!this.theme,
     };
   }
 
@@ -246,7 +246,7 @@ export class MSelect implements ComponentInterface {
               class={{
                 'form-select': true,
                 'no-icons': !this.iconStart && !this.iconMiddle && !this.iconEnd,
-                [`form-select-${this.theme}`]: this.variant !== 'prime',
+                [`form-select-${this.theme}`]: this.variant !== 'prime' && !!this.theme,
               }}
               aria-describedby={`${this.mId}-start`}
               disabled={this.isDisabled}

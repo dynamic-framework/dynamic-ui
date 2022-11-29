@@ -21,7 +21,7 @@ it('should render base currency', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-  <m-currency class="form-control-layout form-control-layout-currency form-control-theme-primary">
+  <m-currency class="form-control-layout form-control-layout-currency">
       <div class="form-control-input">
         <div class="input-group">
           <input aria-describedby="${props.mId}-add" aria-label="" class="form-control" id="${props.mId}" placeholder="" type="number" value="${props.value}">

@@ -410,7 +410,7 @@ export namespace Components {
         /**
           * Theme for the m-currency
          */
-        "theme": string;
+        "theme"?: string;
         /**
           * * The value of the input
          */
@@ -528,7 +528,7 @@ export namespace Components {
         /**
           * Theme for the hint
          */
-        "theme": string;
+        "theme"?: string;
     }
     interface MIcon {
         /**
@@ -1104,7 +1104,7 @@ export namespace Components {
         /**
           * The theme of the select
          */
-        "theme": string;
+        "theme"?: string;
         /**
           * Callback to extract the value from the option
          */
