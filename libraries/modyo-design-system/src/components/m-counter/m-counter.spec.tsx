@@ -21,7 +21,7 @@ it('should render base counter', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-counter class="form-control-layout form-control-layout-counter form-control-layout-counter-default form-control-theme-info">
+    <m-counter class="form-control-layout form-control-layout-counter form-control-layout-counter-default">
       <div class="form-control-input">
         <div class="input-group">
           <div class="form-control">
@@ -40,9 +40,7 @@ it('should render base counter', async () => {
                 </m-icon>
               </button>
             </div>
-            <m-icon class="form-control-icon icon-state">
-              <i class="bi bi-info-circle m-icon" style="--bs-m-icon-font-size: inherit; --bs-m-icon-animation-duration: 1.8s;"></i>
-            </m-icon>
+            <div class="form-control-spacer"></div>
           </div>
         </div>
       </div>
