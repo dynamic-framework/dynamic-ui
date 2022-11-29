@@ -222,7 +222,7 @@ export class MCounter {
                   id={this.mId}
                   min={this.minValue}
                   max={this.maxValue}
-                  value={this.value}
+                  value={this.internalValue}
                   onInput={this.inputHandler}
                   disabled={this.isDisabled}
                 />
