@@ -81,7 +81,7 @@ export class MCounter {
   /**
    * Theme of the counter
    */
-  @Prop() theme = 'info';
+  @Prop() theme?: string;
 
   /**
    * Minimum value for the input
@@ -121,49 +121,69 @@ export class MCounter {
   /**
    * Event for button pressed
    */
-  @Event({ eventName: 'mClick' }) mClick?: EventEmitter;
+  @Event({ eventName: 'mClick' }) mClick!: EventEmitter;
 
   /**
    * State to show the icon in valid states
    */
   @State() state?: string;
 
-  @Watch('theme')
-  watchThemeHandler(newValue: string) {
-    this.state = this.validStates.includes(newValue) ? newValue : undefined;
-  }
+  /**
+   * Internal value
+   */
+  @State() internalValue = 0;
 
-  connectedCallback() {
-    this.state = this.validStates.includes(this.theme) ? this.theme : undefined;
-  }
-
-  private validStates = Object.keys(ICON_STATE).filter((k) => k !== 'light');
-
-  private htmlInput!: HTMLInputElement;
+  private validStates = Object.keys(ICON_STATE).filter((k) => !['light', 'info'].includes(k));
 
   private inputHandler = (event: Event) => {
-    this.mInput.emit((event.target as HTMLInputElement).value);
+    const newValue = (event.target as HTMLInputElement).value;
+    this.internalValue = Number(newValue);
+    this.mInput.emit(newValue);
   };
 
   private clickHandler = (action: boolean) => {
-    const currentValue = this.htmlInput.value;
+    const currentValue = this.internalValue;
     if (action) {
       const temp = Number(currentValue) + 1;
-      this.mInput.emit(temp <= this.maxValue ? temp : this.maxValue);
+      this.internalValue = temp <= this.maxValue ? temp : this.maxValue;
     } else {
       const temp = Number(currentValue) - 1;
-      this.mInput.emit(temp >= this.minValue ? temp : this.minValue);
+      this.internalValue = temp >= this.minValue ? temp : this.minValue;
     }
+    this.mClick.emit(this.internalValue);
   };
 
   private generateHostClasses(): ClassMap {
     return {
       'form-control-layout form-control-layout-counter': true,
-      [`form-control-theme-${this.theme}`]: true,
+      [`form-control-theme-${this.state}`]: !!this.state,
       [`form-control-layout-counter-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
       'form-control-layout-counter-disabled': this.isDisabled,
     };
+  }
+
+  private getTheme(theme: string) {
+    return this.validStates.includes(theme) ? theme : undefined;
+  }
+
+  @Watch('theme')
+  watchThemeHandler(newValue: string) {
+    this.state = this.validStates.includes(newValue) ? newValue : undefined;
+  }
+
+  @Watch('internalValue')
+  watchValidValueHandler() {
+    if (this.internalValue >= this.minValue && this.internalValue <= this.maxValue) {
+      this.state = this.theme ? this.getTheme(this.theme) : undefined;
+    } else {
+      this.state = 'danger';
+    }
+  }
+
+  connectedCallback() {
+    this.state = this.theme ? this.getTheme(this.theme) : undefined;
+    this.internalValue = this.value;
   }
 
   render() {
@@ -197,14 +217,12 @@ export class MCounter {
                   />
                 </button>
                 <input
-                  // eslint-disable-next-line no-return-assign
-                  ref={(el) => (this.htmlInput = el as HTMLInputElement)}
                   class="form-control-counter-input"
                   type="number"
                   id={this.mId}
                   min={this.minValue}
                   max={this.maxValue}
-                  value={this.value}
+                  value={this.internalValue}
                   onInput={this.inputHandler}
                   disabled={this.isDisabled}
                 />
