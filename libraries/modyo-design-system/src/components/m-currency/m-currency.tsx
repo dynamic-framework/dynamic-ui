@@ -169,7 +169,7 @@ export class MCurrency implements ComponentInterface {
   /**
    * Theme for the m-currency
    * */
-  @Prop() theme = 'primary';
+  @Prop() theme?: string;
 
   /**
    * Variant for the m-currency
@@ -280,7 +280,7 @@ export class MCurrency implements ComponentInterface {
   private generateHostClasses(): ClassMap {
     return {
       'form-control-layout form-control-layout-currency': true,
-      [`form-control-theme-${this.internalTheme}`]: true,
+      [`form-control-theme-${this.internalTheme}`]: !!this.internalTheme,
       [`form-control-layout-currency-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
     };
@@ -381,7 +381,6 @@ export class MCurrency implements ComponentInterface {
           {this.hint && (
             <m-hint
               text={this.hint}
-              theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : 'info'}
               {...(this.hintIconStart && ({
                 iconStart: this.hintIconStart,
                 iconStartFamilyClass: this.hintIconStartFamilyClass,

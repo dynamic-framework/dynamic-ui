@@ -2,7 +2,7 @@ $primary: $pink !default;
 $secondary: $purple !default;
 $tertiary: $indigo !default;
 $success: $green !default;
-$info: $gray-400 !default;
+$info: $blue !default;
 $warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;
@@ -16,7 +16,8 @@ $theme-colors: (
   "info": $info,
   "warning": $warning,
   "danger": $danger,
-  "light": $light, // TODO: check this, in design-system/src/components/m-button/m-button.scss it is $white
+  "light": $light,
+  // TODO: check this, in design-system/src/components/m-button/m-button.scss it is $white
   "dark": $dark
 ) !default;
 
