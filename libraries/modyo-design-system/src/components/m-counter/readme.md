@@ -25,7 +25,7 @@
 | `mId` _(required)_          | `m-id`                          | Id of the input                                                      | `string`                     | `undefined`     |
 | `maxValue` _(required)_     | `max-value`                     | Maximum value for the input                                          | `number`                     | `undefined`     |
 | `minValue` _(required)_     | `min-value`                     | Minimum value for the input                                          | `number`                     | `undefined`     |
-| `theme`                     | `theme`                         | Theme of the counter                                                 | `string`                     | `'info'`        |
+| `theme`                     | `theme`                         | Theme of the counter                                                 | `string \| undefined`        | `undefined`     |
 | `value` _(required)_        | `value`                         | Value of the input                                                   | `number`                     | `undefined`     |
 | `variant`                   | `variant`                       | Variant of the counter                                               | `"default" \| "prime"`       | `'default'`     |
 
