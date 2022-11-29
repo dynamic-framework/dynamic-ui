@@ -1,11 +1,11 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { DateTime } from 'luxon';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export declare interface CalendarProps {
   date: string;
-  setDate: (date: string) => void;
+  setDate: (date: string | [string | null, string | null] | null) => void;
   calendarContainer?: React.FC;
   inline?: boolean;
   withPortal?: boolean;
@@ -14,7 +14,16 @@ export declare interface CalendarProps {
   calendarStartDay?: number;
   timeInputLabel?: string;
   className?: string;
+  calendarClassName?: ReactDatePickerProps['calendarClassName'],
   dateFormat?: string | string[];
+  selectsRange?: boolean;
+  selectsStart?: boolean;
+  selectsEnd?: boolean;
+  startDate?: Date | null;
+  endDate?: Date | null;
+  autoFocus?: boolean;
+  fixedHeight?: boolean;
+  monthsShown?: number;
 }
 
 export default function MCalendar({
@@ -29,13 +38,32 @@ export default function MCalendar({
   timeInputLabel,
   dateFormat,
   className,
+  calendarClassName,
+  selectsRange,
+  selectsStart,
+  selectsEnd,
+  startDate,
+  endDate,
+  autoFocus,
+  monthsShown,
+  fixedHeight,
 }: CalendarProps) {
   const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
 
   return (
     <DatePicker
       selected={dateJS(date)}
-      onChange={(value: Date) => setDate(DateTime.fromJSDate(value).toISO())}
+      onChange={(value) => {
+        if (Array.isArray(value)) {
+          const [start, end] = value as [Date | null, Date | null];
+          setDate([
+            start ? DateTime.fromJSDate(start).toISO() : null,
+            end ? DateTime.fromJSDate(end).toISO() : null,
+          ]);
+        } else {
+          setDate(value ? DateTime.fromJSDate(value).toISO() : null);
+        }
+      }}
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       calendarContainer={calendarContainer}
       inline={inline}
@@ -46,6 +74,15 @@ export default function MCalendar({
       timeInputLabel={timeInputLabel}
       dateFormat={dateFormat}
       className={className}
+      calendarClassName={calendarClassName}
+      selectsRange={selectsRange}
+      selectsEnd={selectsEnd}
+      selectsStart={selectsStart}
+      startDate={startDate}
+      endDate={endDate}
+      autoFocus={autoFocus}
+      monthsShown={monthsShown}
+      fixedHeight={fixedHeight}
     />
   );
 }
