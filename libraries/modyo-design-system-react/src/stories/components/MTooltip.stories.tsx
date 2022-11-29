@@ -34,19 +34,19 @@ const config: ComponentMeta<typeof MTooltip> = {
     Component: {
       defaultValue: 'Link',
       type: 'string',
-      control: 'text'
+      control: 'text',
     },
     children: {
       control: 'text',
       type: 'string',
-      defaultValue: 'Lorem ipsum dolor sit amet consectetur.'
+      defaultValue: 'Lorem ipsum dolor sit amet consectetur.',
     },
     offSet: {
       type: 'number',
     },
     padding: {
       type: 'number',
-    }
+    },
   },
 };
 
