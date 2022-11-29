@@ -16,6 +16,6 @@ export default {
     }
   ],
   external: id => id.startsWith('vue')
-    || id.startsWith('@modyolabs')
+    || id.startsWith('@modyo-dynamic')
     || id.startsWith('@vuepic/vue-datepicker')
 };

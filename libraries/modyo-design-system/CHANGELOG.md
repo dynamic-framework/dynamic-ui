@@ -3,9 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.3.1](https://github.com/modyolabs/modyo-design-system/compare/@modyolabs/design-system@0.3.0...@modyolabs/design-system@0.3.1) (2022-09-26)
+## [0.3.1](https://github.com/modyolabs/modyo-design-system/compare/@modyo-dynamic/design-system@0.3.0...@modyo-dynamic/design-system@0.3.1) (2022-09-26)
 
-**Note:** Version bump only for package @modyolabs/design-system
+**Note:** Version bump only for package @modyo-dynamic/design-system
 
 
 
@@ -78,7 +78,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# Change Log - @modyolabs/design-system
+# Change Log - @modyo-dynamic/design-system
 
 This log was last generated on Wed, 21 Sep 2022 02:55:12 GMT and should not be manually modified.
 

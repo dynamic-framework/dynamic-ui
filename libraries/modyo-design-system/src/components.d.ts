@@ -170,7 +170,7 @@ export namespace Components {
         /**
           * Theme of the counter
          */
-        "theme": string;
+        "theme"?: string;
         /**
           * Value of the input
          */

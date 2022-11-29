@@ -3,9 +3,9 @@
 /* auto-generated vue proxies */
 import { defineContainer } from './vue-component-lib/utils';
 
-import type { JSX } from '@modyolabs/modyo-design-system';
+import type { JSX } from '@modyo-dynamic/modyo-design-system';
 
-import { defineCustomElements } from '@modyolabs/modyo-design-system/loader';
+import { defineCustomElements } from '@modyo-dynamic/modyo-design-system/loader';
 
 defineCustomElements();
 

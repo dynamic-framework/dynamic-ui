@@ -24,7 +24,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           registry-url: https://npm.pkg.github.com/
-          scope: '@modyolabs'
+          scope: '@modyo-dynamic'
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

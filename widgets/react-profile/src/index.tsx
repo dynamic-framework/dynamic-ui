@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import '@modyolabs/modyo-design-system/dist/design-system/design-system.css';
+import '@modyo-dynamic/modyo-design-system/dist/design-system/design-system.css';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';

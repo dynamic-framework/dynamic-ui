@@ -1,5 +1,5 @@
 {
-  "name": "@modyolabs/modyo-design-system-react",
+  "name": "@modyo-dynamic/modyo-design-system-react",
   "sideEffects": false,
   "version": "0.4.0",
   "description": "React specific wrapper for component-library",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
-    "@modyolabs/modyo-design-system": "*",
+    "@modyo-dynamic/modyo-design-system": "*",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
@@ -60,7 +60,7 @@
     "@types/luxon": "~3.0.1",
     "@types/node": "^15.12.2",
     "@types/react": "^18.0.8",
-    "@types/react-datepicker": "~4.4.2",
+    "@types/react-datepicker": "~4.8.0",
     "@types/react-dom": "^18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -88,7 +88,7 @@
     "typescript": "^4.6.4"
   },
   "peerDependencies": {
-    "@modyolabs/modyo-design-system": "*",
+    "@modyo-dynamic/modyo-design-system": "*",
     "formik": "^2.2.9",
     "luxon": "~3.0.3",
     "react": "^18.1.0",
@@ -98,7 +98,7 @@
   },
   "nx": {
     "implicitDependencies": [
-      "@modyolabs/modyo-design-system"
+      "@modyo-dynamic/modyo-design-system"
     ]
   }
 }
