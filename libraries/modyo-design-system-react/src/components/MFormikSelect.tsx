@@ -10,7 +10,7 @@ type Props = {
   name: string;
   options: Array<any>;
   variant?: SelectLayoutVariant;
-  theme: string;
+  theme?: string;
   label?: string;
   placeholder: string;
   iconStart?: string;
@@ -24,7 +24,7 @@ export default function MFormikSelect(
     name,
     options = [],
     variant = 'prime',
-    theme = 'tertiary',
+    theme,
     label,
     placeholder,
     iconStart,
