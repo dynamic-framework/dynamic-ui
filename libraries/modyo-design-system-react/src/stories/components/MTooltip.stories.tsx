@@ -23,11 +23,11 @@ const config: ComponentMeta<typeof MTooltip> = {
       type: 'boolean',
       defaultValue: false,
     },
-    classNameTooltip: {
+    classNameContainer: {
       type: 'string',
       control: 'text',
     },
-    classNameButton: {
+    className: {
       type: 'string',
       control: 'text',
     },
