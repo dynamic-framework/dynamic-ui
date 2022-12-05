@@ -214,11 +214,6 @@ export class MCurrency implements ComponentInterface {
     this.internalTheme = newValue;
   }
 
-  connectedCallback() {
-    this.internalTheme = this.theme;
-    this.internalValue = this.value;
-  }
-
   /**
    * HTML input element
    */
@@ -243,16 +238,16 @@ export class MCurrency implements ComponentInterface {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private onBlurEvent = (event: any) => {
+    let newValue;
     if (!Number.isNaN(event.target.valueAsNumber)) {
       this.internalValue = event.target.valueAsNumber;
-      const value = currency(event.target.valueAsNumber, this.currencyOptions).format();
-      this.htmlInput.setAttribute('type', 'text');
-      this.htmlInput.value = value;
+      newValue = currency(event.target.valueAsNumber, this.currencyOptions).format();
     } else {
       this.internalValue = undefined;
-      this.value = undefined;
-      this.htmlInput.value = '';
+      newValue = '';
     }
+    this.htmlInput.setAttribute('type', 'text');
+    this.htmlInput.value = `${newValue}`;
   };
 
   private onFocusEvent = () => {
@@ -284,6 +279,20 @@ export class MCurrency implements ComponentInterface {
       [`form-control-layout-currency-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
     };
+  }
+
+  connectedCallback() {
+    this.internalTheme = this.theme;
+    this.internalValue = this.value;
+  }
+
+  componentDidLoad() {
+    this.htmlInput.setAttribute('type', 'text');
+    if (this.internalValue && !Number.isNaN(this.internalValue)) {
+      this.htmlInput.value = currency(this.internalValue, this.currencyOptions).format();
+    } else {
+      this.htmlInput.value = '';
+    }
   }
 
   render() {
@@ -344,7 +353,11 @@ export class MCurrency implements ComponentInterface {
               max={this.maxValue}
               class="form-control"
               value={this.value}
-              placeholder={this.placeholder}
+              placeholder={
+                this.placeholder
+                  ? this.placeholder
+                  : currency(0, this.currencyOptions).format()
+              }
               aria-label={this.label}
               aria-describedby={`${this.mId}-add`}
               onInput={this.changeHandler}
