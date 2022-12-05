@@ -3,12 +3,43 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-    <title>Stencil Component Starter</title>
-
-    <script type="module" src="/build/design-system.esm.js"></script>
-    <script nomodule src="/build/design-system.js"></script>
+    <title>Modyo Design System | Stencil Components</title>
+    <link rel="stylesheet" href="../dist/design-system/design-system.css">
+    <script type="module" src="../dist/design-system/design-system.esm.js"></script>
+    <script nomodule src="../dist/design-system/design-system.js"></script>
   </head>
   <body>
-    <m-button text="the button"></m-button>
+    <m-app>
+      <m-button text="the button" theme="primary"></m-button>
+      <div class="row p-3 m-0 g-0">
+        <div class="col-12 fw-bold fs-5 p-2 text-tertiary text-decoration-underline">
+          m-currency
+        </div>
+        <div class="col-12 col-lg-3">
+          <div class="d-flex flex-column p-2">
+            <strong>Without value</strong>
+            <m-currency m-id="currency1"></m-currency>
+          </div>
+        </div>
+        <div class="col-12 col-lg-3">
+          <div class="d-flex flex-column p-2">
+            <strong>Without value + placeholder</strong>
+            <m-currency m-id="currency2" placeholder="$1000.00"></m-currency>
+          </div>
+        </div>
+        <div class="col-12 col-lg-3">
+          <div class="d-flex flex-column p-2">
+            <strong>With value</strong>
+            <m-currency m-id="currency3" value="123456"></m-currency>
+          </div>
+        </div>
+        <div class="col-12 col-lg-3">
+          <div class="d-flex flex-column p-2">
+            <strong>With value + decimals</strong>
+            <m-currency m-id="currency4" value="123456.78"></m-currency>
+          </div>
+        </div>
+      </div>
+    </m-app>
   </body>
 </html>
