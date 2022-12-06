@@ -16,7 +16,7 @@ const Example = (
   return (
     <LiquidContextProvider>
       {values.map((value) => (
-        <pre>{value}</pre>
+        <pre key={value}>{value}</pre>
       ))}
     </LiquidContextProvider>
   );
