@@ -238,16 +238,15 @@ export class MCurrency implements ComponentInterface {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private onBlurEvent = (event: any) => {
-    let newValue;
     if (!Number.isNaN(event.target.valueAsNumber)) {
       this.internalValue = event.target.valueAsNumber;
-      newValue = currency(event.target.valueAsNumber, this.currencyOptions).format();
+      this.htmlInput.setAttribute('type', 'text');
+      this.htmlInput.value = currency(event.target.valueAsNumber, this.currencyOptions).format();
     } else {
       this.internalValue = undefined;
-      newValue = '';
+      this.htmlInput.setAttribute('type', 'text');
+      this.htmlInput.value = '';
     }
-    this.htmlInput.setAttribute('type', 'text');
-    this.htmlInput.value = `${newValue}`;
   };
 
   private onFocusEvent = () => {
