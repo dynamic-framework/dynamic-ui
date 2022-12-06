@@ -15,9 +15,9 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import type { Placement } from '@floating-ui/react-dom-interactions';
 
-type Props = PropsWithChildren<{
-  classNameTooltip?: string;
-  classNameButton?: string;
+export type MTooltipProps = PropsWithChildren<{
+  classNameContainer?: string;
+  className?: string;
   offSet?: number;
   padding?: number;
   withHover?: boolean;
@@ -27,12 +27,12 @@ type Props = PropsWithChildren<{
   Component: JSX.Element | ReactNode;
 }>;
 
-const DEFAULT_TOOLTIP_CLASSES = 'bg-tertiary rounded-1 px-3 py-1 text-white';
+const DEFAULT_TOOLTIP_CLASSES = 'bg-tertiary rounded-1 p-2 text-white small';
 const DEFAULT_BUTTON_CLASSES = 'bg-transparent border-0 p-0 text-decoration-underline';
 
 export default function MTooltip({
-  classNameTooltip = DEFAULT_TOOLTIP_CLASSES,
-  classNameButton = DEFAULT_BUTTON_CLASSES,
+  classNameContainer = DEFAULT_TOOLTIP_CLASSES,
+  className = DEFAULT_BUTTON_CLASSES,
   offSet = 0,
   padding = 0,
   withFocus,
@@ -41,7 +41,7 @@ export default function MTooltip({
   placement = 'top',
   Component,
   children,
-}: Props) {
+}: MTooltipProps) {
   const [open, setOpen] = useState(false);
   const {
     x,
@@ -82,7 +82,7 @@ export default function MTooltip({
   return (
     <>
       <button
-        className={classNameButton}
+        className={className}
         type="button"
         ref={reference}
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -93,7 +93,7 @@ export default function MTooltip({
       <FloatingPortal>
         {open && (
           <div
-            className={classNameTooltip}
+            className={classNameContainer}
             ref={floating}
             style={{
               position: strategy,
