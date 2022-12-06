@@ -288,7 +288,7 @@ export class MCurrency implements ComponentInterface {
 
   componentDidLoad() {
     this.htmlInput.setAttribute('type', 'text');
-    if (this.internalValue && !Number.isNaN(this.internalValue)) {
+    if (this.internalValue !== undefined && !Number.isNaN(this.internalValue)) {
       this.htmlInput.value = currency(this.internalValue, this.currencyOptions).format();
     } else {
       this.htmlInput.value = '';
