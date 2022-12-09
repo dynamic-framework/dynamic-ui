@@ -12,6 +12,12 @@
       "darken"
     ],
     "property-disallowed-list": [],
+    "indentation": [
+      2,
+      {
+        "indentInsideParens": "once-at-root-twice-in-block"
+      }
+    ],
     "scss/dollar-variable-default": [
       true,
       {
@@ -22,7 +28,11 @@
     "selector-no-qualifying-type": [
       true,
       {
-        "ignore": ["attribute", "class", "id"]
+        "ignore": [
+          "attribute",
+          "class",
+          "id"
+        ]
       }
     ],
     "selector-class-pattern": null
