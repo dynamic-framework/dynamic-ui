@@ -37,7 +37,8 @@
     "generate": "stencil generate",
     "eslint": "eslint src/**/*{.ts,.tsx}",
     "stylelint": "stylelint \"**/*.{css,scss}\" --rd",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "serve": "stencil build --dev --watch --serve"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",

@@ -14,6 +14,7 @@ const componentCorePackage = '@modyo-dynamic/modyo-design-system';
 export const config: Config = {
   namespace: 'design-system',
   taskQueue: 'async',
+  devServer: { initialLoadUrl: '/src' },
   outputTargets: [
     reactOutputTarget({
       componentCorePackage,
