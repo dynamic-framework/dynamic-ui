@@ -240,13 +240,13 @@ export class MCurrency implements ComponentInterface {
   private onBlurEvent = (event: any) => {
     if (!Number.isNaN(event.target.valueAsNumber)) {
       this.internalValue = event.target.valueAsNumber;
-      this.htmlInput.setAttribute('type', 'text');
-      this.htmlInput.value = currency(event.target.valueAsNumber, this.currencyOptions).format();
     } else {
       this.internalValue = undefined;
-      this.htmlInput.setAttribute('type', 'text');
-      this.htmlInput.value = '';
     }
+    this.htmlInput.setAttribute('type', 'text');
+    this.htmlInput.value = this.internalValue !== undefined
+      ? currency(this.internalValue, this.currencyOptions).format()
+      : '';
   };
 
   private onFocusEvent = () => {

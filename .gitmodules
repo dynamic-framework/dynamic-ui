@@ -23,3 +23,9 @@
 [submodule "packages/stencil-eslint-plugin"]
 	path = packages/stencil-eslint-plugin
 	url = https://github.com/modyolabs/stencil-eslint-plugin.git
+[submodule "packages/modyo-template-widget-react"]
+	path = packages/modyo-template-widget-react
+	url = git@github.com:modyo-dynamic/modyo-template-widget-react.git
+[submodule "widgets/modyo-widget-retail-dashboard-payments"]
+	path = widgets/modyo-widget-retail-dashboard-payments
+	url = git@github.com:modyo-dynamic/modyo-widget-retail-dashboard-payments.git
