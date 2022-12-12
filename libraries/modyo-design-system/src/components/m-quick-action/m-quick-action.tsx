@@ -135,7 +135,8 @@ export class MQuickAction implements ComponentInterface {
             </div>
             {(this.actionIcon && !this.actionWord) && (
               <m-icon
-                class="quick-action-link small"
+                size="1.125rem"
+                class="quick-action-link"
                 icon={this.actionIcon}
                 familyClass={this.iconFamilyClass}
                 familyPrefix={this.iconFamilyPrefix}
