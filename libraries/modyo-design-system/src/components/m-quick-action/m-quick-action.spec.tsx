@@ -26,7 +26,7 @@ it('should render my component', async () => {
               ${quick.text}
             </span>
           </div>
-          <m-icon class="quick-action-link" icon="chevron-right" size="18px"></m-icon>
+          <m-icon class="quick-action-link" icon="chevron-right" size="1.125rem"></m-icon>
         </div>
       </button>
     </m-quick-action>
