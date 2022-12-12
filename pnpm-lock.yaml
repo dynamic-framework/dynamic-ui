@@ -335,6 +335,87 @@ importers:
       tslib: 2.4.1
       typescript: 4.8.4
 
+  packages/modyo-template-widget-react:
+    specifiers:
+      '@babel/plugin-syntax-flow': ^7.14.5
+      '@babel/plugin-transform-react-jsx': ^7.14.9
+      '@craco/craco': ^7.0.0-alpha.3
+      '@modyo-dynamic/modyo-design-system': ^0.3.1
+      '@modyo-dynamic/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-service-retail': ^0.1.0
+      '@reduxjs/toolkit': ^1.8.4
+      '@testing-library/jest-dom': ^5.16.4
+      '@testing-library/react': ^13.3.0
+      '@testing-library/user-event': ^13.5.0
+      '@types/jest': ^27.0.1
+      '@types/node': ^16.7.13
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      '@types/webpack-env': ^1.18.0
+      '@typescript-eslint/eslint-plugin': ^5.13.0
+      '@typescript-eslint/parser': ^5.0.0
+      axios: ^1.1.2
+      classnames: ^2.3.2
+      eslint: 8.22.0
+      eslint-config-airbnb: 19.0.4
+      eslint-config-airbnb-typescript: ^17.0.0
+      eslint-plugin-import: ^2.25.3
+      eslint-plugin-jsx-a11y: ^6.5.1
+      eslint-plugin-react: ^7.28.0
+      eslint-plugin-react-hooks: ^4.3.0
+      i18next: ~21.9.0
+      liquidjs: ^9.39.2
+      postcss: ^8.1.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-i18next: ~11.18.3
+      react-redux: ^8.0.2
+      react-scripts: 5.0.1
+      sass: ~1.54.0
+      typescript: ^4.6.4
+      web-vitals: ^2.1.4
+      webpack: ^5.64.4
+    dependencies:
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../modyo-service-retail
+      '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
+      '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
+      '@testing-library/user-event': 13.5.0_aaq3sbffpfe3jnxzm2zngsddei
+      axios: 1.1.3
+      classnames: 2.3.2
+      i18next: 21.9.2
+      liquidjs: 9.42.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
+      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      web-vitals: 2.1.4
+    devDependencies:
+      '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
+      '@babel/plugin-transform-react-jsx': 7.19.0_@babel+core@7.19.6
+      '@craco/craco': 7.0.0-alpha.9_kky7ubbxyus7sscdw4durf3qga
+      '@types/jest': 27.5.2
+      '@types/node': 16.18.3
+      '@types/react': 18.0.24
+      '@types/react-dom': 18.0.8
+      '@types/webpack-env': 1.18.0
+      '@typescript-eslint/eslint-plugin': 5.42.0_n2s2dbqilupifq2xgcu4m4ie5i
+      '@typescript-eslint/parser': 5.42.0_yv3nvntfnealqm77uomj2fi4ki
+      eslint: 8.22.0
+      eslint-config-airbnb: 19.0.4_yzdaygrtjsxrrhxpgpx6hh5x2y
+      eslint-config-airbnb-typescript: 17.0.0_xal2q56332h2htx2srtpldg7bu
+      eslint-plugin-import: 2.26.0_rilxvfua27h4rm2vbxk2jtqfja
+      eslint-plugin-jsx-a11y: 6.6.1_eslint@8.22.0
+      eslint-plugin-react: 7.31.10_eslint@8.22.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.22.0
+      postcss: 8.4.18
+      react-scripts: 5.0.1_juuppn7mhzcvx5jvfeqy7diwhy
+      sass: 1.54.9
+      typescript: 4.8.4
+      webpack: 5.74.0
+
   packages/stencil-eslint-plugin:
     specifiers:
       '@types/eslint': ^8.4.9
@@ -445,6 +526,87 @@ importers:
       '@testing-library/user-event': ^13.5.0
       '@types/jest': ^27.0.1
       '@types/node': ^16.11.63
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      '@types/webpack-env': ^1.18.0
+      '@typescript-eslint/eslint-plugin': ^5.13.0
+      '@typescript-eslint/parser': ^5.0.0
+      axios: ^1.1.2
+      classnames: ^2.3.2
+      eslint: 8.22.0
+      eslint-config-airbnb: 19.0.4
+      eslint-config-airbnb-typescript: ^17.0.0
+      eslint-plugin-import: ^2.25.3
+      eslint-plugin-jsx-a11y: ^6.5.1
+      eslint-plugin-react: ^7.28.0
+      eslint-plugin-react-hooks: ^4.3.0
+      i18next: ~21.9.0
+      liquidjs: ^9.39.2
+      postcss: ^8.1.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-i18next: ~11.18.3
+      react-redux: ^8.0.2
+      react-scripts: 5.0.1
+      sass: ~1.54.0
+      typescript: ^4.6.4
+      web-vitals: ^2.1.4
+      webpack: ^5.64.4
+    dependencies:
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
+      '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
+      '@testing-library/user-event': 13.5.0_aaq3sbffpfe3jnxzm2zngsddei
+      axios: 1.1.3
+      classnames: 2.3.2
+      i18next: 21.9.2
+      liquidjs: 9.42.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
+      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      web-vitals: 2.1.4
+    devDependencies:
+      '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
+      '@babel/plugin-transform-react-jsx': 7.19.0_@babel+core@7.19.6
+      '@craco/craco': 7.0.0-alpha.9_kky7ubbxyus7sscdw4durf3qga
+      '@types/jest': 27.5.2
+      '@types/node': 16.18.3
+      '@types/react': 18.0.24
+      '@types/react-dom': 18.0.8
+      '@types/webpack-env': 1.18.0
+      '@typescript-eslint/eslint-plugin': 5.42.0_n2s2dbqilupifq2xgcu4m4ie5i
+      '@typescript-eslint/parser': 5.42.0_yv3nvntfnealqm77uomj2fi4ki
+      eslint: 8.22.0
+      eslint-config-airbnb: 19.0.4_yzdaygrtjsxrrhxpgpx6hh5x2y
+      eslint-config-airbnb-typescript: 17.0.0_xal2q56332h2htx2srtpldg7bu
+      eslint-plugin-import: 2.26.0_rilxvfua27h4rm2vbxk2jtqfja
+      eslint-plugin-jsx-a11y: 6.6.1_eslint@8.22.0
+      eslint-plugin-react: 7.31.10_eslint@8.22.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.22.0
+      postcss: 8.4.18
+      react-scripts: 5.0.1_juuppn7mhzcvx5jvfeqy7diwhy
+      sass: 1.54.9
+      typescript: 4.8.4
+      webpack: 5.74.0
+
+  widgets/modyo-widget-retail-dashboard-payments:
+    specifiers:
+      '@babel/plugin-syntax-flow': ^7.14.5
+      '@babel/plugin-transform-react-jsx': ^7.14.9
+      '@craco/craco': ^7.0.0-alpha.3
+      '@modyo-dynamic/modyo-design-system': ^0.3.1
+      '@modyo-dynamic/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-service-retail': ^0.1.0
+      '@reduxjs/toolkit': ^1.8.4
+      '@testing-library/jest-dom': ^5.16.4
+      '@testing-library/react': ^13.3.0
+      '@testing-library/user-event': ^13.5.0
+      '@types/jest': ^27.0.1
+      '@types/node': ^16.7.13
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       '@types/webpack-env': ^1.18.0
@@ -677,6 +839,7 @@ importers:
       '@craco/craco': ^7.0.0-alpha.3
       '@modyo-dynamic/modyo-design-system': ^0.3.1
       '@modyo-dynamic/modyo-design-system-react': ^0.4.0
+      '@modyo-dynamic/modyo-service-retail': ^0.1.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -720,6 +883,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
