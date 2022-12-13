@@ -43,6 +43,7 @@
   gap: var(--#{$prefix}btn-gap);
   align-items: center;
   justify-content: center;
+  width: inherit;
   filter: drop-shadow(var(--#{$prefix}btn-base-box-shadow));
 
   // hover selectors
