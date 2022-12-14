@@ -17,6 +17,10 @@
     --#{$prefix}btn-box-border-color: var(--#{$prefix}accessibility);
   }
 
+  .btn {
+    width: inherit;
+  }
+
   // TODO: setup boundary box
   // margin: $btn-boundary-box-margin-y $btn-boundary-box-margin-x;
 }
@@ -43,7 +47,6 @@
   gap: var(--#{$prefix}btn-gap);
   align-items: center;
   justify-content: center;
-  width: inherit;
   filter: drop-shadow(var(--#{$prefix}btn-base-box-shadow));
 
   // hover selectors
