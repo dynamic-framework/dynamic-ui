@@ -853,6 +853,7 @@ importers:
       '@types/webpack-env': ^1.18.0
       '@typescript-eslint/eslint-plugin': ^5.13.0
       '@typescript-eslint/parser': ^5.0.0
+      classnames: ^2.3.2
       eslint: 8.22.0
       eslint-config-airbnb: 19.0.4
       eslint-config-airbnb-typescript: ^17.0.0
@@ -888,6 +889,7 @@ importers:
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 13.5.0_aaq3sbffpfe3jnxzm2zngsddei
+      classnames: 2.3.2
       i18next: 21.9.2
       liquidjs: 9.42.1
       lodash.debounce: 4.0.8
