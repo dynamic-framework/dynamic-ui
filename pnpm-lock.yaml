@@ -390,7 +390,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -567,7 +567,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -648,7 +648,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -725,7 +725,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -805,7 +805,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       react-verification-input: 3.1.1_biqbaboplfbrettd7655fr4n2y
       web-vitals: 2.1.4
     devDependencies:
@@ -897,7 +897,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       react-toastify: 9.0.8_biqbaboplfbrettd7655fr4n2y
       web-vitals: 2.1.4
     devDependencies:
@@ -989,7 +989,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -1081,7 +1081,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       react-toastify: 9.0.8_biqbaboplfbrettd7655fr4n2y
       web-vitals: 2.1.4
       yup: 0.32.11
@@ -6406,7 +6406,7 @@ packages:
     dependencies:
       immer: 9.0.16
       react: 18.2.0
-      react-redux: 8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq
+      react-redux: 8.0.4_nsgh7lqw2e2kb5wanadocemtdi
       redux: 4.2.0
       redux-thunk: 2.4.1_redux@4.2.0
       reselect: 4.1.6
@@ -24767,7 +24767,7 @@ packages:
       react-fast-compare: 3.2.0
       warning: 4.0.3
 
-  /react-redux/8.0.4_h6epe7l2gr2z2rhkgdu6cxyvqq:
+  /react-redux/8.0.4_nsgh7lqw2e2kb5wanadocemtdi:
     resolution: {integrity: sha512-yMfQ7mX6bWuicz2fids6cR1YT59VTuT8MKyyE310wJQlINKENCeT1UcPdEiX6znI5tF8zXyJ/VYvDgeGuaaNwQ==}
     peerDependencies:
       '@types/react': ^16.8 || ^17.0 || ^18.0
@@ -24797,7 +24797,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
-      redux: 4.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
