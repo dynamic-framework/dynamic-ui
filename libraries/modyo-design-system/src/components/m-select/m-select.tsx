@@ -184,7 +184,7 @@ export class MSelect implements ComponentInterface {
   @Event({ eventName: 'mBlur' }) mBlur!: EventEmitter;
 
   private changeHandler = (event: Event) => {
-    const { value } = event.target as HTMLInputElement;
+    const { value } = event.target as HTMLSelectElement;
     this.mChange.emit(
       this.options.find((option) => this.valueExtractor(option).toString() === value),
     );
