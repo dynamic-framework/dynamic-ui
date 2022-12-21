@@ -92,6 +92,9 @@ const config: ComponentMeta<typeof MCoupon> = {
       control: 'select',
       options: ['horizontal', 'vertical'],
     },
+    isLoading: {
+      control: 'boolean',
+    }
   },
 };
 

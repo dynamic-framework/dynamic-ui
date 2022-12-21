@@ -68,6 +68,9 @@ const config: ComponentMeta<typeof MButton> = {
     isPill: {
       control: 'boolean',
     },
+    isLoading: {
+      control: 'boolean',
+    }
   },
 };
 

@@ -78,6 +78,9 @@ const config: ComponentMeta<typeof MInput> = {
       control: 'select',
       options: ['horizontal', 'vertical'],
     },
+    isLoading: {
+      control: 'boolean',
+    }
   },
 };
 

@@ -140,7 +140,7 @@ export namespace Components {
          */
         "isDisabled": boolean;
         /**
-          * Is disabled counter
+          * Flag for loading state.
          */
         "isLoading": boolean;
         /**
@@ -1539,7 +1539,7 @@ declare namespace LocalJSX {
          */
         "isDisabled"?: boolean;
         /**
-          * Is disabled counter
+          * Flag for loading state.
          */
         "isLoading"?: boolean;
         /**

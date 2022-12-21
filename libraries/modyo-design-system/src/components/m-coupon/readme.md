@@ -27,6 +27,7 @@
 | `iconStart`                 | `icon-start`                    | Icon of the left                                                     | `string \| undefined`        | `undefined`     |
 | `iconStartFamilyClass`      | `icon-start-family-class`       | Left icon family class                                               | `string \| undefined`        | `undefined`     |
 | `iconStartFamilyPrefix`     | `icon-start-family-prefix`      | Left icon family class                                               | `string \| undefined`        | `undefined`     |
+| `isLoading`                 | `is-loading`                    | Flag for loading state.                                              | `boolean`                    | `false`         |
 | `label`                     | `label`                         | Label for the input                                                  | `string`                     | `''`            |
 | `labelIcon`                 | `label-icon`                    | Icon for the label text                                              | `string`                     | `'info-circle'` |
 | `labelIconFamilyClass`      | `label-icon-family-class`       | Icon label family class                                              | `string \| undefined`        | `undefined`     |

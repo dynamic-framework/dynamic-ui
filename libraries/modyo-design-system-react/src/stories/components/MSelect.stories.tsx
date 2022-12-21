@@ -74,6 +74,9 @@ const config: ComponentMeta<typeof MSelect> = {
       control: 'select',
       options: ['horizontal', 'vertical'],
     },
+    isLoading: {
+      control: 'boolean',
+    }
   },
 };
 

@@ -20,6 +20,7 @@
 | `iconEndFamilyClass`        | `icon-end-family-class`         | Right icon family class                                              | `string \| undefined`        | `undefined`  |
 | `iconEndFamilyPrefix`       | `icon-end-family-prefix`        | Right icon family class                                              | `string \| undefined`        | `undefined`  |
 | `isDisabled`                | `is-disabled`                   | Flag to disable the input                                            | `boolean`                    | `false`      |
+| `isLoading`                 | `is-loading`                    | Flag for loading state.                                              | `boolean`                    | `false`      |
 | `isReadOnly`                | `is-read-only`                  | Flag to read only the input                                          | `boolean`                    | `false`      |
 | `label`                     | `label`                         | The label text                                                       | `string`                     | `''`         |
 | `labelIcon`                 | `label-icon`                    | Icon to display on label right                                       | `string \| undefined`        | `undefined`  |

@@ -100,6 +100,9 @@ const config: ComponentMeta<typeof MCurrency> = {
       control: 'select',
       options: ['horizontal', 'vertical'],
     },
+    isLoading: {
+      control: 'boolean',
+    }
   },
 };
 

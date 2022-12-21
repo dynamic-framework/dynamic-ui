@@ -86,6 +86,9 @@ const config: ComponentMeta<typeof MSearch> = {
       control: 'select',
       options: ['horizontal', 'vertical'],
     },
+    isLoading: {
+      control: 'boolean',
+    }
   },
 };
 

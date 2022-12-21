@@ -114,7 +114,7 @@ export class MCounter {
   @Prop() isDisabled = false;
 
   /**
-   * Is disabled counter
+   * Flag for loading state.
    */
   @Prop() isLoading = false;
 
