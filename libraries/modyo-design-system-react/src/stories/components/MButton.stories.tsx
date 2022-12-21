@@ -70,7 +70,7 @@ const config: ComponentMeta<typeof MButton> = {
     },
     isLoading: {
       control: 'boolean',
-    }
+    },
   },
 };
 

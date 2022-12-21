@@ -76,7 +76,7 @@ const config: ComponentMeta<typeof MSelect> = {
     },
     isLoading: {
       control: 'boolean',
-    }
+    },
   },
 };
 

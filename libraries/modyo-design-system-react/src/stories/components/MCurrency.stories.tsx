@@ -102,7 +102,7 @@ const config: ComponentMeta<typeof MCurrency> = {
     },
     isLoading: {
       control: 'boolean',
-    }
+    },
   },
 };
 

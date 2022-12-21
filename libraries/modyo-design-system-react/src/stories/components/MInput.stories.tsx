@@ -80,7 +80,7 @@ const config: ComponentMeta<typeof MInput> = {
     },
     isLoading: {
       control: 'boolean',
-    }
+    },
   },
 };
 

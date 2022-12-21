@@ -88,7 +88,7 @@ const config: ComponentMeta<typeof MSearch> = {
     },
     isLoading: {
       control: 'boolean',
-    }
+    },
   },
 };
 

@@ -94,7 +94,7 @@ const config: ComponentMeta<typeof MCoupon> = {
     },
     isLoading: {
       control: 'boolean',
-    }
+    },
   },
 };
 

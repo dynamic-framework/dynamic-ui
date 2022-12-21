@@ -61,7 +61,7 @@ const config: ComponentMeta<typeof MCounter> = {
     },
     isLoading: {
       control: 'boolean',
-    }
+    },
   },
 };
 
