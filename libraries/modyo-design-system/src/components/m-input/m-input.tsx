@@ -65,6 +65,11 @@ export class MInput implements ComponentInterface {
   @Prop() isDisabled = false;
 
   /**
+   * Flag for loading state.
+  */
+  @Prop() isLoading = false;
+
+  /**
    * Icon to display on input left
    */
   @Prop() iconStart?: string;
@@ -218,7 +223,7 @@ export class MInput implements ComponentInterface {
               onInput={this.changeHandler}
               onBlur={this.blurHandler}
             />
-            {this.iconEnd && (
+            {(this.iconEnd && !this.isLoading) && (
               <span
                 class="input-group-text"
                 id={`${this.mId}-end`}
@@ -232,6 +237,17 @@ export class MInput implements ComponentInterface {
                   />
                 )}
               </span>
+            )}
+            {this.isLoading && (
+              <div class="input-group-text form-control-icon">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </div>
             )}
           </div>
           {this.hint && (

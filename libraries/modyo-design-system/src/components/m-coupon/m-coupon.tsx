@@ -92,6 +92,11 @@ export class MCoupon implements ComponentInterface {
   @Prop() hasSelect = false;
 
   /**
+   * Flag for loading state.
+  */
+  @Prop() isLoading = false;
+
+  /**
    * Placeholder for the input
    * */
   @Prop() placeholder?: string = '';
@@ -219,7 +224,7 @@ export class MCoupon implements ComponentInterface {
             )}
             {this.hasSelect && (
               <select
-               // eslint-disable-next-line no-return-assign
+                // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
               >
@@ -249,13 +254,15 @@ export class MCoupon implements ComponentInterface {
                 />
               </span>
             )}
-            <button
-              class={`btn btn-text-${this.theme} fw-semibold text-uppercase small`}
-              onClick={this.clickHandler}
-            >
-              {this.buttonText}
-            </button>
-            {this.iconEnd && (
+            {!this.isLoading && (
+              <button
+                class={`btn btn-text-${this.theme} fw-semibold text-uppercase small`}
+                onClick={this.clickHandler}
+              >
+                {this.buttonText}
+              </button>
+            )}
+            {(this.iconEnd && !this.isLoading) && (
               <span
                 class="input-group-text"
                 id={`${this.mId}-end`}
@@ -267,6 +274,17 @@ export class MCoupon implements ComponentInterface {
                   familyPrefix={this.iconEndFamilyPrefix}
                 />
               </span>
+            )}
+            {this.isLoading && (
+              <div class="input-group-text form-control-icon">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </div>
             )}
           </div>
           {this.hint && (

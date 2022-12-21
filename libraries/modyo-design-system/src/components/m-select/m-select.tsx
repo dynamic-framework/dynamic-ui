@@ -160,6 +160,11 @@ export class MSelect implements ComponentInterface {
   @Prop() isDisabled = false;
 
   /**
+   * Flag for loading state.
+  */
+  @Prop() isLoading = false;
+
+  /**
    * Callback to extract the value from the option
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
@@ -279,7 +284,7 @@ export class MSelect implements ComponentInterface {
                 )}
               </span>
             )}
-            {(this.iconEnd) && (
+            {(this.iconEnd && !this.isLoading) && (
               <span
                 class="input-group-text"
                 id={`${this.mId}-end`}
@@ -293,6 +298,17 @@ export class MSelect implements ComponentInterface {
                   />
                 )}
               </span>
+            )}
+            {this.isLoading && (
+              <div class="input-group-text form-control-icon">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </div>
             )}
           </div>
           {(this.hint) && (

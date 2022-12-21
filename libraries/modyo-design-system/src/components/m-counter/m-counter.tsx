@@ -114,6 +114,11 @@ export class MCounter {
   @Prop() isDisabled = false;
 
   /**
+   * Is disabled counter
+   */
+  @Prop() isLoading = false;
+
+  /**
    * Event for input change
    */
   @Event({ eventName: 'mInput' }) mInput!: EventEmitter;
@@ -236,14 +241,25 @@ export class MCounter {
                   />
                 </button>
               </div>
-              {!this.state && (
+              {(!this.state && !this.isLoading) && (
                 <div class="form-control-spacer" />
               )}
-              {this.state && (
+              {(this.state && !this.isLoading) && (
                 <m-icon
                   class="form-control-icon icon-state"
                   icon={ICON_STATE[this.state]}
                 />
+              )}
+              {this.isLoading && (
+                <div class="form-control-icon">
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </span>
+                </div>
               )}
             </div>
           </div>

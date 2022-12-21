@@ -192,6 +192,11 @@ export class MCurrency implements ComponentInterface {
   @Prop() isDisabled = false;
 
   /**
+   * Flag for loading state.
+   */
+  @Prop() isLoading = false;
+
+  /**
    * Emitted when the inputs change
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<CurrencyEvent>;
@@ -376,7 +381,7 @@ export class MCurrency implements ComponentInterface {
                 />
               </span>
             )}
-            {this.iconEnd && (
+            {(this.iconEnd && !this.isLoading) && (
               <span
                 class="input-group-text"
                 id={`${this.mId}-end`}
@@ -388,6 +393,17 @@ export class MCurrency implements ComponentInterface {
                   familyPrefix={this.iconEndFamilyPrefix}
                 />
               </span>
+            )}
+            {this.isLoading && (
+              <div class="form-control-icon">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </div>
             )}
           </div>
           {this.hint && (

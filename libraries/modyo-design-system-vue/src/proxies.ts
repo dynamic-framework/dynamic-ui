@@ -42,6 +42,7 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'value',
   'type',
   'isPill',
+  'isLoading',
   'mClick'
 ]);
 
@@ -137,6 +138,7 @@ export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currenc
   'currencyOptions',
   'layoutDirection',
   'isDisabled',
+  'isLoading',
   'mChange'
 ]);
 
