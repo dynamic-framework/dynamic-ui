@@ -1,8 +1,8 @@
 {
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
-    "eslint.packageManager": "npm",
+    "eslint.packageManager": "pnpm",
     "eslint.workingDirectories": [
-        "design-system"
+        "modyo-design-system"
     ],
     "eslint.alwaysShowStatus": true
 }

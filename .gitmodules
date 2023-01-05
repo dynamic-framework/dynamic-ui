@@ -2,3 +2,30 @@
 	path = widgets/modyo-widget-retail-pay-debt
 	url = git@github.com:modyolabs/modyo-widget-retail-pay-debt.git
 	branch = chore/lerna
+[submodule "widgets/modyo-widget-retail-dashboard"]
+	path = widgets/modyo-widget-retail-dashboard
+	url = git@github.com:modyolabs/modyo-widget-retail-dashboard.git
+[submodule "widgets/modyo-widget-retail-transfer"]
+	path = widgets/modyo-widget-retail-transfer
+	url = git@github.com:modyolabs/modyo-widget-retail-transfer.git
+[submodule "widgets/modyo-widget-retail-product-detail"]
+	path = widgets/modyo-widget-retail-product-detail
+	url = git@github.com:modyolabs/modyo-widget-retail-product-detail.git
+[submodule "packages/modyo-service-retail"]
+	path = packages/modyo-service-retail
+	url = git@github.com:modyolabs/modyo-service-retail.git
+[submodule "widgets/modyo-widget-retail-loan-application"]
+	path = widgets/modyo-widget-retail-loan-application
+	url = git@github.com:modyolabs/modyo-widget-retail-loan-application.git
+[submodule "widgets/modyo-widget-retail-loan-approval"]
+	path = widgets/modyo-widget-retail-loan-approval
+	url = git@github.com:modyolabs/modyo-widget-retail-loan-approval.git
+[submodule "packages/stencil-eslint-plugin"]
+	path = packages/stencil-eslint-plugin
+	url = https://github.com/modyolabs/stencil-eslint-plugin.git
+[submodule "packages/modyo-template-widget-react"]
+	path = packages/modyo-template-widget-react
+	url = git@github.com:modyo-dynamic/modyo-template-widget-react.git
+[submodule "widgets/modyo-widget-retail-dashboard-payments"]
+	path = widgets/modyo-widget-retail-dashboard-payments
+	url = git@github.com:modyo-dynamic/modyo-widget-retail-dashboard-payments.git

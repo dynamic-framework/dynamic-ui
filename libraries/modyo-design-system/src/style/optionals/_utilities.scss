@@ -1,0 +1,45 @@
+/* stylelint-disable scss/dollar-variable-default */
+// Theme utilities
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "opacity": map-merge(
+      map-get($utilities, "opacity"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "opacity"), "values"),
+          (
+            40: .4,
+          )
+        )
+      )
+    ),
+    "color": map-merge(
+      map-get($utilities, "color"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "color"), "values"),
+          (
+            $colors
+          )
+        )
+      )
+    ),
+    "text-opacity": map-merge(
+      map-get($utilities, "text-opacity"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "text-opacity"), "values"),
+          (
+            40: .4,
+          )
+        )
+      )
+    ),
+    "cursor": (
+      property: cursor,
+      values: $cursors,
+    ),
+  )
+);

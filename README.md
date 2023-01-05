@@ -1,27 +1,24 @@
-# Stencil widget factory
+# Design system and widget factory
 
 ## Setup
 
-+ `clone`
-+ `cd ds-poc` to move to a cloned repo
-+ `rush install` to install dependencies
-+ `rush build` to build all packages
++ `git clone --recurse-submodules git@github.com:modyolabs/modyo-design-system.git` use `--recurse-submodules` to clone the widgets submodules to
++ `cd modyo-design-system` to move to the cloned repository
++ `pnpm install` to install dependencies
++ `pnpm exec lerna run build --no-private` to build all the no private packages.
 
 ## Packages
-| Project                   | Package                      | Version  | Links                                                    |
-|---------------------------|------------------------------|----------|----------------------------------------------------------|
-| **Design System**         | @modyo/design-system         | --       | [`README.md`](libraries/design-system/README.md)                   |
-| **Angular Design System** | @modyo/angular-design-system | --       | [`README.md`](libraries/angular-design-system/README.md) |
-| **Vue Design System**     | @modyo/vue-design-system     | --       | [`README.md`](libraries/vue-design-system/README.md)     |
-| **React Design System**   | @modyo/react-design-system   | --       | [`README.md`](libraries/react-design-system/README.md)   |
+| Project                         | Package                            | Version                                                                            | Links                                                        |
+|---------------------------------|------------------------------------|------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| **Modyo Design System**         | @modyo/modyo-design-system         | ![npm](https://img.shields.io/npm/v/modyo-design-system?style=flat-square)         | [`README.md`](libraries/modyo-design-system/README.md) |
+| **Modyo Design System Angular** | @modyo/modyo-design-system-angular | ![npm](https://img.shields.io/npm/v/modyo-design-system-angular?style=flat-square) | [`README.md`](libraries/modyo-design-system-angular/README.md) |
+| **Modyo Design System Vue**     | @modyo/modyo-design-system-vue     | ![npm](https://img.shields.io/npm/v/modyo-design-system-vue?style=flat-square)     | [`README.md`](libraries/modyo-design-system-vue/README.md)   |
+| **Modyo Design System React**   | @modyo/modyo-design-system-react   | ![npm](https://img.shields.io/npm/v/modyo-design-system-react?style=flat-square)   | [`README.md`](libraries/modyo-design-system-react/README.md) |
 
 ## How to run a widget
 
 + Move to a widget folder, e.g. `cd widgets/react-profile`
-+ `rushx` to see the available commands
-+ `rushx start` or `rushx serve` to run the widget
-
-> You can also use `npm run`, but only `npm run` and no other `npm` commands. [Rush caveats](https://rushjs.io/pages/developer/new_developer/#a-couple-caveats)
++ `pnpm start` to run the widget
 
 ## How to add a new widget
 
@@ -29,46 +26,38 @@
   + [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app)
   + [angular cli](https://angular.io/cli)
   + [vue cli](https://cli.vuejs.org/guide/installation.html)
-> If you are going to use a builder or cli, create the widget in a folder external to the repo to avoid conflicts with rush.
+> If you are going to use a builder or cli, create the widget in an external folder to the repo to avoid conflicts.
 
 > You can use any tool to create a widget, you can even configure it from scratch by creating your own webpack configuration for example.
 
-+ Delete the local shrinkwrap file, since it's superseded by Rush's common shrinkwrap file
-+ Consider deleting the project's `.npmrc` file, since Rush operations always use `common/config/rush/.npmrc`
-+ Consider deleting the project's Git config files unless they contain rules that are really specific to that project
-
-´´´shell
-rm -f shrinkwrap.yaml npm-shrinkwrap.json package-lock.json yarn.lock
-rm -f .npmrc          # (if it makes sense)
-rm -f .gitattributes  # (if it makes sense)
-rm -f .gitignore      # (if it makes sense)
-´´´
-
++ Use `pnpm import` to generate a pnpm-lock.yaml from another package manager's lockfile (ignore peer dependencies problem)
++ Delete all another lockfile and the node_modules folder
 + Move the new widget folder to the `widgets` folder in the repo
-+ Add the widget to the project array in the `rush.json` file
-+ Run `rush update` to install dependencies
-+ Run `rush build` to verify that the widget builds
++ Run `pnpm install` to install the widget dependencies.
 
-> These steps can be found in the [rush documentation](https://rushjs.io/pages/maintainer/add_to_repo/#step-4-add-your-first-project)
+## Working in a widget with design-system changes
 
-## How to build a rush tag
+1. commit in widget.
+2. commit in the design-system adding the widget.
+3. PR design-system (branch→develop) widget (branch→master)
+4. merge PR of design-system. (branch→develop)
+5. publish design-system. (develop→master)
+6. update the design-system version in the widget (commit with version)
+7. merge PR of widget. (branch→master)
+8. add submodule change (new hash of widget) and commit in the design-system on develop.
 
-+ `rush build --to tag:angular` to build all the packages with angular tag
-+ `rush build --to tag:vue` to build all the packages with vue tag
-+ `rush build --to tag:libraries` to build all the packages with libraries tag
-+ `rush build --to tag:widgets` to build all the packages with widgets tag
+## caveats
 
-## How to build from or to a specific package
-
-+ `rush build --to @modyo/vue-profile` or `rush build -t @modyo/vue-profile` to build the package `@modyo/vue-profile` and all its dependencies
-+ `rush build --from @modyo/vue-design-system` or `rush build -f @modyo/vue-design-system` to build the package from `@modyo/vue-design-system` and all its dependencies
-+ `rush build --to-except @modyo/vue-profile` or `rush build -T @modyo/vue-profile` to build the dependencies of `@modyo/vue-profile`
-+ `rush build --only @modyo/react-profile` or `rush build -o @modyo/react-profile` to build only `@modyo/react-profile` w/o its dependencies
+- temporarily unmanaged packages must carry `*` in the workspace dependencies.
+- after publish a design-system version we need to change the dependency version in the widget in the corresponding PR.
+- after update the dependency version in the widget we need to commit and push the new commit hash of widget to develop in the workspace.
+- temporarily unmaintained packages must have `private: true` in the `package.json` to not be included in the ci.
+- lerna can run scripts on all packages, lint-staged example: `npx lerna run lint-staged`, it will only run lint-staged on packages that have the script defined.
 
 ## Other links
 
 + [POC](POC.md)
-+ Rush [documentation](https://rushjs.io/pages/intro/get_started/)
++ Lerna [documentation](https://lerna.js.org/)
 + Stencil [documentation](https://stenciljs.com/docs/overview)
 + Stencil GitHub [repository](https://github.com/ionic-team/stencil)
 + Stencil output target GitHub [repository](https://github.com/ionic-team/stencil-ds-output-targets)

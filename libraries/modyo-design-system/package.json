@@ -1,0 +1,88 @@
+{
+  "name": "@modyo-dynamic/modyo-design-system",
+  "version": "0.3.1",
+  "description": "Stencil Component Starter",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/interface.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/design-system/design-system.esm.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modyolabs/modyo-design-system.git"
+  },
+  "bugs": {
+    "type": "git",
+    "url": "https://github.com/modyolabs/modyo-design-system.git"
+  },
+  "author": {
+    "name": "Abraham José González Barboza",
+    "email": "agonzalez@modyo.com",
+    "url": "https://github.com/abe-modyo"
+  },
+  "files": [
+    "dist/",
+    "components/",
+    "loader/"
+  ],
+  "scripts": {
+    "build": "stencil build --docs",
+    "build:watch": "stencil build --docs",
+    "test": "stencil test --spec --e2e",
+    "test:unit": "stencil test --spec",
+    "test:watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate",
+    "eslint": "eslint src/**/*{.ts,.tsx}",
+    "stylelint": "stylelint \"**/*.{css,scss}\" --rd",
+    "lint-staged": "lint-staged",
+    "serve": "stencil build --dev --watch --serve"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.5",
+    "@stencil/core": "^2.18.0",
+    "@stencil/store": "^2.0.1",
+    "bootstrap": "^5.2.0",
+    "currency.js": "^2.0.4"
+  },
+  "devDependencies": {
+    "@stencil/angular-output-target": "^0.4.0",
+    "@stencil/eslint-plugin": "workspace:^0.4.0",
+    "@stencil/postcss": "^2.1.0",
+    "@stencil/react-output-target": "^0.3.1",
+    "@stencil/sass": "^1.5.2",
+    "@stencil/vue-output-target": "^0.6.0",
+    "@types/bootstrap": "^5.1.12",
+    "@types/jest": "^27.0.3",
+    "@types/luxon": "~3.0.1",
+    "@types/node": "^18.7.1",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
+    "autoprefixer": "^10.4.7",
+    "axios": "^1.1.2",
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.30.0",
+    "jest": "26.6.3",
+    "jest-cli": "26.6.3",
+    "lint-staged": "^12.4.1",
+    "liquidjs": "^9.39.2",
+    "luxon": "~3.0.3",
+    "puppeteer": "^14.0.0",
+    "sass": "^1.51.0",
+    "stylelint": "^14.8.2",
+    "stylelint-config-twbs-bootstrap": "^3.0.1",
+    "typescript": "~4.4.4"
+  },
+  "peerDependencies": {
+    "axios": "^1.1.2",
+    "liquidjs": "^9.39.2",
+    "luxon": "~3.0.3"
+  },
+  "license": "MIT"
+}

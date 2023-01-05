@@ -1,5 +1,5 @@
-import type { ButtonVariant } from '@modyolabs/design-system';
-import { MButton } from '@modyolabs/react-design-system';
+import type { ButtonVariant } from '@modyo-dynamic/modyo-design-system';
+import { MButton } from '@modyo-dynamic/modyo-design-system-react';
 
 const THEMES = ['light', 'dark', 'primary', 'secondary', 'success', 'danger', 'warning', 'info'];
 const VARIANTS: Partial<ButtonVariant[]> = ['outline', undefined, 'text', 'ghost'];

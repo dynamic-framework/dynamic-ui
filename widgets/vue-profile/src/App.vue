@@ -2275,7 +2275,7 @@ import {
   MShortcutToggle,
   MSkeleton,
   MCalendar,
-} from '@modyolabs/vue-design-system';
+} from '../../../libraries/modyo-design-system-vue';
 
 export default defineComponent({
   name: 'App',

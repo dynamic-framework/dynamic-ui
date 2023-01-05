@@ -1,0 +1,27 @@
+{
+  "root": true,
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:react/jsx-runtime"
+  ],
+  "parserOptions": {
+    "project": ["**/tsconfig.json"],
+    "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
+  },
+  "rules": {
+    "react/require-default-props": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+    "import/prefer-default-export": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+.form-control-layout-search {
+  --#{$prefix}search-label-color: #{$search-label-color};
+  --#{$prefix}label-icon-color: #{$search-label-icon-color};
+  --#{$prefix}hint-color: #{$search-hint-color};
+  --#{$prefix}hint-icon-color: #{$search-hint-icon-color};
+  --#{$prefix}button-search-color: #{$search-button-color};
+  --#{$prefix}button-search-hover-color: #{$search-button-hover-color};
+  --#{$prefix}button-search-disabled-color: #{$search-button-disabled-color};
+  --#{$prefix}button-search-disabled-opacity: #{$search-button-disabled-opacity};
+  --#{$prefix}button-search-readonly-color: #{$search-button-readonly-color};
+  --#{$prefix}search-state-color: #{$search-button-state-color};
+  --#{$prefix}search-state-size: #{$search-button-state-size-sm};
+  --#{$prefix}input-group-search-border-color: #{$search-input-group-border-color};
+  --#{$prefix}input-group-search-hover-border-color: #{$search-input-group-hover-border-color};
+  --#{$prefix}input-group-search-focus-border-color: #{$search-input-group-focus-border-color};
+  --#{$prefix}input-group-search-hover-box-shadow: #{$search-input-group-hover-box-shadow};
+  --#{$prefix}input-group-disabled-bg: #{$search-input-group-disabled-bg};
+  --#{$prefix}form-control-disabled-bg: #{$search-form-control-disabled-bg};
+  --#{$prefix}form-control-readonly-bg: #{$search-form-control-readonly-bg};
+
+  .form-control {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  label,
+  .hint {
+    color: var(--#{$prefix}search-label-color);
+  }
+
+  label .form-control-icon {
+    color: var(--#{$prefix}label-icon-color);
+  }
+
+  .input-group .btn-search {
+    z-index: inherit;
+    padding-left: 0;
+    color: var(--#{$prefix}button-search-color);
+  }
+
+  .input-group:hover {
+    box-shadow: var(--#{$prefix}input-group-search-hover-box-shadow);
+
+    .form-control:not(:read-only) ~ .btn-search {
+      color: var(--#{$prefix}button-search-hover-color);
+    }
+  }
+
+  .input-group:focus-within:not(:hover) {
+    border-color: var(--#{$prefix}input-group-search-focus-border-color);
+
+    .form-control {
+      caret-color: var(--#{$prefix}input-group-search-focus-border-color);
+    }
+  }
+
+  .form-control-icon.hint-icon {
+    color: var(--#{$prefix}hint-icon-color);
+  }
+
+  &.disabled {
+
+    .input-group,
+    .input-group-text,
+    .form-control-icon:not(.label-icon):not(.hint-icon) {
+      pointer-events: none;
+      cursor: not-allowed;
+      background-color: var(--#{$prefix}input-group-disabled-bg);
+    }
+  }
+
+  .form-control:disabled {
+    background-color: var(--#{$prefix}form-control-disabled-bg);
+  }
+
+  .btn-search:disabled {
+    color: var(--#{$prefix}button-search-disabled-color);
+    opacity: var(--#{$prefix}button-search-disabled-opacity);
+  }
+
+  &.readonly {
+    pointer-events: none;
+
+    .input-group {
+      border-color: var(--#{$prefix}white);
+    }
+
+    .btn-search {
+      color: var(--#{$prefix}button-search-readonly-color);
+    }
+  }
+
+  .form-control:read-only:not(:disabled) {
+    background-color: var(--#{$prefix}form-control-readonly-bg);
+  }
+
+  .search-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--#{$prefix}search-state-size);
+    color: var(--#{$prefix}search-state-color);
+  }
+
+  &.form-control-layout-prime {
+    --#{$prefix}input-group-bg: transparent;
+    --#{$prefix}input-group-border-radius: 0;
+    --#{$prefix}input-group-disabled-bg: transparent;
+    --#{$prefix}form-control-disabled-bg: transparent;
+    --#{$prefix}form-control-readonly-bg: transparent;
+    --#{$prefix}input-group-outline-padding: 3px;
+
+    label {
+      display: none;
+    }
+
+    .form-control {
+      padding-top: 3px;
+      padding-bottom: 3px;
+      font-size: 2rem;
+      line-height: 3rem;
+      text-align: center;
+    }
+
+    .input-group {
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: var(--#{$prefix}input-border-color);
+      border-left-color: transparent;
+    }
+
+    .input-group:hover {
+      border-bottom-color: var(--#{$prefix}input-hover-border-color);
+      box-shadow: none;
+    }
+
+    .input-group:focus-within,
+    .input-group:focus {
+      --#{$prefix}input-group-border-radius: #{$input-border-radius};
+      --#{$prefix}input-group-bg: var(--#{$prefix}white);
+      border-color: var(--#{$prefix}input-border-color);
+    }
+
+    .hint {
+      width: 100%;
+      text-align: center;
+    }
+
+    &.readonly {
+      .input-group {
+        border-color: transparent;
+      }
+    }
+  }
+
+  &.form-control-layout-secondary {
+    --#{$prefix}form-label-padding-x: 1rem;
+    --#{$prefix}form-label-padding-y: .25rem;
+    --#{$prefix}input-group-border-radius: #{$border-radius-pill};
+    --#{$prefix}input-group-bg: transparent;
+    --#{$prefix}input-group-disabled-bg: transparent;
+    --#{$prefix}form-control-disabled-bg: transparent;
+    --#{$prefix}form-control-readonly-bg: transparent;
+
+
+    .input-group:not(:focus-within) {
+      padding: 0;
+      border-radius: #{$border-radius-pill};
+
+      >* {
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+    }
+
+    .input-group:focus-within,
+    .input-group:focus {
+      --#{$prefix}input-group-bg: var(--#{$prefix}white);
+    }
+  }
+}
+
+@each $color,
+  $value in map-remove($theme-colors, "light", "dark", "primary", "secondary", "success", "info") {
+  .form-control-layout-search-#{$color} {
+    --#{$prefix}search-label-color: var(--#{$prefix}#{$color});
+    --#{$prefix}label-icon-color: var(--#{$prefix}#{$color});
+    --#{$prefix}hint-icon-color: var(--#{$prefix}#{$color});
+    --#{$prefix}button-search-color: var(--#{$prefix}#{$color});
+    --#{$prefix}input-group-search-border-color: var(--#{$prefix}#{$color});
+    --#{$prefix}input-border-color: var(--#{$prefix}#{$color});
+    --#{$prefix}button-search-hover-color: var(--#{$prefix}#{$color}-hover);
+    --#{$prefix}input-hover-border-color: var(--#{$prefix}#{$color}-hover);
+    --#{$prefix}search-state-color: var(--#{$prefix}#{$color});
+  }
+}
+
+.form-control-layout-search-loading {
+  .form-control-icon.search-state {
+    --#{$prefix}search-state-color: var(--#{$prefix}info);
+    --#{$prefix}search-state-size: #{$search-button-state-size};
+  }
+}
+
+
+.form-control-layout-search-success {
+  .form-control-icon.search-state {
+    --#{$prefix}search-state-color: var(--#{$prefix}success);
+    --#{$prefix}search-state-size: #{$search-button-state-size-lg};
+  }
+}

@@ -1,0 +1,32 @@
+.m-icon {
+  --#{$prefix}m-icon-color: inherit;
+  --#{$prefix}m-icon-bg-color: inherit;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--#{$prefix}m-icon-font-size);
+
+  color: var(--#{$prefix}m-icon-color);
+  background-color: var(--#{$prefix}m-icon-bg-color);
+}
+
+@each $color, $value in $theme-colors {
+  .m-icon-#{$color} {
+    color: var(--#{$prefix}#{$color});
+  }
+}
+
+.m-icon-loading {
+  animation: loading-icon var(--#{$prefix}m-icon-animation-duration) infinite linear;
+}
+
+@keyframes loading-icon {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

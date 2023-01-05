@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "strict": true,
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "importHelpers": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist-transpiled",
+    "declarationDir": "dist/types",
+    "removeComments": false,
+    "inlineSources": true,
+    "sourceMap": true,
+    "jsx": "react-jsx",
+    "allowJs": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "@types"],
+  "compileOnSave": false,
+  "buildOnSave": false
+}
