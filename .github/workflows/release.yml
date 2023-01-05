@@ -40,6 +40,7 @@ jobs:
           pnpm set "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}"
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
+          git update-index --skip-worktree -- .npmrc
           pnpm exec lerna publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
