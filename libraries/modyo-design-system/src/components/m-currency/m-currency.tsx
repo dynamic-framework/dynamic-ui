@@ -256,6 +256,10 @@ export class MCurrency implements ComponentInterface {
     }
   };
 
+  private onWheelEvent = () => {
+    this.htmlInput.blur();
+  };
+
   private isValid(value?: number): boolean {
     if (value === undefined) {
       return true;
@@ -362,6 +366,7 @@ export class MCurrency implements ComponentInterface {
               onInput={this.changeHandler}
               onBlur={this.onBlurEvent}
               onFocus={this.onFocusEvent}
+              onWheel={this.onWheelEvent}
             />
             {this.iconMiddle && (
               <span
