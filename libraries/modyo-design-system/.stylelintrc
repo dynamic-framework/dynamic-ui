@@ -3,6 +3,7 @@
     "stylelint-config-twbs-bootstrap"
   ],
   "rules": {
+    "selector-max-class": 5,
     "declaration-property-value-disallowed-list": {
       "border": "none",
       "outline": "none"
