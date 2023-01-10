@@ -149,7 +149,7 @@ export class MCoupon implements ComponentInterface {
   /**
    * Theme for the m-cupon
    * */
-  @Prop() theme? = 'primary';
+  @Prop() theme?: string;
 
   /**
    * Change the layout direction to put the label on top or left of input
@@ -184,7 +184,7 @@ export class MCoupon implements ComponentInterface {
   private generateHostClasses(): ClassMap {
     return {
       'form-control-layout form-control-layout-coupon': true,
-      [`form-control-theme-${this.theme}`]: true,
+      [`form-control-theme-${this.theme}`]: !!this.theme,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
     };
   }
@@ -206,7 +206,11 @@ export class MCoupon implements ComponentInterface {
           </label>
         )}
         <div class="form-control-input">
-          <div class="input-group">
+          <div class={{
+            'input-group': true,
+            disabled: this.isLoading,
+          }}
+          >
             {this.iconStart && (
               <span
                 class="input-group-text"
@@ -227,6 +231,7 @@ export class MCoupon implements ComponentInterface {
                 // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
+                disabled={this.isLoading}
               >
                 <slot />
               </select>
@@ -240,6 +245,7 @@ export class MCoupon implements ComponentInterface {
               placeholder={this.placeholder}
               aria-label={this.label}
               aria-describedby={`${this.mId}-add`}
+              disabled={this.isLoading}
             />
             {this.iconMiddle && (
               <span
@@ -268,7 +274,7 @@ export class MCoupon implements ComponentInterface {
                 id={`${this.mId}-end`}
               >
                 <m-icon
-                  class="form-control-icon"
+                  class="form-control-icon icon-end"
                   icon={this.iconEnd}
                   familyClass={this.iconEndFamilyClass}
                   familyPrefix={this.iconEndFamilyPrefix}
@@ -290,7 +296,7 @@ export class MCoupon implements ComponentInterface {
           {this.hint && (
             <m-hint
               text={this.hint}
-              theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : 'info'}
+              theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : undefined}
               {...(this.hintIconStart && ({
                 iconStart: this.hintIconStart,
                 iconStartFamilyClass: this.hintIconStartFamilyClass,

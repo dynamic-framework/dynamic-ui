@@ -164,7 +164,7 @@ export class MCounter {
       [`form-control-theme-${this.state}`]: !!this.state,
       [`form-control-layout-counter-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
-      'form-control-layout-counter-disabled': this.isDisabled,
+      'form-control-layout-counter-disabled': this.isDisabled || this.isLoading,
     };
   }
 

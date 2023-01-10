@@ -316,7 +316,7 @@ export class MCurrency implements ComponentInterface {
         <div class="form-control-input">
           <div class={{
             'input-group': true,
-            disabled: this.isDisabled,
+            disabled: this.isDisabled || this.isLoading,
           }}
           >
             {this.iconStart && (
@@ -337,7 +337,7 @@ export class MCurrency implements ComponentInterface {
                 // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
-                disabled={this.isDisabled}
+                disabled={this.isDisabled || this.isLoading}
                 onInput={this.changeHandler}
               >
                 {this.selectOptions.map((opt) => (
@@ -352,7 +352,7 @@ export class MCurrency implements ComponentInterface {
               ref={(el) => (this.htmlInput = el as HTMLInputElement)}
               id={this.mId}
               type="number"
-              disabled={this.isDisabled}
+              disabled={this.isDisabled || this.isLoading}
               min={this.minValue}
               max={this.maxValue}
               class="form-control"

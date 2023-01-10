@@ -190,6 +190,7 @@ export class MInput implements ComponentInterface {
             class={{
               'input-group': true,
               'has-validation': this.isInvalid,
+              disabled: this.isDisabled || this.isLoading,
             }}
           >
             {this.iconStart && (
@@ -217,7 +218,7 @@ export class MInput implements ComponentInterface {
               }}
               placeholder={this.placeholder}
               aria-label={this.label}
-              disabled={this.isDisabled}
+              disabled={this.isDisabled || this.isLoading}
               value={this.value}
               aria-describedby={`${this.mId}-add`}
               onInput={this.changeHandler}

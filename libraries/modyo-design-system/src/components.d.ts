@@ -296,7 +296,7 @@ export namespace Components {
         /**
           * Theme for the m-cupon
          */
-        "theme"?: string | undefined;
+        "theme"?: string;
         /**
           * * The type of the input
          */
@@ -1707,7 +1707,7 @@ declare namespace LocalJSX {
         /**
           * Theme for the m-cupon
          */
-        "theme"?: string | undefined;
+        "theme"?: string;
         /**
           * * The type of the input
          */

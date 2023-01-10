@@ -110,6 +110,14 @@
   &:hover {
     border: 1px solid var(--#{$prefix}input-hover-border-color);
   }
+
+  &.disabled {
+    background: var(--#{$prefix}light);
+
+    * {
+      background: var(--#{$prefix}light);
+    }
+  }
 }
 
 .form-control-input {
