@@ -262,7 +262,10 @@ export class MCoupon implements ComponentInterface {
             )}
             {!this.isLoading && (
               <button
-                class={`btn btn-text-${this.theme} fw-semibold text-uppercase small`}
+                class={{
+                  'btn fw-semibold text-uppercase small': true,
+                  [`btn-text-${this.theme}`]: !!this.theme,
+                }}
                 onClick={this.clickHandler}
               >
                 {this.buttonText}
