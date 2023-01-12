@@ -24,6 +24,7 @@
 | `iconStartFamilyPrefix`     | `icon-start-family-prefix`      | Left icon family class                                               | `string \| undefined`        | `undefined`     |
 | `isDisabled`                | `is-disabled`                   | Flag to disable the input                                            | `boolean`                    | `false`         |
 | `isInvalid`                 | `is-invalid`                    | Add is-invalid class                                                 | `boolean`                    | `false`         |
+| `isLoading`                 | `is-loading`                    | Flag for loading state.                                              | `boolean`                    | `false`         |
 | `label`                     | `label`                         | The label text                                                       | `string`                     | `''`            |
 | `labelIcon`                 | `label-icon`                    | Icon for the label text                                              | `string`                     | `'info-circle'` |
 | `labelIconFamilyClass`      | `label-icon-family-class`       | Icon label family class                                              | `string \| undefined`        | `undefined`     |

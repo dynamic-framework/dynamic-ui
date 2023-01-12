@@ -15,6 +15,7 @@
 | `iconStart`             | `icon-start`               | Icon left to display                         | `string \| undefined`                                       | `undefined` |
 | `iconStartFamilyClass`  | `icon-start-family-class`  | Icon left family class                       | `string \| undefined`                                       | `undefined` |
 | `iconStartFamilyPrefix` | `icon-start-family-prefix` | Icon left family prefix                      | `string \| undefined`                                       | `undefined` |
+| `isLoading`             | `is-loading`               | Flag for loading state and disable button.   | `boolean`                                                   | `false`     |
 | `isPill`                | `is-pill`                  | Flag to switch to pill button border radius. | `boolean`                                                   | `false`     |
 | `state`                 | `state`                    | Flag to set the button as active.            | `"active" \| "disabled" \| "focus" \| "hover" \| undefined` | `undefined` |
 | `text`                  | `text`                     | The text to display.                         | `string`                                                    | `''`        |

@@ -160,6 +160,11 @@ export class MSelect implements ComponentInterface {
   @Prop() isDisabled = false;
 
   /**
+   * Flag for loading state.
+  */
+  @Prop() isLoading = false;
+
+  /**
    * Callback to extract the value from the option
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
@@ -224,7 +229,7 @@ export class MSelect implements ComponentInterface {
           <div
             class={{
               'input-group': true,
-              disabled: this.isDisabled,
+              disabled: this.isDisabled || this.isLoading,
             }}
           >
             {this.iconStart && (
@@ -249,7 +254,7 @@ export class MSelect implements ComponentInterface {
                 [`form-select-${this.theme}`]: this.variant !== 'prime' && !!this.theme,
               }}
               aria-describedby={`${this.mId}-start`}
-              disabled={this.isDisabled}
+              disabled={this.isDisabled || this.isLoading}
               onChange={this.changeHandler}
               onBlur={this.blurHandler}
             >
@@ -279,7 +284,7 @@ export class MSelect implements ComponentInterface {
                 )}
               </span>
             )}
-            {(this.iconEnd) && (
+            {(this.iconEnd && !this.isLoading) && (
               <span
                 class="input-group-text"
                 id={`${this.mId}-end`}
@@ -293,6 +298,17 @@ export class MSelect implements ComponentInterface {
                   />
                 )}
               </span>
+            )}
+            {this.isLoading && (
+              <div class="input-group-text form-control-icon loading">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </div>
             )}
           </div>
           {(this.hint) && (

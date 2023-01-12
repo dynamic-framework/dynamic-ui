@@ -128,4 +128,8 @@
     color: var(--#{$prefix}gray-light);
     background-color: var(--#{$prefix}light);
   }
+
+  .loading {
+    background: var(--#{$prefix}light);
+  }
 }
