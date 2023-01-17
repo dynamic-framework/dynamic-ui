@@ -2,7 +2,7 @@
 
 ## Setup
 
-+ `git clone --recurse-submodules git@github.com:modyolabs/modyo-design-system.git` use `--recurse-submodules` to clone the widgets submodules to
++ `git clone --recurse-submodules git@github.com:modyo-dynamic/modyo-design-system.git` use `--recurse-submodules` to clone the widgets submodules to
 + `cd modyo-design-system` to move to the cloned repository
 + `pnpm install` to install dependencies
 + `pnpm exec lerna run build --no-private` to build all the no private packages.
