@@ -186,6 +186,11 @@ export class MCounter {
     }
   }
 
+  @Watch('value')
+  watchValueHandler() {
+    this.internalValue = this.value;
+  }
+
   connectedCallback() {
     this.state = this.theme ? this.getTheme(this.theme) : undefined;
     this.internalValue = this.value;
