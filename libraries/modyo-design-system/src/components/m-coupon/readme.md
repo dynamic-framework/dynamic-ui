@@ -35,7 +35,7 @@
 | `layoutDirection`           | `layout-direction`              | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"` | `'vertical'`    |
 | `mId` _(required)_          | `m-id`                          | Id for the input                                                     | `string`                     | `undefined`     |
 | `placeholder`               | `placeholder`                   | Placeholder for the input                                            | `string \| undefined`        | `''`            |
-| `theme`                     | `theme`                         | Theme for the m-cupon                                                | `string \| undefined`        | `'primary'`     |
+| `theme`                     | `theme`                         | Theme for the m-cupon                                                | `string \| undefined`        | `undefined`     |
 | `type`                      | `type`                          | * The type of the input                                              | `"number" \| "text"`         | `'text'`        |
 
 

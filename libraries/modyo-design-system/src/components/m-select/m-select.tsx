@@ -229,7 +229,7 @@ export class MSelect implements ComponentInterface {
           <div
             class={{
               'input-group': true,
-              disabled: this.isDisabled,
+              disabled: this.isDisabled || this.isLoading,
             }}
           >
             {this.iconStart && (
@@ -254,7 +254,7 @@ export class MSelect implements ComponentInterface {
                 [`form-select-${this.theme}`]: this.variant !== 'prime' && !!this.theme,
               }}
               aria-describedby={`${this.mId}-start`}
-              disabled={this.isDisabled}
+              disabled={this.isDisabled || this.isLoading}
               onChange={this.changeHandler}
               onBlur={this.blurHandler}
             >
@@ -300,7 +300,7 @@ export class MSelect implements ComponentInterface {
               </span>
             )}
             {this.isLoading && (
-              <div class="input-group-text form-control-icon">
+              <div class="input-group-text form-control-icon loading">
                 <span
                   class="spinner-border spinner-border-sm"
                   role="status"
