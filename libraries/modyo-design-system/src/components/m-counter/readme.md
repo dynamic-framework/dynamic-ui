@@ -17,6 +17,7 @@
 | `hintIconStartFamilyClass`  | `hint-icon-start-family-class`  | Hint left icon family class                                          | `string \| undefined`        | `undefined`     |
 | `hintIconStartFamilyPrefix` | `hint-icon-start-family-prefix` | Hint left icon family class                                          | `string \| undefined`        | `undefined`     |
 | `isDisabled`                | `is-disabled`                   | Is disabled counter                                                  | `boolean`                    | `false`         |
+| `isLoading`                 | `is-loading`                    | Flag for loading state.                                              | `boolean`                    | `false`         |
 | `label`                     | `label`                         | Label of the input                                                   | `string \| undefined`        | `undefined`     |
 | `labelIcon`                 | `label-icon`                    | Icon for the label text                                              | `string`                     | `'info-circle'` |
 | `labelIconFamilyClass`      | `label-icon-family-class`       | Icon label family class                                              | `string \| undefined`        | `undefined`     |

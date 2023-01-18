@@ -42,6 +42,7 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'value',
   'type',
   'isPill',
+  'isLoading',
   'mClick'
 ]);
 
@@ -66,6 +67,7 @@ export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter',
   'variant',
   'layoutDirection',
   'isDisabled',
+  'isLoading',
   'mInput',
   'mClick'
 ]);
@@ -87,6 +89,7 @@ export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', un
   'iconEndFamilyClass',
   'iconEndFamilyPrefix',
   'hasSelect',
+  'isLoading',
   'placeholder',
   'type',
   'buttonText',
@@ -137,6 +140,7 @@ export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currenc
   'currencyOptions',
   'layoutDirection',
   'isDisabled',
+  'isLoading',
   'mChange'
 ]);
 
@@ -204,6 +208,7 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'type',
   'value',
   'isDisabled',
+  'isLoading',
   'iconStart',
   'iconStartFamilyClass',
   'iconStartFamilyPrefix',
@@ -300,6 +305,7 @@ export const MSearch = /*@__PURE__*/ defineContainer<JSX.MSearch>('m-search', un
   'type',
   'value',
   'isDisabled',
+  'isLoading',
   'isReadOnly',
   'iconEnd',
   'iconEndFamilyClass',
@@ -365,6 +371,7 @@ export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', un
   'selectedOption',
   'layoutDirection',
   'isDisabled',
+  'isLoading',
   'valueExtractor',
   'labelExtractor',
   'mChange',

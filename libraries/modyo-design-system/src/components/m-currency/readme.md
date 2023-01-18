@@ -27,6 +27,7 @@
 | `iconStartFamilyClass`         | `icon-start-family-class`       | Left icon family class                                               | `string \| undefined`             | `undefined`             |
 | `iconStartFamilyPrefix`        | `icon-start-family-prefix`      | Left icon family class                                               | `string \| undefined`             | `undefined`             |
 | `isDisabled`                   | `is-disabled`                   | The input is disabled                                                | `boolean`                         | `false`                 |
+| `isLoading`                    | `is-loading`                    | Flag for loading state.                                              | `boolean`                         | `false`                 |
 | `label`                        | `label`                         | Label for the input                                                  | `string`                          | `''`                    |
 | `labelExtractor`               | --                              | Callback to extract the label from the option                        | `(item: any) => string`           | `(item) => item?.label` |
 | `labelIcon`                    | `label-icon`                    | Icon for the label text                                              | `string`                          | `'info-circle'`         |

@@ -1,3 +1,5 @@
+$themes-coupon: map-remove($theme-colors, "light", "dark", "success", "info", "secondary") !default;
+
 .form-control-layout-coupon {
 
   .form-select {
@@ -7,6 +9,12 @@
     width: 3rem;
   }
 
+  label {
+    font-size: 1rem;
+    font-weight: $font-weight-semibold;
+    color: var(--#{$prefix}gray);
+  }
+
   .form-select,
   .form-control {
     border-width: 0;
@@ -14,17 +22,41 @@
     box-shadow: none;
   }
 
+  .input-group,
+  .form-select,
+  .form-control {
+    &.disabled,
+    &:disabled {
+      background-color: var(--#{$prefix}light);
+    }
+  }
+
+  .input-group-icon {
+    color: var(--#{$prefix}dark);
+  }
+
   .btn.small {
     --#{$prefix}btn-font-size: .625rem;
     --#{$prefix}btn-font-weight: $font-weight-semibold;
+    color: var(--#{$prefix}tertiary);
+  }
+
+  .input-group-text {
+    background: inherit;
   }
 }
 
-@each $color, $value in map-remove($theme-colors, "light", "dark") {
+@each $color, $value in $themes-coupon {
   .form-control-layout-coupon.form-control-theme-#{$color} {
-    label,
-    .input-group-text,
-    .input-group-icon,
+    .btn.small {
+      color: var(--#{$prefix}#{$color});
+    }
+  }
+}
+
+@each $color, $value in $themes-coupon {
+  .form-control-layout-coupon.form-control-theme-#{$color} {
+    .form-control-icon.icon-end,
     .hint {
       color: var(--#{$prefix}#{$color});
     }
@@ -38,8 +70,7 @@
 @each $color, $value in map-remove($theme-colors-hover, "light", "dark") {
   .form-control-layout-coupon:hover.form-control-theme-#{$color},
   .form-control-layout-coupon.hover.form-control-theme-#{$color} {
-    .input-group-text,
-    .input-group-icon {
+    .form-control-icon.icon-end {
       color: var(--#{$prefix}#{$color});
     }
 

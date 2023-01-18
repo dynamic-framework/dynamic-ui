@@ -92,6 +92,11 @@ export class MCoupon implements ComponentInterface {
   @Prop() hasSelect = false;
 
   /**
+   * Flag for loading state.
+  */
+  @Prop() isLoading = false;
+
+  /**
    * Placeholder for the input
    * */
   @Prop() placeholder?: string = '';
@@ -144,7 +149,7 @@ export class MCoupon implements ComponentInterface {
   /**
    * Theme for the m-cupon
    * */
-  @Prop() theme? = 'primary';
+  @Prop() theme?: string;
 
   /**
    * Change the layout direction to put the label on top or left of input
@@ -179,7 +184,7 @@ export class MCoupon implements ComponentInterface {
   private generateHostClasses(): ClassMap {
     return {
       'form-control-layout form-control-layout-coupon': true,
-      [`form-control-theme-${this.theme}`]: true,
+      [`form-control-theme-${this.theme}`]: !!this.theme,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
     };
   }
@@ -201,7 +206,11 @@ export class MCoupon implements ComponentInterface {
           </label>
         )}
         <div class="form-control-input">
-          <div class="input-group">
+          <div class={{
+            'input-group': true,
+            disabled: this.isLoading,
+          }}
+          >
             {this.iconStart && (
               <span
                 class="input-group-text"
@@ -219,9 +228,10 @@ export class MCoupon implements ComponentInterface {
             )}
             {this.hasSelect && (
               <select
-               // eslint-disable-next-line no-return-assign
+                // eslint-disable-next-line no-return-assign
                 ref={(el) => (this.htmlSelect = el as HTMLSelectElement)}
                 class="form-select"
+                disabled={this.isLoading}
               >
                 <slot />
               </select>
@@ -235,6 +245,7 @@ export class MCoupon implements ComponentInterface {
               placeholder={this.placeholder}
               aria-label={this.label}
               aria-describedby={`${this.mId}-add`}
+              disabled={this.isLoading}
             />
             {this.iconMiddle && (
               <span
@@ -249,30 +260,46 @@ export class MCoupon implements ComponentInterface {
                 />
               </span>
             )}
-            <button
-              class={`btn btn-text-${this.theme} fw-semibold text-uppercase small`}
-              onClick={this.clickHandler}
-            >
-              {this.buttonText}
-            </button>
-            {this.iconEnd && (
+            {!this.isLoading && (
+              <button
+                class={{
+                  'btn fw-semibold text-uppercase small': true,
+                  [`btn-text-${this.theme}`]: !!this.theme,
+                }}
+                onClick={this.clickHandler}
+              >
+                {this.buttonText}
+              </button>
+            )}
+            {(this.iconEnd && !this.isLoading) && (
               <span
                 class="input-group-text"
                 id={`${this.mId}-end`}
               >
                 <m-icon
-                  class="form-control-icon"
+                  class="form-control-icon icon-end"
                   icon={this.iconEnd}
                   familyClass={this.iconEndFamilyClass}
                   familyPrefix={this.iconEndFamilyPrefix}
                 />
               </span>
             )}
+            {this.isLoading && (
+              <div class="input-group-text form-control-icon">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </div>
+            )}
           </div>
           {this.hint && (
             <m-hint
               text={this.hint}
-              theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : 'info'}
+              theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : undefined}
               {...(this.hintIconStart && ({
                 iconStart: this.hintIconStart,
                 iconStartFamilyClass: this.hintIconStartFamilyClass,
