@@ -279,7 +279,7 @@ importers:
       '@types/react-dom': ^18.0.3
       '@typescript-eslint/eslint-plugin': ^5.13.0
       '@typescript-eslint/parser': ^5.0.0
-      axios: ^1.1.2
+      axios: ~1.1.2
       babel-loader: ^8.2.5
       eslint: 8.22.0
       eslint-config-airbnb-base: ^15.0.0
@@ -374,7 +374,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.2.1_guevbirpu4drzctypqn24ueqhm
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -552,7 +552,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.2.1_guevbirpu4drzctypqn24ueqhm
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -634,7 +634,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.2.1_guevbirpu4drzctypqn24ueqhm
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -713,7 +713,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.2.1_guevbirpu4drzctypqn24ueqhm
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -792,7 +792,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.2.1_guevbirpu4drzctypqn24ueqhm
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -882,7 +882,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.2.1_guevbirpu4drzctypqn24ueqhm
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -974,7 +974,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.2.1_guevbirpu4drzctypqn24ueqhm
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -1064,7 +1064,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.2.1_guevbirpu4drzctypqn24ueqhm
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -5854,6 +5854,20 @@ packages:
   /@mdx-js/util/1.6.22:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
     dev: true
+
+  /@modyo-dynamic/modyo-service-retail/0.2.1_guevbirpu4drzctypqn24ueqhm:
+    resolution: {integrity: sha512-nTGBsgb7LoTBSEv9Xc6YxzHZJ41XxVWxSuMQAn3AiU3RcIRVKXqUw09rCyY5BWtj9UO/RgKPp0rW7o/q3ddCsw==, tarball: download/@modyo-dynamic/modyo-service-retail/0.2.1/5aef433a4eefa094b84aaa36074d7524d70a47fb}
+    peerDependencies:
+      '@modyo-dynamic/modyo-design-system': '*'
+      luxon: ~3.0.4
+    dependencies:
+      '@modyo-dynamic/modyo-design-system': link:libraries/modyo-design-system
+      axios: 1.1.3
+      lodash.uniqueid: 4.0.1
+      luxon: 3.0.4
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@modyo/cli/3.1.27:
     resolution: {integrity: sha512-XkvdzUwGEghFZmXVSn5NYEaAnWjnVRq2IQmwDU1Va3v5dB2+Ux4HJxwxNXhN5cEhYOf2Wtz7zpwhAHcC/xBM5A==, tarball: download/@modyo/cli/3.1.27/63ca3536d24abf1e6a463638f5911ca693df8c1c}
