@@ -74,6 +74,10 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * Flag for loading state and disable button.
+         */
+        "isLoading": boolean;
+        /**
           * Flag to switch to pill button border radius.
          */
         "isPill": boolean;
@@ -135,6 +139,10 @@ export namespace Components {
           * Is disabled counter
          */
         "isDisabled": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
         /**
           * Label of the input
          */
@@ -254,6 +262,10 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
           * Label for the input
          */
         "label": string;
@@ -284,7 +296,7 @@ export namespace Components {
         /**
           * Theme for the m-cupon
          */
-        "theme"?: string | undefined;
+        "theme"?: string;
         /**
           * * The type of the input
          */
@@ -363,6 +375,10 @@ export namespace Components {
           * The input is disabled
          */
         "isDisabled": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
         /**
           * Label for the input
          */
@@ -629,6 +645,10 @@ export namespace Components {
           * Add is-invalid class
          */
         "isInvalid": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
         /**
           * The label text
          */
@@ -908,6 +928,10 @@ export namespace Components {
          */
         "isDisabled": boolean;
         /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
           * Flag to read only the input
          */
         "isReadOnly": boolean;
@@ -1061,6 +1085,10 @@ export namespace Components {
           * The select is disabled
          */
         "isDisabled": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
         /**
           * The label of the select in full variant
          */
@@ -1441,6 +1469,10 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * Flag for loading state and disable button.
+         */
+        "isLoading"?: boolean;
+        /**
           * Flag to switch to pill button border radius.
          */
         "isPill"?: boolean;
@@ -1506,6 +1538,10 @@ declare namespace LocalJSX {
           * Is disabled counter
          */
         "isDisabled"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
         /**
           * Label of the input
          */
@@ -1633,6 +1669,10 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
           * Label for the input
          */
         "label"?: string;
@@ -1667,7 +1707,7 @@ declare namespace LocalJSX {
         /**
           * Theme for the m-cupon
          */
-        "theme"?: string | undefined;
+        "theme"?: string;
         /**
           * * The type of the input
          */
@@ -1746,6 +1786,10 @@ declare namespace LocalJSX {
           * The input is disabled
          */
         "isDisabled"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
         /**
           * Label for the input
          */
@@ -2024,6 +2068,10 @@ declare namespace LocalJSX {
           * Add is-invalid class
          */
         "isInvalid"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
         /**
           * The label text
          */
@@ -2327,6 +2375,10 @@ declare namespace LocalJSX {
          */
         "isDisabled"?: boolean;
         /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
           * Flag to read only the input
          */
         "isReadOnly"?: boolean;
@@ -2492,6 +2544,10 @@ declare namespace LocalJSX {
           * The select is disabled
          */
         "isDisabled"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
         /**
           * The label of the select in full variant
          */

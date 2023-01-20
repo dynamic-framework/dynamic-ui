@@ -61,6 +61,11 @@ export class MSearch implements ComponentInterface {
   @Prop() isDisabled = false;
 
   /**
+   * Flag for loading state.
+  */
+  @Prop() isLoading = false;
+
+  /**
     * Flag to read only the input
     */
   @Prop() isReadOnly = false;
@@ -160,7 +165,7 @@ export class MSearch implements ComponentInterface {
       [`form-control-layout-search-${this.theme}`]: !!this.theme,
       [`form-control-layout-${this.variant}`]: !!this.variant,
       'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
-      disabled: this.isDisabled,
+      disabled: this.isDisabled || this.isLoading,
       readonly: this.isReadOnly,
     };
   }
@@ -191,13 +196,13 @@ export class MSearch implements ComponentInterface {
               class="form-control"
               placeholder={this.placeholder}
               aria-label={this.label}
-              disabled={this.isDisabled}
+              disabled={this.isDisabled || this.isLoading}
               readOnly={this.isReadOnly}
               value={this.value}
               aria-describedby={`${this.mId}-add`}
               onInput={this.changeHandler}
             />
-            {(this.iconEnd && !!this.theme) && (
+            {(this.iconEnd && !!this.theme && !this.isLoading) && (
               <span
                 class="input-group-text"
                 id={`${this.mId}-end`}
@@ -212,15 +217,28 @@ export class MSearch implements ComponentInterface {
                 )}
               </span>
             )}
-            <button
-              class="btn btn-text btn-search"
-              disabled={this.isDisabled}
-              onClick={this.clickHandler}
-            >
-              <m-icon
-                icon="search"
-              />
-            </button>
+            {this.isLoading && (
+              <div class="input-group-text form-control-icon">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </div>
+            )}
+            {!this.isLoading && (
+              <button
+                class="btn btn-text btn-search"
+                disabled={this.isDisabled}
+                onClick={this.clickHandler}
+              >
+                <m-icon
+                  icon="search"
+                />
+              </button>
+            )}
           </div>
           {this.hint && (
             <small class="hint">

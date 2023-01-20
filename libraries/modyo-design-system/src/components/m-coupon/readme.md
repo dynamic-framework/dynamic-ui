@@ -27,6 +27,7 @@
 | `iconStart`                 | `icon-start`                    | Icon of the left                                                     | `string \| undefined`        | `undefined`     |
 | `iconStartFamilyClass`      | `icon-start-family-class`       | Left icon family class                                               | `string \| undefined`        | `undefined`     |
 | `iconStartFamilyPrefix`     | `icon-start-family-prefix`      | Left icon family class                                               | `string \| undefined`        | `undefined`     |
+| `isLoading`                 | `is-loading`                    | Flag for loading state.                                              | `boolean`                    | `false`         |
 | `label`                     | `label`                         | Label for the input                                                  | `string`                     | `''`            |
 | `labelIcon`                 | `label-icon`                    | Icon for the label text                                              | `string`                     | `'info-circle'` |
 | `labelIconFamilyClass`      | `label-icon-family-class`       | Icon label family class                                              | `string \| undefined`        | `undefined`     |
@@ -34,7 +35,7 @@
 | `layoutDirection`           | `layout-direction`              | Change the layout direction to put the label on top or left of input | `"horizontal" \| "vertical"` | `'vertical'`    |
 | `mId` _(required)_          | `m-id`                          | Id for the input                                                     | `string`                     | `undefined`     |
 | `placeholder`               | `placeholder`                   | Placeholder for the input                                            | `string \| undefined`        | `''`            |
-| `theme`                     | `theme`                         | Theme for the m-cupon                                                | `string \| undefined`        | `'primary'`     |
+| `theme`                     | `theme`                         | Theme for the m-cupon                                                | `string \| undefined`        | `undefined`     |
 | `type`                      | `type`                          | * The type of the input                                              | `"number" \| "text"`         | `'text'`        |
 
 

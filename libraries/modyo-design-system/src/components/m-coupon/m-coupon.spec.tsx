@@ -14,11 +14,11 @@ it('should render base coupon', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-coupon class="form-control-layout form-control-layout-coupon form-control-theme-primary">
+    <m-coupon class="form-control-layout form-control-layout-coupon">
       <div class="form-control-input">
         <div class="input-group">
           <input aria-describedby="${props.mId}-add" aria-label="" class="form-control" id="${props.mId}" placeholder="" type="text">
-          <button class="btn btn-text-primary fw-semibold small text-uppercase">
+          <button class="btn fw-semibold small text-uppercase">
             Apply
           </button>
         </div>

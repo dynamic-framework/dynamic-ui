@@ -12,11 +12,11 @@
   "unpkg": "dist/design-system/design-system.esm.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/modyolabs/modyo-design-system.git"
+    "url": "git+https://github.com/modyo-dynamic/modyo-design-system.git"
   },
   "bugs": {
     "type": "git",
-    "url": "https://github.com/modyolabs/modyo-design-system.git"
+    "url": "https://github.com/modyo-dynamic/modyo-design-system.git"
   },
   "author": {
     "name": "Abraham José González Barboza",

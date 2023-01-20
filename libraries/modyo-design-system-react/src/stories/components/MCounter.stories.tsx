@@ -59,6 +59,9 @@ const config: ComponentMeta<typeof MCounter> = {
     isDisabled: {
       control: 'boolean',
     },
+    isLoading: {
+      control: 'boolean',
+    },
   },
 };
 
