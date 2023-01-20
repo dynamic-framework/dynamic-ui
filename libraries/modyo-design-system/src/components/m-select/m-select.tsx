@@ -262,7 +262,8 @@ export class MSelect implements ComponentInterface {
                 <option
                   value={this.valueExtractor(option)}
                   selected={
-                    this.valueExtractor(option) === this.valueExtractor(this.selectedOption)
+                    this.selectedOption
+                      && this.valueExtractor(option) === this.valueExtractor(this.selectedOption)
                   }
                 >
                   {this.labelExtractor(option)}

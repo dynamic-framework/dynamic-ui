@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.4.0...@modyo-dynamic/modyo-design-system@0.5.0) (2023-01-20)
+
+### Features
+
+- watch counter value ([75483dc](https://github.com/modyo-dynamic/modyo-design-system/commit/75483dcd6a7e45e6c6b16d99e02459c8063f3a87))
+
+### Bug Fixes
+
+- m-select w/o selected option ([93508c3](https://github.com/modyo-dynamic/modyo-design-system/commit/93508c37559629681508896b1a19ce480fa758a3))
+
 ## 0.4.0 (2023-01-05)
 
 ### Features
