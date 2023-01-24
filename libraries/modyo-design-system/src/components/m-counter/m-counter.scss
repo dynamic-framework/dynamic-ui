@@ -1,67 +1,70 @@
-.form-control {
-  display: flex;
-  gap: #{$spacer-2};
-  align-items: center;
-  justify-content: center;
-}
+.form-control-layout-counter {
+  .form-control {
+    display: flex;
+    gap: #{$spacer-2};
+    align-items: center;
+    justify-content: center;
+  }
 
-.form-control-spacer {
-  display: block;
-  min-width: 12px;
-  min-height: 12px;
-  background-color: transparent;
-  border-radius: 50rem;
-}
+  .form-control-spacer {
+    display: block;
+    min-width: 12px;
+    min-height: 12px;
+    background-color: transparent;
+    border-radius: 50rem;
+  }
 
-.form-control-counter {
-  display: flex;
-  gap: #{$spacer-1};
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  .form-control-counter {
+    display: flex;
+    gap: #{$spacer-1};
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 
-  .form-control-counter-input {
-    display: inline-block;
-    flex-grow: 1;
-    height: 24px;
-    font-weight: 700;
-    text-align: center;
-    border: 0;
-    outline: 0;
-
-    :focus,
-    :focus-visible {
+    .form-control-counter-input {
+      display: inline-block;
+      flex-grow: 1;
+      height: 24px;
+      font-weight: 700;
+      text-align: center;
+      border: 0;
       outline: 0;
+
+      :focus,
+      :focus-visible {
+        outline: 0;
+      }
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    .form-control-counter-input::-webkit-outer-spin-button,
+    .form-control-counter-input::-webkit-inner-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    .form-control-counter-input[type="number"] {
+      appearance: textfield;
     }
   }
 
-  /* Chrome, Safari, Edge, Opera */
-  .form-control-counter-input::-webkit-outer-spin-button,
-  .form-control-counter-input::-webkit-inner-spin-button {
-    appearance: none;
-    margin: 0;
-  }
-
-  /* Firefox */
-  .form-control-counter-input[type="number"] {
-    appearance: textfield;
+  .form-control-counter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 1.5rem;
+    color: var(--#{$prefix}tertiary);
+    background-color: rgba($color: var(--#{$prefix}tertiary-rgb), $alpha: .1);
+    border: 0;
+    border-radius: .5rem;
   }
 }
 
-.form-control-counter-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  font-size: 1.5rem;
-  color: var(--#{$prefix}tertiary);
-  background-color: rgba($color: var(--#{$prefix}tertiary-rgb), $alpha: .1);
-  border: 0;
-  border-radius: .5rem;
-}
-
-@each $color, $value in map-remove($theme-colors, "light", "dark", "primary", "secondary", "success", "info") {
+@each $color,
+  $value in map-remove($theme-colors, "light", "dark", "primary", "secondary", "success", "info") {
   .form-control-layout-counter.form-control-theme-#{$color} {
     .form-control-counter-btn {
       color: var(--#{$prefix}#{$color});
@@ -75,7 +78,8 @@
   }
 }
 
-@each $color, $value in $state-colors {
+@each $color,
+  $value in $state-colors {
   .form-control-layout-counter.form-control-theme-#{$color} {
     .form-control-icon.icon-state {
       font-size: 1rem;
