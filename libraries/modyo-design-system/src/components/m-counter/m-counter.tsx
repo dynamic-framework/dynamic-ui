@@ -271,7 +271,7 @@ export class MCounter {
           {this.hint && (
             <m-hint
               text={this.hint}
-              theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : 'info'}
+              theme={this.state ? this.getTheme(this.state) : undefined}
               {...(this.hintIconStart && ({
                 iconStart: this.hintIconStart,
                 iconStartFamilyClass: this.hintIconStartFamilyClass,
