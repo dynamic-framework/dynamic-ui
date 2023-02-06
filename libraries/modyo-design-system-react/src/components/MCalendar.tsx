@@ -89,7 +89,8 @@ export default function MCalendar({
       autoFocus={autoFocus}
       monthsShown={monthsShown}
       fixedHeight={fixedHeight}
-      locale={LANG}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...LANG && { locale: LANG }}
     />
   );
 }
