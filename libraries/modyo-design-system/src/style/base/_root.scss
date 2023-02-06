@@ -6,3 +6,7 @@
     --#{$prefix}#{$color}-hover-rgb: #{to-rgb($value)};
   }
 }
+
+.flex-1 {
+  flex: 1;
+}

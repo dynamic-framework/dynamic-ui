@@ -1,7 +1,11 @@
 import React from 'react';
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import DatePicker, { ReactDatePickerProps, registerLocale } from 'react-datepicker';
 import { DateTime } from 'luxon';
+import { liquidParser } from '@modyo-dynamic/modyo-design-system';
 import 'react-datepicker/dist/react-datepicker.css';
+import es from 'date-fns/locale/es';
+
+registerLocale('es', es);
 
 export declare interface CalendarProps {
   date: string;
@@ -50,6 +54,8 @@ export default function MCalendar({
 }: CalendarProps) {
   const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
 
+  const LANG = liquidParser.parse('{{site.language}}') === 'en' ? undefined : 'es';
+
   return (
     <DatePicker
       selected={dateJS(date)}
@@ -83,6 +89,8 @@ export default function MCalendar({
       autoFocus={autoFocus}
       monthsShown={monthsShown}
       fixedHeight={fixedHeight}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...LANG && { locale: LANG }}
     />
   );
 }
