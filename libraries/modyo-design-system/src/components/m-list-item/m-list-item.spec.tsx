@@ -48,7 +48,7 @@ it('should render my component with variant default', async () => {
   expect(page.root).toEqualHtml(`
     <m-list-item class="list-group-item list-group-item-variant">
       <div class="gap-2">
-        <div class="d-flex flex-column flex-grow-1">
+        <div class="d-flex flex-column flex-1">
           <span class="d-block fs-6 fw-bold lh-3 text-dark">
             ${listItem.text}
           </span>

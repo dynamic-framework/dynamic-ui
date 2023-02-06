@@ -201,7 +201,7 @@ export class MListItem implements ComponentInterface {
                 )}
               </div>
             )}
-            <div class="d-flex flex-column flex-grow-1">
+            <div class="d-flex flex-column flex-1">
               <span class="d-block fw-bold fs-6 text-dark lh-3">
                 {this.text}
               </span>
@@ -211,7 +211,7 @@ export class MListItem implements ComponentInterface {
                 </small>
               )}
             </div>
-            {this.value !== null && (
+            {this.value !== undefined && (
               <div class="d-flex flex-column flex-grow-1 text-end">
                 <span class={`fw-bold lh-3 text-${this.themeValue}`}>
                   {this.value}
