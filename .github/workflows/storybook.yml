@@ -1,19 +1,17 @@
-name: Checks
+name: Storybook
 on:
-  pull_request:
-    types: [opened, edited, reopened, synchronize]
+  push:
     branches:
-      - master
-      - develop
+      - feat/storybook-publish
 
 jobs:
-  checks:
-    name: Lint and Test
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Checkout packages submodules.
         run: git submodule update --init packages/stencil-eslint-plugin
       - uses: pnpm/action-setup@v2.2.2
@@ -32,9 +30,13 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build packages
         run: pnpm build
-      - name: Lint packages
-        run: |
-          pnpm exec lerna run eslint --no-private
-          pnpm exec lerna run stylelint --no-private
-      - name: Test packages
-        run: pnpm exec lerna run test --no-private
+      - name: Build storybook
+        run: pnpm build:storybook:react
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: master
+          FOLDER: docs
+          CLEAN: true
+          TARGET_FOLDER: docs

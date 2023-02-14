@@ -35,7 +35,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build packages
-        run: pnpm exec lerna run build --no-private
+        run: pnpm build
       - name: Version and publish packages
         run: |
           pnpm set @modyo-dynamic:registry=https://npm.pkg.github.com/
