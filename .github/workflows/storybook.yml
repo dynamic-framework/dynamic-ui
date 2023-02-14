@@ -40,3 +40,4 @@ jobs:
           FOLDER: libraries/modyo-design-system-react/docs
           CLEAN: true
           TARGET_FOLDER: docs
+          COMMIT_MESSAGE: 'doc: update storybook'
