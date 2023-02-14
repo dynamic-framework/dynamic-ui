@@ -1,0 +1,33 @@
+{
+  "entries": [
+    "./components/m-alert/m-alert.js",
+    "./components/m-app/m-app.js",
+    "./components/m-badge/m-badge.js",
+    "./components/m-button/m-button.js",
+    "./components/m-counter/m-counter.js",
+    "./components/m-coupon/m-coupon.js",
+    "./components/m-currency/m-currency.js",
+    "./components/m-form-check/m-form-check.js",
+    "./components/m-form-switch/m-form-switch.js",
+    "./components/m-hint/m-hint.js",
+    "./components/m-icon/m-icon.js",
+    "./components/m-input/m-input.js",
+    "./components/m-list-item/m-list-item.js",
+    "./components/m-modal/m-modal.js",
+    "./components/m-offcanvas/m-offcanvas.js",
+    "./components/m-quick-action/m-quick-action.js",
+    "./components/m-search/m-search.js",
+    "./components/m-segment-control/m-segment-control.js",
+    "./components/m-segment-control-item/m-segment-control-item.js",
+    "./components/m-select/m-select.js",
+    "./components/m-shortcut-toggle/m-shortcut-toggle.js"
+  ],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "2.19.2",
+    "typescriptVersion": "4.7.4"
+  },
+  "collections": [],
+  "bundles": [],
+  "global": "./global/initialize.js"
+}

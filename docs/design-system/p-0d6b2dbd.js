@@ -1,0 +1,1 @@
+const c={warning:"exclamation-circle",danger:"exclamation-triangle",success:"check-lg",info:"info-circle",light:"info-circle"},i="bs-";export{c as I,i as p}
