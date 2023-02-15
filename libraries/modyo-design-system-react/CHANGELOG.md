@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.4...@modyo-dynamic/modyo-design-system-react@0.6.0) (2023-02-15)
+
+### Features
+
+- add hooks to download, share and take a screenshot ([1ab6a30](https://github.com/modyo-dynamic/modyo-design-system/commit/1ab6a304016b0cb3212272fd3050a2690e455a33))
+- setup storybook publish on gh pages ([5da3826](https://github.com/modyo-dynamic/modyo-design-system/commit/5da3826880bb39ebe4bb5d55a18fc48f978e6a0b))
+
 ## [0.5.4](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.3...@modyo-dynamic/modyo-design-system-react@0.5.4) (2023-02-06)
 
 ### Bug Fixes
