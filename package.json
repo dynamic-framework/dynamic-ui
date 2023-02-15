@@ -14,6 +14,7 @@
     "prepare": "husky install",
     "build": "lerna run build --no-private",
     "clean": "lerna clean",
-    "storybook:react": "pnpm run --filter=@modyo-dynamic/modyo-design-system-react storybook"
+    "storybook:react": "pnpm run --filter=@modyo-dynamic/modyo-design-system-react storybook",
+    "build:storybook:react": "pnpm run --filter=@modyo-dynamic/modyo-design-system-react build-storybook"
   }
 }
