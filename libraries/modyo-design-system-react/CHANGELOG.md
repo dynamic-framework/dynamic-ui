@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.4](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.3...@modyo-dynamic/modyo-design-system-react@0.5.4) (2023-02-06)
+
+### Bug Fixes
+
+- declare LANG into component ([ae21a5c](https://github.com/modyo-dynamic/modyo-design-system/commit/ae21a5c405832a7ae90ffe65ce57dc378d7e3d1d))
+
 ## [0.5.3](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.2...@modyo-dynamic/modyo-design-system-react@0.5.3) (2023-01-27)
 
 **Note:** Version bump only for package @modyo-dynamic/modyo-design-system-react
