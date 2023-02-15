@@ -8933,6 +8933,9 @@ textarea.form-control-lg {
   border-radius: var(--bs-border-radius-sm);
   outline: 0;
 }
+.react-datepicker .react-datepicker__current-month {
+  text-transform: capitalize;
+}
 
 .react-datepicker.calendar-start .react-datepicker__day--selected.react-datepicker__day--selecting-range-start, .react-datepicker.calendar-start .react-datepicker__day--selected.react-datepicker__day--range-start,
 .react-datepicker.calendar-start .react-datepicker__day--in-selecting-range.react-datepicker__day--selecting-range-start,
