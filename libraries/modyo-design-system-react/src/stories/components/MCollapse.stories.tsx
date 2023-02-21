@@ -9,13 +9,12 @@ const config: ComponentMeta<typeof MCollapse> = {
     Component: {
       options: ['Text', 'Custom'],
       mapping: {
-        Text: "Simple text",
-        Custom:
-          <div className="d-flex gap-3">
-            <h4 className="m-0 fw-bold">
-              Custom component
-            </h4>
-          </div>,
+        Text: 'Simple text',
+        Custom: <div className="d-flex gap-3">
+          <h4 className="m-0 fw-bold">
+            Custom component
+          </h4>
+        </div>,
       },
     },
     isCollapsed: {
