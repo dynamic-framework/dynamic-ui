@@ -27,7 +27,7 @@ const config: ComponentMeta<typeof MProgressBar> = {
 export default config;
 
 const Template: ComponentStory<typeof MProgressBar> = (args) => (
-  <div className={`d-flex justify-content-center p-3 ${args.enableDarkMode ? 'bg-tertiary' : ''}`}>
+  <div className="d-flex justify-content-center p-3">
     <MProgressBar {...args} />
   </div>
 );
