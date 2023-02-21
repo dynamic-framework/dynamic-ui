@@ -20,7 +20,7 @@ const config: ComponentMeta<typeof MProgressBar> = {
     },
     enableDarkMode: {
       control: 'boolean',
-    }
+    },
   },
 };
 
