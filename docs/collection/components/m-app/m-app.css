@@ -7731,6 +7731,60 @@ progress {
     --bs-spinner-animation-speed: 1.5s;
   }
 }
+@keyframes progress-bar-stripes {
+  0% {
+    background-position-x: 0.5rem;
+  }
+}
+.progress {
+  --bs-progress-height: 0.5rem;
+  --bs-progress-font-size: 0.75rem;
+  --bs-progress-bg: #dddce1;
+  --bs-progress-border-radius: 1rem;
+  --bs-progress-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+  --bs-progress-bar-color: #fff;
+  --bs-progress-bar-bg: #4848b7;
+  --bs-progress-bar-transition: width 0.6s ease;
+  display: flex;
+  height: var(--bs-progress-height);
+  overflow: hidden;
+  font-size: var(--bs-progress-font-size);
+  background-color: var(--bs-progress-bg);
+  border-radius: var(--bs-progress-border-radius);
+  box-shadow: var(--bs-progress-box-shadow);
+}
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--bs-progress-bar-color);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--bs-progress-bar-bg);
+  transition: var(--bs-progress-bar-transition);
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar {
+    transition: none;
+  }
+}
+
+.progress-bar-striped {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: var(--bs-progress-height) var(--bs-progress-height);
+}
+
+.progress-bar-animated {
+  animation: 1s linear infinite progress-bar-stripes;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar-animated {
+    animation: none;
+  }
+}
+
 .form-label {
   margin-bottom: 0.5rem;
   font-size: 1rem;
@@ -8967,4 +9021,55 @@ textarea.form-control-lg {
 .react-datepicker.calendar-end .react-datepicker__day--in-range.react-datepicker__day--selecting-range-end:hover,
 .react-datepicker.calendar-end .react-datepicker__day--in-range.react-datepicker__day--range-end:hover {
   background-color: rgba(var(--bs-tertiary-rgb), 0.7);
+}
+
+.m-collapse {
+  --bs-bg-color: #fff;
+  --bs-border-radius: 1rem;
+  --bs-box-shadow: 0 8px 12px rgba(29, 25, 41, .05);
+  --bs-focus-outline: #a0a2fe solid 2px;
+  --bs-focus-outline-offset: -2px;
+  --bs-button-padding-x: 1.5rem;
+  --bs-button-padding-y: .5rem;
+  --bs-button-gap: 1rem;
+  --bs-body-padding-x: 1.5rem;
+  --bs-body-padding-y: 1rem;
+  --bs-separator-padding-top: 1rem;
+  --bs-separator-height: 1px;
+  --bs-separator-bg: #d5d4e6;
+}
+.m-collapse.collapse-container {
+  background-color: var(--bs-bg-color);
+  border-radius: var(--bs-border-radius);
+  box-shadow: var(--bs-box-shadow);
+}
+.m-collapse.collapse-container:focus-within {
+  outline: var(--bs-focus-outline);
+  outline-offset: var(--bs-focus-outline-offset);
+}
+.m-collapse .collapse-button {
+  display: flex;
+  gap: var(--bs-button-gap);
+  align-items: center;
+  padding: var(--bs-button-padding-y) var(--bs-button-padding-x);
+  user-select: none;
+}
+.m-collapse .collapse-button:focus, .m-collapse .collapse-button:focus-visible {
+  outline: 0;
+}
+.m-collapse .collapse-body {
+  position: relative;
+  padding: var(--bs-body-padding-y) var(--bs-body-padding-x);
+  padding-top: 0;
+}
+.m-collapse .collapse-body.separator {
+  padding-top: var(--bs-separator-padding-top);
+}
+.m-collapse .collapse-body .collapse-body-separator {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: calc(100% - var(--bs-body-padding-x) * 2);
+  height: var(--bs-separator-height);
+  background-color: var(--bs-separator-bg);
 }

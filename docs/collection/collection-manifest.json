@@ -15,6 +15,7 @@
     "./components/m-list-item/m-list-item.js",
     "./components/m-modal/m-modal.js",
     "./components/m-offcanvas/m-offcanvas.js",
+    "./components/m-progress-bar/m-progress-bar.js",
     "./components/m-quick-action/m-quick-action.js",
     "./components/m-search/m-search.js",
     "./components/m-segment-control/m-segment-control.js",
