@@ -1,0 +1,63 @@
+.m-collapse {
+  // Container
+  --#{$prefix}bg-color: #fff;
+  --#{$prefix}border-radius: 1rem;
+  --#{$prefix}box-shadow: 0 8px 12px rgba(29, 25, 41, .05);
+  --#{$prefix}focus-outline: #a0a2fe solid 2px;
+  --#{$prefix}focus-outline-offset: -2px;
+  // Button
+  --#{$prefix}button-padding-x: 1.5rem;
+  --#{$prefix}button-padding-y: .5rem;
+  --#{$prefix}button-gap: 1rem;
+  // Body
+  --#{$prefix}body-padding-x: 1.5rem;
+  --#{$prefix}body-padding-y: 1rem;
+  // Separator
+  --#{$prefix}separator-padding-top: 1rem;
+  --#{$prefix}separator-height: 1px;
+  --#{$prefix}separator-bg: #d5d4e6;
+
+  &.collapse-container {
+
+    background-color: var(--#{$prefix}bg-color);
+    border-radius: var(--#{$prefix}border-radius);
+    box-shadow: var(--#{$prefix}box-shadow);
+
+    &:focus-within {
+      outline: var(--#{$prefix}focus-outline);
+      outline-offset: var(--#{$prefix}focus-outline-offset);
+    }
+  }
+
+  .collapse-button {
+    display: flex;
+    gap: var(--#{$prefix}button-gap);
+    align-items: center;
+    padding: var(--#{$prefix}button-padding-y) var(--#{$prefix}button-padding-x);
+    user-select: none;
+
+    &:focus,
+    &:focus-visible {
+      outline: 0;
+    }
+  }
+
+  .collapse-body {
+    position: relative;
+    padding: var(--#{$prefix}body-padding-y) var(--#{$prefix}body-padding-x);
+    padding-top: 0;
+
+    &.separator {
+      padding-top: var(--#{$prefix}separator-padding-top);
+    }
+
+    .collapse-body__separator {
+      position: absolute;
+      top: 0;
+      display: block;
+      width: calc(100% - (var(--#{$prefix}body-padding-x) * 2));
+      height: var(--#{$prefix}separator-height);
+      background-color: var(--#{$prefix}separator-bg);
+    }
+  }
+}
