@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useState, PropsWithChildren, ReactNode } from 'react';
 import { MIcon } from './proxies';
 
-type CollapseProps = PropsWithChildren<{
+type Props = PropsWithChildren<{
   id?: string;
   Component: JSX.Element | ReactNode;
   hasSeparator?: boolean;
@@ -15,7 +15,7 @@ export default function MCollapse({
   hasSeparator = false,
   isCollapsed = true,
   children,
-}: CollapseProps) {
+}: Props) {
   const [toggle, setToggle] = useState(isCollapsed);
 
   return (
@@ -43,7 +43,7 @@ export default function MCollapse({
           })}
         >
           {hasSeparator && (
-            <div className="collapse-body__separator" />
+            <div className="collapse-body-separator" />
           )}
           {children}
         </div>

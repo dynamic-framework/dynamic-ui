@@ -18,7 +18,6 @@
   --#{$prefix}separator-bg: #d5d4e6;
 
   &.collapse-container {
-
     background-color: var(--#{$prefix}bg-color);
     border-radius: var(--#{$prefix}border-radius);
     box-shadow: var(--#{$prefix}box-shadow);
@@ -51,7 +50,7 @@
       padding-top: var(--#{$prefix}separator-padding-top);
     }
 
-    .collapse-body__separator {
+    .collapse-body-separator {
       position: absolute;
       top: 0;
       display: block;
