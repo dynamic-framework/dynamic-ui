@@ -280,9 +280,9 @@ export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offca
 
 
 export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-progress-bar', undefined, [
-  'valueCurrent',
-  'valueMin',
-  'valueMax',
+  'currentValue',
+  'minValue',
+  'maxValue',
   'classNameContainer',
   'classNameProgress',
   'classNameBar',

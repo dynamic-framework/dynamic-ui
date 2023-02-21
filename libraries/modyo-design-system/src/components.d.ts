@@ -850,6 +850,10 @@ export namespace Components {
          */
         "classNameProgress"?: string;
         /**
+          * Current progress-bar value
+         */
+        "currentValue": number;
+        /**
           * Enable dark mode
          */
         "enableDarkMode": boolean;
@@ -858,17 +862,13 @@ export namespace Components {
          */
         "enableStripedAnimation": boolean;
         /**
-          * Current progress-bar value
-         */
-        "valueCurrent": number;
-        /**
           * Maximum value of the bar
          */
-        "valueMax": number;
+        "maxValue": number;
         /**
           * Minimum value of the bar
          */
-        "valueMin": number;
+        "minValue": number;
     }
     interface MQuickAction {
         /**
@@ -2334,6 +2334,10 @@ declare namespace LocalJSX {
          */
         "classNameProgress"?: string;
         /**
+          * Current progress-bar value
+         */
+        "currentValue": number;
+        /**
           * Enable dark mode
          */
         "enableDarkMode"?: boolean;
@@ -2342,17 +2346,13 @@ declare namespace LocalJSX {
          */
         "enableStripedAnimation"?: boolean;
         /**
-          * Current progress-bar value
-         */
-        "valueCurrent": number;
-        /**
           * Maximum value of the bar
          */
-        "valueMax"?: number;
+        "maxValue"?: number;
         /**
           * Minimum value of the bar
          */
-        "valueMin"?: number;
+        "minValue"?: number;
     }
     interface MQuickAction {
         /**
