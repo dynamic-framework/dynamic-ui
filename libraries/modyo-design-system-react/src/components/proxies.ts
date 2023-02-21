@@ -20,6 +20,7 @@ import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMListItem } from '@modyo-dynamic/modyo-design-system/components/m-list-item.js';
 import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
+import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickAction } from '@modyo-dynamic/modyo-design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyo-dynamic/modyo-design-system/components/m-search.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
@@ -42,6 +43,7 @@ export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputEl
 export const MListItem = /*@__PURE__*/createReactComponent<JSX.MListItem, HTMLMListItemElement>('m-list-item', undefined, undefined, defineMListItem);
 export const MModal = /*@__PURE__*/createReactComponent<JSX.MModal, HTMLMModalElement>('m-modal', undefined, undefined, defineMModal);
 export const MOffcanvas = /*@__PURE__*/createReactComponent<JSX.MOffcanvas, HTMLMOffcanvasElement>('m-offcanvas', undefined, undefined, defineMOffcanvas);
+export const MProgressBar = /*@__PURE__*/createReactComponent<JSX.MProgressBar, HTMLMProgressBarElement>('m-progress-bar', undefined, undefined, defineMProgressBar);
 export const MQuickAction = /*@__PURE__*/createReactComponent<JSX.MQuickAction, HTMLMQuickActionElement>('m-quick-action', undefined, undefined, defineMQuickAction);
 export const MSearch = /*@__PURE__*/createReactComponent<JSX.MSearch, HTMLMSearchElement>('m-search', undefined, undefined, defineMSearch);
 export const MSegmentControl = /*@__PURE__*/createReactComponent<JSX.MSegmentControl, HTMLMSegmentControlElement>('m-segment-control', undefined, undefined, defineMSegmentControl);

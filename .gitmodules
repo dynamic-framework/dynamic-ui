@@ -29,3 +29,6 @@
 [submodule "widgets/modyo-widget-retail-dashboard-payments"]
 	path = widgets/modyo-widget-retail-dashboard-payments
 	url = git@github.com:modyo-dynamic/modyo-widget-retail-dashboard-payments.git
+[submodule "widgets/modyo-widget-business-dashboard"]
+	path = widgets/modyo-widget-business-dashboard
+	url = git@github.com:modyo-dynamic/modyo-widget-business-dashboard.git

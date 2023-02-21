@@ -279,6 +279,18 @@ export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offca
 ]);
 
 
+export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-progress-bar', undefined, [
+  'currentValue',
+  'minValue',
+  'maxValue',
+  'classNameContainer',
+  'classNameProgress',
+  'classNameBar',
+  'enableStripedAnimation',
+  'enableDarkMode'
+]);
+
+
 export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-quick-action', undefined, [
   'text',
   'subtext',

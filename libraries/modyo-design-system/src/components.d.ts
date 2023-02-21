@@ -836,6 +836,40 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
+    interface MProgressBar {
+        /**
+          * Additional classes for progress bar
+         */
+        "classNameBar"?: string;
+        /**
+          * Additional classes for component container
+         */
+        "classNameContainer"?: string;
+        /**
+          * Additional classes for progress container
+         */
+        "classNameProgress"?: string;
+        /**
+          * Current progress-bar value
+         */
+        "currentValue": number;
+        /**
+          * Enable dark mode
+         */
+        "enableDarkMode": boolean;
+        /**
+          * Enable striped animation
+         */
+        "enableStripedAnimation": boolean;
+        /**
+          * Maximum value of the bar
+         */
+        "maxValue": number;
+        /**
+          * Minimum value of the bar
+         */
+        "minValue": number;
+    }
     interface MQuickAction {
         /**
           * The action icon for the quick action
@@ -1348,6 +1382,12 @@ declare global {
         prototype: HTMLMOffcanvasElement;
         new (): HTMLMOffcanvasElement;
     };
+    interface HTMLMProgressBarElement extends Components.MProgressBar, HTMLStencilElement {
+    }
+    var HTMLMProgressBarElement: {
+        prototype: HTMLMProgressBarElement;
+        new (): HTMLMProgressBarElement;
+    };
     interface HTMLMQuickActionElement extends Components.MQuickAction, HTMLStencilElement {
     }
     var HTMLMQuickActionElement: {
@@ -1400,6 +1440,7 @@ declare global {
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
+        "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
         "m-segment-control": HTMLMSegmentControlElement;
@@ -2279,6 +2320,40 @@ declare namespace LocalJSX {
          */
         "showCloseButton"?: boolean;
     }
+    interface MProgressBar {
+        /**
+          * Additional classes for progress bar
+         */
+        "classNameBar"?: string;
+        /**
+          * Additional classes for component container
+         */
+        "classNameContainer"?: string;
+        /**
+          * Additional classes for progress container
+         */
+        "classNameProgress"?: string;
+        /**
+          * Current progress-bar value
+         */
+        "currentValue": number;
+        /**
+          * Enable dark mode
+         */
+        "enableDarkMode"?: boolean;
+        /**
+          * Enable striped animation
+         */
+        "enableStripedAnimation"?: boolean;
+        /**
+          * Maximum value of the bar
+         */
+        "maxValue"?: number;
+        /**
+          * Minimum value of the bar
+         */
+        "minValue"?: number;
+    }
     interface MQuickAction {
         /**
           * The action icon for the quick action
@@ -2679,6 +2754,7 @@ declare namespace LocalJSX {
         "m-list-item": MListItem;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
+        "m-progress-bar": MProgressBar;
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
         "m-segment-control": MSegmentControl;
@@ -2706,6 +2782,7 @@ declare module "@stencil/core" {
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
+            "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
