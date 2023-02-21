@@ -4,7 +4,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MProgressBar } from './m-progress-bar';
 
 it('should render my component', async () => {
-  const progress = { valueCurrent: 33 };
+  const progress = { currentValue: 33 };
 
   const page = await newSpecPage({
     components: [MProgressBar],
@@ -21,15 +21,15 @@ it('should render my component', async () => {
         aria-label="Progress bar" 
         aria-valuemax="100" 
         aria-valuemin="0" 
-        aria-valuenow="${progress.valueCurrent}" 
+        aria-valuenow="${progress.currentValue}" 
         class="progress-bar" 
         role="progressbar" 
-        style="width: ${progress.valueCurrent}%;"
+        style="width: ${progress.currentValue}%;"
       >
       </div>
     </div>
     <span class="progress-text">
-      ${progress.valueCurrent}%
+      ${progress.currentValue}%
     </span>
   </m-progress-bar>
   `);
