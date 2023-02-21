@@ -58,14 +58,14 @@ export class MProgressBar implements ComponentInterface {
     };
   }
 
-  private generateProgressBarContainerClasses(): ClassMap {
+  private generateContainerClasses(): ClassMap {
     return {
       progress: true,
       'dark-mode': this.enableDarkMode,
     };
   }
 
-  private generateProgressBarClasses(): ClassMap {
+  private generateClasses(): ClassMap {
     return {
       'progress-bar': true,
       [`${this.classNameBar}`]: !!this.classNameBar,
@@ -76,9 +76,9 @@ export class MProgressBar implements ComponentInterface {
   render() {
     return (
       <Host class={this.generateHostClasses()}>
-        <div class={this.generateProgressBarContainerClasses()}>
+        <div class={this.generateContainerClasses()}>
           <div
-            class={this.generateProgressBarClasses()}
+            class={this.generateClasses()}
             role="progressbar"
             aria-label="Progress bar"
             style={{ width: `${this.valueCurrent}%` }}
