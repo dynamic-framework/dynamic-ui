@@ -17,15 +17,15 @@ export class MProgressBar implements ComponentInterface {
   /**
    * Current progress-bar value
    */
-  @Prop() valueCurrent!: number;
+  @Prop() currentValue!: number;
   /**
    * Minimum value of the bar
    */
-  @Prop() valueMin = 0;
+  @Prop() minValue = 0;
   /**
   * Maximum value of the bar
   */
-  @Prop() valueMax = 100;
+  @Prop() maxValue = 100;
   /**
   * Additional classes for component container
   */
@@ -48,7 +48,7 @@ export class MProgressBar implements ComponentInterface {
   @Prop() enableDarkMode = false;
 
   private formatProgress() {
-    return `${this.valueCurrent}%`;
+    return `${this.currentValue}%`;
   }
 
   private generateHostClasses(): ClassMap {
@@ -81,10 +81,10 @@ export class MProgressBar implements ComponentInterface {
             class={this.generateClasses()}
             role="progressbar"
             aria-label="Progress bar"
-            style={{ width: `${this.valueCurrent}%` }}
-            aria-valuenow={this.valueCurrent}
-            aria-valuemin={this.valueMin}
-            aria-valuemax={this.valueMax}
+            style={{ width: `${this.currentValue}%` }}
+            aria-valuenow={this.currentValue}
+            aria-valuemin={this.minValue}
+            aria-valuemax={this.maxValue}
           />
         </div>
         <span class="progress-text">

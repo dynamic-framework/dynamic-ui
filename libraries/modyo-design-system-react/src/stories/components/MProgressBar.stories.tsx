@@ -6,13 +6,13 @@ const config: ComponentMeta<typeof MProgressBar> = {
   title: 'Stencil/MProgressBar',
   component: MProgressBar,
   argTypes: {
-    valueCurrent: {
+    currentValue: {
       control: 'number',
     },
-    valueMin: {
+    minValue: {
       control: 'number',
     },
-    valueMax: {
+    maxValue: {
       control: 'number',
     },
     enableStripedAnimation: {
@@ -34,9 +34,9 @@ const Template: ComponentStory<typeof MProgressBar> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  valueCurrent: 33,
-  valueMin: 0,
-  valueMax: 100,
+  currentValue: 33,
+  minValue: 0,
+  maxValue: 100,
   enableStripedAnimation: false,
   enableDarkMode: false,
 };

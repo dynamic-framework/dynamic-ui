@@ -433,13 +433,13 @@ export declare interface MProgressBar extends Components.MProgressBar {}
 
 @ProxyCmp({
   defineCustomElementFn: defineMProgressBar,
-  inputs: ['classNameBar', 'classNameContainer', 'classNameProgress', 'enableDarkMode', 'enableStripedAnimation', 'valueCurrent', 'valueMax', 'valueMin']
+  inputs: ['classNameBar', 'classNameContainer', 'classNameProgress', 'currentValue', 'enableDarkMode', 'enableStripedAnimation', 'maxValue', 'minValue']
 })
 @Component({
   selector: 'm-progress-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['classNameBar', 'classNameContainer', 'classNameProgress', 'enableDarkMode', 'enableStripedAnimation', 'valueCurrent', 'valueMax', 'valueMin']
+  inputs: ['classNameBar', 'classNameContainer', 'classNameProgress', 'currentValue', 'enableDarkMode', 'enableStripedAnimation', 'maxValue', 'minValue']
 })
 export class MProgressBar {
   protected el: HTMLElement;
