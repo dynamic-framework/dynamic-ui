@@ -6,15 +6,17 @@ type CollapseProps = PropsWithChildren<{
   id?: string;
   Component: JSX.Element | ReactNode;
   hasSeparator?: boolean;
+  isCollapsed?: boolean;
 }>;
 
 export default function MCollapse({
   id,
   Component,
   hasSeparator = false,
+  isCollapsed = true,
   children,
 }: CollapseProps) {
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(isCollapsed);
 
   return (
     <div
