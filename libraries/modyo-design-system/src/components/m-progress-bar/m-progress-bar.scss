@@ -14,6 +14,11 @@
 
     &.dark-mode {
       --#{$prefix}progress-bar-bg: #{$progress-bar-bg-light};
+      --#{$prefix}progress-bg: #{$progress-bg-light};
+
+      + .progress-text {
+        color: #{$progress-bar-bg-light};
+      }
     }
   }
 
