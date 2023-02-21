@@ -9,5 +9,6 @@ export { default as MCurrencyText } from './MCurrencyText';
 export { default as MFormikInput } from './MFormikInput';
 export { default as MFormikSelect } from './MFormikSelect';
 export { default as MTooltip } from './MTooltip';
+export { default as MCollapse } from './MCollapse';
 
 export type { TabOption } from './MTabs';
