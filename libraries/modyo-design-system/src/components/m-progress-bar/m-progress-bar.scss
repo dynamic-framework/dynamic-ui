@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.m-progress-bar {
+  display: flex;
+  flex-direction: row;
+  gap: #{$spacer-2};
+  align-items: center;
+  width: 100%;
+
+  .progress {
+    width: 100%;
+
+    &.dark-mode {
+      --#{$prefix}progress-bar-bg: #{$progress-bar-bg-light};
+      --#{$prefix}progress-bg: #{$progress-bg-light};
+
+      + .progress-text {
+        color: #{$progress-bar-bg-light};
+      }
+    }
+  }
+
+  .progress-bar {
+    border-radius: #{$border-radius-pill};
+  }
+
+  .progress-text {
+    min-width: 4ch; // Ensure that the bar does not resize
+    max-width: 4ch;
+    font-size: .813rem;
+    font-weight: #{$font-weight-bold};
+    color: #{$progress-bar-bg};
+  }
+}
