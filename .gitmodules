@@ -32,3 +32,6 @@
 [submodule "widgets/modyo-widget-business-dashboard"]
 	path = widgets/modyo-widget-business-dashboard
 	url = git@github.com:modyo-dynamic/modyo-widget-business-dashboard.git
+[submodule "widgets/modyo-widget-business-role-management"]
+	path = widgets/modyo-widget-business-role-management
+	url = git@github.com:modyo-dynamic/modyo-widget-business-role-management.git
