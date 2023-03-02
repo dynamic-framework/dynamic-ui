@@ -1,3 +1,5 @@
+@import "~bootstrap/scss/progress";
+
 :host {
   display: block;
 }
@@ -9,15 +11,22 @@
   align-items: center;
   width: 100%;
 
-  .progress {
+  >.progress {
+    --#{$prefix}progress-height: #{$progress-height};
+    --#{$prefix}progress-bg: #{$progress-bg};
+    --#{$prefix}progress-border-radius: #{$progress-border-radius};
+    --#{$prefix}progress-box-shadow: #{$progress-box-shadow};
+    --#{$prefix}progress-bar-color: #{$progress-bar-color};
+    --#{$prefix}progress-bar-bg: #{$progress-bar-bg};
+    --#{$prefix}progress-bar-transition: #{$progress-bar-transition};
     width: 100%;
 
     &.dark-mode {
       --#{$prefix}progress-bar-bg: #{$progress-bar-bg-light};
       --#{$prefix}progress-bg: #{$progress-bg-light};
 
-      + .progress-text {
-        color: #{$progress-bar-bg-light};
+      +.progress-text {
+        color: var(--#{$prefix}progress-bar-bg);
       }
     }
   }
@@ -32,5 +41,6 @@
     font-size: .813rem;
     font-weight: #{$font-weight-bold};
     color: #{$progress-bar-bg};
+    text-align: end;
   }
 }
