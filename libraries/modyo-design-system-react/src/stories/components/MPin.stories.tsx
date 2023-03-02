@@ -50,9 +50,9 @@ const config: ComponentMeta<typeof MPin> = {
 export default config;
 
 const Template: ComponentStory<typeof MPin> = (args) => (
- <div className="d-flex">
-   <MPin {...args} />
- </div>
+  <div className="d-flex">
+    <MPin {...args} />
+  </div>
 );
 
 export const Default = Template.bind({});
