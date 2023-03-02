@@ -20,6 +20,7 @@ import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMListItem } from '@modyo-dynamic/modyo-design-system/components/m-list-item.js';
 import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
+import { defineCustomElement as defineMPin } from '@modyo-dynamic/modyo-design-system/components/m-pin.js';
 import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickAction } from '@modyo-dynamic/modyo-design-system/components/m-quick-action.js';
 import { defineCustomElement as defineMSearch } from '@modyo-dynamic/modyo-design-system/components/m-search.js';
@@ -425,6 +426,34 @@ export class MOffcanvas {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mClose']);
+  }
+}
+
+
+export declare interface MPin extends Components.MPin {
+  /**
+   * Emitted when the inputs had changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMPin,
+  inputs: ['characters', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isSecret', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'mInputMode', 'mType', 'placeholder', 'theme']
+})
+@Component({
+  selector: 'm-pin',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['characters', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isSecret', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'mInputMode', 'mType', 'placeholder', 'theme']
+})
+export class MPin {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 
