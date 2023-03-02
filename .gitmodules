@@ -35,3 +35,6 @@
 [submodule "widgets/modyo-widget-business-login-otp"]
 	path = widgets/modyo-widget-business-login-otp
 	url = git@github.com:modyo-dynamic/modyo-widget-business-login-otp.git
+[submodule "widgets/modyo-widget-business-role-management"]
+	path = widgets/modyo-widget-business-role-management
+	url = git@github.com:modyo-dynamic/modyo-widget-business-role-management.git
