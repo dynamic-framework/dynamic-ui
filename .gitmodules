@@ -38,3 +38,6 @@
 [submodule "widgets/modyo-widget-business-role-management"]
 	path = widgets/modyo-widget-business-role-management
 	url = git@github.com:modyo-dynamic/modyo-widget-business-role-management.git
+[submodule "widgets/modyo-widget-business-role-list"]
+	path = widgets/modyo-widget-business-role-list
+	url = git@github.com:modyo-dynamic/modyo-widget-business-role-list.git

@@ -931,10 +931,6 @@ export namespace Components {
          */
         "mInputMode": PinInputMode;
         /**
-          * Type of the inputs
-         */
-        "mType": PinInputType;
-        /**
           * Placeholder of the inputs
          */
         "placeholder"?: string;
@@ -942,6 +938,10 @@ export namespace Components {
           * Theme for inputs
          */
         "theme"?: string;
+        /**
+          * Type of the inputs
+         */
+        "type": PinInputType;
     }
     interface MProgressBar {
         /**
@@ -2532,10 +2532,6 @@ declare namespace LocalJSX {
          */
         "mInputMode"?: PinInputMode;
         /**
-          * Type of the inputs
-         */
-        "mType"?: PinInputType;
-        /**
           * Emitted when the inputs had changed
          */
         "onMChange"?: (event: MPinCustomEvent<string>) => void;
@@ -2547,6 +2543,10 @@ declare namespace LocalJSX {
           * Theme for inputs
          */
         "theme"?: string;
+        /**
+          * Type of the inputs
+         */
+        "type"?: PinInputType;
     }
     interface MProgressBar {
         /**

@@ -32,9 +32,9 @@
 | `labelIconFamilyPrefix`     | `label-icon-family-prefix`      | Icon label family class         | `string \| undefined`          | `undefined`     |
 | `mId` _(required)_          | `m-id`                          | Id for the input                | `string`                       | `undefined`     |
 | `mInputMode`                | `m-input-mode`                  | Keyboard style                  | `"numeric" \| "tel" \| "text"` | `'text'`        |
-| `mType`                     | `m-type`                        | Type of the inputs              | `"number" \| "tel" \| "text"`  | `'text'`        |
 | `placeholder`               | `placeholder`                   | Placeholder of the inputs       | `string \| undefined`          | `'•'`           |
 | `theme`                     | `theme`                         | Theme for inputs                | `string \| undefined`          | `undefined`     |
+| `type`                      | `type`                          | Type of the inputs              | `"number" \| "tel" \| "text"`  | `'text'`        |
 
 
 ## Events

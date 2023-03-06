@@ -103,7 +103,7 @@ export class MPin implements ComponentInterface {
   /**
    * Type of the inputs
    */
-  @Prop() mType: PinInputType = 'text';
+  @Prop() type: PinInputType = 'text';
 
   /**
    * Placeholder of the inputs
@@ -164,7 +164,7 @@ export class MPin implements ComponentInterface {
     this.internalTheme = newValue;
   }
 
-  @Watch('mType')
+  @Watch('type')
   watchMTypeHandler(newValue: string) {
     this.pattern = newValue === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$';
   }
@@ -188,7 +188,7 @@ export class MPin implements ComponentInterface {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  private prevInput(e: KeyboardEvent) {
+  private prevInput = (e: KeyboardEvent) => {
     if (e.key === 'Backspace') {
       const { value } = e.currentTarget as HTMLInputElement;
       const input = e.target as HTMLInputElement;
@@ -200,7 +200,7 @@ export class MPin implements ComponentInterface {
         input.focus();
       }
     }
-  }
+  };
 
   // eslint-disable-next-line class-methods-use-this
   private focusInput = (e: Event) => {
@@ -237,14 +237,14 @@ export class MPin implements ComponentInterface {
 
   connectedCallback() {
     this.internalTheme = this.theme;
-    this.pattern = this.mType === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$';
+    this.pattern = this.type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$';
   }
 
   render() {
     return (
       <Host class={this.generateHostClasses()}>
         {this.label && (
-          <label htmlFor={this.mId}>
+          <label htmlFor="pin-index-0">
             {this.label}
             {this.labelIcon && (
               <m-icon
@@ -258,7 +258,7 @@ export class MPin implements ComponentInterface {
         )}
         <form
           id={this.mId}
-          class="m-pin"
+          class="form-control-input"
           onInput={this.formChange}
           onSubmit={this.preventDefaultEvents}
         >
@@ -279,8 +279,8 @@ export class MPin implements ComponentInterface {
           )}
           {Array.from({ length: this.characters }).map((_, index) => (
             <input
-              class="m-pin-item"
-              type={this.isSecret ? 'password' : this.mType}
+              class="pin-item"
+              type={this.isSecret ? 'password' : this.type}
               inputMode={this.mInputMode}
               id={`pin-index-${index}`}
               name={`pin-${index}`}
@@ -294,7 +294,7 @@ export class MPin implements ComponentInterface {
               placeholder={this.placeholder}
               disabled={this.isDisabled || this.isLoading}
               required
-              {...this.mType === 'number' && (
+              {...this.type === 'number' && (
                 {
                   min: 0,
                   max: 9,
