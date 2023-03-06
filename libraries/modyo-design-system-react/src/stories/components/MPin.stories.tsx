@@ -13,7 +13,7 @@ const config: ComponentMeta<typeof MPin> = {
       control: 'select',
       options: [undefined, 'tertiary', 'danger', 'warning'],
     },
-    mType: {
+    type: {
       control: 'select',
       options: ['number', 'text'],
     },
@@ -60,7 +60,7 @@ Default.args = {
   mId: 'myPin',
   characters: 4,
   theme: undefined,
-  mType: 'text',
+  type: 'text',
   isDisabled: false,
   isLoading: false,
 };
