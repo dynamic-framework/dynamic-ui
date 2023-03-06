@@ -11,23 +11,12 @@
   --#{$prefix}input-height: 56px;
   --#{$prefix}input-width: 56px;
 
-  label {
-    font-weight: 600;
-
-    .form-control-icon {
-      .m-icon {
-        --bs-m-icon-color: var(--#{$prefix}info);
-      }
-    }
-  }
-
-  .m-pin {
+  .form-control-input {
     position: relative;
     display: flex;
     gap: 1rem;
     align-items: center;
     justify-content: center;
-    width: 100%;
     padding: 1rem;
 
     .input-group-text {
@@ -36,7 +25,7 @@
       }
     }
 
-    .m-pin-item {
+    .pin-item {
       width: var(--#{$prefix}input-width);
       height: var(--#{$prefix}input-height);
       padding: 1rem;
@@ -99,14 +88,14 @@
 }
 
 @media (max-width: 767px) {
-  .form-control-layout.form-control-layout-pin .m-pin {
+  .form-control-layout.form-control-layout-pin .form-control-input {
     gap: 8px;
     width: 100%;
     padding-right: 0;
     padding-left: 0;
   }
 
-  .form-control-layout.form-control-layout-pin .m-pin .m-pin-item {
+  .form-control-layout.form-control-layout-pin .form-control-input .pin-item {
     --#{$prefix}input-height: 46px;
     --#{$prefix}input-width: 46px;
     padding: 0;
@@ -114,7 +103,7 @@
 }
 
 @media (max-width: 375px) {
-  .form-control-layout.form-control-layout-pin .m-pin {
+  .form-control-layout.form-control-layout-pin .form-control-input {
     gap: 0;
     justify-content: space-around;
   }
