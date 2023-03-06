@@ -46,5 +46,10 @@ $utilities: map-merge(
       property: cursor,
       values: $cursors,
     ),
+    "bg-widget": (
+      property: background,
+      class: "bg-widget",
+      values: $bg-widget-colors,
+    ),
   )
 );
