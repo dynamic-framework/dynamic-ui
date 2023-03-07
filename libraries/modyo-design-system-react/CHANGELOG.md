@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.7.0...@modyo-dynamic/modyo-design-system-react@0.8.0) (2023-03-07)
+
+### Features
+
+- add m-pin component ([a02d173](https://github.com/modyo-dynamic/modyo-design-system/commit/a02d17341b6973090aefd0cfc7299e92265e4fe4))
+
 ## [0.7.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.6.0...@modyo-dynamic/modyo-design-system-react@0.7.0) (2023-02-21)
 
 ### Features
