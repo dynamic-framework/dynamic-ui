@@ -17,6 +17,7 @@ export const DIRECTIVES = [
   d.MListItem,
   d.MModal,
   d.MOffcanvas,
+  d.MPin,
   d.MProgressBar,
   d.MQuickAction,
   d.MSearch,

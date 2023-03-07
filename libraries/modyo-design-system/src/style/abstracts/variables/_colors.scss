@@ -1,13 +1,13 @@
 $white: #fff !default;
-$gray-100: #f8f8fb !default;
-$gray-200: #dddce1 !default;
-$gray-300: #c0c0d1 !default;
-$gray-400: #848d9f !default;
-$gray-500: #8b8992 !default;
-$gray-600: #6d6d82 !default;
-$gray-700: #54515e !default;
-$gray-800: #383543 !default;
-$gray-900: #1d1929 !default;
+$gray-100: #f7f7ff !default;
+$gray-200: #d7d7e0 !default;
+$gray-300: #d5d4e6 !default;
+$gray-400: #9a9aa5 !default;
+$gray-500: #6d6d82 !default;
+$gray-600: #61616d !default;
+$gray-700: #555564 !default;
+$gray-800: #2d2e3a !default;
+$gray-900: #161723 !default;
 $black: #000 !default;
 
 $grays: (
@@ -39,7 +39,13 @@ $colors: (
   "green": $green,
   "black": $black,
   "white": $white,
-  "gray": $gray-600,
+  "gray": $gray-500,
   "gray-dark": $gray-800,
   "gray-light": $gray-300
+) !default;
+
+$bg-widget-colors: (
+  "gray": #fafafa,
+  "indigo": #fbfaff,
+  "magenta": #fff9fa,
 ) !default;

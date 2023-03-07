@@ -43,6 +43,12 @@
     font-size: var(--#{$prefix}form-label-font-size);
     font-weight: var(--#{$prefix}form-label-font-weight);
     color: var(--#{$prefix}form-label-color);
+
+    .form-control-icon {
+      .m-icon {
+        --#{$prefix}m-icon-color: var(--#{$prefix}info);
+      }
+    }
   }
 
   &.form-control-layout-pill {
