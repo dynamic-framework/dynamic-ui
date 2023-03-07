@@ -395,7 +395,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -518,87 +518,6 @@ importers:
       typescript: 4.6.4
       webpack: 5.74.0
 
-  widgets/modyo-widget-business-dashboard:
-    specifiers:
-      '@babel/plugin-syntax-flow': ^7.14.5
-      '@babel/plugin-transform-react-jsx': ^7.14.9
-      '@craco/craco': ^7.0.0-alpha.3
-      '@modyo-dynamic/modyo-design-system': ^0.6.0
-      '@modyo-dynamic/modyo-design-system-react': ^0.7.0
-      '@modyo/cli': ^3.1.27
-      '@reduxjs/toolkit': ^1.8.4
-      '@testing-library/jest-dom': ^5.16.4
-      '@testing-library/react': ^13.3.0
-      '@testing-library/user-event': ^13.5.0
-      '@types/jest': ^27.0.1
-      '@types/node': ^16.7.13
-      '@types/react': ^18.0.0
-      '@types/react-dom': ^18.0.0
-      '@types/webpack-env': ^1.18.0
-      '@typescript-eslint/eslint-plugin': ^5.13.0
-      '@typescript-eslint/parser': ^5.0.0
-      axios: ^1.1.2
-      classnames: ^2.3.2
-      eslint: 8.22.0
-      eslint-config-airbnb: 19.0.4
-      eslint-config-airbnb-typescript: ^17.0.0
-      eslint-plugin-import: ^2.25.3
-      eslint-plugin-jsx-a11y: ^6.5.1
-      eslint-plugin-react: ^7.28.0
-      eslint-plugin-react-hooks: ^4.3.0
-      i18next: ~21.9.0
-      liquidjs: ^9.39.2
-      postcss: ^8.1.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
-      react-i18next: ~11.18.3
-      react-redux: ^8.0.2
-      react-scripts: 5.0.1
-      sass: ~1.54.0
-      typescript: ^4.6.4
-      web-vitals: ^2.1.4
-      webpack: ^5.64.4
-    dependencies:
-      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@reduxjs/toolkit': 1.9.3_k4ae6lp43ej6mezo3ztvx6pykq
-      '@testing-library/jest-dom': 5.16.5
-      '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
-      '@testing-library/user-event': 13.5.0_aaq3sbffpfe3jnxzm2zngsddei
-      axios: 1.1.3
-      classnames: 2.3.2
-      i18next: 21.9.2
-      liquidjs: 9.42.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
-      web-vitals: 2.1.4
-    devDependencies:
-      '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
-      '@babel/plugin-transform-react-jsx': 7.19.0_@babel+core@7.19.6
-      '@craco/craco': 7.0.0-alpha.9_u5hhdgvia6sobtjy77xptnenfm
-      '@modyo/cli': 3.1.27
-      '@types/jest': 27.5.2
-      '@types/node': 16.18.11
-      '@types/react': 18.0.24
-      '@types/react-dom': 18.0.8
-      '@types/webpack-env': 1.18.0
-      '@typescript-eslint/eslint-plugin': 5.42.0_n2s2dbqilupifq2xgcu4m4ie5i
-      '@typescript-eslint/parser': 5.42.0_yv3nvntfnealqm77uomj2fi4ki
-      eslint: 8.22.0
-      eslint-config-airbnb: 19.0.4_yzdaygrtjsxrrhxpgpx6hh5x2y
-      eslint-config-airbnb-typescript: 17.0.0_xal2q56332h2htx2srtpldg7bu
-      eslint-plugin-import: 2.26.0_rilxvfua27h4rm2vbxk2jtqfja
-      eslint-plugin-jsx-a11y: 6.6.1_eslint@8.22.0
-      eslint-plugin-react: 7.31.10_eslint@8.22.0
-      eslint-plugin-react-hooks: 4.6.0_eslint@8.22.0
-      postcss: 8.4.18
-      react-scripts: 5.0.1_yvjutvxrnomxq5tyw6foehaqc4
-      sass: 1.54.9
-      typescript: 4.8.4
-      webpack: 5.74.0
-
   widgets/modyo-widget-business-login-otp:
     specifiers:
       '@babel/plugin-syntax-flow': ^7.14.5
@@ -653,7 +572,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -734,7 +653,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -761,13 +680,13 @@ importers:
       typescript: 4.8.4
       webpack: 5.74.0
 
-  widgets/modyo-widget-business-role-management:
+  widgets/modyo-widget-business-role-list:
     specifiers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyo-dynamic/modyo-design-system': ^0.5.2
-      '@modyo-dynamic/modyo-design-system-react': ^0.5.3
+      '@modyo-dynamic/modyo-design-system': ^0.6.0
+      '@modyo-dynamic/modyo-design-system-react': ^0.7.0
       '@modyo/cli': ^3.1.27
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
@@ -795,6 +714,7 @@ importers:
       react: ^18.2.0
       react-dom: ^18.2.0
       react-i18next: ~11.18.3
+      react-indiana-drag-scroll: ^2.2.0
       react-redux: ^8.0.2
       react-scripts: 5.0.1
       sass: ~1.54.0
@@ -802,8 +722,8 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
-      '@modyo-dynamic/modyo-design-system-react': 0.5.4_2wr74pmrtkmtk63bgvtgvkn2oq
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
       '@reduxjs/toolkit': 1.9.3_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -815,12 +735,13 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-indiana-drag-scroll: 2.2.0_biqbaboplfbrettd7655fr4n2y
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
       '@babel/plugin-transform-react-jsx': 7.19.0_@babel+core@7.19.6
-      '@craco/craco': 7.0.0-alpha.9_u5hhdgvia6sobtjy77xptnenfm
+      '@craco/craco': 7.0.0_u5hhdgvia6sobtjy77xptnenfm
       '@modyo/cli': 3.1.27
       '@types/jest': 27.5.2
       '@types/node': 16.18.11
@@ -898,7 +819,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -981,7 +902,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -1060,7 +981,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -1142,7 +1063,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       react-verification-input: 3.3.0_biqbaboplfbrettd7655fr4n2y
       web-vitals: 2.1.4
     devDependencies:
@@ -1174,7 +1095,7 @@ importers:
     specifiers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
-      '@craco/craco': ^7.0.0
+      '@craco/craco': ^7.0.0-alpha.3
       '@modyo-dynamic/modyo-design-system': ^0.5.4
       '@modyo-dynamic/modyo-design-system-react': ^0.6.0
       '@modyo-dynamic/modyo-service-retail': ^0.5.2
@@ -1238,7 +1159,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       react-toastify: 9.0.8_biqbaboplfbrettd7655fr4n2y
       web-vitals: 2.1.4
     devDependencies:
@@ -1332,7 +1253,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       web-vitals: 2.1.4
     devDependencies:
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.19.6
@@ -1428,7 +1349,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       react-toastify: 9.0.8_biqbaboplfbrettd7655fr4n2y
       web-vitals: 2.1.4
       yup: 0.32.11
@@ -7193,7 +7114,7 @@ packages:
     dependencies:
       immer: 9.0.16
       react: 18.2.0
-      react-redux: 8.0.5_nsgh7lqw2e2kb5wanadocemtdi
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
       redux: 4.2.1
       redux-thunk: 2.4.2_redux@4.2.1
       reselect: 4.1.7
@@ -12018,7 +11939,7 @@ packages:
     dev: true
 
   /batch/0.6.1:
-    resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
+    resolution: {integrity: sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=}
 
   /before-after-hook/2.2.3:
     resolution: {integrity: sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==}
@@ -12345,7 +12266,7 @@ packages:
     dev: true
 
   /bytes/3.0.0:
-    resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
+    resolution: {integrity: sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=}
     engines: {node: '>= 0.8'}
 
   /bytes/3.1.2:
@@ -13502,8 +13423,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      is-text-path: 1.0.1
       JSONStream: 1.3.5
+      is-text-path: 1.0.1
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -14238,6 +14159,10 @@ packages:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
     dev: true
 
+  /debounce/1.2.1:
+    resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
+    dev: false
+
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     peerDependencies:
@@ -14833,6 +14758,10 @@ packages:
   /eastasianwidth/0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
+
+  /easy-bem/1.1.1:
+    resolution: {integrity: sha512-GJRqdiy2h+EXy6a8E6R+ubmqUM08BK0FWNq41k24fup6045biQ8NXxoXimiwegMQvFFV3t1emADdGNL1TlS61A==}
+    dev: false
 
   /easy-stack/1.0.1:
     resolution: {integrity: sha512-wK2sCs4feiiJeFXn3zvY0p41mdU5VUgbgs1rNsc/y5ngFUijdWd+iIN8eoyuZHKB8xN6BL4PdWmzqFmxNg6V2w==}
@@ -25664,6 +25593,20 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
 
+  /react-indiana-drag-scroll/2.2.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-+W/3B2OQV0FrbdnsoIo4dww/xpH0MUQJz6ziQb7H+oBko3OCbXuzDFYnho6v6yhGrYDNWYPuFUewb89IONEl/A==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      classnames: 2.3.2
+      debounce: 1.2.1
+      easy-bem: 1.1.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
   /react-inspector/5.1.1_react@18.2.0:
     resolution: {integrity: sha512-GURDaYzoLbW8pMGXwYPDBIv6nqei4kK7LPRZ9q9HCZF54wqXz/dnylBp/kfE9XmekBhHvLDdcYeyIwSrvtOiWg==}
     peerDependencies:
@@ -25711,7 +25654,7 @@ packages:
       react-fast-compare: 3.2.0
       warning: 4.0.3
 
-  /react-redux/8.0.5_nsgh7lqw2e2kb5wanadocemtdi:
+  /react-redux/8.0.5_dqth7tpbjtbeadjzq5awtqhohm:
     resolution: {integrity: sha512-Q2f6fCKxPFpkXt1qNRZdEDLlScsDWyrgSj0mliK59qU6W5gvBiKkdMEG2lJzhd1rCctf0hb6EtePPLZ2e0m1uw==}
     peerDependencies:
       '@types/react': ^16.8 || ^17.0 || ^18.0
@@ -25741,6 +25684,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
+      redux: 4.2.1
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
@@ -26550,6 +26494,7 @@ packages:
 
   /rollup-plugin-terser/7.0.2_rollup@2.79.1:
     resolution: {integrity: sha512-w3iIaU4OxcF52UUXiZNsNeuXIMDvFrr+ZXK6bFZ0Q60qyVfq4uLptoS4bbq3paG3x216eQllFZX7zt6TIImguQ==}
+    deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
     peerDependencies:
       rollup: ^2.0.0
     dependencies:
