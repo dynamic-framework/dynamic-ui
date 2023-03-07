@@ -279,6 +279,37 @@ export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offca
 ]);
 
 
+export const MPin = /*@__PURE__*/ defineContainer<JSX.MPin>('m-pin', undefined, [
+  'mId',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'iconStart',
+  'iconStartFamilyClass',
+  'iconStartFamilyPrefix',
+  'iconEnd',
+  'iconEndFamilyClass',
+  'iconEndFamilyPrefix',
+  'isLoading',
+  'characters',
+  'isSecret',
+  'isDisabled',
+  'mInputMode',
+  'type',
+  'placeholder',
+  'theme',
+  'hint',
+  'hintIconStart',
+  'hintIconStartFamilyClass',
+  'hintIconStartFamilyPrefix',
+  'hintIconEnd',
+  'hintIconEndFamilyClass',
+  'hintIconEndFamilyPrefix',
+  'mChange'
+]);
+
+
 export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-progress-bar', undefined, [
   'currentValue',
   'minValue',

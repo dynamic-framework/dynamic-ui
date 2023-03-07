@@ -15,6 +15,7 @@ import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
+import { PinInputMode, PinInputType } from "./components/m-pin/m-pin-interface";
 import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
 import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
 export namespace Components {
@@ -836,6 +837,112 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
+    interface MPin {
+        /**
+          * Number of characters of the pin
+         */
+        "characters": number;
+        /**
+          * Hint for the m-coupon
+         */
+        "hint"?: string;
+        /**
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
+        /**
+          * Icon of the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Icon of the left
+         */
+        "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * Disable the inputs
+         */
+        "isDisabled": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
+          * Hide the characters
+         */
+        "isSecret": boolean;
+        /**
+          * Label for the input
+         */
+        "label": string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * Keyboard style
+         */
+        "mInputMode": PinInputMode;
+        /**
+          * Placeholder of the inputs
+         */
+        "placeholder"?: string;
+        /**
+          * Theme for inputs
+         */
+        "theme"?: string;
+        /**
+          * Type of the inputs
+         */
+        "type": PinInputType;
+    }
     interface MProgressBar {
         /**
           * Additional classes for progress bar
@@ -1271,6 +1378,10 @@ export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMOffcanvasElement;
 }
+export interface MPinCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMPinElement;
+}
 export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionElement;
@@ -1382,6 +1493,12 @@ declare global {
         prototype: HTMLMOffcanvasElement;
         new (): HTMLMOffcanvasElement;
     };
+    interface HTMLMPinElement extends Components.MPin, HTMLStencilElement {
+    }
+    var HTMLMPinElement: {
+        prototype: HTMLMPinElement;
+        new (): HTMLMPinElement;
+    };
     interface HTMLMProgressBarElement extends Components.MProgressBar, HTMLStencilElement {
     }
     var HTMLMProgressBarElement: {
@@ -1440,6 +1557,7 @@ declare global {
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
+        "m-pin": HTMLMPinElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action": HTMLMQuickActionElement;
         "m-search": HTMLMSearchElement;
@@ -2320,6 +2438,116 @@ declare namespace LocalJSX {
          */
         "showCloseButton"?: boolean;
     }
+    interface MPin {
+        /**
+          * Number of characters of the pin
+         */
+        "characters"?: number;
+        /**
+          * Hint for the m-coupon
+         */
+        "hint"?: string;
+        /**
+          * Icon end for the hint text
+         */
+        "hintIconEnd"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyClass"?: string;
+        /**
+          * Hint right icon family class
+         */
+        "hintIconEndFamilyPrefix"?: string;
+        /**
+          * Icon start for the hint text
+         */
+        "hintIconStart"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyClass"?: string;
+        /**
+          * Hint left icon family class
+         */
+        "hintIconStartFamilyPrefix"?: string;
+        /**
+          * Icon of the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Icon of the left
+         */
+        "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * Disable the inputs
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
+          * Hide the characters
+         */
+        "isSecret"?: boolean;
+        /**
+          * Label for the input
+         */
+        "label"?: string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * Keyboard style
+         */
+        "mInputMode"?: PinInputMode;
+        /**
+          * Emitted when the inputs had changed
+         */
+        "onMChange"?: (event: MPinCustomEvent<string>) => void;
+        /**
+          * Placeholder of the inputs
+         */
+        "placeholder"?: string;
+        /**
+          * Theme for inputs
+         */
+        "theme"?: string;
+        /**
+          * Type of the inputs
+         */
+        "type"?: PinInputType;
+    }
     interface MProgressBar {
         /**
           * Additional classes for progress bar
@@ -2754,6 +2982,7 @@ declare namespace LocalJSX {
         "m-list-item": MListItem;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
+        "m-pin": MPin;
         "m-progress-bar": MProgressBar;
         "m-quick-action": MQuickAction;
         "m-search": MSearch;
@@ -2782,6 +3011,7 @@ declare module "@stencil/core" {
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
+            "m-pin": LocalJSX.MPin & JSXBase.HTMLAttributes<HTMLMPinElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
             "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;

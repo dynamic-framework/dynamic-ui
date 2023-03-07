@@ -27,6 +27,7 @@
  - [m-counter](../m-counter)
  - [m-coupon](../m-coupon)
  - [m-currency](../m-currency)
+ - [m-pin](../m-pin)
 
 ### Depends on
 
@@ -39,6 +40,7 @@ graph TD;
   m-counter --> m-hint
   m-coupon --> m-hint
   m-currency --> m-hint
+  m-pin --> m-hint
   style m-hint fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
