@@ -213,7 +213,7 @@ $form-validation-states: (
 }
 
 .form-control-layout-full .form-select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath d='M0 2A2 2 0 012 0H22A2 2 0 0124 2V22A2 2 0 0122 24H2A2 2 0 010 22V2' fill='%234848b7' fill-opacity='0.1'/%3e%3cpath d='M5.646 8.646A.5.5 0 016.354 8.646L12 14.293 17.646 8.646A.5.5 0 0118.354 9.354L12.354 15.354A.5.5 0 0111.646 15.354L5.646 9.354A.5.5 0 015.646 8.646Z' fill='%231d1929'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath d='M0 2A2 2 0 012 0H22A2 2 0 0124 2V22A2 2 0 0122 24H2A2 2 0 010 22V2' fill='%234848b7' fill-opacity='0.1'/%3e%3cpath d='M5.646 8.646A.5.5 0 016.354 8.646L12 14.293 17.646 8.646A.5.5 0 0118.354 9.354L12.354 15.354A.5.5 0 0111.646 15.354L5.646 9.354A.5.5 0 015.646 8.646Z' fill='%23161723'/%3e%3c/svg%3e");
 }
 .form-control-layout-full .form-select.form-select-primary {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath d='M0 2A2 2 0 012 0H22A2 2 0 0124 2V22A2 2 0 0122 24H2A2 2 0 010 22V2' fill='%23e60063' fill-opacity='0.1'/%3e%3cpath d='M5.646 8.646A.5.5 0 016.354 8.646L12 14.293 17.646 8.646A.5.5 0 0118.354 9.354L12.354 15.354A.5.5 0 0111.646 15.354L5.646 9.354A.5.5 0 015.646 8.646Z' fill='%23e60063'/%3e%3c/svg%3e");
@@ -454,7 +454,7 @@ $form-validation-states: (
   background-color: var(--bs-primary-hover);
 }
 .form-control-layout-prime .form-select:disabled {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath d='M5.646 8.646A.5.5 0 016.354 8.646L12 14.293 17.646 8.646A.5.5 0 0118.354 9.354L12.354 15.354A.5.5 0 0111.646 15.354L5.646 9.354A.5.5 0 015.646 8.646Z' fill='%23c0c0d1'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath d='M5.646 8.646A.5.5 0 016.354 8.646L12 14.293 17.646 8.646A.5.5 0 0118.354 9.354L12.354 15.354A.5.5 0 0111.646 15.354L5.646 9.354A.5.5 0 015.646 8.646Z' fill='%23d5d4e6'/%3e%3c/svg%3e");
 }
 
 .form-control-layout-full .input-group.disabled,

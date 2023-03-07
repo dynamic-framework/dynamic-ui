@@ -297,21 +297,21 @@ $form-validation-states: (
 }
 
 .alert-light {
-  --bs-alert-color: #636364;
-  --bs-alert-bg: #fefefe;
-  --bs-alert-border-color: #fdfdfe;
+  --bs-alert-color: #636366;
+  --bs-alert-bg: #fdfdff;
+  --bs-alert-border-color: #fdfdff;
 }
 .alert-light .alert-link {
-  color: #4f4f50;
+  color: #4f4f52;
 }
 
 .alert-dark {
-  --bs-alert-color: #110f19;
-  --bs-alert-bg: #d2d1d4;
-  --bs-alert-border-color: #bbbabf;
+  --bs-alert-color: #0d0e15;
+  --bs-alert-bg: #d0d1d3;
+  --bs-alert-border-color: #b9b9bd;
 }
 .alert-dark .alert-link {
-  color: #0e0c14;
+  color: #0a0b11;
 }
 
 .alert-primary {

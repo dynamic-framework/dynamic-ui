@@ -206,7 +206,7 @@ $form-validation-states: (
   --bs-offcanvas-bg: #fff;
   --bs-offcanvas-border-width: 1px;
   --bs-offcanvas-border-color: var(--bs-border-color-translucent);
-  --bs-offcanvas-box-shadow: 0 8px 12px 0 rgba(29, 25, 41, 0.1);
+  --bs-offcanvas-box-shadow: 0 8px 12px 0 rgba(22, 23, 35, 0.1);
 }
 
 @media (max-width: 575.98px) {

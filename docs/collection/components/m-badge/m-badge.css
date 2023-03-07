@@ -228,7 +228,7 @@ $form-validation-states: (
   line-height: var(--bs-badge-line-height);
 }
 .badge.bg-light {
-  --bs-badge-color-light: #6d6d82;
+  --bs-badge-color-light: #61616d;
   color: var(--bs-badge-color-light);
 }
 .badge.badge-dot {

@@ -204,12 +204,12 @@ $form-validation-states: (
   --bs-list-group-border-radius: var(--bs-border-radius-sm);
   --bs-list-group-item-padding-x: 0.25rem;
   --bs-list-group-item-padding-y: 0.25rem;
-  --bs-list-group-action-color: #54515e;
-  --bs-list-group-action-hover-color: #54515e;
-  --bs-list-group-action-hover-bg: #f8f8fb;
-  --bs-list-group-action-active-color: #1d1929;
-  --bs-list-group-action-active-bg: #dddce1;
-  --bs-list-group-disabled-color: #6d6d82;
+  --bs-list-group-action-color: #555564;
+  --bs-list-group-action-hover-color: #555564;
+  --bs-list-group-action-hover-bg: #f7f7ff;
+  --bs-list-group-action-active-color: #161723;
+  --bs-list-group-action-active-bg: #d7d7e0;
+  --bs-list-group-disabled-color: #61616d;
   --bs-list-group-disabled-bg: transparent;
   --bs-list-group-active-color: #fff;
   --bs-list-group-active-bg: #bc0956;
@@ -534,31 +534,31 @@ $form-validation-states: (
 }
 
 .list-group-item-light {
-  color: #636364;
-  background-color: #f8f8fb;
+  color: #636366;
+  background-color: #f7f7ff;
 }
 .list-group-item-light.list-group-item-action:hover, .list-group-item-light.list-group-item-action:focus {
-  color: #636364;
-  background-color: #dfdfe2;
+  color: #636366;
+  background-color: #dedee6;
 }
 .list-group-item-light.list-group-item-action.active {
   color: #fff;
-  background-color: #636364;
-  border-color: #636364;
+  background-color: #636366;
+  border-color: #636366;
 }
 
 .list-group-item-dark {
-  color: #a5a3a9;
-  background-color: #1d1929;
+  color: #a2a2a7;
+  background-color: #161723;
 }
 .list-group-item-dark.list-group-item-action:hover, .list-group-item-dark.list-group-item-action:focus {
-  color: #a5a3a9;
-  background-color: #1a1725;
+  color: #a2a2a7;
+  background-color: #141520;
 }
 .list-group-item-dark.list-group-item-action.active {
   color: #fff;
-  background-color: #a5a3a9;
-  border-color: #a5a3a9;
+  background-color: #a2a2a7;
+  border-color: #a2a2a7;
 }
 
 .list-group-item {
@@ -628,7 +628,7 @@ $form-validation-states: (
 }
 
 .list-group-item-variant.list-group-item-light {
-  --bs-list-group-bg: #f8f8fb;
+  --bs-list-group-bg: #f7f7ff;
   --bs-list-group-border-color: var(--bs-gray-light);
   background-color: var(--bs-list-group-bg);
 }

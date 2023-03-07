@@ -206,7 +206,7 @@ $form-validation-states: (
   --bs-modal-border-color: var(--bs-border-color-translucent);
   --bs-modal-border-width: 1px;
   --bs-modal-border-radius: 1rem;
-  --bs-modal-box-shadow: 0 8px 12px 0 rgba(29, 25, 41, 0.1);
+  --bs-modal-box-shadow: 0 8px 12px 0 rgba(22, 23, 35, 0.1);
   --bs-modal-inner-border-radius: calc(1rem - 1px);
   --bs-modal-header-padding-x: 1rem;
   --bs-modal-header-padding-y: 1rem;
@@ -348,7 +348,7 @@ $form-validation-states: (
 @media (min-width: 576px) {
   .modal {
     --bs-modal-margin: 1.75rem;
-    --bs-modal-box-shadow: 0 12px 14px 0 rgba(29, 25, 41, 0.2);
+    --bs-modal-box-shadow: 0 12px 14px 0 rgba(22, 23, 35, 0.2);
   }
 
   .modal-dialog {

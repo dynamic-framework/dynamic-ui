@@ -245,7 +245,7 @@ $form-validation-states: (
   transition: border 200ms, color 200ms, background-color 200ms;
 }
 .form-check-input:hover:not([disabled]) {
-  --bs-form-check-input-border-hover-color: #6d6d82;
+  --bs-form-check-input-border-hover-color: #61616d;
   border: var(--bs-form-check-input-border-hover-width) solid var(--bs-form-check-input-border-hover-color);
 }
 .form-check-input:hover:indeterminate {
