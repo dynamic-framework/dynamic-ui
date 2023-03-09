@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.7.0...@modyo-dynamic/modyo-design-system-react@0.8.0) (2023-03-07)
+
+### Features
+
+- add m-pin component ([a02d173](https://github.com/modyo-dynamic/modyo-design-system/commit/a02d17341b6973090aefd0cfc7299e92265e4fe4))
+
+## [0.7.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.6.0...@modyo-dynamic/modyo-design-system-react@0.7.0) (2023-02-21)
+
+### Features
+
+- add m-collapse component and styles ([5cc0216](https://github.com/modyo-dynamic/modyo-design-system/commit/5cc021622fc3a37936334d4078cb33cac5473ebf))
+- add progress bar component ([144d3f5](https://github.com/modyo-dynamic/modyo-design-system/commit/144d3f5013fa24eb093fdb843b433dc5a7028255))
+
 ## [0.6.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.4...@modyo-dynamic/modyo-design-system-react@0.6.0) (2023-02-15)
 
 ### Features

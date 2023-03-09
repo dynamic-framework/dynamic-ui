@@ -16,5 +16,9 @@
     "clean": "lerna clean",
     "storybook:react": "pnpm run --filter=@modyo-dynamic/modyo-design-system-react storybook",
     "build:storybook:react": "pnpm run --filter=@modyo-dynamic/modyo-design-system-react build-storybook"
+  },
+  "engines": {
+    "node": ">=16.16",
+    "pnpm": ">=7.29"
   }
 }

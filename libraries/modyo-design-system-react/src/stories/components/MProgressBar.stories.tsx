@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { MProgressBar } from '../../components';
 
 const config: ComponentMeta<typeof MProgressBar> = {
-  title: 'Stencil/MProgressBar',
+  title: 'Stencil/ProgressBar',
   component: MProgressBar,
   argTypes: {
     currentValue: {

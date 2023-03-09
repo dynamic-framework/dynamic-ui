@@ -26,6 +26,11 @@ $utilities: map-merge(
         )
       )
     ),
+    "text-gray": (
+      property: color,
+      class: "text-gray",
+      values: $grays,
+    ),
     "text-opacity": map-merge(
       map-get($utilities, "text-opacity"),
       (
@@ -40,6 +45,11 @@ $utilities: map-merge(
     "cursor": (
       property: cursor,
       values: $cursors,
+    ),
+    "bg-widget": (
+      property: background,
+      class: "bg-widget",
+      values: $bg-widget-colors,
     ),
   )
 );

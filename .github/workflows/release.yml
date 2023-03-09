@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
       - name: Checkout packages submodules.
         run: git submodule update --init packages/stencil-eslint-plugin
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         with:
           version: 7
       - name: Setup Node.js 16.x

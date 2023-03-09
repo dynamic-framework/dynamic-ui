@@ -5,6 +5,11 @@
     --#{$prefix}#{$color}-hover: #{$value};
     --#{$prefix}#{$color}-hover-rgb: #{to-rgb($value)};
   }
+
+  @each $color, $value in $bg-widget-colors {
+    --#{$prefix}bg-widget-#{$color}: #{$value};
+    --#{$prefix}bg-widget-#{$color}-rgb: #{to-rgb($value)};
+  }
 }
 
 .flex-1 {
