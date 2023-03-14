@@ -15,7 +15,7 @@ it('should render my component', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-  <m-progress-bar class="m-progress-bar">
+  <m-progress-bar class="progress-box">
     <div class="progress">
       <div 
         aria-label="Progress bar" 
