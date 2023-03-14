@@ -1,5 +1,12 @@
 import classNames from 'classnames';
-import { useState, PropsWithChildren, ReactNode } from 'react';
+import {
+  PropsWithChildren,
+  ReactNode,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import { MIcon } from './proxies';
 
 type Props = PropsWithChildren<{
@@ -7,16 +14,28 @@ type Props = PropsWithChildren<{
   Component: JSX.Element | ReactNode;
   hasSeparator?: boolean;
   isCollapsed?: boolean;
+  setCollapse?: Dispatch<SetStateAction<boolean>>;
 }>;
 
 export default function MCollapse({
   id,
   Component,
   hasSeparator = false,
-  isCollapsed = true,
+  isCollapsed = false,
   children,
+  setCollapse,
 }: Props) {
   const [toggle, setToggle] = useState(isCollapsed);
+
+  useEffect(() => {
+    if (setCollapse) {
+      setCollapse(toggle);
+    }
+  }, [toggle, setCollapse]);
+
+  useEffect(() => {
+    setToggle(isCollapsed);
+  }, [isCollapsed]);
 
   return (
     <div
