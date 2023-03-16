@@ -18,6 +18,12 @@
   .form-check,
   .form-switch {
     width: 100%;
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .form-check-switch {
+    flex: 0 0 #{$form-switch-width};
   }
 
   .form-check-switch:hover:not([disabled]) {
