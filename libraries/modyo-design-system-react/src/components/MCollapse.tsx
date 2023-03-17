@@ -4,8 +4,6 @@ import {
   ReactNode,
   useState,
   useEffect,
-  Dispatch,
-  SetStateAction,
 } from 'react';
 import { MIcon } from './proxies';
 
@@ -13,29 +11,31 @@ type Props = PropsWithChildren<{
   id?: string;
   Component: JSX.Element | ReactNode;
   hasSeparator?: boolean;
-  isCollapsed?: boolean;
-  setCollapse?: Dispatch<SetStateAction<boolean>>;
+  defaultCollapsed?: boolean;
+  onChange?: (value: boolean) => void;
 }>;
 
 export default function MCollapse({
   id,
   Component,
   hasSeparator = false,
-  isCollapsed = false,
+  defaultCollapsed = false,
+  onChange,
   children,
-  setCollapse,
 }: Props) {
-  const [toggle, setToggle] = useState(isCollapsed);
+  const [toggle, setToggle] = useState(defaultCollapsed);
+
+  const onChangeCollapse = () => setToggle((prev) => !prev);
 
   useEffect(() => {
-    if (setCollapse) {
-      setCollapse(toggle);
+    if (onChange) {
+      onChange(toggle);
     }
-  }, [toggle, setCollapse]);
+  }, [toggle, onChange]);
 
   useEffect(() => {
-    setToggle(isCollapsed);
-  }, [isCollapsed]);
+    setToggle(defaultCollapsed);
+  }, [defaultCollapsed]);
 
   return (
     <div
@@ -46,8 +46,8 @@ export default function MCollapse({
         className="collapse-button"
         role="button"
         tabIndex={0}
-        onClick={() => setToggle((prev) => !prev)}
-        onKeyDown={({ code }) => (code === 'Enter' ? setToggle((prev) => !prev) : {})}
+        onClick={onChangeCollapse}
+        onKeyDown={({ code }) => (code === 'Enter' ? onChangeCollapse : {})}
       >
         <div className="flex-grow-1">
           {Component}
