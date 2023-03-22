@@ -34,6 +34,7 @@ it('should render my component', async () => {
             id="${search.mId}" 
             placeholder="${search.placeholder}" 
             value="${search.value}"
+            autocomplete="off"
           >
           <button class="btn btn-search btn-text">
             <m-icon icon="search"></m-icon>

@@ -1,22 +1,41 @@
 import classNames from 'classnames';
-import { useState, PropsWithChildren, ReactNode } from 'react';
+import {
+  PropsWithChildren,
+  ReactNode,
+  useState,
+  useEffect,
+} from 'react';
 import { MIcon } from './proxies';
 
 type Props = PropsWithChildren<{
   id?: string;
   Component: JSX.Element | ReactNode;
   hasSeparator?: boolean;
-  isCollapsed?: boolean;
+  defaultCollapsed?: boolean;
+  onChange?: (value: boolean) => void;
 }>;
 
 export default function MCollapse({
   id,
   Component,
   hasSeparator = false,
-  isCollapsed = true,
+  defaultCollapsed = false,
+  onChange,
   children,
 }: Props) {
-  const [toggle, setToggle] = useState(isCollapsed);
+  const [toggle, setToggle] = useState(defaultCollapsed);
+
+  const onChangeCollapse = () => setToggle((prev) => !prev);
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(toggle);
+    }
+  }, [toggle, onChange]);
+
+  useEffect(() => {
+    setToggle(defaultCollapsed);
+  }, [defaultCollapsed]);
 
   return (
     <div
@@ -27,8 +46,8 @@ export default function MCollapse({
         className="collapse-button"
         role="button"
         tabIndex={0}
-        onClick={() => setToggle((prev) => !prev)}
-        onKeyDown={({ code }) => (code === 'Enter' ? setToggle((prev) => !prev) : {})}
+        onClick={onChangeCollapse}
+        onKeyDown={({ code }) => (code === 'Enter' ? onChangeCollapse : {})}
       >
         <div className="flex-grow-1">
           {Component}

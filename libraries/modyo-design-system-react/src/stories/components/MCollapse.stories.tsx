@@ -19,7 +19,7 @@ const config: ComponentMeta<typeof MCollapse> = {
         ),
       },
     },
-    isCollapsed: {
+    defaultCollapsed: {
       control: 'boolean',
     },
     hasSeparator: {
@@ -49,6 +49,6 @@ const Template: ComponentStory<typeof MCollapse> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   Component: 'Text',
-  isCollapsed: false,
+  defaultCollapsed: false,
   hasSeparator: true,
 };
