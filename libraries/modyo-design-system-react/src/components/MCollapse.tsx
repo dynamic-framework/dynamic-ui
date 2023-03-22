@@ -4,7 +4,6 @@ import {
   ReactNode,
   useState,
   useEffect,
-  useCallback,
 } from 'react';
 import { MIcon } from './proxies';
 
@@ -26,12 +25,13 @@ export default function MCollapse({
 }: Props) {
   const [toggle, setToggle] = useState(defaultCollapsed);
 
-  const onChangeCollapse = useCallback(() => {
-    setToggle(!toggle);
+  const onChangeCollapse = () => setToggle((prev) => !prev);
+
+  useEffect(() => {
     if (onChange) {
-      onChange(!toggle);
+      onChange(toggle);
     }
-  }, [onChange, toggle]);
+  }, [toggle, onChange]);
 
   useEffect(() => {
     setToggle(defaultCollapsed);
