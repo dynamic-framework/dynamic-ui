@@ -201,6 +201,7 @@ export class MSearch implements ComponentInterface {
               value={this.value}
               aria-describedby={`${this.mId}-add`}
               onInput={this.changeHandler}
+              autoComplete="off"
             />
             {(this.iconEnd && !!this.theme && !this.isLoading) && (
               <span
