@@ -21,7 +21,7 @@ export class MFormSwitch {
     this.internalIsChecked = this.isChecked;
   }
   render() {
-    return (h(Host, { class: "form-switch-box" }, h("div", { class: "form-check form-switch form-check-reverse" }, h("label", { class: "form-switch-box-label", htmlFor: this.mId }, h("div", { class: "d-flex gap-3 justify-content-between flex-grow-1" }, h("span", { class: "form-check-label" }, this.label), h("span", { class: "form-check-label fw-bold" }, this.internalIsChecked ? this.labelOn : this.labelOff)), h("input", { id: this.mId, onChange: (event) => this.changeHandler(event), class: "form-check-input form-check-switch", type: "checkbox", role: "switch", checked: this.internalIsChecked, disabled: this.isDisabled })))));
+    return (h(Host, { class: "form-switch-box" }, h("div", { class: "form-check form-switch form-check-reverse" }, h("label", { class: "form-switch-box-label", htmlFor: this.mId }, h("div", { class: "d-flex gap-3 justify-content-between align-items-center flex-grow-1" }, h("span", { class: "form-check-label" }, this.label), h("span", { class: "form-check-label fw-bold" }, this.internalIsChecked ? this.labelOn : this.labelOff)), h("input", { id: this.mId, onChange: (event) => this.changeHandler(event), class: "form-check-input form-check-switch", type: "checkbox", role: "switch", checked: this.internalIsChecked, disabled: this.isDisabled })))));
   }
   static get is() { return "m-form-switch"; }
   static get originalStyleUrls() {

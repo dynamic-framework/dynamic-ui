@@ -15,7 +15,7 @@ export class MProgressBar {
   }
   generateHostClasses() {
     return {
-      'm-progress-bar': true,
+      'progress-box': true,
       [`${this.classNameContainer}`]: !!this.classNameContainer,
     };
   }

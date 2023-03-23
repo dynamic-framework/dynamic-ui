@@ -217,6 +217,12 @@ $form-validation-states: (
 .form-switch-box .form-check,
 .form-switch-box .form-switch {
   width: 100%;
+  padding-left: 0;
+  text-align: left;
+}
+:host .form-check-switch,
+.form-switch-box .form-check-switch {
+  flex: 0 0 2.5em;
 }
 :host .form-check-switch:hover:not([disabled]),
 .form-switch-box .form-check-switch:hover:not([disabled]) {

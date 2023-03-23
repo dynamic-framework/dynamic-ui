@@ -23,7 +23,7 @@ const MProgressBar = class {
   }
   generateHostClasses() {
     return {
-      'm-progress-bar': true,
+      'progress-box': true,
       [`${this.classNameContainer}`]: !!this.classNameContainer,
     };
   }
