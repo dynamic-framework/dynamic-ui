@@ -127,7 +127,7 @@ importers:
     specifiers:
       "@babel/core": ^7.19.3
       "@floating-ui/react-dom-interactions": ^0.12.0
-      "@modyo-dynamic/modyo-design-system": ^0.7.0
+      "@modyo-dynamic/modyo-design-system": ^0.7.1
       "@rollup/plugin-node-resolve": ^13.3.0
       "@storybook/addon-actions": ^6.5.12
       "@storybook/addon-essentials": ^6.5.12

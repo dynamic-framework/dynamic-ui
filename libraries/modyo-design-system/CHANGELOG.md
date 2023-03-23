@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.0...@modyo-dynamic/modyo-design-system@0.7.1) (2023-03-23)
+
+### Bug Fixes
+
+- fixed input size and align left label ([9a7ecae](https://github.com/modyo-dynamic/modyo-design-system/commit/9a7ecae3e0313bfa38ccc39272319c6a06b33d84))
+
 ## [0.7.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.6.0...@modyo-dynamic/modyo-design-system@0.7.0) (2023-03-07)
 
 ### Features

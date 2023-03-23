@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.0...@modyo-dynamic/modyo-design-system-react@0.8.1) (2023-03-23)
+
+### Bug Fixes
+
+- internal and external collapse toggle ([dc3e2d2](https://github.com/modyo-dynamic/modyo-design-system/commit/dc3e2d28985bb83c393e2160a1842b305f039a65))
+
+### Reverts
+
+- Revert "chore: remove useEffect" ([2e1d27e](https://github.com/modyo-dynamic/modyo-design-system/commit/2e1d27e4792d6d21ebe77766cc781dc39231475c))
+
 ## [0.8.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.7.0...@modyo-dynamic/modyo-design-system-react@0.8.0) (2023-03-07)
 
 ### Features
