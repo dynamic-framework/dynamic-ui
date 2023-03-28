@@ -31,7 +31,7 @@ const config: Meta<typeof MHint> = {
     theme: {
       control: 'select',
       options: THEMES.filter(
-        (theme) => !['light', 'primary', 'secondary'].includes(theme)
+        (theme) => !['light', 'primary', 'secondary'].includes(theme),
       ),
       table: { defaultValue: { summary: 'primary' } },
     },

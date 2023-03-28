@@ -85,7 +85,7 @@ const config: Meta<typeof MInput> = {
 };
 
 export default config;
-type Story = StoryObj<typeof  MInput>;
+type Story = StoryObj<typeof MInput>;
 
 export const Default: Story = {
   args: {

@@ -75,7 +75,7 @@ const config: Meta<typeof MButton> = {
 };
 
 export default config;
-type Story = StoryObj<typeof  MButton>;
+type Story = StoryObj<typeof MButton>;
 
 export const Default: Story = {
   args: {
