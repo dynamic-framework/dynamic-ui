@@ -34,8 +34,8 @@ type Story = StoryObj<typeof MTabs>;
 export const Default: Story = {
   render: (args) => (
     <MTabs {...args}>
-      <MTabContent tab='tab1'>Tab content for Tab 1</MTabContent>
-      <MTabContent tab='tab2'>Tab content for Tab 2</MTabContent>
+      <MTabContent tab="tab1">Tab content for Tab 1</MTabContent>
+      <MTabContent tab="tab2">Tab content for Tab 2</MTabContent>
     </MTabs>
   ),
 

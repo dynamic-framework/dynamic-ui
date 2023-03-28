@@ -55,7 +55,7 @@ type Story = StoryObj<typeof MTooltip>;
 
 export const Default: Story = {
   render: (args) => (
-    <div className='d-flex justify-content-center align-items-center p-5 w-100'>
+    <div className="d-flex justify-content-center align-items-center p-5 w-100">
       <MTooltip {...args} />
     </div>
   ),

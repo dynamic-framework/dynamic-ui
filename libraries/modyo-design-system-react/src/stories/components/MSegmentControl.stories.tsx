@@ -26,22 +26,22 @@ export const Default: Story = {
   render: (args) => (
     <MSegmentControl {...args}>
       <MSegmentControlItem
-        mId='segment1'
-        label='the label1'
-        name='the name'
-        value='the value'
+        mId="segment1"
+        label="the label1"
+        name="the name"
+        value="the value"
       />
       <MSegmentControlItem
-        mId='segment2'
-        label='the label2'
-        name='the name'
-        value='the value'
+        mId="segment2"
+        label="the label2"
+        name="the name"
+        value="the value"
       />
       <MSegmentControlItem
-        mId='segment3'
-        label='the label3'
-        name='the name'
-        value='the value'
+        mId="segment3"
+        label="the label3"
+        name="the name"
+        value="the value"
       />
     </MSegmentControl>
   ),

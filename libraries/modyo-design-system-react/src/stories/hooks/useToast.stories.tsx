@@ -15,7 +15,7 @@ const Example = ({ message, theme, showClose }: Props) => {
   return (
     <>
       <MButton
-        text='Show Toast'
+        text="Show Toast"
         onClick={() => toast(message, { theme, showClose })}
       />
       <MToastContainer />

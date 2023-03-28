@@ -6,25 +6,25 @@ import type { ModalProps } from '../../contexts';
 
 const ExampleModal = ({ closeModal }: ModalProps) => (
   <MModal
-    name='example'
+    name="example"
     isCentered
     isStatic
     showCloseButton
     onMClose={() => closeModal()}
   >
-    <div slot='header'>text on slot header</div>
-    <div slot='body'>text on slot body</div>
+    <div slot="header">text on slot header</div>
+    <div slot="body">text on slot body</div>
   </MModal>
 );
 
 const ExampleChildren = () => {
   const { openModal } = useModalContext();
-  return <MButton text='Show Modal' onClick={() => openModal('example')} />;
+  return <MButton text="Show Modal" onClick={() => openModal('example')} />;
 };
 
 const Example = () => (
   <ModalContextProvider
-    portalName='examplePortal'
+    portalName="examplePortal"
     availableModals={{
       example: ExampleModal,
     }}

@@ -29,7 +29,7 @@ type Story = StoryObj<typeof MProgressBar>;
 
 export const Default: Story = {
   render: (args) => (
-    <div className='d-flex justify-content-center p-3'>
+    <div className="d-flex justify-content-center p-3">
       <MProgressBar {...args} />
     </div>
   ),

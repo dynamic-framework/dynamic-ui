@@ -52,7 +52,7 @@ type Story = StoryObj<typeof MPin>;
 
 export const Default: Story = {
   render: (args) => (
-    <div className='d-flex'>
+    <div className="d-flex">
       <MPin {...args} />
     </div>
   ),
