@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MCoupon } from '../../components';
 import { ICONS, THEMES } from '../constants';
@@ -99,8 +99,9 @@ const config: Meta<typeof MCoupon> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCoupon>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     label: 'the label',

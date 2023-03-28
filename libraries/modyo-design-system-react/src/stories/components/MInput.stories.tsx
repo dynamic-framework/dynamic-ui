@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MInput } from '../../components';
 import { ICONS } from '../constants';
@@ -85,8 +85,9 @@ const config: Meta<typeof MInput> = {
 };
 
 export default config;
+type Story = StoryObj<typeof  MInput>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     label: 'the label',

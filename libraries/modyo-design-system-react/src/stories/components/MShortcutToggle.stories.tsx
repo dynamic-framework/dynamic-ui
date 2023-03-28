@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MShortcutToggle } from '../../components';
 import { ICONS, INPUT_STATE } from '../constants';
@@ -53,8 +53,9 @@ const config: Meta<typeof MShortcutToggle> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MShortcutToggle>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     name: 'the name',

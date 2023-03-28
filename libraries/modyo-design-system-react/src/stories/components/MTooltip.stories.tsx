@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MTooltip } from '../../components';
 
@@ -51,8 +51,9 @@ const config: Meta<typeof MTooltip> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MTooltip>;
 
-export const Default = {
+export const Default: Story = {
   render: (args) => (
     <div className='d-flex justify-content-center align-items-center p-5 w-100'>
       <MTooltip {...args} />

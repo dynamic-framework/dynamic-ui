@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { useFormatCurrency } from '../../hooks';
 import { LiquidContextProvider } from '../../contexts';

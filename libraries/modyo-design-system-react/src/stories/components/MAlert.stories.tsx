@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MAlert } from '../../components';
 import { THEMES } from '../constants';
@@ -29,8 +29,9 @@ const config: Meta<typeof MAlert> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MAlert>;
 
-export const Default = {
+export const Default: Story = {
   render: (args) => <MAlert {...args}>Default alert</MAlert>,
 
   args: {

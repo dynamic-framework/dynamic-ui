@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MIcon } from '../../components';
 import { ICONS, THEMES } from '../constants';
@@ -29,8 +29,9 @@ const config: Meta<typeof MIcon> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MIcon>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     icon: ICONS[0],
     theme: 'info',

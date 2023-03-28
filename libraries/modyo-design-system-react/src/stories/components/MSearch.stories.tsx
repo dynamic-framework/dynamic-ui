@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MSearch } from '../../components';
 import { ICONS } from '../constants';
@@ -93,8 +93,9 @@ const config: Meta<typeof MSearch> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MSearch>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     placeholder: 'the placeholder',

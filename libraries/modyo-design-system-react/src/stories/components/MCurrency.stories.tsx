@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MCurrency } from '../../components';
 import { ICONS, THEMES } from '../constants';
@@ -110,8 +110,9 @@ const config: Meta<typeof MCurrency> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCurrency>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     label: 'the label',

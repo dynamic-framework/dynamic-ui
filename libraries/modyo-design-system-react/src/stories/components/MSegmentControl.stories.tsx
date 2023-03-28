@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MSegmentControl, MSegmentControlItem } from '../../components';
 
@@ -20,8 +20,9 @@ const config: Meta<typeof MSegmentControl> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MSegmentControl>;
 
-export const Default = {
+export const Default: Story = {
   render: (args) => (
     <MSegmentControl {...args}>
       <MSegmentControlItem

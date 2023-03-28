@@ -29,7 +29,6 @@
     "allowJs": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "@types"],
-  "exclude": ["src/stories/**"],
   "compileOnSave": false,
   "buildOnSave": false
 }

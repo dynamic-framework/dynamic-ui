@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MPin } from '../../components';
 
@@ -48,8 +48,9 @@ const config: Meta<typeof MPin> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MPin>;
 
-export const Default = {
+export const Default: Story = {
   render: (args) => (
     <div className='d-flex'>
       <MPin {...args} />

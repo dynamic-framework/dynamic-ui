@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { MButton, MToastContainer } from '../../components';
 import { useToast } from '../../hooks';

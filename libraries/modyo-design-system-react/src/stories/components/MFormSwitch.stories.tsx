@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MFormSwitch } from '../../components';
 
@@ -28,8 +28,9 @@ const config: Meta<typeof MFormSwitch> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MFormSwitch>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     label: 'the label',

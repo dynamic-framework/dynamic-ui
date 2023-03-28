@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MCollapse } from '../../components';
 
@@ -27,8 +27,9 @@ const config: Meta<typeof MCollapse> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCollapse>;
 
-export const Default = {
+export const Default: Story = {
   render: (args) => (
     <MCollapse {...args}>
       <div className='row d-flex flex-column gap-3'>

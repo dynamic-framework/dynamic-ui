@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MSelect } from '../../components';
 import { ICONS, THEMES } from '../constants';
@@ -81,8 +81,9 @@ const config: Meta<typeof MSelect> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MSelect>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     variant: 'prime',

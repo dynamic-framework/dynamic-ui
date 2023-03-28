@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MTabs, MTabContent } from '../../components';
 
@@ -29,8 +29,9 @@ const config: Meta<typeof MTabs> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MTabs>;
 
-export const Default = {
+export const Default: Story = {
   render: (args) => (
     <MTabs {...args}>
       <MTabContent tab='tab1'>Tab content for Tab 1</MTabContent>

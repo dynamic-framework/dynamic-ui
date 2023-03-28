@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MProgressBar } from '../../components';
 
@@ -25,8 +25,9 @@ const config: Meta<typeof MProgressBar> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MProgressBar>;
 
-export const Default = {
+export const Default: Story = {
   render: (args) => (
     <div className='d-flex justify-content-center p-3'>
       <MProgressBar {...args} />

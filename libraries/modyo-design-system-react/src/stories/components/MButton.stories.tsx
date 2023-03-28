@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MButton } from '../../components';
 import { ICONS, INPUT_STATE, THEMES } from '../constants';
@@ -75,8 +75,9 @@ const config: Meta<typeof MButton> = {
 };
 
 export default config;
+type Story = StoryObj<typeof  MButton>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     theme: 'primary',
     text: 'default',

@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MCounter } from '../../components';
 import { ICONS } from '../constants';
@@ -66,8 +66,9 @@ const config: Meta<typeof MCounter> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCounter>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     theme: 'info',

@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { DateTime } from 'luxon';
 
 import { MCalendar } from '../../components';
@@ -42,8 +42,9 @@ const config: Meta<typeof MCalendar> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCalendar>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     date: DateTime.now().toISO(),
   },

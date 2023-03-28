@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MSegmentControlItem } from '../../components';
 import { INPUT_STATE } from '../constants';
@@ -45,8 +45,9 @@ const config: Meta<typeof MSegmentControlItem> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MSegmentControlItem>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     name: 'the name',

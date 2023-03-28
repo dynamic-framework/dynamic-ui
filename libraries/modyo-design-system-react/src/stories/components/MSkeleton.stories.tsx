@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MSkeleton } from '../../components';
 
@@ -22,8 +22,9 @@ const config: Meta<typeof MSkeleton> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MSkeleton>;
 
-export const Default = {
+export const Default: Story = {
   render: (args) => (
     <MSkeleton {...args}>
       <rect x='48' y='8' rx='3' ry='3' width='88' height='6' />

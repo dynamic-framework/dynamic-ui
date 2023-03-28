@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MQuickAction } from '../../components';
 import { ICONS } from '../constants';
@@ -57,8 +57,9 @@ const config: Meta<typeof MQuickAction> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MQuickAction>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     text: 'the text',
     variant: 'extended',

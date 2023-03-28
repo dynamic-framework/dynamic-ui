@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MBadge } from '../../components';
 import { THEMES } from '../constants';
@@ -19,8 +19,9 @@ const config: Meta<typeof MBadge> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MBadge>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     theme: 'primary',
     text: 'default',

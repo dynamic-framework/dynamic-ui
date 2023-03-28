@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MListItem } from '../../components';
 import { ICONS, THEMES } from '../constants';
@@ -76,8 +76,9 @@ const config: Meta<typeof MListItem> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MListItem>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     text: 'the text',
     subtext: 'the subtext',

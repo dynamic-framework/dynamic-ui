@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MFormCheck } from '../../components';
 
@@ -54,8 +54,9 @@ const config: Meta<typeof MFormCheck> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MFormCheck>;
 
-export const Default = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     label: 'the label',

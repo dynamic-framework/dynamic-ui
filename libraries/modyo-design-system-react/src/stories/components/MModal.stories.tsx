@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MButton, MModal } from '../../components';
 import { ModalContextProvider, useModalContext } from '../../contexts';
@@ -39,7 +39,8 @@ const config: Meta<typeof Example> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MModal>;
 
-export const Default = {
+export const Default: Story = {
   render: () => <Example />,
 };
