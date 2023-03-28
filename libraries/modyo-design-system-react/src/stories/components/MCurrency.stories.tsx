@@ -1,110 +1,110 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MCurrency } from "../../components";
-import { ICONS, THEMES } from "../constants";
+import { MCurrency } from '../../components';
+import { ICONS, THEMES } from '../constants';
 
 const config: Meta<typeof MCurrency> = {
-  title: "Stencil/Currency",
+  title: 'Stencil/Currency',
   component: MCurrency,
   argTypes: {
     mId: {
-      control: "text",
+      control: 'text',
     },
     label: {
-      control: "text",
+      control: 'text',
     },
     labelIcon: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     iconStart: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     iconMiddle: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     iconEnd: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     placeholder: {
-      control: "text",
+      control: 'text',
     },
     value: {
-      control: "number",
+      control: 'number',
     },
     minValue: {
-      control: "number",
+      control: 'number',
     },
     maxValue: {
-      control: "number",
+      control: 'number',
     },
     hint: {
-      control: "text",
+      control: 'text',
     },
     hintIconStart: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     hintIconEnd: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     theme: {
-      control: "select",
-      options: THEMES.filter((theme) => !["light", "dark"].includes(theme)),
-      table: { defaultValue: { summary: "primary" } },
+      control: 'select',
+      options: THEMES.filter((theme) => !['light', 'dark'].includes(theme)),
+      table: { defaultValue: { summary: 'primary' } },
     },
     variant: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
-      options: [undefined, "prime"],
+      options: [undefined, 'prime'],
     },
     layoutDirection: {
-      control: "select",
-      options: ["horizontal", "vertical"],
+      control: 'select',
+      options: ['horizontal', 'vertical'],
     },
     isLoading: {
-      control: "boolean",
+      control: 'boolean',
     },
     isDisabled: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -113,22 +113,22 @@ export default config;
 
 export const Default = {
   args: {
-    mId: "componentId",
-    label: "the label",
+    mId: 'componentId',
+    label: 'the label',
     selectOptions: [
-      { label: "USD", value: "USD" },
-      { label: "CLP", value: "CLP" },
+      { label: 'USD', value: 'USD' },
+      { label: 'CLP', value: 'CLP' },
     ],
-    placeholder: "the placeholder",
+    placeholder: 'the placeholder',
     value: 123,
     minValue: 0,
     maxValue: 100000,
     currencyOptions: {
-      symbol: "$",
+      symbol: '$',
       precision: 2,
-      separator: ",",
-      decimal: ".",
+      separator: ',',
+      decimal: '.',
     },
-    layoutDirection: "vertical",
+    layoutDirection: 'vertical',
   },
 };

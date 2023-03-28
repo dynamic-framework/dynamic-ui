@@ -1,8 +1,8 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MButton, MToastContainer } from "../../components";
-import { useToast } from "../../hooks";
-import { THEMES } from "../constants";
+import { MButton, MToastContainer } from '../../components';
+import { useToast } from '../../hooks';
+import { THEMES } from '../constants';
 
 type Props = {
   message: string;
@@ -15,7 +15,7 @@ const Example = ({ message, theme, showClose }: Props) => {
   return (
     <>
       <MButton
-        text="Show Toast"
+        text='Show Toast'
         onClick={() => toast(message, { theme, showClose })}
       />
       <MToastContainer />
@@ -24,15 +24,15 @@ const Example = ({ message, theme, showClose }: Props) => {
 };
 
 const config: Meta<typeof Example> = {
-  title: "React/hooks/useToast",
+  title: 'React/hooks/useToast',
   component: Example,
   argTypes: {
     theme: {
-      control: "select",
+      control: 'select',
       options: THEMES,
     },
     showClose: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -41,8 +41,8 @@ export default config;
 
 export const Default = {
   args: {
-    message: "the default message",
-    theme: "primary",
+    message: 'the default message',
+    theme: 'primary',
     showClose: false,
   },
 };

@@ -1,42 +1,42 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MSegmentControlItem } from "../../components";
-import { INPUT_STATE } from "../constants";
+import { MSegmentControlItem } from '../../components';
+import { INPUT_STATE } from '../constants';
 
 const config: Meta<typeof MSegmentControlItem> = {
-  title: "Stencil/SegmentControlItem",
+  title: 'Stencil/SegmentControlItem',
   component: MSegmentControlItem,
   parameters: {
     docs: {
       description: {
-        component: "Design System Segment Control Item",
+        component: 'Design System Segment Control Item',
       },
     },
   },
   argTypes: {
     mId: {
-      control: "text",
+      control: 'text',
     },
     name: {
-      control: "text",
+      control: 'text',
     },
     label: {
-      control: "text",
+      control: 'text',
     },
     value: {
-      control: "text",
+      control: 'text',
     },
     isDisabled: {
-      control: "boolean",
+      control: 'boolean',
     },
     isChecked: {
-      control: "boolean",
+      control: 'boolean',
     },
     state: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...INPUT_STATE],
@@ -48,9 +48,9 @@ export default config;
 
 export const Default = {
   args: {
-    mId: "componentId",
-    name: "the name",
-    label: "the label",
-    value: "the value",
+    mId: 'componentId',
+    name: 'the name',
+    label: 'the label',
+    value: 'the value',
   },
 };

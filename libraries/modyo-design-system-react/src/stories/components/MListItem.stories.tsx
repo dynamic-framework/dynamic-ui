@@ -1,73 +1,73 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MListItem } from "../../components";
-import { ICONS, THEMES } from "../constants";
+import { MListItem } from '../../components';
+import { ICONS, THEMES } from '../constants';
 
 const config: Meta<typeof MListItem> = {
-  title: "Stencil/ListItem",
+  title: 'Stencil/ListItem',
   component: MListItem,
   argTypes: {
     theme: {
-      control: "select",
+      control: 'select',
       options: THEMES,
-      table: { defaultValue: { summary: "primary" } },
+      table: { defaultValue: { summary: 'primary' } },
     },
     text: {
-      control: "text",
+      control: 'text',
     },
     subtext: {
-      control: "text",
+      control: 'text',
     },
     value: {
-      control: "text",
+      control: 'text',
     },
     alternativeValue: {
-      control: "text",
+      control: 'text',
     },
     isPill: {
-      control: "boolean",
+      control: 'boolean',
     },
     icon: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     image: {
-      control: "text",
+      control: 'text',
     },
     variant: {
-      control: "select",
-      options: ["default", "selectable", "navegable"],
+      control: 'select',
+      options: ['default', 'selectable', 'navegable'],
     },
     selectableProps: {
       control: {
-        type: "object",
+        type: 'object',
         value: {
-          id: "the id",
-          name: "the name",
-          value: "",
+          id: 'the id',
+          name: 'the name',
+          value: '',
           checked: false,
         },
       },
-      description: "`optional` to use with forms",
+      description: '`optional` to use with forms',
       table: {
         defaultValue: { summary: undefined },
       },
     },
     navegableProps: {
       control: {
-        type: "object",
+        type: 'object',
         value: {
-          href: "/",
-          target: "",
-          "aria-current": "",
+          href: '/',
+          target: '',
+          'aria-current': '',
         },
       },
-      description: "`optional` to use with links",
+      description: '`optional` to use with links',
       table: {
         defaultValue: { summary: undefined },
       },
@@ -79,9 +79,9 @@ export default config;
 
 export const Default = {
   args: {
-    text: "the text",
-    subtext: "the subtext",
-    theme: "primary",
-    variant: "default",
+    text: 'the text',
+    subtext: 'the subtext',
+    theme: 'primary',
+    variant: 'default',
   },
 };

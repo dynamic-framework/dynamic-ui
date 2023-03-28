@@ -1,29 +1,29 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MIcon } from "../../components";
-import { ICONS, THEMES } from "../constants";
+import { MIcon } from '../../components';
+import { ICONS, THEMES } from '../constants';
 
 const config: Meta<typeof MIcon> = {
-  title: "Stencil/Icon",
+  title: 'Stencil/Icon',
   component: MIcon,
   argTypes: {
     icon: {
-      control: "select",
+      control: 'select',
       options: ICONS,
     },
     theme: {
-      control: "select",
+      control: 'select',
       options: THEMES,
-      table: { defaultValue: { summary: "primary" } },
+      table: { defaultValue: { summary: 'primary' } },
     },
     size: {
-      control: "text",
+      control: 'text',
     },
     isLoading: {
-      control: "boolean",
+      control: 'boolean',
     },
     duration: {
-      control: "number",
+      control: 'number',
     },
   },
 };
@@ -33,6 +33,6 @@ export default config;
 export const Default = {
   args: {
     icon: ICONS[0],
-    theme: "info",
+    theme: 'info',
   },
 };

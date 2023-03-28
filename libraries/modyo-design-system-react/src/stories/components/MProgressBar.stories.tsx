@@ -1,25 +1,25 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MProgressBar } from "../../components";
+import { MProgressBar } from '../../components';
 
 const config: Meta<typeof MProgressBar> = {
-  title: "Stencil/ProgressBar",
+  title: 'Stencil/ProgressBar',
   component: MProgressBar,
   argTypes: {
     currentValue: {
-      control: "number",
+      control: 'number',
     },
     minValue: {
-      control: "number",
+      control: 'number',
     },
     maxValue: {
-      control: "number",
+      control: 'number',
     },
     enableStripedAnimation: {
-      control: "boolean",
+      control: 'boolean',
     },
     enableDarkMode: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -28,7 +28,7 @@ export default config;
 
 export const Default = {
   render: (args) => (
-    <div className="d-flex justify-content-center p-3">
+    <div className='d-flex justify-content-center p-3'>
       <MProgressBar {...args} />
     </div>
   ),

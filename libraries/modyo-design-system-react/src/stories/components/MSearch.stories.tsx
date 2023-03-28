@@ -1,93 +1,93 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MSearch } from "../../components";
-import { ICONS } from "../constants";
+import { MSearch } from '../../components';
+import { ICONS } from '../constants';
 
 const config: Meta<typeof MSearch> = {
-  title: "Stencil/Search",
+  title: 'Stencil/Search',
   component: MSearch,
   argTypes: {
     mId: {
-      control: "text",
+      control: 'text',
     },
     label: {
-      control: "text",
+      control: 'text',
     },
     labelIcon: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     placeholder: {
-      control: "text",
+      control: 'text',
     },
     value: {
-      control: "text",
+      control: 'text',
     },
     isDisabled: {
-      control: "boolean",
+      control: 'boolean',
     },
     isReadOnly: {
-      control: "boolean",
+      control: 'boolean',
     },
     iconEnd: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     hint: {
-      control: "text",
+      control: 'text',
     },
     hintIconStart: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     hintIconEnd: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     theme: {
       control: {
-        type: "theme",
+        type: 'theme',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
-      options: [undefined, "warning", "danger"],
+      options: [undefined, 'warning', 'danger'],
     },
     variant: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
-      options: [undefined, "prime", "secondary"],
+      options: [undefined, 'prime', 'secondary'],
     },
     layoutDirection: {
-      control: "select",
-      options: ["horizontal", "vertical"],
+      control: 'select',
+      options: ['horizontal', 'vertical'],
     },
     isLoading: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -96,8 +96,8 @@ export default config;
 
 export const Default = {
   args: {
-    mId: "componentId",
-    placeholder: "the placeholder",
-    layoutDirection: "vertical",
+    mId: 'componentId',
+    placeholder: 'the placeholder',
+    layoutDirection: 'vertical',
   },
 };

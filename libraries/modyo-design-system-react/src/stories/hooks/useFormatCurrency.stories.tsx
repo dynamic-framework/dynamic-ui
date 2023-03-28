@@ -1,7 +1,7 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { useFormatCurrency } from "../../hooks";
-import { LiquidContextProvider } from "../../contexts";
+import { useFormatCurrency } from '../../hooks';
+import { LiquidContextProvider } from '../../contexts';
 
 type Props = {
   valuesToFormat: Array<number>;
@@ -19,7 +19,7 @@ const Example = ({ valuesToFormat }: Props) => {
 };
 
 const config: Meta<typeof Example> = {
-  title: "React/hooks/useFormatCurrency",
+  title: 'React/hooks/useFormatCurrency',
   component: Example,
 };
 

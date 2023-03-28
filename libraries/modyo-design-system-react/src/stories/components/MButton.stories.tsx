@@ -1,75 +1,75 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MButton } from "../../components";
-import { ICONS, INPUT_STATE, THEMES } from "../constants";
+import { MButton } from '../../components';
+import { ICONS, INPUT_STATE, THEMES } from '../constants';
 
 const config: Meta<typeof MButton> = {
-  title: "Stencil/Button",
+  title: 'Stencil/Button',
   component: MButton,
   parameters: {
     docs: {
       description: {
-        component: "Design System Button",
+        component: 'Design System Button',
       },
     },
   },
   argTypes: {
     theme: {
-      control: "select",
+      control: 'select',
       options: THEMES,
-      table: { defaultValue: { summary: "primary" } },
+      table: { defaultValue: { summary: 'primary' } },
     },
     variant: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
-      options: [undefined, "outline", "text", "ghost"],
+      options: [undefined, 'outline', 'text', 'ghost'],
     },
     state: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...INPUT_STATE],
     },
     text: {
-      control: "text",
+      control: 'text',
     },
     iconStart: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     iconEnd: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     value: {
-      control: "text",
+      control: 'text',
     },
     type: {
-      control: "select",
-      options: ["submit", "reset", "button"],
+      control: 'select',
+      options: ['submit', 'reset', 'button'],
     },
     isPill: {
-      control: "boolean",
+      control: 'boolean',
     },
     isLoading: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -78,8 +78,8 @@ export default config;
 
 export const Default = {
   args: {
-    theme: "primary",
-    text: "default",
-    type: "button",
+    theme: 'primary',
+    text: 'default',
+    type: 'button',
   },
 };

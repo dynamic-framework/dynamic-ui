@@ -1,42 +1,42 @@
-import { StoryFn, Meta } from "@storybook/react";
-import { DateTime } from "luxon";
+import { StoryFn, Meta } from '@storybook/react';
+import { DateTime } from 'luxon';
 
-import { MCalendar } from "../../components";
+import { MCalendar } from '../../components';
 
 const config: Meta<typeof MCalendar> = {
-  title: "React/Components/Calendar",
+  title: 'React/Components/Calendar',
   component: MCalendar,
   parameters: {
     docs: {
       description: {
-        component: "Design System Calendar",
+        component: 'Design System Calendar',
       },
     },
   },
   argTypes: {
     calendarContainer: {
-      control: "text",
+      control: 'text',
     },
     inline: {
-      control: "boolean",
+      control: 'boolean',
     },
     withPortal: {
-      control: "boolean",
+      control: 'boolean',
     },
     showTimeInput: {
-      control: "boolean",
+      control: 'boolean',
     },
     calendarStartDay: {
-      control: "number",
+      control: 'number',
     },
     timeInputLabel: {
-      control: "text",
+      control: 'text',
     },
     className: {
-      control: "text",
+      control: 'text',
     },
     dateFormat: {
-      control: "text",
+      control: 'text',
     },
   },
 };

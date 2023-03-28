@@ -1,57 +1,57 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MQuickAction } from "../../components";
-import { ICONS } from "../constants";
+import { MQuickAction } from '../../components';
+import { ICONS } from '../constants';
 
 const config: Meta<typeof MQuickAction> = {
-  title: "Stencil/QuickAction",
+  title: 'Stencil/QuickAction',
   component: MQuickAction,
   argTypes: {
     text: {
-      control: "text",
+      control: 'text',
     },
     subtext: {
-      control: "text",
+      control: 'text',
     },
     extraInfo: {
-      control: "text",
+      control: 'text',
     },
     icon: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     image: {
-      control: "text",
+      control: 'text',
     },
     variant: {
-      control: "select",
-      options: ["compact", "extended"],
+      control: 'select',
+      options: ['compact', 'extended'],
     },
     actionWord: {
-      control: "text",
+      control: 'text',
     },
     actionIcon: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
       options: [undefined, ...ICONS],
     },
     state: {
       control: {
-        type: "select",
+        type: 'select',
         labels: {
-          undefined: "empty",
+          undefined: 'empty',
         },
       },
-      options: [undefined, "hover", "disabled", "focus"],
+      options: [undefined, 'hover', 'disabled', 'focus'],
     },
   },
 };
@@ -60,7 +60,7 @@ export default config;
 
 export const Default = {
   args: {
-    text: "the text",
-    variant: "extended",
+    text: 'the text',
+    variant: 'extended',
   },
 };

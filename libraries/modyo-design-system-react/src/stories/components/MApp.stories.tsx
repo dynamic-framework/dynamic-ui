@@ -1,9 +1,9 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MApp } from "../../components";
+import { MApp } from '../../components';
 
 const config: Meta<typeof MApp> = {
-  title: "Stencil/App",
+  title: 'Stencil/App',
   component: MApp,
   decorators: [(Story) => <Story />],
 };

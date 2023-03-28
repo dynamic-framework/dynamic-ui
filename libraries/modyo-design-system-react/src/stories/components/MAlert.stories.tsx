@@ -1,29 +1,29 @@
-import { StoryFn, Meta } from "@storybook/react";
+import { StoryFn, Meta } from '@storybook/react';
 
-import { MAlert } from "../../components";
-import { THEMES } from "../constants";
+import { MAlert } from '../../components';
+import { THEMES } from '../constants';
 
 const config: Meta<typeof MAlert> = {
-  title: "Stencil/Alert",
+  title: 'Stencil/Alert',
   component: MAlert,
   parameters: {
     docs: {
       description: {
-        component: "Design System Alert",
+        component: 'Design System Alert',
       },
     },
   },
   argTypes: {
     theme: {
-      control: "select",
+      control: 'select',
       options: THEMES,
-      table: { defaultValue: { summary: "primary" } },
+      table: { defaultValue: { summary: 'primary' } },
     },
     showClose: {
-      control: "boolean",
+      control: 'boolean',
     },
     showIcon: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -34,7 +34,7 @@ export const Default = {
   render: (args) => <MAlert {...args}>Default alert</MAlert>,
 
   args: {
-    theme: "success",
+    theme: 'success',
     showIcon: true,
   },
 };
