@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import {
   Component,
   Host,
@@ -71,7 +73,10 @@ export class MFormSwitch implements ComponentInterface {
   render() {
     return (
       <Host class="form-switch-box">
-        <div class="form-check form-switch form-check-reverse">
+        <div
+          class="form-check form-switch form-check-reverse"
+          onClick={(e) => e.stopPropagation()}
+        >
           <label
             class="form-switch-box-label"
             htmlFor={this.mId}
