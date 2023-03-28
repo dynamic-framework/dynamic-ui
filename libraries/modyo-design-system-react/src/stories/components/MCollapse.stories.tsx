@@ -17,7 +17,7 @@ const config: Meta<typeof MCollapse> = {
         ),
       },
     },
-    isCollapsed: {
+    defaultCollapsed: {
       control: "boolean",
     },
     hasSeparator: {
@@ -41,7 +41,7 @@ export const Default = {
 
   args: {
     Component: "Text",
-    isCollapsed: false,
+    defaultCollapsed: false,
     hasSeparator: true,
   },
 };

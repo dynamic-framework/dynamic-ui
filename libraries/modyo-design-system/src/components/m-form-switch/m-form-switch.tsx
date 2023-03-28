@@ -76,7 +76,7 @@ export class MFormSwitch implements ComponentInterface {
             class="form-switch-box-label"
             htmlFor={this.mId}
           >
-            <div class="d-flex gap-3 justify-content-between flex-grow-1">
+            <div class="d-flex gap-3 justify-content-between align-items-center flex-grow-1">
               <span class="form-check-label">{this.label}</span>
               <span class="form-check-label fw-bold">
                 {this.internalIsChecked ? this.labelOn : this.labelOff}
