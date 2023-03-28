@@ -1,42 +1,43 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from "@storybook/react";
 
-import { MProgressBar } from '../../components';
+import { MProgressBar } from "../../components";
 
-const config: ComponentMeta<typeof MProgressBar> = {
-  title: 'Stencil/ProgressBar',
+const config: Meta<typeof MProgressBar> = {
+  title: "Stencil/ProgressBar",
   component: MProgressBar,
   argTypes: {
     currentValue: {
-      control: 'number',
+      control: "number",
     },
     minValue: {
-      control: 'number',
+      control: "number",
     },
     maxValue: {
-      control: 'number',
+      control: "number",
     },
     enableStripedAnimation: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableDarkMode: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
 
 export default config;
 
-const Template: ComponentStory<typeof MProgressBar> = (args) => (
-  <div className="d-flex justify-content-center p-3">
-    <MProgressBar {...args} />
-  </div>
-);
+export const Default = {
+  render: (args) => (
+    <div className="d-flex justify-content-center p-3">
+      <MProgressBar {...args} />
+    </div>
+  ),
 
-export const Default = Template.bind({});
-Default.args = {
-  currentValue: 33,
-  minValue: 0,
-  maxValue: 100,
-  enableStripedAnimation: false,
-  enableDarkMode: false,
+  args: {
+    currentValue: 33,
+    minValue: 0,
+    maxValue: 100,
+    enableStripedAnimation: false,
+    enableDarkMode: false,
+  },
 };

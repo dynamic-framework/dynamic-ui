@@ -1,58 +1,64 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from "@storybook/react";
 
-import { MFormCheck } from '../../components';
+import { MFormCheck } from "../../components";
 
-const config: ComponentMeta<typeof MFormCheck> = {
-  title: 'Stencil/FormCheck',
+const config: Meta<typeof MFormCheck> = {
+  title: "Stencil/FormCheck",
   component: MFormCheck,
   argTypes: {
     type: {
-      control: 'select',
-      options: ['checkbox', 'radio'],
+      control: "select",
+      options: ["checkbox", "radio"],
     },
     name: {
-      control: 'text',
+      control: "text",
     },
     label: {
-      control: 'text',
+      control: "text",
     },
     isChecked: {
-      control: 'boolean',
+      control: "boolean",
     },
     mId: {
-      control: 'text',
+      control: "text",
     },
     isDisabled: {
-      control: 'boolean',
+      control: "boolean",
     },
     state: {
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          undefined: 'empty',
+          undefined: "empty",
         },
       },
-      options: [undefined, 'success', 'error', 'warning', 'indeterminate', 'loading'],
+      options: [
+        undefined,
+        "success",
+        "error",
+        "warning",
+        "indeterminate",
+        "loading",
+      ],
     },
     isIndeterminate: {
-      control: 'boolean',
+      control: "boolean",
     },
     value: {
-      control: 'text',
+      control: "text",
     },
     isButton: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
 
 export default config;
 
-const Template: ComponentStory<typeof MFormCheck> = (args) => <MFormCheck {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  label: 'the label',
-  type: 'checkbox',
+export const Default = {
+  args: {
+    mId: "componentId",
+    label: "the label",
+    type: "checkbox",
+  },
 };

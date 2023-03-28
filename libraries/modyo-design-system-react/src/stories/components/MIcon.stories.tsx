@@ -1,39 +1,38 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from "@storybook/react";
 
-import { MIcon } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { MIcon } from "../../components";
+import { ICONS, THEMES } from "../constants";
 
-const config: ComponentMeta<typeof MIcon> = {
-  title: 'Stencil/Icon',
+const config: Meta<typeof MIcon> = {
+  title: "Stencil/Icon",
   component: MIcon,
   argTypes: {
     icon: {
-      control: 'select',
+      control: "select",
       options: ICONS,
     },
     theme: {
-      control: 'select',
+      control: "select",
       options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
+      table: { defaultValue: { summary: "primary" } },
     },
     size: {
-      control: 'text',
+      control: "text",
     },
     isLoading: {
-      control: 'boolean',
+      control: "boolean",
     },
     duration: {
-      control: 'number',
+      control: "number",
     },
   },
 };
 
 export default config;
 
-const Template: ComponentStory<typeof MIcon> = (args) => <MIcon {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  icon: ICONS[0],
-  theme: 'info',
+export const Default = {
+  args: {
+    icon: ICONS[0],
+    theme: "info",
+  },
 };

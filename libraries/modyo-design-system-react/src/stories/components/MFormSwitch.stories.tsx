@@ -1,38 +1,37 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from "@storybook/react";
 
-import { MFormSwitch } from '../../components';
+import { MFormSwitch } from "../../components";
 
-const config: ComponentMeta<typeof MFormSwitch> = {
-  title: 'Stencil/FormSwitch',
+const config: Meta<typeof MFormSwitch> = {
+  title: "Stencil/FormSwitch",
   component: MFormSwitch,
   argTypes: {
     label: {
-      control: 'text',
+      control: "text",
     },
     labelOn: {
-      control: 'text',
+      control: "text",
     },
     labelOff: {
-      control: 'text',
+      control: "text",
     },
     mId: {
-      control: 'text',
+      control: "text",
     },
     isChecked: {
-      control: 'boolean',
+      control: "boolean",
     },
     isDisabled: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
 
 export default config;
 
-const Template: ComponentStory<typeof MFormSwitch> = (args) => <MFormSwitch {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  label: 'the label',
+export const Default = {
+  args: {
+    mId: "componentId",
+    label: "the label",
+  },
 };

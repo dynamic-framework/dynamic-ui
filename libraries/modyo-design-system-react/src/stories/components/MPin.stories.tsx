@@ -1,66 +1,67 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from "@storybook/react";
 
-import { MPin } from '../../components';
+import { MPin } from "../../components";
 
-const config: ComponentMeta<typeof MPin> = {
-  title: 'Stencil/Pin',
+const config: Meta<typeof MPin> = {
+  title: "Stencil/Pin",
   component: MPin,
   argTypes: {
     characters: {
-      control: 'number',
+      control: "number",
     },
     theme: {
-      control: 'select',
-      options: [undefined, 'tertiary', 'danger', 'warning'],
+      control: "select",
+      options: [undefined, "tertiary", "danger", "warning"],
     },
     type: {
-      control: 'select',
-      options: ['number', 'text'],
+      control: "select",
+      options: ["number", "text"],
     },
     isDisabled: {
-      control: 'boolean',
+      control: "boolean",
     },
     isLoading: {
-      control: 'boolean',
+      control: "boolean",
     },
     label: {
-      control: 'text',
+      control: "text",
     },
     labelIcon: {
-      control: 'text',
+      control: "text",
     },
     iconStart: {
-      control: 'text',
+      control: "text",
     },
     iconEnd: {
-      control: 'text',
+      control: "text",
     },
     hint: {
-      control: 'text',
+      control: "text",
     },
     hintIconStart: {
-      control: 'text',
+      control: "text",
     },
     hintIconEnd: {
-      control: 'text',
+      control: "text",
     },
   },
 };
 
 export default config;
 
-const Template: ComponentStory<typeof MPin> = (args) => (
-  <div className="d-flex">
-    <MPin {...args} />
-  </div>
-);
+export const Default = {
+  render: (args) => (
+    <div className="d-flex">
+      <MPin {...args} />
+    </div>
+  ),
 
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'myPin',
-  characters: 4,
-  theme: undefined,
-  type: 'text',
-  isDisabled: false,
-  isLoading: false,
+  args: {
+    mId: "myPin",
+    characters: 4,
+    theme: undefined,
+    type: "text",
+    isDisabled: false,
+    isLoading: false,
+  },
 };

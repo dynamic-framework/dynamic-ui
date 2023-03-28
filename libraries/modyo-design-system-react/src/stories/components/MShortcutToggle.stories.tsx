@@ -1,66 +1,65 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from "@storybook/react";
 
-import { MShortcutToggle } from '../../components';
-import { ICONS, INPUT_STATE } from '../constants';
+import { MShortcutToggle } from "../../components";
+import { ICONS, INPUT_STATE } from "../constants";
 
-const config: ComponentMeta<typeof MShortcutToggle> = {
-  title: 'Stencil/ShortcutToggle',
+const config: Meta<typeof MShortcutToggle> = {
+  title: "Stencil/ShortcutToggle",
   component: MShortcutToggle,
   argTypes: {
     mId: {
-      control: 'text',
+      control: "text",
     },
     name: {
-      control: 'text',
+      control: "text",
     },
     value: {
-      control: 'text',
+      control: "text",
     },
     label: {
-      control: 'text',
+      control: "text",
     },
     text: {
-      control: 'text',
+      control: "text",
     },
     subtext: {
-      control: 'text',
+      control: "text",
     },
     icon: {
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          undefined: 'empty',
+          undefined: "empty",
         },
       },
       options: [undefined, ...ICONS],
     },
     isChecked: {
-      control: 'boolean',
+      control: "boolean",
     },
     state: {
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          undefined: 'empty',
+          undefined: "empty",
         },
       },
       options: [undefined, ...INPUT_STATE],
     },
     white: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
 
 export default config;
 
-const Template: ComponentStory<typeof MShortcutToggle> = (args) => <MShortcutToggle {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  name: 'the name',
-  value: 'the value',
-  label: 'the label',
-  white: false,
+export const Default = {
+  args: {
+    mId: "componentId",
+    name: "the name",
+    value: "the value",
+    label: "the label",
+    white: false,
+  },
 };

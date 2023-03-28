@@ -1,52 +1,51 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from "@storybook/react";
 
-import { MHint } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { MHint } from "../../components";
+import { ICONS, THEMES } from "../constants";
 
-const config: ComponentMeta<typeof MHint> = {
-  title: 'Stencil/Hint',
+const config: Meta<typeof MHint> = {
+  title: "Stencil/Hint",
   component: MHint,
   argTypes: {
     iconStart: {
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          undefined: 'empty',
+          undefined: "empty",
         },
       },
       options: [undefined, ...ICONS],
     },
     iconEnd: {
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          undefined: 'empty',
+          undefined: "empty",
         },
       },
       options: [undefined, ...ICONS],
     },
     text: {
-      control: 'text',
+      control: "text",
     },
     theme: {
-      control: 'select',
-      options: THEMES.filter((theme) => (
-        !['light', 'primary', 'secondary'].includes(theme)
-      )),
-      table: { defaultValue: { summary: 'primary' } },
+      control: "select",
+      options: THEMES.filter(
+        (theme) => !["light", "primary", "secondary"].includes(theme)
+      ),
+      table: { defaultValue: { summary: "primary" } },
     },
     iconSize: {
-      control: 'text',
+      control: "text",
     },
   },
 };
 
 export default config;
 
-const Template: ComponentStory<typeof MHint> = (args) => <MHint {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  text: 'the text',
-  theme: 'info',
+export const Default = {
+  args: {
+    text: "the text",
+    theme: "info",
+  },
 };

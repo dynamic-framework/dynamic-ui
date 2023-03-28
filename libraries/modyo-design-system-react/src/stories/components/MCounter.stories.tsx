@@ -1,81 +1,80 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from "@storybook/react";
 
-import { MCounter } from '../../components';
-import { ICONS } from '../constants';
+import { MCounter } from "../../components";
+import { ICONS } from "../constants";
 
-const config: ComponentMeta<typeof MCounter> = {
-  title: 'Stencil/Counter',
+const config: Meta<typeof MCounter> = {
+  title: "Stencil/Counter",
   component: MCounter,
   argTypes: {
     mId: {
-      control: 'text',
+      control: "text",
     },
     label: {
-      control: 'text',
+      control: "text",
     },
     hint: {
-      control: 'text',
+      control: "text",
     },
     hintIconStart: {
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          undefined: 'empty',
+          undefined: "empty",
         },
       },
       options: [undefined, ...ICONS],
     },
     hintIconEnd: {
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          undefined: 'empty',
+          undefined: "empty",
         },
       },
       options: [undefined, ...ICONS],
     },
     theme: {
-      control: 'select',
-      options: ['info', 'warning', 'danger'],
-      table: { defaultValue: { summary: 'info' } },
+      control: "select",
+      options: ["info", "warning", "danger"],
+      table: { defaultValue: { summary: "info" } },
     },
     minValue: {
-      control: 'number',
+      control: "number",
     },
     maxValue: {
-      control: 'number',
+      control: "number",
     },
     value: {
-      control: 'number',
+      control: "number",
     },
     variant: {
-      control: 'select',
-      options: ['default', 'prime'],
+      control: "select",
+      options: ["default", "prime"],
     },
     layoutDirection: {
-      control: 'select',
-      options: ['horizontal', 'vertical'],
+      control: "select",
+      options: ["horizontal", "vertical"],
     },
     isDisabled: {
-      control: 'boolean',
+      control: "boolean",
     },
     isLoading: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 };
 
 export default config;
 
-const Template: ComponentStory<typeof MCounter> = (args) => <MCounter {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  theme: 'info',
-  minValue: 0,
-  maxValue: 100,
-  value: 3,
-  variant: 'default',
-  layoutDirection: 'vertical',
+export const Default = {
+  args: {
+    mId: "componentId",
+    theme: "info",
+    minValue: 0,
+    maxValue: 100,
+    value: 3,
+    variant: "default",
+    layoutDirection: "vertical",
+  },
 };
