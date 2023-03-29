@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.1...@modyo-dynamic/modyo-design-system-react@0.8.2) (2023-03-29)
+
+### Bug Fixes
+
+- adjust style of m-toat ([e3c61a0](https://github.com/modyo-dynamic/modyo-design-system/commit/e3c61a0b89f7ef9b8a1830f6f2cfd9b435636d9c))
+- remove boxShadow style of m-toast container ([ba4f81f](https://github.com/modyo-dynamic/modyo-design-system/commit/ba4f81f225e9f3c98794f9a5e741870bf7eec0d7))
+- stories type ([bf52a40](https://github.com/modyo-dynamic/modyo-design-system/commit/bf52a40991ceb04e7353c53bc8a471f3150adb14))
+
 ## [0.8.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.0...@modyo-dynamic/modyo-design-system-react@0.8.1) (2023-03-23)
 
 ### Bug Fixes

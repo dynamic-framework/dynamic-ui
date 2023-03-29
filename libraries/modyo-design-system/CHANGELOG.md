@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.1...@modyo-dynamic/modyo-design-system@0.7.2) (2023-03-29)
+
+### Bug Fixes
+
+- add stop propagation onClick switch ([14ca335](https://github.com/modyo-dynamic/modyo-design-system/commit/14ca335e23f464d6d59cd9ab84e3c96de58f8f23))
+
 ## [0.7.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.0...@modyo-dynamic/modyo-design-system@0.7.1) (2023-03-23)
 
 ### Bug Fixes
