@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MCoupon } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MCoupon> = {
+const config: Meta<typeof MCoupon> = {
   title: 'Stencil/Coupon',
   component: MCoupon,
   argTypes: {
@@ -99,11 +99,11 @@ const config: ComponentMeta<typeof MCoupon> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCoupon>;
 
-const Template: ComponentStory<typeof MCoupon> = (args) => <MCoupon {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  label: 'the label',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'the label',
+  },
 };

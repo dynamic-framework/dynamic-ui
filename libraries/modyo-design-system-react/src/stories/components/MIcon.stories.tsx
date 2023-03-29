@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MIcon } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MIcon> = {
+const config: Meta<typeof MIcon> = {
   title: 'Stencil/Icon',
   component: MIcon,
   argTypes: {
@@ -29,11 +29,11 @@ const config: ComponentMeta<typeof MIcon> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MIcon>;
 
-const Template: ComponentStory<typeof MIcon> = (args) => <MIcon {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  icon: ICONS[0],
-  theme: 'info',
+export const Default: Story = {
+  args: {
+    icon: ICONS[0],
+    theme: 'info',
+  },
 };

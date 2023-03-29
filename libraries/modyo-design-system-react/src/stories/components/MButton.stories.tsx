@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MButton } from '../../components';
 import { ICONS, INPUT_STATE, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MButton> = {
+const config: Meta<typeof MButton> = {
   title: 'Stencil/Button',
   component: MButton,
   parameters: {
@@ -75,12 +75,12 @@ const config: ComponentMeta<typeof MButton> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MButton>;
 
-const Template: ComponentStory<typeof MButton> = (args) => <MButton {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  theme: 'primary',
-  text: 'default',
-  type: 'button',
+export const Default: Story = {
+  args: {
+    theme: 'primary',
+    text: 'default',
+    type: 'button',
+  },
 };

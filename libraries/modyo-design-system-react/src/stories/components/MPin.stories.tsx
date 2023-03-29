@@ -1,8 +1,8 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MPin } from '../../components';
 
-const config: ComponentMeta<typeof MPin> = {
+const config: Meta<typeof MPin> = {
   title: 'Stencil/Pin',
   component: MPin,
   argTypes: {
@@ -48,19 +48,21 @@ const config: ComponentMeta<typeof MPin> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MPin>;
 
-const Template: ComponentStory<typeof MPin> = (args) => (
-  <div className="d-flex">
-    <MPin {...args} />
-  </div>
-);
+export const Default: Story = {
+  render: (args) => (
+    <div className="d-flex">
+      <MPin {...args} />
+    </div>
+  ),
 
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'myPin',
-  characters: 4,
-  theme: undefined,
-  type: 'text',
-  isDisabled: false,
-  isLoading: false,
+  args: {
+    mId: 'myPin',
+    characters: 4,
+    theme: undefined,
+    type: 'text',
+    isDisabled: false,
+    isLoading: false,
+  },
 };

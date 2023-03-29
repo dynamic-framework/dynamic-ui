@@ -1,8 +1,8 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MCollapse } from '../../components';
 
-const config: ComponentMeta<typeof MCollapse> = {
+const config: Meta<typeof MCollapse> = {
   title: 'React/Components/Collapse',
   component: MCollapse,
   argTypes: {
@@ -12,9 +12,7 @@ const config: ComponentMeta<typeof MCollapse> = {
         Text: 'Simple text',
         Custom: (
           <div className="d-flex gap-3">
-            <h4 className="m-0 fw-bold">
-              Custom component
-            </h4>
+            <h4 className="m-0 fw-bold">Custom component</h4>
           </div>
         ),
       },
@@ -29,26 +27,22 @@ const config: ComponentMeta<typeof MCollapse> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCollapse>;
 
-const Template: ComponentStory<typeof MCollapse> = (args) => (
-  <MCollapse {...args}>
-    <div className="row d-flex flex-column gap-3">
-      <div className="col-12">
-        Lorem ipsum dolor sit amet consectetur.
+export const Default: Story = {
+  render: (args) => (
+    <MCollapse {...args}>
+      <div className="row d-flex flex-column gap-3">
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
       </div>
-      <div className="col-12">
-        Lorem ipsum dolor sit amet consectetur.
-      </div>
-      <div className="col-12">
-        Lorem ipsum dolor sit amet consectetur.
-      </div>
-    </div>
-  </MCollapse>
-);
+    </MCollapse>
+  ),
 
-export const Default = Template.bind({});
-Default.args = {
-  Component: 'Text',
-  defaultCollapsed: false,
-  hasSeparator: true,
+  args: {
+    Component: 'Text',
+    defaultCollapsed: false,
+    hasSeparator: true,
+  },
 };

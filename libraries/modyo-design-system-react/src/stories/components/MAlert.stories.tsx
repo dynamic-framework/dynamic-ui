@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MAlert } from '../../components';
 import { THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MAlert> = {
+const config: Meta<typeof MAlert> = {
   title: 'Stencil/Alert',
   component: MAlert,
   parameters: {
@@ -29,15 +29,13 @@ const config: ComponentMeta<typeof MAlert> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MAlert>;
 
-const Template: ComponentStory<typeof MAlert> = (args) => (
-  <MAlert {...args}>
-    Default alert
-  </MAlert>
-);
+export const Default: Story = {
+  render: (args) => <MAlert {...args}>Default alert</MAlert>,
 
-export const Default = Template.bind({});
-Default.args = {
-  theme: 'success',
-  showIcon: true,
+  args: {
+    theme: 'success',
+    showIcon: true,
+  },
 };

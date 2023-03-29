@@ -1,8 +1,8 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MFormCheck } from '../../components';
 
-const config: ComponentMeta<typeof MFormCheck> = {
+const config: Meta<typeof MFormCheck> = {
   title: 'Stencil/FormCheck',
   component: MFormCheck,
   argTypes: {
@@ -32,7 +32,14 @@ const config: ComponentMeta<typeof MFormCheck> = {
           undefined: 'empty',
         },
       },
-      options: [undefined, 'success', 'error', 'warning', 'indeterminate', 'loading'],
+      options: [
+        undefined,
+        'success',
+        'error',
+        'warning',
+        'indeterminate',
+        'loading',
+      ],
     },
     isIndeterminate: {
       control: 'boolean',
@@ -47,12 +54,12 @@ const config: ComponentMeta<typeof MFormCheck> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MFormCheck>;
 
-const Template: ComponentStory<typeof MFormCheck> = (args) => <MFormCheck {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  label: 'the label',
-  type: 'checkbox',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'the label',
+    type: 'checkbox',
+  },
 };

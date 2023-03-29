@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MCurrency } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MCurrency> = {
+const config: Meta<typeof MCurrency> = {
   title: 'Stencil/Currency',
   component: MCurrency,
   argTypes: {
@@ -110,26 +110,26 @@ const config: ComponentMeta<typeof MCurrency> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCurrency>;
 
-const Template: ComponentStory<typeof MCurrency> = (args) => <MCurrency {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  label: 'the label',
-  selectOptions: [
-    { label: 'USD', value: 'USD' },
-    { label: 'CLP', value: 'CLP' },
-  ],
-  placeholder: 'the placeholder',
-  value: 123,
-  minValue: 0,
-  maxValue: 100000,
-  currencyOptions: {
-    symbol: '$',
-    precision: 2,
-    separator: ',',
-    decimal: '.',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'the label',
+    selectOptions: [
+      { label: 'USD', value: 'USD' },
+      { label: 'CLP', value: 'CLP' },
+    ],
+    placeholder: 'the placeholder',
+    value: 123,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
+    layoutDirection: 'vertical',
   },
-  layoutDirection: 'vertical',
 };
