@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { DateTime } from 'luxon';
 
 import { MCalendar } from '../../components';
 
-const config: ComponentMeta<typeof MCalendar> = {
+const config: Meta<typeof MCalendar> = {
   title: 'React/Components/Calendar',
   component: MCalendar,
   parameters: {
@@ -42,10 +42,10 @@ const config: ComponentMeta<typeof MCalendar> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCalendar>;
 
-const Template: ComponentStory<typeof MCalendar> = (args) => <MCalendar {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  date: DateTime.now().toISO(),
+export const Default: Story = {
+  args: {
+    date: DateTime.now().toISO(),
+  },
 };

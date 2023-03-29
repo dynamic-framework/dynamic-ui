@@ -1,8 +1,8 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MTooltip } from '../../components';
 
-const config: ComponentMeta<typeof MTooltip> = {
+const config: Meta<typeof MTooltip> = {
   title: 'React/Components/Tooltip',
   component: MTooltip,
   argTypes: {
@@ -51,11 +51,12 @@ const config: ComponentMeta<typeof MTooltip> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MTooltip>;
 
-const Template: ComponentStory<typeof MTooltip> = (args) => (
-  <div className="d-flex justify-content-center align-items-center p-5 w-100">
-    <MTooltip {...args} />
-  </div>
-);
-
-export const Default = Template.bind({});
+export const Default: Story = {
+  render: (args) => (
+    <div className="d-flex justify-content-center align-items-center p-5 w-100">
+      <MTooltip {...args} />
+    </div>
+  ),
+};

@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MBadge } from '../../components';
 import { THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MBadge> = {
+const config: Meta<typeof MBadge> = {
   title: 'Stencil/Badge',
   component: MBadge,
   argTypes: {
@@ -19,13 +19,11 @@ const config: ComponentMeta<typeof MBadge> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MBadge>;
 
-const Template: ComponentStory<typeof MBadge> = (args) => (
-  <MBadge {...args} />
-);
-
-export const Default = Template.bind({});
-Default.args = {
-  theme: 'primary',
-  text: 'default',
+export const Default: Story = {
+  args: {
+    theme: 'primary',
+    text: 'default',
+  },
 };

@@ -1,8 +1,8 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MFormSwitch } from '../../components';
 
-const config: ComponentMeta<typeof MFormSwitch> = {
+const config: Meta<typeof MFormSwitch> = {
   title: 'Stencil/FormSwitch',
   component: MFormSwitch,
   argTypes: {
@@ -28,11 +28,11 @@ const config: ComponentMeta<typeof MFormSwitch> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MFormSwitch>;
 
-const Template: ComponentStory<typeof MFormSwitch> = (args) => <MFormSwitch {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  label: 'the label',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'the label',
+  },
 };

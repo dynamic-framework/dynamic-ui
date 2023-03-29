@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MInput } from '../../components';
 import { ICONS } from '../constants';
 
-const config: ComponentMeta<typeof MInput> = {
+const config: Meta<typeof MInput> = {
   title: 'Stencil/Input',
   component: MInput,
   argTypes: {
@@ -85,16 +85,16 @@ const config: ComponentMeta<typeof MInput> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MInput>;
 
-const Template: ComponentStory<typeof MInput> = (args) => <MInput {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  label: 'the label',
-  labelIcon: undefined,
-  placeholder: 'the placeholder',
-  type: 'text',
-  value: 'the value',
-  layoutDirection: 'vertical',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'the label',
+    labelIcon: undefined,
+    placeholder: 'the placeholder',
+    type: 'text',
+    value: 'the value',
+    layoutDirection: 'vertical',
+  },
 };

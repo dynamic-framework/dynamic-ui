@@ -1,8 +1,8 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MTabs, MTabContent } from '../../components';
 
-const config: ComponentMeta<typeof MTabs> = {
+const config: Meta<typeof MTabs> = {
   title: 'React/Components/Tabs',
   component: MTabs,
   argTypes: {
@@ -29,26 +29,22 @@ const config: ComponentMeta<typeof MTabs> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MTabs>;
 
-const Template: ComponentStory<typeof MTabs> = (args) => (
-  <MTabs
-    {...args}
-  >
-    <MTabContent tab="tab1">
-      Tab content for Tab 1
-    </MTabContent>
-    <MTabContent tab="tab2">
-      Tab content for Tab 2
-    </MTabContent>
-  </MTabs>
-);
+export const Default: Story = {
+  render: (args) => (
+    <MTabs {...args}>
+      <MTabContent tab="tab1">Tab content for Tab 1</MTabContent>
+      <MTabContent tab="tab2">Tab content for Tab 2</MTabContent>
+    </MTabs>
+  ),
 
-export const Default = Template.bind({});
-Default.args = {
-  defaultSelected: 'tab2',
-  options: [
-    { label: 'Tab 1', tab: 'tab1' },
-    { label: 'Tab 2', tab: 'tab2' },
-    { label: 'Tab w/o Content', tab: 'empty' },
-  ],
+  args: {
+    defaultSelected: 'tab2',
+    options: [
+      { label: 'Tab 1', tab: 'tab1' },
+      { label: 'Tab 2', tab: 'tab2' },
+      { label: 'Tab w/o Content', tab: 'empty' },
+    ],
+  },
 };

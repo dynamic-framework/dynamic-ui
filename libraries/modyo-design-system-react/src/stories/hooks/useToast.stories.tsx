@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 
 import { MButton, MToastContainer } from '../../components';
 import { useToast } from '../../hooks';
@@ -6,17 +6,11 @@ import { THEMES } from '../constants';
 
 type Props = {
   message: string;
-  theme: typeof THEMES[number];
+  theme: (typeof THEMES)[number];
   showClose: boolean;
 };
 
-const Example = (
-  {
-    message,
-    theme,
-    showClose,
-  }: Props,
-) => {
+const Example = ({ message, theme, showClose }: Props) => {
   const { toast } = useToast();
   return (
     <>
@@ -29,7 +23,7 @@ const Example = (
   );
 };
 
-const config: ComponentMeta<typeof Example> = {
+const config: Meta<typeof Example> = {
   title: 'React/hooks/useToast',
   component: Example,
   argTypes: {
@@ -45,13 +39,10 @@ const config: ComponentMeta<typeof Example> = {
 
 export default config;
 
-const Template: ComponentStory<typeof Example> = (args) => (
-  <Example {...args} />
-);
-
-export const Default = Template.bind({});
-Default.args = {
-  message: 'the default message',
-  theme: 'primary',
-  showClose: false,
+export const Default = {
+  args: {
+    message: 'the default message',
+    theme: 'primary',
+    showClose: false,
+  },
 };

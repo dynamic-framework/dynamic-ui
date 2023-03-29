@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MCounter } from '../../components';
 import { ICONS } from '../constants';
 
-const config: ComponentMeta<typeof MCounter> = {
+const config: Meta<typeof MCounter> = {
   title: 'Stencil/Counter',
   component: MCounter,
   argTypes: {
@@ -66,16 +66,16 @@ const config: ComponentMeta<typeof MCounter> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MCounter>;
 
-const Template: ComponentStory<typeof MCounter> = (args) => <MCounter {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  theme: 'info',
-  minValue: 0,
-  maxValue: 100,
-  value: 3,
-  variant: 'default',
-  layoutDirection: 'vertical',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    theme: 'info',
+    minValue: 0,
+    maxValue: 100,
+    value: 3,
+    variant: 'default',
+    layoutDirection: 'vertical',
+  },
 };

@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MSelect } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MSelect> = {
+const config: Meta<typeof MSelect> = {
   title: 'Stencil/Select',
   component: MSelect,
   argTypes: {
@@ -81,16 +81,16 @@ const config: ComponentMeta<typeof MSelect> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MSelect>;
 
-const Template: ComponentStory<typeof MSelect> = (args) => <MSelect {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  variant: 'prime',
-  options: [
-    { label: 'option 1', value: '1' },
-    { label: 'option 2', value: '2' },
-  ],
-  layoutDirection: 'vertical',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    variant: 'prime',
+    options: [
+      { label: 'option 1', value: '1' },
+      { label: 'option 2', value: '2' },
+    ],
+    layoutDirection: 'vertical',
+  },
 };

@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MSegmentControlItem } from '../../components';
 import { INPUT_STATE } from '../constants';
 
-const config: ComponentMeta<typeof MSegmentControlItem> = {
+const config: Meta<typeof MSegmentControlItem> = {
   title: 'Stencil/SegmentControlItem',
   component: MSegmentControlItem,
   parameters: {
@@ -45,15 +45,13 @@ const config: ComponentMeta<typeof MSegmentControlItem> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MSegmentControlItem>;
 
-const Template: ComponentStory<typeof MSegmentControlItem> = (args) => (
-  <MSegmentControlItem {...args} />
-);
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  name: 'the name',
-  label: 'the label',
-  value: 'the value',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    name: 'the name',
+    label: 'the label',
+    value: 'the value',
+  },
 };
