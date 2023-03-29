@@ -22,10 +22,7 @@ export default function MToastContainer({ style }: Props) {
       closeOnClick={false}
       closeButton={false}
       transition={Zoom}
-      style={{
-        ...style,
-        boxShadow: 'none'
-      }}
+      style={style}
     />
   );
 }
