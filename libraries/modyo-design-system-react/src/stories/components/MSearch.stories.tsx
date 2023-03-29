@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MSearch } from '../../components';
 import { ICONS } from '../constants';
 
-const config: ComponentMeta<typeof MSearch> = {
+const config: Meta<typeof MSearch> = {
   title: 'Stencil/Search',
   component: MSearch,
   argTypes: {
@@ -93,12 +93,12 @@ const config: ComponentMeta<typeof MSearch> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MSearch>;
 
-const Template: ComponentStory<typeof MSearch> = (args) => <MSearch {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  placeholder: 'the placeholder',
-  layoutDirection: 'vertical',
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    placeholder: 'the placeholder',
+    layoutDirection: 'vertical',
+  },
 };

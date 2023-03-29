@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MHint } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MHint> = {
+const config: Meta<typeof MHint> = {
   title: 'Stencil/Hint',
   component: MHint,
   argTypes: {
@@ -30,9 +30,9 @@ const config: ComponentMeta<typeof MHint> = {
     },
     theme: {
       control: 'select',
-      options: THEMES.filter((theme) => (
-        !['light', 'primary', 'secondary'].includes(theme)
-      )),
+      options: THEMES.filter(
+        (theme) => !['light', 'primary', 'secondary'].includes(theme),
+      ),
       table: { defaultValue: { summary: 'primary' } },
     },
     iconSize: {
@@ -42,11 +42,11 @@ const config: ComponentMeta<typeof MHint> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MHint>;
 
-const Template: ComponentStory<typeof MHint> = (args) => <MHint {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  text: 'the text',
-  theme: 'info',
+export const Default: Story = {
+  args: {
+    text: 'the text',
+    theme: 'info',
+  },
 };

@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MQuickAction } from '../../components';
 import { ICONS } from '../constants';
 
-const config: ComponentMeta<typeof MQuickAction> = {
+const config: Meta<typeof MQuickAction> = {
   title: 'Stencil/QuickAction',
   component: MQuickAction,
   argTypes: {
@@ -57,13 +57,11 @@ const config: ComponentMeta<typeof MQuickAction> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MQuickAction>;
 
-const Template: ComponentStory<typeof MQuickAction> = (args) => (
-  <MQuickAction {...args} />
-);
-
-export const Default = Template.bind({});
-Default.args = {
-  text: 'the text',
-  variant: 'extended',
+export const Default: Story = {
+  args: {
+    text: 'the text',
+    variant: 'extended',
+  },
 };

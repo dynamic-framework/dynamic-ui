@@ -1,8 +1,8 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MProgressBar } from '../../components';
 
-const config: ComponentMeta<typeof MProgressBar> = {
+const config: Meta<typeof MProgressBar> = {
   title: 'Stencil/ProgressBar',
   component: MProgressBar,
   argTypes: {
@@ -25,18 +25,20 @@ const config: ComponentMeta<typeof MProgressBar> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MProgressBar>;
 
-const Template: ComponentStory<typeof MProgressBar> = (args) => (
-  <div className="d-flex justify-content-center p-3">
-    <MProgressBar {...args} />
-  </div>
-);
+export const Default: Story = {
+  render: (args) => (
+    <div className="d-flex justify-content-center p-3">
+      <MProgressBar {...args} />
+    </div>
+  ),
 
-export const Default = Template.bind({});
-Default.args = {
-  currentValue: 33,
-  minValue: 0,
-  maxValue: 100,
-  enableStripedAnimation: false,
-  enableDarkMode: false,
+  args: {
+    currentValue: 33,
+    minValue: 0,
+    maxValue: 100,
+    enableStripedAnimation: false,
+    enableDarkMode: false,
+  },
 };

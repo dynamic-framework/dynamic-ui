@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MListItem } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: ComponentMeta<typeof MListItem> = {
+const config: Meta<typeof MListItem> = {
   title: 'Stencil/ListItem',
   component: MListItem,
   argTypes: {
@@ -76,13 +76,13 @@ const config: ComponentMeta<typeof MListItem> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MListItem>;
 
-const Template: ComponentStory<typeof MListItem> = (args) => <MListItem {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  text: 'the text',
-  subtext: 'the subtext',
-  theme: 'primary',
-  variant: 'default',
+export const Default: Story = {
+  args: {
+    text: 'the text',
+    subtext: 'the subtext',
+    theme: 'primary',
+    variant: 'default',
+  },
 };

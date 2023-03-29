@@ -1,36 +1,18 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MApp } from '../../components';
 
-const config: ComponentMeta<typeof MApp> = {
+const config: Meta<typeof MApp> = {
   title: 'Stencil/App',
   component: MApp,
-  decorators: [
-    (Story) => <Story />,
-  ],
+  decorators: [(Story) => <Story />],
 };
 
 export default config;
+type Story = StoryObj<typeof MApp>;
 
-/* TODO: doc
-  + icon style
-  + tabs style
-  + input group style
-  + bootstrap utilities
-  + bootstrap reboot
-  + bootstrap type
-  + bootstrap images
-  + bootstrap containers
-  + bootstrap grid
-  + bootstrap helpers
-  + bootstrap close
-  + bootstrap transitions
- */
-const Template: ComponentStory<typeof MApp> = (args) => (
-  <MApp {...args}>
-    The awesome widget
-  </MApp>
-);
+export const Default: Story = {
+  render: (args) => <MApp {...args}>The awesome widget</MApp>,
 
-export const Default = Template.bind({});
-Default.args = {};
+  args: {},
+};

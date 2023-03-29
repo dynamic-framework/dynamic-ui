@@ -1,9 +1,9 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { MShortcutToggle } from '../../components';
 import { ICONS, INPUT_STATE } from '../constants';
 
-const config: ComponentMeta<typeof MShortcutToggle> = {
+const config: Meta<typeof MShortcutToggle> = {
   title: 'Stencil/ShortcutToggle',
   component: MShortcutToggle,
   argTypes: {
@@ -53,14 +53,14 @@ const config: ComponentMeta<typeof MShortcutToggle> = {
 };
 
 export default config;
+type Story = StoryObj<typeof MShortcutToggle>;
 
-const Template: ComponentStory<typeof MShortcutToggle> = (args) => <MShortcutToggle {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  mId: 'componentId',
-  name: 'the name',
-  value: 'the value',
-  label: 'the label',
-  white: false,
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    name: 'the name',
+    value: 'the value',
+    label: 'the label',
+    white: false,
+  },
 };

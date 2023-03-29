@@ -1,32 +1,27 @@
 module.exports = {
-  stories: [
-    '../src/**/*.stories.mdx',
-    '../src/**/*.stories.@(js|jsx|ts|tsx)',
-  ],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/addon-viewport',
-  ],
-  framework: '@storybook/react',
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions', '@storybook/addon-viewport', '@storybook/addon-mdx-gfm'],
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {}
+  },
   typescript: {
     check: false,
     checkOptions: {},
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
-    },
+      propFilter: prop => prop.parent ? !/node_modules/.test(prop.parent.fileName) : true
+    }
   },
   core: {
-    builder: 'webpack5',
-    disableTelemetry: true,
+    disableTelemetry: true
   },
-  staticDirs: [
-    '../../modyo-design-system/dist',
-  ],
+  staticDirs: ['../../modyo-design-system/dist'],
   features: {
-    modernInlineRender: true,
+    modernInlineRender: true
   },
+  docs: {
+    autodocs: true
+  }
 };
