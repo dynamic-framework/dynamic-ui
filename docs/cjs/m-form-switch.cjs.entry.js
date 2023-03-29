@@ -30,7 +30,7 @@ const MFormSwitch = class {
     this.internalIsChecked = this.isChecked;
   }
   render() {
-    return (index.h(index.Host, { class: "form-switch-box" }, index.h("div", { class: "form-check form-switch form-check-reverse" }, index.h("label", { class: "form-switch-box-label", htmlFor: this.mId }, index.h("div", { class: "d-flex gap-3 justify-content-between align-items-center flex-grow-1" }, index.h("span", { class: "form-check-label" }, this.label), index.h("span", { class: "form-check-label fw-bold" }, this.internalIsChecked ? this.labelOn : this.labelOff)), index.h("input", { id: this.mId, onChange: (event) => this.changeHandler(event), class: "form-check-input form-check-switch", type: "checkbox", role: "switch", checked: this.internalIsChecked, disabled: this.isDisabled })))));
+    return (index.h(index.Host, { class: "form-switch-box" }, index.h("div", { class: "form-check form-switch form-check-reverse", onClick: (e) => e.stopPropagation() }, index.h("label", { class: "form-switch-box-label", htmlFor: this.mId }, index.h("div", { class: "d-flex gap-3 justify-content-between align-items-center flex-grow-1" }, index.h("span", { class: "form-check-label" }, this.label), index.h("span", { class: "form-check-label fw-bold" }, this.internalIsChecked ? this.labelOn : this.labelOff)), index.h("input", { id: this.mId, onChange: (event) => this.changeHandler(event), class: "form-check-input form-check-switch", type: "checkbox", role: "switch", checked: this.internalIsChecked, disabled: this.isDisabled })))));
   }
   static get watchers() { return {
     "isChecked": ["watchIsCheckedHandler"]
