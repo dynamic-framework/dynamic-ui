@@ -15,13 +15,17 @@ type Props = {
 export default function MToastContainer({ style }: Props) {
   return (
     <ToastContainer
+      toastClassName={() => 'shadow-none p-0 cursor-default'}
       position="bottom-center"
       autoClose={false}
       hideProgressBar
       closeOnClick={false}
       closeButton={false}
       transition={Zoom}
-      style={style}
+      style={{
+        ...style,
+        boxShadow: 'none'
+      }}
     />
   );
 }
