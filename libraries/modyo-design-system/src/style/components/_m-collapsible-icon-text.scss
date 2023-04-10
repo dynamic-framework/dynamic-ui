@@ -1,0 +1,23 @@
+.collapse-content {
+  // Icon container
+  --#{$prefix}container-icon-radius: 100%;
+  --#{$prefix}container-icon-width: 3rem;
+  --#{$prefix}container-icon-height: 3rem;
+
+  // Title
+  --#{$prefix}title-size: 1.125rem;
+  --#{$prefix}title-weight: 700;
+
+  .container-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--#{$prefix}container-icon-width);
+    height: var(--#{$prefix}container-icon-height);
+    border-radius: var(--#{$prefix}container-icon-radius);
+  }
+  .collapse-title {
+    font-size: var(--#{$prefix}title-size);
+    font-weight: var(--#{$prefix}title-weight);
+  }
+}
