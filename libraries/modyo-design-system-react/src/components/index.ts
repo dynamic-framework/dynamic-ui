@@ -1,4 +1,6 @@
 export * from './proxies';
+export * from './banking';
+
 export { default as MCalendar } from './MCalendar';
 export { default as MSkeleton } from './MSkeleton';
 export { default as MTabs, useTabContext } from './MTabs';
