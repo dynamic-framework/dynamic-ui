@@ -1,8 +1,10 @@
 .collapse-content {
+  --#{$prefix}container-icon-square: 3rem;
+
   // Icon container
-  --#{$prefix}container-icon-radius: 100%;
-  --#{$prefix}container-icon-width: 3rem;
-  --#{$prefix}container-icon-height: 3rem;
+  --#{$prefix}container-icon-radius: var(--#{$prefix}container-icon-square);
+  --#{$prefix}container-icon-width: var(--#{$prefix}container-icon-square);
+  --#{$prefix}container-icon-height: var(--#{$prefix}container-icon-square);
 
   // Title
   --#{$prefix}title-size: 1.125rem;
