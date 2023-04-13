@@ -8,8 +8,8 @@ type Props = PropsWithChildren<{
   iconTheme?: string;
   iconSize?: string;
   title: string;
-  familyClassIcon?: string;
-  familyPrefixIcon?: string;
+  iconFamilyClass?: string;
+  iconFamilyPrefix?: string;
 }>;
 
 export default function MCollapsibleIconText({
@@ -18,8 +18,8 @@ export default function MCollapsibleIconText({
   iconSize = '1.5rem',
   iconTheme = 'primary',
   title,
-  familyClassIcon,
-  familyPrefixIcon,
+  iconFamilyClass,
+  iconFamilyPrefix,
 }: Props) {
   return (
     <MCollapse
@@ -31,8 +31,8 @@ export default function MCollapsibleIconText({
               icon={icon}
               size={iconSize}
               theme={iconTheme}
-              {...familyClassIcon && { familyClass: familyClassIcon }}
-              {...familyPrefixIcon && { familyPrefix: familyPrefixIcon }}
+              {...iconFamilyClass && { familyClass: iconFamilyClass }}
+              {...iconFamilyPrefix && { familyPrefix: iconFamilyPrefix }}
             />
           </div>
           <span className="collapse-title">
