@@ -18,6 +18,12 @@ const config: Meta<typeof MCollapsibleIconText> = {
     iconTheme: {
       control: 'string',
     },
+    iconFamilyClass: {
+      control: 'string',
+    },
+    iconFamilyPrefix: {
+      control: 'string',
+    },
   },
 };
 
