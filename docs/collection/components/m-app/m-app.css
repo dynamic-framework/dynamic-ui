@@ -198,7 +198,7 @@ $form-validation-states: (
 ) !default;
 */
 /* stylelint-disable scss/dollar-variable-default */
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css");
 *,
 *::before,
 *::after {
@@ -9069,4 +9069,25 @@ textarea.form-control-lg {
   width: calc(100% - var(--bs-body-padding-x) * 2);
   height: var(--bs-separator-height);
   background-color: var(--bs-separator-bg);
+}
+
+.collapse-content {
+  --bs-container-icon-square: 3rem;
+  --bs-container-icon-radius: var(--bs-container-icon-square);
+  --bs-container-icon-width: var(--bs-container-icon-square);
+  --bs-container-icon-height: var(--bs-container-icon-square);
+  --bs-title-size: 1.125rem;
+  --bs-title-weight: 700;
+}
+.collapse-content .container-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--bs-container-icon-width);
+  height: var(--bs-container-icon-height);
+  border-radius: var(--bs-container-icon-radius);
+}
+.collapse-content .collapse-title {
+  font-size: var(--bs-title-size);
+  font-weight: var(--bs-title-weight);
 }
