@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.3](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.2...@modyo-dynamic/modyo-design-system@0.7.3) (2023-04-20)
+
+**Note:** Version bump only for package @modyo-dynamic/modyo-design-system
+
 ## [0.7.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.1...@modyo-dynamic/modyo-design-system@0.7.2) (2023-03-29)
 
 ### Bug Fixes
