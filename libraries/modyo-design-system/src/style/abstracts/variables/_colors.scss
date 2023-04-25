@@ -1,12 +1,12 @@
 $white: #fff !default;
 $gray-100: #f7f7ff !default;
-$gray-200: #d7d7e0 !default;
+$gray-200: #e6e6f3 !default;
 $gray-300: #d5d4e6 !default;
-$gray-400: #9a9aa5 !default;
+$gray-400: #a1a1b5 !default;
 $gray-500: #6d6d82 !default;
-$gray-600: #61616d !default;
+$gray-600: #616173 !default;
 $gray-700: #555564 !default;
-$gray-800: #2d2e3a !default;
+$gray-800: #363744 !default;
 $gray-900: #161723 !default;
 $black: #000 !default;
 
@@ -26,24 +26,32 @@ $blue: #4778d9 !default;
 $indigo: #4848b7 !default;
 $purple: #525298 !default;
 $pink: #e60063 !default;
-$red: #f56c6c !default;
-$yellow: #e6a23c !default;
-$green: #67c23a !default;
+$red: #d81b60 !default;
+$orange: #d32f2f !default;
+$yellow: #fbc02d !default;
+$green: #028759 !default;
+$teal: #20c997 !default;
+$cyan: #0dcaf0 !default;
 
 $colors: (
+  "blue": $blue,
   "indigo": $indigo,
   "purple": $purple,
   "pink": $pink,
   "red": $red,
+  "orange": $orange,
   "yellow": $yellow,
   "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
   "black": $black,
   "white": $white,
   "gray": $gray-500,
   "gray-dark": $gray-800,
-  "gray-light": $gray-300
+  "gray-light": $gray-300 // TODO: check this.
 ) !default;
 
+// TODO: check this.
 $bg-widget-colors: (
   "gray": #fafafa,
   "indigo": #fbfaff,

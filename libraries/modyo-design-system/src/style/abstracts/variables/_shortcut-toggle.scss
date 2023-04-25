@@ -25,7 +25,8 @@ $shortcut-toggle-label-checked-color: var(--#{$prefix}gray-light) !default;
 $shortcut-toggle-text-checked-color: var(--#{$prefix}white) !default;
 $shortcut-toggle-icon-checked-color: var(--#{$prefix}white) !default;
 // :focus
-$shortcut-focus-border-color: var(--#{$prefix}accessibility) !default;
+// TODO: fix focus.
+// $shortcut-focus-border-color: var(--#{$prefix}accessibility) !default;
 // :hover
 $shortcut-toggle-hover-box-shadow: 0 0 0 3px rgba($color: var(--#{$prefix}tertiary-rgb), $alpha: .03) !default;
 // :active

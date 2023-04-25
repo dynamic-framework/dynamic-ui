@@ -14,7 +14,8 @@
 
   &:focus-within,
   &.focus {
-    --#{$prefix}btn-box-border-color: var(--#{$prefix}accessibility);
+    // TODO: fix focus.
+    // --#{$prefix}btn-box-border-color: var(--#{$prefix}accessibility);
   }
 
   .btn {

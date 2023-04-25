@@ -57,7 +57,8 @@
 
 .segment-control input:focus + .segment-control-item,
 .segment-control .focus + .segment-control-item {
-  --#{$prefix}segment-control-item-border-color: #{$segment-control-item-focus-border-color};
+  // TODO: fix focus.
+  // --#{$prefix}segment-control-item-border-color: #{$segment-control-item-focus-border-color};
 }
 
 .segment-control input:active + .segment-control-item,

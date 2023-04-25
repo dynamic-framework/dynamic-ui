@@ -96,7 +96,8 @@
 
   &:focus-within,
   &:focus {
-    --#{$prefix}input-group-outline-border-color: var(--#{$prefix}accessibility);
+    // TODO: fix focus.
+    // --#{$prefix}input-group-outline-border-color: var(--#{$prefix}accessibility);
   }
 
   > * {
