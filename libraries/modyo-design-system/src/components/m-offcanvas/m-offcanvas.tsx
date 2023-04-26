@@ -7,7 +7,7 @@ import {
   EventEmitter,
 } from '@stencil/core';
 
-import { prefixBS } from '../../utils/component-interface';
+import { prefixBS } from '../../utils/component-config';
 
 import { PositionToggleFrom } from './m-offcanvas-interface';
 

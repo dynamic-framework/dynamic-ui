@@ -7,7 +7,8 @@ import {
   EventEmitter,
 } from '@stencil/core';
 
-import { prefixBS, ClassMap } from '../../utils/component-interface';
+import { ClassMap } from '../../utils/component-interface';
+import { prefixBS } from '../../utils/component-config';
 
 import { ModalSize, FullScreenFrom } from './m-modal-interface';
 

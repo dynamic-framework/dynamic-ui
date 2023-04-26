@@ -1,9 +1,31 @@
 import type { Preview } from '@storybook/react';
 
 import { MApp } from '../src';
+import { ICONS, THEMES_WITH_EMPTY } from '../src/stories/constants';
 
 export default {
+  argTypes: {
+    theme: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: THEMES_WITH_EMPTY,
+    },
+    icon: {
+      control: 'select',
+      type: { name: 'string', required: true },
+      options: ICONS,
+    },
+    isLoading: {
+      control: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
+  },
   parameters: {
+    layout: 'centered',
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
@@ -14,7 +36,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <MApp>
+      <MApp className="d-flex justify-content-center align-items-center">
         <Story />
       </MApp>
     ),

@@ -1,39 +1,51 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MIcon } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { FIRST_ICON } from '../constants';
 
-const config: Meta<typeof MIcon> = {
-  title: 'Stencil/Icon',
+const meta: Meta<typeof MIcon> = {
+  title: 'Components-Molecules/Icon',
   component: MIcon,
   argTypes: {
-    icon: {
-      control: 'select',
-      options: ICONS,
-    },
-    theme: {
-      control: 'select',
-      options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
-    },
     size: {
       control: 'text',
+      table: { defaultValue: { summary: '1rem' } },
     },
-    isLoading: {
-      control: 'boolean',
-    },
-    duration: {
+    loadingDuration: {
       control: 'number',
+      description: 'In seconds',
+      table: { defaultValue: { summary: 1.8 } },
+    },
+    color: {
+      control: 'color',
+    },
+    backgroundColor: {
+      control: 'color',
+    },
+    hasCircle: {
+      control: 'boolean',
+      table: { defaultValue: { summary: false } },
     },
   },
 };
 
-export default config;
+export default meta;
 type Story = StoryObj<typeof MIcon>;
 
 export const Default: Story = {
   args: {
-    icon: ICONS[0],
-    theme: 'info',
+    icon: FIRST_ICON,
+    size: '120px',
+    hasCircle: false,
+    isLoading: false,
+  },
+};
+
+export const Circle: Story = {
+  args: {
+    icon: FIRST_ICON,
+    size: '120px',
+    hasCircle: true,
+    isLoading: false,
   },
 };

@@ -553,13 +553,13 @@ export namespace Components {
          */
         "backgroundColor"?: string;
         /**
+          * Circle size
+         */
+        "circleSize"?: string;
+        /**
           * To set css color
          */
         "color"?: string;
-        /**
-          * Loading animation duration
-         */
-        "duration": number;
         /**
           * Family class
          */
@@ -569,6 +569,10 @@ export namespace Components {
          */
         "familyPrefix": string;
         /**
+          * Has circle
+         */
+        "hasCircle": boolean;
+        /**
           * Name of icon to use (in kebab-case)
          */
         "icon": string;
@@ -577,7 +581,11 @@ export namespace Components {
          */
         "isLoading": boolean;
         /**
-          * Font size of the icon
+          * Loading animation duration
+         */
+        "loadingDuration": number;
+        /**
+          * Size of the icon
          */
         "size"?: string;
         /**
@@ -2134,13 +2142,13 @@ declare namespace LocalJSX {
          */
         "backgroundColor"?: string;
         /**
+          * Circle size
+         */
+        "circleSize"?: string;
+        /**
           * To set css color
          */
         "color"?: string;
-        /**
-          * Loading animation duration
-         */
-        "duration"?: number;
         /**
           * Family class
          */
@@ -2150,6 +2158,10 @@ declare namespace LocalJSX {
          */
         "familyPrefix"?: string;
         /**
+          * Has circle
+         */
+        "hasCircle"?: boolean;
+        /**
           * Name of icon to use (in kebab-case)
          */
         "icon": string;
@@ -2158,7 +2170,11 @@ declare namespace LocalJSX {
          */
         "isLoading"?: boolean;
         /**
-          * Font size of the icon
+          * Loading animation duration
+         */
+        "loadingDuration"?: number;
+        /**
+          * Size of the icon
          */
         "size"?: string;
         /**

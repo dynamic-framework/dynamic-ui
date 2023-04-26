@@ -1,0 +1,37 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Description,
+} from '@storybook/blocks';
+
+import { prefixBS } from '@modyo-dynamic/modyo-design-system'
+
+import * as MIconStories from "./MIcon.stories";
+
+# Icon
+
+## CSS Variables
+
+<Description>
+
+  {`
+
+  | Variable                                 | Type            | Description                           |
+  |------------------------------------------|-----------------|---------------------------------------|
+  | \`--${prefixBS}m-icon-color\`            | css color unit  | The icon color                        |
+  | \`--${prefixBS}m-icon-bg-color\`         | css color unit  | The icon background color             |
+  | \`--${prefixBS}m-icon-size\`             | css length unit | The size of icon                      |
+  | \`--${prefixBS}m-icon-host-size\`        | css length unit | The size of the host (icon box)       |
+  | \`--${prefixBS}m-icon-loading-duration\` | number          | The duration of the loading animation |
+
+  > The colors can ref another css var like a \`var(--${prefixBS}primary)\`
+
+  `}
+</Description>
+
+## Args
+<Meta of={MIconStories} />
+
+<ArgTypes of={MIconStories} />
+

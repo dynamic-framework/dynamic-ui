@@ -7,7 +7,7 @@ import {
 } from '@stencil/core';
 
 import type { ClassMap } from '../../utils/component-interface';
-import { ICON_STATE } from '../../utils/component-interface';
+import { ICON_STATE } from '../../utils/component-config';
 
 @Component({
   tag: 'm-alert',

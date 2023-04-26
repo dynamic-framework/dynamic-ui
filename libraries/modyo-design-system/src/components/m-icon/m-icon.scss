@@ -1,24 +1,31 @@
-.m-icon {
-  --#{$prefix}m-icon-color: inherit;
-  --#{$prefix}m-icon-bg-color: inherit;
+.m-icon-host {
+  --#{$prefix}m-icon-color: var(--#{$prefix}m-icon-component-color, inherit);
+  --#{$prefix}m-icon-bg-color: var(--#{$prefix}m-icon-component-bg-color, inherit);
+  --#{$prefix}m-icon-size: var(--#{$prefix}m-icon-component-size);
+  --#{$prefix}m-icon-host-size: var(--#{$prefix}m-icon-component-host-size);
+  --#{$prefix}m-icon-loading-duration: var(--#{$prefix}m-icon-component-loading-duration);
 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--#{$prefix}m-icon-host-size);
+  height: var(--#{$prefix}m-icon-host-size);
+  background-color: var(--#{$prefix}m-icon-bg-color);
+  border-radius: var(--#{$prefix}m-icon-host-size);
+}
+
+.m-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--#{$prefix}m-icon-font-size);
-
+  width: var(--#{$prefix}m-icon-size);
+  height: var(--#{$prefix}m-icon-size);
+  font-size: var(--#{$prefix}m-icon-size);
   color: var(--#{$prefix}m-icon-color);
-  background-color: var(--#{$prefix}m-icon-bg-color);
-}
-
-@each $color, $value in $theme-colors {
-  .m-icon-#{$color} {
-    color: var(--#{$prefix}#{$color});
-  }
 }
 
 .m-icon-loading {
-  animation: loading-icon var(--#{$prefix}m-icon-animation-duration) infinite linear;
+  animation: loading-icon var(--#{$prefix}m-icon-loading-duration) infinite linear;
 }
 
 @keyframes loading-icon {
