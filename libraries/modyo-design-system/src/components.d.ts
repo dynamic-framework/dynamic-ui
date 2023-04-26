@@ -549,27 +549,27 @@ export namespace Components {
     }
     interface MIcon {
         /**
-          * To set background color
+          * Icon background color in css color unit or var
          */
         "backgroundColor"?: string;
         /**
-          * Circle size
+          * Circle size in css length unit
          */
         "circleSize"?: string;
         /**
-          * To set css color
+          * Icon color in css color unit or var
          */
         "color"?: string;
         /**
-          * Family class
+          * Change the family class to use another icon suite
          */
         "familyClass": string;
         /**
-          * Family prefix
+          * Change the family prefix to use another icon suite
          */
         "familyPrefix": string;
         /**
-          * Has circle
+          * Add circle around the icon
          */
         "hasCircle": boolean;
         /**
@@ -577,15 +577,15 @@ export namespace Components {
          */
         "icon": string;
         /**
-          * Is loading
+          * Enable loading animation
          */
         "isLoading": boolean;
         /**
-          * Loading animation duration
+          * Loading animation duration, in seconds
          */
         "loadingDuration": number;
         /**
-          * Size of the icon
+          * Size of the icon in css length unit
          */
         "size"?: string;
         /**
@@ -2138,27 +2138,27 @@ declare namespace LocalJSX {
     }
     interface MIcon {
         /**
-          * To set background color
+          * Icon background color in css color unit or var
          */
         "backgroundColor"?: string;
         /**
-          * Circle size
+          * Circle size in css length unit
          */
         "circleSize"?: string;
         /**
-          * To set css color
+          * Icon color in css color unit or var
          */
         "color"?: string;
         /**
-          * Family class
+          * Change the family class to use another icon suite
          */
         "familyClass"?: string;
         /**
-          * Family prefix
+          * Change the family prefix to use another icon suite
          */
         "familyPrefix"?: string;
         /**
-          * Has circle
+          * Add circle around the icon
          */
         "hasCircle"?: boolean;
         /**
@@ -2166,15 +2166,15 @@ declare namespace LocalJSX {
          */
         "icon": string;
         /**
-          * Is loading
+          * Enable loading animation
          */
         "isLoading"?: boolean;
         /**
-          * Loading animation duration
+          * Loading animation duration, in seconds
          */
         "loadingDuration"?: number;
         /**
-          * Size of the icon
+          * Size of the icon in css length unit
          */
         "size"?: string;
         /**

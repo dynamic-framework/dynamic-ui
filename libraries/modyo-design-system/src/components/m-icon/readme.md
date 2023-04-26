@@ -7,19 +7,19 @@
 
 ## Properties
 
-| Property            | Attribute          | Description                         | Type                  | Default                    |
-| ------------------- | ------------------ | ----------------------------------- | --------------------- | -------------------------- |
-| `backgroundColor`   | `background-color` | To set background color             | `string \| undefined` | `undefined`                |
-| `circleSize`        | `circle-size`      | Circle size                         | `string \| undefined` | ``calc(${this.size} * 3)`` |
-| `color`             | `color`            | To set css color                    | `string \| undefined` | `undefined`                |
-| `familyClass`       | `family-class`     | Family class                        | `string`              | `state.iconFamilyClass`    |
-| `familyPrefix`      | `family-prefix`    | Family prefix                       | `string`              | `state.iconFamilyPrefix`   |
-| `hasCircle`         | `has-circle`       | Has circle                          | `boolean`             | `false`                    |
-| `icon` _(required)_ | `icon`             | Name of icon to use (in kebab-case) | `string`              | `undefined`                |
-| `isLoading`         | `is-loading`       | Is loading                          | `boolean`             | `false`                    |
-| `loadingDuration`   | `loading-duration` | Loading animation duration          | `number`              | `1.8`                      |
-| `size`              | `size`             | Size of the icon                    | `string \| undefined` | `'1rem'`                   |
-| `theme`             | `theme`            | Theme of the icon                   | `string \| undefined` | `undefined`                |
+| Property            | Attribute          | Description                                        | Type                  | Default                                                |
+| ------------------- | ------------------ | -------------------------------------------------- | --------------------- | ------------------------------------------------------ |
+| `backgroundColor`   | `background-color` | Icon background color in css color unit or var     | `string \| undefined` | `undefined`                                            |
+| `circleSize`        | `circle-size`      | Circle size in css length unit                     | `string \| undefined` | ``calc(var(--${PREFIX_BS}m-icon-component-size) * 3)`` |
+| `color`             | `color`            | Icon color in css color unit or var                | `string \| undefined` | `undefined`                                            |
+| `familyClass`       | `family-class`     | Change the family class to use another icon suite  | `string`              | `state.iconFamilyClass`                                |
+| `familyPrefix`      | `family-prefix`    | Change the family prefix to use another icon suite | `string`              | `state.iconFamilyPrefix`                               |
+| `hasCircle`         | `has-circle`       | Add circle around the icon                         | `boolean`             | `false`                                                |
+| `icon` _(required)_ | `icon`             | Name of icon to use (in kebab-case)                | `string`              | `undefined`                                            |
+| `isLoading`         | `is-loading`       | Enable loading animation                           | `boolean`             | `false`                                                |
+| `loadingDuration`   | `loading-duration` | Loading animation duration, in seconds             | `number`              | `1.8`                                                  |
+| `size`              | `size`             | Size of the icon in css length unit                | `string \| undefined` | `'1rem'`                                               |
+| `theme`             | `theme`            | Theme of the icon                                  | `string \| undefined` | `undefined`                                            |
 
 
 ## Dependencies

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MAlert } from '../../components';
-import { THEMES } from '../constants';
+import { ALL_COLORS } from '../constants';
 
 const config: Meta<typeof MAlert> = {
   title: 'Stencil/Alert',
@@ -16,7 +16,7 @@ const config: Meta<typeof MAlert> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: THEMES,
+      options: ALL_COLORS,
       table: { defaultValue: { summary: 'primary' } },
     },
     showClose: {

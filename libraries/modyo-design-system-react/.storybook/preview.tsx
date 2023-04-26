@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
 
 import { MApp } from '../src';
-import { ICONS, THEMES_WITH_EMPTY } from '../src/stories/constants';
+import { ICONS, ALL_COLORS_WITH_EMPTY } from '../src/stories/constants';
 
 export default {
   argTypes: {
@@ -12,7 +12,7 @@ export default {
           undefined: 'empty',
         },
       },
-      options: THEMES_WITH_EMPTY,
+      options: ALL_COLORS_WITH_EMPTY,
     },
     icon: {
       control: 'select',

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MCoupon } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { ICONS, ALL_COLORS } from '../constants';
 
 const config: Meta<typeof MCoupon> = {
   title: 'Stencil/Coupon',
@@ -85,7 +85,7 @@ const config: Meta<typeof MCoupon> = {
     },
     theme: {
       control: 'select',
-      options: THEMES,
+      options: ALL_COLORS,
       table: { defaultValue: { summary: 'primary' } },
     },
     layoutDirection: {

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MButton } from '../../components';
-import { ICONS, INPUT_STATE, THEMES } from '../constants';
+import { ICONS, INPUT_STATE, ALL_COLORS } from '../constants';
 
 const config: Meta<typeof MButton> = {
   title: 'Stencil/Button',
@@ -16,7 +16,7 @@ const config: Meta<typeof MButton> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: THEMES,
+      options: ALL_COLORS,
       table: { defaultValue: { summary: 'primary' } },
     },
     variant: {

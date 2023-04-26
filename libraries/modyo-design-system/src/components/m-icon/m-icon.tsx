@@ -7,7 +7,7 @@ import {
 
 import state from '../../utils/store';
 import type { ClassMap } from '../../utils/component-interface';
-import { prefixBS } from '../../utils/component-config';
+import { PREFIX_BS } from '../../utils';
 
 @Component({
   tag: 'm-icon',
@@ -25,57 +25,57 @@ export class MIcon {
   @Prop() theme?: string;
 
   /**
-   * Size of the icon
+   * Size of the icon in css length unit
    * */
   @Prop() size?: string = '1rem';
 
   /**
-   * Is loading
+   * Enable loading animation
    * */
   @Prop() isLoading = false;
 
   /**
-   * Has circle
-   */
-  @Prop() hasCircle = false;
-
-  /**
-   * Circle size
-   */
-  @Prop() circleSize?: string = `calc(${this.size} * 3)`;
-
-  /**
-   * Loading animation duration
+   * Loading animation duration, in seconds
    * */
   @Prop() loadingDuration = 1.8;
 
   /**
-   * To set css color
+   * Add circle around the icon
+   */
+  @Prop() hasCircle = false;
+
+  /**
+   * Circle size in css length unit
+   */
+  @Prop() circleSize?: string = `calc(var(--${PREFIX_BS}m-icon-component-size) * 3)`;
+
+  /**
+   * Icon color in css color unit or var
    * */
   @Prop() color?: string;
 
   /**
-   * To set background color
+   * Icon background color in css color unit or var
    * */
   @Prop() backgroundColor?: string;
 
   /**
-   * Family class
+   * Change the family class to use another icon suite
    * */
   @Prop() familyClass: string = state.iconFamilyClass;
 
   /**
-   * Family prefix
+   * Change the family prefix to use another icon suite
    * */
   @Prop() familyPrefix: string = state.iconFamilyPrefix;
 
   private getColorStyle() {
     if (this.color) {
-      return { [`--${prefixBS}m-icon-component-color`]: this.color };
+      return { [`--${PREFIX_BS}m-icon-component-color`]: this.color };
     }
 
     if (this.theme) {
-      return { [`--${prefixBS}m-icon-component-color`]: `var(--${prefixBS}${this.theme})` };
+      return { [`--${PREFIX_BS}m-icon-component-color`]: `var(--${PREFIX_BS}${this.theme})` };
     }
 
     return {};
@@ -83,14 +83,14 @@ export class MIcon {
 
   private getBackgroundStyle() {
     if (this.backgroundColor) {
-      return { [`--${prefixBS}m-icon-component-bg-color`]: this.backgroundColor };
+      return { [`--${PREFIX_BS}m-icon-component-bg-color`]: this.backgroundColor };
     }
 
     if (this.hasCircle) {
       if (this.theme) {
-        return { [`--${prefixBS}m-icon-component-bg-color`]: `rgba(var(--${prefixBS}${this.theme}-rgb), 0.1)` };
+        return { [`--${PREFIX_BS}m-icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}${this.theme}-rgb), 0.1)` };
       }
-      return { [`--${prefixBS}m-icon-component-bg-color`]: `rgba(var(--${prefixBS}body-color-rgb), 0.1)` };
+      return { [`--${PREFIX_BS}m-icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}body-color-rgb), 0.1)` };
     }
 
     return {};
@@ -98,15 +98,15 @@ export class MIcon {
 
   private getCircleSizeStyle() {
     if (this.hasCircle) {
-      return { [`--${prefixBS}m-icon-component-host-size`]: this.circleSize };
+      return { [`--${PREFIX_BS}m-icon-component-host-size`]: this.circleSize };
     }
-    return { [`--${prefixBS}m-icon-component-host-size`]: this.size };
+    return { [`--${PREFIX_BS}m-icon-component-host-size`]: this.size };
   }
 
   private generateHostStyleVariables() {
     return {
-      [`--${prefixBS}m-icon-component-size`]: this.size,
-      [`--${prefixBS}m-icon-component-loading-duration`]: `${this.loadingDuration}s`,
+      [`--${PREFIX_BS}m-icon-component-size`]: this.size,
+      [`--${PREFIX_BS}m-icon-component-loading-duration`]: `${this.loadingDuration}s`,
       ...this.getColorStyle(),
       ...this.getBackgroundStyle(),
       ...this.getCircleSizeStyle(),

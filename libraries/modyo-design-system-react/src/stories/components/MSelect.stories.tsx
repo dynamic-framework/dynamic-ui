@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MSelect } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { ICONS, ALL_COLORS } from '../constants';
 
 const config: Meta<typeof MSelect> = {
   title: 'Stencil/Select',
@@ -16,7 +16,7 @@ const config: Meta<typeof MSelect> = {
     },
     theme: {
       control: 'select',
-      options: THEMES,
+      options: ALL_COLORS,
       table: { defaultValue: { summary: 'primary' } },
     },
     label: {

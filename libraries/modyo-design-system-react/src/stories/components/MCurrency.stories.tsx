@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MCurrency } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { ICONS, ALL_COLORS } from '../constants';
 
 const config: Meta<typeof MCurrency> = {
   title: 'Stencil/Currency',
@@ -84,7 +84,7 @@ const config: Meta<typeof MCurrency> = {
     },
     theme: {
       control: 'select',
-      options: THEMES.filter((theme) => !['light', 'dark'].includes(theme)),
+      options: ALL_COLORS.filter((theme) => !['light', 'dark'].includes(theme)),
       table: { defaultValue: { summary: 'primary' } },
     },
     variant: {

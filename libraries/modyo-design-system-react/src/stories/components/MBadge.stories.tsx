@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MBadge } from '../../components';
-import { THEMES } from '../constants';
+import { ALL_COLORS } from '../constants';
 
 const config: Meta<typeof MBadge> = {
   title: 'Stencil/Badge',
@@ -12,7 +12,7 @@ const config: Meta<typeof MBadge> = {
     },
     theme: {
       control: 'select',
-      options: THEMES,
+      options: ALL_COLORS,
       table: { defaultValue: { summary: 'primary' } },
     },
   },
