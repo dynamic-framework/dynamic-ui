@@ -2,7 +2,6 @@ import {
   Component,
   h,
   Prop,
-  Host,
 } from '@stencil/core';
 
 import state from '../../utils/store';
@@ -47,7 +46,7 @@ export class MIcon {
   /**
    * Circle size in css length unit
    */
-  @Prop() circleSize?: string = `calc(var(--${PREFIX_BS}m-icon-component-size) * 3)`;
+  @Prop() circleSize?: string = `calc(var(--${PREFIX_BS}m-icon-component-size) * 2)`;
 
   /**
    * Icon color in css color unit or var
@@ -98,12 +97,12 @@ export class MIcon {
 
   private getCircleSizeStyle() {
     if (this.hasCircle) {
-      return { [`--${PREFIX_BS}m-icon-component-host-size`]: this.circleSize };
+      return { [`--${PREFIX_BS}m-icon-component-padding`]: this.circleSize };
     }
-    return { [`--${PREFIX_BS}m-icon-component-host-size`]: this.size };
+    return { [`--${PREFIX_BS}m-icon-component-padding`]: this.size };
   }
 
-  private generateHostStyleVariables() {
+  private generateStyleVariables() {
     return {
       [`--${PREFIX_BS}m-icon-component-size`]: this.size,
       [`--${PREFIX_BS}m-icon-component-loading-duration`]: `${this.loadingDuration}s`,
@@ -124,12 +123,10 @@ export class MIcon {
 
   render() {
     return (
-      <Host
-        class="m-icon-host"
-        style={this.generateHostStyleVariables()}
-      >
-        <i class={this.generateClasses()} />
-      </Host>
+      <i
+        class={this.generateClasses()}
+        style={this.generateStyleVariables()}
+      />
     );
   }
 }

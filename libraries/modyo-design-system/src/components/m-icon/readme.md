@@ -10,7 +10,7 @@
 | Property            | Attribute          | Description                                        | Type                  | Default                                                |
 | ------------------- | ------------------ | -------------------------------------------------- | --------------------- | ------------------------------------------------------ |
 | `backgroundColor`   | `background-color` | Icon background color in css color unit or var     | `string \| undefined` | `undefined`                                            |
-| `circleSize`        | `circle-size`      | Circle size in css length unit                     | `string \| undefined` | ``calc(var(--${PREFIX_BS}m-icon-component-size) * 3)`` |
+| `circleSize`        | `circle-size`      | Circle size in css length unit                     | `string \| undefined` | ``calc(var(--${PREFIX_BS}m-icon-component-size) * 2)`` |
 | `color`             | `color`            | Icon color in css color unit or var                | `string \| undefined` | `undefined`                                            |
 | `familyClass`       | `family-class`     | Change the family class to use another icon suite  | `string`              | `state.iconFamilyClass`                                |
 | `familyPrefix`      | `family-prefix`    | Change the family prefix to use another icon suite | `string`              | `state.iconFamilyPrefix`                               |

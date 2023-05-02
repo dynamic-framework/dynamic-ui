@@ -1,27 +1,29 @@
 .m-icon-host {
-  --#{$prefix}m-icon-color: var(--#{$prefix}m-icon-component-color, inherit);
-  --#{$prefix}m-icon-bg-color: var(--#{$prefix}m-icon-component-bg-color, inherit);
-  --#{$prefix}m-icon-size: var(--#{$prefix}m-icon-component-size);
-  --#{$prefix}m-icon-host-size: var(--#{$prefix}m-icon-component-host-size);
-  --#{$prefix}m-icon-loading-duration: var(--#{$prefix}m-icon-component-loading-duration);
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--#{$prefix}m-icon-host-size);
-  height: var(--#{$prefix}m-icon-host-size);
-  background-color: var(--#{$prefix}m-icon-bg-color);
-  border-radius: var(--#{$prefix}m-icon-host-size);
+
+
+
 }
 
 .m-icon {
+  --#{$prefix}m-icon-color: var(--#{$prefix}m-icon-component-color, inherit);
+  --#{$prefix}m-icon-bg-color: var(--#{$prefix}m-icon-component-bg-color, inherit);
+  --#{$prefix}m-icon-size: var(--#{$prefix}m-icon-component-size);
+  --#{$prefix}m-icon-padding: var(--#{$prefix}m-icon-component-padding);
+  --#{$prefix}m-icon-loading-duration: var(--#{$prefix}m-icon-component-loading-duration);
+
   display: flex;
   align-items: center;
   justify-content: center;
   width: var(--#{$prefix}m-icon-size);
   height: var(--#{$prefix}m-icon-size);
+  padding: var(--#{$prefix}m-icon-padding);
   font-size: var(--#{$prefix}m-icon-size);
   color: var(--#{$prefix}m-icon-color);
+  background-color: var(--#{$prefix}m-icon-bg-color);
+  border-radius: var(--#{$prefix}m-icon-padding);
 }
 
 .m-icon-loading {

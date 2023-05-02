@@ -46,7 +46,7 @@ const meta: Meta<typeof MIcon> = {
       type: 'string',
       control: 'text',
       description: 'Circle size in css length unit',
-      table: { defaultValue: { summary: `calc(var(--${PREFIX_BS}m-icon-component-size) * 3)` } },
+      table: { defaultValue: { summary: `calc(var(--${PREFIX_BS}m-icon-component-size) * 2)` } },
     },
     color: {
       type: 'string',
@@ -89,6 +89,6 @@ export const Circle: Story = {
     size: '120px',
     hasCircle: true,
     isLoading: false,
-    circleSize: `calc(var(--${PREFIX_BS}m-icon-component-size) * 3)`,
+    circleSize: `calc(var(--${PREFIX_BS}m-icon-component-size) * 2)`,
   },
 };
