@@ -80,7 +80,8 @@
 .shortcut:focus,
 .shortcut:focus-within,
 .shortcut.focus {
-  border-color: #{$shortcut-focus-border-color};
+  // TODO: fix focus.
+  // border-color: #{$shortcut-focus-border-color};
 }
 
 .shortcut:hover,

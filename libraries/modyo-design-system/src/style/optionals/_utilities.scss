@@ -20,16 +20,18 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "color"), "values"),
-          (
-            $colors
-          )
+          $all-colors-text,
         )
       )
     ),
-    "text-gray": (
-      property: color,
-      class: "text-gray",
-      values: $grays,
+    "background-color": map-merge(
+      map-get($utilities, "background-color"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "background-color"), "values"),
+          $all-colors-bg,
+        )
+      )
     ),
     "text-opacity": map-merge(
       map-get($utilities, "text-opacity"),
@@ -39,6 +41,15 @@ $utilities: map-merge(
           (
             40: .4,
           )
+        )
+      )
+    ),
+    "border-color": map-merge(
+      map-get($utilities, "border-color"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "border-color"), "values"),
+          $all-colors-border,
         )
       )
     ),

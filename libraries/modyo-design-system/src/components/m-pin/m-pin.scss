@@ -6,7 +6,8 @@
   --#{$prefix}form-label-color: var(--#{$prefix}gray-500);
   --#{$prefix}input-border-color: var(--#{$prefix}gray-300);
   --#{$prefix}input-hover-border-color: var(--#{$prefix}gray-500);
-  --#{$prefix}input-focus-border-outline: 2px solid var(--#{$prefix}accessibility);
+  // TODO: fix focus.
+  // --#{$prefix}input-focus-border-outline: 2px solid var(--#{$prefix}accessibility);
   --#{$prefix}input-focus-border-padding: -2px;
   --#{$prefix}input-height: 56px;
   --#{$prefix}input-width: 56px;

@@ -20,7 +20,8 @@ $segment-control-item-cursor: pointer !default;
 // Segment Control Item :hover
 $segment-control-item-hover-bg: var(--#{$prefix}gray) !default;
 // Segment Control Item :focus
-$segment-control-item-focus-border-color: var(--#{$prefix}accessibility) !default;
+// TODO: fix focus.
+// $segment-control-item-focus-border-color: var(--#{$prefix}accessibility) !default;
 // Segment Control Item :active
 $segment-control-item-active-bg: var(--#{$prefix}tertiary) !default;
 $segment-control-item-active-color: var(--#{$prefix}white) !default;

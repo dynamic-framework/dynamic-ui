@@ -1,5 +1,6 @@
 :root {
-  --#{$prefix}accessibility: #{$accessibility};
+  // TODO: fix focus.
+  // --#{$prefix}accessibility: #{$accessibility};
 
   @each $color, $value in $theme-colors-hover {
     --#{$prefix}#{$color}-hover: #{$value};
@@ -9,6 +10,18 @@
   @each $color, $value in $bg-widget-colors {
     --#{$prefix}bg-widget-#{$color}: #{$value};
     --#{$prefix}bg-widget-#{$color}-rgb: #{to-rgb($value)};
+  }
+
+  @each $color, $value in $colors {
+    --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
+  }
+
+  @each $color, $value in $palette-colors {
+    --#{$prefix}#{$color}: #{$value};
+  }
+
+  @each $color, $value in $palette-colors-rgb {
+    --#{$prefix}#{$color}-rgb: #{$value};
   }
 }
 

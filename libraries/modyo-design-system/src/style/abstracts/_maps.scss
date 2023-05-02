@@ -1,1 +1,13 @@
 // Theme maps
+
+$palette-grays: map-prev-key($grays, "gray") !default;
+
+$palette-colors: map-merge-multiple($palette-grays, $blues, $indigos, $purples, $pinks, $reds, $oranges, $yellows, $greens, $teals, $cyans) !default;
+$all-colors: map-merge($colors, $palette-colors) !default;
+
+$palette-colors-rgb: map-loop($palette-colors, to-rgb, "$value") !default;
+$all-colors-rgb: map-loop($all-colors, to-rgb, "$value") !default;
+
+$all-colors-text: map-loop($all-colors-rgb, rgba-css-var, "$key", "text") !default;
+$all-colors-bg: map-loop($all-colors-rgb, rgba-css-var, "$key", "bg") !default;
+$all-colors-border: map-loop($all-colors-rgb, rgba-css-var, "$key", "border") !default;

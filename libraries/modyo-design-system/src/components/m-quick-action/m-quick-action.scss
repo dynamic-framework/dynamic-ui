@@ -12,7 +12,8 @@
 
   &:focus-within,
   &.focus {
-    --#{$prefix}quick-action-border-color: var(--#{$prefix}accessibility);
+    // TODO: fix focus.
+    // --#{$prefix}quick-action-border-color: var(--#{$prefix}accessibility);
   }
 
   &.disabled {

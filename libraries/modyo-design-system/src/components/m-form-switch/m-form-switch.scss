@@ -1,7 +1,8 @@
 :host,
 .form-switch-box {
   --#{$prefix}form-check-border-width-focus: #{$form-check-border-width-focus};
-  --#{$prefix}form-check-border-color-focus: #{$form-check-border-color-focus};
+  // TODO: fix focus.
+  // --#{$prefix}form-check-border-color-focus: #{$form-check-border-color-focus};
   --#{$prefix}checkbox-box-border-width: 3px;
   --#{$prefix}checkbox-box-border-radius: #{$form-check-input-border-radius};
   display: block;
