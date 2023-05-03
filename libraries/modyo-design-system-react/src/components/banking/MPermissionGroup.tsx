@@ -1,12 +1,22 @@
 import { PropsWithChildren } from 'react';
+import { PermissionItemType } from './interface';
+import MPermissionItem from './MPermissionItem';
 
 type Props = PropsWithChildren<{
   title: string;
   description: string;
-  permissionList: Array<Record<string, unknown>>
+  permissionList: Array<PermissionItemType>;
+  onChangePermission: (permission: PermissionItemType, isChecked: boolean) => void;
+  onCustomAction?: (permission: PermissionItemType) => void;
 }>;
 
-export default function MPermissionGroup({ title, description, permissionList }: Props) {
+export default function MPermissionGroup({
+  title,
+  description,
+  permissionList,
+  onChangePermission,
+  onCustomAction = () => {},
+}: Props) {
   return (
     <div className="row operation g-0 mb-3 mb-lg-0">
       <div className="col-12 col-lg-4 d-flex flex-column justify-content-center">
@@ -14,16 +24,14 @@ export default function MPermissionGroup({ title, description, permissionList }:
         <p className="fs-8 d-none d-lg-block m-0">{description}</p>
       </div>
       <div className="col-12 offset-lg-1 col-lg-7">
-        {/*
-          Iterate over permissions and create BankingUI component for SinglePermission?
-          Or only with children?
-        */}
-        {/* {permissions.map((permission) => (
-          <RolePermission
+        {permissionList.map((permission) => (
+          <MPermissionItem
             key={permission.id}
             permission={permission}
+            onChange={(isChecked) => onChangePermission(permission, isChecked)}
+            onAction={() => onCustomAction(permission)}
           />
-        ))} */}
+        ))}
       </div>
     </div>
   );
