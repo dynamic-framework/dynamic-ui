@@ -1,15 +1,14 @@
-import { PropsWithChildren } from 'react';
 import { PermissionItemType } from './interface';
 import MPermissionItem from './MPermissionItem';
 
-type Props = PropsWithChildren<{
+type Props = {
   title: string;
   description: string;
   badgeTitle: string;
   permissionList: Array<PermissionItemType>;
   onChangePermission: (permission: PermissionItemType, isChecked: boolean) => void;
   onCustomAction?: (permission: PermissionItemType) => void;
-}>;
+};
 
 export default function MPermissionGroup({
   title,
