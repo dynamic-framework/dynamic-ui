@@ -2,11 +2,6 @@
   // TODO: fix focus.
   // --#{$prefix}accessibility: #{$accessibility};
 
-  @each $color, $value in $theme-colors-hover {
-    --#{$prefix}#{$color}-hover: #{$value};
-    --#{$prefix}#{$color}-hover-rgb: #{to-rgb($value)};
-  }
-
   @each $color, $value in $bg-widget-colors {
     --#{$prefix}bg-widget-#{$color}: #{$value};
     --#{$prefix}bg-widget-#{$color}-rgb: #{to-rgb($value)};
@@ -22,6 +17,10 @@
 
   @each $color, $value in $palette-colors-rgb {
     --#{$prefix}#{$color}-rgb: #{$value};
+  }
+
+  @each $color, $value in $theme-color-variants {
+    --#{$prefix}#{$color}: #{$value};
   }
 }
 

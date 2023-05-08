@@ -30,6 +30,7 @@ export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undef
 
 export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', undefined, [
   'theme',
+  'size',
   'variant',
   'state',
   'text',

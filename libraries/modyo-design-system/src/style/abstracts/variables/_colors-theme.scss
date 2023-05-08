@@ -62,28 +62,30 @@ $danger-border-subtle: tint-color($danger, 60%) !default;
 $light-border-subtle: $gray-200 !default;
 $dark-border-subtle: $gray-500 !default;
 
-// TODO: Use hover-colors in components with :hover
-$primary-hover: #bc0956 !default;
-$secondary-hover: #303071 !default;
-$tertiary-hover: #25258a !default;
-$success-hover: #58a533 !default;
-$info-hover: #516182 !default;
-$warning-hover: #c38322 !default;
-$danger-hover: #c64e4e !default;
+$primary-light: $red-100 !default;
+$primary-dark: $red-900 !default;
+$secondary-light: $indigo-100 !default;
+$secondary-dark: $indigo-900 !default;
+$success-light: $green-100 !default;
+$success-dark: $green-900 !default;
+$info-light: $blue-100 !default;
+$info-dark: $blue-900 !default;
+$warning-light: $yellow-100 !default;
+$warning-dark: $yellow-900 !default;
+$danger-light: $orange-100 !default;
+$danger-dark: $orange-900 !default;
 
-$theme-colors-hover: (
-  "primary": $primary-hover,
-  "secondary": $secondary-hover,
-  "success": $success-hover,
-  "info": $info-hover,
-  "warning": $warning-hover,
-  "danger": $danger-hover,
-  "light": $light,
-  "dark": $dark
+$theme-color-variants: (
+  "primary-light": $primary-light,
+  "primary-dark": $primary-dark,
+  "secondary-light": $secondary-light,
+  "secondary-dark": $secondary-dark,
+  "success-light": $success-light,
+  "success-dark": $success-dark,
+  "info-light": $info-light,
+  "info-dark": $info-dark,
+  "warning-light": $warning-light,
+  "warning-dark": $warning-dark,
+  "danger-light": $danger-light,
+  "danger-dark": $danger-dark
 ) !default;
-
-$gradient-secondary-start: #404ece !default;
-$gradient-secondary-end: #0966bc !default;
-
-$gradient-primary: linear-gradient(96.85deg, $primary 0%, $primary-hover 100%) !default;
-$gradient-secondary: linear-gradient(96.85deg, $gradient-secondary-start 0%, $gradient-secondary-end 100%) !default;
