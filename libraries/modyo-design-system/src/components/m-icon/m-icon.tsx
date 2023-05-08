@@ -99,7 +99,7 @@ export class MIcon {
     if (this.hasCircle) {
       return { [`--${PREFIX_BS}m-icon-component-padding`]: this.circleSize };
     }
-    return { [`--${PREFIX_BS}m-icon-component-padding`]: this.size };
+    return { [`--${PREFIX_BS}m-icon-component-padding`]: '0' };
   }
 
   private generateStyleVariables() {

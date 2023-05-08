@@ -6,17 +6,30 @@ import {
 } from '@modyo-dynamic/modyo-design-system';
 
 import { MIcon } from '../../components';
-import { FIRST_ICON } from '../constants';
+import {
+  ALL_COLORS_WITH_EMPTY,
+  FIRST_ICON,
+  ICONS,
+} from '../constants';
 
 const meta: Meta<typeof MIcon> = {
-  title: 'Components-Molecules/Icon',
+  title: 'Design System/Components/Icon',
   component: MIcon,
   argTypes: {
     icon: {
-      type: 'string',
+      control: 'select',
+      type: { name: 'string', required: true },
+      options: ICONS,
       description: 'Name of icon to use (in kebab-case)',
     },
     theme: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: ALL_COLORS_WITH_EMPTY,
       type: 'string',
       description: 'Theme of the icon',
     },
@@ -27,6 +40,8 @@ const meta: Meta<typeof MIcon> = {
       table: { defaultValue: { summary: '1rem' } },
     },
     isLoading: {
+      control: 'boolean',
+      table: { defaultValue: { summary: false } },
       type: 'boolean',
       description: 'Enable loading animation',
     },

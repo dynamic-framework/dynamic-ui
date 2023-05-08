@@ -28,14 +28,14 @@ it('should render base counter', async () => {
             <div class="form-control-spacer"></div>
             <div class="form-control-counter">
               <button class="form-control-counter-btn">
-                <m-icon class="m-icon-host" style="--bs-m-icon-component-size: 1rem; --bs-m-icon-component-loading-duration: 1.8s; --bs-m-icon-component-host-size: 1rem;">
-                  <i class="bi bi-dash m-icon"></i>
+                <m-icon>
+                  <i class="bi bi-dash m-icon" style="--bs-m-icon-component-size: 1rem; --bs-m-icon-component-loading-duration: 1.8s; --bs-m-icon-component-padding: 0;"></i>
                 </m-icon>
               </button>
               <input class="form-control-counter-input" id="${props.mId}" max="${props.maxValue}" min="${props.minValue}" type="number" value="${props.value}" >
               <button class="form-control-counter-btn">
-                <m-icon class="m-icon-host" style="--bs-m-icon-component-size: 1rem; --bs-m-icon-component-loading-duration: 1.8s; --bs-m-icon-component-host-size: 1rem;">
-                    <i class="bi bi-plus m-icon"></i>
+                <m-icon>
+                  <i class="bi bi-plus m-icon" style="--bs-m-icon-component-size: 1rem; --bs-m-icon-component-loading-duration: 1.8s; --bs-m-icon-component-padding: 0;"></i>
                 </m-icon>
               </button>
             </div>
