@@ -111,6 +111,7 @@ export class MButton implements ComponentInterface {
       [variantClass]: true,
       [`btn-${this.size}`]: !!this.size,
       ...(this.state && this.state !== 'disabled') && { [this.state]: true },
+      loading: this.isLoading,
       'rounded-pill': this.isPill,
     };
   }

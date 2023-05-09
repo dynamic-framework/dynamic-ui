@@ -225,7 +225,6 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'hintIconEnd',
   'hintIconEndFamilyClass',
   'hintIconEndFamilyPrefix',
-  'layoutDirection',
   'isInvalid',
   'mChange',
   'mBlur'

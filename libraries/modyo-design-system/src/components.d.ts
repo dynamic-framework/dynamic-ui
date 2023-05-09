@@ -679,10 +679,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection": FormControlLayoutDirection;
-        /**
           * The id of the input
          */
         "mId": string;
@@ -2271,10 +2267,6 @@ declare namespace LocalJSX {
           * Icon label family class
          */
         "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection"?: FormControlLayoutDirection;
         /**
           * The id of the input
          */

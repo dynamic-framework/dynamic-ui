@@ -115,6 +115,21 @@ export const Primary: Story = {
   },
 };
 
+export const PrimaryHover: Story = {
+  args: {
+    theme: 'primary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: undefined,
+    isLoading: false,
+    isPill: true,
+    state: 'hover',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
 export const PrimaryFocus: Story = {
   args: {
     theme: 'primary',
@@ -125,6 +140,36 @@ export const PrimaryFocus: Story = {
     isLoading: false,
     isPill: true,
     state: 'focus-visible',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const PrimaryDisabled: Story = {
+  args: {
+    theme: 'primary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: undefined,
+    isLoading: false,
+    isPill: true,
+    state: 'disabled',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const PrimaryActive: Story = {
+  args: {
+    theme: 'primary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: undefined,
+    isLoading: false,
+    isPill: true,
+    state: 'active',
     iconStart: undefined,
     iconEnd: undefined,
   },
@@ -186,6 +231,21 @@ export const Secondary: Story = {
   },
 };
 
+export const SecondaryHover: Story = {
+  args: {
+    theme: 'primary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'outline',
+    isLoading: false,
+    isPill: true,
+    state: 'hover',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
 export const SecondaryFocus: Story = {
   args: {
     theme: 'primary',
@@ -196,6 +256,36 @@ export const SecondaryFocus: Story = {
     isLoading: false,
     isPill: true,
     state: 'focus-visible',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const SecondaryDisabled: Story = {
+  args: {
+    theme: 'primary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'outline',
+    isLoading: false,
+    isPill: true,
+    state: 'disabled',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const SecondaryActive: Story = {
+  args: {
+    theme: 'primary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'outline',
+    isLoading: false,
+    isPill: true,
+    state: 'active',
     iconStart: undefined,
     iconEnd: undefined,
   },
@@ -236,6 +326,122 @@ export const SecondaryLoadingIconRight: Story = {
     text: 'Default',
     type: 'button',
     variant: 'outline',
+    isLoading: true,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: 'chevron-right',
+  },
+};
+
+export const Link: Story = {
+  args: {
+    theme: 'secondary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: false,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const LinkHover: Story = {
+  args: {
+    theme: 'secondary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: false,
+    isPill: true,
+    state: 'hover',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const LinkFocus: Story = {
+  args: {
+    theme: 'secondary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: false,
+    isPill: true,
+    state: 'focus-visible',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const LinkDisabled: Story = {
+  args: {
+    theme: 'secondary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: false,
+    isPill: true,
+    state: 'disabled',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const LinkActive: Story = {
+  args: {
+    theme: 'secondary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: false,
+    isPill: true,
+    state: 'active',
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const LinkIconRight: Story = {
+  args: {
+    theme: 'secondary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: false,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: 'chevron-right',
+  },
+};
+
+export const LinkLoading: Story = {
+  args: {
+    theme: 'secondary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: true,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: undefined,
+  },
+};
+
+export const LinkLoadingIconRight: Story = {
+  args: {
+    theme: 'secondary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
     isLoading: true,
     isPill: true,
     iconStart: undefined,
