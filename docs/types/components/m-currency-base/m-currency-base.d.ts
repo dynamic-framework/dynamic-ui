@@ -1,8 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '../../stencil-public-runtime';
 import type { Options } from 'currency.js';
 import type { FormControlLayoutDirection } from '../../utils/component-interface';
-import type { CurrencyEvent, CurrencyVariant } from './m-currency-interface';
-export declare class MCurrency implements ComponentInterface {
+import type { CurrencyEvent, CurrencyVariant } from './m-currency-base-interface';
+export declare class MCurrencyBase implements ComponentInterface {
   /**
    * Id for the input
    * */
@@ -88,7 +88,7 @@ export declare class MCurrency implements ComponentInterface {
   */
   maxValue?: number;
   /**
-   * Hint text for the m-currency
+   * Hint text for the m-currency-base
    * */
   hint?: string;
   /**
@@ -116,15 +116,15 @@ export declare class MCurrency implements ComponentInterface {
    */
   hintIconEndFamilyPrefix?: string;
   /**
-   * Theme for the m-currency
+   * Theme for the m-currency-base
    * */
   theme?: string;
   /**
-   * Variant for the m-currency
+   * Variant for the m-currency-base
    * */
   variant?: CurrencyVariant;
   /**
-   * Options for the m-currency
+   * Options for the m-currency-base
    * */
   currencyOptions: Options;
   /**

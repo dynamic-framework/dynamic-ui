@@ -6,7 +6,7 @@
     "./components/m-button/m-button.js",
     "./components/m-counter/m-counter.js",
     "./components/m-coupon/m-coupon.js",
-    "./components/m-currency/m-currency.js",
+    "./components/m-currency-base/m-currency-base.js",
     "./components/m-form-check/m-form-check.js",
     "./components/m-form-switch/m-form-switch.js",
     "./components/m-hint/m-hint.js",

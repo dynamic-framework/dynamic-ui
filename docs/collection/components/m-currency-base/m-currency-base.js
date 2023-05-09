@@ -1,6 +1,6 @@
 import { h, Host, } from '@stencil/core';
 import currency from 'currency.js';
-export class MCurrency {
+export class MCurrencyBase {
   constructor() {
     /**
      * Emit input and select values when the values change
@@ -136,15 +136,15 @@ export class MCurrency {
       iconEndFamilyPrefix: this.hintIconEndFamilyPrefix,
     }))))))));
   }
-  static get is() { return "m-currency"; }
+  static get is() { return "m-currency-base"; }
   static get originalStyleUrls() {
     return {
-      "$": ["m-currency.scss"]
+      "$": ["m-currency-base.scss"]
     };
   }
   static get styleUrls() {
     return {
-      "$": ["m-currency.css"]
+      "$": ["m-currency-base.css"]
     };
   }
   static get properties() {
@@ -522,7 +522,7 @@ export class MCurrency {
         "optional": true,
         "docs": {
           "tags": [],
-          "text": "Hint text for the m-currency"
+          "text": "Hint text for the m-currency-base"
         },
         "attribute": "hint",
         "reflect": false
@@ -641,7 +641,7 @@ export class MCurrency {
         "optional": true,
         "docs": {
           "tags": [],
-          "text": "Theme for the m-currency"
+          "text": "Theme for the m-currency-base"
         },
         "attribute": "theme",
         "reflect": false
@@ -655,7 +655,7 @@ export class MCurrency {
           "references": {
             "CurrencyVariant": {
               "location": "import",
-              "path": "./m-currency-interface"
+              "path": "./m-currency-base-interface"
             }
           }
         },
@@ -663,7 +663,7 @@ export class MCurrency {
         "optional": true,
         "docs": {
           "tags": [],
-          "text": "Variant for the m-currency"
+          "text": "Variant for the m-currency-base"
         },
         "attribute": "variant",
         "reflect": false
@@ -685,7 +685,7 @@ export class MCurrency {
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "Options for the m-currency"
+          "text": "Options for the m-currency-base"
         }
       },
       "layoutDirection": {
@@ -772,7 +772,7 @@ export class MCurrency {
           "references": {
             "CurrencyEvent": {
               "location": "import",
-              "path": "./m-currency-interface"
+              "path": "./m-currency-base-interface"
             }
           }
         }

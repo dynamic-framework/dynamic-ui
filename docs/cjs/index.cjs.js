@@ -3,7 +3,8 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const initialize = require('./initialize-ae7ede02.js');
-const store = require('./store-3ad36b21.js');
+const currency_min = require('./currency.min-923ce975.js');
+const store = require('./store-3b82eec8.js');
 require('./index-aa298dc0.js');
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -61,7 +62,7 @@ const liquidParser = {
 };
 
 function formatCurrency(amount, options) {
-  return store.currency_min(amount, options).format();
+  return currency_min.currency_min(amount, options).format();
 }
 
 /**

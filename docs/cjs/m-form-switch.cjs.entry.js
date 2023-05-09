@@ -16,8 +16,8 @@ const MFormSwitch = class {
       this.mChange.emit(value);
     };
     this.label = undefined;
-    this.labelOn = 'On';
-    this.labelOff = 'Off';
+    this.labelOn = '';
+    this.labelOff = '';
     this.mId = undefined;
     this.isChecked = undefined;
     this.isDisabled = false;
