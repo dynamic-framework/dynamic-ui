@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.9.0...@modyo-dynamic/modyo-design-system-react@0.10.0) (2023-05-09)
+
+### Features
+
+- permission group component ([fa3de56](https://github.com/modyo-dynamic/modyo-design-system/commit/fa3de569cd122686a3b8ecb1fcb24793466e1dbb))
+- permission item component ([4fe407f](https://github.com/modyo-dynamic/modyo-design-system/commit/4fe407facba056ffd97b5c02537dc23b8c369945))
+- summary card component ([1575da5](https://github.com/modyo-dynamic/modyo-design-system/commit/1575da567ffff55003824b3cd8be525d0c47f3ef))
+
 ## [0.9.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.2...@modyo-dynamic/modyo-design-system-react@0.9.0) (2023-04-20)
 
 ### Features

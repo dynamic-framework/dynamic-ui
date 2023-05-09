@@ -1,7 +1,7 @@
 {
   "name": "@modyo-dynamic/modyo-design-system-react",
   "sideEffects": false,
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "React specific wrapper for component-library",
   "license": "MIT",
   "repository": {
@@ -47,7 +47,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.0",
-    "@modyo-dynamic/modyo-design-system": "^0.7.3",
+    "@modyo-dynamic/modyo-design-system": "^0.7.4",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@storybook/addon-actions": "^7.0.0-rc.8",
     "@storybook/addon-essentials": "^7.0.0-rc.8",
