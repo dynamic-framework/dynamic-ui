@@ -1,4 +1,4 @@
-# m-currency
+# m-currency-base
 
 
 
@@ -9,8 +9,8 @@
 
 | Property                       | Attribute                       | Description                                                          | Type                              | Default                 |
 | ------------------------------ | ------------------------------- | -------------------------------------------------------------------- | --------------------------------- | ----------------------- |
-| `currencyOptions` _(required)_ | --                              | Options for the m-currency                                           | `Options`                         | `undefined`             |
-| `hint`                         | `hint`                          | Hint text for the m-currency                                         | `string \| undefined`             | `undefined`             |
+| `currencyOptions` _(required)_ | --                              | Options for the m-currency-base                                      | `Options`                         | `undefined`             |
+| `hint`                         | `hint`                          | Hint text for the m-currency-base                                    | `string \| undefined`             | `undefined`             |
 | `hintIconEnd`                  | `hint-icon-end`                 | Icon end for the hint text                                           | `string \| undefined`             | `undefined`             |
 | `hintIconEndFamilyClass`       | `hint-icon-end-family-class`    | Hint right icon family class                                         | `string \| undefined`             | `undefined`             |
 | `hintIconEndFamilyPrefix`      | `hint-icon-end-family-prefix`   | Hint right icon family class                                         | `string \| undefined`             | `undefined`             |
@@ -39,10 +39,10 @@
 | `minValue`                     | `min-value`                     | * The min value of the input                                         | `number \| undefined`             | `undefined`             |
 | `placeholder`                  | `placeholder`                   | Placeholder for the input                                            | `string \| undefined`             | `''`                    |
 | `selectOptions`                | --                              | Select options                                                       | `any[]`                           | `[]`                    |
-| `theme`                        | `theme`                         | Theme for the m-currency                                             | `string \| undefined`             | `undefined`             |
+| `theme`                        | `theme`                         | Theme for the m-currency-base                                        | `string \| undefined`             | `undefined`             |
 | `value`                        | `value`                         | * The value of the input                                             | `number \| undefined`             | `undefined`             |
 | `valueExtractor`               | --                              | Callback to extract the value from the option                        | `(item: any) => string \| number` | `(item) => item?.value` |
-| `variant`                      | `variant`                       | Variant for the m-currency                                           | `"prime" \| undefined`            | `undefined`             |
+| `variant`                      | `variant`                       | Variant for the m-currency-base                                      | `"prime" \| undefined`            | `undefined`             |
 
 
 ## Events
@@ -62,10 +62,10 @@
 ### Graph
 ```mermaid
 graph TD;
-  m-currency --> m-icon
-  m-currency --> m-hint
+  m-currency-base --> m-icon
+  m-currency-base --> m-hint
   m-hint --> m-icon
-  style m-currency fill:#f9f,stroke:#333,stroke-width:4px
+  style m-currency-base fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

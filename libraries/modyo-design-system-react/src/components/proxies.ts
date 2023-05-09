@@ -11,7 +11,7 @@ import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
 import { defineCustomElement as defineMCounter } from '@modyo-dynamic/modyo-design-system/components/m-counter.js';
 import { defineCustomElement as defineMCoupon } from '@modyo-dynamic/modyo-design-system/components/m-coupon.js';
-import { defineCustomElement as defineMCurrency } from '@modyo-dynamic/modyo-design-system/components/m-currency.js';
+import { defineCustomElement as defineMCurrencyBase } from '@modyo-dynamic/modyo-design-system/components/m-currency-base.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyo-dynamic/modyo-design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
@@ -35,7 +35,7 @@ export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeEl
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
 export const MCounter = /*@__PURE__*/createReactComponent<JSX.MCounter, HTMLMCounterElement>('m-counter', undefined, undefined, defineMCounter);
 export const MCoupon = /*@__PURE__*/createReactComponent<JSX.MCoupon, HTMLMCouponElement>('m-coupon', undefined, undefined, defineMCoupon);
-export const MCurrency = /*@__PURE__*/createReactComponent<JSX.MCurrency, HTMLMCurrencyElement>('m-currency', undefined, undefined, defineMCurrency);
+export const MCurrencyBase = /*@__PURE__*/createReactComponent<JSX.MCurrencyBase, HTMLMCurrencyBaseElement>('m-currency-base', undefined, undefined, defineMCurrencyBase);
 export const MFormCheck = /*@__PURE__*/createReactComponent<JSX.MFormCheck, HTMLMFormCheckElement>('m-form-check', undefined, undefined, defineMFormCheck);
 export const MFormSwitch = /*@__PURE__*/createReactComponent<JSX.MFormSwitch, HTMLMFormSwitchElement>('m-form-switch', undefined, undefined, defineMFormSwitch);
 export const MHint = /*@__PURE__*/createReactComponent<JSX.MHint, HTMLMHintElement>('m-hint', undefined, undefined, defineMHint);
