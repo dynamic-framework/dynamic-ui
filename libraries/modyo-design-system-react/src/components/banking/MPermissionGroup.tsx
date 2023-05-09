@@ -4,7 +4,7 @@ import MPermissionItem from './MPermissionItem';
 type Props = {
   title: string;
   description: string;
-  badgeTitle: string;
+  permissionState: string;
   permissionList: Array<PermissionItemType>;
   onChangePermission: (permission: PermissionItemType, isChecked: boolean) => void;
   onCustomAction?: (permission: PermissionItemType) => void;
@@ -13,7 +13,7 @@ type Props = {
 export default function MPermissionGroup({
   title,
   description,
-  badgeTitle,
+  permissionState,
   permissionList,
   onChangePermission,
   onCustomAction = () => {},
@@ -29,7 +29,7 @@ export default function MPermissionGroup({
           <MPermissionItem
             key={permission.id}
             permission={permission}
-            badgeTitle={badgeTitle}
+            permissionState={permissionState}
             onChange={(isChecked) => onChangePermission(permission, isChecked)}
             onAction={() => onCustomAction(permission)}
           />
