@@ -252,6 +252,7 @@ export class MSelect implements ComponentInterface {
                 'form-select': true,
                 'no-icons': !this.iconStart && !this.iconMiddle && !this.iconEnd,
                 [`form-select-${this.theme}`]: this.variant !== 'prime' && !!this.theme,
+                loading: this.isLoading,
               }}
               aria-describedby={`${this.mId}-start`}
               disabled={this.isDisabled || this.isLoading}

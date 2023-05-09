@@ -16,6 +16,7 @@ type Props = {
   iconStart?: string;
   labelExtractor?: (item: any) => string;
   valueExtractor?: (item: any) => string | number;
+  isLoading?: boolean;
 };
 
 export default function MFormikSelect(
@@ -30,6 +31,7 @@ export default function MFormikSelect(
     iconStart,
     labelExtractor = (item: any) => item?.label as string,
     valueExtractor = (item: any) => item?.value as string,
+    isLoading,
   }: Props,
 ) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,6 +50,7 @@ export default function MFormikSelect(
       valueExtractor={valueExtractor}
       onMChange={({ detail }) => helpers.setValue(detail)}
       onMBlur={({ detail }) => field.onBlur(detail)}
+      isLoading={isLoading}
     />
   );
 }
