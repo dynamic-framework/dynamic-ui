@@ -966,8 +966,8 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0
-      '@modyo-dynamic/modyo-design-system': ^0.7.2
-      '@modyo-dynamic/modyo-design-system-react': ^0.8.2
+      '@modyo-dynamic/modyo-design-system': ^0.7.3
+      '@modyo-dynamic/modyo-design-system-react': ^0.9.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -1010,7 +1010,7 @@ importers:
       yup: ^0.32.11
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyo-dynamic/modyo-design-system-react': 0.8.2_kaepd4q6w3nvhjgiopybe4jnbu
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
       '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -2779,7 +2779,6 @@ packages:
   /@babel/helper-validator-option/7.18.6:
     resolution: {integrity: sha512-XO7gESt5ouv/LRJdrVjkShckw6STTaB7l9BrpBaAHDeF5YZT+01PCwmR0SJHnkW6i8OwW/EVWRShfi4j2x+KQw==}
     engines: {node: '>=6.9.0'}
-    dev: true
 
   /@babel/helper-validator-option/7.21.0:
     resolution: {integrity: sha512-rmL/B8/f0mKS2baE9ZpyTcTavvEuWhTTW8amjzXNvYG4AwBsqTLikfXsEofsJEfKHf+HQVQbFOHy6o+4cnC/fQ==}
@@ -5493,7 +5492,7 @@ packages:
       '@babel/core': 7.21.3
       '@babel/helper-compilation-targets': 7.20.7_@babel+core@7.21.3
       '@babel/helper-plugin-utils': 7.20.2
-      '@babel/helper-validator-option': 7.21.0
+      '@babel/helper-validator-option': 7.18.6
       '@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression': 7.18.6_@babel+core@7.21.3
       '@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining': 7.18.9_@babel+core@7.21.3
       '@babel/plugin-proposal-async-generator-functions': 7.20.1_@babel+core@7.21.3
