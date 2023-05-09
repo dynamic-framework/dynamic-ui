@@ -9,7 +9,7 @@ import { IconSettings } from "./utils";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
-import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
+import { CurrencyEvent, CurrencyVariant } from "./components/m-currency-base/m-currency-base-interface";
 import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
@@ -303,13 +303,13 @@ export namespace Components {
          */
         "type": CouponInputType;
     }
-    interface MCurrency {
+    interface MCurrencyBase {
         /**
-          * Options for the m-currency
+          * Options for the m-currency-base
          */
         "currencyOptions": Options;
         /**
-          * Hint text for the m-currency
+          * Hint text for the m-currency-base
          */
         "hint"?: string;
         /**
@@ -425,7 +425,7 @@ export namespace Components {
          */
         "selectOptions": Array<any>;
         /**
-          * Theme for the m-currency
+          * Theme for the m-currency-base
          */
         "theme"?: string;
         /**
@@ -437,7 +437,7 @@ export namespace Components {
          */
         "valueExtractor": (item: any) => string | number;
         /**
-          * Variant for the m-currency
+          * Variant for the m-currency-base
          */
         "variant"?: CurrencyVariant;
     }
@@ -1350,9 +1350,9 @@ export interface MCouponCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCouponElement;
 }
-export interface MCurrencyCustomEvent<T> extends CustomEvent<T> {
+export interface MCurrencyBaseCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMCurrencyElement;
+    target: HTMLMCurrencyBaseElement;
 }
 export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1439,11 +1439,11 @@ declare global {
         prototype: HTMLMCouponElement;
         new (): HTMLMCouponElement;
     };
-    interface HTMLMCurrencyElement extends Components.MCurrency, HTMLStencilElement {
+    interface HTMLMCurrencyBaseElement extends Components.MCurrencyBase, HTMLStencilElement {
     }
-    var HTMLMCurrencyElement: {
-        prototype: HTMLMCurrencyElement;
-        new (): HTMLMCurrencyElement;
+    var HTMLMCurrencyBaseElement: {
+        prototype: HTMLMCurrencyBaseElement;
+        new (): HTMLMCurrencyBaseElement;
     };
     interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
     }
@@ -1548,7 +1548,7 @@ declare global {
         "m-button": HTMLMButtonElement;
         "m-counter": HTMLMCounterElement;
         "m-coupon": HTMLMCouponElement;
-        "m-currency": HTMLMCurrencyElement;
+        "m-currency-base": HTMLMCurrencyBaseElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
         "m-hint": HTMLMHintElement;
@@ -1872,13 +1872,13 @@ declare namespace LocalJSX {
          */
         "type"?: CouponInputType;
     }
-    interface MCurrency {
+    interface MCurrencyBase {
         /**
-          * Options for the m-currency
+          * Options for the m-currency-base
          */
         "currencyOptions": Options;
         /**
-          * Hint text for the m-currency
+          * Hint text for the m-currency-base
          */
         "hint"?: string;
         /**
@@ -1988,7 +1988,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the inputs change
          */
-        "onMChange"?: (event: MCurrencyCustomEvent<CurrencyEvent>) => void;
+        "onMChange"?: (event: MCurrencyBaseCustomEvent<CurrencyEvent>) => void;
         /**
           * Placeholder for the input
          */
@@ -1998,7 +1998,7 @@ declare namespace LocalJSX {
          */
         "selectOptions"?: Array<any>;
         /**
-          * Theme for the m-currency
+          * Theme for the m-currency-base
          */
         "theme"?: string;
         /**
@@ -2010,7 +2010,7 @@ declare namespace LocalJSX {
          */
         "valueExtractor"?: (item: any) => string | number;
         /**
-          * Variant for the m-currency
+          * Variant for the m-currency-base
          */
         "variant"?: CurrencyVariant;
     }
@@ -2973,7 +2973,7 @@ declare namespace LocalJSX {
         "m-button": MButton;
         "m-counter": MCounter;
         "m-coupon": MCoupon;
-        "m-currency": MCurrency;
+        "m-currency-base": MCurrencyBase;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
         "m-hint": MHint;
@@ -3002,7 +3002,7 @@ declare module "@stencil/core" {
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;
             "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
-            "m-currency": LocalJSX.MCurrency & JSXBase.HTMLAttributes<HTMLMCurrencyElement>;
+            "m-currency-base": LocalJSX.MCurrencyBase & JSXBase.HTMLAttributes<HTMLMCurrencyBaseElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
