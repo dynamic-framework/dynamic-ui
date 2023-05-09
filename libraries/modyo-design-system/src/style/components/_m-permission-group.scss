@@ -1,0 +1,39 @@
+.operation-group {
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--bs-gray-300);
+  }
+}
+
+.permission-item {
+  padding: 8px 0;
+  .form-switch-box {
+    width: auto;
+  }
+  .label {
+    font-size: .875rem;
+  }
+  &:hover {
+    background: #f7f7ff;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--bs-gray-300);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .permission-item {
+    padding: 8px 10px;
+  }
+  .permission-item .label {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .operation-group  {
+    border-top: 1px solid var(--bs-gray-300);
+    &:not(:last-child) {
+      border-bottom: none;
+    }
+  }
+}
