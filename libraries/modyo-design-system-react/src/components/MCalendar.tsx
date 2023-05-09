@@ -1,7 +1,6 @@
 import React from 'react';
 import DatePicker, { ReactDatePickerProps, registerLocale } from 'react-datepicker';
 import { DateTime } from 'luxon';
-import { liquidParser } from '@modyo-dynamic/modyo-design-system';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
 import { useLiquidContext } from '../contexts';
