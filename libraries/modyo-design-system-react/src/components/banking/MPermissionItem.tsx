@@ -3,14 +3,14 @@ import { PermissionItemType } from './interface';
 
 type Props = {
   permission: PermissionItemType;
-  badgeTitle: string;
+  permissionState: string;
   onChange: (isChecked: boolean) => void;
   onAction?: () => void;
 };
 
 export default function MPermissionItem({
   permission,
-  badgeTitle,
+  permissionState,
   onChange,
   onAction = () => {},
 }: Props) {
@@ -26,7 +26,7 @@ export default function MPermissionItem({
       {permission.type === 'custom' && (
         <MBadge
           theme="tertiary"
-          text={badgeTitle}
+          text={permissionState}
         />
       )}
       <MFormSwitch
