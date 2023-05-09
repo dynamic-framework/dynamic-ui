@@ -106,7 +106,7 @@ export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', un
 ]);
 
 
-export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currency', undefined, [
+export const MCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MCurrencyBase>('m-currency-base', undefined, [
   'mId',
   'label',
   'labelIcon',

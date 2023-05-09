@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MCurrency } from '../../components';
+import { MCurrencyBase } from '../../components';
 import { ICONS, THEMES } from '../constants';
 
-const config: Meta<typeof MCurrency> = {
-  title: 'Stencil/Currency',
-  component: MCurrency,
+const config: Meta<typeof MCurrencyBase> = {
+  title: 'Stencil/CurrencyBase',
+  component: MCurrencyBase,
   argTypes: {
     mId: {
       control: 'text',
@@ -110,7 +110,7 @@ const config: Meta<typeof MCurrency> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MCurrency>;
+type Story = StoryObj<typeof MCurrencyBase>;
 
 export const Default: Story = {
   args: {

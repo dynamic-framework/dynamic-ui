@@ -12,5 +12,6 @@ export { default as MFormikInput } from './MFormikInput';
 export { default as MFormikSelect } from './MFormikSelect';
 export { default as MTooltip } from './MTooltip';
 export { default as MCollapse } from './MCollapse';
+export { default as MCurrency } from './MCurrency';
 
 export type { TabOption } from './MTabs';

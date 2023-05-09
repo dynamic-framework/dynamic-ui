@@ -16,13 +16,13 @@ import type { ClassMap, FormControlLayoutDirection } from '../../utils/component
 import type {
   CurrencyEvent,
   CurrencyVariant,
-} from './m-currency-interface';
+} from './m-currency-base-interface';
 
 @Component({
-  tag: 'm-currency',
-  styleUrl: 'm-currency.scss',
+  tag: 'm-currency-base',
+  styleUrl: 'm-currency-base.scss',
 })
-export class MCurrency implements ComponentInterface {
+export class MCurrencyBase implements ComponentInterface {
   /**
    * Id for the input
    * */
@@ -132,7 +132,7 @@ export class MCurrency implements ComponentInterface {
   @Prop() maxValue?: number;
 
   /**
-   * Hint text for the m-currency
+   * Hint text for the m-currency-base
    * */
   @Prop() hint?: string;
 
@@ -167,17 +167,17 @@ export class MCurrency implements ComponentInterface {
   @Prop() hintIconEndFamilyPrefix?: string;
 
   /**
-   * Theme for the m-currency
+   * Theme for the m-currency-base
    * */
   @Prop() theme?: string;
 
   /**
-   * Variant for the m-currency
+   * Variant for the m-currency-base
    * */
   @Prop() variant?: CurrencyVariant;
 
   /**
-   * Options for the m-currency
+   * Options for the m-currency-base
    * */
   @Prop() currencyOptions!: Options;
 
