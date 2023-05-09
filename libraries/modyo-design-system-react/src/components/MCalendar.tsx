@@ -56,7 +56,7 @@ export default function MCalendar({
   const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
 
   const { language } = useLiquidContext();
-  const LANG = language === 'en' ? undefined : 'es';
+  const lang = language === 'en' ? undefined : 'es';
 
   return (
     <DatePicker
@@ -92,7 +92,7 @@ export default function MCalendar({
       monthsShown={monthsShown}
       fixedHeight={fixedHeight}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...LANG && { locale: LANG }}
+      {...lang && { locale: lang }}
     />
   );
 }
