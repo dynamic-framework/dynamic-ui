@@ -1,13 +1,15 @@
-import { PropsWithChildren } from 'react';
+import { Trans } from 'react-i18next';
+import { ReactElement } from 'react';
 import { MIcon } from '../proxies';
 
-type Props = PropsWithChildren<{
+type Props = {
   title: string;
   description: string;
   icon: string;
   iconSize: string;
   iconTheme: string;
-}>;
+  Summary: ReactElement<typeof Trans> | string;
+};
 
 export default function MSummaryCard({
   title,
@@ -15,7 +17,7 @@ export default function MSummaryCard({
   icon,
   iconSize,
   iconTheme,
-  children,
+  Summary,
 }: Props) {
   return (
     <div>
@@ -28,7 +30,7 @@ export default function MSummaryCard({
           theme={iconTheme}
           size={iconSize}
         />
-        {children}
+        {Summary}
       </div>
     </div>
   );
