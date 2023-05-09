@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.2...@modyo-dynamic/modyo-design-system-react@0.9.0) (2023-04-20)
+
+### Features
+
+- MCollapse custom component ([68ed23a](https://github.com/modyo-dynamic/modyo-design-system/commit/68ed23a0a257aea21d1bff7d382b329fb6120b91))
+
 ## [0.8.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.1...@modyo-dynamic/modyo-design-system-react@0.8.2) (2023-03-29)
 
 ### Bug Fixes
