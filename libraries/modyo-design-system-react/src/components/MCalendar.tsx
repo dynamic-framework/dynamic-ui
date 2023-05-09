@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { liquidParser } from '@modyo-dynamic/modyo-design-system';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
+import { useLiquidContext } from '../contexts';
 
 registerLocale('es', es);
 
@@ -54,7 +55,8 @@ export default function MCalendar({
 }: CalendarProps) {
   const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
 
-  const LANG = liquidParser.parse('{{site.language}}') === 'en' ? undefined : 'es';
+  const { language } = useLiquidContext();
+  const LANG = language === 'en' ? undefined : 'es';
 
   return (
     <DatePicker
