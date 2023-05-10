@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MHint } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { ICONS, ALL_COLORS } from '../constants';
 
 const config: Meta<typeof MHint> = {
   title: 'Stencil/Hint',
@@ -30,7 +30,7 @@ const config: Meta<typeof MHint> = {
     },
     theme: {
       control: 'select',
-      options: THEMES.filter(
+      options: ALL_COLORS.filter(
         (theme) => !['light', 'primary', 'secondary'].includes(theme),
       ),
       table: { defaultValue: { summary: 'primary' } },

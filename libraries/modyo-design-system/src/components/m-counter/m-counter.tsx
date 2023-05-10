@@ -9,8 +9,8 @@ import {
   Watch,
 } from '@stencil/core';
 
-import { ICON_STATE } from '../../utils/component-interface';
 import type { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
+import { ICON_STATE } from '../../utils/component-config';
 
 @Component({
   tag: 'm-counter',

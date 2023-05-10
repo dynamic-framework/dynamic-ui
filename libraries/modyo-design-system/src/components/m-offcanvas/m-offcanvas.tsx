@@ -7,7 +7,7 @@ import {
   EventEmitter,
 } from '@stencil/core';
 
-import { prefixBS } from '../../utils/component-interface';
+import { PREFIX_BS } from '../../utils/component-config';
 
 import { PositionToggleFrom } from './m-offcanvas-interface';
 
@@ -77,12 +77,12 @@ export class MOffcanvas {
         aria-labelledby={`${this.name}Label`}
         aria-hidden="false"
         {...this.isStatic && ({
-          [`data-${prefixBS}backdrop`]: 'static',
-          [`data-${prefixBS}keyboard`]: 'false',
+          [`data-${PREFIX_BS}backdrop`]: 'static',
+          [`data-${PREFIX_BS}keyboard`]: 'false',
         })}
         {...this.isScrollable && ({
-          [`data-${prefixBS}scroll`]: 'true',
-          [`data-${prefixBS}keyboard`]: 'false',
+          [`data-${PREFIX_BS}scroll`]: 'true',
+          [`data-${PREFIX_BS}keyboard`]: 'false',
         })}
       >
 

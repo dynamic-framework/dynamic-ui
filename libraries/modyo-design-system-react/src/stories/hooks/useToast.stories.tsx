@@ -2,11 +2,11 @@ import { Meta } from '@storybook/react';
 
 import { MButton, MToastContainer } from '../../components';
 import { useToast } from '../../hooks';
-import { THEMES } from '../constants';
+import { ALL_COLORS } from '../constants';
 
 type Props = {
   message: string;
-  theme: (typeof THEMES)[number];
+  theme: (typeof ALL_COLORS)[number];
   showClose: boolean;
 };
 
@@ -29,7 +29,7 @@ const config: Meta<typeof Example> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: THEMES,
+      options: ALL_COLORS,
     },
     showClose: {
       control: 'boolean',

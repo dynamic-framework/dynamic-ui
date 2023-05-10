@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MListItem } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { ICONS, ALL_COLORS } from '../constants';
 
 const config: Meta<typeof MListItem> = {
   title: 'Stencil/ListItem',
@@ -9,7 +9,7 @@ const config: Meta<typeof MListItem> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: THEMES,
+      options: ALL_COLORS,
       table: { defaultValue: { summary: 'primary' } },
     },
     text: {

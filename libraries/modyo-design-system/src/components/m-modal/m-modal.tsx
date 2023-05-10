@@ -7,7 +7,8 @@ import {
   EventEmitter,
 } from '@stencil/core';
 
-import { prefixBS, ClassMap } from '../../utils/component-interface';
+import { ClassMap } from '../../utils/component-interface';
+import { PREFIX_BS } from '../../utils/component-config';
 
 import { ModalSize, FullScreenFrom } from './m-modal-interface';
 
@@ -117,13 +118,13 @@ export class MModal {
         aria-labelledby={`${this.name}Label`}
         aria-hidden="false"
         {...this.isStatic && ({
-          [`data-${prefixBS}backdrop`]: 'static',
-          [`data-${prefixBS}keyboard`]: 'false',
+          [`data-${PREFIX_BS}backdrop`]: 'static',
+          [`data-${PREFIX_BS}keyboard`]: 'false',
         })}
       >
         <div
           class={this.generateModalDialogClasses()}
-          {...this.imageHeader && ({ style: { [`--${prefixBS}header-bg-image`]: `url("${this.imageHeader}")` } })}
+          {...this.imageHeader && ({ style: { [`--${PREFIX_BS}header-bg-image`]: `url("${this.imageHeader}")` } })}
         >
           <div class="modal-content">
             {this.header && (
