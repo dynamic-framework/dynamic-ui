@@ -1,12 +1,3 @@
-.m-icon-host {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-
-
-}
-
 .m-icon {
   --#{$prefix}m-icon-color: var(--#{$prefix}m-icon-component-color, inherit);
   --#{$prefix}m-icon-bg-color: var(--#{$prefix}m-icon-component-bg-color, inherit);
