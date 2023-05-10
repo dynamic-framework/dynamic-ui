@@ -60,8 +60,8 @@ $aspect-ratios: (
 @import "typography";
 @import "tables";
 
-$input-btn-padding-y: .65625rem !default;
-$input-btn-padding-x: $spacer-4 !default;
+$input-btn-padding-y: .625rem !default; // TODO: remove this after m-input homologation
+$input-btn-padding-x: $spacer-4 !default; // TODO: remove this after m-input homologation
 $input-btn-font-family: null !default;
 $input-btn-font-size: $font-size-base !default;
 $input-btn-line-height: $line-height-base !default;
@@ -72,13 +72,13 @@ $input-btn-line-height: $line-height-base !default;
 // $input-btn-focus-blur: 0 !default;
 // $input-btn-focus-box-shadow: 0 0 $input-btn-focus-blur $input-btn-focus-width $input-btn-focus-color !default;
 
-$input-btn-padding-y-sm: .59375rem !default;
-$input-btn-padding-x-sm: $spacer-3 !default;
+$input-btn-padding-y-sm: $spacer-2 !default; // TODO: remove this after m-input homologation
+$input-btn-padding-x-sm: $spacer-3 !default; // TODO: remove this after m-input homologation
 $input-btn-font-size-sm: $subparagraph-font-size !default;
 
-$input-btn-padding-y-lg: 1.0625rem !default;
-$input-btn-padding-x-lg: $spacer-4 !default;
-$input-btn-font-size-lg: $font-size-lg !default;
+$input-btn-padding-y-lg: 1.125rem !default; // TODO: remove this after m-input homologation
+$input-btn-padding-x-lg: $spacer-4 !default; // TODO: remove this after m-input homologation
+$input-btn-font-size-lg: 1rem !default;
 
 $input-btn-border-width: $border-width !default;
 
