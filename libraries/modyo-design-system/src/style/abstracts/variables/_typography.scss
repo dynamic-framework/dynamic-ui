@@ -6,8 +6,8 @@ $font-family-code: var(--#{$prefix}font-monospace) !default;
 
 $font-size-root: 16px !default;
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
-$font-size-sm: $font-size-base * .75 !default; // TODO: set value
-$font-size-lg: $font-size-base * 1.125 !default;
+$font-size-sm: $font-size-base * .875 !default;   // 14px
+$font-size-lg: $font-size-base * 1.125 !default;  // 18px
 
 $font-weight-lighter: lighter !default;
 $font-weight-light: 200 !default;
@@ -71,7 +71,7 @@ $display-line-height: $headings-line-height !default;
 $subparagraph-font-size: .875rem !default;
 $lead-font-weight: $font-weight-normal !default;
 
-$small-font-size: .75rem !default;
+$small-font-size: .813rem !default;
 
 // $sub-sup-font-size: .75em !default; // TODO: set value
 

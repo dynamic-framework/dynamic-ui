@@ -6,8 +6,8 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { IconSettings } from "./utils";
+import { ComponentSize, FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
 import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { Options } from "currency.js";
@@ -83,7 +83,11 @@ export namespace Components {
          */
         "isPill": boolean;
         /**
-          * Flag to set the button as active.
+          * The size
+         */
+        "size"?: ComponentSize;
+        /**
+          * Change the state of the button
          */
         "state"?: InputState;
         /**
@@ -91,17 +95,17 @@ export namespace Components {
          */
         "text": string;
         /**
-          * The theme to use.
+          * Theme to use.
          */
         "theme": string;
         /**
-          * The type of the button.
+          * The html type of the button.
          */
         "type": ButtonType;
         /**
-          * The value of the button.
+          * The html value of the button.
          */
-        "value": string;
+        "value"?: string;
         /**
           * The variant to use.
          */
@@ -674,10 +678,6 @@ export namespace Components {
           * Icon label family class
          */
         "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection": FormControlLayoutDirection;
         /**
           * The id of the input
          */
@@ -1648,7 +1648,11 @@ declare namespace LocalJSX {
          */
         "onMClick"?: (event: MButtonCustomEvent<any>) => void;
         /**
-          * Flag to set the button as active.
+          * The size
+         */
+        "size"?: ComponentSize;
+        /**
+          * Change the state of the button
          */
         "state"?: InputState;
         /**
@@ -1656,15 +1660,15 @@ declare namespace LocalJSX {
          */
         "text"?: string;
         /**
-          * The theme to use.
+          * Theme to use.
          */
         "theme"?: string;
         /**
-          * The type of the button.
+          * The html type of the button.
          */
         "type"?: ButtonType;
         /**
-          * The value of the button.
+          * The html value of the button.
          */
         "value"?: string;
         /**
@@ -2263,10 +2267,6 @@ declare namespace LocalJSX {
           * Icon label family class
          */
         "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection"?: FormControlLayoutDirection;
         /**
           * The id of the input
          */

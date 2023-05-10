@@ -66,17 +66,3 @@ $themes-coupon: map-remove($theme-colors, "light", "dark", "success", "info", "s
     }
   }
 }
-
-@each $color, $value in map-remove($theme-colors-hover, "light", "dark") {
-  .form-control-layout-coupon:hover.form-control-theme-#{$color},
-  .form-control-layout-coupon.hover.form-control-theme-#{$color} {
-    .form-control-icon.icon-end {
-      color: var(--#{$prefix}#{$color});
-    }
-
-    .input-group {
-      border-color: var(--#{$prefix}#{$color});
-      box-shadow: 0 0 0 1px var(--#{$prefix}#{$color});
-    }
-  }
-}

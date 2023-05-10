@@ -7,22 +7,23 @@
 
 ## Properties
 
-| Property                | Attribute                  | Description                                  | Type                                                        | Default     |
-| ----------------------- | -------------------------- | -------------------------------------------- | ----------------------------------------------------------- | ----------- |
-| `iconEnd`               | `icon-end`                 | Icon right to display                        | `string \| undefined`                                       | `undefined` |
-| `iconEndFamilyClass`    | `icon-end-family-class`    | Icon right family class                      | `string \| undefined`                                       | `undefined` |
-| `iconEndFamilyPrefix`   | `icon-end-family-prefix`   | Icon right family prefix                     | `string \| undefined`                                       | `undefined` |
-| `iconStart`             | `icon-start`               | Icon left to display                         | `string \| undefined`                                       | `undefined` |
-| `iconStartFamilyClass`  | `icon-start-family-class`  | Icon left family class                       | `string \| undefined`                                       | `undefined` |
-| `iconStartFamilyPrefix` | `icon-start-family-prefix` | Icon left family prefix                      | `string \| undefined`                                       | `undefined` |
-| `isLoading`             | `is-loading`               | Flag for loading state and disable button.   | `boolean`                                                   | `false`     |
-| `isPill`                | `is-pill`                  | Flag to switch to pill button border radius. | `boolean`                                                   | `false`     |
-| `state`                 | `state`                    | Flag to set the button as active.            | `"active" \| "disabled" \| "focus" \| "hover" \| undefined` | `undefined` |
-| `text`                  | `text`                     | The text to display.                         | `string`                                                    | `''`        |
-| `theme`                 | `theme`                    | The theme to use.                            | `string`                                                    | `'primary'` |
-| `type`                  | `type`                     | The type of the button.                      | `"button" \| "reset" \| "submit"`                           | `'button'`  |
-| `value`                 | `value`                    | The value of the button.                     | `string`                                                    | `''`        |
-| `variant`               | `variant`                  | The variant to use.                          | `"ghost" \| "outline" \| "text" \| undefined`               | `undefined` |
+| Property                | Attribute                  | Description                                  | Type                                                                | Default     |
+| ----------------------- | -------------------------- | -------------------------------------------- | ------------------------------------------------------------------- | ----------- |
+| `iconEnd`               | `icon-end`                 | Icon right to display                        | `string \| undefined`                                               | `undefined` |
+| `iconEndFamilyClass`    | `icon-end-family-class`    | Icon right family class                      | `string \| undefined`                                               | `undefined` |
+| `iconEndFamilyPrefix`   | `icon-end-family-prefix`   | Icon right family prefix                     | `string \| undefined`                                               | `undefined` |
+| `iconStart`             | `icon-start`               | Icon left to display                         | `string \| undefined`                                               | `undefined` |
+| `iconStartFamilyClass`  | `icon-start-family-class`  | Icon left family class                       | `string \| undefined`                                               | `undefined` |
+| `iconStartFamilyPrefix` | `icon-start-family-prefix` | Icon left family prefix                      | `string \| undefined`                                               | `undefined` |
+| `isLoading`             | `is-loading`               | Flag for loading state and disable button.   | `boolean`                                                           | `false`     |
+| `isPill`                | `is-pill`                  | Flag to switch to pill button border radius. | `boolean`                                                           | `false`     |
+| `size`                  | `size`                     | The size                                     | `"lg" \| "sm" \| undefined`                                         | `undefined` |
+| `state`                 | `state`                    | Change the state of the button               | `"active" \| "disabled" \| "focus-visible" \| "hover" \| undefined` | `undefined` |
+| `text`                  | `text`                     | The text to display.                         | `string`                                                            | `''`        |
+| `theme`                 | `theme`                    | Theme to use.                                | `string`                                                            | `'primary'` |
+| `type`                  | `type`                     | The html type of the button.                 | `"button" \| "reset" \| "submit"`                                   | `'button'`  |
+| `value`                 | `value`                    | The html value of the button.                | `string \| undefined`                                               | `undefined` |
+| `variant`               | `variant`                  | The variant to use.                          | `"link" \| "outline" \| undefined`                                  | `undefined` |
 
 
 ## Events

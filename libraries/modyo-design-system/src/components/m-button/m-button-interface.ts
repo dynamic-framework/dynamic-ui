@@ -1,2 +1,2 @@
-export type ButtonVariant = 'outline' | 'text' | 'ghost';
+export type ButtonVariant = 'outline' | 'link';
 export type ButtonType = 'submit' | 'reset' | 'button';
