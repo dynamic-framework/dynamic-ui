@@ -131,7 +131,7 @@ importers:
       '@babel/preset-react': ^7.18.6
       '@babel/preset-typescript': ^7.21.0
       '@floating-ui/react-dom-interactions': ^0.12.0
-      '@modyo-dynamic/modyo-design-system': workspace:^0.7.2
+      '@modyo-dynamic/modyo-design-system': ^0.7.2
       '@rollup/plugin-node-resolve': ^13.3.0
       '@storybook/addon-actions': 7.0.6
       '@storybook/addon-essentials': 7.0.6
@@ -196,7 +196,7 @@ importers:
       '@babel/preset-env': 7.20.2_@babel+core@7.19.6
       '@babel/preset-react': 7.18.6_@babel+core@7.19.6
       '@babel/preset-typescript': 7.21.0_@babel+core@7.19.6
-      '@modyo-dynamic/modyo-design-system': link:../modyo-design-system
+      '@modyo-dynamic/modyo-design-system': 0.7.3_lqhwqtalix6x5nr3eea54nphna
       '@rollup/plugin-node-resolve': 13.3.0_rollup@2.79.1
       '@storybook/addon-actions': 7.0.6_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-essentials': 7.0.6_biqbaboplfbrettd7655fr4n2y
@@ -923,7 +923,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': 0.7.3_lqhwqtalix6x5nr3eea54nphna
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.6.2_judlfxncvjqhd44pphgjtni6ta
       '@reduxjs/toolkit': 1.9.4_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -1186,7 +1186,7 @@ importers:
     dependencies:
       '@modyo-dynamic/modyo-design-system': 0.7.3_lqhwqtalix6x5nr3eea54nphna
       '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
-      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
+      '@modyo-dynamic/modyo-service-retail': 0.6.2_judlfxncvjqhd44pphgjtni6ta
       '@reduxjs/toolkit': 1.9.4_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -8177,7 +8177,6 @@ packages:
       currency.js: 2.0.4
       liquidjs: 9.42.1
       luxon: 3.0.4
-    dev: false
 
   /@modyo-dynamic/modyo-service-retail/0.5.3_latdsykkg6l6fo3brmei5xbybq:
     resolution: {integrity: sha512-0X9/eD6vRi4SinPK8GrL3FZzzLxpMYauWwRkEgBhwkVo+j8kuDdvxkTegkjEVytj1wrYeEvwOvyzD+8SvZOKOQ==, tarball: download/@modyo-dynamic/modyo-service-retail/0.5.3/7682cc211816766c0ca72bdafc86bcdaa0572904}
@@ -8186,6 +8185,21 @@ packages:
       luxon: ~3.0.4
     dependencies:
       '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
+      axios: 1.1.3
+      lodash.uniqueid: 4.0.1
+      luxon: 3.0.4
+      uuid: 9.0.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@modyo-dynamic/modyo-service-retail/0.6.2_judlfxncvjqhd44pphgjtni6ta:
+    resolution: {integrity: sha512-vrawj74LdoIUn4grk282AmfdiQJsbwoma8dr6GGEvCe9G0AcZYWFql2hIX2ge8LkPquDy5rlGOlfdX2s17uZWw==, tarball: download/@modyo-dynamic/modyo-service-retail/0.6.2/9edcd66e71859e82ae758b25174293dce86f7fbc}
+    peerDependencies:
+      '@modyo-dynamic/modyo-design-system': '*'
+      luxon: ~3.0.4
+    dependencies:
+      '@modyo-dynamic/modyo-design-system': 0.7.3_lqhwqtalix6x5nr3eea54nphna
       axios: 1.1.3
       lodash.uniqueid: 4.0.1
       luxon: 3.0.4
@@ -9357,7 +9371,6 @@ packages:
       '@stencil/core': '>=2.0.0'
     dependencies:
       '@stencil/core': 2.19.2
-    dev: false
 
   /@stencil/vue-output-target/0.6.2_@stencil+core@2.19.2:
     resolution: {integrity: sha512-Oh7SLFbOUchCSCbGe/Dqal2xSYPKCFQiVKnvzvS0dsHP/XS7rfHqp3qptW6JCp9lBoo3wmmBurHfldqxhLlnag==}
@@ -13685,7 +13698,6 @@ packages:
       '@popperjs/core': ^2.11.6
     dependencies:
       '@popperjs/core': 2.11.6
-    dev: false
 
   /bootstrap/5.3.0-alpha3_@popperjs+core@2.11.6:
     resolution: {integrity: sha512-FBhOWMxkCFr74hesJdchLXhqagPTXS+kRNU3gE0FR5Ki/AdPSz32Ik96Z28+yBluCnE/pc9st7l1yPwKgbtfSA==}
@@ -15404,7 +15416,6 @@ packages:
   /currency.js/2.0.4:
     resolution: {integrity: sha512-6/OplJYgJ0RUlli74d93HJ/OsKVBi8lB1+Z6eJYS1YZzBuIp4qKKHpJ7ad+GvTlWmLR/hLJOWTykN5Nm8NJ7+w==}
     engines: {node: '>=4'}
-    dev: false
 
   /custom-event/1.0.1:
     resolution: {integrity: sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg==}
