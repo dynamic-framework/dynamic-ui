@@ -47,3 +47,6 @@
 [submodule "widgets/modyo-widget-business-team-management"]
 	path = widgets/modyo-widget-business-team-management
 	url = git@github.com:modyo-dynamic/modyo-widget-business-team-management.git
+[submodule "widgets/modyo-widget-business-member-management"]
+	path = widgets/modyo-widget-business-member-management
+	url = git@github.com:modyo-dynamic/modyo-widget-business-member-management.git
