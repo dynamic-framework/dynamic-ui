@@ -700,6 +700,93 @@ importers:
       typescript: 4.6.4
       webpack: 5.74.0
 
+  widgets/modyo-widget-business-mass-payments:
+    specifiers:
+      '@babel/plugin-syntax-flow': ^7.14.5
+      '@babel/plugin-transform-react-jsx': ^7.14.9
+      '@craco/craco': ^7.0.0
+      '@modyo-dynamic/modyo-design-system': ^0.6.0
+      '@modyo-dynamic/modyo-design-system-react': ^0.7.0
+      '@reduxjs/toolkit': ^1.8.4
+      '@testing-library/jest-dom': ^5.16.4
+      '@testing-library/react': ^13.3.0
+      '@testing-library/user-event': ^13.5.0
+      '@types/jest': ^27.0.1
+      '@types/node': ^16.7.13
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      '@types/webpack-env': ^1.18.0
+      '@typescript-eslint/eslint-plugin': ^5.13.0
+      '@typescript-eslint/parser': ^5.0.0
+      axios: ^1.1.2
+      classnames: ^2.3.2
+      eslint: 8.22.0
+      eslint-config-airbnb: 19.0.4
+      eslint-config-airbnb-typescript: ^17.0.0
+      eslint-plugin-import: ^2.25.3
+      eslint-plugin-jsx-a11y: ^6.5.1
+      eslint-plugin-react: ^7.28.0
+      eslint-plugin-react-hooks: ^4.3.0
+      i18next: ~21.9.0
+      jest: ^29.1.2
+      jest-cli: ^29.1.2
+      jest-environment-jsdom: ^29.1.1
+      liquidjs: ^9.39.2
+      postcss: ^8.1.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-i18next: ~11.18.3
+      react-redux: ^8.0.2
+      react-scripts: 5.0.1
+      sass: ~1.54.0
+      ts-jest: ^29.0.5
+      typescript: ^4.6.4
+      web-vitals: ^2.1.4
+      webpack: ^5.64.4
+    dependencies:
+      '@modyo-dynamic/modyo-design-system': 0.6.0_lqhwqtalix6x5nr3eea54nphna
+      '@modyo-dynamic/modyo-design-system-react': 0.7.0_autbu4i677u7462ge6pvdzrdsy
+      '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
+      '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
+      '@testing-library/user-event': 13.5.0_@testing-library+dom@9.0.1
+      axios: 1.1.3
+      classnames: 2.3.2
+      i18next: 21.9.2
+      liquidjs: 9.42.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
+      react-redux: 8.0.5_dqth7tpbjtbeadjzq5awtqhohm
+      web-vitals: 2.1.4
+    devDependencies:
+      '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.21.3
+      '@babel/plugin-transform-react-jsx': 7.19.0_@babel+core@7.21.3
+      '@craco/craco': 7.1.0_36vimn7yg2jdimn7bizf7etwva
+      '@types/jest': 27.5.2
+      '@types/node': 16.18.11
+      '@types/react': 18.0.24
+      '@types/react-dom': 18.0.8
+      '@types/webpack-env': 1.18.0
+      '@typescript-eslint/eslint-plugin': 5.42.0_abnxv7xy2crh7ioxqy34evgk5q
+      '@typescript-eslint/parser': 5.42.0_jy673cbh7vjykirk7l57zzfyvy
+      eslint: 8.22.0
+      eslint-config-airbnb: 19.0.4_yzdaygrtjsxrrhxpgpx6hh5x2y
+      eslint-config-airbnb-typescript: 17.0.0_xal2q56332h2htx2srtpldg7bu
+      eslint-plugin-import: 2.26.0_rilxvfua27h4rm2vbxk2jtqfja
+      eslint-plugin-jsx-a11y: 6.6.1_eslint@8.22.0
+      eslint-plugin-react: 7.31.10_eslint@8.22.0
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.22.0
+      jest: 29.2.2_@types+node@16.18.11
+      jest-cli: 29.2.2_@types+node@16.18.11
+      jest-environment-jsdom: 29.2.2
+      postcss: 8.4.18
+      react-scripts: 5.0.1_twfmaemapujxbv3fmtqpa2hou4
+      sass: 1.54.9
+      ts-jest: 29.1.0_pzvu3gzwmmqieahukxpifwpzni
+      typescript: 4.6.4
+      webpack: 5.74.0
+
   widgets/modyo-widget-business-member-management:
     specifiers:
       '@babel/plugin-syntax-flow': ^7.14.5
@@ -972,8 +1059,8 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0-alpha.3
-      '@modyo-dynamic/modyo-design-system': ^0.7.4
-      '@modyo-dynamic/modyo-design-system-react': ^0.10.0
+      '@modyo-dynamic/modyo-design-system': ^0.7.0
+      '@modyo-dynamic/modyo-design-system-react': ^0.8.0
       '@modyo/cli': ^3.1.27
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
@@ -1009,7 +1096,7 @@ importers:
       webpack: ^5.64.4
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-design-system-react': 0.8.2_kaepd4q6w3nvhjgiopybe4jnbu
       '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -1053,8 +1140,8 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0
-      '@modyo-dynamic/modyo-design-system': ^0.7.2
-      '@modyo-dynamic/modyo-design-system-react': ^0.8.2
+      '@modyo-dynamic/modyo-design-system': ^0.7.4
+      '@modyo-dynamic/modyo-design-system-react': ^0.10.0
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -1099,7 +1186,7 @@ importers:
       yup: ^0.32.11
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyo-dynamic/modyo-design-system-react': 0.8.2_kaepd4q6w3nvhjgiopybe4jnbu
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
       '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -3338,7 +3425,7 @@ packages:
       '@babel/helper-compilation-targets': 7.20.7_@babel+core@7.16.12
       '@babel/helper-plugin-utils': 7.20.2
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.16.12
-      '@babel/plugin-transform-parameters': 7.20.1_@babel+core@7.16.12
+      '@babel/plugin-transform-parameters': 7.21.3_@babel+core@7.16.12
     dev: true
 
   /@babel/plugin-proposal-object-rest-spread/7.19.4_@babel+core@7.21.3:
@@ -4832,6 +4919,16 @@ packages:
     dependencies:
       '@babel/core': 7.21.3
       '@babel/helper-plugin-utils': 7.20.2
+
+  /@babel/plugin-transform-parameters/7.21.3_@babel+core@7.16.12:
+    resolution: {integrity: sha512-Wxc+TvppQG9xWFYatvCGPvZ6+SIUxQ2ZdiBP+PHYMIjnPXD+uThCshaz4NZOnODAtBjjcVQQ/3OKs9LW28purQ==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.16.12
+      '@babel/helper-plugin-utils': 7.20.2
+    dev: true
 
   /@babel/plugin-transform-parameters/7.21.3_@babel+core@7.19.6:
     resolution: {integrity: sha512-Wxc+TvppQG9xWFYatvCGPvZ6+SIUxQ2ZdiBP+PHYMIjnPXD+uThCshaz4NZOnODAtBjjcVQQ/3OKs9LW28purQ==}
@@ -9798,12 +9895,12 @@ packages:
       telejson: 7.0.4
     dev: true
 
-  /@storybook/channel-postmessage/7.0.10:
-    resolution: {integrity: sha512-Y5ZSp9WYH3HznQ2rrGN78Y5fYM16Bfvyn3iKy5QD38gsQk1gTrra1osIZ0X+lk3sep14D4oW4QMW3DCSrn0Big==}
+  /@storybook/channel-postmessage/7.0.11:
+    resolution: {integrity: sha512-6ARow3o2thnXLO4i3+tluHAPqqSrB30U/Oxg3JqC5/2FJin3UFBOMCj04V7FPUN8jQfZpERoYgiUYE9JddT39g==}
     dependencies:
-      '@storybook/channels': 7.0.10
-      '@storybook/client-logger': 7.0.10
-      '@storybook/core-events': 7.0.10
+      '@storybook/channels': 7.0.11
+      '@storybook/client-logger': 7.0.11
+      '@storybook/core-events': 7.0.11
       '@storybook/global': 5.0.0
       qs: 6.11.0
       telejson: 7.0.4
@@ -9822,8 +9919,8 @@ packages:
     resolution: {integrity: sha512-2tI/ECbQcXjncYGLVdrttNT8adIp6kV/bnQGJWmF5hBXZ7Izwyq1WRPTgPT++RihmOOTHvkRx4GCKfwluOrNpA==}
     dev: true
 
-  /@storybook/channels/7.0.10:
-    resolution: {integrity: sha512-hdPaGV3W7s6MkVcg33S5hmkVgqXC16AA7H0ID9MROiU1lQzolKhSqCs2iVfGPQfmWzEJeqWQoEXU7dmCclRM0w==}
+  /@storybook/channels/7.0.11:
+    resolution: {integrity: sha512-1cVgju7ViN7GDeUNUS5hp3GZLT2EgxgXj7zuGbCZwsF8lFsM0IWeXma8TV0UfcBiyQjP4edYRmUn0vy6CMc/WA==}
     dev: true
 
   /@storybook/cli/7.0.0-rc.8:
@@ -9888,8 +9985,8 @@ packages:
       '@storybook/global': 5.0.0
     dev: true
 
-  /@storybook/client-logger/7.0.10:
-    resolution: {integrity: sha512-hb8tO+w28ErzjEw69ERMtZT81Xyg835FQjH6Y42ejoGcBA9Z0W6RZmx4RgkcIUOlYXkU6lSnNVne9gXodV4/Hw==}
+  /@storybook/client-logger/7.0.11:
+    resolution: {integrity: sha512-3p+vXogcwPI9/9PgjqhJSzJsbcJUnvVyZ4rM4sQhwbXQkMjwl2j/LjI86zuYbQe9yQpKND1Yc4HPJd24225H/Q==}
     dependencies:
       '@storybook/global': 5.0.0
     dev: true
@@ -9970,8 +10067,8 @@ packages:
     resolution: {integrity: sha512-KsKf+Ob6zQ8+IJ9oDD5xqASwYGzcjT08azBjSt4yocHIJ3mY741h88YDS0wcwnM+JrV6iFYlY0hiK35lnBEddA==}
     dev: true
 
-  /@storybook/core-events/7.0.10:
-    resolution: {integrity: sha512-OyBqhxVQOdI78Vgv6nKwXOdIVNChyfktpdxQZP1rz9MpO6MrqMaGAUL7k8xQMQAVx0VY+dAMYZB3bnyN2IC8FA==}
+  /@storybook/core-events/7.0.11:
+    resolution: {integrity: sha512-azEjQMpMx61h4o11OV8l78ab6Jxiwc5nlbqEUa1FVCupyRKFxrbK7zovmWyVL3cTllCSiJf4v3o/MadtuH4lcw==}
     dev: true
 
   /@storybook/core-server/7.0.0-rc.8:
@@ -10108,14 +10205,14 @@ packages:
       '@storybook/preview-api': 7.0.0-rc.8
     dev: true
 
-  /@storybook/instrumenter/7.0.10:
-    resolution: {integrity: sha512-Z+kIidnxaq3tneUnIKB2d0DCqb4lwUdOS/AC43LNvd9C6BWYgj89cIPdLDTNhOWa0ZiEju7wTS+K/3uMvcHZ4w==}
+  /@storybook/instrumenter/7.0.11:
+    resolution: {integrity: sha512-sBwV0AGN2DrJTMWGRZHU/HvjRFF0HJ1ynnwnVqT2n1q2oi/8Xa3xYit5bvcyMGStnXdfo38nRKuKZQ6UrNXEug==}
     dependencies:
-      '@storybook/channels': 7.0.10
-      '@storybook/client-logger': 7.0.10
-      '@storybook/core-events': 7.0.10
+      '@storybook/channels': 7.0.11
+      '@storybook/client-logger': 7.0.11
+      '@storybook/core-events': 7.0.11
       '@storybook/global': 5.0.0
-      '@storybook/preview-api': 7.0.10
+      '@storybook/preview-api': 7.0.11
     dev: true
 
   /@storybook/manager-api/7.0.0-rc.8_biqbaboplfbrettd7655fr4n2y:
@@ -10242,16 +10339,16 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /@storybook/preview-api/7.0.10:
-    resolution: {integrity: sha512-URj2YJKbs8hc6JZQ3aA+MmjB4hTSzGZAVFVs3kLUEuaQPDbU1RT5GKxedwF5zlMnkZQPNoaUtopN3z7aF+SKFQ==}
+  /@storybook/preview-api/7.0.11:
+    resolution: {integrity: sha512-w86kKnoH46xmhoi+i0V2bPiuoKnjUhEtSHXtIOEM+gJCfrKECWzrlDVCu+fh2xv38uf7zrJcQSJg9Vmpsmiasw==}
     dependencies:
-      '@storybook/channel-postmessage': 7.0.10
-      '@storybook/channels': 7.0.10
-      '@storybook/client-logger': 7.0.10
-      '@storybook/core-events': 7.0.10
+      '@storybook/channel-postmessage': 7.0.11
+      '@storybook/channels': 7.0.11
+      '@storybook/client-logger': 7.0.11
+      '@storybook/core-events': 7.0.11
       '@storybook/csf': 0.1.0
       '@storybook/global': 5.0.0
-      '@storybook/types': 7.0.10
+      '@storybook/types': 7.0.11
       '@types/qs': 6.9.7
       dequal: 2.0.3
       lodash: 4.17.21
@@ -10411,8 +10508,8 @@ packages:
   /@storybook/testing-library/0.0.14-next.1:
     resolution: {integrity: sha512-1CAl40IKIhcPaCC4pYCG0b9IiYNymktfV/jTrX7ctquRY3akaN7f4A1SippVHosksft0M+rQTFE0ccfWW581fw==}
     dependencies:
-      '@storybook/client-logger': 7.0.10
-      '@storybook/instrumenter': 7.0.10
+      '@storybook/client-logger': 7.0.11
+      '@storybook/instrumenter': 7.0.11
       '@testing-library/dom': 8.19.0
       '@testing-library/user-event': 13.5.0_aaq3sbffpfe3jnxzm2zngsddei
       ts-dedent: 2.2.0
@@ -10441,10 +10538,10 @@ packages:
       file-system-cache: 2.0.2
     dev: true
 
-  /@storybook/types/7.0.10:
-    resolution: {integrity: sha512-mFktvN8PjjDFJSjck4spikmjtr0AwfOhcEtIf4UCmUD5JHgGppkQmvO6483nGcprSFcWOvD2uYGs8Wp32wG/MQ==}
+  /@storybook/types/7.0.11:
+    resolution: {integrity: sha512-VOnef/u/HvYbk6LxWkwMlu31VD1ly6BTyHDOMUfYas03uNflX1KldGooWphmXVFrkkoLJoF5V4wsTShHSizi2A==}
     dependencies:
-      '@storybook/channels': 7.0.10
+      '@storybook/channels': 7.0.11
       '@types/babel__core': 7.1.19
       '@types/express': 4.17.14
       file-system-cache: 2.0.2

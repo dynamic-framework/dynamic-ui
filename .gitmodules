@@ -50,3 +50,6 @@
 [submodule "widgets/modyo-widget-business-member-management"]
 	path = widgets/modyo-widget-business-member-management
 	url = git@github.com:modyo-dynamic/modyo-widget-business-member-management.git
+[submodule "widgets/modyo-widget-business-mass-payments"]
+	path = widgets/modyo-widget-business-mass-payments
+	url = git@github.com:modyo-dynamic/modyo-widget-business-mass-payments.git
