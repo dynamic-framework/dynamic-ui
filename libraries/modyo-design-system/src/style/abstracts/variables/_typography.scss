@@ -75,7 +75,7 @@ $small-font-size: .813rem !default;
 
 // $sub-sup-font-size: .75em !default; // TODO: set value
 
-// $text-muted: rgba(var(--#{$prefix}body-color-rgb), .75) !default;
+$text-muted: var(--#{$prefix}gray) !default;
 
 // $initialism-font-size: $small-font-size !default;
 

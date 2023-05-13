@@ -30,7 +30,7 @@
   ],
   "scripts": {
     "build": "stencil build --docs",
-    "build:watch": "stencil build --docs",
+    "build:watch": "stencil build --docs --watch",
     "test": "stencil test --spec --e2e",
     "test:unit": "stencil test --spec",
     "test:watch": "stencil test --spec --e2e --watchAll",

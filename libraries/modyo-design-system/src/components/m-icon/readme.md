@@ -29,14 +29,12 @@
  - [m-alert](../m-alert)
  - [m-button](../m-button)
  - [m-counter](../m-counter)
- - [m-coupon](../m-coupon)
  - [m-currency](../m-currency)
  - [m-hint](../m-hint)
  - [m-input](../m-input)
  - [m-list-item](../m-list-item)
  - [m-pin](../m-pin)
  - [m-quick-action](../m-quick-action)
- - [m-search](../m-search)
  - [m-select](../m-select)
  - [m-shortcut-toggle](../m-shortcut-toggle)
 
@@ -46,14 +44,12 @@ graph TD;
   m-alert --> m-icon
   m-button --> m-icon
   m-counter --> m-icon
-  m-coupon --> m-icon
   m-currency --> m-icon
   m-hint --> m-icon
   m-input --> m-icon
   m-list-item --> m-icon
   m-pin --> m-icon
   m-quick-action --> m-icon
-  m-search --> m-icon
   m-select --> m-icon
   m-shortcut-toggle --> m-icon
   style m-icon fill:#f9f,stroke:#333,stroke-width:4px

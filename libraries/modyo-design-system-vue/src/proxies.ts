@@ -74,39 +74,6 @@ export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter',
 ]);
 
 
-export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconMiddle',
-  'iconMiddleFamilyClass',
-  'iconMiddleFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'hasSelect',
-  'isLoading',
-  'placeholder',
-  'type',
-  'buttonText',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'theme',
-  'layoutDirection',
-  'mClick'
-]);
-
-
 export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currency', undefined, [
   'mId',
   'label',
@@ -211,7 +178,10 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'type',
   'value',
   'isDisabled',
+  'isReadOnly',
   'isLoading',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
   'iconStart',
   'iconStartFamilyClass',
   'iconStartFamilyPrefix',
@@ -219,15 +189,51 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'iconEndFamilyClass',
   'iconEndFamilyPrefix',
   'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
   'isInvalid',
+  'isValid',
   'mChange',
-  'mBlur'
+  'mBlur',
+  'mIconStartClick',
+  'mIconEndClick'
+]);
+
+
+export const MInputPassword = /*@__PURE__*/ defineContainer<JSX.MInputPassword>('m-input-password', undefined, [
+  'mId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'mChange'
+]);
+
+
+export const MInputSearch = /*@__PURE__*/ defineContainer<JSX.MInputSearch>('m-input-search', undefined, [
+  'mId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'mChange',
+  'mClick'
 ]);
 
 
@@ -336,36 +342,6 @@ export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-q
   'actionWord',
   'actionIcon',
   'state',
-  'mClick'
-]);
-
-
-export const MSearch = /*@__PURE__*/ defineContainer<JSX.MSearch>('m-search', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'placeholder',
-  'type',
-  'value',
-  'isDisabled',
-  'isLoading',
-  'isReadOnly',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'theme',
-  'variant',
-  'layoutDirection',
-  'mChange',
   'mClick'
 ]);
 

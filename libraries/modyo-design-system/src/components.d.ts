@@ -8,7 +8,6 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { IconSettings } from "./utils";
 import { ComponentSize, FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { CouponEvent, CouponInputType } from "./components/m-coupon/m-coupon-interface";
 import { CurrencyEvent, CurrencyVariant } from "./components/m-currency/m-currency-interface";
 import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
@@ -192,120 +191,6 @@ export namespace Components {
           * Variant of the counter
          */
         "variant": 'default' | 'prime';
-    }
-    interface MCoupon {
-        /**
-          * Text for the coupon button
-         */
-        "buttonText": string;
-        /**
-          * Has a select input
-         */
-        "hasSelect": boolean;
-        /**
-          * Hint for the m-coupon
-         */
-        "hint"?: string;
-        /**
-          * Icon end for the hint text
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon start for the hint text
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Icon of the end
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Icon of the middle
-         */
-        "iconMiddle"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyClass"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyPrefix"?: string;
-        /**
-          * Icon of the left
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading": boolean;
-        /**
-          * Label for the input
-         */
-        "label": string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon": string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection": FormControlLayoutDirection;
-        /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * Placeholder for the input
-         */
-        "placeholder"?: string;
-        /**
-          * Theme for the m-cupon
-         */
-        "theme"?: string;
-        /**
-          * * The type of the input
-         */
-        "type": CouponInputType;
     }
     interface MCurrency {
         /**
@@ -599,33 +484,9 @@ export namespace Components {
     }
     interface MInput {
         /**
-          * Hint to display, also used to display validity feedback
+          * Hint to display
          */
         "hint"?: string;
-        /**
-          * Icon to display on hint right
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon to display on hint left
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
         /**
           * Icon to display on input right
          */
@@ -638,6 +499,14 @@ export namespace Components {
           * Right icon family class
          */
         "iconEndFamilyPrefix"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
         /**
           * Icon to display on input left
          */
@@ -663,13 +532,21 @@ export namespace Components {
          */
         "isLoading": boolean;
         /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid": boolean;
+        /**
           * The label text
          */
         "label": string;
         /**
           * Icon for the label text
          */
-        "labelIcon": string;
+        "labelIcon"?: string;
         /**
           * Icon label family class
          */
@@ -698,6 +575,122 @@ export namespace Components {
           * The value of the input
          */
         "value": string | number;
+    }
+    interface MInputPassword {
+        /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * The placeholder text
+         */
+        "placeholder": string;
+        /**
+          * The value of the input
+         */
+        "value": string;
+    }
+    interface MInputSearch {
+        /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * The placeholder text
+         */
+        "placeholder": string;
+        /**
+          * The value of the input
+         */
+        "value": string;
     }
     interface MListItem {
         /**
@@ -1031,104 +1024,6 @@ export namespace Components {
          */
         "variant"?: QuickActionVariant;
     }
-    interface MSearch {
-        /**
-          * Hint to display, also used to display validity feedback
-         */
-        "hint"?: string;
-        /**
-          * Icon to display on hint right
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon to display on hint left
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Icon to display on input right
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Flag to disable the input
-         */
-        "isDisabled": boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading": boolean;
-        /**
-          * Flag to read only the input
-         */
-        "isReadOnly": boolean;
-        /**
-          * The label text
-         */
-        "label": string;
-        /**
-          * Icon to display on label right
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection": FormControlLayoutDirection;
-        /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * The placeholder text
-         */
-        "placeholder": string;
-        /**
-          * Theme to use for the search
-         */
-        "theme"?: string;
-        /**
-          * The type of the input
-         */
-        "type": string;
-        /**
-          * The value of the input
-         */
-        "value": string;
-        /**
-          * Variant to use for the search
-         */
-        "variant"?: string;
-    }
     interface MSegmentControl {
         /**
           * Aria label to describe the segment control
@@ -1354,10 +1249,6 @@ export interface MCounterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCounterElement;
 }
-export interface MCouponCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMCouponElement;
-}
 export interface MCurrencyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCurrencyElement;
@@ -1373,6 +1264,14 @@ export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MInputPasswordCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputPasswordElement;
+}
+export interface MInputSearchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputSearchElement;
 }
 export interface MListItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1393,10 +1292,6 @@ export interface MPinCustomEvent<T> extends CustomEvent<T> {
 export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionElement;
-}
-export interface MSearchCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMSearchElement;
 }
 export interface MSegmentControlItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1441,12 +1336,6 @@ declare global {
         prototype: HTMLMCounterElement;
         new (): HTMLMCounterElement;
     };
-    interface HTMLMCouponElement extends Components.MCoupon, HTMLStencilElement {
-    }
-    var HTMLMCouponElement: {
-        prototype: HTMLMCouponElement;
-        new (): HTMLMCouponElement;
-    };
     interface HTMLMCurrencyElement extends Components.MCurrency, HTMLStencilElement {
     }
     var HTMLMCurrencyElement: {
@@ -1482,6 +1371,18 @@ declare global {
     var HTMLMInputElement: {
         prototype: HTMLMInputElement;
         new (): HTMLMInputElement;
+    };
+    interface HTMLMInputPasswordElement extends Components.MInputPassword, HTMLStencilElement {
+    }
+    var HTMLMInputPasswordElement: {
+        prototype: HTMLMInputPasswordElement;
+        new (): HTMLMInputPasswordElement;
+    };
+    interface HTMLMInputSearchElement extends Components.MInputSearch, HTMLStencilElement {
+    }
+    var HTMLMInputSearchElement: {
+        prototype: HTMLMInputSearchElement;
+        new (): HTMLMInputSearchElement;
     };
     interface HTMLMListItemElement extends Components.MListItem, HTMLStencilElement {
     }
@@ -1519,12 +1420,6 @@ declare global {
         prototype: HTMLMQuickActionElement;
         new (): HTMLMQuickActionElement;
     };
-    interface HTMLMSearchElement extends Components.MSearch, HTMLStencilElement {
-    }
-    var HTMLMSearchElement: {
-        prototype: HTMLMSearchElement;
-        new (): HTMLMSearchElement;
-    };
     interface HTMLMSegmentControlElement extends Components.MSegmentControl, HTMLStencilElement {
     }
     var HTMLMSegmentControlElement: {
@@ -1555,20 +1450,20 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-counter": HTMLMCounterElement;
-        "m-coupon": HTMLMCouponElement;
         "m-currency": HTMLMCurrencyElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
         "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
+        "m-input-password": HTMLMInputPasswordElement;
+        "m-input-search": HTMLMInputSearchElement;
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-pin": HTMLMPinElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action": HTMLMQuickActionElement;
-        "m-search": HTMLMSearchElement;
         "m-segment-control": HTMLMSegmentControlElement;
         "m-segment-control-item": HTMLMSegmentControlItemElement;
         "m-select": HTMLMSelectElement;
@@ -1765,124 +1660,6 @@ declare namespace LocalJSX {
           * Variant of the counter
          */
         "variant"?: 'default' | 'prime';
-    }
-    interface MCoupon {
-        /**
-          * Text for the coupon button
-         */
-        "buttonText"?: string;
-        /**
-          * Has a select input
-         */
-        "hasSelect"?: boolean;
-        /**
-          * Hint for the m-coupon
-         */
-        "hint"?: string;
-        /**
-          * Icon end for the hint text
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon start for the hint text
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Icon of the end
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Icon of the middle
-         */
-        "iconMiddle"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyClass"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyPrefix"?: string;
-        /**
-          * Icon of the left
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading"?: boolean;
-        /**
-          * Label for the input
-         */
-        "label"?: string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection"?: FormControlLayoutDirection;
-        /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * Emitted when the button is clicked
-         */
-        "onMClick"?: (event: MCouponCustomEvent<CouponEvent>) => void;
-        /**
-          * Placeholder for the input
-         */
-        "placeholder"?: string;
-        /**
-          * Theme for the m-cupon
-         */
-        "theme"?: string;
-        /**
-          * * The type of the input
-         */
-        "type"?: CouponInputType;
     }
     interface MCurrency {
         /**
@@ -2188,33 +1965,9 @@ declare namespace LocalJSX {
     }
     interface MInput {
         /**
-          * Hint to display, also used to display validity feedback
+          * Hint to display
          */
         "hint"?: string;
-        /**
-          * Icon to display on hint right
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon to display on hint left
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
         /**
           * Icon to display on input right
          */
@@ -2227,6 +1980,14 @@ declare namespace LocalJSX {
           * Right icon family class
          */
         "iconEndFamilyPrefix"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
         /**
           * Icon to display on input left
          */
@@ -2251,6 +2012,14 @@ declare namespace LocalJSX {
           * Flag for loading state.
          */
         "isLoading"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid"?: boolean;
         /**
           * The label text
          */
@@ -2284,6 +2053,14 @@ declare namespace LocalJSX {
          */
         "onMChange"?: (event: MInputCustomEvent<string | number>) => void;
         /**
+          * Emitted when click on the right icon
+         */
+        "onMIconEndClick"?: (event: MInputCustomEvent<MouseEvent>) => void;
+        /**
+          * Emitted when click on the left icon
+         */
+        "onMIconStartClick"?: (event: MInputCustomEvent<MouseEvent>) => void;
+        /**
           * The placeholder text
          */
         "placeholder"?: string;
@@ -2295,6 +2072,134 @@ declare namespace LocalJSX {
           * The value of the input
          */
         "value"?: string | number;
+    }
+    interface MInputPassword {
+        /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMChange"?: (event: MInputPasswordCustomEvent<string>) => void;
+        /**
+          * The placeholder text
+         */
+        "placeholder"?: string;
+        /**
+          * The value of the input
+         */
+        "value"?: string;
+    }
+    interface MInputSearch {
+        /**
+          * Hint to display, also used to display validity feedback
+         */
+        "hint"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Icon to display on label right
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onMChange"?: (event: MInputSearchCustomEvent<string>) => void;
+        /**
+          * Emitted when the button is clicked
+         */
+        "onMClick"?: (event: MInputSearchCustomEvent<string>) => void;
+        /**
+          * The placeholder text
+         */
+        "placeholder"?: string;
+        /**
+          * The value of the input
+         */
+        "value"?: string;
     }
     interface MListItem {
         /**
@@ -2648,112 +2553,6 @@ declare namespace LocalJSX {
          */
         "variant"?: QuickActionVariant;
     }
-    interface MSearch {
-        /**
-          * Hint to display, also used to display validity feedback
-         */
-        "hint"?: string;
-        /**
-          * Icon to display on hint right
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon to display on hint left
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Icon to display on input right
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Flag to disable the input
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading"?: boolean;
-        /**
-          * Flag to read only the input
-         */
-        "isReadOnly"?: boolean;
-        /**
-          * The label text
-         */
-        "label"?: string;
-        /**
-          * Icon to display on label right
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection"?: FormControlLayoutDirection;
-        /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * Emitted when the input value has changed
-         */
-        "onMChange"?: (event: MSearchCustomEvent<string>) => void;
-        /**
-          * Emitted when the button is clicked
-         */
-        "onMClick"?: (event: MSearchCustomEvent<string>) => void;
-        /**
-          * The placeholder text
-         */
-        "placeholder"?: string;
-        /**
-          * Theme to use for the search
-         */
-        "theme"?: string;
-        /**
-          * The type of the input
-         */
-        "type"?: string;
-        /**
-          * The value of the input
-         */
-        "value"?: string;
-        /**
-          * Variant to use for the search
-         */
-        "variant"?: string;
-    }
     interface MSegmentControl {
         /**
           * Aria label to describe the segment control
@@ -2988,20 +2787,20 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-counter": MCounter;
-        "m-coupon": MCoupon;
         "m-currency": MCurrency;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
         "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
+        "m-input-password": MInputPassword;
+        "m-input-search": MInputSearch;
         "m-list-item": MListItem;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
         "m-pin": MPin;
         "m-progress-bar": MProgressBar;
         "m-quick-action": MQuickAction;
-        "m-search": MSearch;
         "m-segment-control": MSegmentControl;
         "m-segment-control-item": MSegmentControlItem;
         "m-select": MSelect;
@@ -3017,20 +2816,20 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;
-            "m-coupon": LocalJSX.MCoupon & JSXBase.HTMLAttributes<HTMLMCouponElement>;
             "m-currency": LocalJSX.MCurrency & JSXBase.HTMLAttributes<HTMLMCurrencyElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
+            "m-input-password": LocalJSX.MInputPassword & JSXBase.HTMLAttributes<HTMLMInputPasswordElement>;
+            "m-input-search": LocalJSX.MInputSearch & JSXBase.HTMLAttributes<HTMLMInputSearchElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-pin": LocalJSX.MPin & JSXBase.HTMLAttributes<HTMLMPinElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
-            "m-search": LocalJSX.MSearch & JSXBase.HTMLAttributes<HTMLMSearchElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
             "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;
             "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;

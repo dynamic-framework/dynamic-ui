@@ -10,20 +10,20 @@ import { defineCustomElement as defineMApp } from '@modyo-dynamic/modyo-design-s
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
 import { defineCustomElement as defineMCounter } from '@modyo-dynamic/modyo-design-system/components/m-counter.js';
-import { defineCustomElement as defineMCoupon } from '@modyo-dynamic/modyo-design-system/components/m-coupon.js';
 import { defineCustomElement as defineMCurrency } from '@modyo-dynamic/modyo-design-system/components/m-currency.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyo-dynamic/modyo-design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
+import { defineCustomElement as defineMInputPassword } from '@modyo-dynamic/modyo-design-system/components/m-input-password.js';
+import { defineCustomElement as defineMInputSearch } from '@modyo-dynamic/modyo-design-system/components/m-input-search.js';
 import { defineCustomElement as defineMListItem } from '@modyo-dynamic/modyo-design-system/components/m-list-item.js';
 import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMPin } from '@modyo-dynamic/modyo-design-system/components/m-pin.js';
 import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickAction } from '@modyo-dynamic/modyo-design-system/components/m-quick-action.js';
-import { defineCustomElement as defineMSearch } from '@modyo-dynamic/modyo-design-system/components/m-search.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
 import { defineCustomElement as defineMSelect } from '@modyo-dynamic/modyo-design-system/components/m-select.js';
@@ -156,34 +156,6 @@ export class MCounter {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mInput', 'mClick']);
-  }
-}
-
-import type { CouponEvent as IMCouponCouponEvent } from '@modyo-dynamic/modyo-design-system/components';
-export declare interface MCoupon extends Components.MCoupon {
-  /**
-   * Emitted when the button is clicked 
-   */
-  mClick: EventEmitter<CustomEvent<IMCouponCouponEvent>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMCoupon,
-  inputs: ['buttonText', 'hasSelect', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isLoading', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'placeholder', 'theme', 'type']
-})
-@Component({
-  selector: 'm-coupon',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['buttonText', 'hasSelect', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isLoading', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'placeholder', 'theme', 'type']
-})
-export class MCoupon {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClick']);
   }
 }
 
@@ -323,25 +295,93 @@ export declare interface MInput extends Components.MInput {
    * Emitted when blur the input 
    */
   mBlur: EventEmitter<CustomEvent<any>>;
+  /**
+   * Emitted when click on the left icon 
+   */
+  mIconStartClick: EventEmitter<CustomEvent<MouseEvent>>;
+  /**
+   * Emitted when click on the right icon 
+   */
+  mIconEndClick: EventEmitter<CustomEvent<MouseEvent>>;
 
 }
 
 @ProxyCmp({
   defineCustomElementFn: defineMInput,
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'type', 'value']
 })
 @Component({
   selector: 'm-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'type', 'value']
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'type', 'value']
 })
 export class MInput {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange', 'mBlur']);
+    proxyOutputs(this, this.el, ['mChange', 'mBlur', 'mIconStartClick', 'mIconEndClick']);
+  }
+}
+
+
+export declare interface MInputPassword extends Components.MInputPassword {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMInputPassword,
+  inputs: ['hint', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'value']
+})
+@Component({
+  selector: 'm-input-password',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['hint', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'value']
+})
+export class MInputPassword {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MInputSearch extends Components.MInputSearch {
+  /**
+   * Emitted when the input value has changed 
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+  /**
+   * Emitted when the button is clicked 
+   */
+  mClick: EventEmitter<CustomEvent<string>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMInputSearch,
+  inputs: ['hint', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'value']
+})
+@Component({
+  selector: 'm-input-search',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['hint', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'value']
+})
+export class MInputSearch {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange', 'mClick']);
   }
 }
 
@@ -503,38 +543,6 @@ export class MQuickAction {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mClick']);
-  }
-}
-
-
-export declare interface MSearch extends Components.MSearch {
-  /**
-   * Emitted when the input value has changed 
-   */
-  mChange: EventEmitter<CustomEvent<string>>;
-  /**
-   * Emitted when the button is clicked 
-   */
-  mClick: EventEmitter<CustomEvent<string>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMSearch,
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'isDisabled', 'isLoading', 'isReadOnly', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'placeholder', 'theme', 'type', 'value', 'variant']
-})
-@Component({
-  selector: 'm-search',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'isDisabled', 'isLoading', 'isReadOnly', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'placeholder', 'theme', 'type', 'value', 'variant']
-})
-export class MSearch {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange', 'mClick']);
   }
 }
 

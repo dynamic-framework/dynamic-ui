@@ -1,7 +1,7 @@
 @import "~bootstrap/scss/forms";
 
 .form-control-layout {
-  --#{$prefix}form-control-flex-direction: column; // TODO: move to form-control-layout scss variable.
+  --#{$prefix}form-control-gap: #{$spacer-1};
   // label
   --#{$prefix}form-label-color: #{$form-label-color};
   --#{$prefix}form-label-font-weight: #{$form-label-font-weight};
@@ -9,29 +9,55 @@
   --#{$prefix}form-label-padding-x: #{$form-label-padding-x};
   --#{$prefix}form-label-padding-y: #{$form-label-padding-y};
   --#{$prefix}form-label-gap: #{$form-label-gap};
-  // input
-  --#{$prefix}input-box-shadow: #{$input-box-shadow};
-  --#{$prefix}input-border-color: #{$input-border-color};
-  --#{$prefix}input-hover-border-color: #{$input-hover-border-color};
-  // focus outline
-  --#{$prefix}input-group-outline-padding: #{$input-group-outline-padding};
-  --#{$prefix}input-group-outline-border-width: #{$input-group-outline-border-width-width};
-  --#{$prefix}input-group-outline-border-color: transparent;
+  // label hover
+  --#{$prefix}form-label-focus-color: #{$form-label-focus-color};
+
   // input group
-  --#{$prefix}input-group-bg: #{$input-bg};
-  --#{$prefix}input-group-border-radius: #{$input-border-radius};
+  --#{$prefix}input-group-border-color: #{$input-group-border-color};
+  --#{$prefix}input-group-border-width: #{$input-group-border-width};
+  --#{$prefix}input-group-border-radius: #{$input-group-border-radius};
+  // input group hover
+  --#{$prefix}input-group-hover-border-color: #{$input-group-hover-border-color};
+  // input group focus
+  --#{$prefix}input-group-focus-border-color: #{$input-group-focus-border-color};
+  --#{$prefix}input-group-focus-box-shadow: #{$input-group-focus-box-shadow};
+
   // hint
-  --#{$prefix}input-hint-padding: #{$input-hint-padding-y} #{$input-hint-padding-x};
-  --#{$prefix}input-hint-gap: #{$input-hint-gap};
-  // icon
-  --#{$prefix}form-control-icon-size: #{$form-control-icon-size};
+  --#{$prefix}form-text-padding: #{$form-control-padding-y} #{$form-control-padding-x};
+  --#{$prefix}form-text-gap: #{$form-control-gap};
+  --#{$prefix}form-text-color: #{$form-control-color};
+
+  // input disabled
+  --#{$prefix}input-group-disabled-bg: #{$input-disabled-bg};
 
   display: flex;
-  flex-direction: var(--#{$prefix}form-control-flex-direction);
+  flex-direction: column;
+  gap: var(--#{$prefix}form-control-gap);
   align-items: start;
 
-  &.form-control-layout-horizontal {
-    --#{$prefix}form-control-flex-direction: row;
+  // focus
+  &:focus-within {
+    label {
+      color: var(--#{$prefix}form-label-focus-color);
+    }
+
+    .input-group {
+      border-color: var(--#{$prefix}input-group-focus-border-color);
+      box-shadow: var(--#{$prefix}input-group-focus-box-shadow);
+
+      &:hover:has(.form-control:not(:placeholder-shown)),
+      &:hover {
+        border-color: var(--#{$prefix}input-group-focus-border-color);
+      }
+    }
+  }
+
+  // form-control container
+  .form-control-input {
+    display: flex;
+    flex-direction: column;
+    gap: var(--#{$prefix}form-control-gap);
+    width: 100%;
   }
 
   label {
@@ -46,128 +72,87 @@
 
     .form-control-icon {
       .m-icon {
-        --#{$prefix}m-icon-color: var(--#{$prefix}info);
+        --#{$prefix}m-icon-color: var(--#{$prefix}secondary);
       }
     }
   }
 
-  &.form-control-layout-pill {
-    --#{$prefix}input-group-border-radius: var(--#{$prefix}border-radius-pill);
-  }
-
-  &.form-control-layout-transparent {
-    --#{$prefix}input-group-bg: transparent;
-  }
-}
-
-.form-control-layout[is-invalid="true"] {
-  --#{$prefix}input-border-color: var(--#{$prefix}danger);
-
-  label {
-    color: var(--#{$prefix}danger);
-  }
-
+  // input with elements
   .input-group {
-    &:hover {
-      border: 1px solid var(--#{$prefix}danger-hover);
-    }
-  }
-}
-
-.input-group {
-  position: relative;
-  gap: $spacer-2;
-  background: var(--#{$prefix}input-group-bg);
-  border: $input-border-width solid var(--#{$prefix}input-border-color);
-  border-radius: var(--#{$prefix}input-group-border-radius);
-
-  &::before {
-    $offset: calc((var(--#{$prefix}input-group-outline-padding) + var(--#{$prefix}input-group-outline-border-width)) * -1);
-    position: absolute;
-    top: $offset;
-    right: $offset;
-    bottom: $offset;
-    left: $offset;
-
-    content: " ";
-    border: var(--#{$prefix}input-group-outline-border-width) solid var(--#{$prefix}input-group-outline-border-color);
+    border: var(--#{$prefix}input-group-border-width) solid var(--#{$prefix}input-group-border-color);
     border-radius: var(--#{$prefix}input-group-border-radius);
   }
 
-  &:focus-within,
-  &:focus {
-    // TODO: fix focus.
-    // --#{$prefix}input-group-outline-border-color: var(--#{$prefix}accessibility);
+  // hover
+  .input-group:hover:has(.form-control:not(:disabled)) {
+    border-color: var(--#{$prefix}input-group-hover-border-color);
   }
 
-  > * {
-    &:first-child {
-      padding-left: $input-padding-y;
-      border-top-left-radius: var(--#{$prefix}input-group-border-radius);
-      border-bottom-left-radius: var(--#{$prefix}input-group-border-radius);
+  // not empty
+  &:has(.form-control:not(:placeholder-shown)) .input-group {
+    border-color: var(--#{$prefix}input-group-hover-border-color);
+  }
+
+  // validation states
+  @each $state, $data in $form-validation-states {
+    $border-color: map-get($data, "border-color");
+    $tooltip-bg-color: map-get($data, "tooltip-bg-color");
+
+    &:has(.form-control.is-#{$state}){
+      .input-group {
+        border-color: $border-color;
+      }
+
+      .input-group ~ .form-text {
+        color: $border-color;
+      }
+
+      .form-control-validation-icon {
+        .m-icon {
+          --#{$prefix}m-icon-color: #{$tooltip-bg-color};
+        }
+      }
     }
-
-    &:last-child {
-      padding-right: $input-padding-y;
-      border-top-right-radius: var(--#{$prefix}input-group-border-radius);
-      border-bottom-right-radius: var(--#{$prefix}input-group-border-radius);
-    }
   }
 
-  &:hover {
-    border: 1px solid var(--#{$prefix}input-hover-border-color);
+  // input hint
+  .input-group ~ .form-text {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--#{$prefix}form-text-gap);
+    align-items: center;
+    padding: var(--#{$prefix}form-text-padding);
+    color: var(--#{$prefix}form-text-color);
   }
 
-  &.disabled {
-    background: var(--#{$prefix}light);
-
-    * {
-      background: var(--#{$prefix}light);
-    }
-  }
-}
-
-.form-control-input {
-  width: 100%;
-}
-
-.input-group ~ .hint {
-  display: inline-flex;
-  flex-direction: row;
-  gap: var(--#{$prefix}input-hint-gap);
-  align-items: center;
-  justify-content: center;
-  padding: var(--#{$prefix}input-hint-padding);
-}
-
-.form-control-icon {
-  // width: var(--#{$prefix}form-control-icon-size);
-  // height: var(--#{$prefix}form-control-icon-size);
-  font-size: var(--#{$prefix}form-control-icon-size);
-  line-height: var(--#{$prefix}form-control-icon-size);
-}
-
-.form-control {
-  background: transparent;
-  border-width: 0;
-  box-shadow: none;
-
-  &:focus {
+  // input element
+  .form-control {
+    border-width: 0;
     box-shadow: none;
+
+    &:not(:last-child) {
+      padding-right: 0;
+    }
+
+    &:not(:first-child) {
+      padding-left: 0;
+    }
   }
-}
 
-.input-group-text {
-  gap: $spacer-2;
-  line-height: 1rem;
-  background: var(--#{$prefix}input-group-bg);
-  border-width: 0;
-}
+  // input addons
+  .input-group-text {
+    border: 0;
+  }
 
-.input-group-sm {
-  border-radius: $input-border-radius-sm;
-}
+  // input disabled
+  .form-control:disabled {
+    background: var(--#{$prefix}input-group-disabled-bg);
+  }
 
-.input-group-lg {
-  border-radius: $input-border-radius-lg;
+  // input addons disabled
+  &:has(.form-control:disabled) {
+    .input-group-text {
+      background: var(--#{$prefix}input-group-disabled-bg);
+    }
+  }
 }
