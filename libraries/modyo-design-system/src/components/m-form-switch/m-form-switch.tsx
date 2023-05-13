@@ -26,12 +26,12 @@ export class MFormSwitch implements ComponentInterface {
   /**
    * The text to display when the switch is on.
    */
-  @Prop() labelOn = 'On';
+  @Prop() labelOn = '';
 
   /**
    * The text to display when the switch is off.
    */
-  @Prop() labelOff = 'Off';
+  @Prop() labelOff = '';
 
   /**
    * Id

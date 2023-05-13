@@ -29,7 +29,7 @@
  - [m-alert](../m-alert)
  - [m-button](../m-button)
  - [m-counter](../m-counter)
- - [m-currency](../m-currency)
+ - [m-currency-base](../m-currency-base)
  - [m-hint](../m-hint)
  - [m-input](../m-input)
  - [m-list-item](../m-list-item)
@@ -44,7 +44,7 @@ graph TD;
   m-alert --> m-icon
   m-button --> m-icon
   m-counter --> m-icon
-  m-currency --> m-icon
+  m-currency-base --> m-icon
   m-hint --> m-icon
   m-input --> m-icon
   m-list-item --> m-icon

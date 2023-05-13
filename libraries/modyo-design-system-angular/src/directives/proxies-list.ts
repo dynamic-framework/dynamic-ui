@@ -7,7 +7,7 @@ export const DIRECTIVES = [
   d.MBadge,
   d.MButton,
   d.MCounter,
-  d.MCurrency,
+  d.MCurrencyBase,
   d.MFormCheck,
   d.MFormSwitch,
   d.MHint,

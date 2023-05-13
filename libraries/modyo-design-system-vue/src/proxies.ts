@@ -74,7 +74,7 @@ export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter',
 ]);
 
 
-export const MCurrency = /*@__PURE__*/ defineContainer<JSX.MCurrency>('m-currency', undefined, [
+export const MCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MCurrencyBase>('m-currency-base', undefined, [
   'mId',
   'label',
   'labelIcon',

@@ -10,7 +10,7 @@ import { defineCustomElement as defineMApp } from '@modyo-dynamic/modyo-design-s
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
 import { defineCustomElement as defineMCounter } from '@modyo-dynamic/modyo-design-system/components/m-counter.js';
-import { defineCustomElement as defineMCurrency } from '@modyo-dynamic/modyo-design-system/components/m-currency.js';
+import { defineCustomElement as defineMCurrencyBase } from '@modyo-dynamic/modyo-design-system/components/m-currency-base.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyo-dynamic/modyo-design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
@@ -159,26 +159,26 @@ export class MCounter {
   }
 }
 
-import type { CurrencyEvent as IMCurrencyCurrencyEvent } from '@modyo-dynamic/modyo-design-system/components';
-export declare interface MCurrency extends Components.MCurrency {
+import type { CurrencyEvent as IMCurrencyBaseCurrencyEvent } from '@modyo-dynamic/modyo-design-system/components';
+export declare interface MCurrencyBase extends Components.MCurrencyBase {
   /**
    * Emitted when the inputs change 
    */
-  mChange: EventEmitter<CustomEvent<IMCurrencyCurrencyEvent>>;
+  mChange: EventEmitter<CustomEvent<IMCurrencyBaseCurrencyEvent>>;
 
 }
 
 @ProxyCmp({
-  defineCustomElementFn: defineMCurrency,
+  defineCustomElementFn: defineMCurrencyBase,
   inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
 })
 @Component({
-  selector: 'm-currency',
+  selector: 'm-currency-base',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['currencyOptions', 'hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconMiddle', 'iconMiddleFamilyClass', 'iconMiddleFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'placeholder', 'selectOptions', 'theme', 'value', 'valueExtractor', 'variant']
 })
-export class MCurrency {
+export class MCurrencyBase {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
