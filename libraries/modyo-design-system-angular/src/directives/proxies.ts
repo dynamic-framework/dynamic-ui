@@ -9,12 +9,12 @@ import { defineCustomElement as defineMAlert } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMApp } from '@modyo-dynamic/modyo-design-system/components/m-app.js';
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineMCounter } from '@modyo-dynamic/modyo-design-system/components/m-counter.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyo-dynamic/modyo-design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
+import { defineCustomElement as defineMInputCounter } from '@modyo-dynamic/modyo-design-system/components/m-input-counter.js';
 import { defineCustomElement as defineMInputCurrencyBase } from '@modyo-dynamic/modyo-design-system/components/m-input-currency-base.js';
 import { defineCustomElement as defineMInputPassword } from '@modyo-dynamic/modyo-design-system/components/m-input-password.js';
 import { defineCustomElement as defineMInputSearch } from '@modyo-dynamic/modyo-design-system/components/m-input-search.js';
@@ -124,38 +124,6 @@ export class MButton {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mClick']);
-  }
-}
-
-
-export declare interface MCounter extends Components.MCounter {
-  /**
-   * Event for input change 
-   */
-  mInput: EventEmitter<CustomEvent<any>>;
-  /**
-   * Event for button pressed 
-   */
-  mClick: EventEmitter<CustomEvent<any>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMCounter,
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'isDisabled', 'isLoading', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'theme', 'value', 'variant']
-})
-@Component({
-  selector: 'm-counter',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['hint', 'hintIconEnd', 'hintIconEndFamilyClass', 'hintIconEndFamilyPrefix', 'hintIconStart', 'hintIconStartFamilyClass', 'hintIconStartFamilyPrefix', 'isDisabled', 'isLoading', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'layoutDirection', 'mId', 'maxValue', 'minValue', 'theme', 'value', 'variant']
-})
-export class MCounter {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mInput', 'mClick']);
   }
 }
 
@@ -303,6 +271,38 @@ export class MInput {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mChange', 'mBlur', 'mFocus', 'mWheel', 'mIconStartClick', 'mIconEndClick']);
+  }
+}
+
+
+export declare interface MInputCounter extends Components.MInputCounter {
+  /**
+   * Event for input change 
+   */
+  mChange: EventEmitter<CustomEvent<number>>;
+  /**
+   * Event for button pressed 
+   */
+  mClick: EventEmitter<CustomEvent<number>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMInputCounter,
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'value']
+})
+@Component({
+  selector: 'm-input-counter',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'value']
+})
+export class MInputCounter {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange', 'mClick']);
   }
 }
 

@@ -9,12 +9,12 @@ import { defineCustomElement as defineMAlert } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMApp } from '@modyo-dynamic/modyo-design-system/components/m-app.js';
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineMCounter } from '@modyo-dynamic/modyo-design-system/components/m-counter.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
 import { defineCustomElement as defineMFormSwitch } from '@modyo-dynamic/modyo-design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
+import { defineCustomElement as defineMInputCounter } from '@modyo-dynamic/modyo-design-system/components/m-input-counter.js';
 import { defineCustomElement as defineMInputCurrencyBase } from '@modyo-dynamic/modyo-design-system/components/m-input-currency-base.js';
 import { defineCustomElement as defineMInputPassword } from '@modyo-dynamic/modyo-design-system/components/m-input-password.js';
 import { defineCustomElement as defineMInputSearch } from '@modyo-dynamic/modyo-design-system/components/m-input-search.js';
@@ -33,12 +33,12 @@ export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertEl
 export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>('m-app', undefined, undefined, defineMApp);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
-export const MCounter = /*@__PURE__*/createReactComponent<JSX.MCounter, HTMLMCounterElement>('m-counter', undefined, undefined, defineMCounter);
 export const MFormCheck = /*@__PURE__*/createReactComponent<JSX.MFormCheck, HTMLMFormCheckElement>('m-form-check', undefined, undefined, defineMFormCheck);
 export const MFormSwitch = /*@__PURE__*/createReactComponent<JSX.MFormSwitch, HTMLMFormSwitchElement>('m-form-switch', undefined, undefined, defineMFormSwitch);
 export const MHint = /*@__PURE__*/createReactComponent<JSX.MHint, HTMLMHintElement>('m-hint', undefined, undefined, defineMHint);
 export const MIcon = /*@__PURE__*/createReactComponent<JSX.MIcon, HTMLMIconElement>('m-icon', undefined, undefined, defineMIcon);
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
+export const MInputCounter = /*@__PURE__*/createReactComponent<JSX.MInputCounter, HTMLMInputCounterElement>('m-input-counter', undefined, undefined, defineMInputCounter);
 export const MInputCurrencyBase = /*@__PURE__*/createReactComponent<JSX.MInputCurrencyBase, HTMLMInputCurrencyBaseElement>('m-input-currency-base', undefined, undefined, defineMInputCurrencyBase);
 export const MInputPassword = /*@__PURE__*/createReactComponent<JSX.MInputPassword, HTMLMInputPasswordElement>('m-input-password', undefined, undefined, defineMInputPassword);
 export const MInputSearch = /*@__PURE__*/createReactComponent<JSX.MInputSearch, HTMLMInputSearchElement>('m-input-search', undefined, undefined, defineMInputSearch);

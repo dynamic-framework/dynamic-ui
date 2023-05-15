@@ -24,7 +24,6 @@
 
 ### Used by
 
- - [m-counter](../m-counter)
  - [m-pin](../m-pin)
 
 ### Depends on
@@ -35,7 +34,6 @@
 ```mermaid
 graph TD;
   m-hint --> m-icon
-  m-counter --> m-hint
   m-pin --> m-hint
   style m-hint fill:#f9f,stroke:#333,stroke-width:4px
 ```

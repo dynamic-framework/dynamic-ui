@@ -48,32 +48,6 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
 ]);
 
 
-export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'theme',
-  'minValue',
-  'maxValue',
-  'value',
-  'variant',
-  'layoutDirection',
-  'isDisabled',
-  'isLoading',
-  'mInput',
-  'mClick'
-]);
-
-
 export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
   'type',
   'name',
@@ -158,6 +132,35 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'mWheel',
   'mIconStartClick',
   'mIconEndClick'
+]);
+
+
+export const MInputCounter = /*@__PURE__*/ defineContainer<JSX.MInputCounter>('m-input-counter', undefined, [
+  'mId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'iconStart',
+  'iconStartFamilyClass',
+  'iconStartFamilyPrefix',
+  'iconEnd',
+  'iconEndFamilyClass',
+  'iconEndFamilyPrefix',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'minValue',
+  'maxValue',
+  'mChange',
+  'mClick'
 ]);
 
 
