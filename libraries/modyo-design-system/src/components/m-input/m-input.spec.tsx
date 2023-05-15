@@ -20,22 +20,23 @@ it('should render my component', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-input class="form-control-layout">
-      <label htmlfor="${input.mId}">
-        ${input.label}
-        <m-icon class="form-control-icon" icon="info-circle"></m-icon>
-      </label>
-      <div class="form-control-input">
-        <div class="input-group">
-          <input
-            aria-describedby="${input.mId}-add"
-            aria-label="${input.label}"
-            placeholder="${input.placeholder}"
-            value="${input.value}"
-            class="form-control"
-            type="text"
-            id=${input.mId}
-          >
+    <m-input>
+      <div class="form-control-layout">
+        <label htmlfor="${input.mId}">
+          ${input.label}
+        </label>
+        <div class="form-control-input">
+          <div class="input-group">
+            <input
+              aria-describedby="${input.mId}Add inputIdHint"
+              aria-label="${input.label}"
+              placeholder="${input.placeholder}"
+              value="${input.value}"
+              class="form-control"
+              type="text"
+              id=${input.mId}
+            >
+          </div>
         </div>
       </div>
     </m-input>
