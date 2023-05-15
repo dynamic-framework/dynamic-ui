@@ -74,45 +74,6 @@ export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter',
 ]);
 
 
-export const MCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MCurrencyBase>('m-currency-base', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconMiddle',
-  'iconMiddleFamilyClass',
-  'iconMiddleFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'selectOptions',
-  'valueExtractor',
-  'labelExtractor',
-  'placeholder',
-  'value',
-  'minValue',
-  'maxValue',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'theme',
-  'variant',
-  'currencyOptions',
-  'layoutDirection',
-  'isDisabled',
-  'isLoading',
-  'mChange'
-]);
-
-
 export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
   'type',
   'name',
@@ -193,8 +154,40 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'isValid',
   'mChange',
   'mBlur',
+  'mFocus',
+  'mWheel',
   'mIconStartClick',
   'mIconEndClick'
+]);
+
+
+export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurrencyBase>('m-input-currency-base', undefined, [
+  'mId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'iconStart',
+  'iconStartFamilyClass',
+  'iconStartFamilyPrefix',
+  'iconEnd',
+  'iconEndFamilyClass',
+  'iconEndFamilyPrefix',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'minValue',
+  'maxValue',
+  'currencyOptions',
+  'mChange'
 ]);
 
 

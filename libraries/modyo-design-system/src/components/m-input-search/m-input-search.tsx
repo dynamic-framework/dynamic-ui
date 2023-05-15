@@ -89,23 +89,25 @@ export class MInputSearch implements ComponentInterface {
   @Event({ eventName: 'mClick' }) mClick!: EventEmitter<string>;
 
   /**
-   * HTML input element
+   * HTML m-input element
    */
-  private htmlInput?: HTMLMInputElement;
+  private htmlMInputElement?: HTMLMInputElement;
 
-  private changeHandler = () => {
-    this.mChange.emit(this.htmlInput?.value.toString());
+  private changeHandler = (event: CustomEvent<string | number>) => {
+    event.stopPropagation();
+    this.mChange.emit(event.detail.toString());
   };
 
-  private clickHandler = () => {
-    this.mClick.emit(this.htmlInput?.value.toString());
+  private clickHandler = (event: CustomEvent) => {
+    event.stopPropagation();
+    this.mClick.emit(this.htmlMInputElement?.value.toString());
   };
 
   render() {
     return (
       <m-input
         // eslint-disable-next-line no-return-assign
-        ref={(el) => (this.htmlInput = el as HTMLMInputElement)}
+        ref={(el) => (this.htmlMInputElement = el)}
         mId={this.mId}
         name={this.name}
         label={this.label}

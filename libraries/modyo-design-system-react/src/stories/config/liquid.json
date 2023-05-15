@@ -1,0 +1,8 @@
+{
+  "vars": {
+    "currency-symbol": "$",
+    "currency-precision": 2,
+    "currency-separator": ".",
+    "currency-decimal": ","
+  }
+}

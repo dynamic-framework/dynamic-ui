@@ -40,14 +40,40 @@
 | ----------------- | ---------------------------------------- | ------------------------------- |
 | `mBlur`           | Emitted when blur the input              | `CustomEvent<any>`              |
 | `mChange`         | Emitted when the input value has changed | `CustomEvent<number \| string>` |
+| `mFocus`          | Emitted when blur the input              | `CustomEvent<any>`              |
 | `mIconEndClick`   | Emitted when click on the right icon     | `CustomEvent<MouseEvent>`       |
 | `mIconStartClick` | Emitted when click on the left icon      | `CustomEvent<MouseEvent>`       |
+| `mWheel`          | Emitted when blur the input              | `CustomEvent<any>`              |
+
+
+## Methods
+
+### `blurInput() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `focusInput() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Dependencies
 
 ### Used by
 
+ - [m-input-currency-base](../m-input-currency-base)
  - [m-input-password](../m-input-password)
  - [m-input-search](../m-input-search)
 
@@ -59,6 +85,7 @@
 ```mermaid
 graph TD;
   m-input --> m-icon
+  m-input-currency-base --> m-input
   m-input-password --> m-input
   m-input-search --> m-input
   style m-input fill:#f9f,stroke:#333,stroke-width:4px

@@ -1,7 +1,6 @@
 export * from './components';
 export * from './index';
 export * from './components/m-button/m-button-interface';
-export * from './components/m-currency-base/m-currency-base-interface';
 export * from './components/m-select/m-select-interface';
 export * from './components/m-form-check/m-form-check-interface';
 export * from './components/m-list-item/m-list-item-interface';

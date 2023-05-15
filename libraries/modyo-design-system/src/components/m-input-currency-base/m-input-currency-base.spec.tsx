@@ -2,7 +2,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import currency from 'currency.js';
 
-import { MCurrencyBase } from './m-currency-base';
+import { MInputCurrencyBase } from './m-input-currency-base';
 
 it('should render base currency', async () => {
   const props = {
@@ -15,7 +15,7 @@ it('should render base currency', async () => {
     },
   };
   const page = await newSpecPage({
-    components: [MCurrencyBase],
+    components: [MInputCurrencyBase],
     template: () => (
       <m-currency-base
         {...props}

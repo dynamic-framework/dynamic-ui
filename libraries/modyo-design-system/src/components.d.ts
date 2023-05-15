@@ -8,9 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { IconSettings } from "./utils";
 import { ComponentSize, FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { CurrencyEvent, CurrencyVariant } from "./components/m-currency-base/m-currency-base-interface";
-import { Options } from "currency.js";
 import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
+import { Options } from "currency.js";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
@@ -192,144 +191,6 @@ export namespace Components {
          */
         "variant": 'default' | 'prime';
     }
-    interface MCurrencyBase {
-        /**
-          * Options for the m-currency-base
-         */
-        "currencyOptions": Options;
-        /**
-          * Hint text for the m-currency-base
-         */
-        "hint"?: string;
-        /**
-          * Icon end for the hint text
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon start for the hint text
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Icon for the end
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Icon for the middle
-         */
-        "iconMiddle"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyClass"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyPrefix"?: string;
-        /**
-          * Icon for the left
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * The input is disabled
-         */
-        "isDisabled": boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading": boolean;
-        /**
-          * Label for the input
-         */
-        "label": string;
-        /**
-          * Callback to extract the label from the option
-         */
-        "labelExtractor": (item: any) => string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon": string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection": FormControlLayoutDirection;
-        /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * * The max value of the input
-         */
-        "maxValue"?: number;
-        /**
-          * * The min value of the input
-         */
-        "minValue"?: number;
-        /**
-          * Placeholder for the input
-         */
-        "placeholder"?: string;
-        /**
-          * Select options
-         */
-        "selectOptions": Array<any>;
-        /**
-          * Theme for the m-currency-base
-         */
-        "theme"?: string;
-        /**
-          * * The value of the input
-         */
-        "value"?: number;
-        /**
-          * Callback to extract the value from the option
-         */
-        "valueExtractor": (item: any) => string | number;
-        /**
-          * Variant for the m-currency-base
-         */
-        "variant"?: CurrencyVariant;
-    }
     interface MFormCheck {
         /**
           * Set checkbox as toggle button
@@ -483,6 +344,8 @@ export namespace Components {
         "theme"?: string;
     }
     interface MInput {
+        "blurInput": () => Promise<void>;
+        "focusInput": () => Promise<void>;
         /**
           * Hint to display
          */
@@ -575,6 +438,108 @@ export namespace Components {
           * The value of the input
          */
         "value": string | number;
+    }
+    interface MInputCurrencyBase {
+        /**
+          * Options for the m-input-currency-base
+         */
+        "currencyOptions": Options;
+        /**
+          * Hint to display
+         */
+        "hint"?: string;
+        /**
+          * Icon for the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Icon for the left
+         */
+        "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * The input is disabled
+         */
+        "isDisabled": boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * * The max value of the input
+         */
+        "maxValue"?: number;
+        /**
+          * * The min value of the input
+         */
+        "minValue"?: number;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Placeholder for the input
+         */
+        "placeholder"?: string;
+        /**
+          * The value of the input
+         */
+        "value"?: number;
     }
     interface MInputPassword {
         /**
@@ -1249,10 +1214,6 @@ export interface MCounterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMCounterElement;
 }
-export interface MCurrencyBaseCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMCurrencyBaseElement;
-}
 export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMFormCheckElement;
@@ -1264,6 +1225,10 @@ export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MInputCurrencyBaseCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputCurrencyBaseElement;
 }
 export interface MInputPasswordCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1336,12 +1301,6 @@ declare global {
         prototype: HTMLMCounterElement;
         new (): HTMLMCounterElement;
     };
-    interface HTMLMCurrencyBaseElement extends Components.MCurrencyBase, HTMLStencilElement {
-    }
-    var HTMLMCurrencyBaseElement: {
-        prototype: HTMLMCurrencyBaseElement;
-        new (): HTMLMCurrencyBaseElement;
-    };
     interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
     }
     var HTMLMFormCheckElement: {
@@ -1371,6 +1330,12 @@ declare global {
     var HTMLMInputElement: {
         prototype: HTMLMInputElement;
         new (): HTMLMInputElement;
+    };
+    interface HTMLMInputCurrencyBaseElement extends Components.MInputCurrencyBase, HTMLStencilElement {
+    }
+    var HTMLMInputCurrencyBaseElement: {
+        prototype: HTMLMInputCurrencyBaseElement;
+        new (): HTMLMInputCurrencyBaseElement;
     };
     interface HTMLMInputPasswordElement extends Components.MInputPassword, HTMLStencilElement {
     }
@@ -1450,12 +1415,12 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-counter": HTMLMCounterElement;
-        "m-currency-base": HTMLMCurrencyBaseElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
         "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
+        "m-input-currency-base": HTMLMInputCurrencyBaseElement;
         "m-input-password": HTMLMInputPasswordElement;
         "m-input-search": HTMLMInputSearchElement;
         "m-list-item": HTMLMListItemElement;
@@ -1660,148 +1625,6 @@ declare namespace LocalJSX {
           * Variant of the counter
          */
         "variant"?: 'default' | 'prime';
-    }
-    interface MCurrencyBase {
-        /**
-          * Options for the m-currency-base
-         */
-        "currencyOptions": Options;
-        /**
-          * Hint text for the m-currency-base
-         */
-        "hint"?: string;
-        /**
-          * Icon end for the hint text
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon start for the hint text
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Icon for the end
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Icon for the middle
-         */
-        "iconMiddle"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyClass"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyPrefix"?: string;
-        /**
-          * Icon for the left
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * The input is disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading"?: boolean;
-        /**
-          * Label for the input
-         */
-        "label"?: string;
-        /**
-          * Callback to extract the label from the option
-         */
-        "labelExtractor"?: (item: any) => string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection"?: FormControlLayoutDirection;
-        /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * * The max value of the input
-         */
-        "maxValue"?: number;
-        /**
-          * * The min value of the input
-         */
-        "minValue"?: number;
-        /**
-          * Emitted when the inputs change
-         */
-        "onMChange"?: (event: MCurrencyBaseCustomEvent<CurrencyEvent>) => void;
-        /**
-          * Placeholder for the input
-         */
-        "placeholder"?: string;
-        /**
-          * Select options
-         */
-        "selectOptions"?: Array<any>;
-        /**
-          * Theme for the m-currency-base
-         */
-        "theme"?: string;
-        /**
-          * * The value of the input
-         */
-        "value"?: number;
-        /**
-          * Callback to extract the value from the option
-         */
-        "valueExtractor"?: (item: any) => string | number;
-        /**
-          * Variant for the m-currency-base
-         */
-        "variant"?: CurrencyVariant;
     }
     interface MFormCheck {
         /**
@@ -2053,6 +1876,10 @@ declare namespace LocalJSX {
          */
         "onMChange"?: (event: MInputCustomEvent<string | number>) => void;
         /**
+          * Emitted when blur the input
+         */
+        "onMFocus"?: (event: MInputCustomEvent<any>) => void;
+        /**
           * Emitted when click on the right icon
          */
         "onMIconEndClick"?: (event: MInputCustomEvent<MouseEvent>) => void;
@@ -2060,6 +1887,10 @@ declare namespace LocalJSX {
           * Emitted when click on the left icon
          */
         "onMIconStartClick"?: (event: MInputCustomEvent<MouseEvent>) => void;
+        /**
+          * Emitted when blur the input
+         */
+        "onMWheel"?: (event: MInputCustomEvent<any>) => void;
         /**
           * The placeholder text
          */
@@ -2072,6 +1903,112 @@ declare namespace LocalJSX {
           * The value of the input
          */
         "value"?: string | number;
+    }
+    interface MInputCurrencyBase {
+        /**
+          * Options for the m-input-currency-base
+         */
+        "currencyOptions": Options;
+        /**
+          * Hint to display
+         */
+        "hint"?: string;
+        /**
+          * Icon for the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Icon for the left
+         */
+        "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * The input is disabled
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * * The max value of the input
+         */
+        "maxValue"?: number;
+        /**
+          * * The min value of the input
+         */
+        "minValue"?: number;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Emitted when the inputs change
+         */
+        "onMChange"?: (event: MInputCurrencyBaseCustomEvent<number>) => void;
+        /**
+          * Placeholder for the input
+         */
+        "placeholder"?: string;
+        /**
+          * The value of the input
+         */
+        "value"?: number;
     }
     interface MInputPassword {
         /**
@@ -2787,12 +2724,12 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-counter": MCounter;
-        "m-currency-base": MCurrencyBase;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
         "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
+        "m-input-currency-base": MInputCurrencyBase;
         "m-input-password": MInputPassword;
         "m-input-search": MInputSearch;
         "m-list-item": MListItem;
@@ -2816,12 +2753,12 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;
-            "m-currency-base": LocalJSX.MCurrencyBase & JSXBase.HTMLAttributes<HTMLMCurrencyBaseElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
+            "m-input-currency-base": LocalJSX.MInputCurrencyBase & JSXBase.HTMLAttributes<HTMLMInputCurrencyBaseElement>;
             "m-input-password": LocalJSX.MInputPassword & JSXBase.HTMLAttributes<HTMLMInputPasswordElement>;
             "m-input-search": LocalJSX.MInputSearch & JSXBase.HTMLAttributes<HTMLMInputSearchElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;

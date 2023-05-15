@@ -1,11 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
+import type { ComponentProps } from 'react';
 
-import { MInputSearch } from '../../components';
+import { MInputCurrency } from '../../components';
 import { ICONS } from '../constants';
+import { LiquidContextProvider } from '../../contexts';
 
-const config: Meta<typeof MInputSearch> = {
+const config: Meta<typeof MInputCurrency> = {
   title: 'Design System/Components/Input',
-  component: MInputSearch,
+  component: MInputCurrency,
   argTypes: {
     mId: {
       control: 'text',
@@ -56,6 +58,26 @@ const config: Meta<typeof MInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
+    iconStart: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    iconEnd: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
     hint: {
       control: 'text',
       type: 'string',
@@ -71,25 +93,40 @@ const config: Meta<typeof MInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    onMClick: {
-      action: 'onMClick',
+    minValue: {
+      control: 'number',
+      type: 'number',
     },
-    onMChange: {
+    maxValue: {
+      control: 'number',
+      type: 'number',
+    },
+    onChange: {
       action: 'onMChange',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MInputSearch>;
+type Story = StoryObj<typeof MInputCurrency>;
 
-export const Search: Story = {
+export const Currency: Story = {
+  render: (args: ComponentProps<typeof MInputCurrency>) => {
+    // eslint-disable-next-line global-require
+    require('../config/liquidConfig');
+    return (
+      <LiquidContextProvider>
+        <MInputCurrency {...args} />
+      </LiquidContextProvider>
+    );
+  },
   args: {
     mId: 'componentId',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
-    onMChange: ({ detail }) => console.log(detail),
+    minValue: 0,
+    maxValue: 100000,
   },
 };

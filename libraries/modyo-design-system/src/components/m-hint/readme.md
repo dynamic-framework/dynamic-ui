@@ -25,7 +25,6 @@
 ### Used by
 
  - [m-counter](../m-counter)
- - [m-currency-base](../m-currency-base)
  - [m-pin](../m-pin)
 
 ### Depends on
@@ -37,7 +36,6 @@
 graph TD;
   m-hint --> m-icon
   m-counter --> m-hint
-  m-currency-base --> m-hint
   m-pin --> m-hint
   style m-hint fill:#f9f,stroke:#333,stroke-width:4px
 ```
