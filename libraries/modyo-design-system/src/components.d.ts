@@ -236,7 +236,13 @@ export namespace Components {
         "theme"?: string;
     }
     interface MInput {
+        /**
+          * Set blur to internal input
+         */
         "blurInput": () => Promise<void>;
+        /**
+          * Set focus to internal input
+         */
         "focusInput": () => Promise<void>;
         /**
           * Hint to display

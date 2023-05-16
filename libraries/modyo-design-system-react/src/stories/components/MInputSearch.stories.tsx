@@ -4,7 +4,7 @@ import { MInputSearch } from '../../components';
 import { ICONS } from '../constants';
 
 const config: Meta<typeof MInputSearch> = {
-  title: 'Design System/Components/Input',
+  title: 'Design System/Components/Input Search',
   component: MInputSearch,
   argTypes: {
     mId: {
@@ -83,12 +83,55 @@ const config: Meta<typeof MInputSearch> = {
 export default config;
 type Story = StoryObj<typeof MInputSearch>;
 
-export const Search: Story = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
+  },
+};
+
+export const Value: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: 'Value',
+  },
+};
+
+export const Error: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    isInvalid: true,
+  },
+};
+
+export const Confirm: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    isValid: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    isDisabled: true,
   },
 };

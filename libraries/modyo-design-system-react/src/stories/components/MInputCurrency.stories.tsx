@@ -6,7 +6,7 @@ import { ICONS } from '../constants';
 import { LiquidContextProvider } from '../../contexts';
 
 const config: Meta<typeof MInputCurrency> = {
-  title: 'Design System/Components/Input',
+  title: 'Design System/Components/Input Currency',
   component: MInputCurrency,
   argTypes: {
     mId: {
@@ -39,8 +39,8 @@ const config: Meta<typeof MInputCurrency> = {
       type: 'string',
     },
     value: {
-      control: 'text',
-      type: 'string',
+      control: 'number',
+      type: 'number',
       description: 'The value of the input',
     },
     isDisabled: {
@@ -110,7 +110,7 @@ const config: Meta<typeof MInputCurrency> = {
 export default config;
 type Story = StoryObj<typeof MInputCurrency>;
 
-export const Currency: Story = {
+export const Default: Story = {
   render: (args: ComponentProps<typeof MInputCurrency>) => {
     // eslint-disable-next-line global-require
     require('../config/liquidConfig');
@@ -128,5 +128,92 @@ export const Currency: Story = {
     value: undefined,
     minValue: 0,
     maxValue: 100000,
+  },
+};
+
+export const Value: Story = {
+  render: (args: ComponentProps<typeof MInputCurrency>) => {
+    // eslint-disable-next-line global-require
+    require('../config/liquidConfig');
+    return (
+      <LiquidContextProvider>
+        <MInputCurrency {...args} />
+      </LiquidContextProvider>
+    );
+  },
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: 1000,
+    minValue: 0,
+    maxValue: 100000,
+  },
+};
+
+export const Error: Story = {
+  render: (args: ComponentProps<typeof MInputCurrency>) => {
+    // eslint-disable-next-line global-require
+    require('../config/liquidConfig');
+    return (
+      <LiquidContextProvider>
+        <MInputCurrency {...args} />
+      </LiquidContextProvider>
+    );
+  },
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    isInvalid: true,
+  },
+};
+
+export const Confirm: Story = {
+  render: (args: ComponentProps<typeof MInputCurrency>) => {
+    // eslint-disable-next-line global-require
+    require('../config/liquidConfig');
+    return (
+      <LiquidContextProvider>
+        <MInputCurrency {...args} />
+      </LiquidContextProvider>
+    );
+  },
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    isValid: true,
+  },
+};
+
+export const Disabled: Story = {
+  render: (args: ComponentProps<typeof MInputCurrency>) => {
+    // eslint-disable-next-line global-require
+    require('../config/liquidConfig');
+    return (
+      <LiquidContextProvider>
+        <MInputCurrency {...args} />
+      </LiquidContextProvider>
+    );
+  },
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    isDisabled: true,
   },
 };

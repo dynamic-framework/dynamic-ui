@@ -33,10 +33,6 @@ $input-padding-x-lg: $input-padding-x !default;
 $input-font-size-lg: $input-font-size !default;
 
 $input-bg: var(--#{$prefix}white) !default;
-$input-disabled-color: null !default;
-$input-disabled-bg: $gray-100 !default;
-$input-disabled-border-color: null !default;
-
 $input-color: var(--#{$prefix}gray) !default;
 $input-border-color: var(--#{$prefix}gray-light) !default;      // unused
 $input-border-width: $input-btn-border-width !default;          // unused
@@ -66,6 +62,10 @@ $input-group-hover-border-color: var(--#{$prefix}gray) !default;
 $input-group-focus-border-color: var(--#{$prefix}secondary) !default;
 $input-group-focus-box-shadow: 0 2px 14px rgba(var(--#{$prefix}secondary-rgb), .3) !default;
 // end custom
+
+$input-disabled-color: var(--#{$prefix}gray) !default;
+$input-disabled-bg: var(--#{$prefix}gray-100) !default;
+$input-disabled-border-color: var(--#{$prefix}gray-light) !default;
 
 $input-placeholder-color: var(--#{$prefix}gray-light) !default;
 $input-plaintext-color: $body-color !default;

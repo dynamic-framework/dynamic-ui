@@ -4,7 +4,7 @@ import { MInputCounter } from '../../components';
 import { ICONS } from '../constants';
 
 const config: Meta<typeof MInputCounter> = {
-  title: 'Design System/Components/Input',
+  title: 'Design System/Components/Input Counter',
   component: MInputCounter,
   argTypes: {
     mId: {
@@ -107,7 +107,45 @@ const config: Meta<typeof MInputCounter> = {
 export default config;
 type Story = StoryObj<typeof MInputCounter>;
 
-export const Counter: Story = {
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: 1,
+    minValue: 0,
+    maxValue: 20,
+  },
+};
+
+export const Error: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: 21,
+    minValue: 0,
+    maxValue: 20,
+    isInvalid: true,
+  },
+};
+
+export const Confirm: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: 2,
+    minValue: 0,
+    maxValue: 20,
+    isValid: true,
+  },
+};
+
+export const Disabled: Story = {
   args: {
     mId: 'componentId',
     label: 'Label',
@@ -116,5 +154,6 @@ export const Counter: Story = {
     value: 3,
     minValue: 0,
     maxValue: 20,
+    isDisabled: true,
   },
 };

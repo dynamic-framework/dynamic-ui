@@ -127,11 +127,17 @@ export class MInput implements ComponentInterface {
    */
   @Prop() isValid = false;
 
+  /**
+   * Set focus to internal input
+   */
   @Method()
   async focusInput() {
     this.htmlInputElement?.focus();
   }
 
+  /**
+   * Set blur to internal input
+   */
   @Method()
   async blurInput() {
     this.htmlInputElement?.blur();
@@ -226,6 +232,7 @@ export class MInput implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}Start`}
                 onClick={this.iconStartClickHandler}
+                disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconStart && (
                   <m-icon
@@ -278,6 +285,7 @@ export class MInput implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}End`}
                 onClick={this.iconEndClickHandler}
+                disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconEnd && (
                   <m-icon

@@ -4,7 +4,7 @@ import { MInputPassword } from '../../components';
 import { ICONS } from '../constants';
 
 const config: Meta<typeof MInputPassword> = {
-  title: 'Design System/Components/Input',
+  title: 'Design System/Components/Input Password',
   component: MInputPassword,
   argTypes: {
     mId: {
@@ -80,12 +80,55 @@ const config: Meta<typeof MInputPassword> = {
 export default config;
 type Story = StoryObj<typeof MInputPassword>;
 
-export const Password: Story = {
+export const Default: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+  },
+};
+
+export const Value: Story = {
   args: {
     mId: 'componentId',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: '12345',
+  },
+};
+
+export const Error: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    isInvalid: true,
+  },
+};
+
+export const Confirm: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    isValid: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    isDisabled: true,
   },
 };
