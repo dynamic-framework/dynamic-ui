@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { MInputSwitch } from '../../components';
 
 const config: Meta<typeof MInputSwitch> = {
-  title: 'Design System/Components/Switch',
+  title: 'Design System/Components/Input Switch',
   component: MInputSwitch,
   argTypes: {
     mId: {
