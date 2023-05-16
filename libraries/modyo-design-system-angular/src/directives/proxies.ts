@@ -10,7 +10,6 @@ import { defineCustomElement as defineMApp } from '@modyo-dynamic/modyo-design-s
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
-import { defineCustomElement as defineMFormSwitch } from '@modyo-dynamic/modyo-design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
@@ -18,6 +17,7 @@ import { defineCustomElement as defineMInputCounter } from '@modyo-dynamic/modyo
 import { defineCustomElement as defineMInputCurrencyBase } from '@modyo-dynamic/modyo-design-system/components/m-input-currency-base.js';
 import { defineCustomElement as defineMInputPassword } from '@modyo-dynamic/modyo-design-system/components/m-input-password.js';
 import { defineCustomElement as defineMInputSearch } from '@modyo-dynamic/modyo-design-system/components/m-input-search.js';
+import { defineCustomElement as defineMInputSwitch } from '@modyo-dynamic/modyo-design-system/components/m-input-switch.js';
 import { defineCustomElement as defineMListItem } from '@modyo-dynamic/modyo-design-system/components/m-list-item.js';
 import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
@@ -147,34 +147,6 @@ export declare interface MFormCheck extends Components.MFormCheck {
   inputs: ['isButton', 'isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'state', 'type', 'value']
 })
 export class MFormCheck {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MFormSwitch extends Components.MFormSwitch {
-  /**
-   * Emitted when the switch has changed 
-   */
-  mChange: EventEmitter<CustomEvent<boolean>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineMFormSwitch,
-  inputs: ['isChecked', 'isDisabled', 'label', 'labelOff', 'labelOn', 'mId']
-})
-@Component({
-  selector: 'm-form-switch',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['isChecked', 'isDisabled', 'label', 'labelOff', 'labelOn', 'mId']
-})
-export class MFormSwitch {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -391,6 +363,34 @@ export class MInputSearch {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['mChange', 'mClick']);
+  }
+}
+
+
+export declare interface MInputSwitch extends Components.MInputSwitch {
+  /**
+   * Emitted when the switch has changed 
+   */
+  mChange: EventEmitter<CustomEvent<boolean>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: defineMInputSwitch,
+  inputs: ['isChecked', 'isDisabled', 'label', 'mId', 'name']
+})
+@Component({
+  selector: 'm-input-switch',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['isChecked', 'isDisabled', 'label', 'mId', 'name']
+})
+export class MInputSwitch {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
   }
 }
 

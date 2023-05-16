@@ -21,11 +21,11 @@ it('should render my component', async () => {
   });
   expect(page.root).toEqualHtml(`
     <m-input>
-      <div class="form-control-layout">
+      <div class="m-input">
         <label htmlfor="${input.mId}">
           ${input.label}
         </label>
-        <div class="form-control-input">
+        <div class="m-input-control">
           <div class="input-group">
             <input
               aria-describedby="${input.mId}Add inputIdHint"

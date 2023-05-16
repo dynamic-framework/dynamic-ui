@@ -63,17 +63,6 @@ export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-
 ]);
 
 
-export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-form-switch', undefined, [
-  'label',
-  'labelOn',
-  'labelOff',
-  'mId',
-  'isChecked',
-  'isDisabled',
-  'mChange'
-]);
-
-
 export const MHint = /*@__PURE__*/ defineContainer<JSX.MHint>('m-hint', undefined, [
   'iconStart',
   'iconStartFamilyClass',
@@ -230,6 +219,16 @@ export const MInputSearch = /*@__PURE__*/ defineContainer<JSX.MInputSearch>('m-i
   'isValid',
   'mChange',
   'mClick'
+]);
+
+
+export const MInputSwitch = /*@__PURE__*/ defineContainer<JSX.MInputSwitch>('m-input-switch', undefined, [
+  'label',
+  'mId',
+  'name',
+  'isChecked',
+  'isDisabled',
+  'mChange'
 ]);
 
 

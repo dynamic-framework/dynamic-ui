@@ -30,7 +30,7 @@ $state-colors: (
 // TODO: check this.
 $focus-ring-width: .25rem !default;
 $focus-ring-opacity: 1 !default;
-$focus-ring-color: rgba(#039, $focus-ring-opacity) !default;
+$focus-ring-color: rgba($secondary, $focus-ring-opacity) !default;
 $focus-ring-blur: 0 !default;
 $focus-ring-box-shadow: 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color !default;
 

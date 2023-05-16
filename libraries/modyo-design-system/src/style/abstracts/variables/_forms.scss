@@ -91,7 +91,7 @@ $form-check-transition: border 200ms, color 200ms, background-color 200ms !defau
 
 // Checkbox :disabled
 $form-check-input-disabled-opacity: .75 !default;
-$form-check-label-disabled-opacity: .3 !default;
+$form-check-label-disabled-opacity: 1 !default;
 $form-check-btn-check-disabled-opacity: $btn-disabled-opacity !default;
 
 // Checkbox :focus
@@ -131,19 +131,22 @@ $form-check-input-indeterminate-bg-image: url("data:image/svg+xml,<svg xmlns='ht
 //// scss-docs-end form-check-variables
 
 //// scss-docs-start form-switch-variables
-$form-switch-color: rgba($black, .25) !default;
-$form-switch-width: 2.5em !default;
+$form-switch-color: $white !default;
+$form-switch-width: 3em !default;
 $form-switch-padding-start: $form-switch-width + .5em !default;
-$form-switch-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-color}'/></svg>") !default;
+$form-switch-bg-image: url("data:image/svg+xml,<svg viewBox='-4 -4 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><rect x='0.5' y='0.5' width='15' height='15' rx='7.5' fill='#{$white}' stroke='#{$gray-500}'/></svg>") !default;
 $form-switch-border-radius: $form-switch-width !default;
 $form-switch-transition: background-position .15s ease-in-out !default;
 
 $form-switch-focus-color: var(--#{$prefix}tertiary) !default;
-$form-switch-focus-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-color}'/></svg>") !default;
+$form-switch-focus-bg-image: url("data:image/svg+xml,<svg viewBox='-4 -4 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><rect x='0.5' y='0.5' width='15' height='15' rx='7.5' fill='#{$white}' stroke='#{$gray-500}'/></svg>") !default;
 
-$form-switch-checked-color: $component-active-color !default;
-$form-switch-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-checked-color}'/></svg>") !default;
+$form-switch-checked-color: $white !default;
+$form-switch-checked-bg-image: url("data:image/svg+xml,<svg viewBox='-4 -4 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><rect x='0.5' y='0.5' width='15' height='15' rx='7.5' fill='#{$white}' stroke='#{$gray-500}'/></svg>") !default;
 $form-switch-checked-bg-position: right center !default;
+
+$form-switch-disabled-bg-image: url("data:image/svg+xml,<svg viewBox='-4 -4 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><rect x='0.5' y='0.5' width='15' height='15' rx='7.5' fill='#{$white}' stroke='#{$gray-300}'/></svg>") !default;
+// scss-docs-end form-switch-variables
 
 $input-group-addon-padding-y: $input-padding-y !default;
 $input-group-addon-padding-x: $input-padding-x !default;

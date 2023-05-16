@@ -1,6 +1,6 @@
 @import "~bootstrap/scss/forms";
 
-.form-control-layout {
+.m-input {
   --#{$prefix}m-input-gap: #{$spacer-1};
   // label
   --#{$prefix}m-input-label-color: #{$form-label-color};
@@ -56,7 +56,7 @@
   }
 
   // form-control container
-  .form-control-input {
+  .m-input-control {
     display: flex;
     flex-direction: column;
     gap: var(--#{$prefix}m-input-gap);
@@ -73,9 +73,9 @@
     font-weight: var(--#{$prefix}m-input-label-font-weight);
     color: var(--#{$prefix}m-input-label-color);
 
-    .form-control-icon {
+    .m-input-icon {
       .m-icon {
-        --#{$prefix}m-icon-color: var(--#{$prefix}secondary);
+        --#{$prefix}m-icon-color: var(--#{$prefix}focus-ring-color);
       }
     }
   }
@@ -110,7 +110,7 @@
         color: $border-color;
       }
 
-      .form-control-validation-icon {
+      .m-input-validation-icon {
         .m-icon {
           --#{$prefix}m-icon-color: #{$tooltip-bg-color};
         }

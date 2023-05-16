@@ -1,0 +1,40 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import * as MInputSwitchStories from './MInputSwitch.stories';
+
+# Input Switch
+
+// TODO
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                              | Type            | Description                   |
+  |-------------------------------------------------------|-----------------|-------------------------------|
+  | \`--${PREFIX_BS}m-input-switch-bg\`                   | css color unit  | Background color              |
+  | \`--${PREFIX_BS}m-input-switch-border-color\`         | css color unit  | Border color                  |
+  | \`--${PREFIX_BS}m-input-switch-dot\`                  | data url svg    | Component circle              |
+  | \`--${PREFIX_BS}m-input-switch-hover-border-color\`   | css color unit  | Hover border color            |
+  | \`--${PREFIX_BS}m-input-switch-focus-outline-color\`  | css color unit  | Focus outline color           |
+  | \`--${PREFIX_BS}m-input-switch-active-border-color\`  | css color unit  | Active border color           |
+  | \`--${PREFIX_BS}m-input-switch-active-bg\`            | css color unit  | Active background color       |
+  | \`--${PREFIX_BS}m-input-switch-disabled-border-color\`| css color unit  | Disabled border color         |
+  | \`--${PREFIX_BS}m-input-switch-disabled-bg\`          | css color unit  | Disabled background color     |
+  | \`--${PREFIX_BS}m-input-switch-disabled-dot\`         | data url svg    | Disabled component circle     |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MInputSwitchStories} />
+
+<ArgTypes of={MInputSwitchStories} />
+
+<Stories />
