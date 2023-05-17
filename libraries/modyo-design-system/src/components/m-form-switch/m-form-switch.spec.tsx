@@ -24,9 +24,7 @@ it('should render base switch', async () => {
           <span class="form-check-label">
             ${props.label}
           </span>
-          <span class="form-check-label fw-bold">
-            Off
-          </span>
+          <span class="form-check-label fw-bold"></span>
         </div>
         <input class="form-check-input form-check-switch" id="${props.mId}" role="switch" type="checkbox">
       </label>

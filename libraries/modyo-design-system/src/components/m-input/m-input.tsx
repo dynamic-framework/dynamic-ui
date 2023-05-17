@@ -4,6 +4,7 @@ import {
   h,
   Prop,
   Event,
+  Method,
 } from '@stencil/core';
 
 @Component({
@@ -28,7 +29,7 @@ export class MInput implements ComponentInterface {
 
   /**
    * Icon for the label text
-   * */
+   */
   @Prop() labelIcon?: string;
 
   /**
@@ -126,6 +127,16 @@ export class MInput implements ComponentInterface {
    */
   @Prop() isValid = false;
 
+  @Method()
+  async focusInput() {
+    this.htmlInputElement?.focus();
+  }
+
+  @Method()
+  async blurInput() {
+    this.htmlInputElement?.blur();
+  }
+
   /**
    * Emitted when the input value has changed
    */
@@ -137,6 +148,16 @@ export class MInput implements ComponentInterface {
   @Event({ eventName: 'mBlur' }) mBlur!: EventEmitter;
 
   /**
+   * Emitted when blur the input
+   */
+  @Event({ eventName: 'mFocus' }) mFocus!: EventEmitter;
+
+  /**
+   * Emitted when blur the input
+   */
+  @Event({ eventName: 'mWheel' }) mWheel!: EventEmitter;
+
+  /**
    * Emitted when click on the left icon
    */
   @Event({ eventName: 'mIconStartClick' }) mIconStartClick!: EventEmitter<MouseEvent>;
@@ -146,12 +167,25 @@ export class MInput implements ComponentInterface {
    */
   @Event({ eventName: 'mIconEndClick' }) mIconEndClick!: EventEmitter<MouseEvent>;
 
+  /**
+   * HTML m-input element
+   */
+  private htmlInputElement?: HTMLInputElement;
+
   private changeHandler = (event: Event) => {
     this.mChange.emit((event.target as HTMLInputElement).value);
   };
 
   private blurHandler = (event: Event) => {
     this.mBlur.emit(event);
+  };
+
+  private focusHandler = (event: Event) => {
+    this.mFocus.emit(event);
+  };
+
+  private wheelHandler = (event: Event) => {
+    this.mWheel.emit(event);
   };
 
   private iconStartClickHandler = (event: MouseEvent) => {
@@ -204,6 +238,8 @@ export class MInput implements ComponentInterface {
               </button>
             )}
             <input
+              // eslint-disable-next-line no-return-assign
+              ref={(el) => (this.htmlInputElement = el)}
               id={this.mId}
               name={this.name}
               type={this.type}
@@ -220,6 +256,8 @@ export class MInput implements ComponentInterface {
               aria-describedby={`${this.mId}Add ${this.mId}Hint`}
               onInput={this.changeHandler}
               onBlur={this.blurHandler}
+              onFocus={this.focusHandler}
+              onWheel={this.wheelHandler}
             />
             {((this.isInvalid || this.isValid) && !this.iconEnd && !this.isLoading) && (
               <span

@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MInputSearch } from '../../components';
+import { MInputCurrencyBase } from '../../components';
 import { ICONS } from '../constants';
 
-const config: Meta<typeof MInputSearch> = {
+const config: Meta<typeof MInputCurrencyBase> = {
   title: 'Design System/Components/Input',
-  component: MInputSearch,
+  component: MInputCurrencyBase,
   argTypes: {
     mId: {
       control: 'text',
@@ -56,6 +56,26 @@ const config: Meta<typeof MInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
+    iconStart: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    iconEnd: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
     hint: {
       control: 'text',
       type: 'string',
@@ -71,8 +91,13 @@ const config: Meta<typeof MInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    onMClick: {
-      action: 'onMClick',
+    minValue: {
+      control: 'number',
+      type: 'number',
+    },
+    maxValue: {
+      control: 'number',
+      type: 'number',
     },
     onMChange: {
       action: 'onMChange',
@@ -81,15 +106,22 @@ const config: Meta<typeof MInputSearch> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MInputSearch>;
+type Story = StoryObj<typeof MInputCurrencyBase>;
 
-export const Search: Story = {
+export const CurrencyBase: Story = {
   args: {
     mId: 'componentId',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
-    onMChange: ({ detail }) => console.log(detail),
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
   },
 };
