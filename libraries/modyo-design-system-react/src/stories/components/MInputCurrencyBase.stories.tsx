@@ -4,7 +4,7 @@ import { MInputCurrencyBase } from '../../components';
 import { ICONS } from '../constants';
 
 const config: Meta<typeof MInputCurrencyBase> = {
-  title: 'Design System/Components/Input',
+  title: 'Design System/Components/Input Currency Base',
   component: MInputCurrencyBase,
   argTypes: {
     mId: {
@@ -37,8 +37,8 @@ const config: Meta<typeof MInputCurrencyBase> = {
       type: 'string',
     },
     value: {
-      control: 'text',
-      type: 'string',
+      control: 'number',
+      type: 'number',
       description: 'The value of the input',
     },
     isDisabled: {
@@ -108,7 +108,7 @@ const config: Meta<typeof MInputCurrencyBase> = {
 export default config;
 type Story = StoryObj<typeof MInputCurrencyBase>;
 
-export const CurrencyBase: Story = {
+export const Default: Story = {
   args: {
     mId: 'componentId',
     label: 'Label',
@@ -123,5 +123,80 @@ export const CurrencyBase: Story = {
       separator: ',',
       decimal: '.',
     },
+  },
+};
+
+export const Value: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: 100,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
+  },
+};
+
+export const Error: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
+    isInvalid: true,
+  },
+};
+
+export const Confirm: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
+    isValid: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
+    isDisabled: true,
   },
 };

@@ -31,7 +31,9 @@
   --#{$prefix}m-input-form-text-color: #{$form-control-color};
 
   // input disabled
+  --#{$prefix}m-input-group-disabled-border-color: #{$input-disabled-border-color};
   --#{$prefix}m-input-group-disabled-bg: #{$input-disabled-bg};
+  --#{$prefix}m-input-group-disabled-color: #{$input-disabled-color};
 
   display: flex;
   flex-direction: column;
@@ -48,7 +50,7 @@
       border-color: var(--#{$prefix}m-input-group-focus-border-color);
       box-shadow: var(--#{$prefix}m-input-group-focus-box-shadow);
 
-      &:hover:has(.form-control:not(:placeholder-shown)),
+      &:hover:has(.form-control:not(:placeholder-shown:disabled)),
       &:hover {
         border-color: var(--#{$prefix}m-input-group-focus-border-color);
       }
@@ -153,10 +155,23 @@
     background: var(--#{$prefix}m-input-group-disabled-bg);
   }
 
-  // input addons disabled
+
   &:has(.form-control:disabled) {
+    // input addons disabled
     .input-group-text {
       background: var(--#{$prefix}m-input-group-disabled-bg);
+    }
+
+    // icon disabled
+    .m-input-icon {
+      .m-icon {
+        color: var(--#{$prefix}m-input-group-disabled-color);
+      }
+    }
+
+    // input with elements disabled
+    .input-group {
+      border-color: var(--#{$prefix}m-input-group-disabled-border-color);
     }
   }
 }
