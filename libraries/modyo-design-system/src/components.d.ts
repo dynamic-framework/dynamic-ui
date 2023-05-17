@@ -109,88 +109,6 @@ export namespace Components {
          */
         "variant"?: ButtonVariant;
     }
-    interface MCounter {
-        /**
-          * Hint text
-         */
-        "hint"?: string;
-        /**
-          * Right icon of the hint text
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Left icon of the hint text
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Is disabled counter
-         */
-        "isDisabled": boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading": boolean;
-        /**
-          * Label of the input
-         */
-        "label"?: string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon": string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection": FormControlLayoutDirection;
-        /**
-          * Id of the input
-         */
-        "mId": string;
-        /**
-          * Maximum value for the input
-         */
-        "maxValue": number;
-        /**
-          * Minimum value for the input
-         */
-        "minValue": number;
-        /**
-          * Theme of the counter
-         */
-        "theme"?: string;
-        /**
-          * Value of the input
-         */
-        "value": number;
-        /**
-          * Variant of the counter
-         */
-        "variant": 'default' | 'prime';
-    }
     interface MFormCheck {
         /**
           * Set checkbox as toggle button
@@ -438,6 +356,100 @@ export namespace Components {
           * The value of the input
          */
         "value": string | number;
+    }
+    interface MInputCounter {
+        /**
+          * Hint to display
+         */
+        "hint"?: string;
+        /**
+          * Icon for the end
+         */
+        "iconEnd": string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Icon for the left
+         */
+        "iconStart": string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * The input is disabled
+         */
+        "isDisabled": boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * * The max value of the input
+         */
+        "maxValue": number;
+        /**
+          * * The min value of the input
+         */
+        "minValue": number;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * The value of the input
+         */
+        "value": number;
     }
     interface MInputCurrencyBase {
         /**
@@ -1210,10 +1222,6 @@ export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
 }
-export interface MCounterCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMCounterElement;
-}
 export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMFormCheckElement;
@@ -1225,6 +1233,10 @@ export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MInputCounterCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputCounterElement;
 }
 export interface MInputCurrencyBaseCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1295,12 +1307,6 @@ declare global {
         prototype: HTMLMButtonElement;
         new (): HTMLMButtonElement;
     };
-    interface HTMLMCounterElement extends Components.MCounter, HTMLStencilElement {
-    }
-    var HTMLMCounterElement: {
-        prototype: HTMLMCounterElement;
-        new (): HTMLMCounterElement;
-    };
     interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
     }
     var HTMLMFormCheckElement: {
@@ -1330,6 +1336,12 @@ declare global {
     var HTMLMInputElement: {
         prototype: HTMLMInputElement;
         new (): HTMLMInputElement;
+    };
+    interface HTMLMInputCounterElement extends Components.MInputCounter, HTMLStencilElement {
+    }
+    var HTMLMInputCounterElement: {
+        prototype: HTMLMInputCounterElement;
+        new (): HTMLMInputCounterElement;
     };
     interface HTMLMInputCurrencyBaseElement extends Components.MInputCurrencyBase, HTMLStencilElement {
     }
@@ -1414,12 +1426,12 @@ declare global {
         "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
-        "m-counter": HTMLMCounterElement;
         "m-form-check": HTMLMFormCheckElement;
         "m-form-switch": HTMLMFormSwitchElement;
         "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
+        "m-input-counter": HTMLMInputCounterElement;
         "m-input-currency-base": HTMLMInputCurrencyBaseElement;
         "m-input-password": HTMLMInputPasswordElement;
         "m-input-search": HTMLMInputSearchElement;
@@ -1535,96 +1547,6 @@ declare namespace LocalJSX {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
-    }
-    interface MCounter {
-        /**
-          * Hint text
-         */
-        "hint"?: string;
-        /**
-          * Right icon of the hint text
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Left icon of the hint text
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Is disabled counter
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading"?: boolean;
-        /**
-          * Label of the input
-         */
-        "label"?: string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of input
-         */
-        "layoutDirection"?: FormControlLayoutDirection;
-        /**
-          * Id of the input
-         */
-        "mId": string;
-        /**
-          * Maximum value for the input
-         */
-        "maxValue": number;
-        /**
-          * Minimum value for the input
-         */
-        "minValue": number;
-        /**
-          * Event for button pressed
-         */
-        "onMClick"?: (event: MCounterCustomEvent<any>) => void;
-        /**
-          * Event for input change
-         */
-        "onMInput"?: (event: MCounterCustomEvent<any>) => void;
-        /**
-          * Theme of the counter
-         */
-        "theme"?: string;
-        /**
-          * Value of the input
-         */
-        "value": number;
-        /**
-          * Variant of the counter
-         */
-        "variant"?: 'default' | 'prime';
     }
     interface MFormCheck {
         /**
@@ -1903,6 +1825,108 @@ declare namespace LocalJSX {
           * The value of the input
          */
         "value"?: string | number;
+    }
+    interface MInputCounter {
+        /**
+          * Hint to display
+         */
+        "hint"?: string;
+        /**
+          * Icon for the end
+         */
+        "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Icon for the left
+         */
+        "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * The input is disabled
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * * The max value of the input
+         */
+        "maxValue": number;
+        /**
+          * * The min value of the input
+         */
+        "minValue": number;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Event for input change
+         */
+        "onMChange"?: (event: MInputCounterCustomEvent<number>) => void;
+        /**
+          * Event for button pressed
+         */
+        "onMClick"?: (event: MInputCounterCustomEvent<number>) => void;
+        /**
+          * The value of the input
+         */
+        "value": number;
     }
     interface MInputCurrencyBase {
         /**
@@ -2723,12 +2747,12 @@ declare namespace LocalJSX {
         "m-app": MApp;
         "m-badge": MBadge;
         "m-button": MButton;
-        "m-counter": MCounter;
         "m-form-check": MFormCheck;
         "m-form-switch": MFormSwitch;
         "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
+        "m-input-counter": MInputCounter;
         "m-input-currency-base": MInputCurrencyBase;
         "m-input-password": MInputPassword;
         "m-input-search": MInputSearch;
@@ -2752,12 +2776,12 @@ declare module "@stencil/core" {
             "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
-            "m-counter": LocalJSX.MCounter & JSXBase.HTMLAttributes<HTMLMCounterElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
+            "m-input-counter": LocalJSX.MInputCounter & JSXBase.HTMLAttributes<HTMLMInputCounterElement>;
             "m-input-currency-base": LocalJSX.MInputCurrencyBase & JSXBase.HTMLAttributes<HTMLMInputCurrencyBaseElement>;
             "m-input-password": LocalJSX.MInputPassword & JSXBase.HTMLAttributes<HTMLMInputPasswordElement>;
             "m-input-search": LocalJSX.MInputSearch & JSXBase.HTMLAttributes<HTMLMInputSearchElement>;

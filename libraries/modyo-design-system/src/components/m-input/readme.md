@@ -73,6 +73,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [m-input-counter](../m-input-counter)
  - [m-input-currency-base](../m-input-currency-base)
  - [m-input-password](../m-input-password)
  - [m-input-search](../m-input-search)
@@ -85,6 +86,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   m-input --> m-icon
+  m-input-counter --> m-input
   m-input-currency-base --> m-input
   m-input-password --> m-input
   m-input-search --> m-input
