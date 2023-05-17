@@ -50,7 +50,7 @@
 
 ### `blurInput() => Promise<void>`
 
-
+Set blur to internal input
 
 #### Returns
 
@@ -60,7 +60,7 @@ Type: `Promise<void>`
 
 ### `focusInput() => Promise<void>`
 
-
+Set focus to internal input
 
 #### Returns
 
