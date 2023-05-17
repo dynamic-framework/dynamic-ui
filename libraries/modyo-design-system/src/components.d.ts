@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { IconSettings } from "./utils";
 import { ComponentSize, FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { FormCheckState, FormCheckType } from "./components/m-form-check/m-form-check-interface";
+import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 import { Options } from "currency.js";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
@@ -111,10 +111,6 @@ export namespace Components {
     }
     interface MFormCheck {
         /**
-          * Set checkbox as toggle button
-         */
-        "isButton": boolean;
-        /**
           * Set checkbox or radio button marked as selected or not
          */
         "isChecked": boolean;
@@ -138,10 +134,6 @@ export namespace Components {
           * HTML Name to use within a form or JS reference
          */
         "name"?: string;
-        /**
-          * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
-         */
-        "state"?: FormCheckState;
         /**
           * Set whether is a checkbox input or a radio input
          */
@@ -1552,10 +1544,6 @@ declare namespace LocalJSX {
     }
     interface MFormCheck {
         /**
-          * Set checkbox as toggle button
-         */
-        "isButton"?: boolean;
-        /**
           * Set checkbox or radio button marked as selected or not
          */
         "isChecked"?: boolean;
@@ -1583,10 +1571,6 @@ declare namespace LocalJSX {
           * Emitted when the switch has changed
          */
         "onMChange"?: (event: MFormCheckCustomEvent<any>) => void;
-        /**
-          * State of checkbox or radio. The states could be: Success state Error state Warning state Loading state
-         */
-        "state"?: FormCheckState;
         /**
           * Set whether is a checkbox input or a radio input
          */

@@ -1,8 +1,8 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MFormCheck } from './m-form-check';
-import { FormCheckType } from './m-form-check-interface';
+import { MInputCheck } from './m-input-check';
+import { FormCheckType } from './m-input-check-interface';
 
 it('should render base checkbox', async () => {
   const props = {
@@ -10,7 +10,7 @@ it('should render base checkbox', async () => {
     type: 'checkbox',
   };
   const page = await newSpecPage({
-    components: [MFormCheck],
+    components: [MInputCheck],
     template: () => (
       <m-form-check
         mId={props.mId}
@@ -31,7 +31,7 @@ it('should render base radio', async () => {
     type: 'radio',
   };
   const page = await newSpecPage({
-    components: [MFormCheck],
+    components: [MInputCheck],
     template: () => (
       <m-form-check
         mId={props.mId}

@@ -22,9 +22,11 @@ const config: Meta<typeof MInputSwitch> = {
     },
     isChecked: {
       control: 'boolean',
+      type: 'boolean',
     },
     isDisabled: {
       control: 'boolean',
+      type: 'boolean',
     },
   },
 };

@@ -1,14 +1,18 @@
+// scss-docs-start form-text-variables
 $form-text-margin-top: .25rem !default;
 $form-text-font-size: $small-font-size !default;
 $form-text-font-style: null !default;
 $form-text-font-weight: null !default;
 $form-text-color: $text-muted !default;
+// scss-docs-end form-text-variables
 
+// scss-docs-start form-label-variables
 $form-label-margin-bottom: 0 !default;
 $form-label-font-size: $subparagraph-font-size !default;
 $form-label-font-style: null !default;
 $form-label-font-weight: $font-weight-bold !default;
 $form-label-color: var(--#{$prefix}gray) !default;
+// scss-docs-end form-label-variables
 
 // custom
 $form-label-focus-color: var(--#{$prefix}secondary) !default;
@@ -17,6 +21,7 @@ $form-label-padding-x: $spacer-2 !default;
 $form-label-gap: $spacer-1 !default;
 // end custom
 
+// scss-docs-start form-input-variables
 $input-padding-y: .75rem !default;
 $input-padding-x: $spacer-3 !default;
 $input-font-family: $input-btn-font-family !default;
@@ -33,6 +38,10 @@ $input-padding-x-lg: $input-padding-x !default;
 $input-font-size-lg: $input-font-size !default;
 
 $input-bg: var(--#{$prefix}white) !default;
+$input-disabled-color: var(--#{$prefix}gray) !default;
+$input-disabled-bg: var(--#{$prefix}gray-100) !default;
+$input-disabled-border-color: var(--#{$prefix}gray-light) !default;
+
 $input-color: var(--#{$prefix}gray) !default;
 $input-border-color: var(--#{$prefix}gray-light) !default;      // unused
 $input-border-width: $input-btn-border-width !default;          // unused
@@ -47,7 +56,7 @@ $input-hover-border-color: var(--#{$prefix}gray) !default;
 // end custom
 
 $input-focus-bg: $input-bg !default;
-$input-focus-border-color: var(--#{$prefix}secondary) !default; // unused
+$input-focus-border-color: var(--#{$prefix}focus-ring-color) !default; // unused
 $input-focus-color: $input-color !default;                      // unused
 $input-focus-width: $input-btn-focus-width !default;            // unused
 $input-focus-box-shadow: $input-btn-focus-box-shadow !default;
@@ -62,10 +71,6 @@ $input-group-hover-border-color: var(--#{$prefix}gray) !default;
 $input-group-focus-border-color: var(--#{$prefix}secondary) !default;
 $input-group-focus-box-shadow: 0 2px 14px rgba(var(--#{$prefix}secondary-rgb), .3) !default;
 // end custom
-
-$input-disabled-color: var(--#{$prefix}gray) !default;
-$input-disabled-bg: var(--#{$prefix}gray-100) !default;
-$input-disabled-border-color: var(--#{$prefix}gray-light) !default;
 
 $input-placeholder-color: var(--#{$prefix}gray-light) !default;
 $input-plaintext-color: $body-color !default;
@@ -83,52 +88,60 @@ $input-height-lg: add($input-line-height * 1em, add($input-padding-y-lg * 2, $in
 $input-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 
 $form-color-width: 3rem !default;
+// scss-docs-end form-input-variables
 
-// Checkbox
-$form-check-margin-bottom: 0 !default;
-$form-check-label-color: var(--#{$prefix}gray) !default;
-$form-check-transition: border 200ms, color 200ms, background-color 200ms !default;
-
-// Checkbox :disabled
-$form-check-input-disabled-opacity: .75 !default;
-$form-check-label-disabled-opacity: 1 !default;
-$form-check-btn-check-disabled-opacity: $btn-disabled-opacity !default;
-
-// Checkbox :focus
-// TODO: fix focus.
-// $form-check-border-color-focus: var(--#{$prefix}accessibility) !default;
-$form-check-border-width-focus: .125rem !default;
-
-// Checkbox-input
+// scss-docs-start form-check-variables
 $form-check-input-width: 1.5em !default;
-$form-check-input-bg: var(--#{$prefix}light) !default;
+$form-check-min-height: $font-size-base * $line-height-base !default;
+$form-check-padding-start: $form-check-input-width + .5em !default;
+$form-check-margin-bottom: .125rem !default;
+$form-check-label-color: null !default;
+$form-check-label-cursor: null !default;
+$form-check-transition: null !default;
 
-$form-check-input-border-color: var(--#{$prefix}form-check-input-border-color) !default;
-$form-check-input-border: 1px solid #{$form-check-input-border-color} !default;
+$form-check-input-active-filter: brightness(90%) !default;
 
-$form-check-input-border-hover-color: var(--#{$prefix}form-check-input-border-hover-color) !default;
-$form-check-input-border-hover-width: var(--#{$prefix}form-check-input-border-hover-width) !default;
-$form-check-input-border-hover: #{$form-check-input-border-hover-width} solid #{$form-check-input-border-hover-color} !default;
+// custom
+$form-check-input-border-color: var(--#{$prefix}gray-300) !default;
+// end custom
 
+$form-check-input-bg: $input-bg !default;
+$form-check-input-border: var(--#{$prefix}border-width) solid $form-check-input-border-color !default;
 $form-check-input-border-radius: .25em !default;
-
-// Checkbox-input:focus
-$form-check-input-focus-border: none !default;
+$form-check-radio-border-radius: 50% !default;
+$form-check-input-focus-border: $input-focus-border-color !default;
 $form-check-input-focus-box-shadow: none !default;
 
-// Checkbox-input:checked
-$form-check-input-checked-bg-color: var(--#{$prefix}form-check-input-checked-bg, var(--#{$prefix}tertiary)) !default;
-$form-check-input-checked-border-color: $form-check-input-checked-bg-color !default;
+// custom
+$form-check-input-focus-border-color: $form-check-input-border-color !default;
+$form-check-input-focus-outline-color: var(--#{$prefix}focus-ring-color) !default;
+$form-check-input-focus-outline: 2px solid $form-check-input-focus-outline-color !default;
+$form-check-input-focus-outline-offset: 2px !default;
+$form-check-input-hover-border-color: var(--#{$prefix}focus-ring-color) !default;
+// end custom
 
-// Checkbox Indeterminate
-$form-check-input-indeterminate-color: #{$light} !default;
-$form-check-input-indeterminate-bg-color: var(--#{$prefix}tertiary) !default;
-$form-check-input-indeterminate-border-color: #{$form-check-input-indeterminate-bg-color} !default;
-$form-check-input-indeterminate-border-hover-color: var(--#{$prefix}gray-600) !default;
+$form-check-input-checked-color: $component-active-color !default;
+$form-check-input-checked-bg-color: $component-active-bg !default;
+$form-check-input-checked-border-color: $form-check-input-checked-bg-color !default;
+$form-check-input-checked-bg-image: url("data:image/svg+xml, <svg viewBox='-4 -6 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' clip-rule='evenodd' d='M14.294 0.594229C14.3863 0.498719 14.4966 0.422536 14.6186 0.370127C14.7406 0.317718 14.8719 0.290132 15.0046 0.288978C15.1374 0.287824 15.2691 0.313126 15.392 0.363407C15.5149 0.413688 15.6265 0.487941 15.7204 0.581833C15.8143 0.675726 15.8886 0.787378 15.9389 0.910275C15.9891 1.03317 16.0144 1.16485 16.0133 1.29763C16.0121 1.43041 15.9846 1.56163 15.9321 1.68363C15.8797 1.80564 15.8036 1.91598 15.708 2.00823L6.70804 11.0082C6.52051 11.1957 6.26621 11.301 6.00104 11.301C5.73588 11.301 5.48157 11.1957 5.29404 11.0082L0.293041 6.00723C0.110883 5.81863 0.0100885 5.56602 0.0123669 5.30383C0.0146453 5.04163 0.119815 4.79082 0.305223 4.60541C0.490631 4.42 0.741443 4.31483 1.00364 4.31255C1.26584 4.31028 1.51844 4.41107 1.70704 4.59323L6.00104 8.88723L14.294 0.594229V0.594229Z' fill='#{$form-check-input-checked-color}'/></svg>") !default;
+$form-check-radio-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$form-check-input-checked-color}'/></svg>") !default;
+
+$form-check-input-indeterminate-color: $component-active-color !default;
+$form-check-input-indeterminate-bg-color: $component-active-bg !default;
+$form-check-input-indeterminate-border-color: $form-check-input-indeterminate-bg-color !default;
 $form-check-input-indeterminate-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$form-check-input-indeterminate-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>") !default;
 
-// $form-check-inline-margin-end: 1rem !default;
-//// scss-docs-end form-check-variables
+$form-check-input-disabled-opacity: 1 !default;
+$form-check-label-disabled-opacity: $form-check-input-disabled-opacity !default;
+$form-check-btn-check-disabled-opacity: $btn-disabled-opacity !default;
+
+// custom
+$form-check-input-disabled-border-color: var(--#{$prefix}gray-300) !default;
+$form-check-input-disabled-bg: var(--#{$prefix}gray-100) !default;
+// end custom
+
+$form-check-inline-margin-end:    1rem !default;
+// scss-docs-end form-check-variables
 
 //// scss-docs-start form-switch-variables
 $form-switch-color: $white !default;
