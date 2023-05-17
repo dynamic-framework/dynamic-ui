@@ -15,7 +15,7 @@ const config: Meta<typeof MInput> = {
     name: {
       control: 'text',
       type: 'string',
-      description: 'The name of the input',
+      description: 'Name of the input',
     },
     label: {
       control: 'text',
