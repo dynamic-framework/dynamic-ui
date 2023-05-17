@@ -36,7 +36,7 @@ $position-values: (
 @import "box-shadow";
 
 $component-active-color: $white !default;
-$component-active-bg: $primary-900 !default;
+$component-active-bg: $focus-ring-color !default;
 
 // $caret-width: .3em !default;
 // $caret-vertical-align: $caret-width * .85 !default;
@@ -66,11 +66,11 @@ $input-btn-font-family: null !default;
 $input-btn-font-size: $font-size-base !default;
 $input-btn-line-height: $line-height-base !default;
 
-// $input-btn-focus-width: .25rem !default;
-// $input-btn-focus-color-opacity: .25 !default;
-// $input-btn-focus-color: rgba($component-active-bg, $input-btn-focus-color-opacity) !default;
-// $input-btn-focus-blur: 0 !default;
-// $input-btn-focus-box-shadow: 0 0 $input-btn-focus-blur $input-btn-focus-width $input-btn-focus-color !default;
+$input-btn-focus-width: 0 !default;
+$input-btn-focus-color-opacity: 0 !default;
+$input-btn-focus-color: rgba(var(--#{$prefix}secondary-rgb), $input-btn-focus-color-opacity) !default;
+$input-btn-focus-blur: 0 !default;
+$input-btn-focus-box-shadow: none !default;
 
 $input-btn-padding-y-sm: $spacer-2 !default; // TODO: remove this after m-input homologation
 $input-btn-padding-x-sm: $spacer-3 !default; // TODO: remove this after m-input homologation
