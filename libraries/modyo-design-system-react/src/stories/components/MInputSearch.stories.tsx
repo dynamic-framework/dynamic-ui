@@ -90,6 +90,5 @@ export const Search: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
-    onMChange: ({ detail }) => console.log(detail),
   },
 };

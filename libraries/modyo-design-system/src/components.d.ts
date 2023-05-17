@@ -151,32 +151,6 @@ export namespace Components {
          */
         "value"?: string;
     }
-    interface MFormSwitch {
-        /**
-          * Flag to change the check state
-         */
-        "isChecked"?: boolean;
-        /**
-          * Flag to disable the input
-         */
-        "isDisabled": boolean;
-        /**
-          * The text to display in the switch.
-         */
-        "label": string;
-        /**
-          * The text to display when the switch is off.
-         */
-        "labelOff": string;
-        /**
-          * The text to display when the switch is on.
-         */
-        "labelOn": string;
-        /**
-          * Id
-         */
-        "mId": string;
-    }
     interface MHint {
         /**
           * Right icon for the hint
@@ -668,6 +642,28 @@ export namespace Components {
           * The value of the input
          */
         "value": string;
+    }
+    interface MInputSwitch {
+        /**
+          * Flag to change the check state
+         */
+        "isChecked"?: boolean;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
+          * The text to display in the switch.
+         */
+        "label"?: string;
+        /**
+          * Id
+         */
+        "mId": string;
+        /**
+          * Id
+         */
+        "name"?: string;
     }
     interface MListItem {
         /**
@@ -1226,10 +1222,6 @@ export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMFormCheckElement;
 }
-export interface MFormSwitchCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMFormSwitchElement;
-}
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
@@ -1249,6 +1241,10 @@ export interface MInputPasswordCustomEvent<T> extends CustomEvent<T> {
 export interface MInputSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputSearchElement;
+}
+export interface MInputSwitchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputSwitchElement;
 }
 export interface MListItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1313,12 +1309,6 @@ declare global {
         prototype: HTMLMFormCheckElement;
         new (): HTMLMFormCheckElement;
     };
-    interface HTMLMFormSwitchElement extends Components.MFormSwitch, HTMLStencilElement {
-    }
-    var HTMLMFormSwitchElement: {
-        prototype: HTMLMFormSwitchElement;
-        new (): HTMLMFormSwitchElement;
-    };
     interface HTMLMHintElement extends Components.MHint, HTMLStencilElement {
     }
     var HTMLMHintElement: {
@@ -1360,6 +1350,12 @@ declare global {
     var HTMLMInputSearchElement: {
         prototype: HTMLMInputSearchElement;
         new (): HTMLMInputSearchElement;
+    };
+    interface HTMLMInputSwitchElement extends Components.MInputSwitch, HTMLStencilElement {
+    }
+    var HTMLMInputSwitchElement: {
+        prototype: HTMLMInputSwitchElement;
+        new (): HTMLMInputSwitchElement;
     };
     interface HTMLMListItemElement extends Components.MListItem, HTMLStencilElement {
     }
@@ -1427,7 +1423,6 @@ declare global {
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-form-check": HTMLMFormCheckElement;
-        "m-form-switch": HTMLMFormSwitchElement;
         "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
@@ -1435,6 +1430,7 @@ declare global {
         "m-input-currency-base": HTMLMInputCurrencyBaseElement;
         "m-input-password": HTMLMInputPasswordElement;
         "m-input-search": HTMLMInputSearchElement;
+        "m-input-switch": HTMLMInputSwitchElement;
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
@@ -1593,36 +1589,6 @@ declare namespace LocalJSX {
           * A string representing the value of the checkbox or radio
          */
         "value"?: string;
-    }
-    interface MFormSwitch {
-        /**
-          * Flag to change the check state
-         */
-        "isChecked"?: boolean;
-        /**
-          * Flag to disable the input
-         */
-        "isDisabled"?: boolean;
-        /**
-          * The text to display in the switch.
-         */
-        "label": string;
-        /**
-          * The text to display when the switch is off.
-         */
-        "labelOff"?: string;
-        /**
-          * The text to display when the switch is on.
-         */
-        "labelOn"?: string;
-        /**
-          * Id
-         */
-        "mId": string;
-        /**
-          * Emitted when the switch has changed
-         */
-        "onMChange"?: (event: MFormSwitchCustomEvent<boolean>) => void;
     }
     interface MHint {
         /**
@@ -2161,6 +2127,32 @@ declare namespace LocalJSX {
           * The value of the input
          */
         "value"?: string;
+    }
+    interface MInputSwitch {
+        /**
+          * Flag to change the check state
+         */
+        "isChecked"?: boolean;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * The text to display in the switch.
+         */
+        "label"?: string;
+        /**
+          * Id
+         */
+        "mId": string;
+        /**
+          * Id
+         */
+        "name"?: string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onMChange"?: (event: MInputSwitchCustomEvent<boolean>) => void;
     }
     interface MListItem {
         /**
@@ -2748,7 +2740,6 @@ declare namespace LocalJSX {
         "m-badge": MBadge;
         "m-button": MButton;
         "m-form-check": MFormCheck;
-        "m-form-switch": MFormSwitch;
         "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
@@ -2756,6 +2747,7 @@ declare namespace LocalJSX {
         "m-input-currency-base": MInputCurrencyBase;
         "m-input-password": MInputPassword;
         "m-input-search": MInputSearch;
+        "m-input-switch": MInputSwitch;
         "m-list-item": MListItem;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
@@ -2777,7 +2769,6 @@ declare module "@stencil/core" {
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
-            "m-form-switch": LocalJSX.MFormSwitch & JSXBase.HTMLAttributes<HTMLMFormSwitchElement>;
             "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
@@ -2785,6 +2776,7 @@ declare module "@stencil/core" {
             "m-input-currency-base": LocalJSX.MInputCurrencyBase & JSXBase.HTMLAttributes<HTMLMInputCurrencyBaseElement>;
             "m-input-password": LocalJSX.MInputPassword & JSXBase.HTMLAttributes<HTMLMInputPasswordElement>;
             "m-input-search": LocalJSX.MInputSearch & JSXBase.HTMLAttributes<HTMLMInputSearchElement>;
+            "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;

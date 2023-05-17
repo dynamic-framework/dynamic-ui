@@ -10,7 +10,6 @@ import { defineCustomElement as defineMApp } from '@modyo-dynamic/modyo-design-s
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
 import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
-import { defineCustomElement as defineMFormSwitch } from '@modyo-dynamic/modyo-design-system/components/m-form-switch.js';
 import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
@@ -18,6 +17,7 @@ import { defineCustomElement as defineMInputCounter } from '@modyo-dynamic/modyo
 import { defineCustomElement as defineMInputCurrencyBase } from '@modyo-dynamic/modyo-design-system/components/m-input-currency-base.js';
 import { defineCustomElement as defineMInputPassword } from '@modyo-dynamic/modyo-design-system/components/m-input-password.js';
 import { defineCustomElement as defineMInputSearch } from '@modyo-dynamic/modyo-design-system/components/m-input-search.js';
+import { defineCustomElement as defineMInputSwitch } from '@modyo-dynamic/modyo-design-system/components/m-input-switch.js';
 import { defineCustomElement as defineMListItem } from '@modyo-dynamic/modyo-design-system/components/m-list-item.js';
 import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
@@ -34,7 +34,6 @@ export const MApp = /*@__PURE__*/createReactComponent<JSX.MApp, HTMLMAppElement>
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
 export const MFormCheck = /*@__PURE__*/createReactComponent<JSX.MFormCheck, HTMLMFormCheckElement>('m-form-check', undefined, undefined, defineMFormCheck);
-export const MFormSwitch = /*@__PURE__*/createReactComponent<JSX.MFormSwitch, HTMLMFormSwitchElement>('m-form-switch', undefined, undefined, defineMFormSwitch);
 export const MHint = /*@__PURE__*/createReactComponent<JSX.MHint, HTMLMHintElement>('m-hint', undefined, undefined, defineMHint);
 export const MIcon = /*@__PURE__*/createReactComponent<JSX.MIcon, HTMLMIconElement>('m-icon', undefined, undefined, defineMIcon);
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
@@ -42,6 +41,7 @@ export const MInputCounter = /*@__PURE__*/createReactComponent<JSX.MInputCounter
 export const MInputCurrencyBase = /*@__PURE__*/createReactComponent<JSX.MInputCurrencyBase, HTMLMInputCurrencyBaseElement>('m-input-currency-base', undefined, undefined, defineMInputCurrencyBase);
 export const MInputPassword = /*@__PURE__*/createReactComponent<JSX.MInputPassword, HTMLMInputPasswordElement>('m-input-password', undefined, undefined, defineMInputPassword);
 export const MInputSearch = /*@__PURE__*/createReactComponent<JSX.MInputSearch, HTMLMInputSearchElement>('m-input-search', undefined, undefined, defineMInputSearch);
+export const MInputSwitch = /*@__PURE__*/createReactComponent<JSX.MInputSwitch, HTMLMInputSwitchElement>('m-input-switch', undefined, undefined, defineMInputSwitch);
 export const MListItem = /*@__PURE__*/createReactComponent<JSX.MListItem, HTMLMListItemElement>('m-list-item', undefined, undefined, defineMListItem);
 export const MModal = /*@__PURE__*/createReactComponent<JSX.MModal, HTMLMModalElement>('m-modal', undefined, undefined, defineMModal);
 export const MOffcanvas = /*@__PURE__*/createReactComponent<JSX.MOffcanvas, HTMLMOffcanvasElement>('m-offcanvas', undefined, undefined, defineMOffcanvas);

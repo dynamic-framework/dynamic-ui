@@ -198,13 +198,13 @@ export class MInput implements ComponentInterface {
 
   render() {
     return (
-      <div class="form-control-layout">
+      <div class="m-input">
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
             {this.labelIcon && (
               <m-icon
-                class="form-control-icon"
+                class="m-input-icon"
                 icon={this.labelIcon}
                 familyClass={this.labelIconFamilyClass}
                 familyPrefix={this.labelIconFamilyPrefix}
@@ -212,7 +212,7 @@ export class MInput implements ComponentInterface {
             )}
           </label>
         )}
-        <div class="form-control-input">
+        <div class="m-input-control">
           <div
             class={{
               'input-group': true,
@@ -229,7 +229,7 @@ export class MInput implements ComponentInterface {
               >
                 {this.iconStart && (
                   <m-icon
-                    class="form-control-icon"
+                    class="m-input-icon"
                     icon={this.iconStart}
                     familyClass={this.iconStartFamilyClass}
                     familyPrefix={this.iconStartFamilyPrefix}
@@ -265,7 +265,7 @@ export class MInput implements ComponentInterface {
                 id={`${this.mId}State`}
               >
                 <m-icon
-                  class="form-control-validation-icon"
+                  class="m-input-validation-icon"
                   icon={this.isInvalid ? 'exclamation-circle' : 'check'}
                   familyClass={this.iconFamilyClass}
                   familyPrefix={this.iconFamilyPrefix}
@@ -281,7 +281,7 @@ export class MInput implements ComponentInterface {
               >
                 {this.iconEnd && (
                   <m-icon
-                    class="form-control-icon"
+                    class="m-input-icon"
                     icon={this.iconEnd}
                     familyClass={this.iconEndFamilyClass}
                     familyPrefix={this.iconEndFamilyPrefix}
@@ -290,7 +290,7 @@ export class MInput implements ComponentInterface {
               </button>
             )}
             {this.isLoading && (
-              <div class="input-group-text form-control-icon">
+              <div class="input-group-text m-input-icon">
                 <span
                   class="spinner-border spinner-border-sm"
                   role="status"
