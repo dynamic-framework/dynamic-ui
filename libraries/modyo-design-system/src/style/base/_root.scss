@@ -22,6 +22,22 @@
   @each $color, $value in $theme-color-variants {
     --#{$prefix}#{$color}: #{$value};
   }
+
+  // only reference root variables
+
+  @each $level, $value in $spacers {
+    --#{$prefix}ref-spacer-#{$level}: #{$value};
+  }
+
+  @each $level, $value in $display-font-sizes {
+    --#{$prefix}ref-display-#{$level}: #{$value};
+  }
+  @each $level, $value in $font-sizes {
+    --#{$prefix}ref-fs-#{$level}: #{$value};
+  }
+  --#{$prefix}ref-fs-subparagraph: #{$subparagraph-font-size};
+  --#{$prefix}ref-fs-small: #{$small-font-size};
+
 }
 
 .flex-1 {
