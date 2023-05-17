@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.10.0...@modyo-dynamic/modyo-design-system-react@0.10.1) (2023-05-17)
+
+### Bug Fixes
+
+- event type on change ([a74516d](https://github.com/modyo-dynamic/modyo-design-system/commit/a74516d0b7a149f1a64b5d77143929780a7b28e2))
+- remove unused import ([afc8c9a](https://github.com/modyo-dynamic/modyo-design-system/commit/afc8c9ae7dc0effa90990633728da037c1b3aaba))
+
 ## [0.10.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.9.0...@modyo-dynamic/modyo-design-system-react@0.10.0) (2023-05-09)
 
 ### Features
