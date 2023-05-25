@@ -43,19 +43,6 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
 ]);
 
 
-export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
-  'type',
-  'name',
-  'label',
-  'isChecked',
-  'mId',
-  'isDisabled',
-  'isIndeterminate',
-  'value',
-  'mChange'
-]);
-
-
 export const MHint = /*@__PURE__*/ defineContainer<JSX.MHint>('m-hint', undefined, [
   'iconStart',
   'iconStartFamilyClass',
@@ -116,6 +103,19 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'mWheel',
   'mIconStartClick',
   'mIconEndClick'
+]);
+
+
+export const MInputCheck = /*@__PURE__*/ defineContainer<JSX.MInputCheck>('m-input-check', undefined, [
+  'type',
+  'name',
+  'label',
+  'isChecked',
+  'mId',
+  'isDisabled',
+  'isIndeterminate',
+  'value',
+  'mChange'
 ]);
 
 

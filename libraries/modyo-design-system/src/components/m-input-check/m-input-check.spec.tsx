@@ -12,16 +12,16 @@ it('should render base checkbox', async () => {
   const page = await newSpecPage({
     components: [MInputCheck],
     template: () => (
-      <m-form-check
+      <m-input-check
         mId={props.mId}
         type={props.type as FormCheckType}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-form-check class="form-check-box">
-      <input class="form-check-input" id="${props.mId}" type="${props.type}">
-    </m-form-check>
+    <m-input-check>
+      <input class="form-check-input m-input-check" id="checkTest" type="checkbox">
+    </m-input-check>
   `);
 });
 
@@ -33,15 +33,15 @@ it('should render base radio', async () => {
   const page = await newSpecPage({
     components: [MInputCheck],
     template: () => (
-      <m-form-check
+      <m-input-check
         mId={props.mId}
         type={props.type as FormCheckType}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-form-check class="form-check-box">
-      <input class="form-check-input" id="${props.mId}" type="${props.type}">
-    </m-form-check>
+    <m-input-check>
+      <input class="form-check-input m-input-check" id="radioTest" type="radio">
+    </m-input-check>
   `);
 });

@@ -9,10 +9,10 @@ import type { Components } from '@modyo-dynamic/modyo-design-system/components';
 import { defineCustomElement as defineMAlert } from '@modyo-dynamic/modyo-design-system/components/m-alert.js';
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineMFormCheck } from '@modyo-dynamic/modyo-design-system/components/m-form-check.js';
 import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
+import { defineCustomElement as defineMInputCheck } from '@modyo-dynamic/modyo-design-system/components/m-input-check.js';
 import { defineCustomElement as defineMInputCounter } from '@modyo-dynamic/modyo-design-system/components/m-input-counter.js';
 import { defineCustomElement as defineMInputCurrencyBase } from '@modyo-dynamic/modyo-design-system/components/m-input-currency-base.js';
 import { defineCustomElement as defineMInputPassword } from '@modyo-dynamic/modyo-design-system/components/m-input-password.js';
@@ -110,35 +110,6 @@ export declare interface MButton extends Components.MButton {
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMFormCheck,
-  inputs: ['isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'type', 'value']
-})
-@Component({
-  selector: 'm-form-check',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'type', 'value'],
-})
-export class MFormCheck {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MFormCheck extends Components.MFormCheck {
-  /**
-   * Emitted when the switch has changed
-   */
-  mChange: EventEmitter<CustomEvent<any>>;
-}
-
-
-@ProxyCmp({
   defineCustomElementFn: defineMHint,
   inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconSize', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'text', 'theme']
 })
@@ -231,6 +202,35 @@ export declare interface MInput extends Components.MInput {
    * Emitted when click on the right icon
    */
   mIconEndClick: EventEmitter<CustomEvent<MouseEvent>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineMInputCheck,
+  inputs: ['isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'type', 'value']
+})
+@Component({
+  selector: 'm-input-check',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'type', 'value'],
+})
+export class MInputCheck {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MInputCheck extends Components.MInputCheck {
+  /**
+   * Emitted when the switch has changed
+   */
+  mChange: EventEmitter<CustomEvent<any>>;
 }
 
 

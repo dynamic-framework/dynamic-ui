@@ -108,40 +108,6 @@ export namespace Components {
          */
         "variant"?: ButtonVariant;
     }
-    interface MFormCheck {
-        /**
-          * Set checkbox or radio button marked as selected or not
-         */
-        "isChecked": boolean;
-        /**
-          * Set input as disabled
-         */
-        "isDisabled": boolean;
-        /**
-          * Set view of checkbox as indeterminated
-         */
-        "isIndeterminate"?: boolean;
-        /**
-          * Text that will be displayed beside Check input or Radio input
-         */
-        "label"?: string;
-        /**
-          * Form control identifier
-         */
-        "mId": string;
-        /**
-          * HTML Name to use within a form or JS reference
-         */
-        "name"?: string;
-        /**
-          * Set whether is a checkbox input or a radio input
-         */
-        "type": FormCheckType;
-        /**
-          * A string representing the value of the checkbox or radio
-         */
-        "value"?: string;
-    }
     interface MHint {
         /**
           * Right icon for the hint
@@ -335,6 +301,40 @@ export namespace Components {
           * The value of the input
          */
         "value": string | number;
+    }
+    interface MInputCheck {
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "isChecked": boolean;
+        /**
+          * Set input as disabled
+         */
+        "isDisabled": boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "isIndeterminate"?: boolean;
+        /**
+          * Text that will be displayed beside Check input or Radio input
+         */
+        "label"?: string;
+        /**
+          * Form control identifier
+         */
+        "mId": string;
+        /**
+          * HTML Name to use within a form or JS reference
+         */
+        "name"?: string;
+        /**
+          * Set whether is a checkbox input or a radio input
+         */
+        "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
     }
     interface MInputCounter {
         /**
@@ -1167,13 +1167,13 @@ export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
 }
-export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMFormCheckElement;
-}
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MInputCheckCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputCheckElement;
 }
 export interface MInputCounterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1246,12 +1246,6 @@ declare global {
         prototype: HTMLMButtonElement;
         new (): HTMLMButtonElement;
     };
-    interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
-    }
-    var HTMLMFormCheckElement: {
-        prototype: HTMLMFormCheckElement;
-        new (): HTMLMFormCheckElement;
-    };
     interface HTMLMHintElement extends Components.MHint, HTMLStencilElement {
     }
     var HTMLMHintElement: {
@@ -1269,6 +1263,12 @@ declare global {
     var HTMLMInputElement: {
         prototype: HTMLMInputElement;
         new (): HTMLMInputElement;
+    };
+    interface HTMLMInputCheckElement extends Components.MInputCheck, HTMLStencilElement {
+    }
+    var HTMLMInputCheckElement: {
+        prototype: HTMLMInputCheckElement;
+        new (): HTMLMInputCheckElement;
     };
     interface HTMLMInputCounterElement extends Components.MInputCounter, HTMLStencilElement {
     }
@@ -1364,10 +1364,10 @@ declare global {
         "m-alert": HTMLMAlertElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
-        "m-form-check": HTMLMFormCheckElement;
         "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
+        "m-input-check": HTMLMInputCheckElement;
         "m-input-counter": HTMLMInputCounterElement;
         "m-input-currency-base": HTMLMInputCurrencyBaseElement;
         "m-input-password": HTMLMInputPasswordElement;
@@ -1479,44 +1479,6 @@ declare namespace LocalJSX {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
-    }
-    interface MFormCheck {
-        /**
-          * Set checkbox or radio button marked as selected or not
-         */
-        "isChecked"?: boolean;
-        /**
-          * Set input as disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Set view of checkbox as indeterminated
-         */
-        "isIndeterminate"?: boolean;
-        /**
-          * Text that will be displayed beside Check input or Radio input
-         */
-        "label"?: string;
-        /**
-          * Form control identifier
-         */
-        "mId": string;
-        /**
-          * HTML Name to use within a form or JS reference
-         */
-        "name"?: string;
-        /**
-          * Emitted when the switch has changed
-         */
-        "onMChange"?: (event: MFormCheckCustomEvent<any>) => void;
-        /**
-          * Set whether is a checkbox input or a radio input
-         */
-        "type": FormCheckType;
-        /**
-          * A string representing the value of the checkbox or radio
-         */
-        "value"?: string;
     }
     interface MHint {
         /**
@@ -1727,6 +1689,44 @@ declare namespace LocalJSX {
           * The value of the input
          */
         "value"?: string | number;
+    }
+    interface MInputCheck {
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "isChecked"?: boolean;
+        /**
+          * Set input as disabled
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "isIndeterminate"?: boolean;
+        /**
+          * Text that will be displayed beside Check input or Radio input
+         */
+        "label"?: string;
+        /**
+          * Form control identifier
+         */
+        "mId": string;
+        /**
+          * HTML Name to use within a form or JS reference
+         */
+        "name"?: string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onMChange"?: (event: MInputCheckCustomEvent<any>) => void;
+        /**
+          * Set whether is a checkbox input or a radio input
+         */
+        "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
     }
     interface MInputCounter {
         /**
@@ -2626,10 +2626,10 @@ declare namespace LocalJSX {
         "m-alert": MAlert;
         "m-badge": MBadge;
         "m-button": MButton;
-        "m-form-check": MFormCheck;
         "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
+        "m-input-check": MInputCheck;
         "m-input-counter": MInputCounter;
         "m-input-currency-base": MInputCurrencyBase;
         "m-input-password": MInputPassword;
@@ -2654,10 +2654,10 @@ declare module "@stencil/core" {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
-            "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
+            "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;
             "m-input-counter": LocalJSX.MInputCounter & JSXBase.HTMLAttributes<HTMLMInputCounterElement>;
             "m-input-currency-base": LocalJSX.MInputCurrencyBase & JSXBase.HTMLAttributes<HTMLMInputCurrencyBaseElement>;
             "m-input-password": LocalJSX.MInputPassword & JSXBase.HTMLAttributes<HTMLMInputPasswordElement>;

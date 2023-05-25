@@ -9,24 +9,21 @@ it('should render my component', async () => {
   const page = await newSpecPage({
     components: [MInputSelect],
     template: () => (
-      <m-select
+      <m-input-select
         {...select}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-  <m-select class="form-control-layout form-control-layout-pill form-control-layout-prime">
-    <div class="form-control-input w-100">
-      <div class="input-group">
-        <select
-          aria-describedby="${select.mId}-start"
-          class="form-select no-icons"
-          id="${select.mId}"
-        >
-        </select>
+    <m-input-select>
+      <div class="m-input">
+        <div class="m-input-control">
+          <div class="input-group">
+            <select aria-describedby="Random-idAdd Random-idHint" aria-label="" class="form-select" id="Random-id"></select>
+          </div>
+        </div>
       </div>
-    </div>
-  </m-select>
+    </m-input-select>
   `);
 });
 
@@ -41,29 +38,27 @@ it('should render my component with options', async () => {
   const page = await newSpecPage({
     components: [MInputSelect],
     template: () => (
-      <m-select
+      <m-input-select
         {...select}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-  <m-select class="form-control-layout form-control-layout-pill form-control-layout-prime">
-    <div class="form-control-input w-100">
-      <div class="input-group">
-        <select
-          aria-describedby="${select.mId}-start"
-          class="form-select no-icons"
-          id="${select.mId}"
-        >
-          <option value=${options[0].value}>
-            ${options[0].label}
-          </option>
-          <option value="${options[1].value}">
-            ${options[1].label}
-          </option>
-        </select>
+    <m-input-select>
+      <div class="m-input">
+        <div class="m-input-control">
+          <div class="input-group">
+            <select aria-describedby="Random-idAdd Random-idHint" aria-label="" class="form-select" id="Random-id">
+              <option value="valueA">
+                Option A
+              </option>
+              <option value="valueB">
+                Option B
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
-  </m-select>
+    </m-input-select>
   `);
 });

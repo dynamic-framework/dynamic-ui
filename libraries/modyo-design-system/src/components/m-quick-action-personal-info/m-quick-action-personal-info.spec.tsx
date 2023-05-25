@@ -20,20 +20,21 @@ it('should render my component', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-quick-action class="quick-action-host">
-      <button class="quick-action quick-action-variant-extended">
-        <div class="quick-action-picture">
-          <m-icon class="quick-action-icon" icon="heart-fill"></m-icon>
-        </div>
+    <m-quick-action-personal-info>
+      <button class="quick-action">
+        <img alt="" class="quick-action-picture" src="https://i.pravatar.cc/150?img=2">
         <div class="quick-action-content">
           <div class="quick-action-text">
             <span class="quick-action-title">
-              ${quick.name}
+              Jessica Rabit
             </span>
+            <small class="quick-action-subtitle">
+              Toon Bank **** 721
+            </small>
           </div>
-          <m-icon class="quick-action-link" icon="chevron-right" size="1.125rem"></m-icon>
         </div>
+        <m-icon class="quick-action-action-icon" icon="chevron-right"></m-icon>
       </button>
-    </m-quick-action>
+    </m-quick-action-personal-info>
   `);
 });
