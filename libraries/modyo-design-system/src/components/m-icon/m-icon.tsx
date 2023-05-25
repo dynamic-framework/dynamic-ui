@@ -8,10 +8,7 @@ import state from '../../utils/store';
 import type { ClassMap } from '../../utils/component-interface';
 import { PREFIX_BS } from '../../utils';
 
-@Component({
-  tag: 'm-icon',
-  styleUrl: 'm-icon.scss',
-})
+@Component({ tag: 'm-icon' })
 export class MIcon {
   /**
    * Name of icon to use (in kebab-case)
@@ -26,7 +23,7 @@ export class MIcon {
   /**
    * Size of the icon in css length unit
    * */
-  @Prop() size?: string = '1rem';
+  @Prop() size?: string = '1.5rem';
 
   /**
    * Enable loading animation
@@ -46,7 +43,7 @@ export class MIcon {
   /**
    * Circle size in css length unit
    */
-  @Prop() circleSize?: string = `calc(var(--${PREFIX_BS}m-icon-component-size) * 2)`;
+  @Prop() circleSize?: string = `calc(var(--${PREFIX_BS}m-icon-component-size) * 1)`;
 
   /**
    * Icon color in css color unit or var

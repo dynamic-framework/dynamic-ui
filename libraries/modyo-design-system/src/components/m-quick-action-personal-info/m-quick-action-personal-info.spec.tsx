@@ -1,15 +1,20 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MQuickAction } from './m-quick-action';
+import { MQuickActionPersonalInfo } from './m-quick-action-personal-info';
 
 it('should render my component', async () => {
-  const quick = { text: 'Quick' };
+  const quick = {
+    name: 'Jessica Rabit',
+    bank: 'Toon Bank',
+    account: '**** 721',
+    image: 'https://i.pravatar.cc/150?img=2',
+  };
 
   const page = await newSpecPage({
-    components: [MQuickAction],
+    components: [MQuickActionPersonalInfo],
     template: () => (
-      <m-quick-action
+      <m-quick-action-personal-info
         {...quick}
       />
     ),
@@ -23,7 +28,7 @@ it('should render my component', async () => {
         <div class="quick-action-content">
           <div class="quick-action-text">
             <span class="quick-action-title">
-              ${quick.text}
+              ${quick.name}
             </span>
           </div>
           <m-icon class="quick-action-link" icon="chevron-right" size="1.125rem"></m-icon>

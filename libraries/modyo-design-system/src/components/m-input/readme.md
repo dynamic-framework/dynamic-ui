@@ -26,9 +26,11 @@
 | `label`                 | `label`                    | The label text                 | `string`              | `''`        |
 | `labelIcon`             | `label-icon`               | Icon for the label text        | `string \| undefined` | `undefined` |
 | `labelIconFamilyClass`  | `label-icon-family-class`  | Icon label family class        | `string \| undefined` | `undefined` |
-| `labelIconFamilyPrefix` | `label-icon-family-prefix` | Icon label family class        | `string \| undefined` | `undefined` |
+| `labelIconFamilyPrefix` | `label-icon-family-prefix` | Icon label family prefix       | `string \| undefined` | `undefined` |
 | `mId` _(required)_      | `m-id`                     | The id of the input            | `string`              | `undefined` |
+| `mInputMode`            | `m-input-mode`             | Input mode                     | `string \| undefined` | `undefined` |
 | `name`                  | `name`                     | The name of the input          | `string \| undefined` | `undefined` |
+| `pattern`               | `pattern`                  | Pattern to validate            | `string \| undefined` | `undefined` |
 | `placeholder`           | `placeholder`              | The placeholder text           | `string`              | `''`        |
 | `type`                  | `type`                     | The type of the input          | `string`              | `'text'`    |
 | `value`                 | `value`                    | The value of the input         | `number \| string`    | `''`        |

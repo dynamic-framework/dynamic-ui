@@ -1,2 +1,6 @@
-// $figure-caption-font-size: $small-font-size !default;
-// $figure-caption-color: $gray-600 !default;
+// Figures
+
+// scss-docs-start figure-variables
+$figure-caption-font-size: $small-font-size !default;
+$figure-caption-color: var(--#{$prefix}secondary-color) !default;
+// scss-docs-end figure-variables

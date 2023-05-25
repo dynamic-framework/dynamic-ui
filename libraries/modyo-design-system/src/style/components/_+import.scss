@@ -1,8 +1,37 @@
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/button-group";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/accordion";
+@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/pagination";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/progress";
+@import "bootstrap/scss/list-group";
+@import "bootstrap/scss/close";
+@import "bootstrap/scss/toasts";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/popover";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/spinners";
+@import "bootstrap/scss/offcanvas";
+@import "bootstrap/scss/placeholders";
+
+@import "m-icon";
 @import "m-input";
 @import "m-input-switch";
 @import "m-input-check";
-@import "tabs";
-@import "calendar-react";
-@import "m-collapse";
-@import "m-collapsible-icon-text";
-@import "m-permission-group";
+@import "m-input-select";
+@import "m-button";
+@import "m-quick-action";
+
+@import "tabs"; // TODO: review
+@import "calendar-react"; // TODO: review
+@import "m-collapsible-icon-text"; // TODO: review
+@import "m-permission-group"; // TODO: review

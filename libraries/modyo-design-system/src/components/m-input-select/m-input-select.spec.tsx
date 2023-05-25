@@ -1,13 +1,13 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MSelect } from './m-select';
+import { MInputSelect } from './m-input-select';
 
 it('should render my component', async () => {
   const select = { mId: 'Random-id' };
 
   const page = await newSpecPage({
-    components: [MSelect],
+    components: [MInputSelect],
     template: () => (
       <m-select
         {...select}
@@ -39,7 +39,7 @@ it('should render my component with options', async () => {
   const select = { mId: 'Random-id', options };
 
   const page = await newSpecPage({
-    components: [MSelect],
+    components: [MInputSelect],
     template: () => (
       <m-select
         {...select}

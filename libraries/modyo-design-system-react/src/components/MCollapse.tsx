@@ -1,4 +1,6 @@
 import classNames from 'classnames';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
 import {
   PropsWithChildren,
   ReactNode,
@@ -9,6 +11,7 @@ import { MIcon } from './proxies';
 
 type Props = PropsWithChildren<{
   id?: string;
+  className?: string;
   Component: JSX.Element | ReactNode;
   hasSeparator?: boolean;
   defaultCollapsed?: boolean;
@@ -17,6 +20,7 @@ type Props = PropsWithChildren<{
 
 export default function MCollapse({
   id,
+  className,
   Component,
   hasSeparator = false,
   defaultCollapsed = false,
@@ -40,30 +44,31 @@ export default function MCollapse({
   return (
     <div
       id={id}
-      className="m-collapse collapse-container"
+      className={classNames('m-collapse collapse-container', className)}
     >
-      <div
+      <button
         className="collapse-button"
-        role="button"
-        tabIndex={0}
+        type="button"
         onClick={onChangeCollapse}
-        onKeyDown={({ code }) => (code === 'Enter' ? onChangeCollapse : {})}
       >
         <div className="flex-grow-1">
           {Component}
         </div>
-        <MIcon icon={toggle ? 'chevron-up' : 'chevron-down'} />
-      </div>
+        <MIcon
+          color={`var(--${PREFIX_BS}gray)`}
+          size={`var(--${PREFIX_BS}ref-fs-small)`}
+          icon={toggle ? 'chevron-up' : 'chevron-down'}
+        />
+      </button>
       {toggle && (
         <div
           className={classNames({
             'collapse-body': true,
-            separator: hasSeparator,
           })}
+          style={{
+            [`--${PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
+          }}
         >
-          {hasSeparator && (
-            <div className="collapse-body-separator" />
-          )}
           {children}
         </div>
       )}

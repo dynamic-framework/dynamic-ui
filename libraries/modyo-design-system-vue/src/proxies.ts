@@ -17,11 +17,6 @@ export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undef
 ]);
 
 
-export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined, [
-  'iconSettings'
-]);
-
-
 export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undefined, [
   'theme',
   'text'
@@ -99,6 +94,8 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'placeholder',
   'type',
   'value',
+  'mInputMode',
+  'pattern',
   'isDisabled',
   'isReadOnly',
   'isLoading',
@@ -220,6 +217,35 @@ export const MInputSearch = /*@__PURE__*/ defineContainer<JSX.MInputSearch>('m-i
 ]);
 
 
+export const MInputSelect = /*@__PURE__*/ defineContainer<JSX.MInputSelect>('m-input-select', undefined, [
+  'mId',
+  'name',
+  'label',
+  'options',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'isDisabled',
+  'isLoading',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'iconStart',
+  'iconStartFamilyClass',
+  'iconStartFamilyPrefix',
+  'iconEnd',
+  'iconEndFamilyClass',
+  'iconEndFamilyPrefix',
+  'hint',
+  'selectedOption',
+  'valueExtractor',
+  'labelExtractor',
+  'mChange',
+  'mBlur',
+  'mIconStartClick',
+  'mIconEndClick'
+]);
+
+
 export const MInputSwitch = /*@__PURE__*/ defineContainer<JSX.MInputSwitch>('m-input-switch', undefined, [
   'label',
   'mId',
@@ -323,18 +349,14 @@ export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-p
 ]);
 
 
-export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-quick-action', undefined, [
-  'text',
-  'subtext',
-  'extraInfo',
+export const MQuickActionPersonalInfo = /*@__PURE__*/ defineContainer<JSX.MQuickActionPersonalInfo>('m-quick-action-personal-info', undefined, [
+  'name',
+  'bank',
+  'account',
   'icon',
   'iconFamilyClass',
   'iconFamilyPrefix',
   'image',
-  'variant',
-  'actionWord',
-  'actionIcon',
-  'state',
   'mClick'
 ]);
 
@@ -353,43 +375,6 @@ export const MSegmentControlItem = /*@__PURE__*/ defineContainer<JSX.MSegmentCon
   'isChecked',
   'state',
   'mChange'
-]);
-
-
-export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
-  'mId',
-  'name',
-  'variant',
-  'options',
-  'theme',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconMiddle',
-  'iconMiddleFamilyClass',
-  'iconMiddleFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'hint',
-  'selectedOption',
-  'layoutDirection',
-  'isDisabled',
-  'isLoading',
-  'valueExtractor',
-  'labelExtractor',
-  'mChange',
-  'mBlur'
 ]);
 
 

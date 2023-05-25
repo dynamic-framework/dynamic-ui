@@ -10,6 +10,8 @@ import {
 import currency from 'currency.js';
 import type { Options } from 'currency.js';
 
+import { PREFIX_BS } from '../../utils';
+
 @Component({ tag: 'm-input-currency-base' })
 export class MInputCurrencyBase implements ComponentInterface {
   /**
@@ -230,10 +232,24 @@ export class MInputCurrencyBase implements ComponentInterface {
       : '';
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  private generateStyleVariables() {
+    return {
+      [`--${PREFIX_BS}m-input-currency-component-symbol-color`]: `var(--${PREFIX_BS}secondary)`,
+      [`--${PREFIX_BS}m-input-currency-symbol-color`]: `var(--${PREFIX_BS}m-input-currency-component-symbol-color)`,
+    };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private generateSymbolStyleVariables() {
+    return { color: `var(--${PREFIX_BS}m-input-currency-symbol-color)` };
+  }
+
   render() {
     return (
       <m-input// eslint-disable-next-line no-return-assign
         ref={(el) => (this.htmlMInputElement = el)}
+        style={this.generateStyleVariables()}
         mId={this.mId}
         name={this.name}
         label={this.label}
@@ -245,9 +261,9 @@ export class MInputCurrencyBase implements ComponentInterface {
         iconStart={this.iconStart}
         iconStartFamilyClass={this.iconStartFamilyClass}
         iconStartFamilyPrefix={this.iconStartFamilyPrefix}
-        iconEnd={this.iconStart}
-        iconEndFamilyClass={this.iconStartFamilyClass}
-        iconEndFamilyPrefix={this.iconStartFamilyPrefix}
+        iconEnd={this.iconEnd}
+        iconEndFamilyClass={this.iconEndFamilyClass}
+        iconEndFamilyPrefix={this.iconEndFamilyPrefix}
         isDisabled={this.isDisabled}
         isReadOnly={this.isReadOnly}
         isLoading={this.isLoading}
@@ -255,11 +271,20 @@ export class MInputCurrencyBase implements ComponentInterface {
         isInvalid={this.isInvalid}
         isValid={this.isValid}
         type={this.internalType}
+        mInputMode="decimal"
+        pattern="^[0-9]"
         onMChange={this.changeHandler}
         onMBlur={this.blurHandler}
         onMFocus={this.focusHandler}
         onMWheel={this.wheelHandler}
-      />
+      >
+        <span
+          slot="input-start"
+          style={this.generateSymbolStyleVariables()}
+        >
+          {this.currencyOptions.symbol}
+        </span>
+      </m-input>
     );
   }
 }

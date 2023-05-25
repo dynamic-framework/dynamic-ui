@@ -23,7 +23,10 @@ module.exports = {
   core: {
     disableTelemetry: true
   },
-  staticDirs: ['../../modyo-design-system/dist'],
+  staticDirs: [
+    '../../modyo-design-system/dist',
+    '../dist'
+  ],
   features: {
     modernInlineRender: true
   },

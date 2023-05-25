@@ -1,3 +1,7 @@
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+
 // scss-docs-start btn-variables
 $btn-color: var(--#{$prefix}body-color) !default;
 $btn-padding-y: .625rem !default;
@@ -27,14 +31,17 @@ $btn-active-box-shadow: none !default;
 $btn-link-color: var(--#{$prefix}link-color) !default;
 $btn-link-hover-color: var(--#{$prefix}link-hover-color) !default;
 $btn-link-disabled-color: $gray-600 !default;
+
+// custom
 $btn-link-padding-y: $spacer-2 !default;
 $btn-link-padding-x: $spacer-2 !default;
+// end custom
 
 $btn-border-radius: $border-radius-sm !default;
 $btn-border-radius-sm: $border-radius-sm !default;
 $btn-border-radius-lg: $border-radius-lg !default;
 
-// $btn-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+$btn-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 
 $btn-hover-bg-shade-amount: 15% !default;
 $btn-hover-bg-tint-amount: 15% !default;
@@ -44,4 +51,4 @@ $btn-active-bg-shade-amount: 20% !default;
 $btn-active-bg-tint-amount: 20% !default;
 $btn-active-border-shade-amount: 25% !default;
 $btn-active-border-tint-amount: 10% !default;
-
+// scss-docs-end btn-variables

@@ -29,7 +29,6 @@ const config: Meta<typeof MInputCounter> = {
         },
       },
       type: 'string',
-      table: { defaultValue: { summary: 'question-circle' } },
       options: [undefined, ...ICONS],
     },
     value: {

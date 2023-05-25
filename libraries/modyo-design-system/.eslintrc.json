@@ -1,6 +1,7 @@
 {
   "parserOptions": {
-    "project": "**/tsconfig.json"
+    "project": "**/tsconfig.json",
+    "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
   },
   "extends": [
     "plugin:@stencil/recommended",

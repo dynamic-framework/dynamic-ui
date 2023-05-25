@@ -104,6 +104,6 @@ export const Circle: Story = {
     size: '120px',
     hasCircle: true,
     isLoading: false,
-    circleSize: `calc(var(--${PREFIX_BS}m-icon-component-size) * 2)`,
+    circleSize: `calc(var(--${PREFIX_BS}m-icon-component-size) * 1)`,
   },
 };
