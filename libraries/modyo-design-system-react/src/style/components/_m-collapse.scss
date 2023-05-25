@@ -4,12 +4,12 @@
   --#{$prefix}m-collapse-border-radius: var(--#{$prefix}spacer-1);
   --#{$prefix}m-collapse-box-shadow: var(--#{$prefix}shadow-sm);
   // Button
-  --#{$prefix}m-collapse-button-padding-x: 1rem;
-  --#{$prefix}m-collapse-button-padding-y: 1rem;
-  --#{$prefix}m-collapse-button-gap: 1rem;
+  --#{$prefix}m-collapse-button-padding-x: var(--#{$prefix}spacer-3);
+  --#{$prefix}m-collapse-button-padding-y: var(--#{$prefix}spacer-3);
+  --#{$prefix}m-collapse-button-gap: var(--#{$prefix}spacer-3);
   // Body
-  --#{$prefix}m-collapse-body-padding-x: 1rem;
-  --#{$prefix}m-collapse-body-padding-y: 1rem;
+  --#{$prefix}m-collapse-body-padding-x: var(--#{$prefix}spacer-3);
+  --#{$prefix}m-collapse-body-padding-y: var(--#{$prefix}spacer-3);
   // Separator
   --#{$prefix}m-collapse-separator-display: none;
   --#{$prefix}m-collapse-separator-height: 1px;
