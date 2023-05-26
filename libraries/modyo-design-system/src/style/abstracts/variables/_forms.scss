@@ -40,10 +40,10 @@ $input-font-size-lg: $input-font-size !default;
 $input-bg: var(--#{$prefix}white) !default;
 $input-disabled-color: var(--#{$prefix}gray) !default;
 $input-disabled-bg: var(--#{$prefix}gray-100) !default;
-$input-disabled-border-color: var(--#{$prefix}gray-light) !default;
+$input-disabled-border-color: var(--#{$prefix}gray-200) !default;
 
 $input-color: var(--#{$prefix}gray) !default;
-$input-border-color: var(--#{$prefix}gray-light) !default;      // unused
+$input-border-color: var(--#{$prefix}gray-200) !default;      // unused
 $input-border-width: $input-btn-border-width !default;          // unused
 $input-box-shadow: $box-shadow-inset !default;                  // unused
 
@@ -62,7 +62,7 @@ $input-focus-width: $input-btn-focus-width !default;            // unused
 $input-focus-box-shadow: $input-btn-focus-box-shadow !default;
 
 // custom
-$input-group-border-color: var(--#{$prefix}gray-light) !default;
+$input-group-border-color: var(--#{$prefix}gray-200) !default;
 $input-group-border-width: 1px !default;
 $input-group-border-radius: $input-border-radius !default;
 
@@ -72,7 +72,7 @@ $input-group-focus-border-color: var(--#{$prefix}secondary) !default;
 $input-group-focus-box-shadow: 0 2px 14px rgba(var(--#{$prefix}secondary-rgb), .3) !default;
 // end custom
 
-$input-placeholder-color: var(--#{$prefix}gray-light) !default;
+$input-placeholder-color: var(--#{$prefix}gray-200) !default;
 $input-plaintext-color: $body-color !default;
 
 $input-height-border: $input-border-width * 2 !default;

@@ -29,7 +29,7 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "background-color"), "values"),
-          $all-colors-bg,
+          map-merge($all-colors-bg, $bg-soft-colors),
         )
       )
     ),
@@ -56,11 +56,6 @@ $utilities: map-merge(
     "cursor": (
       property: cursor,
       values: $cursors,
-    ),
-    "bg-widget": (
-      property: background,
-      class: "bg-widget",
-      values: $bg-widget-colors,
     ),
   )
 );

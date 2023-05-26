@@ -21,7 +21,7 @@ $shortcut-toggle-text-line-height: 1.375rem !default;
 $shortcut-toggle-icon-color: var(--#{$prefix}tertiary) !default;
 // :checked
 $shortcut-toggle-checked-bg: var(--#{$prefix}tertiary) !default;
-$shortcut-toggle-label-checked-color: var(--#{$prefix}gray-light) !default;
+$shortcut-toggle-label-checked-color: var(--#{$prefix}gray-200) !default;
 $shortcut-toggle-text-checked-color: var(--#{$prefix}white) !default;
 $shortcut-toggle-icon-checked-color: var(--#{$prefix}white) !default;
 // :focus

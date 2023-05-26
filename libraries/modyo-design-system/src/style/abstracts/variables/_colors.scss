@@ -59,16 +59,21 @@ $colors: (
   "white": $white,
   "gray": $gray-500,
   "gray-dark": $gray-800,
-  "gray-light": $gray-300
 ) !default;
 // scss-docs-end colors-map
 
+// custom
 // TODO: check this.
-$bg-widget-colors: (
-  "gray": #fafafa,
-  "indigo": #fbfaff,
-  "magenta": #fff9fa,
+$bg-gray-soft: #fafafa !default;
+$bg-indigo-soft: #fbfaff !default;
+$bg-magenta-soft: #fff9fa !default;
+
+$bg-soft-colors: (
+  "gray-soft": $bg-gray-soft,
+  "indigo-soft": $bg-indigo-soft,
+  "magenta-soft": $bg-magenta-soft,
 ) !default;
+// end custom
 
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
 // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast

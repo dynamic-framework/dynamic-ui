@@ -1,0 +1,28 @@
+$quick-action-button-gap: var(--#{$prefix}ref-spacer-2) !default;
+$quick-action-button-padding: var(--#{$prefix}ref-spacer-3) !default;
+$quick-action-button-bg: var(--#{$prefix}white) !default;
+$quick-action-button-border: 1px solid var(--#{$prefix}secondary-100) !default;
+$quick-action-button-border-radius: var(--#{$prefix}border-radius-sm) !default;
+$quick-action-button-min-width: 300px !default;
+
+$quick-action-button-line1-font-size: var(--#{$prefix}ref-fs-6) !default;
+$quick-action-button-line1-font-weight: var(--#{$prefix}ref-fw-bold) !default;
+$quick-action-button-line1-color: var(--#{$prefix}body-color) !default;
+
+$quick-action-button-line2-font-size: var(--#{$prefix}ref-fs-small) !default;
+$quick-action-button-line2-font-weight: var(--#{$prefix}ref-fw-normal) !default;
+$quick-action-button-line2-color: var(--#{$prefix}gray-500) !default;
+
+$quick-action-button-representative-image-size: 2.25rem !default;
+$quick-action-button-representative-icon-size: 1.5rem !default;
+
+$quick-action-button-action-icon-color: var(--#{$prefix}gray-500) !default;
+$quick-action-button-action-icon-size: var(--#{$prefix}body-font-size) !default;
+
+$quick-action-button-hover-bg: var(--#{$prefix}gray-100) !default;
+$quick-action-button-hover-border-color: var(--#{$prefix}secondary-100) !default;
+$quick-action-button-hover-action-icon-color: var(--#{$prefix}secondary) !default;
+
+$quick-action-button-active-bg: var(--#{$prefix}gray-100) !default;
+$quick-action-button-active-border-color: var(--#{$prefix}secondary) !default;
+$quick-action-button-active-action-icon-color: var(--#{$prefix}secondary) !default;

@@ -217,6 +217,34 @@ export const PrimaryLoadingIconRight: Story = {
   },
 };
 
+export const PrimarySm: Story = {
+  args: {
+    theme: 'primary',
+    text: 'Default',
+    type: 'button',
+    variant: undefined,
+    isLoading: false,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: undefined,
+    size: 'sm',
+  },
+};
+
+export const PrimaryLg: Story = {
+  args: {
+    theme: 'primary',
+    text: 'Default',
+    type: 'button',
+    variant: undefined,
+    isLoading: false,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: undefined,
+    size: 'lg',
+  },
+};
+
 export const Secondary: Story = {
   args: {
     theme: 'primary',
@@ -333,6 +361,34 @@ export const SecondaryLoadingIconRight: Story = {
   },
 };
 
+export const SecondarySm: Story = {
+  args: {
+    theme: 'primary',
+    text: 'Default',
+    type: 'button',
+    variant: 'outline',
+    isLoading: false,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: undefined,
+    size: 'sm',
+  },
+};
+
+export const SecondaryLg: Story = {
+  args: {
+    theme: 'primary',
+    text: 'Default',
+    type: 'button',
+    variant: 'outline',
+    isLoading: false,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: undefined,
+    size: 'lg',
+  },
+};
+
 export const Link: Story = {
   args: {
     theme: 'secondary',
@@ -446,5 +502,33 @@ export const LinkLoadingIconRight: Story = {
     isPill: true,
     iconStart: undefined,
     iconEnd: 'chevron-right',
+  },
+};
+
+export const LinkSm: Story = {
+  args: {
+    theme: 'secondary',
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: false,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: undefined,
+    size: 'sm',
+  },
+};
+
+export const LinkLg: Story = {
+  args: {
+    theme: 'secondary',
+    text: 'Default',
+    type: 'button',
+    variant: 'link',
+    isLoading: false,
+    isPill: true,
+    iconStart: undefined,
+    iconEnd: undefined,
+    size: 'lg',
   },
 };

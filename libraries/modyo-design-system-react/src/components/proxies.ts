@@ -23,7 +23,7 @@ import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMPin } from '@modyo-dynamic/modyo-design-system/components/m-pin.js';
 import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
-import { defineCustomElement as defineMQuickActionPersonalInfo } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-personal-info.js';
+import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
 import { defineCustomElement as defineMShortcutToggle } from '@modyo-dynamic/modyo-design-system/components/m-shortcut-toggle.js';
@@ -46,7 +46,7 @@ export const MModal = /*@__PURE__*/createReactComponent<JSX.MModal, HTMLMModalEl
 export const MOffcanvas = /*@__PURE__*/createReactComponent<JSX.MOffcanvas, HTMLMOffcanvasElement>('m-offcanvas', undefined, undefined, defineMOffcanvas);
 export const MPin = /*@__PURE__*/createReactComponent<JSX.MPin, HTMLMPinElement>('m-pin', undefined, undefined, defineMPin);
 export const MProgressBar = /*@__PURE__*/createReactComponent<JSX.MProgressBar, HTMLMProgressBarElement>('m-progress-bar', undefined, undefined, defineMProgressBar);
-export const MQuickActionPersonalInfo = /*@__PURE__*/createReactComponent<JSX.MQuickActionPersonalInfo, HTMLMQuickActionPersonalInfoElement>('m-quick-action-personal-info', undefined, undefined, defineMQuickActionPersonalInfo);
+export const MQuickActionButton = /*@__PURE__*/createReactComponent<JSX.MQuickActionButton, HTMLMQuickActionButtonElement>('m-quick-action-button', undefined, undefined, defineMQuickActionButton);
 export const MSegmentControl = /*@__PURE__*/createReactComponent<JSX.MSegmentControl, HTMLMSegmentControlElement>('m-segment-control', undefined, undefined, defineMSegmentControl);
 export const MSegmentControlItem = /*@__PURE__*/createReactComponent<JSX.MSegmentControlItem, HTMLMSegmentControlItemElement>('m-segment-control-item', undefined, undefined, defineMSegmentControlItem);
 export const MShortcutToggle = /*@__PURE__*/createReactComponent<JSX.MShortcutToggle, HTMLMShortcutToggleElement>('m-shortcut-toggle', undefined, undefined, defineMShortcutToggle);

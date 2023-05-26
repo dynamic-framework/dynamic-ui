@@ -18,7 +18,7 @@
   --#{$prefix}tab-padding-y: 0;
   --#{$prefix}tab-margin-x: 4px;
   --#{$prefix}tab-margin-y: 0;
-  --#{$prefix}tab-color: var(--#{$prefix}gray-light);
+  --#{$prefix}tab-color: var(--#{$prefix}gray-200);
   --#{$prefix}tab-border-width: 2px;
   --#{$prefix}tab-border-color: transparent;
   --#{$prefix}tab-border-radius: 0;
@@ -68,7 +68,7 @@
 
   &:disabled,
   &.disabled {
-    --#{$prefix}tab-color: var(--#{$prefix}gray-light);
+    --#{$prefix}tab-color: var(--#{$prefix}gray-200);
     pointer-events: none;
     cursor: not-allowed;
   }
@@ -98,8 +98,8 @@
 
   .tab.disabled,
   .tab:disabled {
-    --#{$prefix}tab-border-color: var(--#{$prefix}gray-light);
-    --#{$prefix}tab-color: var(--#{$prefix}gray-light);
+    --#{$prefix}tab-border-color: var(--#{$prefix}gray-200);
+    --#{$prefix}tab-color: var(--#{$prefix}gray-200);
   }
 
   .tab.selected,
@@ -134,9 +134,9 @@
 
     &.disabled,
     &:disabled {
-      --#{$prefix}tab-color: var(--#{$prefix}gray-light);
+      --#{$prefix}tab-color: var(--#{$prefix}gray-200);
       --#{$prefix}tab-bg: transparent;
-      --#{$prefix}tab-border-color: var(--#{$prefix}gray-light);
+      --#{$prefix}tab-border-color: var(--#{$prefix}gray-200);
     }
   }
 

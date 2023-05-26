@@ -35,6 +35,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [m-quick-action-button](../m-quick-action-button)
+
 ### Depends on
 
 - [m-icon](../m-icon)
@@ -43,6 +47,7 @@
 ```mermaid
 graph TD;
   m-button --> m-icon
+  m-quick-action-button --> m-button
   style m-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
