@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MFormCheck } from '../../components';
+import { MInputCheck } from '../../components';
 
-const config: Meta<typeof MFormCheck> = {
+const config: Meta<typeof MInputCheck> = {
   title: 'Design System/Components/Input Check',
-  component: MFormCheck,
+  component: MInputCheck,
   argTypes: {
     mId: {
       control: 'text',
@@ -45,7 +45,7 @@ const config: Meta<typeof MFormCheck> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MFormCheck>;
+type Story = StoryObj<typeof MInputCheck>;
 
 export const CheckboxWithoutLabel: Story = {
   args: {

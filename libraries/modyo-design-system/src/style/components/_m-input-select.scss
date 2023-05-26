@@ -1,0 +1,20 @@
+.m-input {
+  &:has(.form-select:not(:disabled)) {
+    --#{$prefix}m-input-group-border-color: var(--#{$prefix}m-input-group-hover-border-color);
+  }
+
+  .form-select {
+    text-align: var(--#{$prefix}m-input-form-control-text-align);
+    border-width: 0;
+    box-shadow: none;
+
+    &:not(:last-child) {
+      padding-right: $form-select-padding-x * 2;
+      background-position: right center;
+    }
+
+    &:not(:first-child) {
+      padding-left: 0;
+    }
+  }
+}

@@ -12,11 +12,7 @@ import type {
 
 import type { ButtonType, ButtonVariant } from './m-button-interface';
 
-@Component({
-  tag: 'm-button',
-  styleUrl: 'm-button.scss',
-  shadow: false,
-})
+@Component({ tag: 'm-button' })
 export class MButton implements ComponentInterface {
   /**
    * Theme to use.
@@ -108,6 +104,7 @@ export class MButton implements ComponentInterface {
       : `btn-${this.theme}`;
     return {
       btn: true,
+      'm-button': true,
       [variantClass]: true,
       [`btn-${this.size}`]: !!this.size,
       ...(this.state && this.state !== 'disabled') && { [this.state]: true },

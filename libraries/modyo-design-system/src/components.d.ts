@@ -5,8 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { IconSettings } from "./utils";
-import { ComponentSize, FormControlLayoutDirection, InputState, NavegableProps } from "./utils/component-interface";
+import { ComponentSize, InputState, NavegableProps } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 import { Options } from "currency.js";
@@ -14,8 +13,14 @@ import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-lis
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 import { PinInputMode, PinInputType } from "./components/m-pin/m-pin-interface";
-import { QuickActionState, QuickActionVariant } from "./components/m-quick-action/m-quick-action-interface";
-import { SelectLayoutVariant } from "./components/m-select/m-select-interface";
+export { ComponentSize, InputState, NavegableProps } from "./utils/component-interface";
+export { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
+export { FormCheckType } from "./components/m-input-check/m-input-check-interface";
+export { Options } from "currency.js";
+export { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
+export { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
+export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
+export { PinInputMode, PinInputType } from "./components/m-pin/m-pin-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -30,12 +35,6 @@ export namespace Components {
           * Theme for the alert
          */
         "theme": string;
-    }
-    interface MApp {
-        /**
-          * Icon settings
-         */
-        "iconSettings"?: IconSettings;
     }
     interface MBadge {
         /**
@@ -108,40 +107,6 @@ export namespace Components {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
-    }
-    interface MFormCheck {
-        /**
-          * Set checkbox or radio button marked as selected or not
-         */
-        "isChecked": boolean;
-        /**
-          * Set input as disabled
-         */
-        "isDisabled": boolean;
-        /**
-          * Set view of checkbox as indeterminated
-         */
-        "isIndeterminate"?: boolean;
-        /**
-          * Text that will be displayed beside Check input or Radio input
-         */
-        "label"?: string;
-        /**
-          * Form control identifier
-         */
-        "mId": string;
-        /**
-          * HTML Name to use within a form or JS reference
-         */
-        "name"?: string;
-        /**
-          * Set whether is a checkbox input or a radio input
-         */
-        "type": FormCheckType;
-        /**
-          * A string representing the value of the checkbox or radio
-         */
-        "value"?: string;
     }
     interface MHint {
         /**
@@ -305,7 +270,7 @@ export namespace Components {
          */
         "labelIconFamilyClass"?: string;
         /**
-          * Icon label family class
+          * Icon label family prefix
          */
         "labelIconFamilyPrefix"?: string;
         /**
@@ -313,9 +278,17 @@ export namespace Components {
          */
         "mId": string;
         /**
+          * Input mode
+         */
+        "mInputMode"?: string;
+        /**
           * The name of the input
          */
         "name"?: string;
+        /**
+          * Pattern to validate
+         */
+        "pattern"?: string;
         /**
           * The placeholder text
          */
@@ -328,6 +301,40 @@ export namespace Components {
           * The value of the input
          */
         "value": string | number;
+    }
+    interface MInputCheck {
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "isChecked": boolean;
+        /**
+          * Set input as disabled
+         */
+        "isDisabled": boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "isIndeterminate"?: boolean;
+        /**
+          * Text that will be displayed beside Check input or Radio input
+         */
+        "label"?: string;
+        /**
+          * Form control identifier
+         */
+        "mId": string;
+        /**
+          * HTML Name to use within a form or JS reference
+         */
+        "name"?: string;
+        /**
+          * Set whether is a checkbox input or a radio input
+         */
+        "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
     }
     interface MInputCounter {
         /**
@@ -641,6 +648,92 @@ export namespace Components {
          */
         "value": string;
     }
+    interface MInputSelect {
+        /**
+          * Hint to display
+         */
+        "hint"?: string;
+        /**
+          * The end icon for the select
+         */
+        "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * The start icon for the select
+         */
+        "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor": (item: any) => string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family prefix
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * The select options
+         */
+        "options": Array<Record<string, unknown>>;
+        /**
+          * The value selected of the component
+         */
+        "selectedOption"?: Record<string, unknown>;
+        /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor": (item: any) => string | number;
+    }
     interface MInputSwitch {
         /**
           * Flag to change the check state
@@ -949,23 +1042,19 @@ export namespace Components {
          */
         "minValue": number;
     }
-    interface MQuickAction {
+    interface MQuickActionPersonalInfo {
         /**
-          * The action icon for the quick action
+          * The person account number
          */
-        "actionIcon"?: string;
+        "account": string;
         /**
-          * The action word for the quick action
+          * The person bank name
          */
-        "actionWord"?: string;
+        "bank": string;
         /**
-          * The extra info of the quick action
+          * The icon to indicate the action
          */
-        "extraInfo"?: string;
-        /**
-          * The icon of the quick action
-         */
-        "icon"?: string;
+        "icon": string;
         /**
           * Icon family class
          */
@@ -975,25 +1064,13 @@ export namespace Components {
          */
         "iconFamilyPrefix"?: string;
         /**
-          * The image of the quick action
+          * The person profile image
          */
-        "image"?: string;
+        "image": string;
         /**
-          * The state of the quick action
+          * The person name
          */
-        "state"?: QuickActionState;
-        /**
-          * The subtext of the quick action
-         */
-        "subtext"?: string;
-        /**
-          * The main text of the quick action
-         */
-        "text": string;
-        /**
-          * The variant of the quick action
-         */
-        "variant"?: QuickActionVariant;
+        "name": string;
     }
     interface MSegmentControl {
         /**
@@ -1030,132 +1107,6 @@ export namespace Components {
           * Value of the radio
          */
         "value": string;
-    }
-    interface MSelect {
-        /**
-          * The hint of the select in full variant
-         */
-        "hint"?: string;
-        /**
-          * The hint icon for the select in full variant
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * The hint icon for the select in full variant
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * The end icon for the select
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * The middle icon for the select
-         */
-        "iconMiddle"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyClass"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyPrefix"?: string;
-        /**
-          * The start icon for the select
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * The select is disabled
-         */
-        "isDisabled": boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading": boolean;
-        /**
-          * The label of the select in full variant
-         */
-        "label"?: string;
-        /**
-          * Callback to extract the label from the option
-         */
-        "labelExtractor": (item: any) => string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon": string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of select
-         */
-        "layoutDirection": FormControlLayoutDirection;
-        /**
-          * Id of the select
-         */
-        "mId": string;
-        /**
-          * The name of the input
-         */
-        "name"?: string;
-        /**
-          * The select options
-         */
-        "options": Array<Record<string, unknown>>;
-        /**
-          * The value selected of the component
-         */
-        "selectedOption"?: Record<string, unknown>;
-        /**
-          * The theme of the select
-         */
-        "theme"?: string;
-        /**
-          * Callback to extract the value from the option
-         */
-        "valueExtractor": (item: any) => string | number;
-        /**
-          * The variant of the select
-         */
-        "variant"?: SelectLayoutVariant;
     }
     interface MShortcutToggle {
         /**
@@ -1216,13 +1167,13 @@ export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
 }
-export interface MFormCheckCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMFormCheckElement;
-}
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
+}
+export interface MInputCheckCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputCheckElement;
 }
 export interface MInputCounterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1239,6 +1190,10 @@ export interface MInputPasswordCustomEvent<T> extends CustomEvent<T> {
 export interface MInputSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputSearchElement;
+}
+export interface MInputSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputSelectElement;
 }
 export interface MInputSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1260,17 +1215,13 @@ export interface MPinCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMPinElement;
 }
-export interface MQuickActionCustomEvent<T> extends CustomEvent<T> {
+export interface MQuickActionPersonalInfoCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMQuickActionElement;
+    target: HTMLMQuickActionPersonalInfoElement;
 }
 export interface MSegmentControlItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMSegmentControlItemElement;
-}
-export interface MSelectCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMSelectElement;
 }
 export interface MShortcutToggleCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1283,12 +1234,6 @@ declare global {
         prototype: HTMLMAlertElement;
         new (): HTMLMAlertElement;
     };
-    interface HTMLMAppElement extends Components.MApp, HTMLStencilElement {
-    }
-    var HTMLMAppElement: {
-        prototype: HTMLMAppElement;
-        new (): HTMLMAppElement;
-    };
     interface HTMLMBadgeElement extends Components.MBadge, HTMLStencilElement {
     }
     var HTMLMBadgeElement: {
@@ -1300,12 +1245,6 @@ declare global {
     var HTMLMButtonElement: {
         prototype: HTMLMButtonElement;
         new (): HTMLMButtonElement;
-    };
-    interface HTMLMFormCheckElement extends Components.MFormCheck, HTMLStencilElement {
-    }
-    var HTMLMFormCheckElement: {
-        prototype: HTMLMFormCheckElement;
-        new (): HTMLMFormCheckElement;
     };
     interface HTMLMHintElement extends Components.MHint, HTMLStencilElement {
     }
@@ -1324,6 +1263,12 @@ declare global {
     var HTMLMInputElement: {
         prototype: HTMLMInputElement;
         new (): HTMLMInputElement;
+    };
+    interface HTMLMInputCheckElement extends Components.MInputCheck, HTMLStencilElement {
+    }
+    var HTMLMInputCheckElement: {
+        prototype: HTMLMInputCheckElement;
+        new (): HTMLMInputCheckElement;
     };
     interface HTMLMInputCounterElement extends Components.MInputCounter, HTMLStencilElement {
     }
@@ -1348,6 +1293,12 @@ declare global {
     var HTMLMInputSearchElement: {
         prototype: HTMLMInputSearchElement;
         new (): HTMLMInputSearchElement;
+    };
+    interface HTMLMInputSelectElement extends Components.MInputSelect, HTMLStencilElement {
+    }
+    var HTMLMInputSelectElement: {
+        prototype: HTMLMInputSelectElement;
+        new (): HTMLMInputSelectElement;
     };
     interface HTMLMInputSwitchElement extends Components.MInputSwitch, HTMLStencilElement {
     }
@@ -1385,11 +1336,11 @@ declare global {
         prototype: HTMLMProgressBarElement;
         new (): HTMLMProgressBarElement;
     };
-    interface HTMLMQuickActionElement extends Components.MQuickAction, HTMLStencilElement {
+    interface HTMLMQuickActionPersonalInfoElement extends Components.MQuickActionPersonalInfo, HTMLStencilElement {
     }
-    var HTMLMQuickActionElement: {
-        prototype: HTMLMQuickActionElement;
-        new (): HTMLMQuickActionElement;
+    var HTMLMQuickActionPersonalInfoElement: {
+        prototype: HTMLMQuickActionPersonalInfoElement;
+        new (): HTMLMQuickActionPersonalInfoElement;
     };
     interface HTMLMSegmentControlElement extends Components.MSegmentControl, HTMLStencilElement {
     }
@@ -1403,12 +1354,6 @@ declare global {
         prototype: HTMLMSegmentControlItemElement;
         new (): HTMLMSegmentControlItemElement;
     };
-    interface HTMLMSelectElement extends Components.MSelect, HTMLStencilElement {
-    }
-    var HTMLMSelectElement: {
-        prototype: HTMLMSelectElement;
-        new (): HTMLMSelectElement;
-    };
     interface HTMLMShortcutToggleElement extends Components.MShortcutToggle, HTMLStencilElement {
     }
     var HTMLMShortcutToggleElement: {
@@ -1417,27 +1362,26 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
-        "m-app": HTMLMAppElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
-        "m-form-check": HTMLMFormCheckElement;
         "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
+        "m-input-check": HTMLMInputCheckElement;
         "m-input-counter": HTMLMInputCounterElement;
         "m-input-currency-base": HTMLMInputCurrencyBaseElement;
         "m-input-password": HTMLMInputPasswordElement;
         "m-input-search": HTMLMInputSearchElement;
+        "m-input-select": HTMLMInputSelectElement;
         "m-input-switch": HTMLMInputSwitchElement;
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-pin": HTMLMPinElement;
         "m-progress-bar": HTMLMProgressBarElement;
-        "m-quick-action": HTMLMQuickActionElement;
+        "m-quick-action-personal-info": HTMLMQuickActionPersonalInfoElement;
         "m-segment-control": HTMLMSegmentControlElement;
         "m-segment-control-item": HTMLMSegmentControlItemElement;
-        "m-select": HTMLMSelectElement;
         "m-shortcut-toggle": HTMLMShortcutToggleElement;
     }
 }
@@ -1459,12 +1403,6 @@ declare namespace LocalJSX {
           * Theme for the alert
          */
         "theme"?: string;
-    }
-    interface MApp {
-        /**
-          * Icon settings
-         */
-        "iconSettings"?: IconSettings;
     }
     interface MBadge {
         /**
@@ -1541,44 +1479,6 @@ declare namespace LocalJSX {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
-    }
-    interface MFormCheck {
-        /**
-          * Set checkbox or radio button marked as selected or not
-         */
-        "isChecked"?: boolean;
-        /**
-          * Set input as disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Set view of checkbox as indeterminated
-         */
-        "isIndeterminate"?: boolean;
-        /**
-          * Text that will be displayed beside Check input or Radio input
-         */
-        "label"?: string;
-        /**
-          * Form control identifier
-         */
-        "mId": string;
-        /**
-          * HTML Name to use within a form or JS reference
-         */
-        "name"?: string;
-        /**
-          * Emitted when the switch has changed
-         */
-        "onMChange"?: (event: MFormCheckCustomEvent<any>) => void;
-        /**
-          * Set whether is a checkbox input or a radio input
-         */
-        "type": FormCheckType;
-        /**
-          * A string representing the value of the checkbox or radio
-         */
-        "value"?: string;
     }
     interface MHint {
         /**
@@ -1734,13 +1634,17 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyClass"?: string;
         /**
-          * Icon label family class
+          * Icon label family prefix
          */
         "labelIconFamilyPrefix"?: string;
         /**
           * The id of the input
          */
         "mId": string;
+        /**
+          * Input mode
+         */
+        "mInputMode"?: string;
         /**
           * The name of the input
          */
@@ -1770,6 +1674,10 @@ declare namespace LocalJSX {
          */
         "onMWheel"?: (event: MInputCustomEvent<any>) => void;
         /**
+          * Pattern to validate
+         */
+        "pattern"?: string;
+        /**
           * The placeholder text
          */
         "placeholder"?: string;
@@ -1781,6 +1689,44 @@ declare namespace LocalJSX {
           * The value of the input
          */
         "value"?: string | number;
+    }
+    interface MInputCheck {
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "isChecked"?: boolean;
+        /**
+          * Set input as disabled
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "isIndeterminate"?: boolean;
+        /**
+          * Text that will be displayed beside Check input or Radio input
+         */
+        "label"?: string;
+        /**
+          * Form control identifier
+         */
+        "mId": string;
+        /**
+          * HTML Name to use within a form or JS reference
+         */
+        "name"?: string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onMChange"?: (event: MInputCheckCustomEvent<any>) => void;
+        /**
+          * Set whether is a checkbox input or a radio input
+         */
+        "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
     }
     interface MInputCounter {
         /**
@@ -2118,6 +2064,108 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface MInputSelect {
+        /**
+          * Hint to display
+         */
+        "hint"?: string;
+        /**
+          * The end icon for the select
+         */
+        "iconEnd"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * The start icon for the select
+         */
+        "iconStart"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Left icon family class
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Callback to extract the label from the option
+         */
+        "labelExtractor"?: (item: any) => string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family prefix
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Emitted when blur the input
+         */
+        "onMBlur"?: (event: MInputSelectCustomEvent<any>) => void;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onMChange"?: (event: MInputSelectCustomEvent<any>) => void;
+        /**
+          * Emitted when click on the right icon
+         */
+        "onMIconEndClick"?: (event: MInputSelectCustomEvent<MouseEvent>) => void;
+        /**
+          * Emitted when click on the left icon
+         */
+        "onMIconStartClick"?: (event: MInputSelectCustomEvent<MouseEvent>) => void;
+        /**
+          * The select options
+         */
+        "options"?: Array<Record<string, unknown>>;
+        /**
+          * The value selected of the component
+         */
+        "selectedOption"?: Record<string, unknown>;
+        /**
+          * Callback to extract the value from the option
+         */
+        "valueExtractor"?: (item: any) => string | number;
+    }
     interface MInputSwitch {
         /**
           * Flag to change the check state
@@ -2446,21 +2494,17 @@ declare namespace LocalJSX {
          */
         "minValue"?: number;
     }
-    interface MQuickAction {
+    interface MQuickActionPersonalInfo {
         /**
-          * The action icon for the quick action
+          * The person account number
          */
-        "actionIcon"?: string;
+        "account": string;
         /**
-          * The action word for the quick action
+          * The person bank name
          */
-        "actionWord"?: string;
+        "bank": string;
         /**
-          * The extra info of the quick action
-         */
-        "extraInfo"?: string;
-        /**
-          * The icon of the quick action
+          * The icon to indicate the action
          */
         "icon"?: string;
         /**
@@ -2472,29 +2516,17 @@ declare namespace LocalJSX {
          */
         "iconFamilyPrefix"?: string;
         /**
-          * The image of the quick action
+          * The person profile image
          */
-        "image"?: string;
+        "image": string;
+        /**
+          * The person name
+         */
+        "name": string;
         /**
           * Emitted when the input value has changed
          */
-        "onMClick"?: (event: MQuickActionCustomEvent<any>) => void;
-        /**
-          * The state of the quick action
-         */
-        "state"?: QuickActionState;
-        /**
-          * The subtext of the quick action
-         */
-        "subtext"?: string;
-        /**
-          * The main text of the quick action
-         */
-        "text": string;
-        /**
-          * The variant of the quick action
-         */
-        "variant"?: QuickActionVariant;
+        "onMClick"?: (event: MQuickActionPersonalInfoCustomEvent<any>) => void;
     }
     interface MSegmentControl {
         /**
@@ -2535,140 +2567,6 @@ declare namespace LocalJSX {
           * Value of the radio
          */
         "value": string;
-    }
-    interface MSelect {
-        /**
-          * The hint of the select in full variant
-         */
-        "hint"?: string;
-        /**
-          * The hint icon for the select in full variant
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * The hint icon for the select in full variant
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * The end icon for the select
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * The middle icon for the select
-         */
-        "iconMiddle"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyClass"?: string;
-        /**
-          * Middle icon family class
-         */
-        "iconMiddleFamilyPrefix"?: string;
-        /**
-          * The start icon for the select
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * The select is disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading"?: boolean;
-        /**
-          * The label of the select in full variant
-         */
-        "label"?: string;
-        /**
-          * Callback to extract the label from the option
-         */
-        "labelExtractor"?: (item: any) => string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Change the layout direction to put the label on top or left of select
-         */
-        "layoutDirection"?: FormControlLayoutDirection;
-        /**
-          * Id of the select
-         */
-        "mId": string;
-        /**
-          * The name of the input
-         */
-        "name"?: string;
-        /**
-          * Emitted when blur the input
-         */
-        "onMBlur"?: (event: MSelectCustomEvent<any>) => void;
-        /**
-          * Emitted when the select value has changed
-         */
-        "onMChange"?: (event: MSelectCustomEvent<any>) => void;
-        /**
-          * The select options
-         */
-        "options"?: Array<Record<string, unknown>>;
-        /**
-          * The value selected of the component
-         */
-        "selectedOption"?: Record<string, unknown>;
-        /**
-          * The theme of the select
-         */
-        "theme"?: string;
-        /**
-          * Callback to extract the value from the option
-         */
-        "valueExtractor"?: (item: any) => string | number;
-        /**
-          * The variant of the select
-         */
-        "variant"?: SelectLayoutVariant;
     }
     interface MShortcutToggle {
         /**
@@ -2726,27 +2624,26 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "m-alert": MAlert;
-        "m-app": MApp;
         "m-badge": MBadge;
         "m-button": MButton;
-        "m-form-check": MFormCheck;
         "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
+        "m-input-check": MInputCheck;
         "m-input-counter": MInputCounter;
         "m-input-currency-base": MInputCurrencyBase;
         "m-input-password": MInputPassword;
         "m-input-search": MInputSearch;
+        "m-input-select": MInputSelect;
         "m-input-switch": MInputSwitch;
         "m-list-item": MListItem;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
         "m-pin": MPin;
         "m-progress-bar": MProgressBar;
-        "m-quick-action": MQuickAction;
+        "m-quick-action-personal-info": MQuickActionPersonalInfo;
         "m-segment-control": MSegmentControl;
         "m-segment-control-item": MSegmentControlItem;
-        "m-select": MSelect;
         "m-shortcut-toggle": MShortcutToggle;
     }
 }
@@ -2755,27 +2652,26 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
-            "m-app": LocalJSX.MApp & JSXBase.HTMLAttributes<HTMLMAppElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
-            "m-form-check": LocalJSX.MFormCheck & JSXBase.HTMLAttributes<HTMLMFormCheckElement>;
             "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
+            "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;
             "m-input-counter": LocalJSX.MInputCounter & JSXBase.HTMLAttributes<HTMLMInputCounterElement>;
             "m-input-currency-base": LocalJSX.MInputCurrencyBase & JSXBase.HTMLAttributes<HTMLMInputCurrencyBaseElement>;
             "m-input-password": LocalJSX.MInputPassword & JSXBase.HTMLAttributes<HTMLMInputPasswordElement>;
             "m-input-search": LocalJSX.MInputSearch & JSXBase.HTMLAttributes<HTMLMInputSearchElement>;
+            "m-input-select": LocalJSX.MInputSelect & JSXBase.HTMLAttributes<HTMLMInputSelectElement>;
             "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-pin": LocalJSX.MPin & JSXBase.HTMLAttributes<HTMLMPinElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
-            "m-quick-action": LocalJSX.MQuickAction & JSXBase.HTMLAttributes<HTMLMQuickActionElement>;
+            "m-quick-action-personal-info": LocalJSX.MQuickActionPersonalInfo & JSXBase.HTMLAttributes<HTMLMQuickActionPersonalInfoElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
             "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;
-            "m-select": LocalJSX.MSelect & JSXBase.HTMLAttributes<HTMLMSelectElement>;
             "m-shortcut-toggle": LocalJSX.MShortcutToggle & JSXBase.HTMLAttributes<HTMLMShortcutToggleElement>;
         }
     }

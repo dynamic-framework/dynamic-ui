@@ -5,13 +5,17 @@ import {
   Prop,
   Event,
   Method,
+  Element,
 } from '@stencil/core';
+
+import { PREFIX_BS } from '../../utils';
 
 @Component({
   tag: 'm-input',
   shadow: false,
 })
 export class MInput implements ComponentInterface {
+  @Element() el!: HTMLMInputElement;
   /**
    * The id of the input
    */
@@ -38,7 +42,7 @@ export class MInput implements ComponentInterface {
   @Prop() labelIconFamilyClass?: string;
 
   /**
-   * Icon label family class
+   * Icon label family prefix
    */
   @Prop() labelIconFamilyPrefix?: string;
 
@@ -56,6 +60,16 @@ export class MInput implements ComponentInterface {
    * The value of the input
    */
   @Prop() value: string | number = '';
+
+  /**
+   * Input mode
+   */
+  @Prop() mInputMode?: string;
+
+  /**
+   * Pattern to validate
+   */
+  @Prop() pattern?: string;
 
   /**
    * Flag to disable the input
@@ -202,6 +216,14 @@ export class MInput implements ComponentInterface {
     this.mIconEndClick.emit(event);
   };
 
+  private inputStart!: HTMLElement | null;
+  private inputEnd!: HTMLElement | null;
+
+  componentWillLoad() {
+    this.inputStart = this.el.querySelector('[slot="input-start"]');
+    this.inputEnd = this.el.querySelector('[slot="input-end"]');
+  }
+
   render() {
     return (
       <div class="m-input">
@@ -212,6 +234,7 @@ export class MInput implements ComponentInterface {
               <m-icon
                 class="m-input-icon"
                 icon={this.labelIcon}
+                size={`var(--${PREFIX_BS}m-input-label-font-size)`}
                 familyClass={this.labelIconFamilyClass}
                 familyPrefix={this.labelIconFamilyPrefix}
               />
@@ -226,6 +249,11 @@ export class MInput implements ComponentInterface {
               disabled: this.isDisabled || this.isLoading,
             }}
           >
+            {!!this.inputStart && (
+              <div class="input-group-text">
+                <slot name="input-start" />
+              </div>
+            )}
             {this.iconStart && (
               <button
                 type="button"
@@ -261,6 +289,8 @@ export class MInput implements ComponentInterface {
               readOnly={this.isReadOnly}
               value={this.value}
               aria-describedby={`${this.mId}Add ${this.mId}Hint`}
+              inputmode={this.mInputMode}
+              pattern={this.pattern}
               onInput={this.changeHandler}
               onBlur={this.blurHandler}
               onFocus={this.focusHandler}
@@ -296,6 +326,11 @@ export class MInput implements ComponentInterface {
                   />
                 )}
               </button>
+            )}
+            {!!this.inputEnd && (
+              <div class="input-group-text">
+                <slot name="input-end" />
+              </div>
             )}
             {this.isLoading && (
               <div class="input-group-text m-input-icon">

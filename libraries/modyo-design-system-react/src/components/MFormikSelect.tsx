@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
 import { useField } from 'formik';
-import { SelectLayoutVariant } from '@modyo-dynamic/modyo-design-system';
 
-import { MSelect } from './proxies';
+import { MInputSelect } from './proxies';
 
-// TODO: add all props of m-select
+// TODO: add all props of m-input-select
 type Props = {
   mId: string;
   name: string;
   options: Array<any>;
-  variant?: SelectLayoutVariant;
-  theme?: string;
   label?: string;
   placeholder: string;
   iconStart?: string;
@@ -24,8 +21,6 @@ export default function MFormikSelect(
     mId,
     name,
     options = [],
-    variant = 'prime',
-    theme,
     label,
     placeholder,
     iconStart,
@@ -37,12 +32,10 @@ export default function MFormikSelect(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [field,, helpers] = useField<any>(name);
   return (
-    <MSelect
+    <MInputSelect
       mId={mId}
       name={field.name}
       options={options}
-      variant={variant}
-      theme={theme}
       label={label}
       placeholder={placeholder}
       iconStart={iconStart}

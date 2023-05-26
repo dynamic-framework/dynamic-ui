@@ -1,5 +1,3 @@
-@import "~bootstrap/scss/alert";
-
 @each $color, $value in map-remove($theme-colors, "light") {
   .alert-#{$color} {
     --#{$prefix}alert-bg: var(--#{$prefix}#{$color});

@@ -1,14 +1,43 @@
-$body-bg: $white !default;
-$body-color: $gray-900 !default;
+// Body
+//
+// Settings for the `<body>` element.
+
 $body-text-align: null !default;
+$body-color: $gray-900 !default;
+$body-bg: $white !default;
 
-// $link-color: $primary !default;
-// $link-decoration: underline !default;
-// $link-shade-percentage: 20% !default;
-// $link-hover-color: shift-color($link-color, $link-shade-percentage) !default;
-// $link-hover-decoration: null !default;
+$body-secondary-color: rgba($body-color, .75) !default;
+$body-secondary-bg: $gray-200 !default;
 
-// $stretched-link-pseudo-element: after !default;
-// $stretched-link-z-index: 1 !default;
+$body-tertiary-color: rgba($body-color, .5) !default;
+$body-tertiary-bg: $gray-100 !default;
 
-// $paragraph-margin-bottom: 1rem !default;
+$body-emphasis-color: $black !default;
+
+// Links
+//
+// Style anchor elements.
+
+$link-color: $primary !default;
+$link-decoration: underline !default;
+$link-shade-percentage: 20% !default;
+$link-hover-color: shift-color($link-color, $link-shade-percentage) !default;
+$link-hover-decoration: null !default;
+
+$stretched-link-pseudo-element: after !default;
+$stretched-link-z-index: 1 !default;
+
+// Icon links
+// scss-docs-start icon-link-variables
+$icon-link-gap: .375rem !default;
+$icon-link-underline-offset: .25em !default;
+$icon-link-icon-size: 1em !default;
+$icon-link-icon-transition: .2s ease-in-out transform !default;
+$icon-link-icon-transform: translate3d(.25em, 0, 0) !default;
+// scss-docs-end icon-link-variables
+
+// Paragraphs
+//
+// Style p element.
+
+$paragraph-margin-bottom: 0 !default;

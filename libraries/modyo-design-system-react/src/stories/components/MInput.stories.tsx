@@ -29,7 +29,6 @@ const config: Meta<typeof MInput> = {
         },
       },
       type: 'string',
-      table: { defaultValue: { summary: 'question-circle' } },
       options: [undefined, ...ICONS],
     },
     placeholder: {
@@ -46,6 +45,16 @@ const config: Meta<typeof MInput> = {
       control: 'text',
       type: 'string',
       description: 'The value of the input',
+    },
+    mInputMode: {
+      control: 'text',
+      type: 'string',
+      description: 'Input mode',
+    },
+    pattern: {
+      control: 'text',
+      type: 'string',
+      description: 'Pattern to validate',
     },
     isDisabled: {
       control: 'boolean',
@@ -105,6 +114,15 @@ const config: Meta<typeof MInput> = {
     },
     onMChange: {
       action: 'onMChange',
+    },
+    onMBlur: {
+      action: 'onMBlur',
+    },
+    onMFocus: {
+      action: 'onMFocus',
+    },
+    onMWheel: {
+      action: 'onMWheel',
     },
   },
 };

@@ -38,6 +38,12 @@
   --#{$prefix}ref-fs-subparagraph: #{$subparagraph-font-size};
   --#{$prefix}ref-fs-small: #{$small-font-size};
 
+  --#{$prefix}ref-fw-lighter: #{$font-weight-lighter};
+  --#{$prefix}ref-fw-light: #{$font-weight-light};
+  --#{$prefix}ref-fw-normal: #{$font-weight-normal};
+  --#{$prefix}ref-fw-semibold: #{$font-weight-semibold};
+  --#{$prefix}ref-fw-bold: #{$font-weight-bold};
+  --#{$prefix}ref-fw-bolder: #{$font-weight-bolder};
 }
 
 .flex-1 {

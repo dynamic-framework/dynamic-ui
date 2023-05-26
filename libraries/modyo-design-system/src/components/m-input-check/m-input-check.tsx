@@ -9,7 +9,7 @@ import {
 
 import type { FormCheckType } from './m-input-check-interface';
 
-@Component({ tag: 'm-form-check' })
+@Component({ tag: 'm-input-check' })
 export class MInputCheck implements ComponentInterface {
   /**
    * Set whether is a checkbox input or a radio input

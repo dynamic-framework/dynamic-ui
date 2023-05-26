@@ -29,7 +29,6 @@ const config: Meta<typeof MInputCurrencyBase> = {
         },
       },
       type: 'string',
-      table: { defaultValue: { summary: 'question-circle' } },
       options: [undefined, ...ICONS],
     },
     placeholder: {

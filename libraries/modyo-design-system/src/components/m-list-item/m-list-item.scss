@@ -1,5 +1,3 @@
-@import "~bootstrap/scss/list-group";
-
 .list-group-item {
   --#{$prefix}list-group-item-border-radius: #{$list-group-item-border-radius};
   border-radius: var(--#{$prefix}list-group-item-border-radius);

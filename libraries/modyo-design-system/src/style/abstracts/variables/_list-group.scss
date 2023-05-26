@@ -1,3 +1,6 @@
+// List group
+
+// scss-docs-start list-group-variables
 $list-group-color: var(--#{$prefix}dark) !default;
 $list-group-bg: transparent !default;
 $list-group-border-color: var(--#{$prefix}light) !default;
@@ -6,23 +9,27 @@ $list-group-border-radius: var(--#{$prefix}border-radius-sm) !default;
 
 $list-group-item-padding-y: $spacer-1 !default;
 $list-group-item-padding-x: $spacer-1 !default;
+
+// fusv-disable
 $list-group-item-bg-scale: 0% !default;
-// $list-group-item-color-scale: 40% !default;
+$list-group-item-color-scale: 40% !default;
+// fusv-enable
 
-// $list-group-hover-bg: $gray-100 !default;
-// $list-group-active-color: $component-active-color !default;
-// $list-group-active-bg: $component-active-bg !default;
-// $list-group-active-border-color: $list-group-active-bg !default;
+$list-group-hover-bg: $gray-100 !default;
+$list-group-active-color: $component-active-color !default;
+$list-group-active-bg: $component-active-bg !default;
+$list-group-active-border-color: $list-group-active-bg !default;
 
-// $list-group-disabled-color: $gray-600 !default;
-// $list-group-disabled-bg: $list-group-bg !default;
+$list-group-disabled-color: $gray-600 !default;
+$list-group-disabled-bg: $list-group-bg !default;
 
-// $list-group-action-color: $gray-700 !default;
-// $list-group-action-hover-color: $list-group-action-color !default;
+$list-group-action-color: $gray-700 !default;
+$list-group-action-hover-color: $list-group-action-color !default;
 
-// $list-group-action-active-color: $body-color !default;
-// $list-group-action-active-bg: $gray-200 !default;
+$list-group-action-active-color: $body-color !default;
+$list-group-action-active-bg: $gray-200 !default;
 
+// custom
 $list-group-item-border-radius: 0 !default;
 
 $list-group-item-bg-light: $light !default;
@@ -32,3 +39,5 @@ $list-group-item-picture-border-radius: $border-radius-sm !default;
 
 $list-group-item-content-padding-y: $spacer-3 !default;
 $list-group-item-content-padding-x: $spacer-3 !default;
+// end cusotm
+// scss-docs-end list-group-variables
