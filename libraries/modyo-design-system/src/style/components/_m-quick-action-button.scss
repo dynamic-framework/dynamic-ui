@@ -4,7 +4,6 @@
   --#{$prefix}m-quick-action-button-bg: #{$quick-action-button-bg};
   --#{$prefix}m-quick-action-button-border: #{$quick-action-button-border};
   --#{$prefix}m-quick-action-button-border-radius: #{$quick-action-button-border-radius};
-  --#{$prefix}m-quick-action-button-min-width: #{$quick-action-button-min-width};
 
   --#{$prefix}m-quick-action-button-line1-font-size: #{$quick-action-button-line1-font-size};
   --#{$prefix}m-quick-action-button-line1-font-weight: #{$quick-action-button-line1-font-weight};
@@ -23,16 +22,17 @@
   --#{$prefix}m-quick-action-button-hover-bg: #{$quick-action-button-hover-bg};
   --#{$prefix}m-quick-action-button-hover-border-color: #{$quick-action-button-hover-border-color};
   --#{$prefix}m-quick-action-button-hover-action-icon-color: #{$quick-action-button-hover-action-icon-color};
+  --#{$prefix}m-quick-action-button-hover-box-shadow: #{$quick-action-button-hover-box-shadow};
 
   --#{$prefix}m-quick-action-button-active-bg: #{$quick-action-button-active-bg};
   --#{$prefix}m-quick-action-button-active-border-color: #{$quick-action-button-active-border-color};
   --#{$prefix}m-quick-action-button-active-action-icon-color: #{$quick-action-button-active-action-icon-color};
+  --#{$prefix}m-quick-action-button-active-box-shadow: #{$quick-action-button-active-box-shadow};
 
   display: flex;
   gap: var(--#{$prefix}m-quick-action-button-gap);
   align-items: center;
   width: 100%;
-  min-width: var(--#{$prefix}m-quick-action-button-min-width);
   padding: var(--#{$prefix}m-quick-action-button-padding);
   text-align: left;
   background-color: var(--#{$prefix}m-quick-action-button-bg);
@@ -43,11 +43,13 @@
   &:hover {
     background: var(--#{$prefix}m-quick-action-button-hover-bg);
     border-color: var(--#{$prefix}m-quick-action-button-hover-border-color);
+    box-shadow: var(--#{$prefix}m-quick-action-button-hover-box-shadow);
   }
 
   &:active {
     background: var(--#{$prefix}m-quick-action-button-active-bg);
     border-color: var(--#{$prefix}m-quick-action-button-active-border-color);
+    box-shadow: var(--#{$prefix}m-quick-action-button-active-box-shadow);
   }
 
   .quick-action-button-representative-image {
