@@ -349,14 +349,20 @@ export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-p
 ]);
 
 
-export const MQuickActionPersonalInfo = /*@__PURE__*/ defineContainer<JSX.MQuickActionPersonalInfo>('m-quick-action-personal-info', undefined, [
-  'name',
-  'bank',
-  'account',
-  'icon',
-  'iconFamilyClass',
-  'iconFamilyPrefix',
-  'image',
+export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickActionButton>('m-quick-action-button', undefined, [
+  'line1',
+  'line2',
+  'actionLinkText',
+  'actionLinkTheme',
+  'actionIcon',
+  'actionIconFamilyClass',
+  'actionIconFamilyPrefix',
+  'representativeImage',
+  'representativeIcon',
+  'representativeIconTheme',
+  'representativeIconHasCircle',
+  'representativeIconFamilyClass',
+  'representativeIconFamilyPrefix',
   'mClick'
 ]);
 

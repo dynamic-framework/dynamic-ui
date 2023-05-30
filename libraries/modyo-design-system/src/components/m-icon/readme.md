@@ -33,7 +33,7 @@
  - [m-input-select](../m-input-select)
  - [m-list-item](../m-list-item)
  - [m-pin](../m-pin)
- - [m-quick-action-personal-info](../m-quick-action-personal-info)
+ - [m-quick-action-button](../m-quick-action-button)
  - [m-shortcut-toggle](../m-shortcut-toggle)
 
 ### Graph
@@ -46,7 +46,7 @@ graph TD;
   m-input-select --> m-icon
   m-list-item --> m-icon
   m-pin --> m-icon
-  m-quick-action-personal-info --> m-icon
+  m-quick-action-button --> m-icon
   m-shortcut-toggle --> m-icon
   style m-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

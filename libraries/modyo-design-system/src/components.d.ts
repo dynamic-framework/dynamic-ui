@@ -1042,35 +1042,59 @@ export namespace Components {
          */
         "minValue": number;
     }
-    interface MQuickActionPersonalInfo {
-        /**
-          * The person account number
-         */
-        "account": string;
-        /**
-          * The person bank name
-         */
-        "bank": string;
+    interface MQuickActionButton {
         /**
           * The icon to indicate the action
          */
-        "icon": string;
+        "actionIcon": string;
         /**
           * Icon family class
          */
-        "iconFamilyClass"?: string;
+        "actionIconFamilyClass"?: string;
         /**
           * Icon family class
          */
-        "iconFamilyPrefix"?: string;
+        "actionIconFamilyPrefix"?: string;
         /**
-          * The person profile image
+          * Action link text, displayed when the icon is not set
          */
-        "image": string;
+        "actionLinkText"?: string;
         /**
-          * The person name
+          * Action link theme
          */
-        "name": string;
+        "actionLinkTheme": string;
+        /**
+          * The title
+         */
+        "line1": string;
+        /**
+          * The subtitle
+         */
+        "line2": string;
+        /**
+          * Representative icon, displayed when the representativeImage is not set
+         */
+        "representativeIcon"?: string;
+        /**
+          * Icon family class
+         */
+        "representativeIconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "representativeIconFamilyPrefix"?: string;
+        /**
+          * Representative icon circle
+         */
+        "representativeIconHasCircle"?: boolean | undefined;
+        /**
+          * Representative icon theme
+         */
+        "representativeIconTheme": string;
+        /**
+          * Representative image
+         */
+        "representativeImage"?: string;
     }
     interface MSegmentControl {
         /**
@@ -1215,9 +1239,9 @@ export interface MPinCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMPinElement;
 }
-export interface MQuickActionPersonalInfoCustomEvent<T> extends CustomEvent<T> {
+export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMQuickActionPersonalInfoElement;
+    target: HTMLMQuickActionButtonElement;
 }
 export interface MSegmentControlItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1336,11 +1360,11 @@ declare global {
         prototype: HTMLMProgressBarElement;
         new (): HTMLMProgressBarElement;
     };
-    interface HTMLMQuickActionPersonalInfoElement extends Components.MQuickActionPersonalInfo, HTMLStencilElement {
+    interface HTMLMQuickActionButtonElement extends Components.MQuickActionButton, HTMLStencilElement {
     }
-    var HTMLMQuickActionPersonalInfoElement: {
-        prototype: HTMLMQuickActionPersonalInfoElement;
-        new (): HTMLMQuickActionPersonalInfoElement;
+    var HTMLMQuickActionButtonElement: {
+        prototype: HTMLMQuickActionButtonElement;
+        new (): HTMLMQuickActionButtonElement;
     };
     interface HTMLMSegmentControlElement extends Components.MSegmentControl, HTMLStencilElement {
     }
@@ -1379,7 +1403,7 @@ declare global {
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-pin": HTMLMPinElement;
         "m-progress-bar": HTMLMProgressBarElement;
-        "m-quick-action-personal-info": HTMLMQuickActionPersonalInfoElement;
+        "m-quick-action-button": HTMLMQuickActionButtonElement;
         "m-segment-control": HTMLMSegmentControlElement;
         "m-segment-control-item": HTMLMSegmentControlItemElement;
         "m-shortcut-toggle": HTMLMShortcutToggleElement;
@@ -2494,39 +2518,63 @@ declare namespace LocalJSX {
          */
         "minValue"?: number;
     }
-    interface MQuickActionPersonalInfo {
-        /**
-          * The person account number
-         */
-        "account": string;
-        /**
-          * The person bank name
-         */
-        "bank": string;
+    interface MQuickActionButton {
         /**
           * The icon to indicate the action
          */
-        "icon"?: string;
+        "actionIcon"?: string;
         /**
           * Icon family class
          */
-        "iconFamilyClass"?: string;
+        "actionIconFamilyClass"?: string;
         /**
           * Icon family class
          */
-        "iconFamilyPrefix"?: string;
+        "actionIconFamilyPrefix"?: string;
         /**
-          * The person profile image
+          * Action link text, displayed when the icon is not set
          */
-        "image": string;
+        "actionLinkText"?: string;
         /**
-          * The person name
+          * Action link theme
          */
-        "name": string;
+        "actionLinkTheme"?: string;
+        /**
+          * The title
+         */
+        "line1": string;
+        /**
+          * The subtitle
+         */
+        "line2": string;
         /**
           * Emitted when the input value has changed
          */
-        "onMClick"?: (event: MQuickActionPersonalInfoCustomEvent<any>) => void;
+        "onMClick"?: (event: MQuickActionButtonCustomEvent<any>) => void;
+        /**
+          * Representative icon, displayed when the representativeImage is not set
+         */
+        "representativeIcon"?: string;
+        /**
+          * Icon family class
+         */
+        "representativeIconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "representativeIconFamilyPrefix"?: string;
+        /**
+          * Representative icon circle
+         */
+        "representativeIconHasCircle"?: boolean | undefined;
+        /**
+          * Representative icon theme
+         */
+        "representativeIconTheme"?: string;
+        /**
+          * Representative image
+         */
+        "representativeImage"?: string;
     }
     interface MSegmentControl {
         /**
@@ -2641,7 +2689,7 @@ declare namespace LocalJSX {
         "m-offcanvas": MOffcanvas;
         "m-pin": MPin;
         "m-progress-bar": MProgressBar;
-        "m-quick-action-personal-info": MQuickActionPersonalInfo;
+        "m-quick-action-button": MQuickActionButton;
         "m-segment-control": MSegmentControl;
         "m-segment-control-item": MSegmentControlItem;
         "m-shortcut-toggle": MShortcutToggle;
@@ -2669,7 +2717,7 @@ declare module "@stencil/core" {
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-pin": LocalJSX.MPin & JSXBase.HTMLAttributes<HTMLMPinElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
-            "m-quick-action-personal-info": LocalJSX.MQuickActionPersonalInfo & JSXBase.HTMLAttributes<HTMLMQuickActionPersonalInfoElement>;
+            "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
             "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;
             "m-shortcut-toggle": LocalJSX.MShortcutToggle & JSXBase.HTMLAttributes<HTMLMShortcutToggleElement>;

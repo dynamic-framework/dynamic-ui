@@ -1,0 +1,98 @@
+.quick-action-button {
+  --#{$prefix}m-quick-action-button-gap: #{$quick-action-button-gap};
+  --#{$prefix}m-quick-action-button-padding: #{$quick-action-button-padding};
+  --#{$prefix}m-quick-action-button-bg: #{$quick-action-button-bg};
+  --#{$prefix}m-quick-action-button-border: #{$quick-action-button-border};
+  --#{$prefix}m-quick-action-button-border-radius: #{$quick-action-button-border-radius};
+  --#{$prefix}m-quick-action-button-min-width: #{$quick-action-button-min-width};
+
+  --#{$prefix}m-quick-action-button-line1-font-size: #{$quick-action-button-line1-font-size};
+  --#{$prefix}m-quick-action-button-line1-font-weight: #{$quick-action-button-line1-font-weight};
+  --#{$prefix}m-quick-action-button-line1-color: #{$quick-action-button-line1-color};
+
+  --#{$prefix}m-quick-action-button-line2-font-size: #{$quick-action-button-line2-font-size};
+  --#{$prefix}m-quick-action-button-line2-font-weight: #{$quick-action-button-line2-font-weight};
+  --#{$prefix}m-quick-action-button-line2-color: #{$quick-action-button-line2-color};
+
+  --#{$prefix}m-quick-action-button-representative-image-size: #{$quick-action-button-representative-image-size};
+  --#{$prefix}m-quick-action-button-representative-icon-size: #{$quick-action-button-representative-icon-size};
+
+  --#{$prefix}m-quick-action-button-action-icon-color: #{$quick-action-button-action-icon-color};
+  --#{$prefix}m-quick-action-button-action-icon-size: #{$quick-action-button-action-icon-size};
+
+  --#{$prefix}m-quick-action-button-hover-bg: #{$quick-action-button-hover-bg};
+  --#{$prefix}m-quick-action-button-hover-border-color: #{$quick-action-button-hover-border-color};
+  --#{$prefix}m-quick-action-button-hover-action-icon-color: #{$quick-action-button-hover-action-icon-color};
+
+  --#{$prefix}m-quick-action-button-active-bg: #{$quick-action-button-active-bg};
+  --#{$prefix}m-quick-action-button-active-border-color: #{$quick-action-button-active-border-color};
+  --#{$prefix}m-quick-action-button-active-action-icon-color: #{$quick-action-button-active-action-icon-color};
+
+  display: flex;
+  gap: var(--#{$prefix}m-quick-action-button-gap);
+  align-items: center;
+  width: 100%;
+  min-width: var(--#{$prefix}m-quick-action-button-min-width);
+  padding: var(--#{$prefix}m-quick-action-button-padding);
+  text-align: left;
+  background-color: var(--#{$prefix}m-quick-action-button-bg);
+  background-position: center;
+  border: var(--#{$prefix}m-quick-action-button-border);
+  border-radius: var(--#{$prefix}m-quick-action-button-border-radius);
+
+  &:hover {
+    background: var(--#{$prefix}m-quick-action-button-hover-bg);
+    border-color: var(--#{$prefix}m-quick-action-button-hover-border-color);
+  }
+
+  &:active {
+    background: var(--#{$prefix}m-quick-action-button-active-bg);
+    border-color: var(--#{$prefix}m-quick-action-button-active-border-color);
+  }
+
+  .quick-action-button-representative-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--#{$prefix}m-quick-action-button-representative-image-size);
+    height: var(--#{$prefix}m-quick-action-button-representative-image-size);
+    background-color: var(--#{$prefix}m-quick-action-button-action-icon-color);
+    border-radius: inherit;
+  }
+
+  .quick-action-button-content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .quick-action-button-text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .quick-action-button-line1 {
+    font-size: var(--#{$prefix}m-quick-action-button-line1-font-size);
+    font-weight: var(--#{$prefix}m-quick-action-button-line1-font-weight);
+    color: var(--#{$prefix}m-quick-action-button-line1-color);
+  }
+
+  .quick-action-button-line2 {
+    font-size: var(--#{$prefix}m-quick-action-button-line2-font-size);
+    font-weight: var(--#{$prefix}m-quick-action-button-line2-font-weight);
+    color: var(--#{$prefix}m-quick-action-button-line2-color);
+  }
+
+  .quick-action-button-action-icon {
+    color: var(--#{$prefix}m-quick-action-button-action-icon-color);
+  }
+
+  &:hover .quick-action-button-action-icon {
+    color: var(--#{$prefix}m-quick-action-button-active-action-icon-color);
+  }
+
+  &:active .quick-action-button-action-icon {
+    color: var(--#{$prefix}m-quick-action-button-active-action-icon-color);
+  }
+}

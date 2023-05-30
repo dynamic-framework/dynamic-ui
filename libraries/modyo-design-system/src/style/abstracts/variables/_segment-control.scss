@@ -1,5 +1,5 @@
 // Segment Control
-$segment-control-bg: var(--#{$prefix}gray-light) !default;
+$segment-control-bg: var(--#{$prefix}gray-200) !default;
 $segment-control-border-radius: .5rem !default;
 $segment-control-width: fit-content !default;
 $segment-control-height: auto !default;
@@ -8,7 +8,7 @@ $segment-control-font-weight: 700 !default;
 $segment-control-line-height: 18px !default;
 $segment-control-letter-spacing: -.5% !default;
 // Segment Control Item
-$segment-control-item-bg: var(--#{$prefix}gray-light) !default;
+$segment-control-item-bg: var(--#{$prefix}gray-200) !default;
 $segment-control-item-color: var(--#{$prefix}white) !default;
 $segment-control-item-border-width: 2px !default;
 $segment-control-item-border-color: var(--#{$prefix}segment-control-item-border-color) !default;
@@ -31,9 +31,9 @@ $segment-control-item-checked-color: var(--#{$prefix}tertiary) !default;
 // Segment Control Item :checked :hover
 $segment-control-item-checked-hover-border-color: var(--#{$prefix}tertiary) !default;
 // Segment Control Item :disabled
-$segment-control-item-disabled-border-color: var(--#{$prefix}gray-light) !default;
+$segment-control-item-disabled-border-color: var(--#{$prefix}gray-200) !default;
 $segment-control-item-disabled-bg: var(--#{$prefix}white) !default;
-$segment-control-item-disabled-color: var(--#{$prefix}gray-light) !default;
+$segment-control-item-disabled-color: var(--#{$prefix}gray-200) !default;
 $segment-control-item-disabled-cursor: not-allowed !default;
 // Separator
 $segment-control-separator-width: 1px !default;

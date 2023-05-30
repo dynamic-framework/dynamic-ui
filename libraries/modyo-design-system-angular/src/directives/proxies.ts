@@ -24,7 +24,7 @@ import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMPin } from '@modyo-dynamic/modyo-design-system/components/m-pin.js';
 import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
-import { defineCustomElement as defineMQuickActionPersonalInfo } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-personal-info.js';
+import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
 import { defineCustomElement as defineMShortcutToggle } from '@modyo-dynamic/modyo-design-system/components/m-shortcut-toggle.js';
@@ -568,17 +568,17 @@ export declare interface MProgressBar extends Components.MProgressBar {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMQuickActionPersonalInfo,
-  inputs: ['account', 'bank', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'name']
+  defineCustomElementFn: defineMQuickActionButton,
+  inputs: ['actionIcon', 'actionIconFamilyClass', 'actionIconFamilyPrefix', 'actionLinkText', 'actionLinkTheme', 'line1', 'line2', 'representativeIcon', 'representativeIconFamilyClass', 'representativeIconFamilyPrefix', 'representativeIconHasCircle', 'representativeIconTheme', 'representativeImage']
 })
 @Component({
-  selector: 'm-quick-action-personal-info',
+  selector: 'm-quick-action-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['account', 'bank', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'name'],
+  inputs: ['actionIcon', 'actionIconFamilyClass', 'actionIconFamilyPrefix', 'actionLinkText', 'actionLinkTheme', 'line1', 'line2', 'representativeIcon', 'representativeIconFamilyClass', 'representativeIconFamilyPrefix', 'representativeIconHasCircle', 'representativeIconTheme', 'representativeImage'],
 })
-export class MQuickActionPersonalInfo {
+export class MQuickActionButton {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -588,7 +588,7 @@ export class MQuickActionPersonalInfo {
 }
 
 
-export declare interface MQuickActionPersonalInfo extends Components.MQuickActionPersonalInfo {
+export declare interface MQuickActionButton extends Components.MQuickActionButton {
   /**
    * Emitted when the input value has changed
    */

@@ -13,11 +13,11 @@ $btn-white-space: null !default; // Set to `nowrap` to prevent text wrapping
 
 $btn-padding-y-sm: $spacer-2 !default;
 $btn-padding-x-sm: $spacer-3 !default;
-$btn-font-size-sm: 1rem !default;
+$btn-font-size-sm: $subparagraph-font-size !default;
 
 $btn-padding-y-lg: 1.125rem !default;
 $btn-padding-x-lg: $spacer-4 !default;
-$btn-font-size-lg: 1rem !default;
+$btn-font-size-lg: $h6-font-size !default;
 
 $btn-border-width: 2px !default;
 
@@ -35,6 +35,7 @@ $btn-link-disabled-color: $gray-600 !default;
 // custom
 $btn-link-padding-y: $spacer-2 !default;
 $btn-link-padding-x: $spacer-2 !default;
+$btn-link-font-size-sm: $small-font-size !default;
 // end custom
 
 $btn-border-radius: $border-radius-sm !default;
