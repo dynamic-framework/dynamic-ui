@@ -1,0 +1,37 @@
+import {
+  Meta,
+  ArgTypes,
+  Markdown,
+  IconGallery,
+  IconItem,
+  Stories,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import { ICONS } from '../constants';
+
+import * as MProgressBarStories from './MProgressBar.stories';
+
+# Progress Bar
+
+## CSS Variables
+<Markdown>
+  {`
+
+| Variable                                           | Type              | Description                           |
+  |--------------------------------------------------|-------------------|---------------------------------------|
+  | \`--${PREFIX_BS}m-progress-bar-font-size\`       | css length unit   | Text font size                        |
+  | \`--${PREFIX_BS}m-progress-bar-font-weight\`     | css length unit   | Text font weight                      |
+  | \`--${PREFIX_BS}m-progress-bar-color\`           | css color unit    | Text and Progress Bar color           |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MProgressBarStories} />
+
+<ArgTypes of={MProgressBarStories} />
+
+<Stories />
+
+

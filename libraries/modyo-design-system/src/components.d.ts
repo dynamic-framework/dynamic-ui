@@ -1010,25 +1010,9 @@ export namespace Components {
     }
     interface MProgressBar {
         /**
-          * Additional classes for progress bar
-         */
-        "classNameBar"?: string;
-        /**
-          * Additional classes for component container
-         */
-        "classNameContainer"?: string;
-        /**
-          * Additional classes for progress container
-         */
-        "classNameProgress"?: string;
-        /**
           * Current progress-bar value
          */
         "currentValue": number;
-        /**
-          * Enable dark mode
-         */
-        "enableDarkMode": boolean;
         /**
           * Enable striped animation
          */
@@ -2486,25 +2470,9 @@ declare namespace LocalJSX {
     }
     interface MProgressBar {
         /**
-          * Additional classes for progress bar
-         */
-        "classNameBar"?: string;
-        /**
-          * Additional classes for component container
-         */
-        "classNameContainer"?: string;
-        /**
-          * Additional classes for progress container
-         */
-        "classNameProgress"?: string;
-        /**
           * Current progress-bar value
          */
         "currentValue": number;
-        /**
-          * Enable dark mode
-         */
-        "enableDarkMode"?: boolean;
         /**
           * Enable striped animation
          */

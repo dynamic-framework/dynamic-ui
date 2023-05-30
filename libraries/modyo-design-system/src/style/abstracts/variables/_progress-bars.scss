@@ -1,19 +1,18 @@
 // Progress bars
 
 // scss-docs-start progress-variables
-$progress-height: .5rem !default;
-$progress-font-size: $font-size-base * .75 !default;
-$progress-bg: $gray-200 !default;
-$progress-border-radius: $border-radius !default;
-$progress-box-shadow: $box-shadow-inset !default;
-$progress-bar-color: $white !default;
-$progress-bar-bg: $secondary !default;
-
-// custom
-$progress-bar-bg-light: $white !default;
-$progress-bg-light: rgba(255, 255, 255, .5) !default;
-// end custom
-
+$progress-height: $spacer-2 !default;
+$progress-font-size: var(--#{$prefix}ref-fs-small) !default;
+$progress-bg: var(--#{$prefix}secondary-100) !default;
+$progress-border-radius: var(--#{$prefix}border-radius-pill) !default;
+$progress-box-shadow: none !default;
+$progress-bar-color: var(--#{$prefix}white) !default;
+$progress-bar-bg: var(--#{$prefix}secondary) !default;
 $progress-bar-animation-timing: 1s linear infinite !default;
 $progress-bar-transition: width .6s ease !default;
+
+// custom
+$progress-font-weight: var(--#{$prefix}ref-fw-bold) !default;
+$progress-color: var(--#{$prefix}secondary) !default;
+// end custom
 // scss-docs-end progress-variables
