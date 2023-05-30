@@ -1010,7 +1010,7 @@ export namespace Components {
     }
     interface MProgressBar {
         /**
-          * Current progress-bar value
+          * Current progress value
          */
         "currentValue": number;
         /**
@@ -2470,7 +2470,7 @@ declare namespace LocalJSX {
     }
     interface MProgressBar {
         /**
-          * Current progress-bar value
+          * Current progress value
          */
         "currentValue": number;
         /**

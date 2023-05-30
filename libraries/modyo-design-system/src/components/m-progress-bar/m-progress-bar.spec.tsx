@@ -15,22 +15,15 @@ it('should render my component', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-progress-bar class="progress-box">
-      <div class="progress">
-        <div
-          aria-label="Progress bar"
-          aria-valuemax="100"
-          aria-valuemin="0"
-          aria-valuenow="${progress.currentValue}"
-          class="progress-bar"
-          role="progressbar"
-          style="width: ${progress.currentValue}%;"
-        >
+    <m-progress-bar>
+      <div class="m-progress-bar">
+        <div class="progress">
+          <div aria-label="Progress bar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="33" class="progress-bar" role="progressbar" style="width: 33%;"></div>
         </div>
+        <span class="m-progress-text">
+          33%
+        </span>
       </div>
-      <span class="progress-text">
-        ${progress.currentValue}%
-      </span>
     </m-progress-bar>
   `);
 });
