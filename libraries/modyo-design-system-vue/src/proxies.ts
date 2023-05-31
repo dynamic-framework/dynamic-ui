@@ -341,11 +341,8 @@ export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-p
   'currentValue',
   'minValue',
   'maxValue',
-  'classNameContainer',
-  'classNameProgress',
-  'classNameBar',
-  'enableStripedAnimation',
-  'enableDarkMode'
+  'hideCurrentValue',
+  'enableStripedAnimation'
 ]);
 
 

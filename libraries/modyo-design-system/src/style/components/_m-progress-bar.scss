@@ -1,0 +1,28 @@
+.m-progress-bar {
+  --#{$prefix}m-progress-bar-font-size: #{$progress-font-size};
+  --#{$prefix}m-progress-bar-font-weight: #{$progress-font-weight};
+  --#{$prefix}m-progress-bar-color: #{$progress-color};
+
+  display: flex;
+  flex-direction: row;
+  gap: $spacer-1;
+  align-items: center;
+  width: 100%;
+
+  .progress {
+    --#{$prefix}progress-font-size: var(--#{$prefix}m-progress-bar-font-size);
+    --#{$prefix}progress-bar-bg: var(--#{$prefix}m-progress-bar-color);
+
+    flex: 1;
+  }
+
+  .m-progress-text {
+    width: 4ch;
+    font-size: var(--#{$prefix}m-progress-bar-font-size);
+    font-weight: var(--#{$prefix}m-progress-bar-font-weight);
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    color: var(--#{$prefix}m-progress-bar-color);
+    text-align: end;
+  }
+}

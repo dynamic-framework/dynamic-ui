@@ -1,6 +1,5 @@
 import {
   Component,
-  Host,
   h,
   Prop,
   ComponentInterface,
@@ -8,75 +7,48 @@ import {
 
 import { ClassMap } from '../../utils/component-interface';
 
-@Component({
-  tag: 'm-progress-bar',
-  styleUrl: 'm-progress-bar.scss',
-  shadow: false,
-})
+@Component({ tag: 'm-progress-bar' })
 export class MProgressBar implements ComponentInterface {
   /**
-   * Current progress-bar value
+   * Current progress value
    */
   @Prop() currentValue!: number;
+
   /**
    * Minimum value of the bar
    */
   @Prop() minValue = 0;
+
   /**
   * Maximum value of the bar
   */
   @Prop() maxValue = 100;
+
   /**
-  * Additional classes for component container
-  */
-  @Prop() classNameContainer?: string;
-  /**
-  * Additional classes for progress container
-  */
-  @Prop() classNameProgress?: string;
-  /**
-  * Additional classes for progress bar
-  */
-  @Prop() classNameBar?: string;
+   * Hide current value
+   */
+  @Prop() hideCurrentValue? = false;
+
   /**
   * Enable striped animation
   */
   @Prop() enableStripedAnimation = false;
-  /**
-  * Enable dark mode
-  */
-  @Prop() enableDarkMode = false;
 
   private formatProgress() {
     return `${this.currentValue}%`;
   }
 
-  private generateHostClasses(): ClassMap {
-    return {
-      'progress-box': true,
-      [`${this.classNameContainer}`]: !!this.classNameContainer,
-    };
-  }
-
-  private generateContainerClasses(): ClassMap {
-    return {
-      progress: true,
-      'dark-mode': this.enableDarkMode,
-    };
-  }
-
   private generateClasses(): ClassMap {
     return {
       'progress-bar': true,
-      [`${this.classNameBar}`]: !!this.classNameBar,
       'progress-bar-striped progress-bar-animated': this.enableStripedAnimation,
     };
   }
 
   render() {
     return (
-      <Host class={this.generateHostClasses()}>
-        <div class={this.generateContainerClasses()}>
+      <div class="m-progress-bar">
+        <div class="progress">
           <div
             class={this.generateClasses()}
             role="progressbar"
@@ -87,10 +59,12 @@ export class MProgressBar implements ComponentInterface {
             aria-valuemax={this.maxValue}
           />
         </div>
-        <span class="progress-text">
-          {this.formatProgress()}
-        </span>
-      </Host>
+        {!this.hideCurrentValue && (
+          <span class="m-progress-text">
+            {this.formatProgress()}
+          </span>
+        )}
+      </div>
     );
   }
 }
