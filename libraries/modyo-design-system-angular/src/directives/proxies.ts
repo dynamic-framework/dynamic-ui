@@ -546,14 +546,14 @@ export declare interface MPin extends Components.MPin {
 
 @ProxyCmp({
   defineCustomElementFn: defineMProgressBar,
-  inputs: ['currentValue', 'enableStripedAnimation', 'maxValue', 'minValue']
+  inputs: ['currentValue', 'enableStripedAnimation', 'hideCurrentValue', 'maxValue', 'minValue']
 })
 @Component({
   selector: 'm-progress-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['currentValue', 'enableStripedAnimation', 'maxValue', 'minValue'],
+  inputs: ['currentValue', 'enableStripedAnimation', 'hideCurrentValue', 'maxValue', 'minValue'],
 })
 export class MProgressBar {
   protected el: HTMLElement;

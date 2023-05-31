@@ -21,6 +21,12 @@ const config: Meta<typeof MProgressBar> = {
       type: 'number',
       description: 'Maximum value of the bar',
     },
+    hideCurrentValue: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Hide current value',
+      table: { defaultValue: { summary: false } },
+    },
     enableStripedAnimation: {
       control: 'boolean',
       type: 'boolean',
@@ -66,5 +72,24 @@ export const Stripped: Story = {
     minValue: 0,
     maxValue: 100,
     enableStripedAnimation: true,
+  },
+};
+
+export const Valueless: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MProgressBar {...args} />
+    </div>
+  ),
+
+  args: {
+    currentValue: 33,
+    minValue: 0,
+    maxValue: 100,
+    enableStripedAnimation: false,
+    hideCurrentValue: true,
   },
 };

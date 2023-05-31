@@ -25,6 +25,11 @@ export class MProgressBar implements ComponentInterface {
   @Prop() maxValue = 100;
 
   /**
+   * Hide current value
+   */
+  @Prop() hideCurrentValue? = false;
+
+  /**
   * Enable striped animation
   */
   @Prop() enableStripedAnimation = false;
@@ -54,9 +59,11 @@ export class MProgressBar implements ComponentInterface {
             aria-valuemax={this.maxValue}
           />
         </div>
-        <span class="m-progress-text">
-          {this.formatProgress()}
-        </span>
+        {!this.hideCurrentValue && (
+          <span class="m-progress-text">
+            {this.formatProgress()}
+          </span>
+        )}
       </div>
     );
   }

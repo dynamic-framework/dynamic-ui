@@ -1018,6 +1018,10 @@ export namespace Components {
          */
         "enableStripedAnimation": boolean;
         /**
+          * Hide current value
+         */
+        "hideCurrentValue"?: boolean | undefined;
+        /**
           * Maximum value of the bar
          */
         "maxValue": number;
@@ -2477,6 +2481,10 @@ declare namespace LocalJSX {
           * Enable striped animation
          */
         "enableStripedAnimation"?: boolean;
+        /**
+          * Hide current value
+         */
+        "hideCurrentValue"?: boolean | undefined;
         /**
           * Maximum value of the bar
          */
