@@ -64,9 +64,9 @@ export default function MTooltip({
       : TOOLTIP_FONT_SIZE_BY_SIZE.default;
     return {
       background: `var(--${PREFIX_BS}m-tooltip-bg, var(--${PREFIX_BS}m-tooltip-component-bg, var(--${PREFIX_BS}secondary)))`,
-      'border-radius': `var(--${PREFIX_BS}m-tooltip-border-radius, var(--${PREFIX_BS}m-tooltip-component-border-radius, var(--${PREFIX_BS}border-radius)))`,
+      borderRadius: `var(--${PREFIX_BS}m-tooltip-border-radius, var(--${PREFIX_BS}m-tooltip-component-border-radius, var(--${PREFIX_BS}border-radius)))`,
       color: `var(--${PREFIX_BS}m-tooltip-color, var(--${PREFIX_BS}m-tooltip-component-color, var(--${PREFIX_BS}white)))`,
-      'font-size': `var(--${PREFIX_BS}m-tooltip-font-size, var(--${PREFIX_BS}m-tooltip-component-font-size, ${defaultFontSize}))`,
+      fontSize: `var(--${PREFIX_BS}m-tooltip-font-size, var(--${PREFIX_BS}m-tooltip-component-font-size, ${defaultFontSize}))`,
       padding: `var(--${PREFIX_BS}m-tooltip-padding, var(--${PREFIX_BS}m-tooltip-component-padding, var(--${PREFIX_BS}ref-spacer-2)))`,
     };
   }, [size]);
