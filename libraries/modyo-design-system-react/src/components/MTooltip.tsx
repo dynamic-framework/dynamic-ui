@@ -116,7 +116,7 @@ export default function MTooltip({
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...getReferenceProps()}
       >
-        {children}
+        {Component}
       </div>
       <FloatingPortal>
         {open && (
@@ -139,7 +139,7 @@ export default function MTooltip({
               width={ARROW_WIDTH}
               height={ARROW_HEIGHT}
             />
-            {Component}
+            {children}
           </div>
         )}
       </FloatingPortal>
