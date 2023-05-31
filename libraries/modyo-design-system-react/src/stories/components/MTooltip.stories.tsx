@@ -58,8 +58,8 @@ type Story = StoryObj<typeof MTooltip>;
 export const Top: Story = {
   args: {
     placement: 'top',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -70,8 +70,8 @@ export const Top: Story = {
 export const Right: Story = {
   args: {
     placement: 'right',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -82,8 +82,8 @@ export const Right: Story = {
 export const Bottom: Story = {
   args: {
     placement: 'bottom',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -94,8 +94,8 @@ export const Bottom: Story = {
 export const Left: Story = {
   args: {
     placement: 'left',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -106,8 +106,8 @@ export const Left: Story = {
 export const SmallTop: Story = {
   args: {
     placement: 'top',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -119,8 +119,8 @@ export const SmallTop: Story = {
 export const SmallRight: Story = {
   args: {
     placement: 'right',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -132,8 +132,8 @@ export const SmallRight: Story = {
 export const SmallBottom: Story = {
   args: {
     placement: 'bottom',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -145,8 +145,8 @@ export const SmallBottom: Story = {
 export const SmallLeft: Story = {
   args: {
     placement: 'left',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -158,8 +158,8 @@ export const SmallLeft: Story = {
 export const LargeTop: Story = {
   args: {
     placement: 'top',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -171,8 +171,8 @@ export const LargeTop: Story = {
 export const LargeRight: Story = {
   args: {
     placement: 'right',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -184,8 +184,8 @@ export const LargeRight: Story = {
 export const LargeBottom: Story = {
   args: {
     placement: 'bottom',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
@@ -197,8 +197,8 @@ export const LargeBottom: Story = {
 export const LargeLeft: Story = {
   args: {
     placement: 'left',
-    Component: 'Lorem Ipsum',
-    children: 'text',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
     withHover: true,
     withClick: false,
     withFocus: false,
