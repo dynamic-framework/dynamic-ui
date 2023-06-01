@@ -23,12 +23,12 @@ const config: Meta<typeof MAlert> = {
     showClose: {
       control: 'boolean',
       type: 'boolean',
-      description: 'Show alert icon',
+      description: 'Show close button',
     },
     showIcon: {
       control: 'boolean',
       type: 'boolean',
-      description: 'Show close button',
+      description: 'Show alert icon',
     },
   },
 };
