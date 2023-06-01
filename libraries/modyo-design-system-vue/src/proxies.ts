@@ -200,6 +200,29 @@ export const MInputPassword = /*@__PURE__*/ defineContainer<JSX.MInputPassword>(
 ]);
 
 
+export const MInputPin = /*@__PURE__*/ defineContainer<JSX.MInputPin>('m-input-pin', undefined, [
+  'mId',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'type',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'isSecret',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'characters',
+  'mInputMode',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'mChange'
+]);
+
+
 export const MInputSearch = /*@__PURE__*/ defineContainer<JSX.MInputSearch>('m-input-search', undefined, [
   'mId',
   'name',
@@ -306,37 +329,6 @@ export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offca
   'showCloseButton',
   'openFrom',
   'mClose'
-]);
-
-
-export const MPin = /*@__PURE__*/ defineContainer<JSX.MPin>('m-pin', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'isLoading',
-  'characters',
-  'isSecret',
-  'isDisabled',
-  'mInputMode',
-  'type',
-  'placeholder',
-  'theme',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'mChange'
 ]);
 
 

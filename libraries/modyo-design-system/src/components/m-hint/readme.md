@@ -22,10 +22,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [m-pin](../m-pin)
-
 ### Depends on
 
 - [m-icon](../m-icon)
@@ -34,7 +30,6 @@
 ```mermaid
 graph TD;
   m-hint --> m-icon
-  m-pin --> m-hint
   style m-hint fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

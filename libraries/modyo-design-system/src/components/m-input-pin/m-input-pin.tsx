@@ -1,6 +1,5 @@
 import {
   Component,
-  Host,
   h,
   Prop,
   Event,
@@ -9,31 +8,26 @@ import {
 } from '@stencil/core';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 
-import { ClassMap } from '../../utils/component-interface';
+import { PREFIX_BS } from '../../utils';
 
-import { PinInputMode, PinInputType } from './m-pin-interface';
+import { PinInputMode, PinInputType } from './m-input-pin-interface';
 
-@Component({
-  tag: 'm-pin',
-  styleUrl: 'm-pin.scss',
-  shadow: false,
-})
-
-export class MPin implements ComponentInterface {
+@Component({ tag: 'm-input-pin' })
+export class MInputPin implements ComponentInterface {
   /**
    * Id for the input
    * */
   @Prop() mId!: string;
 
   /**
-   * Label for the input
-   * */
+   * The label text
+   */
   @Prop() label = '';
 
   /**
    * Icon for the label text
-   * */
-  @Prop() labelIcon?: string = 'info-circle';
+   */
+  @Prop() labelIcon?: string;
 
   /**
    * Icon label family class
@@ -41,69 +35,9 @@ export class MPin implements ComponentInterface {
   @Prop() labelIconFamilyClass?: string;
 
   /**
-   * Icon label family class
+   * Icon label family prefix
    */
   @Prop() labelIconFamilyPrefix?: string;
-
-  /**
-   * Icon of the left
-   * */
-  @Prop() iconStart?: string;
-
-  /**
-   * Left icon family class
-   */
-  @Prop() iconStartFamilyClass?: string;
-
-  /**
-   * Left icon family class
-   */
-  @Prop() iconStartFamilyPrefix?: string;
-
-  /**
-   * Icon of the end
-   * */
-  @Prop() iconEnd?: string;
-
-  /**
-   * Right icon family class
-   */
-  @Prop() iconEndFamilyClass?: string;
-
-  /**
-   * Right icon family class
-   */
-  @Prop() iconEndFamilyPrefix?: string;
-
-  /**
-   * Flag for loading state.
-  */
-  @Prop() isLoading = false;
-
-  /**
-   * Number of characters of the pin
-   */
-  @Prop() characters = 4;
-
-  /**
-   * Hide the characters
-   */
-  @Prop() isSecret = false;
-
-  /**
-   * Disable the inputs
-   */
-  @Prop() isDisabled = false;
-
-  /**
-   * Keyboard style
-   */
-  @Prop() mInputMode: PinInputMode = 'text';
-
-  /**
-   * Type of the inputs
-   */
-  @Prop() type: PinInputType = 'text';
 
   /**
    * Placeholder of the inputs
@@ -111,9 +45,49 @@ export class MPin implements ComponentInterface {
   @Prop() placeholder?: string = '•';
 
   /**
-   * Theme for inputs
-   * */
-  @Prop() theme?: string;
+   * Type of the inputs
+   */
+  @Prop() type: PinInputType = 'text';
+
+  /**
+   * Flag to disable the input
+   */
+  @Prop() isDisabled = false;
+
+  /**
+   * Flag to read only the input
+   */
+  @Prop() isReadOnly = false;
+
+  /**
+   * Flag for loading state.
+   */
+  @Prop() isLoading = false;
+
+  /**
+   * Hide the characters
+   */
+  @Prop() isSecret = false;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconFamilyClass?: string;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconFamilyPrefix?: string;
+
+  /**
+   * Number of characters of the pin
+   */
+  @Prop() characters = 4;
+
+  /**
+   * Keyboard style
+   */
+  @Prop() mInputMode: PinInputMode = 'text';
 
   /**
    * Hint for the m-coupon
@@ -121,48 +95,21 @@ export class MPin implements ComponentInterface {
   @Prop() hint?: string;
 
   /**
-   * Icon start for the hint text
-   * */
-  @Prop() hintIconStart?: string;
-
-  /**
-   * Hint left icon family class
+   * Add is-invalid class
    */
-  @Prop() hintIconStartFamilyClass?: string;
+  @Prop() isInvalid = false;
 
   /**
-   * Hint left icon family class
+   * Add is-valid class
    */
-  @Prop() hintIconStartFamilyPrefix?: string;
-
-  /**
-   * Icon end for the hint text
-   * */
-  @Prop() hintIconEnd?: string;
-
-  /**
-   * Hint right icon family class
-   */
-  @Prop() hintIconEndFamilyClass?: string;
-
-  /**
-   * Hint right icon family class
-   */
-  @Prop() hintIconEndFamilyPrefix?: string;
+  @Prop() isValid = false;
 
   /**
    * Emitted when the inputs had changed
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
 
-  @State() internalTheme?: string;
-
   @State() pattern!: string;
-
-  @Watch('theme')
-  watchThemeHandler(newValue: string) {
-    this.internalTheme = newValue;
-  }
 
   @Watch('type')
   watchMTypeHandler(newValue: string) {
@@ -228,28 +175,21 @@ export class MPin implements ComponentInterface {
     e.preventDefault();
   };
 
-  private generateHostClasses(): ClassMap {
-    return {
-      'form-control-layout form-control-layout-pin': true,
-      [`form-control-theme-${this.internalTheme}`]: !!this.internalTheme,
-    };
-  }
-
   connectedCallback() {
-    this.internalTheme = this.theme;
     this.pattern = this.type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$';
   }
 
   render() {
     return (
-      <Host class={this.generateHostClasses()}>
+      <div class="m-input-pin">
         {this.label && (
-          <label htmlFor="pin-index-0">
+          <label htmlFor="pinIndex0">
             {this.label}
             {this.labelIcon && (
               <m-icon
-                class="form-control-icon"
+                class="m-input-pin-icon"
                 icon={this.labelIcon}
+                size={`var(--${PREFIX_BS}m-input-label-font-size)`}
                 familyClass={this.labelIconFamilyClass}
                 familyPrefix={this.labelIconFamilyPrefix}
               />
@@ -258,31 +198,21 @@ export class MPin implements ComponentInterface {
         )}
         <form
           id={this.mId}
-          class="form-control-input"
+          class="m-input-pin-controls"
           onInput={this.formChange}
           onSubmit={this.preventDefaultEvents}
         >
-          {this.iconStart && (
-            <span
-              class="input-group-text"
-              id={`${this.mId}-start`}
-            >
-              {this.iconStart && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.iconStart}
-                  familyClass={this.iconStartFamilyClass}
-                  familyPrefix={this.iconStartFamilyPrefix}
-                />
-              )}
-            </span>
-          )}
           {Array.from({ length: this.characters }).map((_, index) => (
             <input
-              class="pin-item"
+              class={{
+                'form-control': true,
+                'is-invalid': this.isInvalid,
+                'is-valid': this.isValid,
+              }}
               type={this.isSecret ? 'password' : this.type}
+              aria-describedby={`${this.mId}State`}
               inputMode={this.mInputMode}
-              id={`pin-index-${index}`}
+              id={`pinIndex${index}`}
               name={`pin-${index}`}
               maxLength={1}
               onInput={this.nextInput}
@@ -302,21 +232,21 @@ export class MPin implements ComponentInterface {
               )}
             />
           ))}
-          {(this.iconEnd && !this.isLoading) && (
+          {((this.isInvalid || this.isValid) && !this.isLoading) && (
             <span
               class="input-group-text"
-              id={`${this.mId}-end`}
+              id={`${this.mId}State`}
             >
               <m-icon
-                class="form-control-icon icon-end"
-                icon={this.iconEnd}
-                familyClass={this.iconEndFamilyClass}
-                familyPrefix={this.iconEndFamilyPrefix}
+                class="m-input-pin-validation-icon"
+                icon={this.isInvalid ? 'exclamation-circle' : 'check'}
+                familyClass={this.iconFamilyClass}
+                familyPrefix={this.iconFamilyPrefix}
               />
             </span>
           )}
           {this.isLoading && (
-            <div class="input-group-text form-control-icon">
+            <div class="input-group-text m-input-pin-icon">
               <span
                 class="spinner-border spinner-border-sm"
                 role="status"
@@ -328,22 +258,14 @@ export class MPin implements ComponentInterface {
           )}
         </form>
         {this.hint && (
-          <m-hint
-            text={this.hint}
-            theme={this.theme === 'danger' || this.theme === 'tertiary' || this.theme === 'warning' ? this.theme : undefined}
-            {...(this.hintIconStart && ({
-              iconStart: this.hintIconStart,
-              iconStartFamilyClass: this.hintIconStartFamilyClass,
-              iconStartFamilyPrefix: this.hintIconStartFamilyPrefix,
-            }))}
-            {...(this.hintIconEnd && ({
-              iconEnd: this.hintIconEnd,
-              iconEndFamilyClass: this.hintIconEndFamilyClass,
-              iconEndFamilyPrefix: this.hintIconEndFamilyPrefix,
-            }))}
-          />
+          <div
+            class="form-text"
+            id={`${this.mId}Hint`}
+          >
+            {this.hint}
+          </div>
         )}
-      </Host>
+      </div>
     );
   }
 }

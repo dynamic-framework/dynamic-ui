@@ -10,19 +10,19 @@ import { ComponentSize, InputState, NavegableProps } from "./utils/component-int
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 import { Options } from "currency.js";
+import { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
 import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
-import { PinInputMode, PinInputType } from "./components/m-pin/m-pin-interface";
 export { AlertType } from "./components/m-alert/m-alert-interface";
 export { ComponentSize, InputState, NavegableProps } from "./utils/component-interface";
 export { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 export { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 export { Options } from "currency.js";
+export { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
 export { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 export { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
-export { PinInputMode, PinInputType } from "./components/m-pin/m-pin-interface";
 export namespace Components {
     interface MAlert {
         /**
@@ -604,6 +604,80 @@ export namespace Components {
          */
         "value": string;
     }
+    interface MInputPin {
+        /**
+          * Number of characters of the pin
+         */
+        "characters": number;
+        /**
+          * Hint for the m-coupon
+         */
+        "hint"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * Hide the characters
+         */
+        "isSecret": boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family prefix
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * Keyboard style
+         */
+        "mInputMode": PinInputMode;
+        /**
+          * Placeholder of the inputs
+         */
+        "placeholder"?: string;
+        /**
+          * Type of the inputs
+         */
+        "type": PinInputType;
+    }
     interface MInputSearch {
         /**
           * Hint to display, also used to display validity feedback
@@ -916,112 +990,6 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
-    interface MPin {
-        /**
-          * Number of characters of the pin
-         */
-        "characters": number;
-        /**
-          * Hint for the m-coupon
-         */
-        "hint"?: string;
-        /**
-          * Icon end for the hint text
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon start for the hint text
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Icon of the end
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Icon of the left
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * Disable the inputs
-         */
-        "isDisabled": boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading": boolean;
-        /**
-          * Hide the characters
-         */
-        "isSecret": boolean;
-        /**
-          * Label for the input
-         */
-        "label": string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * Keyboard style
-         */
-        "mInputMode": PinInputMode;
-        /**
-          * Placeholder of the inputs
-         */
-        "placeholder"?: string;
-        /**
-          * Theme for inputs
-         */
-        "theme"?: string;
-        /**
-          * Type of the inputs
-         */
-        "type": PinInputType;
-    }
     interface MProgressBar {
         /**
           * Current progress value
@@ -1213,6 +1181,10 @@ export interface MInputPasswordCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputPasswordElement;
 }
+export interface MInputPinCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMInputPinElement;
+}
 export interface MInputSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputSearchElement;
@@ -1236,10 +1208,6 @@ export interface MModalCustomEvent<T> extends CustomEvent<T> {
 export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMOffcanvasElement;
-}
-export interface MPinCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMPinElement;
 }
 export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1314,6 +1282,12 @@ declare global {
         prototype: HTMLMInputPasswordElement;
         new (): HTMLMInputPasswordElement;
     };
+    interface HTMLMInputPinElement extends Components.MInputPin, HTMLStencilElement {
+    }
+    var HTMLMInputPinElement: {
+        prototype: HTMLMInputPinElement;
+        new (): HTMLMInputPinElement;
+    };
     interface HTMLMInputSearchElement extends Components.MInputSearch, HTMLStencilElement {
     }
     var HTMLMInputSearchElement: {
@@ -1349,12 +1323,6 @@ declare global {
     var HTMLMOffcanvasElement: {
         prototype: HTMLMOffcanvasElement;
         new (): HTMLMOffcanvasElement;
-    };
-    interface HTMLMPinElement extends Components.MPin, HTMLStencilElement {
-    }
-    var HTMLMPinElement: {
-        prototype: HTMLMPinElement;
-        new (): HTMLMPinElement;
     };
     interface HTMLMProgressBarElement extends Components.MProgressBar, HTMLStencilElement {
     }
@@ -1397,13 +1365,13 @@ declare global {
         "m-input-counter": HTMLMInputCounterElement;
         "m-input-currency-base": HTMLMInputCurrencyBaseElement;
         "m-input-password": HTMLMInputPasswordElement;
+        "m-input-pin": HTMLMInputPinElement;
         "m-input-search": HTMLMInputSearchElement;
         "m-input-select": HTMLMInputSelectElement;
         "m-input-switch": HTMLMInputSwitchElement;
         "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
-        "m-pin": HTMLMPinElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action-button": HTMLMQuickActionButtonElement;
         "m-segment-control": HTMLMSegmentControlElement;
@@ -2036,6 +2004,84 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface MInputPin {
+        /**
+          * Number of characters of the pin
+         */
+        "characters"?: number;
+        /**
+          * Hint for the m-coupon
+         */
+        "hint"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * Hide the characters
+         */
+        "isSecret"?: boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family prefix
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * Id for the input
+         */
+        "mId": string;
+        /**
+          * Keyboard style
+         */
+        "mInputMode"?: PinInputMode;
+        /**
+          * Emitted when the inputs had changed
+         */
+        "onMChange"?: (event: MInputPinCustomEvent<string>) => void;
+        /**
+          * Placeholder of the inputs
+         */
+        "placeholder"?: string;
+        /**
+          * Type of the inputs
+         */
+        "type"?: PinInputType;
+    }
     interface MInputSearch {
         /**
           * Hint to display, also used to display validity feedback
@@ -2388,116 +2434,6 @@ declare namespace LocalJSX {
          */
         "showCloseButton"?: boolean;
     }
-    interface MPin {
-        /**
-          * Number of characters of the pin
-         */
-        "characters"?: number;
-        /**
-          * Hint for the m-coupon
-         */
-        "hint"?: string;
-        /**
-          * Icon end for the hint text
-         */
-        "hintIconEnd"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyClass"?: string;
-        /**
-          * Hint right icon family class
-         */
-        "hintIconEndFamilyPrefix"?: string;
-        /**
-          * Icon start for the hint text
-         */
-        "hintIconStart"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyClass"?: string;
-        /**
-          * Hint left icon family class
-         */
-        "hintIconStartFamilyPrefix"?: string;
-        /**
-          * Icon of the end
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Icon of the left
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * Disable the inputs
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading"?: boolean;
-        /**
-          * Hide the characters
-         */
-        "isSecret"?: boolean;
-        /**
-          * Label for the input
-         */
-        "label"?: string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * Keyboard style
-         */
-        "mInputMode"?: PinInputMode;
-        /**
-          * Emitted when the inputs had changed
-         */
-        "onMChange"?: (event: MPinCustomEvent<string>) => void;
-        /**
-          * Placeholder of the inputs
-         */
-        "placeholder"?: string;
-        /**
-          * Theme for inputs
-         */
-        "theme"?: string;
-        /**
-          * Type of the inputs
-         */
-        "type"?: PinInputType;
-    }
     interface MProgressBar {
         /**
           * Current progress value
@@ -2683,13 +2619,13 @@ declare namespace LocalJSX {
         "m-input-counter": MInputCounter;
         "m-input-currency-base": MInputCurrencyBase;
         "m-input-password": MInputPassword;
+        "m-input-pin": MInputPin;
         "m-input-search": MInputSearch;
         "m-input-select": MInputSelect;
         "m-input-switch": MInputSwitch;
         "m-list-item": MListItem;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
-        "m-pin": MPin;
         "m-progress-bar": MProgressBar;
         "m-quick-action-button": MQuickActionButton;
         "m-segment-control": MSegmentControl;
@@ -2711,13 +2647,13 @@ declare module "@stencil/core" {
             "m-input-counter": LocalJSX.MInputCounter & JSXBase.HTMLAttributes<HTMLMInputCounterElement>;
             "m-input-currency-base": LocalJSX.MInputCurrencyBase & JSXBase.HTMLAttributes<HTMLMInputCurrencyBaseElement>;
             "m-input-password": LocalJSX.MInputPassword & JSXBase.HTMLAttributes<HTMLMInputPasswordElement>;
+            "m-input-pin": LocalJSX.MInputPin & JSXBase.HTMLAttributes<HTMLMInputPinElement>;
             "m-input-search": LocalJSX.MInputSearch & JSXBase.HTMLAttributes<HTMLMInputSearchElement>;
             "m-input-select": LocalJSX.MInputSelect & JSXBase.HTMLAttributes<HTMLMInputSelectElement>;
             "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
             "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
-            "m-pin": LocalJSX.MPin & JSXBase.HTMLAttributes<HTMLMPinElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
