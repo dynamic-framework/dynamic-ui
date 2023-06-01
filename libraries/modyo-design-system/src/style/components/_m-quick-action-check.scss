@@ -1,0 +1,74 @@
+.m-quick-action-check {
+  --#{$prefix}m-quick-action-check-gap: #{$quick-action-check-gap};
+  --#{$prefix}m-quick-action-check-padding: #{$quick-action-check-padding};
+  --#{$prefix}m-quick-action-check-bg: #{$quick-action-check-bg};
+  --#{$prefix}m-quick-action-check-border-radius: #{$quick-action-check-border-radius};
+
+  --#{$prefix}m-quick-action-check-line1-font-size: #{$quick-action-check-line1-font-size};
+  --#{$prefix}m-quick-action-check-line1-font-weight: #{$quick-action-check-line1-font-weight};
+  --#{$prefix}m-quick-action-check-line1-color: #{$quick-action-check-line1-color};
+
+  --#{$prefix}m-quick-action-check-line2-font-size: #{$quick-action-check-line2-font-size};
+  --#{$prefix}m-quick-action-check-line2-font-weight: #{$quick-action-check-line2-font-weight};
+  --#{$prefix}m-quick-action-check-line2-color: #{$quick-action-check-line2-color};
+
+  --#{$prefix}m-quick-action-check-line3-font-size: #{$quick-action-check-line3-font-size};
+  --#{$prefix}m-quick-action-check-line3-font-weight: #{$quick-action-check-line3-font-weight};
+  --#{$prefix}m-quick-action-check-line3-color: #{$quick-action-check-line3-color};
+
+  --#{$prefix}m-quick-action-check-hover-bg: #{$quick-action-check-hover-bg};
+
+  --#{$prefix}m-quick-action-check-checked-bg: #{$quick-action-check-checked-bg};
+  --#{$prefix}m-quick-action-check-checked-color: #{$quick-action-check-checked-color};
+
+  display: flex;
+  flex-direction: row;
+  gap: var(--#{$prefix}m-quick-action-check-gap);
+  align-items: center;
+  width: 100%;
+  padding: var(--#{$prefix}m-quick-action-check-padding);
+  text-align: left;
+  background-color: var(--#{$prefix}m-quick-action-check-bg);
+  border-radius: var(--#{$prefix}m-quick-action-check-border-radius);
+
+  &:hover {
+    background: var(--#{$prefix}m-quick-action-check-hover-bg);
+  }
+
+  &:has(input:checked) {
+    background: var(--#{$prefix}m-quick-action-check-checked-bg);
+
+    .quick-action-check-line3 {
+      color: var(--#{$prefix}m-quick-action-check-checked-color);
+    }
+  }
+
+  .quick-action-check-detail {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .quick-action-check-line1 {
+    font-size: var(--#{$prefix}m-quick-action-check-line1-font-size);
+    font-weight: var(--#{$prefix}m-quick-action-check-line1-font-weight);
+    color: var(--#{$prefix}m-quick-action-check-line1-color);
+  }
+
+  .quick-action-check-line2 {
+    font-size: var(--#{$prefix}m-quick-action-check-line2-font-size);
+    font-weight: var(--#{$prefix}m-quick-action-check-line2-font-weight);
+    color: var(--#{$prefix}m-quick-action-check-line2-color);
+  }
+
+  .quick-action-check-line3 {
+    font-size: var(--#{$prefix}m-quick-action-check-line3-font-size);
+    font-weight: var(--#{$prefix}m-quick-action-check-line3-font-weight);
+    color: var(--#{$prefix}m-quick-action-check-line3-color);
+  }
+
+  .m-input-check.form-check-input:focus,
+  .m-input-check .form-check-input:focus {
+    outline: 0;
+  }
+}

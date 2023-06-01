@@ -25,6 +25,7 @@ import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
+import { defineCustomElement as defineMQuickActionCheck } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
@@ -593,6 +594,35 @@ export declare interface MQuickActionButton extends Components.MQuickActionButto
    * Emitted when the input value has changed
    */
   mClick: EventEmitter<CustomEvent<any>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineMQuickActionCheck,
+  inputs: ['isChecked', 'line1', 'line2', 'line3', 'mId', 'name', 'value']
+})
+@Component({
+  selector: 'm-quick-action-check',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['isChecked', 'line1', 'line2', 'line3', 'mId', 'name', 'value'],
+})
+export class MQuickActionCheck {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MQuickActionCheck extends Components.MQuickActionCheck {
+  /**
+   * Emitted when the select value has changed
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
 }
 
 

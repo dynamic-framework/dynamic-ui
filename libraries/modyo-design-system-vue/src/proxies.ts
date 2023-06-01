@@ -359,6 +359,18 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
 ]);
 
 
+export const MQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.MQuickActionCheck>('m-quick-action-check', undefined, [
+  'mId',
+  'name',
+  'value',
+  'line1',
+  'line2',
+  'line3',
+  'isChecked',
+  'mChange'
+]);
+
+
 export const MQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.MQuickActionSelect>('m-quick-action-select', undefined, [
   'mId',
   'name',
