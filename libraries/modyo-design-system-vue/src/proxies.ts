@@ -11,6 +11,9 @@ defineCustomElements();
 
 export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
   'type',
+  'icon',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
   'showIcon',
   'showClose',
   'mClose'

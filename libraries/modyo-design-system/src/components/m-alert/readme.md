@@ -7,11 +7,14 @@
 
 ## Properties
 
-| Property    | Attribute    | Description                  | Type                                                                | Default     |
-| ----------- | ------------ | ---------------------------- | ------------------------------------------------------------------- | ----------- |
-| `showClose` | `show-close` | Show close button            | `boolean \| undefined`                                              | `undefined` |
-| `showIcon`  | `show-icon`  | Show icon theme in the alert | `boolean`                                                           | `false`     |
-| `type`      | `type`       | Theme for the alert          | `"danger" \| "dark" \| "info" \| "light" \| "success" \| "warning"` | `'light'`   |
+| Property           | Attribute            | Description             | Type                                                                | Default     |
+| ------------------ | -------------------- | ----------------------- | ------------------------------------------------------------------- | ----------- |
+| `icon`             | `icon`               | Alert icon              | `string \| undefined`                                               | `undefined` |
+| `iconFamilyClass`  | `icon-family-class`  | Right icon family class | `string \| undefined`                                               | `undefined` |
+| `iconFamilyPrefix` | `icon-family-prefix` | Right icon family class | `string \| undefined`                                               | `undefined` |
+| `showClose`        | `show-close`         | Show close button       | `boolean \| undefined`                                              | `undefined` |
+| `showIcon`         | `show-icon`          | Show alert icon         | `boolean`                                                           | `false`     |
+| `type`             | `type`               | Alert type              | `"danger" \| "dark" \| "info" \| "light" \| "success" \| "warning"` | `'light'`   |
 
 
 ## Events

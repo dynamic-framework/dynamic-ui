@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MAlert } from '../../components';
-import { ALERT_TYPES } from '../constants';
+import { ALERT_TYPES, ICONS } from '../constants';
 
 const config: Meta<typeof MAlert> = {
   title: 'Design System/Patterns/Alert',
@@ -13,6 +13,12 @@ const config: Meta<typeof MAlert> = {
       options: ALERT_TYPES,
       table: { defaultValue: { summary: 'light' } },
       description: 'Alert type',
+    },
+    icon: {
+      control: 'select',
+      type: 'string',
+      options: ICONS,
+      description: 'Name of icon to use (in kebab-case)',
     },
     showClose: {
       control: 'boolean',
@@ -146,6 +152,15 @@ export const InfoClose: Story = {
 export const WarningClose: Story = {
   args: {
     showIcon: true,
+    children: 'Default alert',
+    type: 'warning',
+    showClose: true,
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    icon: 'clock',
     children: 'Default alert',
     type: 'warning',
     showClose: true,

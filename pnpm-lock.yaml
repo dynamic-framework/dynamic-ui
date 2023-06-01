@@ -1423,9 +1423,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0
-      '@modyo-dynamic/modyo-design-system': ^0.5.2
-      '@modyo-dynamic/modyo-design-system-react': ^0.5.3
-      '@modyo-dynamic/modyo-service-retail': ^0.5.2
+      '@modyo-dynamic/modyo-design-system': workspace:*
+      '@modyo-dynamic/modyo-design-system-react': workspace:*
+      '@modyo-dynamic/modyo-service-retail': workspace:*
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -1461,9 +1461,9 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
-      '@modyo-dynamic/modyo-design-system-react': 0.5.4_2wr74pmrtkmtk63bgvtgvkn2oq
-      '@modyo-dynamic/modyo-service-retail': 0.5.3_latdsykkg6l6fo3brmei5xbybq
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -2203,6 +2203,7 @@ packages:
     dependencies:
       '@angular/core': 13.3.11_rxjs@7.5.7+zone.js@0.11.8
       tslib: 2.5.0
+    dev: false
 
   /@angular/cli/13.3.9:
     resolution: {integrity: sha512-b64mfB7A8vw5QmopEnkCVhGH8zDX5FrQVKKCRlK1dO3GEtAdfhFJb5J7TBbCOwp1XfYJ5jl+biNQy4HoX5HQPw==}
@@ -2298,7 +2299,7 @@ packages:
     dependencies:
       '@angular/common': 13.3.11_bhhwnklxwrazs27rzqzgvujy7y
       '@angular/core': 13.3.11_rxjs@7.5.7+zone.js@0.11.8
-      '@angular/platform-browser': 13.3.11_dontfr2itdbwnai2bloqfkk3ui
+      '@angular/platform-browser': 13.3.11_ve2xnktmvxgo5glgd6utpzcxwq
       rxjs: 7.5.7
       tslib: 2.4.1
 
@@ -2333,6 +2334,7 @@ packages:
       '@angular/common': 13.3.11_bhhwnklxwrazs27rzqzgvujy7y
       '@angular/core': 13.3.11_rxjs@7.5.7+zone.js@0.11.8
       tslib: 2.5.0
+    dev: false
 
   /@angular/platform-browser/13.3.11_ve2xnktmvxgo5glgd6utpzcxwq:
     resolution: {integrity: sha512-PG3chCErARb6wNzkOed2NsZmgvTmbumRx/6sMXqGkDKXYQm0JULnl4X42Rn+JCgJ9DLJi5/jrd1dbcBCrKk9Vg==}
@@ -2348,7 +2350,6 @@ packages:
       '@angular/common': 13.3.11_bhhwnklxwrazs27rzqzgvujy7y
       '@angular/core': 13.3.11_rxjs@7.5.7+zone.js@0.11.8
       tslib: 2.4.1
-    dev: true
 
   /@angular/router/13.3.11_s6ofle4rnazb4kwevmg47377ym:
     resolution: {integrity: sha512-bJTcxDYKEyoqtsi1kJcDJWLmEN+dXpwhU07SsqUwfyN4V5fYF1ApDhpJ4c17hNdjEqe106srT9tiHXhmWayhmQ==}

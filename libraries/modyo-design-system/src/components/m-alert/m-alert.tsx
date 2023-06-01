@@ -20,6 +20,21 @@ export class MAlert {
   @Prop() type: AlertType = 'light';
 
   /**
+   * Alert icon
+   */
+  @Prop() icon?: string;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconFamilyClass?: string;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconFamilyPrefix?: string;
+
+  /**
    * Show alert icon
    */
   @Prop() showIcon = false;
@@ -45,8 +60,8 @@ export class MAlert {
     };
   }
 
-  private iconState(): string {
-    return ALERT_TYPE_ICON[this.type] || '';
+  private getIcon(): string {
+    return this.icon || ALERT_TYPE_ICON[this.type] || '';
   }
 
   private generateStyleVariables() {
@@ -64,10 +79,12 @@ export class MAlert {
         style={this.generateStyleVariables()}
         role="alert"
       >
-        {this.showIcon && (
+        {(this.showIcon || this.icon) && (
           <m-icon
             class="m-alert-icon"
-            icon={this.iconState()}
+            icon={this.getIcon()}
+            familyClass={this.iconFamilyClass}
+            familyPrefix={this.iconFamilyPrefix}
           />
         )}
         <div class="m-alert-text">
@@ -86,6 +103,8 @@ export class MAlert {
             <m-icon
               class="m-alert-close-icon"
               icon="x-lg"
+              familyClass={this.iconFamilyClass}
+              familyPrefix={this.iconFamilyPrefix}
             />
           </button>
         )}

@@ -26,6 +26,18 @@ export { PinInputMode, PinInputType } from "./components/m-pin/m-pin-interface";
 export namespace Components {
     interface MAlert {
         /**
+          * Alert icon
+         */
+        "icon"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
           * Show close button
          */
         "showClose"?: boolean;
@@ -1401,6 +1413,18 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MAlert {
+        /**
+          * Alert icon
+         */
+        "icon"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
         /**
           * Emitted when the button has been clicked.
          */
