@@ -5,12 +5,11 @@ import { MQuickActionSelect } from './m-quick-action-select';
 
 it('should render my component', async () => {
   const shortcut = {
-    name: 'paymentOption',
-    label: 'Minimum',
-    text: '300',
-    value: '300',
-    mId: 'Random-id',
-    subtext: '',
+    mId: 'component',
+    name: 'name',
+    line1: 'total',
+    line2: '$ 7.432.450',
+    value: 'value',
   };
 
   const page = await newSpecPage({
@@ -22,11 +21,15 @@ it('should render my component', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-quick-action-select label="Minimum" subtext="" text="300">
-      <label class="m-quick-action-select" htmlfor="Random-id">
-        <input id="Random-id" name="paymentOption" type="radio" value="300">
-        <span class="quick-action-select-line1"></span>
-        <span class="quick-action-select-line2"></span>
+    <m-quick-action-select>
+      <label class="m-quick-action-select" htmlfor="component">
+        <input id="component" name="name" type="radio" value="value">
+        <span class="quick-action-select-line1">
+          total
+        </span>
+        <span class="quick-action-select-line2">
+          $ 7.432.450
+        </span>
       </label>
     </m-quick-action-select>
   `);
