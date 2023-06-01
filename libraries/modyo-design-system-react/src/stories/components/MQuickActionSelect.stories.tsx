@@ -10,21 +10,32 @@ const config: Meta<typeof MQuickActionSelect> = {
   argTypes: {
     mId: {
       control: 'text',
+      type: 'string',
     },
     name: {
       control: 'text',
+      type: 'string',
     },
     value: {
       control: 'text',
+      type: 'string',
     },
     line1: {
       control: 'text',
+      type: 'string',
+      description: 'The title',
     },
     line2: {
       control: 'text',
+      type: 'string',
+      description: 'The subtitle',
     },
     isSelected: {
       control: 'boolean',
+      type: 'boolean',
+    },
+    onMChange: {
+      action: 'onMChange',
     },
   },
 };
