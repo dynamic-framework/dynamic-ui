@@ -10,7 +10,10 @@ import { defineCustomElements } from '@modyo-dynamic/modyo-design-system/loader'
 defineCustomElements();
 
 export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
-  'theme',
+  'type',
+  'icon',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
   'showIcon',
   'showClose',
   'mClose'

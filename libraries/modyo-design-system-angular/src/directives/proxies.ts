@@ -30,14 +30,14 @@ import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic
 import { defineCustomElement as defineMShortcutToggle } from '@modyo-dynamic/modyo-design-system/components/m-shortcut-toggle.js';
 @ProxyCmp({
   defineCustomElementFn: defineMAlert,
-  inputs: ['showClose', 'showIcon', 'theme']
+  inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type']
 })
 @Component({
   selector: 'm-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['showClose', 'showIcon', 'theme'],
+  inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type'],
 })
 export class MAlert {
   protected el: HTMLElement;

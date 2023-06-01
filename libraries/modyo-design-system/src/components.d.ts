@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { AlertType } from "./components/m-alert/m-alert-interface";
 import { ComponentSize, InputState, NavegableProps } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
@@ -13,6 +14,7 @@ import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-lis
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 import { PinInputMode, PinInputType } from "./components/m-pin/m-pin-interface";
+export { AlertType } from "./components/m-alert/m-alert-interface";
 export { ComponentSize, InputState, NavegableProps } from "./utils/component-interface";
 export { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 export { FormCheckType } from "./components/m-input-check/m-input-check-interface";
@@ -24,17 +26,29 @@ export { PinInputMode, PinInputType } from "./components/m-pin/m-pin-interface";
 export namespace Components {
     interface MAlert {
         /**
+          * Alert icon
+         */
+        "icon"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
           * Show close button
          */
         "showClose"?: boolean;
         /**
-          * Show icon theme in the alert
+          * Show alert icon
          */
         "showIcon": boolean;
         /**
-          * Theme for the alert
+          * Alert type
          */
-        "theme": string;
+        "type": AlertType;
     }
     interface MBadge {
         /**
@@ -1400,6 +1414,18 @@ declare global {
 declare namespace LocalJSX {
     interface MAlert {
         /**
+          * Alert icon
+         */
+        "icon"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
           * Emitted when the button has been clicked.
          */
         "onMClose"?: (event: MAlertCustomEvent<any>) => void;
@@ -1408,13 +1434,13 @@ declare namespace LocalJSX {
          */
         "showClose"?: boolean;
         /**
-          * Show icon theme in the alert
+          * Show alert icon
          */
         "showIcon"?: boolean;
         /**
-          * Theme for the alert
+          * Alert type
          */
-        "theme"?: string;
+        "type"?: AlertType;
     }
     interface MBadge {
         /**

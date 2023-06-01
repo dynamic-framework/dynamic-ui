@@ -20,6 +20,14 @@
     --#{$prefix}#{$color}: #{$value};
   }
 
+  @each $type, $value in $alert-colors {
+    --#{$prefix}alert-#{$type}-color: #{$value};
+  }
+
+  @each $type, $value in $alert-background-colors {
+    --#{$prefix}alert-#{$type}-bg: #{$value};
+  }
+
   // only reference root variables
 
   @each $level, $value in $spacers {
@@ -41,6 +49,7 @@
   --#{$prefix}ref-fw-semibold: #{$font-weight-semibold};
   --#{$prefix}ref-fw-bold: #{$font-weight-bold};
   --#{$prefix}ref-fw-bolder: #{$font-weight-bolder};
+
 }
 
 .flex-1 {

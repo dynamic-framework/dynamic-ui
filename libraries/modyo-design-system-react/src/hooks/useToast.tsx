@@ -1,13 +1,20 @@
 import { useCallback } from 'react';
 import { toast as reactToast } from 'react-toastify';
 
+import type { AlertType } from '@modyo-dynamic/modyo-design-system';
+
 import { MAlert } from '../components';
 
+export type ToastConfig = {
+  type?: AlertType;
+  showClose?: boolean;
+};
+
 export default function useToast() {
-  const toast = useCallback((message: string, { theme = 'info', showClose = true } = {}) => {
+  const toast = useCallback((message: string, { type = 'info', showClose = true }: ToastConfig = {}) => {
     reactToast(({ closeToast }) => (
       <MAlert
-        theme={theme}
+        type={type}
         showClose={showClose}
         onMClose={closeToast}
       >

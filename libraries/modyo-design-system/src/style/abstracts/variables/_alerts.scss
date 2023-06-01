@@ -5,14 +5,51 @@
 // scss-docs-start alert-variables
 $alert-padding-y: $spacer-3 !default;
 $alert-padding-x: $spacer-4 !default;
-$alert-margin-bottom: 1rem !default;
-$alert-border-radius: var(--#{$prefix}border-radius) !default;
-$alert-link-font-weight: $font-weight-bold !default;
+$alert-margin-bottom: $spacer-3 !default;
+$alert-border-radius: var(--#{$prefix}border-radius-sm) !default;
+$alert-link-font-weight: var(--#{$prefix}ref-fw-bold) !default;
 $alert-border-width: var(--#{$prefix}border-width) !default;
-$alert-bg-scale: -80% !default;
-$alert-border-scale: -70% !default;
-$alert-color-scale: 40% !default;
+$alert-bg-scale: 100% !default;
+$alert-border-scale: 100% !default;
+$alert-color-scale: 100% !default;
 $alert-dismissible-padding-r: $alert-padding-x * 3 !default; // 3x covers width of x plus default padding on either side
+
+// custom
+$alert-gap: $spacer-3 !default;
+$alert-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
+
+$alert-danger-bg: var(--#{$prefix}danger-300) !default;
+$alert-success-bg: var(--#{$prefix}success-300) !default;
+$alert-warning-bg: var(--#{$prefix}warning) !default;
+$alert-info-bg: var(--#{$prefix}info) !default;
+$alert-light-bg: var(--#{$prefix}white) !default;
+$alert-dark-bg: var(--#{$prefix}gray-100) !default;
+
+$alert-danger-color: var(--#{$prefix}white) !default;
+$alert-success-color: var(--#{$prefix}white) !default;
+$alert-warning-color: var(--#{$prefix}black) !default;
+$alert-info-color: var(--#{$prefix}white) !default;
+$alert-light-color: var(--#{$prefix}gray-700) !default;
+$alert-dark-color: var(--#{$prefix}gray-700) !default;
+
+$alert-background-colors: (
+  "danger": $alert-danger-bg,
+  "success": $alert-success-bg,
+  "warning": $alert-warning-bg,
+  "info": $alert-info-bg,
+  "light": $alert-light-bg,
+  "dark": $alert-dark-bg
+) !default;
+
+$alert-colors: (
+  "danger": $alert-danger-color,
+  "success": $alert-success-color,
+  "warning": $alert-warning-color,
+  "info": $alert-info-color,
+  "light": $alert-light-color,
+  "dark": $alert-dark-color
+) !default;
+// end custom
 // scss-docs-end alert-variables
 
 // fusv-disable
