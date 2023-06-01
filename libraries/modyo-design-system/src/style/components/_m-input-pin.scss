@@ -59,6 +59,12 @@
     box-shadow: none;
   }
 
+  .form-control::-webkit-inner-spin-button,
+  .form-control::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
   .form-control:not(:placeholder-shown) {
     border-color: var(--#{$prefix}m-input-pin-form-control-border-color);
   }

@@ -143,6 +143,12 @@
     }
   }
 
+  .form-control::-webkit-inner-spin-button,
+  .form-control::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
   // input addons
   .input-group-text {
     border: 0;
