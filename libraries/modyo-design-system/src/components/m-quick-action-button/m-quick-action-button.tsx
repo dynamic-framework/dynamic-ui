@@ -87,7 +87,9 @@ export class MQuickActionButton implements ComponentInterface {
     this.mClick.emit();
   };
 
-  private actionLinkClickHandler = () => {
+  private actionLinkClickHandler = (event: CustomEvent) => {
+    event.stopPropagation();
+
     if (!this.actionLinkText) {
       return;
     }

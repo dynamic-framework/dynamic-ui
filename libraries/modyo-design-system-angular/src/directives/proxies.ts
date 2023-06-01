@@ -25,9 +25,9 @@ import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
+import { defineCustomElement as defineMQuickActionSelect } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
-import { defineCustomElement as defineMShortcutToggle } from '@modyo-dynamic/modyo-design-system/components/m-shortcut-toggle.js';
 @ProxyCmp({
   defineCustomElementFn: defineMAlert,
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type']
@@ -597,6 +597,35 @@ export declare interface MQuickActionButton extends Components.MQuickActionButto
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineMQuickActionSelect,
+  inputs: ['isSelected', 'line1', 'line2', 'mId', 'name', 'value']
+})
+@Component({
+  selector: 'm-quick-action-select',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['isSelected', 'line1', 'line2', 'mId', 'name', 'value'],
+})
+export class MQuickActionSelect {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MQuickActionSelect extends Components.MQuickActionSelect {
+  /**
+   * Emitted when the select value has changed
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineMSegmentControl,
   inputs: ['description']
 })
@@ -643,35 +672,6 @@ export class MSegmentControlItem {
 export declare interface MSegmentControlItem extends Components.MSegmentControlItem {
   /**
    * Emitted when the input value has changed
-   */
-  mChange: EventEmitter<CustomEvent<string>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMShortcutToggle,
-  inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'isChecked', 'label', 'mId', 'name', 'state', 'subtext', 'text', 'value', 'white']
-})
-@Component({
-  selector: 'm-shortcut-toggle',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'isChecked', 'label', 'mId', 'name', 'state', 'subtext', 'text', 'value', 'white'],
-})
-export class MShortcutToggle {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MShortcutToggle extends Components.MShortcutToggle {
-  /**
-   * Emitted when the select value has changed
    */
   mChange: EventEmitter<CustomEvent<string>>;
 }

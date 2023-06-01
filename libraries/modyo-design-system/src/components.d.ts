@@ -1066,6 +1066,32 @@ export namespace Components {
          */
         "representativeImage"?: string;
     }
+    interface MQuickActionSelect {
+        /**
+          * Is selected
+         */
+        "isSelected"?: boolean;
+        /**
+          * Line 1 text
+         */
+        "line1": string;
+        /**
+          * Line 2 text
+         */
+        "line2": string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Input value
+         */
+        "value": string;
+    }
     interface MSegmentControl {
         /**
           * Aria label to describe the segment control
@@ -1101,56 +1127,6 @@ export namespace Components {
           * Value of the radio
          */
         "value": string;
-    }
-    interface MShortcutToggle {
-        /**
-          * Shortcut icon
-         */
-        "icon"?: string;
-        /**
-          * Icon family class
-         */
-        "iconFamilyClass"?: string;
-        /**
-          * Icon family class
-         */
-        "iconFamilyPrefix"?: string;
-        /**
-          * Is checked
-         */
-        "isChecked"?: boolean;
-        /**
-          * Shortcut label
-         */
-        "label"?: string;
-        /**
-          * Id of the input
-         */
-        "mId": string;
-        /**
-          * Name of the input
-         */
-        "name": string;
-        /**
-          * Input and shortcut state
-         */
-        "state"?: InputState;
-        /**
-          * Shortcut text
-         */
-        "subtext"?: string;
-        /**
-          * Shortcut text
-         */
-        "text"?: string;
-        /**
-          * Input value
-         */
-        "value": string;
-        /**
-          * Theme
-         */
-        "white": boolean;
     }
 }
 export interface MAlertCustomEvent<T> extends CustomEvent<T> {
@@ -1213,13 +1189,13 @@ export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionButtonElement;
 }
+export interface MQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMQuickActionSelectElement;
+}
 export interface MSegmentControlItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMSegmentControlItemElement;
-}
-export interface MShortcutToggleCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMShortcutToggleElement;
 }
 declare global {
     interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
@@ -1336,6 +1312,12 @@ declare global {
         prototype: HTMLMQuickActionButtonElement;
         new (): HTMLMQuickActionButtonElement;
     };
+    interface HTMLMQuickActionSelectElement extends Components.MQuickActionSelect, HTMLStencilElement {
+    }
+    var HTMLMQuickActionSelectElement: {
+        prototype: HTMLMQuickActionSelectElement;
+        new (): HTMLMQuickActionSelectElement;
+    };
     interface HTMLMSegmentControlElement extends Components.MSegmentControl, HTMLStencilElement {
     }
     var HTMLMSegmentControlElement: {
@@ -1347,12 +1329,6 @@ declare global {
     var HTMLMSegmentControlItemElement: {
         prototype: HTMLMSegmentControlItemElement;
         new (): HTMLMSegmentControlItemElement;
-    };
-    interface HTMLMShortcutToggleElement extends Components.MShortcutToggle, HTMLStencilElement {
-    }
-    var HTMLMShortcutToggleElement: {
-        prototype: HTMLMShortcutToggleElement;
-        new (): HTMLMShortcutToggleElement;
     };
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
@@ -1374,9 +1350,9 @@ declare global {
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action-button": HTMLMQuickActionButtonElement;
+        "m-quick-action-select": HTMLMQuickActionSelectElement;
         "m-segment-control": HTMLMSegmentControlElement;
         "m-segment-control-item": HTMLMSegmentControlItemElement;
-        "m-shortcut-toggle": HTMLMShortcutToggleElement;
     }
 }
 declare namespace LocalJSX {
@@ -2514,6 +2490,36 @@ declare namespace LocalJSX {
          */
         "representativeImage"?: string;
     }
+    interface MQuickActionSelect {
+        /**
+          * Is selected
+         */
+        "isSelected"?: boolean;
+        /**
+          * Line 1 text
+         */
+        "line1": string;
+        /**
+          * Line 2 text
+         */
+        "line2": string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onMChange"?: (event: MQuickActionSelectCustomEvent<string>) => void;
+        /**
+          * Input value
+         */
+        "value": string;
+    }
     interface MSegmentControl {
         /**
           * Aria label to describe the segment control
@@ -2554,60 +2560,6 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
-    interface MShortcutToggle {
-        /**
-          * Shortcut icon
-         */
-        "icon"?: string;
-        /**
-          * Icon family class
-         */
-        "iconFamilyClass"?: string;
-        /**
-          * Icon family class
-         */
-        "iconFamilyPrefix"?: string;
-        /**
-          * Is checked
-         */
-        "isChecked"?: boolean;
-        /**
-          * Shortcut label
-         */
-        "label"?: string;
-        /**
-          * Id of the input
-         */
-        "mId": string;
-        /**
-          * Name of the input
-         */
-        "name": string;
-        /**
-          * Emitted when the select value has changed
-         */
-        "onMChange"?: (event: MShortcutToggleCustomEvent<string>) => void;
-        /**
-          * Input and shortcut state
-         */
-        "state"?: InputState;
-        /**
-          * Shortcut text
-         */
-        "subtext"?: string;
-        /**
-          * Shortcut text
-         */
-        "text"?: string;
-        /**
-          * Input value
-         */
-        "value": string;
-        /**
-          * Theme
-         */
-        "white"?: boolean;
-    }
     interface IntrinsicElements {
         "m-alert": MAlert;
         "m-badge": MBadge;
@@ -2628,9 +2580,9 @@ declare namespace LocalJSX {
         "m-offcanvas": MOffcanvas;
         "m-progress-bar": MProgressBar;
         "m-quick-action-button": MQuickActionButton;
+        "m-quick-action-select": MQuickActionSelect;
         "m-segment-control": MSegmentControl;
         "m-segment-control-item": MSegmentControlItem;
-        "m-shortcut-toggle": MShortcutToggle;
     }
 }
 export { LocalJSX as JSX };
@@ -2656,9 +2608,9 @@ declare module "@stencil/core" {
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
+            "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
             "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;
-            "m-shortcut-toggle": LocalJSX.MShortcutToggle & JSXBase.HTMLAttributes<HTMLMShortcutToggleElement>;
         }
     }
 }

@@ -87,6 +87,15 @@ export default config;
 type Story = StoryObj<typeof MQuickActionButton>;
 
 export const PersonalInfo: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MQuickActionButton {...args} />
+    </div>
+  ),
+
   args: {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank **** 721',
@@ -95,6 +104,15 @@ export const PersonalInfo: Story = {
 };
 
 export const AccountBox: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MQuickActionButton {...args} />
+    </div>
+  ),
+
   args: {
     line1: 'Checking account',
     line2: 'HISA ··· 665',
@@ -106,6 +124,15 @@ export const AccountBox: Story = {
 };
 
 export const Info: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MQuickActionButton {...args} />
+    </div>
+  ),
+
   args: {
     line1: 'Alternativas de pago',
     line2: 'Si no puedes pagar en este momento',
