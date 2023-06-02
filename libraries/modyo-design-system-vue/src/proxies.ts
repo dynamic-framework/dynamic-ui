@@ -359,6 +359,17 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
 ]);
 
 
+export const MQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.MQuickActionSelect>('m-quick-action-select', undefined, [
+  'mId',
+  'name',
+  'value',
+  'line1',
+  'line2',
+  'isSelected',
+  'mChange'
+]);
+
+
 export const MSegmentControl = /*@__PURE__*/ defineContainer<JSX.MSegmentControl>('m-segment-control', undefined, [
   'description'
 ]);
@@ -372,23 +383,6 @@ export const MSegmentControlItem = /*@__PURE__*/ defineContainer<JSX.MSegmentCon
   'isDisabled',
   'isChecked',
   'state',
-  'mChange'
-]);
-
-
-export const MShortcutToggle = /*@__PURE__*/ defineContainer<JSX.MShortcutToggle>('m-shortcut-toggle', undefined, [
-  'mId',
-  'name',
-  'value',
-  'label',
-  'text',
-  'subtext',
-  'icon',
-  'iconFamilyClass',
-  'iconFamilyPrefix',
-  'isChecked',
-  'state',
-  'white',
   'mChange'
 ]);
 
