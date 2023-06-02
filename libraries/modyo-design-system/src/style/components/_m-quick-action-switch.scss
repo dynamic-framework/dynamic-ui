@@ -26,6 +26,7 @@
   width: 100%;
   padding: var(--#{$prefix}m-quick-action-switch-padding);
   text-align: left;
+  cursor: pointer;
   background-color: var(--#{$prefix}m-quick-action-switch-bg);
   border-radius: var(--#{$prefix}m-quick-action-switch-border-radius);
 

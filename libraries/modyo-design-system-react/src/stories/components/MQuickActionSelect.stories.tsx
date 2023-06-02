@@ -80,3 +80,22 @@ export const Example: Story = {
     line2: '$ 7.432.450',
   },
 };
+
+export const Selected: Story = {
+  render: ({ mId, ...args }: ComponentProps<typeof MQuickActionSelect>) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+    >
+      <MQuickActionSelect mId={`${mId}4`} {...args} />
+    </div>
+  ),
+
+  args: {
+    mId: 'component',
+    name: 'name',
+    line1: 'total',
+    line2: '$ 7.432.450',
+    isSelected: true,
+  },
+};

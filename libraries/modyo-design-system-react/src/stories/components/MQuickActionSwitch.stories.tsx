@@ -36,9 +36,18 @@ type Story = StoryObj<typeof MQuickActionSwitch>;
 
 export const Default: Story = {
   args: {
-    mId: 'componentId2',
+    mId: 'componentId1',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: false,
+  },
+};
+
+export const Checked: Story = {
+  args: {
+    mId: 'componentId2',
+    label: 'Program',
+    hint: 'This payment is applied with the periodicity and date that you define',
+    isChecked: true,
   },
 };
