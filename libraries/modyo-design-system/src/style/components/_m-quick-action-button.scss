@@ -1,4 +1,4 @@
-.quick-action-button {
+.m-quick-action-button {
   --#{$prefix}m-quick-action-button-gap: #{$quick-action-button-gap};
   --#{$prefix}m-quick-action-button-padding: #{$quick-action-button-padding};
   --#{$prefix}m-quick-action-button-bg: #{$quick-action-button-bg};
@@ -52,7 +52,7 @@
     box-shadow: var(--#{$prefix}m-quick-action-button-active-box-shadow);
   }
 
-  .quick-action-button-representative-image {
+  .m-quick-action-button-representative-image {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,39 +62,39 @@
     border-radius: inherit;
   }
 
-  .quick-action-button-content {
+  .m-quick-action-button-content {
     display: flex;
     flex: 1;
     justify-content: center;
   }
 
-  .quick-action-button-text {
+  .m-quick-action-button-text {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
   }
 
-  .quick-action-button-line1 {
+  .m-quick-action-button-line1 {
     font-size: var(--#{$prefix}m-quick-action-button-line1-font-size);
     font-weight: var(--#{$prefix}m-quick-action-button-line1-font-weight);
     color: var(--#{$prefix}m-quick-action-button-line1-color);
   }
 
-  .quick-action-button-line2 {
+  .m-quick-action-button-line2 {
     font-size: var(--#{$prefix}m-quick-action-button-line2-font-size);
     font-weight: var(--#{$prefix}m-quick-action-button-line2-font-weight);
     color: var(--#{$prefix}m-quick-action-button-line2-color);
   }
 
-  .quick-action-button-action-icon {
+  .m-quick-action-button-action-icon {
     color: var(--#{$prefix}m-quick-action-button-action-icon-color);
   }
 
-  &:hover .quick-action-button-action-icon {
+  &:hover .m-quick-action-button-action-icon {
     color: var(--#{$prefix}m-quick-action-button-active-action-icon-color);
   }
 
-  &:active .quick-action-button-action-icon {
+  &:active .m-quick-action-button-action-icon {
     color: var(--#{$prefix}m-quick-action-button-active-action-icon-color);
   }
 }

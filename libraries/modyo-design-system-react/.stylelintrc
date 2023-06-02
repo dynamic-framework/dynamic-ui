@@ -1,0 +1,41 @@
+{
+  "extends": [
+    "stylelint-config-twbs-bootstrap"
+  ],
+  "rules": {
+    "selector-max-class": 5,
+    "declaration-property-value-disallowed-list": {
+      "border": "none",
+      "outline": "none"
+    },
+    "function-disallowed-list": [
+      "lighten",
+      "darken"
+    ],
+    "property-disallowed-list": [],
+    "indentation": [
+      2,
+      {
+        "indentInsideParens": "once-at-root-twice-in-block"
+      }
+    ],
+    "scss/dollar-variable-default": [
+      true,
+      {
+        "ignore": "local"
+      }
+    ],
+    "scss/selector-no-union-class-name": true,
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": [
+          "attribute",
+          "class",
+          "id"
+        ]
+      }
+    ],
+    "selector-class-pattern": null
+  }
+}

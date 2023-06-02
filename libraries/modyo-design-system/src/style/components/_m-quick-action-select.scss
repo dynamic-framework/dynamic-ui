@@ -21,6 +21,7 @@
   width: 100%;
   padding: var(--#{$prefix}m-quick-action-select-padding);
   text-align: left;
+  cursor: pointer;
   background-color: var(--#{$prefix}m-quick-action-select-bg);
   border-radius: var(--#{$prefix}m-quick-action-select-border-radius);
 
@@ -35,19 +36,19 @@
   &:has(input:checked) {
     background: var(--#{$prefix}m-quick-action-select-checked-bg);
 
-    .quick-action-select-line1,
-    .quick-action-select-line2 {
+    .m-quick-action-select-line1,
+    .m-quick-action-select-line2 {
       color: var(--#{$prefix}m-quick-action-select-checked-color);
     }
   }
 
-  .quick-action-select-line1 {
+  .m-quick-action-select-line1 {
     font-size: var(--#{$prefix}m-quick-action-select-line1-font-size);
     font-weight: var(--#{$prefix}m-quick-action-select-line1-font-weight);
     color: var(--#{$prefix}m-quick-action-select-line1-color);
   }
 
-  .quick-action-select-line2 {
+  .m-quick-action-select-line2 {
     font-size: var(--#{$prefix}m-quick-action-select-line2-font-size);
     font-weight: var(--#{$prefix}m-quick-action-select-line2-font-weight);
     color: var(--#{$prefix}m-quick-action-select-line2-color);

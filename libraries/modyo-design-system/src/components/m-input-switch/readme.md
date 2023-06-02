@@ -23,6 +23,19 @@
 | `mChange` | Emitted when the switch has changed | `CustomEvent<boolean>` |
 
 
+## Dependencies
+
+### Used by
+
+ - [m-quick-action-switch](../m-quick-action-switch)
+
+### Graph
+```mermaid
+graph TD;
+  m-quick-action-switch --> m-input-switch
+  style m-input-switch fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

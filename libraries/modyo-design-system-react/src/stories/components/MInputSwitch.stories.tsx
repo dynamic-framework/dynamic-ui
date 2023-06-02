@@ -36,7 +36,7 @@ type Story = StoryObj<typeof MInputSwitch>;
 
 export const WithoutLabel: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId1',
     isChecked: false,
     isDisabled: false,
   },
@@ -44,7 +44,7 @@ export const WithoutLabel: Story = {
 
 export const Default: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId2',
     label: 'Label',
     isChecked: false,
     isDisabled: false,
@@ -53,7 +53,7 @@ export const Default: Story = {
 
 export const Checked: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId3',
     label: 'Label',
     isChecked: true,
     isDisabled: false,
@@ -62,9 +62,19 @@ export const Checked: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId4',
     label: 'Label',
     isChecked: false,
+    isDisabled: true,
+  },
+};
+
+
+export const CheckedDisabled: Story = {
+  args: {
+    mId: 'componentId4',
+    label: 'Label',
+    isChecked: true,
     isDisabled: true,
   },
 };

@@ -1122,6 +1122,28 @@ export namespace Components {
          */
         "value": string;
     }
+    interface MQuickActionSwitch {
+        /**
+          * Hint to display
+         */
+        "hint": string;
+        /**
+          * Is checked
+         */
+        "isChecked"?: boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+    }
     interface MSegmentControl {
         /**
           * Aria label to describe the segment control
@@ -1226,6 +1248,10 @@ export interface MQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
 export interface MQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionSelectElement;
+}
+export interface MQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMQuickActionSwitchElement;
 }
 export interface MSegmentControlItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1358,6 +1384,12 @@ declare global {
         prototype: HTMLMQuickActionSelectElement;
         new (): HTMLMQuickActionSelectElement;
     };
+    interface HTMLMQuickActionSwitchElement extends Components.MQuickActionSwitch, HTMLStencilElement {
+    }
+    var HTMLMQuickActionSwitchElement: {
+        prototype: HTMLMQuickActionSwitchElement;
+        new (): HTMLMQuickActionSwitchElement;
+    };
     interface HTMLMSegmentControlElement extends Components.MSegmentControl, HTMLStencilElement {
     }
     var HTMLMSegmentControlElement: {
@@ -1392,6 +1424,7 @@ declare global {
         "m-quick-action-button": HTMLMQuickActionButtonElement;
         "m-quick-action-check": HTMLMQuickActionCheckElement;
         "m-quick-action-select": HTMLMQuickActionSelectElement;
+        "m-quick-action-switch": HTMLMQuickActionSwitchElement;
         "m-segment-control": HTMLMSegmentControlElement;
         "m-segment-control-item": HTMLMSegmentControlItemElement;
     }
@@ -2595,6 +2628,32 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
+    interface MQuickActionSwitch {
+        /**
+          * Hint to display
+         */
+        "hint": string;
+        /**
+          * Is checked
+         */
+        "isChecked"?: boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onMChange"?: (event: MQuickActionSwitchCustomEvent<string>) => void;
+    }
     interface MSegmentControl {
         /**
           * Aria label to describe the segment control
@@ -2657,6 +2716,7 @@ declare namespace LocalJSX {
         "m-quick-action-button": MQuickActionButton;
         "m-quick-action-check": MQuickActionCheck;
         "m-quick-action-select": MQuickActionSelect;
+        "m-quick-action-switch": MQuickActionSwitch;
         "m-segment-control": MSegmentControl;
         "m-segment-control-item": MSegmentControlItem;
     }
@@ -2686,6 +2746,7 @@ declare module "@stencil/core" {
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
             "m-quick-action-check": LocalJSX.MQuickActionCheck & JSXBase.HTMLAttributes<HTMLMQuickActionCheckElement>;
             "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
+            "m-quick-action-switch": LocalJSX.MQuickActionSwitch & JSXBase.HTMLAttributes<HTMLMQuickActionSwitchElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
             "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;
         }

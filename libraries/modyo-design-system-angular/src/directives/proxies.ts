@@ -27,6 +27,7 @@ import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-
 import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
 import { defineCustomElement as defineMQuickActionCheck } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
+import { defineCustomElement as defineMQuickActionSwitch } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-switch.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
 @ProxyCmp({
@@ -648,6 +649,35 @@ export class MQuickActionSelect {
 
 
 export declare interface MQuickActionSelect extends Components.MQuickActionSelect {
+  /**
+   * Emitted when the select value has changed
+   */
+  mChange: EventEmitter<CustomEvent<string>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineMQuickActionSwitch,
+  inputs: ['hint', 'isChecked', 'label', 'mId', 'name']
+})
+@Component({
+  selector: 'm-quick-action-switch',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['hint', 'isChecked', 'label', 'mId', 'name'],
+})
+export class MQuickActionSwitch {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mChange']);
+  }
+}
+
+
+export declare interface MQuickActionSwitch extends Components.MQuickActionSwitch {
   /**
    * Emitted when the select value has changed
    */

@@ -23,6 +23,7 @@ export const DIRECTIVES = [
   d.MQuickActionButton,
   d.MQuickActionCheck,
   d.MQuickActionSelect,
+  d.MQuickActionSwitch,
   d.MSegmentControl,
   d.MSegmentControlItem
 ];

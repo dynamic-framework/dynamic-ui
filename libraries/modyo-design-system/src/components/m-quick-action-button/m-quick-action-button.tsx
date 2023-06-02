@@ -104,12 +104,12 @@ export class MQuickActionButton implements ComponentInterface {
     const Tag = this.getTag();
     return (
       <Tag
-        class="quick-action-button"
+        class="m-quick-action-button"
         {...!this.actionLinkText && { onClick: this.globalClickHandler }}
       >
         {this.representativeIcon && (
           <m-icon
-            class="quick-action-button-representative-icon"
+            class="m-quick-action-button-representative-icon"
             size={(
               this.representativeIconHasCircle
                 ? `var(--${PREFIX_BS}m-quick-action-button-representative-icon-size)`
@@ -124,24 +124,24 @@ export class MQuickActionButton implements ComponentInterface {
         )}
         {this.representativeImage && (
           <img
-            class="quick-action-button-representative-image"
+            class="m-quick-action-button-representative-image"
             src={this.representativeImage}
             alt=""
           />
         )}
-        <div class="quick-action-button-content">
-          <div class="quick-action-button-text">
-            <span class="quick-action-button-line1">
+        <div class="m-quick-action-button-content">
+          <div class="m-quick-action-button-text">
+            <span class="m-quick-action-button-line1">
               {this.line1}
             </span>
-            <small class="quick-action-button-line2">
+            <small class="m-quick-action-button-line2">
               {this.line2}
             </small>
           </div>
         </div>
         {this.actionLinkText ? (
           <m-button
-            class="quick-action-button-action-link"
+            class="m-quick-action-button-action-link"
             type="button"
             variant="link"
             size="sm"
@@ -151,7 +151,7 @@ export class MQuickActionButton implements ComponentInterface {
           />
         ) : (
           <m-icon
-            class="quick-action-button-action-icon"
+            class="m-quick-action-button-action-icon"
             icon={this.actionIcon}
             size={`var(--${PREFIX_BS}m-quick-action-button-action-icon-size)`}
             family-class={this.actionIconFamilyClass}

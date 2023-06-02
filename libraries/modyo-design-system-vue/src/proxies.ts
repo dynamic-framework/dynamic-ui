@@ -382,6 +382,16 @@ export const MQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.MQuickAction
 ]);
 
 
+export const MQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.MQuickActionSwitch>('m-quick-action-switch', undefined, [
+  'mId',
+  'name',
+  'label',
+  'hint',
+  'isChecked',
+  'mChange'
+]);
+
+
 export const MSegmentControl = /*@__PURE__*/ defineContainer<JSX.MSegmentControl>('m-segment-control', undefined, [
   'description'
 ]);

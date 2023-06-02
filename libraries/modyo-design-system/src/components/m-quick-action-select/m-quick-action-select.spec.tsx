@@ -24,10 +24,10 @@ it('should render my component', async () => {
     <m-quick-action-select>
       <label class="m-quick-action-select" htmlfor="component">
         <input id="component" name="name" type="radio" value="value">
-        <span class="quick-action-select-line1">
+        <span class="m-quick-action-select-line1">
           total
         </span>
-        <span class="quick-action-select-line2">
+        <span class="m-quick-action-select-line2">
           $ 7.432.450
         </span>
       </label>
