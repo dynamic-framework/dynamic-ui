@@ -1,0 +1,22 @@
+$quick-action-check-gap: var(--#{$prefix}ref-spacer-3) !default;
+$quick-action-check-padding: var(--#{$prefix}ref-spacer-3) !default;
+$quick-action-check-bg: var(--#{$prefix}white) !default;
+$quick-action-check-border-radius: var(--#{$prefix}border-radius-sm) !default;
+
+$quick-action-check-line1-font-size: var(--#{$prefix}body-font-size) !default;
+$quick-action-check-line1-font-weight: var(--#{$prefix}ref-fw-bold) !default;
+$quick-action-check-line1-color: var(--#{$prefix}light-text-emphasis) !default;
+
+$quick-action-check-line2-font-size: var(--#{$prefix}ref-fs-sp) !default;
+$quick-action-check-line2-font-weight: var(--#{$prefix}ref-fw-normal) !default;
+$quick-action-check-line2-color: var(--#{$prefix}gray) !default;
+
+$quick-action-check-line3-font-size: var(--#{$prefix}body-font-size) !default;
+$quick-action-check-line3-font-weight: var(--#{$prefix}ref-fw-bold) !default;
+$quick-action-check-line3-color: var(--#{$prefix}gray) !default;
+
+$quick-action-check-hover-bg: var(--#{$prefix}gray-100) !default;
+
+$quick-action-check-checked-bg: var(--#{$prefix}white) !default;
+$quick-action-check-checked-color: var(--#{$prefix}body-color) !default;
+

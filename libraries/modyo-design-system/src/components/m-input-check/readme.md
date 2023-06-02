@@ -26,6 +26,19 @@
 | `mChange` | Emitted when the switch has changed | `CustomEvent<any>` |
 
 
+## Dependencies
+
+### Used by
+
+ - [m-quick-action-check](../m-quick-action-check)
+
+### Graph
+```mermaid
+graph TD;
+  m-quick-action-check --> m-input-check
+  style m-input-check fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

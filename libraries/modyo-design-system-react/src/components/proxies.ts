@@ -24,6 +24,7 @@ import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
+import { defineCustomElement as defineMQuickActionCheck } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
@@ -47,6 +48,7 @@ export const MModal = /*@__PURE__*/createReactComponent<JSX.MModal, HTMLMModalEl
 export const MOffcanvas = /*@__PURE__*/createReactComponent<JSX.MOffcanvas, HTMLMOffcanvasElement>('m-offcanvas', undefined, undefined, defineMOffcanvas);
 export const MProgressBar = /*@__PURE__*/createReactComponent<JSX.MProgressBar, HTMLMProgressBarElement>('m-progress-bar', undefined, undefined, defineMProgressBar);
 export const MQuickActionButton = /*@__PURE__*/createReactComponent<JSX.MQuickActionButton, HTMLMQuickActionButtonElement>('m-quick-action-button', undefined, undefined, defineMQuickActionButton);
+export const MQuickActionCheck = /*@__PURE__*/createReactComponent<JSX.MQuickActionCheck, HTMLMQuickActionCheckElement>('m-quick-action-check', undefined, undefined, defineMQuickActionCheck);
 export const MQuickActionSelect = /*@__PURE__*/createReactComponent<JSX.MQuickActionSelect, HTMLMQuickActionSelectElement>('m-quick-action-select', undefined, undefined, defineMQuickActionSelect);
 export const MSegmentControl = /*@__PURE__*/createReactComponent<JSX.MSegmentControl, HTMLMSegmentControlElement>('m-segment-control', undefined, undefined, defineMSegmentControl);
 export const MSegmentControlItem = /*@__PURE__*/createReactComponent<JSX.MSegmentControlItem, HTMLMSegmentControlItemElement>('m-segment-control-item', undefined, undefined, defineMSegmentControlItem);

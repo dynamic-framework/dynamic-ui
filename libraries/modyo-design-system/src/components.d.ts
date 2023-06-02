@@ -1066,6 +1066,36 @@ export namespace Components {
          */
         "representativeImage"?: string;
     }
+    interface MQuickActionCheck {
+        /**
+          * Is selected
+         */
+        "isChecked"?: boolean;
+        /**
+          * Line 1 text
+         */
+        "line1": string;
+        /**
+          * Line 2 text
+         */
+        "line2": string;
+        /**
+          * Line 3 text
+         */
+        "line3": string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Input value
+         */
+        "value": string;
+    }
     interface MQuickActionSelect {
         /**
           * Is selected
@@ -1188,6 +1218,10 @@ export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
 export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionButtonElement;
+}
+export interface MQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMQuickActionCheckElement;
 }
 export interface MQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1312,6 +1346,12 @@ declare global {
         prototype: HTMLMQuickActionButtonElement;
         new (): HTMLMQuickActionButtonElement;
     };
+    interface HTMLMQuickActionCheckElement extends Components.MQuickActionCheck, HTMLStencilElement {
+    }
+    var HTMLMQuickActionCheckElement: {
+        prototype: HTMLMQuickActionCheckElement;
+        new (): HTMLMQuickActionCheckElement;
+    };
     interface HTMLMQuickActionSelectElement extends Components.MQuickActionSelect, HTMLStencilElement {
     }
     var HTMLMQuickActionSelectElement: {
@@ -1350,6 +1390,7 @@ declare global {
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action-button": HTMLMQuickActionButtonElement;
+        "m-quick-action-check": HTMLMQuickActionCheckElement;
         "m-quick-action-select": HTMLMQuickActionSelectElement;
         "m-segment-control": HTMLMSegmentControlElement;
         "m-segment-control-item": HTMLMSegmentControlItemElement;
@@ -2490,6 +2531,40 @@ declare namespace LocalJSX {
          */
         "representativeImage"?: string;
     }
+    interface MQuickActionCheck {
+        /**
+          * Is selected
+         */
+        "isChecked"?: boolean;
+        /**
+          * Line 1 text
+         */
+        "line1": string;
+        /**
+          * Line 2 text
+         */
+        "line2": string;
+        /**
+          * Line 3 text
+         */
+        "line3": string;
+        /**
+          * The id of the input
+         */
+        "mId": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onMChange"?: (event: MQuickActionCheckCustomEvent<string>) => void;
+        /**
+          * Input value
+         */
+        "value": string;
+    }
     interface MQuickActionSelect {
         /**
           * Is selected
@@ -2580,6 +2655,7 @@ declare namespace LocalJSX {
         "m-offcanvas": MOffcanvas;
         "m-progress-bar": MProgressBar;
         "m-quick-action-button": MQuickActionButton;
+        "m-quick-action-check": MQuickActionCheck;
         "m-quick-action-select": MQuickActionSelect;
         "m-segment-control": MSegmentControl;
         "m-segment-control-item": MSegmentControlItem;
@@ -2608,6 +2684,7 @@ declare module "@stencil/core" {
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
+            "m-quick-action-check": LocalJSX.MQuickActionCheck & JSXBase.HTMLAttributes<HTMLMQuickActionCheckElement>;
             "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
             "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
             "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;

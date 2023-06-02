@@ -21,6 +21,7 @@ export const DIRECTIVES = [
   d.MOffcanvas,
   d.MProgressBar,
   d.MQuickActionButton,
+  d.MQuickActionCheck,
   d.MQuickActionSelect,
   d.MSegmentControl,
   d.MSegmentControlItem
