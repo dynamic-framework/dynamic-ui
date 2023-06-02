@@ -61,10 +61,10 @@ export class MQuickActionSelect implements ComponentInterface {
           checked={this.isSelected}
           onChange={this.changeHandler}
         />
-        <span class="quick-action-select-line1">
+        <span class="m-quick-action-select-line1">
           {this.line1}
         </span>
-        <span class="quick-action-select-line2">
+        <span class="m-quick-action-select-line2">
           {this.line2}
         </span>
       </label>

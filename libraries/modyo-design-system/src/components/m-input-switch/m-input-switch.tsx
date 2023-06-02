@@ -71,12 +71,14 @@ export class MInputSwitch implements ComponentInterface {
           checked={this.internalIsChecked}
           disabled={this.isDisabled}
         />
-        <label
-          class="form-check-label"
-          htmlFor={this.mId}
-        >
-          {this.label}
-        </label>
+        {!!this.label && (
+          <label
+            class="form-check-label"
+            htmlFor={this.mId}
+          >
+            {this.label}
+          </label>
+        )}
       </div>
     );
   }

@@ -26,6 +26,7 @@ import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-
 import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
 import { defineCustomElement as defineMQuickActionCheck } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
+import { defineCustomElement as defineMQuickActionSwitch } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-switch.js';
 import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
 import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
 
@@ -50,5 +51,6 @@ export const MProgressBar = /*@__PURE__*/createReactComponent<JSX.MProgressBar, 
 export const MQuickActionButton = /*@__PURE__*/createReactComponent<JSX.MQuickActionButton, HTMLMQuickActionButtonElement>('m-quick-action-button', undefined, undefined, defineMQuickActionButton);
 export const MQuickActionCheck = /*@__PURE__*/createReactComponent<JSX.MQuickActionCheck, HTMLMQuickActionCheckElement>('m-quick-action-check', undefined, undefined, defineMQuickActionCheck);
 export const MQuickActionSelect = /*@__PURE__*/createReactComponent<JSX.MQuickActionSelect, HTMLMQuickActionSelectElement>('m-quick-action-select', undefined, undefined, defineMQuickActionSelect);
+export const MQuickActionSwitch = /*@__PURE__*/createReactComponent<JSX.MQuickActionSwitch, HTMLMQuickActionSwitchElement>('m-quick-action-switch', undefined, undefined, defineMQuickActionSwitch);
 export const MSegmentControl = /*@__PURE__*/createReactComponent<JSX.MSegmentControl, HTMLMSegmentControlElement>('m-segment-control', undefined, undefined, defineMSegmentControl);
 export const MSegmentControlItem = /*@__PURE__*/createReactComponent<JSX.MSegmentControlItem, HTMLMSegmentControlItemElement>('m-segment-control-item', undefined, undefined, defineMSegmentControlItem);

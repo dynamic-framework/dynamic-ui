@@ -9,8 +9,18 @@
   --#{$prefix}m-input-switch-disabled-border-color: var(--#{$prefix}gray-300);
   --#{$prefix}m-input-switch-disabled-bg: var(--#{$prefix}gray-100);
   --#{$prefix}m-input-switch-disabled-dot: #{escape-svg($form-switch-disabled-bg-image)};
+  --#{$prefix}m-input-switch-label-color: #{$form-switch-label-color};
+  --#{$prefix}m-input-switch-active-label-color: #{$form-switch-active-label-color};
 
   &.form-switch {
+    .form-check-label {
+      color: var(--#{$prefix}m-input-switch-label-color);
+    }
+
+    .form-check-input:checked ~ .form-check-label {
+      color: var(--#{$prefix}m-input-switch-active-label-color);
+    }
+
     .form-check-input {
       background-color: var(--#{$prefix}m-input-switch-bg);
       background-image: var(--#{$prefix}m-input-switch-dot);
@@ -21,8 +31,8 @@
         border-color: var(--#{$prefix}m-input-switch-active-border-color);
       }
 
-      &[disabled],
-      &:disabled {
+      &[disabled]:not(:checked),
+      &:disabled:not(:checked) {
         background-color: var(--#{$prefix}m-input-switch-disabled-bg);
         background-image: var(--#{$prefix}m-input-switch-disabled-dot);
         border-color: var(--#{$prefix}m-input-switch-disabled-border-color);
