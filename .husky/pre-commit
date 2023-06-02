@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm exec lerna run lint-staged
+pnpm exec lerna run lint-staged --concurrency 1

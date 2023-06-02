@@ -47,23 +47,18 @@ export class MProgressBar implements ComponentInterface {
 
   render() {
     return (
-      <div class="m-progress-bar">
-        <div class="progress">
-          <div
-            class={this.generateClasses()}
-            role="progressbar"
-            aria-label="Progress bar"
-            style={{ width: `${this.currentValue}%` }}
-            aria-valuenow={this.currentValue}
-            aria-valuemin={this.minValue}
-            aria-valuemax={this.maxValue}
-          />
+      <div class="m-progress-bar progress">
+        <div
+          class={this.generateClasses()}
+          role="progressbar"
+          aria-label="Progress bar"
+          style={{ width: `${this.currentValue}%` }}
+          aria-valuenow={this.currentValue}
+          aria-valuemin={this.minValue}
+          aria-valuemax={this.maxValue}
+        >
+          {!this.hideCurrentValue && this.formatProgress()}
         </div>
-        {!this.hideCurrentValue && (
-          <span class="m-progress-text">
-            {this.formatProgress()}
-          </span>
-        )}
       </div>
     );
   }

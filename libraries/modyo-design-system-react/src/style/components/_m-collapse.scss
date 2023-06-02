@@ -25,12 +25,12 @@
     display: flex;
     gap: var(--#{$prefix}m-collapse-button-gap);
     align-items: center;
-    padding: var(--#{$prefix}m-collapse-button-padding-y) var(--#{$prefix}m-collapse-button-padding-x);
-    user-select: none;
-    border: none;
-    background: transparent;
     width: 100%;
+    padding: var(--#{$prefix}m-collapse-button-padding-y) var(--#{$prefix}m-collapse-button-padding-x);
     text-align: left;
+    user-select: none;
+    background: transparent;
+    border: 0;
 
     &:focus,
     &:focus-visible {
@@ -43,13 +43,13 @@
     padding: var(--#{$prefix}m-collapse-body-padding-y) var(--#{$prefix}m-collapse-body-padding-x);
     padding-top: 0;
 
-    &:before {
-      content: " ";
+    &::before {
       position: absolute;
       top: 0;
       display: var(--#{$prefix}m-collapse-separator-display);
       width: calc(100% - (var(--#{$prefix}m-collapse-body-padding-x) * 2));
       height: var(--#{$prefix}m-collapse-separator-height);
+      content: " ";
       background-color: var(--#{$prefix}m-collapse-separator-bg);
     }
   }

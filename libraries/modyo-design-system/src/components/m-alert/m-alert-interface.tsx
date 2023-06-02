@@ -4,10 +4,10 @@ export type AlertTypeIconMap = {
 };
 
 export const ALERT_TYPE_ICON: AlertTypeIconMap = {
-  warning: 'exclamation-circle-fill',
+  warning: 'exclamation-circle',
   danger: 'exclamation-triangle',
-  success: 'check-circle-fill',
-  info: 'info-circle-fill',
-  light: 'info-circle-fill',
-  dark: 'info-circle-fill',
+  success: 'check-circle',
+  info: 'info-circle',
+  light: 'info-circle',
+  dark: 'info-circle',
 };

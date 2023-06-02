@@ -72,7 +72,6 @@ $transition-collapse: height .35s ease !default;
 $transition-collapse-width: width .35s ease !default;
 // scss-docs-end collapse-transition
 
-// stylelint-disable function-disallowed-list
 // scss-docs-start aspect-ratios
 $aspect-ratios: (
   "1x1": 100%,
@@ -81,7 +80,6 @@ $aspect-ratios: (
   "21x9": calc(9 / 21 * 100%)
 ) !default;
 // scss-docs-end aspect-ratios
-// stylelint-enable function-disallowed-list
 
 @import "typography";
 @import "tables";
@@ -91,8 +89,8 @@ $aspect-ratios: (
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
 // scss-docs-start input-btn-variables
-$input-btn-padding-y: .625rem !default; // TODO: remove this after m-input homologation
-$input-btn-padding-x: $spacer-4 !default; // TODO: remove this after m-input homologation
+$input-btn-padding-y: .625rem !default;
+$input-btn-padding-x: $spacer-4 !default;
 $input-btn-font-family: null !default;
 $input-btn-font-size: $font-size-base !default;
 $input-btn-line-height: $line-height-base !default;
@@ -103,12 +101,12 @@ $input-btn-focus-color: rgba(var(--#{$prefix}secondary-rgb), $input-btn-focus-co
 $input-btn-focus-blur: 0 !default;
 $input-btn-focus-box-shadow: none !default;
 
-$input-btn-padding-y-sm: $spacer-2 !default; // TODO: remove this after m-input homologation
-$input-btn-padding-x-sm: $spacer-3 !default; // TODO: remove this after m-input homologation
+$input-btn-padding-y-sm: $spacer-2 !default;
+$input-btn-padding-x-sm: $spacer-3 !default;
 $input-btn-font-size-sm: $subparagraph-font-size !default;
 
-$input-btn-padding-y-lg: 1.125rem !default; // TODO: remove this after m-input homologation
-$input-btn-padding-x-lg: $spacer-4 !default; // TODO: remove this after m-input homologation
+$input-btn-padding-y-lg: 1.125rem !default;
+$input-btn-padding-x-lg: $spacer-4 !default;
 $input-btn-font-size-lg: 1rem !default;
 
 $input-btn-border-width: $border-width !default;
@@ -137,7 +135,7 @@ $placeholder-opacity-min: .2 !default;
 @import "badges";
 @import "modals";
 @import "alerts";
-@import "progress-bars";
+@import "progress";
 @import "list-group";
 @import "thumbnails";
 @import "figures";

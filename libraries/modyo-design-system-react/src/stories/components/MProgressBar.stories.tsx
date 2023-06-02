@@ -54,6 +54,7 @@ export const Default: Story = {
     minValue: 0,
     maxValue: 100,
     enableStripedAnimation: false,
+    hideCurrentValue: false,
   },
 };
 
@@ -72,6 +73,7 @@ export const Stripped: Story = {
     minValue: 0,
     maxValue: 100,
     enableStripedAnimation: true,
+    hideCurrentValue: false,
   },
 };
 

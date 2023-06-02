@@ -3,10 +3,8 @@
 // Font, line-height, and color for body text, headings, and more.
 
 // scss-docs-start font-variables
-// stylelint-disable value-keyword-case
 $font-family-sans-serif: "Source Sans Pro", sans-serif !default;
 $font-family-monospace: $font-family-sans-serif !default;
-// stylelint-enable value-keyword-case
 $font-family-base: var(--#{$prefix}font-sans-serif) !default;
 $font-family-code: var(--#{$prefix}font-monospace) !default;
 
