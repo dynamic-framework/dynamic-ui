@@ -36,13 +36,20 @@ const config: Meta<typeof MAlert> = {
 export default config;
 type Story = StoryObj<typeof MAlert>;
 
-export const Default: Story = {
+export const Light: Story = {
   args: {
     showIcon: false,
     children: 'Default alert',
   },
 };
 
+export const Dark: Story = {
+  args: {
+    showIcon: false,
+    children: 'Default alert',
+    type: 'dark',
+  },
+};
 export const Success: Story = {
   args: {
     showIcon: false,
@@ -75,10 +82,18 @@ export const Warning: Story = {
   },
 };
 
-export const DefaultIcon: Story = {
+export const LightIcon: Story = {
   args: {
     showIcon: true,
     children: 'Default alert',
+  },
+};
+
+export const DarkIcon: Story = {
+  args: {
+    showIcon: true,
+    children: 'Default alert',
+    type: 'dark',
   },
 };
 
@@ -114,11 +129,20 @@ export const WarningIcon: Story = {
   },
 };
 
-export const DefaultClose: Story = {
+export const LightClose: Story = {
   args: {
     showIcon: true,
     children: 'Default alert',
     showClose: true,
+  },
+};
+
+export const DarkClose: Story = {
+  args: {
+    showIcon: true,
+    children: 'Default alert',
+    showClose: true,
+    type: 'dark',
   },
 };
 

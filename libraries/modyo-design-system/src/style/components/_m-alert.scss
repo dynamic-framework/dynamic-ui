@@ -32,12 +32,13 @@
     --#{$prefix}m-icon-color: var(--#{$prefix}m-alert-icon-color);
   }
 
-  @each $color, $value in $alert-colors {
-    &.alert-#{$color} {
-      --#{$prefix}alert-color: var(--#{$prefix}alert-#{$color}-color);
-      --#{$prefix}alert-bg: var(--#{$prefix}alert-#{$color}-bg);
-      --#{$prefix}alert-border-color: var(--#{$prefix}alert-#{$color}-bg);
-      --#{$prefix}alert-link-color: var(--#{$prefix}alert-#{$color}-color);
+  @each $theme, $value in $theme-colors {
+    $color: color-contrast($value);
+    &.alert-#{$theme} {
+      --#{$prefix}alert-color: #{$color};
+      --#{$prefix}alert-bg: var(--#{$prefix}#{$theme});
+      --#{$prefix}alert-border-color: var(--#{$prefix}#{$theme});
+      --#{$prefix}alert-link-color: #{$color};
     }
   }
 }

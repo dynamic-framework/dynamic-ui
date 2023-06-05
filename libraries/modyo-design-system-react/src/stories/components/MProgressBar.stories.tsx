@@ -95,3 +95,79 @@ export const Valueless: Story = {
     hideCurrentValue: true,
   },
 };
+
+export const Zero: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MProgressBar {...args} />
+    </div>
+  ),
+
+  args: {
+    currentValue: 0,
+    minValue: 0,
+    maxValue: 100,
+    enableStripedAnimation: false,
+    hideCurrentValue: false,
+  },
+};
+
+export const Two: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MProgressBar {...args} />
+    </div>
+  ),
+
+  args: {
+    currentValue: 2,
+    minValue: 0,
+    maxValue: 100,
+    enableStripedAnimation: false,
+    hideCurrentValue: false,
+  },
+};
+
+export const TwoValueless: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MProgressBar {...args} />
+    </div>
+  ),
+
+  args: {
+    currentValue: 2,
+    minValue: 0,
+    maxValue: 100,
+    enableStripedAnimation: false,
+    hideCurrentValue: true,
+  },
+};
+
+export const OneHundred: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MProgressBar {...args} />
+    </div>
+  ),
+
+  args: {
+    currentValue: 100,
+    minValue: 0,
+    maxValue: 100,
+    enableStripedAnimation: false,
+    hideCurrentValue: false,
+  },
+};
