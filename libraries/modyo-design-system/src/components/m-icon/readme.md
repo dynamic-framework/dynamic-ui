@@ -28,11 +28,9 @@
 
  - [m-alert](../m-alert)
  - [m-button](../m-button)
- - [m-hint](../m-hint)
  - [m-input](../m-input)
  - [m-input-pin](../m-input-pin)
  - [m-input-select](../m-input-select)
- - [m-list-item](../m-list-item)
  - [m-quick-action-button](../m-quick-action-button)
 
 ### Graph
@@ -40,11 +38,9 @@
 graph TD;
   m-alert --> m-icon
   m-button --> m-icon
-  m-hint --> m-icon
   m-input --> m-icon
   m-input-pin --> m-icon
   m-input-select --> m-icon
-  m-list-item --> m-icon
   m-quick-action-button --> m-icon
   style m-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

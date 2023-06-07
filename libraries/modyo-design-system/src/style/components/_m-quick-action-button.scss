@@ -2,8 +2,15 @@
   --#{$prefix}m-quick-action-button-gap: #{$quick-action-button-gap};
   --#{$prefix}m-quick-action-button-padding: #{$quick-action-button-padding};
   --#{$prefix}m-quick-action-button-bg: #{$quick-action-button-bg};
-  --#{$prefix}m-quick-action-button-border: #{$quick-action-button-border};
+  --#{$prefix}m-quick-action-button-border-color: #{$quick-action-button-border-color};
+  --#{$prefix}m-quick-action-button-border-style: #{$quick-action-button-border-style};
+  --#{$prefix}m-quick-action-button-border-width: #{$quick-action-button-border-width};
   --#{$prefix}m-quick-action-button-border-radius: #{$quick-action-button-border-radius};
+
+  --#{$prefix}m-quick-action-button-border-top: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
+  --#{$prefix}m-quick-action-button-border-right: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
+  --#{$prefix}m-quick-action-button-border-bottom: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
+  --#{$prefix}m-quick-action-button-border-left: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
 
   --#{$prefix}m-quick-action-button-line1-font-size: #{$quick-action-button-line1-font-size};
   --#{$prefix}m-quick-action-button-line1-font-weight: #{$quick-action-button-line1-font-weight};
@@ -37,7 +44,10 @@
   text-align: left;
   background-color: var(--#{$prefix}m-quick-action-button-bg);
   background-position: center;
-  border: var(--#{$prefix}m-quick-action-button-border);
+  border-top: var(--#{$prefix}m-quick-action-button-border-top);
+  border-right: var(--#{$prefix}m-quick-action-button-border-bottom);
+  border-bottom: var(--#{$prefix}m-quick-action-button-border-right);
+  border-left: var(--#{$prefix}m-quick-action-button-border-left);
   border-radius: var(--#{$prefix}m-quick-action-button-border-radius);
 
   &:hover {

@@ -10,6 +10,10 @@
     align-items: center;
     justify-content: center;
 
+    .m-icon {
+      --#{$prefix}m-icon-size: var(--#{$prefix}btn-font-size);
+    }
+
     // hover selectors
     &:hover,
     &.hover {
@@ -126,6 +130,10 @@
       &.btn-sm {
         font-size: var(--#{$prefix}m-button-link-font-size-sm);
       }
+
+      > span {
+        text-decoration: $link-decoration;
+      }
     }
   }
 
@@ -157,6 +165,10 @@
     &.btn-sm {
       font-size: var(--#{$prefix}m-button-link-font-size-sm);
     }
+
+    > span {
+      text-decoration: $link-decoration;
+    }
   }
 
   &.btn-link-dark {
@@ -186,6 +198,10 @@
 
     &.btn-sm {
       font-size: var(--#{$prefix}m-button-link-font-size-sm);
+    }
+
+    > span {
+      text-decoration: $link-decoration;
     }
   }
 }
