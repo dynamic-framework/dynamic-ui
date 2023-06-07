@@ -17,9 +17,11 @@ it('should render badge', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-badge class="d-inline-block">
-      <span class="badge bg-${props.theme}">
-        ${props.text}
+    <m-badge>
+      <span class="badge badge-primary m-badge">
+        <span>
+          Test
+        </span>
       </span>
     </m-badge>
   `);

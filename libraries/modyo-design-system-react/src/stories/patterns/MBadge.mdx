@@ -1,0 +1,34 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import * as MBadgeStories from './MBadge.stories';
+
+# Badge
+
+// TODO
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                  | Type            | Description                   |
+  |-------------------------------------------|-----------------|-------------------------------|
+  | \`--${PREFIX_BS}m-badge-bg\`              | css color unit  | Background color              |
+  | \`--${PREFIX_BS}m-badge-dot-height\`      | css length unit | Dot height                    |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MBadgeStories} />
+
+<ArgTypes of={MBadgeStories} />
+
+<Stories />
+
+
