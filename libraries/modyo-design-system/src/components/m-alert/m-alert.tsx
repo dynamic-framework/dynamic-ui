@@ -65,11 +65,10 @@ export class MAlert {
   }
 
   private generateStyleVariables() {
-    if (this.type === 'light') {
-      return { [`--${PREFIX_BS}m-alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)` };
-    }
-
-    return {};
+    return {
+      ...this.type === 'light' ? { [`--${PREFIX_BS}m-alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)` } : {},
+      [`--${PREFIX_BS}m-alert-component-separator-opacity`]: '0.3',
+    };
   }
 
   render() {
