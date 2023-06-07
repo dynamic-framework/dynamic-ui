@@ -9,7 +9,6 @@ import type { Components } from '@modyo-dynamic/modyo-design-system/components';
 import { defineCustomElement as defineMAlert } from '@modyo-dynamic/modyo-design-system/components/m-alert.js';
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineMHint } from '@modyo-dynamic/modyo-design-system/components/m-hint.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
 import { defineCustomElement as defineMInputCheck } from '@modyo-dynamic/modyo-design-system/components/m-input-check.js';
@@ -20,7 +19,6 @@ import { defineCustomElement as defineMInputPin } from '@modyo-dynamic/modyo-des
 import { defineCustomElement as defineMInputSearch } from '@modyo-dynamic/modyo-design-system/components/m-input-search.js';
 import { defineCustomElement as defineMInputSelect } from '@modyo-dynamic/modyo-design-system/components/m-input-select.js';
 import { defineCustomElement as defineMInputSwitch } from '@modyo-dynamic/modyo-design-system/components/m-input-switch.js';
-import { defineCustomElement as defineMListItem } from '@modyo-dynamic/modyo-design-system/components/m-list-item.js';
 import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
@@ -28,8 +26,6 @@ import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/
 import { defineCustomElement as defineMQuickActionCheck } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
 import { defineCustomElement as defineMQuickActionSwitch } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-switch.js';
-import { defineCustomElement as defineMSegmentControl } from '@modyo-dynamic/modyo-design-system/components/m-segment-control.js';
-import { defineCustomElement as defineMSegmentControlItem } from '@modyo-dynamic/modyo-design-system/components/m-segment-control-item.js';
 @ProxyCmp({
   defineCustomElementFn: defineMAlert,
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type']
@@ -61,14 +57,14 @@ export declare interface MAlert extends Components.MAlert {
 
 @ProxyCmp({
   defineCustomElementFn: defineMBadge,
-  inputs: ['text', 'theme']
+  inputs: ['isDot', 'text', 'theme']
 })
 @Component({
   selector: 'm-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['text', 'theme'],
+  inputs: ['isDot', 'text', 'theme'],
 })
 export class MBadge {
   protected el: HTMLElement;
@@ -109,29 +105,6 @@ export declare interface MButton extends Components.MButton {
    */
   mClick: EventEmitter<CustomEvent<any>>;
 }
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMHint,
-  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconSize', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'text', 'theme']
-})
-@Component({
-  selector: 'm-hint',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconSize', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'text', 'theme'],
-})
-export class MHint {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface MHint extends Components.MHint {}
 
 
 @ProxyCmp({
@@ -460,35 +433,6 @@ export declare interface MInputSwitch extends Components.MInputSwitch {
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMListItem,
-  inputs: ['alternativeValue', 'customActionClass', 'customActionEndIcon', 'customActionEndIconFamilyClass', 'customActionEndIconFamilyPrefix', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isLoading', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant']
-})
-@Component({
-  selector: 'm-list-item',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alternativeValue', 'customActionClass', 'customActionEndIcon', 'customActionEndIconFamilyClass', 'customActionEndIconFamilyPrefix', 'icon', 'iconFamilyClass', 'iconFamilyPrefix', 'image', 'isLoading', 'isPill', 'navegableProps', 'selectableProps', 'subtext', 'text', 'theme', 'themeValue', 'value', 'variant'],
-})
-export class MListItem {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mCustomClick']);
-  }
-}
-
-
-export declare interface MListItem extends Components.MListItem {
-  /**
-   * Emitted when the right custom icon has been clicked.
-   */
-  mCustomClick: EventEmitter<CustomEvent<any>>;
-}
-
-
-@ProxyCmp({
   defineCustomElementFn: defineMModal,
   inputs: ['closeText', 'fullScreenFrom', 'imageHeader', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
 })
@@ -658,14 +602,14 @@ export declare interface MQuickActionSelect extends Components.MQuickActionSelec
 
 @ProxyCmp({
   defineCustomElementFn: defineMQuickActionSwitch,
-  inputs: ['hint', 'isChecked', 'label', 'mId', 'name']
+  inputs: ['hint', 'isChecked', 'isDisabled', 'label', 'mId', 'name']
 })
 @Component({
   selector: 'm-quick-action-switch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'isChecked', 'label', 'mId', 'name'],
+  inputs: ['hint', 'isChecked', 'isDisabled', 'label', 'mId', 'name'],
 })
 export class MQuickActionSwitch {
   protected el: HTMLElement;
@@ -680,58 +624,6 @@ export class MQuickActionSwitch {
 export declare interface MQuickActionSwitch extends Components.MQuickActionSwitch {
   /**
    * Emitted when the select value has changed
-   */
-  mChange: EventEmitter<CustomEvent<string>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMSegmentControl,
-  inputs: ['description']
-})
-@Component({
-  selector: 'm-segment-control',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['description'],
-})
-export class MSegmentControl {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface MSegmentControl extends Components.MSegmentControl {}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMSegmentControlItem,
-  inputs: ['isChecked', 'isDisabled', 'label', 'mId', 'name', 'state', 'value']
-})
-@Component({
-  selector: 'm-segment-control-item',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'isDisabled', 'label', 'mId', 'name', 'state', 'value'],
-})
-export class MSegmentControlItem {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MSegmentControlItem extends Components.MSegmentControlItem {
-  /**
-   * Emitted when the input value has changed
    */
   mChange: EventEmitter<CustomEvent<string>>;
 }

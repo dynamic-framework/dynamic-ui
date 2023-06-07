@@ -6,21 +6,19 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertType } from "./components/m-alert/m-alert-interface";
-import { ComponentSize, InputState, NavegableProps } from "./utils/component-interface";
+import { ComponentSize, InputState } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 import { Options } from "currency.js";
 import { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
-import { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export { AlertType } from "./components/m-alert/m-alert-interface";
-export { ComponentSize, InputState, NavegableProps } from "./utils/component-interface";
+export { ComponentSize, InputState } from "./utils/component-interface";
 export { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 export { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 export { Options } from "currency.js";
 export { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
-export { ListItemVariant, SelectableProps } from "./components/m-list-item/m-list-item-interface";
 export { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export namespace Components {
@@ -52,9 +50,13 @@ export namespace Components {
     }
     interface MBadge {
         /**
+          * Enable dot mode
+         */
+        "isDot": boolean;
+        /**
           * The text of badge
          */
-        "text": string;
+        "text"?: string;
         /**
           * The theme to use.
          */
@@ -121,44 +123,6 @@ export namespace Components {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
-    }
-    interface MHint {
-        /**
-          * Right icon for the hint
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Size for the icons
-         */
-        "iconSize": string;
-        /**
-          * Left icon for the hint
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * Hint text
-         */
-        "text": string;
-        /**
-          * Theme for the hint
-         */
-        "theme"?: string;
     }
     interface MIcon {
         /**
@@ -844,84 +808,6 @@ export namespace Components {
          */
         "name"?: string;
     }
-    interface MListItem {
-        /**
-          * Alternative value
-         */
-        "alternativeValue"?: string | number;
-        /**
-          * Class for button custom action
-         */
-        "customActionClass"?: string;
-        /**
-          * End custom icon
-         */
-        "customActionEndIcon"?: string;
-        /**
-          * Family class for custom action icon
-         */
-        "customActionEndIconFamilyClass"?: string;
-        /**
-          * Family prefix for custom action icon
-         */
-        "customActionEndIconFamilyPrefix"?: string;
-        /**
-          * The icon to display
-         */
-        "icon"?: string;
-        /**
-          * Icon family class
-         */
-        "iconFamilyClass"?: string;
-        /**
-          * Icon family class
-         */
-        "iconFamilyPrefix"?: string;
-        /**
-          * Url to replace the default icon image
-         */
-        "image": string | null;
-        /**
-          * Right custom icon clickable
-         */
-        "isLoading"?: boolean;
-        /**
-          * Has borders rounded
-         */
-        "isPill": boolean;
-        /**
-          * Props for the list item navegable variant
-         */
-        "navegableProps"?: NavegableProps;
-        /**
-          * Props for the list item selectable variant
-         */
-        "selectableProps"?: SelectableProps;
-        /**
-          * Subtext of the list.
-         */
-        "subtext": string;
-        /**
-          * Main text of the list.
-         */
-        "text": string;
-        /**
-          * The theme to use.
-         */
-        "theme"?: string;
-        /**
-          * Theme to apply in the list value
-         */
-        "themeValue"?: string;
-        /**
-          * Value of the list
-         */
-        "value"?: string | number;
-        /**
-          * Variant for text item list or complete item list
-         */
-        "variant"?: ListItemVariant;
-    }
     interface MModal {
         /**
           * Close button text
@@ -1132,6 +1018,10 @@ export namespace Components {
          */
         "isChecked"?: boolean;
         /**
+          * Is disabled
+         */
+        "isDisabled"?: boolean;
+        /**
           * The label text
          */
         "label": string;
@@ -1143,42 +1033,6 @@ export namespace Components {
           * The name of the input
          */
         "name"?: string;
-    }
-    interface MSegmentControl {
-        /**
-          * Aria label to describe the segment control
-         */
-        "description"?: string;
-    }
-    interface MSegmentControlItem {
-        /**
-          * Is checked
-         */
-        "isChecked"?: boolean;
-        /**
-          * Is disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Label of the radio
-         */
-        "label": string;
-        /**
-          * Id of the radio
-         */
-        "mId": string;
-        /**
-          * Name of the radio
-         */
-        "name": string;
-        /**
-          * State of the input
-         */
-        "state"?: InputState;
-        /**
-          * Value of the radio
-         */
-        "value": string;
     }
 }
 export interface MAlertCustomEvent<T> extends CustomEvent<T> {
@@ -1225,10 +1079,6 @@ export interface MInputSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputSwitchElement;
 }
-export interface MListItemCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMListItemElement;
-}
 export interface MModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMModalElement;
@@ -1253,10 +1103,6 @@ export interface MQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionSwitchElement;
 }
-export interface MSegmentControlItemCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMSegmentControlItemElement;
-}
 declare global {
     interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
     }
@@ -1275,12 +1121,6 @@ declare global {
     var HTMLMButtonElement: {
         prototype: HTMLMButtonElement;
         new (): HTMLMButtonElement;
-    };
-    interface HTMLMHintElement extends Components.MHint, HTMLStencilElement {
-    }
-    var HTMLMHintElement: {
-        prototype: HTMLMHintElement;
-        new (): HTMLMHintElement;
     };
     interface HTMLMIconElement extends Components.MIcon, HTMLStencilElement {
     }
@@ -1342,12 +1182,6 @@ declare global {
         prototype: HTMLMInputSwitchElement;
         new (): HTMLMInputSwitchElement;
     };
-    interface HTMLMListItemElement extends Components.MListItem, HTMLStencilElement {
-    }
-    var HTMLMListItemElement: {
-        prototype: HTMLMListItemElement;
-        new (): HTMLMListItemElement;
-    };
     interface HTMLMModalElement extends Components.MModal, HTMLStencilElement {
     }
     var HTMLMModalElement: {
@@ -1390,23 +1224,10 @@ declare global {
         prototype: HTMLMQuickActionSwitchElement;
         new (): HTMLMQuickActionSwitchElement;
     };
-    interface HTMLMSegmentControlElement extends Components.MSegmentControl, HTMLStencilElement {
-    }
-    var HTMLMSegmentControlElement: {
-        prototype: HTMLMSegmentControlElement;
-        new (): HTMLMSegmentControlElement;
-    };
-    interface HTMLMSegmentControlItemElement extends Components.MSegmentControlItem, HTMLStencilElement {
-    }
-    var HTMLMSegmentControlItemElement: {
-        prototype: HTMLMSegmentControlItemElement;
-        new (): HTMLMSegmentControlItemElement;
-    };
     interface HTMLElementTagNameMap {
         "m-alert": HTMLMAlertElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
-        "m-hint": HTMLMHintElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-input-check": HTMLMInputCheckElement;
@@ -1417,7 +1238,6 @@ declare global {
         "m-input-search": HTMLMInputSearchElement;
         "m-input-select": HTMLMInputSelectElement;
         "m-input-switch": HTMLMInputSwitchElement;
-        "m-list-item": HTMLMListItemElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-progress-bar": HTMLMProgressBarElement;
@@ -1425,8 +1245,6 @@ declare global {
         "m-quick-action-check": HTMLMQuickActionCheckElement;
         "m-quick-action-select": HTMLMQuickActionSelectElement;
         "m-quick-action-switch": HTMLMQuickActionSwitchElement;
-        "m-segment-control": HTMLMSegmentControlElement;
-        "m-segment-control-item": HTMLMSegmentControlItemElement;
     }
 }
 declare namespace LocalJSX {
@@ -1461,6 +1279,10 @@ declare namespace LocalJSX {
         "type"?: AlertType;
     }
     interface MBadge {
+        /**
+          * Enable dot mode
+         */
+        "isDot"?: boolean;
         /**
           * The text of badge
          */
@@ -1535,44 +1357,6 @@ declare namespace LocalJSX {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
-    }
-    interface MHint {
-        /**
-          * Right icon for the hint
-         */
-        "iconEnd"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Size for the icons
-         */
-        "iconSize"?: string;
-        /**
-          * Left icon for the hint
-         */
-        "iconStart"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Left icon family class
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * Hint text
-         */
-        "text": string;
-        /**
-          * Theme for the hint
-         */
-        "theme"?: string;
     }
     interface MIcon {
         /**
@@ -2326,88 +2110,6 @@ declare namespace LocalJSX {
          */
         "onMChange"?: (event: MInputSwitchCustomEvent<boolean>) => void;
     }
-    interface MListItem {
-        /**
-          * Alternative value
-         */
-        "alternativeValue"?: string | number;
-        /**
-          * Class for button custom action
-         */
-        "customActionClass"?: string;
-        /**
-          * End custom icon
-         */
-        "customActionEndIcon"?: string;
-        /**
-          * Family class for custom action icon
-         */
-        "customActionEndIconFamilyClass"?: string;
-        /**
-          * Family prefix for custom action icon
-         */
-        "customActionEndIconFamilyPrefix"?: string;
-        /**
-          * The icon to display
-         */
-        "icon"?: string;
-        /**
-          * Icon family class
-         */
-        "iconFamilyClass"?: string;
-        /**
-          * Icon family class
-         */
-        "iconFamilyPrefix"?: string;
-        /**
-          * Url to replace the default icon image
-         */
-        "image"?: string | null;
-        /**
-          * Right custom icon clickable
-         */
-        "isLoading"?: boolean;
-        /**
-          * Has borders rounded
-         */
-        "isPill"?: boolean;
-        /**
-          * Props for the list item navegable variant
-         */
-        "navegableProps"?: NavegableProps;
-        /**
-          * Emitted when the right custom icon has been clicked.
-         */
-        "onMCustomClick"?: (event: MListItemCustomEvent<any>) => void;
-        /**
-          * Props for the list item selectable variant
-         */
-        "selectableProps"?: SelectableProps;
-        /**
-          * Subtext of the list.
-         */
-        "subtext"?: string;
-        /**
-          * Main text of the list.
-         */
-        "text"?: string;
-        /**
-          * The theme to use.
-         */
-        "theme"?: string;
-        /**
-          * Theme to apply in the list value
-         */
-        "themeValue"?: string;
-        /**
-          * Value of the list
-         */
-        "value"?: string | number;
-        /**
-          * Variant for text item list or complete item list
-         */
-        "variant"?: ListItemVariant;
-    }
     interface MModal {
         /**
           * Close button text
@@ -2638,6 +2340,10 @@ declare namespace LocalJSX {
          */
         "isChecked"?: boolean;
         /**
+          * Is disabled
+         */
+        "isDisabled"?: boolean;
+        /**
           * The label text
          */
         "label": string;
@@ -2654,51 +2360,10 @@ declare namespace LocalJSX {
          */
         "onMChange"?: (event: MQuickActionSwitchCustomEvent<string>) => void;
     }
-    interface MSegmentControl {
-        /**
-          * Aria label to describe the segment control
-         */
-        "description"?: string;
-    }
-    interface MSegmentControlItem {
-        /**
-          * Is checked
-         */
-        "isChecked"?: boolean;
-        /**
-          * Is disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Label of the radio
-         */
-        "label": string;
-        /**
-          * Id of the radio
-         */
-        "mId": string;
-        /**
-          * Name of the radio
-         */
-        "name": string;
-        /**
-          * Emitted when the input value has changed
-         */
-        "onMChange"?: (event: MSegmentControlItemCustomEvent<string>) => void;
-        /**
-          * State of the input
-         */
-        "state"?: InputState;
-        /**
-          * Value of the radio
-         */
-        "value": string;
-    }
     interface IntrinsicElements {
         "m-alert": MAlert;
         "m-badge": MBadge;
         "m-button": MButton;
-        "m-hint": MHint;
         "m-icon": MIcon;
         "m-input": MInput;
         "m-input-check": MInputCheck;
@@ -2709,7 +2374,6 @@ declare namespace LocalJSX {
         "m-input-search": MInputSearch;
         "m-input-select": MInputSelect;
         "m-input-switch": MInputSwitch;
-        "m-list-item": MListItem;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
         "m-progress-bar": MProgressBar;
@@ -2717,8 +2381,6 @@ declare namespace LocalJSX {
         "m-quick-action-check": MQuickActionCheck;
         "m-quick-action-select": MQuickActionSelect;
         "m-quick-action-switch": MQuickActionSwitch;
-        "m-segment-control": MSegmentControl;
-        "m-segment-control-item": MSegmentControlItem;
     }
 }
 export { LocalJSX as JSX };
@@ -2728,7 +2390,6 @@ declare module "@stencil/core" {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
-            "m-hint": LocalJSX.MHint & JSXBase.HTMLAttributes<HTMLMHintElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;
@@ -2739,7 +2400,6 @@ declare module "@stencil/core" {
             "m-input-search": LocalJSX.MInputSearch & JSXBase.HTMLAttributes<HTMLMInputSearchElement>;
             "m-input-select": LocalJSX.MInputSelect & JSXBase.HTMLAttributes<HTMLMInputSelectElement>;
             "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
-            "m-list-item": LocalJSX.MListItem & JSXBase.HTMLAttributes<HTMLMListItemElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
@@ -2747,8 +2407,6 @@ declare module "@stencil/core" {
             "m-quick-action-check": LocalJSX.MQuickActionCheck & JSXBase.HTMLAttributes<HTMLMQuickActionCheckElement>;
             "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
             "m-quick-action-switch": LocalJSX.MQuickActionSwitch & JSXBase.HTMLAttributes<HTMLMQuickActionSwitchElement>;
-            "m-segment-control": LocalJSX.MSegmentControl & JSXBase.HTMLAttributes<HTMLMSegmentControlElement>;
-            "m-segment-control-item": LocalJSX.MSegmentControlItem & JSXBase.HTMLAttributes<HTMLMSegmentControlItemElement>;
         }
     }
 }

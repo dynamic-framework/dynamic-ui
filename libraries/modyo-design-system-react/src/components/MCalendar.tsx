@@ -1,7 +1,8 @@
-import React from 'react';
 import DatePicker, { ReactDatePickerProps, registerLocale } from 'react-datepicker';
 import { DateTime } from 'luxon';
-import 'react-datepicker/dist/react-datepicker.css';
+
+import type { FC } from 'react';
+
 import es from 'date-fns/locale/es';
 import { useLiquidContext } from '../contexts';
 
@@ -10,7 +11,7 @@ registerLocale('es', es);
 export declare interface CalendarProps {
   date: string;
   setDate: (date: string | [string | null, string | null] | null) => void;
-  calendarContainer?: React.FC;
+  calendarContainer?: FC;
   inline?: boolean;
   withPortal?: boolean;
   minDate?: string;
@@ -34,7 +35,7 @@ export default function MCalendar({
   setDate,
   date,
   calendarContainer,
-  inline,
+  inline = true,
   withPortal,
   minDate,
   showTimeInput,
