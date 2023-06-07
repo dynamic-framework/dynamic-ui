@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description       | Type      | Default     |
-| -------- | --------- | ----------------- | --------- | ----------- |
-| `isDot`  | `is-dot`  | Enable dot mode   | `boolean` | `false`     |
-| `text`   | `text`    | The text of badge | `string`  | `''`        |
-| `theme`  | `theme`   | The theme to use. | `string`  | `'primary'` |
+| Property | Attribute | Description       | Type                  | Default     |
+| -------- | --------- | ----------------- | --------------------- | ----------- |
+| `isDot`  | `is-dot`  | Enable dot mode   | `boolean`             | `false`     |
+| `text`   | `text`    | The text of badge | `string \| undefined` | `undefined` |
+| `theme`  | `theme`   | The theme to use. | `string`              | `'primary'` |
 
 
 ----------------------------------------------

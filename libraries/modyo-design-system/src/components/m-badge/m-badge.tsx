@@ -15,7 +15,7 @@ export class MBadge implements ComponentInterface {
   /**
    * The text of badge
    */
-  @Prop() text = '';
+  @Prop() text?: string;
 
   /**
    *  Enable dot mode
