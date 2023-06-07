@@ -28,6 +28,10 @@ const config: Meta<typeof MQuickActionSwitch> = {
       control: 'boolean',
       type: 'boolean',
     },
+    isDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
   },
 };
 
@@ -49,5 +53,25 @@ export const Checked: Story = {
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: true,
+  },
+};
+
+export const DefaultDisabled: Story = {
+  args: {
+    mId: 'componentId3',
+    label: 'Program',
+    hint: 'This payment is applied with the periodicity and date that you define',
+    isChecked: false,
+    isDisabled: true,
+  },
+};
+
+export const CheckedDisabled: Story = {
+  args: {
+    mId: 'componentId3',
+    label: 'Program',
+    hint: 'This payment is applied with the periodicity and date that you define',
+    isChecked: true,
+    isDisabled: true,
   },
 };

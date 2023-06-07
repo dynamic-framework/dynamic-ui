@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property             | Attribute    | Description           | Type                   | Default     |
-| -------------------- | ------------ | --------------------- | ---------------------- | ----------- |
-| `hint` _(required)_  | `hint`       | Hint to display       | `string`               | `undefined` |
-| `isChecked`          | `is-checked` | Is checked            | `boolean \| undefined` | `undefined` |
-| `label` _(required)_ | `label`      | The label text        | `string`               | `undefined` |
-| `mId` _(required)_   | `m-id`       | The id of the input   | `string`               | `undefined` |
-| `name`               | `name`       | The name of the input | `string \| undefined`  | `undefined` |
+| Property             | Attribute     | Description           | Type                   | Default     |
+| -------------------- | ------------- | --------------------- | ---------------------- | ----------- |
+| `hint` _(required)_  | `hint`        | Hint to display       | `string`               | `undefined` |
+| `isChecked`          | `is-checked`  | Is checked            | `boolean \| undefined` | `undefined` |
+| `isDisabled`         | `is-disabled` | Is disabled           | `boolean \| undefined` | `undefined` |
+| `label` _(required)_ | `label`       | The label text        | `string`               | `undefined` |
+| `mId` _(required)_   | `m-id`        | The id of the input   | `string`               | `undefined` |
+| `name`               | `name`        | The name of the input | `string \| undefined`  | `undefined` |
 
 
 ## Events

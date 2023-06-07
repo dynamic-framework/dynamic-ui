@@ -34,6 +34,11 @@ export class MQuickActionSwitch implements ComponentInterface {
   @Prop() isChecked?: boolean;
 
   /**
+   * Is disabled
+   */
+  @Prop() isDisabled?: boolean;
+
+  /**
    * Emitted when the select value has changed
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
@@ -53,6 +58,7 @@ export class MQuickActionSwitch implements ComponentInterface {
           <m-input-switch
             mId={this.mId}
             name={this.name}
+            isDisabled={this.isDisabled}
             isChecked={this.isChecked}
             onMChange={this.changeHandler}
           />
