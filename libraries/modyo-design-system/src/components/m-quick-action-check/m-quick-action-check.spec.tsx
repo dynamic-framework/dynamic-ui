@@ -34,7 +34,7 @@ it('should render my component', async () => {
           </span>
         </div>
         <span class="quick-action-check-line3">
-          *** 654
+          $ 7.432.450
         </span>
       </label>
     </m-quick-action-check>

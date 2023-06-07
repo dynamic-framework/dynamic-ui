@@ -76,7 +76,7 @@ export class MQuickActionCheck implements ComponentInterface {
           </span>
         </div>
         <span class="quick-action-check-line3">
-          {this.line2}
+          {this.line3}
         </span>
       </label>
     );
