@@ -19,7 +19,7 @@ const Example = ({ valuesToFormat }: Props) => {
 };
 
 const config: Meta<typeof Example> = {
-  title: 'React/hooks/useFormatCurrency',
+  title: 'Hooks/useFormatCurrency',
   component: Example,
 };
 

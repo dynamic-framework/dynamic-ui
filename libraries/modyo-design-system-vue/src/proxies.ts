@@ -22,7 +22,8 @@ export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undef
 
 export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undefined, [
   'theme',
-  'text'
+  'text',
+  'isDot'
 ]);
 
 
@@ -43,19 +44,6 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'isPill',
   'isLoading',
   'mClick'
-]);
-
-
-export const MHint = /*@__PURE__*/ defineContainer<JSX.MHint>('m-hint', undefined, [
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'text',
-  'theme',
-  'iconSize'
 ]);
 
 
@@ -282,30 +270,6 @@ export const MInputSwitch = /*@__PURE__*/ defineContainer<JSX.MInputSwitch>('m-i
 ]);
 
 
-export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-item', undefined, [
-  'theme',
-  'text',
-  'subtext',
-  'value',
-  'alternativeValue',
-  'isPill',
-  'icon',
-  'iconFamilyClass',
-  'iconFamilyPrefix',
-  'image',
-  'variant',
-  'selectableProps',
-  'themeValue',
-  'customActionEndIcon',
-  'customActionClass',
-  'customActionEndIconFamilyClass',
-  'customActionEndIconFamilyPrefix',
-  'isLoading',
-  'navegableProps',
-  'mCustomClick'
-]);
-
-
 export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
   'name',
   'closeText',
@@ -388,23 +352,7 @@ export const MQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'label',
   'hint',
   'isChecked',
-  'mChange'
-]);
-
-
-export const MSegmentControl = /*@__PURE__*/ defineContainer<JSX.MSegmentControl>('m-segment-control', undefined, [
-  'description'
-]);
-
-
-export const MSegmentControlItem = /*@__PURE__*/ defineContainer<JSX.MSegmentControlItem>('m-segment-control-item', undefined, [
-  'mId',
-  'name',
-  'label',
-  'value',
   'isDisabled',
-  'isChecked',
-  'state',
   'mChange'
 ]);
 

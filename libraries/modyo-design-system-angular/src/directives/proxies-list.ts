@@ -5,7 +5,6 @@ export const DIRECTIVES = [
   d.MAlert,
   d.MBadge,
   d.MButton,
-  d.MHint,
   d.MIcon,
   d.MInput,
   d.MInputCheck,
@@ -16,14 +15,11 @@ export const DIRECTIVES = [
   d.MInputSearch,
   d.MInputSelect,
   d.MInputSwitch,
-  d.MListItem,
   d.MModal,
   d.MOffcanvas,
   d.MProgressBar,
   d.MQuickActionButton,
   d.MQuickActionCheck,
   d.MQuickActionSelect,
-  d.MQuickActionSwitch,
-  d.MSegmentControl,
-  d.MSegmentControlItem
+  d.MQuickActionSwitch
 ];

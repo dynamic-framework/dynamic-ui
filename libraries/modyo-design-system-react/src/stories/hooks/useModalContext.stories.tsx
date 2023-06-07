@@ -34,7 +34,7 @@ const Example = () => (
 );
 
 const config: Meta<typeof Example> = {
-  title: 'React/hooks/useModalContext',
+  title: 'Design System/Alpha/hooks/useModalContext',
   component: Example,
 };
 
