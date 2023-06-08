@@ -3,29 +3,8 @@ import { Meta, StoryObj } from '@storybook/react';
 import { MTabs, MTabContent } from '../../components';
 
 const config: Meta<typeof MTabs> = {
-  title: 'React/Components/Tabs',
+  title: 'Design System/Patterns/Tabs',
   component: MTabs,
-  argTypes: {
-    defaultSelected: {
-      control: {
-        type: 'select',
-      },
-      options: ['tab1', 'tab2', 'empty'],
-    },
-    onChange: { action: 'changed' },
-    variant: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      options: [undefined, 'pills', 'group'],
-    },
-    className: {
-      control: 'text',
-    },
-  },
 };
 
 export default config;

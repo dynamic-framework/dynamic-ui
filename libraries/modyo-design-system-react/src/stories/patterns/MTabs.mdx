@@ -1,0 +1,38 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import * as MTabsStories from './MTabs.stories';
+
+# Tabs
+
+// TODO
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                                  | Type              | Description                        |
+  |-----------------------------------------------------------|-------------------|------------------------------------|
+  | \`--${PREFIX_BS}m-tabs-nav-gap\`                          | css length unit   | Space between nav links            |
+  | \`--${PREFIX_BS}m-tabs-link-border-height\`               | css length unit   | Nav link border height             |
+  | \`--${PREFIX_BS}m-tabs-link-border-border-radius\`        | css length unit   | Nav link border radius             |
+  | \`--${PREFIX_BS}m-tabs-link-border-active-color\`         | css color unit    | Nav link border active color       |
+  | \`--${PREFIX_BS}m-tabs-link-border-active-font-weight\`   | css font weight   | Nav link border active font weight |
+  | \`--${PREFIX_BS}m-tabs-link-border-active-bg\`            | css color unit    | Nav link border active background  |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MTabsStories} />
+
+<ArgTypes of={MTabsStories} />
+
+<Stories />
+
+

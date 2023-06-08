@@ -7,18 +7,19 @@ type Props = PropsWithChildren<{
 }>;
 
 export default function MTabContent({ tab, children }: Props) {
-  const selected = useTabContext();
+  const { isSelected } = useTabContext();
 
-  if (tab !== selected) {
+  if (!isSelected(tab)) {
     return null;
   }
 
   return (
     <div
       className="tab-pane fade show active"
-      id="nav-home"
+      id={`${tab}Pane`}
       role="tabpanel"
       tabIndex={0}
+      aria-labelledby={`${tab}Tab`}
     >
       {children}
     </div>
