@@ -18,7 +18,7 @@ import type { PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   renderComponent: (isOpen: boolean) => JSX.Element;
-  isOpen: true,
+  isOpen: boolean,
   setIsOpen: (isOpen: boolean) => void
 }>;
 

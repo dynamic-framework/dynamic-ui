@@ -20,6 +20,7 @@
     position: relative;
 
     &.active {
+      font-weight: var(--#{$prefix}m-tabs-link-border-active-font-weight);
       color: var(--#{$prefix}m-tabs-link-border-active-color);
 
       &::before {
