@@ -51,6 +51,9 @@
       $active-color: color-contrast($color-700);
       $disable-color: color-contrast($color-100);
 
+      --#{$prefix}btn-bg: var(--#{$prefix}#{$color}-500);
+      --#{$prefix}btn-border-color: var(--#{$prefix}#{$color}-500);
+
       --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$color}-900);
       --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color}-900);
       --#{$prefix}btn-hover-color: #{$hover-color};
@@ -76,6 +79,8 @@
     }
 
     &.btn-outline-#{$color} {
+      --#{$prefix}btn-color: var(--#{$prefix}#{$color}-500);
+
       --#{$prefix}btn-hover-bg: transparent;
       --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color}-900);
       --#{$prefix}btn-hover-color: var(--#{$prefix}#{$color}-900);
@@ -102,7 +107,7 @@
     &.btn-link-#{$color} {
       padding: var(--#{$prefix}m-button-link-padding-y) var(--#{$prefix}m-button-link-padding-x);
 
-      --#{$prefix}btn-color: #{$value};
+      --#{$prefix}btn-color: var(--#{$prefix}#{$color}-500);
 
       --#{$prefix}btn-hover-bg: transparent;
       --#{$prefix}btn-hover-border-color: transparent;

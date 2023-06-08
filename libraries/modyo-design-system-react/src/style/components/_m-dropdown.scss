@@ -1,0 +1,22 @@
+.m-dropdown,
+.dropdown {
+  width: 100%;
+
+  .dropdown-toggle {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    background: transparent;
+    border: 0;
+
+    &::after {
+      content: none;
+    }
+  }
+
+  .dropdown-menu {
+    width: 100%;
+  }
+}

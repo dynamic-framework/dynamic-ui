@@ -1,15 +1,14 @@
-import { CSSProperties, Dispatch, SetStateAction } from 'react';
-import type { PropsWithChildren } from 'react';
+import { useEffect, useState } from 'react';
 
-import { MIcon } from './proxies';
+import type { PropsWithChildren, CSSProperties } from 'react';
 
 type Props = PropsWithChildren<{
-  Component: JSX.Element;
+  renderComponent: (toggle: boolean) => JSX.Element;
   className?: string;
   classNameButton?: string;
   classNameOptions?: string;
   toggle: boolean;
-  setToggle: Dispatch<SetStateAction<boolean>>;
+  setToggle?: (toggle: boolean) => void;
   style: CSSProperties;
 }>;
 
@@ -22,33 +21,35 @@ export default function MDropdown(
     className = '',
     classNameButton = '',
     classNameOptions = '',
-    Component,
+    renderComponent,
   }: Props,
 ) {
+  const [innerToggle, setInnerToggle] = useState<boolean>(toggle);
+
   const handlerToggle = () => {
-    setToggle(!toggle);
+    setInnerToggle((prevInnerToggle) => !prevInnerToggle);
   };
+
+  useEffect(() => {
+    if (setToggle) {
+      setToggle(innerToggle);
+    }
+  }, [innerToggle, setToggle]);
 
   return (
     <div
-      className={`dropdown ${className}`}
+      className={`m-dropdown dropdown ${className}`}
     >
       <button
         style={style}
         type="button"
         onClick={handlerToggle}
-        className={`dropdown-toggle ${toggle ? 'show' : ''} d-flex align-items-center gap-3 ${classNameButton}`}
+        className={`dropdown-toggle ${innerToggle ? 'show' : ''} ${classNameButton}`}
       >
-        {Component}
-        <div className="icon-container me-3">
-          <MIcon
-            size="1rem"
-            icon={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-          />
-        </div>
+        {renderComponent(innerToggle)}
       </button>
       <div
-        className={`dropdown-menu ${toggle ? 'show' : ''} ${classNameOptions}`}
+        className={`dropdown-menu ${innerToggle ? 'show' : ''} ${classNameOptions}`}
       >
         {children}
       </div>
