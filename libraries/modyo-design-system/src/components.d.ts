@@ -124,6 +124,32 @@ export namespace Components {
          */
         "variant"?: ButtonVariant;
     }
+    interface MChip {
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon"?: string;
+        /**
+          * Change the family class to use another icon suite
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Change the family prefix to use another icon suite
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Show close icon
+         */
+        "showClose"?: boolean;
+        /**
+          * The text of badge
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme": string;
+    }
     interface MIcon {
         /**
           * Icon background color in css color unit or var
@@ -1043,6 +1069,10 @@ export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMButtonElement;
 }
+export interface MChipCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMChipElement;
+}
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMInputElement;
@@ -1121,6 +1151,12 @@ declare global {
     var HTMLMButtonElement: {
         prototype: HTMLMButtonElement;
         new (): HTMLMButtonElement;
+    };
+    interface HTMLMChipElement extends Components.MChip, HTMLStencilElement {
+    }
+    var HTMLMChipElement: {
+        prototype: HTMLMChipElement;
+        new (): HTMLMChipElement;
     };
     interface HTMLMIconElement extends Components.MIcon, HTMLStencilElement {
     }
@@ -1228,6 +1264,7 @@ declare global {
         "m-alert": HTMLMAlertElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
+        "m-chip": HTMLMChipElement;
         "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-input-check": HTMLMInputCheckElement;
@@ -1357,6 +1394,36 @@ declare namespace LocalJSX {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
+    }
+    interface MChip {
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon"?: string;
+        /**
+          * Change the family class to use another icon suite
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Change the family prefix to use another icon suite
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Emitted when the close button has been clicked.
+         */
+        "onMClose"?: (event: MChipCustomEvent<any>) => void;
+        /**
+          * Show close icon
+         */
+        "showClose"?: boolean;
+        /**
+          * The text of badge
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme"?: string;
     }
     interface MIcon {
         /**
@@ -2364,6 +2431,7 @@ declare namespace LocalJSX {
         "m-alert": MAlert;
         "m-badge": MBadge;
         "m-button": MButton;
+        "m-chip": MChip;
         "m-icon": MIcon;
         "m-input": MInput;
         "m-input-check": MInputCheck;
@@ -2390,6 +2458,7 @@ declare module "@stencil/core" {
             "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
+            "m-chip": LocalJSX.MChip & JSXBase.HTMLAttributes<HTMLMChipElement>;
             "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;

@@ -47,6 +47,17 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
 ]);
 
 
+export const MChip = /*@__PURE__*/ defineContainer<JSX.MChip>('m-chip', undefined, [
+  'theme',
+  'text',
+  'icon',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'showClose',
+  'mClose'
+]);
+
+
 export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefined, [
   'icon',
   'theme',

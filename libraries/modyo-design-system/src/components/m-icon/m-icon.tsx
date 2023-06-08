@@ -12,27 +12,27 @@ import { PREFIX_BS } from '../../utils';
 export class MIcon {
   /**
    * Name of icon to use (in kebab-case)
-   * */
+   */
   @Prop() icon!: string;
 
   /**
    * Theme of the icon
-   * */
+   */
   @Prop() theme?: string;
 
   /**
    * Size of the icon in css length unit
-   * */
+   */
   @Prop() size?: string = '1.5rem';
 
   /**
    * Enable loading animation
-   * */
+   */
   @Prop() isLoading = false;
 
   /**
    * Loading animation duration, in seconds
-   * */
+   */
   @Prop() loadingDuration = 1.8;
 
   /**
@@ -47,22 +47,22 @@ export class MIcon {
 
   /**
    * Icon color in css color unit or var
-   * */
+   */
   @Prop() color?: string;
 
   /**
    * Icon background color in css color unit or var
-   * */
+   */
   @Prop() backgroundColor?: string;
 
   /**
    * Change the family class to use another icon suite
-   * */
+   */
   @Prop() familyClass: string = state.iconFamilyClass;
 
   /**
    * Change the family prefix to use another icon suite
-   * */
+   */
   @Prop() familyPrefix: string = state.iconFamilyPrefix;
 
   private getColorStyle() {
