@@ -28,6 +28,8 @@ $nav-tabs-link-active-color: var(--#{$prefix}secondary) !default;
 $nav-tabs-link-active-bg: transparent !default;
 $nav-tabs-link-active-border-color: transparent !default;
 // custom
+$nav-nav-padding-x: $spacer-4 !default;
+$nav-nav-padding-y: $spacer-3 !default;
 $nav-nav-gap: $spacer-4 !default;
 // end custom
 

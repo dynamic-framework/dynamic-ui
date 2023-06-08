@@ -6,6 +6,7 @@
   --#{$prefix}m-quick-action-button-border-style: #{$quick-action-button-border-style};
   --#{$prefix}m-quick-action-button-border-width: #{$quick-action-button-border-width};
   --#{$prefix}m-quick-action-button-border-radius: #{$quick-action-button-border-radius};
+  --#{$prefix}m-quick-action-button-box-shadow: #{$quick-action-button-box-shadow};
 
   --#{$prefix}m-quick-action-button-border-top: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
   --#{$prefix}m-quick-action-button-border-right: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
@@ -49,6 +50,7 @@
   border-bottom: var(--#{$prefix}m-quick-action-button-border-right);
   border-left: var(--#{$prefix}m-quick-action-button-border-left);
   border-radius: var(--#{$prefix}m-quick-action-button-border-radius);
+  box-shadow: var(--#{$prefix}m-quick-action-button-hover-box-shadow);
 
   &:hover {
     background: var(--#{$prefix}m-quick-action-button-hover-bg);

@@ -19,6 +19,8 @@ type Props = PropsWithChildren<{
   onChange: (option: TabOption) => void;
   options: Array<TabOption>;
   defaultSelected: string;
+  className?: string;
+  isVertical?: boolean;
 }>;
 
 type TabContextState = {
@@ -33,6 +35,8 @@ export default function MTabs(
     defaultSelected,
     onChange,
     options,
+    className,
+    isVertical,
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -58,7 +62,12 @@ export default function MTabs(
 
   return (
     <TabContext.Provider value={value}>
-      <div className="m-tabs">
+      <div
+        className={classnames({
+          'm-tabs': true,
+          'm-tabs-vertical': isVertical,
+        })}
+      >
         <nav className="nav">
           {options.map((option) => (
             <button
@@ -70,6 +79,7 @@ export default function MTabs(
                   {
                     active: option.tab === selected,
                   },
+                  className,
                 )
               }
               type="button"
