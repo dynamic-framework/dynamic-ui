@@ -13,7 +13,7 @@
   flex-direction: row;
   gap: var(--#{$prefix}m-chip-gap);
   align-items: center;
-  padding: var(--#{$prefix}m-chip-padding-x) var(--#{$prefix}m-chip-padding-y);
+  padding: var(--#{$prefix}m-chip-padding-y) var(--#{$prefix}m-chip-padding-x);
   font-size: var(--#{$prefix}m-chip-font-size);
   font-weight: var(--#{$prefix}m-chip-font-weight);
   line-height: var(--#{$prefix}m-chip-line-height);
