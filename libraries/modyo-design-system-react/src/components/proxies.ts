@@ -8,6 +8,7 @@ import type { JSX } from '@modyo-dynamic/modyo-design-system/components';
 import { defineCustomElement as defineMAlert } from '@modyo-dynamic/modyo-design-system/components/m-alert.js';
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
+import { defineCustomElement as defineMChip } from '@modyo-dynamic/modyo-design-system/components/m-chip.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
 import { defineCustomElement as defineMInputCheck } from '@modyo-dynamic/modyo-design-system/components/m-input-check.js';
@@ -29,6 +30,7 @@ import { defineCustomElement as defineMQuickActionSwitch } from '@modyo-dynamic/
 export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertElement>('m-alert', undefined, undefined, defineMAlert);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
+export const MChip = /*@__PURE__*/createReactComponent<JSX.MChip, HTMLMChipElement>('m-chip', undefined, undefined, defineMChip);
 export const MIcon = /*@__PURE__*/createReactComponent<JSX.MIcon, HTMLMIconElement>('m-icon', undefined, undefined, defineMIcon);
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
 export const MInputCheck = /*@__PURE__*/createReactComponent<JSX.MInputCheck, HTMLMInputCheckElement>('m-input-check', undefined, undefined, defineMInputCheck);

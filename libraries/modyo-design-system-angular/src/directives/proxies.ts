@@ -9,6 +9,7 @@ import type { Components } from '@modyo-dynamic/modyo-design-system/components';
 import { defineCustomElement as defineMAlert } from '@modyo-dynamic/modyo-design-system/components/m-alert.js';
 import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
+import { defineCustomElement as defineMChip } from '@modyo-dynamic/modyo-design-system/components/m-chip.js';
 import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
 import { defineCustomElement as defineMInputCheck } from '@modyo-dynamic/modyo-design-system/components/m-input-check.js';
@@ -104,6 +105,35 @@ export declare interface MButton extends Components.MButton {
    * Emitted when the button has been clicked.
    */
   mClick: EventEmitter<CustomEvent<any>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineMChip,
+  inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'text', 'theme']
+})
+@Component({
+  selector: 'm-chip',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'text', 'theme'],
+})
+export class MChip {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['mClose']);
+  }
+}
+
+
+export declare interface MChip extends Components.MChip {
+  /**
+   * Emitted when the close button has been clicked.
+   */
+  mClose: EventEmitter<CustomEvent<any>>;
 }
 
 

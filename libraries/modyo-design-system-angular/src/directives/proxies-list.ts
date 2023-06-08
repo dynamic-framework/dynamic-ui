@@ -5,6 +5,7 @@ export const DIRECTIVES = [
   d.MAlert,
   d.MBadge,
   d.MButton,
+  d.MChip,
   d.MIcon,
   d.MInput,
   d.MInputCheck,
