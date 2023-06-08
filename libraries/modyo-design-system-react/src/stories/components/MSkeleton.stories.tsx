@@ -3,22 +3,8 @@ import { Meta, StoryObj } from '@storybook/react';
 import { MSkeleton } from '../../components';
 
 const config: Meta<typeof MSkeleton> = {
-  title: 'React/Components/Skeleton',
+  title: 'Design System/Components/Skeleton',
   component: MSkeleton,
-  argTypes: {
-    speed: {
-      control: 'number',
-    },
-    viewBox: {
-      control: 'text',
-    },
-    backgroundColor: {
-      control: 'color',
-    },
-    foregroundColor: {
-      control: 'color',
-    },
-  },
 };
 
 export default config;
