@@ -1,0 +1,34 @@
+.m-tabs {
+  --#{$prefix}m-tabs-nav-gap: #{$nav-nav-gap};
+  --#{$prefix}m-tabs-link-border-height: #{$nav-link-border-height};
+  --#{$prefix}m-tabs-link-border-border-radius: #{$nav-link-border-border-radius};
+  --#{$prefix}m-tabs-link-border-active-color: #{$nav-link-border-active-color};
+  --#{$prefix}m-tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
+  --#{$prefix}m-tabs-link-border-active-bg: #{$nav-link-border-active-bg};
+
+  .nav {
+    gap: var(--#{$prefix}m-tabs-nav-gap);
+  }
+
+  .nav-link {
+    position: relative;
+
+    &.active {
+      color: var(--#{$prefix}m-tabs-link-border-active-color);
+
+      &::before {
+        background: var(--#{$prefix}m-tabs-link-border-active-bg);
+      }
+    }
+  }
+
+  .nav-link::before {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: var(--#{$prefix}m-tabs-link-border-height);
+    content: " ";
+    border-radius: var(--#{$prefix}m-tabs-link-border-border-radius);
+  }
+}
