@@ -206,3 +206,16 @@ export const LargeLeft: Story = {
     size: 'lg',
   },
 };
+
+export const LargeText: Story = {
+  args: {
+    placement: 'left',
+    Component: 'Text',
+    children: 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'lg',
+  },
+};

@@ -140,6 +140,11 @@ export class MInputCurrencyBase implements ComponentInterface {
   @Prop() currencyOptions!: Options;
 
   /**
+   * Currency code
+   */
+  @Prop() currencyCode?: string;
+
+  /**
    * Emitted when the inputs change
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<number>;
@@ -282,7 +287,7 @@ export class MInputCurrencyBase implements ComponentInterface {
           slot="input-start"
           style={this.generateSymbolStyleVariables()}
         >
-          {this.currencyOptions.symbol}
+          {this.currencyCode || this.currencyOptions.symbol}
         </span>
       </m-input>
     );

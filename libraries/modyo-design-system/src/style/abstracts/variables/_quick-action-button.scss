@@ -5,7 +5,7 @@ $quick-action-button-border-color: var(--#{$prefix}secondary-100) !default;
 $quick-action-button-border-style: solid !default;
 $quick-action-button-border-width: 1px !default;
 $quick-action-button-border-radius: var(--#{$prefix}border-radius) !default;
-$quick-action-button-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
+$quick-action-button-box-shadow: none !default;
 
 $quick-action-button-line1-font-size: var(--#{$prefix}ref-fs-6) !default;
 $quick-action-button-line1-font-weight: var(--#{$prefix}ref-fw-bold) !default;

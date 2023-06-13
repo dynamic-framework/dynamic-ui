@@ -11,11 +11,7 @@ import { PREFIX_BS } from '../../utils/component-config';
 
 import { PositionToggleFrom } from './m-offcanvas-interface';
 
-@Component({
-  tag: 'm-offcanvas',
-  styleUrl: 'm-offcanvas.scss',
-  shadow: false,
-})
+@Component({ tag: 'm-offcanvas' })
 export class MOffcanvas {
   @Element() el!: HTMLMOffcanvasElement;
 
@@ -23,11 +19,6 @@ export class MOffcanvas {
    * the name of the offcanvas
    */
   @Prop() name!: string;
-
-  /**
-   * Close button text
-   */
-  @Prop() closeText?: string;
 
   /**
    * Is backdrop static
@@ -47,7 +38,17 @@ export class MOffcanvas {
   /**
    * Position to show offcanvas from
    */
-  @Prop() openFrom: PositionToggleFrom = 'start';
+  @Prop() openFrom?: PositionToggleFrom = 'end';
+
+  /**
+   * Footer action direction
+   */
+  @Prop() footerActionPlacement?: 'start' | 'end' | 'fill' = 'fill';
+
+  /**
+   * Place offcanvas inline
+   */
+  @Prop() isInline?: boolean = false;
 
   /**
    * Emitted when the input value has changed
@@ -84,37 +85,38 @@ export class MOffcanvas {
           [`data-${PREFIX_BS}scroll`]: 'true',
           [`data-${PREFIX_BS}keyboard`]: 'false',
         })}
+        style={{ ...this.isInline && { position: 'absolute' } }}
       >
-
-        {this.header && (
-        <div
-          class="offcanvas-header"
-        >
-          <slot name="header" />
-          {this.showCloseButton && (
-          <button
-            type="button"
-            class={{
-              'btn-close': !this.closeText,
-              'btn-close-text': !!this.closeText,
-            }}
-            aria-label="Close"
-            onClick={this.closeHandler}
+        {(this.header || this.showCloseButton) && (
+          <div
+            class="offcanvas-header"
           >
-            {this.closeText && (this.closeText)}
-          </button>
-          )}
-        </div>
+            {this.showCloseButton && (
+              <button
+                type="button"
+                class="m-offcanvas-close"
+                aria-label="Close"
+                onClick={this.closeHandler}
+              >
+                <m-icon icon="x-lg" />
+              </button>
+            )}
+            {this.header && (
+              <div class="m-offcanvas-slot">
+                <slot name="header" />
+              </div>
+            )}
+          </div>
         )}
         {this.body && (
-        <div class="offcanvas-body">
-          <slot name="body" />
-        </div>
+          <div class="m-offcanvas-slot offcanvas-body">
+            <slot name="body" />
+          </div>
         )}
         {this.footer && (
-        <div class="offcanvas-footer">
-          <slot name="footer" />
-        </div>
+          <div class={`m-offcanvas-slot m-offcanvas-footer m-offcanvas-action-${this.footerActionPlacement}`}>
+            <slot name="footer" />
+          </div>
         )}
       </div>
     );

@@ -14,7 +14,7 @@ export type OffcanvasComponent = FC<OffcanvasProps>;
 export type OffcanvasAvailableList = Record<string, OffcanvasComponent>;
 type Props = PropsWithChildren<{
   portalName: string;
-  availableOffcanvass: OffcanvasAvailableList;
+  availableOffcanvas: OffcanvasAvailableList;
 }>;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type OffcanvasPayload = Record<string, any>;
@@ -79,7 +79,7 @@ export function OffcanvasContextProvider(
   {
     portalName,
     children,
-    availableOffcanvass,
+    availableOffcanvas,
   }: Props,
 ) {
   const [hasPortal, setHasPortal] = useState(false);
@@ -108,7 +108,7 @@ export function OffcanvasContextProvider(
 
   const openOffcanvas = useCallback<OffcanvasContextType['openOffcanvas']>(
     (offcanvasName, { payload, callbacks } = { payload: {} }) => {
-      const Component = availableOffcanvass[offcanvasName];
+      const Component = availableOffcanvas[offcanvasName];
       if (!Component) {
         throw new Error(`there is no component for offcanvas ${offcanvasName}`);
       }
@@ -123,7 +123,7 @@ export function OffcanvasContextProvider(
       }
       push(stackItem);
     },
-    [availableOffcanvass, push],
+    [availableOffcanvas, push],
   );
 
   const closeOffcanvas = useCallback<OffcanvasContextType['closeOffcanvas']>(

@@ -274,14 +274,14 @@ export declare interface MInputCounter extends Components.MInputCounter {
 
 @ProxyCmp({
   defineCustomElementFn: defineMInputCurrencyBase,
-  inputs: ['currencyOptions', 'hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'placeholder', 'value']
+  inputs: ['currencyCode', 'currencyOptions', 'hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'placeholder', 'value']
 })
 @Component({
   selector: 'm-input-currency-base',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['currencyOptions', 'hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'placeholder', 'value'],
+  inputs: ['currencyCode', 'currencyOptions', 'hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'placeholder', 'value'],
 })
 export class MInputCurrencyBase {
   protected el: HTMLElement;
@@ -464,14 +464,14 @@ export declare interface MInputSwitch extends Components.MInputSwitch {
 
 @ProxyCmp({
   defineCustomElementFn: defineMModal,
-  inputs: ['closeText', 'fullScreenFrom', 'imageHeader', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
+  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isInline', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
 })
 @Component({
   selector: 'm-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['closeText', 'fullScreenFrom', 'imageHeader', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
+  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isInline', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
 })
 export class MModal {
   protected el: HTMLElement;
@@ -493,14 +493,14 @@ export declare interface MModal extends Components.MModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineMOffcanvas,
-  inputs: ['closeText', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
+  inputs: ['footerActionPlacement', 'isInline', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
 })
 @Component({
   selector: 'm-offcanvas',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['closeText', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton'],
+  inputs: ['footerActionPlacement', 'isInline', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton'],
 })
 export class MOffcanvas {
   protected el: HTMLElement;

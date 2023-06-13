@@ -1603,9 +1603,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0
-      '@modyo-dynamic/modyo-design-system': ^0.5.4
-      '@modyo-dynamic/modyo-design-system-react': ^0.6.0
-      '@modyo-dynamic/modyo-service-retail': ^0.5.2
+      '@modyo-dynamic/modyo-design-system': workspace:*
+      '@modyo-dynamic/modyo-design-system-react': workspace:*
+      '@modyo-dynamic/modyo-service-retail': workspace:*
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^14.0.0
@@ -1649,9 +1649,9 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
-      '@modyo-dynamic/modyo-design-system-react': 0.6.0_achsymie6xotvipijdvm5xa5ce
-      '@modyo-dynamic/modyo-service-retail': 0.5.3_latdsykkg6l6fo3brmei5xbybq
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
@@ -1704,9 +1704,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0
-      '@modyo-dynamic/modyo-design-system': ^0.5.0
-      '@modyo-dynamic/modyo-design-system-react': ^0.5.1
-      '@modyo-dynamic/modyo-service-retail': ^0.5.2
+      '@modyo-dynamic/modyo-design-system': workspace:*
+      '@modyo-dynamic/modyo-design-system-react': workspace:*
+      '@modyo-dynamic/modyo-service-retail': workspace:*
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -1746,9 +1746,9 @@ importers:
       web-vitals: ^2.1.4
       webpack: ^5.64.4
     dependencies:
-      '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
-      '@modyo-dynamic/modyo-design-system-react': 0.5.4_2wr74pmrtkmtk63bgvtgvkn2oq
-      '@modyo-dynamic/modyo-service-retail': 0.5.3_latdsykkg6l6fo3brmei5xbybq
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -1797,9 +1797,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0
-      '@modyo-dynamic/modyo-design-system': ^0.5.4
-      '@modyo-dynamic/modyo-design-system-react': ^0.6.0
-      '@modyo-dynamic/modyo-service-retail': ^0.5.2
+      '@modyo-dynamic/modyo-design-system': workspace:*
+      '@modyo-dynamic/modyo-design-system-react': workspace:*
+      '@modyo-dynamic/modyo-service-retail': workspace:*
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -1845,9 +1845,9 @@ importers:
       webpack: ^5.64.4
       yup: ^0.32.11
     dependencies:
-      '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
-      '@modyo-dynamic/modyo-design-system-react': 0.6.0_achsymie6xotvipijdvm5xa5ce
-      '@modyo-dynamic/modyo-service-retail': 0.5.3_latdsykkg6l6fo3brmei5xbybq
+      '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -8679,68 +8679,6 @@ packages:
       - debug
     dev: false
 
-  /@modyo-dynamic/modyo-design-system-react/0.5.4_2wr74pmrtkmtk63bgvtgvkn2oq:
-    resolution: {integrity: sha512-q3BTnKi/XRrnF32g/IgBTufQZi6MbPxjKMX4fqgRSpcEJoJeBJP54jyXqWAkAyCgDoO5/t6wNuLsepEtueMnPQ==, tarball: download/@modyo-dynamic/modyo-design-system-react/0.5.4/4fb5b1d1beadb9a84042e4e4972a12af0b1ef688}
-    peerDependencies:
-      '@modyo-dynamic/modyo-design-system': '*'
-      formik: ^2.2.9
-      luxon: ~3.0.3
-      react: ^18.1.0
-      react-dom: ^18.1.0
-      react-i18next: ~11.18.3
-      react-toastify: ~9.0.8
-    dependencies:
-      '@floating-ui/react-dom-interactions': 0.12.0_knhnagtyfncgg2hpin7s37uixq
-      '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
-      axios: 1.1.3
-      classnames: 2.3.2
-      date-fns: 2.29.3
-      formik: 2.2.9_react@18.2.0
-      i18next: 21.9.2
-      luxon: 3.0.4
-      react: 18.2.0
-      react-content-loader: 6.2.0_react@18.2.0
-      react-datepicker: 4.8.0_biqbaboplfbrettd7655fr4n2y
-      react-dom: 18.2.0_react@18.2.0
-      react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-toastify: 9.0.8_biqbaboplfbrettd7655fr4n2y
-    transitivePeerDependencies:
-      - '@types/react'
-      - debug
-    dev: false
-
-  /@modyo-dynamic/modyo-design-system-react/0.6.0_achsymie6xotvipijdvm5xa5ce:
-    resolution: {integrity: sha512-E6al01Bfxbv9kbytxXTZ8iVmfTjHvhR67dnBXuqxtdRgWIp4yvzBlqE2hfffkHxpVT0pZCvFyHRr1jQ53RP/Tw==, tarball: download/@modyo-dynamic/modyo-design-system-react/0.6.0/249972ea4154ddbbd4ed2d19fef15ca9c1c7bc4a}
-    peerDependencies:
-      '@modyo-dynamic/modyo-design-system': '*'
-      formik: ^2.2.9
-      html2canvas: ^1.4.1
-      luxon: ~3.0.3
-      react: ^18.1.0
-      react-dom: ^18.1.0
-      react-i18next: ~11.18.3
-      react-toastify: ~9.0.8
-    dependencies:
-      '@floating-ui/react-dom-interactions': 0.12.0_knhnagtyfncgg2hpin7s37uixq
-      '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
-      axios: 1.1.3
-      classnames: 2.3.2
-      date-fns: 2.29.3
-      formik: 2.2.9_react@18.2.0
-      html2canvas: 1.4.1
-      i18next: 21.9.2
-      luxon: 3.0.4
-      react: 18.2.0
-      react-content-loader: 6.2.0_react@18.2.0
-      react-datepicker: 4.8.0_biqbaboplfbrettd7655fr4n2y
-      react-dom: 18.2.0_react@18.2.0
-      react-i18next: 11.18.6_ulhmqqxshznzmtuvahdi5nasbq
-      react-toastify: 9.0.8_biqbaboplfbrettd7655fr4n2y
-    transitivePeerDependencies:
-      - '@types/react'
-      - debug
-    dev: false
-
   /@modyo-dynamic/modyo-design-system-react/0.7.0_autbu4i677u7462ge6pvdzrdsy:
     resolution: {integrity: sha512-jWz9dIZ2x0mV/eW8knYFqhiauLdsamCHV/qOV9QHk5GNe2w0NV3BFMhZlyXWBwLiVfKliKuPEiZtl/Uu/BwSOQ==, tarball: download/@modyo-dynamic/modyo-design-system-react/0.7.0/0cd4814205b85129807de4e8567db526c76a26a0}
     peerDependencies:
@@ -8805,23 +8743,6 @@ packages:
       - debug
     dev: false
 
-  /@modyo-dynamic/modyo-design-system/0.5.4_lqhwqtalix6x5nr3eea54nphna:
-    resolution: {integrity: sha512-RjZy/IsWudo8ky7s/mxd9R20JaydvJCig3s2FgvGdbDjSdg2MHNz6T64zWf7S5fyBm6ImUprSReoS2+QTacpqA==, tarball: download/@modyo-dynamic/modyo-design-system/0.5.4/1c90a414aa0d787938f2dfd88ea3023d868644b4}
-    peerDependencies:
-      axios: ^1.1.2
-      liquidjs: ^9.39.2
-      luxon: ~3.0.3
-    dependencies:
-      '@popperjs/core': 2.11.6
-      '@stencil/core': 2.19.2
-      '@stencil/store': 2.0.7_@stencil+core@2.19.2
-      axios: 1.1.3
-      bootstrap: 5.3.0_@popperjs+core@2.11.6
-      currency.js: 2.0.4
-      liquidjs: 9.42.1
-      luxon: 3.0.4
-    dev: false
-
   /@modyo-dynamic/modyo-design-system/0.6.0_lqhwqtalix6x5nr3eea54nphna:
     resolution: {integrity: sha512-ms4GB3bWOgyPsrW3l/XerzOAjIzkmliZUgnwaGdZey0hxHeBMusftdKdmgG+lnh+/FCJekvNpepe+6CBZp8C7A==, tarball: download/@modyo-dynamic/modyo-design-system/0.6.0/b3b6ef9c89816b33c75fa32fb4640481c1528245}
     peerDependencies:
@@ -8837,21 +8758,6 @@ packages:
       currency.js: 2.0.4
       liquidjs: 9.42.1
       luxon: 3.0.4
-    dev: false
-
-  /@modyo-dynamic/modyo-service-retail/0.5.3_latdsykkg6l6fo3brmei5xbybq:
-    resolution: {integrity: sha512-0X9/eD6vRi4SinPK8GrL3FZzzLxpMYauWwRkEgBhwkVo+j8kuDdvxkTegkjEVytj1wrYeEvwOvyzD+8SvZOKOQ==, tarball: download/@modyo-dynamic/modyo-service-retail/0.5.3/7682cc211816766c0ca72bdafc86bcdaa0572904}
-    peerDependencies:
-      '@modyo-dynamic/modyo-design-system': '*'
-      luxon: ~3.0.4
-    dependencies:
-      '@modyo-dynamic/modyo-design-system': 0.5.4_lqhwqtalix6x5nr3eea54nphna
-      axios: 1.1.3
-      lodash.uniqueid: 4.0.1
-      luxon: 3.0.4
-      uuid: 9.0.0
-    transitivePeerDependencies:
-      - debug
     dev: false
 
   /@modyo/cli/3.1.27_vnw3lb5zm2t5k6pr3kukr5jsgm:
@@ -19141,7 +19047,7 @@ packages:
       vue-template-compiler:
         optional: true
     dependencies:
-      '@babel/code-frame': 7.21.4
+      '@babel/code-frame': 7.18.6
       '@types/json-schema': 7.0.11
       chalk: 4.1.2
       chokidar: 3.5.3
@@ -19204,7 +19110,7 @@ packages:
       vue-template-compiler:
         optional: true
     dependencies:
-      '@babel/code-frame': 7.21.4
+      '@babel/code-frame': 7.18.6
       '@types/json-schema': 7.0.11
       chalk: 4.1.2
       chokidar: 3.5.3

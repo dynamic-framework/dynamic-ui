@@ -9,6 +9,7 @@
 
 | Property                       | Attribute                  | Description                           | Type                  | Default     |
 | ------------------------------ | -------------------------- | ------------------------------------- | --------------------- | ----------- |
+| `currencyCode`                 | `currency-code`            | Currency code                         | `string \| undefined` | `undefined` |
 | `currencyOptions` _(required)_ | --                         | Options for the m-input-currency-base | `Options`             | `undefined` |
 | `hint`                         | `hint`                     | Hint to display                       | `string \| undefined` | `undefined` |
 | `iconEnd`                      | `icon-end`                 | Icon for the end                      | `string \| undefined` | `undefined` |
