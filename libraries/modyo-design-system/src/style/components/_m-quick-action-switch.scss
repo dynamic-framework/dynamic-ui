@@ -28,6 +28,7 @@
   text-align: left;
   cursor: pointer;
   background-color: var(--#{$prefix}m-quick-action-switch-bg);
+  border: 0;
   border-radius: var(--#{$prefix}m-quick-action-switch-border-radius);
 
   &:hover {

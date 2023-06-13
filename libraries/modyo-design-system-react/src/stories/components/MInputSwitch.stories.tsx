@@ -24,9 +24,16 @@ const config: Meta<typeof MInputSwitch> = {
       control: 'boolean',
       type: 'boolean',
     },
+    isReadonly: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     isDisabled: {
       control: 'boolean',
       type: 'boolean',
+    },
+    onMChange: {
+      action: 'onMChange',
     },
   },
 };
@@ -60,6 +67,15 @@ export const Checked: Story = {
   },
 };
 
+export const Readonly: Story = {
+  args: {
+    mId: 'componentId4',
+    label: 'Label',
+    isChecked: false,
+    isReadonly: true,
+  },
+};
+
 export const Disabled: Story = {
   args: {
     mId: 'componentId4',
@@ -68,7 +84,6 @@ export const Disabled: Story = {
     isDisabled: true,
   },
 };
-
 
 export const CheckedDisabled: Story = {
   args: {

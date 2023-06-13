@@ -278,6 +278,7 @@ export const MInputSwitch = /*@__PURE__*/ defineContainer<JSX.MInputSwitch>('m-i
   'name',
   'isChecked',
   'isDisabled',
+  'isReadonly',
   'mChange'
 ]);
 
@@ -366,6 +367,6 @@ export const MQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'hint',
   'isChecked',
   'isDisabled',
-  'mChange'
+  'mClick'
 ]);
 
