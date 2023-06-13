@@ -9,7 +9,7 @@ export { default as MToastContainer } from './MToastContainer';
 export { default as MPopover } from './MPopover';
 export { default as MCurrencyText } from './MCurrencyText';
 export { default as MFormikInput } from './MFormikInput';
-export { default as MFormikSelect } from './MFormikSelect';
+export { default as MFormikInputSelect } from './MFormikInputSelect';
 export { default as MTooltip } from './MTooltip';
 export { default as MCollapse } from './MCollapse';
 export { default as MInputCurrency } from './MInputCurrency';
