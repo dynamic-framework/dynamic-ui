@@ -10,7 +10,7 @@ addons.setConfig({
   enableShortcuts: true,
   showToolbar: true,
   theme: undefined,
-  selectedPanel: undefined, // ??? addon-controls id ?
+  selectedPanel: undefined,
   initialActive: 'sidebar',
   sidebar: {
     showRoots: false,
