@@ -1,23 +1,22 @@
-import { Host, h, } from '@stencil/core';
+import { h, } from '@stencil/core';
 export class MBadge {
   constructor() {
     this.theme = 'primary';
-    this.text = '';
+    this.text = undefined;
+    this.isDot = false;
+  }
+  // eslint-disable-next-line @stencil/own-methods-must-be-private
+  generateClasses() {
+    return {
+      'm-badge badge': true,
+      'badge-dot': this.isDot,
+      [`badge-${this.theme}`]: !!this.theme,
+    };
   }
   render() {
-    return (h(Host, { class: "d-inline-block" }, h("span", { class: `badge ${this.text === '' ? 'badge-dot' : ''} bg-${this.theme}` }, this.text)));
+    return (h("span", { class: this.generateClasses() }, h("span", null, this.text)));
   }
   static get is() { return "m-badge"; }
-  static get originalStyleUrls() {
-    return {
-      "$": ["m-badge.scss"]
-    };
-  }
-  static get styleUrls() {
-    return {
-      "$": ["m-badge.css"]
-    };
-  }
   static get properties() {
     return {
       "theme": {
@@ -43,19 +42,37 @@ export class MBadge {
         "mutable": false,
         "complexType": {
           "original": "string",
-          "resolved": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "The text of badge"
+        },
+        "attribute": "text",
+        "reflect": false
+      },
+      "isDot": {
+        "type": "boolean",
+        "mutable": false,
+        "complexType": {
+          "original": "boolean",
+          "resolved": "boolean",
           "references": {}
         },
         "required": false,
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "The text of badge"
+          "text": "Enable dot mode"
         },
-        "attribute": "text",
+        "attribute": "is-dot",
         "reflect": false,
-        "defaultValue": "''"
+        "defaultValue": "false"
       }
     };
   }
 }
+//# sourceMappingURL=m-badge.js.map

@@ -1,0 +1,1 @@
+{"file":"app-globals-fc403c56.js","mappings":";;;;AACY,MAAC,aAAa,GAAGA;;;;","names":["appGlobalScript"],"sources":["@stencil/core/internal/app-globals"],"sourcesContent":["import appGlobalScript from '/home/runner/work/modyo-design-system/modyo-design-system/libraries/modyo-design-system/src/global/initialize.ts';\nexport const globalScripts = appGlobalScript;\n"],"version":3}

@@ -2,10 +2,10 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const initialize = require('./initialize-ae7ede02.js');
-const currency_min = require('./currency.min-923ce975.js');
-const store = require('./store-3b82eec8.js');
-require('./index-aa298dc0.js');
+const initialize = require('./initialize-2cd52068.js');
+const store = require('./store-ee5cb3bf.js');
+const componentConfig = require('./component-config-a8f1d95a.js');
+require('./index-7e8a8a10.js');
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const liquidParser = {
@@ -62,7 +62,7 @@ const liquidParser = {
 };
 
 function formatCurrency(amount, options) {
-  return currency_min.currency_min(amount, options).format();
+  return store.currency_min(amount, options).format();
 }
 
 /**
@@ -112,8 +112,13 @@ function createMockedRequest(data) {
 
 exports.initialize = initialize.initialize;
 exports.setIconSettings = store.setIconSettings;
+exports.ICON_FAMILY_CLASS = componentConfig.ICON_FAMILY_CLASS;
+exports.ICON_FAMILY_PREFIX = componentConfig.ICON_FAMILY_PREFIX;
+exports.PREFIX_BS = componentConfig.PREFIX_BS;
 exports.Deferred = Deferred;
 exports.createControlledRequest = createControlledRequest;
 exports.createMockedRequest = createMockedRequest;
 exports.formatCurrency = formatCurrency;
 exports.liquidParser = liquidParser;
+
+//# sourceMappingURL=index.cjs.js.map

@@ -19,3 +19,4 @@ export const initialize = (userConfig = {}) => {
   setPlatformHelpers(platformHelpers);
 };
 export default initialize;
+//# sourceMappingURL=initialize.js.map

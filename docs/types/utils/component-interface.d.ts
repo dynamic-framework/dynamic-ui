@@ -1,15 +1,11 @@
-export declare type ClassMap = {
+export type ClassMap = {
   [className: string]: boolean;
 };
-export declare type IconStateMap = {
-  [state: string]: string;
-};
-export declare type InputState = 'focus' | 'hover' | 'active' | 'disabled';
-export declare type FormControlLayoutDirection = 'horizontal' | 'vertical';
-export declare type NavegableProps = {
+export type InputState = 'focus-visible' | 'hover' | 'active' | 'disabled';
+export type FormControlLayoutDirection = 'horizontal' | 'vertical';
+export type NavegableProps = {
   href: string;
   target?: string;
   'aria-current'?: string;
 };
-export declare const ICON_STATE: IconStateMap;
-export declare const prefixBS = "bs-";
+export type ComponentSize = 'sm' | 'lg';

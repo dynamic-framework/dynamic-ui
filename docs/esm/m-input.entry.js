@@ -1,27 +1,50 @@
-import { r as registerInstance, c as createEvent, h, H as Host } from './index-39190b44.js';
+import { r as registerInstance, c as createEvent, h, d as getElement } from './index-c7f2daf2.js';
+import './store-d1bbe9e1.js';
+import { P as PREFIX_BS } from './component-config-025f7932.js';
 
 const MInput = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.mChange = createEvent(this, "mChange", 7);
     this.mBlur = createEvent(this, "mBlur", 7);
+    this.mFocus = createEvent(this, "mFocus", 7);
+    this.mWheel = createEvent(this, "mWheel", 7);
+    this.mIconStartClick = createEvent(this, "mIconStartClick", 7);
+    this.mIconEndClick = createEvent(this, "mIconEndClick", 7);
     this.changeHandler = (event) => {
       this.mChange.emit(event.target.value);
     };
     this.blurHandler = (event) => {
       this.mBlur.emit(event);
     };
+    this.focusHandler = (event) => {
+      this.mFocus.emit(event);
+    };
+    this.wheelHandler = (event) => {
+      this.mWheel.emit(event);
+    };
+    this.iconStartClickHandler = (event) => {
+      this.mIconStartClick.emit(event);
+    };
+    this.iconEndClickHandler = (event) => {
+      this.mIconEndClick.emit(event);
+    };
     this.mId = undefined;
     this.name = undefined;
     this.label = '';
-    this.labelIcon = 'info-circle';
+    this.labelIcon = undefined;
     this.labelIconFamilyClass = undefined;
     this.labelIconFamilyPrefix = undefined;
     this.placeholder = '';
     this.type = 'text';
     this.value = '';
+    this.mInputMode = undefined;
+    this.pattern = undefined;
     this.isDisabled = false;
+    this.isReadOnly = false;
     this.isLoading = false;
+    this.iconFamilyClass = undefined;
+    this.iconFamilyPrefix = undefined;
     this.iconStart = undefined;
     this.iconStartFamilyClass = undefined;
     this.iconStartFamilyPrefix = undefined;
@@ -29,31 +52,44 @@ const MInput = class {
     this.iconEndFamilyClass = undefined;
     this.iconEndFamilyPrefix = undefined;
     this.hint = undefined;
-    this.hintIconStart = undefined;
-    this.hintIconStartFamilyClass = undefined;
-    this.hintIconStartFamilyPrefix = undefined;
-    this.hintIconEnd = undefined;
-    this.hintIconEndFamilyClass = undefined;
-    this.hintIconEndFamilyPrefix = undefined;
-    this.layoutDirection = 'vertical';
     this.isInvalid = false;
+    this.isValid = false;
   }
-  generateHostClasses() {
-    return {
-      'form-control-layout': true,
-      'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
-    };
+  /**
+   * Set focus to internal input
+   */
+  async focusInput() {
+    var _a;
+    (_a = this.htmlInputElement) === null || _a === void 0 ? void 0 : _a.focus();
+  }
+  /**
+   * Set blur to internal input
+   */
+  async blurInput() {
+    var _a;
+    (_a = this.htmlInputElement) === null || _a === void 0 ? void 0 : _a.blur();
+  }
+  componentWillLoad() {
+    this.inputStart = this.el.querySelector('[slot="input-start"]');
+    this.inputEnd = this.el.querySelector('[slot="input-end"]');
   }
   render() {
-    return (h(Host, { class: this.generateHostClasses() }, this.label && (h("label", { htmlFor: this.mId }, this.label, this.labelIcon && (h("m-icon", { class: "form-control-icon", icon: this.labelIcon, familyClass: this.labelIconFamilyClass, familyPrefix: this.labelIconFamilyPrefix })))), h("div", { class: "form-control-input" }, h("div", { class: {
+    return (h("div", { class: "m-input" }, this.label && (h("label", { htmlFor: this.mId }, this.label, this.labelIcon && (h("m-icon", { class: "m-input-icon", icon: this.labelIcon, size: `var(--${PREFIX_BS}m-input-label-font-size)`, familyClass: this.labelIconFamilyClass, familyPrefix: this.labelIconFamilyPrefix })))), h("div", { class: "m-input-control" }, h("div", { class: {
         'input-group': true,
         'has-validation': this.isInvalid,
         disabled: this.isDisabled || this.isLoading,
-      } }, this.iconStart && (h("span", { class: "input-group-text", id: `${this.mId}-start` }, this.iconStart && (h("m-icon", { class: "form-control-icon", icon: this.iconStart, familyClass: this.iconStartFamilyClass, familyPrefix: this.iconStartFamilyPrefix })))), h("input", { id: this.mId, name: this.name, type: this.type, class: {
+      } }, !!this.inputStart && (h("div", { class: "input-group-text" }, h("slot", { name: "input-start" }))), this.iconStart && (h("button", { type: "button", class: "input-group-text", id: `${this.mId}Start`, onClick: this.iconStartClickHandler, disabled: this.isDisabled || this.isLoading }, this.iconStart && (h("m-icon", { class: "m-input-icon", icon: this.iconStart, familyClass: this.iconStartFamilyClass, familyPrefix: this.iconStartFamilyPrefix })))), h("input", {
+      // eslint-disable-next-line no-return-assign
+      ref: (el) => (this.htmlInputElement = el), id: this.mId, name: this.name, type: this.type, class: {
         'form-control': true,
         'is-invalid': this.isInvalid,
-      }, placeholder: this.placeholder, "aria-label": this.label, disabled: this.isDisabled || this.isLoading, value: this.value, "aria-describedby": `${this.mId}-add`, onInput: this.changeHandler, onBlur: this.blurHandler }), (this.iconEnd && !this.isLoading) && (h("span", { class: "input-group-text", id: `${this.mId}-end` }, this.iconEnd && (h("m-icon", { class: "form-control-icon", icon: this.iconEnd, familyClass: this.iconEndFamilyClass, familyPrefix: this.iconEndFamilyPrefix })))), this.isLoading && (h("div", { class: "input-group-text form-control-icon" }, h("span", { class: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true" }, h("span", { class: "visually-hidden" }, "Loading..."))))), this.hint && (h("small", { class: "hint" }, this.hintIconStart && (h("m-icon", { class: "form-control-icon", icon: this.hintIconStart, familyClass: this.hintIconStartFamilyClass, familyPrefix: this.hintIconStartFamilyPrefix })), this.hint, this.hintIconEnd && (h("m-icon", { class: "form-control-icon", icon: this.hintIconEnd, familyClass: this.hintIconEndFamilyClass, familyPrefix: this.hintIconEndFamilyPrefix })))))));
+        'is-valid': this.isValid,
+      }, placeholder: this.placeholder, "aria-label": this.label, disabled: this.isDisabled || this.isLoading, readOnly: this.isReadOnly, value: this.value, "aria-describedby": `${this.mId}Add ${this.mId}Hint`, inputmode: this.mInputMode, pattern: this.pattern, onInput: this.changeHandler, onBlur: this.blurHandler, onFocus: this.focusHandler, onWheel: this.wheelHandler
+    }), ((this.isInvalid || this.isValid) && !this.iconEnd && !this.isLoading) && (h("span", { class: "input-group-text", id: `${this.mId}State` }, h("m-icon", { class: "m-input-validation-icon", icon: this.isInvalid ? 'exclamation-circle' : 'check', familyClass: this.iconFamilyClass, familyPrefix: this.iconFamilyPrefix }))), (this.iconEnd && !this.isLoading) && (h("button", { type: "button", class: "input-group-text", id: `${this.mId}End`, onClick: this.iconEndClickHandler, disabled: this.isDisabled || this.isLoading }, this.iconEnd && (h("m-icon", { class: "m-input-icon", icon: this.iconEnd, familyClass: this.iconEndFamilyClass, familyPrefix: this.iconEndFamilyPrefix })))), !!this.inputEnd && (h("div", { class: "input-group-text" }, h("slot", { name: "input-end" }))), this.isLoading && (h("div", { class: "input-group-text m-input-icon" }, h("span", { class: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true" }, h("span", { class: "visually-hidden" }, "Loading..."))))), this.hint && (h("div", { class: "form-text", id: `${this.mId}Hint` }, this.hint)))));
   }
+  get el() { return getElement(this); }
 };
 
 export { MInput as m_input };
+
+//# sourceMappingURL=m-input.entry.js.map

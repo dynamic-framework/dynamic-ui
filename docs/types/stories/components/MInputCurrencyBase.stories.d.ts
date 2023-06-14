@@ -1,0 +1,11 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { MInputCurrencyBase } from '../../components';
+declare const config: Meta<typeof MInputCurrencyBase>;
+export default config;
+declare type Story = StoryObj<typeof MInputCurrencyBase>;
+export declare const Default: Story;
+export declare const Value: Story;
+export declare const Error: Story;
+export declare const Confirm: Story;
+export declare const Disabled: Story;
+export declare const WithCurrencyCode: Story;

@@ -1,56 +1,109 @@
 import { h, } from '@stencil/core';
-import { ICON_STATE } from '../../utils/component-interface';
+import { PREFIX_BS } from '../../utils';
+import { ALERT_TYPE_ICON } from './m-alert-interface';
 export class MAlert {
   constructor() {
     this.clickHandler = () => {
       this.mClose.emit();
     };
-    this.theme = 'warning';
+    this.type = 'light';
+    this.icon = undefined;
+    this.iconFamilyClass = undefined;
+    this.iconFamilyPrefix = undefined;
     this.showIcon = false;
     this.showClose = undefined;
   }
   generateClasses() {
     return {
-      [`alert alert-${this.theme}`]: true,
+      [`m-alert alert alert-${this.type}`]: true,
       'fade show': !!this.showClose,
     };
   }
-  iconState() {
-    return ICON_STATE[this.theme] || '';
+  getIcon() {
+    return this.icon || ALERT_TYPE_ICON[this.type] || '';
+  }
+  generateStyleVariables() {
+    return Object.assign(Object.assign({}, this.type === 'light' ? { [`--${PREFIX_BS}m-alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)` } : {}), { [`--${PREFIX_BS}m-alert-component-separator-opacity`]: '0.3' });
   }
   render() {
-    return (h("div", { class: this.generateClasses(), role: "alert" }, this.showIcon && (h("div", { class: "alert-icon small" }, h("m-icon", { icon: this.iconState() }))), h("div", { class: "alert-text flex-grow-1" }, h("slot", null)), this.showClose && (h("div", { class: "separator" })), this.showClose && (h("button", { type: "button", class: "btn-close fs-4", "aria-label": "Close", onClick: this.clickHandler }, h("m-icon", { icon: "x-lg" })))));
+    return (h("div", { class: this.generateClasses(), style: this.generateStyleVariables(), role: "alert" }, (this.showIcon || this.icon) && (h("m-icon", { class: "m-alert-icon", icon: this.getIcon(), familyClass: this.iconFamilyClass, familyPrefix: this.iconFamilyPrefix })), h("div", { class: "m-alert-text" }, h("slot", null)), this.showClose && (h("div", { class: "m-alert-separator" })), this.showClose && (h("button", { type: "button", class: "btn-close", "aria-label": "Close", onClick: this.clickHandler }, h("m-icon", { class: "m-alert-close-icon", icon: "x-lg", familyClass: this.iconFamilyClass, familyPrefix: this.iconFamilyPrefix })))));
   }
   static get is() { return "m-alert"; }
-  static get originalStyleUrls() {
-    return {
-      "$": ["m-alert.scss"]
-    };
-  }
-  static get styleUrls() {
-    return {
-      "$": ["m-alert.css"]
-    };
-  }
   static get properties() {
     return {
-      "theme": {
+      "type": {
         "type": "string",
         "mutable": false,
         "complexType": {
-          "original": "string",
-          "resolved": "string",
-          "references": {}
+          "original": "AlertType",
+          "resolved": "\"danger\" | \"dark\" | \"info\" | \"light\" | \"success\" | \"warning\"",
+          "references": {
+            "AlertType": {
+              "location": "import",
+              "path": "./m-alert-interface"
+            }
+          }
         },
         "required": false,
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "Theme for the alert"
+          "text": "Alert type"
         },
-        "attribute": "theme",
+        "attribute": "type",
         "reflect": false,
-        "defaultValue": "'warning'"
+        "defaultValue": "'light'"
+      },
+      "icon": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Alert icon"
+        },
+        "attribute": "icon",
+        "reflect": false
+      },
+      "iconFamilyClass": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Right icon family class"
+        },
+        "attribute": "icon-family-class",
+        "reflect": false
+      },
+      "iconFamilyPrefix": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Right icon family class"
+        },
+        "attribute": "icon-family-prefix",
+        "reflect": false
       },
       "showIcon": {
         "type": "boolean",
@@ -64,7 +117,7 @@ export class MAlert {
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "Show icon theme in the alert"
+          "text": "Show alert icon"
         },
         "attribute": "show-icon",
         "reflect": false,
@@ -108,3 +161,4 @@ export class MAlert {
       }];
   }
 }
+//# sourceMappingURL=m-alert.js.map

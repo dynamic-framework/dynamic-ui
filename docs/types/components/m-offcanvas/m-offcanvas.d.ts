@@ -7,10 +7,6 @@ export declare class MOffcanvas {
    */
   name: string;
   /**
-   * Close button text
-   */
-  closeText?: string;
-  /**
    * Is backdrop static
    */
   isStatic?: boolean;
@@ -25,7 +21,15 @@ export declare class MOffcanvas {
   /**
    * Position to show offcanvas from
    */
-  openFrom: PositionToggleFrom;
+  openFrom?: PositionToggleFrom;
+  /**
+   * Footer action direction
+   */
+  footerActionPlacement?: 'start' | 'end' | 'fill';
+  /**
+   * Place offcanvas inline
+   */
+  isInline?: boolean;
   /**
    * Emitted when the input value has changed
    */
