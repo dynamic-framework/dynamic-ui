@@ -1,20 +1,20 @@
 import { h, } from '@stencil/core';
-import { PREFIX_BS } from '../../utils';
+import { prefixBS } from '../../utils/component-interface';
 export class MModal {
   constructor() {
     this.closeHandler = () => {
       this.mClose.emit();
     };
     this.name = undefined;
+    this.closeText = undefined;
     this.isStatic = undefined;
     this.isScrollable = undefined;
     this.isCentered = undefined;
     this.isFullScreen = undefined;
-    this.isInline = false;
     this.fullScreenFrom = undefined;
     this.modalSize = undefined;
+    this.imageHeader = undefined;
     this.showCloseButton = undefined;
-    this.footerActionPlacement = 'fill';
   }
   componentWillLoad() {
     this.header = !!this.el.querySelector('[slot="header"]');
@@ -40,12 +40,28 @@ export class MModal {
     };
   }
   render() {
-    return (h("div", Object.assign({ class: "m-modal modal fade show", id: this.name, tabindex: "-1", "aria-labelledby": `${this.name}Label`, "aria-hidden": "false" }, this.isStatic && ({
-      [`data-${PREFIX_BS}backdrop`]: 'static',
-      [`data-${PREFIX_BS}keyboard`]: 'false',
-    }), { style: Object.assign({}, this.isInline && { position: 'unset' }) }), h("div", { class: this.generateModalDialogClasses() }, h("div", { class: "modal-content" }, (this.header || this.showCloseButton) && (h("div", { class: "modal-header" }, this.showCloseButton && (h("button", { type: "button", class: "m-modal-close", "aria-label": "Close", onClick: this.closeHandler }, h("m-icon", { icon: "x-lg" }))), this.header && (h("div", { class: "m-modal-slot" }, h("slot", { name: "header" }))))), this.body && (h("div", { class: "m-modal-slot modal-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: "m-modal-separator" })), this.footer && (h("div", { class: `m-modal-slot modal-footer m-modal-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))))));
+    return (h("div", Object.assign({ class: "modal fade show d-block", id: this.name, tabindex: "-1", "aria-labelledby": `${this.name}Label`, "aria-hidden": "false" }, this.isStatic && ({
+      [`data-${prefixBS}backdrop`]: 'static',
+      [`data-${prefixBS}keyboard`]: 'false',
+    })), h("div", Object.assign({ class: this.generateModalDialogClasses() }, this.imageHeader && ({ style: { [`--${prefixBS}header-bg-image`]: `url("${this.imageHeader}")` } })), h("div", { class: "modal-content" }, this.header && (h("div", { class: {
+        'modal-header': true,
+        'modal-header-bg-image': !!this.imageHeader,
+      } }, h("slot", { name: "header" }), this.showCloseButton && (h("button", { type: "button", class: {
+        'btn-close': !this.closeText,
+        'btn-close-text': !!this.closeText,
+      }, "aria-label": "Close", onClick: this.closeHandler }, this.closeText && (this.closeText))))), this.body && (h("div", { class: "modal-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: "modal-footer" }, h("slot", { name: "footer" })))))));
   }
   static get is() { return "m-modal"; }
+  static get originalStyleUrls() {
+    return {
+      "$": ["m-modal.scss"]
+    };
+  }
+  static get styleUrls() {
+    return {
+      "$": ["m-modal.css"]
+    };
+  }
   static get properties() {
     return {
       "name": {
@@ -63,6 +79,23 @@ export class MModal {
           "text": "the name of the modal"
         },
         "attribute": "name",
+        "reflect": false
+      },
+      "closeText": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Close button text"
+        },
+        "attribute": "close-text",
         "reflect": false
       },
       "isStatic": {
@@ -133,24 +166,6 @@ export class MModal {
         "attribute": "is-full-screen",
         "reflect": false
       },
-      "isInline": {
-        "type": "boolean",
-        "mutable": false,
-        "complexType": {
-          "original": "boolean",
-          "resolved": "boolean | undefined",
-          "references": {}
-        },
-        "required": false,
-        "optional": true,
-        "docs": {
-          "tags": [],
-          "text": "Place modal inline"
-        },
-        "attribute": "is-inline",
-        "reflect": false,
-        "defaultValue": "false"
-      },
       "fullScreenFrom": {
         "type": "string",
         "mutable": false,
@@ -195,6 +210,23 @@ export class MModal {
         "attribute": "modal-size",
         "reflect": false
       },
+      "imageHeader": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Background image header"
+        },
+        "attribute": "image-header",
+        "reflect": false
+      },
       "showCloseButton": {
         "type": "boolean",
         "mutable": false,
@@ -211,24 +243,6 @@ export class MModal {
         },
         "attribute": "show-close-button",
         "reflect": false
-      },
-      "footerActionPlacement": {
-        "type": "string",
-        "mutable": false,
-        "complexType": {
-          "original": "'start' | 'end' | 'fill'",
-          "resolved": "\"end\" | \"fill\" | \"start\" | undefined",
-          "references": {}
-        },
-        "required": false,
-        "optional": true,
-        "docs": {
-          "tags": [],
-          "text": "Footer action direction"
-        },
-        "attribute": "footer-action-placement",
-        "reflect": false,
-        "defaultValue": "'fill'"
       }
     };
   }
@@ -252,4 +266,3 @@ export class MModal {
   }
   static get elementRef() { return "el"; }
 }
-//# sourceMappingURL=m-modal.js.map

@@ -1,52 +1,40 @@
 export declare class MIcon {
   /**
    * Name of icon to use (in kebab-case)
-   */
+   * */
   icon: string;
   /**
    * Theme of the icon
-   */
+   * */
   theme?: string;
   /**
-   * Size of the icon in css length unit
-   */
+   * Font size of the icon
+   * */
   size?: string;
   /**
-   * Enable loading animation
-   */
+   * Is loading
+   * */
   isLoading: boolean;
   /**
-   * Loading animation duration, in seconds
-   */
-  loadingDuration: number;
+   * Loading animation duration
+   * */
+  duration: number;
   /**
-   * Add circle around the icon
-   */
-  hasCircle: boolean;
-  /**
-   * Circle size in css length unit
-   */
-  circleSize?: string;
-  /**
-   * Icon color in css color unit or var
-   */
+   * To set css color
+   * */
   color?: string;
   /**
-   * Icon background color in css color unit or var
-   */
+   * To set background color
+   * */
   backgroundColor?: string;
   /**
-   * Change the family class to use another icon suite
-   */
+   * Family class
+   * */
   familyClass: string;
   /**
-   * Change the family prefix to use another icon suite
-   */
+   * Family prefix
+   * */
   familyPrefix: string;
-  private getColorStyle;
-  private getBackgroundStyle;
-  private getCircleSizeStyle;
-  private generateStyleVariables;
   private generateClasses;
   render(): any;
 }

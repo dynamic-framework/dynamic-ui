@@ -1,0 +1,327 @@
+/*
+$blues: (
+  "blue-100": $blue-100,
+  "blue-200": $blue-200,
+  "blue-300": $blue-300,
+  "blue-400": $blue-400,
+  "blue-500": $blue-500,
+  "blue-600": $blue-600,
+  "blue-700": $blue-700,
+  "blue-800": $blue-800,
+  "blue-900": $blue-900
+) !default;
+*/
+/*
+$indigos: (
+  "indigo-100": $indigo-100,
+  "indigo-200": $indigo-200,
+  "indigo-300": $indigo-300,
+  "indigo-400": $indigo-400,
+  "indigo-500": $indigo-500,
+  "indigo-600": $indigo-600,
+  "indigo-700": $indigo-700,
+  "indigo-800": $indigo-800,
+  "indigo-900": $indigo-900
+) !default;
+*/
+/*
+$purples: (
+  "purple-100": $purple-100,
+  "purple-200": $purple-200,
+  "purple-300": $purple-300,
+  "purple-400": $purple-400,
+  "purple-500": $purple-500,
+  "purple-600": $purple-600,
+  "purple-700": $purple-700,
+  "purple-800": $purple-800,
+  "purple-900": $purple-900
+) !default;
+*/
+/*
+$pinks: (
+  "pink-100": $pink-100,
+  "pink-200": $pink-200,
+  "pink-300": $pink-300,
+  "pink-400": $pink-400,
+  "pink-500": $pink-500,
+  "pink-600": $pink-600,
+  "pink-700": $pink-700,
+  "pink-800": $pink-800,
+  "pink-900": $pink-900
+) !default;
+*/
+/*
+$reds: (
+  "red-100": $red-100,
+  "red-200": $red-200,
+  "red-300": $red-300,
+  "red-400": $red-400,
+  "red-500": $red-500,
+  "red-600": $red-600,
+  "red-700": $red-700,
+  "red-800": $red-800,
+  "red-900": $red-900
+) !default;
+*/
+/*
+$oranges: (
+  "orange-100": $orange-100,
+  "orange-200": $orange-200,
+  "orange-300": $orange-300,
+  "orange-400": $orange-400,
+  "orange-500": $orange-500,
+  "orange-600": $orange-600,
+  "orange-700": $orange-700,
+  "orange-800": $orange-800,
+  "orange-900": $orange-900
+) !default;
+*/
+/*
+$yellows: (
+  "yellow-100": $yellow-100,
+  "yellow-200": $yellow-200,
+  "yellow-300": $yellow-300,
+  "yellow-400": $yellow-400,
+  "yellow-500": $yellow-500,
+  "yellow-600": $yellow-600,
+  "yellow-700": $yellow-700,
+  "yellow-800": $yellow-800,
+  "yellow-900": $yellow-900
+) !default;
+*/
+/*
+$greens: (
+  "green-100": $green-100,
+  "green-200": $green-200,
+  "green-300": $green-300,
+  "green-400": $green-400,
+  "green-500": $green-500,
+  "green-600": $green-600,
+  "green-700": $green-700,
+  "green-800": $green-800,
+  "green-900": $green-900
+) !default;
+*/
+/*
+$teals: (
+  "teal-100": $teal-100,
+  "teal-200": $teal-200,
+  "teal-300": $teal-300,
+  "teal-400": $teal-400,
+  "teal-500": $teal-500,
+  "teal-600": $teal-600,
+  "teal-700": $teal-700,
+  "teal-800": $teal-800,
+  "teal-900": $teal-900
+) !default;
+*/
+/*
+$cyans: (
+  "cyan-100": $cyan-100,
+  "cyan-200": $cyan-200,
+  "cyan-300": $cyan-300,
+  "cyan-400": $cyan-400,
+  "cyan-500": $cyan-500,
+  "cyan-600": $cyan-600,
+  "cyan-700": $cyan-700,
+  "cyan-800": $cyan-800,
+  "cyan-900": $cyan-900
+) !default;
+*/
+/*
+$escaped-characters: (
+  ("<", "%3c"),
+  (">", "%3e"),
+  ("#", "%23"),
+  ("(", "%28"),
+  (")", "%29"),
+) !default;
+*/
+/*
+$position-values: (
+  0: 0,
+  50: 50%,
+  100: 100%
+) !default;
+*/
+/*
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+) !default;
+*/
+/*
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+) !default;
+*/
+/*
+$aspect-ratios: (
+  "1x1": 100%,
+  "4x3": calc(3 / 4 * 100%),
+  "16x9": calc(9 / 16 * 100%),
+  "21x9": calc(9 / 21 * 100%)
+) !default;
+*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap");
+/*
+$table-variants: (
+  "primary": shift-color($primary, $table-bg-scale),
+  "secondary": shift-color($secondary, $table-bg-scale),
+  "success": shift-color($success, $table-bg-scale),
+  "info": shift-color($info, $table-bg-scale),
+  "warning": shift-color($warning, $table-bg-scale),
+  "danger": shift-color($danger, $table-bg-scale),
+  "light": $light,
+  "dark": $dark,
+) !default;
+*/
+/*
+$form-validation-states: (
+  "valid": (
+    "color": $form-feedback-valid-color,
+    "icon": $form-feedback-icon-valid
+  ),
+  "invalid": (
+    "color": $form-feedback-invalid-color,
+    "icon": $form-feedback-icon-invalid
+  )
+) !default;
+*/
+.form-control-layout-counter .form-control {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+.form-control-layout-counter .form-control-spacer {
+  display: block;
+  min-width: 12px;
+  min-height: 12px;
+  background-color: transparent;
+  border-radius: 50rem;
+}
+.form-control-layout-counter .form-control-counter {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* Chrome, Safari, Edge, Opera */
+  /* Firefox */
+}
+.form-control-layout-counter .form-control-counter .form-control-counter-input {
+  display: inline-block;
+  flex-grow: 1;
+  height: 24px;
+  font-weight: 700;
+  text-align: center;
+  border: 0;
+  outline: 0;
+}
+.form-control-layout-counter .form-control-counter .form-control-counter-input :focus,
+.form-control-layout-counter .form-control-counter .form-control-counter-input :focus-visible {
+  outline: 0;
+}
+.form-control-layout-counter .form-control-counter .form-control-counter-input::-webkit-outer-spin-button,
+.form-control-layout-counter .form-control-counter .form-control-counter-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+.form-control-layout-counter .form-control-counter .form-control-counter-input[type=number] {
+  appearance: textfield;
+}
+.form-control-layout-counter .form-control-counter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 1.5rem;
+  color: var(--bs-tertiary);
+  background-color: rgba(var(--bs-tertiary-rgb), 0.1);
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+.form-control-layout-counter.form-control-theme-tertiary .form-control-counter-btn {
+  color: var(--bs-tertiary);
+  background: rgba(var(--bs-tertiary-rgb), 0.1);
+}
+.form-control-layout-counter.form-control-theme-tertiary .input-group {
+  --bs-input-hover-border-color: var(--bs-tertiary-hover);
+  --bs-input-border-color: var(--bs-tertiary);
+}
+
+.form-control-layout-counter.form-control-theme-warning .form-control-counter-btn {
+  color: var(--bs-warning);
+  background: rgba(var(--bs-warning-rgb), 0.1);
+}
+.form-control-layout-counter.form-control-theme-warning .input-group {
+  --bs-input-hover-border-color: var(--bs-warning-hover);
+  --bs-input-border-color: var(--bs-warning);
+}
+
+.form-control-layout-counter.form-control-theme-danger .form-control-counter-btn {
+  color: var(--bs-danger);
+  background: rgba(var(--bs-danger-rgb), 0.1);
+}
+.form-control-layout-counter.form-control-theme-danger .input-group {
+  --bs-input-hover-border-color: var(--bs-danger-hover);
+  --bs-input-border-color: var(--bs-danger);
+}
+
+.form-control-layout-counter.form-control-theme-success .form-control-icon.icon-state {
+  font-size: 1rem;
+  color: var(--bs-success);
+}
+
+.form-control-layout-counter.form-control-theme-info .form-control-icon.icon-state {
+  font-size: 1rem;
+  color: var(--bs-info);
+}
+
+.form-control-layout-counter.form-control-theme-warning .form-control-icon.icon-state {
+  font-size: 1rem;
+  color: var(--bs-warning);
+}
+
+.form-control-layout-counter.form-control-theme-danger .form-control-icon.icon-state {
+  font-size: 1rem;
+  color: var(--bs-danger);
+}
+
+.form-control-layout-counter-disabled .form-control-counter-btn {
+  color: var(--bs-tertiary);
+  background: rgba(var(--bs-tertiary-rgb), 0.1);
+}
+.form-control-layout-counter-disabled .input-group {
+  --bs-input-hover-border-color: var(--bs-gray-light);
+  --bs-input-border-color: var(--bs-gray-light);
+}
+.form-control-layout-counter-disabled .form-control-counter-btn,
+.form-control-layout-counter-disabled .form-control-counter-input {
+  pointer-events: none;
+}
+.form-control-layout-counter-disabled .form-control-counter-input {
+  background-color: transparent;
+}
+.form-control-layout-counter-disabled .form-control {
+  background-color: var(--bs-light);
+}
+.form-control-layout-counter-disabled.form-control-theme-danger .form-control-counter-btn, .form-control-layout-counter-disabled.form-control-theme-warning .form-control-counter-btn, .form-control-layout-counter-disabled.form-control-theme-tertiary .form-control-counter-btn {
+  color: var(--bs-tertiary);
+  background: rgba(var(--bs-tertiary-rgb), 0.1);
+}
+.form-control-layout-counter-disabled.form-control-theme-danger .input-group, .form-control-layout-counter-disabled.form-control-theme-warning .input-group, .form-control-layout-counter-disabled.form-control-theme-tertiary .input-group {
+  --bs-input-hover-border-color: var(--bs-gray-light);
+  --bs-input-border-color: var(--bs-gray-light);
+}

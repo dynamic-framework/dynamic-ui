@@ -1,11 +1,10 @@
-import { h, } from '@stencil/core';
+import { h, Host, } from '@stencil/core';
 export class MButton {
   constructor() {
     this.clickHandler = () => {
       this.mClick.emit();
     };
     this.theme = 'primary';
-    this.size = undefined;
     this.variant = undefined;
     this.state = undefined;
     this.text = '';
@@ -15,7 +14,7 @@ export class MButton {
     this.iconEnd = undefined;
     this.iconEndFamilyClass = undefined;
     this.iconEndFamilyPrefix = undefined;
-    this.value = undefined;
+    this.value = '';
     this.type = 'button';
     this.isPill = false;
     this.isLoading = false;
@@ -24,12 +23,29 @@ export class MButton {
     const variantClass = this.variant
       ? `btn-${this.variant}-${this.theme}`
       : `btn-${this.theme}`;
-    return Object.assign(Object.assign({ btn: true, 'm-button': true, [variantClass]: true, [`btn-${this.size}`]: !!this.size }, (this.state && this.state !== 'disabled') && { [this.state]: true }), { loading: this.isLoading, 'rounded-pill': this.isPill });
+    return Object.assign(Object.assign({ btn: true, [variantClass]: true }, (this.state && this.state !== 'disabled') && { [this.state]: true }), { 'rounded-pill': this.isPill });
+  }
+  generateHostClasses() {
+    return {
+      'btn-box': true,
+      focus: this.state === 'focus',
+      'rounded-pill': this.isPill,
+    };
   }
   render() {
-    return (h("button", Object.assign({ class: this.generateClasses(), type: this.type, disabled: this.state === 'disabled' || this.isLoading }, this.value && { value: this.value }, { onClick: this.clickHandler }), this.iconStart && (h("m-icon", { icon: this.iconStart, familyClass: this.iconStartFamilyClass, familyPrefix: this.iconStartFamilyPrefix })), (this.text && !this.isLoading) && (h("span", null, this.text)), this.isLoading && (h("span", { class: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true" }, h("span", { class: "visually-hidden" }, "Loading..."))), (this.iconEnd) && (h("m-icon", { icon: this.iconEnd, familyClass: this.iconEndFamilyClass, familyPrefix: this.iconEndFamilyPrefix }))));
+    return (h(Host, { class: this.generateHostClasses() }, h("button", Object.assign({ class: this.generateClasses(), type: this.type, disabled: this.state === 'disabled' || this.isLoading }, this.value && { value: this.value }, { onClick: this.clickHandler }), this.iconStart && (h("m-icon", { class: "btn-icon btn-left-icon", icon: this.iconStart, familyClass: this.iconStartFamilyClass, familyPrefix: this.iconStartFamilyPrefix })), this.text && (h("span", null, this.text)), (this.iconEnd && !this.isLoading) && (h("m-icon", { class: "btn-icon btn-right-icon", icon: this.iconEnd, familyClass: this.iconEndFamilyClass, familyPrefix: this.iconEndFamilyPrefix })), this.isLoading && (h("span", { class: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true" }, h("span", { class: "visually-hidden" }, "Loading..."))))));
   }
   static get is() { return "m-button"; }
+  static get originalStyleUrls() {
+    return {
+      "$": ["m-button.scss"]
+    };
+  }
+  static get styleUrls() {
+    return {
+      "$": ["m-button.css"]
+    };
+  }
   static get properties() {
     return {
       "theme": {
@@ -44,40 +60,18 @@ export class MButton {
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "Theme to use."
+          "text": "The theme to use."
         },
         "attribute": "theme",
         "reflect": false,
         "defaultValue": "'primary'"
-      },
-      "size": {
-        "type": "string",
-        "mutable": false,
-        "complexType": {
-          "original": "ComponentSize",
-          "resolved": "\"lg\" | \"sm\" | undefined",
-          "references": {
-            "ComponentSize": {
-              "location": "import",
-              "path": "../../utils/component-interface"
-            }
-          }
-        },
-        "required": false,
-        "optional": true,
-        "docs": {
-          "tags": [],
-          "text": "The size"
-        },
-        "attribute": "size",
-        "reflect": false
       },
       "variant": {
         "type": "string",
         "mutable": false,
         "complexType": {
           "original": "ButtonVariant",
-          "resolved": "\"link\" | \"outline\" | undefined",
+          "resolved": "\"ghost\" | \"outline\" | \"text\" | undefined",
           "references": {
             "ButtonVariant": {
               "location": "import",
@@ -99,7 +93,7 @@ export class MButton {
         "mutable": false,
         "complexType": {
           "original": "InputState",
-          "resolved": "\"active\" | \"disabled\" | \"focus-visible\" | \"hover\" | undefined",
+          "resolved": "\"active\" | \"disabled\" | \"focus\" | \"hover\" | undefined",
           "references": {
             "InputState": {
               "location": "import",
@@ -111,7 +105,7 @@ export class MButton {
         "optional": true,
         "docs": {
           "tags": [],
-          "text": "Change the state of the button"
+          "text": "Flag to set the button as active."
         },
         "attribute": "state",
         "reflect": false
@@ -241,17 +235,18 @@ export class MButton {
         "mutable": false,
         "complexType": {
           "original": "string",
-          "resolved": "string | undefined",
+          "resolved": "string",
           "references": {}
         },
         "required": false,
-        "optional": true,
+        "optional": false,
         "docs": {
           "tags": [],
-          "text": "The html value of the button."
+          "text": "The value of the button."
         },
         "attribute": "value",
-        "reflect": false
+        "reflect": false,
+        "defaultValue": "''"
       },
       "type": {
         "type": "string",
@@ -270,7 +265,7 @@ export class MButton {
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "The html type of the button."
+          "text": "The type of the button."
         },
         "attribute": "type",
         "reflect": false,
@@ -333,4 +328,3 @@ export class MButton {
       }];
   }
 }
-//# sourceMappingURL=m-button.js.map

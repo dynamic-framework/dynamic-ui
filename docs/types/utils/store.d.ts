@@ -1,9 +1,9 @@
-type Store = {
+declare type Store = {
   iconFamilyClass: string;
   iconFamilyPrefix: string;
 };
 declare const state: Store;
-export type IconSettings = {
+export declare type IconSettings = {
   familyClass?: string;
   familyPrefix?: string;
 };

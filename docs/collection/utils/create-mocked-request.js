@@ -18,4 +18,3 @@ export default function createMockedRequest(data) {
     },
   };
 }
-//# sourceMappingURL=create-mocked-request.js.map

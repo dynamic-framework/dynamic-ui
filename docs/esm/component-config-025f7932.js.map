@@ -1,1 +1,0 @@
-{"file":"component-config-025f7932.js","mappings":"MAAa,SAAS,GAAG,MAAM;MAElB,iBAAiB,GAAG,KAAK;MACzB,kBAAkB,GAAG;;;;","names":[],"sources":["./src/utils/component-config.ts"],"sourcesContent":["export const PREFIX_BS = 'bs-';\n\nexport const ICON_FAMILY_CLASS = 'bi';\nexport const ICON_FAMILY_PREFIX = 'bi-';\n"],"version":3}

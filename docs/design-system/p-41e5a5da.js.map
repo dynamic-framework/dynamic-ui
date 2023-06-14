@@ -1,1 +1,0 @@
-{"version":3,"names":["globalScripts","appGlobalScript"],"sources":["@stencil/core/internal/app-globals"],"sourcesContent":["import appGlobalScript from '/home/runner/work/modyo-design-system/modyo-design-system/libraries/modyo-design-system/src/global/initialize.ts';\nexport const globalScripts = appGlobalScript;\n"],"mappings":"oCACY,MAACA,EAAgBC,S"}

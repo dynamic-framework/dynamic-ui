@@ -1,1 +1,0 @@
-{"version":3,"file":"m-button-interface.js","sourceRoot":"","sources":["../../../../src/components/m-button/m-button-interface.ts"],"names":[],"mappings":"","sourcesContent":["export type ButtonVariant = 'outline' | 'link';\nexport type ButtonType = 'submit' | 'reset' | 'button';\n"]}
