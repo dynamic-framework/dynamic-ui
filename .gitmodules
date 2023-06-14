@@ -53,3 +53,6 @@
 [submodule "widgets/modyo-widget-business-mass-payments"]
 	path = widgets/modyo-widget-business-mass-payments
 	url = git@github.com:modyo-dynamic/modyo-widget-business-mass-payments.git
+[submodule "widgets/modyo-widget-business-mass-payments-query"]
+	path = widgets/modyo-widget-business-mass-payments-query
+	url = git@github.com:modyo-dynamic/modyo-widget-business-mass-payments-query.git
