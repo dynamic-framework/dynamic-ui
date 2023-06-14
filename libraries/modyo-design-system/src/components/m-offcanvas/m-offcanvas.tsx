@@ -91,6 +91,11 @@ export class MOffcanvas {
           <div
             class="offcanvas-header"
           >
+            {this.header && (
+              <div class="m-offcanvas-slot">
+                <slot name="header" />
+              </div>
+            )}
             {this.showCloseButton && (
               <button
                 type="button"
@@ -100,11 +105,6 @@ export class MOffcanvas {
               >
                 <m-icon icon="x-lg" />
               </button>
-            )}
-            {this.header && (
-              <div class="m-offcanvas-slot">
-                <slot name="header" />
-              </div>
             )}
           </div>
         )}
