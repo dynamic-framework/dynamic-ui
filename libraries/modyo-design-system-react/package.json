@@ -38,7 +38,8 @@
   "module": "./dist/index.esm.js",
   "types": "./dist/types/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "src/style"
   ],
   "dependencies": {
     "@floating-ui/react": "^0.24.1",

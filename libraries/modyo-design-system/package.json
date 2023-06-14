@@ -28,7 +28,8 @@
   "files": [
     "dist/",
     "components/",
-    "loader/"
+    "loader/",
+    "src/style"
   ],
   "scripts": {
     "build": "pnpm build:stencil && pnpm build:style",
