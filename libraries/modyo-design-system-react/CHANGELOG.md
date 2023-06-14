@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.10.1...@modyo-dynamic/modyo-design-system-react@1.0.0) (2023-06-14)
+
+### ⚠ BREAKING CHANGES
+
+- include src/style in package
+
+### Features
+
+- add cursor pointer to selectable quick actions and adjust story ([1352b6a](https://github.com/modyo-dynamic/modyo-design-system/commit/1352b6a2dc4b7c1babe9b31eb9a3622c5c259745))
+- add flag to hide value of the m-progress-bar ([f2fa7ce](https://github.com/modyo-dynamic/modyo-design-system/commit/f2fa7ce1ff4cce00eacd7059cf71ebff66a7c26b))
+- add iconography ([190d985](https://github.com/modyo-dynamic/modyo-design-system/commit/190d9855a39442cc0195eb16d84b2ece9872a473))
+- add m-quick-action-select story arg types details ([80a7485](https://github.com/modyo-dynamic/modyo-design-system/commit/80a748599ec88291863db1246abcfd449608bd30))
+- adjust contrast colors, m-alert colors and m-progress without value or small value ([d4ec085](https://github.com/modyo-dynamic/modyo-design-system/commit/d4ec0851d7e1e6f66421ffd7cfabc8777fc5d14a))
+- adjust design of m-tabs and m-quick-action-buttom, refactor m-dropdown to m-popover ([382b28a](https://github.com/modyo-dynamic/modyo-design-system/commit/382b28a0885ddee8ad1c8b7f2a9824babff24fc0))
+- adjust m-progress-bar design, m-alert base colors and icons and blue color, change bootstrap to stable version and stylelint config ([9a1f0d8](https://github.com/modyo-dynamic/modyo-design-system/commit/9a1f0d85b44ae4d7c72cac1e0d61aa4f20a99b0b))
+- adjust offcanvas header align ([3dbd6b9](https://github.com/modyo-dynamic/modyo-design-system/commit/3dbd6b96607f74284e5d5bb2ab5710eb1c1f3917))
+- adjust properties of m-icon and docs ([d1f30e1](https://github.com/modyo-dynamic/modyo-design-system/commit/d1f30e1c0df386501c41a9d108a6317f36eb6e70))
+- base m-button homologation ([265c8bb](https://github.com/modyo-dynamic/modyo-design-system/commit/265c8bbe2cbd871c4f896d3245fd51b9f667f49e))
+- colors, spacing and typography homologation ([4204bd3](https://github.com/modyo-dynamic/modyo-design-system/commit/4204bd3caf0441dbf8b7cfb84e01a7f2069358ee))
+- m-alert homologation ([d1d5cf8](https://github.com/modyo-dynamic/modyo-design-system/commit/d1d5cf811867d560fef2d42e29b8ba3b73e24ba8))
+- m-alert homologation adjust ([3de7681](https://github.com/modyo-dynamic/modyo-design-system/commit/3de76813937c4f2c2346355ae02baa11327ad75c))
+- m-alert support to custom icon ([a17bc37](https://github.com/modyo-dynamic/modyo-design-system/commit/a17bc37d34f7faed1279239a138b5b602380337a))
+- m-badge homologation ([076430b](https://github.com/modyo-dynamic/modyo-design-system/commit/076430bef50d38a7994c5aa060e13beaceeb8968))
+- m-border homologation ([c7b4742](https://github.com/modyo-dynamic/modyo-design-system/commit/c7b47429402f3201f03068625e9dae602342bbfa))
+- m-button homologation ([6b73859](https://github.com/modyo-dynamic/modyo-design-system/commit/6b73859a2423df94cda04a9f6836b96deb01e76b))
+- m-button m-quick-action-button and m-quick-action-switch adjust ([46d274f](https://github.com/modyo-dynamic/modyo-design-system/commit/46d274f0f6a8abdeb05b02c1d1ab03bdbd115fdb))
+- m-calendar style in react-package and m-collapse-icon-text homologation ([273b037](https://github.com/modyo-dynamic/modyo-design-system/commit/273b0378602f24450884b071dbbd519a8c5f729d))
+- m-chip component ([47341c9](https://github.com/modyo-dynamic/modyo-design-system/commit/47341c963f9a83053fe23985303afc41fe549031))
+- m-counter homologation and adjust css variables of m-input ([fecff94](https://github.com/modyo-dynamic/modyo-design-system/commit/fecff94e55630d22d5e66d6e08d4a22ffabebef9))
+- m-currency homologation w/o display currency information ([4ee36ac](https://github.com/modyo-dynamic/modyo-design-system/commit/4ee36ac046c69d291aa733851933b4a8278e2c1c))
+- m-dropdown homologation ([81ac351](https://github.com/modyo-dynamic/modyo-design-system/commit/81ac35155bf476dab699b93f10912a1ad96539b5))
+- m-formik-input and m-formik-input-select homologation ([e05f082](https://github.com/modyo-dynamic/modyo-design-system/commit/e05f0828b93c8dd00c911fd3691a26a274ad9216))
+- m-icon homologation ([eb3f740](https://github.com/modyo-dynamic/modyo-design-system/commit/eb3f7408eb275fabd169bb7f1c6c9000f9f445d5))
+- m-input homologation and m-input-password and m-input-search ([3f05f1c](https://github.com/modyo-dynamic/modyo-design-system/commit/3f05f1ccdb922d7f7697f075717031c96a65fb92))
+- m-input-check homologation ([013d897](https://github.com/modyo-dynamic/modyo-design-system/commit/013d89787218b09e2e5bf9bf3a2b4b7de0ce8da0))
+- m-input-pin homologation ([b050768](https://github.com/modyo-dynamic/modyo-design-system/commit/b0507686ddca9e1ac3948f876808b660367114bd))
+- m-input-switch homologation ([ff178c4](https://github.com/modyo-dynamic/modyo-design-system/commit/ff178c49858655c924f3f0aa77dbaa40a10322a1))
+- m-offcanvas and m-modal homologation ([ed4a7f0](https://github.com/modyo-dynamic/modyo-design-system/commit/ed4a7f0f0a45947cde3bdabdb32d6da24be09969))
+- m-progress-bar homologation ([0c653ba](https://github.com/modyo-dynamic/modyo-design-system/commit/0c653bab1893893fb9678cff8ffc40e6a4875c13))
+- m-quick-action box shadow, feat: remove default icons ([e6a0030](https://github.com/modyo-dynamic/modyo-design-system/commit/e6a0030034e6991a34f79e9c24729301cc1f4039))
+- m-quick-action homologation ([2c45550](https://github.com/modyo-dynamic/modyo-design-system/commit/2c455503dd25709c889e40fdb1acfd9897ea5f47))
+- m-quick-action-check homologation ([4314716](https://github.com/modyo-dynamic/modyo-design-system/commit/43147161fe98cc7aee04d3be20b28eb0b4f36af1))
+- m-quick-action-select homologation and adjust story of m-quick-action-button ([326c65b](https://github.com/modyo-dynamic/modyo-design-system/commit/326c65b4dd278b16bfc1eae87e3a55849643e50e))
+- m-quick-action-switch refactor ([559c22a](https://github.com/modyo-dynamic/modyo-design-system/commit/559c22a8ba085cbefdae2c819c1ce227c681b2b4))
+- m-quik-action-switch homologation and adjust other quick-actions and m-input-switch details ([9b7592f](https://github.com/modyo-dynamic/modyo-design-system/commit/9b7592f3bfc79c43b6acb4297cb284acacc29cb3))
+- m-skeleton homologation ([bf717d7](https://github.com/modyo-dynamic/modyo-design-system/commit/bf717d79ca47a6951cc3cce14461ef0c22481bb3))
+- m-tabs homologation ([8426751](https://github.com/modyo-dynamic/modyo-design-system/commit/8426751f8fcf40428e1e8be4cda1d2d42ee55691))
+- m-tooltip homologation and add some reference css variables ([c9ab3e8](https://github.com/modyo-dynamic/modyo-design-system/commit/c9ab3e882df0fe5b07fa0e8bac70ad9085880798))
+- remove m-host from m-icon ([e6c277d](https://github.com/modyo-dynamic/modyo-design-system/commit/e6c277d11a9bf699e9009b104ae92bfdc0e406e7))
+- remove stencil style generation and add some components homologation ([73ba759](https://github.com/modyo-dynamic/modyo-design-system/commit/73ba75991b9f634dbfe843d3aa4d826c3e8ff635))
+- separate documentation of m-input ([0d8bd9e](https://github.com/modyo-dynamic/modyo-design-system/commit/0d8bd9e6249b98b1710cdf4332563a9b879448c9))
+
+### Bug Fixes
+
+- adjust m-icon tests ([893fd42](https://github.com/modyo-dynamic/modyo-design-system/commit/893fd42a3e90a60c715d5f67b695faf7c9042e08))
+- m-tab active font-weight and m-popover isOpen type ([cdbb5ad](https://github.com/modyo-dynamic/modyo-design-system/commit/cdbb5add2e2cee1071c5c8e1b8a630083b0f2105))
+- react import of variables and adjust m-collapse vars ([e31cad7](https://github.com/modyo-dynamic/modyo-design-system/commit/e31cad7e3d5c99c6bfbaf271b12e54eb89acedba))
+- remove workspace and .m-icon-host ([99103fd](https://github.com/modyo-dynamic/modyo-design-system/commit/99103fdadf973620223833b8361157c324ab4284))
+- tests ([5046b55](https://github.com/modyo-dynamic/modyo-design-system/commit/5046b55545c8a8cbe0203d08fa5bb5e055d22265))
+
+### Miscellaneous Chores
+
+- include src/style in package ([7801b07](https://github.com/modyo-dynamic/modyo-design-system/commit/7801b079058f44a7315651f9f372a8e6c5fa8354))
+
 ## [0.10.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.10.0...@modyo-dynamic/modyo-design-system-react@0.10.1) (2023-05-17)
 
 ### Bug Fixes
