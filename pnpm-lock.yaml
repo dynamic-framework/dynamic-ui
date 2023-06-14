@@ -1514,9 +1514,9 @@ importers:
       '@babel/plugin-syntax-flow': ^7.14.5
       '@babel/plugin-transform-react-jsx': ^7.14.9
       '@craco/craco': ^7.0.0
-      '@modyo-dynamic/modyo-design-system': ^0.7.2
-      '@modyo-dynamic/modyo-design-system-react': ^0.8.2
-      '@modyo-dynamic/modyo-service-retail': ^0.6.0
+      '@modyo-dynamic/modyo-design-system': workspace:*
+      '@modyo-dynamic/modyo-design-system-react': workspace:*
+      '@modyo-dynamic/modyo-service-retail': workspace:*
       '@reduxjs/toolkit': ^1.8.4
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.3.0
@@ -1529,6 +1529,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.13.0
       '@typescript-eslint/parser': ^5.0.0
       axios: ^1.1.2
+      classnames: ^2.3.2
       eslint: 8.22.0
       eslint-config-airbnb: 19.0.4
       eslint-config-airbnb-typescript: ^17.0.0
@@ -1555,13 +1556,14 @@ importers:
       webpack: ^5.64.4
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyo-dynamic/modyo-design-system-react': 0.8.2_kaepd4q6w3nvhjgiopybe4jnbu
+      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
       '@modyo-dynamic/modyo-service-retail': link:../../packages/modyo-service-retail
       '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 13.5.0_@testing-library+dom@9.0.1
       axios: 1.1.3
+      classnames: 2.3.2
       i18next: 21.9.2
       liquidjs: 9.42.1
       react: 18.2.0
@@ -1917,7 +1919,7 @@ importers:
       webpack: ^5.64.4
     dependencies:
       '@modyo-dynamic/modyo-design-system': link:../../libraries/modyo-design-system
-      '@modyo-dynamic/modyo-design-system-react': link:../../libraries/modyo-design-system-react
+      '@modyo-dynamic/modyo-design-system-react': 0.10.1_kaepd4q6w3nvhjgiopybe4jnbu
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 13.5.0_@testing-library+dom@9.0.1
