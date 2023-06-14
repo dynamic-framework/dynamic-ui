@@ -11,7 +11,7 @@ $dropdown-font-size: $font-size-base !default;
 $dropdown-color: var(--#{$prefix}body-color) !default;
 $dropdown-bg: var(--#{$prefix}body-bg) !default;
 $dropdown-border-color: var(--#{$prefix}border-color-translucent) !default;
-$dropdown-border-radius: none !default;
+$dropdown-border-radius: 0 !default;
 $dropdown-border-width: 0 !default;
 $dropdown-inner-border-radius: calc(#{$dropdown-border-radius} - #{$dropdown-border-width}) !default;
 $dropdown-divider-bg: $dropdown-border-color !default;
