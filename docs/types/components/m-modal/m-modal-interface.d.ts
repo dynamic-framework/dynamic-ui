@@ -1,2 +1,2 @@
-export type ModalSize = 'sm' | 'lg' | 'xl';
-export type FullScreenFrom = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+export declare type ModalSize = 'sm' | 'lg' | 'xl';
+export declare type FullScreenFrom = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';

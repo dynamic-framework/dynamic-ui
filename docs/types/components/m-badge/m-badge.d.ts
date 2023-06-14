@@ -7,15 +7,6 @@ export declare class MBadge implements ComponentInterface {
   /**
    * The text of badge
    */
-  text?: string;
-  /**
-   *  Enable dot mode
-   */
-  isDot: boolean;
-  generateClasses(): {
-    [x: string]: boolean;
-    'm-badge badge': boolean;
-    'badge-dot': boolean;
-  };
+  text: string;
   render(): any;
 }

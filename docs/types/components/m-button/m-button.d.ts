@@ -1,21 +1,17 @@
 import type { ComponentInterface, EventEmitter } from '../../stencil-public-runtime';
-import type { ComponentSize, InputState } from '../../utils/component-interface';
+import type { InputState } from '../../utils/component-interface';
 import type { ButtonType, ButtonVariant } from './m-button-interface';
 export declare class MButton implements ComponentInterface {
   /**
-   * Theme to use.
+   * The theme to use.
    */
   theme: string;
-  /**
-   * The size
-   */
-  size?: ComponentSize;
   /**
    * The variant to use.
    */
   variant?: ButtonVariant;
   /**
-   * Change the state of the button
+   * Flag to set the button as active.
    */
   state?: InputState;
   /**
@@ -47,11 +43,11 @@ export declare class MButton implements ComponentInterface {
    */
   iconEndFamilyPrefix?: string;
   /**
-   * The html value of the button.
+   * The value of the button.
    */
-  value?: string;
+  value: string;
   /**
-   * The html type of the button.
+   * The type of the button.
    */
   type: ButtonType;
   /**
@@ -68,5 +64,6 @@ export declare class MButton implements ComponentInterface {
   mClick: EventEmitter;
   private clickHandler;
   private generateClasses;
+  private generateHostClasses;
   render(): any;
 }

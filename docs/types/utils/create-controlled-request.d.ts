@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-export type ControlledRequest<ResponseData, RequestData = any> = {
+export declare type ControlledRequest<ResponseData, RequestData = any> = {
   perform: (config?: {
     data?: RequestData;
     params?: any;

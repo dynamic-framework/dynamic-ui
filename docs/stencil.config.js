@@ -1,6 +1,11 @@
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
+import { sass } from '@stencil/sass';
+import { postcss } from '@stencil/postcss';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import autoprefixer from 'autoprefixer';
 const componentCorePackage = '@modyo-dynamic/modyo-design-system';
 export const config = {
   namespace: 'design-system',
@@ -44,5 +49,13 @@ export const config = {
     { type: 'docs-readme' },
   ],
   globalScript: 'src/global/initialize.ts',
+  globalStyle: 'src/style/global-style.scss',
+  plugins: [
+    postcss({ plugins: [autoprefixer()] }),
+    sass({
+      injectGlobalPaths: [
+        'src/style/global-path.scss',
+      ],
+    }),
+  ],
 };
-//# sourceMappingURL=stencil.config.js.map

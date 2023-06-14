@@ -1,24 +1,11 @@
 import { EventEmitter } from '../../stencil-public-runtime';
-import type { AlertType } from './m-alert-interface';
 export declare class MAlert {
   /**
-   * Alert type
+   * Theme for the alert
    */
-  type: AlertType;
+  theme: string;
   /**
-   * Alert icon
-   */
-  icon?: string;
-  /**
-   * Right icon family class
-   */
-  iconFamilyClass?: string;
-  /**
-   * Right icon family class
-   */
-  iconFamilyPrefix?: string;
-  /**
-   * Show alert icon
+   * Show icon theme in the alert
    */
   showIcon: boolean;
   /**
@@ -31,7 +18,6 @@ export declare class MAlert {
   mClose: EventEmitter;
   private clickHandler;
   private generateClasses;
-  private getIcon;
-  private generateStyleVariables;
+  private iconState;
   render(): any;
 }
