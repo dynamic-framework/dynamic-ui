@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@1.0.0...@modyo-dynamic/modyo-design-system@1.0.1) (2023-06-14)
+
+### Bug Fixes
+
+- lexical error none - 0 caused by -border-radius: none ([c381c1a](https://github.com/modyo-dynamic/modyo-design-system/commit/c381c1a276eb1cf43cb02b2168b999c1256860a7))
+
 ## [1.0.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.4...@modyo-dynamic/modyo-design-system@1.0.0) (2023-06-14)
 
 ### ⚠ BREAKING CHANGES
