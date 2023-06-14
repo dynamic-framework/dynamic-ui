@@ -10,26 +10,26 @@ import { defineCustomElements } from '@modyo-dynamic/modyo-design-system/loader'
 defineCustomElements();
 
 export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
-  'theme',
+  'type',
+  'icon',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
   'showIcon',
   'showClose',
   'mClose'
 ]);
 
 
-export const MApp = /*@__PURE__*/ defineContainer<JSX.MApp>('m-app', undefined, [
-  'iconSettings'
-]);
-
-
 export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undefined, [
   'theme',
-  'text'
+  'text',
+  'isDot'
 ]);
 
 
 export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', undefined, [
   'theme',
+  'size',
   'variant',
   'state',
   'text',
@@ -47,140 +47,14 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
 ]);
 
 
-export const MCounter = /*@__PURE__*/ defineContainer<JSX.MCounter>('m-counter', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
+export const MChip = /*@__PURE__*/ defineContainer<JSX.MChip>('m-chip', undefined, [
   'theme',
-  'minValue',
-  'maxValue',
-  'value',
-  'variant',
-  'layoutDirection',
-  'isDisabled',
-  'isLoading',
-  'mInput',
-  'mClick'
-]);
-
-
-export const MCoupon = /*@__PURE__*/ defineContainer<JSX.MCoupon>('m-coupon', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconMiddle',
-  'iconMiddleFamilyClass',
-  'iconMiddleFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'hasSelect',
-  'isLoading',
-  'placeholder',
-  'type',
-  'buttonText',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'theme',
-  'layoutDirection',
-  'mClick'
-]);
-
-
-export const MCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MCurrencyBase>('m-currency-base', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconMiddle',
-  'iconMiddleFamilyClass',
-  'iconMiddleFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'selectOptions',
-  'valueExtractor',
-  'labelExtractor',
-  'placeholder',
-  'value',
-  'minValue',
-  'maxValue',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'theme',
-  'variant',
-  'currencyOptions',
-  'layoutDirection',
-  'isDisabled',
-  'isLoading',
-  'mChange'
-]);
-
-
-export const MFormCheck = /*@__PURE__*/ defineContainer<JSX.MFormCheck>('m-form-check', undefined, [
-  'type',
-  'name',
-  'label',
-  'isChecked',
-  'mId',
-  'isDisabled',
-  'state',
-  'isIndeterminate',
-  'value',
-  'isButton',
-  'mChange'
-]);
-
-
-export const MFormSwitch = /*@__PURE__*/ defineContainer<JSX.MFormSwitch>('m-form-switch', undefined, [
-  'label',
-  'labelOn',
-  'labelOff',
-  'mId',
-  'isChecked',
-  'isDisabled',
-  'mChange'
-]);
-
-
-export const MHint = /*@__PURE__*/ defineContainer<JSX.MHint>('m-hint', undefined, [
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
   'text',
-  'theme',
-  'iconSize'
+  'icon',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'showClose',
+  'mClose'
 ]);
 
 
@@ -189,7 +63,9 @@ export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefine
   'theme',
   'size',
   'isLoading',
-  'duration',
+  'loadingDuration',
+  'hasCircle',
+  'circleSize',
   'color',
   'backgroundColor',
   'familyClass',
@@ -207,8 +83,13 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'placeholder',
   'type',
   'value',
+  'mInputMode',
+  'pattern',
   'isDisabled',
+  'isReadOnly',
   'isLoading',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
   'iconStart',
   'iconStartFamilyClass',
   'iconStartFamilyPrefix',
@@ -216,97 +97,216 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'iconEndFamilyClass',
   'iconEndFamilyPrefix',
   'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'layoutDirection',
   'isInvalid',
+  'isValid',
   'mChange',
-  'mBlur'
+  'mBlur',
+  'mFocus',
+  'mWheel',
+  'mIconStartClick',
+  'mIconEndClick'
 ]);
 
 
-export const MListItem = /*@__PURE__*/ defineContainer<JSX.MListItem>('m-list-item', undefined, [
-  'theme',
-  'text',
-  'subtext',
+export const MInputCheck = /*@__PURE__*/ defineContainer<JSX.MInputCheck>('m-input-check', undefined, [
+  'type',
+  'name',
+  'label',
+  'isChecked',
+  'mId',
+  'isDisabled',
+  'isIndeterminate',
   'value',
-  'alternativeValue',
-  'isPill',
-  'icon',
+  'mChange'
+]);
+
+
+export const MInputCounter = /*@__PURE__*/ defineContainer<JSX.MInputCounter>('m-input-counter', undefined, [
+  'mId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
   'iconFamilyClass',
   'iconFamilyPrefix',
-  'image',
-  'variant',
-  'selectableProps',
-  'themeValue',
-  'customActionEndIcon',
-  'customActionClass',
-  'customActionEndIconFamilyClass',
-  'customActionEndIconFamilyPrefix',
+  'iconStart',
+  'iconStartFamilyClass',
+  'iconStartFamilyPrefix',
+  'iconEnd',
+  'iconEndFamilyClass',
+  'iconEndFamilyPrefix',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'minValue',
+  'maxValue',
+  'mChange',
+  'mClick'
+]);
+
+
+export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurrencyBase>('m-input-currency-base', undefined, [
+  'mId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'value',
+  'isDisabled',
+  'isReadOnly',
   'isLoading',
-  'navegableProps',
-  'mCustomClick'
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'iconStart',
+  'iconStartFamilyClass',
+  'iconStartFamilyPrefix',
+  'iconEnd',
+  'iconEndFamilyClass',
+  'iconEndFamilyPrefix',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'minValue',
+  'maxValue',
+  'currencyOptions',
+  'currencyCode',
+  'mChange'
+]);
+
+
+export const MInputPassword = /*@__PURE__*/ defineContainer<JSX.MInputPassword>('m-input-password', undefined, [
+  'mId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'mChange'
+]);
+
+
+export const MInputPin = /*@__PURE__*/ defineContainer<JSX.MInputPin>('m-input-pin', undefined, [
+  'mId',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'type',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'isSecret',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'characters',
+  'mInputMode',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'mChange'
+]);
+
+
+export const MInputSearch = /*@__PURE__*/ defineContainer<JSX.MInputSearch>('m-input-search', undefined, [
+  'mId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'mChange',
+  'mClick'
+]);
+
+
+export const MInputSelect = /*@__PURE__*/ defineContainer<JSX.MInputSelect>('m-input-select', undefined, [
+  'mId',
+  'name',
+  'label',
+  'options',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'isDisabled',
+  'isLoading',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'iconStart',
+  'iconStartFamilyClass',
+  'iconStartFamilyPrefix',
+  'iconEnd',
+  'iconEndFamilyClass',
+  'iconEndFamilyPrefix',
+  'hint',
+  'selectedOption',
+  'valueExtractor',
+  'labelExtractor',
+  'mChange',
+  'mBlur',
+  'mIconStartClick',
+  'mIconEndClick'
+]);
+
+
+export const MInputSwitch = /*@__PURE__*/ defineContainer<JSX.MInputSwitch>('m-input-switch', undefined, [
+  'label',
+  'mId',
+  'name',
+  'isChecked',
+  'isDisabled',
+  'isReadonly',
+  'mChange'
 ]);
 
 
 export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
   'name',
-  'closeText',
   'isStatic',
   'isScrollable',
   'isCentered',
   'isFullScreen',
+  'isInline',
   'fullScreenFrom',
   'modalSize',
-  'imageHeader',
   'showCloseButton',
+  'footerActionPlacement',
   'mClose'
 ]);
 
 
 export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offcanvas', undefined, [
   'name',
-  'closeText',
   'isStatic',
   'isScrollable',
   'showCloseButton',
   'openFrom',
+  'footerActionPlacement',
+  'isInline',
   'mClose'
-]);
-
-
-export const MPin = /*@__PURE__*/ defineContainer<JSX.MPin>('m-pin', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'isLoading',
-  'characters',
-  'isSecret',
-  'isDisabled',
-  'mInputMode',
-  'type',
-  'placeholder',
-  'theme',
-  'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'mChange'
 ]);
 
 
@@ -314,127 +314,59 @@ export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-p
   'currentValue',
   'minValue',
   'maxValue',
-  'classNameContainer',
-  'classNameProgress',
-  'classNameBar',
-  'enableStripedAnimation',
-  'enableDarkMode'
+  'hideCurrentValue',
+  'enableStripedAnimation'
 ]);
 
 
-export const MQuickAction = /*@__PURE__*/ defineContainer<JSX.MQuickAction>('m-quick-action', undefined, [
-  'text',
-  'subtext',
-  'extraInfo',
-  'icon',
-  'iconFamilyClass',
-  'iconFamilyPrefix',
-  'image',
-  'variant',
-  'actionWord',
+export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickActionButton>('m-quick-action-button', undefined, [
+  'line1',
+  'line2',
+  'actionLinkText',
+  'actionLinkTheme',
   'actionIcon',
-  'state',
+  'actionIconFamilyClass',
+  'actionIconFamilyPrefix',
+  'representativeImage',
+  'representativeIcon',
+  'representativeIconTheme',
+  'representativeIconHasCircle',
+  'representativeIconFamilyClass',
+  'representativeIconFamilyPrefix',
   'mClick'
 ]);
 
 
-export const MSearch = /*@__PURE__*/ defineContainer<JSX.MSearch>('m-search', undefined, [
+export const MQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.MQuickActionCheck>('m-quick-action-check', undefined, [
   'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'placeholder',
-  'type',
+  'name',
   'value',
-  'isDisabled',
-  'isLoading',
-  'isReadOnly',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
+  'line1',
+  'line2',
+  'line3',
+  'isChecked',
+  'mChange'
+]);
+
+
+export const MQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.MQuickActionSelect>('m-quick-action-select', undefined, [
+  'mId',
+  'name',
+  'value',
+  'line1',
+  'line2',
+  'isSelected',
+  'mChange'
+]);
+
+
+export const MQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.MQuickActionSwitch>('m-quick-action-switch', undefined, [
+  'mId',
+  'name',
+  'label',
   'hint',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'theme',
-  'variant',
-  'layoutDirection',
-  'mChange',
+  'isChecked',
+  'isDisabled',
   'mClick'
-]);
-
-
-export const MSegmentControl = /*@__PURE__*/ defineContainer<JSX.MSegmentControl>('m-segment-control', undefined, [
-  'description'
-]);
-
-
-export const MSegmentControlItem = /*@__PURE__*/ defineContainer<JSX.MSegmentControlItem>('m-segment-control-item', undefined, [
-  'mId',
-  'name',
-  'label',
-  'value',
-  'isDisabled',
-  'isChecked',
-  'state',
-  'mChange'
-]);
-
-
-export const MSelect = /*@__PURE__*/ defineContainer<JSX.MSelect>('m-select', undefined, [
-  'mId',
-  'name',
-  'variant',
-  'options',
-  'theme',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconMiddle',
-  'iconMiddleFamilyClass',
-  'iconMiddleFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'hintIconStart',
-  'hintIconStartFamilyClass',
-  'hintIconStartFamilyPrefix',
-  'hintIconEnd',
-  'hintIconEndFamilyClass',
-  'hintIconEndFamilyPrefix',
-  'hint',
-  'selectedOption',
-  'layoutDirection',
-  'isDisabled',
-  'isLoading',
-  'valueExtractor',
-  'labelExtractor',
-  'mChange',
-  'mBlur'
-]);
-
-
-export const MShortcutToggle = /*@__PURE__*/ defineContainer<JSX.MShortcutToggle>('m-shortcut-toggle', undefined, [
-  'mId',
-  'name',
-  'value',
-  'label',
-  'text',
-  'subtext',
-  'icon',
-  'iconFamilyClass',
-  'iconFamilyPrefix',
-  'isChecked',
-  'state',
-  'white',
-  'mChange'
 ]);
 

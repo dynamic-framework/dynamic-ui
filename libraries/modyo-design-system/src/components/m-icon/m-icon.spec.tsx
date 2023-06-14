@@ -16,10 +16,7 @@ it('should render my component', async () => {
   });
   expect(page.root).toEqualHtml(`
     <m-icon>
-      <i 
-        class="bi bi-${icon.icon} m-icon" 
-        style="--bs-m-icon-font-size: inherit; --bs-m-icon-animation-duration: 1.8s;">
-      </i>
+      <i class="bi bi-heart m-icon" style="--bs-m-icon-component-size: 1.5rem; --bs-m-icon-component-loading-duration: 1.8s; --bs-m-icon-component-padding: 0;"></i>
     </m-icon>
   `);
 });

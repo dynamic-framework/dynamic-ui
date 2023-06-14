@@ -1,6 +1,12 @@
 module.exports = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions', '@storybook/addon-viewport', '@storybook/addon-mdx-gfm'],
+  addons: [
+    '@storybook/addon-controls',
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@storybook/addon-viewport',
+  ],
   framework: {
     name: '@storybook/react-webpack5',
     options: {}
@@ -12,16 +18,19 @@ module.exports = {
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
       propFilter: prop => prop.parent ? !/node_modules/.test(prop.parent.fileName) : true
-    }
+    },
   },
   core: {
     disableTelemetry: true
   },
-  staticDirs: ['../../modyo-design-system/dist'],
+  staticDirs: [
+    '../../modyo-design-system/dist',
+    '../dist'
+  ],
   features: {
     modernInlineRender: true
   },
   docs: {
-    autodocs: true
+    autodocs: 'tag'
   }
 };

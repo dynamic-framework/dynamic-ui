@@ -1,38 +1,26 @@
-import type { HTMLInputTypeAttribute } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
 import { useField } from 'formik';
+
+import type { ComponentProps } from 'react';
 
 import { MInput } from './proxies';
 
-// TODO: add all props of m-input
-type Props = {
-  mId: string;
-  label: string;
+type Props = Omit<ComponentProps<typeof MInput>, 'name' | 'value'> & {
   name: string;
-  placeholder: string;
-  type?: HTMLInputTypeAttribute;
-  iconStart?: string;
 };
 
 export default function MFormikInput(
   {
-    mId,
-    label,
     name,
-    type = 'text',
-    placeholder,
-    iconStart,
+    ...props
   }: Props,
 ) {
   const [field, meta, helpers] = useField<string | number>(name);
   return (
     <MInput
-      mId={mId}
-      label={label}
+      {...props}
       name={field.name}
       value={field.value}
-      type={type}
-      placeholder={placeholder}
-      iconStart={iconStart}
       onMChange={({ detail }) => helpers.setValue(detail)}
       onMBlur={({ detail }) => field.onBlur(detail)}
       isInvalid={!!meta.error}

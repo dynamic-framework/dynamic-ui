@@ -14,8 +14,8 @@ it('should render base button', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-button class="btn-box">
-      <button class="btn btn-primary" type="button">
+    <m-button>
+      <button class="btn btn-primary m-button" type="button">
         <span>${props.text}</span>
       </button>
     </m-button>
@@ -36,8 +36,8 @@ it('should render button pill', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-button class="btn-box rounded-pill">
-      <button class="btn btn-primary rounded-pill" type="button">
+    <m-button>
+      <button class="btn btn-primary m-button rounded-pill" type="button">
         <span>${props.text}</span>
       </button>
     </m-button>

@@ -1,0 +1,9 @@
+.m-progress-bar {
+  --#{$prefix}m-progress-bar-font-weight: #{$progress-font-weight};
+
+  font-weight: var(--#{$prefix}m-progress-bar-font-weight);
+
+  .progress-bar:not(:empty) {
+    min-width: 4ch;
+  }
+}

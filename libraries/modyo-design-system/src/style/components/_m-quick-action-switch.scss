@@ -1,0 +1,71 @@
+.m-quick-action-switch {
+  --#{$prefix}m-quick-action-switch-gap: #{$quick-action-switch-gap};
+  --#{$prefix}m-quick-action-switch-padding: #{$quick-action-switch-padding};
+  --#{$prefix}m-quick-action-switch-bg: #{$quick-action-switch-bg};
+  --#{$prefix}m-quick-action-switch-border-radius: #{$quick-action-switch-border-radius};
+
+  --#{$prefix}m-quick-action-switch-content-gap: #{$quick-action-switch-content-gap};
+
+  --#{$prefix}m-quick-action-switch-label-font-size: #{$quick-action-switch-label-font-size};
+  --#{$prefix}m-quick-action-switch-label-font-weight: #{$quick-action-switch-label-font-weight};
+  --#{$prefix}m-quick-action-switch-label-color: #{$quick-action-switch-label-color};
+
+  --#{$prefix}m-quick-action-switch-hint-font-size: #{$quick-action-switch-hint-font-size};
+  --#{$prefix}m-quick-action-switch-hint-font-weight: #{$quick-action-switch-hint-font-weight};
+  --#{$prefix}m-quick-action-switch-hint-color: #{$quick-action-switch-hint-color};
+
+  --#{$prefix}m-quick-action-switch-hover-bg: #{$quick-action-switch-hover-bg};
+
+  --#{$prefix}m-quick-action-switch-checked-bg: #{$quick-action-switch-checked-bg};
+  --#{$prefix}m-quick-action-switch-checked-label-color: #{$quick-action-switch-checked-label-color};
+  --#{$prefix}m-quick-action-switch-checked-hint-color: #{$quick-action-switch-checked-hint-color};
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}m-quick-action-switch-gap);
+  width: 100%;
+  padding: var(--#{$prefix}m-quick-action-switch-padding);
+  text-align: left;
+  cursor: pointer;
+  background-color: var(--#{$prefix}m-quick-action-switch-bg);
+  border: 0;
+  border-radius: var(--#{$prefix}m-quick-action-switch-border-radius);
+
+  &:hover {
+    background: var(--#{$prefix}m-quick-action-switch-hover-bg);
+  }
+
+  &:has(input:checked) {
+    background: var(--#{$prefix}m-quick-action-switch-checked-bg);
+
+    .m-quick-action-switch-label {
+      color: var(--#{$prefix}m-quick-action-switch-checked-label-color);
+    }
+
+    .m-quick-action-switch-hint {
+      color: var(--#{$prefix}m-quick-action-switch-checked-hint-color);
+    }
+  }
+
+  .m-quick-action-switch-content {
+    display: flex;
+    flex-direction: row;
+    gap: var(--#{$prefix}m-quick-action-switch-content-gap);
+  }
+
+  .m-quick-action-switch-label {
+    font-size: var(--#{$prefix}m-quick-action-switch-label-font-size);
+    font-weight: var(--#{$prefix}m-quick-action-switch-label-font-weight);
+    color: var(--#{$prefix}m-quick-action-switch-label-color);
+  }
+
+  .m-quick-action-switch-hint {
+    font-size: var(--#{$prefix}m-quick-action-switch-hint-font-size);
+    font-weight: var(--#{$prefix}m-quick-action-switch-hint-font-weight);
+    color: var(--#{$prefix}m-quick-action-switch-hint-color);
+  }
+
+  .m-input-switch:focus-within.form-switch .form-check-input {
+    outline: 0;
+  }
+}

@@ -1,0 +1,32 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import * as MButtonStories from './MButton.stories';
+
+# Button
+
+The css variables available by default can be seen in the bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                    | Type            | Description                     |
+  |---------------------------------------------|-----------------|---------------------------------|
+  | \`--${PREFIX_BS}m-button-link-padding-y\`   | css length unit  | Button link padding vertical   |
+  | \`--${PREFIX_BS}m-button-link-padding-x\`   | css length unit  | Button link padding horizontal |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MButtonStories} />
+
+<ArgTypes of={MButtonStories} />
+
+<Stories />

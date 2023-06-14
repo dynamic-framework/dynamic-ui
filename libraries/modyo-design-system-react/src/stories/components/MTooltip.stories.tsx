@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { MTooltip } from '../../components';
 
 const config: Meta<typeof MTooltip> = {
-  title: 'React/Components/Tooltip',
+  title: 'Design System/Components/Tooltip',
   component: MTooltip,
   argTypes: {
     placement: {
@@ -13,14 +13,17 @@ const config: Meta<typeof MTooltip> = {
     },
     withHover: {
       type: 'boolean',
+      control: 'boolean',
       defaultValue: true,
     },
     withClick: {
       type: 'boolean',
+      control: 'boolean',
       defaultValue: false,
     },
     withFocus: {
       type: 'boolean',
+      control: 'boolean',
       defaultValue: false,
     },
     classNameContainer: {
@@ -39,7 +42,6 @@ const config: Meta<typeof MTooltip> = {
     children: {
       control: 'text',
       type: 'string',
-      defaultValue: 'Lorem ipsum dolor sit amet consectetur.',
     },
     offSet: {
       type: 'number',
@@ -53,10 +55,167 @@ const config: Meta<typeof MTooltip> = {
 export default config;
 type Story = StoryObj<typeof MTooltip>;
 
-export const Default: Story = {
-  render: (args) => (
-    <div className="d-flex justify-content-center align-items-center p-5 w-100">
-      <MTooltip {...args} />
-    </div>
-  ),
+export const Top: Story = {
+  args: {
+    placement: 'top',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+  },
+};
+
+export const Right: Story = {
+  args: {
+    placement: 'right',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+  },
+};
+
+export const Bottom: Story = {
+  args: {
+    placement: 'bottom',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+  },
+};
+
+export const Left: Story = {
+  args: {
+    placement: 'left',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+  },
+};
+
+export const SmallTop: Story = {
+  args: {
+    placement: 'top',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'sm',
+  },
+};
+
+export const SmallRight: Story = {
+  args: {
+    placement: 'right',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'sm',
+  },
+};
+
+export const SmallBottom: Story = {
+  args: {
+    placement: 'bottom',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'sm',
+  },
+};
+
+export const SmallLeft: Story = {
+  args: {
+    placement: 'left',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'sm',
+  },
+};
+
+export const LargeTop: Story = {
+  args: {
+    placement: 'top',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'lg',
+  },
+};
+
+export const LargeRight: Story = {
+  args: {
+    placement: 'right',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'lg',
+  },
+};
+
+export const LargeBottom: Story = {
+  args: {
+    placement: 'bottom',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'lg',
+  },
+};
+
+export const LargeLeft: Story = {
+  args: {
+    placement: 'left',
+    Component: 'Text',
+    children: 'Lorem Ipsum',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'lg',
+  },
+};
+
+export const LargeText: Story = {
+  args: {
+    placement: 'left',
+    Component: 'Text',
+    children: 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ',
+    withHover: true,
+    withClick: false,
+    withFocus: false,
+    isOpen: true,
+    size: 'lg',
+  },
 };

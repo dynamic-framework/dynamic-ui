@@ -1,0 +1,16 @@
+.m-collapse-icon-text {
+  --#{$prefix}m-collapse-icon-text-header-gap: #{$collapse-icon-text-header-gap};
+  --#{$prefix}m-collapse-icon-text-header-font-size: #{$collapse-icon-text-header-font-size};
+  --#{$prefix}m-collapse-icon-text-header-font-weight: #{$collapse-icon-text-header-font-weight};
+
+  .m-collapse-icon-text-header {
+    display: flex;
+    gap: var(--#{$prefix}m-collapse-icon-text-header-gap);
+    align-items: center;
+  }
+
+  .m-collapse-icon-text-title {
+    font-size: var(--#{$prefix}m-collapse-icon-text-header-font-size);
+    font-weight: var(--#{$prefix}m-collapse-icon-text-header-font-weight);
+  }
+}

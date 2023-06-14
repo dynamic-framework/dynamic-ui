@@ -4,16 +4,18 @@ import {
   h,
   Prop,
   Event,
-  Host,
+  Method,
+  Element,
 } from '@stencil/core';
 
-import { ClassMap, FormControlLayoutDirection } from '../../utils/component-interface';
+import { PREFIX_BS } from '../../utils';
 
 @Component({
   tag: 'm-input',
   shadow: false,
 })
 export class MInput implements ComponentInterface {
+  @Element() el!: HTMLMInputElement;
   /**
    * The id of the input
    */
@@ -31,8 +33,8 @@ export class MInput implements ComponentInterface {
 
   /**
    * Icon for the label text
-   * */
-  @Prop() labelIcon = 'info-circle';
+   */
+  @Prop() labelIcon?: string;
 
   /**
    * Icon label family class
@@ -40,7 +42,7 @@ export class MInput implements ComponentInterface {
   @Prop() labelIconFamilyClass?: string;
 
   /**
-   * Icon label family class
+   * Icon label family prefix
    */
   @Prop() labelIconFamilyPrefix?: string;
 
@@ -60,14 +62,39 @@ export class MInput implements ComponentInterface {
   @Prop() value: string | number = '';
 
   /**
+   * Input mode
+   */
+  @Prop() mInputMode?: string;
+
+  /**
+   * Pattern to validate
+   */
+  @Prop() pattern?: string;
+
+  /**
    * Flag to disable the input
    */
   @Prop() isDisabled = false;
 
   /**
+   * Flag to read only the input
+   */
+  @Prop() isReadOnly = false;
+
+  /**
    * Flag for loading state.
   */
   @Prop() isLoading = false;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconFamilyClass?: string;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconFamilyPrefix?: string;
 
   /**
    * Icon to display on input left
@@ -100,49 +127,35 @@ export class MInput implements ComponentInterface {
   @Prop() iconEndFamilyPrefix?: string;
 
   /**
-   * Hint to display, also used to display validity feedback
+   * Hint to display
    */
   @Prop() hint?: string;
-
-  /**
-   * Icon to display on hint left
-   */
-  @Prop() hintIconStart?: string;
-
-  /**
-   * Hint left icon family class
-   */
-  @Prop() hintIconStartFamilyClass?: string;
-
-  /**
-   * Hint left icon family class
-   */
-  @Prop() hintIconStartFamilyPrefix?: string;
-
-  /**
-   * Icon to display on hint right
-   */
-  @Prop() hintIconEnd?: string;
-
-  /**
-   * Hint right icon family class
-   */
-  @Prop() hintIconEndFamilyClass?: string;
-
-  /**
-   * Hint right icon family class
-   */
-  @Prop() hintIconEndFamilyPrefix?: string;
-
-  /**
-   * Change the layout direction to put the label on top or left of input
-   */
-  @Prop() layoutDirection: FormControlLayoutDirection = 'vertical';
 
   /**
    * Add is-invalid class
    */
   @Prop() isInvalid = false;
+
+  /**
+   * Add is-valid class
+   */
+  @Prop() isValid = false;
+
+  /**
+   * Set focus to internal input
+   */
+  @Method()
+  async focusInput() {
+    this.htmlInputElement?.focus();
+  }
+
+  /**
+   * Set blur to internal input
+   */
+  @Method()
+  async blurInput() {
+    this.htmlInputElement?.blur();
+  }
 
   /**
    * Emitted when the input value has changed
@@ -154,6 +167,31 @@ export class MInput implements ComponentInterface {
    */
   @Event({ eventName: 'mBlur' }) mBlur!: EventEmitter;
 
+  /**
+   * Emitted when blur the input
+   */
+  @Event({ eventName: 'mFocus' }) mFocus!: EventEmitter;
+
+  /**
+   * Emitted when blur the input
+   */
+  @Event({ eventName: 'mWheel' }) mWheel!: EventEmitter;
+
+  /**
+   * Emitted when click on the left icon
+   */
+  @Event({ eventName: 'mIconStartClick' }) mIconStartClick!: EventEmitter<MouseEvent>;
+
+  /**
+   * Emitted when click on the right icon
+   */
+  @Event({ eventName: 'mIconEndClick' }) mIconEndClick!: EventEmitter<MouseEvent>;
+
+  /**
+   * HTML m-input element
+   */
+  private htmlInputElement?: HTMLInputElement;
+
   private changeHandler = (event: Event) => {
     this.mChange.emit((event.target as HTMLInputElement).value);
   };
@@ -162,30 +200,48 @@ export class MInput implements ComponentInterface {
     this.mBlur.emit(event);
   };
 
-  private generateHostClasses(): ClassMap {
-    return {
-      'form-control-layout': true,
-      'form-control-layout-horizontal': this.layoutDirection === 'horizontal',
-    };
+  private focusHandler = (event: Event) => {
+    this.mFocus.emit(event);
+  };
+
+  private wheelHandler = (event: Event) => {
+    this.mWheel.emit(event);
+  };
+
+  private iconStartClickHandler = (event: MouseEvent) => {
+    this.mIconStartClick.emit(event);
+  };
+
+  private iconEndClickHandler = (event: MouseEvent) => {
+    this.mIconEndClick.emit(event);
+  };
+
+  private inputStart!: HTMLElement | null;
+  private inputEnd!: HTMLElement | null;
+
+  componentWillLoad() {
+    this.inputStart = this.el.querySelector('[slot="input-start"]');
+    this.inputEnd = this.el.querySelector('[slot="input-end"]');
   }
 
   render() {
     return (
-      <Host class={this.generateHostClasses()}>
+      <div class="m-input">
         {this.label && (
           <label htmlFor={this.mId}>
             {this.label}
             {this.labelIcon && (
               <m-icon
-                class="form-control-icon"
+                class="m-input-icon"
                 icon={this.labelIcon}
+                size={`var(--${PREFIX_BS}m-input-label-font-size)`}
                 familyClass={this.labelIconFamilyClass}
                 familyPrefix={this.labelIconFamilyPrefix}
               />
             )}
           </label>
         )}
-        <div class="form-control-input">
+        <div class="m-input-control">
           <div
             class={{
               'input-group': true,
@@ -193,54 +249,91 @@ export class MInput implements ComponentInterface {
               disabled: this.isDisabled || this.isLoading,
             }}
           >
+            {!!this.inputStart && (
+              <div class="input-group-text">
+                <slot name="input-start" />
+              </div>
+            )}
             {this.iconStart && (
-              <span
+              <button
+                type="button"
                 class="input-group-text"
-                id={`${this.mId}-start`}
+                id={`${this.mId}Start`}
+                onClick={this.iconStartClickHandler}
+                disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconStart && (
                   <m-icon
-                    class="form-control-icon"
+                    class="m-input-icon"
                     icon={this.iconStart}
                     familyClass={this.iconStartFamilyClass}
                     familyPrefix={this.iconStartFamilyPrefix}
                   />
                 )}
-              </span>
+              </button>
             )}
             <input
+              // eslint-disable-next-line no-return-assign
+              ref={(el) => (this.htmlInputElement = el)}
               id={this.mId}
               name={this.name}
               type={this.type}
               class={{
                 'form-control': true,
                 'is-invalid': this.isInvalid,
+                'is-valid': this.isValid,
               }}
               placeholder={this.placeholder}
               aria-label={this.label}
               disabled={this.isDisabled || this.isLoading}
+              readOnly={this.isReadOnly}
               value={this.value}
-              aria-describedby={`${this.mId}-add`}
+              aria-describedby={`${this.mId}Add ${this.mId}Hint`}
+              inputmode={this.mInputMode}
+              pattern={this.pattern}
               onInput={this.changeHandler}
               onBlur={this.blurHandler}
+              onFocus={this.focusHandler}
+              onWheel={this.wheelHandler}
             />
-            {(this.iconEnd && !this.isLoading) && (
+            {((this.isInvalid || this.isValid) && !this.iconEnd && !this.isLoading) && (
               <span
                 class="input-group-text"
-                id={`${this.mId}-end`}
+                id={`${this.mId}State`}
+              >
+                <m-icon
+                  class="m-input-validation-icon"
+                  icon={this.isInvalid ? 'exclamation-circle' : 'check'}
+                  familyClass={this.iconFamilyClass}
+                  familyPrefix={this.iconFamilyPrefix}
+                />
+              </span>
+            )}
+            {(this.iconEnd && !this.isLoading) && (
+              <button
+                type="button"
+                class="input-group-text"
+                id={`${this.mId}End`}
+                onClick={this.iconEndClickHandler}
+                disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconEnd && (
                   <m-icon
-                    class="form-control-icon"
+                    class="m-input-icon"
                     icon={this.iconEnd}
                     familyClass={this.iconEndFamilyClass}
                     familyPrefix={this.iconEndFamilyPrefix}
                   />
                 )}
-              </span>
+              </button>
+            )}
+            {!!this.inputEnd && (
+              <div class="input-group-text">
+                <slot name="input-end" />
+              </div>
             )}
             {this.isLoading && (
-              <div class="input-group-text form-control-icon">
+              <div class="input-group-text m-input-icon">
                 <span
                   class="spinner-border spinner-border-sm"
                   role="status"
@@ -252,28 +345,15 @@ export class MInput implements ComponentInterface {
             )}
           </div>
           {this.hint && (
-            <small class="hint">
-              {this.hintIconStart && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.hintIconStart}
-                  familyClass={this.hintIconStartFamilyClass}
-                  familyPrefix={this.hintIconStartFamilyPrefix}
-                />
-              )}
+            <div
+              class="form-text"
+              id={`${this.mId}Hint`}
+            >
               {this.hint}
-              {this.hintIconEnd && (
-                <m-icon
-                  class="form-control-icon"
-                  icon={this.hintIconEnd}
-                  familyClass={this.hintIconEndFamilyClass}
-                  familyPrefix={this.hintIconEndFamilyPrefix}
-                />
-              )}
-            </small>
+            </div>
           )}
         </div>
-      </Host>
+      </div>
     );
   }
 }

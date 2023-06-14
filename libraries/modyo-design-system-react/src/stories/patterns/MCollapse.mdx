@@ -1,0 +1,43 @@
+import {
+  Meta,
+  ArgTypes,
+  Markdown,
+  IconGallery,
+  IconItem,
+  Stories,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import * as MCollapseStories from './MCollapse.stories';
+
+# Collapse
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                        | Type              | Description                                 |
+  |-------------------------------------------------|-------------------|---------------------------------------------|
+  | \`--${PREFIX_BS}m-collapse-bg\`                 | css color unit    | Collapse background                         |
+  | \`--${PREFIX_BS}m-collapse-border-radius\`      | css length unit   | Collapse border radius                      |
+  | \`--${PREFIX_BS}m-collapse-box-shadow\`         | css box shadow    | Collapse box shadow                         |
+  | \`--${PREFIX_BS}m-collapse-button-padding-x\`   | css length unit   | Collapse header button padding horizontal   |
+  | \`--${PREFIX_BS}m-collapse-button-padding-y\`   | css length unit   | Collapse header button padding vertical     |
+  | \`--${PREFIX_BS}m-collapse-button-gap\`         | css length unit   | Collapse header button gap                  |
+  | \`--${PREFIX_BS}m-collapse-body-padding-x\`     | css length unit   | Collapse body padding horizontal            |
+  | \`--${PREFIX_BS}m-collapse-body-padding-y\`     | css length unit   | Collapse body padding vertical              |
+  | \`--${PREFIX_BS}m-collapse-separator-display\`  | css display       | Collapse separator display                  |
+  | \`--${PREFIX_BS}m-collapse-separator-height\`   | css length unit   | Collapse separator size                     |
+  | \`--${PREFIX_BS}m-collapse-separator-bg\`       | css color unit    | Collapse separator color                    |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MCollapseStories} />
+
+<ArgTypes of={MCollapseStories} />
+
+<Stories />
+
+

@@ -1,0 +1,46 @@
+.m-alert,
+.alert {
+  --#{$prefix}m-alert-gap: #{$alert-gap};
+  --#{$prefix}m-alert-box-shadow: #{$alert-box-shadow};
+  --#{$prefix}m-alert-icon-color: var(--#{$prefix}m-alert-component-icon-color, var(--#{$prefix}alert-color));
+  --#{$prefix}m-alert-separator-opacity: var(--#{$prefix}m-alert-component-separator-opacity);
+
+  display: flex;
+  flex-direction: row;
+  gap: var(--#{$prefix}m-alert-gap);
+  align-items: center;
+  box-shadow: var(--#{$prefix}m-alert-box-shadow);
+
+  .m-alert-text {
+    flex-grow: 1;
+  }
+
+  .m-alert-separator {
+    align-self: stretch;
+    width: 1px;
+    background-color: var(--#{$prefix}m-alert-icon-color);
+    opacity: var(--#{$prefix}m-alert-separator-opacity);
+  }
+
+  .btn-close {
+    --#{$prefix}btn-close-bg: transparent;
+  }
+
+  .m-alert-icon .m-icon {
+    --#{$prefix}m-icon-color: var(--#{$prefix}m-alert-icon-color);
+  }
+
+  .m-alert-close-icon {
+    --#{$prefix}m-icon-color: var(--#{$prefix}m-alert-icon-color);
+  }
+
+  @each $theme, $value in $theme-colors {
+    $color: color-contrast($value);
+    &.alert-#{$theme} {
+      --#{$prefix}alert-color: #{$color};
+      --#{$prefix}alert-bg: var(--#{$prefix}#{$theme});
+      --#{$prefix}alert-border-color: var(--#{$prefix}#{$theme});
+      --#{$prefix}alert-link-color: #{$color};
+    }
+  }
+}

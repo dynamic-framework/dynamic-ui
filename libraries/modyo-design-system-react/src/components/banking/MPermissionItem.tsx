@@ -1,4 +1,4 @@
-import { MBadge, MFormSwitch } from '../proxies';
+import { MBadge, MInputSwitch } from '../proxies';
 import { PermissionItemType } from './interface';
 
 type Props = {
@@ -29,8 +29,7 @@ export default function MPermissionItem({
           text={permissionState}
         />
       )}
-      <MFormSwitch
-        label=""
+      <MInputSwitch
         mId={permission.id}
         isChecked={!!permission.value}
         isDisabled={!permission.enabled}

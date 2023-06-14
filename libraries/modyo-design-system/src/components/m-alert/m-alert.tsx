@@ -6,22 +6,36 @@ import {
   Event,
 } from '@stencil/core';
 
+import { PREFIX_BS } from '../../utils';
 import type { ClassMap } from '../../utils/component-interface';
-import { ICON_STATE } from '../../utils/component-interface';
 
-@Component({
-  tag: 'm-alert',
-  styleUrl: 'm-alert.scss',
-  shadow: false,
-})
+import { ALERT_TYPE_ICON } from './m-alert-interface';
+import type { AlertType } from './m-alert-interface';
+
+@Component({ tag: 'm-alert' })
 export class MAlert {
   /**
-   * Theme for the alert
+   * Alert type
    */
-  @Prop() theme = 'warning';
+  @Prop() type: AlertType = 'light';
 
   /**
-   * Show icon theme in the alert
+   * Alert icon
+   */
+  @Prop() icon?: string;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconFamilyClass?: string;
+
+  /**
+   * Right icon family class
+   */
+  @Prop() iconFamilyPrefix?: string;
+
+  /**
+   * Show alert icon
    */
   @Prop() showIcon = false;
 
@@ -41,43 +55,55 @@ export class MAlert {
 
   private generateClasses(): ClassMap {
     return {
-      [`alert alert-${this.theme}`]: true,
+      [`m-alert alert alert-${this.type}`]: true,
       'fade show': !!this.showClose,
     };
   }
 
-  private iconState(): string {
-    return ICON_STATE[this.theme] || '';
+  private getIcon(): string {
+    return this.icon || ALERT_TYPE_ICON[this.type] || '';
+  }
+
+  private generateStyleVariables() {
+    return {
+      ...this.type === 'light' ? { [`--${PREFIX_BS}m-alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)` } : {},
+      [`--${PREFIX_BS}m-alert-component-separator-opacity`]: '0.3',
+    };
   }
 
   render() {
     return (
       <div
         class={this.generateClasses()}
+        style={this.generateStyleVariables()}
         role="alert"
       >
-        {this.showIcon && (
-          <div class="alert-icon small">
-            <m-icon
-              icon={this.iconState()}
-            />
-          </div>
+        {(this.showIcon || this.icon) && (
+          <m-icon
+            class="m-alert-icon"
+            icon={this.getIcon()}
+            familyClass={this.iconFamilyClass}
+            familyPrefix={this.iconFamilyPrefix}
+          />
         )}
-        <div class="alert-text flex-grow-1">
+        <div class="m-alert-text">
           <slot />
         </div>
         {this.showClose && (
-          <div class="separator" />
+          <div class="m-alert-separator" />
         )}
         {this.showClose && (
           <button
             type="button"
-            class="btn-close fs-4"
+            class="btn-close"
             aria-label="Close"
             onClick={this.clickHandler}
           >
             <m-icon
+              class="m-alert-close-icon"
               icon="x-lg"
+              familyClass={this.iconFamilyClass}
+              familyPrefix={this.iconFamilyPrefix}
             />
           </button>
         )}

@@ -1,15 +1,47 @@
 :root {
-  --#{$prefix}accessibility: #{$accessibility};
-
-  @each $color, $value in $theme-colors-hover {
-    --#{$prefix}#{$color}-hover: #{$value};
-    --#{$prefix}#{$color}-hover-rgb: #{to-rgb($value)};
+  @each $color, $value in $bg-soft-colors {
+    --#{$prefix}#{$color}: #{$value};
+    --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
   }
 
-  @each $color, $value in $bg-widget-colors {
-    --#{$prefix}bg-widget-#{$color}: #{$value};
-    --#{$prefix}bg-widget-#{$color}-rgb: #{to-rgb($value)};
+  @each $color, $value in $colors {
+    --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
   }
+
+  @each $color, $value in $palette-colors {
+    --#{$prefix}#{$color}: #{$value};
+  }
+
+  @each $color, $value in $palette-colors-rgb {
+    --#{$prefix}#{$color}-rgb: #{$value};
+  }
+
+  @each $color, $value in $theme-color-variants {
+    --#{$prefix}#{$color}: #{$value};
+  }
+
+  // only reference root variables
+
+  @each $level, $value in $spacers {
+    --#{$prefix}ref-spacer-#{$level}: #{$value};
+  }
+
+  @each $level, $value in $display-font-sizes {
+    --#{$prefix}ref-display-#{$level}: #{$value};
+  }
+  @each $level, $value in $font-sizes {
+    --#{$prefix}ref-fs-#{$level}: #{$value};
+  }
+  --#{$prefix}ref-fs-subparagraph: #{$subparagraph-font-size};
+  --#{$prefix}ref-fs-small: #{$small-font-size};
+
+  --#{$prefix}ref-fw-lighter: #{$font-weight-lighter};
+  --#{$prefix}ref-fw-light: #{$font-weight-light};
+  --#{$prefix}ref-fw-normal: #{$font-weight-normal};
+  --#{$prefix}ref-fw-semibold: #{$font-weight-semibold};
+  --#{$prefix}ref-fw-bold: #{$font-weight-bold};
+  --#{$prefix}ref-fw-bolder: #{$font-weight-bolder};
+
 }
 
 .flex-1 {

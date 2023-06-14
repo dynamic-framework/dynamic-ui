@@ -1,9 +1,10 @@
-import { PropsWithChildren, ReactNode, useState } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import {
   autoUpdate,
   offset,
   flip,
   shift,
+  arrow,
   useClick,
   useDismiss,
   useFocus,
@@ -12,8 +13,12 @@ import {
   useInteractions,
   useRole,
   FloatingPortal,
-} from '@floating-ui/react-dom-interactions';
-import type { Placement } from '@floating-ui/react-dom-interactions';
+  FloatingArrow,
+} from '@floating-ui/react';
+import type { PropsWithChildren, ReactNode } from 'react';
+import type { Placement } from '@floating-ui/react';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+import type { ComponentSize } from '@modyo-dynamic/modyo-design-system';
 
 export type MTooltipProps = PropsWithChildren<{
   classNameContainer?: string;
@@ -23,33 +28,55 @@ export type MTooltipProps = PropsWithChildren<{
   withHover?: boolean;
   withFocus?: boolean;
   withClick?: boolean;
+  isOpen?: boolean;
+  size?: ComponentSize;
   placement?: Placement;
-  Component: JSX.Element | ReactNode;
+  Component: ReactNode;
 }>;
 
-const DEFAULT_TOOLTIP_CLASSES = 'bg-tertiary rounded-1 p-2 text-white small';
-const DEFAULT_BUTTON_CLASSES = 'bg-transparent border-0 p-0 text-decoration-underline';
+const TOOLTIP_FONT_SIZE_BY_SIZE = {
+  sm: `var(--${PREFIX_BS}ref-fs-subparagraph)`,
+  default: `var(--${PREFIX_BS}body-font-size)`,
+  lg: `var(--${PREFIX_BS}ref-fs-6)`,
+};
+const ARROW_WIDTH = 8;
+const ARROW_HEIGHT = 4;
+const GAP = 2;
 
 export default function MTooltip({
-  classNameContainer = DEFAULT_TOOLTIP_CLASSES,
-  className = DEFAULT_BUTTON_CLASSES,
-  offSet = 0,
-  padding = 0,
-  withFocus,
-  withClick,
+  classNameContainer,
+  className,
+  offSet = ARROW_HEIGHT + GAP,
+  padding,
+  withFocus = false,
+  withClick = false,
   withHover = true,
+  isOpen = false,
   placement = 'top',
+  size,
   Component,
   children,
 }: MTooltipProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(isOpen);
+  const styleVariables = useMemo(() => {
+    const defaultFontSize = size
+      ? TOOLTIP_FONT_SIZE_BY_SIZE[size]
+      : TOOLTIP_FONT_SIZE_BY_SIZE.default;
+    return {
+      background: `var(--${PREFIX_BS}m-tooltip-bg, var(--${PREFIX_BS}m-tooltip-component-bg, var(--${PREFIX_BS}secondary)))`,
+      borderRadius: `var(--${PREFIX_BS}m-tooltip-border-radius, var(--${PREFIX_BS}m-tooltip-component-border-radius, var(--${PREFIX_BS}border-radius)))`,
+      color: `var(--${PREFIX_BS}m-tooltip-color, var(--${PREFIX_BS}m-tooltip-component-color, var(--${PREFIX_BS}white)))`,
+      fontSize: `var(--${PREFIX_BS}m-tooltip-font-size, var(--${PREFIX_BS}m-tooltip-component-font-size, ${defaultFontSize}))`,
+      padding: `var(--${PREFIX_BS}m-tooltip-padding, var(--${PREFIX_BS}m-tooltip-component-padding, var(--${PREFIX_BS}ref-spacer-2)))`,
+      maxWidth: `var(--${PREFIX_BS}m-tooltip-max-width, var(--${PREFIX_BS}m-tooltip-component-max-width, 300px))`,
+    };
+  }, [size]);
+
+  const arrowRef = useRef(null);
   const {
-    x,
-    y,
-    reference,
-    floating,
-    strategy,
+    refs,
     context,
+    floatingStyles,
   } = useFloating({
     open,
     onOpenChange: setOpen,
@@ -60,6 +87,9 @@ export default function MTooltip({
       flip(),
       shift({
         padding,
+      }),
+      arrow({
+        element: arrowRef,
       }),
     ],
   });
@@ -81,28 +111,35 @@ export default function MTooltip({
 
   return (
     <>
-      <button
+      <div
         className={className}
-        type="button"
-        ref={reference}
+        ref={refs.setReference}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...getReferenceProps()}
       >
         {Component}
-      </button>
+      </div>
       <FloatingPortal>
         {open && (
           <div
             className={classNameContainer}
-            ref={floating}
+            ref={refs.setFloating}
             style={{
-              position: strategy,
-              top: y ?? 0,
-              left: x ?? 0,
+              ...floatingStyles,
+              ...styleVariables,
             }}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...getFloatingProps()}
           >
+            <FloatingArrow
+              ref={arrowRef}
+              context={context}
+              style={{
+                fill: styleVariables.background,
+              }}
+              width={ARROW_WIDTH}
+              height={ARROW_HEIGHT}
+            />
             {children}
           </div>
         )}

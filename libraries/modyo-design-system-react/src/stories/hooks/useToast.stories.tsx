@@ -1,22 +1,25 @@
 import { Meta } from '@storybook/react';
 
+import type { AlertType } from '@modyo-dynamic/modyo-design-system';
+
 import { MButton, MToastContainer } from '../../components';
-import { useToast } from '../../hooks';
-import { THEMES } from '../constants';
+import { useToast as useToastHook } from '../../hooks';
+
+import { ALERT_TYPES } from '../constants';
 
 type Props = {
   message: string;
-  theme: (typeof THEMES)[number];
+  type: AlertType;
   showClose: boolean;
 };
 
-const Example = ({ message, theme, showClose }: Props) => {
-  const { toast } = useToast();
+const Example = ({ message, type, showClose }: Props) => {
+  const { toast } = useToastHook();
   return (
     <>
       <MButton
         text="Show Toast"
-        onClick={() => toast(message, { theme, showClose })}
+        onClick={() => toast(message, { type, showClose })}
       />
       <MToastContainer />
     </>
@@ -24,25 +27,27 @@ const Example = ({ message, theme, showClose }: Props) => {
 };
 
 const config: Meta<typeof Example> = {
-  title: 'React/hooks/useToast',
+  title: 'Design System/Patterns/Alert',
   component: Example,
   argTypes: {
-    theme: {
+    type: {
       control: 'select',
-      options: THEMES,
+      type: 'string',
+      options: ALERT_TYPES,
     },
     showClose: {
       control: 'boolean',
+      type: 'boolean',
     },
   },
 };
 
 export default config;
 
-export const Default = {
+export const useToast = {
   args: {
     message: 'the default message',
-    theme: 'primary',
+    type: 'info',
     showClose: false,
   },
 };

@@ -4,23 +4,25 @@ import {
   Event,
   h,
   Prop,
-  Host,
 } from '@stencil/core';
 
-import type { ClassMap, InputState } from '../../utils/component-interface';
+import type {
+  ClassMap, ComponentSize, InputState,
+} from '../../utils/component-interface';
 
 import type { ButtonType, ButtonVariant } from './m-button-interface';
 
-@Component({
-  tag: 'm-button',
-  styleUrl: 'm-button.scss',
-  shadow: false,
-})
+@Component({ tag: 'm-button' })
 export class MButton implements ComponentInterface {
   /**
-   * The theme to use.
+   * Theme to use.
    */
   @Prop() theme = 'primary';
+
+  /**
+   * The size
+   */
+  @Prop() size?: ComponentSize;
 
   /**
    * The variant to use.
@@ -28,7 +30,7 @@ export class MButton implements ComponentInterface {
   @Prop() variant?: ButtonVariant;
 
   /**
-   * Flag to set the button as active.
+   * Change the state of the button
    */
   @Prop() state?: InputState;
 
@@ -68,12 +70,12 @@ export class MButton implements ComponentInterface {
   @Prop() iconEndFamilyPrefix?: string;
 
   /**
-   * The value of the button.
+   * The html value of the button.
    */
-  @Prop() value = '';
+  @Prop() value?: string;
 
   /**
-   * The type of the button.
+   * The html type of the button.
    */
   @Prop() type: ButtonType = 'button';
 
@@ -102,60 +104,51 @@ export class MButton implements ComponentInterface {
       : `btn-${this.theme}`;
     return {
       btn: true,
+      'm-button': true,
       [variantClass]: true,
+      [`btn-${this.size}`]: !!this.size,
       ...(this.state && this.state !== 'disabled') && { [this.state]: true },
-      'rounded-pill': this.isPill,
-    };
-  }
-
-  private generateHostClasses(): ClassMap {
-    return {
-      'btn-box': true,
-      focus: this.state === 'focus',
+      loading: this.isLoading,
       'rounded-pill': this.isPill,
     };
   }
 
   render() {
     return (
-      <Host class={this.generateHostClasses()}>
-        <button
-          class={this.generateClasses()}
-          type={this.type}
-          disabled={this.state === 'disabled' || this.isLoading}
-          {...this.value && { value: this.value }}
-          onClick={this.clickHandler}
-        >
-          {this.iconStart && (
-            <m-icon
-              class="btn-icon btn-left-icon"
-              icon={this.iconStart}
-              familyClass={this.iconStartFamilyClass}
-              familyPrefix={this.iconStartFamilyPrefix}
-            />
-          )}
-          {this.text && (
-            <span>{this.text}</span>
-          )}
-          {(this.iconEnd && !this.isLoading) && (
-            <m-icon
-              class="btn-icon btn-right-icon"
-              icon={this.iconEnd}
-              familyClass={this.iconEndFamilyClass}
-              familyPrefix={this.iconEndFamilyPrefix}
-            />
-          )}
-          {this.isLoading && (
-            <span
-              class="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            >
-              <span class="visually-hidden">Loading...</span>
-            </span>
-          )}
-        </button>
-      </Host>
+      <button
+        class={this.generateClasses()}
+        type={this.type}
+        disabled={this.state === 'disabled' || this.isLoading}
+        {...this.value && { value: this.value }}
+        onClick={this.clickHandler}
+      >
+        {this.iconStart && (
+          <m-icon
+            icon={this.iconStart}
+            familyClass={this.iconStartFamilyClass}
+            familyPrefix={this.iconStartFamilyPrefix}
+          />
+        )}
+        {(this.text && !this.isLoading) && (
+          <span>{this.text}</span>
+        )}
+        {this.isLoading && (
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </span>
+        )}
+        {(this.iconEnd) && (
+          <m-icon
+            icon={this.iconEnd}
+            familyClass={this.iconEndFamilyClass}
+            familyPrefix={this.iconEndFamilyPrefix}
+          />
+        )}
+      </button>
     );
   }
 }

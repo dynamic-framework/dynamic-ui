@@ -1,14 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap");
-$font-family-sans-serif: "Inter", sans-serif !default;
-$font-family-monospace: $font-family-sans-serif !default;
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
 
+// scss-docs-start font-variables
+$font-family-sans-serif: "Source Sans Pro", sans-serif !default;
+$font-family-monospace: $font-family-sans-serif !default;
 $font-family-base: var(--#{$prefix}font-sans-serif) !default;
 $font-family-code: var(--#{$prefix}font-monospace) !default;
 
+// $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and margins
+// $font-size-base affects the font size of the body text
 $font-size-root: 16px !default;
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
-$font-size-sm: $font-size-base * .75 !default;
-$font-size-lg: $font-size-base * 1.125 !default;
+$font-size-sm: $font-size-base * .875 !default;   // 14px
+$font-size-lg: $font-size-base * 1.125 !default;  // 18px
 
 $font-weight-lighter: lighter !default;
 $font-weight-light: 200 !default;
@@ -19,17 +24,19 @@ $font-weight-bolder: 800 !default;
 
 $font-weight-base: $font-weight-normal !default;
 
-$line-height-base: 1.5 !default;
-$line-height-sm: 1.5 !default;
+$line-height-base: 1.2 !default;
+$line-height-sm: 1.2 !default;
 $line-height-lg: 1.2 !default;
 
-$h1-font-size: $font-size-base * 2.5 !default;
-$h2-font-size: $font-size-base * 2 !default;
-$h3-font-size: $font-size-base * 1.75 !default;
-$h4-font-size: $font-size-base * 1.5 !default;
-$h5-font-size: $font-size-base * 1.25 !default;
+$h1-font-size: $font-size-base * 4 !default;
+$h2-font-size: $font-size-base * 3.5 !default;
+$h3-font-size: $font-size-base * 3 !default;
+$h4-font-size: $font-size-base * 2 !default;
+$h5-font-size: $font-size-base * 1.5 !default;
 $h6-font-size: $font-size-base * 1.125 !default;
+// scss-docs-end font-variables
 
+// scss-docs-start font-sizes
 $font-sizes: (
   1: $h1-font-size,
   2: $h2-font-size,
@@ -38,74 +45,82 @@ $font-sizes: (
   5: $h5-font-size,
   6: $h6-font-size
 ) !default;
+// scss-docs-end font-sizes
 
-$h1-font-weight: $font-weight-bolder !default;
-$h2-font-weight: $font-weight-bolder !default;
-$h3-font-weight: $font-weight-bolder !default;
-$h4-font-weight: $font-weight-bold !default;
-$h5-font-weight: $font-weight-semibold !default;
-$h6-font-weight: $font-weight-semibold !default;
-
-$font-weights: (
-  1: $h1-font-weight,
-  2: $h2-font-weight,
-  3: $h3-font-weight,
-  4: $h4-font-weight,
-  5: $h5-font-weight,
-  6: $h6-font-weight
-) !default;
-
-$headings-margin-bottom: $spacer * .5 !default;
+// scss-docs-start headings-variables
+$headings-margin-bottom: 0 !default;
 $headings-font-family: null !default;
 $headings-font-style: null !default;
 $headings-line-height: 1.2 !default;
 $headings-color: null !default;
+// scss-docs-end headings-variables
+
+// scss-docs-start display-headings
+$display1-font-size: 7.5rem !default;
+$display2-font-size: 4.5rem !default;
+$display3-font-size: 4rem !default;
+$display4-font-size: 3.5rem !default;
+$display5-font-size: 3rem !default;
+$display6-font-size: 2.5rem !default;
 
 $display-font-sizes: (
-  1: 5rem,
-  2: 4.5rem,
-  3: 4rem,
-  4: 3.5rem,
-  5: 3rem,
-  6: 2.5rem
+  1: $display1-font-size,
+  2: $display2-font-size,
+  3: $display3-font-size,
+  4: $display4-font-size,
+  5: $display5-font-size,
+  6: $display6-font-size
 ) !default;
 
-$display-font-weight: 700 !default;
-$display-line-height: 1.3 !default;
+$display-font-family: null !default;
+$display-font-style:  null !default;
+$display-font-weight: $font-weight-base !default;
+$display-line-height: $headings-line-height !default;
+// scss-docs-end display-headings
 
-// $lead-font-size: $font-size-base * 1.25 !default;
-// $lead-font-weight: 300 !default;
+// scss-docs-start type-variables
+$lead-font-size: $font-size-base * 1.25 !default;
+$lead-font-weight: $font-weight-normal !default;
 
-$small-font-size: .75rem !default;
+// custom
+$subparagraph-font-size: .875rem !default;
+// end custom
 
-// $sub-sup-font-size: .75em !default;
+$small-font-size: .813rem !default;
 
-// $text-muted: rgba(var(--#{$prefix}body-color-rgb), .75) !default;
+$sub-sup-font-size: .75em !default;
 
-// $initialism-font-size: $small-font-size !default;
+// fusv-disable
+$text-muted: var(--#{$prefix}gray) !default;
+// fusv-enable
 
-// $blockquote-margin-y: $spacer !default;
-// $blockquote-font-size: $font-size-base * 1.25 !default;
-// $blockquote-footer-color: $gray-600 !default;
-// $blockquote-footer-font-size: $small-font-size !default;
+$initialism-font-size: $small-font-size !default;
 
-// $hr-margin-y: $spacer !default;
-// $hr-color: inherit !default;
+$blockquote-margin-y: $spacer !default;
+$blockquote-font-size: $font-size-base * 1.25 !default;
+$blockquote-footer-color: $gray-600 !default;
+$blockquote-footer-font-size: $small-font-size !default;
 
-// $hr-bg-color: null !default; // Deprecated in v5.2.0
-// $hr-height: null !default; // Deprecated in v5.2.0
+$hr-margin-y: $spacer !default;
+$hr-color: inherit !default;
 
-// $hr-border-color: null !default; // Allows for inherited colors
-// $hr-border-width: $border-width !default;
-// $hr-opacity: .25 !default;
+// fusv-disable
+$hr-bg-color: null !default; // Deprecated in v5.2.0
+$hr-height: null !default; // Deprecated in v5.2.0
+// fusv-enable
 
-// $legend-margin-bottom: .5rem !default;
-// $legend-font-size: 1.5rem !default;
-// $legend-font-weight: null !default;
+$hr-border-color: $border-color !default; // Allows for inherited colors
+$hr-border-width: $border-width !default;
+$hr-opacity: 1 !default;
 
-// $dt-font-weight: $font-weight-bold !default;
+$legend-margin-bottom: .5rem !default;
+$legend-font-size: 1.5rem !default;
+$legend-font-weight: null !default;
 
-// $list-inline-padding: .5rem !default;
+$dt-font-weight: $font-weight-bold !default;
 
-// $mark-padding: .1875em !default;
-// $mark-bg: $yellow-100 !default;
+$list-inline-padding: .5rem !default;
+
+$mark-padding: .1875em !default;
+$mark-bg: $yellow-100 !default;
+// scss-docs-end type-variables

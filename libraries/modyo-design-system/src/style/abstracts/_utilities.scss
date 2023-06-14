@@ -1,0 +1,61 @@
+/* stylelint-disable scss/dollar-variable-default */
+// Theme utilities
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "opacity": map-merge(
+      map-get($utilities, "opacity"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "opacity"), "values"),
+          (
+            40: .4,
+          )
+        )
+      )
+    ),
+    "color": map-merge(
+      map-get($utilities, "color"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "color"), "values"),
+          $all-colors-text,
+        )
+      )
+    ),
+    "background-color": map-merge(
+      map-get($utilities, "background-color"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "background-color"), "values"),
+          map-merge($all-colors-bg, $bg-soft-colors),
+        )
+      )
+    ),
+    "text-opacity": map-merge(
+      map-get($utilities, "text-opacity"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "text-opacity"), "values"),
+          (
+            40: .4,
+          )
+        )
+      )
+    ),
+    "border-color": map-merge(
+      map-get($utilities, "border-color"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "border-color"), "values"),
+          $all-colors-border,
+        )
+      )
+    ),
+    "cursor": (
+      property: cursor,
+      values: $cursors,
+    ),
+  )
+);

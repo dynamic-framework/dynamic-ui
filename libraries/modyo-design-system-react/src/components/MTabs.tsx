@@ -4,37 +4,39 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
 } from 'react';
 import type { PropsWithChildren } from 'react';
 import classnames from 'classnames';
 
-import { MIcon } from './proxies';
-
 export type TabOption = {
   label: string;
   tab: string;
-  icon?: string;
-  disabled?: boolean;
+  isDisabled?: boolean;
 };
 
 type Props = PropsWithChildren<{
   onChange: (option: TabOption) => void;
   options: Array<TabOption>;
   defaultSelected: string;
-  variant?: 'pills' | 'group' | undefined;
   className?: string;
+  isVertical?: boolean;
 }>;
 
-const TabContext = createContext<string>('');
+type TabContextState = {
+  isSelected: (tab: TabOption['tab']) => boolean;
+};
+
+const TabContext = createContext<TabContextState | undefined>(undefined);
 
 export default function MTabs(
   {
     children,
-    className,
     defaultSelected,
     onChange,
     options,
-    variant,
+    className,
+    isVertical,
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -50,47 +52,51 @@ export default function MTabs(
     setSelected(defaultSelected);
   }, [defaultSelected]);
 
+  const isSelected = useCallback((tab: TabOption['tab']) => (
+    selected === tab
+  ), [selected]);
+
+  const value = useMemo(() => ({
+    isSelected,
+  }), [isSelected]);
+
   return (
-    <TabContext.Provider value={selected}>
-      <nav className="tabs">
-        <div
-          className={
-            classnames(
-              'tab-list',
-              {
-                [variant as string]: !!variant,
-              },
-              className,
-            )
-          }
-          role="tablist"
-        >
+    <TabContext.Provider value={value}>
+      <div
+        className={classnames({
+          'm-tabs': true,
+          'm-tabs-vertical': isVertical,
+        })}
+      >
+        <nav className="nav">
           {options.map((option) => (
             <button
               key={option.label}
+              id={`${option.tab}Tab`}
               className={
                 classnames(
-                  'tab',
+                  'nav-link',
                   {
-                    selected: option.tab === selected,
-                    'tab-icon': !!option.icon,
+                    active: option.tab === selected,
                   },
+                  className,
                 )
               }
               type="button"
               role="tab"
-              disabled={option.disabled}
+              aria-controls={`${option.tab}Pane`}
+              aria-selected={option.tab === selected}
+              disabled={option.isDisabled}
               onClick={() => onSelect(option)}
             >
-              {option.icon && (
-                <MIcon icon={option.icon} />
-              )}
               {option.label}
             </button>
           ))}
+        </nav>
+        <div className="tab-content">
+          {children}
         </div>
-      </nav>
-      {children}
+      </div>
     </TabContext.Provider>
   );
 }

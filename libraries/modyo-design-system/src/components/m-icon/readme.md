@@ -7,17 +7,19 @@
 
 ## Properties
 
-| Property            | Attribute          | Description                         | Type                  | Default                  |
-| ------------------- | ------------------ | ----------------------------------- | --------------------- | ------------------------ |
-| `backgroundColor`   | `background-color` | To set background color             | `string \| undefined` | `undefined`              |
-| `color`             | `color`            | To set css color                    | `string \| undefined` | `undefined`              |
-| `duration`          | `duration`         | Loading animation duration          | `number`              | `1.8`                    |
-| `familyClass`       | `family-class`     | Family class                        | `string`              | `state.iconFamilyClass`  |
-| `familyPrefix`      | `family-prefix`    | Family prefix                       | `string`              | `state.iconFamilyPrefix` |
-| `icon` _(required)_ | `icon`             | Name of icon to use (in kebab-case) | `string`              | `undefined`              |
-| `isLoading`         | `is-loading`       | Is loading                          | `boolean`             | `false`                  |
-| `size`              | `size`             | Font size of the icon               | `string \| undefined` | `'inherit'`              |
-| `theme`             | `theme`            | Theme of the icon                   | `string \| undefined` | `undefined`              |
+| Property            | Attribute          | Description                                        | Type                  | Default                                                |
+| ------------------- | ------------------ | -------------------------------------------------- | --------------------- | ------------------------------------------------------ |
+| `backgroundColor`   | `background-color` | Icon background color in css color unit or var     | `string \| undefined` | `undefined`                                            |
+| `circleSize`        | `circle-size`      | Circle size in css length unit                     | `string \| undefined` | ``calc(var(--${PREFIX_BS}m-icon-component-size) * 1)`` |
+| `color`             | `color`            | Icon color in css color unit or var                | `string \| undefined` | `undefined`                                            |
+| `familyClass`       | `family-class`     | Change the family class to use another icon suite  | `string`              | `state.iconFamilyClass`                                |
+| `familyPrefix`      | `family-prefix`    | Change the family prefix to use another icon suite | `string`              | `state.iconFamilyPrefix`                               |
+| `hasCircle`         | `has-circle`       | Add circle around the icon                         | `boolean`             | `false`                                                |
+| `icon` _(required)_ | `icon`             | Name of icon to use (in kebab-case)                | `string`              | `undefined`                                            |
+| `isLoading`         | `is-loading`       | Enable loading animation                           | `boolean`             | `false`                                                |
+| `loadingDuration`   | `loading-duration` | Loading animation duration, in seconds             | `number`              | `1.8`                                                  |
+| `size`              | `size`             | Size of the icon in css length unit                | `string \| undefined` | `'1.5rem'`                                             |
+| `theme`             | `theme`            | Theme of the icon                                  | `string \| undefined` | `undefined`                                            |
 
 
 ## Dependencies
@@ -26,34 +28,26 @@
 
  - [m-alert](../m-alert)
  - [m-button](../m-button)
- - [m-counter](../m-counter)
- - [m-coupon](../m-coupon)
- - [m-currency-base](../m-currency-base)
- - [m-hint](../m-hint)
+ - [m-chip](../m-chip)
  - [m-input](../m-input)
- - [m-list-item](../m-list-item)
- - [m-pin](../m-pin)
- - [m-quick-action](../m-quick-action)
- - [m-search](../m-search)
- - [m-select](../m-select)
- - [m-shortcut-toggle](../m-shortcut-toggle)
+ - [m-input-pin](../m-input-pin)
+ - [m-input-select](../m-input-select)
+ - [m-modal](../m-modal)
+ - [m-offcanvas](../m-offcanvas)
+ - [m-quick-action-button](../m-quick-action-button)
 
 ### Graph
 ```mermaid
 graph TD;
   m-alert --> m-icon
   m-button --> m-icon
-  m-counter --> m-icon
-  m-coupon --> m-icon
-  m-currency-base --> m-icon
-  m-hint --> m-icon
+  m-chip --> m-icon
   m-input --> m-icon
-  m-list-item --> m-icon
-  m-pin --> m-icon
-  m-quick-action --> m-icon
-  m-search --> m-icon
-  m-select --> m-icon
-  m-shortcut-toggle --> m-icon
+  m-input-pin --> m-icon
+  m-input-select --> m-icon
+  m-modal --> m-icon
+  m-offcanvas --> m-icon
+  m-quick-action-button --> m-icon
   style m-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

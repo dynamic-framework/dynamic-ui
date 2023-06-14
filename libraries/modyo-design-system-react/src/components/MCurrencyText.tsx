@@ -2,7 +2,7 @@ import useFormatCurrency from '../hooks/useFormatCurrency';
 
 type Props = {
   value: number;
-  className: string;
+  className?: string;
 };
 
 export default function MCurrencyText(

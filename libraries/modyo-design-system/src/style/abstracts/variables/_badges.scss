@@ -1,10 +1,15 @@
-$badge-font-size: .75rem !default;
+// Badges
+
+// scss-docs-start badge-variables
+$badge-font-size: $small-font-size !default;
 $badge-font-weight: $font-weight-normal !default;
-$badge-color: $white !default;
-$badge-padding-y: .25rem !default;
-$badge-padding-x: .75rem !default;
+$badge-color: $color-contrast-dark !default;
+$badge-padding-y: $spacer-1 !default;
+$badge-padding-x: $spacer-2 !default;
 $badge-border-radius: $border-radius-sm !default;
-$badge-color-light: $gray-600 !default;
-$badge-line-height: 1.125rem !default;
-$badge-dot-width: .75rem !default;
-$badge-dot-height: .75rem !default;
+
+// custom
+$badge-bg: $color-contrast-light !default;
+$badge-dot-height: $spacer-3 !default;
+// end custom
+// scss-docs-end badge-variables

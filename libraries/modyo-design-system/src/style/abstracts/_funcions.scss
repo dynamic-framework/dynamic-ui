@@ -14,3 +14,14 @@
   $result: math.div($value, $base) * 1rem;
   @return $result;
 }
+
+@function map-prev-key($map, $text) {
+  $new-map: ();
+
+  @each $key, $value in $map {
+    $new-key: "#{$text}-#{$key}";
+    $new-map: map-merge($new-map, ($new-key: $value));
+  }
+
+  @return $new-map;
+}
