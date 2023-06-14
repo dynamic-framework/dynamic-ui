@@ -37,11 +37,16 @@
     border: 0;
   }
 
-  @each $theme, $value in $theme-colors {
+  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
     $color: color-contrast($value);
     &.m-chip-#{$theme} {
       --#{$prefix}m-chip-color: var(--#{$prefix}#{$theme}-700);
       --#{$prefix}m-chip-bg: var(--#{$prefix}#{$theme}-100);
     }
+  }
+
+  &.m-chip-light {
+    --#{$prefix}m-chip-color: var(--#{$prefix}gray);
+    --#{$prefix}m-chip-bg: var(--#{$prefix}gray-100);
   }
 }
