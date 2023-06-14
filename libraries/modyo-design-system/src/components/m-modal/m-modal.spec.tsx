@@ -16,13 +16,7 @@ it('should render my component', async () => {
   });
   expect(page.root).toEqualHtml(`
     <m-modal>
-      <div 
-        aria-hidden="false" 
-        aria-labelledby="${modal.name}Label" 
-        class="d-block fade modal show" 
-        id="${modal.name}" 
-        tabindex="-1"
-      >
+      <div aria-hidden="false" aria-labelledby="myModalLabel" class="fade m-modal modal show" id="myModal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content"></div>
         </div>
@@ -54,26 +48,23 @@ it('should render my component with header, body and footer slot', async () => {
   });
   expect(page.root).toEqualHtml(`
     <m-modal>
-      <div 
-        aria-hidden="false" 
-        aria-labelledby="${modal.name}Label" 
-        class="d-block fade modal show" 
-        id="${modal.name}" 
-        tabindex="-1"
-      >
+      <div aria-hidden="false" aria-labelledby="myModalLabel" class="fade m-modal modal show" id="myModal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <div slot="header">
-                Test Header
+              <div class="m-modal-slot">
+                <div slot="header">
+                  Test Header
+                </div>
               </div>
             </div>
-            <div class="modal-body">
+            <div class="m-modal-slot modal-body">
               <div slot="body">
                 Test Body
               </div>
             </div>
-            <div class="modal-footer">
+            <div class="m-modal-separator"></div>
+            <div class="m-modal-action-fill m-modal-slot modal-footer">
               <div slot="footer">
                 Test Footer
               </div>

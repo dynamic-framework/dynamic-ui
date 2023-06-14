@@ -8,15 +8,11 @@ import {
 } from '@stencil/core';
 
 import { ClassMap } from '../../utils/component-interface';
-import { PREFIX_BS } from '../../utils/component-config';
+import { PREFIX_BS } from '../../utils';
 
 import { ModalSize, FullScreenFrom } from './m-modal-interface';
 
-@Component({
-  tag: 'm-modal',
-  styleUrl: 'm-modal.scss',
-  shadow: false,
-})
+@Component({ tag: 'm-modal' })
 export class MModal {
   @Element() el!: HTMLMModalElement;
 
@@ -24,11 +20,6 @@ export class MModal {
    * the name of the modal
    */
   @Prop() name!: string;
-
-  /**
-   * Close button text
-   */
-  @Prop() closeText?: string;
 
   /**
    * Is backdrop static
@@ -51,6 +42,11 @@ export class MModal {
   @Prop() isFullScreen?: boolean;
 
   /**
+   * Place modal inline
+   */
+  @Prop() isInline?: boolean = false;
+
+  /**
    * Minimum size to apply the fullscreen
    */
   @Prop() fullScreenFrom?: FullScreenFrom;
@@ -61,14 +57,14 @@ export class MModal {
   @Prop() modalSize?: ModalSize;
 
   /**
-   * Background image header
-   */
-  @Prop() imageHeader?: string;
-
-  /**
    * No display close button
    */
   @Prop() showCloseButton?: boolean;
+
+  /**
+   * Footer action direction
+   */
+  @Prop() footerActionPlacement?: 'start' | 'end' | 'fill' = 'fill';
 
   /**
    * Emitted when the input value has changed
@@ -112,7 +108,7 @@ export class MModal {
   render() {
     return (
       <div
-        class="modal fade show d-block"
+        class="m-modal modal fade show"
         id={this.name}
         tabindex="-1"
         aria-labelledby={`${this.name}Label`}
@@ -121,42 +117,41 @@ export class MModal {
           [`data-${PREFIX_BS}backdrop`]: 'static',
           [`data-${PREFIX_BS}keyboard`]: 'false',
         })}
+        style={{ ...this.isInline && { position: 'unset' } }}
       >
-        <div
-          class={this.generateModalDialogClasses()}
-          {...this.imageHeader && ({ style: { [`--${PREFIX_BS}header-bg-image`]: `url("${this.imageHeader}")` } })}
-        >
+        <div class={this.generateModalDialogClasses()}>
           <div class="modal-content">
-            {this.header && (
+            {(this.header || this.showCloseButton) && (
               <div
-                class={{
-                  'modal-header': true,
-                  'modal-header-bg-image': !!this.imageHeader,
-                }}
+                class="modal-header"
               >
-                <slot name="header" />
                 {this.showCloseButton && (
                   <button
                     type="button"
-                    class={{
-                      'btn-close': !this.closeText,
-                      'btn-close-text': !!this.closeText,
-                    }}
+                    class="m-modal-close"
                     aria-label="Close"
                     onClick={this.closeHandler}
                   >
-                    {this.closeText && (this.closeText)}
+                    <m-icon icon="x-lg" />
                   </button>
+                )}
+                {this.header && (
+                  <div class="m-modal-slot">
+                    <slot name="header" />
+                  </div>
                 )}
               </div>
             )}
             {this.body && (
-              <div class="modal-body">
+              <div class="m-modal-slot modal-body">
                 <slot name="body" />
               </div>
             )}
             {this.footer && (
-              <div class="modal-footer">
+              <div class="m-modal-separator" />
+            )}
+            {this.footer && (
+              <div class={`m-modal-slot modal-footer m-modal-action-${this.footerActionPlacement}`}>
                 <slot name="footer" />
               </div>
             )}

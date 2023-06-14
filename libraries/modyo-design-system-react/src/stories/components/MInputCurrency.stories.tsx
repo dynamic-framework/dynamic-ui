@@ -82,6 +82,10 @@ const config: Meta<typeof MInputCurrency> = {
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
+    currencyCode: {
+      control: 'string',
+      type: 'string',
+    },
     isInvalid: {
       control: 'boolean',
       type: 'boolean',
@@ -214,5 +218,18 @@ export const Disabled: Story = {
     minValue: 0,
     maxValue: 100000,
     isDisabled: true,
+  },
+};
+
+export const WithCurrencyCode: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyCode: 'CLP',
   },
 };

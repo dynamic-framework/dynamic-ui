@@ -1,8 +1,11 @@
 // Offcanvas
 
 // scss-docs-start offcanvas-variables
-$offcanvas-padding-y: $modal-inner-padding !default;
-$offcanvas-padding-x: $modal-inner-padding !default;
+$offcanvas-padding-y: $spacer-4 !default;
+// custom
+$offcanvas-footer-gap: $spacer-4 !default;
+// end custom
+$offcanvas-padding-x: $spacer-4 !default;
 $offcanvas-horizontal-width: 400px !default;
 $offcanvas-vertical-height: 30vh !default;
 $offcanvas-transition-duration: .3s !default;

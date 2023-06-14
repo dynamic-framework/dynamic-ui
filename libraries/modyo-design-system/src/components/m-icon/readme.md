@@ -32,6 +32,8 @@
  - [m-input](../m-input)
  - [m-input-pin](../m-input-pin)
  - [m-input-select](../m-input-select)
+ - [m-modal](../m-modal)
+ - [m-offcanvas](../m-offcanvas)
  - [m-quick-action-button](../m-quick-action-button)
 
 ### Graph
@@ -43,6 +45,8 @@ graph TD;
   m-input --> m-icon
   m-input-pin --> m-icon
   m-input-select --> m-icon
+  m-modal --> m-icon
+  m-offcanvas --> m-icon
   m-quick-action-button --> m-icon
   style m-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

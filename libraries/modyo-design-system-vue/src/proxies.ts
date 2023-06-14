@@ -176,6 +176,7 @@ export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurren
   'minValue',
   'maxValue',
   'currencyOptions',
+  'currencyCode',
   'mChange'
 ]);
 
@@ -283,26 +284,27 @@ export const MInputSwitch = /*@__PURE__*/ defineContainer<JSX.MInputSwitch>('m-i
 
 export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
   'name',
-  'closeText',
   'isStatic',
   'isScrollable',
   'isCentered',
   'isFullScreen',
+  'isInline',
   'fullScreenFrom',
   'modalSize',
-  'imageHeader',
   'showCloseButton',
+  'footerActionPlacement',
   'mClose'
 ]);
 
 
 export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offcanvas', undefined, [
   'name',
-  'closeText',
   'isStatic',
   'isScrollable',
   'showCloseButton',
   'openFrom',
+  'footerActionPlacement',
+  'isInline',
   'mClose'
 ]);
 

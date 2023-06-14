@@ -80,6 +80,10 @@ const config: Meta<typeof MInputCurrencyBase> = {
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
+    currencyCode: {
+      control: 'string',
+      type: 'string',
+    },
     isInvalid: {
       control: 'boolean',
       type: 'boolean',
@@ -197,5 +201,24 @@ export const Disabled: Story = {
       decimal: '.',
     },
     isDisabled: true,
+  },
+};
+
+export const WithCurrencyCode: Story = {
+  args: {
+    mId: 'componentId',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyCode: 'CLP',
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
   },
 };

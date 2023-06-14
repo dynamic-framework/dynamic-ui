@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { MButton, MModal } from '../../components';
-import { ModalContextProvider, useModalContext } from '../../contexts';
+import { ModalContextProvider, useModalContext as useModalContextHook } from '../../contexts';
 import type { ModalProps } from '../../contexts';
 
 const ExampleModal = ({ closeModal }: ModalProps) => (
@@ -12,14 +12,29 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
     showCloseButton
     onMClose={() => closeModal()}
   >
-    <div slot="header">text on slot header</div>
-    <div slot="body">text on slot body</div>
+    <div slot="header">
+      <h5 className="fw-bold">Do you want to reject the offer?</h5>
+    </div>
+    <div slot="body">
+      Modal body
+    </div>
+    <div slot="footer">
+      <MButton
+        text="cancel"
+        theme="secondary"
+        variant="outline"
+        className="d-grid"
+        isPill
+        onMClick={() => closeModal()}
+      />
+      <MButton text="ok" className="d-grid" isPill />
+    </div>
   </MModal>
 );
 
 const ExampleChildren = () => {
-  const { openModal } = useModalContext();
-  return <MButton text="Show Modal" onClick={() => openModal('example')} />;
+  const { openModal } = useModalContextHook();
+  return <MButton text="Open Modal" onClick={() => openModal('example')} />;
 };
 
 const Example = () => (
@@ -34,13 +49,13 @@ const Example = () => (
 );
 
 const config: Meta<typeof Example> = {
-  title: 'Design System/Alpha/hooks/useModalContext',
+  title: 'Design System/Patterns/Modal',
   component: Example,
 };
 
 export default config;
 type Story = StoryObj<typeof MModal>;
 
-export const Default: Story = {
+export const useModalContext: Story = {
   render: () => <Example />,
 };

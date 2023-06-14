@@ -436,6 +436,10 @@ export namespace Components {
     }
     interface MInputCurrencyBase {
         /**
+          * Currency code
+         */
+        "currencyCode"?: string;
+        /**
           * Options for the m-input-currency-base
          */
         "currencyOptions": Options;
@@ -836,17 +840,13 @@ export namespace Components {
     }
     interface MModal {
         /**
-          * Close button text
+          * Footer action direction
          */
-        "closeText"?: string;
+        "footerActionPlacement"?: 'start' | 'end' | 'fill';
         /**
           * Minimum size to apply the fullscreen
          */
         "fullScreenFrom"?: FullScreenFrom;
-        /**
-          * Background image header
-         */
-        "imageHeader"?: string;
         /**
           * Is modal centered
          */
@@ -855,6 +855,10 @@ export namespace Components {
           * Is fullscreen in all sizes
          */
         "isFullScreen"?: boolean;
+        /**
+          * Place modal inline
+         */
+        "isInline"?: boolean;
         /**
           * Is modal scrollable
          */
@@ -878,9 +882,13 @@ export namespace Components {
     }
     interface MOffcanvas {
         /**
-          * Close button text
+          * Footer action direction
          */
-        "closeText"?: string;
+        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        /**
+          * Place offcanvas inline
+         */
+        "isInline"?: boolean;
         /**
           * Is body scrollable while offcanvas is active
          */
@@ -896,7 +904,7 @@ export namespace Components {
         /**
           * Position to show offcanvas from
          */
-        "openFrom": PositionToggleFrom;
+        "openFrom"?: PositionToggleFrom;
         /**
           * No display close button
          */
@@ -1739,6 +1747,10 @@ declare namespace LocalJSX {
     }
     interface MInputCurrencyBase {
         /**
+          * Currency code
+         */
+        "currencyCode"?: string;
+        /**
           * Options for the m-input-currency-base
          */
         "currencyOptions": Options;
@@ -2179,17 +2191,13 @@ declare namespace LocalJSX {
     }
     interface MModal {
         /**
-          * Close button text
+          * Footer action direction
          */
-        "closeText"?: string;
+        "footerActionPlacement"?: 'start' | 'end' | 'fill';
         /**
           * Minimum size to apply the fullscreen
          */
         "fullScreenFrom"?: FullScreenFrom;
-        /**
-          * Background image header
-         */
-        "imageHeader"?: string;
         /**
           * Is modal centered
          */
@@ -2198,6 +2206,10 @@ declare namespace LocalJSX {
           * Is fullscreen in all sizes
          */
         "isFullScreen"?: boolean;
+        /**
+          * Place modal inline
+         */
+        "isInline"?: boolean;
         /**
           * Is modal scrollable
          */
@@ -2225,9 +2237,13 @@ declare namespace LocalJSX {
     }
     interface MOffcanvas {
         /**
-          * Close button text
+          * Footer action direction
          */
-        "closeText"?: string;
+        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        /**
+          * Place offcanvas inline
+         */
+        "isInline"?: boolean;
         /**
           * Is body scrollable while offcanvas is active
          */
