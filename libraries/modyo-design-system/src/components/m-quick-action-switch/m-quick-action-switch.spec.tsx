@@ -22,17 +22,17 @@ it('should render my component', async () => {
   });
   expect(page.root).toEqualHtml(`
     <m-quick-action-switch value="value">
-      <label class="m-quick-action-switch" htmlfor="component">
+      <button class="m-quick-action-switch">
         <div class="m-quick-action-switch-content">
-          <m-input-switch mid="component" name="name"></m-input-switch>
-          <span class="m-quick-action-switch-label">
+          <m-input-switch isreadonly="" mid="component" name="name"></m-input-switch>
+          <label class="m-quick-action-switch-label" htmlfor="component">
             total
-          </span>
+          </label>
         </div>
         <div class="m-quick-action-switch-hint">
           $ 7.432.450
         </div>
-      </label>
+      </button>
     </m-quick-action-switch>
   `);
 });
