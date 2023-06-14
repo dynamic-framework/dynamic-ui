@@ -435,14 +435,14 @@ export declare interface MInputSelect extends Components.MInputSelect {
 
 @ProxyCmp({
   defineCustomElementFn: defineMInputSwitch,
-  inputs: ['isChecked', 'isDisabled', 'label', 'mId', 'name']
+  inputs: ['isChecked', 'isDisabled', 'isReadonly', 'label', 'mId', 'name']
 })
 @Component({
   selector: 'm-input-switch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'isDisabled', 'label', 'mId', 'name'],
+  inputs: ['isChecked', 'isDisabled', 'isReadonly', 'label', 'mId', 'name'],
 })
 export class MInputSwitch {
   protected el: HTMLElement;
@@ -646,7 +646,7 @@ export class MQuickActionSwitch {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['mClick']);
   }
 }
 
@@ -655,7 +655,7 @@ export declare interface MQuickActionSwitch extends Components.MQuickActionSwitc
   /**
    * Emitted when the select value has changed
    */
-  mChange: EventEmitter<CustomEvent<string>>;
+  mClick: EventEmitter<CustomEvent<boolean>>;
 }
 
 

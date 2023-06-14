@@ -41,18 +41,18 @@ export class MQuickActionSwitch implements ComponentInterface {
   /**
    * Emitted when the select value has changed
    */
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
+  @Event({ eventName: 'mClick' }) mClick!: EventEmitter<boolean>;
 
-  private changeHandler = (event: CustomEvent) => {
+  private clickHandler = (event: MouseEvent) => {
     event.stopPropagation();
-    this.mChange.emit((event.target as HTMLInputElement).value);
+    this.mClick.emit(this.isChecked);
   };
 
   render() {
     return (
-      <label
+      <button
         class="m-quick-action-switch"
-        htmlFor={this.mId}
+        onClick={this.clickHandler}
       >
         <div class="m-quick-action-switch-content">
           <m-input-switch
@@ -60,16 +60,19 @@ export class MQuickActionSwitch implements ComponentInterface {
             name={this.name}
             isDisabled={this.isDisabled}
             isChecked={this.isChecked}
-            onMChange={this.changeHandler}
+            isReadonly
           />
-          <span class="m-quick-action-switch-label">
+          <label
+            class="m-quick-action-switch-label"
+            htmlFor={this.mId}
+          >
             {this.label}
-          </span>
+          </label>
         </div>
         <div class="m-quick-action-switch-hint">
           {this.hint}
         </div>
-      </label>
+      </button>
     );
   }
 }

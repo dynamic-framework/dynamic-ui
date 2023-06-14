@@ -824,7 +824,11 @@ export namespace Components {
         /**
           * Flag to disable the input
          */
-        "isDisabled": boolean;
+        "isDisabled"?: boolean;
+        /**
+          * Flag to disable the onMChange event
+         */
+        "isReadonly"?: boolean;
         /**
           * The text to display in the switch.
          */
@@ -2173,6 +2177,10 @@ declare namespace LocalJSX {
          */
         "isDisabled"?: boolean;
         /**
+          * Flag to disable the onMChange event
+         */
+        "isReadonly"?: boolean;
+        /**
           * The text to display in the switch.
          */
         "label"?: string;
@@ -2441,7 +2449,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MQuickActionSwitchCustomEvent<string>) => void;
+        "onMClick"?: (event: MQuickActionSwitchCustomEvent<boolean>) => void;
     }
     interface IntrinsicElements {
         "m-alert": MAlert;

@@ -7,10 +7,13 @@ import {
   EventEmitter,
   State,
   Watch,
+  Element,
 } from '@stencil/core';
 
 @Component({ tag: 'm-input-switch' })
 export class MInputSwitch implements ComponentInterface {
+  @Element() el!: HTMLMInputSwitchElement;
+
   /**
    * The text to display in the switch.
    */
@@ -34,7 +37,12 @@ export class MInputSwitch implements ComponentInterface {
   /**
    * Flag to disable the input
    */
-  @Prop() isDisabled = false;
+  @Prop() isDisabled?: boolean;
+
+  /**
+   * Flag to disable the onMChange event
+   */
+  @Prop() isReadonly?: boolean;
 
   /**
    * Emitted when the switch has changed
@@ -50,6 +58,10 @@ export class MInputSwitch implements ComponentInterface {
 
   connectedCallback() {
     this.internalIsChecked = this.isChecked;
+
+    if (this.isReadonly) {
+      this.el.onclick = () => false;
+    }
   }
 
   private changeHandler = (event: Event) => {

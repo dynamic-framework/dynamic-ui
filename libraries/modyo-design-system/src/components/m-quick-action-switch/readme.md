@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event     | Description                               | Type                  |
-| --------- | ----------------------------------------- | --------------------- |
-| `mChange` | Emitted when the select value has changed | `CustomEvent<string>` |
+| Event    | Description                               | Type                   |
+| -------- | ----------------------------------------- | ---------------------- |
+| `mClick` | Emitted when the select value has changed | `CustomEvent<boolean>` |
 
 
 ## Dependencies
