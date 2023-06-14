@@ -1,7 +1,7 @@
 {
   "name": "@modyo-dynamic/modyo-design-system-react",
   "sideEffects": false,
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "React specific wrapper for component-library",
   "license": "MIT",
   "repository": {
