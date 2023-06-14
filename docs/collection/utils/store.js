@@ -8,3 +8,4 @@ export function setIconSettings({ familyClass = 'bi', familyPrefix = 'bi-', }) {
   set('iconFamilyPrefix', familyPrefix);
 }
 export default state;
+//# sourceMappingURL=store.js.map

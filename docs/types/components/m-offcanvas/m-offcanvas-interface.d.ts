@@ -1,1 +1,1 @@
-export declare type PositionToggleFrom = 'top' | 'bottom' | 'start' | 'end';
+export type PositionToggleFrom = 'top' | 'bottom' | 'start' | 'end';

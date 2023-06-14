@@ -7,10 +7,6 @@ export declare class MModal {
    */
   name: string;
   /**
-   * Close button text
-   */
-  closeText?: string;
-  /**
    * Is backdrop static
    */
   isStatic?: boolean;
@@ -27,6 +23,10 @@ export declare class MModal {
    */
   isFullScreen?: boolean;
   /**
+   * Place modal inline
+   */
+  isInline?: boolean;
+  /**
    * Minimum size to apply the fullscreen
    */
   fullScreenFrom?: FullScreenFrom;
@@ -35,13 +35,13 @@ export declare class MModal {
    */
   modalSize?: ModalSize;
   /**
-   * Background image header
-   */
-  imageHeader?: string;
-  /**
    * No display close button
    */
   showCloseButton?: boolean;
+  /**
+   * Footer action direction
+   */
+  footerActionPlacement?: 'start' | 'end' | 'fill';
   /**
    * Emitted when the input value has changed
    */

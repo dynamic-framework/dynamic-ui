@@ -1,0 +1,1 @@
+{"version":3,"file":"m-offcanvas-interface.js","sourceRoot":"","sources":["../../../../src/components/m-offcanvas/m-offcanvas-interface.ts"],"names":[],"mappings":"","sourcesContent":["export type PositionToggleFrom = 'top' | 'bottom' | 'start' | 'end';\n"]}
