@@ -1,16 +1,17 @@
 import { h, } from '@stencil/core';
-import { prefixBS } from '../../utils/component-interface';
+import { PREFIX_BS } from '../../utils/component-config';
 export class MOffcanvas {
   constructor() {
     this.closeHandler = () => {
       this.mClose.emit();
     };
     this.name = undefined;
-    this.closeText = undefined;
     this.isStatic = undefined;
     this.isScrollable = undefined;
     this.showCloseButton = undefined;
-    this.openFrom = 'start';
+    this.openFrom = 'end';
+    this.footerActionPlacement = 'fill';
+    this.isInline = false;
   }
   componentWillLoad() {
     this.header = !!this.el.querySelector('[slot="header"]');
@@ -19,27 +20,14 @@ export class MOffcanvas {
   }
   render() {
     return (h("div", Object.assign({ class: `offcanvas offcanvas-${this.openFrom} show`, id: this.name, tabindex: "-1", "aria-labelledby": `${this.name}Label`, "aria-hidden": "false" }, this.isStatic && ({
-      [`data-${prefixBS}backdrop`]: 'static',
-      [`data-${prefixBS}keyboard`]: 'false',
+      [`data-${PREFIX_BS}backdrop`]: 'static',
+      [`data-${PREFIX_BS}keyboard`]: 'false',
     }), this.isScrollable && ({
-      [`data-${prefixBS}scroll`]: 'true',
-      [`data-${prefixBS}keyboard`]: 'false',
-    })), this.header && (h("div", { class: "offcanvas-header" }, h("slot", { name: "header" }), this.showCloseButton && (h("button", { type: "button", class: {
-        'btn-close': !this.closeText,
-        'btn-close-text': !!this.closeText,
-      }, "aria-label": "Close", onClick: this.closeHandler }, this.closeText && (this.closeText))))), this.body && (h("div", { class: "offcanvas-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: "offcanvas-footer" }, h("slot", { name: "footer" })))));
+      [`data-${PREFIX_BS}scroll`]: 'true',
+      [`data-${PREFIX_BS}keyboard`]: 'false',
+    }), { style: Object.assign({}, this.isInline && { position: 'absolute' }) }), (this.header || this.showCloseButton) && (h("div", { class: "offcanvas-header" }, this.header && (h("div", { class: "m-offcanvas-slot" }, h("slot", { name: "header" }))), this.showCloseButton && (h("button", { type: "button", class: "m-offcanvas-close", "aria-label": "Close", onClick: this.closeHandler }, h("m-icon", { icon: "x-lg" }))))), this.body && (h("div", { class: "m-offcanvas-slot offcanvas-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: `m-offcanvas-slot m-offcanvas-footer m-offcanvas-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))));
   }
   static get is() { return "m-offcanvas"; }
-  static get originalStyleUrls() {
-    return {
-      "$": ["m-offcanvas.scss"]
-    };
-  }
-  static get styleUrls() {
-    return {
-      "$": ["m-offcanvas.css"]
-    };
-  }
   static get properties() {
     return {
       "name": {
@@ -57,23 +45,6 @@ export class MOffcanvas {
           "text": "the name of the offcanvas"
         },
         "attribute": "name",
-        "reflect": false
-      },
-      "closeText": {
-        "type": "string",
-        "mutable": false,
-        "complexType": {
-          "original": "string",
-          "resolved": "string | undefined",
-          "references": {}
-        },
-        "required": false,
-        "optional": true,
-        "docs": {
-          "tags": [],
-          "text": "Close button text"
-        },
-        "attribute": "close-text",
         "reflect": false
       },
       "isStatic": {
@@ -132,7 +103,7 @@ export class MOffcanvas {
         "mutable": false,
         "complexType": {
           "original": "PositionToggleFrom",
-          "resolved": "\"bottom\" | \"end\" | \"start\" | \"top\"",
+          "resolved": "\"bottom\" | \"end\" | \"start\" | \"top\" | undefined",
           "references": {
             "PositionToggleFrom": {
               "location": "import",
@@ -141,14 +112,50 @@ export class MOffcanvas {
           }
         },
         "required": false,
-        "optional": false,
+        "optional": true,
         "docs": {
           "tags": [],
           "text": "Position to show offcanvas from"
         },
         "attribute": "open-from",
         "reflect": false,
-        "defaultValue": "'start'"
+        "defaultValue": "'end'"
+      },
+      "footerActionPlacement": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "'start' | 'end' | 'fill'",
+          "resolved": "\"end\" | \"fill\" | \"start\" | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Footer action direction"
+        },
+        "attribute": "footer-action-placement",
+        "reflect": false,
+        "defaultValue": "'fill'"
+      },
+      "isInline": {
+        "type": "boolean",
+        "mutable": false,
+        "complexType": {
+          "original": "boolean",
+          "resolved": "boolean | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Place offcanvas inline"
+        },
+        "attribute": "is-inline",
+        "reflect": false,
+        "defaultValue": "false"
       }
     };
   }
@@ -172,3 +179,4 @@ export class MOffcanvas {
   }
   static get elementRef() { return "el"; }
 }
+//# sourceMappingURL=m-offcanvas.js.map

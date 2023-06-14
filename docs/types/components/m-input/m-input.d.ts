@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '../../stencil-public-runtime';
-import { FormControlLayoutDirection } from '../../utils/component-interface';
 export declare class MInput implements ComponentInterface {
+  el: HTMLMInputElement;
   /**
    * The id of the input
    */
@@ -15,14 +15,14 @@ export declare class MInput implements ComponentInterface {
   label: string;
   /**
    * Icon for the label text
-   * */
-  labelIcon: string;
+   */
+  labelIcon?: string;
   /**
    * Icon label family class
    */
   labelIconFamilyClass?: string;
   /**
-   * Icon label family class
+   * Icon label family prefix
    */
   labelIconFamilyPrefix?: string;
   /**
@@ -38,13 +38,33 @@ export declare class MInput implements ComponentInterface {
    */
   value: string | number;
   /**
+   * Input mode
+   */
+  mInputMode?: string;
+  /**
+   * Pattern to validate
+   */
+  pattern?: string;
+  /**
    * Flag to disable the input
    */
   isDisabled: boolean;
   /**
+   * Flag to read only the input
+   */
+  isReadOnly: boolean;
+  /**
    * Flag for loading state.
   */
   isLoading: boolean;
+  /**
+   * Right icon family class
+   */
+  iconFamilyClass?: string;
+  /**
+   * Right icon family class
+   */
+  iconFamilyPrefix?: string;
   /**
    * Icon to display on input left
    */
@@ -70,41 +90,25 @@ export declare class MInput implements ComponentInterface {
    */
   iconEndFamilyPrefix?: string;
   /**
-   * Hint to display, also used to display validity feedback
+   * Hint to display
    */
   hint?: string;
-  /**
-   * Icon to display on hint left
-   */
-  hintIconStart?: string;
-  /**
-   * Hint left icon family class
-   */
-  hintIconStartFamilyClass?: string;
-  /**
-   * Hint left icon family class
-   */
-  hintIconStartFamilyPrefix?: string;
-  /**
-   * Icon to display on hint right
-   */
-  hintIconEnd?: string;
-  /**
-   * Hint right icon family class
-   */
-  hintIconEndFamilyClass?: string;
-  /**
-   * Hint right icon family class
-   */
-  hintIconEndFamilyPrefix?: string;
-  /**
-   * Change the layout direction to put the label on top or left of input
-   */
-  layoutDirection: FormControlLayoutDirection;
   /**
    * Add is-invalid class
    */
   isInvalid: boolean;
+  /**
+   * Add is-valid class
+   */
+  isValid: boolean;
+  /**
+   * Set focus to internal input
+   */
+  focusInput(): Promise<void>;
+  /**
+   * Set blur to internal input
+   */
+  blurInput(): Promise<void>;
   /**
    * Emitted when the input value has changed
    */
@@ -113,8 +117,34 @@ export declare class MInput implements ComponentInterface {
    * Emitted when blur the input
    */
   mBlur: EventEmitter;
+  /**
+   * Emitted when blur the input
+   */
+  mFocus: EventEmitter;
+  /**
+   * Emitted when blur the input
+   */
+  mWheel: EventEmitter;
+  /**
+   * Emitted when click on the left icon
+   */
+  mIconStartClick: EventEmitter<MouseEvent>;
+  /**
+   * Emitted when click on the right icon
+   */
+  mIconEndClick: EventEmitter<MouseEvent>;
+  /**
+   * HTML m-input element
+   */
+  private htmlInputElement?;
   private changeHandler;
   private blurHandler;
-  private generateHostClasses;
+  private focusHandler;
+  private wheelHandler;
+  private iconStartClickHandler;
+  private iconEndClickHandler;
+  private inputStart;
+  private inputEnd;
+  componentWillLoad(): void;
   render(): any;
 }

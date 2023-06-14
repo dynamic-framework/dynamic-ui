@@ -1,0 +1,10 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { MInputPin } from '../../components';
+declare const config: Meta<typeof MInputPin>;
+export default config;
+declare type Story = StoryObj<typeof MInputPin>;
+export declare const Default: Story;
+export declare const WithoutLabel: Story;
+export declare const Error: Story;
+export declare const Confirm: Story;
+export declare const Disabled: Story;

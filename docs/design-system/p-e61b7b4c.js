@@ -1,1 +1,0 @@
-import{s as o}from"./p-c721c866.js";const n=(n={})=>{if("undefined"==typeof window)return;const s={};n._ael&&(s.ael=n._ael),n._rel&&(s.rel=n._rel),n._ce&&(s.ce=n._ce),o(s)};export{n as i}

@@ -1,17 +1,25 @@
-import { r as registerInstance, h, H as Host } from './index-39190b44.js';
-
-const mBadgeCss = "@import url(\"https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap\"); .badge{--bs-badge-padding-x:0.75rem;--bs-badge-padding-y:0.25rem;--bs-badge-font-size:0.75rem;--bs-badge-font-weight:400;--bs-badge-color:#fff;--bs-badge-border-radius:0.5rem;display:inline-block;padding:var(--bs-badge-padding-y) var(--bs-badge-padding-x);font-size:var(--bs-badge-font-size);font-weight:var(--bs-badge-font-weight);line-height:1;color:var(--bs-badge-color);text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:var(--bs-badge-border-radius)}.badge:empty{display:none}.btn .badge{position:relative;top:-1px}.badge{--bs-badge-line-height:1.125rem;line-height:var(--bs-badge-line-height)}.badge.bg-light{--bs-badge-color-light:#61616d;color:var(--bs-badge-color-light)}.badge.badge-dot{--bs-badge-dot-width:0.75rem;--bs-badge-dot-height:0.75rem;width:var(--bs-badge-dot-width);height:var(--bs-badge-dot-height);padding:0;margin:0}.badge.badge-dot:empty{display:inline-block}";
+import { r as registerInstance, h } from './index-c7f2daf2.js';
 
 const MBadge = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
     this.theme = 'primary';
-    this.text = '';
+    this.text = undefined;
+    this.isDot = false;
+  }
+  // eslint-disable-next-line @stencil/own-methods-must-be-private
+  generateClasses() {
+    return {
+      'm-badge badge': true,
+      'badge-dot': this.isDot,
+      [`badge-${this.theme}`]: !!this.theme,
+    };
   }
   render() {
-    return (h(Host, { class: "d-inline-block" }, h("span", { class: `badge ${this.text === '' ? 'badge-dot' : ''} bg-${this.theme}` }, this.text)));
+    return (h("span", { class: this.generateClasses() }, h("span", null, this.text)));
   }
 };
-MBadge.style = mBadgeCss;
 
 export { MBadge as m_badge };
+
+//# sourceMappingURL=m-badge.entry.js.map
