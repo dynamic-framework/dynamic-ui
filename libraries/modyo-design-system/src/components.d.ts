@@ -846,7 +846,7 @@ export namespace Components {
         /**
           * Footer action direction
          */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
         /**
           * Minimum size to apply the fullscreen
          */
@@ -2201,7 +2201,7 @@ declare namespace LocalJSX {
         /**
           * Footer action direction
          */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
         /**
           * Minimum size to apply the fullscreen
          */
