@@ -7,7 +7,9 @@ import {
 } from '@stencil/core';
 
 import type {
-  ClassMap, ComponentSize, InputState,
+  ClassMap,
+  ComponentSize,
+  InputState,
 } from '../../utils/component-interface';
 
 import type { ButtonType, ButtonVariant } from './m-button-interface';
