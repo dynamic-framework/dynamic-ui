@@ -16,7 +16,7 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
       <h5 className="fw-bold">Do you want to reject the offer?</h5>
     </div>
     <div slot="body">
-      Modal body
+      <p className="py-3 px-5">Modal body</p>
     </div>
     <div slot="footer">
       <MButton
