@@ -170,11 +170,11 @@ export namespace Components {
         /**
           * Change the family class to use another icon suite
          */
-        "familyClass": string;
+        "familyClass"?: string;
         /**
           * Change the family prefix to use another icon suite
          */
-        "familyPrefix": string;
+        "familyPrefix"?: string;
         /**
           * Add circle around the icon
          */
@@ -850,7 +850,7 @@ export namespace Components {
         /**
           * Footer action direction
          */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
         /**
           * Minimum size to apply the fullscreen
          */
@@ -2209,7 +2209,7 @@ declare namespace LocalJSX {
         /**
           * Footer action direction
          */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
         /**
           * Minimum size to apply the fullscreen
          */
