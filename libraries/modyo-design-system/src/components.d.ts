@@ -88,7 +88,11 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
-          * Flag for loading state and disable button.
+          * Flag to disable the button, alias to state="disable"
+         */
+        "isDisabled": boolean;
+        /**
+          * Flag to loading state and disable button.
          */
         "isLoading": boolean;
         /**
@@ -1367,7 +1371,11 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
-          * Flag for loading state and disable button.
+          * Flag to disable the button, alias to state="disable"
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag to loading state and disable button.
          */
         "isLoading"?: boolean;
         /**

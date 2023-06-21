@@ -87,9 +87,14 @@ export class MButton implements ComponentInterface {
   @Prop() isPill = false;
 
   /**
-   * Flag for loading state and disable button.
+   * Flag to loading state and disable button.
    */
   @Prop() isLoading = false;
+
+  /**
+   * Flag to disable the button, alias to state="disable"
+   */
+  @Prop() isDisabled = false;
 
   /**
    * Emitted when the button has been clicked.
@@ -120,7 +125,7 @@ export class MButton implements ComponentInterface {
       <button
         class={this.generateClasses()}
         type={this.type}
-        disabled={this.state === 'disabled' || this.isLoading}
+        disabled={this.state === 'disabled' || this.isLoading || this.isDisabled}
         {...this.value && { value: this.value }}
         onClick={this.clickHandler}
       >
