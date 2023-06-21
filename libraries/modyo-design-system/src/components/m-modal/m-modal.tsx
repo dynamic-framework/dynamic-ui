@@ -64,7 +64,7 @@ export class MModal {
   /**
    * Footer action direction
    */
-  @Prop() footerActionPlacement?: 'start' | 'end' | 'fill' = 'fill';
+  @Prop() footerActionPlacement?: 'start' | 'end' | 'fill' | 'center' = 'fill';
 
   /**
    * Emitted when the input value has changed

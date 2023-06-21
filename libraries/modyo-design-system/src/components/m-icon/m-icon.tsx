@@ -58,12 +58,12 @@ export class MIcon {
   /**
    * Change the family class to use another icon suite
    */
-  @Prop() familyClass: string = state.iconFamilyClass;
+  @Prop() familyClass?: string = state.iconFamilyClass;
 
   /**
    * Change the family prefix to use another icon suite
    */
-  @Prop() familyPrefix: string = state.iconFamilyPrefix;
+  @Prop() familyPrefix?: string = state.iconFamilyPrefix;
 
   private getColorStyle() {
     if (this.color) {
@@ -112,8 +112,8 @@ export class MIcon {
   private generateClasses(): ClassMap {
     return {
       'm-icon': true,
-      [this.familyClass]: true,
-      [`${this.familyPrefix}${this.icon}`]: true,
+      [this.familyClass || state.iconFamilyClass]: true,
+      [`${this.familyPrefix || state.iconFamilyPrefix}${this.icon}`]: true,
       'm-icon-loading': this.isLoading,
     };
   }
