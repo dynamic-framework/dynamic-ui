@@ -88,7 +88,11 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
-          * Flag for loading state and disable button.
+          * Flag to disable the button, alias to state="disable"
+         */
+        "isDisabled": boolean;
+        /**
+          * Flag to loading state and disable button.
          */
         "isLoading": boolean;
         /**
@@ -166,11 +170,11 @@ export namespace Components {
         /**
           * Change the family class to use another icon suite
          */
-        "familyClass": string;
+        "familyClass"?: string;
         /**
           * Change the family prefix to use another icon suite
          */
-        "familyPrefix": string;
+        "familyPrefix"?: string;
         /**
           * Add circle around the icon
          */
@@ -846,7 +850,7 @@ export namespace Components {
         /**
           * Footer action direction
          */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
         /**
           * Minimum size to apply the fullscreen
          */
@@ -1367,7 +1371,11 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
-          * Flag for loading state and disable button.
+          * Flag to disable the button, alias to state="disable"
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag to loading state and disable button.
          */
         "isLoading"?: boolean;
         /**
@@ -2201,7 +2209,7 @@ declare namespace LocalJSX {
         /**
           * Footer action direction
          */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
         /**
           * Minimum size to apply the fullscreen
          */
