@@ -26,6 +26,11 @@ export class MQuickActionButton implements ComponentInterface {
   @Prop() actionLinkText?: string;
 
   /**
+   * Second action icon
+   */
+  @Prop() secondActionIcon?: string;
+
+  /**
    * Action link theme
    */
   @Prop() actionLinkTheme = 'secondary';
@@ -80,6 +85,11 @@ export class MQuickActionButton implements ComponentInterface {
    */
   @Event({ eventName: 'mClick' }) mClick!: EventEmitter;
 
+  /**
+   * Emitted when the input value has changed
+   */
+  @Event({ eventName: 'mClickSecondary' }) mClickSecondary!: EventEmitter;
+
   private globalClickHandler = () => {
     if (this.actionLinkText) {
       return;
@@ -94,6 +104,11 @@ export class MQuickActionButton implements ComponentInterface {
       return;
     }
     this.mClick.emit();
+  };
+
+  private secondActionLinkClickHandler = (event: MouseEvent) => {
+    event.stopPropagation();
+    this.mClickSecondary.emit();
   };
 
   private getTag() {
@@ -139,6 +154,19 @@ export class MQuickActionButton implements ComponentInterface {
             </small>
           </div>
         </div>
+        {this.secondActionIcon && (
+          <m-button
+            class="m-quick-action-button-second-action-link"
+            type="button"
+            variant="link"
+            iconStart={this.secondActionIcon}
+            family-iconStartFamilyClass={this.actionIconFamilyClass}
+            family-iconStartFamilyPrefix={this.actionIconFamilyPrefix}
+            size="sm"
+            theme={this.actionLinkTheme}
+            onClick={this.secondActionLinkClickHandler}
+          />
+        )}
         {this.actionLinkText ? (
           <m-button
             class="m-quick-action-button-action-link"

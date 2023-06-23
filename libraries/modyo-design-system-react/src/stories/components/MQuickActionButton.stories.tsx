@@ -17,6 +17,17 @@ const config: Meta<typeof MQuickActionButton> = {
       type: 'string',
       description: 'The subtitle',
     },
+    secondActionIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+      description: 'The second action icon',
+      table: { defaultValue: { summary: 'chevron-left' } },
+    },
     actionLinkText: {
       control: 'text',
       type: 'string',
@@ -80,6 +91,9 @@ const config: Meta<typeof MQuickActionButton> = {
     onMClick: {
       action: 'mClick',
     },
+    onMClickSecondary: {
+      action: 'mClickSecondary',
+    },
   },
 };
 
@@ -99,6 +113,24 @@ export const PersonalInfo: Story = {
   args: {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank **** 721',
+    representativeImage: 'https://i.pravatar.cc/150?img=2',
+  },
+};
+
+export const PersonalInfoDoubleAction: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MQuickActionButton {...args} />
+    </div>
+  ),
+
+  args: {
+    line1: 'Jessica Rabit',
+    line2: 'Toon Bank **** 721',
+    secondActionIcon: 'star',
     representativeImage: 'https://i.pravatar.cc/150?img=2',
   },
 };
