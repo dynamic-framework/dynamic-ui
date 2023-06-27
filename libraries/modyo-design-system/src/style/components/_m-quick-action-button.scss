@@ -2,16 +2,14 @@
   --#{$prefix}m-quick-action-button-gap: #{$quick-action-button-gap};
   --#{$prefix}m-quick-action-button-padding: #{$quick-action-button-padding};
   --#{$prefix}m-quick-action-button-bg: #{$quick-action-button-bg};
-  --#{$prefix}m-quick-action-button-border-color: #{$quick-action-button-border-color};
-  --#{$prefix}m-quick-action-button-border-style: #{$quick-action-button-border-style};
-  --#{$prefix}m-quick-action-button-border-width: #{$quick-action-button-border-width};
-  --#{$prefix}m-quick-action-button-border-radius: #{$quick-action-button-border-radius};
+  --#{$prefix}m-quick-action-button-border-radius: var(--#{$prefix}m-quick-action-button-component-border-radius, #{$quick-action-button-border-radius});
+  --#{$prefix}m-quick-action-button-border: #{$quick-action-button-border};
   --#{$prefix}m-quick-action-button-box-shadow: #{$quick-action-button-box-shadow};
 
-  --#{$prefix}m-quick-action-button-border-top: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
-  --#{$prefix}m-quick-action-button-border-right: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
-  --#{$prefix}m-quick-action-button-border-bottom: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
-  --#{$prefix}m-quick-action-button-border-left: var(--#{$prefix}m-quick-action-button-border-width) var(--#{$prefix}m-quick-action-button-border-style) var(--#{$prefix}m-quick-action-button-border-color);
+  --#{$prefix}m-quick-action-button-border-top: var(--#{$prefix}m-quick-action-button-component-border-top, var(--#{$prefix}m-quick-action-button-border));
+  --#{$prefix}m-quick-action-button-border-right: var(--#{$prefix}m-quick-action-button-component-border-right, var(--#{$prefix}m-quick-action-button-border));
+  --#{$prefix}m-quick-action-button-border-bottom: var(--#{$prefix}m-quick-action-button-component-border-bottom, var(--#{$prefix}m-quick-action-button-border));
+  --#{$prefix}m-quick-action-button-border-left: var(--#{$prefix}m-quick-action-button-component-border-left, var(--#{$prefix}m-quick-action-button-border));
 
   --#{$prefix}m-quick-action-button-line1-font-size: #{$quick-action-button-line1-font-size};
   --#{$prefix}m-quick-action-button-line1-font-weight: #{$quick-action-button-line1-font-weight};
@@ -22,6 +20,7 @@
   --#{$prefix}m-quick-action-button-line2-color: #{$quick-action-button-line2-color};
 
   --#{$prefix}m-quick-action-button-representative-image-size: #{$quick-action-button-representative-image-size};
+  --#{$prefix}m-quick-action-button-representative-image-border-radius: #{$quick-action-button-representative-image-border-radius};
   --#{$prefix}m-quick-action-button-representative-icon-size: #{$quick-action-button-representative-icon-size};
 
   --#{$prefix}m-quick-action-button-action-icon-color: #{$quick-action-button-action-icon-color};
@@ -71,7 +70,7 @@
     width: var(--#{$prefix}m-quick-action-button-representative-image-size);
     height: var(--#{$prefix}m-quick-action-button-representative-image-size);
     background-color: var(--#{$prefix}m-quick-action-button-action-icon-color);
-    border-radius: inherit;
+    border-radius: var(--#{$prefix}m-quick-action-button-representative-image-border-radius);
   }
 
   .m-quick-action-button-content {

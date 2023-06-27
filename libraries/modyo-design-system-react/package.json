@@ -48,7 +48,8 @@
     "date-fns": "^2.29.3",
     "i18next": "~21.9.0",
     "react-content-loader": "~6.2.0",
-    "react-datepicker": "~4.8.0"
+    "react-datepicker": "~4.8.0",
+    "react-dropzone": "^14.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

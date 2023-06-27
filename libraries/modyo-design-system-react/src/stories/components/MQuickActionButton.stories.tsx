@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
 
 import { MQuickActionButton } from '../../components';
 import { ALL_COLORS_WITH_EMPTY, ICONS } from '../constants';
@@ -170,5 +171,30 @@ export const Info: Story = {
     line2: 'Si no puedes pagar en este momento',
     representativeIcon: 'shuffle',
     representativeIconTheme: 'secondary',
+  },
+};
+
+export const PersonList: Story = {
+  render: (args) => (
+    <div
+      style={{ width: '320px', height: '320px' }}
+      className="d-flex flex-column align-items-stretch justify-content-center"
+    >
+      <MQuickActionButton
+        {...args}
+        style={{
+          [`--${PREFIX_BS}m-quick-action-button-component-border-radius`]: 0,
+          [`--${PREFIX_BS}m-quick-action-button-component-border-right`]: 0,
+          [`--${PREFIX_BS}m-quick-action-button-component-border-left`]: 0,
+          [`--${PREFIX_BS}m-quick-action-button-component-border-bottom`]: 0,
+        }}
+      />
+    </div>
+  ),
+
+  args: {
+    line1: 'Jessica Rabit',
+    line2: 'Toon Bank  **** 721',
+    representativeImage: 'https://i.pravatar.cc/150?img=2',
   },
 };
