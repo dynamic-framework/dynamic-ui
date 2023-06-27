@@ -37,13 +37,24 @@ export default function MBoxFile(
     ...dropzoneOptions
   }: Props,
 ) {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+  const {
+    acceptedFiles,
+    getRootProps,
+    getInputProps,
+  } = useDropzone({
     disabled: isDisabled,
     ...dropzoneOptions,
   });
 
   return (
-    <section className="m-box-file">
+    <section
+      className={classnames(
+        'm-box-file',
+        {
+          'm-box-file-selected': !!acceptedFiles.length,
+        },
+      )}
+    >
       <div
         {...getRootProps({
           className: classnames(
