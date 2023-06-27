@@ -26,11 +26,6 @@ export class MQuickActionButton implements ComponentInterface {
   @Prop() actionLinkText?: string;
 
   /**
-   * Second action icon
-   */
-  @Prop() secondActionIcon?: string;
-
-  /**
    * Action link theme
    */
   @Prop() actionLinkTheme = 'secondary';
@@ -39,6 +34,11 @@ export class MQuickActionButton implements ComponentInterface {
    * The icon to indicate the action
    */
   @Prop() actionIcon = 'chevron-right';
+
+  /**
+   * Second action icon
+   */
+  @Prop() secondaryActionIcon?: string;
 
   /**
    * Icon family class
@@ -99,14 +99,13 @@ export class MQuickActionButton implements ComponentInterface {
 
   private actionLinkClickHandler = (event: CustomEvent) => {
     event.stopPropagation();
-
     if (!this.actionLinkText) {
       return;
     }
     this.mClick.emit();
   };
 
-  private secondActionLinkClickHandler = (event: MouseEvent) => {
+  private secondActionLinkClickHandler = (event: CustomEvent) => {
     event.stopPropagation();
     this.mClickSecondary.emit();
   };
@@ -131,10 +130,10 @@ export class MQuickActionButton implements ComponentInterface {
                 : `var(--${PREFIX_BS}m-quick-action-button-representative-image-size)`
             )}
             icon={this.representativeIcon}
-            has-circle={this.representativeIconHasCircle}
+            hasCircle={this.representativeIconHasCircle}
             theme={this.representativeIconTheme}
-            family-class={this.representativeIconFamilyClass}
-            family-prefix={this.representativeIconFamilyPrefix}
+            familyClass={this.representativeIconFamilyClass}
+            familyPrefix={this.representativeIconFamilyPrefix}
           />
         )}
         {this.representativeImage && (
@@ -154,17 +153,17 @@ export class MQuickActionButton implements ComponentInterface {
             </small>
           </div>
         </div>
-        {this.secondActionIcon && (
+        {this.secondaryActionIcon && (
           <m-button
-            class="m-quick-action-button-second-action-link"
+            class="m-quick-action-button-secondary-action-link"
             type="button"
             variant="link"
-            iconStart={this.secondActionIcon}
-            family-iconStartFamilyClass={this.actionIconFamilyClass}
-            family-iconStartFamilyPrefix={this.actionIconFamilyPrefix}
+            iconStart={this.secondaryActionIcon}
+            iconStartFamilyClass={this.actionIconFamilyClass}
+            iconStartFamilyPrefix={this.actionIconFamilyPrefix}
             size="sm"
             theme={this.actionLinkTheme}
-            onClick={this.secondActionLinkClickHandler}
+            onMClick={this.secondActionLinkClickHandler}
           />
         )}
         {this.actionLinkText ? (
@@ -175,15 +174,15 @@ export class MQuickActionButton implements ComponentInterface {
             size="sm"
             theme={this.actionLinkTheme}
             text={this.actionLinkText}
-            on-m-click={this.actionLinkClickHandler}
+            onMClick={this.actionLinkClickHandler}
           />
         ) : (
           <m-icon
             class="m-quick-action-button-action-icon"
             icon={this.actionIcon}
             size={`var(--${PREFIX_BS}m-quick-action-button-action-icon-size)`}
-            family-class={this.actionIconFamilyClass}
-            family-prefix={this.actionIconFamilyPrefix}
+            familyClass={this.actionIconFamilyClass}
+            familyPrefix={this.actionIconFamilyPrefix}
           />
         )}
       </Tag>

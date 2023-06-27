@@ -996,7 +996,7 @@ export namespace Components {
         /**
           * Second action icon
          */
-        "secondActionIcon"?: string;
+        "secondaryActionIcon"?: string;
     }
     interface MQuickActionCheck {
         /**
@@ -2375,7 +2375,7 @@ declare namespace LocalJSX {
         /**
           * Second action icon
          */
-        "secondActionIcon"?: string;
+        "secondaryActionIcon"?: string;
     }
     interface MQuickActionCheck {
         /**

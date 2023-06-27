@@ -17,7 +17,7 @@ const config: Meta<typeof MQuickActionButton> = {
       type: 'string',
       description: 'The subtitle',
     },
-    secondActionIcon: {
+    secondaryActionIcon: {
       control: {
         type: 'select',
         labels: {
@@ -117,7 +117,7 @@ export const PersonalInfo: Story = {
   },
 };
 
-export const PersonalInfoDoubleAction: Story = {
+export const ButtonDoubleAction: Story = {
   render: (args) => (
     <div
       style={{ width: '320px', height: '320px' }}
@@ -130,7 +130,7 @@ export const PersonalInfoDoubleAction: Story = {
   args: {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank **** 721',
-    secondActionIcon: 'star',
+    secondaryActionIcon: 'star',
     representativeImage: 'https://i.pravatar.cc/150?img=2',
   },
 };

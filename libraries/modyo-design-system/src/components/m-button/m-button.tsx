@@ -99,9 +99,10 @@ export class MButton implements ComponentInterface {
   /**
    * Emitted when the button has been clicked.
    */
-  @Event() mClick!: EventEmitter;
+  @Event({ bubbles: false }) mClick!: EventEmitter;
 
-  private clickHandler = () => {
+  private clickHandler = (event: MouseEvent) => {
+    event.stopPropagation();
     this.mClick.emit();
   };
 

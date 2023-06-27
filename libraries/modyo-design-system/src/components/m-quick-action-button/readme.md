@@ -22,7 +22,7 @@
 | `representativeIconHasCircle`    | `representative-icon-has-circle`    | Representative icon circle                                             | `boolean \| undefined` | `false`           |
 | `representativeIconTheme`        | `representative-icon-theme`         | Representative icon theme                                              | `string`               | `'secondary'`     |
 | `representativeImage`            | `representative-image`              | Representative image                                                   | `string \| undefined`  | `undefined`       |
-| `secondActionIcon`               | `second-action-icon`                | Second action icon                                                     | `string \| undefined`  | `undefined`       |
+| `secondaryActionIcon`            | `secondary-action-icon`             | Second action icon                                                     | `string \| undefined`  | `undefined`       |
 
 
 ## Events
