@@ -161,7 +161,6 @@ export class MQuickActionButton implements ComponentInterface {
             iconStart={this.secondaryActionIcon}
             iconStartFamilyClass={this.actionIconFamilyClass}
             iconStartFamilyPrefix={this.actionIconFamilyPrefix}
-            size="sm"
             theme={this.actionLinkTheme}
             onMClick={this.secondActionLinkClickHandler}
           />
