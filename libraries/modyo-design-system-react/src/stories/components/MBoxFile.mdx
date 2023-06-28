@@ -1,0 +1,41 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import * as MBoxFileStories from './MBoxFile.stories';
+
+# Box File
+
+// TODO
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                        | Type            | Description               |
+  |-------------------------------------------------|-----------------|---------------------------|
+  | \`--${PREFIX_BS}m-box-file-gap\`                | css length unit | Space between elements    |
+  | \`--${PREFIX_BS}m-box-file-border\`             | css border      | Border                    |
+  | \`--${PREFIX_BS}m-box-file-border-radius\`      | css length unit | Border radius             |
+  | \`--${PREFIX_BS}m-box-file-padding\`            | css length unit | Padding                   |
+  | \`--${PREFIX_BS}m-box-file-content-max-width\`  | css length unit | Max width of the content  |
+  | \`--${PREFIX_BS}m-box-file-icon-size\`          | css length unit | Icon size                 |
+  | \`--${PREFIX_BS}m-box-file-icon-color\`         | css color unit  | Icon color                |
+  | \`--${PREFIX_BS}m-box-file-hover-border\`       | css border      | Hover Border              |
+  | \`--${PREFIX_BS}m-box-file-hover-bg\`           | css color unit  | Hover background          |
+  | \`--${PREFIX_BS}m-box-file-selected-border\`    | css border      | Selected border           |
+  | \`--${PREFIX_BS}m-box-file-selected-bg\`        | css color unit  | Selected background       |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MBoxFileStories} />
+
+<ArgTypes of={MBoxFileStories} />
+
+<Stories />
