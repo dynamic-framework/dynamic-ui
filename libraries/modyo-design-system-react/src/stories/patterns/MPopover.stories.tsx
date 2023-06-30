@@ -11,17 +11,22 @@ export default config;
 type Story = StoryObj<typeof MPopover>;
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MPopover {...args}>
-        <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-        <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-        <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      </MPopover>
-    </div>
+    <MPopover {...args}>
+      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+    </MPopover>
   ),
   args: {
     renderComponent: (toggle) => (
@@ -35,17 +40,22 @@ export const Default: Story = {
 };
 
 export const Open: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MPopover {...args}>
-        <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-        <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-        <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      </MPopover>
-    </div>
+    <MPopover {...args}>
+      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+    </MPopover>
   ),
   args: {
     renderComponent: (toggle) => (
@@ -60,15 +70,20 @@ export const Open: Story = {
 };
 
 export const Plain: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MPopover {...args}>
-        Ipsum
-      </MPopover>
-    </div>
+    <MPopover {...args}>
+      Ipsum
+    </MPopover>
   ),
   args: {
     renderComponent: () => (

@@ -13,7 +13,6 @@
 | `fullScreenFrom`        | `full-screen-from`        | Minimum size to apply the fullscreen | `"lg" \| "md" \| "sm" \| "xl" \| "xxl" \| undefined`  | `undefined` |
 | `isCentered`            | `is-centered`             | Is modal centered                    | `boolean \| undefined`                                | `undefined` |
 | `isFullScreen`          | `is-full-screen`          | Is fullscreen in all sizes           | `boolean \| undefined`                                | `undefined` |
-| `isInline`              | `is-inline`               | Place modal inline                   | `boolean \| undefined`                                | `false`     |
 | `isScrollable`          | `is-scrollable`           | Is modal scrollable                  | `boolean \| undefined`                                | `undefined` |
 | `isStatic`              | `is-static`               | Is backdrop static                   | `boolean \| undefined`                                | `undefined` |
 | `modalSize`             | `modal-size`              | Modal size                           | `"lg" \| "sm" \| "xl" \| undefined`                   | `undefined` |

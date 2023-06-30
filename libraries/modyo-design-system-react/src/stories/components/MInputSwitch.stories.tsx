@@ -78,7 +78,7 @@ export const Readonly: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId4',
+    mId: 'componentId5',
     label: 'Label',
     isChecked: false,
     isDisabled: true,
@@ -87,7 +87,7 @@ export const Disabled: Story = {
 
 export const CheckedDisabled: Story = {
   args: {
-    mId: 'componentId4',
+    mId: 'componentId6',
     label: 'Label',
     isChecked: true,
     isDisabled: true,

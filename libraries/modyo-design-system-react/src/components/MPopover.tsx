@@ -19,7 +19,7 @@ import type { PropsWithChildren } from 'react';
 type Props = PropsWithChildren<{
   renderComponent: (isOpen: boolean) => JSX.Element;
   isOpen: boolean,
-  setIsOpen: (isOpen: boolean) => void
+  setIsOpen?: (isOpen: boolean) => void
 }>;
 
 export default function MPopover(
@@ -27,7 +27,7 @@ export default function MPopover(
     children,
     renderComponent,
     isOpen,
-    setIsOpen,
+    setIsOpen = () => {},
   }: Props,
 ) {
   const [innerIsOpen, setInnerIsOpen] = useState(false);

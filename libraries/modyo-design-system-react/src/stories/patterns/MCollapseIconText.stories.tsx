@@ -11,18 +11,22 @@ export default config;
 type Story = StoryObj<typeof MCollapseIconText>;
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px', height: '320px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div style={{ width: '320px', height: '320px' }}>
-      <MCollapseIconText {...args}>
-        <div className="row d-flex flex-column gap-3">
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        </div>
-      </MCollapseIconText>
-    </div>
+    <MCollapseIconText {...args}>
+      <div className="row d-flex flex-column gap-3">
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+      </div>
+    </MCollapseIconText>
   ),
-
   args: {
     title: 'Credit cards',
     icon: 'credit-card-2-back',

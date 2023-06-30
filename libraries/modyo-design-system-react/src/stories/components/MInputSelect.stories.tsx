@@ -100,7 +100,7 @@ type Story = StoryObj<typeof MInputSelect>;
 
 export const Default: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId1',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -113,7 +113,7 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId2',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -127,7 +127,7 @@ export const Disabled: Story = {
 
 export const Icon: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId3',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -142,7 +142,7 @@ export const Icon: Story = {
 
 export const Extractors: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId4',
     label: 'Label',
     labelIcon: undefined,
     options: [

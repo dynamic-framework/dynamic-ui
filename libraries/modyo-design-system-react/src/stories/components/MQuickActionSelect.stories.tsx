@@ -44,17 +44,18 @@ export default config;
 type Story = StoryObj<typeof MQuickActionSelect>;
 
 export const Default: Story = {
-  render: ({ mId, ...args }: ComponentProps<typeof MQuickActionSelect>) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center gap-3"
-    >
-      <MQuickActionSelect mId={`${mId}0`} {...args} />
-    </div>
-  ),
-
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   args: {
-    mId: 'component',
+    mId: 'componentId1',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -62,19 +63,25 @@ export const Default: Story = {
 };
 
 export const Example: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: ({ mId, ...args }: ComponentProps<typeof MQuickActionSelect>) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center gap-3"
-    >
-      <MQuickActionSelect mId={`${mId}1`} {...args} />
+    <>
       <MQuickActionSelect mId={`${mId}2`} {...args} />
       <MQuickActionSelect mId={`${mId}3`} {...args} />
-    </div>
+      <MQuickActionSelect mId={`${mId}4`} {...args} />
+    </>
   ),
-
   args: {
-    mId: 'component',
+    mId: 'componentId',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -82,17 +89,18 @@ export const Example: Story = {
 };
 
 export const Selected: Story = {
-  render: ({ mId, ...args }: ComponentProps<typeof MQuickActionSelect>) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center gap-3"
-    >
-      <MQuickActionSelect mId={`${mId}4`} {...args} />
-    </div>
-  ),
-
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   args: {
-    mId: 'component',
+    mId: 'componentId5',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',

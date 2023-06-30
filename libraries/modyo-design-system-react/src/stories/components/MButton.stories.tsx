@@ -247,7 +247,7 @@ export const PrimaryLg: Story = {
 
 export const Secondary: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -261,7 +261,7 @@ export const Secondary: Story = {
 
 export const SecondaryHover: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -276,7 +276,7 @@ export const SecondaryHover: Story = {
 
 export const SecondaryFocus: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -291,7 +291,7 @@ export const SecondaryFocus: Story = {
 
 export const SecondaryDisabled: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -306,7 +306,7 @@ export const SecondaryDisabled: Story = {
 
 export const SecondaryActive: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -321,7 +321,7 @@ export const SecondaryActive: Story = {
 
 export const SecondaryIconRight: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -335,7 +335,7 @@ export const SecondaryIconRight: Story = {
 
 export const SecondaryLoading: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -349,7 +349,7 @@ export const SecondaryLoading: Story = {
 
 export const SecondaryLoadingIconRight: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -363,7 +363,7 @@ export const SecondaryLoadingIconRight: Story = {
 
 export const SecondarySm: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     text: 'Default',
     type: 'button',
     variant: 'outline',
@@ -377,7 +377,7 @@ export const SecondarySm: Story = {
 
 export const SecondaryLg: Story = {
   args: {
-    theme: 'primary',
+    theme: 'secondary',
     text: 'Default',
     type: 'button',
     variant: 'outline',

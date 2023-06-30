@@ -88,15 +88,19 @@ export default config;
 type Story = StoryObj<typeof MQuickActionButton>;
 
 export const PersonalInfo: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MQuickActionButton {...args} />
-    </div>
+    <MQuickActionButton {...args} />
   ),
-
   args: {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank **** 721',
@@ -105,15 +109,19 @@ export const PersonalInfo: Story = {
 };
 
 export const AccountBox: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MQuickActionButton {...args} />
-    </div>
+    <MQuickActionButton {...args} />
   ),
-
   args: {
     line1: 'Checking account',
     line2: 'HISA ··· 665',
@@ -125,15 +133,19 @@ export const AccountBox: Story = {
 };
 
 export const Info: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MQuickActionButton {...args} />
-    </div>
+    <MQuickActionButton {...args} />
   ),
-
   args: {
     line1: 'Alternativas de pago',
     line2: 'Si no puedes pagar en este momento',
@@ -143,23 +155,27 @@ export const Info: Story = {
 };
 
 export const PersonList: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MQuickActionButton
-        {...args}
-        style={{
-          [`--${PREFIX_BS}m-quick-action-button-component-border-radius`]: 0,
-          [`--${PREFIX_BS}m-quick-action-button-component-border-right`]: 0,
-          [`--${PREFIX_BS}m-quick-action-button-component-border-left`]: 0,
-          [`--${PREFIX_BS}m-quick-action-button-component-border-bottom`]: 0,
-        }}
-      />
-    </div>
+    <MQuickActionButton
+      {...args}
+      style={{
+        [`--${PREFIX_BS}m-quick-action-button-component-border-radius`]: 0,
+        [`--${PREFIX_BS}m-quick-action-button-component-border-right`]: 0,
+        [`--${PREFIX_BS}m-quick-action-button-component-border-left`]: 0,
+        [`--${PREFIX_BS}m-quick-action-button-component-border-bottom`]: 0,
+      }}
+    />
   ),
-
   args: {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank  **** 721',

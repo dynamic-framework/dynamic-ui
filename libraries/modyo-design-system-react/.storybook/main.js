@@ -24,6 +24,7 @@ module.exports = {
     disableTelemetry: true
   },
   staticDirs: [
+    './public',
     '../../modyo-design-system/dist',
     '../dist'
   ],

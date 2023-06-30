@@ -94,7 +94,7 @@ type Story = StoryObj<typeof MInputPin>;
 
 export const Default: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId1',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -109,7 +109,7 @@ export const Default: Story = {
 
 export const WithoutLabel: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId2',
     characters: 4,
     type: 'text',
     isDisabled: false,
@@ -122,7 +122,7 @@ export const WithoutLabel: Story = {
 
 export const Error: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId3',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -137,7 +137,7 @@ export const Error: Story = {
 
 export const Confirm: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId4',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -152,7 +152,7 @@ export const Confirm: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId5',
     label: 'Label',
     characters: 4,
     type: 'text',

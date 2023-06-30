@@ -19,22 +19,26 @@ const OPTIONS = [
 ];
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <Formik
+        initialValues={{ field: OPTIONS.at(-1) }}
+        onSubmit={console.log}
+        enableReinitialize
+      >
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Story />
+          </form>
+        )}
+      </Formik>
+    ),
+  ],
   render: (args) => (
-    <Formik
-      initialValues={{ field: OPTIONS.at(-1) }}
-      onSubmit={console.log}
-      enableReinitialize
-    >
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <MFormikInputSelect {...args} />
-        </form>
-      )}
-    </Formik>
+    <MFormikInputSelect {...args} />
   ),
-
   args: {
-    mId: 'field',
+    mId: 'field1',
     label: 'Label',
     labelIcon: undefined,
     name: 'field',
@@ -44,22 +48,26 @@ export const Default: Story = {
 };
 
 export const Empty: Story = {
+  decorators: [
+    (Story) => (
+      <Formik
+        initialValues={{ field: {} }}
+        onSubmit={console.log}
+        enableReinitialize
+      >
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Story />
+          </form>
+        )}
+      </Formik>
+    ),
+  ],
   render: (args) => (
-    <Formik
-      initialValues={{ field: {} }}
-      onSubmit={console.log}
-      enableReinitialize
-    >
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <MFormikInputSelect {...args} />
-        </form>
-      )}
-    </Formik>
+    <MFormikInputSelect {...args} />
   ),
-
   args: {
-    mId: 'field',
+    mId: 'field2',
     label: 'Label',
     labelIcon: undefined,
     name: 'field',

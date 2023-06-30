@@ -42,11 +42,6 @@ export class MModal {
   @Prop() isFullScreen?: boolean;
 
   /**
-   * Place modal inline
-   */
-  @Prop() isInline?: boolean = false;
-
-  /**
    * Minimum size to apply the fullscreen
    */
   @Prop() fullScreenFrom?: FullScreenFrom;
@@ -117,7 +112,6 @@ export class MModal {
           [`data-${PREFIX_BS}backdrop`]: 'static',
           [`data-${PREFIX_BS}keyboard`]: 'false',
         })}
-        style={{ ...this.isInline && { position: 'unset' } }}
       >
         <div class={this.generateModalDialogClasses()}>
           <div class="modal-content">
