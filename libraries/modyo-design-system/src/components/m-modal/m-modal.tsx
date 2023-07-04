@@ -42,11 +42,6 @@ export class MModal {
   @Prop() isFullScreen?: boolean;
 
   /**
-   * Place modal inline
-   */
-  @Prop() isInline?: boolean = false;
-
-  /**
    * Minimum size to apply the fullscreen
    */
   @Prop() fullScreenFrom?: FullScreenFrom;
@@ -64,7 +59,7 @@ export class MModal {
   /**
    * Footer action direction
    */
-  @Prop() footerActionPlacement?: 'start' | 'end' | 'fill' = 'fill';
+  @Prop() footerActionPlacement?: 'start' | 'end' | 'fill' | 'center' = 'fill';
 
   /**
    * Emitted when the input value has changed
@@ -117,7 +112,6 @@ export class MModal {
           [`data-${PREFIX_BS}backdrop`]: 'static',
           [`data-${PREFIX_BS}keyboard`]: 'false',
         })}
-        style={{ ...this.isInline && { position: 'unset' } }}
       >
         <div class={this.generateModalDialogClasses()}>
           <div class="modal-content">

@@ -46,12 +46,22 @@ const config: Meta<typeof MModal> = {
       options: ['fill', 'start', 'end'],
     },
   },
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export default config;
 type Story = StoryObj<typeof MModal>;
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MModal {...args}>
       <div slot="header">
@@ -72,7 +82,6 @@ export const Default: Story = {
       </div>
     </MModal>
   ),
-
   args: {
     name: 'exampleModal',
     isStatic: false,
@@ -82,11 +91,17 @@ export const Default: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'fill',
-    isInline: true,
   },
 };
 
 export const ActionsPlacementStart: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MModal {...args}>
       <div slot="header">
@@ -107,7 +122,6 @@ export const ActionsPlacementStart: Story = {
       </div>
     </MModal>
   ),
-
   args: {
     name: 'exampleModal',
     isStatic: false,
@@ -117,11 +131,17 @@ export const ActionsPlacementStart: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'start',
-    isInline: true,
   },
 };
 
 export const ActionsPlacementEnd: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MModal {...args}>
       <div slot="header">
@@ -142,7 +162,6 @@ export const ActionsPlacementEnd: Story = {
       </div>
     </MModal>
   ),
-
   args: {
     name: 'exampleModal',
     isStatic: false,
@@ -152,11 +171,17 @@ export const ActionsPlacementEnd: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'end',
-    isInline: true,
   },
 };
 
 export const WithoutHeader: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MModal {...args}>
       <div slot="body">
@@ -174,7 +199,6 @@ export const WithoutHeader: Story = {
       </div>
     </MModal>
   ),
-
   args: {
     name: 'exampleModal',
     isStatic: false,
@@ -184,11 +208,17 @@ export const WithoutHeader: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'fill',
-    isInline: true,
   },
 };
 
 export const WithoutActions: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MModal {...args}>
       <div slot="header">
@@ -199,7 +229,6 @@ export const WithoutActions: Story = {
       </div>
     </MModal>
   ),
-
   args: {
     name: 'exampleModal',
     isStatic: false,
@@ -209,11 +238,17 @@ export const WithoutActions: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'fill',
-    isInline: true,
   },
 };
 
 export const OnlyBody: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MModal {...args}>
       <div slot="body">
@@ -221,7 +256,6 @@ export const OnlyBody: Story = {
       </div>
     </MModal>
   ),
-
   args: {
     name: 'exampleModal',
     isStatic: false,
@@ -231,11 +265,17 @@ export const OnlyBody: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'fill',
-    isInline: true,
   },
 };
 
 export const WithoutCancelX: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MModal {...args}>
       <div slot="header">
@@ -256,7 +296,6 @@ export const WithoutCancelX: Story = {
       </div>
     </MModal>
   ),
-
   args: {
     name: 'exampleModal',
     isStatic: false,
@@ -266,6 +305,5 @@ export const WithoutCancelX: Story = {
     modalSize: 'sm',
     showCloseButton: false,
     footerActionPlacement: 'fill',
-    isInline: true,
   },
 };

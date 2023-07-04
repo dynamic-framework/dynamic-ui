@@ -31,38 +31,48 @@ export default config;
 type Story = StoryObj<typeof MCollapse>;
 
 export const HeaderText: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px', height: '320px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div style={{ width: '320px', height: '320px' }}>
-      <MCollapse {...args}>
-        <div className="row d-flex flex-column gap-3 pt-3">
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        </div>
-      </MCollapse>
-    </div>
+    <MCollapse {...args}>
+      <div className="row d-flex flex-column gap-3 pt-3">
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+      </div>
+    </MCollapse>
   ),
-
   args: {
-    Component: 'Text',
+    Component: (
+      <p>Text</p>
+    ),
     defaultCollapsed: false,
     hasSeparator: true,
   },
 };
 
 export const HeaderComponent: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px', height: '320px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div style={{ width: '320px', height: '320px' }}>
-      <MCollapse {...args}>
-        <div className="row d-flex flex-column gap-3 pt-3">
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        </div>
-      </MCollapse>
-    </div>
+    <MCollapse {...args}>
+      <div className="row d-flex flex-column gap-3 pt-3">
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+      </div>
+    </MCollapse>
   ),
-
   args: {
     Component: (
       <div className="d-flex align-items-center gap-3">
@@ -76,20 +86,26 @@ export const HeaderComponent: Story = {
 };
 
 export const Collapsed: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px', height: '320px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div style={{ width: '320px', height: '320px' }}>
-      <MCollapse {...args}>
-        <div className="row d-flex flex-column gap-3 pt-3">
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
-        </div>
-      </MCollapse>
-    </div>
+    <MCollapse {...args}>
+      <div className="row d-flex flex-column gap-3 pt-3">
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+      </div>
+    </MCollapse>
   ),
-
   args: {
-    Component: 'Text',
+    Component: (
+      <p>Text</p>
+    ),
     defaultCollapsed: true,
     hasSeparator: true,
   },

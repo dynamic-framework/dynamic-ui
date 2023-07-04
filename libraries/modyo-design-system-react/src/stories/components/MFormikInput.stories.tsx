@@ -1,6 +1,8 @@
 import { Formik } from 'formik';
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import { MFormikInput } from '../../components';
 
 const config: Meta<typeof MFormikInput> = {
@@ -12,22 +14,26 @@ export default config;
 type Story = StoryObj<typeof MFormikInput>;
 
 export const Default: Story = {
-  render: (args) => (
-    <Formik
-      initialValues={{ field: 'Value' }}
-      onSubmit={console.log}
-      enableReinitialize
-    >
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <MFormikInput {...args} />
-        </form>
-      )}
-    </Formik>
+  decorators: [
+    (Story) => (
+      <Formik
+        initialValues={{ field: 'Value' }}
+        onSubmit={console.log}
+        enableReinitialize
+      >
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Story />
+          </form>
+        )}
+      </Formik>
+    ),
+  ],
+  render: (args: ComponentProps<typeof MFormikInput>) => (
+    <MFormikInput {...args} />
   ),
-
   args: {
-    mId: 'field',
+    mId: 'field1',
     label: 'Label',
     name: 'field',
     placeholder: 'Placeholder',
@@ -40,22 +46,26 @@ export const Default: Story = {
 };
 
 export const Empty: Story = {
+  decorators: [
+    (Story) => (
+      <Formik
+        initialValues={{ field: '' }}
+        onSubmit={console.log}
+        enableReinitialize
+      >
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Story />
+          </form>
+        )}
+      </Formik>
+    ),
+  ],
   render: (args) => (
-    <Formik
-      initialValues={{ field: '' }}
-      onSubmit={console.log}
-      enableReinitialize
-    >
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <MFormikInput {...args} />
-        </form>
-      )}
-    </Formik>
+    <MFormikInput {...args} />
   ),
-
   args: {
-    mId: 'field',
+    mId: 'field2',
     label: 'Label',
     name: 'field',
     placeholder: 'Placeholder',

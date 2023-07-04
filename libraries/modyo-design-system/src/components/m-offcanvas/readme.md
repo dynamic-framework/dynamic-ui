@@ -10,7 +10,6 @@
 | Property                | Attribute                 | Description                                  | Type                                                 | Default     |
 | ----------------------- | ------------------------- | -------------------------------------------- | ---------------------------------------------------- | ----------- |
 | `footerActionPlacement` | `footer-action-placement` | Footer action direction                      | `"end" \| "fill" \| "start" \| undefined`            | `'fill'`    |
-| `isInline`              | `is-inline`               | Place offcanvas inline                       | `boolean \| undefined`                               | `false`     |
 | `isScrollable`          | `is-scrollable`           | Is body scrollable while offcanvas is active | `boolean \| undefined`                               | `undefined` |
 | `isStatic`              | `is-static`               | Is backdrop static                           | `boolean \| undefined`                               | `undefined` |
 | `name` _(required)_     | `name`                    | the name of the offcanvas                    | `string`                                             | `undefined` |

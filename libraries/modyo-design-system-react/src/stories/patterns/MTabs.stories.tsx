@@ -22,18 +22,22 @@ export default config;
 type Story = StoryObj<typeof MTabs>;
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center gap-3"
-    >
-      <MTabs {...args}>
-        <MTabContent tab="tab1">Tab content for Tab 1</MTabContent>
-        <MTabContent tab="tab2">Tab content for Tab 2</MTabContent>
-      </MTabs>
-    </div>
+    <MTabs {...args}>
+      <MTabContent tab="tab1">Tab content for Tab 1</MTabContent>
+      <MTabContent tab="tab2">Tab content for Tab 2</MTabContent>
+    </MTabs>
   ),
-
   args: {
     defaultSelected: 'tab2',
     options: [
@@ -46,18 +50,22 @@ export const Default: Story = {
 };
 
 export const Vertical: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center gap-3"
-    >
-      <MTabs {...args}>
-        <MTabContent tab="tab1">Tab content for Tab 1</MTabContent>
-        <MTabContent tab="tab2">Tab content for Tab 2</MTabContent>
-      </MTabs>
-    </div>
+    <MTabs {...args}>
+      <MTabContent tab="tab1">Tab content for Tab 1</MTabContent>
+      <MTabContent tab="tab2">Tab content for Tab 2</MTabContent>
+    </MTabs>
   ),
-
   args: {
     defaultSelected: 'tab2',
     options: [

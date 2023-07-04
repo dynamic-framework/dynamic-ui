@@ -46,11 +46,6 @@ export class MOffcanvas {
   @Prop() footerActionPlacement?: 'start' | 'end' | 'fill' = 'fill';
 
   /**
-   * Place offcanvas inline
-   */
-  @Prop() isInline?: boolean = false;
-
-  /**
    * Emitted when the input value has changed
    */
   @Event({ eventName: 'mClose' }) mClose!: EventEmitter<void>;
@@ -85,7 +80,6 @@ export class MOffcanvas {
           [`data-${PREFIX_BS}scroll`]: 'true',
           [`data-${PREFIX_BS}keyboard`]: 'false',
         })}
-        style={{ ...this.isInline && { position: 'absolute' } }}
       >
         {(this.header || this.showCloseButton) && (
           <div

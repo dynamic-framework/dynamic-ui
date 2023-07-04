@@ -7,7 +7,9 @@ import {
 } from '@stencil/core';
 
 import type {
-  ClassMap, ComponentSize, InputState,
+  ClassMap,
+  ComponentSize,
+  InputState,
 } from '../../utils/component-interface';
 
 import type { ButtonType, ButtonVariant } from './m-button-interface';
@@ -85,16 +87,22 @@ export class MButton implements ComponentInterface {
   @Prop() isPill = false;
 
   /**
-   * Flag for loading state and disable button.
+   * Flag to loading state and disable button.
    */
   @Prop() isLoading = false;
 
   /**
+   * Flag to disable the button, alias to state="disable"
+   */
+  @Prop() isDisabled = false;
+
+  /**
    * Emitted when the button has been clicked.
    */
-  @Event() mClick!: EventEmitter;
+  @Event({ bubbles: false }) mClick!: EventEmitter;
 
-  private clickHandler = () => {
+  private clickHandler = (event: MouseEvent) => {
+    event.stopPropagation();
     this.mClick.emit();
   };
 
@@ -118,7 +126,7 @@ export class MButton implements ComponentInterface {
       <button
         class={this.generateClasses()}
         type={this.type}
-        disabled={this.state === 'disabled' || this.isLoading}
+        disabled={this.state === 'disabled' || this.isLoading || this.isDisabled}
         {...this.value && { value: this.value }}
         onClick={this.clickHandler}
       >

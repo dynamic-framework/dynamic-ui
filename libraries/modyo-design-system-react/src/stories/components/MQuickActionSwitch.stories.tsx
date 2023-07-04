@@ -39,6 +39,16 @@ export default config;
 type Story = StoryObj<typeof MQuickActionSwitch>;
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     mId: 'componentId1',
     label: 'Program',
@@ -48,6 +58,16 @@ export const Default: Story = {
 };
 
 export const Checked: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     mId: 'componentId2',
     label: 'Program',
@@ -57,6 +77,16 @@ export const Checked: Story = {
 };
 
 export const DefaultDisabled: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     mId: 'componentId3',
     label: 'Program',
@@ -67,8 +97,18 @@ export const DefaultDisabled: Story = {
 };
 
 export const CheckedDisabled: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   args: {
-    mId: 'componentId3',
+    mId: 'componentId4',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: true,

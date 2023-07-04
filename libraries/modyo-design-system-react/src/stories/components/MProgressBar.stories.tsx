@@ -40,15 +40,19 @@ export default config;
 type Story = StoryObj<typeof MProgressBar>;
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MProgressBar {...args} />
-    </div>
+    <MProgressBar {...args} />
   ),
-
   args: {
     currentValue: 33,
     minValue: 0,
@@ -59,15 +63,19 @@ export const Default: Story = {
 };
 
 export const Stripped: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MProgressBar {...args} />
-    </div>
+    <MProgressBar {...args} />
   ),
-
   args: {
     currentValue: 33,
     minValue: 0,
@@ -78,15 +86,19 @@ export const Stripped: Story = {
 };
 
 export const Valueless: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MProgressBar {...args} />
-    </div>
+    <MProgressBar {...args} />
   ),
-
   args: {
     currentValue: 33,
     minValue: 0,
@@ -97,15 +109,19 @@ export const Valueless: Story = {
 };
 
 export const Zero: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MProgressBar {...args} />
-    </div>
+    <MProgressBar {...args} />
   ),
-
   args: {
     currentValue: 0,
     minValue: 0,
@@ -116,15 +132,19 @@ export const Zero: Story = {
 };
 
 export const Two: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MProgressBar {...args} />
-    </div>
+    <MProgressBar {...args} />
   ),
-
   args: {
     currentValue: 2,
     minValue: 0,
@@ -135,15 +155,19 @@ export const Two: Story = {
 };
 
 export const TwoValueless: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MProgressBar {...args} />
-    </div>
+    <MProgressBar {...args} />
   ),
-
   args: {
     currentValue: 2,
     minValue: 0,
@@ -154,15 +178,19 @@ export const TwoValueless: Story = {
 };
 
 export const OneHundred: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
-    <div
-      style={{ width: '320px', height: '320px' }}
-      className="d-flex flex-column align-items-stretch justify-content-center"
-    >
-      <MProgressBar {...args} />
-    </div>
+    <MProgressBar {...args} />
   ),
-
   args: {
     currentValue: 100,
     minValue: 0,

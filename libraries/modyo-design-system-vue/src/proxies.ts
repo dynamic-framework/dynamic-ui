@@ -43,6 +43,7 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'type',
   'isPill',
   'isLoading',
+  'isDisabled',
   'mClick'
 ]);
 
@@ -289,7 +290,6 @@ export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undef
   'isScrollable',
   'isCentered',
   'isFullScreen',
-  'isInline',
   'fullScreenFrom',
   'modalSize',
   'showCloseButton',
@@ -305,7 +305,6 @@ export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offca
   'showCloseButton',
   'openFrom',
   'footerActionPlacement',
-  'isInline',
   'mClose'
 ]);
 
@@ -325,6 +324,7 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'actionLinkText',
   'actionLinkTheme',
   'actionIcon',
+  'secondaryActionIcon',
   'actionIconFamilyClass',
   'actionIconFamilyPrefix',
   'representativeImage',
@@ -333,7 +333,8 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'representativeIconHasCircle',
   'representativeIconFamilyClass',
   'representativeIconFamilyPrefix',
-  'mClick'
+  'mClick',
+  'mClickSecondary'
 ]);
 
 
