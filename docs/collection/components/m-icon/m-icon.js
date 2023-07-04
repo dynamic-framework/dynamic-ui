@@ -48,8 +48,8 @@ export class MIcon {
   generateClasses() {
     return {
       'm-icon': true,
-      [this.familyClass]: true,
-      [`${this.familyPrefix}${this.icon}`]: true,
+      [this.familyClass || state.iconFamilyClass]: true,
+      [`${this.familyPrefix || state.iconFamilyPrefix}${this.icon}`]: true,
       'm-icon-loading': this.isLoading,
     };
   }
@@ -222,11 +222,11 @@ export class MIcon {
         "mutable": false,
         "complexType": {
           "original": "string",
-          "resolved": "string",
+          "resolved": "string | undefined",
           "references": {}
         },
         "required": false,
-        "optional": false,
+        "optional": true,
         "docs": {
           "tags": [],
           "text": "Change the family class to use another icon suite"
@@ -240,11 +240,11 @@ export class MIcon {
         "mutable": false,
         "complexType": {
           "original": "string",
-          "resolved": "string",
+          "resolved": "string | undefined",
           "references": {}
         },
         "required": false,
-        "optional": false,
+        "optional": true,
         "docs": {
           "tags": [],
           "text": "Change the family prefix to use another icon suite"

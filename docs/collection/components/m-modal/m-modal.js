@@ -10,7 +10,6 @@ export class MModal {
     this.isScrollable = undefined;
     this.isCentered = undefined;
     this.isFullScreen = undefined;
-    this.isInline = false;
     this.fullScreenFrom = undefined;
     this.modalSize = undefined;
     this.showCloseButton = undefined;
@@ -43,7 +42,7 @@ export class MModal {
     return (h("div", Object.assign({ class: "m-modal modal fade show", id: this.name, tabindex: "-1", "aria-labelledby": `${this.name}Label`, "aria-hidden": "false" }, this.isStatic && ({
       [`data-${PREFIX_BS}backdrop`]: 'static',
       [`data-${PREFIX_BS}keyboard`]: 'false',
-    }), { style: Object.assign({}, this.isInline && { position: 'unset' }) }), h("div", { class: this.generateModalDialogClasses() }, h("div", { class: "modal-content" }, (this.header || this.showCloseButton) && (h("div", { class: "modal-header" }, this.showCloseButton && (h("button", { type: "button", class: "m-modal-close", "aria-label": "Close", onClick: this.closeHandler }, h("m-icon", { icon: "x-lg" }))), this.header && (h("div", { class: "m-modal-slot" }, h("slot", { name: "header" }))))), this.body && (h("div", { class: "m-modal-slot modal-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: "m-modal-separator" })), this.footer && (h("div", { class: `m-modal-slot modal-footer m-modal-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))))));
+    })), h("div", { class: this.generateModalDialogClasses() }, h("div", { class: "modal-content" }, (this.header || this.showCloseButton) && (h("div", { class: "modal-header" }, this.showCloseButton && (h("button", { type: "button", class: "m-modal-close", "aria-label": "Close", onClick: this.closeHandler }, h("m-icon", { icon: "x-lg" }))), this.header && (h("div", { class: "m-modal-slot" }, h("slot", { name: "header" }))))), this.body && (h("div", { class: "m-modal-slot modal-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: "m-modal-separator" })), this.footer && (h("div", { class: `m-modal-slot modal-footer m-modal-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))))));
   }
   static get is() { return "m-modal"; }
   static get properties() {
@@ -133,24 +132,6 @@ export class MModal {
         "attribute": "is-full-screen",
         "reflect": false
       },
-      "isInline": {
-        "type": "boolean",
-        "mutable": false,
-        "complexType": {
-          "original": "boolean",
-          "resolved": "boolean | undefined",
-          "references": {}
-        },
-        "required": false,
-        "optional": true,
-        "docs": {
-          "tags": [],
-          "text": "Place modal inline"
-        },
-        "attribute": "is-inline",
-        "reflect": false,
-        "defaultValue": "false"
-      },
       "fullScreenFrom": {
         "type": "string",
         "mutable": false,
@@ -216,8 +197,8 @@ export class MModal {
         "type": "string",
         "mutable": false,
         "complexType": {
-          "original": "'start' | 'end' | 'fill'",
-          "resolved": "\"end\" | \"fill\" | \"start\" | undefined",
+          "original": "'start' | 'end' | 'fill' | 'center'",
+          "resolved": "\"center\" | \"end\" | \"fill\" | \"start\" | undefined",
           "references": {}
         },
         "required": false,

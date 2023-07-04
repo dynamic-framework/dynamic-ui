@@ -23,10 +23,6 @@ export declare class MModal {
    */
   isFullScreen?: boolean;
   /**
-   * Place modal inline
-   */
-  isInline?: boolean;
-  /**
    * Minimum size to apply the fullscreen
    */
   fullScreenFrom?: FullScreenFrom;
@@ -41,7 +37,7 @@ export declare class MModal {
   /**
    * Footer action direction
    */
-  footerActionPlacement?: 'start' | 'end' | 'fill';
+  footerActionPlacement?: 'start' | 'end' | 'fill' | 'center';
   /**
    * Emitted when the input value has changed
    */

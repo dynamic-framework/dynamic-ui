@@ -11,7 +11,6 @@ export class MOffcanvas {
     this.showCloseButton = undefined;
     this.openFrom = 'end';
     this.footerActionPlacement = 'fill';
-    this.isInline = false;
   }
   componentWillLoad() {
     this.header = !!this.el.querySelector('[slot="header"]');
@@ -25,7 +24,7 @@ export class MOffcanvas {
     }), this.isScrollable && ({
       [`data-${PREFIX_BS}scroll`]: 'true',
       [`data-${PREFIX_BS}keyboard`]: 'false',
-    }), { style: Object.assign({}, this.isInline && { position: 'absolute' }) }), (this.header || this.showCloseButton) && (h("div", { class: "offcanvas-header" }, this.header && (h("div", { class: "m-offcanvas-slot" }, h("slot", { name: "header" }))), this.showCloseButton && (h("button", { type: "button", class: "m-offcanvas-close", "aria-label": "Close", onClick: this.closeHandler }, h("m-icon", { icon: "x-lg" }))))), this.body && (h("div", { class: "m-offcanvas-slot offcanvas-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: `m-offcanvas-slot m-offcanvas-footer m-offcanvas-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))));
+    })), (this.header || this.showCloseButton) && (h("div", { class: "offcanvas-header" }, this.header && (h("div", { class: "m-offcanvas-slot" }, h("slot", { name: "header" }))), this.showCloseButton && (h("button", { type: "button", class: "m-offcanvas-close", "aria-label": "Close", onClick: this.closeHandler }, h("m-icon", { icon: "x-lg" }))))), this.body && (h("div", { class: "m-offcanvas-slot offcanvas-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: `m-offcanvas-slot m-offcanvas-footer m-offcanvas-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))));
   }
   static get is() { return "m-offcanvas"; }
   static get properties() {
@@ -138,24 +137,6 @@ export class MOffcanvas {
         "attribute": "footer-action-placement",
         "reflect": false,
         "defaultValue": "'fill'"
-      },
-      "isInline": {
-        "type": "boolean",
-        "mutable": false,
-        "complexType": {
-          "original": "boolean",
-          "resolved": "boolean | undefined",
-          "references": {}
-        },
-        "required": false,
-        "optional": true,
-        "docs": {
-          "tags": [],
-          "text": "Place offcanvas inline"
-        },
-        "attribute": "is-inline",
-        "reflect": false,
-        "defaultValue": "false"
       }
     };
   }

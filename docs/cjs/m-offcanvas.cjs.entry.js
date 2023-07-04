@@ -18,7 +18,6 @@ const MOffcanvas = class {
     this.showCloseButton = undefined;
     this.openFrom = 'end';
     this.footerActionPlacement = 'fill';
-    this.isInline = false;
   }
   componentWillLoad() {
     this.header = !!this.el.querySelector('[slot="header"]');
@@ -32,7 +31,7 @@ const MOffcanvas = class {
     }), this.isScrollable && ({
       [`data-${componentConfig.PREFIX_BS}scroll`]: 'true',
       [`data-${componentConfig.PREFIX_BS}keyboard`]: 'false',
-    }), { style: Object.assign({}, this.isInline && { position: 'absolute' }) }), (this.header || this.showCloseButton) && (index.h("div", { class: "offcanvas-header" }, this.header && (index.h("div", { class: "m-offcanvas-slot" }, index.h("slot", { name: "header" }))), this.showCloseButton && (index.h("button", { type: "button", class: "m-offcanvas-close", "aria-label": "Close", onClick: this.closeHandler }, index.h("m-icon", { icon: "x-lg" }))))), this.body && (index.h("div", { class: "m-offcanvas-slot offcanvas-body" }, index.h("slot", { name: "body" }))), this.footer && (index.h("div", { class: `m-offcanvas-slot m-offcanvas-footer m-offcanvas-action-${this.footerActionPlacement}` }, index.h("slot", { name: "footer" })))));
+    })), (this.header || this.showCloseButton) && (index.h("div", { class: "offcanvas-header" }, this.header && (index.h("div", { class: "m-offcanvas-slot" }, index.h("slot", { name: "header" }))), this.showCloseButton && (index.h("button", { type: "button", class: "m-offcanvas-close", "aria-label": "Close", onClick: this.closeHandler }, index.h("m-icon", { icon: "x-lg" }))))), this.body && (index.h("div", { class: "m-offcanvas-slot offcanvas-body" }, index.h("slot", { name: "body" }))), this.footer && (index.h("div", { class: `m-offcanvas-slot m-offcanvas-footer m-offcanvas-action-${this.footerActionPlacement}` }, index.h("slot", { name: "footer" })))));
   }
   get el() { return index.getElement(this); }
 };

@@ -12,4 +12,5 @@ export { default as MFormikInputSelect } from './MFormikInputSelect';
 export { default as MTooltip } from './MTooltip';
 export { default as MCollapse } from './MCollapse';
 export { default as MInputCurrency } from './MInputCurrency';
+export { default as MBoxFile } from './MBoxFile';
 export type { TabOption } from './MTabs';

@@ -9,7 +9,7 @@ const es = require('date-fns/locale/es');
 const React = require('react');
 const modyoDesignSystem = require('@modyo-dynamic/modyo-design-system');
 const ContentLoader = require('react-content-loader');
-const classNames = require('classnames');
+const classnames = require('classnames');
 const reactToastify = require('react-toastify');
 require('react-toastify/dist/ReactToastify.css');
 const react = require('@floating-ui/react');
@@ -36,6 +36,7 @@ const mQuickActionButton_js = require('@modyo-dynamic/modyo-design-system/compon
 const mQuickActionCheck_js = require('@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js');
 const mQuickActionSelect_js = require('@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js');
 const mQuickActionSwitch_js = require('@modyo-dynamic/modyo-design-system/components/m-quick-action-switch.js');
+const reactDropzone = require('react-dropzone');
 const i18n = require('i18next');
 const reactI18next = require('react-i18next');
 const html2canvas = require('html2canvas');
@@ -47,7 +48,7 @@ const DatePicker__default = /*#__PURE__*/_interopDefaultLegacy(DatePicker);
 const es__default = /*#__PURE__*/_interopDefaultLegacy(es);
 const React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 const ContentLoader__default = /*#__PURE__*/_interopDefaultLegacy(ContentLoader);
-const classNames__default = /*#__PURE__*/_interopDefaultLegacy(classNames);
+const classnames__default = /*#__PURE__*/_interopDefaultLegacy(classnames);
 const i18n__default = /*#__PURE__*/_interopDefaultLegacy(i18n);
 const html2canvas__default = /*#__PURE__*/_interopDefaultLegacy(html2canvas);
 
@@ -117,6 +118,16 @@ const getClassName = (classList, newProps, oldProps) => {
     return finalClassNames.join(' ');
 };
 /**
+ * Transforms a React event name to a browser event name.
+ */
+const transformReactEventName = (eventNameSuffix) => {
+    switch (eventNameSuffix) {
+        case 'doubleclick':
+            return 'dblclick';
+    }
+    return eventNameSuffix;
+};
+/**
  * Checks if an event is supported in the current execution environment.
  * @license Modernizr 3.0.0pre (Custom Build) | MIT
  */
@@ -125,7 +136,7 @@ const isCoveredByReact = (eventNameSuffix) => {
         return true;
     }
     else {
-        const eventName = 'on' + eventNameSuffix;
+        const eventName = 'on' + transformReactEventName(eventNameSuffix);
         let isSupported = eventName in document;
         if (!isSupported) {
             const element = document.createElement('div');
@@ -176,7 +187,9 @@ const createForwardRef = (ReactComponent, displayName) => {
         return jsxRuntime.jsx(ReactComponent, Object.assign({}, props, { forwardedRef: ref }));
     };
     forwardRef.displayName = displayName;
-    return React__default["default"].forwardRef(forwardRef);
+    const forwardedRef = React__default["default"].forwardRef(forwardRef);
+    forwardedRef.displayName = displayName;
+    return forwardedRef;
 };
 
 const createReactComponent = (tagName, ReactComponentContext, manipulatePropsFunction, defineCustomElement) => {
@@ -275,7 +288,7 @@ function MCollapse({ id, className, Component, hasSeparator = false, defaultColl
     React.useEffect(() => {
         setToggle(defaultCollapsed);
     }, [defaultCollapsed]);
-    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classNames__default["default"]('m-collapse collapse-container', className) }, { children: [jsxRuntime.jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsxRuntime.jsx(MIcon, { color: `var(--${modyoDesignSystem.PREFIX_BS}gray)`, size: `var(--${modyoDesignSystem.PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]({
+    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classnames__default["default"]('m-collapse collapse-container', className) }, { children: [jsxRuntime.jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsxRuntime.jsx(MIcon, { color: `var(--${modyoDesignSystem.PREFIX_BS}gray)`, size: `var(--${modyoDesignSystem.PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsxRuntime.jsx("div", Object.assign({ className: classnames__default["default"]({
                     'collapse-body': true,
                 }), style: {
                     [`--${modyoDesignSystem.PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
@@ -602,10 +615,10 @@ function MTabs({ children, defaultSelected, onChange, options, className, isVert
     const value = React.useMemo(() => ({
         isSelected,
     }), [isSelected]);
-    return (jsxRuntime.jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxRuntime.jsxs("div", Object.assign({ className: classNames__default["default"]({
+    return (jsxRuntime.jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxRuntime.jsxs("div", Object.assign({ className: classnames__default["default"]({
                 'm-tabs': true,
                 'm-tabs-vertical': isVertical,
-            }) }, { children: [jsxRuntime.jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsxRuntime.jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classNames__default["default"]('nav-link', {
+            }) }, { children: [jsxRuntime.jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsxRuntime.jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classnames__default["default"]('nav-link', {
                             active: option.tab === selected,
                         }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.isDisabled, onClick: () => onSelect(option) }, { children: option.label }), option.label))) })), jsxRuntime.jsx("div", Object.assign({ className: "tab-content" }, { children: children }))] })) })));
 }
@@ -629,7 +642,7 @@ function MToastContainer({ style }) {
     return (jsxRuntime.jsx(reactToastify.ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: "bottom-center", autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: reactToastify.Zoom, style: style }));
 }
 
-function MPopover({ children, renderComponent, isOpen, setIsOpen, }) {
+function MPopover({ children, renderComponent, isOpen, setIsOpen = () => { }, }) {
     const [innerIsOpen, setInnerIsOpen] = React.useState(false);
     React.useEffect(() => {
         setInnerIsOpen(isOpen);
@@ -751,6 +764,18 @@ function MInputCurrency(_a) {
     return (jsxRuntime.jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail) }, otherProps)));
 }
 
+function MBoxFile(_a) {
+    var { icon = 'cloud-upload', iconFamilyClass, iconFamilyPrefix, isDisabled = false, children } = _a, dropzoneOptions = tslib.__rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "isDisabled", "children"]);
+    const { acceptedFiles, getRootProps, getInputProps, } = reactDropzone.useDropzone(Object.assign({ disabled: isDisabled }, dropzoneOptions));
+    return (jsxRuntime.jsxs("section", Object.assign({ className: classnames__default["default"]('m-box-file', {
+            'm-box-file-selected': !!acceptedFiles.length,
+        }) }, { children: [jsxRuntime.jsxs("div", Object.assign({}, getRootProps({
+                className: classnames__default["default"]('m-box-file-dropzone', {
+                    disabled: isDisabled,
+                }),
+            }), { children: [jsxRuntime.jsx("input", Object.assign({}, getInputProps())), jsxRuntime.jsx(MIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsxRuntime.jsx("div", Object.assign({ className: "m-box-content" }, { children: children }))] })), !!acceptedFiles.length && (jsxRuntime.jsx("aside", Object.assign({ className: "m-box-files" }, { children: acceptedFiles.map((file) => (jsxRuntime.jsx("div", Object.assign({ className: "m-box-files-text" }, { children: `${file.name} - ${file.size} bytes` }), file.name))) })))] })));
+}
+
 const LANG = modyoDesignSystem.liquidParser.parse('{{site.language}}');
 async function configureI8n(resources, _a = {}) {
     var { lng = LANG, fallbackLng = 'es' } = _a, config = tslib.__rest(_a, ["lng", "fallbackLng"]);
@@ -842,6 +867,7 @@ exports.LiquidContext = LiquidContext$1;
 exports.LiquidContextProvider = LiquidContextProvider;
 exports.MAlert = MAlert;
 exports.MBadge = MBadge;
+exports.MBoxFile = MBoxFile;
 exports.MButton = MButton;
 exports.MCalendar = MCalendar;
 exports.MChip = MChip;

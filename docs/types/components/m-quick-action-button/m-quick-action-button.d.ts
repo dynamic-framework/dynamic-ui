@@ -21,6 +21,10 @@ export declare class MQuickActionButton implements ComponentInterface {
    */
   actionIcon: string;
   /**
+   * Second action icon
+   */
+  secondaryActionIcon?: string;
+  /**
    * Icon family class
    */
   actionIconFamilyClass?: string;
@@ -56,8 +60,13 @@ export declare class MQuickActionButton implements ComponentInterface {
    * Emitted when the input value has changed
    */
   mClick: EventEmitter;
+  /**
+   * Emitted when the input value has changed
+   */
+  mClickSecondary: EventEmitter;
   private globalClickHandler;
   private actionLinkClickHandler;
+  private secondActionLinkClickHandler;
   private getTag;
   render(): any;
 }

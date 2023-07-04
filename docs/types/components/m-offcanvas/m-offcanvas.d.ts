@@ -27,10 +27,6 @@ export declare class MOffcanvas {
    */
   footerActionPlacement?: 'start' | 'end' | 'fill';
   /**
-   * Place offcanvas inline
-   */
-  isInline?: boolean;
-  /**
    * Emitted when the input value has changed
    */
   mClose: EventEmitter<void>;

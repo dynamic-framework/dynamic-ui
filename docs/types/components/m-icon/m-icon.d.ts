@@ -38,11 +38,11 @@ export declare class MIcon {
   /**
    * Change the family class to use another icon suite
    */
-  familyClass: string;
+  familyClass?: string;
   /**
    * Change the family prefix to use another icon suite
    */
-  familyPrefix: string;
+  familyPrefix?: string;
   private getColorStyle;
   private getBackgroundStyle;
   private getCircleSizeStyle;

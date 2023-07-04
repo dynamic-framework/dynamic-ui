@@ -14,7 +14,6 @@ const MModal = class {
     this.isScrollable = undefined;
     this.isCentered = undefined;
     this.isFullScreen = undefined;
-    this.isInline = false;
     this.fullScreenFrom = undefined;
     this.modalSize = undefined;
     this.showCloseButton = undefined;
@@ -47,7 +46,7 @@ const MModal = class {
     return (h("div", Object.assign({ class: "m-modal modal fade show", id: this.name, tabindex: "-1", "aria-labelledby": `${this.name}Label`, "aria-hidden": "false" }, this.isStatic && ({
       [`data-${PREFIX_BS}backdrop`]: 'static',
       [`data-${PREFIX_BS}keyboard`]: 'false',
-    }), { style: Object.assign({}, this.isInline && { position: 'unset' }) }), h("div", { class: this.generateModalDialogClasses() }, h("div", { class: "modal-content" }, (this.header || this.showCloseButton) && (h("div", { class: "modal-header" }, this.showCloseButton && (h("button", { type: "button", class: "m-modal-close", "aria-label": "Close", onClick: this.closeHandler }, h("m-icon", { icon: "x-lg" }))), this.header && (h("div", { class: "m-modal-slot" }, h("slot", { name: "header" }))))), this.body && (h("div", { class: "m-modal-slot modal-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: "m-modal-separator" })), this.footer && (h("div", { class: `m-modal-slot modal-footer m-modal-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))))));
+    })), h("div", { class: this.generateModalDialogClasses() }, h("div", { class: "modal-content" }, (this.header || this.showCloseButton) && (h("div", { class: "modal-header" }, this.showCloseButton && (h("button", { type: "button", class: "m-modal-close", "aria-label": "Close", onClick: this.closeHandler }, h("m-icon", { icon: "x-lg" }))), this.header && (h("div", { class: "m-modal-slot" }, h("slot", { name: "header" }))))), this.body && (h("div", { class: "m-modal-slot modal-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: "m-modal-separator" })), this.footer && (h("div", { class: `m-modal-slot modal-footer m-modal-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))))));
   }
   get el() { return getElement(this); }
 };

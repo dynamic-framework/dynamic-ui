@@ -1,6 +1,10 @@
 export declare const attachProps: (node: HTMLElement, newProps: any, oldProps?: any) => void;
 export declare const getClassName: (classList: DOMTokenList, newProps: any, oldProps: any) => string;
 /**
+ * Transforms a React event name to a browser event name.
+ */
+export declare const transformReactEventName: (eventNameSuffix: string) => string;
+/**
  * Checks if an event is supported in the current execution environment.
  * @license Modernizr 3.0.0pre (Custom Build) | MIT
  */

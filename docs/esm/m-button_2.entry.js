@@ -5,8 +5,9 @@ import { P as PREFIX_BS } from './component-config-025f7932.js';
 const MButton = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
-    this.mClick = createEvent(this, "mClick", 7);
-    this.clickHandler = () => {
+    this.mClick = createEvent(this, "mClick", 3);
+    this.clickHandler = (event) => {
+      event.stopPropagation();
       this.mClick.emit();
     };
     this.theme = 'primary';
@@ -24,6 +25,7 @@ const MButton = class {
     this.type = 'button';
     this.isPill = false;
     this.isLoading = false;
+    this.isDisabled = false;
   }
   generateClasses() {
     const variantClass = this.variant
@@ -32,7 +34,7 @@ const MButton = class {
     return Object.assign(Object.assign({ btn: true, 'm-button': true, [variantClass]: true, [`btn-${this.size}`]: !!this.size }, (this.state && this.state !== 'disabled') && { [this.state]: true }), { loading: this.isLoading, 'rounded-pill': this.isPill });
   }
   render() {
-    return (h("button", Object.assign({ class: this.generateClasses(), type: this.type, disabled: this.state === 'disabled' || this.isLoading }, this.value && { value: this.value }, { onClick: this.clickHandler }), this.iconStart && (h("m-icon", { icon: this.iconStart, familyClass: this.iconStartFamilyClass, familyPrefix: this.iconStartFamilyPrefix })), (this.text && !this.isLoading) && (h("span", null, this.text)), this.isLoading && (h("span", { class: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true" }, h("span", { class: "visually-hidden" }, "Loading..."))), (this.iconEnd) && (h("m-icon", { icon: this.iconEnd, familyClass: this.iconEndFamilyClass, familyPrefix: this.iconEndFamilyPrefix }))));
+    return (h("button", Object.assign({ class: this.generateClasses(), type: this.type, disabled: this.state === 'disabled' || this.isLoading || this.isDisabled }, this.value && { value: this.value }, { onClick: this.clickHandler }), this.iconStart && (h("m-icon", { icon: this.iconStart, familyClass: this.iconStartFamilyClass, familyPrefix: this.iconStartFamilyPrefix })), (this.text && !this.isLoading) && (h("span", null, this.text)), this.isLoading && (h("span", { class: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true" }, h("span", { class: "visually-hidden" }, "Loading..."))), (this.iconEnd) && (h("m-icon", { icon: this.iconEnd, familyClass: this.iconEndFamilyClass, familyPrefix: this.iconEndFamilyPrefix }))));
   }
 };
 
@@ -84,8 +86,8 @@ const MIcon = class {
   generateClasses() {
     return {
       'm-icon': true,
-      [this.familyClass]: true,
-      [`${this.familyPrefix}${this.icon}`]: true,
+      [this.familyClass || state.iconFamilyClass]: true,
+      [`${this.familyPrefix || state.iconFamilyPrefix}${this.icon}`]: true,
       'm-icon-loading': this.isLoading,
     };
   }

@@ -5,7 +5,7 @@ import es from 'date-fns/locale/es';
 import React, { createElement, useState, useEffect, createContext, useMemo, useContext, useCallback, useRef } from 'react';
 import { PREFIX_BS, liquidParser, formatCurrency } from '@modyo-dynamic/modyo-design-system';
 import ContentLoader from 'react-content-loader';
-import classNames from 'classnames';
+import classnames from 'classnames';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, useRole, useInteractions, useId, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
@@ -32,6 +32,7 @@ import { defineCustomElement as defineCustomElement$h } from '@modyo-dynamic/mod
 import { defineCustomElement as defineCustomElement$i } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js';
 import { defineCustomElement as defineCustomElement$j } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
 import { defineCustomElement as defineCustomElement$k } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-switch.js';
+import { useDropzone } from 'react-dropzone';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import html2canvas from 'html2canvas';
@@ -103,6 +104,16 @@ const getClassName = (classList, newProps, oldProps) => {
     return finalClassNames.join(' ');
 };
 /**
+ * Transforms a React event name to a browser event name.
+ */
+const transformReactEventName = (eventNameSuffix) => {
+    switch (eventNameSuffix) {
+        case 'doubleclick':
+            return 'dblclick';
+    }
+    return eventNameSuffix;
+};
+/**
  * Checks if an event is supported in the current execution environment.
  * @license Modernizr 3.0.0pre (Custom Build) | MIT
  */
@@ -111,7 +122,7 @@ const isCoveredByReact = (eventNameSuffix) => {
         return true;
     }
     else {
-        const eventName = 'on' + eventNameSuffix;
+        const eventName = 'on' + transformReactEventName(eventNameSuffix);
         let isSupported = eventName in document;
         if (!isSupported) {
             const element = document.createElement('div');
@@ -162,7 +173,9 @@ const createForwardRef = (ReactComponent, displayName) => {
         return jsx(ReactComponent, Object.assign({}, props, { forwardedRef: ref }));
     };
     forwardRef.displayName = displayName;
-    return React.forwardRef(forwardRef);
+    const forwardedRef = React.forwardRef(forwardRef);
+    forwardedRef.displayName = displayName;
+    return forwardedRef;
 };
 
 const createReactComponent = (tagName, ReactComponentContext, manipulatePropsFunction, defineCustomElement) => {
@@ -261,7 +274,7 @@ function MCollapse({ id, className, Component, hasSeparator = false, defaultColl
     useEffect(() => {
         setToggle(defaultCollapsed);
     }, [defaultCollapsed]);
-    return (jsxs("div", Object.assign({ id: id, className: classNames('m-collapse collapse-container', className) }, { children: [jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsx(MIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsx("div", Object.assign({ className: classNames({
+    return (jsxs("div", Object.assign({ id: id, className: classnames('m-collapse collapse-container', className) }, { children: [jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsx(MIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsx("div", Object.assign({ className: classnames({
                     'collapse-body': true,
                 }), style: {
                     [`--${PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
@@ -588,10 +601,10 @@ function MTabs({ children, defaultSelected, onChange, options, className, isVert
     const value = useMemo(() => ({
         isSelected,
     }), [isSelected]);
-    return (jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxs("div", Object.assign({ className: classNames({
+    return (jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxs("div", Object.assign({ className: classnames({
                 'm-tabs': true,
                 'm-tabs-vertical': isVertical,
-            }) }, { children: [jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classNames('nav-link', {
+            }) }, { children: [jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classnames('nav-link', {
                             active: option.tab === selected,
                         }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.isDisabled, onClick: () => onSelect(option) }, { children: option.label }), option.label))) })), jsx("div", Object.assign({ className: "tab-content" }, { children: children }))] })) })));
 }
@@ -615,7 +628,7 @@ function MToastContainer({ style }) {
     return (jsx(ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: "bottom-center", autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: Zoom, style: style }));
 }
 
-function MPopover({ children, renderComponent, isOpen, setIsOpen, }) {
+function MPopover({ children, renderComponent, isOpen, setIsOpen = () => { }, }) {
     const [innerIsOpen, setInnerIsOpen] = useState(false);
     useEffect(() => {
         setInnerIsOpen(isOpen);
@@ -737,6 +750,18 @@ function MInputCurrency(_a) {
     return (jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail) }, otherProps)));
 }
 
+function MBoxFile(_a) {
+    var { icon = 'cloud-upload', iconFamilyClass, iconFamilyPrefix, isDisabled = false, children } = _a, dropzoneOptions = __rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "isDisabled", "children"]);
+    const { acceptedFiles, getRootProps, getInputProps, } = useDropzone(Object.assign({ disabled: isDisabled }, dropzoneOptions));
+    return (jsxs("section", Object.assign({ className: classnames('m-box-file', {
+            'm-box-file-selected': !!acceptedFiles.length,
+        }) }, { children: [jsxs("div", Object.assign({}, getRootProps({
+                className: classnames('m-box-file-dropzone', {
+                    disabled: isDisabled,
+                }),
+            }), { children: [jsx("input", Object.assign({}, getInputProps())), jsx(MIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsx("div", Object.assign({ className: "m-box-content" }, { children: children }))] })), !!acceptedFiles.length && (jsx("aside", Object.assign({ className: "m-box-files" }, { children: acceptedFiles.map((file) => (jsx("div", Object.assign({ className: "m-box-files-text" }, { children: `${file.name} - ${file.size} bytes` }), file.name))) })))] })));
+}
+
 const LANG = liquidParser.parse('{{site.language}}');
 async function configureI8n(resources, _a = {}) {
     var { lng = LANG, fallbackLng = 'es' } = _a, config = __rest(_a, ["lng", "fallbackLng"]);
@@ -824,5 +849,5 @@ function useScreenshotWebShare() {
     };
 }
 
-export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MButton, MCalendar, MChip, MCollapse, MCollapseIconText, MCurrencyText, MFormikInput, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MModal, MOffcanvas, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
+export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MBoxFile, MButton, MCalendar, MChip, MCollapse, MCollapseIconText, MCurrencyText, MFormikInput, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MModal, MOffcanvas, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
 //# sourceMappingURL=index.esm.js.map

@@ -1,7 +1,8 @@
 import { h, } from '@stencil/core';
 export class MButton {
   constructor() {
-    this.clickHandler = () => {
+    this.clickHandler = (event) => {
+      event.stopPropagation();
       this.mClick.emit();
     };
     this.theme = 'primary';
@@ -19,6 +20,7 @@ export class MButton {
     this.type = 'button';
     this.isPill = false;
     this.isLoading = false;
+    this.isDisabled = false;
   }
   generateClasses() {
     const variantClass = this.variant
@@ -27,7 +29,7 @@ export class MButton {
     return Object.assign(Object.assign({ btn: true, 'm-button': true, [variantClass]: true, [`btn-${this.size}`]: !!this.size }, (this.state && this.state !== 'disabled') && { [this.state]: true }), { loading: this.isLoading, 'rounded-pill': this.isPill });
   }
   render() {
-    return (h("button", Object.assign({ class: this.generateClasses(), type: this.type, disabled: this.state === 'disabled' || this.isLoading }, this.value && { value: this.value }, { onClick: this.clickHandler }), this.iconStart && (h("m-icon", { icon: this.iconStart, familyClass: this.iconStartFamilyClass, familyPrefix: this.iconStartFamilyPrefix })), (this.text && !this.isLoading) && (h("span", null, this.text)), this.isLoading && (h("span", { class: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true" }, h("span", { class: "visually-hidden" }, "Loading..."))), (this.iconEnd) && (h("m-icon", { icon: this.iconEnd, familyClass: this.iconEndFamilyClass, familyPrefix: this.iconEndFamilyPrefix }))));
+    return (h("button", Object.assign({ class: this.generateClasses(), type: this.type, disabled: this.state === 'disabled' || this.isLoading || this.isDisabled }, this.value && { value: this.value }, { onClick: this.clickHandler }), this.iconStart && (h("m-icon", { icon: this.iconStart, familyClass: this.iconStartFamilyClass, familyPrefix: this.iconStartFamilyPrefix })), (this.text && !this.isLoading) && (h("span", null, this.text)), this.isLoading && (h("span", { class: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true" }, h("span", { class: "visually-hidden" }, "Loading..."))), (this.iconEnd) && (h("m-icon", { icon: this.iconEnd, familyClass: this.iconEndFamilyClass, familyPrefix: this.iconEndFamilyPrefix }))));
   }
   static get is() { return "m-button"; }
   static get properties() {
@@ -306,9 +308,27 @@ export class MButton {
         "optional": false,
         "docs": {
           "tags": [],
-          "text": "Flag for loading state and disable button."
+          "text": "Flag to loading state and disable button."
         },
         "attribute": "is-loading",
+        "reflect": false,
+        "defaultValue": "false"
+      },
+      "isDisabled": {
+        "type": "boolean",
+        "mutable": false,
+        "complexType": {
+          "original": "boolean",
+          "resolved": "boolean",
+          "references": {}
+        },
+        "required": false,
+        "optional": false,
+        "docs": {
+          "tags": [],
+          "text": "Flag to disable the button, alias to state=\"disable\""
+        },
+        "attribute": "is-disabled",
         "reflect": false,
         "defaultValue": "false"
       }
@@ -318,7 +338,7 @@ export class MButton {
     return [{
         "method": "mClick",
         "name": "mClick",
-        "bubbles": true,
+        "bubbles": false,
         "cancelable": true,
         "composed": true,
         "docs": {

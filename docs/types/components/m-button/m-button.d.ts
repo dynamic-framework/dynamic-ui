@@ -59,9 +59,13 @@ export declare class MButton implements ComponentInterface {
    */
   isPill: boolean;
   /**
-   * Flag for loading state and disable button.
+   * Flag to loading state and disable button.
    */
   isLoading: boolean;
+  /**
+   * Flag to disable the button, alias to state="disable"
+   */
+  isDisabled: boolean;
   /**
    * Emitted when the button has been clicked.
    */

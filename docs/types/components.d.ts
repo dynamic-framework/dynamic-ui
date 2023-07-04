@@ -88,7 +88,11 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
-          * Flag for loading state and disable button.
+          * Flag to disable the button, alias to state="disable"
+         */
+        "isDisabled": boolean;
+        /**
+          * Flag to loading state and disable button.
          */
         "isLoading": boolean;
         /**
@@ -166,11 +170,11 @@ export namespace Components {
         /**
           * Change the family class to use another icon suite
          */
-        "familyClass": string;
+        "familyClass"?: string;
         /**
           * Change the family prefix to use another icon suite
          */
-        "familyPrefix": string;
+        "familyPrefix"?: string;
         /**
           * Add circle around the icon
          */
@@ -846,7 +850,7 @@ export namespace Components {
         /**
           * Footer action direction
          */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
         /**
           * Minimum size to apply the fullscreen
          */
@@ -859,10 +863,6 @@ export namespace Components {
           * Is fullscreen in all sizes
          */
         "isFullScreen"?: boolean;
-        /**
-          * Place modal inline
-         */
-        "isInline"?: boolean;
         /**
           * Is modal scrollable
          */
@@ -889,10 +889,6 @@ export namespace Components {
           * Footer action direction
          */
         "footerActionPlacement"?: 'start' | 'end' | 'fill';
-        /**
-          * Place offcanvas inline
-         */
-        "isInline"?: boolean;
         /**
           * Is body scrollable while offcanvas is active
          */
@@ -989,6 +985,10 @@ export namespace Components {
           * Representative image
          */
         "representativeImage"?: string;
+        /**
+          * Second action icon
+         */
+        "secondaryActionIcon"?: string;
     }
     interface MQuickActionCheck {
         /**
@@ -1367,7 +1367,11 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
-          * Flag for loading state and disable button.
+          * Flag to disable the button, alias to state="disable"
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag to loading state and disable button.
          */
         "isLoading"?: boolean;
         /**
@@ -2201,7 +2205,7 @@ declare namespace LocalJSX {
         /**
           * Footer action direction
          */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
         /**
           * Minimum size to apply the fullscreen
          */
@@ -2214,10 +2218,6 @@ declare namespace LocalJSX {
           * Is fullscreen in all sizes
          */
         "isFullScreen"?: boolean;
-        /**
-          * Place modal inline
-         */
-        "isInline"?: boolean;
         /**
           * Is modal scrollable
          */
@@ -2248,10 +2248,6 @@ declare namespace LocalJSX {
           * Footer action direction
          */
         "footerActionPlacement"?: 'start' | 'end' | 'fill';
-        /**
-          * Place offcanvas inline
-         */
-        "isInline"?: boolean;
         /**
           * Is body scrollable while offcanvas is active
          */
@@ -2333,6 +2329,10 @@ declare namespace LocalJSX {
          */
         "onMClick"?: (event: MQuickActionButtonCustomEvent<any>) => void;
         /**
+          * Emitted when the input value has changed
+         */
+        "onMClickSecondary"?: (event: MQuickActionButtonCustomEvent<any>) => void;
+        /**
           * Representative icon, displayed when the representativeImage is not set
          */
         "representativeIcon"?: string;
@@ -2356,6 +2356,10 @@ declare namespace LocalJSX {
           * Representative image
          */
         "representativeImage"?: string;
+        /**
+          * Second action icon
+         */
+        "secondaryActionIcon"?: string;
     }
     interface MQuickActionCheck {
         /**

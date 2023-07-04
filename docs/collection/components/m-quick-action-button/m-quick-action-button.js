@@ -15,11 +15,16 @@ export class MQuickActionButton {
       }
       this.mClick.emit();
     };
+    this.secondActionLinkClickHandler = (event) => {
+      event.stopPropagation();
+      this.mClickSecondary.emit();
+    };
     this.line1 = undefined;
     this.line2 = undefined;
     this.actionLinkText = undefined;
     this.actionLinkTheme = 'secondary';
     this.actionIcon = 'chevron-right';
+    this.secondaryActionIcon = undefined;
     this.actionIconFamilyClass = undefined;
     this.actionIconFamilyPrefix = undefined;
     this.representativeImage = undefined;
@@ -36,7 +41,7 @@ export class MQuickActionButton {
     const Tag = this.getTag();
     return (h(Tag, Object.assign({ class: "m-quick-action-button" }, !this.actionLinkText && { onClick: this.globalClickHandler }), this.representativeIcon && (h("m-icon", { class: "m-quick-action-button-representative-icon", size: (this.representativeIconHasCircle
         ? `var(--${PREFIX_BS}m-quick-action-button-representative-icon-size)`
-        : `var(--${PREFIX_BS}m-quick-action-button-representative-image-size)`), icon: this.representativeIcon, "has-circle": this.representativeIconHasCircle, theme: this.representativeIconTheme, "family-class": this.representativeIconFamilyClass, "family-prefix": this.representativeIconFamilyPrefix })), this.representativeImage && (h("img", { class: "m-quick-action-button-representative-image", src: this.representativeImage, alt: "" })), h("div", { class: "m-quick-action-button-content" }, h("div", { class: "m-quick-action-button-text" }, h("span", { class: "m-quick-action-button-line1" }, this.line1), h("small", { class: "m-quick-action-button-line2" }, this.line2))), this.actionLinkText ? (h("m-button", { class: "m-quick-action-button-action-link", type: "button", variant: "link", size: "sm", theme: this.actionLinkTheme, text: this.actionLinkText, "on-m-click": this.actionLinkClickHandler })) : (h("m-icon", { class: "m-quick-action-button-action-icon", icon: this.actionIcon, size: `var(--${PREFIX_BS}m-quick-action-button-action-icon-size)`, "family-class": this.actionIconFamilyClass, "family-prefix": this.actionIconFamilyPrefix }))));
+        : `var(--${PREFIX_BS}m-quick-action-button-representative-image-size)`), icon: this.representativeIcon, hasCircle: this.representativeIconHasCircle, theme: this.representativeIconTheme, familyClass: this.representativeIconFamilyClass, familyPrefix: this.representativeIconFamilyPrefix })), this.representativeImage && (h("img", { class: "m-quick-action-button-representative-image", src: this.representativeImage, alt: "" })), h("div", { class: "m-quick-action-button-content" }, h("div", { class: "m-quick-action-button-text" }, h("span", { class: "m-quick-action-button-line1" }, this.line1), h("small", { class: "m-quick-action-button-line2" }, this.line2))), this.secondaryActionIcon && (h("m-button", { class: "m-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: this.secondaryActionIcon, iconStartFamilyClass: this.actionIconFamilyClass, iconStartFamilyPrefix: this.actionIconFamilyPrefix, theme: this.actionLinkTheme, onMClick: this.secondActionLinkClickHandler })), this.actionLinkText ? (h("m-button", { class: "m-quick-action-button-action-link", type: "button", variant: "link", size: "sm", theme: this.actionLinkTheme, text: this.actionLinkText, onMClick: this.actionLinkClickHandler })) : (h("m-icon", { class: "m-quick-action-button-action-icon", icon: this.actionIcon, size: `var(--${PREFIX_BS}m-quick-action-button-action-icon-size)`, familyClass: this.actionIconFamilyClass, familyPrefix: this.actionIconFamilyPrefix }))));
   }
   static get is() { return "m-quick-action-button"; }
   static get properties() {
@@ -127,6 +132,23 @@ export class MQuickActionButton {
         "attribute": "action-icon",
         "reflect": false,
         "defaultValue": "'chevron-right'"
+      },
+      "secondaryActionIcon": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Second action icon"
+        },
+        "attribute": "secondary-action-icon",
+        "reflect": false
       },
       "actionIconFamilyClass": {
         "type": "string",
@@ -272,6 +294,21 @@ export class MQuickActionButton {
     return [{
         "method": "mClick",
         "name": "mClick",
+        "bubbles": true,
+        "cancelable": true,
+        "composed": true,
+        "docs": {
+          "tags": [],
+          "text": "Emitted when the input value has changed"
+        },
+        "complexType": {
+          "original": "any",
+          "resolved": "any",
+          "references": {}
+        }
+      }, {
+        "method": "mClickSecondary",
+        "name": "mClickSecondary",
         "bubbles": true,
         "cancelable": true,
         "composed": true,
