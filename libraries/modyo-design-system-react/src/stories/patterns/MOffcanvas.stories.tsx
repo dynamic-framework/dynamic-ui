@@ -25,12 +25,6 @@ const config: Meta<typeof MOffcanvas> = {
   },
   parameters: {
     layout: 'fullscreen',
-    docs: {
-      story: {
-        inline: false,
-        height: '400px',
-      },
-    },
   },
 };
 
@@ -38,6 +32,13 @@ export default config;
 type Story = StoryObj<typeof MOffcanvas>;
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MOffcanvas {...args}>
       <div slot="header">
@@ -58,18 +59,133 @@ export const Default: Story = {
       </div>
     </MOffcanvas>
   ),
-
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
     isScrollable: false,
     showCloseButton: true,
     openFrom: 'end',
-    isInline: true,
+  },
+};
+
+export const ActionsPlacementStart: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <MOffcanvas {...args}>
+      <div slot="header">
+        <h5 className="fw-bold">Advanced filters</h5>
+      </div>
+      <div slot="body">
+        <p>Offcanvas body</p>
+      </div>
+      <div slot="footer">
+        <MButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          isPill
+        />
+        <MButton text="ok" className="d-grid" isPill />
+      </div>
+    </MOffcanvas>
+  ),
+  args: {
+    name: 'exampleOffcanvas',
+    isStatic: false,
+    isScrollable: false,
+    showCloseButton: true,
+    openFrom: 'end',
+    footerActionPlacement: 'start',
+  },
+};
+
+export const ActionsPlacementEnd: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <MOffcanvas {...args}>
+      <div slot="header">
+        <h5 className="fw-bold">Advanced filters</h5>
+      </div>
+      <div slot="body">
+        <p>Offcanvas body</p>
+      </div>
+      <div slot="footer">
+        <MButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          isPill
+        />
+        <MButton text="ok" className="d-grid" isPill />
+      </div>
+    </MOffcanvas>
+  ),
+  args: {
+    name: 'exampleOffcanvas',
+    isStatic: false,
+    isScrollable: false,
+    showCloseButton: true,
+    openFrom: 'end',
+    footerActionPlacement: 'end',
+  },
+};
+
+export const WithoutHeader: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <MOffcanvas {...args}>
+      <div slot="body">
+        <p>Offcanvas body</p>
+      </div>
+      <div slot="footer">
+        <MButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          isPill
+        />
+        <MButton text="ok" className="d-grid" isPill />
+      </div>
+    </MOffcanvas>
+  ),
+  args: {
+    name: 'exampleOffcanvas',
+    isStatic: false,
+    isScrollable: false,
+    showCloseButton: true,
+    openFrom: 'end',
   },
 };
 
 export const WithoutActions: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MOffcanvas {...args}>
       <div slot="header">
@@ -80,7 +196,6 @@ export const WithoutActions: Story = {
       </div>
     </MOffcanvas>
   ),
-
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
@@ -88,11 +203,17 @@ export const WithoutActions: Story = {
     showCloseButton: true,
     openFrom: 'end',
     footerActionPlacement: 'end',
-    isInline: true,
   },
 };
 
 export const OnlyBody: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MOffcanvas {...args}>
       <div slot="body">
@@ -100,7 +221,6 @@ export const OnlyBody: Story = {
       </div>
     </MOffcanvas>
   ),
-
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
@@ -108,11 +228,17 @@ export const OnlyBody: Story = {
     showCloseButton: true,
     openFrom: 'end',
     footerActionPlacement: 'end',
-    isInline: true,
   },
 };
 
 export const WithoutCancelX: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MOffcanvas {...args}>
       <div slot="header">
@@ -133,7 +259,6 @@ export const WithoutCancelX: Story = {
       </div>
     </MOffcanvas>
   ),
-
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
@@ -141,6 +266,5 @@ export const WithoutCancelX: Story = {
     showCloseButton: false,
     openFrom: 'end',
     footerActionPlacement: 'end',
-    isInline: true,
   },
 };

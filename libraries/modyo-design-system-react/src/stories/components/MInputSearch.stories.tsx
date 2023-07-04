@@ -84,7 +84,7 @@ type Story = StoryObj<typeof MInputSearch>;
 
 export const Default: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -94,7 +94,7 @@ export const Default: Story = {
 
 export const Value: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId2',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -104,7 +104,7 @@ export const Value: Story = {
 
 export const Error: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -115,7 +115,7 @@ export const Error: Story = {
 
 export const Confirm: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -126,7 +126,7 @@ export const Confirm: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId5',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,

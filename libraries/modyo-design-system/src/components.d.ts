@@ -864,10 +864,6 @@ export namespace Components {
          */
         "isFullScreen"?: boolean;
         /**
-          * Place modal inline
-         */
-        "isInline"?: boolean;
-        /**
           * Is modal scrollable
          */
         "isScrollable"?: boolean;
@@ -893,10 +889,6 @@ export namespace Components {
           * Footer action direction
          */
         "footerActionPlacement"?: 'start' | 'end' | 'fill';
-        /**
-          * Place offcanvas inline
-         */
-        "isInline"?: boolean;
         /**
           * Is body scrollable while offcanvas is active
          */
@@ -2227,10 +2219,6 @@ declare namespace LocalJSX {
          */
         "isFullScreen"?: boolean;
         /**
-          * Place modal inline
-         */
-        "isInline"?: boolean;
-        /**
           * Is modal scrollable
          */
         "isScrollable"?: boolean;
@@ -2260,10 +2248,6 @@ declare namespace LocalJSX {
           * Footer action direction
          */
         "footerActionPlacement"?: 'start' | 'end' | 'fill';
-        /**
-          * Place offcanvas inline
-         */
-        "isInline"?: boolean;
         /**
           * Is body scrollable while offcanvas is active
          */

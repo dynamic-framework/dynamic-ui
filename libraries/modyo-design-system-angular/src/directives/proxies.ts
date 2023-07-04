@@ -464,14 +464,14 @@ export declare interface MInputSwitch extends Components.MInputSwitch {
 
 @ProxyCmp({
   defineCustomElementFn: defineMModal,
-  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isInline', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
+  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
 })
 @Component({
   selector: 'm-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isInline', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
+  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
 })
 export class MModal {
   protected el: HTMLElement;
@@ -493,14 +493,14 @@ export declare interface MModal extends Components.MModal {
 
 @ProxyCmp({
   defineCustomElementFn: defineMOffcanvas,
-  inputs: ['footerActionPlacement', 'isInline', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
+  inputs: ['footerActionPlacement', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
 })
 @Component({
   selector: 'm-offcanvas',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['footerActionPlacement', 'isInline', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton'],
+  inputs: ['footerActionPlacement', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton'],
 })
 export class MOffcanvas {
   protected el: HTMLElement;

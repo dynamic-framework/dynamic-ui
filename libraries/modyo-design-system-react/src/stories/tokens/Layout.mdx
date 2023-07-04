@@ -1,0 +1,62 @@
+import { Meta, Markdown } from '@storybook/blocks';
+
+<Meta title="Design System/Tokens/Layout" />
+
+# Layout
+
+We use the Bootstrap Layout, Container and Grid System.
+
+To understand in more detail the layout and grid system, review the following documentation:
+
++ [Bootstrap Breakpoints](https://getbootstrap.com/docs/5.3/layout/breakpoints/)
++ [Bootstrap Containers](https://getbootstrap.com/docs/5.3/layout/containers/)
++ [Bootstrap Grid](https://getbootstrap.com/docs/5.3/layout/grid/)
++ [Bootstrap Columns](https://getbootstrap.com/docs/5.3/layout/columns/)
++ [Bootstrap Gutters](https://getbootstrap.com/docs/5.3/layout/gutters/)
+
+## Layout & Grid
+
+The layout is where all the elements of communication come together. A good layout requires careful planning and use of composition, which relies on principles such as hierarchy, scale, proportion, contrast, harmony, rhythm, repetition, and many more.
+
+In the lab we use Bootstrap 5 as the basis for building our design, a powerful mobile-first flexbox grid to build layouts of all shapes and sizes thanks to a twelve column system.
+
+### Grid Options
+
+<h4 className="py-3 mb-0 fw-bold"><pre className="d-inline">.container</pre><code>-*</code></h4>
+
+<Markdown>
+  {`
+
+  | Name                          | Breakpoints   | Max Width     |         |
+  |-------------------------------|---------------|---------------|---------|
+  | Extra extra large (\`xxl\`)   | >= 1400px     | 1320px        |         |
+  | Extra large ((\`xl\`)         | >= 1200px     | 1140px        | Desktop |
+  | Large (\`lg\`)                | >= 992px      | 960px         |         |
+  | Medium (\`md\`)               | >= 768px      | 720px         |         |
+  | Small (\`sm\`)                | >= 576px      | 540px         | Mobile  |
+  | Extra small (\`xs\`) **NONE** | < 576px       | none (auto)   |         |
+
+  `}
+</Markdown>
+
+### Grid Gutter Widths
+
+<h4 className="py-3 mb-0 fw-bold"><pre className="d-inline">.row </pre><code>.g-*</code></h4>
+
+<Markdown>
+  {`
+
+  | Name       | Width  | Class   |         |
+  |------------|--------|---------|---------|
+  | Gutter 0   | 0      | row g-0 |         |
+  | Gutter 1   | 4px    | row g-1 |         |
+  | Gutter 2   | 8px    | row g-2 |         |
+  | Gutter 3   | 16px   | row g-3 | Mobile  |
+  | Gutter 4   | 24px   | row g-4 |         |
+  | Gutter 5   | 32px   | row g-5 |         |
+  | Gutter 6   | 40px   | row g-6 |         |
+  | Gutter 7   | 48px   | row g-7 | Desktop |
+  | Gutter 8   | 56px   | row g-8 |         |
+
+  `}
+</Markdown>

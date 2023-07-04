@@ -15,6 +15,12 @@ import { MIcon } from '../../components';
 
 # Icon
 
+Wrapper Component around Bootstrap Icons.
+
+Free, high quality, open source icon library with over 1,800 icons. Include them anyway you like—SVGs, SVG sprite, or web fonts. Use them with or without Bootstrap in any project.
+
+Source site: [Bootstrap Icons](https://icons.getbootstrap.com/)
+
 ## CSS Variables
 <Markdown>
   {`
@@ -43,7 +49,7 @@ import { MIcon } from '../../components';
 
 <IconGallery>
   {ICONS.map((name) => (
-    <IconItem name={name}>
+    <IconItem key={name} name={name}>
       <MIcon icon={name} />
     </IconItem>
   ))}

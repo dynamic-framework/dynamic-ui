@@ -49,7 +49,7 @@ type Story = StoryObj<typeof MInputCheck>;
 
 export const CheckboxWithoutLabel: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId1',
     type: 'checkbox',
     isChecked: false,
     isDisabled: false,
@@ -58,7 +58,7 @@ export const CheckboxWithoutLabel: Story = {
 
 export const CheckboxDefault: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId2',
     type: 'checkbox',
     label: 'Label',
     isChecked: false,
@@ -68,7 +68,7 @@ export const CheckboxDefault: Story = {
 
 export const CheckboxChecked: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId3',
     type: 'checkbox',
     label: 'Label',
     isChecked: true,
@@ -78,7 +78,7 @@ export const CheckboxChecked: Story = {
 
 export const CheckboxDisabled: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId4',
     type: 'checkbox',
     label: 'Label',
     isChecked: false,
@@ -88,7 +88,7 @@ export const CheckboxDisabled: Story = {
 
 export const RadioWithoutLabel: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId5',
     type: 'radio',
     isChecked: false,
     isDisabled: false,
@@ -97,7 +97,7 @@ export const RadioWithoutLabel: Story = {
 
 export const RadioDefault: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId6',
     type: 'radio',
     label: 'Label',
     isChecked: false,
@@ -107,7 +107,7 @@ export const RadioDefault: Story = {
 
 export const RadioChecked: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId7',
     type: 'radio',
     label: 'Label',
     isChecked: true,
@@ -117,7 +117,7 @@ export const RadioChecked: Story = {
 
 export const RadioDisabled: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId8',
     type: 'radio',
     label: 'Label',
     isChecked: false,

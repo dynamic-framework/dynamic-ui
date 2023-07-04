@@ -290,7 +290,6 @@ export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undef
   'isScrollable',
   'isCentered',
   'isFullScreen',
-  'isInline',
   'fullScreenFrom',
   'modalSize',
   'showCloseButton',
@@ -306,7 +305,6 @@ export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offca
   'showCloseButton',
   'openFrom',
   'footerActionPlacement',
-  'isInline',
   'mClose'
 ]);
 

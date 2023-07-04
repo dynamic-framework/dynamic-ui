@@ -108,7 +108,7 @@ type Story = StoryObj<typeof MInputCounter>;
 
 export const Default: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -120,7 +120,7 @@ export const Default: Story = {
 
 export const Error: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId2',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -133,7 +133,7 @@ export const Error: Story = {
 
 export const Confirm: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -146,7 +146,7 @@ export const Confirm: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId',
+    mId: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
