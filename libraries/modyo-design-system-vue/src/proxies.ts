@@ -324,6 +324,7 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'actionLinkText',
   'actionLinkTheme',
   'actionIcon',
+  'secondaryActionIcon',
   'actionIconFamilyClass',
   'actionIconFamilyPrefix',
   'representativeImage',
@@ -332,7 +333,8 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'representativeIconHasCircle',
   'representativeIconFamilyClass',
   'representativeIconFamilyPrefix',
-  'mClick'
+  'mClick',
+  'mClickSecondary'
 ]);
 
 

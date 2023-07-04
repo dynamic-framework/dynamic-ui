@@ -985,6 +985,10 @@ export namespace Components {
           * Representative image
          */
         "representativeImage"?: string;
+        /**
+          * Second action icon
+         */
+        "secondaryActionIcon"?: string;
     }
     interface MQuickActionCheck {
         /**
@@ -2325,6 +2329,10 @@ declare namespace LocalJSX {
          */
         "onMClick"?: (event: MQuickActionButtonCustomEvent<any>) => void;
         /**
+          * Emitted when the input value has changed
+         */
+        "onMClickSecondary"?: (event: MQuickActionButtonCustomEvent<any>) => void;
+        /**
           * Representative icon, displayed when the representativeImage is not set
          */
         "representativeIcon"?: string;
@@ -2348,6 +2356,10 @@ declare namespace LocalJSX {
           * Representative image
          */
         "representativeImage"?: string;
+        /**
+          * Second action icon
+         */
+        "secondaryActionIcon"?: string;
     }
     interface MQuickActionCheck {
         /**
