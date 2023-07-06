@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@1.0.1...@modyo-dynamic/modyo-design-system-react@1.1.0) (2023-07-04)
+
+### Features
+
+- add m-box-file base ([4838b6c](https://github.com/modyo-dynamic/modyo-design-system/commit/4838b6cde22e92818861647b0f3e29eb12bdc48d))
+- add modal footerActionPlacement center ([b76d04b](https://github.com/modyo-dynamic/modyo-design-system/commit/b76d04b92f6f4f4c7ce4321ef63c4b1d2f630d88))
+- adjust branding and resolve all // TODO docs ([b596900](https://github.com/modyo-dynamic/modyo-design-system/commit/b59690047d4f5dd2a2bd3dbd88af377693f1c000))
+- adjust design of m-box-file ([5567c89](https://github.com/modyo-dynamic/modyo-design-system/commit/5567c8966e30948f21d23b1ab64fe18c92772b9c))
+
+### Bug Fixes
+
+- m-quick-action-button image border-radius and person list example ([a058e47](https://github.com/modyo-dynamic/modyo-design-system/commit/a058e4782675d6080f6bc6f7f37397e71f36cb96))
+- stop propagation ([52e8e7f](https://github.com/modyo-dynamic/modyo-design-system/commit/52e8e7f5c25c8840eda046d2134079a99ef35285))
+
 ## [1.0.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@1.0.0...@modyo-dynamic/modyo-design-system-react@1.0.1) (2023-06-14)
 
 **Note:** Version bump only for package @modyo-dynamic/modyo-design-system-react
