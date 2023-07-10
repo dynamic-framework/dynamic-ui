@@ -1,22 +1,24 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { useFormatCurrency } from '../../hooks';
 import { LiquidContextProvider } from '../../contexts';
 
-type Props = {
-  valuesToFormat: Array<number>;
-};
-
-const Example = ({ valuesToFormat }: Props) => {
-  const { values } = useFormatCurrency(...valuesToFormat);
+const ExampleChildren = () => {
+  const { values } = useFormatCurrency(100, 234.12, -233);
   return (
-    <LiquidContextProvider>
+    <>
       {values.map((value) => (
         <pre key={value}>{value}</pre>
       ))}
-    </LiquidContextProvider>
+    </>
   );
 };
+
+const Example = () => (
+  <LiquidContextProvider>
+    <ExampleChildren />
+  </LiquidContextProvider>
+);
 
 const config: Meta<typeof Example> = {
   title: 'Hooks/useFormatCurrency',
@@ -24,9 +26,14 @@ const config: Meta<typeof Example> = {
 };
 
 export default config;
+type Story = StoryObj<typeof Example>;
 
-export const Default = {
-  args: {
-    valuesToFormat: [100, 234.12, -233],
-  },
+export const Default: Story = {
+  decorators: [
+    (Story) => {
+      // eslint-disable-next-line global-require
+      require('../config/liquidConfig');
+      return <Story />;
+    },
+  ],
 };
