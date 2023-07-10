@@ -35,7 +35,7 @@ const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
 
 const ExampleChildren = () => {
   const { openOffcanvas } = useOffcanvasContextHook();
-  return <MButton text="Open Offcanvas" onClick={() => openOffcanvas('example')} />;
+  return <MButton text="Open Offcanvas" onMClick={() => openOffcanvas('example')} />;
 };
 
 const Example = () => (
