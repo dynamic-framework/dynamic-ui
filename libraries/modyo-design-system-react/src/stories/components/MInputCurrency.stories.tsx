@@ -114,15 +114,18 @@ export default config;
 type Story = StoryObj<typeof MInputCurrency>;
 
 export const Default: Story = {
-  render: (args: ComponentProps<typeof MInputCurrency>) => {
-    // eslint-disable-next-line global-require
-    require('../config/liquidConfig');
-    return (
-      <LiquidContextProvider>
-        <MInputCurrency {...args} />
-      </LiquidContextProvider>
-    );
-  },
+  decorators: [
+    (Story) => {
+      // eslint-disable-next-line global-require
+      require('../config/liquidConfig');
+      return <Story />;
+    },
+  ],
+  render: (args: ComponentProps<typeof MInputCurrency>) => (
+    <LiquidContextProvider>
+      <MInputCurrency {...args} />
+    </LiquidContextProvider>
+  ),
   args: {
     mId: 'componentId1',
     label: 'Label',
@@ -135,15 +138,18 @@ export const Default: Story = {
 };
 
 export const Value: Story = {
-  render: (args: ComponentProps<typeof MInputCurrency>) => {
-    // eslint-disable-next-line global-require
-    require('../config/liquidConfig');
-    return (
-      <LiquidContextProvider>
-        <MInputCurrency {...args} />
-      </LiquidContextProvider>
-    );
-  },
+  decorators: [
+    (Story) => {
+      // eslint-disable-next-line global-require
+      require('../config/liquidConfig');
+      return <Story />;
+    },
+  ],
+  render: (args: ComponentProps<typeof MInputCurrency>) => (
+    <LiquidContextProvider>
+      <MInputCurrency {...args} />
+    </LiquidContextProvider>
+  ),
   args: {
     mId: 'componentId2',
     label: 'Label',
@@ -156,15 +162,18 @@ export const Value: Story = {
 };
 
 export const Error: Story = {
-  render: (args: ComponentProps<typeof MInputCurrency>) => {
-    // eslint-disable-next-line global-require
-    require('../config/liquidConfig');
-    return (
-      <LiquidContextProvider>
-        <MInputCurrency {...args} />
-      </LiquidContextProvider>
-    );
-  },
+  decorators: [
+    (Story) => {
+      // eslint-disable-next-line global-require
+      require('../config/liquidConfig');
+      return <Story />;
+    },
+  ],
+  render: (args: ComponentProps<typeof MInputCurrency>) => (
+    <LiquidContextProvider>
+      <MInputCurrency {...args} />
+    </LiquidContextProvider>
+  ),
   args: {
     mId: 'componentId3',
     label: 'Label',
@@ -178,15 +187,18 @@ export const Error: Story = {
 };
 
 export const Confirm: Story = {
-  render: (args: ComponentProps<typeof MInputCurrency>) => {
-    // eslint-disable-next-line global-require
-    require('../config/liquidConfig');
-    return (
-      <LiquidContextProvider>
-        <MInputCurrency {...args} />
-      </LiquidContextProvider>
-    );
-  },
+  decorators: [
+    (Story) => {
+      // eslint-disable-next-line global-require
+      require('../config/liquidConfig');
+      return <Story />;
+    },
+  ],
+  render: (args: ComponentProps<typeof MInputCurrency>) => (
+    <LiquidContextProvider>
+      <MInputCurrency {...args} />
+    </LiquidContextProvider>
+  ),
   args: {
     mId: 'componentId4',
     label: 'Label',
@@ -200,15 +212,18 @@ export const Confirm: Story = {
 };
 
 export const Disabled: Story = {
-  render: (args: ComponentProps<typeof MInputCurrency>) => {
-    // eslint-disable-next-line global-require
-    require('../config/liquidConfig');
-    return (
-      <LiquidContextProvider>
-        <MInputCurrency {...args} />
-      </LiquidContextProvider>
-    );
-  },
+  decorators: [
+    (Story) => {
+      // eslint-disable-next-line global-require
+      require('../config/liquidConfig');
+      return <Story />;
+    },
+  ],
+  render: (args: ComponentProps<typeof MInputCurrency>) => (
+    <LiquidContextProvider>
+      <MInputCurrency {...args} />
+    </LiquidContextProvider>
+  ),
   args: {
     mId: 'componentId5',
     label: 'Label',
@@ -222,6 +237,18 @@ export const Disabled: Story = {
 };
 
 export const WithCurrencyCode: Story = {
+  decorators: [
+    (Story) => {
+      // eslint-disable-next-line global-require
+      require('../config/liquidConfig');
+      return <Story />;
+    },
+  ],
+  render: (args: ComponentProps<typeof MInputCurrency>) => (
+    <LiquidContextProvider>
+      <MInputCurrency {...args} />
+    </LiquidContextProvider>
+  ),
   args: {
     mId: 'componentId6',
     label: 'Label',
