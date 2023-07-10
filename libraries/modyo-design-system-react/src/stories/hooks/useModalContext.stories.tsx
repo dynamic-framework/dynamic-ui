@@ -34,7 +34,7 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
 
 const ExampleChildren = () => {
   const { openModal } = useModalContextHook();
-  return <MButton text="Open Modal" onClick={() => openModal('example')} />;
+  return <MButton text="Open Modal" onMClick={() => openModal('example')} />;
 };
 
 const Example = () => (
@@ -54,8 +54,8 @@ const config: Meta<typeof Example> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MModal>;
+type Story = StoryObj<typeof Example>;
 
 export const useModalContext: Story = {
-  render: () => <Example />,
+  args: {},
 };

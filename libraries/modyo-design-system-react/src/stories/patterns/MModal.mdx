@@ -2,11 +2,14 @@ import {
   Meta,
   ArgTypes,
   Markdown,
-  Stories, Story, Canvas,
+  Stories,
+  Story,
+  Source,
 } from '@storybook/blocks';
 import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
 
 import * as MModalStories from './MModal.stories';
+import * as useModalContextStories from "../hooks/useModalContext.stories";
 
 # Modal
 
@@ -30,6 +33,64 @@ import * as MModalStories from './MModal.stories';
 
 <ArgTypes of={MModalStories} />
 
+## Example
+
+<Story of={useModalContextStories.useModalContext} />
+<br />
+
+### Context Setup - render of `Bootstrap.tsx`
+<Source
+  code={`
+<ModalContextProvider
+  portalName="examplePortal"
+  availableModals={{
+    example: ExampleModal,
+  }}
+>
+  <App />
+</ModalContextProvider>
+  `}
+/>
+
+### Modal Definition - render of `ExampleModal.tsx`
+<Source
+  code={`
+<MModal
+  name="example"
+  isCentered
+  isStatic
+  showCloseButton
+  onMClose={() => closeModal()}
+>
+  <div slot="header">
+    <h5 className="fw-bold">Do you want to reject the offer?</h5>
+  </div>
+  <div slot="body">
+    <p className="py-3 px-5">Modal body</p>
+  </div>
+  <div slot="footer">
+    <MButton
+      text="cancel"
+      theme="secondary"
+      variant="outline"
+      className="d-grid"
+      isPill
+      onMClick={() => closeModal()}
+    />
+    <MButton text="ok" className="d-grid" isPill />
+  </div>
+</MModal>
+  `}
+/>
+
+### Modal Usage render of `App.tsx`
+<Source
+  code={`
+<MButton text="Open Modal" onMClick={() => openModal('example')} />
+  `}
+/>
+
 <Stories />
+
 
 
