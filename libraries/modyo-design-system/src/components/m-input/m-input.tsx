@@ -10,10 +10,7 @@ import {
 
 import { PREFIX_BS } from '../../utils';
 
-@Component({
-  tag: 'm-input',
-  shadow: false,
-})
+@Component({ tag: 'm-input' })
 export class MInput implements ComponentInterface {
   @Element() el!: HTMLMInputElement;
   /**
