@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { toast as reactToast } from 'react-toastify';
+import { ToastPosition, Slide, toast as reactToast } from 'react-toastify';
 
 import type { AlertType } from '@modyo-dynamic/modyo-design-system';
 
@@ -8,10 +8,17 @@ import { MAlert } from '../components';
 export type ToastConfig = {
   type?: AlertType;
   showClose?: boolean;
+  position?: ToastPosition;
+  autoClose?: number | false;
 };
 
 export default function useToast() {
-  const toast = useCallback((message: string, { type = 'info', showClose = true }: ToastConfig = {}) => {
+  const toast = useCallback((message: string, {
+    position = 'bottom-center',
+    type = 'info',
+    showClose = true,
+    autoClose = false,
+  }: ToastConfig = {}) => {
     reactToast(({ closeToast }) => (
       <MAlert
         type={type}
@@ -20,7 +27,11 @@ export default function useToast() {
       >
         {message}
       </MAlert>
-    ));
+    ), {
+      transition: Slide,
+      position,
+      autoClose,
+    });
   }, []);
 
   return {
