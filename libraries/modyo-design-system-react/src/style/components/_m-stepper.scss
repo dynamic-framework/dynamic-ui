@@ -1,0 +1,46 @@
+.m-stepper {
+  position: relative;
+  display: flex;
+
+  .step .step-value::after {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: 100%;
+    height: 1px;
+    content: "";
+    background-color: var(--bs-secondary);
+  }
+
+  .step:first-child .step-value::after {
+    left: 50%;
+    z-index: 2;
+    width: 50%;
+  }
+
+  .step:last-child .step-value::after {
+    right: 50%;
+    z-index: 2;
+    width: 50%;
+  }
+
+  .step-icon-container {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 100%;
+  }
+
+  .step-icon {
+    display: flex;
+    font-size: 1.125rem;
+  }
+
+  .step-label {
+    text-align: center;
+  }
+}

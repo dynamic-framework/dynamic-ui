@@ -14,5 +14,6 @@ export { default as MTooltip } from './MTooltip';
 export { default as MCollapse } from './MCollapse';
 export { default as MInputCurrency } from './MInputCurrency';
 export { default as MBoxFile } from './MBoxFile';
+export { default as MStepper } from './MStepper';
 
 export type { TabOption } from './MTabs';
