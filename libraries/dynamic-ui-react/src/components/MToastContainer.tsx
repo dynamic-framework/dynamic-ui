@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { ToastContainer, Zoom } from 'react-toastify';
+import { ToastContainer, Slide, ToastPosition } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -9,19 +9,23 @@ type Props = {
     '--toastify-toast-width': any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [index: string]: any;
-  }
+  },
+  position?: ToastPosition;
 };
 
-export default function MToastContainer({ style }: Props) {
+export default function MToastContainer({
+  style,
+  position = 'bottom-center',
+}: Props) {
   return (
     <ToastContainer
       toastClassName={() => 'shadow-none p-0 cursor-default'}
-      position="bottom-center"
+      position={position}
       autoClose={false}
       hideProgressBar
       closeOnClick={false}
       closeButton={false}
-      transition={Zoom}
+      transition={Slide}
       style={style}
     />
   );
