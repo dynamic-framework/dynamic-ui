@@ -33,7 +33,7 @@
   "homepage": "https://modyo.com/",
   "license": "MIT",
   "dependencies": {
-    "@modyo-dynamic/modyo-design-system": "*",
+    "@dynamic-framework/ui": "*",
     "@ngneat/content-loader": "~7.0.0"
   },
   "devDependencies": {
