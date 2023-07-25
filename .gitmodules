@@ -1,58 +1,12 @@
-[submodule "widgets/modyo-widget-retail-pay-debt"]
-	path = widgets/modyo-widget-retail-pay-debt
-	url = git@github.com:modyo-dynamic/modyo-widget-retail-pay-debt.git
-	branch = chore/lerna
-[submodule "widgets/modyo-widget-retail-dashboard"]
-	path = widgets/modyo-widget-retail-dashboard
-	url = git@github.com:modyo-dynamic/modyo-widget-retail-dashboard.git
-[submodule "widgets/modyo-widget-retail-transfer"]
-	path = widgets/modyo-widget-retail-transfer
-	url = git@github.com:modyo-dynamic/modyo-widget-retail-transfer.git
-[submodule "widgets/modyo-widget-retail-product-detail"]
-	path = widgets/modyo-widget-retail-product-detail
-	url = git@github.com:modyo-dynamic/modyo-widget-retail-product-detail.git
-[submodule "packages/modyo-service-retail"]
-	path = packages/modyo-service-retail
-	url = git@github.com:modyo-dynamic/modyo-service-retail.git
-[submodule "widgets/modyo-widget-retail-loan-application"]
-	path = widgets/modyo-widget-retail-loan-application
-	url = git@github.com:modyo-dynamic/modyo-widget-retail-loan-application.git
-[submodule "widgets/modyo-widget-retail-loan-approval"]
-	path = widgets/modyo-widget-retail-loan-approval
-	url = git@github.com:modyo-dynamic/modyo-widget-retail-loan-approval.git
 [submodule "packages/stencil-eslint-plugin"]
 	path = packages/stencil-eslint-plugin
 	url = https://github.com/modyo-dynamic/stencil-eslint-plugin.git
-[submodule "packages/modyo-template-widget-react"]
-	path = packages/modyo-template-widget-react
-	url = git@github.com:modyo-dynamic/modyo-template-widget-react.git
-[submodule "widgets/modyo-widget-retail-dashboard-payments"]
-	path = widgets/modyo-widget-retail-dashboard-payments
-	url = git@github.com:modyo-dynamic/modyo-widget-retail-dashboard-payments.git
-[submodule "widgets/modyo-widget-business-dashboard"]
-	path = widgets/modyo-widget-business-dashboard
-	url = git@github.com:modyo-dynamic/modyo-widget-business-dashboard.git
-[submodule "widgets/modyo-widget-business-login-otp"]
-	path = widgets/modyo-widget-business-login-otp
-	url = git@github.com:modyo-dynamic/modyo-widget-business-login-otp.git
-[submodule "widgets/modyo-widget-business-role-management"]
-	path = widgets/modyo-widget-business-role-management
-	url = git@github.com:modyo-dynamic/modyo-widget-business-role-management.git
-[submodule "widgets/modyo-widget-business-role-list"]
-	path = widgets/modyo-widget-business-role-list
-	url = git@github.com:modyo-dynamic/modyo-widget-business-role-list.git
-[submodule "widgets/modyo-widget-business-product-detail"]
-	path = widgets/modyo-widget-business-product-detail
-	url = git@github.com:modyo-dynamic/modyo-widget-business-product-detail.git
-[submodule "widgets/modyo-widget-business-team-management"]
-	path = widgets/modyo-widget-business-team-management
-	url = git@github.com:modyo-dynamic/modyo-widget-business-team-management.git
-[submodule "widgets/modyo-widget-business-member-management"]
-	path = widgets/modyo-widget-business-member-management
-	url = git@github.com:modyo-dynamic/modyo-widget-business-member-management.git
-[submodule "widgets/modyo-widget-business-mass-payments"]
-	path = widgets/modyo-widget-business-mass-payments
-	url = git@github.com:modyo-dynamic/modyo-widget-business-mass-payments.git
-[submodule "widgets/modyo-widget-business-mass-payments-query"]
-	path = widgets/modyo-widget-business-mass-payments-query
-	url = git@github.com:modyo-dynamic/modyo-widget-business-mass-payments-query.git
+[submodule "templates/dynamic-retail-dashboard-template"]
+	path = templates/dynamic-retail-dashboard-template
+	url = git@github.com:dynamic-framework/dynamic-retail-dashboard-template.git
+[submodule "templates/dynamic-retail-product-detail-template"]
+	path = templates/dynamic-retail-product-detail-template
+	url = git@github.com:dynamic-framework/dynamic-retail-product-detail-template.git
+[submodule "packages/dynamic-react-base-template"]
+	path = packages/dynamic-react-base-template
+	url = git@github.com:dynamic-framework/dynamic-react-base-template.git
