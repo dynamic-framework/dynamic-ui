@@ -1,0 +1,2 @@
+import{a as i}from"./p-bde3ed36.js";const e=(e={})=>{if(typeof window==="undefined"){return}const f={};if(e._ael){f.ael=e._ael}if(e._rel){f.rel=e._rel}if(e._ce){f.ce=e._ce}i(f)};export{e as i};
+//# sourceMappingURL=p-cd5b2523.js.map

@@ -1,4 +1,4 @@
-import { r as registerInstance, h } from './index-c7f2daf2.js';
+import { r as registerInstance, h } from './index-a19c3827.js';
 
 const MBadge = class {
   constructor(hostRef) {
