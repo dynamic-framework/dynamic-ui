@@ -21,10 +21,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          scope: '@dynamic-framework'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@modyo-dynamic'
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build packages
         run: pnpm build
       - name: Build storybook
