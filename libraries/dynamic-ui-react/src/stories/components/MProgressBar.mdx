@@ -1,0 +1,39 @@
+import {
+  Meta,
+  ArgTypes,
+  Markdown,
+  Stories,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as MProgressBarStories from './MProgressBar.stories';
+
+# Progress Bar
+
+Wrapper around Bootstrap Progress.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap Progress](https://getbootstrap.com/docs/5.3/components/progress/)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                         | Type              | Description                           |
+  |--------------------------------------------------|-------------------|---------------------------------------|
+  | \`--${PREFIX_BS}m-progress-bar-font-weight\`     | css length unit   | Text font weight                      |
+
+  `}
+</Markdown>
+
++ [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/progress/#variables)
+
+## Args
+<Meta of={MProgressBarStories} />
+
+<ArgTypes of={MProgressBarStories} />
+
+<Stories />
+
+

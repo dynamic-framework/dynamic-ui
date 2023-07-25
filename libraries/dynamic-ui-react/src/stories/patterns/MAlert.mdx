@@ -1,0 +1,34 @@
+import {
+  Meta,
+  ArgTypes,
+  Markdown,
+  Stories,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as MAlertStories from './MAlert.stories';
+
+# Alert
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                        | Type             | Description              |
+  |-------------------------------------------------|------------------|--------------------------|
+  | \`--${PREFIX_BS}m-alert-gap\`                   | css length unit  | Content separation       |
+  | \`--${PREFIX_BS}m-alert-box-shadow\`            | css box shadow   | Alert box shadow         |
+  | \`--${PREFIX_BS}m-alert-icon-color\`            | css color unit   | Alert icon color         |
+  | \`--${PREFIX_BS}m-alert-separator-opacity\`     | css length unit  | Alert separator opacity  |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MAlertStories} />
+
+<ArgTypes of={MAlertStories} />
+
+<Stories />
+
+
