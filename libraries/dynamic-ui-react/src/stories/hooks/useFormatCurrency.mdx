@@ -1,0 +1,41 @@
+import {
+  Meta,
+  Story,
+  Source,
+} from '@storybook/blocks';
+
+import * as useFormatCurrencyStories from './useFormatCurrency.stories';
+
+<Meta of={useFormatCurrencyStories} />
+
+## Example
+
+<Story of={useFormatCurrencyStories.Default} />
+<br />
+
+### Liquid Setup - render of `Bootstrap.tsx`
+<Source
+  code={`
+<LiquidContextProvider>
+  <App />
+</LiquidContextProvider>
+  `}
+/>
+
+### Hook usage - call
+<Source
+  code={`
+const { values } = useFormatCurrency(100, 234.12, -233);
+  `}
+/>
+
+### Hook usage - render of `App.tsx`
+<Source
+  language="tsx"
+  code={`
+<>
+  {values.map((value) => (<pre key={value}>{value}</pre>))}
+</>
+  `}
+/>
+
