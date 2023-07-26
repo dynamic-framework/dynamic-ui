@@ -2,15 +2,15 @@
   "name": "@dynamic-framework/ui-react",
   "sideEffects": false,
   "version": "1.1.0",
-  "description": "React specific wrapper for component-library",
+  "description": "React Dynamic Framework",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/modyo-dynamic/modyo-design-system.git"
+    "url": "git+https://github.com/dynamic-framework/dynamic-ui.git"
   },
   "bugs": {
     "type": "git",
-    "url": "https://github.com/modyo-dynamic/modyo-design-system.git"
+    "url": "https://github.com/dynamic-framework/dynamic-ui.git"
   },
   "author": {
     "name": "Abraham José González Barboza",
@@ -22,9 +22,9 @@
     "build": "pnpm build:react && pnpm build:style",
     "build:react": "rimraf dist && tsc -p . && rollup -c rollup.config.js",
     "build:react:watch": "tsc -p . && rollup -c rollup.config.js",
-    "build:scss": "sass --load-path=node_modules --source-map --style=compressed src/style/main.scss dist/css/design-system-react.css",
-    "build:scss:watch": "sass --load-path=node_modules --source-map -w src/style/main.scss dist/css/design-system-react.css",
-    "build:autoprefixer": "postcss dist/css/design-system-react.css --use autoprefixer -o dist/css/design-system-react.css",
+    "build:scss": "sass --load-path=node_modules --source-map --style=compressed src/style/main.scss dist/css/dynamic-ui-react.css",
+    "build:scss:watch": "sass --load-path=node_modules --source-map -w src/style/main.scss dist/css/dynamic-ui-react.css",
+    "build:autoprefixer": "postcss dist/css/dynamic-ui-react.css --use autoprefixer -o dist/css/dynamic-ui-react.css",
     "build:style": "pnpm build:scss && pnpm build:autoprefixer",
     "clean": "rimraf dist",
     "compile": "tsc -p . && rollup -c rollup.config.js",

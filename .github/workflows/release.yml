@@ -36,6 +36,8 @@ jobs:
         run: pnpm build
       - name: Version and publish packages
         run: |
+          pnpm set @dynamic-framework:registry=https://registry.npmjs.org/
+          pnpm set "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}"
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           git update-index --skip-worktree -- .npmrc
