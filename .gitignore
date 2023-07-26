@@ -67,4 +67,5 @@ common/autoinstallers/*/.npmrc
 # Heft
 .heft
 
+.vscode
 .idea

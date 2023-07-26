@@ -1,0 +1,92 @@
+import {
+  Meta,
+  ArgTypes,
+  Markdown,
+  Stories,
+  Story,
+  Source,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as MOffcanvasStories from './MOffcanvas.stories';
+import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.stories";
+
+# Offcanvas
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                       | Type              | Description                                 |
+  |------------------------------------------------|-------------------|---------------------------------------------|
+  | \`--${PREFIX_BS}m-offcanvas-footer-gap\`       | css length unit   | Space between footer actions                |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MOffcanvasStories} />
+
+<ArgTypes of={MOffcanvasStories} />
+
+## Example
+
+<Story of={useOffcanvasContextStories.useOffcanvasContext} />
+<br />
+
+### Context Setup - render of `Bootstrap.tsx`
+<Source
+  code={`
+ <OffcanvasContextProvider
+  portalName="examplePortal"
+  availableOffcanvas={{
+    example: ExampleOffcanvas,
+  }}
+>
+  <ExampleChildren />
+</OffcanvasContextProvider>
+  `}
+/>
+
+### Offcanvas Definition - render of `ExampleOffcanvas.tsx`
+<Source
+  code={`
+<MOffcanvas
+  name="example"
+  isStatic={false}
+  isScrollable={false}
+  showCloseButton
+  openFrom="end"
+  onMClose={() => closeOffcanvas()}
+>
+  <div slot="header">
+    <h5 className="fw-bold">Advanced filters</h5>
+  </div>
+  <div slot="body">
+    <p>Offcanvas body</p>
+  </div>
+  <div slot="footer">
+    <MButton
+      text="cancel"
+      theme="secondary"
+      variant="outline"
+      className="d-grid"
+      isPill
+      onMClick={() => closeOffcanvas()}
+    />
+    <MButton text="ok" className="d-grid" isPill />
+  </div>
+</MOffcanvas>
+  `}
+/>
+
+### Offcanvas Usage render of `App.tsx`
+<Source
+  code={`
+<MButton text="Open Offcanvas" onMClick={() => openOffcanvas('example')} />
+  `}
+/>
+
+<Stories />
+
+
