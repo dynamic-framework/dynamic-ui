@@ -6,5 +6,5 @@ interface StencilReactInternalProps<ElementType> extends React.HTMLAttributes<El
     forwardedRef: React.RefObject<ElementType>;
     ref?: React.Ref<any>;
 }
-export declare const createReactComponent: <PropType, ElementType extends HTMLStencilElement, ContextStateType = {}, ExpandedPropsTypes = {}>(tagName: string, ReactComponentContext?: React.Context<ContextStateType> | undefined, manipulatePropsFunction?: ((originalProps: StencilReactInternalProps<ElementType>, propsToPass: any) => ExpandedPropsTypes) | undefined, defineCustomElement?: (() => void) | undefined) => React.ForwardRefExoticComponent<React.PropsWithoutRef<import("./utils").StencilReactExternalProps<PropType, ElementType>> & React.RefAttributes<ElementType>>;
+export declare const createReactComponent: <PropType, ElementType extends HTMLStencilElement, ContextStateType = {}, ExpandedPropsTypes = {}>(tagName: string, ReactComponentContext?: React.Context<ContextStateType> | undefined, manipulatePropsFunction?: ((originalProps: StencilReactInternalProps<ElementType>, propsToPass: any) => ExpandedPropsTypes) | undefined, defineCustomElement?: () => void) => React.ForwardRefExoticComponent<React.PropsWithoutRef<import("./utils").StencilReactExternalProps<PropType, ElementType>> & React.RefAttributes<ElementType>>;
 export {};
