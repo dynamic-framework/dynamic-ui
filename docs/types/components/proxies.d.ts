@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import type { JSX } from '@modyo-dynamic/modyo-design-system/components';
+import type { JSX } from '@dynamic-framework/ui/components';
 export declare const MAlert: import("react").ForwardRefExoticComponent<JSX.MAlert & Omit<import("react").HTMLAttributes<HTMLMAlertElement>, "style"> & import("./react-component-lib/interfaces").StyleReactProps & import("react").RefAttributes<HTMLMAlertElement>>;
 export declare const MBadge: import("react").ForwardRefExoticComponent<JSX.MBadge & Omit<import("react").HTMLAttributes<HTMLMBadgeElement>, "style"> & import("./react-component-lib/interfaces").StyleReactProps & import("react").RefAttributes<HTMLMBadgeElement>>;
 export declare const MButton: import("react").ForwardRefExoticComponent<JSX.MButton & Omit<import("react").HTMLAttributes<HTMLMButtonElement>, "style"> & import("./react-component-lib/interfaces").StyleReactProps & import("react").RefAttributes<HTMLMButtonElement>>;

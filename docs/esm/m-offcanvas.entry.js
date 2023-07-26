@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h, d as getElement } from './index-c7f2daf2.js';
+import { r as registerInstance, c as createEvent, h, d as getElement } from './index-a19c3827.js';
 import { P as PREFIX_BS } from './component-config-025f7932.js';
 
 const MOffcanvas = class {
