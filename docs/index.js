@@ -7,7 +7,7 @@ const DatePicker = require('react-datepicker');
 const luxon = require('luxon');
 const es = require('date-fns/locale/es');
 const React = require('react');
-const modyoDesignSystem = require('@modyo-dynamic/modyo-design-system');
+const ui = require('@dynamic-framework/ui');
 const ContentLoader = require('react-content-loader');
 const classnames = require('classnames');
 const reactToastify = require('react-toastify');
@@ -15,27 +15,27 @@ require('react-toastify/dist/ReactToastify.css');
 const react = require('@floating-ui/react');
 const tslib = require('tslib');
 const formik = require('formik');
-const mAlert_js = require('@modyo-dynamic/modyo-design-system/components/m-alert.js');
-const mBadge_js = require('@modyo-dynamic/modyo-design-system/components/m-badge.js');
-const mButton_js = require('@modyo-dynamic/modyo-design-system/components/m-button.js');
-const mChip_js = require('@modyo-dynamic/modyo-design-system/components/m-chip.js');
-const mIcon_js = require('@modyo-dynamic/modyo-design-system/components/m-icon.js');
-const mInput_js = require('@modyo-dynamic/modyo-design-system/components/m-input.js');
-const mInputCheck_js = require('@modyo-dynamic/modyo-design-system/components/m-input-check.js');
-const mInputCounter_js = require('@modyo-dynamic/modyo-design-system/components/m-input-counter.js');
-const mInputCurrencyBase_js = require('@modyo-dynamic/modyo-design-system/components/m-input-currency-base.js');
-const mInputPassword_js = require('@modyo-dynamic/modyo-design-system/components/m-input-password.js');
-const mInputPin_js = require('@modyo-dynamic/modyo-design-system/components/m-input-pin.js');
-const mInputSearch_js = require('@modyo-dynamic/modyo-design-system/components/m-input-search.js');
-const mInputSelect_js = require('@modyo-dynamic/modyo-design-system/components/m-input-select.js');
-const mInputSwitch_js = require('@modyo-dynamic/modyo-design-system/components/m-input-switch.js');
-const mModal_js = require('@modyo-dynamic/modyo-design-system/components/m-modal.js');
-const mOffcanvas_js = require('@modyo-dynamic/modyo-design-system/components/m-offcanvas.js');
-const mProgressBar_js = require('@modyo-dynamic/modyo-design-system/components/m-progress-bar.js');
-const mQuickActionButton_js = require('@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js');
-const mQuickActionCheck_js = require('@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js');
-const mQuickActionSelect_js = require('@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js');
-const mQuickActionSwitch_js = require('@modyo-dynamic/modyo-design-system/components/m-quick-action-switch.js');
+const mAlert_js = require('@dynamic-framework/ui/components/m-alert.js');
+const mBadge_js = require('@dynamic-framework/ui/components/m-badge.js');
+const mButton_js = require('@dynamic-framework/ui/components/m-button.js');
+const mChip_js = require('@dynamic-framework/ui/components/m-chip.js');
+const mIcon_js = require('@dynamic-framework/ui/components/m-icon.js');
+const mInput_js = require('@dynamic-framework/ui/components/m-input.js');
+const mInputCheck_js = require('@dynamic-framework/ui/components/m-input-check.js');
+const mInputCounter_js = require('@dynamic-framework/ui/components/m-input-counter.js');
+const mInputCurrencyBase_js = require('@dynamic-framework/ui/components/m-input-currency-base.js');
+const mInputPassword_js = require('@dynamic-framework/ui/components/m-input-password.js');
+const mInputPin_js = require('@dynamic-framework/ui/components/m-input-pin.js');
+const mInputSearch_js = require('@dynamic-framework/ui/components/m-input-search.js');
+const mInputSelect_js = require('@dynamic-framework/ui/components/m-input-select.js');
+const mInputSwitch_js = require('@dynamic-framework/ui/components/m-input-switch.js');
+const mModal_js = require('@dynamic-framework/ui/components/m-modal.js');
+const mOffcanvas_js = require('@dynamic-framework/ui/components/m-offcanvas.js');
+const mProgressBar_js = require('@dynamic-framework/ui/components/m-progress-bar.js');
+const mQuickActionButton_js = require('@dynamic-framework/ui/components/m-quick-action-button.js');
+const mQuickActionCheck_js = require('@dynamic-framework/ui/components/m-quick-action-check.js');
+const mQuickActionSelect_js = require('@dynamic-framework/ui/components/m-quick-action-select.js');
+const mQuickActionSwitch_js = require('@dynamic-framework/ui/components/m-quick-action-switch.js');
 const reactDropzone = require('react-dropzone');
 const i18n = require('i18next');
 const reactI18next = require('react-i18next');
@@ -288,10 +288,10 @@ function MCollapse({ id, className, Component, hasSeparator = false, defaultColl
     React.useEffect(() => {
         setToggle(defaultCollapsed);
     }, [defaultCollapsed]);
-    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classnames__default["default"]('m-collapse collapse-container', className) }, { children: [jsxRuntime.jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsxRuntime.jsx(MIcon, { color: `var(--${modyoDesignSystem.PREFIX_BS}gray)`, size: `var(--${modyoDesignSystem.PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsxRuntime.jsx("div", Object.assign({ className: classnames__default["default"]({
+    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classnames__default["default"]('m-collapse collapse-container', className) }, { children: [jsxRuntime.jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsxRuntime.jsx(MIcon, { color: `var(--${ui.PREFIX_BS}gray)`, size: `var(--${ui.PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsxRuntime.jsx("div", Object.assign({ className: classnames__default["default"]({
                     'collapse-body': true,
                 }), style: {
-                    [`--${modyoDesignSystem.PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
+                    [`--${ui.PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
                 } }, { children: children })))] })));
 }
 
@@ -322,12 +322,12 @@ const LiquidContext = React.createContext({
 });
 function LiquidContextProvider({ children, }) {
     const value = React.useMemo(() => ({
-        language: modyoDesignSystem.liquidParser.parse('{{site.language}}'),
+        language: ui.liquidParser.parse('{{site.language}}'),
         currency: {
-            symbol: modyoDesignSystem.liquidParser.parse('{{vars.currency-symbol}}'),
-            precision: parseInt(modyoDesignSystem.liquidParser.parse('{{vars.currency-precision}}'), 10),
-            separator: modyoDesignSystem.liquidParser.parse('{{vars.currency-separator}}'),
-            decimal: modyoDesignSystem.liquidParser.parse('{{vars.currency-decimal}}'),
+            symbol: ui.liquidParser.parse('{{vars.currency-symbol}}'),
+            precision: parseInt(ui.liquidParser.parse('{{vars.currency-precision}}'), 10),
+            separator: ui.liquidParser.parse('{{vars.currency-separator}}'),
+            decimal: ui.liquidParser.parse('{{vars.currency-decimal}}'),
         },
     }), []);
     return (jsxRuntime.jsx(LiquidContext.Provider, Object.assign({ value: value }, { children: children })));
@@ -587,14 +587,14 @@ function MSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, child
             return backgroundColor;
         }
         const computedStyle = getComputedStyle(document.documentElement);
-        return computedStyle.getPropertyValue(`--${modyoDesignSystem.PREFIX_BS}secondary-100`);
+        return computedStyle.getPropertyValue(`--${ui.PREFIX_BS}secondary-100`);
     }, [backgroundColor]);
     const innerForegroundColor = React.useMemo(() => {
         if (foregroundColor) {
             return foregroundColor;
         }
         const computedStyle = getComputedStyle(document.documentElement);
-        return computedStyle.getPropertyValue(`--${modyoDesignSystem.PREFIX_BS}gray-100`);
+        return computedStyle.getPropertyValue(`--${ui.PREFIX_BS}gray-100`);
     }, [foregroundColor]);
     return (jsxRuntime.jsx(ContentLoader__default["default"], Object.assign({ speed: speed, viewBox: viewBox, backgroundColor: innerBackgroundColor, foregroundColor: innerForegroundColor }, { children: children })));
 }
@@ -638,8 +638,8 @@ function MTabContent({ tab, children }) {
     return (jsxRuntime.jsx("div", Object.assign({ className: "tab-pane fade show active", id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab` }, { children: children })));
 }
 
-function MToastContainer({ style }) {
-    return (jsxRuntime.jsx(reactToastify.ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: "bottom-center", autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: reactToastify.Zoom, style: style }));
+function MToastContainer({ style, position = 'bottom-center', }) {
+    return (jsxRuntime.jsx(reactToastify.ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: position, autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: reactToastify.Slide, style: style }));
 }
 
 function MPopover({ children, renderComponent, isOpen, setIsOpen = () => { }, }) {
@@ -675,8 +675,8 @@ function MPopover({ children, renderComponent, isOpen, setIsOpen = () => { }, })
 
 function useFormatCurrency(...args) {
     const { currency } = useLiquidContext();
-    const format = React.useCallback((value) => modyoDesignSystem.formatCurrency(value, currency), [currency]);
-    const values = (args || []).map((value) => (modyoDesignSystem.formatCurrency(value !== null && value !== void 0 ? value : 0, currency)));
+    const format = React.useCallback((value) => ui.formatCurrency(value, currency), [currency]);
+    const values = (args || []).map((value) => (ui.formatCurrency(value !== null && value !== void 0 ? value : 0, currency)));
     return {
         format,
         values,
@@ -702,9 +702,9 @@ function MFormikInputSelect(_a) {
 }
 
 const TOOLTIP_FONT_SIZE_BY_SIZE = {
-    sm: `var(--${modyoDesignSystem.PREFIX_BS}ref-fs-subparagraph)`,
-    default: `var(--${modyoDesignSystem.PREFIX_BS}body-font-size)`,
-    lg: `var(--${modyoDesignSystem.PREFIX_BS}ref-fs-6)`,
+    sm: `var(--${ui.PREFIX_BS}ref-fs-subparagraph)`,
+    default: `var(--${ui.PREFIX_BS}body-font-size)`,
+    lg: `var(--${ui.PREFIX_BS}ref-fs-6)`,
 };
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
@@ -716,12 +716,12 @@ function MTooltip({ classNameContainer, className, offSet = ARROW_HEIGHT + GAP, 
             ? TOOLTIP_FONT_SIZE_BY_SIZE[size]
             : TOOLTIP_FONT_SIZE_BY_SIZE.default;
         return {
-            background: `var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-bg, var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-component-bg, var(--${modyoDesignSystem.PREFIX_BS}secondary)))`,
-            borderRadius: `var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-border-radius, var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-component-border-radius, var(--${modyoDesignSystem.PREFIX_BS}border-radius)))`,
-            color: `var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-color, var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-component-color, var(--${modyoDesignSystem.PREFIX_BS}white)))`,
-            fontSize: `var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-font-size, var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-component-font-size, ${defaultFontSize}))`,
-            padding: `var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-padding, var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-component-padding, var(--${modyoDesignSystem.PREFIX_BS}ref-spacer-2)))`,
-            maxWidth: `var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-max-width, var(--${modyoDesignSystem.PREFIX_BS}m-tooltip-component-max-width, 300px))`,
+            background: `var(--${ui.PREFIX_BS}m-tooltip-bg, var(--${ui.PREFIX_BS}m-tooltip-component-bg, var(--${ui.PREFIX_BS}secondary)))`,
+            borderRadius: `var(--${ui.PREFIX_BS}m-tooltip-border-radius, var(--${ui.PREFIX_BS}m-tooltip-component-border-radius, var(--${ui.PREFIX_BS}border-radius)))`,
+            color: `var(--${ui.PREFIX_BS}m-tooltip-color, var(--${ui.PREFIX_BS}m-tooltip-component-color, var(--${ui.PREFIX_BS}white)))`,
+            fontSize: `var(--${ui.PREFIX_BS}m-tooltip-font-size, var(--${ui.PREFIX_BS}m-tooltip-component-font-size, ${defaultFontSize}))`,
+            padding: `var(--${ui.PREFIX_BS}m-tooltip-padding, var(--${ui.PREFIX_BS}m-tooltip-component-padding, var(--${ui.PREFIX_BS}ref-spacer-2)))`,
+            maxWidth: `var(--${ui.PREFIX_BS}m-tooltip-max-width, var(--${ui.PREFIX_BS}m-tooltip-component-max-width, 300px))`,
         };
     }, [size]);
     const arrowRef = React.useRef(null);
@@ -776,7 +776,7 @@ function MBoxFile(_a) {
             }), { children: [jsxRuntime.jsx("input", Object.assign({}, getInputProps())), jsxRuntime.jsx(MIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsxRuntime.jsx("div", Object.assign({ className: "m-box-content" }, { children: children }))] })), !!acceptedFiles.length && (jsxRuntime.jsx("aside", Object.assign({ className: "m-box-files" }, { children: acceptedFiles.map((file) => (jsxRuntime.jsx("div", Object.assign({ className: "m-box-files-text" }, { children: `${file.name} - ${file.size} bytes` }), file.name))) })))] })));
 }
 
-const LANG = modyoDesignSystem.liquidParser.parse('{{site.language}}');
+const LANG = ui.liquidParser.parse('{{site.language}}');
 async function configureI8n(resources, _a = {}) {
     var { lng = LANG, fallbackLng = 'es' } = _a, config = tslib.__rest(_a, ["lng", "fallbackLng"]);
     return i18n__default["default"]
@@ -792,8 +792,12 @@ async function configureI8n(resources, _a = {}) {
 }
 
 function useToast() {
-    const toast = React.useCallback((message, { type = 'info', showClose = true } = {}) => {
-        reactToastify.toast(({ closeToast }) => (jsxRuntime.jsx(MAlert, Object.assign({ type: type, showClose: showClose, onMClose: closeToast }, { children: message }))));
+    const toast = React.useCallback((message, { position = 'bottom-center', type = 'info', showClose = true, autoClose = false, } = {}) => {
+        reactToastify.toast(({ closeToast }) => (jsxRuntime.jsx(MAlert, Object.assign({ type: type, showClose: showClose, onMClose: closeToast }, { children: message }))), {
+            transition: reactToastify.Slide,
+            position,
+            autoClose,
+        });
     }, []);
     return {
         toast,

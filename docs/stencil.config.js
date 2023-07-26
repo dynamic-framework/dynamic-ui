@@ -1,30 +1,30 @@
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
-const componentCorePackage = '@modyo-dynamic/modyo-design-system';
+const componentCorePackage = '@dynamic-framework/ui';
 export const config = {
-  namespace: 'design-system',
+  namespace: 'dynamic-framework',
   taskQueue: 'async',
   devServer: { initialLoadUrl: '/src' },
   outputTargets: [
     reactOutputTarget({
       componentCorePackage,
-      proxiesFile: '../modyo-design-system-react/src/components/proxies.ts',
+      proxiesFile: '../dynamic-ui-react/src/components/proxies.ts',
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
     }),
     vueOutputTarget({
       componentCorePackage,
-      proxiesFile: '../modyo-design-system-vue/src/proxies.ts',
+      proxiesFile: '../dynamic-ui-vue/src/proxies.ts',
       includeImportCustomElements: false,
       includePolyfills: false,
       includeDefineCustomElements: true, // TODO: disable this when change the vue plugin,
     }),
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../modyo-design-system-angular/src/directives/proxies.ts',
-      directivesArrayFile: '../modyo-design-system-angular/src/directives/proxies-list.ts',
+      directivesProxyFile: '../dynamic-ui-angular/src/directives/proxies.ts',
+      directivesArrayFile: '../dynamic-ui-angular/src/directives/proxies-list.ts',
       includeImportCustomElements: true,
     }),
     {

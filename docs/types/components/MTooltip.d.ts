@@ -1,6 +1,6 @@
 import type { PropsWithChildren, ReactNode } from 'react';
 import type { Placement } from '@floating-ui/react';
-import type { ComponentSize } from '@modyo-dynamic/modyo-design-system';
+import type { ComponentSize } from '@dynamic-framework/ui';
 export declare type MTooltipProps = PropsWithChildren<{
     classNameContainer?: string;
     className?: string;

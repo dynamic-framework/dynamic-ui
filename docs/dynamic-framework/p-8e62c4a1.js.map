@@ -1,0 +1,1 @@
+{"version":3,"names":["globalScripts","appGlobalScript"],"sources":["@stencil/core/internal/app-globals"],"sourcesContent":["import appGlobalScript from '/home/runner/work/dynamic-ui/dynamic-ui/libraries/dynamic-ui/src/global/initialize.ts';\nexport const globalScripts = appGlobalScript;\n"],"mappings":"oCACY,MAACA,EAAgBC,S"}

@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import { Meta } from '@storybook/react';
-import type { AlertType } from '@modyo-dynamic/modyo-design-system';
+import type { AlertType } from '@dynamic-framework/ui';
 declare type Props = {
     message: string;
     type: AlertType;
