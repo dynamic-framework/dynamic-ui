@@ -3,35 +3,35 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import { DateTime } from 'luxon';
 import es from 'date-fns/locale/es';
 import React, { createElement, useState, useEffect, createContext, useMemo, useContext, useCallback, useRef } from 'react';
-import { PREFIX_BS, liquidParser, formatCurrency } from '@modyo-dynamic/modyo-design-system';
+import { PREFIX_BS, liquidParser, formatCurrency } from '@dynamic-framework/ui';
 import ContentLoader from 'react-content-loader';
 import classnames from 'classnames';
-import { ToastContainer, Zoom, toast } from 'react-toastify';
+import { ToastContainer, Slide, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, useRole, useInteractions, useId, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
 import { __rest } from 'tslib';
 import { useField } from 'formik';
-import { defineCustomElement } from '@modyo-dynamic/modyo-design-system/components/m-alert.js';
-import { defineCustomElement as defineCustomElement$1 } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
-import { defineCustomElement as defineCustomElement$2 } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineCustomElement$3 } from '@modyo-dynamic/modyo-design-system/components/m-chip.js';
-import { defineCustomElement as defineCustomElement$4 } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
-import { defineCustomElement as defineCustomElement$5 } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
-import { defineCustomElement as defineCustomElement$6 } from '@modyo-dynamic/modyo-design-system/components/m-input-check.js';
-import { defineCustomElement as defineCustomElement$7 } from '@modyo-dynamic/modyo-design-system/components/m-input-counter.js';
-import { defineCustomElement as defineCustomElement$8 } from '@modyo-dynamic/modyo-design-system/components/m-input-currency-base.js';
-import { defineCustomElement as defineCustomElement$9 } from '@modyo-dynamic/modyo-design-system/components/m-input-password.js';
-import { defineCustomElement as defineCustomElement$a } from '@modyo-dynamic/modyo-design-system/components/m-input-pin.js';
-import { defineCustomElement as defineCustomElement$b } from '@modyo-dynamic/modyo-design-system/components/m-input-search.js';
-import { defineCustomElement as defineCustomElement$c } from '@modyo-dynamic/modyo-design-system/components/m-input-select.js';
-import { defineCustomElement as defineCustomElement$d } from '@modyo-dynamic/modyo-design-system/components/m-input-switch.js';
-import { defineCustomElement as defineCustomElement$e } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
-import { defineCustomElement as defineCustomElement$f } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
-import { defineCustomElement as defineCustomElement$g } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
-import { defineCustomElement as defineCustomElement$h } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
-import { defineCustomElement as defineCustomElement$i } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js';
-import { defineCustomElement as defineCustomElement$j } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
-import { defineCustomElement as defineCustomElement$k } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-switch.js';
+import { defineCustomElement } from '@dynamic-framework/ui/components/m-alert.js';
+import { defineCustomElement as defineCustomElement$1 } from '@dynamic-framework/ui/components/m-badge.js';
+import { defineCustomElement as defineCustomElement$2 } from '@dynamic-framework/ui/components/m-button.js';
+import { defineCustomElement as defineCustomElement$3 } from '@dynamic-framework/ui/components/m-chip.js';
+import { defineCustomElement as defineCustomElement$4 } from '@dynamic-framework/ui/components/m-icon.js';
+import { defineCustomElement as defineCustomElement$5 } from '@dynamic-framework/ui/components/m-input.js';
+import { defineCustomElement as defineCustomElement$6 } from '@dynamic-framework/ui/components/m-input-check.js';
+import { defineCustomElement as defineCustomElement$7 } from '@dynamic-framework/ui/components/m-input-counter.js';
+import { defineCustomElement as defineCustomElement$8 } from '@dynamic-framework/ui/components/m-input-currency-base.js';
+import { defineCustomElement as defineCustomElement$9 } from '@dynamic-framework/ui/components/m-input-password.js';
+import { defineCustomElement as defineCustomElement$a } from '@dynamic-framework/ui/components/m-input-pin.js';
+import { defineCustomElement as defineCustomElement$b } from '@dynamic-framework/ui/components/m-input-search.js';
+import { defineCustomElement as defineCustomElement$c } from '@dynamic-framework/ui/components/m-input-select.js';
+import { defineCustomElement as defineCustomElement$d } from '@dynamic-framework/ui/components/m-input-switch.js';
+import { defineCustomElement as defineCustomElement$e } from '@dynamic-framework/ui/components/m-modal.js';
+import { defineCustomElement as defineCustomElement$f } from '@dynamic-framework/ui/components/m-offcanvas.js';
+import { defineCustomElement as defineCustomElement$g } from '@dynamic-framework/ui/components/m-progress-bar.js';
+import { defineCustomElement as defineCustomElement$h } from '@dynamic-framework/ui/components/m-quick-action-button.js';
+import { defineCustomElement as defineCustomElement$i } from '@dynamic-framework/ui/components/m-quick-action-check.js';
+import { defineCustomElement as defineCustomElement$j } from '@dynamic-framework/ui/components/m-quick-action-select.js';
+import { defineCustomElement as defineCustomElement$k } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 import { useDropzone } from 'react-dropzone';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
@@ -624,8 +624,8 @@ function MTabContent({ tab, children }) {
     return (jsx("div", Object.assign({ className: "tab-pane fade show active", id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab` }, { children: children })));
 }
 
-function MToastContainer({ style }) {
-    return (jsx(ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: "bottom-center", autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: Zoom, style: style }));
+function MToastContainer({ style, position = 'bottom-center', }) {
+    return (jsx(ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: position, autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: Slide, style: style }));
 }
 
 function MPopover({ children, renderComponent, isOpen, setIsOpen = () => { }, }) {
@@ -778,8 +778,12 @@ async function configureI8n(resources, _a = {}) {
 }
 
 function useToast() {
-    const toast$1 = useCallback((message, { type = 'info', showClose = true } = {}) => {
-        toast(({ closeToast }) => (jsx(MAlert, Object.assign({ type: type, showClose: showClose, onMClose: closeToast }, { children: message }))));
+    const toast$1 = useCallback((message, { position = 'bottom-center', type = 'info', showClose = true, autoClose = false, } = {}) => {
+        toast(({ closeToast }) => (jsx(MAlert, Object.assign({ type: type, showClose: showClose, onMClose: closeToast }, { children: message }))), {
+            transition: Slide,
+            position,
+            autoClose,
+        });
     }, []);
     return {
         toast: toast$1,

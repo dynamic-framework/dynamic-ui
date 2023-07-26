@@ -1,2 +1,0 @@
-import{a as i}from"./p-0425ccc6.js";const f=(f={})=>{if(typeof window==="undefined"){return}const o={};if(f._ael){o.ael=f._ael}if(f._rel){o.rel=f._rel}if(f._ce){o.ce=f._ce}i(o)};export{f as i};
-//# sourceMappingURL=p-55c35713.js.map
