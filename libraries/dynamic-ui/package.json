@@ -16,6 +16,9 @@
     "type": "git",
     "url": "git+https://github.com/dynamic-framework/dynamic-ui.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
     "type": "git",
     "url": "https://github.com/dynamic-framework/dynamic-ui.git"
