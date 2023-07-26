@@ -1,4 +1,4 @@
-import { r as registerInstance, c as createEvent, h } from './index-a19c3827.js';
+import { r as registerInstance, c as createEvent, h } from './index-c7f2daf2.js';
 
 const MQuickActionSelect = class {
   constructor(hostRef) {

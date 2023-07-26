@@ -1,7 +1,13 @@
 /// <reference types="react" />
-import { Meta, StoryObj } from '@storybook/react';
-declare const Example: () => JSX.Element;
+import { Meta } from '@storybook/react';
+declare type Props = {
+    valuesToFormat: Array<number>;
+};
+declare const Example: ({ valuesToFormat }: Props) => JSX.Element;
 declare const config: Meta<typeof Example>;
 export default config;
-declare type Story = StoryObj<typeof Example>;
-export declare const Default: Story;
+export declare const Default: {
+    args: {
+        valuesToFormat: number[];
+    };
+};

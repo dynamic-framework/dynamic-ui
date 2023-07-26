@@ -1,2 +1,0 @@
-import{r as s,h as e}from"./p-bde3ed36.js";const t=class{constructor(e){s(this,e);this.theme="primary";this.text=undefined;this.isDot=false}generateClasses(){return{"m-badge badge":true,"badge-dot":this.isDot,[`badge-${this.theme}`]:!!this.theme}}render(){return e("span",{class:this.generateClasses()},e("span",null,this.text))}};export{t as m_badge};
-//# sourceMappingURL=p-a65fbae6.entry.js.map

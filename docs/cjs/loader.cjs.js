@@ -2,9 +2,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-be9a6731.js');
-const appGlobals = require('./app-globals-24b2d94f.js');
-require('./initialize-a976f3a7.js');
+const index = require('./index-7e8a8a10.js');
+const appGlobals = require('./app-globals-fc403c56.js');
+require('./initialize-2cd52068.js');
 
 /*
  Stencil Client Patch Esm v3.3.0 | MIT Licensed | https://stenciljs.com
