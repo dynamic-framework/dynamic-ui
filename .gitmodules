@@ -9,4 +9,4 @@
 	url = git@github.com:dynamic-framework/dynamic-react-base-template.git
 [submodule "packages/stencil-eslint-plugin"]
 	path = packages/stencil-eslint-plugin
-	url = git@github.com:dynamic-framework/stencil-eslint-plugin.git
+	url = https://github.com/dynamic-framework/stencil-eslint-plugin.git
