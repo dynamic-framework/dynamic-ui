@@ -7,8 +7,8 @@
     "conventional-changelog-conventionalcommits": "^5.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^8.0.1",
-    "lerna": "^5.5.1",
-    "nx": "^14.7.6"
+    "lerna": "^7.1.4",
+    "nx": "^16.5.5"
   },
   "scripts": {
     "prepare": "husky install",
@@ -19,7 +19,7 @@
   },
   "engines": {
     "node": ">=16.16",
-    "pnpm": ">=7.29"
+    "pnpm": ">=8.6"
   },
   "pnpm": {
     "patchedDependencies": {
