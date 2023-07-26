@@ -15,7 +15,11 @@
     "build": "lerna run build --no-private",
     "clean": "lerna clean",
     "storybook:react": "pnpm run --filter=@dynamic-framework/ui-react storybook",
-    "build:storybook:react": "pnpm run --filter=@dynamic-framework/ui-react build-storybook"
+    "build:storybook:react": "pnpm run --filter=@dynamic-framework/ui-react build-storybook",
+    "eslint": "lerna run eslint --no-private",
+    "stylelint": "lerna run stylelint --no-private",
+    "test": "lerna run test --no-private",
+    "publish": "lerna publish --no-private --loglevel error"
   },
   "engines": {
     "node": ">=16.16",
