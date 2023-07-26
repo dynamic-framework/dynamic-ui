@@ -26,11 +26,11 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1
       lerna:
-        specifier: ^5.5.1
-        version: 5.6.2
+        specifier: 5.5.1
+        version: 5.5.1
       nx:
-        specifier: ^14.7.6
-        version: 14.8.6
+        specifier: 14.7.6
+        version: 14.7.6
 
   libraries/dynamic-ui:
     dependencies:
@@ -3737,15 +3737,15 @@ packages:
     resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
     dev: true
 
-  /@lerna/add@5.6.2:
-    resolution: {integrity: sha512-NHrm7kYiqP+EviguY7/NltJ3G9vGmJW6v2BASUOhP9FZDhYbq3O+rCDlFdoVRNtcyrSg90rZFMOWHph4KOoCQQ==}
+  /@lerna/add@5.5.1:
+    resolution: {integrity: sha512-Vi6Zm8bt1QAoDYl7YERTOgjEn2bwbZNBqYxNz0DlsxcqKHW2GkefEemZLXxmd9G8YgbsbC71W4sz/yFlkSSsxQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/bootstrap': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/filter-options': 5.6.2
-      '@lerna/npm-conf': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/bootstrap': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/filter-options': 5.5.1
+      '@lerna/npm-conf': 5.5.1
+      '@lerna/validation-error': 5.5.1
       dedent: 0.7.0
       npm-package-arg: 8.1.1
       p-map: 4.0.0
@@ -3756,22 +3756,22 @@ packages:
       - supports-color
     dev: true
 
-  /@lerna/bootstrap@5.6.2:
-    resolution: {integrity: sha512-S2fMOEXbef7nrybQhzBywIGSLhuiQ5huPp1sU+v9Y6XEBsy/2IA+lb0gsZosvPqlRfMtiaFstL+QunaBhlWECA==}
+  /@lerna/bootstrap@5.5.1:
+    resolution: {integrity: sha512-BNfrwZD3peUiJll5ZBVgLRyURWSY9px6hJna1i7zTT1DNged/ehqd2hfMqWV+7iX6mO+CvcfH/v3zJaUwU1aOw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/command': 5.6.2
-      '@lerna/filter-options': 5.6.2
-      '@lerna/has-npm-version': 5.6.2
-      '@lerna/npm-install': 5.6.2
-      '@lerna/package-graph': 5.6.2
-      '@lerna/pulse-till-done': 5.6.2
-      '@lerna/rimraf-dir': 5.6.2
-      '@lerna/run-lifecycle': 5.6.2
-      '@lerna/run-topologically': 5.6.2
-      '@lerna/symlink-binary': 5.6.2
-      '@lerna/symlink-dependencies': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/command': 5.5.1
+      '@lerna/filter-options': 5.5.1
+      '@lerna/has-npm-version': 5.5.1
+      '@lerna/npm-install': 5.5.1
+      '@lerna/package-graph': 5.5.1
+      '@lerna/pulse-till-done': 5.5.1
+      '@lerna/rimraf-dir': 5.5.1
+      '@lerna/run-lifecycle': 5.5.1
+      '@lerna/run-topologically': 5.5.1
+      '@lerna/symlink-binary': 5.5.1
+      '@lerna/symlink-dependencies': 5.5.1
+      '@lerna/validation-error': 5.5.1
       '@npmcli/arborist': 5.3.0
       dedent: 0.7.0
       get-port: 5.1.1
@@ -3787,27 +3787,27 @@ packages:
       - supports-color
     dev: true
 
-  /@lerna/changed@5.6.2:
-    resolution: {integrity: sha512-uUgrkdj1eYJHQGsXXlpH5oEAfu3x0qzeTjgvpdNrxHEdQWi7zWiW59hRadmiImc14uJJYIwVK5q/QLugrsdGFQ==}
+  /@lerna/changed@5.5.1:
+    resolution: {integrity: sha512-aDm+KQZhOdivNSs74lqC71BO7lVtKHu9oyisqhqCb5MdZn7yjO3Ef2Y0CYN4+dt355zW+xI87NzwSWYGQEd/5Q==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/collect-updates': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/listable': 5.6.2
-      '@lerna/output': 5.6.2
+      '@lerna/collect-updates': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/listable': 5.5.1
+      '@lerna/output': 5.5.1
     dev: true
 
-  /@lerna/check-working-tree@5.6.2:
-    resolution: {integrity: sha512-6Vf3IB6p+iNIubwVgr8A/KOmGh5xb4SyRmhFtAVqe33yWl2p3yc+mU5nGoz4ET3JLF1T9MhsePj0hNt6qyOTLQ==}
+  /@lerna/check-working-tree@5.5.1:
+    resolution: {integrity: sha512-scfv1KDYQVy1US6SA8C4uj56HN021E2GXCL0bXzc6VKFewdZ9LreJTo0zSN6JwRitxc0c45lTAfTqDueVWANNQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/collect-uncommitted': 5.6.2
-      '@lerna/describe-ref': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/collect-uncommitted': 5.5.1
+      '@lerna/describe-ref': 5.5.1
+      '@lerna/validation-error': 5.5.1
     dev: true
 
-  /@lerna/child-process@5.6.2:
-    resolution: {integrity: sha512-QIOQ3jIbWdduHd5892fbo3u7/dQgbhzEBB7cvf+Ys/iCPP8UQrBECi1lfRgA4kcTKC2MyMz0SoyXZz/lFcXc3A==}
+  /@lerna/child-process@5.5.1:
+    resolution: {integrity: sha512-rGVK5DIJa2EljPb3RW4ZAvwgiyX6xL3hZzRGRkSQWV7866W/Xy0aCgWhfSmUvxB7iiH1NBw5ANlCuBLk31T0QQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       chalk: 4.1.2
@@ -3815,59 +3815,59 @@ packages:
       strong-log-transformer: 2.1.0
     dev: true
 
-  /@lerna/clean@5.6.2:
-    resolution: {integrity: sha512-A7j8r0Hk2pGyLUyaCmx4keNHen1L/KdcOjb4nR6X8GtTJR5AeA47a8rRKOCz9wwdyMPlo2Dau7d3RV9viv7a5g==}
+  /@lerna/clean@5.5.1:
+    resolution: {integrity: sha512-Be0nQpoppH43oRhNoevNms6unRvZFwFnuz3sGABii+hyFYqLIpZiAz98ur0LtV8OVq1bUYLXp8bHf+XylgvXQg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/command': 5.6.2
-      '@lerna/filter-options': 5.6.2
-      '@lerna/prompt': 5.6.2
-      '@lerna/pulse-till-done': 5.6.2
-      '@lerna/rimraf-dir': 5.6.2
+      '@lerna/command': 5.5.1
+      '@lerna/filter-options': 5.5.1
+      '@lerna/prompt': 5.5.1
+      '@lerna/pulse-till-done': 5.5.1
+      '@lerna/rimraf-dir': 5.5.1
       p-map: 4.0.0
       p-map-series: 2.1.0
       p-waterfall: 2.1.1
     dev: true
 
-  /@lerna/cli@5.6.2:
-    resolution: {integrity: sha512-w0NRIEqDOmYKlA5t0iyqx0hbY7zcozvApmfvwF0lhkuhf3k6LRAFSamtimGQWicC779a7J2NXw4ASuBV47Fs1Q==}
+  /@lerna/cli@5.5.1:
+    resolution: {integrity: sha512-57dEQoiJnMhLIgS5zAEhPmL70LLrZHUqfxoXYBCg+yqlmsGqZ7t0Re5XtBUbFk6hsUm81sblf9A4YI2fssGVrA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/global-options': 5.6.2
+      '@lerna/global-options': 5.5.1
       dedent: 0.7.0
       npmlog: 6.0.2
       yargs: 16.2.0
     dev: true
 
-  /@lerna/collect-uncommitted@5.6.2:
-    resolution: {integrity: sha512-i0jhxpypyOsW2PpPwIw4xg6EPh7/N3YuiI6P2yL7PynZ8nOv8DkIdoyMkhUP4gALjBfckH8Bj94eIaKMviqW4w==}
+  /@lerna/collect-uncommitted@5.5.1:
+    resolution: {integrity: sha512-BPGpov4aYRugkY5aieolHEqJRV/6IQ9y6Xy+Fv/892jNhe2dFwi6+u2JbdmO+9JOkz/ZeDDZ85qEbnaiuVQDWg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
+      '@lerna/child-process': 5.5.1
       chalk: 4.1.2
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/collect-updates@5.6.2:
-    resolution: {integrity: sha512-DdTK13X6PIsh9HINiMniFeiivAizR/1FBB+hDVe6tOhsXFBfjHMw1xZhXlE+mYIoFmDm1UFK7zvQSexoaxRqFA==}
+  /@lerna/collect-updates@5.5.1:
+    resolution: {integrity: sha512-Dco+0KwmbnKv1Uv/4jWmFObZKEVTcY7YpN863LsXjieOyD5hz1B5z/2fVk8g6QP5lUsVBG0WUnSKtdapUO5yBw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/describe-ref': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/describe-ref': 5.5.1
       minimatch: 3.1.2
       npmlog: 6.0.2
       slash: 3.0.0
     dev: true
 
-  /@lerna/command@5.6.2:
-    resolution: {integrity: sha512-eLVGI9TmxcaGt1M7TXGhhBZoeWOtOedMiH7NuCGHtL6TMJ9k+SCExyx+KpNmE6ImyNOzws6EvYLPLjftiqmoaA==}
+  /@lerna/command@5.5.1:
+    resolution: {integrity: sha512-HHnGQpUh7kiHja/mB5rlnHnL3B3B12y4RBpJTxX22IkdcwsiO8g/n2FWh9MPQvuVcR2FRh4PWXhmfVnboZCAaw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/package-graph': 5.6.2
-      '@lerna/project': 5.6.2
-      '@lerna/validation-error': 5.6.2
-      '@lerna/write-log-file': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/package-graph': 5.5.1
+      '@lerna/project': 5.5.1
+      '@lerna/validation-error': 5.5.1
+      '@lerna/write-log-file': 5.5.1
       clone-deep: 4.0.1
       dedent: 0.7.0
       execa: 5.1.1
@@ -3875,11 +3875,11 @@ packages:
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/conventional-commits@5.6.2:
-    resolution: {integrity: sha512-fPrJpYJhxCgY2uyOCTcAAC6+T6lUAtpEGxLbjWHWTb13oKKEygp9THoFpe6SbAD0fYMb3jeZCZCqNofM62rmuA==}
+  /@lerna/conventional-commits@5.5.1:
+    resolution: {integrity: sha512-oYTt1SbCNc/5N98ESFFDjWImU61qcYmQZBVxdzBDeZku/VRlaXw7Km5lSnVy7GrGkIPRxayunL4r1k32w5SZpA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/validation-error': 5.6.2
+      '@lerna/validation-error': 5.5.1
       conventional-changelog-angular: 5.0.13
       conventional-changelog-core: 4.2.4
       conventional-recommended-bump: 6.1.0
@@ -3891,8 +3891,8 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /@lerna/create-symlink@5.6.2:
-    resolution: {integrity: sha512-0WIs3P6ohPVh2+t5axrLZDE5Dt7fe3Kv0Auj0sBiBd6MmKZ2oS76apIl0Bspdbv8jX8+TRKGv6ib0280D0dtEw==}
+  /@lerna/create-symlink@5.5.1:
+    resolution: {integrity: sha512-yOo1dXzoyeqhX4QCeswS0FjMSFyfNmHxtwE73+1k4uIYPWHWPHA/PW3y3hkOqh6QbBBg+y6+KCRiCOPaftZb6g==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       cmd-shim: 5.0.0
@@ -3900,16 +3900,17 @@ packages:
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/create@5.6.2:
-    resolution: {integrity: sha512-+Y5cMUxMNXjTTU9IHpgRYIwKo39w+blui1P+s+qYlZUSCUAew0xNpOBG8iN0Nc5X9op4U094oIdHxv7Dyz6tWQ==}
+  /@lerna/create@5.5.1:
+    resolution: {integrity: sha512-ZkN0rTTrIRIk9B+FzMXsjL8tK8wy4Orw7U3lVu8xe7LkxmK+lYxSOqcgfwWJjmA1yyoiNK+Xn++RlqXF7LW++Q==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/npm-conf': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/npm-conf': 5.5.1
+      '@lerna/validation-error': 5.5.1
       dedent: 0.7.0
       fs-extra: 9.1.0
+      globby: 11.1.0
       init-package-json: 3.0.2
       npm-package-arg: 8.1.1
       p-reduce: 2.1.0
@@ -3925,65 +3926,65 @@ packages:
       - supports-color
     dev: true
 
-  /@lerna/describe-ref@5.6.2:
-    resolution: {integrity: sha512-UqU0N77aT1W8duYGir7R+Sk3jsY/c4lhcCEcnayMpFScMbAp0ETGsW04cYsHK29sgg+ZCc5zEwebBqabWhMhnA==}
+  /@lerna/describe-ref@5.5.1:
+    resolution: {integrity: sha512-pioaEFDKUcYsdgqz/wnjJ5pZyfrh7etJMYdxDDxijysn/96R28zTQMBrgGgjrBmkFyV9zmaxNaQXz1gx+IMohA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
+      '@lerna/child-process': 5.5.1
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/diff@5.6.2:
-    resolution: {integrity: sha512-aHKzKvUvUI8vOcshC2Za/bdz+plM3r/ycqUrPqaERzp+kc1pYHyPeXezydVdEmgmmwmyKI5hx4+2QNnzOnun2A==}
+  /@lerna/diff@5.5.1:
+    resolution: {integrity: sha512-mqKSafF5hGteVbRUPI41b8OZutolr6vqg2ObkKXFXpT6RvAX2NPpppHf0c0XORLWjc47p14Iv8xsQMCNwJ0tzQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/validation-error': 5.5.1
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/exec@5.6.2:
-    resolution: {integrity: sha512-meZozok5stK7S0oAVn+kdbTmU+kHj9GTXjW7V8kgwG9ld+JJMTH3nKK1L3mEKyk9TFu9vFWyEOF7HNK6yEOoVg==}
+  /@lerna/exec@5.5.1:
+    resolution: {integrity: sha512-eip4MlIYkbxibIoV0ANjKdf9CSAER87C2zGY+GwHZKUSOD0I3xfhbPTkJozHBE3aqez6dR0pebi6cpNWvzEdIg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/filter-options': 5.6.2
-      '@lerna/profiler': 5.6.2
-      '@lerna/run-topologically': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/filter-options': 5.5.1
+      '@lerna/profiler': 5.5.1
+      '@lerna/run-topologically': 5.5.1
+      '@lerna/validation-error': 5.5.1
       p-map: 4.0.0
     dev: true
 
-  /@lerna/filter-options@5.6.2:
-    resolution: {integrity: sha512-4Z0HIhPak2TabTsUqEBQaQeOqgqEt0qyskvsY0oviYvqP/nrJfJBZh4H93jIiNQF59LJCn5Ce3KJJrLExxjlzw==}
+  /@lerna/filter-options@5.5.1:
+    resolution: {integrity: sha512-U4erQgGBawazN0eDLQzWf5xu1mTaucVguzUblBSOfQm+fUBsYG5WYJtn9AvVLrUCQMwAV3L2+/NWb1FOkqArMw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/collect-updates': 5.6.2
-      '@lerna/filter-packages': 5.6.2
+      '@lerna/collect-updates': 5.5.1
+      '@lerna/filter-packages': 5.5.1
       dedent: 0.7.0
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/filter-packages@5.6.2:
-    resolution: {integrity: sha512-el9V2lTEG0Bbz+Omo45hATkRVnChCTJhcTpth19cMJ6mQ4M5H4IgbWCJdFMBi/RpTnOhz9BhJxDbj95kuIvvzw==}
+  /@lerna/filter-packages@5.5.1:
+    resolution: {integrity: sha512-970kc2w6Bzr9FAL8DFisOonDocj7VDFdNnVVJpaTbNnbuMLnCT4vPXHKHQku2XEgxfr1lgyFA+srzxiiLQGWaQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/validation-error': 5.6.2
+      '@lerna/validation-error': 5.5.1
       multimatch: 5.0.0
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/get-npm-exec-opts@5.6.2:
-    resolution: {integrity: sha512-0RbSDJ+QC9D5UWZJh3DN7mBIU1NhBmdHOE289oHSkjDY+uEjdzMPkEUy+wZ8fCzMLFnnNQkAEqNaOAzZ7dmFLA==}
+  /@lerna/get-npm-exec-opts@5.5.1:
+    resolution: {integrity: sha512-z8HoeCHbKVoHRjsyEwEhFF37vubX52CQOI+7TcEhjMYDXRrfKYfGcLXFh++DGihRQ7qk7ir27VrJgweeu/rcNw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/get-packed@5.6.2:
-    resolution: {integrity: sha512-pp5nNDmtrtd21aKHjwwOY5CS7XNIHxINzGa+Jholn1jMDYUtdskpN++ZqYbATGpW831++NJuiuBVyqAWi9xbXg==}
+  /@lerna/get-packed@5.5.1:
+    resolution: {integrity: sha512-8zlT1Yzl1f8XfmNzu+zqJFKIqX28icbfVJp/hrbz7CEyn8JtTy9oNFokt3wbolmQ53LZ69B1gECZ1vlKOtoCSQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       fs-extra: 9.1.0
@@ -3991,21 +3992,21 @@ packages:
       tar: 6.1.13
     dev: true
 
-  /@lerna/github-client@5.6.2:
-    resolution: {integrity: sha512-pjALazZoRZtKqfwLBwmW3HPptVhQm54PvA8s3qhCQ+3JkqrZiIFwkkxNZxs3jwzr+aaSOzfhSzCndg0urb0GXA==}
+  /@lerna/github-client@5.5.1:
+    resolution: {integrity: sha512-921aWALGJT3L7iF3pYkj9tzXS1D/nZw32qWNoGQweTyAs7ycqm037WhdJPS67k+bqZL8flC80CbGEOuEMQq8Xw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
+      '@lerna/child-process': 5.5.1
       '@octokit/plugin-enterprise-rest': 6.0.1
       '@octokit/rest': 19.0.5
-      git-url-parse: 13.1.0
+      git-url-parse: 12.0.0
       npmlog: 6.0.2
     transitivePeerDependencies:
       - encoding
     dev: true
 
-  /@lerna/gitlab-client@5.6.2:
-    resolution: {integrity: sha512-TInJmbrsmYIwUyrRxytjO82KjJbRwm67F7LoZs1shAq6rMvNqi4NxSY9j+hT/939alFmEq1zssoy/caeLXHRfQ==}
+  /@lerna/gitlab-client@5.5.1:
+    resolution: {integrity: sha512-hp0/p6cITz6pdZ1ToYNHcLHh8iusdXzYNwoLZABSuMAqvvPBuJt2aOxhU7DXBYCB+sQUj8K8qcVP9qpvBs98Wg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       node-fetch: 2.6.7
@@ -4014,87 +4015,87 @@ packages:
       - encoding
     dev: true
 
-  /@lerna/global-options@5.6.2:
-    resolution: {integrity: sha512-kaKELURXTlczthNJskdOvh6GGMyt24qat0xMoJZ8plYMdofJfhz24h1OFcvB/EwCUwP/XV1+ohE5P+vdktbrEg==}
+  /@lerna/global-options@5.5.1:
+    resolution: {integrity: sha512-Hy/Yrskk5wuigpG+4GN8cAfBk9tGY/NlJlONmjqcZr5mKc3DkJ2It03jeGtUK/j7hP3GNZo2nx2VGnJf40RGuA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dev: true
 
-  /@lerna/has-npm-version@5.6.2:
-    resolution: {integrity: sha512-kXCnSzffmTWsaK0ol30coyCfO8WH26HFbmJjRBzKv7VGkuAIcB6gX2gqRRgNLLlvI+Yrp+JSlpVNVnu15SEH2g==}
+  /@lerna/has-npm-version@5.5.1:
+    resolution: {integrity: sha512-t/eff0L3pX31L97mt26LENvIkt+e9fye8hSHUiLoFmUqjmy2yA1qQz2g+oQpGbRXpy+oz9rCCpBx+G4i13aN9A==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
+      '@lerna/child-process': 5.5.1
       semver: 7.5.4
     dev: true
 
-  /@lerna/import@5.6.2:
-    resolution: {integrity: sha512-xQUE49mtcP0z3KUdXBsyvp8rGDz6phuYUoQbhcFRJ7WPcQKzMvtm0XYrER6c2YWEX7QOuDac6tU82P8zTrTBaA==}
+  /@lerna/import@5.5.1:
+    resolution: {integrity: sha512-9eeagJrw8EBXuONOIagm45zhdHlHrDN9iT5c9OWHV8yh1MBevd7ERbDc8UluHHg5/dP6aqFJxtv54cDdb/3aJg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/prompt': 5.6.2
-      '@lerna/pulse-till-done': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/prompt': 5.5.1
+      '@lerna/pulse-till-done': 5.5.1
+      '@lerna/validation-error': 5.5.1
       dedent: 0.7.0
       fs-extra: 9.1.0
       p-map-series: 2.1.0
     dev: true
 
-  /@lerna/info@5.6.2:
-    resolution: {integrity: sha512-MPjY5Olj+fiZHgfEdwXUFRKamdEuLr9Ob/qut8JsB/oQSQ4ALdQfnrOcMT8lJIcC2R67EA5yav2lHPBIkezm8A==}
+  /@lerna/info@5.5.1:
+    resolution: {integrity: sha512-gRrC2yy0qm9scb0B2xSGlPWBGnFMurie5SbGTz4hPesOdZEoiplMaL+e5y5cr67KDEhYPwIkL1sUXHLkTYZekA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/command': 5.6.2
-      '@lerna/output': 5.6.2
+      '@lerna/command': 5.5.1
+      '@lerna/output': 5.5.1
       envinfo: 7.8.1
     dev: true
 
-  /@lerna/init@5.6.2:
-    resolution: {integrity: sha512-ahU3/lgF+J8kdJAQysihFJROHthkIDXfHmvhw7AYnzf94HjxGNXj7nz6i3At1/dM/1nQhR+4/uNR1/OU4tTYYQ==}
+  /@lerna/init@5.5.1:
+    resolution: {integrity: sha512-jyi8DZK2hylI8wjX5NgI/CBZEx2UJmmt12PiQuIvnfEvyTbd90MK0zj4AtyVMKpEal5oZCyprGFBb8MY8lS5Dg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/project': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/project': 5.5.1
       fs-extra: 9.1.0
       p-map: 4.0.0
       write-json-file: 4.3.0
     dev: true
 
-  /@lerna/link@5.6.2:
-    resolution: {integrity: sha512-hXxQ4R3z6rUF1v2x62oIzLyeHL96u7ZBhxqYMJrm763D1VMSDcHKF9CjJfc6J9vH5Z2ZbL6CQg50Hw5mUpJbjg==}
+  /@lerna/link@5.5.1:
+    resolution: {integrity: sha512-U/voZ0f/3CHiui3cf9r2ad+jESQZnUAMf6n5oIysBFrT5YtAHHN4FYXtzjXJQ4TLFNke2YnLaw67mLaHeQDW+w==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/command': 5.6.2
-      '@lerna/package-graph': 5.6.2
-      '@lerna/symlink-dependencies': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/command': 5.5.1
+      '@lerna/package-graph': 5.5.1
+      '@lerna/symlink-dependencies': 5.5.1
+      '@lerna/validation-error': 5.5.1
       p-map: 4.0.0
       slash: 3.0.0
     dev: true
 
-  /@lerna/list@5.6.2:
-    resolution: {integrity: sha512-WjE5O2tQ3TcS+8LqXUaxi0YdldhxUhNihT5+Gg4vzGdIlrPDioO50Zjo9d8jOU7i3LMIk6EzCma0sZr2CVfEGg==}
+  /@lerna/list@5.5.1:
+    resolution: {integrity: sha512-tRDUpV06ZpV6g2MvqRf35ozsRjKweCTCvS8z1o1/4laZen6aPK+Y9TIihvd36biDzCdNYz3IOLzvz8nO8WIJiA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/command': 5.6.2
-      '@lerna/filter-options': 5.6.2
-      '@lerna/listable': 5.6.2
-      '@lerna/output': 5.6.2
+      '@lerna/command': 5.5.1
+      '@lerna/filter-options': 5.5.1
+      '@lerna/listable': 5.5.1
+      '@lerna/output': 5.5.1
     dev: true
 
-  /@lerna/listable@5.6.2:
-    resolution: {integrity: sha512-8Yp49BwkY/5XqVru38Zko+6Wj/sgbwzJfIGEPy3Qu575r1NA/b9eI1gX22aMsEeXUeGOybR7nWT5ewnPQHjqvA==}
+  /@lerna/listable@5.5.1:
+    resolution: {integrity: sha512-EU+OUBV0vrySrDhlMHvfdA0NgwRtaTx5nc4XUtNrTN4Zqjav9iElrf6Xx9k0fUq27smiQ1tyutQEwGaNab0VTQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/query-graph': 5.6.2
+      '@lerna/query-graph': 5.5.1
       chalk: 4.1.2
       columnify: 1.6.0
     dev: true
 
-  /@lerna/log-packed@5.6.2:
-    resolution: {integrity: sha512-O9GODG7tMtWk+2fufn2MOkIDBYMRoKBhYMHshO5Aw/VIsH76DIxpX1koMzWfUngM/C70R4uNAKcVWineX4qzIw==}
+  /@lerna/log-packed@5.5.1:
+    resolution: {integrity: sha512-i6SomT53TquZwrl8Ib+bleU0xYo8z36jIWGqfb0OlbNZswEbHQ5nvVO73Kjjc14g+eM0JGHwGi79LHFictcjVw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       byte-size: 7.0.1
@@ -4103,19 +4104,19 @@ packages:
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/npm-conf@5.6.2:
-    resolution: {integrity: sha512-gWDPhw1wjXYXphk/PAghTLexO5T6abVFhXb+KOMCeem366mY0F5bM88PiorL73aErTNUoR8n+V4X29NTZzDZpQ==}
+  /@lerna/npm-conf@5.5.1:
+    resolution: {integrity: sha512-ARqXAUlkEfFL00fgZa84aFzvp9GSPxAm4Fy1wzGz9ltXTwg/1yyGu6AucSKO1qa/JvcF2giWuXuvkJ3jsY4Log==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       config-chain: 1.1.13
       pify: 5.0.0
     dev: true
 
-  /@lerna/npm-dist-tag@5.6.2:
-    resolution: {integrity: sha512-t2RmxV6Eog4acXkUI+EzWuYVbeVVY139pANIWS9qtdajfgp4GVXZi1S8mAIb70yeHdNpCp1mhK0xpCrFH9LvGQ==}
+  /@lerna/npm-dist-tag@5.5.1:
+    resolution: {integrity: sha512-DN3l01gpgV3M2MYo7zhZOgZrl21ltr+PoxK2LBVv5Snbhc88WqKm6slCrF5LXnfM6FraZ2UQTjBYXx8fQnpIDw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/otplease': 5.6.2
+      '@lerna/otplease': 5.5.1
       npm-package-arg: 8.1.1
       npm-registry-fetch: 13.3.1
       npmlog: 6.0.2
@@ -4124,12 +4125,12 @@ packages:
       - supports-color
     dev: true
 
-  /@lerna/npm-install@5.6.2:
-    resolution: {integrity: sha512-AT226zdEo+uGENd37jwYgdALKJAIJK4pNOfmXWZWzVb9oMOr8I2YSjPYvSYUNG7gOo2YJQU8x5Zd7OShv2924Q==}
+  /@lerna/npm-install@5.5.1:
+    resolution: {integrity: sha512-O99aYWrWAz+EuHrsED2Wv0X6Ge1O9CrAfcIu6dMf8r5Q58LL67engi9AtH98cwx2LTeyYYHwksjewIsL/kn0ig==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/get-npm-exec-opts': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/get-npm-exec-opts': 5.5.1
       fs-extra: 9.1.0
       npm-package-arg: 8.1.1
       npmlog: 6.0.2
@@ -4137,12 +4138,12 @@ packages:
       write-pkg: 4.0.0
     dev: true
 
-  /@lerna/npm-publish@5.6.2:
-    resolution: {integrity: sha512-ldSyewCfv9fAeC5xNjL0HKGSUxcC048EJoe/B+KRUmd+IPidvZxMEzRu08lSC/q3V9YeUv9ZvRnxATXOM8CffA==}
+  /@lerna/npm-publish@5.5.1:
+    resolution: {integrity: sha512-ajdV2Vb9SOGGp7E7pvb0q7gHqQpd8fQ4DztPOQYrhMUILobJgu4oR3tojMp0XN7vki+pG/OmsOqrQY6M02AkPw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/otplease': 5.6.2
-      '@lerna/run-lifecycle': 5.6.2
+      '@lerna/otplease': 5.5.1
+      '@lerna/run-lifecycle': 5.5.1
       fs-extra: 9.1.0
       libnpmpublish: 6.0.5
       npm-package-arg: 8.1.1
@@ -4154,37 +4155,37 @@ packages:
       - supports-color
     dev: true
 
-  /@lerna/npm-run-script@5.6.2:
-    resolution: {integrity: sha512-MOQoWNcAyJivM8SYp0zELM7vg/Dj07j4YMdxZkey+S1UO0T4/vKBxb575o16hH4WeNzC3Pd7WBlb7C8dLOfNwQ==}
+  /@lerna/npm-run-script@5.5.1:
+    resolution: {integrity: sha512-/68rDfOHtAEHAeAVYC1KXidQkssMBnz/9kcXlcdUaqe88LXSCuhWz49w7qWsUJvSmqwCuD7BWtVR5zx4GnLXhQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
-      '@lerna/get-npm-exec-opts': 5.6.2
+      '@lerna/child-process': 5.5.1
+      '@lerna/get-npm-exec-opts': 5.5.1
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/otplease@5.6.2:
-    resolution: {integrity: sha512-dGS4lzkEQVTMAgji82jp8RK6UK32wlzrBAO4P4iiVHCUTuwNLsY9oeBXvVXSMrosJnl6Hbe0NOvi43mqSucGoA==}
+  /@lerna/otplease@5.5.1:
+    resolution: {integrity: sha512-I2SEuIb7JWWT4xNUNWvKP7qaRHeQslMuiSdJuO6dV1fnH7FM7xEiHnWIhgDsQqacsci17Ix92toORaYmkU/kqg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/prompt': 5.6.2
+      '@lerna/prompt': 5.5.1
     dev: true
 
-  /@lerna/output@5.6.2:
-    resolution: {integrity: sha512-++d+bfOQwY66yo7q1XuAvRcqtRHCG45e/awP5xQomTZ6R1rhWiZ3whWdc9Z6lF7+UtBB9toSYYffKU/xc3L0yQ==}
+  /@lerna/output@5.5.1:
+    resolution: {integrity: sha512-G8WpRlXWUCaJqxtVTCrYRSu5hBy0lxsfdzoEJwkVW9wXL6mL4WwH5TkstPq8LFSEr+NkWa+Hz25VO7LywQQWaQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/pack-directory@5.6.2:
-    resolution: {integrity: sha512-w5Jk5fo+HkN4Le7WMOudTcmAymcf0xPd302TqAQncjXpk0cb8tZbj+5bbNHsGb58GRjOIm5icQbHXooQUxbHhA==}
+  /@lerna/pack-directory@5.5.1:
+    resolution: {integrity: sha512-gvKnq9spvIPV4KGK1sxCk23jUjKdpzXtZFZ77QSDWfv2ZXOLcU9MvNC9xx23wcQRkX1IhKFngwMtIfcxrUZN2Q==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/get-packed': 5.6.2
-      '@lerna/package': 5.6.2
-      '@lerna/run-lifecycle': 5.6.2
-      '@lerna/temp-write': 5.6.2
+      '@lerna/get-packed': 5.5.1
+      '@lerna/package': 5.5.1
+      '@lerna/run-lifecycle': 5.5.1
+      '@lerna/temp-write': 5.5.1
       npm-packlist: 5.1.3
       npmlog: 6.0.2
       tar: 6.1.13
@@ -4193,19 +4194,19 @@ packages:
       - supports-color
     dev: true
 
-  /@lerna/package-graph@5.6.2:
-    resolution: {integrity: sha512-TmL61qBBvA3Tc4qICDirZzdFFwWOA6qicIXUruLiE2PblRowRmCO1bKrrP6XbDOspzwrkPef6N2F2/5gHQAnkQ==}
+  /@lerna/package-graph@5.5.1:
+    resolution: {integrity: sha512-BgkJquJcm/GaGwLmZRTCSAdUBitlGP4HmEP1NI9xrR1x9/OHgfVfkp5yDZBipA/6jY7ucumShU6mYE0fIP9CVA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/prerelease-id-from-version': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/prerelease-id-from-version': 5.5.1
+      '@lerna/validation-error': 5.5.1
       npm-package-arg: 8.1.1
       npmlog: 6.0.2
       semver: 7.5.4
     dev: true
 
-  /@lerna/package@5.6.2:
-    resolution: {integrity: sha512-LaOC8moyM5J9WnRiWZkedjOninSclBOJyPqhif6mHb2kCFX6jAroNYzE8KM4cphu8CunHuhI6Ixzswtv+Dultw==}
+  /@lerna/package@5.5.1:
+    resolution: {integrity: sha512-K2ylaS3DJ2SU/ptWHMeXkN1AUVPAOKNCP5/K8S42z/ZAmuLlt1LcTMznWPaCbYf2h3HExda8j3UmbEsOtYuixw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       load-json-file: 6.2.0
@@ -4213,15 +4214,15 @@ packages:
       write-pkg: 4.0.0
     dev: true
 
-  /@lerna/prerelease-id-from-version@5.6.2:
-    resolution: {integrity: sha512-7gIm9fecWFVNy2kpj/KbH11bRcpyANAwpsft3X5m6J7y7A6FTUscCbEvl3ZNdpQKHNuvnHgCtkm3A5PMSCEgkA==}
+  /@lerna/prerelease-id-from-version@5.5.1:
+    resolution: {integrity: sha512-F12+2ubWOY3pnUyTpV/jgZUMaFWas0ehFwYs20WMAnQQVyRHCVjg+bBfvQPGVnuJ6r7n3kXzn69TLDzouhRJcQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       semver: 7.5.4
     dev: true
 
-  /@lerna/profiler@5.6.2:
-    resolution: {integrity: sha512-okwkagP5zyRIOYTceu/9/esW7UZFt7lyL6q6ZgpSG3TYC5Ay+FXLtS6Xiha/FQdVdumFqKULDWTGovzUlxcwaw==}
+  /@lerna/profiler@5.5.1:
+    resolution: {integrity: sha512-WDPgXEYl0lU/dBZ7ejiiNLqwJkPFR+d4vmIkPAFR4RsKQV4VCOCtlJ2QxOHroOPLJ7FrKD71rKyX4cZUIrHl7Q==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       fs-extra: 9.1.0
@@ -4229,12 +4230,12 @@ packages:
       upath: 2.0.1
     dev: true
 
-  /@lerna/project@5.6.2:
-    resolution: {integrity: sha512-kPIMcIy/0DVWM91FPMMFmXyAnCuuLm3NdhnA8NusE//VuY9wC6QC/3OwuCY39b2dbko/fPZheqKeAZkkMH6sGg==}
+  /@lerna/project@5.5.1:
+    resolution: {integrity: sha512-If3HOjNk/hcbe1gJDysKPws0RKvyG7rrGzkEmBGQ6bi6+eDdaK98XRFHTTAnHfBVOLLd1eimprZCUsYuCATdLg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/package': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/package': 5.5.1
+      '@lerna/validation-error': 5.5.1
       cosmiconfig: 7.0.1
       dedent: 0.7.0
       dot-prop: 6.0.1
@@ -4248,37 +4249,37 @@ packages:
       write-json-file: 4.3.0
     dev: true
 
-  /@lerna/prompt@5.6.2:
-    resolution: {integrity: sha512-4hTNmVYADEr0GJTMegWV+GW6n+dzKx1vN9v2ISqyle283Myv930WxuyO0PeYGqTrkneJsyPreCMovuEGCvZ0iQ==}
+  /@lerna/prompt@5.5.1:
+    resolution: {integrity: sha512-pKxdfwW4VwIapLj3kZBR3V6usCbZmCfkYUJSO//Vcw/dYf8X1lI9a+qR6imXSa1VwGdU/29oimMGpFn89BjyCA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       inquirer: 8.2.5
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/publish@5.6.2(nx@14.8.6)(typescript@4.6.4):
-    resolution: {integrity: sha512-QaW0GjMJMuWlRNjeDCjmY/vjriGSWgkLS23yu8VKNtV5U3dt5yIKA3DNGV3HgZACuu45kQxzMDsfLzgzbGNtYA==}
+  /@lerna/publish@5.5.1:
+    resolution: {integrity: sha512-hQCEHGLHR4Wd3M/Ay7bmOViL1HRekI/VoJGy+JoG3rn/0H13cTh+lVhvwmtOGKJHsHBQkQ0WaZzwZF16/XLTzA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/check-working-tree': 5.6.2
-      '@lerna/child-process': 5.6.2
-      '@lerna/collect-updates': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/describe-ref': 5.6.2
-      '@lerna/log-packed': 5.6.2
-      '@lerna/npm-conf': 5.6.2
-      '@lerna/npm-dist-tag': 5.6.2
-      '@lerna/npm-publish': 5.6.2
-      '@lerna/otplease': 5.6.2
-      '@lerna/output': 5.6.2
-      '@lerna/pack-directory': 5.6.2
-      '@lerna/prerelease-id-from-version': 5.6.2
-      '@lerna/prompt': 5.6.2
-      '@lerna/pulse-till-done': 5.6.2
-      '@lerna/run-lifecycle': 5.6.2
-      '@lerna/run-topologically': 5.6.2
-      '@lerna/validation-error': 5.6.2
-      '@lerna/version': 5.6.2(nx@14.8.6)(typescript@4.6.4)
+      '@lerna/check-working-tree': 5.5.1
+      '@lerna/child-process': 5.5.1
+      '@lerna/collect-updates': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/describe-ref': 5.5.1
+      '@lerna/log-packed': 5.5.1
+      '@lerna/npm-conf': 5.5.1
+      '@lerna/npm-dist-tag': 5.5.1
+      '@lerna/npm-publish': 5.5.1
+      '@lerna/otplease': 5.5.1
+      '@lerna/output': 5.5.1
+      '@lerna/pack-directory': 5.5.1
+      '@lerna/prerelease-id-from-version': 5.5.1
+      '@lerna/prompt': 5.5.1
+      '@lerna/pulse-till-done': 5.5.1
+      '@lerna/run-lifecycle': 5.5.1
+      '@lerna/run-topologically': 5.5.1
+      '@lerna/validation-error': 5.5.1
+      '@lerna/version': 5.5.1
       fs-extra: 9.1.0
       libnpmaccess: 6.0.4
       npm-package-arg: 8.1.1
@@ -4291,27 +4292,25 @@ packages:
     transitivePeerDependencies:
       - bluebird
       - encoding
-      - nx
       - supports-color
-      - typescript
     dev: true
 
-  /@lerna/pulse-till-done@5.6.2:
-    resolution: {integrity: sha512-eA/X1RCxU5YGMNZmbgPi+Kyfx1Q3bn4P9jo/LZy+/NRRr1po3ASXP2GJZ1auBh/9A2ELDvvKTOXCVHqczKC6rA==}
+  /@lerna/pulse-till-done@5.5.1:
+    resolution: {integrity: sha512-fIE9+LRy172Utfei34QpAg34CFy890j2GCZFln6A+0M3aMNrXkLgF3Zn2awPCugXNu7tLqHRrdZ9ZiSeuk5FYg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/query-graph@5.6.2:
-    resolution: {integrity: sha512-KRngr96yBP8XYDi9/U62fnGO+ZXqm04Qk6a2HtoTr/ha8QvO1s7Tgm0xs/G7qWXDQHZgunWIbmK/LhxM7eFQrw==}
+  /@lerna/query-graph@5.5.1:
+    resolution: {integrity: sha512-BqkxJntH/2o+s9Qz0WUOnbA/SW+ASjkvrS/DJ9jVeZ6KQQykPx/VN+ZRcWCBaSDlJEjSyMiTZUPGqtbN5qV+QQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/package-graph': 5.6.2
+      '@lerna/package-graph': 5.5.1
     dev: true
 
-  /@lerna/resolve-symlink@5.6.2:
-    resolution: {integrity: sha512-PDQy+7M8JEFtwIVHJgWvSxHkxJf9zXCENkvIWDB+SsoDPhw9+caewt46bTeP5iGm9pOMu3oZukaWo/TvF7sNjg==}
+  /@lerna/resolve-symlink@5.5.1:
+    resolution: {integrity: sha512-xuVPN9SrtOfx9crgYbfJX7c/TpGKQj2cKlkGNt1HqfD2GvUvLzksn1Wjj1Mq23yinPNXo2QDXr7XgjHuDNd48w==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       fs-extra: 9.1.0
@@ -4319,21 +4318,21 @@ packages:
       read-cmd-shim: 3.0.1
     dev: true
 
-  /@lerna/rimraf-dir@5.6.2:
-    resolution: {integrity: sha512-jgEfzz7uBUiQKteq3G8MtJiA2D2VoKmZSSY3VSiW/tPOSXYxxSHxEsClQdCeNa6+sYrDNDT8fP6MJ3lPLjDeLA==}
+  /@lerna/rimraf-dir@5.5.1:
+    resolution: {integrity: sha512-bS7NUKFMT1HsqEFA8mxtHD3jDnpS2xLfQjCyCb7FHHatL46ByZ4oex2965XqL2/aOf+C5aCvYmLFHQ9JN7E2cQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/child-process': 5.6.2
+      '@lerna/child-process': 5.5.1
       npmlog: 6.0.2
       path-exists: 4.0.0
       rimraf: 3.0.2
     dev: true
 
-  /@lerna/run-lifecycle@5.6.2:
-    resolution: {integrity: sha512-u9gGgq/50Fm8dvfcc/TSHOCAQvzLD7poVanDMhHYWOAqRDnellJEEmA1K/Yka4vZmySrzluahkry9G6jcREt+g==}
+  /@lerna/run-lifecycle@5.5.1:
+    resolution: {integrity: sha512-ZM66N7e1sUxsckBnJxdP1NenPNo3hKjPi8fop4do61kwHrWakyRZHl5EEw3CgCWtC7QT+d3zQ/XgDQeJMYEUZg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/npm-conf': 5.6.2
+      '@lerna/npm-conf': 5.5.1
       '@npmcli/run-script': 4.2.1
       npmlog: 6.0.2
       p-queue: 6.6.2
@@ -4342,54 +4341,53 @@ packages:
       - supports-color
     dev: true
 
-  /@lerna/run-topologically@5.6.2:
-    resolution: {integrity: sha512-QQ/jGOIsVvUg3izShWsd67RlWYh9UOH2yw97Ol1zySX9+JspCMVQrn9eKq1Pk8twQOFhT87LpT/aaxbTBgREPw==}
+  /@lerna/run-topologically@5.5.1:
+    resolution: {integrity: sha512-27n6SY2X8hWIU2VkttNx+G9D5pUXkxvkum6fvWkOrT/3a5miIwmeZvk0t1qhJ2VHxheB3hpd8HntAb2I2tR62g==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/query-graph': 5.6.2
+      '@lerna/query-graph': 5.5.1
       p-queue: 6.6.2
     dev: true
 
-  /@lerna/run@5.6.2:
-    resolution: {integrity: sha512-c2kJxdFrNg5KOkrhmgwKKUOsfSrGNlFCe26EttufOJ3xfY0VnXlEw9rHOkTgwtu7969rfCdyaVP1qckMrF1Dgw==}
+  /@lerna/run@5.5.1:
+    resolution: {integrity: sha512-IVXkiOmTMm1jtrDznunzQx796D9LrwKhlmsTv4YTNfnnyPBlyDAobm/PmOUekf30LKrKvcgTRnbEQ6vWXTR93Q==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/command': 5.6.2
-      '@lerna/filter-options': 5.6.2
-      '@lerna/npm-run-script': 5.6.2
-      '@lerna/output': 5.6.2
-      '@lerna/profiler': 5.6.2
-      '@lerna/run-topologically': 5.6.2
-      '@lerna/timer': 5.6.2
-      '@lerna/validation-error': 5.6.2
+      '@lerna/command': 5.5.1
+      '@lerna/filter-options': 5.5.1
+      '@lerna/npm-run-script': 5.5.1
+      '@lerna/output': 5.5.1
+      '@lerna/profiler': 5.5.1
+      '@lerna/run-topologically': 5.5.1
+      '@lerna/timer': 5.5.1
+      '@lerna/validation-error': 5.5.1
+      p-map: 4.0.0
+    dev: true
+
+  /@lerna/symlink-binary@5.5.1:
+    resolution: {integrity: sha512-PhrpeO2+3S1bYURb8y7QykmvwS/3KT2nF6Tvv23aqHJOBnrD61I2x0lQdjZK71+WOvi+EN+CatHckNWez14zpw==}
+    engines: {node: ^14.15.0 || >=16.0.0}
+    dependencies:
+      '@lerna/create-symlink': 5.5.1
+      '@lerna/package': 5.5.1
       fs-extra: 9.1.0
       p-map: 4.0.0
     dev: true
 
-  /@lerna/symlink-binary@5.6.2:
-    resolution: {integrity: sha512-Cth+miwYyO81WAmrQbPBrLHuF+F0UUc0el5kRXLH6j5zzaRS3kMM68r40M7MmfH8m3GPi7691UARoWFEotW5jw==}
+  /@lerna/symlink-dependencies@5.5.1:
+    resolution: {integrity: sha512-xfxTIbg/fUC0afRODbXnFeJ7inEEow4Jkt3agrI10BrztjDKOmoG65KPPh8j0TGKk46TmeN5DI2Ob/5sKRiRzA==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/create-symlink': 5.6.2
-      '@lerna/package': 5.6.2
-      fs-extra: 9.1.0
-      p-map: 4.0.0
-    dev: true
-
-  /@lerna/symlink-dependencies@5.6.2:
-    resolution: {integrity: sha512-dUVNQLEcjVOIQiT9OlSAKt0ykjyJPy8l9i4NJDe2/0XYaUjo8PWsxJ0vrutz27jzi2aZUy07ASmowQZEmnLHAw==}
-    engines: {node: ^14.15.0 || >=16.0.0}
-    dependencies:
-      '@lerna/create-symlink': 5.6.2
-      '@lerna/resolve-symlink': 5.6.2
-      '@lerna/symlink-binary': 5.6.2
+      '@lerna/create-symlink': 5.5.1
+      '@lerna/resolve-symlink': 5.5.1
+      '@lerna/symlink-binary': 5.5.1
       fs-extra: 9.1.0
       p-map: 4.0.0
       p-map-series: 2.1.0
     dev: true
 
-  /@lerna/temp-write@5.6.2:
-    resolution: {integrity: sha512-S5ZNVTurSwWBmc9kh5alfSjmO3+BnRT6shYtOlmVIUYqWeYVYA5C1Htj322bbU4CSNCMFK6NQl4qGKL17HMuig==}
+  /@lerna/temp-write@5.5.1:
+    resolution: {integrity: sha512-Msuv4OBXXKJlbxhD4kAUs95XsPYGshoKwQSI2sqOinFXnOkkbhdPdRz+7cd4JKs5qMCEy0+5dh7haruYDnSWmQ==}
     dependencies:
       graceful-fs: 4.2.10
       is-stream: 2.0.1
@@ -4398,37 +4396,36 @@ packages:
       uuid: 8.3.2
     dev: true
 
-  /@lerna/timer@5.6.2:
-    resolution: {integrity: sha512-AjMOiLc2B+5Nzdd9hNORetAdZ/WK8YNGX/+2ypzM68TMAPfIT5C40hMlSva9Yg4RsBz22REopXgM5s2zQd5ZQA==}
+  /@lerna/timer@5.5.1:
+    resolution: {integrity: sha512-DLmCZG0dKh7+Ie/CzK+iz6RPRyAJbXt+4D8OA7n6o/K/Q6AERuNabCDS/3AhJKTdReEjoA2UpswrHXfBN48xVg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dev: true
 
-  /@lerna/validation-error@5.6.2:
-    resolution: {integrity: sha512-4WlDUHaa+RSJNyJRtX3gVIAPVzjZD2tle8AJ0ZYBfdZnZmG0VlB2pD1FIbOQPK8sY2h5m0cHLRvfLoLncqHvdQ==}
+  /@lerna/validation-error@5.5.1:
+    resolution: {integrity: sha512-sO5Y6GKmMPtYSKHHR5bNXf/HKISb2g/7uny96X28h+/DihiLhHb0q09fIqmY5WHA1AHsJProZFVEN3BlNrtfEg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       npmlog: 6.0.2
     dev: true
 
-  /@lerna/version@5.6.2(nx@14.8.6)(typescript@4.6.4):
-    resolution: {integrity: sha512-odNSR2rTbHW++xMZSQKu/F6Syrd/sUvwDLPaMKktoOSPKmycHt/eWcuQQyACdtc43Iqeu4uQd7PCLsniqOVFrw==}
+  /@lerna/version@5.5.1:
+    resolution: {integrity: sha512-P2AWTBKRytnSOSS243u3/cz1ecOPG2LTMbiyVBcFnYSAgzHf8AcJYtyfu4aMFzpSD5JfVyYSMvraRiZqK4r7+Q==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
-      '@lerna/check-working-tree': 5.6.2
-      '@lerna/child-process': 5.6.2
-      '@lerna/collect-updates': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/conventional-commits': 5.6.2
-      '@lerna/github-client': 5.6.2
-      '@lerna/gitlab-client': 5.6.2
-      '@lerna/output': 5.6.2
-      '@lerna/prerelease-id-from-version': 5.6.2
-      '@lerna/prompt': 5.6.2
-      '@lerna/run-lifecycle': 5.6.2
-      '@lerna/run-topologically': 5.6.2
-      '@lerna/temp-write': 5.6.2
-      '@lerna/validation-error': 5.6.2
-      '@nrwl/devkit': 15.0.6(nx@14.8.6)(typescript@4.6.4)
+      '@lerna/check-working-tree': 5.5.1
+      '@lerna/child-process': 5.5.1
+      '@lerna/collect-updates': 5.5.1
+      '@lerna/command': 5.5.1
+      '@lerna/conventional-commits': 5.5.1
+      '@lerna/github-client': 5.5.1
+      '@lerna/gitlab-client': 5.5.1
+      '@lerna/output': 5.5.1
+      '@lerna/prerelease-id-from-version': 5.5.1
+      '@lerna/prompt': 5.5.1
+      '@lerna/run-lifecycle': 5.5.1
+      '@lerna/run-topologically': 5.5.1
+      '@lerna/temp-write': 5.5.1
+      '@lerna/validation-error': 5.5.1
       chalk: 4.1.2
       dedent: 0.7.0
       load-json-file: 6.2.0
@@ -4444,13 +4441,11 @@ packages:
     transitivePeerDependencies:
       - bluebird
       - encoding
-      - nx
       - supports-color
-      - typescript
     dev: true
 
-  /@lerna/write-log-file@5.6.2:
-    resolution: {integrity: sha512-J09l18QnWQ3sXIRwuJkjXY3+KwPR2uO5NgbZGE3GXJK1V/LzOBRMvjGAIbuQHXw25uqe7vpLUpB8drtnFrubCQ==}
+  /@lerna/write-log-file@5.5.1:
+    resolution: {integrity: sha512-gWdDQsG6bHsExa+/1+oHyPI/W+pW6IoKw8fKxs62YOZKei3jKxyQbgMZyMqOTSs76kIe2LiY5JsoBD7saN/ORg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       npmlog: 6.0.2
@@ -4735,40 +4730,23 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/cli@14.8.6:
-    resolution: {integrity: sha512-R4udxekMd4jhoRPEksJu+224DocOIrAqenFo0D2R36epE5FaCnZQX7xg+b3TjRbdS10e426i4D9LuXdQmP5jJg==}
+  /@nrwl/cli@14.7.6:
+    resolution: {integrity: sha512-AGGkBodn5+aPGVCMK/jOImYNf54mzEKBkWM56cYRcONP19bJcs9mWO7je4uAgiX79z5M37bic0e608MA2GLcbQ==}
     dependencies:
-      nx: 14.8.6
+      nx: 14.7.6
     transitivePeerDependencies:
       - '@swc-node/register'
       - '@swc/core'
-      - debug
     dev: true
 
-  /@nrwl/devkit@15.0.6(nx@14.8.6)(typescript@4.6.4):
-    resolution: {integrity: sha512-8hxmxIvD53J9dxEQ3iYZv8sd1ii78btXUBVCTfKtzaymysmmoFajpznJ0S+YQB8rCx7A5CKY7jMJ0Q4jFBr5ew==}
-    peerDependencies:
-      nx: '>= 14 <= 16'
-    dependencies:
-      '@phenomnomnominal/tsquery': 4.1.1(typescript@4.6.4)
-      ejs: 3.1.8
-      ignore: 5.2.4
-      nx: 14.8.6
-      semver: 7.3.4
-      tslib: 2.6.0
-    transitivePeerDependencies:
-      - typescript
-    dev: true
-
-  /@nrwl/tao@14.8.6:
-    resolution: {integrity: sha512-CByqrsfSJeonOd7TLAHP8bRYNWgDksxA7j+yncSzgQnFLEbZdJGG/AqqIovx8g6g2v0JS+nRgGC+w5UPf04UrQ==}
+  /@nrwl/tao@14.7.6:
+    resolution: {integrity: sha512-yiIjpMPDN7N2asrIYPsoQMY9HZmBE9m0/EQCu9dWtmevYSMygbaEFEBO8hkNG+clvylWOoUMBE4RfVOMYQRK3g==}
     hasBin: true
     dependencies:
-      nx: 14.8.6
+      nx: 14.7.6
     transitivePeerDependencies:
       - '@swc-node/register'
       - '@swc/core'
-      - debug
     dev: true
 
   /@octokit/auth-token@3.0.2:
@@ -4898,15 +4876,6 @@ packages:
     dependencies:
       node-addon-api: 3.2.1
       node-gyp-build: 4.5.0
-    dev: true
-
-  /@phenomnomnominal/tsquery@4.1.1(typescript@4.6.4):
-    resolution: {integrity: sha512-jjMmK1tnZbm1Jq5a7fBliM4gQwjxMU7TFoRNwIyzwlO+eHPRCFv/Nv+H/Gi1jc3WR7QURG8D5d0Tn12YGrUqBQ==}
-    peerDependencies:
-      typescript: ^3 || ^4
-    dependencies:
-      esquery: 1.4.0
-      typescript: 4.6.4
     dev: true
 
   /@pmmmwh/react-refresh-webpack-plugin@0.5.8(react-refresh@0.11.0)(webpack-dev-server@4.11.1)(webpack@5.74.0):
@@ -7665,25 +7634,6 @@ packages:
       tslib: 2.6.0
     dev: true
 
-  /@yarnpkg/lockfile@1.1.0:
-    resolution: {integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==}
-    dev: true
-
-  /@yarnpkg/parsers@3.0.0-rc.27:
-    resolution: {integrity: sha512-qs2wZulOYVjaOS6tYOs3SsR7m/qeHwjPrB5i4JtBJELsgWrEkyL+rJH21RA+fVwttJobAYQqw5Xj5SYLaDK/bQ==}
-    engines: {node: '>=14.15.0'}
-    dependencies:
-      js-yaml: 3.14.1
-      tslib: 2.6.0
-    dev: true
-
-  /@zkochan/js-yaml@0.0.6:
-    resolution: {integrity: sha512-nzvgl3VfhcELQ8LyVrYOru+UtAy1nrygk2+AGbTm8a5YcO6o8lSjAT+pfg3vJWxIoZKOUhrK6UU7xW/+00kQrg==}
-    hasBin: true
-    dependencies:
-      argparse: 2.0.1
-    dev: true
-
   /JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
     hasBin: true
@@ -10137,6 +10087,7 @@ packages:
 
   /debuglog@1.0.1:
     resolution: {integrity: sha512-syBZ+rnAK3EgMsH2aYEOLUW7mZSY9Gb+0wUMCFsZvcmiz+HigA0LOcq/HoQqVuGG+EKykunc7QG2bzrponfaSw==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     dev: true
 
   /decamelize-keys@1.1.1:
@@ -12615,17 +12566,17 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /git-up@7.0.0:
-    resolution: {integrity: sha512-ONdIrbBCFusq1Oy0sC71F5azx8bVkvtZtMJAsv+a6lz5YAmbNnLD6HAB4gptHZVLPR8S2/kVN6Gab7lryq5+lQ==}
+  /git-up@6.0.0:
+    resolution: {integrity: sha512-6RUFSNd1c/D0xtGnyWN2sxza2bZtZ/EmI9448n6rCZruFwV/ezeEn2fJP7XnUQGwf0RAtd/mmUCbtH6JPYA2SA==}
     dependencies:
       is-ssh: 1.4.0
-      parse-url: 8.1.0
+      parse-url: 7.0.2
     dev: true
 
-  /git-url-parse@13.1.0:
-    resolution: {integrity: sha512-5FvPJP/70WkIprlUZ33bm4UAaFdjcLkJLpWft1BeZKqwR0uhhNGoKwlUaPtVb4LxCSQ++erHapRak9kWGj+FCA==}
+  /git-url-parse@12.0.0:
+    resolution: {integrity: sha512-I6LMWsxV87vysX1WfsoglXsXg6GjQRKq7+Dgiseo+h0skmp5Hp2rzmcEIRQot9CPA+uzU7x1x7jZdqvTFGnB+Q==}
     dependencies:
-      git-up: 7.0.0
+      git-up: 6.0.0
     dev: true
 
   /gitconfiglocal@1.0.0:
@@ -13295,11 +13246,6 @@ packages:
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
     dependencies:
       minimatch: 5.1.0
-    dev: true
-
-  /ignore@5.2.0:
-    resolution: {integrity: sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==}
-    engines: {node: '>= 4'}
     dev: true
 
   /ignore@5.2.4:
@@ -15814,6 +15760,10 @@ packages:
     hasBin: true
     dev: true
 
+  /jsonc-parser@3.0.0:
+    resolution: {integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==}
+    dev: true
+
   /jsonc-parser@3.2.0:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
     dev: true
@@ -15928,39 +15878,35 @@ packages:
       dotenv-expand: 10.0.0
     dev: true
 
-  /lerna@5.6.2:
-    resolution: {integrity: sha512-Y0yMPslvnBnTZi7Nrs/gDyYZYauNf61xWNCehISHIORxZmmpoluNkcWTfcyb47is5uJQCv5QJX5xKKubbs+a6w==}
+  /lerna@5.5.1:
+    resolution: {integrity: sha512-Ofvlm5FRRxF8IQXnx47YbIXmRDHnDaegDwJ4Kq+cVnafbB0VZvRVy/S4ppmnftnqvd4MBXU022lhW9uGN66iZw==}
     engines: {node: ^14.15.0 || >=16.0.0}
     hasBin: true
     dependencies:
-      '@lerna/add': 5.6.2
-      '@lerna/bootstrap': 5.6.2
-      '@lerna/changed': 5.6.2
-      '@lerna/clean': 5.6.2
-      '@lerna/cli': 5.6.2
-      '@lerna/command': 5.6.2
-      '@lerna/create': 5.6.2
-      '@lerna/diff': 5.6.2
-      '@lerna/exec': 5.6.2
-      '@lerna/import': 5.6.2
-      '@lerna/info': 5.6.2
-      '@lerna/init': 5.6.2
-      '@lerna/link': 5.6.2
-      '@lerna/list': 5.6.2
-      '@lerna/publish': 5.6.2(nx@14.8.6)(typescript@4.6.4)
-      '@lerna/run': 5.6.2
-      '@lerna/version': 5.6.2(nx@14.8.6)(typescript@4.6.4)
-      '@nrwl/devkit': 15.0.6(nx@14.8.6)(typescript@4.6.4)
+      '@lerna/add': 5.5.1
+      '@lerna/bootstrap': 5.5.1
+      '@lerna/changed': 5.5.1
+      '@lerna/clean': 5.5.1
+      '@lerna/cli': 5.5.1
+      '@lerna/create': 5.5.1
+      '@lerna/diff': 5.5.1
+      '@lerna/exec': 5.5.1
+      '@lerna/import': 5.5.1
+      '@lerna/info': 5.5.1
+      '@lerna/init': 5.5.1
+      '@lerna/link': 5.5.1
+      '@lerna/list': 5.5.1
+      '@lerna/publish': 5.5.1
+      '@lerna/run': 5.5.1
+      '@lerna/version': 5.5.1
       import-local: 3.1.0
-      inquirer: 8.2.5
       npmlog: 6.0.2
-      nx: 14.8.6
+      nx: 14.7.6
       typescript: 4.6.4
     transitivePeerDependencies:
       - '@swc-node/register'
       - '@swc/core'
       - bluebird
-      - debug
       - encoding
       - supports-color
     dev: true
@@ -17328,8 +17274,8 @@ packages:
     resolution: {integrity: sha512-90yv+6538zuvUMnN+zCr8LuV6bPFdq50304114vJYJ8RDyK8D5O9Phpbd6SZWgI7PwzmmfN1upeOJlvybDSgCw==}
     dev: true
 
-  /nx@14.8.6:
-    resolution: {integrity: sha512-QLU3sip/g3JdNO8n5Nw2esN+0G26Jsy3u1LlrB9Giu4zf/+KsfN8CcXMbEVqOnPR1FkCS52xliaq7IBQfvvMQA==}
+  /nx@14.7.6:
+    resolution: {integrity: sha512-G+QaLMdTtFsWTmVno89SP/5St40IGmFW5wgrIwDGSeosV91G6S0OpU0Yot0D1exgH7gYLh5tE45qGpXFpGGbww==}
     hasBin: true
     requiresBuild: true
     peerDependencies:
@@ -17341,13 +17287,9 @@ packages:
       '@swc/core':
         optional: true
     dependencies:
-      '@nrwl/cli': 14.8.6
-      '@nrwl/tao': 14.8.6
+      '@nrwl/cli': 14.7.6
+      '@nrwl/tao': 14.7.6
       '@parcel/watcher': 2.0.4
-      '@yarnpkg/lockfile': 1.1.0
-      '@yarnpkg/parsers': 3.0.0-rc.27
-      '@zkochan/js-yaml': 0.0.6
-      axios: 1.1.3
       chalk: 4.1.0
       chokidar: 3.5.3
       cli-cursor: 3.1.0
@@ -17360,15 +17302,14 @@ packages:
       flat: 5.0.2
       fs-extra: 10.1.0
       glob: 7.1.4
-      ignore: 5.2.0
+      ignore: 5.2.4
       js-yaml: 4.1.0
-      jsonc-parser: 3.2.0
+      jsonc-parser: 3.0.0
       minimatch: 3.0.5
       npm-run-path: 4.0.1
       open: 8.4.0
       semver: 7.3.4
       string-width: 4.2.3
-      strong-log-transformer: 2.1.0
       tar-stream: 2.2.0
       tmp: 0.2.1
       tsconfig-paths: 3.14.1
@@ -17376,8 +17317,6 @@ packages:
       v8-compile-cache: 2.3.0
       yargs: 17.6.1
       yargs-parser: 21.0.1
-    transitivePeerDependencies:
-      - debug
     dev: true
 
   /object-assign@4.1.1:
@@ -17870,16 +17809,19 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /parse-path@7.0.0:
-    resolution: {integrity: sha512-Euf9GG8WT9CdqwuWJGdf3RkUcTBArppHABkO7Lm8IzRQp0e2r/kkFnmhu4TSK30Wcu5rVAZLmfPKSBBi9tWFog==}
+  /parse-path@5.0.0:
+    resolution: {integrity: sha512-qOpH55/+ZJ4jUu/oLO+ifUKjFPNZGfnPJtzvGzKN/4oLMil5m9OH4VpOj6++9/ytJcfks4kzH2hhi87GL/OU9A==}
     dependencies:
       protocols: 2.0.1
     dev: true
 
-  /parse-url@8.1.0:
-    resolution: {integrity: sha512-xDvOoLU5XRrcOZvnI6b8zA6n9O9ejNk/GExuz1yBuWUGn9KA97GI6HTs6u02wKara1CeVmZhH+0TZFdWScR89w==}
+  /parse-url@7.0.2:
+    resolution: {integrity: sha512-PqO4Z0eCiQ08Wj6QQmrmp5YTTxpYfONdOEamrtvK63AmzXpcavIVQubGHxOEwiIoDZFb8uDOoQFS0NCcjqIYQg==}
     dependencies:
-      parse-path: 7.0.0
+      is-ssh: 1.4.0
+      normalize-url: 6.1.0
+      parse-path: 5.0.0
+      protocols: 2.0.1
     dev: true
 
   /parse5@6.0.1:
@@ -19724,6 +19666,7 @@ packages:
 
   /readdir-scoped-modules@1.1.0:
     resolution: {integrity: sha512-asaikDeqAQg7JifRsZn1NJZXo9E+VwlyCfbkZhwyISinqk5zNS6266HS5kah6P0SaQKGF6SkNnZVHUzHFYxYDw==}
+    deprecated: This functionality has been moved to @npmcli/fs
     dependencies:
       debuglog: 1.0.1
       dezalgo: 1.0.4
