@@ -28,9 +28,6 @@ importers:
       lerna:
         specifier: ^7.1.4
         version: 7.1.4
-      nx:
-        specifier: ^16.5.5
-        version: 16.5.5
 
   libraries/dynamic-ui:
     dependencies:

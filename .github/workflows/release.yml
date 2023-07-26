@@ -22,7 +22,7 @@ jobs:
         run: git submodule update --init packages/stencil-eslint-plugin
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
       - name: Setup Node.js 16.x
         uses: actions/setup-node@v3
         with:
