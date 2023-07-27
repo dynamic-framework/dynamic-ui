@@ -16,6 +16,7 @@ $form-label-color: var(--#{$prefix}gray) !default;
 
 // custom
 $form-label-focus-color: var(--#{$prefix}secondary) !default;
+$form-label-has-value-color: var(--#{$prefix}dark) !default;
 $form-label-padding-y: 0 !default;
 $form-label-padding-x: $spacer-2 !default;
 $form-label-gap: $spacer-1 !default;
@@ -62,7 +63,7 @@ $input-focus-width: $input-btn-focus-width !default;            // unused
 $input-focus-box-shadow: $input-btn-focus-box-shadow !default;
 
 // custom
-$input-group-border-color: var(--#{$prefix}gray-200) !default;
+$input-group-border-color: var(--#{$prefix}gray-300) !default;
 $input-group-border-width: 1px !default;
 $input-group-border-radius: $input-border-radius !default;
 
@@ -72,7 +73,7 @@ $input-group-focus-border-color: var(--#{$prefix}secondary) !default;
 $input-group-focus-box-shadow: 0 2px 14px rgba(var(--#{$prefix}secondary-rgb), .3) !default;
 // end custom
 
-$input-placeholder-color: var(--#{$prefix}gray-200) !default;
+$input-placeholder-color: var(--#{$prefix}gray-500) !default;
 $input-plaintext-color: $body-color !default;
 
 $input-height-border: $input-border-width * 2 !default;

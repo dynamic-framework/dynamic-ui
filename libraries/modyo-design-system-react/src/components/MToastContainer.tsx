@@ -15,7 +15,7 @@ type Props = {
 
 export default function MToastContainer({
   style,
-  position = 'bottom-center',
+  position = 'top-right',
 }: Props) {
   return (
     <ToastContainer
