@@ -12,12 +12,12 @@
 + `pnpm exec lerna run build --no-private` to build all the no private packages.
 
 ## Packages
-| Project                       | Package                       | Version                                                                              | Links                                               |
-|-------------------------------|-------------------------------|--------------------------------------------------------------------------------------|-----------------------------------------------------|
-| **Dynamic Framework**         | @dynamic-framework/ui         | ![npm](https://img.shields.io/npm/v/@dynamic-framework/ui?style=flat-square)         | [`README.md`](libraries/dynamic-ui/README.md)               |
-| **Dynamic Framework Angular** | @dynamic-framework/ui-angular | ![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-angular?style=flat-square) | [`README.md`](libraries/ui-angular/README.md)       |
-| **Dynamic Framework Vue**     | @dynamic-framework/ui-vue     | ![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-vue?style=flat-square)     | [`README.md`](libraries/ui-vue/README.md)           |
-| **Dynamic Framework React**   | @dynamic-framework/ui-react   | ![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-react?style=flat-square)   | [`README.md`](libraries/dynamic-ui-react/README.md) |
+| Project                       | Package                       | Version                                                                                                                             | Links                                               |
+|-------------------------------|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| **Dynamic Framework**         | @dynamic-framework/ui         | [![npm](https://img.shields.io/npm/v/@dynamic-framework/ui?style=flat-square)](https://www.npmjs.com/package/@dynamic-framework/ui) | [`README.md`](libraries/dynamic-ui/README.md)               |
+| **Dynamic Framework Angular** | @dynamic-framework/ui-angular | ![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-angular?style=flat-square)                                                | [`README.md`](libraries/ui-angular/README.md)       |
+| **Dynamic Framework Vue**     | @dynamic-framework/ui-vue     | ![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-vue?style=flat-square)                                                    | [`README.md`](libraries/ui-vue/README.md)           |
+| **Dynamic Framework React**   | @dynamic-framework/ui-react   | [![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-react?style=flat-square)](https://www.npmjs.com/package/@dynamic-framework/ui-react)                                              | [`README.md`](libraries/dynamic-ui-react/README.md) |
 
 ## How to run a template
 
