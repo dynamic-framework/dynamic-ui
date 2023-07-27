@@ -14,7 +14,7 @@ export type ToastConfig = {
 
 export default function useToast() {
   const toast = useCallback((message: string, {
-    position = 'bottom-center',
+    position = 'top-right',
     type = 'info',
     showClose = true,
     autoClose = false,
