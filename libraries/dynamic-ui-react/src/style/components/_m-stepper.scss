@@ -1,0 +1,125 @@
+.m-stepper {
+  position: relative;
+  display: flex;
+
+  .step {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: .5rem;
+
+    .step-value {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .step-icon-container {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+
+      color: var(--bs-secondary);
+      background-color: var(--bs-white);
+      border: 1px solid var(--bs-secondary);
+      border-radius: 100%;
+    }
+
+    .step-check {
+      color: var(--bs-white);
+      background-color: var(--bs-success);
+      border: 1px solid var(--bs-success);
+    }
+
+    .step-current {
+      color: var(--bs-white);
+      background-color: var(--bs-secondary);
+    }
+
+    .step-value::after {
+      position: absolute;
+      top: 50%;
+      z-index: 2;
+      width: 100%;
+      height: 1px;
+      content: "";
+      background-color: var(--bs-secondary);
+    }
+
+    &:first-child .step-value::after {
+      left: 50%;
+      z-index: 2;
+      width: 50%;
+    }
+
+    &:last-child .step-value::after {
+      right: 50%;
+      z-index: 2;
+      width: 50%;
+    }
+
+    .step-label {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+      text-align: center;
+    }
+  }
+
+  &.is-vertical {
+    flex-direction: column;
+
+    .step {
+      flex-direction: row;
+      align-items: center;
+
+      .step-value {
+        align-items: center;
+        height: 100%;
+      }
+
+      .step-label {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        min-height: 3rem;
+        padding: 1rem;
+        text-align: left;
+      }
+      .step-value::after {
+        position: absolute;
+        top: 0;
+        left: calc(50% - 1px);
+        z-index: 2;
+        width: 0;
+        height: 100%;
+        content: "";
+        border: 1px solid var(--bs-secondary);
+      }
+
+      &:first-child .step-value::after {
+        top: 50%;
+        z-index: 2;
+        width: 0;
+        height: 50%;
+        border: 1px solid var(--bs-secondary);
+      }
+
+      &:last-child .step-value::after {
+        z-index: 2;
+        width: 0;
+        height: 50%;
+        border: 1px solid var(--bs-secondary);
+
+      }
+    }
+  }
+
+  .step-icon {
+    display: flex;
+    font-size: 1.125rem;
+  }
+}

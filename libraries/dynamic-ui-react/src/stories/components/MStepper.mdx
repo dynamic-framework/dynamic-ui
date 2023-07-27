@@ -1,0 +1,29 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as MStepper from './MStepper.stories';
+
+# Stepper
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                     | Type             | Description                   |
+  |----------------------------------------------|------------------|-------------------------------|
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MStepper} />
+
+<ArgTypes of={MStepper} />
+
+<Stories />
+
