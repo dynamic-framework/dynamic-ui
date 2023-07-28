@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.1.3...@dynamic-framework/ui-react@1.1.4) (2023-07-27)
+
+**Note:** Version bump only for package @dynamic-framework/ui-react
+
+
+
+
+
 ## [1.1.3](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.1.2...@dynamic-framework/ui-react@1.1.3) (2023-07-27)
 
 **Note:** Version bump only for package @dynamic-framework/ui-react
