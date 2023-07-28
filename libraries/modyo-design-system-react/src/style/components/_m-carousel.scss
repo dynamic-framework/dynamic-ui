@@ -1,0 +1,29 @@
+.m-carousel {
+  // TODO: Adjust styles and no use bem, stylelint fails
+
+  // .splide__arrows.splide__arrows--ltr {
+
+  //   .splide__arrow.splide__arrow--prev {
+  //     left: calc(var(--bs-ref-spacer-3) * -1);
+  //   }
+  //   .splide__arrow.splide__arrow--next {
+  //     right: calc(var(--bs-ref-spacer-3) * -1);
+  //   }
+  // }
+  // .splide__pagination {
+  //   bottom: calc(var(--bs-ref-spacer-3) * -2);
+
+  //   .splide__pagination__page {
+  //     background-color: var(--bs-gray-300);
+
+  //     &.is-active {
+  //       background-color: var(--bs-secondary);
+  //     }
+  //   }
+  // }
+
+  // &.splide.is-focus-in .splide__arrow:focus,
+  // &.splide.is-focus-in .splide__pagination__page:focus {
+  //   outline-color: var(--bs-focus-ring-color);
+  // }
+}

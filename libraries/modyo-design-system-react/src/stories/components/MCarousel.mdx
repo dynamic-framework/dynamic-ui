@@ -1,0 +1,36 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import * as MCarouselStories from './MCarousel.stories';
+
+# Carousel
+
+Carousel of elements and components
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Splide](https://splidejs.com/)
++ [Splide React Integration](https://splidejs.com/integration/react-splide/)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                        | Type            | Description               |
+  |-------------------------------------------------|-----------------|---------------------------|
+  | \`--${PREFIX_BS}m-carousel\`                    | string          | Space between elements    |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MCarouselStories} />
+
+<ArgTypes of={MCarouselStories} />
+
+<Stories />
