@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-/* eslint-disable react/jsx-props-no-spreading,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any,react/jsx-props-no-spreading,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access */
 import { useField } from 'formik';
 
 import type { ComponentProps } from 'react';

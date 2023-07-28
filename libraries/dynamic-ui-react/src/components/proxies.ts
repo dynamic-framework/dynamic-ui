@@ -3,29 +3,29 @@
 /* auto-generated react proxies */
 import { createReactComponent } from './react-component-lib';
 
-import type { JSX } from '@modyo-dynamic/modyo-design-system/components';
+import type { JSX } from '@dynamic-framework/ui/components';
 
-import { defineCustomElement as defineMAlert } from '@modyo-dynamic/modyo-design-system/components/m-alert.js';
-import { defineCustomElement as defineMBadge } from '@modyo-dynamic/modyo-design-system/components/m-badge.js';
-import { defineCustomElement as defineMButton } from '@modyo-dynamic/modyo-design-system/components/m-button.js';
-import { defineCustomElement as defineMChip } from '@modyo-dynamic/modyo-design-system/components/m-chip.js';
-import { defineCustomElement as defineMIcon } from '@modyo-dynamic/modyo-design-system/components/m-icon.js';
-import { defineCustomElement as defineMInput } from '@modyo-dynamic/modyo-design-system/components/m-input.js';
-import { defineCustomElement as defineMInputCheck } from '@modyo-dynamic/modyo-design-system/components/m-input-check.js';
-import { defineCustomElement as defineMInputCounter } from '@modyo-dynamic/modyo-design-system/components/m-input-counter.js';
-import { defineCustomElement as defineMInputCurrencyBase } from '@modyo-dynamic/modyo-design-system/components/m-input-currency-base.js';
-import { defineCustomElement as defineMInputPassword } from '@modyo-dynamic/modyo-design-system/components/m-input-password.js';
-import { defineCustomElement as defineMInputPin } from '@modyo-dynamic/modyo-design-system/components/m-input-pin.js';
-import { defineCustomElement as defineMInputSearch } from '@modyo-dynamic/modyo-design-system/components/m-input-search.js';
-import { defineCustomElement as defineMInputSelect } from '@modyo-dynamic/modyo-design-system/components/m-input-select.js';
-import { defineCustomElement as defineMInputSwitch } from '@modyo-dynamic/modyo-design-system/components/m-input-switch.js';
-import { defineCustomElement as defineMModal } from '@modyo-dynamic/modyo-design-system/components/m-modal.js';
-import { defineCustomElement as defineMOffcanvas } from '@modyo-dynamic/modyo-design-system/components/m-offcanvas.js';
-import { defineCustomElement as defineMProgressBar } from '@modyo-dynamic/modyo-design-system/components/m-progress-bar.js';
-import { defineCustomElement as defineMQuickActionButton } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-button.js';
-import { defineCustomElement as defineMQuickActionCheck } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-check.js';
-import { defineCustomElement as defineMQuickActionSelect } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-select.js';
-import { defineCustomElement as defineMQuickActionSwitch } from '@modyo-dynamic/modyo-design-system/components/m-quick-action-switch.js';
+import { defineCustomElement as defineMAlert } from '@dynamic-framework/ui/components/m-alert.js';
+import { defineCustomElement as defineMBadge } from '@dynamic-framework/ui/components/m-badge.js';
+import { defineCustomElement as defineMButton } from '@dynamic-framework/ui/components/m-button.js';
+import { defineCustomElement as defineMChip } from '@dynamic-framework/ui/components/m-chip.js';
+import { defineCustomElement as defineMIcon } from '@dynamic-framework/ui/components/m-icon.js';
+import { defineCustomElement as defineMInput } from '@dynamic-framework/ui/components/m-input.js';
+import { defineCustomElement as defineMInputCheck } from '@dynamic-framework/ui/components/m-input-check.js';
+import { defineCustomElement as defineMInputCounter } from '@dynamic-framework/ui/components/m-input-counter.js';
+import { defineCustomElement as defineMInputCurrencyBase } from '@dynamic-framework/ui/components/m-input-currency-base.js';
+import { defineCustomElement as defineMInputPassword } from '@dynamic-framework/ui/components/m-input-password.js';
+import { defineCustomElement as defineMInputPin } from '@dynamic-framework/ui/components/m-input-pin.js';
+import { defineCustomElement as defineMInputSearch } from '@dynamic-framework/ui/components/m-input-search.js';
+import { defineCustomElement as defineMInputSelect } from '@dynamic-framework/ui/components/m-input-select.js';
+import { defineCustomElement as defineMInputSwitch } from '@dynamic-framework/ui/components/m-input-switch.js';
+import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/components/m-modal.js';
+import { defineCustomElement as defineMOffcanvas } from '@dynamic-framework/ui/components/m-offcanvas.js';
+import { defineCustomElement as defineMProgressBar } from '@dynamic-framework/ui/components/m-progress-bar.js';
+import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
+import { defineCustomElement as defineMQuickActionCheck } from '@dynamic-framework/ui/components/m-quick-action-check.js';
+import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
+import { defineCustomElement as defineMQuickActionSwitch } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 
 export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertElement>('m-alert', undefined, undefined, defineMAlert);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+import { PREFIX_BS } from '@dynamic-framework/ui';
 
 import {
   PropsWithChildren,

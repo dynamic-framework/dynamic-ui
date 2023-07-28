@@ -15,11 +15,11 @@ import {
   FloatingPortal,
   FloatingArrow,
 } from '@floating-ui/react';
-import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+import { PREFIX_BS } from '@dynamic-framework/ui';
 
 import type { PropsWithChildren, ReactNode } from 'react';
 import type { Placement } from '@floating-ui/react';
-import type { ComponentSize } from '@modyo-dynamic/modyo-design-system';
+import type { ComponentSize } from '@dynamic-framework/ui';
 
 export type MTooltipProps = PropsWithChildren<{
   classNameContainer?: string;

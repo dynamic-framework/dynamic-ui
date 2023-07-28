@@ -3,7 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@1.0.1...@modyo-dynamic/modyo-design-system@1.1.0) (2023-07-04)
+## [1.1.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.1.1...@dynamic-framework/ui@1.1.2) (2023-07-27)
+
+**Note:** Version bump only for package @dynamic-framework/ui
+
+
+
+
+
+## 1.1.1 (2023-07-26)
+
+**Note:** Version bump only for package @dynamic-framework/ui
+
+
+
+
+
+## [1.1.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@1.0.1...@dynamic-framework/ui@1.1.0) (2023-07-04)
 
 ### Features
 
@@ -18,13 +34,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - m-quick-action-button image border-radius and person list example ([a058e47](https://github.com/modyo-dynamic/modyo-design-system/commit/a058e4782675d6080f6bc6f7f37397e71f36cb96))
 - stop propagation ([52e8e7f](https://github.com/modyo-dynamic/modyo-design-system/commit/52e8e7f5c25c8840eda046d2134079a99ef35285))
 
-## [1.0.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@1.0.0...@modyo-dynamic/modyo-design-system@1.0.1) (2023-06-14)
+## [1.0.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@1.0.0...@dynamic-framework/ui@1.0.1) (2023-06-14)
 
 ### Bug Fixes
 
 - lexical error none - 0 caused by -border-radius: none ([c381c1a](https://github.com/modyo-dynamic/modyo-design-system/commit/c381c1a276eb1cf43cb02b2168b999c1256860a7))
 
-## [1.0.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.4...@modyo-dynamic/modyo-design-system@1.0.0) (2023-06-14)
+## [1.0.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.7.4...@dynamic-framework/ui@1.0.0) (2023-06-14)
 
 ### ⚠ BREAKING CHANGES
 
@@ -93,60 +109,60 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - include src/style in package ([7801b07](https://github.com/modyo-dynamic/modyo-design-system/commit/7801b079058f44a7315651f9f372a8e6c5fa8354))
 
-## [0.7.4](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.3...@modyo-dynamic/modyo-design-system@0.7.4) (2023-05-09)
+## [0.7.4](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.7.3...@dynamic-framework/ui@0.7.4) (2023-05-09)
 
 ### Bug Fixes
 
 - update test ([12b38da](https://github.com/modyo-dynamic/modyo-design-system/commit/12b38dab1809366b326ce5808750ad59c6d3bad2))
 
-## [0.7.3](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.2...@modyo-dynamic/modyo-design-system@0.7.3) (2023-04-20)
+## [0.7.3](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.7.2...@dynamic-framework/ui@0.7.3) (2023-04-20)
 
-**Note:** Version bump only for package @modyo-dynamic/modyo-design-system
+**Note:** Version bump only for package @dynamic-framework/ui
 
-## [0.7.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.1...@modyo-dynamic/modyo-design-system@0.7.2) (2023-03-29)
+## [0.7.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.7.1...@dynamic-framework/ui@0.7.2) (2023-03-29)
 
 ### Bug Fixes
 
 - add stop propagation onClick switch ([14ca335](https://github.com/modyo-dynamic/modyo-design-system/commit/14ca335e23f464d6d59cd9ab84e3c96de58f8f23))
 
-## [0.7.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.7.0...@modyo-dynamic/modyo-design-system@0.7.1) (2023-03-23)
+## [0.7.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.7.0...@dynamic-framework/ui@0.7.1) (2023-03-23)
 
 ### Bug Fixes
 
 - fixed input size and align left label ([9a7ecae](https://github.com/modyo-dynamic/modyo-design-system/commit/9a7ecae3e0313bfa38ccc39272319c6a06b33d84))
 
-## [0.7.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.6.0...@modyo-dynamic/modyo-design-system@0.7.0) (2023-03-07)
+## [0.7.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.6.0...@dynamic-framework/ui@0.7.0) (2023-03-07)
 
 ### Features
 
 - add m-pin component ([a02d173](https://github.com/modyo-dynamic/modyo-design-system/commit/a02d17341b6973090aefd0cfc7299e92265e4fe4))
 
-## [0.6.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.5.4...@modyo-dynamic/modyo-design-system@0.6.0) (2023-02-21)
+## [0.6.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.5.4...@dynamic-framework/ui@0.6.0) (2023-02-21)
 
 ### Features
 
 - add m-collapse component and styles ([5cc0216](https://github.com/modyo-dynamic/modyo-design-system/commit/5cc021622fc3a37936334d4078cb33cac5473ebf))
 - add progress bar component ([144d3f5](https://github.com/modyo-dynamic/modyo-design-system/commit/144d3f5013fa24eb093fdb843b433dc5a7028255))
 
-## [0.5.4](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.5.3...@modyo-dynamic/modyo-design-system@0.5.4) (2023-02-15)
+## [0.5.4](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.5.3...@dynamic-framework/ui@0.5.4) (2023-02-15)
 
-**Note:** Version bump only for package @modyo-dynamic/modyo-design-system
+**Note:** Version bump only for package @dynamic-framework/ui
 
-## [0.5.3](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.5.2...@modyo-dynamic/modyo-design-system@0.5.3) (2023-02-06)
+## [0.5.3](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.5.2...@dynamic-framework/ui@0.5.3) (2023-02-06)
 
 ### Bug Fixes
 
 - test m-list-item ([c8c95d3](https://github.com/modyo-dynamic/modyo-design-system/commit/c8c95d3234d9cf8633b8f80e9f2f58b57c9695ec))
 
-## [0.5.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.5.1...@modyo-dynamic/modyo-design-system@0.5.2) (2023-01-27)
+## [0.5.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.5.1...@dynamic-framework/ui@0.5.2) (2023-01-27)
 
-**Note:** Version bump only for package @modyo-dynamic/modyo-design-system
+**Note:** Version bump only for package @dynamic-framework/ui
 
-## [0.5.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.5.0...@modyo-dynamic/modyo-design-system@0.5.1) (2023-01-24)
+## [0.5.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.5.0...@dynamic-framework/ui@0.5.1) (2023-01-24)
 
-**Note:** Version bump only for package @modyo-dynamic/modyo-design-system
+**Note:** Version bump only for package @dynamic-framework/ui
 
-## [0.5.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system@0.4.0...@modyo-dynamic/modyo-design-system@0.5.0) (2023-01-20)
+## [0.5.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui@0.4.0...@dynamic-framework/ui@0.5.0) (2023-01-20)
 
 ### Features
 

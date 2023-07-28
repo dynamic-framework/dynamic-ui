@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { formatCurrency } from '@modyo-dynamic/modyo-design-system';
+import { formatCurrency } from '@dynamic-framework/ui';
 
 import { useLiquidContext } from '../contexts';
 

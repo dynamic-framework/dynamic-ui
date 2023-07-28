@@ -1,16 +1,19 @@
 {
-  "name": "@modyo-dynamic/modyo-design-system-react",
+  "name": "@dynamic-framework/ui-react",
   "sideEffects": false,
-  "version": "1.1.0",
-  "description": "React specific wrapper for component-library",
+  "version": "1.1.3",
+  "description": "React Dynamic Framework",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/modyo-dynamic/modyo-design-system.git"
+    "url": "git+https://github.com/dynamic-framework/dynamic-ui.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "bugs": {
     "type": "git",
-    "url": "https://github.com/modyo-dynamic/modyo-design-system.git"
+    "url": "https://github.com/dynamic-framework/dynamic-ui.git"
   },
   "author": {
     "name": "Abraham José González Barboza",
@@ -22,9 +25,9 @@
     "build": "pnpm build:react && pnpm build:style",
     "build:react": "rimraf dist && tsc -p . && rollup -c rollup.config.js",
     "build:react:watch": "tsc -p . && rollup -c rollup.config.js",
-    "build:scss": "sass --load-path=node_modules --source-map --style=compressed src/style/main.scss dist/css/design-system-react.css",
-    "build:scss:watch": "sass --load-path=node_modules --source-map -w src/style/main.scss dist/css/design-system-react.css",
-    "build:autoprefixer": "postcss dist/css/design-system-react.css --use autoprefixer -o dist/css/design-system-react.css",
+    "build:scss": "sass --load-path=node_modules --no-source-map --style=compressed src/style/main.scss dist/css/dynamic-ui-react.css",
+    "build:scss:watch": "sass --load-path=node_modules -w src/style/main.scss dist/css/dynamic-ui-react.css",
+    "build:autoprefixer": "postcss dist/css/dynamic-ui-react.css --use autoprefixer -o dist/css/dynamic-ui-react.css --no-map",
     "build:style": "pnpm build:scss && pnpm build:autoprefixer",
     "clean": "rimraf dist",
     "compile": "tsc -p . && rollup -c rollup.config.js",
@@ -59,7 +62,8 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.0",
-    "@modyo-dynamic/modyo-design-system": "^1.1.0",
+    "@dynamic-framework/ui": "^1.1.2",
+    "@mdx-js/react": "^2.3.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@storybook/addon-actions": "7.0.6",
     "@storybook/addon-essentials": "7.0.6",
@@ -70,6 +74,7 @@
     "@storybook/react": "7.0.6",
     "@storybook/react-webpack5": "7.0.6",
     "@storybook/testing-library": "^0.1.0",
+    "@storybook/theming": "^7.0.24",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "29.1.2",
@@ -114,7 +119,7 @@
     "typescript": "^4.6.4"
   },
   "peerDependencies": {
-    "@modyo-dynamic/modyo-design-system": "*",
+    "@dynamic-framework/ui": "*",
     "formik": "^2.2.9",
     "html2canvas": "^1.4.1",
     "luxon": "~3.0.3",
@@ -125,7 +130,7 @@
   },
   "nx": {
     "implicitDependencies": [
-      "@modyo-dynamic/modyo-design-system"
+      "@dynamic-framework/ui"
     ]
   }
 }

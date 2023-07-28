@@ -1,4 +1,4 @@
 packages:
   - "libraries/*"
-  - "widgets/*"
   - "packages/*"
+  - "templates/*"

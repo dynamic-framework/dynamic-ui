@@ -31,7 +31,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@modyo-dynamic/modyo-design-system": "*",
+    "@dynamic-framework/ui": "*",
     "@vuepic/vue-datepicker": "~3.3.1",
     "vue-content-loader": "~2.0.1"
   },

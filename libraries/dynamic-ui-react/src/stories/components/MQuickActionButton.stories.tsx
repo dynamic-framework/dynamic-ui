@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+import { PREFIX_BS } from '@dynamic-framework/ui';
 
 import { MQuickActionButton } from '../../components';
 import { ALL_COLORS_WITH_EMPTY, ICONS } from '../constants';

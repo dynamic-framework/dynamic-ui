@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { ToastPosition, Slide, toast as reactToast } from 'react-toastify';
 
-import type { AlertType } from '@modyo-dynamic/modyo-design-system';
+import type { AlertType } from '@dynamic-framework/ui';
 
 import { MAlert } from '../components';
 

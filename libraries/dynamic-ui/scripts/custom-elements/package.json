@@ -1,7 +1,7 @@
 {
-  "name": "@modyo-dynamic/design-system/components",
+  "name": "@dynamic-framework/ui/components",
   "version": "0.0.0",
-  "description": "Modyo Design System Components exported as custom elements, extending HTMLElement.",
+  "description": "Dynamic Framework Components exported as custom elements, extending HTMLElement.",
   "main": "./index.js",
   "types": "./custom-elements.d.ts",
   "private": true,

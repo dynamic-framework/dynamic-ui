@@ -3,7 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@1.0.1...@modyo-dynamic/modyo-design-system-react@1.1.0) (2023-07-04)
+## [1.1.3](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.1.2...@dynamic-framework/ui-react@1.1.3) (2023-07-27)
+
+**Note:** Version bump only for package @dynamic-framework/ui-react
+
+
+
+
+
+## [1.1.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.1.1...@dynamic-framework/ui-react@1.1.2) (2023-07-27)
+
+**Note:** Version bump only for package @dynamic-framework/ui-react
+
+
+
+
+
+## 1.1.1 (2023-07-26)
+
+**Note:** Version bump only for package @dynamic-framework/ui-react
+
+
+
+
+
+## [1.1.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@1.0.1...@dynamic-framework/ui-react@1.1.0) (2023-07-04)
 
 ### Features
 
@@ -17,11 +41,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - m-quick-action-button image border-radius and person list example ([a058e47](https://github.com/modyo-dynamic/modyo-design-system/commit/a058e4782675d6080f6bc6f7f37397e71f36cb96))
 - stop propagation ([52e8e7f](https://github.com/modyo-dynamic/modyo-design-system/commit/52e8e7f5c25c8840eda046d2134079a99ef35285))
 
-## [1.0.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@1.0.0...@modyo-dynamic/modyo-design-system-react@1.0.1) (2023-06-14)
+## [1.0.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@1.0.0...@dynamic-framework/ui-react@1.0.1) (2023-06-14)
 
-**Note:** Version bump only for package @modyo-dynamic/modyo-design-system-react
+**Note:** Version bump only for package @dynamic-framework/ui-react
 
-## [1.0.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.10.1...@modyo-dynamic/modyo-design-system-react@1.0.0) (2023-06-14)
+## [1.0.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.10.1...@dynamic-framework/ui-react@1.0.0) (2023-06-14)
 
 ### ⚠ BREAKING CHANGES
 
@@ -85,14 +109,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - include src/style in package ([7801b07](https://github.com/modyo-dynamic/modyo-design-system/commit/7801b079058f44a7315651f9f372a8e6c5fa8354))
 
-## [0.10.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.10.0...@modyo-dynamic/modyo-design-system-react@0.10.1) (2023-05-17)
+## [0.10.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.10.0...@dynamic-framework/ui-react@0.10.1) (2023-05-17)
 
 ### Bug Fixes
 
 - event type on change ([a74516d](https://github.com/modyo-dynamic/modyo-design-system/commit/a74516d0b7a149f1a64b5d77143929780a7b28e2))
 - remove unused import ([afc8c9a](https://github.com/modyo-dynamic/modyo-design-system/commit/afc8c9ae7dc0effa90990633728da037c1b3aaba))
 
-## [0.10.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.9.0...@modyo-dynamic/modyo-design-system-react@0.10.0) (2023-05-09)
+## [0.10.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.9.0...@dynamic-framework/ui-react@0.10.0) (2023-05-09)
 
 ### Features
 
@@ -100,13 +124,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - permission item component ([4fe407f](https://github.com/modyo-dynamic/modyo-design-system/commit/4fe407facba056ffd97b5c02537dc23b8c369945))
 - summary card component ([1575da5](https://github.com/modyo-dynamic/modyo-design-system/commit/1575da567ffff55003824b3cd8be525d0c47f3ef))
 
-## [0.9.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.2...@modyo-dynamic/modyo-design-system-react@0.9.0) (2023-04-20)
+## [0.9.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.8.2...@dynamic-framework/ui-react@0.9.0) (2023-04-20)
 
 ### Features
 
 - MCollapse custom component ([68ed23a](https://github.com/modyo-dynamic/modyo-design-system/commit/68ed23a0a257aea21d1bff7d382b329fb6120b91))
 
-## [0.8.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.1...@modyo-dynamic/modyo-design-system-react@0.8.2) (2023-03-29)
+## [0.8.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.8.1...@dynamic-framework/ui-react@0.8.2) (2023-03-29)
 
 ### Bug Fixes
 
@@ -114,7 +138,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - remove boxShadow style of m-toast container ([ba4f81f](https://github.com/modyo-dynamic/modyo-design-system/commit/ba4f81f225e9f3c98794f9a5e741870bf7eec0d7))
 - stories type ([bf52a40](https://github.com/modyo-dynamic/modyo-design-system/commit/bf52a40991ceb04e7353c53bc8a471f3150adb14))
 
-## [0.8.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.8.0...@modyo-dynamic/modyo-design-system-react@0.8.1) (2023-03-23)
+## [0.8.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.8.0...@dynamic-framework/ui-react@0.8.1) (2023-03-23)
 
 ### Bug Fixes
 
@@ -124,43 +148,43 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Revert "chore: remove useEffect" ([2e1d27e](https://github.com/modyo-dynamic/modyo-design-system/commit/2e1d27e4792d6d21ebe77766cc781dc39231475c))
 
-## [0.8.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.7.0...@modyo-dynamic/modyo-design-system-react@0.8.0) (2023-03-07)
+## [0.8.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.7.0...@dynamic-framework/ui-react@0.8.0) (2023-03-07)
 
 ### Features
 
 - add m-pin component ([a02d173](https://github.com/modyo-dynamic/modyo-design-system/commit/a02d17341b6973090aefd0cfc7299e92265e4fe4))
 
-## [0.7.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.6.0...@modyo-dynamic/modyo-design-system-react@0.7.0) (2023-02-21)
+## [0.7.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.6.0...@dynamic-framework/ui-react@0.7.0) (2023-02-21)
 
 ### Features
 
 - add m-collapse component and styles ([5cc0216](https://github.com/modyo-dynamic/modyo-design-system/commit/5cc021622fc3a37936334d4078cb33cac5473ebf))
 - add progress bar component ([144d3f5](https://github.com/modyo-dynamic/modyo-design-system/commit/144d3f5013fa24eb093fdb843b433dc5a7028255))
 
-## [0.6.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.4...@modyo-dynamic/modyo-design-system-react@0.6.0) (2023-02-15)
+## [0.6.0](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.5.4...@dynamic-framework/ui-react@0.6.0) (2023-02-15)
 
 ### Features
 
 - add hooks to download, share and take a screenshot ([1ab6a30](https://github.com/modyo-dynamic/modyo-design-system/commit/1ab6a304016b0cb3212272fd3050a2690e455a33))
 - setup storybook publish on gh pages ([5da3826](https://github.com/modyo-dynamic/modyo-design-system/commit/5da3826880bb39ebe4bb5d55a18fc48f978e6a0b))
 
-## [0.5.4](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.3...@modyo-dynamic/modyo-design-system-react@0.5.4) (2023-02-06)
+## [0.5.4](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.5.3...@dynamic-framework/ui-react@0.5.4) (2023-02-06)
 
 ### Bug Fixes
 
 - declare LANG into component ([ae21a5c](https://github.com/modyo-dynamic/modyo-design-system/commit/ae21a5c405832a7ae90ffe65ce57dc378d7e3d1d))
 
-## [0.5.3](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.2...@modyo-dynamic/modyo-design-system-react@0.5.3) (2023-01-27)
+## [0.5.3](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.5.2...@dynamic-framework/ui-react@0.5.3) (2023-01-27)
 
-**Note:** Version bump only for package @modyo-dynamic/modyo-design-system-react
+**Note:** Version bump only for package @dynamic-framework/ui-react
 
-## [0.5.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.1...@modyo-dynamic/modyo-design-system-react@0.5.2) (2023-01-24)
+## [0.5.2](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.5.1...@dynamic-framework/ui-react@0.5.2) (2023-01-24)
 
-**Note:** Version bump only for package @modyo-dynamic/modyo-design-system-react
+**Note:** Version bump only for package @dynamic-framework/ui-react
 
-## [0.5.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@modyo-dynamic/modyo-design-system-react@0.5.0...@modyo-dynamic/modyo-design-system-react@0.5.1) (2023-01-20)
+## [0.5.1](https://github.com/modyo-dynamic/modyo-design-system/compare/@dynamic-framework/ui-react@0.5.0...@dynamic-framework/ui-react@0.5.1) (2023-01-20)
 
-**Note:** Version bump only for package @modyo-dynamic/modyo-design-system-react
+**Note:** Version bump only for package @dynamic-framework/ui-react
 
 ## 0.5.0 (2023-01-05)
 

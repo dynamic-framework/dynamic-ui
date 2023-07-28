@@ -1,6 +1,6 @@
 import { PropsWithChildren, useMemo } from 'react';
 import ContentLoader from 'react-content-loader';
-import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+import { PREFIX_BS } from '@dynamic-framework/ui';
 
 export type Props = PropsWithChildren<{
   speed?: number;

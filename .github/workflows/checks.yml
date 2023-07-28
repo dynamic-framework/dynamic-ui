@@ -23,18 +23,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          registry-url: https://npm.pkg.github.com/
-          scope: '@modyo-dynamic'
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build packages
         run: pnpm build
       - name: Lint packages
         run: |
-          pnpm exec lerna run eslint --no-private
-          pnpm exec lerna run stylelint --no-private
+          pnpm eslint
+          pnpm stylelint
       - name: Test packages
-        run: pnpm exec lerna run test --no-private
+        run: pnpm test

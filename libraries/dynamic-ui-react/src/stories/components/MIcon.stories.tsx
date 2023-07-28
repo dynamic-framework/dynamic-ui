@@ -3,7 +3,7 @@ import {
   PREFIX_BS,
   ICON_FAMILY_PREFIX,
   ICON_FAMILY_CLASS,
-} from '@modyo-dynamic/modyo-design-system';
+} from '@dynamic-framework/ui';
 
 import { MIcon } from '../../components';
 import {

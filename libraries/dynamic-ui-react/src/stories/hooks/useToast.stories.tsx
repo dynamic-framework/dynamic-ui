@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 
-import type { AlertType } from '@modyo-dynamic/modyo-design-system';
+import type { AlertType } from '@dynamic-framework/ui';
 
 import { MButton, MToastContainer } from '../../components';
 import { useToast as useToastHook } from '../../hooks';

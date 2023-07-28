@@ -25,7 +25,7 @@ module.exports = {
   },
   staticDirs: [
     './public',
-    '../../modyo-design-system/dist',
+    '../../dynamic-ui/dist',
     '../dist'
   ],
   features: {
