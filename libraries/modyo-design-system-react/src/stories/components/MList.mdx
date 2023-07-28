@@ -1,0 +1,35 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@modyo-dynamic/modyo-design-system';
+
+import * as MListStories from './MList.stories';
+
+# List
+
+List of [MListItem](/docs/design-system-alpha-patterns-carousel--docs) elements
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                        | Type            | Description               |
+  |-------------------------------------------------|-----------------|---------------------------|
+  | \`--${PREFIX_BS}m-list\`                    | string          | Space between elements    |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MListStories} />
+
+<ArgTypes of={MListStories} />
+
+<Stories />
