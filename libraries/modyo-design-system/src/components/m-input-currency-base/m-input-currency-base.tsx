@@ -176,7 +176,7 @@ export class MInputCurrencyBase implements ComponentInterface {
       ? parseFloat(event.detail)
       : undefined;
     this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, { ...this.currencyOptions, symbol: '' }).format()
       : '';
     this.mChange.emit(this.internalValueAsNumber);
   };
@@ -186,7 +186,7 @@ export class MInputCurrencyBase implements ComponentInterface {
     this.internalType = 'text';
 
     this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, { ...this.currencyOptions, symbol: '' }).format()
       : '';
   };
 
@@ -194,7 +194,7 @@ export class MInputCurrencyBase implements ComponentInterface {
     event.stopPropagation();
     this.internalType = 'number';
     this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, { ...this.currencyOptions, symbol: '' }).format()
       : '';
   };
 
@@ -233,7 +233,7 @@ export class MInputCurrencyBase implements ComponentInterface {
   componentDidLoad() {
     this.internalType = 'text';
     this.internalValueAsFormat = (this.internalValueAsNumber !== undefined)
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, { ...this.currencyOptions, symbol: '' }).format()
       : '';
   }
 
