@@ -86,7 +86,6 @@ export const HorizontalWithBreakpoint: Story = {
   ],
   render: (args) => (
     <>
-      <span className="fs-5">Breakpoint on MD</span>
       <MListExample {...args} />
       <small className="mt-5 text-warning">**Resize the width container to view changes</small>
     </>

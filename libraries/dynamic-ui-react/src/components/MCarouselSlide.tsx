@@ -1,8 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { SplideSlide } from '@splidejs/react-splide';
+import classNames from 'classnames';
 
-export default function MCarouselSlide(props: React.ComponentProps<typeof SplideSlide>) {
+type Props = React.ComponentProps<typeof SplideSlide>;
+
+export default function MCarouselSlide({ className, ...props }: Props) {
   return (
-    <SplideSlide {...props} />
+    <SplideSlide
+      className={classNames(
+        'm-carousel-slide',
+        className,
+      )}
+      {...props}
+    />
   );
 }
