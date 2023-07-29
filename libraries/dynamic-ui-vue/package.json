@@ -1,16 +1,16 @@
 {
-  "name": "@modyo-dynamic/modyo-design-system-vue",
+  "name": "@dynamic-framework/ui-vue",
   "version": "0.2.0",
   "private": true,
   "sideEffects": false,
   "description": "Vue specific wrapper for component-library",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/modyo-dynamic/modyo-design-system.git"
+    "url": "git+https://github.com/dynamic-framework/dynamic-ui.git"
   },
   "bugs": {
     "type": "git",
-    "url": "https://github.com/modyo-dynamic/modyo-design-system.git"
+    "url": "https://github.com/dynamic-framework/dynamic-ui.git"
   },
   "author": {
     "name": "Abraham José González Barboza",
