@@ -16,7 +16,7 @@ export default function MStepper({
   options,
   currentStep,
   successIcon = 'check',
-  isVertical = true,
+  isVertical = false,
 } : Props) {
   return (
     <div className={classNames({
@@ -26,23 +26,23 @@ export default function MStepper({
     >
       {options.map(({ label, value }) => (
         <div
-          className="step"
+          className="m-step"
           key={label}
         >
-          <div className="step-value">
+          <div className="m-step-value">
             <div
               className={classNames({
-                'step-icon-container': true,
-                'step-check': value < currentStep,
-                'step-current': value === currentStep,
+                'm-step-icon-container': true,
+                'm-step-check': value < currentStep,
+                'm-step-current': value === currentStep,
               })}
             >
               {value < currentStep
-                ? <i className={`bi bi-${successIcon} step-icon`} />
+                ? <i className={`bi bi-${successIcon} m-step-icon`} />
                 : value}
             </div>
           </div>
-          <div className="step-label">{label}</div>
+          <div className="m-step-label">{label}</div>
         </div>
       ))}
     </div>
