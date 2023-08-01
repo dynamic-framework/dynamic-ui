@@ -217,8 +217,8 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0(@babel/core@7.21.3)
       '@dynamic-framework/ui':
-        specifier: ^1.1.2
-        version: 1.1.3(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
+        specifier: ^1.1.3
+        version: link:../dynamic-ui
       '@mdx-js/react':
         specifier: ^2.3.0
         version: 2.3.0(react@18.2.0)
@@ -427,12 +427,12 @@ importers:
 
   packages/dynamic-react-base-template:
     dependencies:
-      '@modyo-dynamic/modyo-design-system':
-        specifier: ^0.6.0
-        version: 0.6.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
-      '@modyo-dynamic/modyo-design-system-react':
-        specifier: ^0.7.0
-        version: 0.7.0(@modyo-dynamic/modyo-design-system@0.6.0)(@types/react@18.0.24)(formik@2.2.9)(html2canvas@1.4.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0)
+      '@dynamic-framework/ui':
+        specifier: ^1.1.3
+        version: link:../../libraries/dynamic-ui
+      '@dynamic-framework/ui-react':
+        specifier: ^1.1.4
+        version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
         version: 1.8.4(react-redux@8.0.2)(react@18.2.0)
@@ -608,10 +608,10 @@ importers:
     dependencies:
       '@dynamic-framework/ui':
         specifier: ^1.1.3
-        version: 1.1.3(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
+        version: link:../../libraries/dynamic-ui
       '@dynamic-framework/ui-react':
         specifier: ^1.1.4
-        version: 1.1.4(@dynamic-framework/ui@1.1.3)(@types/react@18.0.24)(formik@2.2.9)(html2canvas@1.4.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0)
+        version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
         version: 1.8.4(react-redux@8.0.2)(react@18.2.0)
@@ -3166,33 +3166,6 @@ packages:
       '@floating-ui/core': 1.2.6
     dev: false
 
-  /@floating-ui/react-dom-interactions@0.12.0(@types/react@18.0.24)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-UBC37z3BvAZ4r3QzD6pDBn8v1S0xSNGLiqdueDM2Tgl/E1bPvEiSpu71uwOTm5qXM22mDGmohJfX/SXF/nQ8nw==}
-    deprecated: Package renamed to @floating-ui/react
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/react-dom': 1.3.0(react-dom@18.2.0)(react@18.2.0)
-      aria-hidden: 1.2.2(@types/react@18.0.24)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      tabbable: 6.0.1
-    transitivePeerDependencies:
-      - '@types/react'
-    dev: false
-
-  /@floating-ui/react-dom@1.3.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-htwHm67Ji5E/pROEAr7f8IKFShuiCKHwUC/UY4vC3I5jiSvGFAYnSYiZO5MlGmads+QqvUkR9ANHEguGrDv72g==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/dom': 1.2.8
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
   /@floating-ui/react-dom@2.0.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Ke0oU3SeuABC2C4OFu2mSAwHIP5WUiV98O9YWoHV4Q5aT6E9k06DV0Khi5uYspR8xmmBk08t8ZDcz3TR3ARkEg==}
     peerDependencies:
@@ -4696,92 +4669,8 @@ packages:
       '@types/react': 18.0.24
       react: 18.2.0
 
-  /@modyo-dynamic/modyo-design-system-react@0.7.0(@modyo-dynamic/modyo-design-system@0.6.0)(@types/react@18.0.24)(formik@2.2.9)(html2canvas@1.4.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0):
-    resolution: {integrity: sha512-jWz9dIZ2x0mV/eW8knYFqhiauLdsamCHV/qOV9QHk5GNe2w0NV3BFMhZlyXWBwLiVfKliKuPEiZtl/Uu/BwSOQ==, tarball: download/@modyo-dynamic/modyo-design-system-react/0.7.0/0cd4814205b85129807de4e8567db526c76a26a0}
-    peerDependencies:
-      '@modyo-dynamic/modyo-design-system': '*'
-      formik: ^2.2.9
-      html2canvas: ^1.4.1
-      luxon: ~3.0.3
-      react: ^18.1.0
-      react-dom: ^18.1.0
-      react-i18next: ~11.18.3
-      react-toastify: ~9.0.8
-    dependencies:
-      '@floating-ui/react-dom-interactions': 0.12.0(@types/react@18.0.24)(react-dom@18.2.0)(react@18.2.0)
-      '@modyo-dynamic/modyo-design-system': 0.6.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
-      axios: 1.1.3
-      classnames: 2.3.2
-      date-fns: 2.29.3
-      formik: 2.2.9(react@18.2.0)
-      html2canvas: 1.4.1
-      i18next: 21.9.2
-      luxon: 3.0.4
-      react: 18.2.0
-      react-content-loader: 6.2.0(react@18.2.0)
-      react-datepicker: 4.8.0(react-dom@18.2.0)(react@18.2.0)
-      react-dom: 18.2.0(react@18.2.0)
-      react-i18next: 11.18.6(i18next@21.9.2)(react-dom@18.2.0)(react@18.2.0)
-      react-toastify: 9.0.8(react-dom@18.2.0)(react@18.2.0)
-    transitivePeerDependencies:
-      - '@types/react'
-      - debug
-    dev: false
-
-  /@modyo-dynamic/modyo-design-system-react@1.1.0(@modyo-dynamic/modyo-design-system@1.1.0)(@types/react@18.0.24)(formik@2.2.9)(html2canvas@1.4.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0):
-    resolution: {integrity: sha512-u9JEhaD33YC0ZN5dicCyFMzwqRJ5KWhOFHem/IrBoIwjFg5p/qRkPGjTQmXHpyXPQTmVFfKrM+GkkEaWzvDIuw==, tarball: download/@modyo-dynamic/modyo-design-system-react/1.1.0/f38cf1448081c25b5869559f3b11707a3be3d3e4}
-    peerDependencies:
-      '@modyo-dynamic/modyo-design-system': '*'
-      formik: ^2.2.9
-      html2canvas: ^1.4.1
-      luxon: ~3.0.3
-      react: ^18.1.0
-      react-dom: ^18.1.0
-      react-i18next: ~11.18.3
-      react-toastify: ~9.0.8
-    dependencies:
-      '@floating-ui/react': 0.24.1(@types/react@18.0.24)(react-dom@18.2.0)(react@18.2.0)
-      '@mdx-js/react': 2.3.0(react@18.2.0)
-      '@modyo-dynamic/modyo-design-system': 1.1.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
-      '@storybook/theming': 7.0.24(react-dom@18.2.0)(react@18.2.0)
-      axios: 1.1.3
-      classnames: 2.3.2
-      date-fns: 2.29.3
-      formik: 2.2.9(react@18.2.0)
-      html2canvas: 1.4.1
-      i18next: 21.9.2
-      luxon: 3.0.4
-      react: 18.2.0
-      react-content-loader: 6.2.0(react@18.2.0)
-      react-datepicker: 4.8.0(react-dom@18.2.0)(react@18.2.0)
-      react-dom: 18.2.0(react@18.2.0)
-      react-dropzone: 14.2.3(react@18.2.0)
-      react-i18next: 11.18.6(i18next@21.9.2)(react-dom@18.2.0)(react@18.2.0)
-      react-toastify: 9.0.8(react-dom@18.2.0)(react@18.2.0)
-    transitivePeerDependencies:
-      - '@types/react'
-      - debug
-    dev: false
-
-  /@modyo-dynamic/modyo-design-system@0.6.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4):
-    resolution: {integrity: sha512-ms4GB3bWOgyPsrW3l/XerzOAjIzkmliZUgnwaGdZey0hxHeBMusftdKdmgG+lnh+/FCJekvNpepe+6CBZp8C7A==, tarball: download/@modyo-dynamic/modyo-design-system/0.6.0/b3b6ef9c89816b33c75fa32fb4640481c1528245}
-    peerDependencies:
-      axios: ^1.1.2
-      liquidjs: ^9.39.2
-      luxon: ~3.0.3
-    dependencies:
-      '@popperjs/core': 2.11.7
-      '@stencil/core': 2.22.3
-      '@stencil/store': 2.0.7(@stencil/core@2.22.3)
-      axios: 1.1.3
-      bootstrap: 5.3.0(@popperjs/core@2.11.7)
-      currency.js: 2.0.4
-      liquidjs: 9.42.1
-      luxon: 3.0.4
-    dev: false
-
   /@modyo-dynamic/modyo-design-system@1.1.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4):
-    resolution: {integrity: sha512-s5dW8UXjrGK4DF9Reo3ZtM2V63X9A7IFIIKR/AyjH/j14P5gGuAtt25HYroBKKSgip3NhyjAgPSQ0E0pV7C1nQ==, tarball: download/@modyo-dynamic/modyo-design-system/1.1.0/28ee313cd41b914249fecbcc1d531906ca39d0eb}
+    resolution: {integrity: sha512-s5dW8UXjrGK4DF9Reo3ZtM2V63X9A7IFIIKR/AyjH/j14P5gGuAtt25HYroBKKSgip3NhyjAgPSQ0E0pV7C1nQ==, tarball: https://npm.pkg.github.com/download/@modyo-dynamic/modyo-design-system/1.1.0/28ee313cd41b914249fecbcc1d531906ca39d0eb}
     peerDependencies:
       axios: ^1.1.2
       liquidjs: ^9.39.2
@@ -4798,7 +4687,7 @@ packages:
     dev: false
 
   /@modyo-dynamic/modyo-service-retail@0.7.1(@modyo-dynamic/modyo-design-system@1.1.0)(luxon@3.0.4):
-    resolution: {integrity: sha512-e6mMMOsd30iiVkcqHKs8fuyjIscCDZ8hIgrYreG0KNfuo+iMVebJOh7nIw7R7BgD3LCJMgTPKxHJLTMZTR5R7Q==, tarball: download/@modyo-dynamic/modyo-service-retail/0.7.1/7caa969b41b541ae777a1a31766b4df9e39ca15b}
+    resolution: {integrity: sha512-e6mMMOsd30iiVkcqHKs8fuyjIscCDZ8hIgrYreG0KNfuo+iMVebJOh7nIw7R7BgD3LCJMgTPKxHJLTMZTR5R7Q==, tarball: https://npm.pkg.github.com/download/@modyo-dynamic/modyo-service-retail/0.7.1/7caa969b41b541ae777a1a31766b4df9e39ca15b}
     peerDependencies:
       '@modyo-dynamic/modyo-design-system': '*'
       luxon: ~3.0.4
@@ -5437,12 +5326,6 @@ packages:
       '@stencil/core': 3.3.0
     dev: true
 
-  /@stencil/core@2.22.3:
-    resolution: {integrity: sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng==}
-    engines: {node: '>=12.10.0', npm: '>=6.0.0'}
-    hasBin: true
-    dev: false
-
   /@stencil/core@3.3.0:
     resolution: {integrity: sha512-+3hqJ8RmUvxz8FgvMP9lxYJdjb4EnZrkdo6ln5fUqGju62ORS5/Ch9m6OAIjlEn6CbDb5Uf1OdeMjO87DJwIAA==}
     engines: {node: '>=14.10.0', npm: '>=6.0.0'}
@@ -5456,14 +5339,6 @@ packages:
       '@stencil/core': 3.3.0
     dev: true
     patched: true
-
-  /@stencil/store@2.0.7(@stencil/core@2.22.3):
-    resolution: {integrity: sha512-PBwgyP/o7FzbKz2caWtmLxhqExT7Pplr+cpIwj1+EQzeRPnAV1AdlMucLMxi05uwOPFxVQXHuOQoiIzU9mm/pw==}
-    peerDependencies:
-      '@stencil/core': '>=2.0.0 || >=3.0.0'
-    dependencies:
-      '@stencil/core': 2.22.3
-    dev: false
 
   /@stencil/store@2.0.7(@stencil/core@3.3.0):
     resolution: {integrity: sha512-PBwgyP/o7FzbKz2caWtmLxhqExT7Pplr+cpIwj1+EQzeRPnAV1AdlMucLMxi05uwOPFxVQXHuOQoiIzU9mm/pw==}
@@ -8761,7 +8636,7 @@ packages:
     dependencies:
       '@babel/core': 7.21.3
       '@babel/helper-define-polyfill-provider': 0.4.2(@babel/core@7.21.3)
-      core-js-compat: 3.31.1
+      core-js-compat: 3.32.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8889,6 +8764,7 @@ packages:
   /base64-arraybuffer@1.0.2:
     resolution: {integrity: sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==}
     engines: {node: '>= 0.6.0'}
+    dev: true
 
   /base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
@@ -9099,7 +8975,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001517
-      electron-to-chromium: 1.4.473
+      electron-to-chromium: 1.4.475
       node-releases: 2.0.13
       update-browserslist-db: 1.0.11(browserslist@4.21.9)
     dev: true
@@ -9606,6 +9482,7 @@ packages:
   /clsx@1.2.1:
     resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
+    dev: true
 
   /cmd-shim@5.0.0:
     resolution: {integrity: sha512-qkCtZ59BidfEwHltnJwkyVZn+XQojdAySM1D1gSeh11Z4pW1Kpolkyo53L5noc0nrxmIvyFwTmJRo4xs7FFLPw==}
@@ -9991,8 +9868,8 @@ packages:
       browserslist: 4.21.5
     dev: true
 
-  /core-js-compat@3.31.1:
-    resolution: {integrity: sha512-wIDWd2s5/5aJSdpOJHfSibxNODxoGoWOBHt8JSPB41NOE94M7kuTPZCYLOlTtuoXTsBPKobpJ6T+y0SSy5L9SA==}
+  /core-js-compat@3.32.0:
+    resolution: {integrity: sha512-7a9a3D1k4UCVKnLhrgALyFcP7YCsLOQIxPd0dKjf/6GuPcgyiGP70ewWdCGrSK7evyhymi0qO4EqCmSJofDeYw==}
     dependencies:
       browserslist: 4.21.9
     dev: true
@@ -10153,6 +10030,7 @@ packages:
     resolution: {integrity: sha512-FHcKFCZcAha3LwfVBhCQbW2nCNbkZXn7KVUJcsT5/P8YmfsVja0FMPJr0B903j/E69HUphKiV9iQArX8SDYA4w==}
     dependencies:
       utrie: 1.0.2
+    dev: true
 
   /css-loader@6.7.1(webpack@5.74.0):
     resolution: {integrity: sha512-yB5CNFa14MbPJcomwNh3wLThtkZgcNyI2bNMRt8iE5Z8Vwl7f8vQXFAzn2HDOJvtDq2NTZBUGMSUNNyrv3/+cw==}
@@ -10563,6 +10441,7 @@ packages:
   /deepmerge@2.2.1:
     resolution: {integrity: sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==}
     engines: {node: '>=0.10.0'}
+    dev: true
 
   /deepmerge@4.2.2:
     resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==}
@@ -10962,8 +10841,8 @@ packages:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
     dev: true
 
-  /electron-to-chromium@1.4.473:
-    resolution: {integrity: sha512-aVfC8+440vGfl06l8HKKn8/PD5jRfSnLkTTD65EFvU46igbpQRri1gxSzW9/+TeUlwYzrXk1sw867T96zlyECA==}
+  /electron-to-chromium@1.4.475:
+    resolution: {integrity: sha512-mTye5u5P98kSJO2n7zYALhpJDmoSQejIGya0iR01GpoRady8eK3bw7YHHnjA1Rfi4ZSLdpuzlAC7Zw+1Zu7Z6A==}
     dev: true
 
   /elegant-spinner@1.0.1:
@@ -12768,6 +12647,7 @@ packages:
       react-fast-compare: 2.0.4
       tiny-warning: 1.0.3
       tslib: 1.14.1
+    dev: true
 
   /forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
@@ -13542,6 +13422,7 @@ packages:
     dependencies:
       css-line-break: 2.1.0
       text-segmentation: 1.0.3
+    dev: true
 
   /htmlparser2@6.1.0:
     resolution: {integrity: sha512-gyyPk6rgonLFEDGoeRgQNaEUvdJ4ktTmmUh/h2t7s+M8oPpIPxgNACWa+6ESR57kXstwqPiCut0V8NRpcwgU7A==}
@@ -16685,6 +16566,7 @@ packages:
 
   /lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: true
 
   /lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -19859,6 +19741,7 @@ packages:
 
   /react-fast-compare@2.0.4:
     resolution: {integrity: sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==}
+    dev: true
 
   /react-fast-compare@3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
@@ -20071,6 +19954,7 @@ packages:
       clsx: 1.2.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: true
 
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
@@ -22158,6 +22042,7 @@ packages:
     resolution: {integrity: sha512-iOiPUo/BGnZ6+54OsWxZidGCsdU8YbE4PSpdPinp7DeMtUJNJBoJ/ouUSTJjHkh1KntHaltHl/gDs2FC4i5+Nw==}
     dependencies:
       utrie: 1.0.2
+    dev: true
 
   /text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
@@ -22210,6 +22095,7 @@ packages:
 
   /tiny-warning@1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
+    dev: true
 
   /tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
@@ -22988,6 +22874,7 @@ packages:
     resolution: {integrity: sha512-1MLa5ouZiOmQzUbjbu9VmjLzn1QLXBhwpUa7kdLUQK+KQ5KA9I1vk5U4YHe/X2Ch7PYnJfWuWT+VbuxbGwljhw==}
     dependencies:
       base64-arraybuffer: 1.0.2
+    dev: true
 
   /uuid-browser@3.1.0:
     resolution: {integrity: sha512-dsNgbLaTrd6l3MMxTtouOCFw4CBFc/3a+GgYA2YyrJvyQ1u6q4pcu3ktLoUZ/VN/Aw9WsauazbgsgdfVWgAKQg==}
