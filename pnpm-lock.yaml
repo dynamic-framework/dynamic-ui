@@ -738,14 +738,11 @@ importers:
   templates/dynamic-retail-product-detail-template:
     dependencies:
       '@dynamic-framework/ui':
-        specifier: workspace:*
+        specifier: ^1.1.3
         version: link:../../libraries/dynamic-ui
       '@dynamic-framework/ui-react':
-        specifier: workspace:*
+        specifier: ^1.1.4
         version: link:../../libraries/dynamic-ui-react
-      '@modyo-dynamic/modyo-service-retail':
-        specifier: ^0.7.1
-        version: 0.7.1(@modyo-dynamic/modyo-design-system@1.1.0)(luxon@3.0.4)
       '@reduxjs/toolkit':
         specifier: ^1.8.4
         version: 1.8.4(react-redux@8.0.2)(react@18.2.0)
@@ -4625,38 +4622,6 @@ packages:
       '@types/react': 18.0.24
       react: 18.2.0
     dev: true
-
-  /@modyo-dynamic/modyo-design-system@1.1.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4):
-    resolution: {integrity: sha512-s5dW8UXjrGK4DF9Reo3ZtM2V63X9A7IFIIKR/AyjH/j14P5gGuAtt25HYroBKKSgip3NhyjAgPSQ0E0pV7C1nQ==, tarball: https://npm.pkg.github.com/download/@modyo-dynamic/modyo-design-system/1.1.0/28ee313cd41b914249fecbcc1d531906ca39d0eb}
-    peerDependencies:
-      axios: ^1.1.2
-      liquidjs: ^9.39.2
-      luxon: ~3.0.3
-    dependencies:
-      '@popperjs/core': 2.11.7
-      '@stencil/core': 3.3.0
-      '@stencil/store': 2.0.7(@stencil/core@3.3.0)
-      axios: 1.1.3
-      bootstrap: 5.3.0(@popperjs/core@2.11.7)
-      currency.js: 2.0.4
-      liquidjs: 9.42.1
-      luxon: 3.0.4
-    dev: false
-
-  /@modyo-dynamic/modyo-service-retail@0.7.1(@modyo-dynamic/modyo-design-system@1.1.0)(luxon@3.0.4):
-    resolution: {integrity: sha512-e6mMMOsd30iiVkcqHKs8fuyjIscCDZ8hIgrYreG0KNfuo+iMVebJOh7nIw7R7BgD3LCJMgTPKxHJLTMZTR5R7Q==, tarball: https://npm.pkg.github.com/download/@modyo-dynamic/modyo-service-retail/0.7.1/7caa969b41b541ae777a1a31766b4df9e39ca15b}
-    peerDependencies:
-      '@modyo-dynamic/modyo-design-system': '*'
-      luxon: ~3.0.4
-    dependencies:
-      '@modyo-dynamic/modyo-design-system': 1.1.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
-      axios: 1.1.3
-      lodash.uniqueid: 4.0.1
-      luxon: 3.0.4
-      uuid: 9.0.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /@ndelangen/get-tarball@3.0.7:
     resolution: {integrity: sha512-NqGfTZIZpRFef1GoVaShSSRwDC3vde3ThtTeqFdcYd6ipKqnfEVhjK2hUeHjCQUcptyZr2TONqcloFXM+5QBrQ==}
@@ -16558,10 +16523,6 @@ packages:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
     dev: true
 
-  /lodash.uniqueid@4.0.1:
-    resolution: {integrity: sha512-GQQWaIeGlL6DIIr06kj1j6sSmBxyNMwI8kaX9aKpHR/XsMTiaXDVPNPAkiboOTK9OJpTJF/dXT3xYoFQnj386Q==}
-    dev: false
-
   /lodash.zip@4.2.0:
     resolution: {integrity: sha512-C7IOaBBK/0gMORRBd8OETNx3kmOkgIWIPvyDpZSCTwUrpYmgZwJkjZeOD8ww4xbOUOs4/attY+pciKvadNfFbg==}
     dev: true
@@ -22842,11 +22803,6 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: true
-
-  /uuid@9.0.0:
-    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
-    hasBin: true
-    dev: false
 
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}

@@ -4,7 +4,7 @@
     "entryFile": "src/index.ts"
   },
   "allowedNonPeerDependencies": [
-    "@modyo-dynamic/modyo-design-system",
+    "@dynamic-framework/ui",
     "@ngneat/content-loader"
   ]
 }
