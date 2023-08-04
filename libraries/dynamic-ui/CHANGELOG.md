@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.1.3...@dynamic-framework/ui@1.2.0) (2023-08-04)
+
+
+### Features
+
+* update button background of hove, active and focus state ([0d43967](https://github.com/dynamic-framework/dynamic-ui/commit/0d43967fefb3bccb8711218e35d317f16531476e))
+
+
+
 ## [1.1.3](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.1.2...@dynamic-framework/ui@1.1.3) (2023-07-27)
 
 **Note:** Version bump only for package @dynamic-framework/ui
