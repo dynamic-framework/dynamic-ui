@@ -350,10 +350,10 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0(postcss@8.4.23)(ts-node@10.9.1)
       react:
-        specifier: ^18.1.0
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18.1.0
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-i18next:
         specifier: ~11.18.3
