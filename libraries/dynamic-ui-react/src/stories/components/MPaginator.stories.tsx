@@ -13,7 +13,7 @@ const meta: Meta<typeof MPaginator> = {
       control: 'number',
     },
     onPageChange: {
-      control: 'clicked',
+      type: 'function',
     },
     previousLabel: {
       control: 'text',
