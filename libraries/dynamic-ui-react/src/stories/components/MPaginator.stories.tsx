@@ -1,34 +1,32 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ComponentProps, useState } from 'react';
-import MPaginator from '../../components/MPaginator';
+import { useCallback, useState } from 'react';
+import MPaginator, { MPaginatorProps } from '../../components/MPaginator';
 
 const meta: Meta<typeof MPaginator> = {
-  title: 'Design System/Alpha/MPaginator',
+  title: 'Design System/Components/Paginator',
   component: MPaginator,
   argTypes: {
-    currentPage: {
+    total: {
       control: 'number',
-      type: 'number',
     },
-    pageSize: {
+    current: {
       control: 'number',
-      type: 'number',
     },
-    totalCount: {
-      control: 'number',
-      type: 'number',
+    onPageChange: {
+      control: 'clicked',
     },
-    siblingCount: {
-      control: 'number',
-      type: 'number',
-    },
-    prevText: {
+    previousLabel: {
       control: 'text',
-      type: 'string',
     },
-    nextText: {
+    nextLabel: {
       control: 'text',
-      type: 'string',
+    },
+    showArrows: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    maxWidth: {
+      control: 'number',
     },
   },
 };
@@ -36,14 +34,26 @@ const meta: Meta<typeof MPaginator> = {
 export default meta;
 type Story = StoryObj<typeof MPaginator>;
 
-const MPaginatorExample = ({ currentPage, ...props }: ComponentProps<typeof MPaginator>) => {
-  const [currentPageState, setCurrentPageState] = useState(currentPage);
+const MPaginatorExample = ({
+  current,
+  maxWidth = 600,
+  extraClassName,
+  ...props
+}: MPaginatorProps) => {
+  const [currentPageState, setCurrentPageState] = useState(current);
+  const handlerChange = useCallback((page: number) => {
+    setCurrentPageState(page);
+  }, []);
   return (
-    <MPaginator
-      {...props}
-      currentPage={currentPageState}
-      setCurrentPage={setCurrentPageState}
-    />
+    <div style={{ width: 'calc(100dvw - 64px)' }}>
+      <MPaginator
+        {...props}
+        current={currentPageState}
+        onPageChange={(page) => handlerChange(page)}
+        maxWidth={maxWidth}
+        extraClassName={`justify-content-center ${extraClassName ?? ''}`}
+      />
+    </div>
   );
 };
 
@@ -52,47 +62,47 @@ export const Default: Story = {
     <MPaginatorExample {...args} />
   ),
   args: {
-    pageSize: 10,
-    totalCount: 100,
-    currentPage: 1,
+    total: 20,
   },
 };
 
-export const ArrowText: Story = {
+export const LabelArrows: Story = {
   render: (args) => (
     <MPaginatorExample {...args} />
   ),
   args: {
-    pageSize: 10,
-    totalCount: 100,
-    currentPage: 1,
-    prevText: 'Previous',
-    nextText: 'Next',
+    total: 20,
+    nextLabel: 'Next',
+    previousLabel: 'Previous',
   },
 };
 
-export const CurrentPage: Story = {
+export const NoArrows: Story = {
   render: (args) => (
     <MPaginatorExample {...args} />
   ),
   args: {
-    pageSize: 10,
-    totalCount: 100,
-    currentPage: 5,
-    siblingCount: 2,
+    showArrows: false,
+    total: 20,
   },
-  name: 'Current page on 5 and sibling 2',
 };
 
-export const Sibling: Story = {
+export const CustomCurrentPage: Story = {
   render: (args) => (
     <MPaginatorExample {...args} />
   ),
   args: {
-    pageSize: 10,
-    totalCount: 100,
-    currentPage: 5,
-    siblingCount: 0,
+    total: 20,
+    current: 10,
   },
-  name: 'Current page on 5 and sibling 0',
+};
+
+export const CustomMaxWidth: Story = {
+  render: (args) => (
+    <MPaginatorExample {...args} />
+  ),
+  args: {
+    total: 20,
+    maxWidth: 400,
+  },
 };

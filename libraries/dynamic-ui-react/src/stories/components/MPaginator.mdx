@@ -8,13 +8,13 @@ import { PREFIX_BS } from '@dynamic-framework/ui';
 
 import * as MPaginatorStories from './MPaginator.stories';
 
-# Progress Bar
+# Paginator
 
 Paginator component.
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
-+ [Bootstrap Progress](https://getbootstrap.com/docs/5.3/components/progress/)
++ [Bootstrap Pagination](https://getbootstrap.com/docs/5.3/components/pagination/)
 
 ## CSS Variables
 <Markdown>
@@ -22,17 +22,29 @@ To understand in more detail the aspects covered by this component, review the f
 
   | Variable                                         | Type              | Description                           |
   |--------------------------------------------------|-------------------|---------------------------------------|
-  | \`--${PREFIX_BS}m-progress-bar-font-weight\`     | css length unit   | Text font weight                      |
+  | \`--${PREFIX_BS}m-pagination-page-item-size\`                   | css length unit         | Size of page item|
+  | \`--${PREFIX_BS}m-pagination-page-link-bg\`                     | css color unit          | Background page item |
+  | \`--${PREFIX_BS}m-pagination-page-border-radius\`               | css border radius unit  | Radius page item |
+  | \`--${PREFIX_BS}m-pagination-arrow-font-size\`                  | css length unit      | Text font arrow |
+  | \`--${PREFIX_BS}m-pagination-arrow-padding-y\`                  | css length unit         | Padding Y axis arrow |
+  | \`--${PREFIX_BS}m-pagination-arrow-padding-x\`                  | css length unit         | Padding X axis page arrow |
+  | \`--${PREFIX_BS}m-pagination-arrow-border-radius\`              | css border radius unit  | Border radius arrow |
+  | \`--${PREFIX_BS}m-pagination-arrow-color\`                      | css color unit          | Text color arrow |
+  | \`--${PREFIX_BS}m-pagination-focus-arrow-bg\`                   | css color unit          | Focus bg arrow |
+  | \`--${PREFIX_BS}m-pagination-arrow-prev-icon-bg-image\`         | css base64 bg image     | Previous icon default |
+  | \`--${PREFIX_BS}m-pagination-disabled-arrow-prev-icon-bg-image\`| css base64 bg image     | Previous icon :focus :hover |
+  | \`--${PREFIX_BS}m-pagination-arrow-next-icon-bg-image\`         | css base64 bg image     | Next icon default |
+  | \`--${PREFIX_BS}m-pagination-disabled-arrow-next-icon-bg-image\`| css base64 bg image     | Next icon :focus :hover |
 
   `}
 </Markdown>
 
-+ [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/progress/#variables)
++ Additional [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/pagination/#variables)
 
 ## Args
 <Meta of={MPaginatorStories} />
 
-<ArgTypes of={MPaginatorStories} />
+<ArgTypes of={MPaginatorStories} sort="requiredFirst"/>
 
 <Stories />
 
