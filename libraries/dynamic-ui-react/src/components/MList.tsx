@@ -18,7 +18,7 @@ export default function MList({
   horizontalBreakpoint,
 }: Props) {
   if (isFlush && isHorizontal) {
-    return <b>Horizontal and Flush props not work together</b>;
+    throw new Error("Horizontal and Flush props don't work together");
   }
 
   return (
@@ -29,9 +29,9 @@ export default function MList({
           {
             'list-group-flush': isFlush && !isHorizontal,
             'list-group-numbered': isNumbered,
+            'list-group-horizontal': isHorizontal && !horizontalBreakpoint,
           },
-          isHorizontal && !horizontalBreakpoint ? 'list-group-horizontal' : undefined,
-          isHorizontal && horizontalBreakpoint ? `list-group-horizontal-${horizontalBreakpoint}` : undefined,
+          (isHorizontal && horizontalBreakpoint) && `list-group-horizontal-${horizontalBreakpoint}`,
           className,
         )
       }
