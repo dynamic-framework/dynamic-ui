@@ -16,7 +16,7 @@ type Story = StoryObj<typeof MFormikInputCurrency>;
 
 export const Default: Story = {
   decorators: [
-    (Story: MFormikInputCurrency) => {
+    (Story: typeof MFormikInputCurrency, { args }) => {
       // eslint-disable-next-line global-require
       require('../config/liquidConfig');
       return (
@@ -27,7 +27,7 @@ export const Default: Story = {
         >
           {({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <Story />
+              <Story {...args} />
             </form>
           )}
         </Formik>
@@ -53,7 +53,7 @@ export const Default: Story = {
 
 export const Empty: Story = {
   decorators: [
-    (Story: MFormikInputCurrency) => {
+    (Story: typeof MFormikInputCurrency, { args }) => {
       // eslint-disable-next-line global-require
       require('../config/liquidConfig');
       return (
@@ -64,14 +64,14 @@ export const Empty: Story = {
         >
           {({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <Story />
+              <Story {...args} />
             </form>
           )}
         </Formik>
       );
     },
   ],
-  render: (args: ComponentProps<MFormikInputCurrency>) => (
+  render: (args: ComponentProps<typeof MFormikInputCurrency>) => (
     <LiquidContextProvider>
       <MFormikInputCurrency {...args} />
     </LiquidContextProvider>
@@ -94,7 +94,7 @@ const Schema = Yup.object().shape({
 
 export const WithErrors: Story = {
   decorators: [
-    (Story: MFormikInputCurrency) => {
+    (Story: typeof MFormikInputCurrency, { args }) => {
       // eslint-disable-next-line global-require
       require('../config/liquidConfig');
       return (
@@ -106,7 +106,7 @@ export const WithErrors: Story = {
         >
           {({ handleSubmit }) => (
             <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
-              <Story />
+              <Story {...args} />
               <MButton
                 onMClick={() => handleSubmit()}
                 text="submit"
@@ -117,7 +117,7 @@ export const WithErrors: Story = {
       );
     },
   ],
-  render: (args: ComponentProps<MFormikInputCurrency>) => (
+  render: (args: ComponentProps<typeof MFormikInputCurrency>) => (
     <LiquidContextProvider>
       <MFormikInputCurrency {...args} />
     </LiquidContextProvider>
@@ -130,6 +130,6 @@ export const WithErrors: Story = {
     labelIcon: undefined,
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
-    // hint: 'Assistive text',
+    hint: 'Assistive text',
   },
 };
