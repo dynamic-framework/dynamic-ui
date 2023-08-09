@@ -5,23 +5,23 @@ import MListItem from './MListItem';
 import { useFormatCurrency } from '../hooks';
 
 type Props = Omit<ComponentProps<typeof MListItem>, ''> & {
-  line1: string;
-  line2: string;
-  line3: number;
+  description: string;
+  date: string;
+  amount: number;
   classNameMovement?: string;
 };
 
 export default function MListItemMovement({
-  line1,
-  line2,
-  line3,
+  description,
+  date,
+  amount,
   classNameMovement,
   ...props
 }: Props) {
   const { format } = useFormatCurrency();
   const value = useMemo(() => {
-    const valueFormatted = format(line3);
-    if (line3 > 0) {
+    const valueFormatted = format(amount);
+    if (amount > 0) {
       return {
         theme: 'text-success',
         valueFormatted,
@@ -31,7 +31,7 @@ export default function MListItemMovement({
       theme: 'text-danger',
       valueFormatted,
     };
-  }, [format, line3]);
+  }, [format, amount]);
 
   return (
     <MListItem {...props}>
@@ -42,14 +42,14 @@ export default function MListItemMovement({
       )}
       >
         <div className="d-flex flex-column gap-1">
-          <span className="h6">
-            {line1}
+          <span className="fs-6">
+            {description}
           </span>
           <span className="sp text-gray-700">
-            {line2}
+            {date}
           </span>
         </div>
-        <span className={classNames('h6', value.theme)}>
+        <span className={classNames('fs-6', value.theme)}>
           {value.valueFormatted}
         </span>
       </div>
