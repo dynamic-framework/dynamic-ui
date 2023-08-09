@@ -9,7 +9,7 @@ type Props = Omit<ComponentProps<typeof MInputCurrency>, 'name' | 'value'> & {
   name: string;
 };
 
-export default function MFormikInput(
+export default function MFormikInputCurrency(
   {
     name,
     hint,
