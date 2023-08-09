@@ -3,20 +3,24 @@ import { ComponentProps } from 'react';
 import { MList, MListItem } from '../../components';
 
 const config: Meta<typeof MList> = {
-  title: 'Design System/Alpha/Patterns/List',
+  title: 'Design System/Components/List',
   component: MList,
   argTypes: {
     className: {
       type: 'string',
+      control: 'text',
     },
     isFlush: {
       type: 'boolean',
+      control: 'boolean',
     },
     isHorizontal: {
       type: 'boolean',
+      control: 'boolean',
     },
     isNumbered: {
       type: 'boolean',
+      control: 'boolean',
     },
     horizontalBreakpoint: {
       control: 'select',
@@ -46,7 +50,6 @@ export const Default: Story = {
   render: (args) => (
     <MListExample {...args} />
   ),
-  args: {},
 };
 
 export const Flush: Story = {
@@ -85,10 +88,7 @@ export const HorizontalWithBreakpoint: Story = {
     ),
   ],
   render: (args) => (
-    <>
-      <MListExample {...args} />
-      <small className="mt-5 text-warning">**Resize the width container to view changes</small>
-    </>
+    <MListExample {...args} />
   ),
   args: {
     isHorizontal: true,

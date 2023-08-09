@@ -5,7 +5,7 @@ import { MCarousel } from '../../components';
 import MCarouselSlide from '../../components/MCarouselSlide';
 
 const config: Meta<typeof MCarousel> = {
-  title: 'Design System/Alpha/Patterns/Carousel',
+  title: 'Design System/Components/Carousel',
   component: MCarousel,
 };
 
@@ -67,10 +67,7 @@ export const TwoPerPage: Story = {
 
 export const WithBreakpoints: Story = {
   render: (args) => (
-    <>
-      <MCalendarExample {...args} />
-      <small className="mt-5 text-warning">**Resize the width container to view changes</small>
-    </>
+    <MCalendarExample {...args} />
   ),
   args: {
     options: {

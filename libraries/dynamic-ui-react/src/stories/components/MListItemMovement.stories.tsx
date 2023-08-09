@@ -4,7 +4,7 @@ import { MList } from '../../components';
 import MListItemMovement from '../../components/MListItemMovement';
 
 const config: Meta<typeof MListItemMovement> = {
-  title: 'Design System/Alpha/Custom/Movement Item',
+  title: 'Design System/Components/Custom/Movements',
   component: MList,
   argTypes: {
     className: {
@@ -21,9 +21,9 @@ const MListExampleMovements = (args: ComponentProps<typeof MList>) => (
     {[1, 2, 3, 4, 5].map((item) => (
       <MListItemMovement
         key={item}
-        line1={`Credit Card ${item}`}
-        line2="22/05/23"
-        line3={item % 2 === 1 ? 5000 : -5000}
+        description={`Credit Card ${item}`}
+        date="22/05/23"
+        amount={item % 2 === 1 ? 5000 : -5000}
       >
         Lorem ipsum dolor sit amet consectetur.
       </MListItemMovement>
@@ -31,27 +31,7 @@ const MListExampleMovements = (args: ComponentProps<typeof MList>) => (
   </MList>
 );
 
-export const Default: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ width: 'calc(300px - 1rem)' }} className="position-relative">
-        <Story />
-      </div>
-    ),
-  ],
-  render: () => (
-    <MList>
-      <MListItemMovement
-        line1="Credit Card 1"
-        line2="22/05/23"
-        line3={5000}
-      />
-    </MList>
-  ),
-  args: {},
-};
-
-export const List: Story = {
+export const ListMovements: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(300px - 1rem)' }} className="position-relative">
