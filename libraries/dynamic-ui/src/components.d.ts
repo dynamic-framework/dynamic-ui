@@ -936,7 +936,7 @@ export namespace Components {
         /**
           * The icon to indicate the action
          */
-        "actionIcon": string;
+        "actionIcon"?: string;
         /**
           * Icon family class
          */
