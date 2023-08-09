@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import classNames from 'classnames';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useMemo } from 'react';
 
 type Props = PropsWithChildren<{
   className?: string;
@@ -18,10 +18,17 @@ export default function MListItem({
   theme,
   onMClick,
 }: Props) {
+  const Tag = useMemo(
+    () => (onMClick ? 'button' : 'div'),
+    [onMClick],
+  );
+
   return (
-    <button
-      onClick={onMClick}
-      type="button"
+    <Tag
+      {...Tag === 'button' && {
+        onClick: onMClick,
+        type: 'button',
+      }}
       className={
         classNames(
           'm-list-item list-group-item list-group-item-action',
@@ -36,6 +43,6 @@ export default function MListItem({
       {...isActive && { 'aria-current': true }}
     >
       {children}
-    </button>
+    </Tag>
   );
 }
