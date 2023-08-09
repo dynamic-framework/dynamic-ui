@@ -1,12 +1,12 @@
 .m-carousel {
   // Arrows
-  --#{$prefix}m-carousel-arrow-space: calc(var(--bs-ref-spacer-3) * -1);
+  --#{$prefix}m-carousel-arrow-space: calc(var(--#{$prefix}ref-spacer-3) * -1);
   // Pagination
-  --#{$prefix}m-carousel-pagination-bottom: calc(var(--bs-ref-spacer-3) * -2);
-  --#{$prefix}m-carousel-pagination-page-bg: var(--bs-gray-300);
-  --#{$prefix}m-carousel-pagination-active-page-bg: var(--bs-secondary);
+  --#{$prefix}m-carousel-pagination-bottom: calc(var(--#{$prefix}ref-spacer-3) * -1);
+  --#{$prefix}m-carousel-pagination-page-bg: var(--#{$prefix}gray-300);
+  --#{$prefix}m-carousel-pagination-active-page-bg: var(--#{$prefix}secondary);
   // :focus
-  --#{$prefix}m-carousel-focus-outline-color: var(--bs-focus-ring-color);
+  --#{$prefix}m-carousel-focus-outline-color: var(--#{$prefix}focus-ring-color);
 
   .m-carousel-arrows {
 
