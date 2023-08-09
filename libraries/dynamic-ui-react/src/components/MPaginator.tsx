@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import ResponsivePagination, { ResponsivePaginationProps } from 'react-responsive-pagination';
 
 export type MPaginatorProps = {
-  extraClassName?: ResponsivePaginationProps['extraClassName'];
+  className?: ResponsivePaginationProps['extraClassName'];
   current: ResponsivePaginationProps['current'];
   onPageChange: ResponsivePaginationProps['onPageChange'];
   total: ResponsivePaginationProps['total'];
@@ -12,16 +12,15 @@ export type MPaginatorProps = {
   maxWidth?: ResponsivePaginationProps['maxWidth'];
 };
 export default function MPaginator({
-  extraClassName,
+  className,
   nextLabel,
   previousLabel,
   showArrows = true,
   ...props
-}:
-MPaginatorProps) {
+}: MPaginatorProps) {
   return (
     <ResponsivePagination
-      extraClassName={classNames('m-pagination', extraClassName)}
+      extraClassName={classNames('m-pagination', className)}
       nextClassName={classNames(
         'm-arrow m-arrow-next',
         !nextLabel && 'no-label',

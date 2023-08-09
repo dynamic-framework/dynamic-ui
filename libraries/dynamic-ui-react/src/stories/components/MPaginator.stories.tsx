@@ -28,6 +28,10 @@ const meta: Meta<typeof MPaginator> = {
     maxWidth: {
       control: 'number',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
   },
 };
 
@@ -36,8 +40,8 @@ type Story = StoryObj<typeof MPaginator>;
 
 const MPaginatorExample = ({
   current,
-  maxWidth = 600,
-  extraClassName,
+  maxWidth = 400,
+  className,
   ...props
 }: MPaginatorProps) => {
   const [currentPageState, setCurrentPageState] = useState(current);
@@ -51,7 +55,7 @@ const MPaginatorExample = ({
         current={currentPageState}
         onPageChange={(page) => handlerChange(page)}
         maxWidth={maxWidth}
-        extraClassName={`justify-content-center ${extraClassName ?? ''}`}
+        className={`justify-content-center ${className ?? ''}`}
       />
     </div>
   );
