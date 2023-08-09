@@ -3,9 +3,9 @@ import { useField } from 'formik';
 
 import type { ComponentProps } from 'react';
 
-import { MInput } from './proxies';
+import MInputCurrency from './MInputCurrency';
 
-type Props = Omit<ComponentProps<typeof MInput>, 'name' | 'value'> & {
+type Props = Omit<ComponentProps<typeof MInputCurrency>, 'name' | 'value'> & {
   name: string;
 };
 
@@ -16,13 +16,13 @@ export default function MFormikInput(
     ...props
   }: Props,
 ) {
-  const [field, meta, helpers] = useField<string | number>(name);
+  const [field, meta, helpers] = useField<number | undefined>(name);
   return (
-    <MInput
+    <MInputCurrency
       {...props}
       name={field.name}
       value={field.value}
-      onMChange={({ detail }) => helpers.setValue(detail)}
+      onChange={(value) => helpers.setValue(value)}
       onMBlur={({ detail }) => field.onBlur(detail)}
       isInvalid={!!meta.error}
       hint={meta.error || hint}

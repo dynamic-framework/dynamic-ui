@@ -178,7 +178,9 @@ export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurren
   'maxValue',
   'currencyOptions',
   'currencyCode',
-  'mChange'
+  'mChange',
+  'mBlur',
+  'mFocus'
 ]);
 
 
