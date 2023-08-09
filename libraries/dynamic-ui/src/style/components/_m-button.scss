@@ -1,44 +1,44 @@
-.m-button {
+.m-button,
+.btn {
   --#{$prefix}m-button-link-padding-y: #{$btn-link-padding-y};
   --#{$prefix}m-button-link-padding-x: #{$btn-link-padding-x};
   --#{$prefix}m-button-link-font-size-sm: #{$btn-link-font-size-sm};
 
-  &.btn {
-    display: flex;
-    flex-direction: row;
-    gap: var(--#{$prefix}btn-gap, $spacer-2);
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--#{$prefix}btn-gap, $spacer-2);
+  align-items: center;
+  justify-content: center;
 
-    .m-icon {
-      --#{$prefix}m-icon-size: var(--#{$prefix}btn-font-size);
-    }
-
-    // hover selectors
-    &:hover,
-    &.hover {
-      // copy of .btn:hover bootstrap
-      color: var(--#{$prefix}btn-hover-color);
-      text-decoration: if($link-hover-decoration == underline, none, null);
-      background-color: var(--#{$prefix}btn-hover-bg);
-      border-color: var(--#{$prefix}btn-hover-border-color);
-      // end copy
-    }
-
-    // focus selectors
-    .btn-check:focus + &,
-    &:focus-visible,
-    &.focus-visible {
-      // copy of .btn:focus bootstrap + focus var
-      color: var(var(--#{$prefix}btn-focus-color), var(--#{$prefix}btn-hover-color));
-      @include gradient-bg(var(var(--#{$prefix}btn-focus-bg), var(--#{$prefix}btn-hover-bg)));
-      border-color: var(var(--#{$prefix}btn-focus-border-color), var(--#{$prefix}btn-hover-border-color));
-      // end copy
-
-      outline: var(--#{$prefix}btn-focus-border-width, var(--#{$prefix}btn-border-width)) solid var(--#{$prefix}btn-focus-outline-color, var(--#{$prefix}focus-ring-color));
-      outline-offset: var(--#{$prefix}btn-focus-outline-offset, var(--#{$prefix}btn-border-width));
-    }
+  .m-icon {
+    --#{$prefix}m-icon-size: var(--#{$prefix}btn-font-size);
   }
+
+  // hover selectors
+  &:hover,
+  &.hover {
+    // copy of .btn:hover bootstrap
+    color: var(--#{$prefix}btn-hover-color);
+    text-decoration: if($link-hover-decoration == underline, none, null);
+    background-color: var(--#{$prefix}btn-hover-bg);
+    border-color: var(--#{$prefix}btn-hover-border-color);
+    // end copy
+  }
+
+  // focus selectors
+  .btn-check:focus + &,
+  &:focus-visible,
+  &.focus-visible {
+    // copy of .btn:focus bootstrap + focus var
+    color: var(var(--#{$prefix}btn-focus-color), var(--#{$prefix}btn-hover-color));
+    @include gradient-bg(var(var(--#{$prefix}btn-focus-bg), var(--#{$prefix}btn-hover-bg)));
+    border-color: var(var(--#{$prefix}btn-focus-border-color), var(--#{$prefix}btn-hover-border-color));
+    // end copy
+
+    outline: var(--#{$prefix}btn-focus-border-width, var(--#{$prefix}btn-border-width)) solid var(--#{$prefix}btn-focus-outline-color, var(--#{$prefix}focus-ring-color));
+    outline-offset: var(--#{$prefix}btn-focus-outline-offset, var(--#{$prefix}btn-border-width));
+  }
+
 
   @each $color, $value in map-remove($theme-colors, "light", "dark") {
     &.btn-#{$color} {
@@ -81,15 +81,15 @@
     &.btn-outline-#{$color} {
       --#{$prefix}btn-color: var(--#{$prefix}#{$color}-500);
 
-      --#{$prefix}btn-hover-bg: transparent;
-      --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color}-900);
-      --#{$prefix}btn-hover-color: var(--#{$prefix}#{$color}-900);
+      --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$color}-100);
+      --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color}-700);
+      --#{$prefix}btn-hover-color: var(--#{$prefix}#{$color}-700);
 
-      --#{$prefix}btn-focus-bg: transparent;
+      --#{$prefix}btn-focus-bg: var(--#{$prefix}#{$color}-100);
       --#{$prefix}btn-focus-border-color: var(--#{$prefix}#{$color});
       --#{$prefix}btn-focus-color: var(--#{$prefix}#{$color});
 
-      --#{$prefix}btn-active-bg: transparent;
+      --#{$prefix}btn-active-bg: var(--#{$prefix}#{$color}-300);
       --#{$prefix}btn-active-border-color: var(--#{$prefix}#{$color}-700);
       --#{$prefix}btn-active-color: var(--#{$prefix}#{$color}-700);
 

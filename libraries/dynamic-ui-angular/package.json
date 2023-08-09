@@ -1,5 +1,5 @@
 {
-  "name": "@modyo-dynamic/modyo-design-system-angular",
+  "name": "@dynamic-framework/ui-angular",
   "version": "0.0.1",
   "private": true,
   "description": "Angular output target for @stencil/core components.",
@@ -19,11 +19,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/modyo-dynamic/modyo-design-system.git"
+    "url": "git+https://github.com/dynamic-framework/dynamic-ui.git"
   },
   "bugs": {
     "type": "git",
-    "url": "https://github.com/modyo-dynamic/modyo-design-system.git"
+    "url": "https://github.com/dynamic-framework/dynamic-ui.git"
   },
   "author": {
     "name": "Abraham José González Barboza",
