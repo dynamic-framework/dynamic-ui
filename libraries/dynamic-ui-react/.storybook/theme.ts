@@ -5,8 +5,8 @@ export default create({
   fontBase: '"Source Sans Pro", sans-serif',
 
   brandTitle: 'Dynamic',
-  brandUrl: 'https://modyo.com',
-  brandImage: 'https://cloud.modyocdn.com/uploads/2d218cc8-28f0-4a61-b3d1-612bfeb39f11/original/BG_Light_Color_Color.svg',
+  brandUrl: 'https://react.dynamicframework.dev',
+  brandImage: 'https://cloud.modyocdn.com/uploads/77647270-2c05-40b4-9fa1-2e57fba27f80/original/dynamic_framework.svg',
   brandTarget: '_self',
 
   colorPrimary: '#d81b60',
