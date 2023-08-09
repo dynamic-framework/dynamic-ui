@@ -1,7 +1,36 @@
 .m-stepper {
-  --#{$prefix}m-icon-container-size: 34px;
+  /* Icon container */
+  --#{$prefix}m-step-icon-container-color: var(--#{$prefix}secondary);
+  --#{$prefix}m-step-icon-container-background-color: var(--#{$prefix}white);
+  --#{$prefix}m-step-icon-container-size: 34px;
+  --#{$prefix}m-step-icon-container-border-width: 1px;
+  --#{$prefix}m-step-icon-container-border-color: var(--#{$prefix}secondary);
+  --#{$prefix}m-step-icon-container-border-radius: 100%;
+  --#{$prefix}m-step-icon-container-z-index: 3;
+
+  /* Base step */
   --#{$prefix}m-step-label-height: 3rem;
   --#{$prefix}m-step-icon-size: 1.125rem;
+  --#{$prefix}m-step-gap: .5rem;
+  --#{$prefix}m-step-z-index: 2;
+
+  /* Checked step */
+  --#{$prefix}m-step-check-text-color: var(--#{$prefix}white);
+  --#{$prefix}m-step-check-background-color: var(--#{$prefix}success);
+  --#{$prefix}m-step-check-border-color: var(--#{$prefix}success);
+
+  /* Current step */
+  --#{$prefix}m-step-current-text-color: var(--#{$prefix}white);
+  --#{$prefix}m-step-current-background-color: var(--#{$prefix}secondary);
+
+  /* Step line */
+  --#{$prefix}m-step-line-stroke: 1px;
+  --#{$prefix}m-step-line-color: var(--#{$prefix}secondary);
+
+  /* Step label */
+  --#{$prefix}m-step-label-padding: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}m-vertical-step-label-padding: var(--#{$prefix}ref-spacer-3);
+
 
   position: relative;
   display: flex;
@@ -10,7 +39,7 @@
     display: flex;
     flex: 1 1 0;
     flex-direction: column;
-    gap: .5rem;
+    gap: var(--#{$prefix}m-step-gap);
 
     .m-step-value {
       position: relative;
@@ -20,55 +49,55 @@
 
     .m-step-icon-container {
       position: relative;
-      z-index: 5;
+      z-index: var(--#{$prefix}m-step-icon-container-z-index);
       display: flex;
       align-items: center;
       justify-content: center;
-      width: var(--#{$prefix}m-icon-container-size);
-      height: var(--#{$prefix}m-icon-container-size);
+      width: var(--#{$prefix}m-step-icon-container-size);
+      height: var(--#{$prefix}m-step-icon-container-size);
 
-      color: var(--#{$prefix}secondary);
-      background-color: var(--#{$prefix}white);
-      border: 1px solid var(--#{$prefix}secondary);
-      border-radius: 100%;
+      color: var(--#{$prefix}m-step-icon-container-color);
+      background-color: var(--#{$prefix}m-step-icon-container-background-color);
+      border: var(--#{$prefix}m-step-icon-container-border-width) solid var(--#{$prefix}m-step-icon-container-border-color);
+      border-radius: var(--#{$prefix}m-step-icon-container-border-radius);
     }
 
     .m-step-check {
-      color: var(--#{$prefix}white);
-      background-color: var(--#{$prefix}success);
-      border: 1px solid var(--#{$prefix}success);
+      color: var(--#{$prefix}m-step-check-text-color);
+      background-color: var(--#{$prefix}m-step-check-background-color);
+      border-color: var(--#{$prefix}m-step-check-border-color);
     }
 
     .m-step-current {
-      color: var(--#{$prefix}white);
-      background-color: var(--#{$prefix}secondary);
+      color: var(--#{$prefix}m-step-current-text-color);
+      background-color: var(--#{$prefix}m-step-current-background-color);
     }
 
     .m-step-value::after {
       position: absolute;
       top: 50%;
-      z-index: 2;
+      z-index: var(--#{$prefix}m-step-z-index);
       width: 100%;
-      height: 1px;
+      height: var(--#{$prefix}m-step-line-stroke);
       content: "";
-      background-color: var(--#{$prefix}secondary);
+      background-color: var(--#{$prefix}m-step-line-color);
     }
 
     &:first-child .m-step-value::after {
       left: 50%;
-      z-index: 2;
+      z-index: var(--#{$prefix}m-step-z-index);
       width: 50%;
     }
 
     &:last-child .m-step-value::after {
       right: 50%;
-      z-index: 2;
+      z-index: var(--#{$prefix}m-step-z-index);
       width: 50%;
     }
 
     .m-step-label {
-      padding-right: 1.5rem;
-      padding-left: 1.5rem;
+      padding-right: var(--#{$prefix}m-step-label-padding);
+      padding-left: var(--#{$prefix}m-step-label-padding);
       text-align: center;
     }
   }
@@ -90,34 +119,32 @@
         flex-grow: 1;
         align-items: center;
         min-height: var(--#{$prefix}m-step-label-height);
-        padding: 1rem;
+        padding: var(--#{$prefix}m-vertical-step-label-padding);
         text-align: left;
       }
+
       .m-step-value::after {
         position: absolute;
         top: 0;
-        left: calc(50% - 1px);
-        z-index: 2;
+        left: calc(50% - var(--#{$prefix}m-step-line-stroke));
+        z-index: var(--#{$prefix}m-step-z-index);
         width: 0;
         height: 100%;
         content: "";
-        border: 1px solid var(--#{$prefix}secondary);
+        border: var(--#{$prefix}m-step-icon-container-border-width) solid var(--#{$prefix}m-step-icon-container-border-color);
       }
 
       &:first-child .m-step-value::after {
         top: 50%;
-        z-index: 2;
+        z-index: var(--#{$prefix}m-step-z-index);
         width: 0;
         height: 50%;
-        border: 1px solid var(--#{$prefix}secondary);
       }
 
       &:last-child .m-step-value::after {
-        z-index: 2;
+        z-index: var(--#{$prefix}m-step-z-index);
         width: 0;
         height: 50%;
-        border: 1px solid var(--#{$prefix}secondary);
-
       }
     }
   }
