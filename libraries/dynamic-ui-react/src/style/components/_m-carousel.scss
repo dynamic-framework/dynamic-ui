@@ -1,9 +1,11 @@
+@import "@splidejs/splide/src/css/template/default/index";
+
 .m-carousel {
   // Arrows
   --#{$prefix}m-carousel-arrow-space: calc(var(--#{$prefix}ref-spacer-3) * -1);
   // Pagination
   --#{$prefix}m-carousel-pagination-bottom: calc(var(--#{$prefix}ref-spacer-3) * -1);
-  --#{$prefix}m-carousel-pagination-page-bg: var(--#{$prefix}gray-300);
+  --#{$prefix}m-carousel-pagination-page-bg: var(--#{$prefix}secondary-100);
   --#{$prefix}m-carousel-pagination-active-page-bg: var(--#{$prefix}secondary);
   // :focus
   --#{$prefix}m-carousel-focus-outline-color: var(--#{$prefix}focus-ring-color);

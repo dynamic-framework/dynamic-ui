@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Splide, SplideProps } from '@splidejs/react-splide';
-// import '@splidejs/react-splide/css';
 import classNames from 'classnames';
 import { PropsWithChildren } from 'react';
 
