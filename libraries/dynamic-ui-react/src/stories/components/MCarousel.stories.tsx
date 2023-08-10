@@ -7,6 +7,11 @@ import MCarouselSlide from '../../components/MCarouselSlide';
 const config: Meta<typeof MCarousel> = {
   title: 'Design System/Components/Carousel',
   component: MCarousel,
+  argTypes: {
+    options: {
+      control: 'object',
+    },
+  },
 };
 
 export default config;

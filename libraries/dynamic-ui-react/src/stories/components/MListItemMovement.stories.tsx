@@ -1,11 +1,11 @@
+/* eslint-disable no-console */
 import { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
-import { MList } from '../../components';
-import MListItemMovement from '../../components/MListItemMovement';
+import { MList, MListItemMovement } from '../../components';
 
 const config: Meta<typeof MListItemMovement> = {
-  title: 'Design System/Components/Custom/Movements',
-  component: MList,
+  title: 'Design System/Components/List Item Movement',
+  component: MListItemMovement,
   argTypes: {
     className: {
       type: 'string',
@@ -14,36 +14,59 @@ const config: Meta<typeof MListItemMovement> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MList>;
+type Story = StoryObj<typeof MListItemMovement>;
 
-const MListExampleMovements = (args: ComponentProps<typeof MList>) => (
-  <MList {...args}>
-    {[1, 2, 3, 4, 5].map((item) => (
-      <MListItemMovement
-        key={item}
-        description={`Credit Card ${item}`}
-        date="22/05/23"
-        amount={item % 2 === 1 ? 5000 : -5000}
-      >
-        Lorem ipsum dolor sit amet consectetur.
-      </MListItemMovement>
-    ))}
-  </MList>
-);
-
-export const ListMovements: Story = {
+export const Movement: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(300px - 1rem)' }} className="position-relative">
-        <Story />
+        <MList isFlush>
+          <Story />
+        </MList>
       </div>
     ),
   ],
   render: (args) => (
-    <MListExampleMovements {...args} />
+    <MListItemMovement
+      description={args.description}
+      date={args.date}
+      amount={args.amount}
+    />
   ),
   args: {
-    isFlush: true,
+    description: 'Credit card',
+    date: '10/08/2023',
+    amount: 5000,
   },
-  name: 'Custom list - Movements',
+};
+
+export const Movements: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: 'calc(300px - 1rem)' }} className="position-relative">
+        <MList isFlush>
+          <Story />
+        </MList>
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <>
+      {[1, 2, 3, 4, 5].map((item) => (
+        <MListItemMovement
+          key={item}
+          description={args.description}
+          date={args.date}
+          amount={args.amount * (item % 2 === 0 ? 1 : -1)}
+          onMClick={args.onMClick}
+        />
+      ))}
+    </>
+  ),
+  args: {
+    description: 'Credit card',
+    date: '10/08/2023',
+    amount: 5000,
+    onMClick: () => console.log('Click'),
+  },
 };

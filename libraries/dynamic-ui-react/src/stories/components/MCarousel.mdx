@@ -21,9 +21,13 @@ To understand in more detail the aspects covered by this component, review the f
 <Markdown>
   {`
 
-  | Variable                                        | Type            | Description               |
-  |-------------------------------------------------|-----------------|---------------------------|
-  | \`--${PREFIX_BS}m-carousel\`                    | string          | Space between elements    |
+  | Variable                                               | Type            | Description                   |
+  |--------------------------------------------------------|-----------------|-------------------------------|
+  | \`--${PREFIX_BS}m-carousel-arrow-space\`               | css length unit | Arrow separation              |
+  | \`--${PREFIX_BS}m-carousel-pagination-bottom\`         | css length unit | Pagination bottom separation  |
+  | \`--${PREFIX_BS}m-carousel-pagination-page-bg\`        | css color       | Background of dot page        |
+  | \`--${PREFIX_BS}m-carousel-pagination-active-page-bg\` | css color       | Background of active dot page |
+  | \`--${PREFIX_BS}m-carousel-focus-outline-color\`       | css color       | Color of focus ring           |
 
   `}
 </Markdown>
@@ -31,6 +35,6 @@ To understand in more detail the aspects covered by this component, review the f
 ## Args
 <Meta of={MCarouselStories} />
 
-<ArgTypes of={MCarouselStories} />
+<ArgTypes of={MCarouselStories} sort="requiredFirst" />
 
 <Stories />
