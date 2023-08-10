@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { MIcon } from './proxies';
 
 export type Step = {
   label: string;
@@ -38,7 +39,7 @@ export default function MStepper({
               })}
             >
               {value < currentStep
-                ? <i className={`bi bi-${successIcon} m-step-icon`} />
+                ? <MIcon icon={`${successIcon} m-step-icon`} />
                 : value}
             </div>
           </div>
