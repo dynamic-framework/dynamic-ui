@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import MListItem from './MListItem';
 import { useFormatCurrency } from '../hooks';
 
-type Props = Omit<ComponentProps<typeof MListItem>, ''> & {
+type Props = Omit<ComponentProps<typeof MListItem>, 'children'> & {
   description: string;
   date: string;
   amount: number;
