@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { Meta, StoryObj } from '@storybook/react';
-import { ComponentProps } from 'react';
 import { MList, MListItemMovement } from '../../components';
 
 const config: Meta<typeof MListItemMovement> = {
