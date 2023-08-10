@@ -7,7 +7,7 @@ import type { ComponentProps } from 'react';
 import { MDatePicker } from '../../components';
 
 const config: Meta<typeof MDatePicker> = {
-  title: 'Design System/Alpha/Patterns/Calendar',
+  title: 'Design System/Alpha/Patterns/Datepicker',
   component: MDatePicker,
   argTypes: {
     autoFocus: {
