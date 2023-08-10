@@ -2,9 +2,14 @@ import DatePicker, { ReactDatePickerProps, registerLocale } from 'react-datepick
 import { DateTime } from 'luxon';
 
 import type { FC } from 'react';
+import { createElement } from 'react';
 
 import es from 'date-fns/locale/es';
 import { useLiquidContext } from '../contexts';
+
+import MDatePickerTime from './MDatePickerTime';
+import MDatePickerInput from './MDatePickerInput';
+import MDatePickerHeader from './MDatePickerHeader';
 
 registerLocale('es', es);
 
@@ -17,7 +22,6 @@ export declare interface CalendarProps {
   minDate?: string;
   showTimeInput?: boolean;
   calendarStartDay?: number;
-  timeInputLabel?: string;
   className?: string;
   calendarClassName?: ReactDatePickerProps['calendarClassName'],
   dateFormat?: string | string[];
@@ -29,9 +33,11 @@ export declare interface CalendarProps {
   autoFocus?: boolean;
   fixedHeight?: boolean;
   monthsShown?: number;
+  showMonthDropdown?: boolean;
+  showYearDropdown?: boolean;
 }
 
-export default function MCalendar({
+export default function MDatePicker({
   setDate,
   date,
   calendarContainer,
@@ -40,8 +46,7 @@ export default function MCalendar({
   minDate,
   showTimeInput,
   calendarStartDay,
-  timeInputLabel,
-  dateFormat,
+  dateFormat = 'dd/mm/yyyy',
   className,
   calendarClassName,
   selectsRange,
@@ -52,6 +57,8 @@ export default function MCalendar({
   autoFocus,
   monthsShown,
   fixedHeight,
+  showMonthDropdown,
+  showYearDropdown,
 }: CalendarProps) {
   const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
 
@@ -72,14 +79,17 @@ export default function MCalendar({
           setDate(value ? DateTime.fromJSDate(value).toISO() : null);
         }
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      renderCustomHeader={(data) => createElement(MDatePickerHeader, data)}
+      customInput={createElement(MDatePickerInput)}
+      customTimeInput={createElement(MDatePickerTime)}
       calendarContainer={calendarContainer}
       inline={inline}
       withPortal={withPortal}
       minDate={minDate ? dateJS(minDate) : undefined}
       showTimeInput={showTimeInput}
+      showMonthDropdown={showMonthDropdown}
+      showYearDropdown={showYearDropdown}
       calendarStartDay={calendarStartDay}
-      timeInputLabel={timeInputLabel}
       dateFormat={dateFormat}
       className={className}
       calendarClassName={calendarClassName}
@@ -91,6 +101,7 @@ export default function MCalendar({
       autoFocus={autoFocus}
       monthsShown={monthsShown}
       fixedHeight={fixedHeight}
+      formatWeekDay={(nameOfDay) => nameOfDay.substring(0, 1).toUpperCase()}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...lang && { locale: lang }}
     />
