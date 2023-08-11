@@ -17,7 +17,7 @@ const config: Meta<typeof MCarousel> = {
 export default config;
 type Story = StoryObj<typeof MCarousel>;
 
-const MCalendarExample = ({ ...props }: SplideProps) => (
+const MCarouselExample = ({ ...props }: SplideProps) => (
   <MCarousel
     {...props}
   >
@@ -39,7 +39,7 @@ const MCalendarExample = ({ ...props }: SplideProps) => (
 
 export const Default: Story = {
   render: (args) => (
-    <MCalendarExample {...args} />
+    <MCarouselExample {...args} />
   ),
   args: {
     options: {
@@ -54,7 +54,7 @@ export const Default: Story = {
 
 export const TwoPerPage: Story = {
   render: (args) => (
-    <MCalendarExample {...args} />
+    <MCarouselExample {...args} />
   ),
   args: {
     options: {
@@ -72,7 +72,7 @@ export const TwoPerPage: Story = {
 
 export const WithBreakpoints: Story = {
   render: (args) => (
-    <MCalendarExample {...args} />
+    <MCarouselExample {...args} />
   ),
   args: {
     options: {
@@ -102,7 +102,7 @@ export const WithBreakpoints: Story = {
 
 export const AutoplayAndLoop: Story = {
   render: (args) => (
-    <MCalendarExample {...args} />
+    <MCarouselExample {...args} />
   ),
   args: {
     options: {
