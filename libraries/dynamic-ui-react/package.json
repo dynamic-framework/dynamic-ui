@@ -54,7 +54,8 @@
     "react-content-loader": "~6.2.0",
     "react-datepicker": "~4.8.0",
     "react-dropzone": "^14.2.3",
-    "react-responsive-pagination": "^2.2.1"
+    "react-responsive-pagination": "^2.2.1",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

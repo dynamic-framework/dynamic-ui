@@ -149,6 +149,16 @@ export class MInputCurrencyBase implements ComponentInterface {
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<number>;
 
+  /**
+   * Emitted when the inputs bur
+   */
+  @Event({ eventName: 'mBlur' }) mBlur!: EventEmitter<number>;
+
+  /**
+   * Emitted when the inputs focus
+   */
+  @Event({ eventName: 'mFocus' }) mFocus!: EventEmitter<number>;
+
   @State() internalValueAsNumber?: number;
 
   @State() internalValueAsFormat?: string;
@@ -188,6 +198,7 @@ export class MInputCurrencyBase implements ComponentInterface {
     this.internalValueAsFormat = this.internalValueAsNumber !== undefined
       ? currency(this.internalValueAsNumber, this.currencyOptions).format()
       : '';
+    this.mBlur.emit(this.internalValueAsNumber);
   };
 
   private focusHandler = (event: CustomEvent) => {
@@ -196,6 +207,7 @@ export class MInputCurrencyBase implements ComponentInterface {
     this.internalValueAsFormat = this.internalValueAsNumber !== undefined
       ? currency(this.internalValueAsNumber, this.currencyOptions).format()
       : '';
+    this.mFocus.emit(this.internalValueAsNumber);
   };
 
   private wheelHandler = (event: CustomEvent) => {

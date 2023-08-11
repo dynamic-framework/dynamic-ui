@@ -15,5 +15,6 @@ export { default as MCollapse } from './MCollapse';
 export { default as MInputCurrency } from './MInputCurrency';
 export { default as MBoxFile } from './MBoxFile';
 export { default as MStepper } from './MStepper';
+export { default as MFormikInputCurrency } from './MFormikInputCurrency';
 
 export type { TabOption } from './MTabs';

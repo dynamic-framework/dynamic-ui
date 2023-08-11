@@ -5,10 +5,14 @@ import { useLiquidContext } from '../contexts';
 
 type Props = {
   onChange: (value: number) => void;
+  onBlur: (value: number) => void;
+  onFocus: (value: number) => void;
 } & Omit<ComponentProps<typeof MInputCurrencyBase>, 'currencyOptions' | 'onChange' | 'onMChange'>;
 
 export default function MInputCurrency({
   onChange,
+  onBlur,
+  onFocus,
   ...otherProps
 }: Props) {
   const { currency } = useLiquidContext();
@@ -17,6 +21,8 @@ export default function MInputCurrency({
     <MInputCurrencyBase
       currencyOptions={currency}
       onMChange={({ detail }: CustomEvent<number>) => onChange(detail)}
+      onMBlur={({ detail }: CustomEvent<number>) => onBlur(detail)}
+      onMFocus={({ detail }: CustomEvent<number>) => onFocus(detail)}
       {...otherProps}
     />
   );
