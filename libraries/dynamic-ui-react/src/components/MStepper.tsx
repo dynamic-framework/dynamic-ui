@@ -39,7 +39,12 @@ export default function MStepper({
               })}
             >
               {value < currentStep
-                ? <MIcon icon={`${successIcon} m-step-icon`} />
+                ? (
+                  <MIcon
+                    icon={successIcon}
+                    innerClass="m-step-icon"
+                  />
+                )
                 : value}
             </div>
           </div>
