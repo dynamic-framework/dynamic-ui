@@ -81,7 +81,7 @@ const config: Meta<typeof MInputCurrencyBase> = {
       description: 'Hint to display, also used to display validity feedback',
     },
     currencyCode: {
-      control: 'string',
+      control: 'text',
       type: 'string',
     },
     isInvalid: {
