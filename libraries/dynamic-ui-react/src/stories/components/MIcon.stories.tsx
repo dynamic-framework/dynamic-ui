@@ -33,6 +33,11 @@ const meta: Meta<typeof MIcon> = {
       type: 'string',
       description: 'Theme of the icon',
     },
+    innerClass: {
+      control: 'text',
+      type: 'string',
+      description: 'Add classes',
+    },
     size: {
       type: 'string',
       control: 'text',

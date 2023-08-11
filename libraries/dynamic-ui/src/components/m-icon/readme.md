@@ -16,6 +16,7 @@
 | `familyPrefix`      | `family-prefix`    | Change the family prefix to use another icon suite | `string \| undefined` | `state.iconFamilyPrefix`                               |
 | `hasCircle`         | `has-circle`       | Add circle around the icon                         | `boolean`             | `false`                                                |
 | `icon` _(required)_ | `icon`             | Name of icon to use (in kebab-case)                | `string`              | `undefined`                                            |
+| `innerClass`        | `inner-class`      | Icon class                                         | `string \| undefined` | `undefined`                                            |
 | `isLoading`         | `is-loading`       | Enable loading animation                           | `boolean`             | `false`                                                |
 | `loadingDuration`   | `loading-duration` | Loading animation duration, in seconds             | `number`              | `1.8`                                                  |
 | `size`              | `size`             | Size of the icon in css length unit                | `string \| undefined` | `'1.5rem'`                                             |
