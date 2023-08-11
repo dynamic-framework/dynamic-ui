@@ -52,7 +52,8 @@
     "i18next": "~21.9.0",
     "react-content-loader": "~6.2.0",
     "react-datepicker": "~4.8.0",
-    "react-dropzone": "^14.2.3"
+    "react-dropzone": "^14.2.3",
+    "react-responsive-pagination": "^2.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
@@ -78,7 +79,7 @@
     "@types/lodash.camelcase": "^4.3.7",
     "@types/luxon": "~3.2.1",
     "@types/node": "^15.12.2",
-    "@types/react": "^18.0.8",
+    "@types/react": "^18.2.19",
     "@types/react-datepicker": "~4.8.0",
     "@types/react-dom": "^18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
@@ -101,8 +102,8 @@
     "lint-staged": "^12.4.1",
     "luxon": "~3.2.1",
     "postcss-cli": "^10.1.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-i18next": "~11.18.3",
     "react-toastify": "~9.0.8",
     "rimraf": "^2.6.3",

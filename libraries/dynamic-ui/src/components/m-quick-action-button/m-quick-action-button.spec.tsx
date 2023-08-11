@@ -32,7 +32,6 @@ it('should render my component', async () => {
             </small>
           </div>
         </div>
-        <m-icon class="m-quick-action-button-action-icon" icon="chevron-right" size="var(--bs-m-quick-action-button-action-icon-size)"></m-icon>
       </button>
     </m-quick-action-button>
   `);

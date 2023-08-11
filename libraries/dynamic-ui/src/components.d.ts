@@ -184,6 +184,10 @@ export namespace Components {
          */
         "icon": string;
         /**
+          * Icon class
+         */
+        "innerClass"?: string;
+        /**
           * Enable loading animation
          */
         "isLoading": boolean;
@@ -936,7 +940,7 @@ export namespace Components {
         /**
           * The icon to indicate the action
          */
-        "actionIcon": string;
+        "actionIcon"?: string;
         /**
           * Icon family class
          */
@@ -1470,6 +1474,10 @@ declare namespace LocalJSX {
           * Name of icon to use (in kebab-case)
          */
         "icon": string;
+        /**
+          * Icon class
+         */
+        "innerClass"?: string;
         /**
           * Enable loading animation
          */
