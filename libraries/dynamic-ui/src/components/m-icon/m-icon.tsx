@@ -117,7 +117,7 @@ export class MIcon {
   private generateClasses(): ClassMap {
     return {
       'm-icon': true,
-      [this.innerClass || '']: true,
+      [`${this.innerClass}`]: !!this.innerClass,
       [this.familyClass || state.iconFamilyClass]: true,
       [`${this.familyPrefix || state.iconFamilyPrefix}${this.icon}`]: true,
       'm-icon-loading': this.isLoading,
