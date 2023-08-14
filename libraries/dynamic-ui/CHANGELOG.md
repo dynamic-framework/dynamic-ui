@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.2.0...@dynamic-framework/ui@1.3.0) (2023-08-14)
+
+
+### Features
+
+* add m-formik-input-currency and adjust details of m-input-currency and m-input-currency-base ([bd87783](https://github.com/dynamic-framework/dynamic-ui/commit/bd877837518ef8b02ada37b43b9ccadb1b3c583c))
+* react re-export of scss and liquidParser ([57fe305](https://github.com/dynamic-framework/dynamic-ui/commit/57fe3058fd75fe199edd00bf3c759ce29bdbc279))
+
+
+### Bug Fixes
+
+* remove default value of actionIcon on m-quick-action-button ([11aaf36](https://github.com/dynamic-framework/dynamic-ui/commit/11aaf36d1b8c26556561a42bd3606f41f19533e3))
+* rename directories ([e2e5a2a](https://github.com/dynamic-framework/dynamic-ui/commit/e2e5a2a2152e731d21d579329f83211bdca6a09d))
+
+
+
 ## [1.2.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.1.3...@dynamic-framework/ui@1.2.0) (2023-08-04)
 
 
