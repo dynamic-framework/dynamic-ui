@@ -12,7 +12,7 @@ export class MInputCurrencyBase {
         ? parseFloat(event.detail)
         : undefined;
       this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-        ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+        ? currency(this.internalValueAsNumber, Object.assign(Object.assign({}, this.currencyOptions), { symbol: '' })).format()
         : '';
       this.mChange.emit(this.internalValueAsNumber);
     };
@@ -20,15 +20,17 @@ export class MInputCurrencyBase {
       event.stopPropagation();
       this.internalType = 'text';
       this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-        ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+        ? currency(this.internalValueAsNumber, Object.assign(Object.assign({}, this.currencyOptions), { symbol: '' })).format()
         : '';
+      this.mBlur.emit(this.internalValueAsNumber);
     };
     this.focusHandler = (event) => {
       event.stopPropagation();
       this.internalType = 'number';
       this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-        ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+        ? currency(this.internalValueAsNumber, Object.assign(Object.assign({}, this.currencyOptions), { symbol: '' })).format()
         : '';
+      this.mFocus.emit(this.internalValueAsNumber);
     };
     this.wheelHandler = (event) => {
       var _a;
@@ -91,7 +93,7 @@ export class MInputCurrencyBase {
   componentDidLoad() {
     this.internalType = 'text';
     this.internalValueAsFormat = (this.internalValueAsNumber !== undefined)
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, Object.assign(Object.assign({}, this.currencyOptions), { symbol: '' })).format()
       : '';
   }
   // eslint-disable-next-line class-methods-use-this
@@ -583,6 +585,36 @@ export class MInputCurrencyBase {
         "docs": {
           "tags": [],
           "text": "Emitted when the inputs change"
+        },
+        "complexType": {
+          "original": "number",
+          "resolved": "number",
+          "references": {}
+        }
+      }, {
+        "method": "mBlur",
+        "name": "mBlur",
+        "bubbles": true,
+        "cancelable": true,
+        "composed": true,
+        "docs": {
+          "tags": [],
+          "text": "Emitted when the inputs bur"
+        },
+        "complexType": {
+          "original": "number",
+          "resolved": "number",
+          "references": {}
+        }
+      }, {
+        "method": "mFocus",
+        "name": "mFocus",
+        "bubbles": true,
+        "cancelable": true,
+        "composed": true,
+        "docs": {
+          "tags": [],
+          "text": "Emitted when the inputs focus"
         },
         "complexType": {
           "original": "number",

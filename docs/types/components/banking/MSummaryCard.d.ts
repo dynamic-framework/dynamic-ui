@@ -8,5 +8,5 @@ declare type Props = {
     iconTheme: string;
     Summary: ReactElement<typeof Trans> | string;
 };
-export default function MSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, }: Props): JSX.Element;
+export default function MSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

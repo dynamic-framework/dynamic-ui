@@ -5,5 +5,5 @@ declare type Props = Omit<ComponentProps<typeof MInputSelect>, 'name' | 'labelEx
     labelExtractor?: (item: any) => string;
     valueExtractor?: (item: any) => string | number;
 };
-export default function MFormikInputSelect({ name, labelExtractor, valueExtractor, ...props }: Props): JSX.Element;
+export default function MFormikInputSelect({ name, labelExtractor, valueExtractor, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

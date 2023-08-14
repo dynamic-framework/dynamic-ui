@@ -184,6 +184,10 @@ export namespace Components {
          */
         "icon": string;
         /**
+          * Icon class
+         */
+        "innerClass"?: string;
+        /**
           * Enable loading animation
          */
         "isLoading": boolean;
@@ -936,7 +940,7 @@ export namespace Components {
         /**
           * The icon to indicate the action
          */
-        "actionIcon": string;
+        "actionIcon"?: string;
         /**
           * Icon family class
          */
@@ -1471,6 +1475,10 @@ declare namespace LocalJSX {
          */
         "icon": string;
         /**
+          * Icon class
+         */
+        "innerClass"?: string;
+        /**
           * Enable loading animation
          */
         "isLoading"?: boolean;
@@ -1851,9 +1859,17 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
+          * Emitted when the inputs bur
+         */
+        "onMBlur"?: (event: MInputCurrencyBaseCustomEvent<number>) => void;
+        /**
           * Emitted when the inputs change
          */
         "onMChange"?: (event: MInputCurrencyBaseCustomEvent<number>) => void;
+        /**
+          * Emitted when the inputs focus
+         */
+        "onMFocus"?: (event: MInputCurrencyBaseCustomEvent<number>) => void;
         /**
           * Placeholder for the input
          */

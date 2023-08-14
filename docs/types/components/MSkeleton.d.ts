@@ -5,4 +5,4 @@ export declare type Props = PropsWithChildren<{
     backgroundColor?: string;
     foregroundColor?: string;
 }>;
-export default function MSkeleton({ speed, viewBox, backgroundColor, foregroundColor, children, }: Props): JSX.Element;
+export default function MSkeleton({ speed, viewBox, backgroundColor, foregroundColor, children, }: Props): import("react/jsx-runtime").JSX.Element;

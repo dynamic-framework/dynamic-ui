@@ -14,6 +14,6 @@ declare type Props = PropsWithChildren<{
 declare type TabContextState = {
     isSelected: (tab: TabOption['tab']) => boolean;
 };
-export default function MTabs({ children, defaultSelected, onChange, options, className, isVertical, }: Props): JSX.Element;
+export default function MTabs({ children, defaultSelected, onChange, options, className, isVertical, }: Props): import("react/jsx-runtime").JSX.Element;
 export declare function useTabContext(): TabContextState;
 export {};

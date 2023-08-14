@@ -5,6 +5,7 @@ export class MIcon {
   constructor() {
     this.icon = undefined;
     this.theme = undefined;
+    this.innerClass = undefined;
     this.size = '1.5rem';
     this.isLoading = false;
     this.loadingDuration = 1.8;
@@ -48,6 +49,7 @@ export class MIcon {
   generateClasses() {
     return {
       'm-icon': true,
+      [`${this.innerClass}`]: !!this.innerClass,
       [this.familyClass || state.iconFamilyClass]: true,
       [`${this.familyPrefix || state.iconFamilyPrefix}${this.icon}`]: true,
       'm-icon-loading': this.isLoading,
@@ -91,6 +93,23 @@ export class MIcon {
           "text": "Theme of the icon"
         },
         "attribute": "theme",
+        "reflect": false
+      },
+      "innerClass": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Icon class"
+        },
+        "attribute": "inner-class",
         "reflect": false
       },
       "size": {

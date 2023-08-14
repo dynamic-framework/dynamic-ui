@@ -39,6 +39,6 @@ export declare type ModalProps = {
     closeModal: CloseModalFunction;
 };
 export declare const ModalContext: import("react").Context<ModalContextType | undefined>;
-export declare function ModalContextProvider({ portalName, children, availableModals, }: Props): JSX.Element;
+export declare function ModalContextProvider({ portalName, children, availableModals, }: Props): import("react/jsx-runtime").JSX.Element;
 export declare function useModalContext(): ModalContextType;
 export {};

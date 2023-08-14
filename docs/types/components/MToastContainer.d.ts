@@ -8,5 +8,5 @@ declare type Props = {
     };
     position?: ToastPosition;
 };
-export default function MToastContainer({ style, position, }: Props): JSX.Element;
+export default function MToastContainer({ style, position, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

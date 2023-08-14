@@ -43,6 +43,7 @@ const MIcon = class {
     registerInstance(this, hostRef);
     this.icon = undefined;
     this.theme = undefined;
+    this.innerClass = undefined;
     this.size = '1.5rem';
     this.isLoading = false;
     this.loadingDuration = 1.8;
@@ -86,6 +87,7 @@ const MIcon = class {
   generateClasses() {
     return {
       'm-icon': true,
+      [`${this.innerClass}`]: !!this.innerClass,
       [this.familyClass || state.iconFamilyClass]: true,
       [`${this.familyPrefix || state.iconFamilyPrefix}${this.icon}`]: true,
       'm-icon-loading': this.isLoading,

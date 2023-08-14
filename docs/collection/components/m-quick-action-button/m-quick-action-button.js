@@ -23,7 +23,7 @@ export class MQuickActionButton {
     this.line2 = undefined;
     this.actionLinkText = undefined;
     this.actionLinkTheme = 'secondary';
-    this.actionIcon = 'chevron-right';
+    this.actionIcon = undefined;
     this.secondaryActionIcon = undefined;
     this.actionIconFamilyClass = undefined;
     this.actionIconFamilyPrefix = undefined;
@@ -41,7 +41,7 @@ export class MQuickActionButton {
     const Tag = this.getTag();
     return (h(Tag, Object.assign({ class: "m-quick-action-button" }, !this.actionLinkText && { onClick: this.globalClickHandler }), this.representativeIcon && (h("m-icon", { class: "m-quick-action-button-representative-icon", size: (this.representativeIconHasCircle
         ? `var(--${PREFIX_BS}m-quick-action-button-representative-icon-size)`
-        : `var(--${PREFIX_BS}m-quick-action-button-representative-image-size)`), icon: this.representativeIcon, hasCircle: this.representativeIconHasCircle, theme: this.representativeIconTheme, familyClass: this.representativeIconFamilyClass, familyPrefix: this.representativeIconFamilyPrefix })), this.representativeImage && (h("img", { class: "m-quick-action-button-representative-image", src: this.representativeImage, alt: "" })), h("div", { class: "m-quick-action-button-content" }, h("div", { class: "m-quick-action-button-text" }, h("span", { class: "m-quick-action-button-line1" }, this.line1), h("small", { class: "m-quick-action-button-line2" }, this.line2))), this.secondaryActionIcon && (h("m-button", { class: "m-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: this.secondaryActionIcon, iconStartFamilyClass: this.actionIconFamilyClass, iconStartFamilyPrefix: this.actionIconFamilyPrefix, theme: this.actionLinkTheme, onMClick: this.secondActionLinkClickHandler })), this.actionLinkText ? (h("m-button", { class: "m-quick-action-button-action-link", type: "button", variant: "link", size: "sm", theme: this.actionLinkTheme, text: this.actionLinkText, onMClick: this.actionLinkClickHandler })) : (h("m-icon", { class: "m-quick-action-button-action-icon", icon: this.actionIcon, size: `var(--${PREFIX_BS}m-quick-action-button-action-icon-size)`, familyClass: this.actionIconFamilyClass, familyPrefix: this.actionIconFamilyPrefix }))));
+        : `var(--${PREFIX_BS}m-quick-action-button-representative-image-size)`), icon: this.representativeIcon, hasCircle: this.representativeIconHasCircle, theme: this.representativeIconTheme, familyClass: this.representativeIconFamilyClass, familyPrefix: this.representativeIconFamilyPrefix })), this.representativeImage && (h("img", { class: "m-quick-action-button-representative-image", src: this.representativeImage, alt: "" })), h("div", { class: "m-quick-action-button-content" }, h("div", { class: "m-quick-action-button-text" }, h("span", { class: "m-quick-action-button-line1" }, this.line1), h("small", { class: "m-quick-action-button-line2" }, this.line2))), this.secondaryActionIcon && (h("m-button", { class: "m-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: this.secondaryActionIcon, iconStartFamilyClass: this.actionIconFamilyClass, iconStartFamilyPrefix: this.actionIconFamilyPrefix, theme: this.actionLinkTheme, onMClick: this.secondActionLinkClickHandler })), (this.actionLinkText && !this.actionIcon) && (h("m-button", { class: "m-quick-action-button-action-link", type: "button", variant: "link", theme: this.actionLinkTheme, text: this.actionLinkText, onMClick: this.actionLinkClickHandler })), (this.actionIcon && !this.actionLinkText) && (h("m-icon", { class: "m-quick-action-button-action-icon", icon: this.actionIcon, size: `var(--${PREFIX_BS}m-quick-action-button-action-icon-size)`, familyClass: this.actionIconFamilyClass, familyPrefix: this.actionIconFamilyPrefix }))));
   }
   static get is() { return "m-quick-action-button"; }
   static get properties() {
@@ -120,18 +120,17 @@ export class MQuickActionButton {
         "mutable": false,
         "complexType": {
           "original": "string",
-          "resolved": "string",
+          "resolved": "string | undefined",
           "references": {}
         },
         "required": false,
-        "optional": false,
+        "optional": true,
         "docs": {
           "tags": [],
           "text": "The icon to indicate the action"
         },
         "attribute": "action-icon",
-        "reflect": false,
-        "defaultValue": "'chevron-right'"
+        "reflect": false
       },
       "secondaryActionIcon": {
         "type": "string",

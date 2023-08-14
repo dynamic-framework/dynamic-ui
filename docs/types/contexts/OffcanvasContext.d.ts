@@ -39,6 +39,6 @@ export declare type OffcanvasProps = {
     closeOffcanvas: CloseOffcanvasFunction;
 };
 export declare const OffcanvasContext: import("react").Context<OffcanvasContextType | undefined>;
-export declare function OffcanvasContextProvider({ portalName, children, availableOffcanvas, }: Props): JSX.Element;
+export declare function OffcanvasContextProvider({ portalName, children, availableOffcanvas, }: Props): import("react/jsx-runtime").JSX.Element;
 export declare function useOffcanvasContext(): OffcanvasContextType;
 export {};

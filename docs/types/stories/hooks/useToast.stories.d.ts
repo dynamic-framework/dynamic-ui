@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { Meta } from '@storybook/react';
 import type { AlertType } from '@dynamic-framework/ui';
 declare type Props = {
@@ -6,7 +5,7 @@ declare type Props = {
     type: AlertType;
     showClose: boolean;
 };
-declare const Example: ({ message, type, showClose }: Props) => JSX.Element;
+declare const Example: ({ message, type, showClose }: Props) => import("react/jsx-runtime").JSX.Element;
 declare const config: Meta<typeof Example>;
 export default config;
 export declare const useToast: {

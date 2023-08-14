@@ -109,6 +109,14 @@ export declare class MInputCurrencyBase implements ComponentInterface {
    * Emitted when the inputs change
    */
   mChange: EventEmitter<number>;
+  /**
+   * Emitted when the inputs bur
+   */
+  mBlur: EventEmitter<number>;
+  /**
+   * Emitted when the inputs focus
+   */
+  mFocus: EventEmitter<number>;
   internalValueAsNumber?: number;
   internalValueAsFormat?: string;
   internalType: 'text' | 'number';

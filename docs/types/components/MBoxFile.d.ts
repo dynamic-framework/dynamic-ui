@@ -6,5 +6,5 @@ declare type Props = PropsWithChildren<Pick<DropzoneOptions, 'accept' | 'minSize
     iconFamilyPrefix?: string;
     isDisabled: DropzoneOptions['disabled'];
 }>;
-export default function MBoxFile({ icon, iconFamilyClass, iconFamilyPrefix, isDisabled, children, ...dropzoneOptions }: Props): JSX.Element;
+export default function MBoxFile({ icon, iconFamilyClass, iconFamilyPrefix, isDisabled, children, ...dropzoneOptions }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

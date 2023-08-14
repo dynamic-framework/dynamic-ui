@@ -9,7 +9,7 @@ const es = require('date-fns/locale/es');
 const React = require('react');
 const ui = require('@dynamic-framework/ui');
 const ContentLoader = require('react-content-loader');
-const classnames = require('classnames');
+const classNames = require('classnames');
 const reactToastify = require('react-toastify');
 require('react-toastify/dist/ReactToastify.css');
 const react = require('@floating-ui/react');
@@ -37,6 +37,7 @@ const mQuickActionCheck_js = require('@dynamic-framework/ui/components/m-quick-a
 const mQuickActionSelect_js = require('@dynamic-framework/ui/components/m-quick-action-select.js');
 const mQuickActionSwitch_js = require('@dynamic-framework/ui/components/m-quick-action-switch.js');
 const reactDropzone = require('react-dropzone');
+const reactSplide = require('@splidejs/react-splide');
 const i18n = require('i18next');
 const reactI18next = require('react-i18next');
 const html2canvas = require('html2canvas');
@@ -48,7 +49,7 @@ const DatePicker__default = /*#__PURE__*/_interopDefaultLegacy(DatePicker);
 const es__default = /*#__PURE__*/_interopDefaultLegacy(es);
 const React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 const ContentLoader__default = /*#__PURE__*/_interopDefaultLegacy(ContentLoader);
-const classnames__default = /*#__PURE__*/_interopDefaultLegacy(classnames);
+const classNames__default = /*#__PURE__*/_interopDefaultLegacy(classNames);
 const i18n__default = /*#__PURE__*/_interopDefaultLegacy(i18n);
 const html2canvas__default = /*#__PURE__*/_interopDefaultLegacy(html2canvas);
 
@@ -288,7 +289,7 @@ function MCollapse({ id, className, Component, hasSeparator = false, defaultColl
     React.useEffect(() => {
         setToggle(defaultCollapsed);
     }, [defaultCollapsed]);
-    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classnames__default["default"]('m-collapse collapse-container', className) }, { children: [jsxRuntime.jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsxRuntime.jsx(MIcon, { color: `var(--${ui.PREFIX_BS}gray)`, size: `var(--${ui.PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsxRuntime.jsx("div", Object.assign({ className: classnames__default["default"]({
+    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classNames__default["default"]('m-collapse collapse-container', className) }, { children: [jsxRuntime.jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsxRuntime.jsx(MIcon, { color: `var(--${ui.PREFIX_BS}gray)`, size: `var(--${ui.PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]({
                     'collapse-body': true,
                 }), style: {
                     [`--${ui.PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
@@ -615,10 +616,10 @@ function MTabs({ children, defaultSelected, onChange, options, className, isVert
     const value = React.useMemo(() => ({
         isSelected,
     }), [isSelected]);
-    return (jsxRuntime.jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxRuntime.jsxs("div", Object.assign({ className: classnames__default["default"]({
+    return (jsxRuntime.jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxRuntime.jsxs("div", Object.assign({ className: classNames__default["default"]({
                 'm-tabs': true,
                 'm-tabs-vertical': isVertical,
-            }) }, { children: [jsxRuntime.jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsxRuntime.jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classnames__default["default"]('nav-link', {
+            }) }, { children: [jsxRuntime.jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsxRuntime.jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classNames__default["default"]('nav-link', {
                             active: option.tab === selected,
                         }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.isDisabled, onClick: () => onSelect(option) }, { children: option.label }), option.label))) })), jsxRuntime.jsx("div", Object.assign({ className: "tab-content" }, { children: children }))] })) })));
 }
@@ -638,7 +639,7 @@ function MTabContent({ tab, children }) {
     return (jsxRuntime.jsx("div", Object.assign({ className: "tab-pane fade show active", id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab` }, { children: children })));
 }
 
-function MToastContainer({ style, position = 'bottom-center', }) {
+function MToastContainer({ style, position = 'top-right', }) {
     return (jsxRuntime.jsx(reactToastify.ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: position, autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: reactToastify.Slide, style: style }));
 }
 
@@ -689,9 +690,9 @@ function MCurrencyText({ value, className, }) {
 }
 
 function MFormikInput(_a) {
-    var { name } = _a, props = tslib.__rest(_a, ["name"]);
+    var { name, hint } = _a, props = tslib.__rest(_a, ["name", "hint"]);
     const [field, meta, helpers] = formik.useField(name);
-    return (jsxRuntime.jsx(MInput, Object.assign({}, props, { name: field.name, value: field.value, onMChange: ({ detail }) => helpers.setValue(detail), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error })));
+    return (jsxRuntime.jsx(MInput, Object.assign({}, props, { name: field.name, value: field.value, onMChange: ({ detail }) => helpers.setValue(detail), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
 }
 
 function MFormikInputSelect(_a) {
@@ -759,40 +760,66 @@ function MTooltip({ classNameContainer, className, offSet = ARROW_HEIGHT + GAP, 
 }
 
 function MInputCurrency(_a) {
-    var { onChange } = _a, otherProps = tslib.__rest(_a, ["onChange"]);
+    var { onChange, onBlur, onFocus } = _a, otherProps = tslib.__rest(_a, ["onChange", "onBlur", "onFocus"]);
     const { currency } = useLiquidContext();
-    return (jsxRuntime.jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail) }, otherProps)));
+    return (jsxRuntime.jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail), onMBlur: ({ detail }) => onBlur(detail), onMFocus: ({ detail }) => onFocus(detail) }, otherProps)));
 }
 
 function MBoxFile(_a) {
     var { icon = 'cloud-upload', iconFamilyClass, iconFamilyPrefix, isDisabled = false, children } = _a, dropzoneOptions = tslib.__rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "isDisabled", "children"]);
     const { acceptedFiles, getRootProps, getInputProps, } = reactDropzone.useDropzone(Object.assign({ disabled: isDisabled }, dropzoneOptions));
-    return (jsxRuntime.jsxs("section", Object.assign({ className: classnames__default["default"]('m-box-file', {
+    return (jsxRuntime.jsxs("section", Object.assign({ className: classNames__default["default"]('m-box-file', {
             'm-box-file-selected': !!acceptedFiles.length,
         }) }, { children: [jsxRuntime.jsxs("div", Object.assign({}, getRootProps({
-                className: classnames__default["default"]('m-box-file-dropzone', {
+                className: classNames__default["default"]('m-box-file-dropzone', {
                     disabled: isDisabled,
                 }),
             }), { children: [jsxRuntime.jsx("input", Object.assign({}, getInputProps())), jsxRuntime.jsx(MIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsxRuntime.jsx("div", Object.assign({ className: "m-box-content" }, { children: children }))] })), !!acceptedFiles.length && (jsxRuntime.jsx("aside", Object.assign({ className: "m-box-files" }, { children: acceptedFiles.map((file) => (jsxRuntime.jsx("div", Object.assign({ className: "m-box-files-text" }, { children: `${file.name} - ${file.size} bytes` }), file.name))) })))] })));
 }
 
-const LANG = ui.liquidParser.parse('{{site.language}}');
-async function configureI8n(resources, _a = {}) {
-    var { lng = LANG, fallbackLng = 'es' } = _a, config = tslib.__rest(_a, ["lng", "fallbackLng"]);
-    return i18n__default["default"]
-        .use(reactI18next.initReactI18next)
-        .init(Object.assign({ resources,
-        lng, initImmediate: true, fallbackLng, interpolation: {
-            escapeValue: false,
-            prefix: '{',
-            suffix: '}',
-            // skipOnVariables: false,
-        } }, config))
-        .then((t) => t);
+function MCarousel(_a) {
+    var { children, className, options } = _a, props = tslib.__rest(_a, ["children", "className", "options"]);
+    return (jsxRuntime.jsx(reactSplide.Splide, Object.assign({ className: classNames__default["default"]('m-carousel', className), options: Object.assign(Object.assign({}, options), { classes: {
+                // Arrows
+                arrows: 'splide__arrows m-carousel-arrows',
+                arrow: 'splide__arrow m-carousel-arrow',
+                prev: 'splide__arrow--prev m-carousel-arrow-prev',
+                next: 'splide__arrow--next m-carousel-arrow-next',
+                // Paginator
+                pagination: 'splide__pagination m-carousel-pagination',
+                page: 'splide__pagination__page m-carousel-pagination-page',
+            } }) }, props, { children: children })));
+}
+
+function MCarouselSlide(_a) {
+    var { className } = _a, props = tslib.__rest(_a, ["className"]);
+    return (jsxRuntime.jsx(reactSplide.SplideSlide, Object.assign({ className: classNames__default["default"]('m-carousel-slide', className) }, props)));
+}
+
+function MList({ children, className, isFlush = false, isNumbered = false, isHorizontal = false, horizontalBreakpoint, }) {
+    if (isFlush && isHorizontal) {
+        throw new Error("Horizontal and Flush props don't work together");
+    }
+    return (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]('m-list list-group', {
+            'list-group-flush': isFlush && !isHorizontal,
+            'list-group-numbered': isNumbered,
+            'list-group-horizontal': isHorizontal && !horizontalBreakpoint,
+        }, (isHorizontal && horizontalBreakpoint) && `list-group-horizontal-${horizontalBreakpoint}`, className) }, { children: children })));
+}
+
+function MListItem({ children, className, isActive = false, isDisabled = false, theme, onMClick, }) {
+    const Tag = React.useMemo(() => (onMClick ? 'button' : 'div'), [onMClick]);
+    return (jsxRuntime.jsx(Tag, Object.assign({}, Tag === 'button' && {
+        onClick: onMClick,
+        type: 'button',
+    }, { className: classNames__default["default"]('m-list-item list-group-item list-group-item-action', theme ? `list-group-item-${theme}` : undefined, className, {
+            active: isActive,
+            disabled: isDisabled,
+        }) }, isActive && { 'aria-current': true }, { children: children })));
 }
 
 function useToast() {
-    const toast = React.useCallback((message, { position = 'bottom-center', type = 'info', showClose = true, autoClose = false, } = {}) => {
+    const toast = React.useCallback((message, { position = 'top-right', type = 'info', showClose = true, autoClose = false, } = {}) => {
         reactToastify.toast(({ closeToast }) => (jsxRuntime.jsx(MAlert, Object.assign({ type: type, showClose: showClose, onMClose: closeToast }, { children: message }))), {
             transition: reactToastify.Slide,
             position,
@@ -867,6 +894,63 @@ function useScreenshotWebShare() {
     };
 }
 
+function MListItemMovement(_a) {
+    var { description, date, amount, classNameMovement } = _a, props = tslib.__rest(_a, ["description", "date", "amount", "classNameMovement"]);
+    const { format } = useFormatCurrency();
+    const value = React.useMemo(() => {
+        const valueFormatted = format(amount);
+        if (amount > 0) {
+            return {
+                theme: 'text-success',
+                valueFormatted,
+            };
+        }
+        return {
+            theme: 'text-danger',
+            valueFormatted,
+        };
+    }, [format, amount]);
+    return (jsxRuntime.jsx(MListItem, Object.assign({}, props, { children: jsxRuntime.jsxs("div", Object.assign({ className: classNames__default["default"]('m-list-item-movement', 'd-flex justify-content-between align-items-center p-3 gap-3', classNameMovement) }, { children: [jsxRuntime.jsxs("div", Object.assign({ className: "d-flex flex-column gap-1" }, { children: [jsxRuntime.jsx("span", Object.assign({ className: "fs-6" }, { children: description })), jsxRuntime.jsx("span", Object.assign({ className: "sp text-gray-700" }, { children: date }))] })), jsxRuntime.jsx("span", Object.assign({ className: classNames__default["default"]('fs-6', value.theme) }, { children: value.valueFormatted }))] })) })));
+}
+
+function MStepper({ options, currentStep, successIcon = 'check', isVertical = false, }) {
+    return (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]({
+            'm-stepper': true,
+            'is-vertical': isVertical,
+        }) }, { children: options.map(({ label, value }) => (jsxRuntime.jsxs("div", Object.assign({ className: "m-step" }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "m-step-value" }, { children: jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]({
+                            'm-step-icon-container': true,
+                            'm-step-check': value < currentStep,
+                            'm-step-current': value === currentStep,
+                        }) }, { children: value < currentStep
+                            ? (jsxRuntime.jsx(MIcon, { icon: successIcon, innerClass: "m-step-icon" }))
+                            : value })) })), jsxRuntime.jsx("div", Object.assign({ className: "m-step-label" }, { children: label }))] }), label))) })));
+}
+
+function MFormikInputCurrency(_a) {
+    var { name, hint } = _a, props = tslib.__rest(_a, ["name", "hint"]);
+    const [field, meta, helpers] = formik.useField(name);
+    return (jsxRuntime.jsx(MInputCurrency, Object.assign({}, props, { name: field.name, value: field.value, onChange: (value) => helpers.setValue(value), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
+}
+
+const LANG = ui.liquidParser.parse('{{site.language}}');
+async function configureI8n(resources, _a = {}) {
+    var { lng = LANG, fallbackLng = 'es' } = _a, config = tslib.__rest(_a, ["lng", "fallbackLng"]);
+    return i18n__default["default"]
+        .use(reactI18next.initReactI18next)
+        .init(Object.assign({ resources,
+        lng, initImmediate: true, fallbackLng, interpolation: {
+            escapeValue: false,
+            prefix: '{',
+            suffix: '}',
+            // skipOnVariables: false,
+        } }, config))
+        .then((t) => t);
+}
+
+Object.defineProperty(exports, 'liquidParser', {
+    enumerable: true,
+    get: function () { return ui.liquidParser; }
+});
 exports.LiquidContext = LiquidContext$1;
 exports.LiquidContextProvider = LiquidContextProvider;
 exports.MAlert = MAlert;
@@ -874,11 +958,14 @@ exports.MBadge = MBadge;
 exports.MBoxFile = MBoxFile;
 exports.MButton = MButton;
 exports.MCalendar = MCalendar;
+exports.MCarousel = MCarousel;
+exports.MCarouselSlide = MCarouselSlide;
 exports.MChip = MChip;
 exports.MCollapse = MCollapse;
 exports.MCollapseIconText = MCollapseIconText;
 exports.MCurrencyText = MCurrencyText;
 exports.MFormikInput = MFormikInput;
+exports.MFormikInputCurrency = MFormikInputCurrency;
 exports.MFormikInputSelect = MFormikInputSelect;
 exports.MIcon = MIcon;
 exports.MInput = MInput;
@@ -891,6 +978,9 @@ exports.MInputPin = MInputPin;
 exports.MInputSearch = MInputSearch;
 exports.MInputSelect = MInputSelect;
 exports.MInputSwitch = MInputSwitch;
+exports.MList = MList;
+exports.MListItem = MListItem;
+exports.MListItemMovement = MListItemMovement;
 exports.MModal = MModal;
 exports.MOffcanvas = MOffcanvas;
 exports.MPermissionGroup = MPermissionGroup;
@@ -902,6 +992,7 @@ exports.MQuickActionCheck = MQuickActionCheck;
 exports.MQuickActionSelect = MQuickActionSelect;
 exports.MQuickActionSwitch = MQuickActionSwitch;
 exports.MSkeleton = MSkeleton;
+exports.MStepper = MStepper;
 exports.MSummaryCard = MSummaryCard;
 exports.MTabContent = MTabContent;
 exports.MTabs = MTabs;

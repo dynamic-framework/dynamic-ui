@@ -8,6 +8,10 @@ export declare class MIcon {
    */
   theme?: string;
   /**
+   * Icon class
+   */
+  innerClass?: string;
+  /**
    * Size of the icon in css length unit
    */
   size?: string;

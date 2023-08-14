@@ -14,4 +14,4 @@ export declare type MTooltipProps = PropsWithChildren<{
     placement?: Placement;
     Component: ReactNode;
 }>;
-export default function MTooltip({ classNameContainer, className, offSet, padding, withFocus, withClick, withHover, isOpen, placement, size, Component, children, }: MTooltipProps): JSX.Element;
+export default function MTooltip({ classNameContainer, className, offSet, padding, withFocus, withClick, withHover, isOpen, placement, size, Component, children, }: MTooltipProps): import("react/jsx-runtime").JSX.Element;

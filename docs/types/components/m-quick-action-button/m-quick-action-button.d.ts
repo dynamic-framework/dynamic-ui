@@ -19,7 +19,7 @@ export declare class MQuickActionButton implements ComponentInterface {
   /**
    * The icon to indicate the action
    */
-  actionIcon: string;
+  actionIcon?: string;
   /**
    * Second action icon
    */

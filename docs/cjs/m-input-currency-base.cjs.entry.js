@@ -10,6 +10,8 @@ const MInputCurrencyBase = class {
   constructor(hostRef) {
     index.registerInstance(this, hostRef);
     this.mChange = index.createEvent(this, "mChange", 7);
+    this.mBlur = index.createEvent(this, "mBlur", 7);
+    this.mFocus = index.createEvent(this, "mFocus", 7);
     /**
      * Emit input and select values when the values change
      */
@@ -19,7 +21,7 @@ const MInputCurrencyBase = class {
         ? parseFloat(event.detail)
         : undefined;
       this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-        ? store.currency_min(this.internalValueAsNumber, this.currencyOptions).format()
+        ? store.currency_min(this.internalValueAsNumber, Object.assign(Object.assign({}, this.currencyOptions), { symbol: '' })).format()
         : '';
       this.mChange.emit(this.internalValueAsNumber);
     };
@@ -27,15 +29,17 @@ const MInputCurrencyBase = class {
       event.stopPropagation();
       this.internalType = 'text';
       this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-        ? store.currency_min(this.internalValueAsNumber, this.currencyOptions).format()
+        ? store.currency_min(this.internalValueAsNumber, Object.assign(Object.assign({}, this.currencyOptions), { symbol: '' })).format()
         : '';
+      this.mBlur.emit(this.internalValueAsNumber);
     };
     this.focusHandler = (event) => {
       event.stopPropagation();
       this.internalType = 'number';
       this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-        ? store.currency_min(this.internalValueAsNumber, this.currencyOptions).format()
+        ? store.currency_min(this.internalValueAsNumber, Object.assign(Object.assign({}, this.currencyOptions), { symbol: '' })).format()
         : '';
+      this.mFocus.emit(this.internalValueAsNumber);
     };
     this.wheelHandler = (event) => {
       var _a;
@@ -98,7 +102,7 @@ const MInputCurrencyBase = class {
   componentDidLoad() {
     this.internalType = 'text';
     this.internalValueAsFormat = (this.internalValueAsNumber !== undefined)
-      ? store.currency_min(this.internalValueAsNumber, this.currencyOptions).format()
+      ? store.currency_min(this.internalValueAsNumber, Object.assign(Object.assign({}, this.currencyOptions), { symbol: '' })).format()
       : '';
   }
   // eslint-disable-next-line class-methods-use-this

@@ -7,5 +7,5 @@ declare type Props = PropsWithChildren<{
     defaultCollapsed?: boolean;
     onChange?: (value: boolean) => void;
 }>;
-export default function MCollapse({ id, className, Component, hasSeparator, defaultCollapsed, onChange, children, }: Props): JSX.Element;
+export default function MCollapse({ id, className, Component, hasSeparator, defaultCollapsed, onChange, children, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

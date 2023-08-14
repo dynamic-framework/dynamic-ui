@@ -22,4 +22,4 @@ export declare interface CalendarProps {
     fixedHeight?: boolean;
     monthsShown?: number;
 }
-export default function MCalendar({ setDate, date, calendarContainer, inline, withPortal, minDate, showTimeInput, calendarStartDay, timeInputLabel, dateFormat, className, calendarClassName, selectsRange, selectsStart, selectsEnd, startDate, endDate, autoFocus, monthsShown, fixedHeight, }: CalendarProps): JSX.Element;
+export default function MCalendar({ setDate, date, calendarContainer, inline, withPortal, minDate, showTimeInput, calendarStartDay, timeInputLabel, dateFormat, className, calendarClassName, selectsRange, selectsStart, selectsEnd, startDate, endDate, autoFocus, monthsShown, fixedHeight, }: CalendarProps): import("react/jsx-runtime").JSX.Element;

@@ -4,5 +4,5 @@ declare type Props = PropsWithChildren<{
     isOpen: boolean;
     setIsOpen?: (isOpen: boolean) => void;
 }>;
-export default function MPopover({ children, renderComponent, isOpen, setIsOpen, }: Props): JSX.Element;
+export default function MPopover({ children, renderComponent, isOpen, setIsOpen, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

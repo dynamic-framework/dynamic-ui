@@ -19,5 +19,5 @@ declare type Props = PropsWithChildren<{
     iconFamilyClass?: string;
     iconFamilyPrefix?: string;
 }>;
-export default function MCollapseIconText({ children, icon, iconSize, iconTheme, title, iconFamilyClass, iconFamilyPrefix, }: Props): JSX.Element;
+export default function MCollapseIconText({ children, icon, iconSize, iconTheme, title, iconFamilyClass, iconFamilyPrefix, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

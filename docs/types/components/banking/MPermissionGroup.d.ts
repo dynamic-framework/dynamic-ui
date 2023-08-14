@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { PermissionItemType } from './interface';
 declare type Props = {
     title: string;
@@ -8,5 +7,5 @@ declare type Props = {
     onChangePermission: (permission: PermissionItemType, isChecked: boolean) => void;
     onCustomAction?: (permission: PermissionItemType) => void;
 };
-export default function MPermissionGroup({ title, description, permissionState, permissionList, onChangePermission, onCustomAction, }: Props): JSX.Element;
+export default function MPermissionGroup({ title, description, permissionState, permissionList, onChangePermission, onCustomAction, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

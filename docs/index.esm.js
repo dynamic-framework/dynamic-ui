@@ -4,8 +4,9 @@ import { DateTime } from 'luxon';
 import es from 'date-fns/locale/es';
 import React, { createElement, useState, useEffect, createContext, useMemo, useContext, useCallback, useRef } from 'react';
 import { PREFIX_BS, liquidParser, formatCurrency } from '@dynamic-framework/ui';
+export { liquidParser } from '@dynamic-framework/ui';
 import ContentLoader from 'react-content-loader';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { ToastContainer, Slide, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, useRole, useInteractions, useId, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
@@ -33,6 +34,7 @@ import { defineCustomElement as defineCustomElement$i } from '@dynamic-framework
 import { defineCustomElement as defineCustomElement$j } from '@dynamic-framework/ui/components/m-quick-action-select.js';
 import { defineCustomElement as defineCustomElement$k } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 import { useDropzone } from 'react-dropzone';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import html2canvas from 'html2canvas';
@@ -274,7 +276,7 @@ function MCollapse({ id, className, Component, hasSeparator = false, defaultColl
     useEffect(() => {
         setToggle(defaultCollapsed);
     }, [defaultCollapsed]);
-    return (jsxs("div", Object.assign({ id: id, className: classnames('m-collapse collapse-container', className) }, { children: [jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsx(MIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsx("div", Object.assign({ className: classnames({
+    return (jsxs("div", Object.assign({ id: id, className: classNames('m-collapse collapse-container', className) }, { children: [jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsx(MIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsx("div", Object.assign({ className: classNames({
                     'collapse-body': true,
                 }), style: {
                     [`--${PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
@@ -601,10 +603,10 @@ function MTabs({ children, defaultSelected, onChange, options, className, isVert
     const value = useMemo(() => ({
         isSelected,
     }), [isSelected]);
-    return (jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxs("div", Object.assign({ className: classnames({
+    return (jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxs("div", Object.assign({ className: classNames({
                 'm-tabs': true,
                 'm-tabs-vertical': isVertical,
-            }) }, { children: [jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classnames('nav-link', {
+            }) }, { children: [jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classNames('nav-link', {
                             active: option.tab === selected,
                         }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.isDisabled, onClick: () => onSelect(option) }, { children: option.label }), option.label))) })), jsx("div", Object.assign({ className: "tab-content" }, { children: children }))] })) })));
 }
@@ -624,7 +626,7 @@ function MTabContent({ tab, children }) {
     return (jsx("div", Object.assign({ className: "tab-pane fade show active", id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab` }, { children: children })));
 }
 
-function MToastContainer({ style, position = 'bottom-center', }) {
+function MToastContainer({ style, position = 'top-right', }) {
     return (jsx(ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: position, autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: Slide, style: style }));
 }
 
@@ -675,9 +677,9 @@ function MCurrencyText({ value, className, }) {
 }
 
 function MFormikInput(_a) {
-    var { name } = _a, props = __rest(_a, ["name"]);
+    var { name, hint } = _a, props = __rest(_a, ["name", "hint"]);
     const [field, meta, helpers] = useField(name);
-    return (jsx(MInput, Object.assign({}, props, { name: field.name, value: field.value, onMChange: ({ detail }) => helpers.setValue(detail), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error })));
+    return (jsx(MInput, Object.assign({}, props, { name: field.name, value: field.value, onMChange: ({ detail }) => helpers.setValue(detail), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
 }
 
 function MFormikInputSelect(_a) {
@@ -745,40 +747,66 @@ function MTooltip({ classNameContainer, className, offSet = ARROW_HEIGHT + GAP, 
 }
 
 function MInputCurrency(_a) {
-    var { onChange } = _a, otherProps = __rest(_a, ["onChange"]);
+    var { onChange, onBlur, onFocus } = _a, otherProps = __rest(_a, ["onChange", "onBlur", "onFocus"]);
     const { currency } = useLiquidContext();
-    return (jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail) }, otherProps)));
+    return (jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail), onMBlur: ({ detail }) => onBlur(detail), onMFocus: ({ detail }) => onFocus(detail) }, otherProps)));
 }
 
 function MBoxFile(_a) {
     var { icon = 'cloud-upload', iconFamilyClass, iconFamilyPrefix, isDisabled = false, children } = _a, dropzoneOptions = __rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "isDisabled", "children"]);
     const { acceptedFiles, getRootProps, getInputProps, } = useDropzone(Object.assign({ disabled: isDisabled }, dropzoneOptions));
-    return (jsxs("section", Object.assign({ className: classnames('m-box-file', {
+    return (jsxs("section", Object.assign({ className: classNames('m-box-file', {
             'm-box-file-selected': !!acceptedFiles.length,
         }) }, { children: [jsxs("div", Object.assign({}, getRootProps({
-                className: classnames('m-box-file-dropzone', {
+                className: classNames('m-box-file-dropzone', {
                     disabled: isDisabled,
                 }),
             }), { children: [jsx("input", Object.assign({}, getInputProps())), jsx(MIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsx("div", Object.assign({ className: "m-box-content" }, { children: children }))] })), !!acceptedFiles.length && (jsx("aside", Object.assign({ className: "m-box-files" }, { children: acceptedFiles.map((file) => (jsx("div", Object.assign({ className: "m-box-files-text" }, { children: `${file.name} - ${file.size} bytes` }), file.name))) })))] })));
 }
 
-const LANG = liquidParser.parse('{{site.language}}');
-async function configureI8n(resources, _a = {}) {
-    var { lng = LANG, fallbackLng = 'es' } = _a, config = __rest(_a, ["lng", "fallbackLng"]);
-    return i18n
-        .use(initReactI18next)
-        .init(Object.assign({ resources,
-        lng, initImmediate: true, fallbackLng, interpolation: {
-            escapeValue: false,
-            prefix: '{',
-            suffix: '}',
-            // skipOnVariables: false,
-        } }, config))
-        .then((t) => t);
+function MCarousel(_a) {
+    var { children, className, options } = _a, props = __rest(_a, ["children", "className", "options"]);
+    return (jsx(Splide, Object.assign({ className: classNames('m-carousel', className), options: Object.assign(Object.assign({}, options), { classes: {
+                // Arrows
+                arrows: 'splide__arrows m-carousel-arrows',
+                arrow: 'splide__arrow m-carousel-arrow',
+                prev: 'splide__arrow--prev m-carousel-arrow-prev',
+                next: 'splide__arrow--next m-carousel-arrow-next',
+                // Paginator
+                pagination: 'splide__pagination m-carousel-pagination',
+                page: 'splide__pagination__page m-carousel-pagination-page',
+            } }) }, props, { children: children })));
+}
+
+function MCarouselSlide(_a) {
+    var { className } = _a, props = __rest(_a, ["className"]);
+    return (jsx(SplideSlide, Object.assign({ className: classNames('m-carousel-slide', className) }, props)));
+}
+
+function MList({ children, className, isFlush = false, isNumbered = false, isHorizontal = false, horizontalBreakpoint, }) {
+    if (isFlush && isHorizontal) {
+        throw new Error("Horizontal and Flush props don't work together");
+    }
+    return (jsx("div", Object.assign({ className: classNames('m-list list-group', {
+            'list-group-flush': isFlush && !isHorizontal,
+            'list-group-numbered': isNumbered,
+            'list-group-horizontal': isHorizontal && !horizontalBreakpoint,
+        }, (isHorizontal && horizontalBreakpoint) && `list-group-horizontal-${horizontalBreakpoint}`, className) }, { children: children })));
+}
+
+function MListItem({ children, className, isActive = false, isDisabled = false, theme, onMClick, }) {
+    const Tag = useMemo(() => (onMClick ? 'button' : 'div'), [onMClick]);
+    return (jsx(Tag, Object.assign({}, Tag === 'button' && {
+        onClick: onMClick,
+        type: 'button',
+    }, { className: classNames('m-list-item list-group-item list-group-item-action', theme ? `list-group-item-${theme}` : undefined, className, {
+            active: isActive,
+            disabled: isDisabled,
+        }) }, isActive && { 'aria-current': true }, { children: children })));
 }
 
 function useToast() {
-    const toast$1 = useCallback((message, { position = 'bottom-center', type = 'info', showClose = true, autoClose = false, } = {}) => {
+    const toast$1 = useCallback((message, { position = 'top-right', type = 'info', showClose = true, autoClose = false, } = {}) => {
         toast(({ closeToast }) => (jsx(MAlert, Object.assign({ type: type, showClose: showClose, onMClose: closeToast }, { children: message }))), {
             transition: Slide,
             position,
@@ -853,5 +881,58 @@ function useScreenshotWebShare() {
     };
 }
 
-export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MBoxFile, MButton, MCalendar, MChip, MCollapse, MCollapseIconText, MCurrencyText, MFormikInput, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MModal, MOffcanvas, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
+function MListItemMovement(_a) {
+    var { description, date, amount, classNameMovement } = _a, props = __rest(_a, ["description", "date", "amount", "classNameMovement"]);
+    const { format } = useFormatCurrency();
+    const value = useMemo(() => {
+        const valueFormatted = format(amount);
+        if (amount > 0) {
+            return {
+                theme: 'text-success',
+                valueFormatted,
+            };
+        }
+        return {
+            theme: 'text-danger',
+            valueFormatted,
+        };
+    }, [format, amount]);
+    return (jsx(MListItem, Object.assign({}, props, { children: jsxs("div", Object.assign({ className: classNames('m-list-item-movement', 'd-flex justify-content-between align-items-center p-3 gap-3', classNameMovement) }, { children: [jsxs("div", Object.assign({ className: "d-flex flex-column gap-1" }, { children: [jsx("span", Object.assign({ className: "fs-6" }, { children: description })), jsx("span", Object.assign({ className: "sp text-gray-700" }, { children: date }))] })), jsx("span", Object.assign({ className: classNames('fs-6', value.theme) }, { children: value.valueFormatted }))] })) })));
+}
+
+function MStepper({ options, currentStep, successIcon = 'check', isVertical = false, }) {
+    return (jsx("div", Object.assign({ className: classNames({
+            'm-stepper': true,
+            'is-vertical': isVertical,
+        }) }, { children: options.map(({ label, value }) => (jsxs("div", Object.assign({ className: "m-step" }, { children: [jsx("div", Object.assign({ className: "m-step-value" }, { children: jsx("div", Object.assign({ className: classNames({
+                            'm-step-icon-container': true,
+                            'm-step-check': value < currentStep,
+                            'm-step-current': value === currentStep,
+                        }) }, { children: value < currentStep
+                            ? (jsx(MIcon, { icon: successIcon, innerClass: "m-step-icon" }))
+                            : value })) })), jsx("div", Object.assign({ className: "m-step-label" }, { children: label }))] }), label))) })));
+}
+
+function MFormikInputCurrency(_a) {
+    var { name, hint } = _a, props = __rest(_a, ["name", "hint"]);
+    const [field, meta, helpers] = useField(name);
+    return (jsx(MInputCurrency, Object.assign({}, props, { name: field.name, value: field.value, onChange: (value) => helpers.setValue(value), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
+}
+
+const LANG = liquidParser.parse('{{site.language}}');
+async function configureI8n(resources, _a = {}) {
+    var { lng = LANG, fallbackLng = 'es' } = _a, config = __rest(_a, ["lng", "fallbackLng"]);
+    return i18n
+        .use(initReactI18next)
+        .init(Object.assign({ resources,
+        lng, initImmediate: true, fallbackLng, interpolation: {
+            escapeValue: false,
+            prefix: '{',
+            suffix: '}',
+            // skipOnVariables: false,
+        } }, config))
+        .then((t) => t);
+}
+
+export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MBoxFile, MButton, MCalendar, MCarousel, MCarouselSlide, MChip, MCollapse, MCollapseIconText, MCurrencyText, MFormikInput, MFormikInputCurrency, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MList, MListItem, MListItemMovement, MModal, MOffcanvas, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MStepper, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
 //# sourceMappingURL=index.esm.js.map
