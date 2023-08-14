@@ -170,7 +170,6 @@ export class MQuickActionButton implements ComponentInterface {
             class="m-quick-action-button-action-link"
             type="button"
             variant="link"
-            size="sm"
             theme={this.actionLinkTheme}
             text={this.actionLinkText}
             onMClick={this.actionLinkClickHandler}

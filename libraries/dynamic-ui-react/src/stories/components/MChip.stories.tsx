@@ -4,7 +4,7 @@ import { MChip } from '../../components';
 import { THEMES } from '../constants';
 
 const config: Meta<typeof MChip> = {
-  title: 'Design System/Patterns/Chip',
+  title: 'Design System/Components/Chip',
   component: MChip,
   argTypes: {
     text: {

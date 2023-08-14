@@ -189,6 +189,12 @@ importers:
       '@floating-ui/react':
         specifier: ^0.24.1
         version: 0.24.1(@types/react@18.2.19)(react-dom@18.2.0)(react@18.2.0)
+      '@splidejs/react-splide':
+        specifier: ^0.7.12
+        version: 0.7.12
+      '@splidejs/splide':
+        specifier: ^4.1.4
+        version: 4.1.4
       axios:
         specifier: ^1.1.2
         version: 1.1.3
@@ -616,8 +622,11 @@ importers:
 
   templates/dynamic-retail-dashboard-template:
     dependencies:
+      '@dynamic-framework/ui':
+        specifier: ^1.1.3
+        version: link:../../libraries/dynamic-ui
       '@dynamic-framework/ui-react':
-        specifier: ^1.1.5
+        specifier: ^1.1.4
         version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
@@ -740,8 +749,11 @@ importers:
 
   templates/dynamic-retail-product-detail-template:
     dependencies:
+      '@dynamic-framework/ui':
+        specifier: ^1.1.3
+        version: link:../../libraries/dynamic-ui
       '@dynamic-framework/ui-react':
-        specifier: ^1.1.5
+        specifier: ^1.1.4
         version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
@@ -5238,6 +5250,16 @@ packages:
       '@sinonjs/commons': 1.8.4
     dev: true
 
+  /@splidejs/react-splide@0.7.12:
+    resolution: {integrity: sha512-UfXH+j47jsMc4x5HA/aOwuuHPqn6y9+ZTNYPWDRD8iLKvIVMZlzq2unjUEvyDAU+TTVPZOXkG2Ojeoz0P4AkZw==}
+    dependencies:
+      '@splidejs/splide': 4.1.4
+    dev: false
+
+  /@splidejs/splide@4.1.4:
+    resolution: {integrity: sha512-5I30evTJcAJQXt6vJ26g2xEkG+l1nXcpEw4xpKh0/FWQ8ozmAeTbtniVtVmz2sH1Es3vgfC4SS8B2X4o5JMptA==}
+    dev: false
+
   /@stencil/angular-output-target@0.7.1(@stencil/core@3.3.0):
     resolution: {integrity: sha512-lxJbCAbyAQVAKGgEpNTjSF7GZZszbrJnNdNVgzuD1hLRFJyElA6kUSL0GQrZMbiPG5lC/cYdbQwpyWHX4xN8mw==}
     peerDependencies:
@@ -8727,7 +8749,7 @@ packages:
     dev: true
 
   /batch@0.6.1:
-    resolution: {integrity: sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=}
+    resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
     dev: true
 
   /before-after-hook@2.2.3:
