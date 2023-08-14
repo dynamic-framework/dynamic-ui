@@ -33,7 +33,7 @@ export class MQuickActionButton implements ComponentInterface {
   /**
    * The icon to indicate the action
    */
-  @Prop() actionIcon = 'chevron-right';
+  @Prop() actionIcon?: string;
 
   /**
    * Second action icon
@@ -165,17 +165,17 @@ export class MQuickActionButton implements ComponentInterface {
             onMClick={this.secondActionLinkClickHandler}
           />
         )}
-        {this.actionLinkText ? (
+        {(this.actionLinkText && !this.actionIcon) && (
           <m-button
             class="m-quick-action-button-action-link"
             type="button"
             variant="link"
-            size="sm"
             theme={this.actionLinkTheme}
             text={this.actionLinkText}
             onMClick={this.actionLinkClickHandler}
           />
-        ) : (
+        )}
+        {(this.actionIcon && !this.actionLinkText) && (
           <m-icon
             class="m-quick-action-button-action-icon"
             icon={this.actionIcon}

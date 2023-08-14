@@ -1,0 +1,49 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as MStepper from './MStepper.stories';
+
+# Stepper
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                                  | Type               | Description                        |
+  |-----------------------------------------------------------|--------------------|------------------------------------|
+  | \`--${PREFIX_BS}m-step-icon-container-color\`             | css color unit     | Icon container color               |
+  | \`--${PREFIX_BS}m-step-icon-container-background-color\`  | css color unit     | Icon container background color    |
+  | \`--${PREFIX_BS}m-step-icon-container-size\`              | css length unit    | Icon container size                |
+  | \`--${PREFIX_BS}m-step-icon-container-border-width\`      | css length unit    | Icon container border width        |
+  | \`--${PREFIX_BS}m-step-icon-container-border-color\`      | css color unit     | Icon container border color        |
+  | \`--${PREFIX_BS}m-step-icon-container-border-radius\`     | css length unit    | Icon container border radius       |
+  | \`--${PREFIX_BS}m-step-icon-container-z-index\`           | css index unit     | Icon container z-index             |
+  | \`--${PREFIX_BS}m-step-label-height\`                     | css length unit    | Step label height                  |
+  | \`--${PREFIX_BS}m-step-icon-size\`                        | css length unit    | Step icon size                     |
+  | \`--${PREFIX_BS}m-step-gap\`                              | css length unit    | Step gap spacing                   |
+  | \`--${PREFIX_BS}m-step-z-index\`                          | css index unit     | Step z-index                       |
+  | \`--${PREFIX_BS}m-step-check-text-color\`                 | css color unit     | Checked step text color            |
+  | \`--${PREFIX_BS}m-step-check-background-color\`           | css color unit     | Checked step background color      |
+  | \`--${PREFIX_BS}m-step-check-border-color\`               | css color unit     | Checked step border color          |
+  | \`--${PREFIX_BS}m-step-current-text-color\`               | css color unit     | Current step text color            |
+  | \`--${PREFIX_BS}m-step-current-background-color\`         | css color unit     | Current step background color      |
+  | \`--${PREFIX_BS}m-step-line-stroke\`                      | css length unit    | Step line size                     |
+  | \`--${PREFIX_BS}m-step-line-color\`                       | css color unit     | Step line color                    |
+  | \`--${PREFIX_BS}m-step-label-padding\`                    | css length unit    | Step label padding                 |
+  | \`--${PREFIX_BS}m-vertical-step-label-padding\`           | css length unit    | Step vertical label padding        |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MStepper} />
+
+<ArgTypes of={MStepper} sort="requiredFirst" />
+
+<Stories />
+

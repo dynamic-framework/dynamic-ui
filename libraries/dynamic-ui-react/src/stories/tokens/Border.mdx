@@ -43,7 +43,7 @@ To understand in more detail review the following documentation : [Bootstrap Bor
 
 <div className="row gap-2 mt-3">
   {ALL_COLORS.map((color) => (
-    <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div key={color} className="col-2 d-flex justify-content-start align-items-center flex-column">
       <div className={`border-${color} border border-2 bg-light ratio ratio-1x1`} />
       <div className="text-center">
         border-{color}

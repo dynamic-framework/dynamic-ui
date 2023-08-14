@@ -119,6 +119,7 @@ export const PersonalInfo: Story = {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank **** 721',
     representativeImage: 'https://i.pravatar.cc/150?img=2',
+    actionIcon: 'chevron-right',
   },
 };
 
@@ -183,6 +184,7 @@ export const Info: Story = {
     line2: 'Si no puedes pagar en este momento',
     representativeIcon: 'shuffle',
     representativeIconTheme: 'secondary',
+    actionIcon: 'chevron-right',
   },
 };
 
@@ -212,5 +214,6 @@ export const PersonList: Story = {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank  **** 721',
     representativeImage: 'https://i.pravatar.cc/150?img=2',
+    actionIcon: 'chevron-right',
   },
 };

@@ -41,7 +41,9 @@
 
 | Event     | Description                    | Type                  |
 | --------- | ------------------------------ | --------------------- |
+| `mBlur`   | Emitted when the inputs bur    | `CustomEvent<number>` |
 | `mChange` | Emitted when the inputs change | `CustomEvent<number>` |
+| `mFocus`  | Emitted when the inputs focus  | `CustomEvent<number>` |
 
 
 ## Dependencies

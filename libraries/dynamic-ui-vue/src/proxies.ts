@@ -62,6 +62,7 @@ export const MChip = /*@__PURE__*/ defineContainer<JSX.MChip>('m-chip', undefine
 export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefined, [
   'icon',
   'theme',
+  'innerClass',
   'size',
   'isLoading',
   'loadingDuration',
@@ -178,7 +179,9 @@ export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurren
   'maxValue',
   'currencyOptions',
   'currencyCode',
-  'mChange'
+  'mChange',
+  'mBlur',
+  'mFocus'
 ]);
 
 

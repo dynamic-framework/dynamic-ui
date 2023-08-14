@@ -139,14 +139,14 @@ export declare interface MChip extends Components.MChip {
 
 @ProxyCmp({
   defineCustomElementFn: defineMIcon,
-  inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'isLoading', 'loadingDuration', 'size', 'theme']
+  inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme']
 })
 @Component({
   selector: 'm-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'isLoading', 'loadingDuration', 'size', 'theme'],
+  inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme'],
 })
 export class MIcon {
   protected el: HTMLElement;
@@ -288,7 +288,7 @@ export class MInputCurrencyBase {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['mChange', 'mBlur', 'mFocus']);
   }
 }
 
@@ -298,6 +298,14 @@ export declare interface MInputCurrencyBase extends Components.MInputCurrencyBas
    * Emitted when the inputs change
    */
   mChange: EventEmitter<CustomEvent<number>>;
+  /**
+   * Emitted when the inputs bur
+   */
+  mBlur: EventEmitter<CustomEvent<number>>;
+  /**
+   * Emitted when the inputs focus
+   */
+  mFocus: EventEmitter<CustomEvent<number>>;
 }
 
 
