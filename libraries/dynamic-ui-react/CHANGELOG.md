@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.1.5...@dynamic-framework/ui-react@1.2.0) (2023-08-14)
+
+
+### Features
+
+* add m-formik-input-currency and adjust details of m-input-currency and m-input-currency-base ([bd87783](https://github.com/dynamic-framework/dynamic-ui/commit/bd877837518ef8b02ada37b43b9ccadb1b3c583c))
+* react re-export of scss and liquidParser ([57fe305](https://github.com/dynamic-framework/dynamic-ui/commit/57fe3058fd75fe199edd00bf3c759ce29bdbc279))
+* stepper ([21557e7](https://github.com/dynamic-framework/dynamic-ui/commit/21557e72bb54e91a83ab90dc0074f0b4efb57f04))
+
+
+### Bug Fixes
+
+* m-formik-input-currency component name ([05d4fee](https://github.com/dynamic-framework/dynamic-ui/commit/05d4fee6235d18ba2c8772c8741a5165b3861618))
+* remove default value of actionIcon on m-quick-action-button ([11aaf36](https://github.com/dynamic-framework/dynamic-ui/commit/11aaf36d1b8c26556561a42bd3606f41f19533e3))
+* remove duplicate dependencies ([86a6124](https://github.com/dynamic-framework/dynamic-ui/commit/86a61242951c14b1bd4e3a9c0bf2e745781e6ae5))
+* remove file ([5624c92](https://github.com/dynamic-framework/dynamic-ui/commit/5624c927f9e1c5b017e2268625ed45031df861ff))
+* remove file ([b4f5abf](https://github.com/dynamic-framework/dynamic-ui/commit/b4f5abfa05b40ce5e90892586eda75f741b4d9e9))
+* rename directories ([e2e5a2a](https://github.com/dynamic-framework/dynamic-ui/commit/e2e5a2a2152e731d21d579329f83211bdca6a09d))
+* type used in ComponentProps of MFormikInputCurrency story ([7d85164](https://github.com/dynamic-framework/dynamic-ui/commit/7d85164e6aef83d8bf87c7eed390e09fe1f9a2bd))
+* typo ([747985f](https://github.com/dynamic-framework/dynamic-ui/commit/747985fdeea3d9d80b21d7d97452ce29ad854e68))
+
+
+
 ## [1.1.5](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.1.4...@dynamic-framework/ui-react@1.1.5) (2023-08-04)
 
 **Note:** Version bump only for package @dynamic-framework/ui-react
