@@ -21,5 +21,6 @@ export { default as MListItem } from './MListItem';
 export { default as MListItemMovement } from './MListItemMovement';
 export { default as MStepper } from './MStepper';
 export { default as MFormikInputCurrency } from './MFormikInputCurrency';
+export { default as MCardAccount } from './MCardAccount';
 
 export type { TabOption } from './MTabs';
