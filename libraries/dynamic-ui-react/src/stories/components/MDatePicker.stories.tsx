@@ -50,6 +50,7 @@ const config: Meta<typeof MDatePicker> = {
       type: 'string',
       control: 'text',
       description: 'Format to display date',
+      defaultValue: 'dd/MM/yyyy',
     },
     selectsRange: {
       type: 'boolean',
@@ -104,11 +105,46 @@ type Story = StoryObj<typeof MDatePicker>;
 
 const MDatePickerBase = (props: ComponentProps<typeof MDatePicker>) => {
   const [date, setDate] = useState<string>(DateTime.now().toISO());
+  const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+    if (value) {
+      setDate(DateTime.fromJSDate(value as Date).toISODate());
+    }
+  };
+
   return (
     <MDatePicker
       {...props}
       date={date}
-      setDate={(value) => setDate(value as string)}
+      dateFormat="dd/MM/yyyy"
+      setDate={(value) => handleDate(value)}
+    />
+  );
+};
+
+const MDatePickerRange = (props: ComponentProps<typeof MDatePicker>) => {
+  const [startDate, setStartDate] = useState<string | null>(DateTime.now().toISO());
+  const [endDate, setEndDate] = useState<string | null>(null);
+
+  const handleChange = (value: Date | [Date | null, Date | null] | null) => {
+    const [newStartDate, newEndDate] = value as Array<Date>;
+    setStartDate(DateTime.fromJSDate(newStartDate).toISODate());
+    setEndDate(DateTime.fromJSDate(newEndDate).toISODate());
+  };
+
+  return (
+    <MDatePicker
+      {...props}
+      {...startDate && {
+        selected: DateTime.fromISO(startDate).toJSDate(),
+        startDate: DateTime.fromISO(startDate).toJSDate(),
+      }}
+      {...endDate && {
+        endDate: DateTime.fromISO(endDate).toJSDate(),
+      }}
+      setDate={handleChange}
+      selectsRange
+      dateFormat="dd/MM/yyyy"
+      inline
     />
   );
 };
@@ -122,7 +158,7 @@ export const Default: Story = {
   },
 };
 
-export const Open: Story = {
+export const Inline: Story = {
   render: (args) => (
     <MDatePickerBase {...args} />
   ),
@@ -136,6 +172,48 @@ export const WithTime: Story = {
     <MDatePickerBase {...args} />
   ),
   args: {
+    inline: true,
     showTimeInput: true,
+  },
+};
+
+export const MonthPicker: Story = {
+  render: (args) => (
+    <MDatePickerBase {...args} />
+  ),
+  args: {
+    inline: true,
+    showMonthYearPicker: true,
+  },
+};
+
+export const DateRange: Story = {
+  render: (args) => (
+    <MDatePickerRange {...args} />
+  ),
+  args: {
+    inline: true,
+    selectsRange: true,
+  },
+};
+
+export const DateRangeWithMonthSelector: Story = {
+  render: (args) => (
+    <MDatePickerRange {...args} />
+  ),
+  args: {
+    inline: true,
+    selectsRange: true,
+    withMonthSelector: true,
+  },
+};
+
+export const WithMonthSelector: Story = {
+  render: (args) => (
+    <MDatePickerBase {...args} />
+  ),
+  args: {
+    inline: true,
+    withMonthSelector: true,
   },
 };
