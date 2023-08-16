@@ -65,8 +65,8 @@ importers:
         specifier: ^27.0.3
         version: 27.5.2
       '@types/luxon':
-        specifier: ~3.0.1
-        version: 3.0.2
+        specifier: ~3.2.1
+        version: 3.2.2
       '@types/node':
         specifier: ^18.7.1
         version: 18.11.9
@@ -113,8 +113,8 @@ importers:
         specifier: ^9.39.2
         version: 9.42.1
       luxon:
-        specifier: ~3.0.3
-        version: 3.0.4
+        specifier: ~3.2.1
+        version: 3.2.1
       postcss-cli:
         specifier: ^10.1.0
         version: 10.1.0(postcss@8.4.23)
@@ -138,7 +138,7 @@ importers:
     dependencies:
       '@dynamic-framework/ui':
         specifier: '*'
-        version: link:../dynamic-ui
+        version: 1.3.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
       '@ngneat/content-loader':
         specifier: ~7.0.0
         version: 7.0.0(@angular/core@13.3.11)
@@ -179,9 +179,18 @@ importers:
 
   libraries/dynamic-ui-react:
     dependencies:
+      '@dynamic-framework/ui':
+        specifier: ^1.2.0
+        version: 1.3.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.2.1)
       '@floating-ui/react':
         specifier: ^0.24.1
         version: 0.24.1(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
+      '@splidejs/react-splide':
+        specifier: ^0.7.12
+        version: 0.7.12
+      '@splidejs/splide':
+        specifier: ^4.1.4
+        version: 4.1.4
       axios:
         specifier: ^1.1.2
         version: 1.1.3
@@ -206,6 +215,9 @@ importers:
       react-responsive-pagination:
         specifier: ^2.2.1
         version: 2.2.2(react-dom@18.2.0)(react@18.2.0)
+      yup:
+        specifier: ^1.2.0
+        version: 1.2.0
     devDependencies:
       '@babel/core':
         specifier: ^7.19.3
@@ -219,9 +231,6 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.21.0
         version: 7.21.0(@babel/core@7.21.3)
-      '@dynamic-framework/ui':
-        specifier: ^1.2.0
-        version: link:../dynamic-ui
       '@mdx-js/react':
         specifier: ^2.3.0
         version: 2.3.0(react@18.2.0)
@@ -271,8 +280,8 @@ importers:
         specifier: ^4.3.7
         version: 4.3.7
       '@types/luxon':
-        specifier: ~3.0.1
-        version: 3.0.2
+        specifier: ~3.2.1
+        version: 3.2.2
       '@types/node':
         specifier: ^15.12.2
         version: 15.14.9
@@ -340,8 +349,8 @@ importers:
         specifier: ^12.4.1
         version: 12.5.0
       luxon:
-        specifier: ~3.0.3
-        version: 3.0.4
+        specifier: ~3.2.1
+        version: 3.2.1
       postcss-cli:
         specifier: ^10.1.0
         version: 10.1.0(postcss@8.4.23)
@@ -389,7 +398,7 @@ importers:
     dependencies:
       '@dynamic-framework/ui':
         specifier: '*'
-        version: link:../dynamic-ui
+        version: 1.3.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
       '@vuepic/vue-datepicker':
         specifier: ~3.3.1
         version: 3.3.1(vue@3.2.41)
@@ -611,10 +620,10 @@ importers:
     dependencies:
       '@dynamic-framework/ui':
         specifier: ^1.1.3
-        version: link:../../libraries/dynamic-ui
+        version: 1.3.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
       '@dynamic-framework/ui-react':
         specifier: ^1.1.4
-        version: link:../../libraries/dynamic-ui-react
+        version: 1.2.0(@types/react@18.0.24)(formik@2.2.9)(html2canvas@1.4.1)(liquidjs@9.42.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0)
       '@reduxjs/toolkit':
         specifier: ^1.8.4
         version: 1.9.5(react-redux@8.1.2)(react@18.2.0)
@@ -2863,6 +2872,77 @@ packages:
     resolution: {integrity: sha512-ws57AidsDvREKrZKYffXddNkyaF14iHNHm8VQnZH6t99E8gczjNN0GpvcGny0imC80yQ0tHz1xVUKk/KFQSUyA==}
     engines: {node: '>=10.0.0'}
     dev: true
+
+  /@dynamic-framework/ui-react@1.2.0(@types/react@18.0.24)(formik@2.2.9)(html2canvas@1.4.1)(liquidjs@9.42.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0):
+    resolution: {integrity: sha512-taHSeV6t31r3bm0CUFaoqb7NOmdnthKtORVGRf8q/q/x1BBBzZZUKtq2XH7vXgKPk//V1G3LPth2dW12F0SQWQ==}
+    peerDependencies:
+      formik: ^2.2.9
+      html2canvas: ^1.4.1
+      luxon: ~3.0.3
+      react: ^18.1.0
+      react-dom: ^18.1.0
+      react-i18next: ~11.18.3
+      react-toastify: ~9.0.8
+    dependencies:
+      '@dynamic-framework/ui': 1.3.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
+      '@floating-ui/react': 0.24.1(@types/react@18.0.24)(react-dom@18.2.0)(react@18.2.0)
+      '@splidejs/react-splide': 0.7.12
+      '@splidejs/splide': 4.1.4
+      axios: 1.1.3
+      classnames: 2.3.2
+      date-fns: 2.29.3
+      formik: 2.2.9(react@18.2.0)
+      html2canvas: 1.4.1
+      i18next: 21.9.2
+      luxon: 3.0.4
+      react: 18.2.0
+      react-content-loader: 6.2.0(react@18.2.0)
+      react-datepicker: 4.8.0(react-dom@18.2.0)(react@18.2.0)
+      react-dom: 18.2.0(react@18.2.0)
+      react-dropzone: 14.2.3(react@18.2.0)
+      react-i18next: 11.18.6(i18next@21.9.2)(react-dom@18.2.0)(react@18.2.0)
+      react-responsive-pagination: 2.2.2(react-dom@18.2.0)(react@18.2.0)
+      react-toastify: 9.0.8(react-dom@18.2.0)(react@18.2.0)
+      yup: 1.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - debug
+      - liquidjs
+    dev: false
+
+  /@dynamic-framework/ui@1.3.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4):
+    resolution: {integrity: sha512-8hSUUDojZ747NaAjzebLhog2FnVTLNsuYfVdNC+KqqVIxQk6cM86ueFsdVnJdpVsCK3zdVau1PGlvAUaxCH5iQ==}
+    peerDependencies:
+      axios: ^1.1.2
+      liquidjs: ^9.39.2
+      luxon: ~3.0.3
+    dependencies:
+      '@popperjs/core': 2.11.7
+      '@stencil/core': 3.3.0
+      '@stencil/store': 2.0.7(@stencil/core@3.3.0)
+      axios: 1.1.3
+      bootstrap: 5.3.0(@popperjs/core@2.11.7)
+      currency.js: 2.0.4
+      liquidjs: 9.42.1
+      luxon: 3.0.4
+    dev: false
+
+  /@dynamic-framework/ui@1.3.0(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.2.1):
+    resolution: {integrity: sha512-8hSUUDojZ747NaAjzebLhog2FnVTLNsuYfVdNC+KqqVIxQk6cM86ueFsdVnJdpVsCK3zdVau1PGlvAUaxCH5iQ==}
+    peerDependencies:
+      axios: ^1.1.2
+      liquidjs: ^9.39.2
+      luxon: ~3.0.3
+    dependencies:
+      '@popperjs/core': 2.11.7
+      '@stencil/core': 3.3.0
+      '@stencil/store': 2.0.7(@stencil/core@3.3.0)
+      axios: 1.1.3
+      bootstrap: 5.3.0(@popperjs/core@2.11.7)
+      currency.js: 2.0.4
+      liquidjs: 9.42.1
+      luxon: 3.2.1
+    dev: false
 
   /@emotion/use-insertion-effect-with-fallbacks@1.0.0(react@18.2.0):
     resolution: {integrity: sha512-1eEgUGmkaljiBnRMTdksDV1W4kUnmwgp7X9G8B++9GYwl1lUdqSndSriIrTJ0N7LQaoauY9JJ2yhiOYK5+NI4A==}
@@ -5396,6 +5476,16 @@ packages:
       '@sinonjs/commons': 1.8.4
     dev: true
 
+  /@splidejs/react-splide@0.7.12:
+    resolution: {integrity: sha512-UfXH+j47jsMc4x5HA/aOwuuHPqn6y9+ZTNYPWDRD8iLKvIVMZlzq2unjUEvyDAU+TTVPZOXkG2Ojeoz0P4AkZw==}
+    dependencies:
+      '@splidejs/splide': 4.1.4
+    dev: false
+
+  /@splidejs/splide@4.1.4:
+    resolution: {integrity: sha512-5I30evTJcAJQXt6vJ26g2xEkG+l1nXcpEw4xpKh0/FWQ8ozmAeTbtniVtVmz2sH1Es3vgfC4SS8B2X4o5JMptA==}
+    dev: false
+
   /@stencil/angular-output-target@0.7.1(@stencil/core@3.3.0):
     resolution: {integrity: sha512-lxJbCAbyAQVAKGgEpNTjSF7GZZszbrJnNdNVgzuD1hLRFJyElA6kUSL0GQrZMbiPG5lC/cYdbQwpyWHX4xN8mw==}
     peerDependencies:
@@ -7060,6 +7150,10 @@ packages:
 
   /@types/luxon@3.0.2:
     resolution: {integrity: sha512-HM2OVWckUMmXbWYZufmWT2XMURGDZ6XbyNyQ+Lx+gCFGFqbZaIjsz7b+AGeGP/AuVYHBiuGY+wXfweP1RremnA==}
+    dev: true
+
+  /@types/luxon@3.2.2:
+    resolution: {integrity: sha512-CuF9hIlsxGpJO4EztrW23/q1L9ctQfb5JM9mnLCJhhA8z81K2b4LTVjQYySXWhFV5SMyUsPYH/IcvvXDCKwa2g==}
     dev: true
 
   /@types/mdx@2.0.3:
@@ -16811,6 +16905,11 @@ packages:
   /luxon@3.0.4:
     resolution: {integrity: sha512-aV48rGUwP/Vydn8HT+5cdr26YYQiUZ42NM6ToMoaGKwYfWbfLeRkEu1wXWMHBZT6+KyLfcbbtVcoQFCbbPjKlw==}
     engines: {node: '>=12'}
+    dev: false
+
+  /luxon@3.2.1:
+    resolution: {integrity: sha512-QrwPArQCNLAKGO/C+ZIilgIuDnEnKx5QYODdDtbFaxzsbZcc/a7WFq7MhsVYgRlwawLtvOUESTlfJ+hc/USqPg==}
+    engines: {node: '>=12'}
 
   /lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
@@ -19528,6 +19627,10 @@ packages:
       object-assign: 4.1.1
       react-is: 16.13.1
 
+  /property-expr@2.0.5:
+    resolution: {integrity: sha512-IJUkICM5dP5znhCckHSv30Q4b5/JA5enCtkRHYaOVOAocnH/1BQEYTC5NMfT3AVl/iXKdr3aqQbQn9DxyWknwA==}
+    dev: false
+
   /proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
     dev: true
@@ -22216,6 +22319,10 @@ packages:
     resolution: {integrity: sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==}
     dev: true
 
+  /tiny-case@1.0.3:
+    resolution: {integrity: sha512-Eet/eeMhkO6TX8mnUteS9zgPbUMQa4I6Kkp5ORiBD5476/m+PIRiumP5tmh5ioJpH7k51Kehawy2UDfsnxxY8Q==}
+    dev: false
+
   /tiny-warning@1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
 
@@ -22287,6 +22394,10 @@ packages:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
     engines: {node: '>=0.6'}
     dev: true
+
+  /toposort@2.0.2:
+    resolution: {integrity: sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg==}
+    dev: false
 
   /tough-cookie@4.1.2:
     resolution: {integrity: sha512-G9fqXWoYFZgTc2z8Q5zaHy/vJMjm+WV0AkAeHxVCQiEB1b+dGvWzFW6QV07cY5jQ5gRkeid2qIkzkxUnmoQZUQ==}
@@ -22627,7 +22738,6 @@ packages:
   /type-fest@2.19.0:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
-    dev: true
 
   /type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
@@ -23998,6 +24108,15 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  /yup@1.2.0:
+    resolution: {integrity: sha512-PPqYKSAXjpRCgLgLKVGPA33v5c/WgEx3wi6NFjIiegz90zSwyMpvTFp/uGcVnnbx6to28pgnzp/q8ih3QRjLMQ==}
+    dependencies:
+      property-expr: 2.0.5
+      tiny-case: 1.0.3
+      toposort: 2.0.2
+      type-fest: 2.19.0
+    dev: false
 
   /zone.js@0.11.8:
     resolution: {integrity: sha512-82bctBg2hKcEJ21humWIkXRlLBBmrc3nN7DFh5LGGhcyycO2S7FN8NmdvlcKaGFDNVL4/9kFLmwmInTavdJERA==}

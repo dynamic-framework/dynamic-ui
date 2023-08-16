@@ -1,0 +1,44 @@
+@import "@splidejs/splide/src/css/template/default/index";
+
+.m-carousel {
+  // Arrows
+  --#{$prefix}m-carousel-arrow-space: calc(var(--#{$prefix}ref-spacer-3) * -1);
+  // Pagination
+  --#{$prefix}m-carousel-pagination-bottom: calc(var(--#{$prefix}ref-spacer-3) * -1);
+  --#{$prefix}m-carousel-pagination-page-bg: var(--#{$prefix}secondary-100);
+  --#{$prefix}m-carousel-pagination-active-page-bg: var(--#{$prefix}secondary);
+  // :focus
+  --#{$prefix}m-carousel-focus-outline-color: var(--#{$prefix}focus-ring-color);
+
+  .m-carousel-arrows {
+
+    .m-carousel-arrow.m-carousel-arrow-prev {
+      left: var(--#{$prefix}m-carousel-arrow-space);
+    }
+    .m-carousel-arrow.m-carousel-arrow-next {
+      right: var(--#{$prefix}m-carousel-arrow-space);
+    }
+  }
+  .m-carousel-pagination {
+    bottom: var(--#{$prefix}m-carousel-pagination-bottom);
+
+    .m-carousel-pagination-page {
+      background-color: var(--#{$prefix}m-carousel-pagination-page-bg);
+
+      &.is-active {
+        background-color: var(--#{$prefix}m-carousel-pagination-active-page-bg);
+      }
+    }
+  }
+
+  &.splide.is-focus-in .m-carousel-arrow:focus,
+  &.splide.is-focus-in .m-carousel-pagination-page:focus {
+    outline-color: var(--#{$prefix}m-carousel-focus-outline-color);
+  }
+
+  .m-carousel-slide.is-active.is-visible {
+    > * {
+      // TODO: ASK. Exist active state on slide(?)
+    }
+  }
+}

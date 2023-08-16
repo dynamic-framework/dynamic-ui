@@ -9,6 +9,8 @@
   --#{$prefix}m-input-label-gap: #{$form-label-gap};
   // label hover
   --#{$prefix}m-input-label-focus-color: #{$form-label-focus-color};
+  // label if input has value
+  --#{$prefix}m-input-label-has-value-color: #{$form-label-has-value-color};
 
   // input group
   --#{$prefix}m-input-group-border-color: #{$input-group-border-color};
@@ -92,8 +94,14 @@
   }
 
   // not empty
-  &:has(.form-control:not(:placeholder-shown)) .input-group {
-    border-color: var(--#{$prefix}m-input-group-hover-border-color);
+  &:has(.form-control:not(:placeholder-shown, :focus)) {
+    .input-group {
+      border-color: var(--#{$prefix}m-input-group-hover-border-color);
+    }
+
+    label {
+      color: var(--#{$prefix}m-input-label-has-value-color);
+    }
   }
 
   // validation states

@@ -149,6 +149,16 @@ export class MInputCurrencyBase implements ComponentInterface {
    */
   @Event({ eventName: 'mChange' }) mChange!: EventEmitter<number>;
 
+  /**
+   * Emitted when the inputs bur
+   */
+  @Event({ eventName: 'mBlur' }) mBlur!: EventEmitter<number>;
+
+  /**
+   * Emitted when the inputs focus
+   */
+  @Event({ eventName: 'mFocus' }) mFocus!: EventEmitter<number>;
+
   @State() internalValueAsNumber?: number;
 
   @State() internalValueAsFormat?: string;
@@ -176,7 +186,7 @@ export class MInputCurrencyBase implements ComponentInterface {
       ? parseFloat(event.detail)
       : undefined;
     this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, { ...this.currencyOptions, symbol: '' }).format()
       : '';
     this.mChange.emit(this.internalValueAsNumber);
   };
@@ -186,16 +196,18 @@ export class MInputCurrencyBase implements ComponentInterface {
     this.internalType = 'text';
 
     this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, { ...this.currencyOptions, symbol: '' }).format()
       : '';
+    this.mBlur.emit(this.internalValueAsNumber);
   };
 
   private focusHandler = (event: CustomEvent) => {
     event.stopPropagation();
     this.internalType = 'number';
     this.internalValueAsFormat = this.internalValueAsNumber !== undefined
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, { ...this.currencyOptions, symbol: '' }).format()
       : '';
+    this.mFocus.emit(this.internalValueAsNumber);
   };
 
   private wheelHandler = (event: CustomEvent) => {
@@ -233,7 +245,7 @@ export class MInputCurrencyBase implements ComponentInterface {
   componentDidLoad() {
     this.internalType = 'text';
     this.internalValueAsFormat = (this.internalValueAsNumber !== undefined)
-      ? currency(this.internalValueAsNumber, this.currencyOptions).format()
+      ? currency(this.internalValueAsNumber, { ...this.currencyOptions, symbol: '' }).format()
       : '';
   }
 

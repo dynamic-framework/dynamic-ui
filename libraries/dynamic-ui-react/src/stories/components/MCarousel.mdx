@@ -1,0 +1,40 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as MCarouselStories from './MCarousel.stories';
+
+# Carousel
+
+Carousel of elements and components
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Splide](https://splidejs.com/)
++ [Splide React Integration](https://splidejs.com/integration/react-splide/)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                               | Type            | Description                   |
+  |--------------------------------------------------------|-----------------|-------------------------------|
+  | \`--${PREFIX_BS}m-carousel-arrow-space\`               | css length unit | Arrow separation              |
+  | \`--${PREFIX_BS}m-carousel-pagination-bottom\`         | css length unit | Pagination bottom separation  |
+  | \`--${PREFIX_BS}m-carousel-pagination-page-bg\`        | css color       | Background of dot page        |
+  | \`--${PREFIX_BS}m-carousel-pagination-active-page-bg\` | css color       | Background of active dot page |
+  | \`--${PREFIX_BS}m-carousel-focus-outline-color\`       | css color       | Color of focus ring           |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MCarouselStories} />
+
+<ArgTypes of={MCarouselStories} sort="requiredFirst" />
+
+<Stories />

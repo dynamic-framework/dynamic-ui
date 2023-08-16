@@ -288,7 +288,7 @@ export class MInputCurrencyBase {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['mChange', 'mBlur', 'mFocus']);
   }
 }
 
@@ -298,6 +298,14 @@ export declare interface MInputCurrencyBase extends Components.MInputCurrencyBas
    * Emitted when the inputs change
    */
   mChange: EventEmitter<CustomEvent<number>>;
+  /**
+   * Emitted when the inputs bur
+   */
+  mBlur: EventEmitter<CustomEvent<number>>;
+  /**
+   * Emitted when the inputs focus
+   */
+  mFocus: EventEmitter<CustomEvent<number>>;
 }
 
 

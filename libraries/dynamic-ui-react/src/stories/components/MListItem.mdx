@@ -1,0 +1,24 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as MListItemStories from './MListItem.stories';
+
+# List item
+
+List item for use within a [List](/docs/design-system-components-list--docs) component.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
+
+## Args
+<Meta of={MListItemStories} />
+
+<ArgTypes of={MListItemStories} sort="requiredFirst" />
+
+<Stories />

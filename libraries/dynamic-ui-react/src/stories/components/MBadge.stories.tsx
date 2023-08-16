@@ -4,7 +4,7 @@ import { MBadge } from '../../components';
 import { THEMES } from '../constants';
 
 const config: Meta<typeof MBadge> = {
-  title: 'Design System/Patterns/Badge',
+  title: 'Design System/Components/Badge',
   component: MBadge,
   argTypes: {
     text: {
