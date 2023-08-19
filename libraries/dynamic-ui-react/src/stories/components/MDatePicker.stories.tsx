@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import type { ComponentProps } from 'react';
 
 import { MDatePicker } from '../../components';
+import MMonthPicker from '../../components/MMonthPicker';
 
 const config: Meta<typeof MDatePicker> = {
   title: 'Design System/Alpha/Patterns/Datepicker',
@@ -121,6 +122,24 @@ const MDatePickerBase = (props: ComponentProps<typeof MDatePicker>) => {
   );
 };
 
+const MMonthPickerBase = (props: ComponentProps<typeof MMonthPicker>) => {
+  const [date, setDate] = useState<string>(DateTime.now().toISO());
+  const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+    if (value) {
+      setDate(DateTime.fromJSDate(value as Date).toISODate());
+    }
+  };
+
+  return (
+    <MMonthPicker
+      {...props}
+      date={date}
+      dateFormat="MM/yyyy"
+      setDate={(value) => handleDate(value)}
+    />
+  );
+};
+
 const MDatePickerRange = (props: ComponentProps<typeof MDatePicker>) => {
   const [startDate, setStartDate] = useState<string | null>(DateTime.now().toISO());
   const [endDate, setEndDate] = useState<string | null>(null);
@@ -158,6 +177,16 @@ export const Default: Story = {
   },
 };
 
+export const DefaultWithMonth: Story = {
+  render: (args) => (
+    <MDatePickerBase {...args} />
+  ),
+  args: {
+    inline: false,
+    withMonthSelector: true,
+  },
+};
+
 export const Inline: Story = {
   render: (args) => (
     <MDatePickerBase {...args} />
@@ -177,13 +206,22 @@ export const WithTime: Story = {
   },
 };
 
-export const MonthPicker: Story = {
+export const WithMonthSelector: Story = {
   render: (args) => (
     <MDatePickerBase {...args} />
   ),
   args: {
     inline: true,
-    showMonthYearPicker: true,
+    withMonthSelector: true,
+  },
+};
+
+export const MonthPicker: Story = {
+  render: (args) => (
+    <MMonthPickerBase {...args} />
+  ),
+  args: {
+    inline: true,
   },
 };
 
@@ -204,16 +242,6 @@ export const DateRangeWithMonthSelector: Story = {
   args: {
     inline: true,
     selectsRange: true,
-    withMonthSelector: true,
-  },
-};
-
-export const WithMonthSelector: Story = {
-  render: (args) => (
-    <MDatePickerBase {...args} />
-  ),
-  args: {
-    inline: true,
     withMonthSelector: true,
   },
 };

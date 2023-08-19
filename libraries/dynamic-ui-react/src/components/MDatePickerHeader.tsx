@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { DateTime } from 'luxon';
-import DatePicker from 'react-datepicker';
-import { useState } from 'react';
 import { MButton } from './proxies';
+import MMonthPicker from './MMonthPicker';
 
 type Props = {
   monthDate: Date;
@@ -25,9 +24,6 @@ export default function MDatePickerHeader({
   nextMonthButtonDisabled,
   withMonthSelector,
 }: Props) {
-  // Review - Inner state month to set selected
-  const [selectedInnerDate, setSelectedInnerDate] = useState(new Date());
-
   return (
     <div className="d-flex align-items-center justify-content-center gap-4 fs-6">
       <MButton
@@ -38,23 +34,15 @@ export default function MDatePickerHeader({
         onMClick={decreaseMonth}
         isDisabled={prevMonthButtonDisabled}
       />
-      <DatePicker
+      <MMonthPicker
         {...!withMonthSelector && { readOnly: true }}
-        selected={selectedInnerDate}
-        showMonthYearPicker
-        calendarClassName="m-month-picker"
-        onChange={(value) => {
+        date={monthDate.toISOString()}
+        setDate={(value) => {
           if (value) {
-            changeMonth(value.getMonth());
-            changeYear(value.getFullYear());
-            setSelectedInnerDate(value);
+            changeMonth(DateTime.fromJSDate(value).month - 1);
+            changeYear(DateTime.fromJSDate(value).year);
           }
         }}
-        customInput={(
-          <p className="fw-bold">
-            {`${DateTime.fromJSDate(monthDate).monthLong} ${DateTime.fromJSDate(monthDate).year}`}
-          </p>
-        )}
       />
       <MButton
         iconStart="chevron-right"
