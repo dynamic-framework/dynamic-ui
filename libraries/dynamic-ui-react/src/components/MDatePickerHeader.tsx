@@ -25,7 +25,7 @@ export default function MDatePickerHeader({
   withMonthSelector,
 }: Props) {
   return (
-    <div className="d-flex align-items-center justify-content-center gap-4 fs-6">
+    <div className="d-flex align-items-center justify-content-between fs-6">
       <MButton
         iconStart="chevron-left"
         size="sm"

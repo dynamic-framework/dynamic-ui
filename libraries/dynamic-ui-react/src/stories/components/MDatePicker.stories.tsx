@@ -245,3 +245,15 @@ export const DateRangeWithMonthSelector: Story = {
     withMonthSelector: true,
   },
 };
+
+export const OnPortal: Story = {
+  render: (args) => (
+    <MDatePickerBase {...args} />
+  ),
+  args: {
+    inline: false,
+    withMonthSelector: true,
+    withPortal: true,
+    showTimeInput: true,
+  },
+};

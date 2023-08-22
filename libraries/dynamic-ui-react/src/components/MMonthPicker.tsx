@@ -3,10 +3,14 @@ import DatePicker, { ReactDatePickerProps, registerLocale } from 'react-datepick
 import { DateTime } from 'luxon';
 
 import es from 'date-fns/locale/es';
+import enUS from 'date-fns/locale/en-US';
+
+import { format } from 'date-fns';
 import { useLiquidContext } from '../contexts';
 import { MButton } from './proxies';
 
 registerLocale('es', es);
+registerLocale('en', enUS);
 
 type CalendarProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' > & {
   date: string;
@@ -20,7 +24,7 @@ export default function MMonthPicker({
 }: CalendarProps) {
   const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
   const { language } = useLiquidContext();
-  const lang = language === 'en' ? undefined : 'es';
+  const lang = language === 'en' ? enUS : es;
 
   return (
     <DatePicker
@@ -31,8 +35,8 @@ export default function MMonthPicker({
         setDate(value);
       }}
       customInput={(
-        <p className="fw-bold">
-          {`${DateTime.fromISO(date).monthLong} ${DateTime.fromISO(date).year}`}
+        <p className="fw-bold text-capitalize">
+          {`${format(new Date(date), 'MMMM', { locale: lang })} ${DateTime.fromISO(date).year}`}
         </p>
       )}
       renderCustomHeader={({
@@ -64,7 +68,6 @@ export default function MMonthPicker({
           />
         </div>
       )}
-      {...lang && { locale: lang }}
       {...props}
     />
   );
