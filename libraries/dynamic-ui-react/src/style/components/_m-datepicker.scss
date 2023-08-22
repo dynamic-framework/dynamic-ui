@@ -20,7 +20,7 @@
   --#{$prefix}m-datepicker-day-name-margin: 0;
   --#{$prefix}m-datepicker-day-name-size: 20px;
   --#{$prefix}m-datepicker-day-name-height: 20px;
-  --#{$prefix}m-datepicker-day-name-color: var(--bs-gray-500);
+  --#{$prefix}m-datepicker-day-name-color: var(--#{$prefix}gray-500);
 
   // Calendar variables
   --#{$prefix}m-datepicker-month-gap: .875rem;
@@ -44,7 +44,7 @@
   --#{$prefix}m-datepicker-day-in-range-color: var(--#{$prefix}dark);
   --#{$prefix}m-datepicker-day-in-range-bg: var(--#{$prefix}secondary-100);
 
-  --#{$prefix}m-datepicker-day-outside-month: var(--bs-gray-400);
+  --#{$prefix}m-datepicker-day-outside-month: var(--#{$prefix}gray-400);
 
   --#{$prefix}m-datepicker-day-today-font-weight: 400;
   --#{$prefix}m-datepicker-day-today-box-shadow: 0 0 0 2px inset var(--#{$prefix}secondary);
