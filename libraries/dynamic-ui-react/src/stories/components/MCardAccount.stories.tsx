@@ -53,7 +53,7 @@ export const Default: Story = {
   decorators: [
     (Story) => (
       <div
-        style={{ width: '216px' }}
+        style={{ width: '300px' }}
       >
         <Story />
       </div>

@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import classNames from 'classnames';
 import { MButton, MIcon } from './proxies';
+import MCard from './MCard';
+import MCardBody from './MCardBody';
 
 type Props = {
   className?: string;
@@ -25,13 +27,12 @@ export default function MCardAccount({
   onClickText,
 }: Props) {
   return (
-    <div className={classNames(
+    <MCard className={classNames(
       'm-card-account',
-      'card',
       className,
     )}
     >
-      <div className="card-body">
+      <MCardBody>
         <div className="d-flex gap-3 align-items-center">
           <MIcon
             icon={icon}
@@ -66,7 +67,7 @@ export default function MCardAccount({
             onMClick={onClick}
           />
         </div>
-      </div>
-    </div>
+      </MCardBody>
+    </MCard>
   );
 }
