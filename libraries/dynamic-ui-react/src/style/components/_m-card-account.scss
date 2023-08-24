@@ -1,0 +1,15 @@
+.m-card-account {
+  // Card
+  --#{$prefix}card-border-width: 0px;
+  --#{$prefix}card-spacer-y: #{$spacer};
+  --#{$prefix}card-spacer-x: #{$spacer};
+  --#{$prefix}card-color: var(--#{$prefix}body-color);
+  // Card body
+  --#{$prefix}card-body-gap: #{$spacer};
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--#{$prefix}card-body-gap);
+  }
+}
