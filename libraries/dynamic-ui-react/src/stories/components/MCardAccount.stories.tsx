@@ -37,7 +37,7 @@ const config: Meta<typeof MCardAccount> = {
       type: 'string',
     },
     onClick: {
-      type: 'function',
+      action: 'onClick',
     },
     className: {
       control: 'text',
@@ -70,6 +70,5 @@ export const Default: Story = {
     balance: '$50.000.000',
     balanceText: 'Available balance',
     onClickText: 'Details',
-    onClick() { console.log('Click'); },
   },
 };

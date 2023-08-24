@@ -50,7 +50,7 @@ export default function MCardAccount({
           </div>
         </div>
         <div className="d-block">
-          <p className="fw-bold fs-6">
+          <p className="fw-bold fs-6 text-body">
             {balance}
           </p>
           <small className="text-gray-700">
