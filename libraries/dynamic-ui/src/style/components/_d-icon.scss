@@ -1,0 +1,32 @@
+.d-icon {
+  --#{$prefix}icon-color: var(--#{$prefix}icon-component-color, inherit);
+  --#{$prefix}icon-bg-color: var(--#{$prefix}icon-component-bg-color, inherit);
+  --#{$prefix}icon-size: var(--#{$prefix}icon-component-size);
+  --#{$prefix}icon-padding: var(--#{$prefix}icon-component-padding);
+  --#{$prefix}icon-loading-duration: var(--#{$prefix}icon-component-loading-duration);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--#{$prefix}icon-size);
+  height: var(--#{$prefix}icon-size);
+  padding: var(--#{$prefix}icon-padding);
+  font-size: var(--#{$prefix}icon-size);
+  color: var(--#{$prefix}icon-color);
+  background-color: var(--#{$prefix}icon-bg-color);
+  border-radius: var(--#{$prefix}icon-padding);
+}
+
+.d-icon-loading {
+  animation: loading-icon var(--#{$prefix}icon-loading-duration) infinite linear;
+}
+
+@keyframes loading-icon {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

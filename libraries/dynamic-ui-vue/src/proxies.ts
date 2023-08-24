@@ -20,6 +20,22 @@ export const DAlert = /*@__PURE__*/ defineContainer<JSX.DAlert>('d-alert', undef
 ]);
 
 
+export const DIcon = /*@__PURE__*/ defineContainer<JSX.DIcon>('d-icon', undefined, [
+  'icon',
+  'theme',
+  'innerClass',
+  'size',
+  'isLoading',
+  'loadingDuration',
+  'hasCircle',
+  'circleSize',
+  'color',
+  'backgroundColor',
+  'familyClass',
+  'familyPrefix'
+]);
+
+
 export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undefined, [
   'theme',
   'text',
@@ -56,22 +72,6 @@ export const MChip = /*@__PURE__*/ defineContainer<JSX.MChip>('m-chip', undefine
   'iconFamilyPrefix',
   'showClose',
   'mClose'
-]);
-
-
-export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefined, [
-  'icon',
-  'theme',
-  'innerClass',
-  'size',
-  'isLoading',
-  'loadingDuration',
-  'hasCircle',
-  'circleSize',
-  'color',
-  'backgroundColor',
-  'familyClass',
-  'familyPrefix'
 ]);
 
 

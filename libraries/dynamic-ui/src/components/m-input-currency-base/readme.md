@@ -56,7 +56,7 @@
 ```mermaid
 graph TD;
   m-input-currency-base --> m-input
-  m-input --> m-icon
+  m-input --> d-icon
   style m-input-currency-base fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MIcon } from '../m-icon/m-icon';
+import { DIcon } from '../d-icon/d-icon';
 
 import { MInputCounter } from './m-input-counter';
 
@@ -13,7 +13,7 @@ it('should render base counter', async () => {
     value: 0,
   };
   const page = await newSpecPage({
-    components: [MInputCounter, MIcon],
+    components: [MInputCounter, DIcon],
     template: () => (
       <m-counter
         {...props}

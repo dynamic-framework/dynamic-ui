@@ -43,7 +43,7 @@
 ```mermaid
 graph TD;
   m-input-search --> m-input
-  m-input --> m-icon
+  m-input --> d-icon
   style m-input-search fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

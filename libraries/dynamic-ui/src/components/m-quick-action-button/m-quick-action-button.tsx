@@ -122,7 +122,7 @@ export class MQuickActionButton implements ComponentInterface {
         {...!this.actionLinkText && { onClick: this.globalClickHandler }}
       >
         {this.representativeIcon && (
-          <m-icon
+          <d-icon
             class="m-quick-action-button-representative-icon"
             size={(
               this.representativeIconHasCircle
@@ -176,7 +176,7 @@ export class MQuickActionButton implements ComponentInterface {
           />
         )}
         {(this.actionIcon && !this.actionLinkText) && (
-          <m-icon
+          <d-icon
             class="m-quick-action-button-action-icon"
             icon={this.actionIcon}
             size={`var(--${PREFIX_BS}m-quick-action-button-action-icon-size)`}

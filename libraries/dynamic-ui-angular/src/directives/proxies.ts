@@ -7,10 +7,10 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 import type { Components } from '@dynamic-framework/ui/components';
 
 import { defineCustomElement as defineDAlert } from '@dynamic-framework/ui/components/d-alert.js';
+import { defineCustomElement as defineDIcon } from '@dynamic-framework/ui/components/d-icon.js';
 import { defineCustomElement as defineMBadge } from '@dynamic-framework/ui/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@dynamic-framework/ui/components/m-button.js';
 import { defineCustomElement as defineMChip } from '@dynamic-framework/ui/components/m-chip.js';
-import { defineCustomElement as defineMIcon } from '@dynamic-framework/ui/components/m-icon.js';
 import { defineCustomElement as defineMInput } from '@dynamic-framework/ui/components/m-input.js';
 import { defineCustomElement as defineMInputCheck } from '@dynamic-framework/ui/components/m-input-check.js';
 import { defineCustomElement as defineMInputCounter } from '@dynamic-framework/ui/components/m-input-counter.js';
@@ -54,6 +54,29 @@ export declare interface DAlert extends Components.DAlert {
    */
   eventClose: EventEmitter<CustomEvent<any>>;
 }
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineDIcon,
+  inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme']
+})
+@Component({
+  selector: 'd-icon',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme'],
+})
+export class DIcon {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface DIcon extends Components.DIcon {}
 
 
 @ProxyCmp({
@@ -135,29 +158,6 @@ export declare interface MChip extends Components.MChip {
    */
   mClose: EventEmitter<CustomEvent<any>>;
 }
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMIcon,
-  inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme']
-})
-@Component({
-  selector: 'm-icon',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme'],
-})
-export class MIcon {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface MIcon extends Components.MIcon {}
 
 
 @ProxyCmp({

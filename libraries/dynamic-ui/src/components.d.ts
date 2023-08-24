@@ -48,6 +48,56 @@ export namespace Components {
          */
         "type": AlertType;
     }
+    interface DIcon {
+        /**
+          * Icon background color in css color unit or var
+         */
+        "backgroundColor"?: string;
+        /**
+          * Circle size in css length unit
+         */
+        "circleSize"?: string;
+        /**
+          * Icon color in css color unit or var
+         */
+        "color"?: string;
+        /**
+          * Change the family class to use another icon suite
+         */
+        "familyClass"?: string;
+        /**
+          * Change the family prefix to use another icon suite
+         */
+        "familyPrefix"?: string;
+        /**
+          * Add circle around the icon
+         */
+        "hasCircle": boolean;
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon": string;
+        /**
+          * Icon class
+         */
+        "innerClass"?: string;
+        /**
+          * Enable loading animation
+         */
+        "isLoading": boolean;
+        /**
+          * Loading animation duration, in seconds
+         */
+        "loadingDuration": number;
+        /**
+          * Size of the icon in css length unit
+         */
+        "size"?: string;
+        /**
+          * Theme of the icon
+         */
+        "theme"?: string;
+    }
     interface MBadge {
         /**
           * Enable dot mode
@@ -153,56 +203,6 @@ export namespace Components {
           * The theme to use.
          */
         "theme": string;
-    }
-    interface MIcon {
-        /**
-          * Icon background color in css color unit or var
-         */
-        "backgroundColor"?: string;
-        /**
-          * Circle size in css length unit
-         */
-        "circleSize"?: string;
-        /**
-          * Icon color in css color unit or var
-         */
-        "color"?: string;
-        /**
-          * Change the family class to use another icon suite
-         */
-        "familyClass"?: string;
-        /**
-          * Change the family prefix to use another icon suite
-         */
-        "familyPrefix"?: string;
-        /**
-          * Add circle around the icon
-         */
-        "hasCircle": boolean;
-        /**
-          * Name of icon to use (in kebab-case)
-         */
-        "icon": string;
-        /**
-          * Icon class
-         */
-        "innerClass"?: string;
-        /**
-          * Enable loading animation
-         */
-        "isLoading": boolean;
-        /**
-          * Loading animation duration, in seconds
-         */
-        "loadingDuration": number;
-        /**
-          * Size of the icon in css length unit
-         */
-        "size"?: string;
-        /**
-          * Theme of the icon
-         */
-        "theme"?: string;
     }
     interface MInput {
         /**
@@ -1156,6 +1156,12 @@ declare global {
         prototype: HTMLDAlertElement;
         new (): HTMLDAlertElement;
     };
+    interface HTMLDIconElement extends Components.DIcon, HTMLStencilElement {
+    }
+    var HTMLDIconElement: {
+        prototype: HTMLDIconElement;
+        new (): HTMLDIconElement;
+    };
     interface HTMLMBadgeElement extends Components.MBadge, HTMLStencilElement {
     }
     var HTMLMBadgeElement: {
@@ -1173,12 +1179,6 @@ declare global {
     var HTMLMChipElement: {
         prototype: HTMLMChipElement;
         new (): HTMLMChipElement;
-    };
-    interface HTMLMIconElement extends Components.MIcon, HTMLStencilElement {
-    }
-    var HTMLMIconElement: {
-        prototype: HTMLMIconElement;
-        new (): HTMLMIconElement;
     };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
@@ -1278,10 +1278,10 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "d-alert": HTMLDAlertElement;
+        "d-icon": HTMLDIconElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-chip": HTMLMChipElement;
-        "m-icon": HTMLMIconElement;
         "m-input": HTMLMInputElement;
         "m-input-check": HTMLMInputCheckElement;
         "m-input-counter": HTMLMInputCounterElement;
@@ -1330,6 +1330,56 @@ declare namespace LocalJSX {
           * Alert type
          */
         "type"?: AlertType;
+    }
+    interface DIcon {
+        /**
+          * Icon background color in css color unit or var
+         */
+        "backgroundColor"?: string;
+        /**
+          * Circle size in css length unit
+         */
+        "circleSize"?: string;
+        /**
+          * Icon color in css color unit or var
+         */
+        "color"?: string;
+        /**
+          * Change the family class to use another icon suite
+         */
+        "familyClass"?: string;
+        /**
+          * Change the family prefix to use another icon suite
+         */
+        "familyPrefix"?: string;
+        /**
+          * Add circle around the icon
+         */
+        "hasCircle"?: boolean;
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon": string;
+        /**
+          * Icon class
+         */
+        "innerClass"?: string;
+        /**
+          * Enable loading animation
+         */
+        "isLoading"?: boolean;
+        /**
+          * Loading animation duration, in seconds
+         */
+        "loadingDuration"?: number;
+        /**
+          * Size of the icon in css length unit
+         */
+        "size"?: string;
+        /**
+          * Theme of the icon
+         */
+        "theme"?: string;
     }
     interface MBadge {
         /**
@@ -1442,56 +1492,6 @@ declare namespace LocalJSX {
         "text"?: string;
         /**
           * The theme to use.
-         */
-        "theme"?: string;
-    }
-    interface MIcon {
-        /**
-          * Icon background color in css color unit or var
-         */
-        "backgroundColor"?: string;
-        /**
-          * Circle size in css length unit
-         */
-        "circleSize"?: string;
-        /**
-          * Icon color in css color unit or var
-         */
-        "color"?: string;
-        /**
-          * Change the family class to use another icon suite
-         */
-        "familyClass"?: string;
-        /**
-          * Change the family prefix to use another icon suite
-         */
-        "familyPrefix"?: string;
-        /**
-          * Add circle around the icon
-         */
-        "hasCircle"?: boolean;
-        /**
-          * Name of icon to use (in kebab-case)
-         */
-        "icon": string;
-        /**
-          * Icon class
-         */
-        "innerClass"?: string;
-        /**
-          * Enable loading animation
-         */
-        "isLoading"?: boolean;
-        /**
-          * Loading animation duration, in seconds
-         */
-        "loadingDuration"?: number;
-        /**
-          * Size of the icon in css length unit
-         */
-        "size"?: string;
-        /**
-          * Theme of the icon
          */
         "theme"?: string;
     }
@@ -2473,10 +2473,10 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "d-alert": DAlert;
+        "d-icon": DIcon;
         "m-badge": MBadge;
         "m-button": MButton;
         "m-chip": MChip;
-        "m-icon": MIcon;
         "m-input": MInput;
         "m-input-check": MInputCheck;
         "m-input-counter": MInputCounter;
@@ -2500,10 +2500,10 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "d-alert": LocalJSX.DAlert & JSXBase.HTMLAttributes<HTMLDAlertElement>;
+            "d-icon": LocalJSX.DIcon & JSXBase.HTMLAttributes<HTMLDIconElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-chip": LocalJSX.MChip & JSXBase.HTMLAttributes<HTMLMChipElement>;
-            "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;
             "m-input-counter": LocalJSX.MInputCounter & JSXBase.HTMLAttributes<HTMLMInputCounterElement>;

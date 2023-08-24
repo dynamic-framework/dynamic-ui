@@ -166,7 +166,7 @@ export class MInputSelect implements ComponentInterface {
           <label htmlFor={this.mId}>
             {this.label}
             {this.labelIcon && (
-              <m-icon
+              <d-icon
                 class="m-input-icon"
                 icon={this.labelIcon}
                 size={`var(--${PREFIX_BS}m-input-label-font-size)`}
@@ -192,7 +192,7 @@ export class MInputSelect implements ComponentInterface {
                 disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconStart && (
-                  <m-icon
+                  <d-icon
                     class="m-input-icon"
                     icon={this.iconStart}
                     familyClass={this.iconStartFamilyClass}
@@ -232,7 +232,7 @@ export class MInputSelect implements ComponentInterface {
                 disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconEnd && (
-                  <m-icon
+                  <d-icon
                     class="m-input-icon"
                     icon={this.iconEnd}
                     familyClass={this.iconEndFamilyClass}

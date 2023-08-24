@@ -7,7 +7,7 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { MIcon } from './proxies';
+import { DIcon } from './proxies';
 
 type Props = PropsWithChildren<{
   id?: string;
@@ -54,7 +54,7 @@ export default function MCollapse({
         <div className="flex-grow-1">
           {Component}
         </div>
-        <MIcon
+        <DIcon
           color={`var(--${PREFIX_BS}gray)`}
           size={`var(--${PREFIX_BS}ref-fs-small)`}
           icon={toggle ? 'chevron-up' : 'chevron-down'}

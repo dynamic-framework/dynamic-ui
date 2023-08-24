@@ -5,16 +5,16 @@ import {
   ICON_FAMILY_CLASS,
 } from '@dynamic-framework/ui';
 
-import { MIcon } from '../../components';
+import { DIcon } from '../../components';
 import {
   ALL_COLORS_WITH_EMPTY,
   FIRST_ICON,
   ICONS,
 } from '../constants';
 
-const meta: Meta<typeof MIcon> = {
+const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
-  component: MIcon,
+  component: DIcon,
   argTypes: {
     icon: {
       control: 'select',
@@ -66,7 +66,7 @@ const meta: Meta<typeof MIcon> = {
       type: 'string',
       control: 'text',
       description: 'Circle size in css length unit',
-      table: { defaultValue: { summary: `calc(var(--${PREFIX_BS}m-icon-component-size) * 2)` } },
+      table: { defaultValue: { summary: `calc(var(--${PREFIX_BS}icon-component-size) * 2)` } },
     },
     color: {
       type: 'string',
@@ -92,7 +92,7 @@ const meta: Meta<typeof MIcon> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MIcon>;
+type Story = StoryObj<typeof DIcon>;
 
 export const Default: Story = {
   args: {
@@ -109,6 +109,6 @@ export const Circle: Story = {
     size: '120px',
     hasCircle: true,
     isLoading: false,
-    circleSize: `calc(var(--${PREFIX_BS}m-icon-component-size) * 1)`,
+    circleSize: `calc(var(--${PREFIX_BS}icon-component-size) * 1)`,
   },
 };

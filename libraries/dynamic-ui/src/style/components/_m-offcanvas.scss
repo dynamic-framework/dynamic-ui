@@ -31,8 +31,8 @@
     background: transparent;
     border: 0;
 
-    .m-icon {
-      --#{$prefix}m-icon-size: #{$spacer-3};
+    .d-icon {
+      --#{$prefix}icon-size: #{$spacer-3};
     }
   }
 

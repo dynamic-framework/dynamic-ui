@@ -1,6 +1,6 @@
 import { Trans } from 'react-i18next';
 import { ReactElement } from 'react';
-import { MIcon } from '../proxies';
+import { DIcon } from '../proxies';
 
 type Props = {
   title: string;
@@ -25,7 +25,7 @@ export default function MSummaryCard({
       <p className="fs-8">{description}</p>
       {/* TODO: Replace with new alert version */}
       <div className="bg-white rounded p-4 d-flex gap-3 shadow-sm text-gray-700 fs-8">
-        <MIcon
+        <DIcon
           icon={icon}
           theme={iconTheme}
           size={iconSize}

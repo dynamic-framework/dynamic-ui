@@ -59,7 +59,7 @@ export class MChip implements ComponentInterface {
       <span class={this.generateClasses()}>
         {this.icon && (
           <div class="m-badge-icon-container">
-            <m-icon
+            <d-icon
               icon={this.icon}
               familyClass={this.iconFamilyClass}
               familyPrefix={this.iconFamilyPrefix}
@@ -73,7 +73,7 @@ export class MChip implements ComponentInterface {
             class="m-badge-icon-container"
             onClick={this.closeHandler}
           >
-            <m-icon icon="x-lg" />
+            <d-icon icon="x-lg" />
           </button>
         )}
       </span>

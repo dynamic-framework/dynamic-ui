@@ -131,7 +131,7 @@ export class MButton implements ComponentInterface {
         onClick={this.clickHandler}
       >
         {this.iconStart && (
-          <m-icon
+          <d-icon
             icon={this.iconStart}
             familyClass={this.iconStartFamilyClass}
             familyPrefix={this.iconStartFamilyPrefix}
@@ -150,7 +150,7 @@ export class MButton implements ComponentInterface {
           </span>
         )}
         {(this.iconEnd) && (
-          <m-icon
+          <d-icon
             icon={this.iconEnd}
             familyClass={this.iconEndFamilyClass}
             familyPrefix={this.iconEndFamilyPrefix}

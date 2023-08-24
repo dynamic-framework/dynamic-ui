@@ -31,12 +31,12 @@
 
 ### Depends on
 
-- [m-icon](../m-icon)
+- [d-icon](../d-icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  m-modal --> m-icon
+  m-modal --> d-icon
   style m-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

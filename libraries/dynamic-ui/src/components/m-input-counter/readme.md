@@ -52,7 +52,7 @@
 ```mermaid
 graph TD;
   m-input-counter --> m-input
-  m-input --> m-icon
+  m-input --> d-icon
   style m-input-counter fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

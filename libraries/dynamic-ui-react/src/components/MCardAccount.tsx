@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import classNames from 'classnames';
-import { MButton, MIcon } from './proxies';
+import { MButton, DIcon } from './proxies';
 import MCard from './MCard';
 import MCardBody from './MCardBody';
 
@@ -34,7 +34,7 @@ export default function MCardAccount({
     >
       <MCardBody>
         <div className="d-flex gap-3 align-items-center">
-          <MIcon
+          <DIcon
             icon={icon}
             hasCircle
             theme={theme}

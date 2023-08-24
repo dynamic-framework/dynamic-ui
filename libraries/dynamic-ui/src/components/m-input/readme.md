@@ -82,12 +82,12 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [m-icon](../m-icon)
+- [d-icon](../d-icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  m-input --> m-icon
+  m-input --> d-icon
   m-input-counter --> m-input
   m-input-currency-base --> m-input
   m-input-password --> m-input

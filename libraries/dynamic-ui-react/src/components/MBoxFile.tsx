@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import type { DropzoneOptions } from 'react-dropzone';
 
-import { MIcon } from './proxies';
+import { DIcon } from './proxies';
 
 type Props = PropsWithChildren<
 Pick<
@@ -66,7 +66,7 @@ export default function MBoxFile(
         })}
       >
         <input {...getInputProps()} />
-        <MIcon
+        <DIcon
           icon={icon}
           familyClass={iconFamilyClass}
           familyPrefix={iconFamilyPrefix}

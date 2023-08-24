@@ -76,8 +76,8 @@
     color: var(--#{$prefix}m-input-label-color);
 
     .m-input-icon {
-      .m-icon {
-        --#{$prefix}m-icon-color: var(--#{$prefix}focus-ring-color);
+      .d-icon {
+        --#{$prefix}icon-color: var(--#{$prefix}focus-ring-color);
       }
     }
   }
@@ -119,8 +119,8 @@
       }
 
       .m-input-validation-icon {
-        .m-icon {
-          --#{$prefix}m-icon-color: #{$tooltip-bg-color};
+        .d-icon {
+          --#{$prefix}icon-color: #{$tooltip-bg-color};
         }
       }
     }
@@ -177,7 +177,7 @@
 
     // icon disabled
     .m-input-icon {
-      .m-icon {
+      .d-icon {
         color: var(--#{$prefix}m-input-group-disabled-color);
       }
     }

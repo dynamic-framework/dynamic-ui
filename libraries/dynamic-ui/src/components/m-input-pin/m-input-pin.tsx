@@ -186,7 +186,7 @@ export class MInputPin implements ComponentInterface {
           <label htmlFor="pinIndex0">
             {this.label}
             {this.labelIcon && (
-              <m-icon
+              <d-icon
                 class="m-input-pin-icon"
                 icon={this.labelIcon}
                 size={`var(--${PREFIX_BS}m-input-label-font-size)`}
@@ -237,7 +237,7 @@ export class MInputPin implements ComponentInterface {
               class="input-group-text"
               id={`${this.mId}State`}
             >
-              <m-icon
+              <d-icon
                 class="m-input-pin-validation-icon"
                 icon={this.isInvalid ? 'exclamation-circle' : 'check'}
                 familyClass={this.iconFamilyClass}

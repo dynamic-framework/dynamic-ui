@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MCollapse, MIcon } from '../../components';
+import { MCollapse, DIcon } from '../../components';
 
 const config: Meta<typeof MCollapse> = {
   title: 'Design System/Patterns/Collapse',
@@ -12,7 +12,7 @@ const config: Meta<typeof MCollapse> = {
         Text: 'Simple text',
         Custom: (
           <div className="d-flex align-items-center gap-3">
-            <MIcon icon="fire" hasCircle />
+            <DIcon icon="fire" hasCircle />
             <h1 className="h4 m-0">Custom component</h1>
           </div>
         ),
@@ -76,7 +76,7 @@ export const HeaderComponent: Story = {
   args: {
     Component: (
       <div className="d-flex align-items-center gap-3">
-        <MIcon icon="fire" hasCircle />
+        <DIcon icon="fire" hasCircle />
         <h1 className="h4 m-0">Custom component</h1>
       </div>
     ),

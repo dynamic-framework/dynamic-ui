@@ -97,7 +97,7 @@ export class MOffcanvas {
                 aria-label="Close"
                 onClick={this.closeHandler}
               >
-                <m-icon icon="x-lg" />
+                <d-icon icon="x-lg" />
               </button>
             )}
           </div>

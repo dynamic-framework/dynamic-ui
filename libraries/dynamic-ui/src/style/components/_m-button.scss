@@ -10,8 +10,8 @@
   align-items: center;
   justify-content: center;
 
-  .m-icon {
-    --#{$prefix}m-icon-size: var(--#{$prefix}btn-font-size);
+  .d-icon {
+    --#{$prefix}icon-size: var(--#{$prefix}btn-font-size);
   }
 
   // hover selectors

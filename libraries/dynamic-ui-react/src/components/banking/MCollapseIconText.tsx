@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 import MCollapse from '../MCollapse';
-import { MIcon } from '../proxies';
+import { DIcon } from '../proxies';
 
 type Props = PropsWithChildren<{
   /**
@@ -39,7 +39,7 @@ export default function MCollapseIconText({
       className="m-collapse-icon-text"
       Component={(
         <div className="m-collapse-icon-text-header">
-          <MIcon
+          <DIcon
             icon={icon}
             size={iconSize}
             theme={iconTheme}

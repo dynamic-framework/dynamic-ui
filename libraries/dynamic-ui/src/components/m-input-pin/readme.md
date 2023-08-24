@@ -40,12 +40,12 @@
 
 ### Depends on
 
-- [m-icon](../m-icon)
+- [d-icon](../d-icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  m-input-pin --> m-icon
+  m-input-pin --> d-icon
   style m-input-pin fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -228,7 +228,7 @@ export class MInput implements ComponentInterface {
           <label htmlFor={this.mId}>
             {this.label}
             {this.labelIcon && (
-              <m-icon
+              <d-icon
                 class="m-input-icon"
                 icon={this.labelIcon}
                 size={`var(--${PREFIX_BS}m-input-label-font-size)`}
@@ -260,7 +260,7 @@ export class MInput implements ComponentInterface {
                 disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconStart && (
-                  <m-icon
+                  <d-icon
                     class="m-input-icon"
                     icon={this.iconStart}
                     familyClass={this.iconStartFamilyClass}
@@ -298,7 +298,7 @@ export class MInput implements ComponentInterface {
                 class="input-group-text"
                 id={`${this.mId}State`}
               >
-                <m-icon
+                <d-icon
                   class="m-input-validation-icon"
                   icon={this.isInvalid ? 'exclamation-circle' : 'check'}
                   familyClass={this.iconFamilyClass}
@@ -315,7 +315,7 @@ export class MInput implements ComponentInterface {
                 disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconEnd && (
-                  <m-icon
+                  <d-icon
                     class="m-input-icon"
                     icon={this.iconEnd}
                     familyClass={this.iconEndFamilyClass}

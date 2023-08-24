@@ -37,15 +37,15 @@
 
 ### Depends on
 
-- [m-icon](../m-icon)
+- [d-icon](../d-icon)
 - [m-button](../m-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  m-quick-action-button --> m-icon
+  m-quick-action-button --> d-icon
   m-quick-action-button --> m-button
-  m-button --> m-icon
+  m-button --> d-icon
   style m-quick-action-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

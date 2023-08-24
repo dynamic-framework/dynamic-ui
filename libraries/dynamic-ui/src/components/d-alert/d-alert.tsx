@@ -79,7 +79,7 @@ export class DAlert {
         role="alert"
       >
         {(this.showIcon || this.icon) && (
-          <m-icon
+          <d-icon
             class="alert-icon"
             icon={this.getIcon()}
             familyClass={this.iconFamilyClass}
@@ -99,7 +99,7 @@ export class DAlert {
             aria-label="Close"
             onClick={this.clickHandler}
           >
-            <m-icon
+            <d-icon
               class="alert-close-icon"
               icon="x-lg"
               familyClass={this.iconFamilyClass}

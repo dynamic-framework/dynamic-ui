@@ -31,9 +31,9 @@
     border: var(--#{$prefix}m-box-file-selected-border);
   }
 
-  .m-icon {
-    --#{$prefix}m-icon-size: var(--#{$prefix}m-box-file-icon-size);
-    --#{$prefix}m-icon-color: var(--#{$prefix}m-box-file-icon-color);
+  .d-icon {
+    --#{$prefix}icon-size: var(--#{$prefix}m-box-file-icon-size);
+    --#{$prefix}icon-color: var(--#{$prefix}m-box-file-icon-color);
   }
 
   .m-box-file-dropzone {

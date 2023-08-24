@@ -28,12 +28,12 @@
 
 ### Depends on
 
-- [m-icon](../m-icon)
+- [d-icon](../d-icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  m-chip --> m-icon
+  m-chip --> d-icon
   style m-chip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -42,7 +42,7 @@
 ```mermaid
 graph TD;
   m-input-password --> m-input
-  m-input --> m-icon
+  m-input --> d-icon
   style m-input-password fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

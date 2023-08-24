@@ -21,8 +21,8 @@
   background-color: var(--#{$prefix}m-chip-bg);
   border-radius: var(--#{$prefix}m-chip-border-radius);
 
-  .m-icon {
-    --#{$prefix}m-icon-size: var(--#{$prefix}m-chip-font-size);
+  .d-icon {
+    --#{$prefix}icon-size: var(--#{$prefix}m-chip-font-size);
   }
 
   .m-badge-icon-container {
