@@ -1,9 +1,9 @@
 .m-card-account {
   // Card
-  --#{$prefix}card-border-width: 0;
+  --#{$prefix}card-border-width: 0px;
   --#{$prefix}card-spacer-y: #{$spacer};
   --#{$prefix}card-spacer-x: #{$spacer};
-  --#{$prefix}card-color: #{$body-color};
+  --#{$prefix}card-color: var(--#{$prefix}body-color);
   // Card body
   --#{$prefix}card-body-gap: #{$spacer};
 
