@@ -11,7 +11,7 @@
   // Header variables
   --#{$prefix}m-datepicker-header-gap: var(--#{$prefix}ref-spacer-3);
   --#{$prefix}m-datepicker-header-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4);
-  --#{$prefix}m-datepicker-header-background-color: #{$datepicker__background-color};
+  --#{$prefix}m-datepicker-header-background-color: var(--#{$prefix}indigo-soft);
   --#{$prefix}m-datepicker-header-border: 0;
   --#{$prefix}m-datepicker-header-font-size: var(--#{$prefix}ref-fs-6);
 
