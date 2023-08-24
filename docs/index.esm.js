@@ -1,17 +1,8 @@
-import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import { DateTime } from 'luxon';
-import es from 'date-fns/locale/es';
-import React, { createElement, useState, useEffect, createContext, useMemo, useContext, useCallback, useRef } from 'react';
-import { PREFIX_BS, liquidParser, formatCurrency } from '@dynamic-framework/ui';
-export { liquidParser } from '@dynamic-framework/ui';
-import ContentLoader from 'react-content-loader';
-import classNames from 'classnames';
-import { ToastContainer, Slide, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, useRole, useInteractions, useId, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
 import { __rest } from 'tslib';
-import { useField } from 'formik';
+import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
+import DatePicker from 'react-datepicker';
+import { DateTime } from 'luxon';
+import React, { createElement, useState, useEffect, createContext, useMemo, useContext, useCallback, forwardRef, useImperativeHandle, useRef } from 'react';
 import { defineCustomElement } from '@dynamic-framework/ui/components/m-alert.js';
 import { defineCustomElement as defineCustomElement$1 } from '@dynamic-framework/ui/components/m-badge.js';
 import { defineCustomElement as defineCustomElement$2 } from '@dynamic-framework/ui/components/m-button.js';
@@ -33,6 +24,14 @@ import { defineCustomElement as defineCustomElement$h } from '@dynamic-framework
 import { defineCustomElement as defineCustomElement$i } from '@dynamic-framework/ui/components/m-quick-action-check.js';
 import { defineCustomElement as defineCustomElement$j } from '@dynamic-framework/ui/components/m-quick-action-select.js';
 import { defineCustomElement as defineCustomElement$k } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
+import { PREFIX_BS, liquidParser, formatCurrency } from '@dynamic-framework/ui';
+export { liquidParser } from '@dynamic-framework/ui';
+import ContentLoader from 'react-content-loader';
+import classNames from 'classnames';
+import { ToastContainer, Slide, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, useRole, useInteractions, useId, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
+import { useField } from 'formik';
 import { useDropzone } from 'react-dropzone';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import i18n from 'i18next';
@@ -300,7 +299,7 @@ function MSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, 
 }
 
 const LiquidContext = createContext({
-    language: 'en-US',
+    language: 'en',
     currency: {
         symbol: '$',
         precision: 2,
@@ -548,25 +547,59 @@ function useOffcanvasContext() {
     return context;
 }
 
-registerLocale('es', es);
-function MCalendar({ setDate, date, calendarContainer, inline = true, withPortal, minDate, showTimeInput, calendarStartDay, timeInputLabel, dateFormat, className, calendarClassName, selectsRange, selectsStart, selectsEnd, startDate, endDate, autoFocus, monthsShown, fixedHeight, }) {
+function MDatePickerTime(_a) {
+    var { value, onChange, mId, label } = _a, props = __rest(_a, ["value", "onChange", "mId", "label"]);
+    return (jsxs("div", Object.assign({ className: "d-flex align-items-center gap-2 flex-column m-datepicker-time" }, { children: [label && (jsx("p", Object.assign({ className: "m-datepicker-time-label" }, { children: label }))), jsx(MInput, Object.assign({}, onChange && {
+                onMChange: (time) => onChange(time),
+            }, { type: "time", mId: mId, value: value }, props))] })));
+}
+
+function MDatePickerInput(_a, ref) {
+    var { value, onClick, mId, iconEnd } = _a, props = __rest(_a, ["value", "onClick", "mId", "iconEnd"]);
+    useImperativeHandle(ref, () => ({}), []);
+    return (jsx("div", Object.assign({ role: "button", onClick: onClick, onKeyDown: () => { }, tabIndex: -1 }, { children: jsx(MInput, Object.assign({ isReadOnly: true, type: "text", mId: mId, value: value, onMIconEndClick: onClick, iconEnd: iconEnd }, props)) })));
+}
+var MDatePickerInput$1 = forwardRef(MDatePickerInput);
+
+function MMonthPicker(_a) {
+    var { setDate, date } = _a, props = __rest(_a, ["setDate", "date"]);
     const dateJS = (value) => DateTime.fromISO(value).toJSDate();
     const { language } = useLiquidContext();
-    const lang = language === 'en' ? undefined : 'es';
-    return (jsx(DatePicker, Object.assign({ selected: dateJS(date), onChange: (value) => {
-            if (Array.isArray(value)) {
-                const [start, end] = value;
-                setDate([
-                    start ? DateTime.fromJSDate(start).toISO() : null,
-                    end ? DateTime.fromJSDate(end).toISO() : null,
-                ]);
-            }
-            else {
-                setDate(value ? DateTime.fromJSDate(value).toISO() : null);
-            }
-        }, 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        calendarContainer: calendarContainer, inline: inline, withPortal: withPortal, minDate: minDate ? dateJS(minDate) : undefined, showTimeInput: showTimeInput, calendarStartDay: calendarStartDay, timeInputLabel: timeInputLabel, dateFormat: dateFormat, className: className, calendarClassName: calendarClassName, selectsRange: selectsRange, selectsEnd: selectsEnd, selectsStart: selectsStart, startDate: startDate, endDate: endDate, autoFocus: autoFocus, monthsShown: monthsShown, fixedHeight: fixedHeight }, lang && { locale: lang })));
+    const lang = language || 'en';
+    return (jsx(DatePicker, Object.assign({ showMonthYearPicker: true, selected: dateJS(date), calendarClassName: "m-month-picker", onChange: (value) => {
+            setDate(value);
+        }, customInput: (jsx("p", Object.assign({ className: "fw-bold text-capitalize" }, { children: DateTime.fromISO(date).setLocale(lang).toFormat('MMMM yyyy') }))), renderCustomHeader: ({ monthDate, decreaseYear, increaseYear, prevYearButtonDisabled, nextYearButtonDisabled, }) => (jsxs("div", Object.assign({ className: "d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark" }, { children: [jsx(MButton, { iconStart: "chevron-left", size: "sm", variant: "link", theme: "light", onMClick: decreaseYear, isDisabled: prevYearButtonDisabled }), jsx("p", Object.assign({ className: "fs-6 fw-bold" }, { children: monthDate.getFullYear() })), jsx(MButton, { iconStart: "chevron-right", size: "sm", variant: "link", theme: "light", onMClick: increaseYear, isDisabled: nextYearButtonDisabled })] }))) }, props)));
+}
+
+function MDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, decreaseMonthIcon, increaseMonthIcon, iconSize, buttonVariant, buttonTheme, }) {
+    const { language } = useLiquidContext();
+    const lang = language || 'en';
+    return (jsxs("div", Object.assign({ className: "d-flex align-items-center justify-content-between m-datepicker-header" }, { children: [jsx(MButton, { iconStart: decreaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onMClick: decreaseMonth, isDisabled: prevMonthButtonDisabled }), jsx(MMonthPicker, Object.assign({}, !withMonthSelector && { readOnly: true }, { date: monthDate.toISOString(), setDate: (value) => {
+                    if (value) {
+                        changeMonth(DateTime.fromJSDate(value).month - 1);
+                        changeYear(DateTime.fromJSDate(value).year);
+                    }
+                } }, lang && { locale: lang })), jsx(MButton, { iconStart: increaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onMClick: increaseMonth, isDisabled: nextMonthButtonDisabled })] })));
+}
+
+function MDatePicker(_a) {
+    var { setDate, date, selectsRange, withMonthSelector, inputLabel, inputIcon = 'calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, headerDecreaseMonthIcon = 'chevron-left', headerIncreaseMonthIcon = 'chevron-right', headerIconSize = 'sm', headerButtonVariant = 'link', headerButtonTheme = 'dark' } = _a, props = __rest(_a, ["setDate", "date", "selectsRange", "withMonthSelector", "inputLabel", "inputIcon", "inputId", "timeId", "timeLabel", "headerDecreaseMonthIcon", "headerIncreaseMonthIcon", "headerIconSize", "headerButtonVariant", "headerButtonTheme"]);
+    const dateJS = (value) => DateTime.fromISO(value).toJSDate();
+    const { language } = useLiquidContext();
+    const lang = language || 'en';
+    // eslint-disable-next-line react/no-unstable-nested-components
+    const InputPicker = forwardRef(({ value, onClick }, ref) => (jsx(MDatePickerInput$1, { label: inputLabel, mId: inputId, iconEnd: inputIcon, value: value, onClick: onClick, ref: ref })));
+    const TimeInputPicker = useCallback(({ value, onChange }) => (jsx(MDatePickerTime, { onChange: onChange, value: value, label: timeLabel, mId: timeId })), [timeLabel, timeId]);
+    const DatePickerHeader = useCallback((headerProps) => (jsx(MDatePickerHeader, Object.assign({}, headerProps, { decreaseMonthIcon: headerDecreaseMonthIcon, increaseMonthIcon: headerIncreaseMonthIcon, iconSize: headerIconSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, withMonthSelector: !!withMonthSelector }))), [headerButtonTheme,
+        headerButtonVariant,
+        headerDecreaseMonthIcon,
+        headerIconSize,
+        headerIncreaseMonthIcon,
+        withMonthSelector,
+    ]);
+    return (jsx(DatePicker, Object.assign({ selected: dateJS(date), calendarClassName: "m-date-picker", onChange: (value) => {
+            setDate(value);
+        }, renderCustomHeader: (headerProps) => jsx(DatePickerHeader, Object.assign({}, headerProps)), customInput: jsx(InputPicker, {}), customTimeInput: jsx(TimeInputPicker, {}), selectsRange: selectsRange }, lang && { locale: lang }, props)));
 }
 
 function MSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
@@ -749,7 +782,11 @@ function MTooltip({ classNameContainer, className, offSet = ARROW_HEIGHT + GAP, 
 function MInputCurrency(_a) {
     var { onChange, onBlur, onFocus } = _a, otherProps = __rest(_a, ["onChange", "onBlur", "onFocus"]);
     const { currency } = useLiquidContext();
-    return (jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail), onMBlur: ({ detail }) => onBlur(detail), onMFocus: ({ detail }) => onFocus(detail) }, otherProps)));
+    return (jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail) }, onBlur && {
+        onMBlur: ({ detail }) => onBlur(detail),
+    }, onFocus && {
+        onMFocus: ({ detail }) => onFocus(detail),
+    }, otherProps)));
 }
 
 function MBoxFile(_a) {
@@ -919,6 +956,26 @@ function MFormikInputCurrency(_a) {
     return (jsx(MInputCurrency, Object.assign({}, props, { name: field.name, value: field.value, onChange: (value) => helpers.setValue(value), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
 }
 
+function MCard({ className, style, children, }) {
+    return (jsx("div", Object.assign({ style: style, className: classNames('card', className) }, { children: children })));
+}
+
+function MCardBody({ className, children, }) {
+    return (jsx("div", Object.assign({ className: classNames('card-body', className) }, { children: children })));
+}
+
+function MCardAccount({ className, icon, theme, name, number, balance, balanceText, onClick, onClickText, }) {
+    return (jsx(MCard, Object.assign({ className: classNames('m-card-account', className) }, { children: jsxs(MCardBody, { children: [jsxs("div", Object.assign({ className: "d-flex gap-3 align-items-center" }, { children: [jsx(MIcon, { icon: icon, hasCircle: true, theme: theme, size: "1.5rem" }), jsxs("div", Object.assign({ className: "d-block flex-grow-1" }, { children: [jsx("p", Object.assign({ className: "text-gray-700" }, { children: name })), jsx("small", Object.assign({ className: "text-gray" }, { children: number }))] }))] })), jsxs("div", Object.assign({ className: "d-block" }, { children: [jsx("p", Object.assign({ className: "fw-bold fs-6 text-body" }, { children: balance })), jsx("small", Object.assign({ className: "text-gray-700" }, { children: balanceText }))] })), jsx("div", Object.assign({ className: "d-flex justify-content-end" }, { children: jsx(MButton, { text: onClickText, variant: "link", size: "sm", theme: "secondary", iconEnd: "chevron-right", onMClick: onClick }) }))] }) })));
+}
+
+function MCardHeader({ className, children, }) {
+    return (jsx("div", Object.assign({ className: classNames('card-header', className) }, { children: children })));
+}
+
+function MCardFooter({ className, children, }) {
+    return (jsx("div", Object.assign({ className: classNames('card-footer', className) }, { children: children })));
+}
+
 const LANG = liquidParser.parse('{{site.language}}');
 async function configureI8n(resources, _a = {}) {
     var { lng = LANG, fallbackLng = 'es' } = _a, config = __rest(_a, ["lng", "fallbackLng"]);
@@ -934,5 +991,5 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MBoxFile, MButton, MCalendar, MCarousel, MCarouselSlide, MChip, MCollapse, MCollapseIconText, MCurrencyText, MFormikInput, MFormikInputCurrency, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MList, MListItem, MListItemMovement, MModal, MOffcanvas, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MStepper, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
+export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MBoxFile, MButton, MCard, MCardAccount, MCardBody, MCardFooter, MCardHeader, MCarousel, MCarouselSlide, MChip, MCollapse, MCollapseIconText, MCurrencyText, MDatePicker, MFormikInput, MFormikInputCurrency, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MList, MListItem, MListItemMovement, MModal, MOffcanvas, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MStepper, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
 //# sourceMappingURL=index.esm.js.map

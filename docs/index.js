@@ -2,19 +2,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+const tslib = require('tslib');
 const jsxRuntime = require('react/jsx-runtime');
 const DatePicker = require('react-datepicker');
 const luxon = require('luxon');
-const es = require('date-fns/locale/es');
 const React = require('react');
-const ui = require('@dynamic-framework/ui');
-const ContentLoader = require('react-content-loader');
-const classNames = require('classnames');
-const reactToastify = require('react-toastify');
-require('react-toastify/dist/ReactToastify.css');
-const react = require('@floating-ui/react');
-const tslib = require('tslib');
-const formik = require('formik');
 const mAlert_js = require('@dynamic-framework/ui/components/m-alert.js');
 const mBadge_js = require('@dynamic-framework/ui/components/m-badge.js');
 const mButton_js = require('@dynamic-framework/ui/components/m-button.js');
@@ -36,6 +28,13 @@ const mQuickActionButton_js = require('@dynamic-framework/ui/components/m-quick-
 const mQuickActionCheck_js = require('@dynamic-framework/ui/components/m-quick-action-check.js');
 const mQuickActionSelect_js = require('@dynamic-framework/ui/components/m-quick-action-select.js');
 const mQuickActionSwitch_js = require('@dynamic-framework/ui/components/m-quick-action-switch.js');
+const ui = require('@dynamic-framework/ui');
+const ContentLoader = require('react-content-loader');
+const classNames = require('classnames');
+const reactToastify = require('react-toastify');
+require('react-toastify/dist/ReactToastify.css');
+const react = require('@floating-ui/react');
+const formik = require('formik');
 const reactDropzone = require('react-dropzone');
 const reactSplide = require('@splidejs/react-splide');
 const i18n = require('i18next');
@@ -46,7 +45,6 @@ const ReactDOM = require('react-dom');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 const DatePicker__default = /*#__PURE__*/_interopDefaultLegacy(DatePicker);
-const es__default = /*#__PURE__*/_interopDefaultLegacy(es);
 const React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 const ContentLoader__default = /*#__PURE__*/_interopDefaultLegacy(ContentLoader);
 const classNames__default = /*#__PURE__*/_interopDefaultLegacy(classNames);
@@ -313,7 +311,7 @@ function MSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, 
 }
 
 const LiquidContext = React.createContext({
-    language: 'en-US',
+    language: 'en',
     currency: {
         symbol: '$',
         precision: 2,
@@ -561,25 +559,59 @@ function useOffcanvasContext() {
     return context;
 }
 
-DatePicker.registerLocale('es', es__default["default"]);
-function MCalendar({ setDate, date, calendarContainer, inline = true, withPortal, minDate, showTimeInput, calendarStartDay, timeInputLabel, dateFormat, className, calendarClassName, selectsRange, selectsStart, selectsEnd, startDate, endDate, autoFocus, monthsShown, fixedHeight, }) {
+function MDatePickerTime(_a) {
+    var { value, onChange, mId, label } = _a, props = tslib.__rest(_a, ["value", "onChange", "mId", "label"]);
+    return (jsxRuntime.jsxs("div", Object.assign({ className: "d-flex align-items-center gap-2 flex-column m-datepicker-time" }, { children: [label && (jsxRuntime.jsx("p", Object.assign({ className: "m-datepicker-time-label" }, { children: label }))), jsxRuntime.jsx(MInput, Object.assign({}, onChange && {
+                onMChange: (time) => onChange(time),
+            }, { type: "time", mId: mId, value: value }, props))] })));
+}
+
+function MDatePickerInput(_a, ref) {
+    var { value, onClick, mId, iconEnd } = _a, props = tslib.__rest(_a, ["value", "onClick", "mId", "iconEnd"]);
+    React.useImperativeHandle(ref, () => ({}), []);
+    return (jsxRuntime.jsx("div", Object.assign({ role: "button", onClick: onClick, onKeyDown: () => { }, tabIndex: -1 }, { children: jsxRuntime.jsx(MInput, Object.assign({ isReadOnly: true, type: "text", mId: mId, value: value, onMIconEndClick: onClick, iconEnd: iconEnd }, props)) })));
+}
+const MDatePickerInput$1 = React.forwardRef(MDatePickerInput);
+
+function MMonthPicker(_a) {
+    var { setDate, date } = _a, props = tslib.__rest(_a, ["setDate", "date"]);
     const dateJS = (value) => luxon.DateTime.fromISO(value).toJSDate();
     const { language } = useLiquidContext();
-    const lang = language === 'en' ? undefined : 'es';
-    return (jsxRuntime.jsx(DatePicker__default["default"], Object.assign({ selected: dateJS(date), onChange: (value) => {
-            if (Array.isArray(value)) {
-                const [start, end] = value;
-                setDate([
-                    start ? luxon.DateTime.fromJSDate(start).toISO() : null,
-                    end ? luxon.DateTime.fromJSDate(end).toISO() : null,
-                ]);
-            }
-            else {
-                setDate(value ? luxon.DateTime.fromJSDate(value).toISO() : null);
-            }
-        }, 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        calendarContainer: calendarContainer, inline: inline, withPortal: withPortal, minDate: minDate ? dateJS(minDate) : undefined, showTimeInput: showTimeInput, calendarStartDay: calendarStartDay, timeInputLabel: timeInputLabel, dateFormat: dateFormat, className: className, calendarClassName: calendarClassName, selectsRange: selectsRange, selectsEnd: selectsEnd, selectsStart: selectsStart, startDate: startDate, endDate: endDate, autoFocus: autoFocus, monthsShown: monthsShown, fixedHeight: fixedHeight }, lang && { locale: lang })));
+    const lang = language || 'en';
+    return (jsxRuntime.jsx(DatePicker__default["default"], Object.assign({ showMonthYearPicker: true, selected: dateJS(date), calendarClassName: "m-month-picker", onChange: (value) => {
+            setDate(value);
+        }, customInput: (jsxRuntime.jsx("p", Object.assign({ className: "fw-bold text-capitalize" }, { children: luxon.DateTime.fromISO(date).setLocale(lang).toFormat('MMMM yyyy') }))), renderCustomHeader: ({ monthDate, decreaseYear, increaseYear, prevYearButtonDisabled, nextYearButtonDisabled, }) => (jsxRuntime.jsxs("div", Object.assign({ className: "d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark" }, { children: [jsxRuntime.jsx(MButton, { iconStart: "chevron-left", size: "sm", variant: "link", theme: "light", onMClick: decreaseYear, isDisabled: prevYearButtonDisabled }), jsxRuntime.jsx("p", Object.assign({ className: "fs-6 fw-bold" }, { children: monthDate.getFullYear() })), jsxRuntime.jsx(MButton, { iconStart: "chevron-right", size: "sm", variant: "link", theme: "light", onMClick: increaseYear, isDisabled: nextYearButtonDisabled })] }))) }, props)));
+}
+
+function MDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, decreaseMonthIcon, increaseMonthIcon, iconSize, buttonVariant, buttonTheme, }) {
+    const { language } = useLiquidContext();
+    const lang = language || 'en';
+    return (jsxRuntime.jsxs("div", Object.assign({ className: "d-flex align-items-center justify-content-between m-datepicker-header" }, { children: [jsxRuntime.jsx(MButton, { iconStart: decreaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onMClick: decreaseMonth, isDisabled: prevMonthButtonDisabled }), jsxRuntime.jsx(MMonthPicker, Object.assign({}, !withMonthSelector && { readOnly: true }, { date: monthDate.toISOString(), setDate: (value) => {
+                    if (value) {
+                        changeMonth(luxon.DateTime.fromJSDate(value).month - 1);
+                        changeYear(luxon.DateTime.fromJSDate(value).year);
+                    }
+                } }, lang && { locale: lang })), jsxRuntime.jsx(MButton, { iconStart: increaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onMClick: increaseMonth, isDisabled: nextMonthButtonDisabled })] })));
+}
+
+function MDatePicker(_a) {
+    var { setDate, date, selectsRange, withMonthSelector, inputLabel, inputIcon = 'calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, headerDecreaseMonthIcon = 'chevron-left', headerIncreaseMonthIcon = 'chevron-right', headerIconSize = 'sm', headerButtonVariant = 'link', headerButtonTheme = 'dark' } = _a, props = tslib.__rest(_a, ["setDate", "date", "selectsRange", "withMonthSelector", "inputLabel", "inputIcon", "inputId", "timeId", "timeLabel", "headerDecreaseMonthIcon", "headerIncreaseMonthIcon", "headerIconSize", "headerButtonVariant", "headerButtonTheme"]);
+    const dateJS = (value) => luxon.DateTime.fromISO(value).toJSDate();
+    const { language } = useLiquidContext();
+    const lang = language || 'en';
+    // eslint-disable-next-line react/no-unstable-nested-components
+    const InputPicker = React.forwardRef(({ value, onClick }, ref) => (jsxRuntime.jsx(MDatePickerInput$1, { label: inputLabel, mId: inputId, iconEnd: inputIcon, value: value, onClick: onClick, ref: ref })));
+    const TimeInputPicker = React.useCallback(({ value, onChange }) => (jsxRuntime.jsx(MDatePickerTime, { onChange: onChange, value: value, label: timeLabel, mId: timeId })), [timeLabel, timeId]);
+    const DatePickerHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(MDatePickerHeader, Object.assign({}, headerProps, { decreaseMonthIcon: headerDecreaseMonthIcon, increaseMonthIcon: headerIncreaseMonthIcon, iconSize: headerIconSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, withMonthSelector: !!withMonthSelector }))), [headerButtonTheme,
+        headerButtonVariant,
+        headerDecreaseMonthIcon,
+        headerIconSize,
+        headerIncreaseMonthIcon,
+        withMonthSelector,
+    ]);
+    return (jsxRuntime.jsx(DatePicker__default["default"], Object.assign({ selected: dateJS(date), calendarClassName: "m-date-picker", onChange: (value) => {
+            setDate(value);
+        }, renderCustomHeader: (headerProps) => jsxRuntime.jsx(DatePickerHeader, Object.assign({}, headerProps)), customInput: jsxRuntime.jsx(InputPicker, {}), customTimeInput: jsxRuntime.jsx(TimeInputPicker, {}), selectsRange: selectsRange }, lang && { locale: lang }, props)));
 }
 
 function MSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
@@ -762,7 +794,11 @@ function MTooltip({ classNameContainer, className, offSet = ARROW_HEIGHT + GAP, 
 function MInputCurrency(_a) {
     var { onChange, onBlur, onFocus } = _a, otherProps = tslib.__rest(_a, ["onChange", "onBlur", "onFocus"]);
     const { currency } = useLiquidContext();
-    return (jsxRuntime.jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail), onMBlur: ({ detail }) => onBlur(detail), onMFocus: ({ detail }) => onFocus(detail) }, otherProps)));
+    return (jsxRuntime.jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail) }, onBlur && {
+        onMBlur: ({ detail }) => onBlur(detail),
+    }, onFocus && {
+        onMFocus: ({ detail }) => onFocus(detail),
+    }, otherProps)));
 }
 
 function MBoxFile(_a) {
@@ -932,6 +968,26 @@ function MFormikInputCurrency(_a) {
     return (jsxRuntime.jsx(MInputCurrency, Object.assign({}, props, { name: field.name, value: field.value, onChange: (value) => helpers.setValue(value), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
 }
 
+function MCard({ className, style, children, }) {
+    return (jsxRuntime.jsx("div", Object.assign({ style: style, className: classNames__default["default"]('card', className) }, { children: children })));
+}
+
+function MCardBody({ className, children, }) {
+    return (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]('card-body', className) }, { children: children })));
+}
+
+function MCardAccount({ className, icon, theme, name, number, balance, balanceText, onClick, onClickText, }) {
+    return (jsxRuntime.jsx(MCard, Object.assign({ className: classNames__default["default"]('m-card-account', className) }, { children: jsxRuntime.jsxs(MCardBody, { children: [jsxRuntime.jsxs("div", Object.assign({ className: "d-flex gap-3 align-items-center" }, { children: [jsxRuntime.jsx(MIcon, { icon: icon, hasCircle: true, theme: theme, size: "1.5rem" }), jsxRuntime.jsxs("div", Object.assign({ className: "d-block flex-grow-1" }, { children: [jsxRuntime.jsx("p", Object.assign({ className: "text-gray-700" }, { children: name })), jsxRuntime.jsx("small", Object.assign({ className: "text-gray" }, { children: number }))] }))] })), jsxRuntime.jsxs("div", Object.assign({ className: "d-block" }, { children: [jsxRuntime.jsx("p", Object.assign({ className: "fw-bold fs-6 text-body" }, { children: balance })), jsxRuntime.jsx("small", Object.assign({ className: "text-gray-700" }, { children: balanceText }))] })), jsxRuntime.jsx("div", Object.assign({ className: "d-flex justify-content-end" }, { children: jsxRuntime.jsx(MButton, { text: onClickText, variant: "link", size: "sm", theme: "secondary", iconEnd: "chevron-right", onMClick: onClick }) }))] }) })));
+}
+
+function MCardHeader({ className, children, }) {
+    return (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]('card-header', className) }, { children: children })));
+}
+
+function MCardFooter({ className, children, }) {
+    return (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]('card-footer', className) }, { children: children })));
+}
+
 const LANG = ui.liquidParser.parse('{{site.language}}');
 async function configureI8n(resources, _a = {}) {
     var { lng = LANG, fallbackLng = 'es' } = _a, config = tslib.__rest(_a, ["lng", "fallbackLng"]);
@@ -957,13 +1013,18 @@ exports.MAlert = MAlert;
 exports.MBadge = MBadge;
 exports.MBoxFile = MBoxFile;
 exports.MButton = MButton;
-exports.MCalendar = MCalendar;
+exports.MCard = MCard;
+exports.MCardAccount = MCardAccount;
+exports.MCardBody = MCardBody;
+exports.MCardFooter = MCardFooter;
+exports.MCardHeader = MCardHeader;
 exports.MCarousel = MCarousel;
 exports.MCarouselSlide = MCarouselSlide;
 exports.MChip = MChip;
 exports.MCollapse = MCollapse;
 exports.MCollapseIconText = MCollapseIconText;
 exports.MCurrencyText = MCurrencyText;
+exports.MDatePicker = MDatePicker;
 exports.MFormikInput = MFormikInput;
 exports.MFormikInputCurrency = MFormikInputCurrency;
 exports.MFormikInputSelect = MFormikInputSelect;
