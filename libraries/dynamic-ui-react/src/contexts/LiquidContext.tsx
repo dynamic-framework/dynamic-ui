@@ -18,7 +18,7 @@ interface LiquidContextInterface {
 }
 
 export const LiquidContext = createContext<LiquidContextInterface>({
-  language: 'en-US',
+  language: 'en',
   currency: {
     symbol: '$',
     precision: 2,
