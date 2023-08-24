@@ -3,36 +3,36 @@
 // stylelint-disable selector-class-pattern
 
 .react-datepicker {
-  --#{$prefix}m-datepicker-font-family: "Source Sans Pro", sans-serif;
+  --#{$prefix}m-datepicker-font-family: var(--#{$prefix}font-sans-serif);
   --#{$prefix}m-datepicker-border: 0px;
   --#{$prefix}m-datepicker-box-shadow: var(--#{$prefix}box-shadow);
   --#{$prefix}m-datepicker-font-size: var(--#{$prefix}ref-spacer-3);
 
   // Header variables
-  --#{$prefix}m-datepicker-header-gap: 1rem;
-  --#{$prefix}m-datepicker-header-padding: 1rem 1.5rem;
-  --#{$prefix}m-datepicker-header-background-color: var(--#{$prefix}indigo-soft);
+  --#{$prefix}m-datepicker-header-gap: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}m-datepicker-header-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}m-datepicker-header-background-color: #{$datepicker__background-color};
   --#{$prefix}m-datepicker-header-border: 0;
   --#{$prefix}m-datepicker-header-font-size: var(--#{$prefix}ref-fs-6);
 
   --#{$prefix}m-datepicker-day-names-margin: 0;
-  --#{$prefix}m-datepicker-day-names-font-size: 1rem;
+  --#{$prefix}m-datepicker-day-names-font-size: var(--#{$prefix}ref-spacer-3);
 
-  --#{$prefix}m-datepicker-day-name-weight: 700;
+  --#{$prefix}m-datepicker-day-name-weight: var(--#{$prefix}ref-fw-bold);
   --#{$prefix}m-datepicker-day-name-margin: 0;
   --#{$prefix}m-datepicker-day-name-size: 20px;
   --#{$prefix}m-datepicker-day-name-color: var(--#{$prefix}gray-500);
 
   // Calendar variables
-  --#{$prefix}m-datepicker-month-gap: .875rem;
-  --#{$prefix}m-datepicker-month-padding: 1rem 1.5rem 1.5rem;
+  --#{$prefix}m-datepicker-month-gap: var(--#{$prefix}ref-fs-subparagraph);
+  --#{$prefix}m-datepicker-month-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-4);
   --#{$prefix}m-datepicker-month-margin: 0;
 
   --#{$prefix}m-datepicker-week-gap: 1.875rem;
 
   // Day variables
   --#{$prefix}m-datepicker-day-margin: 0;
-  --#{$prefix}m-datepicker-day-font-size: .875rem;
+  --#{$prefix}m-datepicker-day-font-size: var(--#{$prefix}ref-fs-subparagraph);
   --#{$prefix}m-datepicker-day-size: 20px;
   --#{$prefix}m-datepicker-day-radius: 100%;
 
@@ -47,7 +47,7 @@
 
   --#{$prefix}m-datepicker-day-outside-month: var(--#{$prefix}gray-400);
 
-  --#{$prefix}m-datepicker-day-today-font-weight: 400;
+  --#{$prefix}m-datepicker-day-today-font-weight: var(--#{$prefix}ref-fw-normal);
   --#{$prefix}m-datepicker-day-today-box-shadow: 0 0 0 2px inset var(--#{$prefix}secondary);
 
   // Time variables
@@ -57,11 +57,11 @@
   --#{$prefix}m-datepicker-time-input-margin: 0;
   --#{$prefix}m-datepicker-time-input-align: center;
 
-  --#{$prefix}m-datepicker-time-input-padding: 1rem;
+  --#{$prefix}m-datepicker-time-input-padding: var(--#{$prefix}ref-spacer-3);
   --#{$prefix}m-datepicker-time-input-gap: var(--#{$prefix}ref-spacer-2);
-  --#{$prefix}m-datepicker-time-input-label-weight: 700;
+  --#{$prefix}m-datepicker-time-input-label-weight: var(--#{$prefix}ref-fw-bold);
   --#{$prefix}m-datepicker-time-input-label-color: var(--#{$prefix}gray-700);
-  --#{$prefix}m-datepicker-time-input-label-size: small;
+  --#{$prefix}m-datepicker-time-input-label-size: var(--#{$prefix}ref-fs-small);
 
   font-family: var(--#{$prefix}m-datepicker-font-family);
   font-size: var(--#{$prefix}m-datepicker-font-size);
@@ -217,7 +217,7 @@
     }
   }
   .m-datepicker-header {
-    font-size: 6;
+    font-size: var(--#{$prefix}ref-fs-6);
   }
 }
 
