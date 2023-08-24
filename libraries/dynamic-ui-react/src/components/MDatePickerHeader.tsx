@@ -1,9 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { DateTime } from 'luxon';
+import { ComponentProps } from 'react';
+import { ButtonVariant, ComponentSize } from '@dynamic-framework/ui';
 import { MButton } from './proxies';
 import MMonthPicker from './MMonthPicker';
+import { useLiquidContext } from '../contexts';
 
-type Props = {
+export type MDatePickerHeaderProps = {
   monthDate: Date;
   decreaseMonth: () => void;
   increaseMonth: () => void;
@@ -12,7 +15,16 @@ type Props = {
   prevMonthButtonDisabled: boolean;
   nextMonthButtonDisabled: boolean;
   withMonthSelector: boolean;
-};
+  decreaseMonthIcon: string;
+  increaseMonthIcon: string;
+  iconSize: ComponentSize;
+  buttonVariant: ButtonVariant;
+  buttonTheme: string;
+} & Omit<ComponentProps<typeof MButton>,
+| 'iconStart'
+| 'onMClick'
+| 'isDisabled'
+>;
 
 export default function MDatePickerHeader({
   monthDate,
@@ -23,14 +35,22 @@ export default function MDatePickerHeader({
   prevMonthButtonDisabled,
   nextMonthButtonDisabled,
   withMonthSelector,
-}: Props) {
+  decreaseMonthIcon,
+  increaseMonthIcon,
+  iconSize,
+  buttonVariant,
+  buttonTheme,
+}: MDatePickerHeaderProps) {
+  const { language } = useLiquidContext();
+  const lang = language || 'en';
+
   return (
     <div className="d-flex align-items-center justify-content-between fs-6">
       <MButton
-        iconStart="chevron-left"
-        size="sm"
-        variant="link"
-        theme="dark"
+        iconStart={decreaseMonthIcon}
+        size={iconSize}
+        variant={buttonVariant}
+        theme={buttonTheme}
         onMClick={decreaseMonth}
         isDisabled={prevMonthButtonDisabled}
       />
@@ -43,12 +63,13 @@ export default function MDatePickerHeader({
             changeYear(DateTime.fromJSDate(value).year);
           }
         }}
+        {...lang && { locale: lang }}
       />
       <MButton
-        iconStart="chevron-right"
-        size="sm"
-        variant="link"
-        theme="dark"
+        iconStart={increaseMonthIcon}
+        size={iconSize}
+        variant={buttonVariant}
+        theme={buttonTheme}
         onMClick={increaseMonth}
         isDisabled={nextMonthButtonDisabled}
       />

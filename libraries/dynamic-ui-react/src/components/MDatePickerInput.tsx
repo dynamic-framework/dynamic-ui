@@ -1,32 +1,47 @@
-import { MInputCustomEvent } from '@dynamic-framework/ui';
+/* eslint-disable react/jsx-props-no-spreading */
+import {
+  ComponentProps, Ref, forwardRef, useImperativeHandle,
+} from 'react';
 import { MInput } from './proxies';
 
-type Props = {
-  value: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onClick: (event: MInputCustomEvent<MouseEvent> | any) => void;
+export type InnerDatePickerProps = {
+  value?: string;
+  onClick?: () => void;
 };
 
-export default function MDatePickerInput({
+type MDatePickerInputProps = InnerDatePickerProps & Omit<ComponentProps<typeof MInput>,
+| 'type'
+| 'isReadOnly'
+| 'onMIconEndClick'
+| 'value'
+>;
+
+function MDatePickerInput({
   value,
   onClick,
-}: Props) {
+  mId,
+  iconEnd,
+  ...props
+}: MDatePickerInputProps, ref: Ref<unknown>) {
+  useImperativeHandle(ref, () => ({}), []);
   return (
     <div
       role="button"
       onClick={onClick}
       onKeyDown={() => {}}
-      tabIndex={0}
+      tabIndex={-1}
     >
       <MInput
         isReadOnly
-        className="m-calendar-input"
         type="text"
-        mId="calendar"
+        mId={mId}
         value={value}
         onMIconEndClick={onClick}
-        iconEnd="calendar"
+        iconEnd={iconEnd}
+        {...props}
       />
     </div>
   );
 }
+
+export default forwardRef(MDatePickerInput);

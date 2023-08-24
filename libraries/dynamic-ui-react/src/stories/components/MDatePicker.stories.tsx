@@ -4,8 +4,12 @@ import { DateTime } from 'luxon';
 
 import type { ComponentProps } from 'react';
 
+import { registerLocale } from 'react-datepicker';
+import es from 'date-fns/locale/es';
 import { MDatePicker } from '../../components';
 import MMonthPicker from '../../components/MMonthPicker';
+
+registerLocale('es', es);
 
 const config: Meta<typeof MDatePicker> = {
   title: 'Design System/Alpha/Patterns/Datepicker',
