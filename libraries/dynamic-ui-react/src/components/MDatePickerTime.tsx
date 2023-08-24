@@ -24,7 +24,7 @@ export default function MDatePickerTime({
   return (
     <div className="d-flex align-items-center gap-2 flex-column m-datepicker-time">
       { label && (
-        <p className="m-label-time">{label}</p>
+        <p className="m-datepicker-time-label">{label}</p>
       )}
       <MInput
         {...onChange && {
