@@ -12,7 +12,7 @@ import MMonthPicker from '../../components/MMonthPicker';
 registerLocale('es', es);
 
 const config: Meta<typeof MDatePicker> = {
-  title: 'Design System/Patterns/Datepicker',
+  title: 'Design System/Components/Datepicker',
   component: MDatePicker,
   argTypes: {
     autoFocus: {
@@ -173,6 +173,13 @@ const MDatePickerRange = (props: ComponentProps<typeof MDatePicker>) => {
 };
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MDatePickerBase {...args} />
   ),
@@ -182,6 +189,13 @@ export const Default: Story = {
 };
 
 export const DefaultWithMonth: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: (args) => (
     <MDatePickerBase {...args} />
   ),
