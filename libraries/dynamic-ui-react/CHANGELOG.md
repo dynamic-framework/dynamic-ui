@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.2.0...@dynamic-framework/ui-react@1.2.1) (2023-08-24)
+
+
+### Bug Fixes
+
+* mdx height of datepicker example ([53f84dc](https://github.com/dynamic-framework/dynamic-ui/commit/53f84dcfcd4a41db4d2dc843cb9e5cf764b1edd9))
+* optional onFocus and onBlur on m-input-currency ([bb632f0](https://github.com/dynamic-framework/dynamic-ui/commit/bb632f0f37d6ab688bbc8ed8193b31d67171f9a8))
+* use css variables ([e29a7e1](https://github.com/dynamic-framework/dynamic-ui/commit/e29a7e1d981954b90aaff3a85d7a2edc31470329))
+
+
+
 ## [1.2.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.1.5...@dynamic-framework/ui-react@1.2.0) (2023-08-14)
 
 
