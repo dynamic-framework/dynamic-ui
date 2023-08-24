@@ -5,7 +5,7 @@ import { createReactComponent } from './react-component-lib';
 
 import type { JSX } from '@dynamic-framework/ui/components';
 
-import { defineCustomElement as defineMAlert } from '@dynamic-framework/ui/components/m-alert.js';
+import { defineCustomElement as defineDAlert } from '@dynamic-framework/ui/components/d-alert.js';
 import { defineCustomElement as defineMBadge } from '@dynamic-framework/ui/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@dynamic-framework/ui/components/m-button.js';
 import { defineCustomElement as defineMChip } from '@dynamic-framework/ui/components/m-chip.js';
@@ -27,7 +27,7 @@ import { defineCustomElement as defineMQuickActionCheck } from '@dynamic-framewo
 import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
 import { defineCustomElement as defineMQuickActionSwitch } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 
-export const MAlert = /*@__PURE__*/createReactComponent<JSX.MAlert, HTMLMAlertElement>('m-alert', undefined, undefined, defineMAlert);
+export const DAlert = /*@__PURE__*/createReactComponent<JSX.DAlert, HTMLDAlertElement>('d-alert', undefined, undefined, defineDAlert);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
 export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
 export const MChip = /*@__PURE__*/createReactComponent<JSX.MChip, HTMLMChipElement>('m-chip', undefined, undefined, defineMChip);

@@ -9,11 +9,11 @@ import {
 import { PREFIX_BS } from '../../utils';
 import type { ClassMap } from '../../utils/component-interface';
 
-import { ALERT_TYPE_ICON } from './m-alert-interface';
-import type { AlertType } from './m-alert-interface';
+import { ALERT_TYPE_ICON } from './d-alert-interface';
+import type { AlertType } from './d-alert-interface';
 
-@Component({ tag: 'm-alert' })
-export class MAlert {
+@Component({ tag: 'd-alert' })
+export class DAlert {
   /**
    * Alert type
    */
@@ -47,15 +47,15 @@ export class MAlert {
   /**
    * Emitted when the button has been clicked.
    */
-  @Event() mClose!: EventEmitter;
+  @Event() eventClose!: EventEmitter;
 
   private clickHandler = () => {
-    this.mClose.emit();
+    this.eventClose.emit();
   };
 
   private generateClasses(): ClassMap {
     return {
-      [`m-alert alert alert-${this.type}`]: true,
+      [`alert alert-${this.type}`]: true,
       'fade show': !!this.showClose,
     };
   }
@@ -66,8 +66,8 @@ export class MAlert {
 
   private generateStyleVariables() {
     return {
-      ...this.type === 'light' ? { [`--${PREFIX_BS}m-alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)` } : {},
-      [`--${PREFIX_BS}m-alert-component-separator-opacity`]: '0.3',
+      ...this.type === 'light' ? { [`--${PREFIX_BS}alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)` } : {},
+      [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3',
     };
   }
 
@@ -80,17 +80,17 @@ export class MAlert {
       >
         {(this.showIcon || this.icon) && (
           <m-icon
-            class="m-alert-icon"
+            class="alert-icon"
             icon={this.getIcon()}
             familyClass={this.iconFamilyClass}
             familyPrefix={this.iconFamilyPrefix}
           />
         )}
-        <div class="m-alert-text">
+        <div class="alert-text">
           <slot />
         </div>
         {this.showClose && (
-          <div class="m-alert-separator" />
+          <div class="alert-separator" />
         )}
         {this.showClose && (
           <button
@@ -100,7 +100,7 @@ export class MAlert {
             onClick={this.clickHandler}
           >
             <m-icon
-              class="m-alert-close-icon"
+              class="alert-close-icon"
               icon="x-lg"
               familyClass={this.iconFamilyClass}
               familyPrefix={this.iconFamilyPrefix}

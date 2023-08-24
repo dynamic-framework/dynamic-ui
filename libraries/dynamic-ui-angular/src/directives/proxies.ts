@@ -6,7 +6,7 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 import type { Components } from '@dynamic-framework/ui/components';
 
-import { defineCustomElement as defineMAlert } from '@dynamic-framework/ui/components/m-alert.js';
+import { defineCustomElement as defineDAlert } from '@dynamic-framework/ui/components/d-alert.js';
 import { defineCustomElement as defineMBadge } from '@dynamic-framework/ui/components/m-badge.js';
 import { defineCustomElement as defineMButton } from '@dynamic-framework/ui/components/m-button.js';
 import { defineCustomElement as defineMChip } from '@dynamic-framework/ui/components/m-chip.js';
@@ -28,31 +28,31 @@ import { defineCustomElement as defineMQuickActionCheck } from '@dynamic-framewo
 import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
 import { defineCustomElement as defineMQuickActionSwitch } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 @ProxyCmp({
-  defineCustomElementFn: defineMAlert,
+  defineCustomElementFn: defineDAlert,
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type']
 })
 @Component({
-  selector: 'm-alert',
+  selector: 'd-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type'],
 })
-export class MAlert {
+export class DAlert {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClose']);
+    proxyOutputs(this, this.el, ['eventClose']);
   }
 }
 
 
-export declare interface MAlert extends Components.MAlert {
+export declare interface DAlert extends Components.DAlert {
   /**
    * Emitted when the button has been clicked.
    */
-  mClose: EventEmitter<CustomEvent<any>>;
+  eventClose: EventEmitter<CustomEvent<any>>;
 }
 
 

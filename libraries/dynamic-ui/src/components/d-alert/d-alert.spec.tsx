@@ -1,8 +1,8 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MAlert } from './m-alert';
-import { AlertType } from './m-alert-interface';
+import { DAlert } from './d-alert';
+import { AlertType } from './d-alert-interface';
 
 it('should render info alert', async () => {
   const props = {
@@ -10,22 +10,22 @@ it('should render info alert', async () => {
     text: 'Test',
   };
   const page = await newSpecPage({
-    components: [MAlert],
+    components: [DAlert],
     template: () => (
-      <m-alert
+      <d-alert
         type={props.theme as AlertType}
       >
         Test
-      </m-alert>
+      </d-alert>
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-alert>
-      <div class="alert alert-info m-alert" role="alert" style="--bs-m-alert-component-separator-opacity: 0.3;">
-        <div class="m-alert-text">
+    <d-alert>
+      <div class="alert alert-info" role="alert" style="--bs-alert-component-separator-opacity: 0.3;">
+        <div class="alert-text">
           Test
         </div>
       </div>
-    </m-alert>
+    </d-alert>
   `);
 });

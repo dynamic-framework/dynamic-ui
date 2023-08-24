@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlertType } from "./components/m-alert/m-alert-interface";
+import { AlertType } from "./components/d-alert/d-alert-interface";
 import { ComponentSize, InputState } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
@@ -13,7 +13,7 @@ import { Options } from "currency.js";
 import { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
-export { AlertType } from "./components/m-alert/m-alert-interface";
+export { AlertType } from "./components/d-alert/d-alert-interface";
 export { ComponentSize, InputState } from "./utils/component-interface";
 export { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
 export { FormCheckType } from "./components/m-input-check/m-input-check-interface";
@@ -22,7 +22,7 @@ export { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin
 export { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export namespace Components {
-    interface MAlert {
+    interface DAlert {
         /**
           * Alert icon
          */
@@ -1077,9 +1077,9 @@ export namespace Components {
         "name"?: string;
     }
 }
-export interface MAlertCustomEvent<T> extends CustomEvent<T> {
+export interface DAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMAlertElement;
+    target: HTMLDAlertElement;
 }
 export interface MButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1150,11 +1150,11 @@ export interface MQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
     target: HTMLMQuickActionSwitchElement;
 }
 declare global {
-    interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
+    interface HTMLDAlertElement extends Components.DAlert, HTMLStencilElement {
     }
-    var HTMLMAlertElement: {
-        prototype: HTMLMAlertElement;
-        new (): HTMLMAlertElement;
+    var HTMLDAlertElement: {
+        prototype: HTMLDAlertElement;
+        new (): HTMLDAlertElement;
     };
     interface HTMLMBadgeElement extends Components.MBadge, HTMLStencilElement {
     }
@@ -1277,7 +1277,7 @@ declare global {
         new (): HTMLMQuickActionSwitchElement;
     };
     interface HTMLElementTagNameMap {
-        "m-alert": HTMLMAlertElement;
+        "d-alert": HTMLDAlertElement;
         "m-badge": HTMLMBadgeElement;
         "m-button": HTMLMButtonElement;
         "m-chip": HTMLMChipElement;
@@ -1301,7 +1301,7 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface MAlert {
+    interface DAlert {
         /**
           * Alert icon
          */
@@ -1317,7 +1317,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the button has been clicked.
          */
-        "onMClose"?: (event: MAlertCustomEvent<any>) => void;
+        "onEventClose"?: (event: DAlertCustomEvent<any>) => void;
         /**
           * Show close button
          */
@@ -2472,7 +2472,7 @@ declare namespace LocalJSX {
         "onMClick"?: (event: MQuickActionSwitchCustomEvent<boolean>) => void;
     }
     interface IntrinsicElements {
-        "m-alert": MAlert;
+        "d-alert": DAlert;
         "m-badge": MBadge;
         "m-button": MButton;
         "m-chip": MChip;
@@ -2499,7 +2499,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
+            "d-alert": LocalJSX.DAlert & JSXBase.HTMLAttributes<HTMLDAlertElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
             "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-chip": LocalJSX.MChip & JSXBase.HTMLAttributes<HTMLMChipElement>;

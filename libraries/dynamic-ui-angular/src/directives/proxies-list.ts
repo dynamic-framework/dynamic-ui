@@ -2,7 +2,7 @@
 import * as d from './proxies';
 
 export const DIRECTIVES = [
-  d.MAlert,
+  d.DAlert,
   d.MBadge,
   d.MButton,
   d.MChip,

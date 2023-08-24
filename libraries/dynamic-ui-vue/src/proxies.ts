@@ -9,14 +9,14 @@ import { defineCustomElements } from '@dynamic-framework/ui/loader';
 
 defineCustomElements();
 
-export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
+export const DAlert = /*@__PURE__*/ defineContainer<JSX.DAlert>('d-alert', undefined, [
   'type',
   'icon',
   'iconFamilyClass',
   'iconFamilyPrefix',
   'showIcon',
   'showClose',
-  'mClose'
+  'eventClose'
 ]);
 
 

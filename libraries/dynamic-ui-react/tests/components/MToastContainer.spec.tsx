@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 
-import MToastContainer from '../../src/components/MToastContainer';
+import DToastContainer from '../../src/components/DToastContainer';
 
-describe('MToastContainer', () => {
+describe('DToastContainer', () => {
   test('renders without crashing', () => {
     render(
-      <MToastContainer />,
+      <DToastContainer />,
     );
   });
 });

@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MAlert } from '../../components';
+import { DAlert } from '../../components';
 import { ALERT_TYPES, ICONS } from '../constants';
 
-const config: Meta<typeof MAlert> = {
+const config: Meta<typeof DAlert> = {
   title: 'Design System/Patterns/Alert',
-  component: MAlert,
+  component: DAlert,
   argTypes: {
     type: {
       control: 'select',
@@ -30,11 +30,14 @@ const config: Meta<typeof MAlert> = {
       type: 'boolean',
       description: 'Show alert icon',
     },
+    onEventClose: {
+      action: 'onEventClose',
+    },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MAlert>;
+type Story = StoryObj<typeof DAlert>;
 
 export const Light: Story = {
   args: {

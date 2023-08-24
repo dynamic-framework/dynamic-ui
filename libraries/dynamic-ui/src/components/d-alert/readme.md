@@ -1,4 +1,4 @@
-# m-alert
+# d-alert
 
 
 
@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event    | Description                               | Type               |
-| -------- | ----------------------------------------- | ------------------ |
-| `mClose` | Emitted when the button has been clicked. | `CustomEvent<any>` |
+| Event        | Description                               | Type               |
+| ------------ | ----------------------------------------- | ------------------ |
+| `eventClose` | Emitted when the button has been clicked. | `CustomEvent<any>` |
 
 
 ## Dependencies
@@ -33,8 +33,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  m-alert --> m-icon
-  style m-alert fill:#f9f,stroke:#333,stroke-width:4px
+  d-alert --> m-icon
+  style d-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

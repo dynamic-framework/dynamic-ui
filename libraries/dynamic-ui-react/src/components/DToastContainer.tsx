@@ -1,5 +1,6 @@
-import type { CSSProperties } from 'react';
 import { ToastContainer, Slide, ToastPosition } from 'react-toastify';
+
+import type { CSSProperties } from 'react';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,7 +14,7 @@ type Props = {
   position?: ToastPosition;
 };
 
-export default function MToastContainer({
+export default function DToastContainer({
   style,
   position = 'top-right',
 }: Props) {
