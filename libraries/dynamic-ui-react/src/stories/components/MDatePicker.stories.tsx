@@ -12,7 +12,7 @@ import MMonthPicker from '../../components/MMonthPicker';
 registerLocale('es', es);
 
 const config: Meta<typeof MDatePicker> = {
-  title: 'Design System/Alpha/Patterns/Datepicker',
+  title: 'Design System/Patterns/Datepicker',
   component: MDatePicker,
   argTypes: {
     autoFocus: {
