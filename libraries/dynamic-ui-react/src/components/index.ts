@@ -1,7 +1,7 @@
 export * from './proxies';
 export * from './banking';
 
-export { default as MCalendar } from './MCalendar';
+export { default as MDatePicker } from './MDatePicker';
 export { default as MSkeleton } from './MSkeleton';
 export { default as MTabs, useTabContext } from './MTabs';
 export { default as MTabContent } from './MTabContent';

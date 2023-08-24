@@ -1,0 +1,72 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as MDatePickerStories from './MDatePicker.stories';
+
+# Datepicker
+
+Datepicker with range and month support
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                                      | Type             | Description                          |
+  |---------------------------------------------------------------|------------------|--------------------------------------|
+  | \`--${PREFIX_BS}m-datepicker-font-family\`                    | css font family  | Datepicker font family               |
+  | \`--${PREFIX_BS}m-datepicker-border\`                         | css length unit  | Datepicker border                    |
+  | \`--${PREFIX_BS}m-datepicker-box-shadow\`                     | css shadow unit  | Datepicker box shadow                |
+  | \`--${PREFIX_BS}m-datepicker-font-size\`                      | css font unit    | Datepicker font size                 |
+  | \`--${PREFIX_BS}m-datepicker-header-gap\`                     | css length unit  | Datepicker header gap                |
+  | \`--${PREFIX_BS}m-datepicker-header-padding\`                 | css length unit  | Datepicker header padding            |
+  | \`--${PREFIX_BS}m-datepicker-header-background-color\`        | css color unit   | Datepicker header background color   |
+  | \`--${PREFIX_BS}m-datepicker-header-border\`                  | css length unit  | Datepicker header border             |
+  | \`--${PREFIX_BS}m-datepicker-header-font-size\`               | css font unit    | Datepicker header font size          |
+  | \`--${PREFIX_BS}m-datepicker-day-names-margin\`               | css length unit  | Datepicker header days margin        |
+  | \`--${PREFIX_BS}m-datepicker-day-names-font-size\`            | css length unit  | Datepicker header days font size     |
+  | \`--${PREFIX_BS}m-datepicker-day-name-weight\`                | css weight unit  | Datepicker header days weight        |
+  | \`--${PREFIX_BS}m-datepicker-day-name-margin\`                | css length unit  | Datepicker header days margin        |
+  | \`--${PREFIX_BS}m-datepicker-day-name-size\`                  | css length unit  | Datepicker header days size          |
+  | \`--${PREFIX_BS}m-datepicker-day-name-color\`                 | css color unit   | Datepicker header days color         |
+  | \`--${PREFIX_BS}m-datepicker-month-gap\`                      | css length unit  | Datepicker month gap                 |
+  | \`--${PREFIX_BS}m-datepicker-month-padding\`                  | css length unit  | Datepicker month paddingmargin       |
+  | \`--${PREFIX_BS}m-datepicker-month-margin\`                   | css length unit  | Datepicker month margin              |
+  | \`--${PREFIX_BS}m-datepicker-week-gap\`                       | css length unit  | Datepicker week gap                  |
+  | \`--${PREFIX_BS}m-datepicker-day-margin\`                     | css length unit  | Datepicker day margin                |
+  | \`--${PREFIX_BS}m-datepicker-day-font-size\`                  | css font unit    | Datepicker day font size             |
+  | \`--${PREFIX_BS}m-datepicker-day-size\`                       | css length unit  | Datepicker day size                  |
+  | \`--${PREFIX_BS}m-datepicker-day-radius\`                     | css length unit  | Datepicker day border radius         |
+  | \`--${PREFIX_BS}m-datepicker-day-bg-hover\`                   | css color unit   | Datepicker day hover background      |
+  | \`--${PREFIX_BS}m-datepicker-day-color-hover\`                | css color unit   | Datepicker day hover color           |
+  | \`--${PREFIX_BS}m-datepicker-day-selected-color\`             | css color unit   | Datepicker day selected color        |
+  | \`--${PREFIX_BS}m-datepicker-day-selected-bg\`                | css color unit   | Datepicker day selected background   |
+  | \`--${PREFIX_BS}m-datepicker-day-in-range-color\`             | css color unit   | Datepicker date range color          |
+  | \`--${PREFIX_BS}m-datepicker-day-in-range-bg\`                | css color unit   | Datepicker date range background     |
+  | \`--${PREFIX_BS}m-datepicker-day-outside-month-color\`        | css color unit   | Datepicker day outside color         |
+  | \`--${PREFIX_BS}m-datepicker-day-today-font-weight\`          | css weight unit  | Datepicker today weight              |
+  | \`--${PREFIX_BS}m-datepicker-day-today-box-shadow\`           | css shadow unit  | Datepicker today box shadow          |
+  | \`--${PREFIX_BS}m-datepicker-time-container-margin\`          | css length unit  | Datepicker container time margin     |
+  | \`--${PREFIX_BS}m-datepicker-time-container-align\`           | css align unit   | Datepicker container time alignment  |
+  | \`--${PREFIX_BS}m-datepicker-time-input-width\`               | css length unit  | Datepicker time width                |
+  | \`--${PREFIX_BS}m-datepicker-time-input-margin\`              | css length unit  | Datepicker time margin               |
+  | \`--${PREFIX_BS}m-datepicker-time-input-align\`               | css align unit   | Datepicker time alignment            |
+  | \`--${PREFIX_BS}m-datepicker-time-input-padding\`             | css length unit  | Datepicker time padding              |
+  | \`--${PREFIX_BS}m-datepicker-time-input-gap\`                 | css length unit  | Datepicker time gap                  |
+  | \`--${PREFIX_BS}m-datepicker-time-input-label-weight\`        | css weight unit  | Datepicker time weight               |
+  | \`--${PREFIX_BS}m-datepicker-time-input-label-color\`         | css color unit   | Datepicker label time color          |
+  | \`--${PREFIX_BS}m-datepicker-time-input-label-size\`          | css length unit  | Datepicker label time size           |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={MDatePickerStories} />
+
+<ArgTypes of={MDatePickerStories} />
+
+<Stories />
