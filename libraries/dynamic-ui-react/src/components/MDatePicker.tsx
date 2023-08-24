@@ -20,8 +20,8 @@ import MDatePickerHeader from './MDatePickerHeader';
 type CalendarProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
   date: string;
   setDate: (value: Date | [Date | null, Date | null] | null) => void;
-  selectsRange: boolean;
-  withMonthSelector: boolean;
+  selectsRange?: boolean;
+  withMonthSelector?: boolean;
   inputLabel?: string;
   inputIcon?: string;
   inputId?: string;
@@ -84,7 +84,7 @@ export default function MDatePicker({
       iconSize={headerIconSize}
       buttonVariant={headerButtonVariant}
       buttonTheme={headerButtonTheme}
-      withMonthSelector={withMonthSelector}
+      withMonthSelector={!!withMonthSelector}
     />
   ), [headerButtonTheme,
     headerButtonVariant,
