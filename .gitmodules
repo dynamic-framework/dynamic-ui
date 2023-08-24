@@ -10,3 +10,6 @@
 [submodule "packages/stencil-eslint-plugin"]
 	path = packages/stencil-eslint-plugin
 	url = https://github.com/dynamic-framework/stencil-eslint-plugin.git
+[submodule "templates/dynamic-retail-transfer-template"]
+	path = templates/dynamic-retail-transfer-template
+	url = git@github.com:dynamic-framework/dynamic-retail-transfer-template.git
