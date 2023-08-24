@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import { DateTime } from 'luxon';
 
-import MCalendar from '../../src/components/MCalendar';
+import MDatePicker from '../../src/components/MDatePicker';
 
-describe('MCalendar', () => {
+describe('MDatePicker', () => {
   test('renders without crashing', () => {
     render(
-      <MCalendar
+      <MDatePicker
         date={DateTime.now().toISO()}
         setDate={() => {}}
       />,
