@@ -207,6 +207,7 @@ export const WithTime: Story = {
   args: {
     inline: true,
     showTimeInput: true,
+    timeLabel: 'Select time',
   },
 };
 

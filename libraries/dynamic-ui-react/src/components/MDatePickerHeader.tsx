@@ -45,7 +45,7 @@ export default function MDatePickerHeader({
   const lang = language || 'en';
 
   return (
-    <div className="d-flex align-items-center justify-content-between fs-6">
+    <div className="d-flex align-items-center justify-content-between m-datepicker-header">
       <MButton
         iconStart={decreaseMonthIcon}
         size={iconSize}

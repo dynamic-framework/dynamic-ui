@@ -22,9 +22,9 @@ export default function MDatePickerTime({
   ...props
 }: MDatePickerTimeProps) {
   return (
-    <div className="p-3 d-flex align-items-center gap-2 flex-column m-datepicker-time">
+    <div className="d-flex align-items-center gap-2 flex-column m-datepicker-time">
       { label && (
-        <p className="fw-bold text-light-emphasis small">{label}</p>
+        <p className="m-label-time">{label}</p>
       )}
       <MInput
         {...onChange && {
