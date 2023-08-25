@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MQuickActionCheck } from './m-quick-action-check';
+import { DQuickActionCheck } from './d-quick-action-check';
 
 it('should render my component', async () => {
   const shortcut = {
-    mId: 'component',
+    innerId: 'component',
     name: 'name',
     value: 'value',
     line1: 'Saving account',
@@ -14,17 +14,17 @@ it('should render my component', async () => {
   };
 
   const page = await newSpecPage({
-    components: [MQuickActionCheck],
+    components: [DQuickActionCheck],
     template: () => (
-      <m-quick-action-check
+      <d-quick-action-check
         {...shortcut}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-quick-action-check>
-      <label class="m-quick-action-check" htmlfor="component">
-        <m-input-check mid="component" name="name" type="radio" value="value"></m-input-check>
+    <d-quick-action-check>
+      <label class="d-quick-action-check" htmlfor="component">
+        <d-input-check innerId="component" name="name" type="radio" value="value"></d-input-check>
         <div class="quick-action-check-detail">
           <span class="quick-action-check-line1">
             Saving account
@@ -37,6 +37,6 @@ it('should render my component', async () => {
           $ 7.432.450
         </span>
       </label>
-    </m-quick-action-check>
+    </d-quick-action-check>
   `);
 });

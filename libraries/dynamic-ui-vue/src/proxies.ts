@@ -110,6 +110,19 @@ export const DInput = /*@__PURE__*/ defineContainer<JSX.DInput>('d-input', undef
 ]);
 
 
+export const DInputCheck = /*@__PURE__*/ defineContainer<JSX.DInputCheck>('d-input-check', undefined, [
+  'type',
+  'name',
+  'label',
+  'isChecked',
+  'innerId',
+  'isDisabled',
+  'isIndeterminate',
+  'value',
+  'eventChange'
+]);
+
+
 export const DInputCounter = /*@__PURE__*/ defineContainer<JSX.DInputCounter>('d-input-counter', undefined, [
   'innerId',
   'name',
@@ -211,16 +224,15 @@ export const DInputSearch = /*@__PURE__*/ defineContainer<JSX.DInputSearch>('d-i
 ]);
 
 
-export const MInputCheck = /*@__PURE__*/ defineContainer<JSX.MInputCheck>('m-input-check', undefined, [
-  'type',
+export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
+  'innerId',
   'name',
-  'label',
-  'isChecked',
-  'mId',
-  'isDisabled',
-  'isIndeterminate',
   'value',
-  'mChange'
+  'line1',
+  'line2',
+  'line3',
+  'isChecked',
+  'eventChange'
 ]);
 
 
@@ -338,18 +350,6 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'representativeIconFamilyPrefix',
   'mClick',
   'mClickSecondary'
-]);
-
-
-export const MQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.MQuickActionCheck>('m-quick-action-check', undefined, [
-  'mId',
-  'name',
-  'value',
-  'line1',
-  'line2',
-  'line3',
-  'isChecked',
-  'mChange'
 ]);
 
 

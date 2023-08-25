@@ -1,0 +1,74 @@
+.d-quick-action-check {
+  --#{$prefix}quick-action-check-gap: #{$quick-action-check-gap};
+  --#{$prefix}quick-action-check-padding: #{$quick-action-check-padding};
+  --#{$prefix}quick-action-check-bg: #{$quick-action-check-bg};
+  --#{$prefix}quick-action-check-border-radius: #{$quick-action-check-border-radius};
+
+  --#{$prefix}quick-action-check-line1-font-size: #{$quick-action-check-line1-font-size};
+  --#{$prefix}quick-action-check-line1-font-weight: #{$quick-action-check-line1-font-weight};
+  --#{$prefix}quick-action-check-line1-color: #{$quick-action-check-line1-color};
+
+  --#{$prefix}quick-action-check-line2-font-size: #{$quick-action-check-line2-font-size};
+  --#{$prefix}quick-action-check-line2-font-weight: #{$quick-action-check-line2-font-weight};
+  --#{$prefix}quick-action-check-line2-color: #{$quick-action-check-line2-color};
+
+  --#{$prefix}quick-action-check-line3-font-size: #{$quick-action-check-line3-font-size};
+  --#{$prefix}quick-action-check-line3-font-weight: #{$quick-action-check-line3-font-weight};
+  --#{$prefix}quick-action-check-line3-color: #{$quick-action-check-line3-color};
+
+  --#{$prefix}quick-action-check-hover-bg: #{$quick-action-check-hover-bg};
+
+  --#{$prefix}quick-action-check-checked-bg: #{$quick-action-check-checked-bg};
+  --#{$prefix}quick-action-check-checked-color: #{$quick-action-check-checked-color};
+
+  display: flex;
+  flex-direction: row;
+  gap: var(--#{$prefix}quick-action-check-gap);
+  align-items: center;
+  width: 100%;
+  padding: var(--#{$prefix}quick-action-check-padding);
+  text-align: left;
+  cursor: pointer;
+  background-color: var(--#{$prefix}quick-action-check-bg);
+  border-radius: var(--#{$prefix}quick-action-check-border-radius);
+
+  &:hover {
+    background: var(--#{$prefix}quick-action-check-hover-bg);
+  }
+
+  &:has(input:checked) {
+    background: var(--#{$prefix}quick-action-check-checked-bg);
+
+    .quick-action-check-line3 {
+      color: var(--#{$prefix}quick-action-check-checked-color);
+    }
+  }
+
+  .quick-action-check-detail {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .quick-action-check-line1 {
+    font-size: var(--#{$prefix}quick-action-check-line1-font-size);
+    font-weight: var(--#{$prefix}quick-action-check-line1-font-weight);
+    color: var(--#{$prefix}quick-action-check-line1-color);
+  }
+
+  .quick-action-check-line2 {
+    font-size: var(--#{$prefix}quick-action-check-line2-font-size);
+    font-weight: var(--#{$prefix}quick-action-check-line2-font-weight);
+    color: var(--#{$prefix}quick-action-check-line2-color);
+  }
+
+  .quick-action-check-line3 {
+    font-size: var(--#{$prefix}quick-action-check-line3-font-size);
+    font-weight: var(--#{$prefix}quick-action-check-line3-font-weight);
+    color: var(--#{$prefix}quick-action-check-line3-color);
+  }
+
+  .form-check-input:focus {
+    outline: 0;
+  }
+}

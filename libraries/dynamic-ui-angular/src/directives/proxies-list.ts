@@ -8,11 +8,12 @@ export const DIRECTIVES = [
   d.DChip,
   d.DIcon,
   d.DInput,
+  d.DInputCheck,
   d.DInputCounter,
   d.DInputCurrencyBase,
   d.DInputPassword,
   d.DInputSearch,
-  d.MInputCheck,
+  d.DQuickActionCheck,
   d.MInputPin,
   d.MInputSelect,
   d.MInputSwitch,
@@ -20,7 +21,6 @@ export const DIRECTIVES = [
   d.MOffcanvas,
   d.MProgressBar,
   d.MQuickActionButton,
-  d.MQuickActionCheck,
   d.MQuickActionSelect,
   d.MQuickActionSwitch
 ];

@@ -2,13 +2,13 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import type { ComponentProps } from 'react';
 
-import { MQuickActionCheck } from '../../components';
+import { DQuickActionCheck } from '../../components';
 
-const config: Meta<typeof MQuickActionCheck> = {
+const config: Meta<typeof DQuickActionCheck> = {
   title: 'Design System/Components/Quick Action Check',
-  component: MQuickActionCheck,
+  component: DQuickActionCheck,
   argTypes: {
-    mId: {
+    innerId: {
       control: 'text',
       type: 'string',
     },
@@ -39,14 +39,14 @@ const config: Meta<typeof MQuickActionCheck> = {
       control: 'boolean',
       type: 'boolean',
     },
-    onMChange: {
-      action: 'onMChange',
+    onEventChange: {
+      action: 'onEventChange',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MQuickActionCheck>;
+type Story = StoryObj<typeof DQuickActionCheck>;
 
 export const Default: Story = {
   decorators: [
@@ -60,7 +60,7 @@ export const Default: Story = {
     ),
   ],
   args: {
-    mId: 'componentId1',
+    innerId: 'componentId1',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -78,15 +78,15 @@ export const Example: Story = {
       </div>
     ),
   ],
-  render: ({ mId, ...args }: ComponentProps<typeof MQuickActionCheck>) => (
+  render: ({ innerId, ...args }: ComponentProps<typeof DQuickActionCheck>) => (
     <>
-      <MQuickActionCheck mId={`${mId}2`} {...args} />
-      <MQuickActionCheck mId={`${mId}3`} {...args} />
-      <MQuickActionCheck mId={`${mId}4`} {...args} />
+      <DQuickActionCheck innerId={`${innerId}2`} {...args} />
+      <DQuickActionCheck innerId={`${innerId}3`} {...args} />
+      <DQuickActionCheck innerId={`${innerId}4`} {...args} />
     </>
   ),
   args: {
-    mId: 'componentId',
+    innerId: 'componentId',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -105,7 +105,7 @@ export const Checked: Story = {
     ),
   ],
   args: {
-    mId: 'componentId5',
+    innerId: 'componentId5',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',

@@ -7,10 +7,10 @@ import {
   EventEmitter,
 } from '@stencil/core';
 
-import type { FormCheckType } from './m-input-check-interface';
+import type { FormCheckType } from './d-input-check-interface';
 
-@Component({ tag: 'm-input-check' })
-export class MInputCheck implements ComponentInterface {
+@Component({ tag: 'd-input-check' })
+export class DInputCheck implements ComponentInterface {
   /**
    * Set whether is a checkbox input or a radio input
    */
@@ -34,7 +34,7 @@ export class MInputCheck implements ComponentInterface {
   /**
    * Form control identifier
    */
-  @Prop() mId!: string;
+  @Prop() innerId!: string;
 
   /**
    * Set input as disabled
@@ -54,11 +54,11 @@ export class MInputCheck implements ComponentInterface {
   /**
    * Emitted when the switch has changed
    */
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter;
+  @Event() eventChange!: EventEmitter;
 
   private changeHandler = (event: Event) => {
     const { checked, value } = (event.target as HTMLInputElement);
-    this.mChange.emit({
+    this.eventChange.emit({
       isChecked: checked,
       value,
     });
@@ -69,10 +69,10 @@ export class MInputCheck implements ComponentInterface {
       return (
         <input
           onChange={this.changeHandler}
-          class="m-input-check form-check-input"
+          class="form-check-input"
           type={this.type}
           name={this.name}
-          id={this.mId}
+          id={this.innerId}
           value={this.value}
           checked={this.isChecked}
           disabled={this.isDisabled}
@@ -82,13 +82,13 @@ export class MInputCheck implements ComponentInterface {
     }
 
     return (
-      <div class="m-input-check form-check">
+      <div class="form-check">
         <input
           onChange={this.changeHandler}
           class="form-check-input"
           type={this.type}
           name={this.name}
-          id={this.mId}
+          id={this.innerId}
           value={this.value}
           checked={this.isChecked}
           disabled={this.isDisabled}
@@ -96,7 +96,7 @@ export class MInputCheck implements ComponentInterface {
         />
         <label
           class="form-check-label"
-          htmlFor={this.mId}
+          htmlFor={this.innerId}
         >
           {this.label}
         </label>

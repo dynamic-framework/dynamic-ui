@@ -6,12 +6,12 @@ import {
   Event,
 } from '@stencil/core';
 
-@Component({ tag: 'm-quick-action-check' })
-export class MQuickActionCheck implements ComponentInterface {
+@Component({ tag: 'd-quick-action-check' })
+export class DQuickActionCheck implements ComponentInterface {
   /**
    * The id of the input
    */
-  @Prop() mId!: string;
+  @Prop() innerId!: string;
 
   /**
    * Name of the input
@@ -46,26 +46,26 @@ export class MQuickActionCheck implements ComponentInterface {
   /**
    * Emitted when the select value has changed
    */
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
+  @Event() eventChange!: EventEmitter<string>;
 
   private changeHandler = (event: CustomEvent) => {
     event.stopPropagation();
-    this.mChange.emit((event.target as HTMLInputElement).value);
+    this.eventChange.emit((event.target as HTMLInputElement).value);
   };
 
   render() {
     return (
       <label
-        class="m-quick-action-check"
-        htmlFor={this.mId}
+        class="d-quick-action-check"
+        htmlFor={this.innerId}
       >
-        <m-input-check
-          mId={this.mId}
+        <d-input-check
+          innerId={this.innerId}
           type="radio"
           name={this.name}
           value={this.value}
           isChecked={this.isChecked}
-          onMChange={this.changeHandler}
+          onEventChange={this.changeHandler}
         />
         <div class="quick-action-check-detail">
           <span class="quick-action-check-line1">

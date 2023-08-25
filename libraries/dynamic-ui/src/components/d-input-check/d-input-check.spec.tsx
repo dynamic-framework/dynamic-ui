@@ -1,27 +1,27 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MInputCheck } from './m-input-check';
-import { FormCheckType } from './m-input-check-interface';
+import { DInputCheck } from './d-input-check';
+import { FormCheckType } from './d-input-check-interface';
 
 it('should render base checkbox', async () => {
   const props = {
-    mId: 'checkTest',
+    innerId: 'checkTest',
     type: 'checkbox',
   };
   const page = await newSpecPage({
-    components: [MInputCheck],
+    components: [DInputCheck],
     template: () => (
-      <m-input-check
-        mId={props.mId}
+      <d-input-check
+        innerId={props.innerId}
         type={props.type as FormCheckType}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-input-check>
-      <input class="form-check-input m-input-check" id="checkTest" type="checkbox">
-    </m-input-check>
+    <d-input-check>
+      <input class="form-check-input" id="checkTest" type="checkbox">
+    </d-input-check>
   `);
 });
 
@@ -31,17 +31,17 @@ it('should render base radio', async () => {
     type: 'radio',
   };
   const page = await newSpecPage({
-    components: [MInputCheck],
+    components: [DInputCheck],
     template: () => (
-      <m-input-check
-        mId={props.mId}
+      <d-input-check
+        innerId={props.mId}
         type={props.type as FormCheckType}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-input-check>
-      <input class="form-check-input m-input-check" id="radioTest" type="radio">
-    </m-input-check>
+    <d-input-check>
+      <input class="form-check-input" id="radioTest" type="radio">
+    </d-input-check>
   `);
 });

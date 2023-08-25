@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MInputCheck } from '../../components';
+import { DInputCheck } from '../../components';
 
-const config: Meta<typeof MInputCheck> = {
+const config: Meta<typeof DInputCheck> = {
   title: 'Design System/Components/Input Check',
-  component: MInputCheck,
+  component: DInputCheck,
   argTypes: {
-    mId: {
+    innerId: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -45,11 +45,11 @@ const config: Meta<typeof MInputCheck> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MInputCheck>;
+type Story = StoryObj<typeof DInputCheck>;
 
 export const CheckboxWithoutLabel: Story = {
   args: {
-    mId: 'componentId1',
+    innerId: 'componentId1',
     type: 'checkbox',
     isChecked: false,
     isDisabled: false,
@@ -58,7 +58,7 @@ export const CheckboxWithoutLabel: Story = {
 
 export const CheckboxDefault: Story = {
   args: {
-    mId: 'componentId2',
+    innerId: 'componentId2',
     type: 'checkbox',
     label: 'Label',
     isChecked: false,
@@ -68,7 +68,7 @@ export const CheckboxDefault: Story = {
 
 export const CheckboxChecked: Story = {
   args: {
-    mId: 'componentId3',
+    innerId: 'componentId3',
     type: 'checkbox',
     label: 'Label',
     isChecked: true,
@@ -78,7 +78,7 @@ export const CheckboxChecked: Story = {
 
 export const CheckboxDisabled: Story = {
   args: {
-    mId: 'componentId4',
+    innerId: 'componentId4',
     type: 'checkbox',
     label: 'Label',
     isChecked: false,
@@ -88,7 +88,7 @@ export const CheckboxDisabled: Story = {
 
 export const RadioWithoutLabel: Story = {
   args: {
-    mId: 'componentId5',
+    innerId: 'componentId5',
     type: 'radio',
     isChecked: false,
     isDisabled: false,
@@ -97,7 +97,7 @@ export const RadioWithoutLabel: Story = {
 
 export const RadioDefault: Story = {
   args: {
-    mId: 'componentId6',
+    innerId: 'componentId6',
     type: 'radio',
     label: 'Label',
     isChecked: false,
@@ -107,7 +107,7 @@ export const RadioDefault: Story = {
 
 export const RadioChecked: Story = {
   args: {
-    mId: 'componentId7',
+    innerId: 'componentId7',
     type: 'radio',
     label: 'Label',
     isChecked: true,
@@ -117,7 +117,7 @@ export const RadioChecked: Story = {
 
 export const RadioDisabled: Story = {
   args: {
-    mId: 'componentId8',
+    innerId: 'componentId8',
     type: 'radio',
     label: 'Label',
     isChecked: false,

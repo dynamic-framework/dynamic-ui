@@ -12,11 +12,12 @@ import { defineCustomElement as defineDButton } from '@dynamic-framework/ui/comp
 import { defineCustomElement as defineDChip } from '@dynamic-framework/ui/components/d-chip.js';
 import { defineCustomElement as defineDIcon } from '@dynamic-framework/ui/components/d-icon.js';
 import { defineCustomElement as defineDInput } from '@dynamic-framework/ui/components/d-input.js';
+import { defineCustomElement as defineDInputCheck } from '@dynamic-framework/ui/components/d-input-check.js';
 import { defineCustomElement as defineDInputCounter } from '@dynamic-framework/ui/components/d-input-counter.js';
 import { defineCustomElement as defineDInputCurrencyBase } from '@dynamic-framework/ui/components/d-input-currency-base.js';
 import { defineCustomElement as defineDInputPassword } from '@dynamic-framework/ui/components/d-input-password.js';
 import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui/components/d-input-search.js';
-import { defineCustomElement as defineMInputCheck } from '@dynamic-framework/ui/components/m-input-check.js';
+import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
 import { defineCustomElement as defineMInputPin } from '@dynamic-framework/ui/components/m-input-pin.js';
 import { defineCustomElement as defineMInputSelect } from '@dynamic-framework/ui/components/m-input-select.js';
 import { defineCustomElement as defineMInputSwitch } from '@dynamic-framework/ui/components/m-input-switch.js';
@@ -24,7 +25,6 @@ import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/compo
 import { defineCustomElement as defineMOffcanvas } from '@dynamic-framework/ui/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@dynamic-framework/ui/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
-import { defineCustomElement as defineMQuickActionCheck } from '@dynamic-framework/ui/components/m-quick-action-check.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
 import { defineCustomElement as defineMQuickActionSwitch } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 @ProxyCmp({
@@ -211,6 +211,35 @@ export declare interface DInput extends Components.DInput {
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDInputCheck,
+  inputs: ['innerId', 'isChecked', 'isDisabled', 'isIndeterminate', 'label', 'name', 'type', 'value']
+})
+@Component({
+  selector: 'd-input-check',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['innerId', 'isChecked', 'isDisabled', 'isIndeterminate', 'label', 'name', 'type', 'value'],
+})
+export class DInputCheck {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventChange']);
+  }
+}
+
+
+export declare interface DInputCheck extends Components.DInputCheck {
+  /**
+   * Emitted when the switch has changed
+   */
+  eventChange: EventEmitter<CustomEvent<any>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDInputCounter,
   inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'maxValue', 'minValue', 'name', 'value']
 })
@@ -343,31 +372,31 @@ export declare interface DInputSearch extends Components.DInputSearch {
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputCheck,
-  inputs: ['isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'type', 'value']
+  defineCustomElementFn: defineDQuickActionCheck,
+  inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value']
 })
 @Component({
-  selector: 'm-input-check',
+  selector: 'd-quick-action-check',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'type', 'value'],
+  inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value'],
 })
-export class MInputCheck {
+export class DQuickActionCheck {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['eventChange']);
   }
 }
 
 
-export declare interface MInputCheck extends Components.MInputCheck {
+export declare interface DQuickActionCheck extends Components.DQuickActionCheck {
   /**
-   * Emitted when the switch has changed
+   * Emitted when the select value has changed
    */
-  mChange: EventEmitter<CustomEvent<any>>;
+  eventChange: EventEmitter<CustomEvent<string>>;
 }
 
 
@@ -581,35 +610,6 @@ export declare interface MQuickActionButton extends Components.MQuickActionButto
    * Emitted when the input value has changed
    */
   mClickSecondary: EventEmitter<CustomEvent<any>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMQuickActionCheck,
-  inputs: ['isChecked', 'line1', 'line2', 'line3', 'mId', 'name', 'value']
-})
-@Component({
-  selector: 'm-quick-action-check',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'line1', 'line2', 'line3', 'mId', 'name', 'value'],
-})
-export class MQuickActionCheck {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MQuickActionCheck extends Components.MQuickActionCheck {
-  /**
-   * Emitted when the select value has changed
-   */
-  mChange: EventEmitter<CustomEvent<string>>;
 }
 
 

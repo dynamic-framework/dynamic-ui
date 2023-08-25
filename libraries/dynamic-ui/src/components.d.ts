@@ -8,16 +8,16 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertType } from "./components/d-alert/d-alert-interface";
 import { ComponentSize, InputState } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
+import { FormCheckType } from "./components/d-input-check/d-input-check-interface";
 import { Options } from "currency.js";
-import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 import { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export { AlertType } from "./components/d-alert/d-alert-interface";
 export { ComponentSize, InputState } from "./utils/component-interface";
 export { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
+export { FormCheckType } from "./components/d-input-check/d-input-check-interface";
 export { Options } from "currency.js";
-export { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 export { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
 export { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
@@ -313,6 +313,40 @@ export namespace Components {
           * The value of the input
          */
         "value": string | number;
+    }
+    interface DInputCheck {
+        /**
+          * Form control identifier
+         */
+        "innerId": string;
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "isChecked": boolean;
+        /**
+          * Set input as disabled
+         */
+        "isDisabled": boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "isIndeterminate"?: boolean;
+        /**
+          * Text that will be displayed beside Check input or Radio input
+         */
+        "label"?: string;
+        /**
+          * HTML Name to use within a form or JS reference
+         */
+        "name"?: string;
+        /**
+          * Set whether is a checkbox input or a radio input
+         */
+        "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
     }
     interface DInputCounter {
         /**
@@ -630,39 +664,35 @@ export namespace Components {
          */
         "value": string;
     }
-    interface MInputCheck {
+    interface DQuickActionCheck {
         /**
-          * Set checkbox or radio button marked as selected or not
+          * The id of the input
          */
-        "isChecked": boolean;
+        "innerId": string;
         /**
-          * Set input as disabled
+          * Is selected
          */
-        "isDisabled": boolean;
+        "isChecked"?: boolean;
         /**
-          * Set view of checkbox as indeterminated
+          * Line 1 text
          */
-        "isIndeterminate"?: boolean;
+        "line1": string;
         /**
-          * Text that will be displayed beside Check input or Radio input
+          * Line 2 text
          */
-        "label"?: string;
+        "line2": string;
         /**
-          * Form control identifier
+          * Line 3 text
          */
-        "mId": string;
+        "line3": string;
         /**
-          * HTML Name to use within a form or JS reference
+          * Name of the input
          */
-        "name"?: string;
+        "name": string;
         /**
-          * Set whether is a checkbox input or a radio input
+          * Input value
          */
-        "type": FormCheckType;
-        /**
-          * A string representing the value of the checkbox or radio
-         */
-        "value"?: string;
+        "value": string;
     }
     interface MInputPin {
         /**
@@ -994,36 +1024,6 @@ export namespace Components {
          */
         "secondaryActionIcon"?: string;
     }
-    interface MQuickActionCheck {
-        /**
-          * Is selected
-         */
-        "isChecked"?: boolean;
-        /**
-          * Line 1 text
-         */
-        "line1": string;
-        /**
-          * Line 2 text
-         */
-        "line2": string;
-        /**
-          * Line 3 text
-         */
-        "line3": string;
-        /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * Name of the input
-         */
-        "name": string;
-        /**
-          * Input value
-         */
-        "value": string;
-    }
     interface MQuickActionSelect {
         /**
           * Is selected
@@ -1093,6 +1093,10 @@ export interface DInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDInputElement;
 }
+export interface DInputCheckCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDInputCheckElement;
+}
 export interface DInputCounterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDInputCounterElement;
@@ -1109,9 +1113,9 @@ export interface DInputSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDInputSearchElement;
 }
-export interface MInputCheckCustomEvent<T> extends CustomEvent<T> {
+export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputCheckElement;
+    target: HTMLDQuickActionCheckElement;
 }
 export interface MInputPinCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1136,10 +1140,6 @@ export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
 export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionButtonElement;
-}
-export interface MQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMQuickActionCheckElement;
 }
 export interface MQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1186,6 +1186,12 @@ declare global {
         prototype: HTMLDInputElement;
         new (): HTMLDInputElement;
     };
+    interface HTMLDInputCheckElement extends Components.DInputCheck, HTMLStencilElement {
+    }
+    var HTMLDInputCheckElement: {
+        prototype: HTMLDInputCheckElement;
+        new (): HTMLDInputCheckElement;
+    };
     interface HTMLDInputCounterElement extends Components.DInputCounter, HTMLStencilElement {
     }
     var HTMLDInputCounterElement: {
@@ -1210,11 +1216,11 @@ declare global {
         prototype: HTMLDInputSearchElement;
         new (): HTMLDInputSearchElement;
     };
-    interface HTMLMInputCheckElement extends Components.MInputCheck, HTMLStencilElement {
+    interface HTMLDQuickActionCheckElement extends Components.DQuickActionCheck, HTMLStencilElement {
     }
-    var HTMLMInputCheckElement: {
-        prototype: HTMLMInputCheckElement;
-        new (): HTMLMInputCheckElement;
+    var HTMLDQuickActionCheckElement: {
+        prototype: HTMLDQuickActionCheckElement;
+        new (): HTMLDQuickActionCheckElement;
     };
     interface HTMLMInputPinElement extends Components.MInputPin, HTMLStencilElement {
     }
@@ -1258,12 +1264,6 @@ declare global {
         prototype: HTMLMQuickActionButtonElement;
         new (): HTMLMQuickActionButtonElement;
     };
-    interface HTMLMQuickActionCheckElement extends Components.MQuickActionCheck, HTMLStencilElement {
-    }
-    var HTMLMQuickActionCheckElement: {
-        prototype: HTMLMQuickActionCheckElement;
-        new (): HTMLMQuickActionCheckElement;
-    };
     interface HTMLMQuickActionSelectElement extends Components.MQuickActionSelect, HTMLStencilElement {
     }
     var HTMLMQuickActionSelectElement: {
@@ -1283,11 +1283,12 @@ declare global {
         "d-chip": HTMLDChipElement;
         "d-icon": HTMLDIconElement;
         "d-input": HTMLDInputElement;
+        "d-input-check": HTMLDInputCheckElement;
         "d-input-counter": HTMLDInputCounterElement;
         "d-input-currency-base": HTMLDInputCurrencyBaseElement;
         "d-input-password": HTMLDInputPasswordElement;
         "d-input-search": HTMLDInputSearchElement;
-        "m-input-check": HTMLMInputCheckElement;
+        "d-quick-action-check": HTMLDQuickActionCheckElement;
         "m-input-pin": HTMLMInputPinElement;
         "m-input-select": HTMLMInputSelectElement;
         "m-input-switch": HTMLMInputSwitchElement;
@@ -1295,7 +1296,6 @@ declare global {
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action-button": HTMLMQuickActionButtonElement;
-        "m-quick-action-check": HTMLMQuickActionCheckElement;
         "m-quick-action-select": HTMLMQuickActionSelectElement;
         "m-quick-action-switch": HTMLMQuickActionSwitchElement;
     }
@@ -1620,6 +1620,44 @@ declare namespace LocalJSX {
           * The value of the input
          */
         "value"?: string | number;
+    }
+    interface DInputCheck {
+        /**
+          * Form control identifier
+         */
+        "innerId": string;
+        /**
+          * Set checkbox or radio button marked as selected or not
+         */
+        "isChecked"?: boolean;
+        /**
+          * Set input as disabled
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Set view of checkbox as indeterminated
+         */
+        "isIndeterminate"?: boolean;
+        /**
+          * Text that will be displayed beside Check input or Radio input
+         */
+        "label"?: string;
+        /**
+          * HTML Name to use within a form or JS reference
+         */
+        "name"?: string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onEventChange"?: (event: DInputCheckCustomEvent<any>) => void;
+        /**
+          * Set whether is a checkbox input or a radio input
+         */
+        "type": FormCheckType;
+        /**
+          * A string representing the value of the checkbox or radio
+         */
+        "value"?: string;
     }
     interface DInputCounter {
         /**
@@ -1969,43 +2007,39 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface MInputCheck {
+    interface DQuickActionCheck {
         /**
-          * Set checkbox or radio button marked as selected or not
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Is selected
          */
         "isChecked"?: boolean;
         /**
-          * Set input as disabled
+          * Line 1 text
          */
-        "isDisabled"?: boolean;
+        "line1": string;
         /**
-          * Set view of checkbox as indeterminated
+          * Line 2 text
          */
-        "isIndeterminate"?: boolean;
+        "line2": string;
         /**
-          * Text that will be displayed beside Check input or Radio input
+          * Line 3 text
          */
-        "label"?: string;
+        "line3": string;
         /**
-          * Form control identifier
+          * Name of the input
          */
-        "mId": string;
+        "name": string;
         /**
-          * HTML Name to use within a form or JS reference
+          * Emitted when the select value has changed
          */
-        "name"?: string;
+        "onEventChange"?: (event: DQuickActionCheckCustomEvent<string>) => void;
         /**
-          * Emitted when the switch has changed
+          * Input value
          */
-        "onMChange"?: (event: MInputCheckCustomEvent<any>) => void;
-        /**
-          * Set whether is a checkbox input or a radio input
-         */
-        "type": FormCheckType;
-        /**
-          * A string representing the value of the checkbox or radio
-         */
-        "value"?: string;
+        "value": string;
     }
     interface MInputPin {
         /**
@@ -2377,40 +2411,6 @@ declare namespace LocalJSX {
          */
         "secondaryActionIcon"?: string;
     }
-    interface MQuickActionCheck {
-        /**
-          * Is selected
-         */
-        "isChecked"?: boolean;
-        /**
-          * Line 1 text
-         */
-        "line1": string;
-        /**
-          * Line 2 text
-         */
-        "line2": string;
-        /**
-          * Line 3 text
-         */
-        "line3": string;
-        /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * Name of the input
-         */
-        "name": string;
-        /**
-          * Emitted when the select value has changed
-         */
-        "onMChange"?: (event: MQuickActionCheckCustomEvent<string>) => void;
-        /**
-          * Input value
-         */
-        "value": string;
-    }
     interface MQuickActionSelect {
         /**
           * Is selected
@@ -2478,11 +2478,12 @@ declare namespace LocalJSX {
         "d-chip": DChip;
         "d-icon": DIcon;
         "d-input": DInput;
+        "d-input-check": DInputCheck;
         "d-input-counter": DInputCounter;
         "d-input-currency-base": DInputCurrencyBase;
         "d-input-password": DInputPassword;
         "d-input-search": DInputSearch;
-        "m-input-check": MInputCheck;
+        "d-quick-action-check": DQuickActionCheck;
         "m-input-pin": MInputPin;
         "m-input-select": MInputSelect;
         "m-input-switch": MInputSwitch;
@@ -2490,7 +2491,6 @@ declare namespace LocalJSX {
         "m-offcanvas": MOffcanvas;
         "m-progress-bar": MProgressBar;
         "m-quick-action-button": MQuickActionButton;
-        "m-quick-action-check": MQuickActionCheck;
         "m-quick-action-select": MQuickActionSelect;
         "m-quick-action-switch": MQuickActionSwitch;
     }
@@ -2505,11 +2505,12 @@ declare module "@stencil/core" {
             "d-chip": LocalJSX.DChip & JSXBase.HTMLAttributes<HTMLDChipElement>;
             "d-icon": LocalJSX.DIcon & JSXBase.HTMLAttributes<HTMLDIconElement>;
             "d-input": LocalJSX.DInput & JSXBase.HTMLAttributes<HTMLDInputElement>;
+            "d-input-check": LocalJSX.DInputCheck & JSXBase.HTMLAttributes<HTMLDInputCheckElement>;
             "d-input-counter": LocalJSX.DInputCounter & JSXBase.HTMLAttributes<HTMLDInputCounterElement>;
             "d-input-currency-base": LocalJSX.DInputCurrencyBase & JSXBase.HTMLAttributes<HTMLDInputCurrencyBaseElement>;
             "d-input-password": LocalJSX.DInputPassword & JSXBase.HTMLAttributes<HTMLDInputPasswordElement>;
             "d-input-search": LocalJSX.DInputSearch & JSXBase.HTMLAttributes<HTMLDInputSearchElement>;
-            "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;
+            "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
             "m-input-pin": LocalJSX.MInputPin & JSXBase.HTMLAttributes<HTMLMInputPinElement>;
             "m-input-select": LocalJSX.MInputSelect & JSXBase.HTMLAttributes<HTMLMInputSelectElement>;
             "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
@@ -2517,7 +2518,6 @@ declare module "@stencil/core" {
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
-            "m-quick-action-check": LocalJSX.MQuickActionCheck & JSXBase.HTMLAttributes<HTMLMQuickActionCheckElement>;
             "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
             "m-quick-action-switch": LocalJSX.MQuickActionSwitch & JSXBase.HTMLAttributes<HTMLMQuickActionSwitchElement>;
         }
