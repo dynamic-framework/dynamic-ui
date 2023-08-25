@@ -75,8 +75,8 @@ export const DIcon = /*@__PURE__*/ defineContainer<JSX.DIcon>('d-icon', undefine
 ]);
 
 
-export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
-  'mId',
+export const DInput = /*@__PURE__*/ defineContainer<JSX.DInput>('d-input', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -85,7 +85,7 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'placeholder',
   'type',
   'value',
-  'mInputMode',
+  'innerInputMode',
   'pattern',
   'isDisabled',
   'isReadOnly',
@@ -101,30 +101,17 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'hint',
   'isInvalid',
   'isValid',
-  'mChange',
-  'mBlur',
-  'mFocus',
-  'mWheel',
-  'mIconStartClick',
-  'mIconEndClick'
+  'eventChange',
+  'eventBlur',
+  'eventFocus',
+  'eventWheel',
+  'eventIconStartClick',
+  'eventIconEndClick'
 ]);
 
 
-export const MInputCheck = /*@__PURE__*/ defineContainer<JSX.MInputCheck>('m-input-check', undefined, [
-  'type',
-  'name',
-  'label',
-  'isChecked',
-  'mId',
-  'isDisabled',
-  'isIndeterminate',
-  'value',
-  'mChange'
-]);
-
-
-export const MInputCounter = /*@__PURE__*/ defineContainer<JSX.MInputCounter>('m-input-counter', undefined, [
-  'mId',
+export const DInputCounter = /*@__PURE__*/ defineContainer<JSX.DInputCounter>('d-input-counter', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -147,13 +134,13 @@ export const MInputCounter = /*@__PURE__*/ defineContainer<JSX.MInputCounter>('m
   'isValid',
   'minValue',
   'maxValue',
-  'mChange',
-  'mClick'
+  'eventChange',
+  'eventClick'
 ]);
 
 
-export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurrencyBase>('m-input-currency-base', undefined, [
-  'mId',
+export const DInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.DInputCurrencyBase>('d-input-currency-base', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -179,14 +166,14 @@ export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurren
   'maxValue',
   'currencyOptions',
   'currencyCode',
-  'mChange',
-  'mBlur',
-  'mFocus'
+  'eventChange',
+  'eventBlur',
+  'eventFocus'
 ]);
 
 
-export const MInputPassword = /*@__PURE__*/ defineContainer<JSX.MInputPassword>('m-input-password', undefined, [
-  'mId',
+export const DInputPassword = /*@__PURE__*/ defineContainer<JSX.DInputPassword>('d-input-password', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -200,6 +187,39 @@ export const MInputPassword = /*@__PURE__*/ defineContainer<JSX.MInputPassword>(
   'hint',
   'isInvalid',
   'isValid',
+  'eventChange'
+]);
+
+
+export const DInputSearch = /*@__PURE__*/ defineContainer<JSX.DInputSearch>('d-input-search', undefined, [
+  'innerId',
+  'name',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'value',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'eventChange',
+  'eventClick'
+]);
+
+
+export const MInputCheck = /*@__PURE__*/ defineContainer<JSX.MInputCheck>('m-input-check', undefined, [
+  'type',
+  'name',
+  'label',
+  'isChecked',
+  'mId',
+  'isDisabled',
+  'isIndeterminate',
+  'value',
   'mChange'
 ]);
 
@@ -224,26 +244,6 @@ export const MInputPin = /*@__PURE__*/ defineContainer<JSX.MInputPin>('m-input-p
   'isInvalid',
   'isValid',
   'mChange'
-]);
-
-
-export const MInputSearch = /*@__PURE__*/ defineContainer<JSX.MInputSearch>('m-input-search', undefined, [
-  'mId',
-  'name',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'placeholder',
-  'value',
-  'isDisabled',
-  'isReadOnly',
-  'isLoading',
-  'hint',
-  'isInvalid',
-  'isValid',
-  'mChange',
-  'mClick'
 ]);
 
 

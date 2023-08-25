@@ -30,7 +30,7 @@
  - [d-alert](../d-alert)
  - [d-button](../d-button)
  - [d-chip](../d-chip)
- - [m-input](../m-input)
+ - [d-input](../d-input)
  - [m-input-pin](../m-input-pin)
  - [m-input-select](../m-input-select)
  - [m-modal](../m-modal)
@@ -43,7 +43,7 @@ graph TD;
   d-alert --> d-icon
   d-button --> d-icon
   d-chip --> d-icon
-  m-input --> d-icon
+  d-input --> d-icon
   m-input-pin --> d-icon
   m-input-select --> d-icon
   m-modal --> d-icon

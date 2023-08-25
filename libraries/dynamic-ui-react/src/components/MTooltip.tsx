@@ -36,7 +36,7 @@ export type MTooltipProps = PropsWithChildren<{
 }>;
 
 const TOOLTIP_FONT_SIZE_BY_SIZE = {
-  sm: `var(--${PREFIX_BS}ref-fs-subparagraph)`,
+  sm: `var(--${PREFIX_BS}ref-fs-small)`,
   default: `var(--${PREFIX_BS}body-font-size)`,
   lg: `var(--${PREFIX_BS}ref-fs-6)`,
 };
