@@ -1,4 +1,4 @@
-# m-quick-action-switch
+# d-quick-action-switch
 
 
 

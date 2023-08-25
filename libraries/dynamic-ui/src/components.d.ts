@@ -11,7 +11,7 @@ import { ButtonType, ButtonVariant } from "./components/d-button/d-button-interf
 import { FormCheckType } from "./components/d-input-check/d-input-check-interface";
 import { Options } from "currency.js";
 import { PinInputMode, PinInputType } from "./components/d-input-pin/d-input-pin-interface";
-import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
+import { FullScreenFrom, ModalSize } from "./components/d-modal/d-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export { AlertType } from "./components/d-alert/d-alert-interface";
 export { ComponentSize, InputState } from "./utils/component-interface";
@@ -19,7 +19,7 @@ export { ButtonType, ButtonVariant } from "./components/d-button/d-button-interf
 export { FormCheckType } from "./components/d-input-check/d-input-check-interface";
 export { Options } from "currency.js";
 export { PinInputMode, PinInputType } from "./components/d-input-pin/d-input-pin-interface";
-export { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
+export { FullScreenFrom, ModalSize } from "./components/d-modal/d-modal-interface";
 export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export namespace Components {
     interface DAlert {
@@ -850,6 +850,44 @@ export namespace Components {
          */
         "name"?: string;
     }
+    interface DModal {
+        /**
+          * Footer action direction
+         */
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
+        /**
+          * Minimum size to apply the fullscreen
+         */
+        "fullScreenFrom"?: FullScreenFrom;
+        /**
+          * Is modal centered
+         */
+        "isCentered"?: boolean;
+        /**
+          * Is fullscreen in all sizes
+         */
+        "isFullScreen"?: boolean;
+        /**
+          * Is modal scrollable
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
+          * Modal size
+         */
+        "modalSize"?: ModalSize;
+        /**
+          * the name of the modal
+         */
+        "name": string;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -905,44 +943,6 @@ export namespace Components {
           * The name of the input
          */
         "name"?: string;
-    }
-    interface MModal {
-        /**
-          * Footer action direction
-         */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
-        /**
-          * Minimum size to apply the fullscreen
-         */
-        "fullScreenFrom"?: FullScreenFrom;
-        /**
-          * Is modal centered
-         */
-        "isCentered"?: boolean;
-        /**
-          * Is fullscreen in all sizes
-         */
-        "isFullScreen"?: boolean;
-        /**
-          * Is modal scrollable
-         */
-        "isScrollable"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "isStatic"?: boolean;
-        /**
-          * Modal size
-         */
-        "modalSize"?: ModalSize;
-        /**
-          * the name of the modal
-         */
-        "name": string;
-        /**
-          * No display close button
-         */
-        "showCloseButton"?: boolean;
     }
     interface MOffcanvas {
         /**
@@ -1125,6 +1125,10 @@ export interface DInputSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDInputSwitchElement;
 }
+export interface DModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDModalElement;
+}
 export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionCheckElement;
@@ -1132,10 +1136,6 @@ export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
 export interface DQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionSwitchElement;
-}
-export interface MModalCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMModalElement;
 }
 export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1234,6 +1234,12 @@ declare global {
         prototype: HTMLDInputSwitchElement;
         new (): HTMLDInputSwitchElement;
     };
+    interface HTMLDModalElement extends Components.DModal, HTMLStencilElement {
+    }
+    var HTMLDModalElement: {
+        prototype: HTMLDModalElement;
+        new (): HTMLDModalElement;
+    };
     interface HTMLDQuickActionCheckElement extends Components.DQuickActionCheck, HTMLStencilElement {
     }
     var HTMLDQuickActionCheckElement: {
@@ -1245,12 +1251,6 @@ declare global {
     var HTMLDQuickActionSwitchElement: {
         prototype: HTMLDQuickActionSwitchElement;
         new (): HTMLDQuickActionSwitchElement;
-    };
-    interface HTMLMModalElement extends Components.MModal, HTMLStencilElement {
-    }
-    var HTMLMModalElement: {
-        prototype: HTMLMModalElement;
-        new (): HTMLMModalElement;
     };
     interface HTMLMOffcanvasElement extends Components.MOffcanvas, HTMLStencilElement {
     }
@@ -1291,9 +1291,9 @@ declare global {
         "d-input-search": HTMLDInputSearchElement;
         "d-input-select": HTMLDInputSelectElement;
         "d-input-switch": HTMLDInputSwitchElement;
+        "d-modal": HTMLDModalElement;
         "d-quick-action-check": HTMLDQuickActionCheckElement;
         "d-quick-action-switch": HTMLDQuickActionSwitchElement;
-        "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action-button": HTMLMQuickActionButtonElement;
@@ -2217,6 +2217,48 @@ declare namespace LocalJSX {
          */
         "onEventChange"?: (event: DInputSwitchCustomEvent<boolean>) => void;
     }
+    interface DModal {
+        /**
+          * Footer action direction
+         */
+        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
+        /**
+          * Minimum size to apply the fullscreen
+         */
+        "fullScreenFrom"?: FullScreenFrom;
+        /**
+          * Is modal centered
+         */
+        "isCentered"?: boolean;
+        /**
+          * Is fullscreen in all sizes
+         */
+        "isFullScreen"?: boolean;
+        /**
+          * Is modal scrollable
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
+          * Modal size
+         */
+        "modalSize"?: ModalSize;
+        /**
+          * the name of the modal
+         */
+        "name": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onEventClose"?: (event: DModalCustomEvent<void>) => void;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -2280,48 +2322,6 @@ declare namespace LocalJSX {
           * Emitted when the select value has changed
          */
         "onEventClick"?: (event: DQuickActionSwitchCustomEvent<boolean>) => void;
-    }
-    interface MModal {
-        /**
-          * Footer action direction
-         */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill' | 'center';
-        /**
-          * Minimum size to apply the fullscreen
-         */
-        "fullScreenFrom"?: FullScreenFrom;
-        /**
-          * Is modal centered
-         */
-        "isCentered"?: boolean;
-        /**
-          * Is fullscreen in all sizes
-         */
-        "isFullScreen"?: boolean;
-        /**
-          * Is modal scrollable
-         */
-        "isScrollable"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "isStatic"?: boolean;
-        /**
-          * Modal size
-         */
-        "modalSize"?: ModalSize;
-        /**
-          * the name of the modal
-         */
-        "name": string;
-        /**
-          * Emitted when the input value has changed
-         */
-        "onMClose"?: (event: MModalCustomEvent<void>) => void;
-        /**
-          * No display close button
-         */
-        "showCloseButton"?: boolean;
     }
     interface MOffcanvas {
         /**
@@ -2486,9 +2486,9 @@ declare namespace LocalJSX {
         "d-input-search": DInputSearch;
         "d-input-select": DInputSelect;
         "d-input-switch": DInputSwitch;
+        "d-modal": DModal;
         "d-quick-action-check": DQuickActionCheck;
         "d-quick-action-switch": DQuickActionSwitch;
-        "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
         "m-progress-bar": MProgressBar;
         "m-quick-action-button": MQuickActionButton;
@@ -2513,9 +2513,9 @@ declare module "@stencil/core" {
             "d-input-search": LocalJSX.DInputSearch & JSXBase.HTMLAttributes<HTMLDInputSearchElement>;
             "d-input-select": LocalJSX.DInputSelect & JSXBase.HTMLAttributes<HTMLDInputSelectElement>;
             "d-input-switch": LocalJSX.DInputSwitch & JSXBase.HTMLAttributes<HTMLDInputSwitchElement>;
+            "d-modal": LocalJSX.DModal & JSXBase.HTMLAttributes<HTMLDModalElement>;
             "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
             "d-quick-action-switch": LocalJSX.DQuickActionSwitch & JSXBase.HTMLAttributes<HTMLDQuickActionSwitchElement>;
-            "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;

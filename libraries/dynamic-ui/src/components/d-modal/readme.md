@@ -1,4 +1,4 @@
-# m-modal
+# d-modal
 
 
 
@@ -22,9 +22,9 @@
 
 ## Events
 
-| Event    | Description                              | Type                |
-| -------- | ---------------------------------------- | ------------------- |
-| `mClose` | Emitted when the input value has changed | `CustomEvent<void>` |
+| Event        | Description                              | Type                |
+| ------------ | ---------------------------------------- | ------------------- |
+| `eventClose` | Emitted when the input value has changed | `CustomEvent<void>` |
 
 
 ## Dependencies
@@ -36,8 +36,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  m-modal --> d-icon
-  style m-modal fill:#f9f,stroke:#333,stroke-width:4px
+  d-modal --> d-icon
+  style d-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

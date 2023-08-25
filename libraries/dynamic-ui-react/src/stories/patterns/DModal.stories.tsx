@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DButton, MModal } from '../../components';
+import { DButton, DModal } from '../../components';
 
-const config: Meta<typeof MModal> = {
+const config: Meta<typeof DModal> = {
   title: 'Design System/Patterns/Modal',
-  component: MModal,
+  component: DModal,
   argTypes: {
     name: {
       control: 'text',
@@ -52,7 +52,7 @@ const config: Meta<typeof MModal> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MModal>;
+type Story = StoryObj<typeof DModal>;
 
 export const Default: Story = {
   decorators: [
@@ -63,7 +63,7 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MModal {...args}>
+    <DModal {...args}>
       <div slot="header">
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </div>
@@ -80,7 +80,7 @@ export const Default: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MModal>
+    </DModal>
   ),
   args: {
     name: 'exampleModal',
@@ -103,7 +103,7 @@ export const ActionsPlacementStart: Story = {
     ),
   ],
   render: (args) => (
-    <MModal {...args}>
+    <DModal {...args}>
       <div slot="header">
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </div>
@@ -120,7 +120,7 @@ export const ActionsPlacementStart: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MModal>
+    </DModal>
   ),
   args: {
     name: 'exampleModal',
@@ -143,7 +143,7 @@ export const ActionsPlacementEnd: Story = {
     ),
   ],
   render: (args) => (
-    <MModal {...args}>
+    <DModal {...args}>
       <div slot="header">
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </div>
@@ -160,7 +160,7 @@ export const ActionsPlacementEnd: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MModal>
+    </DModal>
   ),
   args: {
     name: 'exampleModal',
@@ -183,7 +183,7 @@ export const WithoutHeader: Story = {
     ),
   ],
   render: (args) => (
-    <MModal {...args}>
+    <DModal {...args}>
       <div slot="body">
         <p className="py-3 px-5">Modal body</p>
       </div>
@@ -197,7 +197,7 @@ export const WithoutHeader: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MModal>
+    </DModal>
   ),
   args: {
     name: 'exampleModal',
@@ -220,14 +220,14 @@ export const WithoutActions: Story = {
     ),
   ],
   render: (args) => (
-    <MModal {...args}>
+    <DModal {...args}>
       <div slot="header">
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </div>
       <div slot="body">
         <p className="py-3 px-5">Modal body</p>
       </div>
-    </MModal>
+    </DModal>
   ),
   args: {
     name: 'exampleModal',
@@ -250,11 +250,11 @@ export const OnlyBody: Story = {
     ),
   ],
   render: (args) => (
-    <MModal {...args}>
+    <DModal {...args}>
       <div slot="body">
         <p className="py-3 px-5">Modal body</p>
       </div>
-    </MModal>
+    </DModal>
   ),
   args: {
     name: 'exampleModal',
@@ -277,7 +277,7 @@ export const WithoutCancelX: Story = {
     ),
   ],
   render: (args) => (
-    <MModal {...args}>
+    <DModal {...args}>
       <div slot="header">
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </div>
@@ -294,7 +294,7 @@ export const WithoutCancelX: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MModal>
+    </DModal>
   ),
   args: {
     name: 'exampleModal',

@@ -1,0 +1,63 @@
+.modal {
+  --#{$prefix}modal-body-padding: #{$modal-body-padding};
+  --#{$prefix}modal-footer-padding: #{$modal-footer-padding};
+  --#{$prefix}modal-separator-margin-x: #{$modal-separator-margin-x};
+  --#{$prefix}modal-separator-height: #{$modal-separator-height};
+  --#{$prefix}modal-separator-bg: #{$modal-separator-bg};
+
+  display: block;
+
+  .d-modal-slot > * {
+    display: contents;
+  }
+
+  .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .d-modal-close {
+    align-self: flex-end;
+    padding: 0;
+    margin-bottom: $spacer-3;
+    background: transparent;
+    border: 0;
+
+    .d-icon {
+      --#{$prefix}icon-size: #{$spacer-3};
+    }
+  }
+
+  .modal-body {
+    padding: var(--#{$prefix}modal-body-padding);
+  }
+
+  .d-modal-separator {
+    height: var(--#{$prefix}modal-separator-height);
+    margin: 0 var(--#{$prefix}modal-separator-margin-x);
+    background: var(--#{$prefix}modal-separator-bg);
+  }
+
+  .modal-footer {
+    gap: var(--#{$prefix}modal-footer-gap);
+    padding: var(--#{$prefix}modal-footer-padding);
+  }
+
+  .d-modal-action-fill {
+    div > * {
+      flex: 1;
+    }
+  }
+
+  .d-modal-action-start {
+    justify-content: flex-start;
+  }
+
+  .d-modal-action-center {
+    justify-content: center;
+  }
+
+  .d-modal-action-end {
+    justify-content: flex-end;
+  }
+}

@@ -287,6 +287,20 @@ export const DInputSwitch = /*@__PURE__*/ defineContainer<JSX.DInputSwitch>('d-i
 ]);
 
 
+export const DModal = /*@__PURE__*/ defineContainer<JSX.DModal>('d-modal', undefined, [
+  'name',
+  'isStatic',
+  'isScrollable',
+  'isCentered',
+  'isFullScreen',
+  'fullScreenFrom',
+  'modalSize',
+  'showCloseButton',
+  'footerActionPlacement',
+  'eventClose'
+]);
+
+
 export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
   'innerId',
   'name',
@@ -307,20 +321,6 @@ export const DQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.DQuickAction
   'isChecked',
   'isDisabled',
   'eventClick'
-]);
-
-
-export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
-  'name',
-  'isStatic',
-  'isScrollable',
-  'isCentered',
-  'isFullScreen',
-  'fullScreenFrom',
-  'modalSize',
-  'showCloseButton',
-  'footerActionPlacement',
-  'mClose'
 ]);
 
 

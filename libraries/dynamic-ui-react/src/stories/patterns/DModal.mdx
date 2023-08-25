@@ -8,7 +8,7 @@ import {
 } from '@storybook/blocks';
 import { PREFIX_BS } from '@dynamic-framework/ui';
 
-import * as MModalStories from './MModal.stories';
+import * as DModalStories from './DModal.stories';
 import * as useModalContextStories from "../hooks/useModalContext.stories";
 
 # Modal
@@ -17,21 +17,21 @@ import * as useModalContextStories from "../hooks/useModalContext.stories";
 <Markdown>
   {`
 
-  | Variable                                       | Type              | Description                                 |
-  |------------------------------------------------|-------------------|---------------------------------------------|
-  | \`--${PREFIX_BS}m-modal-body-padding\`         | css length unit   | Body padding                                |
-  | \`--${PREFIX_BS}m-modal-footer-padding\`       | css length unit   | Footer padding                              |
-  | \`--${PREFIX_BS}m-modal-separator-margin-x\`   | css length unit   | Separator horizontal padding                |
-  | \`--${PREFIX_BS}m-modal-separator-height\`     | css length unit   | Separator height (size)                     |
-  | \`--${PREFIX_BS}m-modal-separator-bg\`         | css color unit    | Separator background (color)                |
+  | Variable                                     | Type              | Description                                 |
+  |----------------------------------------------|-------------------|---------------------------------------------|
+  | \`--${PREFIX_BS}modal-body-padding\`         | css length unit   | Body padding                                |
+  | \`--${PREFIX_BS}modal-footer-padding\`       | css length unit   | Footer padding                              |
+  | \`--${PREFIX_BS}modal-separator-margin-x\`   | css length unit   | Separator horizontal padding                |
+  | \`--${PREFIX_BS}modal-separator-height\`     | css length unit   | Separator height (size)                     |
+  | \`--${PREFIX_BS}modal-separator-bg\`         | css color unit    | Separator background (color)                |
 
   `}
 </Markdown>
 
 ## Args
-<Meta of={MModalStories} />
+<Meta of={DModalStories} />
 
-<ArgTypes of={MModalStories} />
+<ArgTypes of={DModalStories} />
 
 ## Example
 
@@ -55,7 +55,7 @@ import * as useModalContextStories from "../hooks/useModalContext.stories";
 ### Modal Definition - render of `ExampleModal.tsx`
 <Source
   code={`
-<MModal
+<DModal
   name="example"
   isCentered
   isStatic
@@ -79,7 +79,7 @@ import * as useModalContextStories from "../hooks/useModalContext.stories";
     />
     <DButton text="ok" className="d-grid" isPill />
   </div>
-</MModal>
+</DModal>
   `}
 />
 

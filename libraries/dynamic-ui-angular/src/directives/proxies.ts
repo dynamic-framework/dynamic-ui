@@ -20,9 +20,9 @@ import { defineCustomElement as defineDInputPin } from '@dynamic-framework/ui/co
 import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui/components/d-input-search.js';
 import { defineCustomElement as defineDInputSelect } from '@dynamic-framework/ui/components/d-input-select.js';
 import { defineCustomElement as defineDInputSwitch } from '@dynamic-framework/ui/components/d-input-switch.js';
+import { defineCustomElement as defineDModal } from '@dynamic-framework/ui/components/d-modal.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
 import { defineCustomElement as defineDQuickActionSwitch } from '@dynamic-framework/ui/components/d-quick-action-switch.js';
-import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@dynamic-framework/ui/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@dynamic-framework/ui/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
@@ -471,6 +471,35 @@ export declare interface DInputSwitch extends Components.DInputSwitch {
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDModal,
+  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
+})
+@Component({
+  selector: 'd-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
+})
+export class DModal {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventClose']);
+  }
+}
+
+
+export declare interface DModal extends Components.DModal {
+  /**
+   * Emitted when the input value has changed
+   */
+  eventClose: EventEmitter<CustomEvent<void>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDQuickActionCheck,
   inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value']
 })
@@ -525,35 +554,6 @@ export declare interface DQuickActionSwitch extends Components.DQuickActionSwitc
    * Emitted when the select value has changed
    */
   eventClick: EventEmitter<CustomEvent<boolean>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMModal,
-  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
-})
-@Component({
-  selector: 'm-modal',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
-})
-export class MModal {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClose']);
-  }
-}
-
-
-export declare interface MModal extends Components.MModal {
-  /**
-   * Emitted when the input value has changed
-   */
-  mClose: EventEmitter<CustomEvent<void>>;
 }
 
 

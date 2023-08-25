@@ -10,11 +10,11 @@ import {
 import { ClassMap } from '../../utils/component-interface';
 import { PREFIX_BS } from '../../utils';
 
-import { ModalSize, FullScreenFrom } from './m-modal-interface';
+import { ModalSize, FullScreenFrom } from './d-modal-interface';
 
-@Component({ tag: 'm-modal' })
-export class MModal {
-  @Element() el!: HTMLMModalElement;
+@Component({ tag: 'd-modal' })
+export class DModal {
+  @Element() el!: HTMLDModalElement;
 
   /**
    * the name of the modal
@@ -64,7 +64,7 @@ export class MModal {
   /**
    * Emitted when the input value has changed
    */
-  @Event({ eventName: 'mClose' }) mClose!: EventEmitter<void>;
+  @Event() eventClose!: EventEmitter<void>;
 
   componentWillLoad() {
     this.header = !!this.el.querySelector('[slot="header"]');
@@ -77,7 +77,7 @@ export class MModal {
   private footer!: boolean;
 
   private closeHandler = () => {
-    this.mClose.emit();
+    this.eventClose.emit();
   };
 
   private fullScreenClass(): string {
@@ -103,7 +103,7 @@ export class MModal {
   render() {
     return (
       <div
-        class="m-modal modal fade show"
+        class="modal fade show"
         id={this.name}
         tabindex="-1"
         aria-labelledby={`${this.name}Label`}
@@ -122,7 +122,7 @@ export class MModal {
                 {this.showCloseButton && (
                   <button
                     type="button"
-                    class="m-modal-close"
+                    class="d-modal-close"
                     aria-label="Close"
                     onClick={this.closeHandler}
                   >
@@ -130,22 +130,22 @@ export class MModal {
                   </button>
                 )}
                 {this.header && (
-                  <div class="m-modal-slot">
+                  <div class="d-modal-slot">
                     <slot name="header" />
                   </div>
                 )}
               </div>
             )}
             {this.body && (
-              <div class="m-modal-slot modal-body">
+              <div class="d-modal-slot modal-body">
                 <slot name="body" />
               </div>
             )}
             {this.footer && (
-              <div class="m-modal-separator" />
+              <div class="d-modal-separator" />
             )}
             {this.footer && (
-              <div class={`m-modal-slot modal-footer m-modal-action-${this.footerActionPlacement}`}>
+              <div class={`d-modal-slot modal-footer d-modal-action-${this.footerActionPlacement}`}>
                 <slot name="footer" />
               </div>
             )}
