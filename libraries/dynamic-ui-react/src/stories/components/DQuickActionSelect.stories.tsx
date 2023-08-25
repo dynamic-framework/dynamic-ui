@@ -2,13 +2,13 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import type { ComponentProps } from 'react';
 
-import { MQuickActionSelect } from '../../components';
+import { DQuickActionSelect } from '../../components';
 
-const config: Meta<typeof MQuickActionSelect> = {
+const config: Meta<typeof DQuickActionSelect> = {
   title: 'Design System/Components/Quick Action Select',
-  component: MQuickActionSelect,
+  component: DQuickActionSelect,
   argTypes: {
-    mId: {
+    innerId: {
       control: 'text',
       type: 'string',
     },
@@ -34,14 +34,14 @@ const config: Meta<typeof MQuickActionSelect> = {
       control: 'boolean',
       type: 'boolean',
     },
-    onMChange: {
-      action: 'onMChange',
+    onEventChange: {
+      action: 'onEventChange',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MQuickActionSelect>;
+type Story = StoryObj<typeof DQuickActionSelect>;
 
 export const Default: Story = {
   decorators: [
@@ -55,7 +55,7 @@ export const Default: Story = {
     ),
   ],
   args: {
-    mId: 'componentId1',
+    innerId: 'componentId1',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -73,15 +73,15 @@ export const Example: Story = {
       </div>
     ),
   ],
-  render: ({ mId, ...args }: ComponentProps<typeof MQuickActionSelect>) => (
+  render: ({ innerId, ...args }: ComponentProps<typeof DQuickActionSelect>) => (
     <>
-      <MQuickActionSelect mId={`${mId}2`} {...args} />
-      <MQuickActionSelect mId={`${mId}3`} {...args} />
-      <MQuickActionSelect mId={`${mId}4`} {...args} />
+      <DQuickActionSelect innerId={`${innerId}2`} {...args} />
+      <DQuickActionSelect innerId={`${innerId}3`} {...args} />
+      <DQuickActionSelect innerId={`${innerId}4`} {...args} />
     </>
   ),
   args: {
-    mId: 'componentId',
+    innerId: 'componentId',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -100,7 +100,7 @@ export const Selected: Story = {
     ),
   ],
   args: {
-    mId: 'componentId5',
+    innerId: 'componentId5',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',

@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { PREFIX_BS } from '@dynamic-framework/ui';
 
-import { MQuickActionButton } from '../../components';
+import { DQuickActionButton } from '../../components';
 import { THEMES_WITH_EMPTY, ICONS } from '../constants';
 
-const config: Meta<typeof MQuickActionButton> = {
+const config: Meta<typeof DQuickActionButton> = {
   title: 'Design System/Components/Quick Action Button',
-  component: MQuickActionButton,
+  component: DQuickActionButton,
   argTypes: {
     line1: {
       control: 'text',
@@ -89,17 +89,17 @@ const config: Meta<typeof MQuickActionButton> = {
       description: 'Add circle around the representative icon',
       table: { defaultValue: { summary: false } },
     },
-    onMClick: {
-      action: 'mClick',
+    onEventClick: {
+      action: 'onEventClick',
     },
-    onMClickSecondary: {
-      action: 'mClickSecondary',
+    onEventClickSecondary: {
+      action: 'onEventClickSecondary',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MQuickActionButton>;
+type Story = StoryObj<typeof DQuickActionButton>;
 
 export const PersonalInfo: Story = {
   decorators: [
@@ -113,7 +113,7 @@ export const PersonalInfo: Story = {
     ),
   ],
   render: (args) => (
-    <MQuickActionButton {...args} />
+    <DQuickActionButton {...args} />
   ),
   args: {
     line1: 'Jessica Rabit',
@@ -129,7 +129,7 @@ export const ButtonDoubleAction: Story = {
       style={{ width: '320px', height: '320px' }}
       className="d-flex flex-column align-items-stretch justify-content-center"
     >
-      <MQuickActionButton {...args} />
+      <DQuickActionButton {...args} />
     </div>
   ),
 
@@ -153,7 +153,7 @@ export const AccountBox: Story = {
     ),
   ],
   render: (args) => (
-    <MQuickActionButton {...args} />
+    <DQuickActionButton {...args} />
   ),
   args: {
     line1: 'Checking account',
@@ -177,7 +177,7 @@ export const Info: Story = {
     ),
   ],
   render: (args) => (
-    <MQuickActionButton {...args} />
+    <DQuickActionButton {...args} />
   ),
   args: {
     line1: 'Alternativas de pago',
@@ -200,7 +200,7 @@ export const PersonList: Story = {
     ),
   ],
   render: (args) => (
-    <MQuickActionButton
+    <DQuickActionButton
       {...args}
       style={{
         [`--${PREFIX_BS}m-quick-action-button-component-border-radius`]: 0,

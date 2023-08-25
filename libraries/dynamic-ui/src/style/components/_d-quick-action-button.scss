@@ -1,0 +1,111 @@
+.d-quick-action-button {
+  --#{$prefix}quick-action-button-gap: #{$quick-action-button-gap};
+  --#{$prefix}quick-action-button-padding: #{$quick-action-button-padding};
+  --#{$prefix}quick-action-button-bg: #{$quick-action-button-bg};
+  --#{$prefix}quick-action-button-border-radius: var(--#{$prefix}quick-action-button-component-border-radius, #{$quick-action-button-border-radius});
+  --#{$prefix}quick-action-button-border: #{$quick-action-button-border};
+  --#{$prefix}quick-action-button-box-shadow: #{$quick-action-button-box-shadow};
+
+  --#{$prefix}quick-action-button-border-top: var(--#{$prefix}quick-action-button-component-border-top, var(--#{$prefix}quick-action-button-border));
+  --#{$prefix}quick-action-button-border-right: var(--#{$prefix}quick-action-button-component-border-right, var(--#{$prefix}quick-action-button-border));
+  --#{$prefix}quick-action-button-border-bottom: var(--#{$prefix}quick-action-button-component-border-bottom, var(--#{$prefix}quick-action-button-border));
+  --#{$prefix}quick-action-button-border-left: var(--#{$prefix}quick-action-button-component-border-left, var(--#{$prefix}quick-action-button-border));
+
+  --#{$prefix}quick-action-button-line1-font-size: #{$quick-action-button-line1-font-size};
+  --#{$prefix}quick-action-button-line1-font-weight: #{$quick-action-button-line1-font-weight};
+  --#{$prefix}quick-action-button-line1-color: #{$quick-action-button-line1-color};
+
+  --#{$prefix}quick-action-button-line2-font-size: #{$quick-action-button-line2-font-size};
+  --#{$prefix}quick-action-button-line2-font-weight: #{$quick-action-button-line2-font-weight};
+  --#{$prefix}quick-action-button-line2-color: #{$quick-action-button-line2-color};
+
+  --#{$prefix}quick-action-button-representative-image-size: #{$quick-action-button-representative-image-size};
+  --#{$prefix}quick-action-button-representative-image-border-radius: #{$quick-action-button-representative-image-border-radius};
+  --#{$prefix}quick-action-button-representative-icon-size: #{$quick-action-button-representative-icon-size};
+
+  --#{$prefix}quick-action-button-action-icon-color: #{$quick-action-button-action-icon-color};
+  --#{$prefix}quick-action-button-action-icon-size: #{$quick-action-button-action-icon-size};
+
+  --#{$prefix}quick-action-button-hover-bg: #{$quick-action-button-hover-bg};
+  --#{$prefix}quick-action-button-hover-border-color: #{$quick-action-button-hover-border-color};
+  --#{$prefix}quick-action-button-hover-action-icon-color: #{$quick-action-button-hover-action-icon-color};
+  --#{$prefix}quick-action-button-hover-box-shadow: #{$quick-action-button-hover-box-shadow};
+
+  --#{$prefix}quick-action-button-active-bg: #{$quick-action-button-active-bg};
+  --#{$prefix}quick-action-button-active-border-color: #{$quick-action-button-active-border-color};
+  --#{$prefix}quick-action-button-active-action-icon-color: #{$quick-action-button-active-action-icon-color};
+  --#{$prefix}quick-action-button-active-box-shadow: #{$quick-action-button-active-box-shadow};
+
+  display: flex;
+  gap: var(--#{$prefix}quick-action-button-gap);
+  align-items: center;
+  width: 100%;
+  padding: var(--#{$prefix}quick-action-button-padding);
+  text-align: left;
+  background-color: var(--#{$prefix}quick-action-button-bg);
+  background-position: center;
+  border-top: var(--#{$prefix}quick-action-button-border-top);
+  border-right: var(--#{$prefix}quick-action-button-border-right);
+  border-bottom: var(--#{$prefix}quick-action-button-border-bottom);
+  border-left: var(--#{$prefix}quick-action-button-border-left);
+  border-radius: var(--#{$prefix}quick-action-button-border-radius);
+  box-shadow: var(--#{$prefix}quick-action-button-box-shadow);
+
+  &:hover {
+    background: var(--#{$prefix}quick-action-button-hover-bg);
+    border-color: var(--#{$prefix}quick-action-button-hover-border-color);
+    box-shadow: var(--#{$prefix}quick-action-button-hover-box-shadow);
+  }
+
+  &:active {
+    background: var(--#{$prefix}quick-action-button-active-bg);
+    border-color: var(--#{$prefix}quick-action-button-active-border-color);
+    box-shadow: var(--#{$prefix}quick-action-button-active-box-shadow);
+  }
+
+  .d-quick-action-button-representative-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--#{$prefix}quick-action-button-representative-image-size);
+    height: var(--#{$prefix}quick-action-button-representative-image-size);
+    background-color: var(--#{$prefix}quick-action-button-action-icon-color);
+    border-radius: var(--#{$prefix}quick-action-button-representative-image-border-radius);
+  }
+
+  .d-quick-action-button-content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .d-quick-action-button-text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .d-quick-action-button-line1 {
+    font-size: var(--#{$prefix}quick-action-button-line1-font-size);
+    font-weight: var(--#{$prefix}quick-action-button-line1-font-weight);
+    color: var(--#{$prefix}quick-action-button-line1-color);
+  }
+
+  .d-quick-action-button-line2 {
+    font-size: var(--#{$prefix}quick-action-button-line2-font-size);
+    font-weight: var(--#{$prefix}quick-action-button-line2-font-weight);
+    color: var(--#{$prefix}quick-action-button-line2-color);
+  }
+
+  .d-quick-action-button-action-icon {
+    color: var(--#{$prefix}quick-action-button-action-icon-color);
+  }
+
+  &:hover .d-quick-action-button-action-icon {
+    color: var(--#{$prefix}quick-action-button-active-action-icon-color);
+  }
+
+  &:active .d-quick-action-button-action-icon {
+    color: var(--#{$prefix}quick-action-button-active-action-icon-color);
+  }
+}

@@ -321,30 +321,7 @@ export const DProgress = /*@__PURE__*/ defineContainer<JSX.DProgress>('d-progres
 ]);
 
 
-export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
-  'innerId',
-  'name',
-  'value',
-  'line1',
-  'line2',
-  'line3',
-  'isChecked',
-  'eventChange'
-]);
-
-
-export const DQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.DQuickActionSwitch>('d-quick-action-switch', undefined, [
-  'innerId',
-  'name',
-  'label',
-  'hint',
-  'isChecked',
-  'isDisabled',
-  'eventClick'
-]);
-
-
-export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickActionButton>('m-quick-action-button', undefined, [
+export const DQuickActionButton = /*@__PURE__*/ defineContainer<JSX.DQuickActionButton>('d-quick-action-button', undefined, [
   'line1',
   'line2',
   'actionLinkText',
@@ -359,18 +336,41 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'representativeIconHasCircle',
   'representativeIconFamilyClass',
   'representativeIconFamilyPrefix',
-  'mClick',
-  'mClickSecondary'
+  'eventClick',
+  'eventClickSecondary'
 ]);
 
 
-export const MQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.MQuickActionSelect>('m-quick-action-select', undefined, [
-  'mId',
+export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
+  'innerId',
+  'name',
+  'value',
+  'line1',
+  'line2',
+  'line3',
+  'isChecked',
+  'eventChange'
+]);
+
+
+export const DQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.DQuickActionSelect>('d-quick-action-select', undefined, [
+  'innerId',
   'name',
   'value',
   'line1',
   'line2',
   'isSelected',
-  'mChange'
+  'eventChange'
+]);
+
+
+export const DQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.DQuickActionSwitch>('d-quick-action-switch', undefined, [
+  'innerId',
+  'name',
+  'label',
+  'hint',
+  'isChecked',
+  'isDisabled',
+  'eventClick'
 ]);
 

@@ -19,8 +19,8 @@ export const DIRECTIVES = [
   d.DModal,
   d.DOffcanvas,
   d.DProgress,
+  d.DQuickActionButton,
   d.DQuickActionCheck,
-  d.DQuickActionSwitch,
-  d.MQuickActionButton,
-  d.MQuickActionSelect
+  d.DQuickActionSelect,
+  d.DQuickActionSwitch
 ];

@@ -936,63 +936,7 @@ export namespace Components {
          */
         "minValue": number;
     }
-    interface DQuickActionCheck {
-        /**
-          * The id of the input
-         */
-        "innerId": string;
-        /**
-          * Is selected
-         */
-        "isChecked"?: boolean;
-        /**
-          * Line 1 text
-         */
-        "line1": string;
-        /**
-          * Line 2 text
-         */
-        "line2": string;
-        /**
-          * Line 3 text
-         */
-        "line3": string;
-        /**
-          * Name of the input
-         */
-        "name": string;
-        /**
-          * Input value
-         */
-        "value": string;
-    }
-    interface DQuickActionSwitch {
-        /**
-          * Hint to display
-         */
-        "hint": string;
-        /**
-          * The id of the input
-         */
-        "innerId": string;
-        /**
-          * Is checked
-         */
-        "isChecked"?: boolean;
-        /**
-          * Is disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * The label text
-         */
-        "label": string;
-        /**
-          * The name of the input
-         */
-        "name"?: string;
-    }
-    interface MQuickActionButton {
+    interface DQuickActionButton {
         /**
           * The icon to indicate the action
          */
@@ -1050,7 +994,41 @@ export namespace Components {
          */
         "secondaryActionIcon"?: string;
     }
-    interface MQuickActionSelect {
+    interface DQuickActionCheck {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Is selected
+         */
+        "isChecked"?: boolean;
+        /**
+          * Line 1 text
+         */
+        "line1": string;
+        /**
+          * Line 2 text
+         */
+        "line2": string;
+        /**
+          * Line 3 text
+         */
+        "line3": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Input value
+         */
+        "value": string;
+    }
+    interface DQuickActionSelect {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Is selected
          */
@@ -1064,10 +1042,6 @@ export namespace Components {
          */
         "line2": string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * Name of the input
          */
         "name": string;
@@ -1075,6 +1049,32 @@ export namespace Components {
           * Input value
          */
         "value": string;
+    }
+    interface DQuickActionSwitch {
+        /**
+          * Hint to display
+         */
+        "hint": string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Is checked
+         */
+        "isChecked"?: boolean;
+        /**
+          * Is disabled
+         */
+        "isDisabled"?: boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * The name of the input
+         */
+        "name"?: string;
     }
 }
 export interface DAlertCustomEvent<T> extends CustomEvent<T> {
@@ -1133,21 +1133,21 @@ export interface DOffcanvasCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDOffcanvasElement;
 }
+export interface DQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDQuickActionButtonElement;
+}
 export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionCheckElement;
 }
+export interface DQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDQuickActionSelectElement;
+}
 export interface DQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionSwitchElement;
-}
-export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMQuickActionButtonElement;
-}
-export interface MQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMQuickActionSelectElement;
 }
 declare global {
     interface HTMLDAlertElement extends Components.DAlert, HTMLStencilElement {
@@ -1252,29 +1252,29 @@ declare global {
         prototype: HTMLDProgressElement;
         new (): HTMLDProgressElement;
     };
+    interface HTMLDQuickActionButtonElement extends Components.DQuickActionButton, HTMLStencilElement {
+    }
+    var HTMLDQuickActionButtonElement: {
+        prototype: HTMLDQuickActionButtonElement;
+        new (): HTMLDQuickActionButtonElement;
+    };
     interface HTMLDQuickActionCheckElement extends Components.DQuickActionCheck, HTMLStencilElement {
     }
     var HTMLDQuickActionCheckElement: {
         prototype: HTMLDQuickActionCheckElement;
         new (): HTMLDQuickActionCheckElement;
     };
+    interface HTMLDQuickActionSelectElement extends Components.DQuickActionSelect, HTMLStencilElement {
+    }
+    var HTMLDQuickActionSelectElement: {
+        prototype: HTMLDQuickActionSelectElement;
+        new (): HTMLDQuickActionSelectElement;
+    };
     interface HTMLDQuickActionSwitchElement extends Components.DQuickActionSwitch, HTMLStencilElement {
     }
     var HTMLDQuickActionSwitchElement: {
         prototype: HTMLDQuickActionSwitchElement;
         new (): HTMLDQuickActionSwitchElement;
-    };
-    interface HTMLMQuickActionButtonElement extends Components.MQuickActionButton, HTMLStencilElement {
-    }
-    var HTMLMQuickActionButtonElement: {
-        prototype: HTMLMQuickActionButtonElement;
-        new (): HTMLMQuickActionButtonElement;
-    };
-    interface HTMLMQuickActionSelectElement extends Components.MQuickActionSelect, HTMLStencilElement {
-    }
-    var HTMLMQuickActionSelectElement: {
-        prototype: HTMLMQuickActionSelectElement;
-        new (): HTMLMQuickActionSelectElement;
     };
     interface HTMLElementTagNameMap {
         "d-alert": HTMLDAlertElement;
@@ -1294,10 +1294,10 @@ declare global {
         "d-modal": HTMLDModalElement;
         "d-offcanvas": HTMLDOffcanvasElement;
         "d-progress": HTMLDProgressElement;
+        "d-quick-action-button": HTMLDQuickActionButtonElement;
         "d-quick-action-check": HTMLDQuickActionCheckElement;
+        "d-quick-action-select": HTMLDQuickActionSelectElement;
         "d-quick-action-switch": HTMLDQuickActionSwitchElement;
-        "m-quick-action-button": HTMLMQuickActionButtonElement;
-        "m-quick-action-select": HTMLMQuickActionSelectElement;
     }
 }
 declare namespace LocalJSX {
@@ -2311,6 +2311,72 @@ declare namespace LocalJSX {
          */
         "minValue"?: number;
     }
+    interface DQuickActionButton {
+        /**
+          * The icon to indicate the action
+         */
+        "actionIcon"?: string;
+        /**
+          * Icon family class
+         */
+        "actionIconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "actionIconFamilyPrefix"?: string;
+        /**
+          * Action link text, displayed when the icon is not set
+         */
+        "actionLinkText"?: string;
+        /**
+          * Action link theme
+         */
+        "actionLinkTheme"?: string;
+        /**
+          * The title
+         */
+        "line1": string;
+        /**
+          * The subtitle
+         */
+        "line2": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onEventClick"?: (event: DQuickActionButtonCustomEvent<any>) => void;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onEventClickSecondary"?: (event: DQuickActionButtonCustomEvent<any>) => void;
+        /**
+          * Representative icon, displayed when the representativeImage is not set
+         */
+        "representativeIcon"?: string;
+        /**
+          * Icon family class
+         */
+        "representativeIconFamilyClass"?: string;
+        /**
+          * Icon family class
+         */
+        "representativeIconFamilyPrefix"?: string;
+        /**
+          * Representative icon circle
+         */
+        "representativeIconHasCircle"?: boolean | undefined;
+        /**
+          * Representative icon theme
+         */
+        "representativeIconTheme"?: string;
+        /**
+          * Representative image
+         */
+        "representativeImage"?: string;
+        /**
+          * Second action icon
+         */
+        "secondaryActionIcon"?: string;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -2340,6 +2406,36 @@ declare namespace LocalJSX {
           * Emitted when the select value has changed
          */
         "onEventChange"?: (event: DQuickActionCheckCustomEvent<string>) => void;
+        /**
+          * Input value
+         */
+        "value": string;
+    }
+    interface DQuickActionSelect {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Is selected
+         */
+        "isSelected"?: boolean;
+        /**
+          * Line 1 text
+         */
+        "line1": string;
+        /**
+          * Line 2 text
+         */
+        "line2": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onEventChange"?: (event: DQuickActionSelectCustomEvent<string>) => void;
         /**
           * Input value
          */
@@ -2375,102 +2471,6 @@ declare namespace LocalJSX {
          */
         "onEventClick"?: (event: DQuickActionSwitchCustomEvent<boolean>) => void;
     }
-    interface MQuickActionButton {
-        /**
-          * The icon to indicate the action
-         */
-        "actionIcon"?: string;
-        /**
-          * Icon family class
-         */
-        "actionIconFamilyClass"?: string;
-        /**
-          * Icon family class
-         */
-        "actionIconFamilyPrefix"?: string;
-        /**
-          * Action link text, displayed when the icon is not set
-         */
-        "actionLinkText"?: string;
-        /**
-          * Action link theme
-         */
-        "actionLinkTheme"?: string;
-        /**
-          * The title
-         */
-        "line1": string;
-        /**
-          * The subtitle
-         */
-        "line2": string;
-        /**
-          * Emitted when the input value has changed
-         */
-        "onMClick"?: (event: MQuickActionButtonCustomEvent<any>) => void;
-        /**
-          * Emitted when the input value has changed
-         */
-        "onMClickSecondary"?: (event: MQuickActionButtonCustomEvent<any>) => void;
-        /**
-          * Representative icon, displayed when the representativeImage is not set
-         */
-        "representativeIcon"?: string;
-        /**
-          * Icon family class
-         */
-        "representativeIconFamilyClass"?: string;
-        /**
-          * Icon family class
-         */
-        "representativeIconFamilyPrefix"?: string;
-        /**
-          * Representative icon circle
-         */
-        "representativeIconHasCircle"?: boolean | undefined;
-        /**
-          * Representative icon theme
-         */
-        "representativeIconTheme"?: string;
-        /**
-          * Representative image
-         */
-        "representativeImage"?: string;
-        /**
-          * Second action icon
-         */
-        "secondaryActionIcon"?: string;
-    }
-    interface MQuickActionSelect {
-        /**
-          * Is selected
-         */
-        "isSelected"?: boolean;
-        /**
-          * Line 1 text
-         */
-        "line1": string;
-        /**
-          * Line 2 text
-         */
-        "line2": string;
-        /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * Name of the input
-         */
-        "name": string;
-        /**
-          * Emitted when the select value has changed
-         */
-        "onMChange"?: (event: MQuickActionSelectCustomEvent<string>) => void;
-        /**
-          * Input value
-         */
-        "value": string;
-    }
     interface IntrinsicElements {
         "d-alert": DAlert;
         "d-badge": DBadge;
@@ -2489,10 +2489,10 @@ declare namespace LocalJSX {
         "d-modal": DModal;
         "d-offcanvas": DOffcanvas;
         "d-progress": DProgress;
+        "d-quick-action-button": DQuickActionButton;
         "d-quick-action-check": DQuickActionCheck;
+        "d-quick-action-select": DQuickActionSelect;
         "d-quick-action-switch": DQuickActionSwitch;
-        "m-quick-action-button": MQuickActionButton;
-        "m-quick-action-select": MQuickActionSelect;
     }
 }
 export { LocalJSX as JSX };
@@ -2516,10 +2516,10 @@ declare module "@stencil/core" {
             "d-modal": LocalJSX.DModal & JSXBase.HTMLAttributes<HTMLDModalElement>;
             "d-offcanvas": LocalJSX.DOffcanvas & JSXBase.HTMLAttributes<HTMLDOffcanvasElement>;
             "d-progress": LocalJSX.DProgress & JSXBase.HTMLAttributes<HTMLDProgressElement>;
+            "d-quick-action-button": LocalJSX.DQuickActionButton & JSXBase.HTMLAttributes<HTMLDQuickActionButtonElement>;
             "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
+            "d-quick-action-select": LocalJSX.DQuickActionSelect & JSXBase.HTMLAttributes<HTMLDQuickActionSelectElement>;
             "d-quick-action-switch": LocalJSX.DQuickActionSwitch & JSXBase.HTMLAttributes<HTMLDQuickActionSwitchElement>;
-            "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
-            "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
         }
     }
 }

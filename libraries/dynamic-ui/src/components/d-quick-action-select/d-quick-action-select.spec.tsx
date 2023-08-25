@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MQuickActionSelect } from './m-quick-action-select';
+import { DQuickActionSelect } from './d-quick-action-select';
 
 it('should render my component', async () => {
   const shortcut = {
-    mId: 'component',
+    innerId: 'component',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -13,24 +13,24 @@ it('should render my component', async () => {
   };
 
   const page = await newSpecPage({
-    components: [MQuickActionSelect],
+    components: [DQuickActionSelect],
     template: () => (
-      <m-quick-action-select
+      <d-quick-action-select
         {...shortcut}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-quick-action-select>
-      <label class="m-quick-action-select" htmlfor="component">
+    <d-quick-action-select>
+      <label class="d-quick-action-select" htmlfor="component">
         <input id="component" name="name" type="radio" value="value">
-        <span class="m-quick-action-select-line1">
+        <span class="d-quick-action-select-line1">
           total
         </span>
-        <span class="m-quick-action-select-line2">
+        <span class="d-quick-action-select-line2">
           $ 7.432.450
         </span>
       </label>
-    </m-quick-action-select>
+    </d-quick-action-select>
   `);
 });

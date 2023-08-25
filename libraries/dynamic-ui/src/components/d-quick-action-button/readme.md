@@ -1,4 +1,4 @@
-# m-quick-action
+# d-quick-action-button
 
 
 
@@ -27,10 +27,10 @@
 
 ## Events
 
-| Event             | Description                              | Type               |
-| ----------------- | ---------------------------------------- | ------------------ |
-| `mClick`          | Emitted when the input value has changed | `CustomEvent<any>` |
-| `mClickSecondary` | Emitted when the input value has changed | `CustomEvent<any>` |
+| Event                 | Description                              | Type               |
+| --------------------- | ---------------------------------------- | ------------------ |
+| `eventClick`          | Emitted when the input value has changed | `CustomEvent<any>` |
+| `eventClickSecondary` | Emitted when the input value has changed | `CustomEvent<any>` |
 
 
 ## Dependencies
@@ -38,12 +38,15 @@
 ### Depends on
 
 - [d-icon](../d-icon)
+- [d-button](../d-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  m-quick-action-button --> d-icon
-  style m-quick-action-button fill:#f9f,stroke:#333,stroke-width:4px
+  d-quick-action-button --> d-icon
+  d-quick-action-button --> d-button
+  d-button --> d-icon
+  style d-quick-action-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

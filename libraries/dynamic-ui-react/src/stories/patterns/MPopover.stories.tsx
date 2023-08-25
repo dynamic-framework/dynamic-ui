@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DButton, MPopover, MQuickActionButton } from '../../components';
+import { DButton, MPopover, DQuickActionButton } from '../../components';
 
 const config: Meta<typeof MPopover> = {
   title: 'Design System/Patterns/Popover',
@@ -23,9 +23,9 @@ export const Default: Story = {
   ],
   render: (args) => (
     <MPopover {...args}>
-      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
     </MPopover>
   ),
   args: {
@@ -52,9 +52,9 @@ export const Open: Story = {
   ],
   render: (args) => (
     <MPopover {...args}>
-      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <MQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
     </MPopover>
   ),
   args: {

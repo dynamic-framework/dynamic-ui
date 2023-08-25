@@ -35,7 +35,7 @@
  - [d-input-select](../d-input-select)
  - [d-modal](../d-modal)
  - [d-offcanvas](../d-offcanvas)
- - [m-quick-action-button](../m-quick-action-button)
+ - [d-quick-action-button](../d-quick-action-button)
 
 ### Graph
 ```mermaid
@@ -48,7 +48,7 @@ graph TD;
   d-input-select --> d-icon
   d-modal --> d-icon
   d-offcanvas --> d-icon
-  m-quick-action-button --> d-icon
+  d-quick-action-button --> d-icon
   style d-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

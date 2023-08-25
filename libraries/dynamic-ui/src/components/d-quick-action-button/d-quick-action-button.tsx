@@ -8,8 +8,8 @@ import {
 
 import { PREFIX_BS } from '../../utils';
 
-@Component({ tag: 'm-quick-action-button' })
-export class MQuickActionButton implements ComponentInterface {
+@Component({ tag: 'd-quick-action-button' })
+export class DQuickActionButton implements ComponentInterface {
   /**
    * The title
    */
@@ -83,18 +83,18 @@ export class MQuickActionButton implements ComponentInterface {
   /**
    * Emitted when the input value has changed
    */
-  @Event({ eventName: 'mClick' }) mClick!: EventEmitter;
+  @Event() eventClick!: EventEmitter;
 
   /**
    * Emitted when the input value has changed
    */
-  @Event({ eventName: 'mClickSecondary' }) mClickSecondary!: EventEmitter;
+  @Event() eventClickSecondary!: EventEmitter;
 
   private globalClickHandler = () => {
     if (this.actionLinkText) {
       return;
     }
-    this.mClick.emit();
+    this.eventClick.emit();
   };
 
   private actionLinkClickHandler = (event: CustomEvent) => {
@@ -102,12 +102,12 @@ export class MQuickActionButton implements ComponentInterface {
     if (!this.actionLinkText) {
       return;
     }
-    this.mClick.emit();
+    this.eventClick.emit();
   };
 
   private secondActionLinkClickHandler = (event: CustomEvent) => {
     event.stopPropagation();
-    this.mClickSecondary.emit();
+    this.eventClickSecondary.emit();
   };
 
   private getTag() {
@@ -118,16 +118,16 @@ export class MQuickActionButton implements ComponentInterface {
     const Tag = this.getTag();
     return (
       <Tag
-        class="m-quick-action-button"
+        class="d-quick-action-button"
         {...!this.actionLinkText && { onClick: this.globalClickHandler }}
       >
         {this.representativeIcon && (
           <d-icon
-            class="m-quick-action-button-representative-icon"
+            class="d-quick-action-button-representative-icon"
             size={(
               this.representativeIconHasCircle
-                ? `var(--${PREFIX_BS}m-quick-action-button-representative-icon-size)`
-                : `var(--${PREFIX_BS}m-quick-action-button-representative-image-size)`
+                ? `var(--${PREFIX_BS}quick-action-button-representative-icon-size)`
+                : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`
             )}
             icon={this.representativeIcon}
             hasCircle={this.representativeIconHasCircle}
@@ -138,48 +138,48 @@ export class MQuickActionButton implements ComponentInterface {
         )}
         {this.representativeImage && (
           <img
-            class="m-quick-action-button-representative-image"
+            class="d-quick-action-button-representative-image"
             src={this.representativeImage}
             alt=""
           />
         )}
-        <div class="m-quick-action-button-content">
-          <div class="m-quick-action-button-text">
-            <span class="m-quick-action-button-line1">
+        <div class="d-quick-action-button-content">
+          <div class="d-quick-action-button-text">
+            <span class="d-quick-action-button-line1">
               {this.line1}
             </span>
-            <small class="m-quick-action-button-line2">
+            <small class="d-quick-action-button-line2">
               {this.line2}
             </small>
           </div>
         </div>
         {this.secondaryActionIcon && (
-          <m-button
-            class="m-quick-action-button-secondary-action-link"
+          <d-button
+            class="d-quick-action-button-secondary-action-link"
             type="button"
             variant="link"
             iconStart={this.secondaryActionIcon}
             iconStartFamilyClass={this.actionIconFamilyClass}
             iconStartFamilyPrefix={this.actionIconFamilyPrefix}
             theme={this.actionLinkTheme}
-            onMClick={this.secondActionLinkClickHandler}
+            onEventClick={this.secondActionLinkClickHandler}
           />
         )}
         {(this.actionLinkText && !this.actionIcon) && (
-          <m-button
-            class="m-quick-action-button-action-link"
+          <d-button
+            class="d-quick-action-button-action-link"
             type="button"
             variant="link"
             theme={this.actionLinkTheme}
             text={this.actionLinkText}
-            onMClick={this.actionLinkClickHandler}
+            onEventClick={this.actionLinkClickHandler}
           />
         )}
         {(this.actionIcon && !this.actionLinkText) && (
           <d-icon
-            class="m-quick-action-button-action-icon"
+            class="d-quick-action-button-action-icon"
             icon={this.actionIcon}
-            size={`var(--${PREFIX_BS}m-quick-action-button-action-icon-size)`}
+            size={`var(--${PREFIX_BS}quick-action-button-action-icon-size)`}
             familyClass={this.actionIconFamilyClass}
             familyPrefix={this.actionIconFamilyPrefix}
           />

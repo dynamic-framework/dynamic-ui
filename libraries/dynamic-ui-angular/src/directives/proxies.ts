@@ -23,10 +23,10 @@ import { defineCustomElement as defineDInputSwitch } from '@dynamic-framework/ui
 import { defineCustomElement as defineDModal } from '@dynamic-framework/ui/components/d-modal.js';
 import { defineCustomElement as defineDOffcanvas } from '@dynamic-framework/ui/components/d-offcanvas.js';
 import { defineCustomElement as defineDProgress } from '@dynamic-framework/ui/components/d-progress.js';
+import { defineCustomElement as defineDQuickActionButton } from '@dynamic-framework/ui/components/d-quick-action-button.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
+import { defineCustomElement as defineDQuickActionSelect } from '@dynamic-framework/ui/components/d-quick-action-select.js';
 import { defineCustomElement as defineDQuickActionSwitch } from '@dynamic-framework/ui/components/d-quick-action-switch.js';
-import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
-import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
 @ProxyCmp({
   defineCustomElementFn: defineDAlert,
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type']
@@ -552,6 +552,39 @@ export declare interface DProgress extends Components.DProgress {}
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDQuickActionButton,
+  inputs: ['actionIcon', 'actionIconFamilyClass', 'actionIconFamilyPrefix', 'actionLinkText', 'actionLinkTheme', 'line1', 'line2', 'representativeIcon', 'representativeIconFamilyClass', 'representativeIconFamilyPrefix', 'representativeIconHasCircle', 'representativeIconTheme', 'representativeImage', 'secondaryActionIcon']
+})
+@Component({
+  selector: 'd-quick-action-button',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['actionIcon', 'actionIconFamilyClass', 'actionIconFamilyPrefix', 'actionLinkText', 'actionLinkTheme', 'line1', 'line2', 'representativeIcon', 'representativeIconFamilyClass', 'representativeIconFamilyPrefix', 'representativeIconHasCircle', 'representativeIconTheme', 'representativeImage', 'secondaryActionIcon'],
+})
+export class DQuickActionButton {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventClick', 'eventClickSecondary']);
+  }
+}
+
+
+export declare interface DQuickActionButton extends Components.DQuickActionButton {
+  /**
+   * Emitted when the input value has changed
+   */
+  eventClick: EventEmitter<CustomEvent<any>>;
+  /**
+   * Emitted when the input value has changed
+   */
+  eventClickSecondary: EventEmitter<CustomEvent<any>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDQuickActionCheck,
   inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value']
 })
@@ -573,6 +606,35 @@ export class DQuickActionCheck {
 
 
 export declare interface DQuickActionCheck extends Components.DQuickActionCheck {
+  /**
+   * Emitted when the select value has changed
+   */
+  eventChange: EventEmitter<CustomEvent<string>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineDQuickActionSelect,
+  inputs: ['innerId', 'isSelected', 'line1', 'line2', 'name', 'value']
+})
+@Component({
+  selector: 'd-quick-action-select',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['innerId', 'isSelected', 'line1', 'line2', 'name', 'value'],
+})
+export class DQuickActionSelect {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventChange']);
+  }
+}
+
+
+export declare interface DQuickActionSelect extends Components.DQuickActionSelect {
   /**
    * Emitted when the select value has changed
    */
@@ -606,68 +668,6 @@ export declare interface DQuickActionSwitch extends Components.DQuickActionSwitc
    * Emitted when the select value has changed
    */
   eventClick: EventEmitter<CustomEvent<boolean>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMQuickActionButton,
-  inputs: ['actionIcon', 'actionIconFamilyClass', 'actionIconFamilyPrefix', 'actionLinkText', 'actionLinkTheme', 'line1', 'line2', 'representativeIcon', 'representativeIconFamilyClass', 'representativeIconFamilyPrefix', 'representativeIconHasCircle', 'representativeIconTheme', 'representativeImage', 'secondaryActionIcon']
-})
-@Component({
-  selector: 'm-quick-action-button',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['actionIcon', 'actionIconFamilyClass', 'actionIconFamilyPrefix', 'actionLinkText', 'actionLinkTheme', 'line1', 'line2', 'representativeIcon', 'representativeIconFamilyClass', 'representativeIconFamilyPrefix', 'representativeIconHasCircle', 'representativeIconTheme', 'representativeImage', 'secondaryActionIcon'],
-})
-export class MQuickActionButton {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClick', 'mClickSecondary']);
-  }
-}
-
-
-export declare interface MQuickActionButton extends Components.MQuickActionButton {
-  /**
-   * Emitted when the input value has changed
-   */
-  mClick: EventEmitter<CustomEvent<any>>;
-  /**
-   * Emitted when the input value has changed
-   */
-  mClickSecondary: EventEmitter<CustomEvent<any>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMQuickActionSelect,
-  inputs: ['isSelected', 'line1', 'line2', 'mId', 'name', 'value']
-})
-@Component({
-  selector: 'm-quick-action-select',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isSelected', 'line1', 'line2', 'mId', 'name', 'value'],
-})
-export class MQuickActionSelect {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MQuickActionSelect extends Components.MQuickActionSelect {
-  /**
-   * Emitted when the select value has changed
-   */
-  mChange: EventEmitter<CustomEvent<string>>;
 }
 
 
