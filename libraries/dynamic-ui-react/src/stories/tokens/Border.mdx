@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/blocks';
 
-import { ALL_COLORS } from '../constants';
+import { THEMES } from '../constants';
 
 <Meta title="Design System/Tokens/Border" />
 
@@ -42,7 +42,7 @@ To understand in more detail review the following documentation : [Bootstrap Bor
 ## Border color
 
 <div className="row gap-2 mt-3">
-  {ALL_COLORS.map((color) => (
+  {THEMES.map((color) => (
     <div key={color} className="col-2 d-flex justify-content-start align-items-center flex-column">
       <div className={`border-${color} border border-2 bg-light ratio ratio-1x1`} />
       <div className="text-center">

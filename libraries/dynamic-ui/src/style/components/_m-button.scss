@@ -42,9 +42,9 @@
 
   @each $color, $value in map-remove($theme-colors, "light", "dark") {
     &.btn-#{$color} {
-      $color-100: map-get($theme-color-variants, #{$color}-100);
-      $color-700: map-get($theme-color-variants, #{$color}-700);
-      $color-900: map-get($theme-color-variants, #{$color}-900);
+      $color-100: map-get($theme-colors-palletes, #{$color}-100);
+      $color-700: map-get($theme-colors-palletes, #{$color}-700);
+      $color-900: map-get($theme-colors-palletes, #{$color}-900);
 
       $hover-color: color-contrast($color-900);
       $focus-color: color-contrast($value);

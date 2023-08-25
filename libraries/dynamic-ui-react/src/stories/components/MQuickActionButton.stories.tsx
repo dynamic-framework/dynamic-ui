@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { PREFIX_BS } from '@dynamic-framework/ui';
 
 import { MQuickActionButton } from '../../components';
-import { ALL_COLORS_WITH_EMPTY, ICONS } from '../constants';
+import { THEMES_WITH_EMPTY, ICONS } from '../constants';
 
 const config: Meta<typeof MQuickActionButton> = {
   title: 'Design System/Components/Quick Action Button',
@@ -52,7 +52,7 @@ const config: Meta<typeof MQuickActionButton> = {
           undefined: 'empty',
         },
       },
-      options: ALL_COLORS_WITH_EMPTY,
+      options: THEMES_WITH_EMPTY,
       type: 'string',
       description: 'Theme of the action link',
       table: { defaultValue: { summary: 'secondary' } },
@@ -78,7 +78,7 @@ const config: Meta<typeof MQuickActionButton> = {
           undefined: 'empty',
         },
       },
-      options: ALL_COLORS_WITH_EMPTY,
+      options: THEMES_WITH_EMPTY,
       type: 'string',
       description: 'Theme of the representative icon',
       table: { defaultValue: { summary: 'secondary' } },

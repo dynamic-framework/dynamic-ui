@@ -7,7 +7,7 @@ import {
 
 import { DIcon } from '../../components';
 import {
-  ALL_COLORS_WITH_EMPTY,
+  THEMES_WITH_EMPTY,
   FIRST_ICON,
   ICONS,
 } from '../constants';
@@ -29,7 +29,7 @@ const meta: Meta<typeof DIcon> = {
           undefined: 'empty',
         },
       },
-      options: ALL_COLORS_WITH_EMPTY,
+      options: THEMES_WITH_EMPTY,
       type: 'string',
       description: 'Theme of the icon',
     },
