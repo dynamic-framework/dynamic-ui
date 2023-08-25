@@ -25,15 +25,15 @@ it('should render my component', async () => {
     <d-quick-action-check>
       <label class="d-quick-action-check" htmlfor="component">
         <d-input-check innerId="component" name="name" type="radio" value="value"></d-input-check>
-        <div class="quick-action-check-detail">
-          <span class="quick-action-check-line1">
+        <div class="d-quick-action-check-detail">
+          <span class="d-quick-action-check-line1">
             Saving account
           </span>
-          <span class="quick-action-check-line2">
+          <span class="d-quick-action-check-line2">
             *** 654
           </span>
         </div>
-        <span class="quick-action-check-line3">
+        <span class="d-quick-action-check-line3">
           $ 7.432.450
         </span>
       </label>

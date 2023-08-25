@@ -67,15 +67,15 @@ export class DQuickActionCheck implements ComponentInterface {
           isChecked={this.isChecked}
           onEventChange={this.changeHandler}
         />
-        <div class="quick-action-check-detail">
-          <span class="quick-action-check-line1">
+        <div class="d-quick-action-check-detail">
+          <span class="d-quick-action-check-line1">
             {this.line1}
           </span>
-          <span class="quick-action-check-line2">
+          <span class="d-quick-action-check-line2">
             {this.line2}
           </span>
         </div>
-        <span class="quick-action-check-line3">
+        <span class="d-quick-action-check-line3">
           {this.line3}
         </span>
       </label>

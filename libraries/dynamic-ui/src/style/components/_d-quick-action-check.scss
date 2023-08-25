@@ -39,30 +39,30 @@
   &:has(input:checked) {
     background: var(--#{$prefix}quick-action-check-checked-bg);
 
-    .quick-action-check-line3 {
+    .d-quick-action-check-line3 {
       color: var(--#{$prefix}quick-action-check-checked-color);
     }
   }
 
-  .quick-action-check-detail {
+  .d-quick-action-check-detail {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
   }
 
-  .quick-action-check-line1 {
+  .d-quick-action-check-line1 {
     font-size: var(--#{$prefix}quick-action-check-line1-font-size);
     font-weight: var(--#{$prefix}quick-action-check-line1-font-weight);
     color: var(--#{$prefix}quick-action-check-line1-color);
   }
 
-  .quick-action-check-line2 {
+  .d-quick-action-check-line2 {
     font-size: var(--#{$prefix}quick-action-check-line2-font-size);
     font-weight: var(--#{$prefix}quick-action-check-line2-font-weight);
     color: var(--#{$prefix}quick-action-check-line2-color);
   }
 
-  .quick-action-check-line3 {
+  .d-quick-action-check-line3 {
     font-size: var(--#{$prefix}quick-action-check-line3-font-size);
     font-weight: var(--#{$prefix}quick-action-check-line3-font-weight);
     color: var(--#{$prefix}quick-action-check-line3-color);

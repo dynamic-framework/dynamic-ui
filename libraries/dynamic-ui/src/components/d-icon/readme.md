@@ -31,7 +31,7 @@
  - [d-button](../d-button)
  - [d-chip](../d-chip)
  - [d-input](../d-input)
- - [m-input-pin](../m-input-pin)
+ - [d-input-pin](../d-input-pin)
  - [m-input-select](../m-input-select)
  - [m-modal](../m-modal)
  - [m-offcanvas](../m-offcanvas)
@@ -44,7 +44,7 @@ graph TD;
   d-button --> d-icon
   d-chip --> d-icon
   d-input --> d-icon
-  m-input-pin --> d-icon
+  d-input-pin --> d-icon
   m-input-select --> d-icon
   m-modal --> d-icon
   m-offcanvas --> d-icon

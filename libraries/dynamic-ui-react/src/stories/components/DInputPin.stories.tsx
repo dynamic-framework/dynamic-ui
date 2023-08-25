@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MInputPin } from '../../components';
+import { DInputPin } from '../../components';
 import { ICONS } from '../constants';
 
-const config: Meta<typeof MInputPin> = {
+const config: Meta<typeof DInputPin> = {
   title: 'Design System/Components/Input Pin',
-  component: MInputPin,
+  component: DInputPin,
   argTypes: {
-    mId: {
+    innerId: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -62,7 +62,7 @@ const config: Meta<typeof MInputPin> = {
       type: 'number',
       description: 'Number of characters of the pin',
     },
-    mInputMode: {
+    innerInputMode: {
       control: 'select',
       options: ['number', 'text', 'tel'],
       type: 'string',
@@ -83,18 +83,18 @@ const config: Meta<typeof MInputPin> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    onMChange: {
-      action: 'onMChange',
+    onEventChange: {
+      action: 'onEventChange',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MInputPin>;
+type Story = StoryObj<typeof DInputPin>;
 
 export const Default: Story = {
   args: {
-    mId: 'componentId1',
+    innerId: 'componentId1',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -109,7 +109,7 @@ export const Default: Story = {
 
 export const WithoutLabel: Story = {
   args: {
-    mId: 'componentId2',
+    innerId: 'componentId2',
     characters: 4,
     type: 'text',
     isDisabled: false,
@@ -122,7 +122,7 @@ export const WithoutLabel: Story = {
 
 export const Error: Story = {
   args: {
-    mId: 'componentId3',
+    innerId: 'componentId3',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -137,7 +137,7 @@ export const Error: Story = {
 
 export const Confirm: Story = {
   args: {
-    mId: 'componentId4',
+    innerId: 'componentId4',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -152,7 +152,7 @@ export const Confirm: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId5',
+    innerId: 'componentId5',
     label: 'Label',
     characters: 4,
     type: 'text',

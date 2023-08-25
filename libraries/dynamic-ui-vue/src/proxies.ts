@@ -204,6 +204,29 @@ export const DInputPassword = /*@__PURE__*/ defineContainer<JSX.DInputPassword>(
 ]);
 
 
+export const DInputPin = /*@__PURE__*/ defineContainer<JSX.DInputPin>('d-input-pin', undefined, [
+  'innerId',
+  'label',
+  'labelIcon',
+  'labelIconFamilyClass',
+  'labelIconFamilyPrefix',
+  'placeholder',
+  'type',
+  'isDisabled',
+  'isReadOnly',
+  'isLoading',
+  'isSecret',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'characters',
+  'innerInputMode',
+  'hint',
+  'isInvalid',
+  'isValid',
+  'eventChange'
+]);
+
+
 export const DInputSearch = /*@__PURE__*/ defineContainer<JSX.DInputSearch>('d-input-search', undefined, [
   'innerId',
   'name',
@@ -233,29 +256,6 @@ export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionC
   'line3',
   'isChecked',
   'eventChange'
-]);
-
-
-export const MInputPin = /*@__PURE__*/ defineContainer<JSX.MInputPin>('m-input-pin', undefined, [
-  'mId',
-  'label',
-  'labelIcon',
-  'labelIconFamilyClass',
-  'labelIconFamilyPrefix',
-  'placeholder',
-  'type',
-  'isDisabled',
-  'isReadOnly',
-  'isLoading',
-  'isSecret',
-  'iconFamilyClass',
-  'iconFamilyPrefix',
-  'characters',
-  'mInputMode',
-  'hint',
-  'isInvalid',
-  'isValid',
-  'mChange'
 ]);
 
 

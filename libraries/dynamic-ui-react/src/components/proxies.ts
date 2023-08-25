@@ -15,9 +15,9 @@ import { defineCustomElement as defineDInputCheck } from '@dynamic-framework/ui/
 import { defineCustomElement as defineDInputCounter } from '@dynamic-framework/ui/components/d-input-counter.js';
 import { defineCustomElement as defineDInputCurrencyBase } from '@dynamic-framework/ui/components/d-input-currency-base.js';
 import { defineCustomElement as defineDInputPassword } from '@dynamic-framework/ui/components/d-input-password.js';
+import { defineCustomElement as defineDInputPin } from '@dynamic-framework/ui/components/d-input-pin.js';
 import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui/components/d-input-search.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
-import { defineCustomElement as defineMInputPin } from '@dynamic-framework/ui/components/m-input-pin.js';
 import { defineCustomElement as defineMInputSelect } from '@dynamic-framework/ui/components/m-input-select.js';
 import { defineCustomElement as defineMInputSwitch } from '@dynamic-framework/ui/components/m-input-switch.js';
 import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/components/m-modal.js';
@@ -37,9 +37,9 @@ export const DInputCheck = /*@__PURE__*/createReactComponent<JSX.DInputCheck, HT
 export const DInputCounter = /*@__PURE__*/createReactComponent<JSX.DInputCounter, HTMLDInputCounterElement>('d-input-counter', undefined, undefined, defineDInputCounter);
 export const DInputCurrencyBase = /*@__PURE__*/createReactComponent<JSX.DInputCurrencyBase, HTMLDInputCurrencyBaseElement>('d-input-currency-base', undefined, undefined, defineDInputCurrencyBase);
 export const DInputPassword = /*@__PURE__*/createReactComponent<JSX.DInputPassword, HTMLDInputPasswordElement>('d-input-password', undefined, undefined, defineDInputPassword);
+export const DInputPin = /*@__PURE__*/createReactComponent<JSX.DInputPin, HTMLDInputPinElement>('d-input-pin', undefined, undefined, defineDInputPin);
 export const DInputSearch = /*@__PURE__*/createReactComponent<JSX.DInputSearch, HTMLDInputSearchElement>('d-input-search', undefined, undefined, defineDInputSearch);
 export const DQuickActionCheck = /*@__PURE__*/createReactComponent<JSX.DQuickActionCheck, HTMLDQuickActionCheckElement>('d-quick-action-check', undefined, undefined, defineDQuickActionCheck);
-export const MInputPin = /*@__PURE__*/createReactComponent<JSX.MInputPin, HTMLMInputPinElement>('m-input-pin', undefined, undefined, defineMInputPin);
 export const MInputSelect = /*@__PURE__*/createReactComponent<JSX.MInputSelect, HTMLMInputSelectElement>('m-input-select', undefined, undefined, defineMInputSelect);
 export const MInputSwitch = /*@__PURE__*/createReactComponent<JSX.MInputSwitch, HTMLMInputSwitchElement>('m-input-switch', undefined, undefined, defineMInputSwitch);
 export const MModal = /*@__PURE__*/createReactComponent<JSX.MModal, HTMLMModalElement>('m-modal', undefined, undefined, defineMModal);

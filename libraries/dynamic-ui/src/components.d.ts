@@ -10,7 +10,7 @@ import { ComponentSize, InputState } from "./utils/component-interface";
 import { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
 import { FormCheckType } from "./components/d-input-check/d-input-check-interface";
 import { Options } from "currency.js";
-import { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
+import { PinInputMode, PinInputType } from "./components/d-input-pin/d-input-pin-interface";
 import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export { AlertType } from "./components/d-alert/d-alert-interface";
@@ -18,7 +18,7 @@ export { ComponentSize, InputState } from "./utils/component-interface";
 export { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
 export { FormCheckType } from "./components/d-input-check/d-input-check-interface";
 export { Options } from "currency.js";
-export { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
+export { PinInputMode, PinInputType } from "./components/d-input-pin/d-input-pin-interface";
 export { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
 export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export namespace Components {
@@ -606,6 +606,80 @@ export namespace Components {
          */
         "value": string;
     }
+    interface DInputPin {
+        /**
+          * Number of characters of the pin
+         */
+        "characters": number;
+        /**
+          * Hint for the input
+         */
+        "hint"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Id for the input
+         */
+        "innerId": string;
+        /**
+          * Keyboard style
+         */
+        "innerInputMode": PinInputMode;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled": boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid": boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading": boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly": boolean;
+        /**
+          * Hide the characters
+         */
+        "isSecret": boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid": boolean;
+        /**
+          * The label text
+         */
+        "label": string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family prefix
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * Placeholder of the inputs
+         */
+        "placeholder"?: string;
+        /**
+          * Type of the inputs
+         */
+        "type": PinInputType;
+    }
     interface DInputSearch {
         /**
           * Hint to display, also used to display validity feedback
@@ -693,80 +767,6 @@ export namespace Components {
           * Input value
          */
         "value": string;
-    }
-    interface MInputPin {
-        /**
-          * Number of characters of the pin
-         */
-        "characters": number;
-        /**
-          * Hint for the m-coupon
-         */
-        "hint"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconFamilyPrefix"?: string;
-        /**
-          * Flag to disable the input
-         */
-        "isDisabled": boolean;
-        /**
-          * Add is-invalid class
-         */
-        "isInvalid": boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading": boolean;
-        /**
-          * Flag to read only the input
-         */
-        "isReadOnly": boolean;
-        /**
-          * Hide the characters
-         */
-        "isSecret": boolean;
-        /**
-          * Add is-valid class
-         */
-        "isValid": boolean;
-        /**
-          * The label text
-         */
-        "label": string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family prefix
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * Keyboard style
-         */
-        "mInputMode": PinInputMode;
-        /**
-          * Placeholder of the inputs
-         */
-        "placeholder"?: string;
-        /**
-          * Type of the inputs
-         */
-        "type": PinInputType;
     }
     interface MInputSelect {
         /**
@@ -1109,6 +1109,10 @@ export interface DInputPasswordCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDInputPasswordElement;
 }
+export interface DInputPinCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDInputPinElement;
+}
 export interface DInputSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDInputSearchElement;
@@ -1116,10 +1120,6 @@ export interface DInputSearchCustomEvent<T> extends CustomEvent<T> {
 export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionCheckElement;
-}
-export interface MInputPinCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMInputPinElement;
 }
 export interface MInputSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1210,6 +1210,12 @@ declare global {
         prototype: HTMLDInputPasswordElement;
         new (): HTMLDInputPasswordElement;
     };
+    interface HTMLDInputPinElement extends Components.DInputPin, HTMLStencilElement {
+    }
+    var HTMLDInputPinElement: {
+        prototype: HTMLDInputPinElement;
+        new (): HTMLDInputPinElement;
+    };
     interface HTMLDInputSearchElement extends Components.DInputSearch, HTMLStencilElement {
     }
     var HTMLDInputSearchElement: {
@@ -1221,12 +1227,6 @@ declare global {
     var HTMLDQuickActionCheckElement: {
         prototype: HTMLDQuickActionCheckElement;
         new (): HTMLDQuickActionCheckElement;
-    };
-    interface HTMLMInputPinElement extends Components.MInputPin, HTMLStencilElement {
-    }
-    var HTMLMInputPinElement: {
-        prototype: HTMLMInputPinElement;
-        new (): HTMLMInputPinElement;
     };
     interface HTMLMInputSelectElement extends Components.MInputSelect, HTMLStencilElement {
     }
@@ -1287,9 +1287,9 @@ declare global {
         "d-input-counter": HTMLDInputCounterElement;
         "d-input-currency-base": HTMLDInputCurrencyBaseElement;
         "d-input-password": HTMLDInputPasswordElement;
+        "d-input-pin": HTMLDInputPinElement;
         "d-input-search": HTMLDInputSearchElement;
         "d-quick-action-check": HTMLDQuickActionCheckElement;
-        "m-input-pin": HTMLMInputPinElement;
         "m-input-select": HTMLMInputSelectElement;
         "m-input-switch": HTMLMInputSwitchElement;
         "m-modal": HTMLMModalElement;
@@ -1941,6 +1941,84 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface DInputPin {
+        /**
+          * Number of characters of the pin
+         */
+        "characters"?: number;
+        /**
+          * Hint for the input
+         */
+        "hint"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Right icon family class
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Id for the input
+         */
+        "innerId": string;
+        /**
+          * Keyboard style
+         */
+        "innerInputMode"?: PinInputMode;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Add is-invalid class
+         */
+        "isInvalid"?: boolean;
+        /**
+          * Flag for loading state.
+         */
+        "isLoading"?: boolean;
+        /**
+          * Flag to read only the input
+         */
+        "isReadOnly"?: boolean;
+        /**
+          * Hide the characters
+         */
+        "isSecret"?: boolean;
+        /**
+          * Add is-valid class
+         */
+        "isValid"?: boolean;
+        /**
+          * The label text
+         */
+        "label"?: string;
+        /**
+          * Icon for the label text
+         */
+        "labelIcon"?: string;
+        /**
+          * Icon label family class
+         */
+        "labelIconFamilyClass"?: string;
+        /**
+          * Icon label family prefix
+         */
+        "labelIconFamilyPrefix"?: string;
+        /**
+          * Emitted when the inputs had changed
+         */
+        "onEventChange"?: (event: DInputPinCustomEvent<string>) => void;
+        /**
+          * Placeholder of the inputs
+         */
+        "placeholder"?: string;
+        /**
+          * Type of the inputs
+         */
+        "type"?: PinInputType;
+    }
     interface DInputSearch {
         /**
           * Hint to display, also used to display validity feedback
@@ -2040,84 +2118,6 @@ declare namespace LocalJSX {
           * Input value
          */
         "value": string;
-    }
-    interface MInputPin {
-        /**
-          * Number of characters of the pin
-         */
-        "characters"?: number;
-        /**
-          * Hint for the m-coupon
-         */
-        "hint"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconFamilyClass"?: string;
-        /**
-          * Right icon family class
-         */
-        "iconFamilyPrefix"?: string;
-        /**
-          * Flag to disable the input
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Add is-invalid class
-         */
-        "isInvalid"?: boolean;
-        /**
-          * Flag for loading state.
-         */
-        "isLoading"?: boolean;
-        /**
-          * Flag to read only the input
-         */
-        "isReadOnly"?: boolean;
-        /**
-          * Hide the characters
-         */
-        "isSecret"?: boolean;
-        /**
-          * Add is-valid class
-         */
-        "isValid"?: boolean;
-        /**
-          * The label text
-         */
-        "label"?: string;
-        /**
-          * Icon for the label text
-         */
-        "labelIcon"?: string;
-        /**
-          * Icon label family class
-         */
-        "labelIconFamilyClass"?: string;
-        /**
-          * Icon label family prefix
-         */
-        "labelIconFamilyPrefix"?: string;
-        /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * Keyboard style
-         */
-        "mInputMode"?: PinInputMode;
-        /**
-          * Emitted when the inputs had changed
-         */
-        "onMChange"?: (event: MInputPinCustomEvent<string>) => void;
-        /**
-          * Placeholder of the inputs
-         */
-        "placeholder"?: string;
-        /**
-          * Type of the inputs
-         */
-        "type"?: PinInputType;
     }
     interface MInputSelect {
         /**
@@ -2482,9 +2482,9 @@ declare namespace LocalJSX {
         "d-input-counter": DInputCounter;
         "d-input-currency-base": DInputCurrencyBase;
         "d-input-password": DInputPassword;
+        "d-input-pin": DInputPin;
         "d-input-search": DInputSearch;
         "d-quick-action-check": DQuickActionCheck;
-        "m-input-pin": MInputPin;
         "m-input-select": MInputSelect;
         "m-input-switch": MInputSwitch;
         "m-modal": MModal;
@@ -2509,9 +2509,9 @@ declare module "@stencil/core" {
             "d-input-counter": LocalJSX.DInputCounter & JSXBase.HTMLAttributes<HTMLDInputCounterElement>;
             "d-input-currency-base": LocalJSX.DInputCurrencyBase & JSXBase.HTMLAttributes<HTMLDInputCurrencyBaseElement>;
             "d-input-password": LocalJSX.DInputPassword & JSXBase.HTMLAttributes<HTMLDInputPasswordElement>;
+            "d-input-pin": LocalJSX.DInputPin & JSXBase.HTMLAttributes<HTMLDInputPinElement>;
             "d-input-search": LocalJSX.DInputSearch & JSXBase.HTMLAttributes<HTMLDInputSearchElement>;
             "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
-            "m-input-pin": LocalJSX.MInputPin & JSXBase.HTMLAttributes<HTMLMInputPinElement>;
             "m-input-select": LocalJSX.MInputSelect & JSXBase.HTMLAttributes<HTMLMInputSelectElement>;
             "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;

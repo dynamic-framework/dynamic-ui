@@ -16,9 +16,9 @@ import { defineCustomElement as defineDInputCheck } from '@dynamic-framework/ui/
 import { defineCustomElement as defineDInputCounter } from '@dynamic-framework/ui/components/d-input-counter.js';
 import { defineCustomElement as defineDInputCurrencyBase } from '@dynamic-framework/ui/components/d-input-currency-base.js';
 import { defineCustomElement as defineDInputPassword } from '@dynamic-framework/ui/components/d-input-password.js';
+import { defineCustomElement as defineDInputPin } from '@dynamic-framework/ui/components/d-input-pin.js';
 import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui/components/d-input-search.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
-import { defineCustomElement as defineMInputPin } from '@dynamic-framework/ui/components/m-input-pin.js';
 import { defineCustomElement as defineMInputSelect } from '@dynamic-framework/ui/components/m-input-select.js';
 import { defineCustomElement as defineMInputSwitch } from '@dynamic-framework/ui/components/m-input-switch.js';
 import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/components/m-modal.js';
@@ -339,6 +339,35 @@ export declare interface DInputPassword extends Components.DInputPassword {
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDInputPin,
+  inputs: ['characters', 'hint', 'iconFamilyClass', 'iconFamilyPrefix', 'innerId', 'innerInputMode', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isSecret', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'placeholder', 'type']
+})
+@Component({
+  selector: 'd-input-pin',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['characters', 'hint', 'iconFamilyClass', 'iconFamilyPrefix', 'innerId', 'innerInputMode', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isSecret', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'placeholder', 'type'],
+})
+export class DInputPin {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventChange']);
+  }
+}
+
+
+export declare interface DInputPin extends Components.DInputPin {
+  /**
+   * Emitted when the inputs had changed
+   */
+  eventChange: EventEmitter<CustomEvent<string>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDInputSearch,
   inputs: ['hint', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'placeholder', 'value']
 })
@@ -397,35 +426,6 @@ export declare interface DQuickActionCheck extends Components.DQuickActionCheck 
    * Emitted when the select value has changed
    */
   eventChange: EventEmitter<CustomEvent<string>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMInputPin,
-  inputs: ['characters', 'hint', 'iconFamilyClass', 'iconFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isSecret', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'mInputMode', 'placeholder', 'type']
-})
-@Component({
-  selector: 'm-input-pin',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['characters', 'hint', 'iconFamilyClass', 'iconFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isSecret', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'mInputMode', 'placeholder', 'type'],
-})
-export class MInputPin {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
-  }
-}
-
-
-export declare interface MInputPin extends Components.MInputPin {
-  /**
-   * Emitted when the inputs had changed
-   */
-  mChange: EventEmitter<CustomEvent<string>>;
 }
 
 

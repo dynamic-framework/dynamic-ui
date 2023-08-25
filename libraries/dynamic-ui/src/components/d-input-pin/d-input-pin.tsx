@@ -10,14 +10,14 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 
 import { PREFIX_BS } from '../../utils';
 
-import { PinInputMode, PinInputType } from './m-input-pin-interface';
+import { PinInputMode, PinInputType } from './d-input-pin-interface';
 
-@Component({ tag: 'm-input-pin' })
-export class MInputPin implements ComponentInterface {
+@Component({ tag: 'd-input-pin' })
+export class DInputPin implements ComponentInterface {
   /**
    * Id for the input
    * */
-  @Prop() mId!: string;
+  @Prop() innerId!: string;
 
   /**
    * The label text
@@ -87,10 +87,10 @@ export class MInputPin implements ComponentInterface {
   /**
    * Keyboard style
    */
-  @Prop() mInputMode: PinInputMode = 'text';
+  @Prop() innerInputMode: PinInputMode = 'text';
 
   /**
-   * Hint for the m-coupon
+   * Hint for the input
    * */
   @Prop() hint?: string;
 
@@ -107,7 +107,7 @@ export class MInputPin implements ComponentInterface {
   /**
    * Emitted when the inputs had changed
    */
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<string>;
+  @Event() eventChange!: EventEmitter<string>;
 
   @State() pattern!: string;
 
@@ -153,7 +153,7 @@ export class MInputPin implements ComponentInterface {
   private focusInput = (e: Event) => {
     const input = e.target as HTMLInputElement;
     input.value = '';
-    this.mChange.emit('');
+    this.eventChange.emit('');
   };
 
   // eslint-disable-next-line class-methods-use-this
@@ -167,7 +167,7 @@ export class MInputPin implements ComponentInterface {
     const form = e.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
     const values = Array.from(formData.values()).join('');
-    this.mChange.emit(values);
+    this.eventChange.emit(values);
   };
 
   // eslint-disable-next-line class-methods-use-this
@@ -181,15 +181,15 @@ export class MInputPin implements ComponentInterface {
 
   render() {
     return (
-      <div class="m-input-pin">
+      <div class="d-input-pin">
         {this.label && (
           <label htmlFor="pinIndex0">
             {this.label}
             {this.labelIcon && (
               <d-icon
-                class="m-input-pin-icon"
+                class="d-input-pin-icon"
                 icon={this.labelIcon}
-                size={`var(--${PREFIX_BS}m-input-label-font-size)`}
+                size={`var(--${PREFIX_BS}input-label-font-size)`}
                 familyClass={this.labelIconFamilyClass}
                 familyPrefix={this.labelIconFamilyPrefix}
               />
@@ -197,8 +197,8 @@ export class MInputPin implements ComponentInterface {
           </label>
         )}
         <form
-          id={this.mId}
-          class="m-input-pin-controls"
+          id={this.innerId}
+          class="d-input-pin-controls"
           onInput={this.formChange}
           onSubmit={this.preventDefaultEvents}
         >
@@ -210,8 +210,8 @@ export class MInputPin implements ComponentInterface {
                 'is-valid': this.isValid,
               }}
               type={this.isSecret ? 'password' : this.type}
-              aria-describedby={`${this.mId}State`}
-              inputMode={this.mInputMode}
+              aria-describedby={`${this.innerId}State`}
+              inputMode={this.innerInputMode}
               id={`pinIndex${index}`}
               name={`pin-${index}`}
               maxLength={1}
@@ -235,10 +235,10 @@ export class MInputPin implements ComponentInterface {
           {((this.isInvalid || this.isValid) && !this.isLoading) && (
             <span
               class="input-group-text"
-              id={`${this.mId}State`}
+              id={`${this.innerId}State`}
             >
               <d-icon
-                class="m-input-pin-validation-icon"
+                class="d-input-pin-validation-icon"
                 icon={this.isInvalid ? 'exclamation-circle' : 'check'}
                 familyClass={this.iconFamilyClass}
                 familyPrefix={this.iconFamilyPrefix}
@@ -246,7 +246,7 @@ export class MInputPin implements ComponentInterface {
             </span>
           )}
           {this.isLoading && (
-            <div class="input-group-text m-input-pin-icon">
+            <div class="input-group-text d-input-pin-icon">
               <span
                 class="spinner-border spinner-border-sm"
                 role="status"
@@ -260,7 +260,7 @@ export class MInputPin implements ComponentInterface {
         {this.hint && (
           <div
             class="form-text"
-            id={`${this.mId}Hint`}
+            id={`${this.innerId}Hint`}
           >
             {this.hint}
           </div>
