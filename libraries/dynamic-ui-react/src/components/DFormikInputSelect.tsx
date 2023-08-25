@@ -4,10 +4,10 @@ import { useField } from 'formik';
 
 import type { ComponentProps } from 'react';
 
-import { MInputSelect } from './proxies';
+import { DInputSelect } from './proxies';
 
 type Props = Omit<
-ComponentProps<typeof MInputSelect>,
+ComponentProps<typeof DInputSelect>,
 | 'name'
 | 'labelExtractor'
 | 'valueExtractor'
@@ -18,7 +18,7 @@ ComponentProps<typeof MInputSelect>,
   valueExtractor?: (item: any) => string | number;
 };
 
-export default function MFormikInputSelect(
+export default function DFormikInputSelect(
   {
     name,
     labelExtractor = (item: any) => item?.label as string,
@@ -29,14 +29,14 @@ export default function MFormikInputSelect(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [field,, helpers] = useField<any>(name);
   return (
-    <MInputSelect
+    <DInputSelect
       {...props}
       name={field.name}
       selectedOption={field.value}
       labelExtractor={labelExtractor}
       valueExtractor={valueExtractor}
-      onMChange={({ detail }) => helpers.setValue(detail)}
-      onMBlur={({ detail }) => field.onBlur(detail)}
+      onEventChange={({ detail }) => helpers.setValue(detail)}
+      onEventBlur={({ detail }) => field.onBlur(detail)}
     />
   );
 }

@@ -738,37 +738,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface DQuickActionCheck {
-        /**
-          * The id of the input
-         */
-        "innerId": string;
-        /**
-          * Is selected
-         */
-        "isChecked"?: boolean;
-        /**
-          * Line 1 text
-         */
-        "line1": string;
-        /**
-          * Line 2 text
-         */
-        "line2": string;
-        /**
-          * Line 3 text
-         */
-        "line3": string;
-        /**
-          * Name of the input
-         */
-        "name": string;
-        /**
-          * Input value
-         */
-        "value": string;
-    }
-    interface MInputSelect {
+    interface DInputSelect {
         /**
           * Hint to display
          */
@@ -806,6 +776,10 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
           * Flag to disable the input
          */
         "isDisabled": boolean;
@@ -834,10 +808,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
@@ -853,6 +823,36 @@ export namespace Components {
           * Callback to extract the value from the option
          */
         "valueExtractor": (item: any) => string | number;
+    }
+    interface DQuickActionCheck {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Is selected
+         */
+        "isChecked"?: boolean;
+        /**
+          * Line 1 text
+         */
+        "line1": string;
+        /**
+          * Line 2 text
+         */
+        "line2": string;
+        /**
+          * Line 3 text
+         */
+        "line3": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Input value
+         */
+        "value": string;
     }
     interface MInputSwitch {
         /**
@@ -1117,13 +1117,13 @@ export interface DInputSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDInputSearchElement;
 }
+export interface DInputSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDInputSelectElement;
+}
 export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionCheckElement;
-}
-export interface MInputSelectCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMInputSelectElement;
 }
 export interface MInputSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1222,17 +1222,17 @@ declare global {
         prototype: HTMLDInputSearchElement;
         new (): HTMLDInputSearchElement;
     };
+    interface HTMLDInputSelectElement extends Components.DInputSelect, HTMLStencilElement {
+    }
+    var HTMLDInputSelectElement: {
+        prototype: HTMLDInputSelectElement;
+        new (): HTMLDInputSelectElement;
+    };
     interface HTMLDQuickActionCheckElement extends Components.DQuickActionCheck, HTMLStencilElement {
     }
     var HTMLDQuickActionCheckElement: {
         prototype: HTMLDQuickActionCheckElement;
         new (): HTMLDQuickActionCheckElement;
-    };
-    interface HTMLMInputSelectElement extends Components.MInputSelect, HTMLStencilElement {
-    }
-    var HTMLMInputSelectElement: {
-        prototype: HTMLMInputSelectElement;
-        new (): HTMLMInputSelectElement;
     };
     interface HTMLMInputSwitchElement extends Components.MInputSwitch, HTMLStencilElement {
     }
@@ -1289,8 +1289,8 @@ declare global {
         "d-input-password": HTMLDInputPasswordElement;
         "d-input-pin": HTMLDInputPinElement;
         "d-input-search": HTMLDInputSearchElement;
+        "d-input-select": HTMLDInputSelectElement;
         "d-quick-action-check": HTMLDQuickActionCheckElement;
-        "m-input-select": HTMLMInputSelectElement;
         "m-input-switch": HTMLMInputSwitchElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
@@ -2085,41 +2085,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface DQuickActionCheck {
-        /**
-          * The id of the input
-         */
-        "innerId": string;
-        /**
-          * Is selected
-         */
-        "isChecked"?: boolean;
-        /**
-          * Line 1 text
-         */
-        "line1": string;
-        /**
-          * Line 2 text
-         */
-        "line2": string;
-        /**
-          * Line 3 text
-         */
-        "line3": string;
-        /**
-          * Name of the input
-         */
-        "name": string;
-        /**
-          * Emitted when the select value has changed
-         */
-        "onEventChange"?: (event: DQuickActionCheckCustomEvent<string>) => void;
-        /**
-          * Input value
-         */
-        "value": string;
-    }
-    interface MInputSelect {
+    interface DInputSelect {
         /**
           * Hint to display
          */
@@ -2157,6 +2123,10 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
           * Flag to disable the input
          */
         "isDisabled"?: boolean;
@@ -2185,29 +2155,25 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
         /**
           * Emitted when blur the input
          */
-        "onMBlur"?: (event: MInputSelectCustomEvent<any>) => void;
+        "onEventBlur"?: (event: DInputSelectCustomEvent<any>) => void;
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MInputSelectCustomEvent<any>) => void;
+        "onEventChange"?: (event: DInputSelectCustomEvent<any>) => void;
         /**
           * Emitted when click on the right icon
          */
-        "onMIconEndClick"?: (event: MInputSelectCustomEvent<MouseEvent>) => void;
+        "onEventIconEndClick"?: (event: DInputSelectCustomEvent<MouseEvent>) => void;
         /**
           * Emitted when click on the left icon
          */
-        "onMIconStartClick"?: (event: MInputSelectCustomEvent<MouseEvent>) => void;
+        "onEventIconStartClick"?: (event: DInputSelectCustomEvent<MouseEvent>) => void;
         /**
           * The select options
          */
@@ -2220,6 +2186,40 @@ declare namespace LocalJSX {
           * Callback to extract the value from the option
          */
         "valueExtractor"?: (item: any) => string | number;
+    }
+    interface DQuickActionCheck {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Is selected
+         */
+        "isChecked"?: boolean;
+        /**
+          * Line 1 text
+         */
+        "line1": string;
+        /**
+          * Line 2 text
+         */
+        "line2": string;
+        /**
+          * Line 3 text
+         */
+        "line3": string;
+        /**
+          * Name of the input
+         */
+        "name": string;
+        /**
+          * Emitted when the select value has changed
+         */
+        "onEventChange"?: (event: DQuickActionCheckCustomEvent<string>) => void;
+        /**
+          * Input value
+         */
+        "value": string;
     }
     interface MInputSwitch {
         /**
@@ -2484,8 +2484,8 @@ declare namespace LocalJSX {
         "d-input-password": DInputPassword;
         "d-input-pin": DInputPin;
         "d-input-search": DInputSearch;
+        "d-input-select": DInputSelect;
         "d-quick-action-check": DQuickActionCheck;
-        "m-input-select": MInputSelect;
         "m-input-switch": MInputSwitch;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
@@ -2511,8 +2511,8 @@ declare module "@stencil/core" {
             "d-input-password": LocalJSX.DInputPassword & JSXBase.HTMLAttributes<HTMLDInputPasswordElement>;
             "d-input-pin": LocalJSX.DInputPin & JSXBase.HTMLAttributes<HTMLDInputPinElement>;
             "d-input-search": LocalJSX.DInputSearch & JSXBase.HTMLAttributes<HTMLDInputSearchElement>;
+            "d-input-select": LocalJSX.DInputSelect & JSXBase.HTMLAttributes<HTMLDInputSelectElement>;
             "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
-            "m-input-select": LocalJSX.MInputSelect & JSXBase.HTMLAttributes<HTMLMInputSelectElement>;
             "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;

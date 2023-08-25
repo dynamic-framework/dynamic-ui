@@ -1,15 +1,15 @@
 import { Formik } from 'formik';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MFormikInputSelect } from '../../components';
+import { DFormikInputSelect } from '../../components';
 
-const config: Meta<typeof MFormikInputSelect> = {
+const config: Meta<typeof DFormikInputSelect> = {
   title: 'Design System/Components/Formik Input Select',
-  component: MFormikInputSelect,
+  component: DFormikInputSelect,
 };
 
 export default config;
-type Story = StoryObj<typeof MFormikInputSelect>;
+type Story = StoryObj<typeof DFormikInputSelect>;
 
 const OPTIONS = [
   { label: 'Option 1', value: '1' },
@@ -35,10 +35,10 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MFormikInputSelect {...args} />
+    <DFormikInputSelect {...args} />
   ),
   args: {
-    mId: 'field1',
+    innerId: 'field1',
     label: 'Label',
     labelIcon: undefined,
     name: 'field',
@@ -64,10 +64,10 @@ export const Empty: Story = {
     ),
   ],
   render: (args) => (
-    <MFormikInputSelect {...args} />
+    <DFormikInputSelect {...args} />
   ),
   args: {
-    mId: 'field2',
+    innerId: 'field2',
     label: 'Label',
     labelIcon: undefined,
     name: 'field',

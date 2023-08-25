@@ -8,12 +8,12 @@ import {
 
 import { PREFIX_BS } from '../../utils';
 
-@Component({ tag: 'm-input-select' })
-export class MInputSelect implements ComponentInterface {
+@Component({ tag: 'd-input-select' })
+export class DInputSelect implements ComponentInterface {
   /**
    * The id of the input
    */
-  @Prop() mId!: string;
+  @Prop() innerId!: string;
 
   /**
    * The name of the input
@@ -122,61 +122,61 @@ export class MInputSelect implements ComponentInterface {
    * Emitted when the select value has changed
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter;
+  @Event() eventChange!: EventEmitter;
 
   /**
    * Emitted when blur the input
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  @Event({ eventName: 'mBlur' }) mBlur!: EventEmitter;
+  @Event() eventBlur!: EventEmitter;
 
   /**
    * Emitted when click on the left icon
    */
-  @Event({ eventName: 'mIconStartClick' }) mIconStartClick!: EventEmitter<MouseEvent>;
+  @Event() eventIconStartClick!: EventEmitter<MouseEvent>;
 
   /**
    * Emitted when click on the right icon
    */
-  @Event({ eventName: 'mIconEndClick' }) mIconEndClick!: EventEmitter<MouseEvent>;
+  @Event() eventIconEndClick!: EventEmitter<MouseEvent>;
 
   private changeHandler = (event: Event) => {
     const { value } = event.target as HTMLSelectElement;
-    this.mChange.emit(
+    this.eventChange.emit(
       this.options.find((option) => this.valueExtractor(option).toString() === value),
     );
   };
 
   private blurHandler = (event: Event) => {
-    this.mBlur.emit(event);
+    this.eventBlur.emit(event);
   };
 
   private iconStartClickHandler = (event: MouseEvent) => {
-    this.mIconStartClick.emit(event);
+    this.eventIconStartClick.emit(event);
   };
 
   private iconEndClickHandler = (event: MouseEvent) => {
-    this.mIconEndClick.emit(event);
+    this.eventIconEndClick.emit(event);
   };
 
   render() {
     return (
-      <div class="m-input">
+      <div class="d-input">
         {(this.label) && (
-          <label htmlFor={this.mId}>
+          <label htmlFor={this.innerId}>
             {this.label}
             {this.labelIcon && (
               <d-icon
-                class="m-input-icon"
+                class="mdinput-icon"
                 icon={this.labelIcon}
-                size={`var(--${PREFIX_BS}m-input-label-font-size)`}
+                size={`var(--${PREFIX_BS}input-label-font-size)`}
                 familyClass={this.labelIconFamilyClass}
                 familyPrefix={this.labelIconFamilyPrefix}
               />
             )}
           </label>
         )}
-        <div class="m-input-control">
+        <div class="d-input-control">
           <div
             class={{
               'input-group': true,
@@ -187,13 +187,13 @@ export class MInputSelect implements ComponentInterface {
               <button
                 type="button"
                 class="input-group-text"
-                id={`${this.mId}Start`}
+                id={`${this.innerId}Start`}
                 onClick={this.iconStartClickHandler}
                 disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconStart && (
                   <d-icon
-                    class="m-input-icon"
+                    class="d-input-icon"
                     icon={this.iconStart}
                     familyClass={this.iconStartFamilyClass}
                     familyPrefix={this.iconStartFamilyPrefix}
@@ -202,12 +202,12 @@ export class MInputSelect implements ComponentInterface {
               </button>
             )}
             <select
-              id={this.mId}
+              id={this.innerId}
               name={this.name}
               class={{ 'form-select': true }}
               aria-label={this.label}
               disabled={this.isDisabled || this.isLoading}
-              aria-describedby={`${this.mId}Add ${this.mId}Hint`}
+              aria-describedby={`${this.innerId}Add ${this.innerId}Hint`}
               onChange={this.changeHandler}
               onBlur={this.blurHandler}
             >
@@ -227,13 +227,13 @@ export class MInputSelect implements ComponentInterface {
               <button
                 type="button"
                 class="input-group-text"
-                id={`${this.mId}End`}
+                id={`${this.innerId}End`}
                 onClick={this.iconEndClickHandler}
                 disabled={this.isDisabled || this.isLoading}
               >
                 {this.iconEnd && (
                   <d-icon
-                    class="m-input-icon"
+                    class="d-input-icon"
                     icon={this.iconEnd}
                     familyClass={this.iconEndFamilyClass}
                     familyPrefix={this.iconEndFamilyPrefix}
@@ -256,7 +256,7 @@ export class MInputSelect implements ComponentInterface {
           {this.hint && (
             <div
               class="form-text"
-              id={`${this.mId}Hint`}
+              id={`${this.innerId}Hint`}
             >
               {this.hint}
             </div>

@@ -1,29 +1,29 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MInputSelect } from './m-input-select';
+import { DInputSelect } from './d-input-select';
 
 it('should render my component', async () => {
-  const select = { mId: 'Random-id' };
+  const select = { innerId: 'Random-id' };
 
   const page = await newSpecPage({
-    components: [MInputSelect],
+    components: [DInputSelect],
     template: () => (
-      <m-input-select
+      <d-input-select
         {...select}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-input-select>
-      <div class="m-input">
-        <div class="m-input-control">
+    <d-input-select>
+      <div class="d-input">
+        <div class="d-input-control">
           <div class="input-group">
             <select aria-describedby="Random-idAdd Random-idHint" aria-label="" class="form-select" id="Random-id"></select>
           </div>
         </div>
       </div>
-    </m-input-select>
+    </d-input-select>
   `);
 });
 
@@ -33,20 +33,20 @@ it('should render my component with options', async () => {
     { label: 'Option B', value: 'valueB' },
   ];
 
-  const select = { mId: 'Random-id', options };
+  const select = { innerId: 'Random-id', options };
 
   const page = await newSpecPage({
-    components: [MInputSelect],
+    components: [DInputSelect],
     template: () => (
-      <m-input-select
+      <d-input-select
         {...select}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-input-select>
-      <div class="m-input">
-        <div class="m-input-control">
+    <d-input-select>
+      <div class="d-input">
+        <div class="d-input-control">
           <div class="input-group">
             <select aria-describedby="Random-idAdd Random-idHint" aria-label="" class="form-select" id="Random-id">
               <option value="valueA">
@@ -59,6 +59,6 @@ it('should render my component with options', async () => {
           </div>
         </div>
       </div>
-    </m-input-select>
+    </d-input-select>
   `);
 });

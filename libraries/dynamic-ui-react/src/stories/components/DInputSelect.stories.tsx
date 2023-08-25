@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MInputSelect } from '../../components';
+import { DInputSelect } from '../../components';
 import { ICONS } from '../constants';
 
-const config: Meta<typeof MInputSelect> = {
+const config: Meta<typeof DInputSelect> = {
   title: 'Design System/Components/Input Select',
-  component: MInputSelect,
+  component: DInputSelect,
   argTypes: {
-    mId: {
+    innerId: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -80,27 +80,27 @@ const config: Meta<typeof MInputSelect> = {
         },
       },
     },
-    onMIconStartClick: {
-      action: 'onIconStartClicked',
+    onEventIconStartClick: {
+      action: 'onEventIconStartClick',
     },
-    onMIconEndClick: {
-      action: 'onIconStartClicked',
+    onEventIconEndClick: {
+      action: 'onEventIconEndClick',
     },
-    onMChange: {
-      action: 'onMChange',
+    onEventChange: {
+      action: 'onEventChange',
     },
-    onMBlur: {
-      action: 'mBlur',
+    onEventBlur: {
+      action: 'onEventBlur',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MInputSelect>;
+type Story = StoryObj<typeof DInputSelect>;
 
 export const Default: Story = {
   args: {
-    mId: 'componentId1',
+    innerId: 'componentId1',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -113,7 +113,7 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId2',
+    innerId: 'componentId2',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -127,7 +127,7 @@ export const Disabled: Story = {
 
 export const Icon: Story = {
   args: {
-    mId: 'componentId3',
+    innerId: 'componentId3',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -142,7 +142,7 @@ export const Icon: Story = {
 
 export const Extractors: Story = {
   args: {
-    mId: 'componentId4',
+    innerId: 'componentId4',
     label: 'Label',
     labelIcon: undefined,
     options: [

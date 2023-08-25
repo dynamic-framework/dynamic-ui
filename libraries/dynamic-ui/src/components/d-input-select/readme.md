@@ -1,4 +1,4 @@
-# m-input-select
+# d-input-select
 
 
 
@@ -18,6 +18,7 @@
 | `iconStart`             | `icon-start`               | The start icon for the select                 | `string \| undefined`                    | `undefined`             |
 | `iconStartFamilyClass`  | `icon-start-family-class`  | Left icon family class                        | `string \| undefined`                    | `undefined`             |
 | `iconStartFamilyPrefix` | `icon-start-family-prefix` | Left icon family class                        | `string \| undefined`                    | `undefined`             |
+| `innerId` _(required)_  | `inner-id`                 | The id of the input                           | `string`                                 | `undefined`             |
 | `isDisabled`            | `is-disabled`              | Flag to disable the input                     | `boolean`                                | `false`                 |
 | `isLoading`             | `is-loading`               | Flag for loading state.                       | `boolean`                                | `false`                 |
 | `label`                 | `label`                    | The label text                                | `string`                                 | `''`                    |
@@ -25,7 +26,6 @@
 | `labelIcon`             | `label-icon`               | Icon for the label text                       | `string \| undefined`                    | `undefined`             |
 | `labelIconFamilyClass`  | `label-icon-family-class`  | Icon label family class                       | `string \| undefined`                    | `undefined`             |
 | `labelIconFamilyPrefix` | `label-icon-family-prefix` | Icon label family prefix                      | `string \| undefined`                    | `undefined`             |
-| `mId` _(required)_      | `m-id`                     | The id of the input                           | `string`                                 | `undefined`             |
 | `name`                  | `name`                     | The name of the input                         | `string \| undefined`                    | `undefined`             |
 | `options`               | --                         | The select options                            | `Record<string, unknown>[]`              | `[]`                    |
 | `selectedOption`        | --                         | The value selected of the component           | `undefined \| { [x: string]: unknown; }` | `undefined`             |
@@ -34,12 +34,12 @@
 
 ## Events
 
-| Event             | Description                               | Type                      |
-| ----------------- | ----------------------------------------- | ------------------------- |
-| `mBlur`           | Emitted when blur the input               | `CustomEvent<any>`        |
-| `mChange`         | Emitted when the select value has changed | `CustomEvent<any>`        |
-| `mIconEndClick`   | Emitted when click on the right icon      | `CustomEvent<MouseEvent>` |
-| `mIconStartClick` | Emitted when click on the left icon       | `CustomEvent<MouseEvent>` |
+| Event                 | Description                               | Type                      |
+| --------------------- | ----------------------------------------- | ------------------------- |
+| `eventBlur`           | Emitted when blur the input               | `CustomEvent<any>`        |
+| `eventChange`         | Emitted when the select value has changed | `CustomEvent<any>`        |
+| `eventIconEndClick`   | Emitted when click on the right icon      | `CustomEvent<MouseEvent>` |
+| `eventIconStartClick` | Emitted when click on the left icon       | `CustomEvent<MouseEvent>` |
 
 
 ## Dependencies
@@ -51,8 +51,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  m-input-select --> d-icon
-  style m-input-select fill:#f9f,stroke:#333,stroke-width:4px
+  d-input-select --> d-icon
+  style d-input-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -1,4 +1,4 @@
-.m-input {
+.d-input {
   &:has(.form-select:not(:disabled)) {
     --#{$prefix}m-input-group-border-color: var(--#{$prefix}m-input-group-hover-border-color);
   }

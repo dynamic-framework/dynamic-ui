@@ -247,20 +247,8 @@ export const DInputSearch = /*@__PURE__*/ defineContainer<JSX.DInputSearch>('d-i
 ]);
 
 
-export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
+export const DInputSelect = /*@__PURE__*/ defineContainer<JSX.DInputSelect>('d-input-select', undefined, [
   'innerId',
-  'name',
-  'value',
-  'line1',
-  'line2',
-  'line3',
-  'isChecked',
-  'eventChange'
-]);
-
-
-export const MInputSelect = /*@__PURE__*/ defineContainer<JSX.MInputSelect>('m-input-select', undefined, [
-  'mId',
   'name',
   'label',
   'options',
@@ -281,10 +269,22 @@ export const MInputSelect = /*@__PURE__*/ defineContainer<JSX.MInputSelect>('m-i
   'selectedOption',
   'valueExtractor',
   'labelExtractor',
-  'mChange',
-  'mBlur',
-  'mIconStartClick',
-  'mIconEndClick'
+  'eventChange',
+  'eventBlur',
+  'eventIconStartClick',
+  'eventIconEndClick'
+]);
+
+
+export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
+  'innerId',
+  'name',
+  'value',
+  'line1',
+  'line2',
+  'line3',
+  'isChecked',
+  'eventChange'
 ]);
 
 

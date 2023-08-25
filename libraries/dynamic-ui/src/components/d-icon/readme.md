@@ -32,7 +32,7 @@
  - [d-chip](../d-chip)
  - [d-input](../d-input)
  - [d-input-pin](../d-input-pin)
- - [m-input-select](../m-input-select)
+ - [d-input-select](../d-input-select)
  - [m-modal](../m-modal)
  - [m-offcanvas](../m-offcanvas)
  - [m-quick-action-button](../m-quick-action-button)
@@ -45,7 +45,7 @@ graph TD;
   d-chip --> d-icon
   d-input --> d-icon
   d-input-pin --> d-icon
-  m-input-select --> d-icon
+  d-input-select --> d-icon
   m-modal --> d-icon
   m-offcanvas --> d-icon
   m-quick-action-button --> d-icon

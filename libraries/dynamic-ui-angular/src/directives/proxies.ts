@@ -18,8 +18,8 @@ import { defineCustomElement as defineDInputCurrencyBase } from '@dynamic-framew
 import { defineCustomElement as defineDInputPassword } from '@dynamic-framework/ui/components/d-input-password.js';
 import { defineCustomElement as defineDInputPin } from '@dynamic-framework/ui/components/d-input-pin.js';
 import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui/components/d-input-search.js';
+import { defineCustomElement as defineDInputSelect } from '@dynamic-framework/ui/components/d-input-select.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
-import { defineCustomElement as defineMInputSelect } from '@dynamic-framework/ui/components/m-input-select.js';
 import { defineCustomElement as defineMInputSwitch } from '@dynamic-framework/ui/components/m-input-switch.js';
 import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@dynamic-framework/ui/components/m-offcanvas.js';
@@ -401,6 +401,47 @@ export declare interface DInputSearch extends Components.DInputSearch {
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDInputSelect,
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'options', 'selectedOption', 'valueExtractor']
+})
+@Component({
+  selector: 'd-input-select',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'options', 'selectedOption', 'valueExtractor'],
+})
+export class DInputSelect {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventChange', 'eventBlur', 'eventIconStartClick', 'eventIconEndClick']);
+  }
+}
+
+
+export declare interface DInputSelect extends Components.DInputSelect {
+  /**
+   * Emitted when the select value has changed
+   */
+  eventChange: EventEmitter<CustomEvent<any>>;
+  /**
+   * Emitted when blur the input
+   */
+  eventBlur: EventEmitter<CustomEvent<any>>;
+  /**
+   * Emitted when click on the left icon
+   */
+  eventIconStartClick: EventEmitter<CustomEvent<MouseEvent>>;
+  /**
+   * Emitted when click on the right icon
+   */
+  eventIconEndClick: EventEmitter<CustomEvent<MouseEvent>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDQuickActionCheck,
   inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value']
 })
@@ -426,47 +467,6 @@ export declare interface DQuickActionCheck extends Components.DQuickActionCheck 
    * Emitted when the select value has changed
    */
   eventChange: EventEmitter<CustomEvent<string>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMInputSelect,
-  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'options', 'selectedOption', 'valueExtractor']
-})
-@Component({
-  selector: 'm-input-select',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'options', 'selectedOption', 'valueExtractor'],
-})
-export class MInputSelect {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange', 'mBlur', 'mIconStartClick', 'mIconEndClick']);
-  }
-}
-
-
-export declare interface MInputSelect extends Components.MInputSelect {
-  /**
-   * Emitted when the select value has changed
-   */
-  mChange: EventEmitter<CustomEvent<any>>;
-  /**
-   * Emitted when blur the input
-   */
-  mBlur: EventEmitter<CustomEvent<any>>;
-  /**
-   * Emitted when click on the left icon
-   */
-  mIconStartClick: EventEmitter<CustomEvent<MouseEvent>>;
-  /**
-   * Emitted when click on the right icon
-   */
-  mIconEndClick: EventEmitter<CustomEvent<MouseEvent>>;
 }
 
 
