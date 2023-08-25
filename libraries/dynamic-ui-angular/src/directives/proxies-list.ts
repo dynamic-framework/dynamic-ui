@@ -18,9 +18,9 @@ export const DIRECTIVES = [
   d.DInputSwitch,
   d.DModal,
   d.DOffcanvas,
+  d.DProgress,
   d.DQuickActionCheck,
   d.DQuickActionSwitch,
-  d.MProgressBar,
   d.MQuickActionButton,
   d.MQuickActionSelect
 ];

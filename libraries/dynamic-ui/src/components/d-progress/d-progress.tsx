@@ -7,8 +7,8 @@ import {
 
 import { ClassMap } from '../../utils/component-interface';
 
-@Component({ tag: 'm-progress-bar' })
-export class MProgressBar implements ComponentInterface {
+@Component({ tag: 'd-progress' })
+export class DProgress implements ComponentInterface {
   /**
    * Current progress value
    */
@@ -47,7 +47,7 @@ export class MProgressBar implements ComponentInterface {
 
   render() {
     return (
-      <div class="m-progress-bar progress">
+      <div class="progress">
         <div
           class={this.generateClasses()}
           role="progressbar"

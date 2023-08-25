@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MProgressBar } from '../../components';
+import { DProgress } from '../../components';
 
-const config: Meta<typeof MProgressBar> = {
-  title: 'Design System/Components/Progress Bar',
-  component: MProgressBar,
+const config: Meta<typeof DProgress> = {
+  title: 'Design System/Components/Progress',
+  component: DProgress,
   argTypes: {
     currentValue: {
       control: 'number',
@@ -37,7 +37,7 @@ const config: Meta<typeof MProgressBar> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MProgressBar>;
+type Story = StoryObj<typeof DProgress>;
 
 export const Default: Story = {
   decorators: [
@@ -51,7 +51,7 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MProgressBar {...args} />
+    <DProgress {...args} />
   ),
   args: {
     currentValue: 33,
@@ -74,7 +74,7 @@ export const Stripped: Story = {
     ),
   ],
   render: (args) => (
-    <MProgressBar {...args} />
+    <DProgress {...args} />
   ),
   args: {
     currentValue: 33,
@@ -97,7 +97,7 @@ export const Valueless: Story = {
     ),
   ],
   render: (args) => (
-    <MProgressBar {...args} />
+    <DProgress {...args} />
   ),
   args: {
     currentValue: 33,
@@ -120,7 +120,7 @@ export const Zero: Story = {
     ),
   ],
   render: (args) => (
-    <MProgressBar {...args} />
+    <DProgress {...args} />
   ),
   args: {
     currentValue: 0,
@@ -143,7 +143,7 @@ export const Two: Story = {
     ),
   ],
   render: (args) => (
-    <MProgressBar {...args} />
+    <DProgress {...args} />
   ),
   args: {
     currentValue: 2,
@@ -166,7 +166,7 @@ export const TwoValueless: Story = {
     ),
   ],
   render: (args) => (
-    <MProgressBar {...args} />
+    <DProgress {...args} />
   ),
   args: {
     currentValue: 2,
@@ -189,7 +189,7 @@ export const OneHundred: Story = {
     ),
   ],
   render: (args) => (
-    <MProgressBar {...args} />
+    <DProgress {...args} />
   ),
   args: {
     currentValue: 100,

@@ -22,9 +22,9 @@ import { defineCustomElement as defineDInputSelect } from '@dynamic-framework/ui
 import { defineCustomElement as defineDInputSwitch } from '@dynamic-framework/ui/components/d-input-switch.js';
 import { defineCustomElement as defineDModal } from '@dynamic-framework/ui/components/d-modal.js';
 import { defineCustomElement as defineDOffcanvas } from '@dynamic-framework/ui/components/d-offcanvas.js';
+import { defineCustomElement as defineDProgress } from '@dynamic-framework/ui/components/d-progress.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
 import { defineCustomElement as defineDQuickActionSwitch } from '@dynamic-framework/ui/components/d-quick-action-switch.js';
-import { defineCustomElement as defineMProgressBar } from '@dynamic-framework/ui/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
 @ProxyCmp({
@@ -529,6 +529,29 @@ export declare interface DOffcanvas extends Components.DOffcanvas {
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDProgress,
+  inputs: ['currentValue', 'enableStripedAnimation', 'hideCurrentValue', 'maxValue', 'minValue']
+})
+@Component({
+  selector: 'd-progress',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['currentValue', 'enableStripedAnimation', 'hideCurrentValue', 'maxValue', 'minValue'],
+})
+export class DProgress {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface DProgress extends Components.DProgress {}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDQuickActionCheck,
   inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value']
 })
@@ -584,29 +607,6 @@ export declare interface DQuickActionSwitch extends Components.DQuickActionSwitc
    */
   eventClick: EventEmitter<CustomEvent<boolean>>;
 }
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMProgressBar,
-  inputs: ['currentValue', 'enableStripedAnimation', 'hideCurrentValue', 'maxValue', 'minValue']
-})
-@Component({
-  selector: 'm-progress-bar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['currentValue', 'enableStripedAnimation', 'hideCurrentValue', 'maxValue', 'minValue'],
-})
-export class MProgressBar {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface MProgressBar extends Components.MProgressBar {}
 
 
 @ProxyCmp({

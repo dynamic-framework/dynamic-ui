@@ -914,6 +914,28 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
+    interface DProgress {
+        /**
+          * Current progress value
+         */
+        "currentValue": number;
+        /**
+          * Enable striped animation
+         */
+        "enableStripedAnimation": boolean;
+        /**
+          * Hide current value
+         */
+        "hideCurrentValue"?: boolean | undefined;
+        /**
+          * Maximum value of the bar
+         */
+        "maxValue": number;
+        /**
+          * Minimum value of the bar
+         */
+        "minValue": number;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -969,28 +991,6 @@ export namespace Components {
           * The name of the input
          */
         "name"?: string;
-    }
-    interface MProgressBar {
-        /**
-          * Current progress value
-         */
-        "currentValue": number;
-        /**
-          * Enable striped animation
-         */
-        "enableStripedAnimation": boolean;
-        /**
-          * Hide current value
-         */
-        "hideCurrentValue"?: boolean | undefined;
-        /**
-          * Maximum value of the bar
-         */
-        "maxValue": number;
-        /**
-          * Minimum value of the bar
-         */
-        "minValue": number;
     }
     interface MQuickActionButton {
         /**
@@ -1246,6 +1246,12 @@ declare global {
         prototype: HTMLDOffcanvasElement;
         new (): HTMLDOffcanvasElement;
     };
+    interface HTMLDProgressElement extends Components.DProgress, HTMLStencilElement {
+    }
+    var HTMLDProgressElement: {
+        prototype: HTMLDProgressElement;
+        new (): HTMLDProgressElement;
+    };
     interface HTMLDQuickActionCheckElement extends Components.DQuickActionCheck, HTMLStencilElement {
     }
     var HTMLDQuickActionCheckElement: {
@@ -1257,12 +1263,6 @@ declare global {
     var HTMLDQuickActionSwitchElement: {
         prototype: HTMLDQuickActionSwitchElement;
         new (): HTMLDQuickActionSwitchElement;
-    };
-    interface HTMLMProgressBarElement extends Components.MProgressBar, HTMLStencilElement {
-    }
-    var HTMLMProgressBarElement: {
-        prototype: HTMLMProgressBarElement;
-        new (): HTMLMProgressBarElement;
     };
     interface HTMLMQuickActionButtonElement extends Components.MQuickActionButton, HTMLStencilElement {
     }
@@ -1293,9 +1293,9 @@ declare global {
         "d-input-switch": HTMLDInputSwitchElement;
         "d-modal": HTMLDModalElement;
         "d-offcanvas": HTMLDOffcanvasElement;
+        "d-progress": HTMLDProgressElement;
         "d-quick-action-check": HTMLDQuickActionCheckElement;
         "d-quick-action-switch": HTMLDQuickActionSwitchElement;
-        "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action-button": HTMLMQuickActionButtonElement;
         "m-quick-action-select": HTMLMQuickActionSelectElement;
     }
@@ -2289,6 +2289,28 @@ declare namespace LocalJSX {
          */
         "showCloseButton"?: boolean;
     }
+    interface DProgress {
+        /**
+          * Current progress value
+         */
+        "currentValue": number;
+        /**
+          * Enable striped animation
+         */
+        "enableStripedAnimation"?: boolean;
+        /**
+          * Hide current value
+         */
+        "hideCurrentValue"?: boolean | undefined;
+        /**
+          * Maximum value of the bar
+         */
+        "maxValue"?: number;
+        /**
+          * Minimum value of the bar
+         */
+        "minValue"?: number;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -2352,28 +2374,6 @@ declare namespace LocalJSX {
           * Emitted when the select value has changed
          */
         "onEventClick"?: (event: DQuickActionSwitchCustomEvent<boolean>) => void;
-    }
-    interface MProgressBar {
-        /**
-          * Current progress value
-         */
-        "currentValue": number;
-        /**
-          * Enable striped animation
-         */
-        "enableStripedAnimation"?: boolean;
-        /**
-          * Hide current value
-         */
-        "hideCurrentValue"?: boolean | undefined;
-        /**
-          * Maximum value of the bar
-         */
-        "maxValue"?: number;
-        /**
-          * Minimum value of the bar
-         */
-        "minValue"?: number;
     }
     interface MQuickActionButton {
         /**
@@ -2488,9 +2488,9 @@ declare namespace LocalJSX {
         "d-input-switch": DInputSwitch;
         "d-modal": DModal;
         "d-offcanvas": DOffcanvas;
+        "d-progress": DProgress;
         "d-quick-action-check": DQuickActionCheck;
         "d-quick-action-switch": DQuickActionSwitch;
-        "m-progress-bar": MProgressBar;
         "m-quick-action-button": MQuickActionButton;
         "m-quick-action-select": MQuickActionSelect;
     }
@@ -2515,9 +2515,9 @@ declare module "@stencil/core" {
             "d-input-switch": LocalJSX.DInputSwitch & JSXBase.HTMLAttributes<HTMLDInputSwitchElement>;
             "d-modal": LocalJSX.DModal & JSXBase.HTMLAttributes<HTMLDModalElement>;
             "d-offcanvas": LocalJSX.DOffcanvas & JSXBase.HTMLAttributes<HTMLDOffcanvasElement>;
+            "d-progress": LocalJSX.DProgress & JSXBase.HTMLAttributes<HTMLDProgressElement>;
             "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
             "d-quick-action-switch": LocalJSX.DQuickActionSwitch & JSXBase.HTMLAttributes<HTMLDQuickActionSwitchElement>;
-            "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
             "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
         }

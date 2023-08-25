@@ -312,6 +312,15 @@ export const DOffcanvas = /*@__PURE__*/ defineContainer<JSX.DOffcanvas>('d-offca
 ]);
 
 
+export const DProgress = /*@__PURE__*/ defineContainer<JSX.DProgress>('d-progress', undefined, [
+  'currentValue',
+  'minValue',
+  'maxValue',
+  'hideCurrentValue',
+  'enableStripedAnimation'
+]);
+
+
 export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
   'innerId',
   'name',
@@ -332,15 +341,6 @@ export const DQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.DQuickAction
   'isChecked',
   'isDisabled',
   'eventClick'
-]);
-
-
-export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-progress-bar', undefined, [
-  'currentValue',
-  'minValue',
-  'maxValue',
-  'hideCurrentValue',
-  'enableStripedAnimation'
 ]);
 
 
