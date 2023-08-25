@@ -1,22 +1,21 @@
-.m-badge,
 .badge {
-  --#{$prefix}m-badge-bg: #{$badge-bg};
-  --#{$prefix}m-badge-dot-height: #{$badge-dot-height};
+  --#{$prefix}badge-bg: #{$badge-bg};
+  --#{$prefix}badge-dot-height: #{$badge-dot-height};
 
   display: block;
-  background-color: var(--#{$prefix}m-badge-bg);
+  background-color: var(--#{$prefix}badge-bg);
 
   @each $theme, $value in $theme-colors {
     $color: color-contrast($value);
     &.badge-#{$theme} {
       --#{$prefix}badge-color: #{$color};
-      --#{$prefix}m-badge-bg: var(--#{$prefix}#{$theme});
+      --#{$prefix}badge-bg: var(--#{$prefix}#{$theme});
     }
   }
 
   &.badge-dot {
-    min-width: var(--#{$prefix}m-badge-dot-height);
-    height: var(--#{$prefix}m-badge-dot-height);
+    min-width: var(--#{$prefix}badge-dot-height);
+    height: var(--#{$prefix}badge-dot-height);
     padding: 0;
     border-radius: var(--#{$prefix}badge-border-radius);
 

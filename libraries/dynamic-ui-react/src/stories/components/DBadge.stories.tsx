@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MBadge } from '../../components';
+import { DBadge } from '../../components';
 import { THEMES } from '../constants';
 
-const config: Meta<typeof MBadge> = {
+const config: Meta<typeof DBadge> = {
   title: 'Design System/Components/Badge',
-  component: MBadge,
+  component: DBadge,
   argTypes: {
     text: {
       control: 'text',
@@ -28,7 +28,7 @@ const config: Meta<typeof MBadge> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MBadge>;
+type Story = StoryObj<typeof DBadge>;
 
 export const Default: Story = {
   args: {

@@ -5,15 +5,15 @@ import {
 } from '@stencil/core';
 import type { ComponentInterface } from '@stencil/core';
 
-@Component({ tag: 'm-chip' })
-export class MChip implements ComponentInterface {
+@Component({ tag: 'd-chip' })
+export class DChip implements ComponentInterface {
   /**
    * The theme to use.
    */
   @Prop() theme = 'primary';
 
   /**
-   * The text of badge
+   * The text of chip
    */
   @Prop() text?: string;
 
@@ -40,17 +40,17 @@ export class MChip implements ComponentInterface {
   /**
    * Emitted when the close button has been clicked.
    */
-  @Event() mClose!: EventEmitter;
+  @Event() eventClose!: EventEmitter;
 
   private closeHandler = () => {
-    this.mClose.emit();
+    this.eventClose.emit();
   };
 
   // eslint-disable-next-line @stencil/own-methods-must-be-private
   generateClasses() {
     return {
-      'm-chip': true,
-      [`m-chip-${this.theme}`]: !!this.theme,
+      'd-chip': true,
+      [`d-chip-${this.theme}`]: !!this.theme,
     };
   }
 
@@ -58,7 +58,7 @@ export class MChip implements ComponentInterface {
     return (
       <span class={this.generateClasses()}>
         {this.icon && (
-          <div class="m-badge-icon-container">
+          <div class="d-chip-icon-container">
             <d-icon
               icon={this.icon}
               familyClass={this.iconFamilyClass}
@@ -70,7 +70,7 @@ export class MChip implements ComponentInterface {
         {this.showClose && (
           <button
             type="button"
-            class="m-badge-icon-container"
+            class="d-chip-icon-container"
             onClick={this.closeHandler}
           >
             <d-icon icon="x-lg" />

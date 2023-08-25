@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MChip } from './m-chip';
+import { DChip } from './d-chip';
 
 it('should render badge', async () => {
   const props = {
@@ -10,14 +10,23 @@ it('should render badge', async () => {
     showClose: true,
   };
   const page = await newSpecPage({
-    components: [MChip],
+    components: [DChip],
     template: () => (
-      <m-badge
+      <d-chip
         {...props}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-badge showclose="" text="Test" theme="primary"></m-badge>
+    <d-chip>
+      <span class="d-chip d-chip-primary">
+        <span>
+          Test
+        </span>
+        <button class="d-chip-icon-container" type="button">
+          <d-icon icon="x-lg"></d-icon>
+        </button>
+      </span>
+    </d-chip>
   `);
 });

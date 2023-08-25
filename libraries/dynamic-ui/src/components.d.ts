@@ -48,6 +48,20 @@ export namespace Components {
          */
         "type": AlertType;
     }
+    interface DBadge {
+        /**
+          * Enable dot mode
+         */
+        "isDot": boolean;
+        /**
+          * The text of badge
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme": string;
+    }
     interface DButton {
         /**
           * Icon right to display
@@ -114,6 +128,32 @@ export namespace Components {
          */
         "variant"?: ButtonVariant;
     }
+    interface DChip {
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon"?: string;
+        /**
+          * Change the family class to use another icon suite
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Change the family prefix to use another icon suite
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Show close icon
+         */
+        "showClose"?: boolean;
+        /**
+          * The text of chip
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme": string;
+    }
     interface DIcon {
         /**
           * Icon background color in css color unit or var
@@ -163,46 +203,6 @@ export namespace Components {
           * Theme of the icon
          */
         "theme"?: string;
-    }
-    interface MBadge {
-        /**
-          * Enable dot mode
-         */
-        "isDot": boolean;
-        /**
-          * The text of badge
-         */
-        "text"?: string;
-        /**
-          * The theme to use.
-         */
-        "theme": string;
-    }
-    interface MChip {
-        /**
-          * Name of icon to use (in kebab-case)
-         */
-        "icon"?: string;
-        /**
-          * Change the family class to use another icon suite
-         */
-        "iconFamilyClass"?: string;
-        /**
-          * Change the family prefix to use another icon suite
-         */
-        "iconFamilyPrefix"?: string;
-        /**
-          * Show close icon
-         */
-        "showClose"?: boolean;
-        /**
-          * The text of badge
-         */
-        "text"?: string;
-        /**
-          * The theme to use.
-         */
-        "theme": string;
     }
     interface MInput {
         /**
@@ -1085,9 +1085,9 @@ export interface DButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDButtonElement;
 }
-export interface MChipCustomEvent<T> extends CustomEvent<T> {
+export interface DChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMChipElement;
+    target: HTMLDChipElement;
 }
 export interface MInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1156,29 +1156,29 @@ declare global {
         prototype: HTMLDAlertElement;
         new (): HTMLDAlertElement;
     };
+    interface HTMLDBadgeElement extends Components.DBadge, HTMLStencilElement {
+    }
+    var HTMLDBadgeElement: {
+        prototype: HTMLDBadgeElement;
+        new (): HTMLDBadgeElement;
+    };
     interface HTMLDButtonElement extends Components.DButton, HTMLStencilElement {
     }
     var HTMLDButtonElement: {
         prototype: HTMLDButtonElement;
         new (): HTMLDButtonElement;
     };
+    interface HTMLDChipElement extends Components.DChip, HTMLStencilElement {
+    }
+    var HTMLDChipElement: {
+        prototype: HTMLDChipElement;
+        new (): HTMLDChipElement;
+    };
     interface HTMLDIconElement extends Components.DIcon, HTMLStencilElement {
     }
     var HTMLDIconElement: {
         prototype: HTMLDIconElement;
         new (): HTMLDIconElement;
-    };
-    interface HTMLMBadgeElement extends Components.MBadge, HTMLStencilElement {
-    }
-    var HTMLMBadgeElement: {
-        prototype: HTMLMBadgeElement;
-        new (): HTMLMBadgeElement;
-    };
-    interface HTMLMChipElement extends Components.MChip, HTMLStencilElement {
-    }
-    var HTMLMChipElement: {
-        prototype: HTMLMChipElement;
-        new (): HTMLMChipElement;
     };
     interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
     }
@@ -1278,10 +1278,10 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "d-alert": HTMLDAlertElement;
+        "d-badge": HTMLDBadgeElement;
         "d-button": HTMLDButtonElement;
+        "d-chip": HTMLDChipElement;
         "d-icon": HTMLDIconElement;
-        "m-badge": HTMLMBadgeElement;
-        "m-chip": HTMLMChipElement;
         "m-input": HTMLMInputElement;
         "m-input-check": HTMLMInputCheckElement;
         "m-input-counter": HTMLMInputCounterElement;
@@ -1330,6 +1330,20 @@ declare namespace LocalJSX {
           * Alert type
          */
         "type"?: AlertType;
+    }
+    interface DBadge {
+        /**
+          * Enable dot mode
+         */
+        "isDot"?: boolean;
+        /**
+          * The text of badge
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme"?: string;
     }
     interface DButton {
         /**
@@ -1401,6 +1415,36 @@ declare namespace LocalJSX {
          */
         "variant"?: ButtonVariant;
     }
+    interface DChip {
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon"?: string;
+        /**
+          * Change the family class to use another icon suite
+         */
+        "iconFamilyClass"?: string;
+        /**
+          * Change the family prefix to use another icon suite
+         */
+        "iconFamilyPrefix"?: string;
+        /**
+          * Emitted when the close button has been clicked.
+         */
+        "onEventClose"?: (event: DChipCustomEvent<any>) => void;
+        /**
+          * Show close icon
+         */
+        "showClose"?: boolean;
+        /**
+          * The text of chip
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme"?: string;
+    }
     interface DIcon {
         /**
           * Icon background color in css color unit or var
@@ -1448,50 +1492,6 @@ declare namespace LocalJSX {
         "size"?: string;
         /**
           * Theme of the icon
-         */
-        "theme"?: string;
-    }
-    interface MBadge {
-        /**
-          * Enable dot mode
-         */
-        "isDot"?: boolean;
-        /**
-          * The text of badge
-         */
-        "text"?: string;
-        /**
-          * The theme to use.
-         */
-        "theme"?: string;
-    }
-    interface MChip {
-        /**
-          * Name of icon to use (in kebab-case)
-         */
-        "icon"?: string;
-        /**
-          * Change the family class to use another icon suite
-         */
-        "iconFamilyClass"?: string;
-        /**
-          * Change the family prefix to use another icon suite
-         */
-        "iconFamilyPrefix"?: string;
-        /**
-          * Emitted when the close button has been clicked.
-         */
-        "onMClose"?: (event: MChipCustomEvent<any>) => void;
-        /**
-          * Show close icon
-         */
-        "showClose"?: boolean;
-        /**
-          * The text of badge
-         */
-        "text"?: string;
-        /**
-          * The theme to use.
          */
         "theme"?: string;
     }
@@ -2473,10 +2473,10 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "d-alert": DAlert;
+        "d-badge": DBadge;
         "d-button": DButton;
+        "d-chip": DChip;
         "d-icon": DIcon;
-        "m-badge": MBadge;
-        "m-chip": MChip;
         "m-input": MInput;
         "m-input-check": MInputCheck;
         "m-input-counter": MInputCounter;
@@ -2500,10 +2500,10 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "d-alert": LocalJSX.DAlert & JSXBase.HTMLAttributes<HTMLDAlertElement>;
+            "d-badge": LocalJSX.DBadge & JSXBase.HTMLAttributes<HTMLDBadgeElement>;
             "d-button": LocalJSX.DButton & JSXBase.HTMLAttributes<HTMLDButtonElement>;
+            "d-chip": LocalJSX.DChip & JSXBase.HTMLAttributes<HTMLDChipElement>;
             "d-icon": LocalJSX.DIcon & JSXBase.HTMLAttributes<HTMLDIconElement>;
-            "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
-            "m-chip": LocalJSX.MChip & JSXBase.HTMLAttributes<HTMLMChipElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;
             "m-input-counter": LocalJSX.MInputCounter & JSXBase.HTMLAttributes<HTMLMInputCounterElement>;

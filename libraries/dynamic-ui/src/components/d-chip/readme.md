@@ -1,4 +1,4 @@
-# m-chip
+# d-chip
 
 
 
@@ -13,15 +13,15 @@
 | `iconFamilyClass`  | `icon-family-class`  | Change the family class to use another icon suite  | `string \| undefined`  | `undefined` |
 | `iconFamilyPrefix` | `icon-family-prefix` | Change the family prefix to use another icon suite | `string \| undefined`  | `undefined` |
 | `showClose`        | `show-close`         | Show close icon                                    | `boolean \| undefined` | `false`     |
-| `text`             | `text`               | The text of badge                                  | `string \| undefined`  | `undefined` |
+| `text`             | `text`               | The text of chip                                   | `string \| undefined`  | `undefined` |
 | `theme`            | `theme`              | The theme to use.                                  | `string`               | `'primary'` |
 
 
 ## Events
 
-| Event    | Description                                     | Type               |
-| -------- | ----------------------------------------------- | ------------------ |
-| `mClose` | Emitted when the close button has been clicked. | `CustomEvent<any>` |
+| Event        | Description                                     | Type               |
+| ------------ | ----------------------------------------------- | ------------------ |
+| `eventClose` | Emitted when the close button has been clicked. | `CustomEvent<any>` |
 
 
 ## Dependencies
@@ -33,8 +33,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  m-chip --> d-icon
-  style m-chip fill:#f9f,stroke:#333,stroke-width:4px
+  d-chip --> d-icon
+  style d-chip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

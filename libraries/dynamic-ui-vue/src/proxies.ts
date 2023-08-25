@@ -20,6 +20,13 @@ export const DAlert = /*@__PURE__*/ defineContainer<JSX.DAlert>('d-alert', undef
 ]);
 
 
+export const DBadge = /*@__PURE__*/ defineContainer<JSX.DBadge>('d-badge', undefined, [
+  'theme',
+  'text',
+  'isDot'
+]);
+
+
 export const DButton = /*@__PURE__*/ defineContainer<JSX.DButton>('d-button', undefined, [
   'theme',
   'size',
@@ -41,6 +48,17 @@ export const DButton = /*@__PURE__*/ defineContainer<JSX.DButton>('d-button', un
 ]);
 
 
+export const DChip = /*@__PURE__*/ defineContainer<JSX.DChip>('d-chip', undefined, [
+  'theme',
+  'text',
+  'icon',
+  'iconFamilyClass',
+  'iconFamilyPrefix',
+  'showClose',
+  'eventClose'
+]);
+
+
 export const DIcon = /*@__PURE__*/ defineContainer<JSX.DIcon>('d-icon', undefined, [
   'icon',
   'theme',
@@ -54,24 +72,6 @@ export const DIcon = /*@__PURE__*/ defineContainer<JSX.DIcon>('d-icon', undefine
   'backgroundColor',
   'familyClass',
   'familyPrefix'
-]);
-
-
-export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undefined, [
-  'theme',
-  'text',
-  'isDot'
-]);
-
-
-export const MChip = /*@__PURE__*/ defineContainer<JSX.MChip>('m-chip', undefined, [
-  'theme',
-  'text',
-  'icon',
-  'iconFamilyClass',
-  'iconFamilyPrefix',
-  'showClose',
-  'mClose'
 ]);
 
 

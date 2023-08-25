@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MChip } from '../../components';
-import { THEMES } from '../constants';
+import { DChip } from '../../components';
+import { ICONS, THEMES } from '../constants';
 
-const config: Meta<typeof MChip> = {
+const config: Meta<typeof DChip> = {
   title: 'Design System/Components/Chip',
-  component: MChip,
+  component: DChip,
   argTypes: {
     text: {
       control: 'text',
@@ -19,14 +19,28 @@ const config: Meta<typeof MChip> = {
       table: { defaultValue: { summary: 'primary' } },
       description: 'The theme to use.',
     },
-    onMClose: {
-      action: 'onMClose',
+    icon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
+    showClose: {
+      control: 'boolean',
+      table: { defaultValue: { summary: false } },
+      type: 'boolean',
+    },
+    onEventClose: {
+      action: 'onEventClose',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MChip>;
+type Story = StoryObj<typeof DChip>;
 
 export const Primary: Story = {
   args: {

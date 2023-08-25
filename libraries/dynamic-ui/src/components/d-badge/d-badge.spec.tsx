@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MBadge } from './m-badge';
+import { DBadge } from './d-badge';
 
 it('should render badge', async () => {
   const props = {
@@ -9,20 +9,20 @@ it('should render badge', async () => {
     text: 'Test',
   };
   const page = await newSpecPage({
-    components: [MBadge],
+    components: [DBadge],
     template: () => (
-      <m-badge
+      <d-badge
         {...props}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-badge>
-      <span class="badge badge-primary m-badge">
+    <d-badge>
+      <span class="badge badge-primary">
         <span>
           Test
         </span>
       </span>
-    </m-badge>
+    </d-badge>
   `);
 });

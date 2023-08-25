@@ -1,4 +1,4 @@
-import { MBadge, MInputSwitch } from '../proxies';
+import { DBadge, MInputSwitch } from '../proxies';
 import { PermissionItemType } from './interface';
 
 type Props = {
@@ -24,7 +24,7 @@ export default function MPermissionItem({
     >
       <span className="flex-grow-1 label">{permission.label}</span>
       {permission.type === 'custom' && (
-        <MBadge
+        <DBadge
           theme="tertiary"
           text={permissionState}
         />

@@ -5,8 +5,8 @@ import {
   Prop,
 } from '@stencil/core';
 
-@Component({ tag: 'm-badge' })
-export class MBadge implements ComponentInterface {
+@Component({ tag: 'd-badge' })
+export class DBadge implements ComponentInterface {
   /**
    * The theme to use.
    */
@@ -25,7 +25,7 @@ export class MBadge implements ComponentInterface {
   // eslint-disable-next-line @stencil/own-methods-must-be-private
   generateClasses() {
     return {
-      'm-badge badge': true,
+      badge: true,
       'badge-dot': this.isDot,
       [`badge-${this.theme}`]: !!this.theme,
     };
