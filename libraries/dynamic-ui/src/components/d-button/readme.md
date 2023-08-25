@@ -1,4 +1,4 @@
-# m-button
+# d-button
 
 
 
@@ -29,16 +29,12 @@
 
 ## Events
 
-| Event    | Description                               | Type               |
-| -------- | ----------------------------------------- | ------------------ |
-| `mClick` | Emitted when the button has been clicked. | `CustomEvent<any>` |
+| Event        | Description                               | Type               |
+| ------------ | ----------------------------------------- | ------------------ |
+| `eventClick` | Emitted when the button has been clicked. | `CustomEvent<any>` |
 
 
 ## Dependencies
-
-### Used by
-
- - [m-quick-action-button](../m-quick-action-button)
 
 ### Depends on
 
@@ -47,9 +43,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  m-button --> d-icon
-  m-quick-action-button --> m-button
-  style m-button fill:#f9f,stroke:#333,stroke-width:4px
+  d-button --> d-icon
+  style d-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

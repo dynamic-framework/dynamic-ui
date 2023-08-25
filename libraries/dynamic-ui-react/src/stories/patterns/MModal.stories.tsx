@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MButton, MModal } from '../../components';
+import { DButton, MModal } from '../../components';
 
 const config: Meta<typeof MModal> = {
   title: 'Design System/Patterns/Modal',
@@ -71,14 +71,14 @@ export const Default: Story = {
         <p className="py-3 px-5">Modal body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MModal>
   ),
@@ -111,14 +111,14 @@ export const ActionsPlacementStart: Story = {
         <p className="py-3 px-5">Modal body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MModal>
   ),
@@ -151,14 +151,14 @@ export const ActionsPlacementEnd: Story = {
         <p className="py-3 px-5">Modal body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MModal>
   ),
@@ -188,14 +188,14 @@ export const WithoutHeader: Story = {
         <p className="py-3 px-5">Modal body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MModal>
   ),
@@ -285,14 +285,14 @@ export const WithoutCancelX: Story = {
         <p className="py-3 px-5">Modal body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MModal>
   ),

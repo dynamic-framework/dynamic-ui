@@ -66,15 +66,15 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
     <p>Offcanvas body</p>
   </div>
   <div slot="footer">
-    <MButton
+    <DButton
       text="cancel"
       theme="secondary"
       variant="outline"
       className="d-grid"
       isPill
-      onMClick={() => closeOffcanvas()}
+      onEventClick={() => closeOffcanvas()}
     />
-    <MButton text="ok" className="d-grid" isPill />
+    <DButton text="ok" className="d-grid" isPill />
   </div>
 </MOffcanvas>
   `}
@@ -83,7 +83,7 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
 ### Offcanvas Usage render of `App.tsx`
 <Source
   code={`
-<MButton text="Open Offcanvas" onMClick={() => openOffcanvas('example')} />
+<DButton text="Open Offcanvas" onEventClick={() => openOffcanvas('example')} />
   `}
 />
 

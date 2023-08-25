@@ -3,7 +3,7 @@ import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { DateTime } from 'luxon';
 
 import { useLiquidContext } from '../contexts';
-import { MButton } from './proxies';
+import { DButton } from './proxies';
 
 type CalendarProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' > & {
   date: string;
@@ -39,23 +39,23 @@ export default function MMonthPicker({
         nextYearButtonDisabled,
       }) => (
         <div className="d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark">
-          <MButton
+          <DButton
             iconStart="chevron-left"
             size="sm"
             variant="link"
             theme="light"
-            onMClick={decreaseYear}
+            onEventClick={decreaseYear}
             isDisabled={prevYearButtonDisabled}
           />
           <p className="fs-6 fw-bold">
             { monthDate.getFullYear() }
           </p>
-          <MButton
+          <DButton
             iconStart="chevron-right"
             size="sm"
             variant="link"
             theme="light"
-            onMClick={increaseYear}
+            onEventClick={increaseYear}
             isDisabled={nextYearButtonDisabled}
           />
         </div>

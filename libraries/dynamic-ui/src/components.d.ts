@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlertType } from "./components/d-alert/d-alert-interface";
 import { ComponentSize, InputState } from "./utils/component-interface";
-import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
+import { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
 import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 import { Options } from "currency.js";
 import { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
@@ -15,7 +15,7 @@ import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interfac
 import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
 export { AlertType } from "./components/d-alert/d-alert-interface";
 export { ComponentSize, InputState } from "./utils/component-interface";
-export { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
+export { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
 export { FormCheckType } from "./components/m-input-check/m-input-check-interface";
 export { Options } from "currency.js";
 export { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
@@ -48,71 +48,7 @@ export namespace Components {
          */
         "type": AlertType;
     }
-    interface DIcon {
-        /**
-          * Icon background color in css color unit or var
-         */
-        "backgroundColor"?: string;
-        /**
-          * Circle size in css length unit
-         */
-        "circleSize"?: string;
-        /**
-          * Icon color in css color unit or var
-         */
-        "color"?: string;
-        /**
-          * Change the family class to use another icon suite
-         */
-        "familyClass"?: string;
-        /**
-          * Change the family prefix to use another icon suite
-         */
-        "familyPrefix"?: string;
-        /**
-          * Add circle around the icon
-         */
-        "hasCircle": boolean;
-        /**
-          * Name of icon to use (in kebab-case)
-         */
-        "icon": string;
-        /**
-          * Icon class
-         */
-        "innerClass"?: string;
-        /**
-          * Enable loading animation
-         */
-        "isLoading": boolean;
-        /**
-          * Loading animation duration, in seconds
-         */
-        "loadingDuration": number;
-        /**
-          * Size of the icon in css length unit
-         */
-        "size"?: string;
-        /**
-          * Theme of the icon
-         */
-        "theme"?: string;
-    }
-    interface MBadge {
-        /**
-          * Enable dot mode
-         */
-        "isDot": boolean;
-        /**
-          * The text of badge
-         */
-        "text"?: string;
-        /**
-          * The theme to use.
-         */
-        "theme": string;
-    }
-    interface MButton {
+    interface DButton {
         /**
           * Icon right to display
          */
@@ -177,6 +113,70 @@ export namespace Components {
           * The variant to use.
          */
         "variant"?: ButtonVariant;
+    }
+    interface DIcon {
+        /**
+          * Icon background color in css color unit or var
+         */
+        "backgroundColor"?: string;
+        /**
+          * Circle size in css length unit
+         */
+        "circleSize"?: string;
+        /**
+          * Icon color in css color unit or var
+         */
+        "color"?: string;
+        /**
+          * Change the family class to use another icon suite
+         */
+        "familyClass"?: string;
+        /**
+          * Change the family prefix to use another icon suite
+         */
+        "familyPrefix"?: string;
+        /**
+          * Add circle around the icon
+         */
+        "hasCircle": boolean;
+        /**
+          * Name of icon to use (in kebab-case)
+         */
+        "icon": string;
+        /**
+          * Icon class
+         */
+        "innerClass"?: string;
+        /**
+          * Enable loading animation
+         */
+        "isLoading": boolean;
+        /**
+          * Loading animation duration, in seconds
+         */
+        "loadingDuration": number;
+        /**
+          * Size of the icon in css length unit
+         */
+        "size"?: string;
+        /**
+          * Theme of the icon
+         */
+        "theme"?: string;
+    }
+    interface MBadge {
+        /**
+          * Enable dot mode
+         */
+        "isDot": boolean;
+        /**
+          * The text of badge
+         */
+        "text"?: string;
+        /**
+          * The theme to use.
+         */
+        "theme": string;
     }
     interface MChip {
         /**
@@ -1081,9 +1081,9 @@ export interface DAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDAlertElement;
 }
-export interface MButtonCustomEvent<T> extends CustomEvent<T> {
+export interface DButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMButtonElement;
+    target: HTMLDButtonElement;
 }
 export interface MChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1156,6 +1156,12 @@ declare global {
         prototype: HTMLDAlertElement;
         new (): HTMLDAlertElement;
     };
+    interface HTMLDButtonElement extends Components.DButton, HTMLStencilElement {
+    }
+    var HTMLDButtonElement: {
+        prototype: HTMLDButtonElement;
+        new (): HTMLDButtonElement;
+    };
     interface HTMLDIconElement extends Components.DIcon, HTMLStencilElement {
     }
     var HTMLDIconElement: {
@@ -1167,12 +1173,6 @@ declare global {
     var HTMLMBadgeElement: {
         prototype: HTMLMBadgeElement;
         new (): HTMLMBadgeElement;
-    };
-    interface HTMLMButtonElement extends Components.MButton, HTMLStencilElement {
-    }
-    var HTMLMButtonElement: {
-        prototype: HTMLMButtonElement;
-        new (): HTMLMButtonElement;
     };
     interface HTMLMChipElement extends Components.MChip, HTMLStencilElement {
     }
@@ -1278,9 +1278,9 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "d-alert": HTMLDAlertElement;
+        "d-button": HTMLDButtonElement;
         "d-icon": HTMLDIconElement;
         "m-badge": HTMLMBadgeElement;
-        "m-button": HTMLMButtonElement;
         "m-chip": HTMLMChipElement;
         "m-input": HTMLMInputElement;
         "m-input-check": HTMLMInputCheckElement;
@@ -1330,6 +1330,76 @@ declare namespace LocalJSX {
           * Alert type
          */
         "type"?: AlertType;
+    }
+    interface DButton {
+        /**
+          * Icon right to display
+         */
+        "iconEnd"?: string;
+        /**
+          * Icon right family class
+         */
+        "iconEndFamilyClass"?: string;
+        /**
+          * Icon right family prefix
+         */
+        "iconEndFamilyPrefix"?: string;
+        /**
+          * Icon left to display
+         */
+        "iconStart"?: string;
+        /**
+          * Icon left family class
+         */
+        "iconStartFamilyClass"?: string;
+        /**
+          * Icon left family prefix
+         */
+        "iconStartFamilyPrefix"?: string;
+        /**
+          * Flag to disable the button, alias to state="disable"
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag to loading state and disable button.
+         */
+        "isLoading"?: boolean;
+        /**
+          * Flag to switch to pill button border radius.
+         */
+        "isPill"?: boolean;
+        /**
+          * Emitted when the button has been clicked.
+         */
+        "onEventClick"?: (event: DButtonCustomEvent<any>) => void;
+        /**
+          * The size
+         */
+        "size"?: ComponentSize;
+        /**
+          * Change the state of the button
+         */
+        "state"?: InputState;
+        /**
+          * The text to display.
+         */
+        "text"?: string;
+        /**
+          * Theme to use.
+         */
+        "theme"?: string;
+        /**
+          * The html type of the button.
+         */
+        "type"?: ButtonType;
+        /**
+          * The html value of the button.
+         */
+        "value"?: string;
+        /**
+          * The variant to use.
+         */
+        "variant"?: ButtonVariant;
     }
     interface DIcon {
         /**
@@ -1394,76 +1464,6 @@ declare namespace LocalJSX {
           * The theme to use.
          */
         "theme"?: string;
-    }
-    interface MButton {
-        /**
-          * Icon right to display
-         */
-        "iconEnd"?: string;
-        /**
-          * Icon right family class
-         */
-        "iconEndFamilyClass"?: string;
-        /**
-          * Icon right family prefix
-         */
-        "iconEndFamilyPrefix"?: string;
-        /**
-          * Icon left to display
-         */
-        "iconStart"?: string;
-        /**
-          * Icon left family class
-         */
-        "iconStartFamilyClass"?: string;
-        /**
-          * Icon left family prefix
-         */
-        "iconStartFamilyPrefix"?: string;
-        /**
-          * Flag to disable the button, alias to state="disable"
-         */
-        "isDisabled"?: boolean;
-        /**
-          * Flag to loading state and disable button.
-         */
-        "isLoading"?: boolean;
-        /**
-          * Flag to switch to pill button border radius.
-         */
-        "isPill"?: boolean;
-        /**
-          * Emitted when the button has been clicked.
-         */
-        "onMClick"?: (event: MButtonCustomEvent<any>) => void;
-        /**
-          * The size
-         */
-        "size"?: ComponentSize;
-        /**
-          * Change the state of the button
-         */
-        "state"?: InputState;
-        /**
-          * The text to display.
-         */
-        "text"?: string;
-        /**
-          * Theme to use.
-         */
-        "theme"?: string;
-        /**
-          * The html type of the button.
-         */
-        "type"?: ButtonType;
-        /**
-          * The html value of the button.
-         */
-        "value"?: string;
-        /**
-          * The variant to use.
-         */
-        "variant"?: ButtonVariant;
     }
     interface MChip {
         /**
@@ -2473,9 +2473,9 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "d-alert": DAlert;
+        "d-button": DButton;
         "d-icon": DIcon;
         "m-badge": MBadge;
-        "m-button": MButton;
         "m-chip": MChip;
         "m-input": MInput;
         "m-input-check": MInputCheck;
@@ -2500,9 +2500,9 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "d-alert": LocalJSX.DAlert & JSXBase.HTMLAttributes<HTMLDAlertElement>;
+            "d-button": LocalJSX.DButton & JSXBase.HTMLAttributes<HTMLDButtonElement>;
             "d-icon": LocalJSX.DIcon & JSXBase.HTMLAttributes<HTMLDIconElement>;
             "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
-            "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
             "m-chip": LocalJSX.MChip & JSXBase.HTMLAttributes<HTMLMChipElement>;
             "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
             "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;

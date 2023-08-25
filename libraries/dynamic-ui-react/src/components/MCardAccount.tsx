@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import classNames from 'classnames';
-import { MButton, DIcon } from './proxies';
+import { DButton, DIcon } from './proxies';
 import MCard from './MCard';
 import MCardBody from './MCardBody';
 
@@ -58,13 +58,13 @@ export default function MCardAccount({
           </small>
         </div>
         <div className="d-flex justify-content-end">
-          <MButton
+          <DButton
             text={onClickText}
             variant="link"
             size="sm"
             theme="secondary"
             iconEnd="chevron-right"
-            onMClick={onClick}
+            onEventClick={onClick}
           />
         </div>
       </MCardBody>

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MButton, MOffcanvas } from '../../components';
+import { DButton, MOffcanvas } from '../../components';
 
 const config: Meta<typeof MOffcanvas> = {
   title: 'Design System/Patterns/Offcanvas',
@@ -48,14 +48,14 @@ export const Default: Story = {
         <p>Offcanvas body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MOffcanvas>
   ),
@@ -85,14 +85,14 @@ export const ActionsPlacementStart: Story = {
         <p>Offcanvas body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MOffcanvas>
   ),
@@ -123,14 +123,14 @@ export const ActionsPlacementEnd: Story = {
         <p>Offcanvas body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MOffcanvas>
   ),
@@ -158,14 +158,14 @@ export const WithoutHeader: Story = {
         <p>Offcanvas body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MOffcanvas>
   ),
@@ -248,14 +248,14 @@ export const WithoutCancelX: Story = {
         <p>Offcanvas body</p>
       </div>
       <div slot="footer">
-        <MButton
+        <DButton
           text="cancel"
           theme="secondary"
           variant="outline"
           className="d-grid"
           isPill
         />
-        <MButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" isPill />
       </div>
     </MOffcanvas>
   ),

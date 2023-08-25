@@ -5,7 +5,7 @@ import {
   MCardHeader,
   MCardBody,
   MCardFooter,
-  MButton,
+  DButton,
 } from '../../components';
 
 const config: Meta<typeof MCard> = {
@@ -35,7 +35,7 @@ export const Default: Story = {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, quo?
       </MCardBody>
       <MCardFooter className="d-flex justify-content-end">
-        <MButton
+        <DButton
           text="Click me!"
         />
       </MCardFooter>

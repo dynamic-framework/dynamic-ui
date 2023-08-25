@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MButton, MPopover, MQuickActionButton } from '../../components';
+import { DButton, MPopover, MQuickActionButton } from '../../components';
 
 const config: Meta<typeof MPopover> = {
   title: 'Design System/Patterns/Popover',
@@ -30,7 +30,7 @@ export const Default: Story = {
   ),
   args: {
     renderComponent: (toggle) => (
-      <MButton
+      <DButton
         text="Dropdown Component"
         iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
         className="d-grid"
@@ -59,7 +59,7 @@ export const Open: Story = {
   ),
   args: {
     renderComponent: (toggle) => (
-      <MButton
+      <DButton
         text="Dropdown Component"
         iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
         className="d-grid"

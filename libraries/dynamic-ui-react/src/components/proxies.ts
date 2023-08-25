@@ -6,9 +6,9 @@ import { createReactComponent } from './react-component-lib';
 import type { JSX } from '@dynamic-framework/ui/components';
 
 import { defineCustomElement as defineDAlert } from '@dynamic-framework/ui/components/d-alert.js';
+import { defineCustomElement as defineDButton } from '@dynamic-framework/ui/components/d-button.js';
 import { defineCustomElement as defineDIcon } from '@dynamic-framework/ui/components/d-icon.js';
 import { defineCustomElement as defineMBadge } from '@dynamic-framework/ui/components/m-badge.js';
-import { defineCustomElement as defineMButton } from '@dynamic-framework/ui/components/m-button.js';
 import { defineCustomElement as defineMChip } from '@dynamic-framework/ui/components/m-chip.js';
 import { defineCustomElement as defineMInput } from '@dynamic-framework/ui/components/m-input.js';
 import { defineCustomElement as defineMInputCheck } from '@dynamic-framework/ui/components/m-input-check.js';
@@ -28,9 +28,9 @@ import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framew
 import { defineCustomElement as defineMQuickActionSwitch } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 
 export const DAlert = /*@__PURE__*/createReactComponent<JSX.DAlert, HTMLDAlertElement>('d-alert', undefined, undefined, defineDAlert);
+export const DButton = /*@__PURE__*/createReactComponent<JSX.DButton, HTMLDButtonElement>('d-button', undefined, undefined, defineDButton);
 export const DIcon = /*@__PURE__*/createReactComponent<JSX.DIcon, HTMLDIconElement>('d-icon', undefined, undefined, defineDIcon);
 export const MBadge = /*@__PURE__*/createReactComponent<JSX.MBadge, HTMLMBadgeElement>('m-badge', undefined, undefined, defineMBadge);
-export const MButton = /*@__PURE__*/createReactComponent<JSX.MButton, HTMLMButtonElement>('m-button', undefined, undefined, defineMButton);
 export const MChip = /*@__PURE__*/createReactComponent<JSX.MChip, HTMLMChipElement>('m-chip', undefined, undefined, defineMChip);
 export const MInput = /*@__PURE__*/createReactComponent<JSX.MInput, HTMLMInputElement>('m-input', undefined, undefined, defineMInput);
 export const MInputCheck = /*@__PURE__*/createReactComponent<JSX.MInputCheck, HTMLMInputCheckElement>('m-input-check', undefined, undefined, defineMInputCheck);

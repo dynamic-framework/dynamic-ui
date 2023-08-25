@@ -3,9 +3,9 @@ import * as d from './proxies';
 
 export const DIRECTIVES = [
   d.DAlert,
+  d.DButton,
   d.DIcon,
   d.MBadge,
-  d.MButton,
   d.MChip,
   d.MInput,
   d.MInputCheck,

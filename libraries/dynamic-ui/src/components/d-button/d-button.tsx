@@ -6,16 +6,17 @@ import {
   Prop,
 } from '@stencil/core';
 
+import { PREFIX_BS } from '../../utils';
 import type {
   ClassMap,
   ComponentSize,
   InputState,
 } from '../../utils/component-interface';
 
-import type { ButtonType, ButtonVariant } from './m-button-interface';
+import type { ButtonType, ButtonVariant } from './d-button-interface';
 
-@Component({ tag: 'm-button' })
-export class MButton implements ComponentInterface {
+@Component({ tag: 'd-button' })
+export class DButton implements ComponentInterface {
   /**
    * Theme to use.
    */
@@ -99,12 +100,19 @@ export class MButton implements ComponentInterface {
   /**
    * Emitted when the button has been clicked.
    */
-  @Event({ bubbles: false }) mClick!: EventEmitter;
+  @Event({ bubbles: false }) eventClick!: EventEmitter;
 
   private clickHandler = (event: MouseEvent) => {
     event.stopPropagation();
-    this.mClick.emit();
+    this.eventClick.emit();
   };
+
+  private generateStyleVariables() {
+    if (this.isPill) {
+      return { [`--${PREFIX_BS}btn-component-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)` };
+    }
+    return {};
+  }
 
   private generateClasses(): ClassMap {
     const variantClass = this.variant
@@ -112,12 +120,10 @@ export class MButton implements ComponentInterface {
       : `btn-${this.theme}`;
     return {
       btn: true,
-      'm-button': true,
       [variantClass]: true,
       [`btn-${this.size}`]: !!this.size,
       ...(this.state && this.state !== 'disabled') && { [this.state]: true },
       loading: this.isLoading,
-      'rounded-pill': this.isPill,
     };
   }
 
@@ -125,6 +131,7 @@ export class MButton implements ComponentInterface {
     return (
       <button
         class={this.generateClasses()}
+        style={this.generateStyleVariables()}
         type={this.type}
         disabled={this.state === 'disabled' || this.isLoading || this.isDisabled}
         {...this.value && { value: this.value }}

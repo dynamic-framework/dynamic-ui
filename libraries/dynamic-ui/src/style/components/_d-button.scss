@@ -1,8 +1,8 @@
-.m-button,
 .btn {
-  --#{$prefix}m-button-link-padding-y: #{$btn-link-padding-y};
-  --#{$prefix}m-button-link-padding-x: #{$btn-link-padding-x};
-  --#{$prefix}m-button-link-font-size-sm: #{$btn-link-font-size-sm};
+  --#{$prefix}btn-link-padding-y: #{$btn-link-padding-y};
+  --#{$prefix}btn-link-padding-x: #{$btn-link-padding-x};
+  --#{$prefix}btn-link-font-size-sm: #{$btn-link-font-size-sm};
+  --#{$prefix}btn-border-radius: var(--#{$prefix}btn-component-border-radius, #{$btn-border-radius});
 
   display: flex;
   flex-direction: row;
@@ -42,43 +42,42 @@
 
   @each $color, $value in map-remove($theme-colors, "light", "dark") {
     &.btn-#{$color} {
-      $color-100: map-get($theme-colors-palletes, #{$color}-100);
-      $color-700: map-get($theme-colors-palletes, #{$color}-700);
-      $color-900: map-get($theme-colors-palletes, #{$color}-900);
-
-      $hover-color: color-contrast($color-900);
-      $focus-color: color-contrast($value);
-      $active-color: color-contrast($color-700);
-      $disable-color: color-contrast($color-100);
+      $text-color-100: color-contrast(map-get($theme-colors-palletes, #{$color}-100));
+      $text-color-500: color-contrast($value);
+      $text-color-700: color-contrast(map-get($theme-colors-palletes, #{$color}-700));
+      $text-color-900: color-contrast(map-get($theme-colors-palletes, #{$color}-900));
 
       --#{$prefix}btn-bg: var(--#{$prefix}#{$color}-500);
       --#{$prefix}btn-border-color: var(--#{$prefix}#{$color}-500);
+      --#{$prefix}btn-color: #{$text-color-500};
 
       --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$color}-900);
       --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color}-900);
-      --#{$prefix}btn-hover-color: #{$hover-color};
+      --#{$prefix}btn-hover-color: #{$text-color-900};
 
-      --#{$prefix}btn-focus-bg: var(--#{$prefix}#{$color});
-      --#{$prefix}btn-focus-border-color: var(--#{$prefix}#{$color});
-      --#{$prefix}btn-focus-color: #{$focus-color};
+      --#{$prefix}btn-focus-bg: var(--#{$prefix}#{$color}-500);
+      --#{$prefix}btn-focus-border-color: var(--#{$prefix}#{$color}-500);
+      --#{$prefix}btn-focus-color: #{$text-color-500};
 
       --#{$prefix}btn-active-bg: var(--#{$prefix}#{$color}-700);
       --#{$prefix}btn-active-border-color: var(--#{$prefix}#{$color}-700);
-      --#{$prefix}btn-active-color: #{$active-color};
+      --#{$prefix}btn-active-color: #{$text-color-700};
 
       --#{$prefix}btn-disabled-bg: var(--#{$prefix}#{$color}-100);
       --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color}-100);
-      --#{$prefix}btn-disabled-color: #{$disable-color};
+      --#{$prefix}btn-disabled-color: #{$text-color-100};
 
       &.loading {
         --#{$prefix}btn-disabled-opacity: 1;
         --#{$prefix}btn-disabled-bg: var(--#{$prefix}#{$color}-700);
         --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color}-700);
-        --#{$prefix}btn-disabled-color: #{$active-color};
+        --#{$prefix}btn-disabled-color: #{$text-color-700};
       }
     }
 
     &.btn-outline-#{$color} {
+      --#{$prefix}btn-bg: transparent;
+      --#{$prefix}btn-border-color: var(--#{$prefix}#{$color}-500);
       --#{$prefix}btn-color: var(--#{$prefix}#{$color}-500);
 
       --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$color}-100);
@@ -99,14 +98,17 @@
 
       &.loading {
         --#{$prefix}btn-disabled-opacity: 1;
+        --#{$prefix}btn-disabled-bg: transparent;
         --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color}-700);
         --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color}-700);
       }
     }
 
     &.btn-link-#{$color} {
-      padding: var(--#{$prefix}m-button-link-padding-y) var(--#{$prefix}m-button-link-padding-x);
+      padding: var(--#{$prefix}btn-link-padding-y) var(--#{$prefix}btn-link-padding-x);
 
+      --#{$prefix}btn-bg: transparent;
+      --#{$prefix}btn-border-color: transparent;
       --#{$prefix}btn-color: var(--#{$prefix}#{$color}-500);
 
       --#{$prefix}btn-hover-bg: transparent;
@@ -129,11 +131,13 @@
 
       &.loading {
         --#{$prefix}btn-disabled-opacity: 1;
+        --#{$prefix}btn-disabled-bg: transparent;
+        --#{$prefix}btn-disabled-border-color: transparent;
         --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color}-700);
       }
 
       &.btn-sm {
-        font-size: var(--#{$prefix}m-button-link-font-size-sm);
+        font-size: var(--#{$prefix}btn-link-font-size-sm);
       }
 
       > span {
@@ -143,7 +147,7 @@
   }
 
   &.btn-link-light {
-    padding: var(--#{$prefix}m-button-link-padding-y) var(--#{$prefix}m-button-link-padding-x);
+    padding: var(--#{$prefix}btn-link-padding-y) var(--#{$prefix}btn-link-padding-x);
 
     --#{$prefix}btn-bg: transparent;
     --#{$prefix}btn-border-color: transparent;
@@ -168,7 +172,7 @@
     }
 
     &.btn-sm {
-      font-size: var(--#{$prefix}m-button-link-font-size-sm);
+      font-size: var(--#{$prefix}btn-link-font-size-sm);
     }
 
     > span {
@@ -177,7 +181,7 @@
   }
 
   &.btn-link-dark {
-    padding: var(--#{$prefix}m-button-link-padding-y) var(--#{$prefix}m-button-link-padding-x);
+    padding: var(--#{$prefix}btn-link-padding-y) var(--#{$prefix}btn-link-padding-x);
 
     --#{$prefix}btn-bg: transparent;
     --#{$prefix}btn-border-color: transparent;
@@ -202,7 +206,7 @@
     }
 
     &.btn-sm {
-      font-size: var(--#{$prefix}m-button-link-font-size-sm);
+      font-size: var(--#{$prefix}btn-link-font-size-sm);
     }
 
     > span {
@@ -210,4 +214,3 @@
     }
   }
 }
-

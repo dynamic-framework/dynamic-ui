@@ -41,9 +41,9 @@ import * as useToastStories from '../hooks/useToast.stories';
 <Source
   code={`
 <>
-  <MButton
+  <DButton
     text="Show Toast"
-    onMClick={() => toast(message, { type: 'info', showClose: false })}
+    onEventClick={() => toast(message, { type: 'info', showClose: false })}
   />
   <DToastContainer />
 </>

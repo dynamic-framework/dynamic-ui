@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import * as Yup from 'yup';
 import type { ComponentProps } from 'react';
 
-import { MButton, MFormikInputCurrency } from '../../components';
+import { DButton, MFormikInputCurrency } from '../../components';
 import { LiquidContextProvider } from '../../contexts';
 
 const config: Meta<typeof MFormikInputCurrency> = {
@@ -107,8 +107,8 @@ export const WithErrors: Story = {
           {({ handleSubmit }) => (
             <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
               <Story {...args} />
-              <MButton
-                onMClick={() => handleSubmit()}
+              <DButton
+                onEventClick={() => handleSubmit()}
                 text="submit"
               />
             </form>

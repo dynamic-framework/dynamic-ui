@@ -7,9 +7,9 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 import type { Components } from '@dynamic-framework/ui/components';
 
 import { defineCustomElement as defineDAlert } from '@dynamic-framework/ui/components/d-alert.js';
+import { defineCustomElement as defineDButton } from '@dynamic-framework/ui/components/d-button.js';
 import { defineCustomElement as defineDIcon } from '@dynamic-framework/ui/components/d-icon.js';
 import { defineCustomElement as defineMBadge } from '@dynamic-framework/ui/components/m-badge.js';
-import { defineCustomElement as defineMButton } from '@dynamic-framework/ui/components/m-button.js';
 import { defineCustomElement as defineMChip } from '@dynamic-framework/ui/components/m-chip.js';
 import { defineCustomElement as defineMInput } from '@dynamic-framework/ui/components/m-input.js';
 import { defineCustomElement as defineMInputCheck } from '@dynamic-framework/ui/components/m-input-check.js';
@@ -57,6 +57,35 @@ export declare interface DAlert extends Components.DAlert {
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDButton,
+  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isPill', 'size', 'state', 'text', 'theme', 'type', 'value', 'variant']
+})
+@Component({
+  selector: 'd-button',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isPill', 'size', 'state', 'text', 'theme', 'type', 'value', 'variant'],
+})
+export class DButton {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventClick']);
+  }
+}
+
+
+export declare interface DButton extends Components.DButton {
+  /**
+   * Emitted when the button has been clicked.
+   */
+  eventClick: EventEmitter<CustomEvent<any>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDIcon,
   inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme']
 })
@@ -100,35 +129,6 @@ export class MBadge {
 
 
 export declare interface MBadge extends Components.MBadge {}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMButton,
-  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isPill', 'size', 'state', 'text', 'theme', 'type', 'value', 'variant']
-})
-@Component({
-  selector: 'm-button',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isPill', 'size', 'state', 'text', 'theme', 'type', 'value', 'variant'],
-})
-export class MButton {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClick']);
-  }
-}
-
-
-export declare interface MButton extends Components.MButton {
-  /**
-   * Emitted when the button has been clicked.
-   */
-  mClick: EventEmitter<CustomEvent<any>>;
-}
 
 
 @ProxyCmp({

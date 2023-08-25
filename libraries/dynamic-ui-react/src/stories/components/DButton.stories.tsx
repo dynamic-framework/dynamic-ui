@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MButton } from '../../components';
+import { DButton } from '../../components';
 import {
   COMPONENT_SIZE,
   ICONS,
@@ -8,9 +8,9 @@ import {
   THEMES,
 } from '../constants';
 
-const config: Meta<typeof MButton> = {
+const config: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',
-  component: MButton,
+  component: DButton,
   argTypes: {
     theme: {
       control: 'select',
@@ -95,11 +95,14 @@ const config: Meta<typeof MButton> = {
       type: 'string',
       description: 'Change the state of the button',
     },
+    onEventClick: {
+      action: 'onEventClick',
+    },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MButton>;
+type Story = StoryObj<typeof DButton>;
 
 export const Primary: Story = {
   args: {

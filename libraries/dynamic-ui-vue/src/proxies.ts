@@ -20,6 +20,27 @@ export const DAlert = /*@__PURE__*/ defineContainer<JSX.DAlert>('d-alert', undef
 ]);
 
 
+export const DButton = /*@__PURE__*/ defineContainer<JSX.DButton>('d-button', undefined, [
+  'theme',
+  'size',
+  'variant',
+  'state',
+  'text',
+  'iconStart',
+  'iconStartFamilyClass',
+  'iconStartFamilyPrefix',
+  'iconEnd',
+  'iconEndFamilyClass',
+  'iconEndFamilyPrefix',
+  'value',
+  'type',
+  'isPill',
+  'isLoading',
+  'isDisabled',
+  'eventClick'
+]);
+
+
 export const DIcon = /*@__PURE__*/ defineContainer<JSX.DIcon>('d-icon', undefined, [
   'icon',
   'theme',
@@ -40,27 +61,6 @@ export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undef
   'theme',
   'text',
   'isDot'
-]);
-
-
-export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', undefined, [
-  'theme',
-  'size',
-  'variant',
-  'state',
-  'text',
-  'iconStart',
-  'iconStartFamilyClass',
-  'iconStartFamilyPrefix',
-  'iconEnd',
-  'iconEndFamilyClass',
-  'iconEndFamilyPrefix',
-  'value',
-  'type',
-  'isPill',
-  'isLoading',
-  'isDisabled',
-  'mClick'
 ]);
 
 

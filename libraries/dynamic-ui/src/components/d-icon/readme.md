@@ -28,7 +28,7 @@
 ### Used by
 
  - [d-alert](../d-alert)
- - [m-button](../m-button)
+ - [d-button](../d-button)
  - [m-chip](../m-chip)
  - [m-input](../m-input)
  - [m-input-pin](../m-input-pin)
@@ -41,7 +41,7 @@
 ```mermaid
 graph TD;
   d-alert --> d-icon
-  m-button --> d-icon
+  d-button --> d-icon
   m-chip --> d-icon
   m-input --> d-icon
   m-input-pin --> d-icon

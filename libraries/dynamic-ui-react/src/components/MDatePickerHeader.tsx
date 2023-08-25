@@ -2,7 +2,7 @@
 import { DateTime } from 'luxon';
 import { ComponentProps } from 'react';
 import { ButtonVariant, ComponentSize } from '@dynamic-framework/ui';
-import { MButton } from './proxies';
+import { DButton } from './proxies';
 import MMonthPicker from './MMonthPicker';
 import { useLiquidContext } from '../contexts';
 
@@ -20,7 +20,7 @@ export type MDatePickerHeaderProps = {
   iconSize: ComponentSize;
   buttonVariant: ButtonVariant;
   buttonTheme: string;
-} & Omit<ComponentProps<typeof MButton>,
+} & Omit<ComponentProps<typeof DButton>,
 | 'iconStart'
 | 'onMClick'
 | 'isDisabled'
@@ -46,12 +46,12 @@ export default function MDatePickerHeader({
 
   return (
     <div className="d-flex align-items-center justify-content-between m-datepicker-header">
-      <MButton
+      <DButton
         iconStart={decreaseMonthIcon}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
-        onMClick={decreaseMonth}
+        onEventClick={decreaseMonth}
         isDisabled={prevMonthButtonDisabled}
       />
       <MMonthPicker
@@ -65,12 +65,12 @@ export default function MDatePickerHeader({
         }}
         {...lang && { locale: lang }}
       />
-      <MButton
+      <DButton
         iconStart={increaseMonthIcon}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
-        onMClick={increaseMonth}
+        onEventClick={increaseMonth}
         isDisabled={nextMonthButtonDisabled}
       />
     </div>
