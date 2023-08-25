@@ -12,7 +12,7 @@ import { FormCheckType } from "./components/d-input-check/d-input-check-interfac
 import { Options } from "currency.js";
 import { PinInputMode, PinInputType } from "./components/d-input-pin/d-input-pin-interface";
 import { FullScreenFrom, ModalSize } from "./components/d-modal/d-modal-interface";
-import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
+import { PositionToggleFrom } from "./components/d-offcanvas/d-offcanvas-interface";
 export { AlertType } from "./components/d-alert/d-alert-interface";
 export { ComponentSize, InputState } from "./utils/component-interface";
 export { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
@@ -20,7 +20,7 @@ export { FormCheckType } from "./components/d-input-check/d-input-check-interfac
 export { Options } from "currency.js";
 export { PinInputMode, PinInputType } from "./components/d-input-pin/d-input-pin-interface";
 export { FullScreenFrom, ModalSize } from "./components/d-modal/d-modal-interface";
-export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
+export { PositionToggleFrom } from "./components/d-offcanvas/d-offcanvas-interface";
 export namespace Components {
     interface DAlert {
         /**
@@ -888,6 +888,32 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
+    interface DOffcanvas {
+        /**
+          * Footer action direction
+         */
+        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        /**
+          * Is body scrollable while offcanvas is active
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
+          * the name of the offcanvas
+         */
+        "name": string;
+        /**
+          * Position to show offcanvas from
+         */
+        "openFrom"?: PositionToggleFrom;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -943,32 +969,6 @@ export namespace Components {
           * The name of the input
          */
         "name"?: string;
-    }
-    interface MOffcanvas {
-        /**
-          * Footer action direction
-         */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
-        /**
-          * Is body scrollable while offcanvas is active
-         */
-        "isScrollable"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "isStatic"?: boolean;
-        /**
-          * the name of the offcanvas
-         */
-        "name": string;
-        /**
-          * Position to show offcanvas from
-         */
-        "openFrom"?: PositionToggleFrom;
-        /**
-          * No display close button
-         */
-        "showCloseButton"?: boolean;
     }
     interface MProgressBar {
         /**
@@ -1129,6 +1129,10 @@ export interface DModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDModalElement;
 }
+export interface DOffcanvasCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDOffcanvasElement;
+}
 export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionCheckElement;
@@ -1136,10 +1140,6 @@ export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
 export interface DQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionSwitchElement;
-}
-export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMOffcanvasElement;
 }
 export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1240,6 +1240,12 @@ declare global {
         prototype: HTMLDModalElement;
         new (): HTMLDModalElement;
     };
+    interface HTMLDOffcanvasElement extends Components.DOffcanvas, HTMLStencilElement {
+    }
+    var HTMLDOffcanvasElement: {
+        prototype: HTMLDOffcanvasElement;
+        new (): HTMLDOffcanvasElement;
+    };
     interface HTMLDQuickActionCheckElement extends Components.DQuickActionCheck, HTMLStencilElement {
     }
     var HTMLDQuickActionCheckElement: {
@@ -1251,12 +1257,6 @@ declare global {
     var HTMLDQuickActionSwitchElement: {
         prototype: HTMLDQuickActionSwitchElement;
         new (): HTMLDQuickActionSwitchElement;
-    };
-    interface HTMLMOffcanvasElement extends Components.MOffcanvas, HTMLStencilElement {
-    }
-    var HTMLMOffcanvasElement: {
-        prototype: HTMLMOffcanvasElement;
-        new (): HTMLMOffcanvasElement;
     };
     interface HTMLMProgressBarElement extends Components.MProgressBar, HTMLStencilElement {
     }
@@ -1292,9 +1292,9 @@ declare global {
         "d-input-select": HTMLDInputSelectElement;
         "d-input-switch": HTMLDInputSwitchElement;
         "d-modal": HTMLDModalElement;
+        "d-offcanvas": HTMLDOffcanvasElement;
         "d-quick-action-check": HTMLDQuickActionCheckElement;
         "d-quick-action-switch": HTMLDQuickActionSwitchElement;
-        "m-offcanvas": HTMLMOffcanvasElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action-button": HTMLMQuickActionButtonElement;
         "m-quick-action-select": HTMLMQuickActionSelectElement;
@@ -2259,6 +2259,36 @@ declare namespace LocalJSX {
          */
         "showCloseButton"?: boolean;
     }
+    interface DOffcanvas {
+        /**
+          * Footer action direction
+         */
+        "footerActionPlacement"?: 'start' | 'end' | 'fill';
+        /**
+          * Is body scrollable while offcanvas is active
+         */
+        "isScrollable"?: boolean;
+        /**
+          * Is backdrop static
+         */
+        "isStatic"?: boolean;
+        /**
+          * the name of the offcanvas
+         */
+        "name": string;
+        /**
+          * Emitted when the input value has changed
+         */
+        "onEventClose"?: (event: DOffcanvasCustomEvent<void>) => void;
+        /**
+          * Position to show offcanvas from
+         */
+        "openFrom"?: PositionToggleFrom;
+        /**
+          * No display close button
+         */
+        "showCloseButton"?: boolean;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -2322,36 +2352,6 @@ declare namespace LocalJSX {
           * Emitted when the select value has changed
          */
         "onEventClick"?: (event: DQuickActionSwitchCustomEvent<boolean>) => void;
-    }
-    interface MOffcanvas {
-        /**
-          * Footer action direction
-         */
-        "footerActionPlacement"?: 'start' | 'end' | 'fill';
-        /**
-          * Is body scrollable while offcanvas is active
-         */
-        "isScrollable"?: boolean;
-        /**
-          * Is backdrop static
-         */
-        "isStatic"?: boolean;
-        /**
-          * the name of the offcanvas
-         */
-        "name": string;
-        /**
-          * Emitted when the input value has changed
-         */
-        "onMClose"?: (event: MOffcanvasCustomEvent<void>) => void;
-        /**
-          * Position to show offcanvas from
-         */
-        "openFrom"?: PositionToggleFrom;
-        /**
-          * No display close button
-         */
-        "showCloseButton"?: boolean;
     }
     interface MProgressBar {
         /**
@@ -2487,9 +2487,9 @@ declare namespace LocalJSX {
         "d-input-select": DInputSelect;
         "d-input-switch": DInputSwitch;
         "d-modal": DModal;
+        "d-offcanvas": DOffcanvas;
         "d-quick-action-check": DQuickActionCheck;
         "d-quick-action-switch": DQuickActionSwitch;
-        "m-offcanvas": MOffcanvas;
         "m-progress-bar": MProgressBar;
         "m-quick-action-button": MQuickActionButton;
         "m-quick-action-select": MQuickActionSelect;
@@ -2514,9 +2514,9 @@ declare module "@stencil/core" {
             "d-input-select": LocalJSX.DInputSelect & JSXBase.HTMLAttributes<HTMLDInputSelectElement>;
             "d-input-switch": LocalJSX.DInputSwitch & JSXBase.HTMLAttributes<HTMLDInputSwitchElement>;
             "d-modal": LocalJSX.DModal & JSXBase.HTMLAttributes<HTMLDModalElement>;
+            "d-offcanvas": LocalJSX.DOffcanvas & JSXBase.HTMLAttributes<HTMLDOffcanvasElement>;
             "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
             "d-quick-action-switch": LocalJSX.DQuickActionSwitch & JSXBase.HTMLAttributes<HTMLDQuickActionSwitchElement>;
-            "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
             "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;

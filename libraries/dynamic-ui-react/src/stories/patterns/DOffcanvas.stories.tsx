@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DButton, MOffcanvas } from '../../components';
+import { DButton, DOffcanvas } from '../../components';
 
-const config: Meta<typeof MOffcanvas> = {
+const config: Meta<typeof DOffcanvas> = {
   title: 'Design System/Patterns/Offcanvas',
-  component: MOffcanvas,
+  component: DOffcanvas,
   argTypes: {
     name: {
       control: 'text',
@@ -29,7 +29,7 @@ const config: Meta<typeof MOffcanvas> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MOffcanvas>;
+type Story = StoryObj<typeof DOffcanvas>;
 
 export const Default: Story = {
   decorators: [
@@ -40,7 +40,7 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MOffcanvas {...args}>
+    <DOffcanvas {...args}>
       <div slot="header">
         <h5 className="fw-bold">Advanced filters</h5>
       </div>
@@ -57,7 +57,7 @@ export const Default: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MOffcanvas>
+    </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
@@ -77,7 +77,7 @@ export const ActionsPlacementStart: Story = {
     ),
   ],
   render: (args) => (
-    <MOffcanvas {...args}>
+    <DOffcanvas {...args}>
       <div slot="header">
         <h5 className="fw-bold">Advanced filters</h5>
       </div>
@@ -94,7 +94,7 @@ export const ActionsPlacementStart: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MOffcanvas>
+    </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
@@ -115,7 +115,7 @@ export const ActionsPlacementEnd: Story = {
     ),
   ],
   render: (args) => (
-    <MOffcanvas {...args}>
+    <DOffcanvas {...args}>
       <div slot="header">
         <h5 className="fw-bold">Advanced filters</h5>
       </div>
@@ -132,7 +132,7 @@ export const ActionsPlacementEnd: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MOffcanvas>
+    </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
@@ -153,7 +153,7 @@ export const WithoutHeader: Story = {
     ),
   ],
   render: (args) => (
-    <MOffcanvas {...args}>
+    <DOffcanvas {...args}>
       <div slot="body">
         <p>Offcanvas body</p>
       </div>
@@ -167,7 +167,7 @@ export const WithoutHeader: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MOffcanvas>
+    </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
@@ -187,14 +187,14 @@ export const WithoutActions: Story = {
     ),
   ],
   render: (args) => (
-    <MOffcanvas {...args}>
+    <DOffcanvas {...args}>
       <div slot="header">
         <h5 className="fw-bold">Advanced filters</h5>
       </div>
       <div slot="body">
         <p>Offcanvas body</p>
       </div>
-    </MOffcanvas>
+    </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
@@ -215,11 +215,11 @@ export const OnlyBody: Story = {
     ),
   ],
   render: (args) => (
-    <MOffcanvas {...args}>
+    <DOffcanvas {...args}>
       <div slot="body">
         <p>Offcanvas body</p>
       </div>
-    </MOffcanvas>
+    </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
@@ -240,7 +240,7 @@ export const WithoutCancelX: Story = {
     ),
   ],
   render: (args) => (
-    <MOffcanvas {...args}>
+    <DOffcanvas {...args}>
       <div slot="header">
         <h5 className="fw-bold">Advanced filters</h5>
       </div>
@@ -257,7 +257,7 @@ export const WithoutCancelX: Story = {
         />
         <DButton text="ok" className="d-grid" isPill />
       </div>
-    </MOffcanvas>
+    </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',

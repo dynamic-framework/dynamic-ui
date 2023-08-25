@@ -301,6 +301,17 @@ export const DModal = /*@__PURE__*/ defineContainer<JSX.DModal>('d-modal', undef
 ]);
 
 
+export const DOffcanvas = /*@__PURE__*/ defineContainer<JSX.DOffcanvas>('d-offcanvas', undefined, [
+  'name',
+  'isStatic',
+  'isScrollable',
+  'showCloseButton',
+  'openFrom',
+  'footerActionPlacement',
+  'eventClose'
+]);
+
+
 export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
   'innerId',
   'name',
@@ -321,17 +332,6 @@ export const DQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.DQuickAction
   'isChecked',
   'isDisabled',
   'eventClick'
-]);
-
-
-export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offcanvas', undefined, [
-  'name',
-  'isStatic',
-  'isScrollable',
-  'showCloseButton',
-  'openFrom',
-  'footerActionPlacement',
-  'mClose'
 ]);
 
 

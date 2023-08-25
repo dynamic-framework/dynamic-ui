@@ -1,23 +1,23 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MOffcanvas } from './m-offcanvas';
+import { DOffcanvas } from './d-offcanvas';
 
 it('should render my component', async () => {
   const offcanvas = { name: 'myModal' };
 
   const page = await newSpecPage({
-    components: [MOffcanvas],
+    components: [DOffcanvas],
     template: () => (
-      <m-offcanvas
+      <d-offcanvas
         {...offcanvas}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-      <m-offcanvas>
+    <d-offcanvas>
       <div aria-hidden="false" aria-labelledby="myModalLabel" class="offcanvas offcanvas-end show" id="myModal" tabindex="-1"></div>
-    </m-offcanvas>
+    </d-offcanvas>
   `);
 });
 
@@ -25,9 +25,9 @@ it('should render my component with header, body and footer slot', async () => {
   const offcanvas = { name: 'myModal' };
 
   const page = await newSpecPage({
-    components: [MOffcanvas],
+    components: [DOffcanvas],
     template: () => (
-      <m-offcanvas
+      <d-offcanvas
         {...offcanvas}
       >
         <div slot="header">
@@ -39,30 +39,30 @@ it('should render my component with header, body and footer slot', async () => {
         <div slot="footer">
           Test Footer
         </div>
-      </m-offcanvas>
+      </d-offcanvas>
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-offcanvas>
+    <d-offcanvas>
       <div aria-hidden="false" aria-labelledby="myModalLabel" class="offcanvas offcanvas-end show" id="myModal" tabindex="-1">
         <div class="offcanvas-header">
-          <div class="m-offcanvas-slot">
+          <div class="d-offcanvas-slot">
             <div slot="header">
               Test Header
             </div>
           </div>
         </div>
-        <div class="m-offcanvas-slot offcanvas-body">
+        <div class="d-offcanvas-slot offcanvas-body">
           <div slot="body">
             Test Body
           </div>
         </div>
-        <div class="m-offcanvas-action-fill m-offcanvas-footer m-offcanvas-slot">
+        <div class="d-offcanvas-action-fill d-offcanvas-footer d-offcanvas-slot">
           <div slot="footer">
             Test Footer
           </div>
         </div>
       </div>
-    </m-offcanvas>
+    </d-offcanvas>
   `);
 });

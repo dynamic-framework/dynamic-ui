@@ -1,4 +1,4 @@
-# m-aside
+# d-offcanvas
 
 
 
@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event    | Description                              | Type                |
-| -------- | ---------------------------------------- | ------------------- |
-| `mClose` | Emitted when the input value has changed | `CustomEvent<void>` |
+| Event        | Description                              | Type                |
+| ------------ | ---------------------------------------- | ------------------- |
+| `eventClose` | Emitted when the input value has changed | `CustomEvent<void>` |
 
 
 ## Dependencies
@@ -33,8 +33,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  m-offcanvas --> d-icon
-  style m-offcanvas fill:#f9f,stroke:#333,stroke-width:4px
+  d-offcanvas --> d-icon
+  style d-offcanvas fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

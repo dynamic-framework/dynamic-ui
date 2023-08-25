@@ -9,11 +9,11 @@ import {
 
 import { PREFIX_BS } from '../../utils/component-config';
 
-import { PositionToggleFrom } from './m-offcanvas-interface';
+import { PositionToggleFrom } from './d-offcanvas-interface';
 
-@Component({ tag: 'm-offcanvas' })
-export class MOffcanvas {
-  @Element() el!: HTMLMOffcanvasElement;
+@Component({ tag: 'd-offcanvas' })
+export class DOffcanvas {
+  @Element() el!: HTMLDOffcanvasElement;
 
   /**
    * the name of the offcanvas
@@ -48,7 +48,7 @@ export class MOffcanvas {
   /**
    * Emitted when the input value has changed
    */
-  @Event({ eventName: 'mClose' }) mClose!: EventEmitter<void>;
+  @Event() eventClose!: EventEmitter<void>;
 
   componentWillLoad() {
     this.header = !!this.el.querySelector('[slot="header"]');
@@ -61,7 +61,7 @@ export class MOffcanvas {
   private footer!: boolean;
 
   private closeHandler = () => {
-    this.mClose.emit();
+    this.eventClose.emit();
   };
 
   render() {
@@ -86,14 +86,14 @@ export class MOffcanvas {
             class="offcanvas-header"
           >
             {this.header && (
-              <div class="m-offcanvas-slot">
+              <div class="d-offcanvas-slot">
                 <slot name="header" />
               </div>
             )}
             {this.showCloseButton && (
               <button
                 type="button"
-                class="m-offcanvas-close"
+                class="d-offcanvas-close"
                 aria-label="Close"
                 onClick={this.closeHandler}
               >
@@ -103,12 +103,12 @@ export class MOffcanvas {
           </div>
         )}
         {this.body && (
-          <div class="m-offcanvas-slot offcanvas-body">
+          <div class="d-offcanvas-slot offcanvas-body">
             <slot name="body" />
           </div>
         )}
         {this.footer && (
-          <div class={`m-offcanvas-slot m-offcanvas-footer m-offcanvas-action-${this.footerActionPlacement}`}>
+          <div class={`d-offcanvas-slot d-offcanvas-footer d-offcanvas-action-${this.footerActionPlacement}`}>
             <slot name="footer" />
           </div>
         )}

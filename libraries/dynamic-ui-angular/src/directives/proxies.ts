@@ -21,9 +21,9 @@ import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui
 import { defineCustomElement as defineDInputSelect } from '@dynamic-framework/ui/components/d-input-select.js';
 import { defineCustomElement as defineDInputSwitch } from '@dynamic-framework/ui/components/d-input-switch.js';
 import { defineCustomElement as defineDModal } from '@dynamic-framework/ui/components/d-modal.js';
+import { defineCustomElement as defineDOffcanvas } from '@dynamic-framework/ui/components/d-offcanvas.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
 import { defineCustomElement as defineDQuickActionSwitch } from '@dynamic-framework/ui/components/d-quick-action-switch.js';
-import { defineCustomElement as defineMOffcanvas } from '@dynamic-framework/ui/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@dynamic-framework/ui/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
@@ -500,6 +500,35 @@ export declare interface DModal extends Components.DModal {
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDOffcanvas,
+  inputs: ['footerActionPlacement', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
+})
+@Component({
+  selector: 'd-offcanvas',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['footerActionPlacement', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton'],
+})
+export class DOffcanvas {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventClose']);
+  }
+}
+
+
+export declare interface DOffcanvas extends Components.DOffcanvas {
+  /**
+   * Emitted when the input value has changed
+   */
+  eventClose: EventEmitter<CustomEvent<void>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDQuickActionCheck,
   inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value']
 })
@@ -554,35 +583,6 @@ export declare interface DQuickActionSwitch extends Components.DQuickActionSwitc
    * Emitted when the select value has changed
    */
   eventClick: EventEmitter<CustomEvent<boolean>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMOffcanvas,
-  inputs: ['footerActionPlacement', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
-})
-@Component({
-  selector: 'm-offcanvas',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['footerActionPlacement', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton'],
-})
-export class MOffcanvas {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClose']);
-  }
-}
-
-
-export declare interface MOffcanvas extends Components.MOffcanvas {
-  /**
-   * Emitted when the input value has changed
-   */
-  mClose: EventEmitter<CustomEvent<void>>;
 }
 
 

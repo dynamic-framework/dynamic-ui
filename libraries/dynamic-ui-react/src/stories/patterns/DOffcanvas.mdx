@@ -8,7 +8,7 @@ import {
 } from '@storybook/blocks';
 import { PREFIX_BS } from '@dynamic-framework/ui';
 
-import * as MOffcanvasStories from './MOffcanvas.stories';
+import * as DOffcanvasStories from './DOffcanvas.stories';
 import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.stories";
 
 # Offcanvas
@@ -17,17 +17,17 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
 <Markdown>
   {`
 
-  | Variable                                       | Type              | Description                                 |
-  |------------------------------------------------|-------------------|---------------------------------------------|
-  | \`--${PREFIX_BS}m-offcanvas-footer-gap\`       | css length unit   | Space between footer actions                |
+  | Variable                                     | Type              | Description                                 |
+  |----------------------------------------------|-------------------|---------------------------------------------|
+  | \`--${PREFIX_BS}offcanvas-footer-gap\`       | css length unit   | Space between footer actions                |
 
   `}
 </Markdown>
 
 ## Args
-<Meta of={MOffcanvasStories} />
+<Meta of={DOffcanvasStories} />
 
-<ArgTypes of={MOffcanvasStories} />
+<ArgTypes of={DOffcanvasStories} />
 
 ## Example
 
@@ -51,7 +51,7 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
 ### Offcanvas Definition - render of `ExampleOffcanvas.tsx`
 <Source
   code={`
-<MOffcanvas
+<DOffcanvas
   name="example"
   isStatic={false}
   isScrollable={false}
@@ -76,7 +76,7 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
     />
     <DButton text="ok" className="d-grid" isPill />
   </div>
-</MOffcanvas>
+</DOffcanvas>
   `}
 />
 

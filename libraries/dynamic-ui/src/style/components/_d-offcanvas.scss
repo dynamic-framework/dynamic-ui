@@ -1,8 +1,7 @@
-.m-offcanvas,
 .offcanvas {
-  --#{$prefix}m-offcanvas-footer-gap: #{$offcanvas-footer-gap};
+  --#{$prefix}offcanvas-footer-gap: #{$offcanvas-footer-gap};
 
-  .m-offcanvas-slot > * {
+  .d-offcanvas-slot > * {
     display: contents;
   }
 
@@ -11,7 +10,7 @@
     align-items: center;
     justify-content: space-between;
 
-    &:has(.m-offcanvas-close:only-child) {
+    &:has(.d-offcanvas-close:only-child) {
       justify-content: flex-end;
     }
   }
@@ -20,13 +19,13 @@
     padding: 0 var(--#{$prefix}offcanvas-padding-x);
   }
 
-  .m-offcanvas-footer {
+  .d-offcanvas-footer {
     display: flex;
-    gap: var(--#{$prefix}m-offcanvas-footer-gap);
+    gap: var(--#{$prefix}offcanvas-footer-gap);
     padding: var(--#{$prefix}offcanvas-padding-y) var(--#{$prefix}offcanvas-padding-x);
   }
 
-  .m-offcanvas-close {
+  .d-offcanvas-close {
     padding: 0;
     background: transparent;
     border: 0;
@@ -36,17 +35,17 @@
     }
   }
 
-  .m-offcanvas-action-fill {
+  .d-offcanvas-action-fill {
     div > * {
       flex: 1;
     }
   }
 
-  .m-offcanvas-action-start {
+  .d-offcanvas-action-start {
     justify-content: flex-start;
   }
 
-  .m-offcanvas-action-end {
+  .d-offcanvas-action-end {
     justify-content: flex-end;
   }
 }

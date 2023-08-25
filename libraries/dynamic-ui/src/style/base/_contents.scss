@@ -5,14 +5,16 @@ d-input-search,
 d-input-password,
 d-input-currency-base,
 d-input-counter,
-m-input-pin,
+d-input-pin,
 m-input-select,
 d-input-check,
-m-input-switch,
+d-input-switch,
 m-progress-bar,
 m-quick-action-button,
 d-quick-action-check,
 m-quick-action-select,
-m-quick-action-switch {
+d-quick-action-switch,
+d-modal,
+d-offcanvas {
   display: contents;
 }
