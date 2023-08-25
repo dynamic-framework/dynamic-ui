@@ -10,9 +10,9 @@ import {
   Element,
 } from '@stencil/core';
 
-@Component({ tag: 'm-input-switch' })
-export class MInputSwitch implements ComponentInterface {
-  @Element() el!: HTMLMInputSwitchElement;
+@Component({ tag: 'd-input-switch' })
+export class DInputSwitch implements ComponentInterface {
+  @Element() el!: HTMLDInputSwitchElement;
 
   /**
    * The text to display in the switch.
@@ -22,7 +22,7 @@ export class MInputSwitch implements ComponentInterface {
   /**
    * Id
    */
-  @Prop() mId!: string;
+  @Prop() innerId!: string;
 
   /**
    * Id
@@ -47,7 +47,7 @@ export class MInputSwitch implements ComponentInterface {
   /**
    * Emitted when the switch has changed
    */
-  @Event({ eventName: 'mChange' }) mChange!: EventEmitter<boolean>;
+  @Event() eventChange!: EventEmitter<boolean>;
 
   @State() internalIsChecked?: boolean;
 
@@ -67,14 +67,14 @@ export class MInputSwitch implements ComponentInterface {
   private changeHandler = (event: Event) => {
     const value = (event.target as HTMLInputElement).checked;
     this.internalIsChecked = value;
-    this.mChange.emit(value);
+    this.eventChange.emit(value);
   };
 
   render() {
     return (
-      <div class="m-input-switch form-check form-switch">
+      <div class="form-check form-switch">
         <input
-          id={this.mId}
+          id={this.innerId}
           name={this.name}
           onChange={this.changeHandler}
           class="form-check-input"
@@ -86,7 +86,7 @@ export class MInputSwitch implements ComponentInterface {
         {!!this.label && (
           <label
             class="form-check-label"
-            htmlFor={this.mId}
+            htmlFor={this.innerId}
           >
             {this.label}
           </label>

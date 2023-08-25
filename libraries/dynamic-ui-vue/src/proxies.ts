@@ -276,6 +276,17 @@ export const DInputSelect = /*@__PURE__*/ defineContainer<JSX.DInputSelect>('d-i
 ]);
 
 
+export const DInputSwitch = /*@__PURE__*/ defineContainer<JSX.DInputSwitch>('d-input-switch', undefined, [
+  'label',
+  'innerId',
+  'name',
+  'isChecked',
+  'isDisabled',
+  'isReadonly',
+  'eventChange'
+]);
+
+
 export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
   'innerId',
   'name',
@@ -288,14 +299,14 @@ export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionC
 ]);
 
 
-export const MInputSwitch = /*@__PURE__*/ defineContainer<JSX.MInputSwitch>('m-input-switch', undefined, [
-  'label',
-  'mId',
+export const DQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.DQuickActionSwitch>('d-quick-action-switch', undefined, [
+  'innerId',
   'name',
+  'label',
+  'hint',
   'isChecked',
   'isDisabled',
-  'isReadonly',
-  'mChange'
+  'eventClick'
 ]);
 
 
@@ -361,16 +372,5 @@ export const MQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'line2',
   'isSelected',
   'mChange'
-]);
-
-
-export const MQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.MQuickActionSwitch>('m-quick-action-switch', undefined, [
-  'mId',
-  'name',
-  'label',
-  'hint',
-  'isChecked',
-  'isDisabled',
-  'mClick'
 ]);
 

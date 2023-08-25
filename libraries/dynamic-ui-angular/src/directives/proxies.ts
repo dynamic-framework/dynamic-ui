@@ -19,14 +19,14 @@ import { defineCustomElement as defineDInputPassword } from '@dynamic-framework/
 import { defineCustomElement as defineDInputPin } from '@dynamic-framework/ui/components/d-input-pin.js';
 import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui/components/d-input-search.js';
 import { defineCustomElement as defineDInputSelect } from '@dynamic-framework/ui/components/d-input-select.js';
+import { defineCustomElement as defineDInputSwitch } from '@dynamic-framework/ui/components/d-input-switch.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
-import { defineCustomElement as defineMInputSwitch } from '@dynamic-framework/ui/components/m-input-switch.js';
+import { defineCustomElement as defineDQuickActionSwitch } from '@dynamic-framework/ui/components/d-quick-action-switch.js';
 import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@dynamic-framework/ui/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@dynamic-framework/ui/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
-import { defineCustomElement as defineMQuickActionSwitch } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 @ProxyCmp({
   defineCustomElementFn: defineDAlert,
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type']
@@ -442,6 +442,35 @@ export declare interface DInputSelect extends Components.DInputSelect {
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineDInputSwitch,
+  inputs: ['innerId', 'isChecked', 'isDisabled', 'isReadonly', 'label', 'name']
+})
+@Component({
+  selector: 'd-input-switch',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['innerId', 'isChecked', 'isDisabled', 'isReadonly', 'label', 'name'],
+})
+export class DInputSwitch {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['eventChange']);
+  }
+}
+
+
+export declare interface DInputSwitch extends Components.DInputSwitch {
+  /**
+   * Emitted when the switch has changed
+   */
+  eventChange: EventEmitter<CustomEvent<boolean>>;
+}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineDQuickActionCheck,
   inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value']
 })
@@ -471,31 +500,31 @@ export declare interface DQuickActionCheck extends Components.DQuickActionCheck 
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputSwitch,
-  inputs: ['isChecked', 'isDisabled', 'isReadonly', 'label', 'mId', 'name']
+  defineCustomElementFn: defineDQuickActionSwitch,
+  inputs: ['hint', 'innerId', 'isChecked', 'isDisabled', 'label', 'name']
 })
 @Component({
-  selector: 'm-input-switch',
+  selector: 'd-quick-action-switch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'isDisabled', 'isReadonly', 'label', 'mId', 'name'],
+  inputs: ['hint', 'innerId', 'isChecked', 'isDisabled', 'label', 'name'],
 })
-export class MInputSwitch {
+export class DQuickActionSwitch {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['eventClick']);
   }
 }
 
 
-export declare interface MInputSwitch extends Components.MInputSwitch {
+export declare interface DQuickActionSwitch extends Components.DQuickActionSwitch {
   /**
-   * Emitted when the switch has changed
+   * Emitted when the select value has changed
    */
-  mChange: EventEmitter<CustomEvent<boolean>>;
+  eventClick: EventEmitter<CustomEvent<boolean>>;
 }
 
 
@@ -639,35 +668,6 @@ export declare interface MQuickActionSelect extends Components.MQuickActionSelec
    * Emitted when the select value has changed
    */
   mChange: EventEmitter<CustomEvent<string>>;
-}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineMQuickActionSwitch,
-  inputs: ['hint', 'isChecked', 'isDisabled', 'label', 'mId', 'name']
-})
-@Component({
-  selector: 'm-quick-action-switch',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'isChecked', 'isDisabled', 'label', 'mId', 'name'],
-})
-export class MQuickActionSwitch {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClick']);
-  }
-}
-
-
-export declare interface MQuickActionSwitch extends Components.MQuickActionSwitch {
-  /**
-   * Emitted when the select value has changed
-   */
-  mClick: EventEmitter<CustomEvent<boolean>>;
 }
 
 

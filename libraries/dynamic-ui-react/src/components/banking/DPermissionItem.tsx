@@ -1,4 +1,4 @@
-import { DBadge, MInputSwitch } from '../proxies';
+import { DBadge, DInputSwitch } from '../proxies';
 import { PermissionItemType } from './interface';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   onAction?: () => void;
 };
 
-export default function MPermissionItem({
+export default function DPermissionItem({
   permission,
   permissionState,
   onChange,
@@ -29,11 +29,11 @@ export default function MPermissionItem({
           text={permissionState}
         />
       )}
-      <MInputSwitch
-        mId={permission.id}
+      <DInputSwitch
+        innerId={permission.id}
         isChecked={!!permission.value}
         isDisabled={!permission.enabled}
-        onMChange={({ detail: checked }) => onChange(checked)}
+        onEventChange={({ detail: checked }) => onChange(checked)}
       />
     </div>
   );

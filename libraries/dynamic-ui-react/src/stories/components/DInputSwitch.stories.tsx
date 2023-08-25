@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MInputSwitch } from '../../components';
+import { DInputSwitch } from '../../components';
 
-const config: Meta<typeof MInputSwitch> = {
+const config: Meta<typeof DInputSwitch> = {
   title: 'Design System/Components/Input Switch',
-  component: MInputSwitch,
+  component: DInputSwitch,
   argTypes: {
-    mId: {
+    innerId: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -32,18 +32,18 @@ const config: Meta<typeof MInputSwitch> = {
       control: 'boolean',
       type: 'boolean',
     },
-    onMChange: {
-      action: 'onMChange',
+    onEventChange: {
+      action: 'onEventChange',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MInputSwitch>;
+type Story = StoryObj<typeof DInputSwitch>;
 
 export const WithoutLabel: Story = {
   args: {
-    mId: 'componentId1',
+    innerId: 'componentId1',
     isChecked: false,
     isDisabled: false,
   },
@@ -51,7 +51,7 @@ export const WithoutLabel: Story = {
 
 export const Default: Story = {
   args: {
-    mId: 'componentId2',
+    innerId: 'componentId2',
     label: 'Label',
     isChecked: false,
     isDisabled: false,
@@ -60,7 +60,7 @@ export const Default: Story = {
 
 export const Checked: Story = {
   args: {
-    mId: 'componentId3',
+    innerId: 'componentId3',
     label: 'Label',
     isChecked: true,
     isDisabled: false,
@@ -69,7 +69,7 @@ export const Checked: Story = {
 
 export const Readonly: Story = {
   args: {
-    mId: 'componentId4',
+    innerId: 'componentId4',
     label: 'Label',
     isChecked: false,
     isReadonly: true,
@@ -78,7 +78,7 @@ export const Readonly: Story = {
 
 export const Disabled: Story = {
   args: {
-    mId: 'componentId5',
+    innerId: 'componentId5',
     label: 'Label',
     isChecked: false,
     isDisabled: true,
@@ -87,7 +87,7 @@ export const Disabled: Story = {
 
 export const CheckedDisabled: Story = {
   args: {
-    mId: 'componentId6',
+    innerId: 'componentId6',
     label: 'Label',
     isChecked: true,
     isDisabled: true,

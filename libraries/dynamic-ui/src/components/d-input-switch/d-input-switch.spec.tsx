@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MInputSwitch } from './m-input-switch';
+import { DInputSwitch } from './d-input-switch';
 
 it('should render base switch', async () => {
   const props = {
@@ -9,14 +9,14 @@ it('should render base switch', async () => {
     label: 'toggle',
   };
   const page = await newSpecPage({
-    components: [MInputSwitch],
+    components: [DInputSwitch],
     template: () => (
-      <m-form-switch
+      <d-form-switch
         {...props}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <m-form-switch label="toggle" mid="switchTest"></m-form-switch>
+    <d-form-switch label="toggle" mid="switchTest"></d-form-switch>
   `);
 });

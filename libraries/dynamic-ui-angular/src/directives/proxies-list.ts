@@ -15,12 +15,12 @@ export const DIRECTIVES = [
   d.DInputPin,
   d.DInputSearch,
   d.DInputSelect,
+  d.DInputSwitch,
   d.DQuickActionCheck,
-  d.MInputSwitch,
+  d.DQuickActionSwitch,
   d.MModal,
   d.MOffcanvas,
   d.MProgressBar,
   d.MQuickActionButton,
-  d.MQuickActionSelect,
-  d.MQuickActionSwitch
+  d.MQuickActionSelect
 ];

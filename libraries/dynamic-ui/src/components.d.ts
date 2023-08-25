@@ -824,6 +824,32 @@ export namespace Components {
          */
         "valueExtractor": (item: any) => string | number;
     }
+    interface DInputSwitch {
+        /**
+          * Id
+         */
+        "innerId": string;
+        /**
+          * Flag to change the check state
+         */
+        "isChecked"?: boolean;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag to disable the onMChange event
+         */
+        "isReadonly"?: boolean;
+        /**
+          * The text to display in the switch.
+         */
+        "label"?: string;
+        /**
+          * Id
+         */
+        "name"?: string;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -854,29 +880,29 @@ export namespace Components {
          */
         "value": string;
     }
-    interface MInputSwitch {
+    interface DQuickActionSwitch {
         /**
-          * Flag to change the check state
+          * Hint to display
+         */
+        "hint": string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Is checked
          */
         "isChecked"?: boolean;
         /**
-          * Flag to disable the input
+          * Is disabled
          */
         "isDisabled"?: boolean;
         /**
-          * Flag to disable the onMChange event
+          * The label text
          */
-        "isReadonly"?: boolean;
+        "label": string;
         /**
-          * The text to display in the switch.
-         */
-        "label"?: string;
-        /**
-          * Id
-         */
-        "mId": string;
-        /**
-          * Id
+          * The name of the input
          */
         "name"?: string;
     }
@@ -1050,32 +1076,6 @@ export namespace Components {
          */
         "value": string;
     }
-    interface MQuickActionSwitch {
-        /**
-          * Hint to display
-         */
-        "hint": string;
-        /**
-          * Is checked
-         */
-        "isChecked"?: boolean;
-        /**
-          * Is disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * The label text
-         */
-        "label": string;
-        /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * The name of the input
-         */
-        "name"?: string;
-    }
 }
 export interface DAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1121,13 +1121,17 @@ export interface DInputSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDInputSelectElement;
 }
+export interface DInputSwitchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLDInputSwitchElement;
+}
 export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLDQuickActionCheckElement;
 }
-export interface MInputSwitchCustomEvent<T> extends CustomEvent<T> {
+export interface DQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputSwitchElement;
+    target: HTMLDQuickActionSwitchElement;
 }
 export interface MModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1144,10 +1148,6 @@ export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
 export interface MQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMQuickActionSelectElement;
-}
-export interface MQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLMQuickActionSwitchElement;
 }
 declare global {
     interface HTMLDAlertElement extends Components.DAlert, HTMLStencilElement {
@@ -1228,17 +1228,23 @@ declare global {
         prototype: HTMLDInputSelectElement;
         new (): HTMLDInputSelectElement;
     };
+    interface HTMLDInputSwitchElement extends Components.DInputSwitch, HTMLStencilElement {
+    }
+    var HTMLDInputSwitchElement: {
+        prototype: HTMLDInputSwitchElement;
+        new (): HTMLDInputSwitchElement;
+    };
     interface HTMLDQuickActionCheckElement extends Components.DQuickActionCheck, HTMLStencilElement {
     }
     var HTMLDQuickActionCheckElement: {
         prototype: HTMLDQuickActionCheckElement;
         new (): HTMLDQuickActionCheckElement;
     };
-    interface HTMLMInputSwitchElement extends Components.MInputSwitch, HTMLStencilElement {
+    interface HTMLDQuickActionSwitchElement extends Components.DQuickActionSwitch, HTMLStencilElement {
     }
-    var HTMLMInputSwitchElement: {
-        prototype: HTMLMInputSwitchElement;
-        new (): HTMLMInputSwitchElement;
+    var HTMLDQuickActionSwitchElement: {
+        prototype: HTMLDQuickActionSwitchElement;
+        new (): HTMLDQuickActionSwitchElement;
     };
     interface HTMLMModalElement extends Components.MModal, HTMLStencilElement {
     }
@@ -1270,12 +1276,6 @@ declare global {
         prototype: HTMLMQuickActionSelectElement;
         new (): HTMLMQuickActionSelectElement;
     };
-    interface HTMLMQuickActionSwitchElement extends Components.MQuickActionSwitch, HTMLStencilElement {
-    }
-    var HTMLMQuickActionSwitchElement: {
-        prototype: HTMLMQuickActionSwitchElement;
-        new (): HTMLMQuickActionSwitchElement;
-    };
     interface HTMLElementTagNameMap {
         "d-alert": HTMLDAlertElement;
         "d-badge": HTMLDBadgeElement;
@@ -1290,14 +1290,14 @@ declare global {
         "d-input-pin": HTMLDInputPinElement;
         "d-input-search": HTMLDInputSearchElement;
         "d-input-select": HTMLDInputSelectElement;
+        "d-input-switch": HTMLDInputSwitchElement;
         "d-quick-action-check": HTMLDQuickActionCheckElement;
-        "m-input-switch": HTMLMInputSwitchElement;
+        "d-quick-action-switch": HTMLDQuickActionSwitchElement;
         "m-modal": HTMLMModalElement;
         "m-offcanvas": HTMLMOffcanvasElement;
         "m-progress-bar": HTMLMProgressBarElement;
         "m-quick-action-button": HTMLMQuickActionButtonElement;
         "m-quick-action-select": HTMLMQuickActionSelectElement;
-        "m-quick-action-switch": HTMLMQuickActionSwitchElement;
     }
 }
 declare namespace LocalJSX {
@@ -2187,6 +2187,36 @@ declare namespace LocalJSX {
          */
         "valueExtractor"?: (item: any) => string | number;
     }
+    interface DInputSwitch {
+        /**
+          * Id
+         */
+        "innerId": string;
+        /**
+          * Flag to change the check state
+         */
+        "isChecked"?: boolean;
+        /**
+          * Flag to disable the input
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Flag to disable the onMChange event
+         */
+        "isReadonly"?: boolean;
+        /**
+          * The text to display in the switch.
+         */
+        "label"?: string;
+        /**
+          * Id
+         */
+        "name"?: string;
+        /**
+          * Emitted when the switch has changed
+         */
+        "onEventChange"?: (event: DInputSwitchCustomEvent<boolean>) => void;
+    }
     interface DQuickActionCheck {
         /**
           * The id of the input
@@ -2221,35 +2251,35 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
-    interface MInputSwitch {
+    interface DQuickActionSwitch {
         /**
-          * Flag to change the check state
+          * Hint to display
+         */
+        "hint": string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Is checked
          */
         "isChecked"?: boolean;
         /**
-          * Flag to disable the input
+          * Is disabled
          */
         "isDisabled"?: boolean;
         /**
-          * Flag to disable the onMChange event
+          * The label text
          */
-        "isReadonly"?: boolean;
+        "label": string;
         /**
-          * The text to display in the switch.
-         */
-        "label"?: string;
-        /**
-          * Id
-         */
-        "mId": string;
-        /**
-          * Id
+          * The name of the input
          */
         "name"?: string;
         /**
-          * Emitted when the switch has changed
+          * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MInputSwitchCustomEvent<boolean>) => void;
+        "onEventClick"?: (event: DQuickActionSwitchCustomEvent<boolean>) => void;
     }
     interface MModal {
         /**
@@ -2441,36 +2471,6 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
-    interface MQuickActionSwitch {
-        /**
-          * Hint to display
-         */
-        "hint": string;
-        /**
-          * Is checked
-         */
-        "isChecked"?: boolean;
-        /**
-          * Is disabled
-         */
-        "isDisabled"?: boolean;
-        /**
-          * The label text
-         */
-        "label": string;
-        /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * The name of the input
-         */
-        "name"?: string;
-        /**
-          * Emitted when the select value has changed
-         */
-        "onMClick"?: (event: MQuickActionSwitchCustomEvent<boolean>) => void;
-    }
     interface IntrinsicElements {
         "d-alert": DAlert;
         "d-badge": DBadge;
@@ -2485,14 +2485,14 @@ declare namespace LocalJSX {
         "d-input-pin": DInputPin;
         "d-input-search": DInputSearch;
         "d-input-select": DInputSelect;
+        "d-input-switch": DInputSwitch;
         "d-quick-action-check": DQuickActionCheck;
-        "m-input-switch": MInputSwitch;
+        "d-quick-action-switch": DQuickActionSwitch;
         "m-modal": MModal;
         "m-offcanvas": MOffcanvas;
         "m-progress-bar": MProgressBar;
         "m-quick-action-button": MQuickActionButton;
         "m-quick-action-select": MQuickActionSelect;
-        "m-quick-action-switch": MQuickActionSwitch;
     }
 }
 export { LocalJSX as JSX };
@@ -2512,14 +2512,14 @@ declare module "@stencil/core" {
             "d-input-pin": LocalJSX.DInputPin & JSXBase.HTMLAttributes<HTMLDInputPinElement>;
             "d-input-search": LocalJSX.DInputSearch & JSXBase.HTMLAttributes<HTMLDInputSearchElement>;
             "d-input-select": LocalJSX.DInputSelect & JSXBase.HTMLAttributes<HTMLDInputSelectElement>;
+            "d-input-switch": LocalJSX.DInputSwitch & JSXBase.HTMLAttributes<HTMLDInputSwitchElement>;
             "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
-            "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
+            "d-quick-action-switch": LocalJSX.DQuickActionSwitch & JSXBase.HTMLAttributes<HTMLDQuickActionSwitchElement>;
             "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
             "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
             "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
             "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
             "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
-            "m-quick-action-switch": LocalJSX.MQuickActionSwitch & JSXBase.HTMLAttributes<HTMLMQuickActionSwitchElement>;
         }
     }
 }

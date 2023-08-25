@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MQuickActionSwitch } from '../../components';
+import { DQuickActionSwitch } from '../../components';
 
-const config: Meta<typeof MQuickActionSwitch> = {
+const config: Meta<typeof DQuickActionSwitch> = {
   title: 'Design System/Components/Quick Action Switch',
-  component: MQuickActionSwitch,
+  component: DQuickActionSwitch,
   argTypes: {
-    mId: {
+    innerId: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -32,11 +32,14 @@ const config: Meta<typeof MQuickActionSwitch> = {
       control: 'boolean',
       type: 'boolean',
     },
+    onEventClick: {
+      action: 'onEventClick',
+    },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MQuickActionSwitch>;
+type Story = StoryObj<typeof DQuickActionSwitch>;
 
 export const Default: Story = {
   decorators: [
@@ -50,7 +53,7 @@ export const Default: Story = {
     ),
   ],
   args: {
-    mId: 'componentId1',
+    innerId: 'componentId1',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: false,
@@ -69,7 +72,7 @@ export const Checked: Story = {
     ),
   ],
   args: {
-    mId: 'componentId2',
+    innerId: 'componentId2',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: true,
@@ -88,7 +91,7 @@ export const DefaultDisabled: Story = {
     ),
   ],
   args: {
-    mId: 'componentId3',
+    innerId: 'componentId3',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: false,
@@ -108,7 +111,7 @@ export const CheckedDisabled: Story = {
     ),
   ],
   args: {
-    mId: 'componentId4',
+    innerId: 'componentId4',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: true,

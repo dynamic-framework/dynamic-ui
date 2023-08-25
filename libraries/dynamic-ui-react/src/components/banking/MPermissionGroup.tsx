@@ -1,5 +1,5 @@
 import { PermissionItemType } from './interface';
-import MPermissionItem from './MPermissionItem';
+import DPermissionItem from './DPermissionItem';
 
 type Props = {
   title: string;
@@ -26,7 +26,7 @@ export default function MPermissionGroup({
       </div>
       <div className="col-12 offset-lg-1 col-lg-7">
         {permissionList.map((permission) => (
-          <MPermissionItem
+          <DPermissionItem
             key={permission.id}
             permission={permission}
             permissionState={permissionState}

@@ -6,12 +6,12 @@ import {
   Event,
 } from '@stencil/core';
 
-@Component({ tag: 'm-quick-action-switch' })
-export class MQuickActionSwitch implements ComponentInterface {
+@Component({ tag: 'd-quick-action-switch' })
+export class DQuickActionSwitch implements ComponentInterface {
   /**
    * The id of the input
    */
-  @Prop() mId!: string;
+  @Prop() innerId!: string;
 
   /**
    * The name of the input
@@ -41,35 +41,35 @@ export class MQuickActionSwitch implements ComponentInterface {
   /**
    * Emitted when the select value has changed
    */
-  @Event({ eventName: 'mClick' }) mClick!: EventEmitter<boolean>;
+  @Event() eventClick!: EventEmitter<boolean>;
 
   private clickHandler = (event: MouseEvent) => {
     event.stopPropagation();
-    this.mClick.emit(this.isChecked);
+    this.eventClick.emit(this.isChecked);
   };
 
   render() {
     return (
       <button
-        class="m-quick-action-switch"
+        class="d-quick-action-switch"
         onClick={this.clickHandler}
       >
-        <div class="m-quick-action-switch-content">
-          <m-input-switch
-            mId={this.mId}
+        <div class="d-quick-action-switch-content">
+          <d-input-switch
+            innerId={this.innerId}
             name={this.name}
             isDisabled={this.isDisabled}
             isChecked={this.isChecked}
             isReadonly
           />
           <label
-            class="m-quick-action-switch-label"
-            htmlFor={this.mId}
+            class="d-quick-action-switch-label"
+            htmlFor={this.innerId}
           >
             {this.label}
           </label>
         </div>
-        <div class="m-quick-action-switch-hint">
+        <div class="d-quick-action-switch-hint">
           {this.hint}
         </div>
       </button>

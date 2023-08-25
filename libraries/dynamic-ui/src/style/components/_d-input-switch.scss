@@ -1,0 +1,58 @@
+.form-switch {
+  --#{$prefix}input-switch-bg: var(--#{$prefix}gray-300);
+  --#{$prefix}input-switch-border-color: var(--#{$prefix}gray-500);
+  --#{$prefix}input-switch-dot: #{escape-svg($form-switch-bg-image)};
+  --#{$prefix}input-switch-hover-border-color: var(--#{$prefix}focus-ring-color);
+  --#{$prefix}input-switch-focus-outline-color: var(--#{$prefix}focus-ring-color);
+  --#{$prefix}input-switch-active-border-color: var(--#{$prefix}focus-ring-color);
+  --#{$prefix}input-switch-active-bg: var(--#{$prefix}focus-ring-color);
+  --#{$prefix}input-switch-disabled-border-color: var(--#{$prefix}gray-300);
+  --#{$prefix}input-switch-disabled-bg: var(--#{$prefix}gray-100);
+  --#{$prefix}input-switch-disabled-dot: #{escape-svg($form-switch-disabled-bg-image)};
+  --#{$prefix}input-switch-label-color: #{$form-switch-label-color};
+  --#{$prefix}input-switch-active-label-color: #{$form-switch-active-label-color};
+
+  .form-check-label {
+    color: var(--#{$prefix}input-switch-label-color);
+  }
+
+  .form-check-input:checked ~ .form-check-label {
+    color: var(--#{$prefix}input-switch-active-label-color);
+  }
+
+  .form-check-input {
+    background-color: var(--#{$prefix}input-switch-bg);
+    background-image: var(--#{$prefix}input-switch-dot);
+    border: 1px solid var(--#{$prefix}input-switch-border-color);
+
+    &:checked {
+      background-color: var(--#{$prefix}input-switch-active-bg);
+      border-color: var(--#{$prefix}input-switch-active-border-color);
+    }
+
+    &[disabled]:not(:checked),
+    &:disabled:not(:checked) {
+      background-color: var(--#{$prefix}input-switch-disabled-bg);
+      background-image: var(--#{$prefix}input-switch-disabled-dot);
+      border-color: var(--#{$prefix}input-switch-disabled-border-color);
+    }
+  }
+
+  &:hover {
+    &.form-switch {
+      .form-check-input:not([disabled]),
+      .form-check-input:not(:disabled) {
+        border-color: var(--#{$prefix}input-switch-hover-border-color);
+      }
+    }
+  }
+
+  &:focus-within {
+    &.form-switch {
+      .form-check-input {
+        outline: 2px solid var(--#{$prefix}input-switch-focus-outline-color);
+        outline-offset: 2px;
+      }
+    }
+  }
+}

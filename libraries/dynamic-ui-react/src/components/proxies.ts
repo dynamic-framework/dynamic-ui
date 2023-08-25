@@ -18,14 +18,14 @@ import { defineCustomElement as defineDInputPassword } from '@dynamic-framework/
 import { defineCustomElement as defineDInputPin } from '@dynamic-framework/ui/components/d-input-pin.js';
 import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui/components/d-input-search.js';
 import { defineCustomElement as defineDInputSelect } from '@dynamic-framework/ui/components/d-input-select.js';
+import { defineCustomElement as defineDInputSwitch } from '@dynamic-framework/ui/components/d-input-switch.js';
 import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
-import { defineCustomElement as defineMInputSwitch } from '@dynamic-framework/ui/components/m-input-switch.js';
+import { defineCustomElement as defineDQuickActionSwitch } from '@dynamic-framework/ui/components/d-quick-action-switch.js';
 import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/components/m-modal.js';
 import { defineCustomElement as defineMOffcanvas } from '@dynamic-framework/ui/components/m-offcanvas.js';
 import { defineCustomElement as defineMProgressBar } from '@dynamic-framework/ui/components/m-progress-bar.js';
 import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
 import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
-import { defineCustomElement as defineMQuickActionSwitch } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
 
 export const DAlert = /*@__PURE__*/createReactComponent<JSX.DAlert, HTMLDAlertElement>('d-alert', undefined, undefined, defineDAlert);
 export const DBadge = /*@__PURE__*/createReactComponent<JSX.DBadge, HTMLDBadgeElement>('d-badge', undefined, undefined, defineDBadge);
@@ -40,11 +40,11 @@ export const DInputPassword = /*@__PURE__*/createReactComponent<JSX.DInputPasswo
 export const DInputPin = /*@__PURE__*/createReactComponent<JSX.DInputPin, HTMLDInputPinElement>('d-input-pin', undefined, undefined, defineDInputPin);
 export const DInputSearch = /*@__PURE__*/createReactComponent<JSX.DInputSearch, HTMLDInputSearchElement>('d-input-search', undefined, undefined, defineDInputSearch);
 export const DInputSelect = /*@__PURE__*/createReactComponent<JSX.DInputSelect, HTMLDInputSelectElement>('d-input-select', undefined, undefined, defineDInputSelect);
+export const DInputSwitch = /*@__PURE__*/createReactComponent<JSX.DInputSwitch, HTMLDInputSwitchElement>('d-input-switch', undefined, undefined, defineDInputSwitch);
 export const DQuickActionCheck = /*@__PURE__*/createReactComponent<JSX.DQuickActionCheck, HTMLDQuickActionCheckElement>('d-quick-action-check', undefined, undefined, defineDQuickActionCheck);
-export const MInputSwitch = /*@__PURE__*/createReactComponent<JSX.MInputSwitch, HTMLMInputSwitchElement>('m-input-switch', undefined, undefined, defineMInputSwitch);
+export const DQuickActionSwitch = /*@__PURE__*/createReactComponent<JSX.DQuickActionSwitch, HTMLDQuickActionSwitchElement>('d-quick-action-switch', undefined, undefined, defineDQuickActionSwitch);
 export const MModal = /*@__PURE__*/createReactComponent<JSX.MModal, HTMLMModalElement>('m-modal', undefined, undefined, defineMModal);
 export const MOffcanvas = /*@__PURE__*/createReactComponent<JSX.MOffcanvas, HTMLMOffcanvasElement>('m-offcanvas', undefined, undefined, defineMOffcanvas);
 export const MProgressBar = /*@__PURE__*/createReactComponent<JSX.MProgressBar, HTMLMProgressBarElement>('m-progress-bar', undefined, undefined, defineMProgressBar);
 export const MQuickActionButton = /*@__PURE__*/createReactComponent<JSX.MQuickActionButton, HTMLMQuickActionButtonElement>('m-quick-action-button', undefined, undefined, defineMQuickActionButton);
 export const MQuickActionSelect = /*@__PURE__*/createReactComponent<JSX.MQuickActionSelect, HTMLMQuickActionSelectElement>('m-quick-action-select', undefined, undefined, defineMQuickActionSelect);
-export const MQuickActionSwitch = /*@__PURE__*/createReactComponent<JSX.MQuickActionSwitch, HTMLMQuickActionSwitchElement>('m-quick-action-switch', undefined, undefined, defineMQuickActionSwitch);
