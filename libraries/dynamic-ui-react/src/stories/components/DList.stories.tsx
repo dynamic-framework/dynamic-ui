@@ -1,10 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
-import { MList, MListItem } from '../../components';
 
-const config: Meta<typeof MList> = {
+import { DList, DListItem } from '../../components';
+
+const config: Meta<typeof DList> = {
   title: 'Design System/Components/List',
-  component: MList,
+  component: DList,
   argTypes: {
     className: {
       type: 'string',
@@ -31,19 +32,19 @@ const config: Meta<typeof MList> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MList>;
+type Story = StoryObj<typeof DList>;
 
-const MListExample = (args: ComponentProps<typeof MList>) => (
-  <MList {...args}>
+const MListExample = (args: ComponentProps<typeof DList>) => (
+  <DList {...args}>
     {[1, 2, 3].map((item) => (
-      <MListItem
+      <DListItem
         key={item}
         className="py-2 px-4"
       >
         Lorem ipsum dolor sit amet consectetur.
-      </MListItem>
+      </DListItem>
     ))}
-  </MList>
+  </DList>
 );
 
 export const Default: Story = {

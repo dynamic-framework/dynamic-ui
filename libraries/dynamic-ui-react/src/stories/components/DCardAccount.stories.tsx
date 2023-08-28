@@ -32,11 +32,11 @@ const config: Meta<typeof DCardAccount> = {
       control: 'text',
       type: 'string',
     },
-    onClickText: {
+    actionText: {
       control: 'text',
       type: 'string',
     },
-    onClick: {
+    onEventClick: {
       action: 'onClick',
     },
     className: {
@@ -69,6 +69,6 @@ export const Default: Story = {
     icon: 'credit-card',
     balance: '$50.000.000',
     balanceText: 'Available balance',
-    onClickText: 'Details',
+    actionText: 'Details',
   },
 };

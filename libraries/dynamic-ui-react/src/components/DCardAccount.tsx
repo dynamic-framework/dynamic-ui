@@ -12,8 +12,8 @@ type Props = {
   number: string;
   balance: string;
   balanceText: string;
-  onClick: () => void;
-  onClickText: string;
+  onEventClick: () => void;
+  actionText: string;
 };
 export default function DCardAccount({
   className,
@@ -23,8 +23,8 @@ export default function DCardAccount({
   number,
   balance,
   balanceText,
-  onClick,
-  onClickText,
+  onEventClick,
+  actionText,
 }: Props) {
   return (
     <DCard className={classNames(
@@ -59,12 +59,12 @@ export default function DCardAccount({
         </div>
         <div className="d-flex justify-content-end">
           <DButton
-            text={onClickText}
+            text={actionText}
             variant="link"
             size="sm"
             theme="secondary"
             iconEnd="chevron-right"
-            onEventClick={onClick}
+            onEventClick={onEventClick}
           />
         </div>
       </DCardBody>

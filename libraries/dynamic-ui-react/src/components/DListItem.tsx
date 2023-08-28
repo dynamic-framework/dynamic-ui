@@ -7,31 +7,33 @@ type Props = PropsWithChildren<{
   isActive?: boolean;
   isDisabled?: boolean;
   theme?: string;
-  onMClick?: () => void;
+  onEventClick?: () => void;
 }>;
 
-export default function MListItem({
-  children,
-  className,
-  isActive = false,
-  isDisabled = false,
-  theme,
-  onMClick,
-}: Props) {
+export default function DListItem(
+  {
+    children,
+    className,
+    isActive = false,
+    isDisabled = false,
+    theme,
+    onEventClick,
+  }: Props,
+) {
   const Tag = useMemo(
-    () => (onMClick ? 'button' : 'div'),
-    [onMClick],
+    () => (onEventClick ? 'button' : 'div'),
+    [onEventClick],
   );
 
   return (
     <Tag
       {...Tag === 'button' && {
-        onClick: onMClick,
+        onClick: onEventClick,
         type: 'button',
       }}
       className={
         classNames(
-          'm-list-item list-group-item list-group-item-action',
+          'list-group-item list-group-item-action',
           theme ? `list-group-item-${theme}` : undefined,
           className,
           {

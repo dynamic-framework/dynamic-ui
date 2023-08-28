@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import { Meta, StoryObj } from '@storybook/react';
-import { MList, MListItemMovement } from '../../components';
 
-const config: Meta<typeof MListItemMovement> = {
+import { DList, DListItemMovement } from '../../components';
+
+const config: Meta<typeof DListItemMovement> = {
   title: 'Design System/Components/List Item Movement',
-  component: MListItemMovement,
+  component: DListItemMovement,
   argTypes: {
     className: {
       type: 'string',
@@ -13,20 +14,20 @@ const config: Meta<typeof MListItemMovement> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MListItemMovement>;
+type Story = StoryObj<typeof DListItemMovement>;
 
 export const Movement: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(300px - 1rem)' }} className="position-relative">
-        <MList isFlush>
+        <DList isFlush>
           <Story />
-        </MList>
+        </DList>
       </div>
     ),
   ],
   render: (args) => (
-    <MListItemMovement
+    <DListItemMovement
       description={args.description}
       date={args.date}
       amount={args.amount}
@@ -43,21 +44,20 @@ export const Movements: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(300px - 1rem)' }} className="position-relative">
-        <MList isFlush>
+        <DList isFlush>
           <Story />
-        </MList>
+        </DList>
       </div>
     ),
   ],
   render: (args) => (
     <>
       {[1, 2, 3, 4, 5].map((item) => (
-        <MListItemMovement
+        <DListItemMovement
           key={item}
           description={args.description}
           date={args.date}
           amount={args.amount * (item % 2 === 0 ? 1 : -1)}
-          onMClick={args.onMClick}
         />
       ))}
     </>
@@ -66,6 +66,5 @@ export const Movements: Story = {
     description: 'Credit card',
     date: '10/08/2023',
     amount: 5000,
-    onMClick: () => console.log('Click'),
   },
 };

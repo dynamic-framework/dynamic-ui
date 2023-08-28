@@ -9,7 +9,7 @@ type Props = PropsWithChildren<{
   horizontalBreakpoint?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 }>;
 
-export default function MList({
+export default function DList({
   children,
   className,
   isFlush = false,
@@ -25,7 +25,7 @@ export default function MList({
     <div
       className={
         classNames(
-          'm-list list-group',
+          'list-group',
           {
             'list-group-flush': isFlush && !isHorizontal,
             'list-group-numbered': isNumbered,

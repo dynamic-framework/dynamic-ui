@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
 import { Meta, StoryObj } from '@storybook/react';
-import { MList, MListItem } from '../../components';
+
+import { DList, DListItem } from '../../components';
 import { THEMES } from '../constants';
 
-const config: Meta<typeof MListItem> = {
+const config: Meta<typeof DListItem> = {
   title: 'Design System/Components/List Item',
-  component: MListItem,
+  component: DListItem,
   argTypes: {
     className: {
       type: 'string',
@@ -24,56 +25,52 @@ const config: Meta<typeof MListItem> = {
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
     },
-    onMClick: {
-      type: 'function',
+    onEventClick: {
+      action: 'onEventClick',
     },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof MListItem>;
+type Story = StoryObj<typeof DListItem>;
 
 export const Default: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(375px - 1rem)' }} className="position-relative">
-        <MList>
+        <DList>
           <Story />
-        </MList>
+        </DList>
       </div>
     ),
   ],
   render: (args) => (
-    <MListItem {...args}>
+    <DListItem {...args}>
       <span className="d-block px-3">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit.
       </span>
-    </MListItem>
+    </DListItem>
   ),
-  args: {
-    onMClick: undefined,
-  },
 };
 
 export const Active: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(375px - 1rem)' }} className="position-relative">
-        <MList>
+        <DList>
           <Story />
-        </MList>
+        </DList>
       </div>
     ),
   ],
   render: (args) => (
-    <MListItem {...args}>
+    <DListItem {...args}>
       <span className="d-block px-3">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit.
       </span>
-    </MListItem>
+    </DListItem>
   ),
   args: {
-    onMClick: undefined,
     isActive: true,
   },
 };
@@ -82,21 +79,20 @@ export const Disabled: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(375px - 1rem)' }} className="position-relative">
-        <MList>
+        <DList>
           <Story />
-        </MList>
+        </DList>
       </div>
     ),
   ],
   render: (args) => (
-    <MListItem {...args}>
+    <DListItem {...args}>
       <span className="d-block px-3">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit.
       </span>
-    </MListItem>
+    </DListItem>
   ),
   args: {
-    onMClick: undefined,
     isDisabled: true,
   },
 };
@@ -105,21 +101,20 @@ export const WithTheme: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(375px - 1rem)' }} className="position-relative">
-        <MList>
+        <DList>
           <Story />
-        </MList>
+        </DList>
       </div>
     ),
   ],
   render: (args) => (
-    <MListItem {...args}>
+    <DListItem {...args}>
       <span className="d-block px-3">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit.
       </span>
-    </MListItem>
+    </DListItem>
   ),
   args: {
-    onMClick: undefined,
     theme: 'secondary',
   },
 };

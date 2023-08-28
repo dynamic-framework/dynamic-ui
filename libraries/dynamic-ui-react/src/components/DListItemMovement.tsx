@@ -1,17 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ComponentProps, useMemo } from 'react';
 import classNames from 'classnames';
-import MListItem from './MListItem';
+import DListItem from './DListItem';
 import { useFormatCurrency } from '../hooks';
 
-type Props = Omit<ComponentProps<typeof MListItem>, 'children'> & {
+type Props = Omit<ComponentProps<typeof DListItem>, 'children'> & {
   description: string;
   date: string;
   amount: number;
   classNameMovement?: string;
 };
 
-export default function MListItemMovement({
+export default function DListItemMovement({
   description,
   date,
   amount,
@@ -34,9 +34,8 @@ export default function MListItemMovement({
   }, [format, amount]);
 
   return (
-    <MListItem {...props}>
+    <DListItem {...props}>
       <div className={classNames(
-        'm-list-item-movement',
         'd-flex justify-content-between align-items-center p-3 gap-3',
         classNameMovement,
       )}
@@ -53,6 +52,6 @@ export default function MListItemMovement({
           {value.valueFormatted}
         </span>
       </div>
-    </MListItem>
+    </DListItem>
   );
 }
