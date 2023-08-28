@@ -24,7 +24,7 @@ export default function DMonthPicker(
     <DatePicker
       showMonthYearPicker
       selected={dateJS(date)}
-      calendarClassName="m-month-picker"
+      calendarClassName="d-month-picker"
       onChange={(value) => {
         onEventChangeDate(value);
       }}
