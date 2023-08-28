@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
-
 import { SplideProps } from '@splidejs/react-splide';
-import { DCarousel } from '../../components';
+
+import DCarousel from '../../components/DCarousel';
 import DCarouselSlide from '../../components/DCarouselSlide';
 
 const config: Meta<typeof DCarousel> = {

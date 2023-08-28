@@ -4,6 +4,7 @@ import { PREFIX_BS } from '@dynamic-framework/ui';
 import {
   PropsWithChildren,
   ReactNode,
+  ReactElement,
   useState,
   useEffect,
 } from 'react';
@@ -12,19 +13,19 @@ import { DIcon } from './proxies';
 type Props = PropsWithChildren<{
   id?: string;
   className?: string;
-  Component: JSX.Element | ReactNode;
+  Component: ReactElement | ReactNode;
   hasSeparator?: boolean;
   defaultCollapsed?: boolean;
-  onChange?: (value: boolean) => void;
+  onEventChange?: (value: boolean) => void;
 }>;
 
-export default function MCollapse({
+export default function DCollapse({
   id,
   className,
   Component,
   hasSeparator = false,
   defaultCollapsed = false,
-  onChange,
+  onEventChange,
   children,
 }: Props) {
   const [toggle, setToggle] = useState(defaultCollapsed);
@@ -32,10 +33,10 @@ export default function MCollapse({
   const onChangeCollapse = () => setToggle((prev) => !prev);
 
   useEffect(() => {
-    if (onChange) {
-      onChange(toggle);
+    if (onEventChange) {
+      onEventChange(toggle);
     }
-  }, [toggle, onChange]);
+  }, [toggle, onEventChange]);
 
   useEffect(() => {
     setToggle(defaultCollapsed);
@@ -44,7 +45,7 @@ export default function MCollapse({
   return (
     <div
       id={id}
-      className={classNames('m-collapse collapse-container', className)}
+      className={classNames('collapse-container', className)}
     >
       <button
         className="collapse-button"
@@ -66,7 +67,7 @@ export default function MCollapse({
             'collapse-body': true,
           })}
           style={{
-            [`--${PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
+            [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
           }}
         >
           {children}

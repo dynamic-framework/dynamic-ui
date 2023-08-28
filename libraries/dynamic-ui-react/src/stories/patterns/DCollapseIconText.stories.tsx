@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MCollapseIconText } from '../../components';
+import { DCollapseIconText } from '../../components';
 
-const config: Meta<typeof MCollapseIconText> = {
+const config: Meta<typeof DCollapseIconText> = {
   title: 'Design System/Patterns/Collapse Icon Text',
-  component: MCollapseIconText,
+  component: DCollapseIconText,
 };
 
 export default config;
-type Story = StoryObj<typeof MCollapseIconText>;
+type Story = StoryObj<typeof DCollapseIconText>;
 
 export const Default: Story = {
   decorators: [
@@ -19,13 +19,13 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MCollapseIconText {...args}>
+    <DCollapseIconText {...args}>
       <div className="row d-flex flex-column gap-3">
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
       </div>
-    </MCollapseIconText>
+    </DCollapseIconText>
   ),
   args: {
     title: 'Credit cards',

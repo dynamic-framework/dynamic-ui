@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
-import MCollapse from '../MCollapse';
-import { DIcon } from '../proxies';
+import DCollapse from './DCollapse';
+import { DIcon } from './proxies';
 
 type Props = PropsWithChildren<{
   /**
@@ -24,7 +24,7 @@ type Props = PropsWithChildren<{
   iconFamilyPrefix?: string;
 }>;
 
-export default function MCollapseIconText({
+export default function DCollapseIconText({
   children,
   icon,
   iconSize = '1.5rem',
@@ -34,11 +34,11 @@ export default function MCollapseIconText({
   iconFamilyPrefix,
 }: Props) {
   return (
-    <MCollapse
+    <DCollapse
       defaultCollapsed
-      className="m-collapse-icon-text"
+      className="d-collapse-icon-text"
       Component={(
-        <div className="m-collapse-icon-text-header">
+        <div className="d-collapse-icon-text-header">
           <DIcon
             icon={icon}
             size={iconSize}
@@ -47,13 +47,13 @@ export default function MCollapseIconText({
             familyPrefix={iconFamilyPrefix}
             hasCircle
           />
-          <span className="m-collapse-icon-text-title">
+          <span className="d-collapse-icon-text-title">
             {title}
           </span>
         </div>
       )}
     >
       {children}
-    </MCollapse>
+    </DCollapse>
   );
 }

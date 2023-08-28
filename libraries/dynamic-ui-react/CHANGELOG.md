@@ -178,7 +178,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- MCollapse custom component ([68ed23a](https://github.com/dynamic-framework/dynamic-ui/commit/68ed23a0a257aea21d1bff7d382b329fb6120b91))
+- DCollapse custom component ([68ed23a](https://github.com/dynamic-framework/dynamic-ui/commit/68ed23a0a257aea21d1bff7d382b329fb6120b91))
 
 ## [0.8.2](https://github.com/dynamic-framework/dynamic-ui/compare/@modyo-dynamic/modyo-design-system-react@0.8.1...@modyo-dynamic/modyo-design-system-react@0.8.2) (2023-03-29)
 

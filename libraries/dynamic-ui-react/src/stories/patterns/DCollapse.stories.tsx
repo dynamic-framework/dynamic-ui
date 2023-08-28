@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MCollapse, DIcon } from '../../components';
+import { DCollapse, DIcon } from '../../components';
 
-const config: Meta<typeof MCollapse> = {
+const config: Meta<typeof DCollapse> = {
   title: 'Design System/Patterns/Collapse',
-  component: MCollapse,
+  component: DCollapse,
   argTypes: {
     Component: {
       options: ['Text', 'Custom'],
@@ -28,7 +28,7 @@ const config: Meta<typeof MCollapse> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MCollapse>;
+type Story = StoryObj<typeof DCollapse>;
 
 export const HeaderText: Story = {
   decorators: [
@@ -39,13 +39,13 @@ export const HeaderText: Story = {
     ),
   ],
   render: (args) => (
-    <MCollapse {...args}>
+    <DCollapse {...args}>
       <div className="row d-flex flex-column gap-3 pt-3">
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
       </div>
-    </MCollapse>
+    </DCollapse>
   ),
   args: {
     Component: (
@@ -65,13 +65,13 @@ export const HeaderComponent: Story = {
     ),
   ],
   render: (args) => (
-    <MCollapse {...args}>
+    <DCollapse {...args}>
       <div className="row d-flex flex-column gap-3 pt-3">
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
       </div>
-    </MCollapse>
+    </DCollapse>
   ),
   args: {
     Component: (
@@ -94,13 +94,13 @@ export const Collapsed: Story = {
     ),
   ],
   render: (args) => (
-    <MCollapse {...args}>
+    <DCollapse {...args}>
       <div className="row d-flex flex-column gap-3 pt-3">
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
         <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
       </div>
-    </MCollapse>
+    </DCollapse>
   ),
   args: {
     Component: (

@@ -11,7 +11,7 @@ export { default as MCurrencyText } from './MCurrencyText';
 export { default as DFormikInput } from './DFormikInput';
 export { default as DFormikInputSelect } from './DFormikInputSelect';
 export { default as MTooltip } from './MTooltip';
-export { default as MCollapse } from './MCollapse';
+export { default as DCollapse } from './DCollapse';
 export { default as DInputCurrency } from './DInputCurrency';
 export { default as DBoxFile } from './DBoxFile';
 export { default as DCarousel } from './DCarousel';
@@ -26,5 +26,6 @@ export { default as DCard } from './DCard';
 export { default as DCardHeader } from './DCardHeader';
 export { default as DCardBody } from './DCardBody';
 export { default as DCardFooter } from './DCardFooter';
+export { default as DCollapseIconText } from './DCollapseIconText';
 
 export type { TabOption } from './MTabs';
