@@ -5,7 +5,7 @@ type Props = {
   className?: string;
 };
 
-export default function MCurrencyText(
+export default function DCurrencyText(
   {
     value,
     className,

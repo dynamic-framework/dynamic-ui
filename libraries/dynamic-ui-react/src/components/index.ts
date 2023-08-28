@@ -7,7 +7,7 @@ export { default as MSkeleton } from './MSkeleton';
 export { default as MTabs, useTabContext } from './MTabs';
 export { default as MTabContent } from './MTabContent';
 export { default as MPopover } from './MPopover';
-export { default as MCurrencyText } from './MCurrencyText';
+export { default as DCurrencyText } from './DCurrencyText';
 export { default as DFormikInput } from './DFormikInput';
 export { default as DFormikInputSelect } from './DFormikInputSelect';
 export { default as MTooltip } from './MTooltip';
