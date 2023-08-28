@@ -21,10 +21,10 @@ export { default as MListItem } from './MListItem';
 export { default as MListItemMovement } from './MListItemMovement';
 export { default as MStepper } from './MStepper';
 export { default as DFormikInputCurrency } from './DFormikInputCurrency';
-export { default as MCardAccount } from './MCardAccount';
-export { default as MCard } from './MCard';
-export { default as MCardHeader } from './MCardHeader';
-export { default as MCardBody } from './MCardBody';
-export { default as MCardFooter } from './MCardFooter';
+export { default as DCardAccount } from './DCardAccount';
+export { default as DCard } from './DCard';
+export { default as DCardHeader } from './DCardHeader';
+export { default as DCardBody } from './DCardBody';
+export { default as DCardFooter } from './DCardFooter';
 
 export type { TabOption } from './MTabs';

@@ -5,7 +5,7 @@ type Props = PropsWithChildren<{
   className?: string;
 }>;
 
-export default function MCardFooter({
+export default function DCardFooter({
   className,
   children,
 }: Props) {

@@ -5,14 +5,14 @@ type Props = PropsWithChildren<{
   className?: string;
 }>;
 
-export default function MCardBody({
+export default function DCardHeader({
   className,
   children,
 }: Props) {
   return (
     <div
       className={classNames(
-        'card-body',
+        'card-header',
         className,
       )}
     >

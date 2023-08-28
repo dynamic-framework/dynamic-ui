@@ -1,16 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import {
-  MCard,
-  MCardHeader,
-  MCardBody,
-  MCardFooter,
+  DCard,
+  DCardHeader,
+  DCardBody,
+  DCardFooter,
   DButton,
 } from '../../components';
 
-const config: Meta<typeof MCard> = {
+const config: Meta<typeof DCard> = {
   title: 'Design System/Components/Card',
-  component: MCard,
+  component: DCard,
   argTypes: {
     className: {
       control: 'text',
@@ -23,23 +23,23 @@ const config: Meta<typeof MCard> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MCard>;
+type Story = StoryObj<typeof DCard>;
 
 export const Default: Story = {
   render: (args) => (
-    <MCard {...args}>
-      <MCardHeader>
+    <DCard {...args}>
+      <DCardHeader>
         <h5 className="card-title">Title #1</h5>
-      </MCardHeader>
-      <MCardBody>
+      </DCardHeader>
+      <DCardBody>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, quo?
-      </MCardBody>
-      <MCardFooter className="d-flex justify-content-end">
+      </DCardBody>
+      <DCardFooter className="d-flex justify-content-end">
         <DButton
           text="Click me!"
         />
-      </MCardFooter>
-    </MCard>
+      </DCardFooter>
+    </DCard>
   ),
   args: {
     style: {
@@ -50,14 +50,14 @@ export const Default: Story = {
 
 export const HeaderAndBody: Story = {
   render: (args) => (
-    <MCard {...args}>
-      <MCardHeader>
+    <DCard {...args}>
+      <DCardHeader>
         <h5 className="card-title">Title #1</h5>
-      </MCardHeader>
-      <MCardBody>
+      </DCardHeader>
+      <DCardBody>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, quo?
-      </MCardBody>
-    </MCard>
+      </DCardBody>
+    </DCard>
   ),
   args: {
     style: {
@@ -68,14 +68,14 @@ export const HeaderAndBody: Story = {
 
 export const OnlyBody: Story = {
   render: (args) => (
-    <MCard {...args}>
-      <MCardBody>
+    <DCard {...args}>
+      <DCardBody>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit.
         Quos magni ex explicabo sint repudiandae quia commodi reiciendis
         reprehenderit minima voluptatibus suscipit adipisci modi, veniam
         doloribus. Laudantium magni tenetur sint eligendi?
-      </MCardBody>
-    </MCard>
+      </DCardBody>
+    </DCard>
   ),
   args: {
     style: {
@@ -86,18 +86,18 @@ export const OnlyBody: Story = {
 
 export const TopImage: Story = {
   render: (args) => (
-    <MCard {...args}>
+    <DCard {...args}>
       <img
         src="https://placehold.co/200x200"
         className="card-img-top"
         alt="200x200"
       />
-      <MCardBody>
+      <DCardBody>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         Eum nihil exercitationem debitis aperiam consectetur beatae
         dolor error quod voluptatem laboriosam.
-      </MCardBody>
-    </MCard>
+      </DCardBody>
+    </DCard>
   ),
   args: {
     style: {
@@ -108,7 +108,7 @@ export const TopImage: Story = {
 
 export const Horizontal: Story = {
   render: (args) => (
-    <MCard {...args}>
+    <DCard {...args}>
       <div className="row g-0">
         <div className="col-md-4">
           <img
@@ -118,7 +118,7 @@ export const Horizontal: Story = {
           />
         </div>
         <div className="col-md-8">
-          <MCardBody>
+          <DCardBody>
             <h5 className="card-title">Card title</h5>
             <p className="card-text">
               This is a wider card with supporting text
@@ -130,10 +130,10 @@ export const Horizontal: Story = {
                 Last updated 3 mins ago
               </small>
             </p>
-          </MCardBody>
+          </DCardBody>
         </div>
       </div>
-    </MCard>
+    </DCard>
   ),
   args: {
     style: {

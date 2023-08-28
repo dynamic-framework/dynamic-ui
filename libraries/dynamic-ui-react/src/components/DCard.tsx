@@ -6,7 +6,7 @@ type Props = PropsWithChildren<{
   style?: CSSProperties;
 }>;
 
-export default function MCard({
+export default function DCard({
   className,
   style,
   children,

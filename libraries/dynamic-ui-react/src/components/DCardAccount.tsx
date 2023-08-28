@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import classNames from 'classnames';
 import { DButton, DIcon } from './proxies';
-import MCard from './MCard';
-import MCardBody from './MCardBody';
+import DCard from './DCard';
+import DCardBody from './DCardBody';
 
 type Props = {
   className?: string;
@@ -15,7 +15,7 @@ type Props = {
   onClick: () => void;
   onClickText: string;
 };
-export default function MCardAccount({
+export default function DCardAccount({
   className,
   icon,
   theme,
@@ -27,12 +27,12 @@ export default function MCardAccount({
   onClickText,
 }: Props) {
   return (
-    <MCard className={classNames(
-      'm-card-account',
+    <DCard className={classNames(
+      'd-card-account',
       className,
     )}
     >
-      <MCardBody>
+      <DCardBody>
         <div className="d-flex gap-3 align-items-center">
           <DIcon
             icon={icon}
@@ -67,7 +67,7 @@ export default function MCardAccount({
             onEventClick={onClick}
           />
         </div>
-      </MCardBody>
-    </MCard>
+      </DCardBody>
+    </DCard>
   );
 }

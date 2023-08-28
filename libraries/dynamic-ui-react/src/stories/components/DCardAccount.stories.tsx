@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
-import MCardAccount from '../../components/MCardAccount';
+import DCardAccount from '../../components/DCardAccount';
 import { ICONS, THEMES } from '../constants';
 
-const config: Meta<typeof MCardAccount> = {
+const config: Meta<typeof DCardAccount> = {
   title: 'Design System/Components/Card Account',
-  component: MCardAccount,
+  component: DCardAccount,
   argTypes: {
     name: {
       control: 'text',
@@ -47,7 +47,7 @@ const config: Meta<typeof MCardAccount> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MCardAccount>;
+type Story = StoryObj<typeof DCardAccount>;
 
 export const Default: Story = {
   decorators: [
@@ -60,7 +60,7 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MCardAccount {...args} />
+    <DCardAccount {...args} />
   ),
   args: {
     name: 'Credit Card',
