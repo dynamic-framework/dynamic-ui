@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { SplideProps } from '@splidejs/react-splide';
-import { MCarousel } from '../../components';
-import MCarouselSlide from '../../components/MCarouselSlide';
+import { DCarousel } from '../../components';
+import DCarouselSlide from '../../components/DCarouselSlide';
 
-const config: Meta<typeof MCarousel> = {
-  title: 'Design System/Components/Carousel',
-  component: MCarousel,
+const config: Meta<typeof DCarousel> = {
+  title: 'Design System/Patterns/Carousel',
+  component: DCarousel,
   argTypes: {
     options: {
       control: 'object',
@@ -15,14 +15,14 @@ const config: Meta<typeof MCarousel> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MCarousel>;
+type Story = StoryObj<typeof DCarousel>;
 
 const MCarouselExample = ({ ...props }: SplideProps) => (
-  <MCarousel
+  <DCarousel
     {...props}
   >
     {[1, 2, 3, 4, 5].map((el) => (
-      <MCarouselSlide key={el}>
+      <DCarouselSlide key={el}>
         <div className="d-flex flex-column bg-light border p-3 rounded text-center">
           <h5>{`Slide ${el}`}</h5>
           <p>
@@ -32,9 +32,9 @@ const MCarouselExample = ({ ...props }: SplideProps) => (
             harum dicta a!
           </p>
         </div>
-      </MCarouselSlide>
+      </DCarouselSlide>
     ))}
-  </MCarousel>
+  </DCarousel>
 );
 
 export const Default: Story = {
