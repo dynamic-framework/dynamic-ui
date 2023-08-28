@@ -27,7 +27,7 @@ DropzoneOptions,
 }
 >;
 
-export default function MBoxFile(
+export default function DBoxFile(
   {
     icon = 'cloud-upload',
     iconFamilyClass,
@@ -49,16 +49,16 @@ export default function MBoxFile(
   return (
     <section
       className={classnames(
-        'm-box-file',
+        'd-box-file',
         {
-          'm-box-file-selected': !!acceptedFiles.length,
+          'd-box-file-selected': !!acceptedFiles.length,
         },
       )}
     >
       <div
         {...getRootProps({
           className: classnames(
-            'm-box-file-dropzone',
+            'd-box-file-dropzone',
             {
               disabled: isDisabled,
             },
@@ -71,14 +71,14 @@ export default function MBoxFile(
           familyClass={iconFamilyClass}
           familyPrefix={iconFamilyPrefix}
         />
-        <div className="m-box-content">
+        <div className="d-box-content">
           {children}
         </div>
       </div>
       {!!acceptedFiles.length && (
-        <aside className="m-box-files">
+        <aside className="d-box-files">
           {acceptedFiles.map((file) => (
-            <div key={file.name} className="m-box-files-text">
+            <div key={file.name} className="d-box-files-text">
               {`${file.name} - ${file.size} bytes`}
             </div>
           ))}

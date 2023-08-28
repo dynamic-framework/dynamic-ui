@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MBoxFile } from '../../components';
+import { DBoxFile } from '../../components';
 
-const config: Meta<typeof MBoxFile> = {
+const config: Meta<typeof DBoxFile> = {
   title: 'Design System/Components/Box File',
-  component: MBoxFile,
+  component: DBoxFile,
 };
 
 export default config;
-type Story = StoryObj<typeof MBoxFile>;
+type Story = StoryObj<typeof DBoxFile>;
 
 export const Default: Story = {
   decorators: [
@@ -22,12 +22,12 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MBoxFile {...args}>
+    <DBoxFile {...args}>
       <div className="text-center">
         <span className="text-secondary text-decoration-underline me-1">Select and upload the file</span>
         or drag and drop it here (png)
       </div>
-    </MBoxFile>
+    </DBoxFile>
   ),
   args: {
     accept: {

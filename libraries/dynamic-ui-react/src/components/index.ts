@@ -13,7 +13,7 @@ export { default as DFormikInputSelect } from './DFormikInputSelect';
 export { default as MTooltip } from './MTooltip';
 export { default as MCollapse } from './MCollapse';
 export { default as DInputCurrency } from './DInputCurrency';
-export { default as MBoxFile } from './MBoxFile';
+export { default as DBoxFile } from './DBoxFile';
 export { default as MCarousel } from './MCarousel';
 export { default as MCarouselSlide } from './MCarouselSlide';
 export { default as MList } from './MList';
