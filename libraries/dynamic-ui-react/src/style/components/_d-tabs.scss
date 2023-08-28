@@ -1,0 +1,56 @@
+.d-tabs {
+  --#{$prefix}tabs-nav-gap: #{$nav-nav-gap};
+  --#{$prefix}tabs-nav-padding-x: #{$nav-nav-padding-x};
+  --#{$prefix}tabs-nav-padding-y: #{$nav-nav-padding-y};
+  --#{$prefix}tabs-link-border-height: #{$nav-link-border-height};
+  --#{$prefix}tabs-link-line-height: #{$nav-link-line-height};
+  --#{$prefix}tabs-link-border-border-radius: #{$nav-link-border-border-radius};
+  --#{$prefix}tabs-link-border-active-color: #{$nav-link-border-active-color};
+  --#{$prefix}tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
+  --#{$prefix}tabs-link-border-active-bg: #{$nav-link-border-active-bg};
+
+  display: flex;
+  flex-direction: column;
+
+  .nav {
+    gap: var(--#{$prefix}tabs-nav-gap);
+    padding: var(--#{$prefix}tabs-nav-padding-y) var(--#{$prefix}tabs-nav-padding-x);
+  }
+
+  .nav-link {
+    position: relative;
+    line-height: var(--#{$prefix}tabs-link-line-height);
+
+    &.active {
+      font-weight: var(--#{$prefix}tabs-link-border-active-font-weight);
+      color: var(--#{$prefix}tabs-link-border-active-color);
+
+      &::before {
+        background: var(--#{$prefix}tabs-link-border-active-bg);
+      }
+    }
+  }
+
+  .nav-link::before {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: var(--#{$prefix}tabs-link-border-height);
+    content: " ";
+    border-radius: var(--#{$prefix}tabs-link-border-border-radius);
+  }
+
+  &.d-tabs-vertical {
+    flex-direction: row;
+
+    .nav {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tab-content {
+      flex: 1;
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MTabs, MTabContent } from '../../components';
+import { DTabs, DTabContent } from '../../components';
 
-const config: Meta<typeof MTabs> = {
+const config: Meta<typeof DTabs> = {
   title: 'Design System/Patterns/Tabs',
-  component: MTabs,
+  component: DTabs,
   argTypes: {
     className: {
       type: 'string',
@@ -19,7 +19,7 @@ const config: Meta<typeof MTabs> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MTabs>;
+type Story = StoryObj<typeof DTabs>;
 
 export const Default: Story = {
   decorators: [
@@ -33,10 +33,10 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MTabs {...args}>
-      <MTabContent tab="tab1">Tab content for Tab 1</MTabContent>
-      <MTabContent tab="tab2">Tab content for Tab 2</MTabContent>
-    </MTabs>
+    <DTabs {...args}>
+      <DTabContent tab="tab1">Tab content for Tab 1</DTabContent>
+      <DTabContent tab="tab2">Tab content for Tab 2</DTabContent>
+    </DTabs>
   ),
   args: {
     defaultSelected: 'tab2',
@@ -61,10 +61,10 @@ export const Vertical: Story = {
     ),
   ],
   render: (args) => (
-    <MTabs {...args}>
-      <MTabContent tab="tab1">Tab content for Tab 1</MTabContent>
-      <MTabContent tab="tab2">Tab content for Tab 2</MTabContent>
-    </MTabs>
+    <DTabs {...args}>
+      <DTabContent tab="tab1">Tab content for Tab 1</DTabContent>
+      <DTabContent tab="tab2">Tab content for Tab 2</DTabContent>
+    </DTabs>
   ),
   args: {
     defaultSelected: 'tab2',

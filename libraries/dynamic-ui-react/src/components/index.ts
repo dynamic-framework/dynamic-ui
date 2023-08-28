@@ -4,8 +4,8 @@ export * from './banking';
 export { default as DToastContainer } from './DToastContainer';
 export { default as DDatePicker } from './DDatePicker';
 export { default as DSkeleton } from './DSkeleton';
-export { default as MTabs, useTabContext } from './MTabs';
-export { default as MTabContent } from './MTabContent';
+export { default as DTabs, useTabContext, DTabOption } from './DTabs';
+export { default as DTabContent } from './DTabContent';
 export { default as DPopover } from './DPopover';
 export { default as DCurrencyText } from './DCurrencyText';
 export { default as DFormikInput } from './DFormikInput';
@@ -28,5 +28,3 @@ export { default as DCardBody } from './DCardBody';
 export { default as DCardFooter } from './DCardFooter';
 export { default as DCollapseIconText } from './DCollapseIconText';
 export { default as DPaginator, Props as DPaginatorProps } from './DPaginator';
-
-export type { TabOption } from './MTabs';

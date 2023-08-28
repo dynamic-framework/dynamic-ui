@@ -1,12 +1,12 @@
 import type { PropsWithChildren } from 'react';
 
-import { useTabContext } from './MTabs';
+import { useTabContext } from './DTabs';
 
 type Props = PropsWithChildren<{
   tab: string;
 }>;
 
-export default function MTabContent({ tab, children }: Props) {
+export default function DTabContent({ tab, children }: Props) {
   const { isSelected } = useTabContext();
 
   if (!isSelected(tab)) {

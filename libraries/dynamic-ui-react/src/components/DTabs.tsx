@@ -9,31 +9,31 @@ import {
 import type { PropsWithChildren } from 'react';
 import classnames from 'classnames';
 
-export type TabOption = {
+export type DTabOption = {
   label: string;
   tab: string;
   isDisabled?: boolean;
 };
 
 type Props = PropsWithChildren<{
-  onChange: (option: TabOption) => void;
-  options: Array<TabOption>;
+  onEventChange: (option: DTabOption) => void;
+  options: Array<DTabOption>;
   defaultSelected: string;
   className?: string;
   isVertical?: boolean;
 }>;
 
 type TabContextState = {
-  isSelected: (tab: TabOption['tab']) => boolean;
+  isSelected: (tab: DTabOption['tab']) => boolean;
 };
 
 const TabContext = createContext<TabContextState | undefined>(undefined);
 
-export default function MTabs(
+export default function DTabs(
   {
     children,
     defaultSelected,
-    onChange,
+    onEventChange,
     options,
     className,
     isVertical,
@@ -41,18 +41,18 @@ export default function MTabs(
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
 
-  const onSelect = useCallback((option: TabOption) => {
+  const onSelect = useCallback((option: DTabOption) => {
     if (option.tab) {
       setSelected(option.tab);
     }
-    onChange(option);
-  }, [onChange]);
+    onEventChange(option);
+  }, [onEventChange]);
 
   useEffect(() => {
     setSelected(defaultSelected);
   }, [defaultSelected]);
 
-  const isSelected = useCallback((tab: TabOption['tab']) => (
+  const isSelected = useCallback((tab: DTabOption['tab']) => (
     selected === tab
   ), [selected]);
 
