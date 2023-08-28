@@ -10,7 +10,7 @@ export { default as DPopover } from './DPopover';
 export { default as DCurrencyText } from './DCurrencyText';
 export { default as DFormikInput } from './DFormikInput';
 export { default as DFormikInputSelect } from './DFormikInputSelect';
-export { default as MTooltip } from './MTooltip';
+export { default as DTooltip, Props as DTooltipProps } from './DTooltip';
 export { default as DCollapse } from './DCollapse';
 export { default as DInputCurrency } from './DInputCurrency';
 export { default as DBoxFile } from './DBoxFile';

@@ -32,7 +32,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * remove file ([5624c92](https://github.com/dynamic-framework/dynamic-ui/commit/5624c927f9e1c5b017e2268625ed45031df861ff))
 * remove file ([b4f5abf](https://github.com/dynamic-framework/dynamic-ui/commit/b4f5abfa05b40ce5e90892586eda75f741b4d9e9))
 * rename directories ([e2e5a2a](https://github.com/dynamic-framework/dynamic-ui/commit/e2e5a2a2152e731d21d579329f83211bdca6a09d))
-* type used in ComponentProps of DFormikInputCurrency story ([7d85164](https://github.com/dynamic-framework/dynamic-ui/commit/7d85164e6aef83d8bf87c7eed390e09fe1f9a2bd))
+* type used in ComponentProps of MFormikInputCurrency story ([7d85164](https://github.com/dynamic-framework/dynamic-ui/commit/7d85164e6aef83d8bf87c7eed390e09fe1f9a2bd))
 * typo ([747985f](https://github.com/dynamic-framework/dynamic-ui/commit/747985fdeea3d9d80b21d7d97452ce29ad854e68))
 
 
@@ -178,7 +178,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- DCollapse custom component ([68ed23a](https://github.com/dynamic-framework/dynamic-ui/commit/68ed23a0a257aea21d1bff7d382b329fb6120b91))
+- MCollapse custom component ([68ed23a](https://github.com/dynamic-framework/dynamic-ui/commit/68ed23a0a257aea21d1bff7d382b329fb6120b91))
 
 ## [0.8.2](https://github.com/dynamic-framework/dynamic-ui/compare/@modyo-dynamic/modyo-design-system-react@0.8.1...@modyo-dynamic/modyo-design-system-react@0.8.2) (2023-03-29)
 

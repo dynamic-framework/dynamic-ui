@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MTooltip } from '../../components';
+import { DTooltip } from '../../components';
 
-const config: Meta<typeof MTooltip> = {
+const config: Meta<typeof DTooltip> = {
   title: 'Design System/Components/Tooltip',
-  component: MTooltip,
+  component: DTooltip,
   argTypes: {
     placement: {
       control: 'select',
@@ -53,7 +53,7 @@ const config: Meta<typeof MTooltip> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MTooltip>;
+type Story = StoryObj<typeof DTooltip>;
 
 export const Top: Story = {
   args: {

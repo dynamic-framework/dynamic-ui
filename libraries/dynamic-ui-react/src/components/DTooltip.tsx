@@ -21,7 +21,7 @@ import type { PropsWithChildren, ReactNode } from 'react';
 import type { Placement } from '@floating-ui/react';
 import type { ComponentSize } from '@dynamic-framework/ui';
 
-export type MTooltipProps = PropsWithChildren<{
+export type Props = PropsWithChildren<{
   classNameContainer?: string;
   className?: string;
   offSet?: number;
@@ -44,20 +44,22 @@ const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
 const GAP = 2;
 
-export default function MTooltip({
-  classNameContainer,
-  className,
-  offSet = ARROW_HEIGHT + GAP,
-  padding,
-  withFocus = false,
-  withClick = false,
-  withHover = true,
-  isOpen = false,
-  placement = 'top',
-  size,
-  Component,
-  children,
-}: MTooltipProps) {
+export default function DTooltip(
+  {
+    classNameContainer,
+    className,
+    offSet = ARROW_HEIGHT + GAP,
+    padding,
+    withFocus = false,
+    withClick = false,
+    withHover = true,
+    isOpen = false,
+    placement = 'top',
+    size,
+    Component,
+    children,
+  }: Props,
+) {
   const [open, setOpen] = useState(isOpen);
   const styleVariables = useMemo(() => {
     const defaultFontSize = size
