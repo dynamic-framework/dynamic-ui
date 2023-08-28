@@ -19,7 +19,7 @@ export { default as DCarouselSlide } from './DCarouselSlide';
 export { default as DList } from './DList';
 export { default as DListItem } from './DListItem';
 export { default as DListItemMovement } from './DListItemMovement';
-export { default as MStepper } from './MStepper';
+export { default as DStepper } from './DStepper';
 export { default as DFormikInputCurrency } from './DFormikInputCurrency';
 export { default as DCardAccount } from './DCardAccount';
 export { default as DCard } from './DCard';

@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MStepper } from '../../components';
+import { DStepper } from '../../components';
 import { ICONS } from '../constants';
 
-const config: Meta<typeof MStepper> = {
+const config: Meta<typeof DStepper> = {
   title: 'Design System/Components/Stepper',
-  component: MStepper,
+  component: DStepper,
   argTypes: {
     currentStep: {
       control: 'number',
@@ -30,7 +30,7 @@ const config: Meta<typeof MStepper> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MStepper>;
+type Story = StoryObj<typeof DStepper>;
 
 export const Default: Story = {
   decorators: [
@@ -44,7 +44,7 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MStepper {...args} />
+    <DStepper {...args} />
   ),
   args: {
     currentStep: 1,
@@ -68,7 +68,7 @@ export const Vertical: Story = {
     ),
   ],
   render: (args) => (
-    <MStepper {...args} />
+    <DStepper {...args} />
   ),
   args: {
     currentStep: 1,

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+
 import { DIcon } from './proxies';
 
 export type Step = {
@@ -13,42 +14,44 @@ type Props = {
   isVertical?: boolean;
 };
 
-export default function MStepper({
-  options,
-  currentStep,
-  successIcon = 'check',
-  isVertical = false,
-} : Props) {
+export default function DStepper(
+  {
+    options,
+    currentStep,
+    successIcon = 'check',
+    isVertical = false,
+  } : Props,
+) {
   return (
     <div className={classNames({
-      'm-stepper': true,
+      'd-stepper': true,
       'is-vertical': isVertical,
     })}
     >
       {options.map(({ label, value }) => (
         <div
-          className="m-step"
+          className="d-step"
           key={label}
         >
-          <div className="m-step-value">
+          <div className="d-step-value">
             <div
               className={classNames({
-                'm-step-icon-container': true,
-                'm-step-check': value < currentStep,
-                'm-step-current': value === currentStep,
+                'd-step-icon-container': true,
+                'd-step-check': value < currentStep,
+                'd-step-current': value === currentStep,
               })}
             >
               {value < currentStep
                 ? (
                   <DIcon
                     icon={successIcon}
-                    innerClass="m-step-icon"
+                    innerClass="d-step-icon"
                   />
                 )
                 : value}
             </div>
           </div>
-          <div className="m-step-label">{label}</div>
+          <div className="d-step-label">{label}</div>
         </div>
       ))}
     </div>
