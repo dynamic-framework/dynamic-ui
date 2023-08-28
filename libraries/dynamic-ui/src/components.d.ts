@@ -100,6 +100,10 @@ export namespace Components {
          */
         "isPill": boolean;
         /**
+          * Flag to start or stop event propagation
+         */
+        "isStopPropagationEnabled": boolean;
+        /**
           * The size
          */
         "size"?: ComponentSize;
@@ -1382,6 +1386,10 @@ declare namespace LocalJSX {
           * Flag to switch to pill button border radius.
          */
         "isPill"?: boolean;
+        /**
+          * Flag to start or stop event propagation
+         */
+        "isStopPropagationEnabled"?: boolean;
         /**
           * Emitted when the button has been clicked.
          */

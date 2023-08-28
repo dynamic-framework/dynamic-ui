@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DButton, MPopover, DQuickActionButton } from '../../components';
+import { DButton, DPopover, DQuickActionButton } from '../../components';
 
-const config: Meta<typeof MPopover> = {
+const config: Meta<typeof DPopover> = {
   title: 'Design System/Patterns/Popover',
-  component: MPopover,
+  component: DPopover,
 };
 
 export default config;
-type Story = StoryObj<typeof MPopover>;
+type Story = StoryObj<typeof DPopover>;
 
 export const Default: Story = {
   decorators: [
@@ -22,17 +22,18 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <MPopover {...args}>
+    <DPopover {...args}>
       <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
       <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
       <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-    </MPopover>
+    </DPopover>
   ),
   args: {
     renderComponent: (toggle) => (
       <DButton
         text="Dropdown Component"
         iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
+        isStopPropagationEnabled={false}
         className="d-grid"
       />
     ),
@@ -51,17 +52,18 @@ export const Open: Story = {
     ),
   ],
   render: (args) => (
-    <MPopover {...args}>
+    <DPopover {...args}>
       <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
       <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
       <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-    </MPopover>
+    </DPopover>
   ),
   args: {
     renderComponent: (toggle) => (
       <DButton
         text="Dropdown Component"
         iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
+        isStopPropagationEnabled={false}
         className="d-grid"
       />
     ),
@@ -81,9 +83,9 @@ export const Plain: Story = {
     ),
   ],
   render: (args) => (
-    <MPopover {...args}>
+    <DPopover {...args}>
       Ipsum
-    </MPopover>
+    </DPopover>
   ),
   args: {
     renderComponent: () => (

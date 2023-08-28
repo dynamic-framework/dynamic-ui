@@ -14,20 +14,20 @@ import {
   useId,
 } from '@floating-ui/react';
 
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type Props = PropsWithChildren<{
-  renderComponent: (isOpen: boolean) => JSX.Element;
+  renderComponent: (isOpen: boolean) => ReactElement;
   isOpen: boolean,
-  setIsOpen?: (isOpen: boolean) => void
+  setEventIsOpen?: (isOpen: boolean) => void
 }>;
 
-export default function MPopover(
+export default function DPopover(
   {
     children,
     renderComponent,
     isOpen,
-    setIsOpen = () => {},
+    setEventIsOpen,
   }: Props,
 ) {
   const [innerIsOpen, setInnerIsOpen] = useState(false);
@@ -38,8 +38,10 @@ export default function MPopover(
 
   const onOpenChange = useCallback((value: boolean) => {
     setInnerIsOpen(value);
-    setIsOpen(value);
-  }, [setIsOpen]);
+    if (setEventIsOpen) {
+      setEventIsOpen(value);
+    }
+  }, [setEventIsOpen]);
 
   const { refs, floatingStyles, context } = useFloating({
     open: innerIsOpen,
@@ -65,7 +67,7 @@ export default function MPopover(
   const headingId = useId();
 
   return (
-    <div className="m-popover">
+    <div className="d-popover">
       <div
         ref={refs.setReference}
         {...getReferenceProps()}
@@ -75,7 +77,7 @@ export default function MPopover(
       {innerIsOpen && (
         <FloatingFocusManager context={context} modal={false}>
           <div
-            className="m-popover-content"
+            className="d-popover-content"
             ref={refs.setFloating}
             style={floatingStyles}
             aria-labelledby={headingId}

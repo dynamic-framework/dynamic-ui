@@ -98,12 +98,19 @@ export class DButton implements ComponentInterface {
   @Prop() isDisabled = false;
 
   /**
+   * Flag to start or stop event propagation
+   */
+  @Prop() isStopPropagationEnabled = true;
+
+  /**
    * Emitted when the button has been clicked.
    */
   @Event({ bubbles: false }) eventClick!: EventEmitter;
 
   private clickHandler = (event: MouseEvent) => {
-    event.stopPropagation();
+    if (this.isStopPropagationEnabled) {
+      event.stopPropagation();
+    }
     this.eventClick.emit();
   };
 

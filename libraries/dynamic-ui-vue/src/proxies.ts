@@ -44,6 +44,7 @@ export const DButton = /*@__PURE__*/ defineContainer<JSX.DButton>('d-button', un
   'isPill',
   'isLoading',
   'isDisabled',
+  'isStopPropagationEnabled',
   'eventClick'
 ]);
 
