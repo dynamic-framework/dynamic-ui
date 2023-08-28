@@ -3,7 +3,7 @@ export * from './banking';
 
 export { default as DToastContainer } from './DToastContainer';
 export { default as DDatePicker } from './DDatePicker';
-export { default as MSkeleton } from './MSkeleton';
+export { default as DSkeleton } from './DSkeleton';
 export { default as MTabs, useTabContext } from './MTabs';
 export { default as MTabContent } from './MTabContent';
 export { default as DPopover } from './DPopover';

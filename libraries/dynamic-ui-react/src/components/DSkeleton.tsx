@@ -9,13 +9,15 @@ export type Props = PropsWithChildren<{
   foregroundColor?: string;
 }>;
 
-export default function MSkeleton({
-  speed = 2,
-  viewBox,
-  backgroundColor,
-  foregroundColor,
-  children,
-}: Props) {
+export default function DSkeleton(
+  {
+    speed = 2,
+    viewBox,
+    backgroundColor,
+    foregroundColor,
+    children,
+  }: Props,
+) {
   const innerBackgroundColor = useMemo(() => {
     if (backgroundColor) {
       return backgroundColor;
@@ -41,7 +43,7 @@ export default function MSkeleton({
       backgroundColor={innerBackgroundColor}
       foregroundColor={innerForegroundColor}
     >
-      { children }
+      {children}
     </ContentLoader>
   );
 }
