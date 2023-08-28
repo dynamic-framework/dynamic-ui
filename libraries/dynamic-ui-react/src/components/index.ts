@@ -27,5 +27,6 @@ export { default as DCardHeader } from './DCardHeader';
 export { default as DCardBody } from './DCardBody';
 export { default as DCardFooter } from './DCardFooter';
 export { default as DCollapseIconText } from './DCollapseIconText';
+export { default as DPaginator, Props as DPaginatorProps } from './DPaginator';
 
 export type { TabOption } from './MTabs';
