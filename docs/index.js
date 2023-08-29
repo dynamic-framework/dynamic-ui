@@ -37,6 +37,7 @@ const react = require('@floating-ui/react');
 const formik = require('formik');
 const reactDropzone = require('react-dropzone');
 const reactSplide = require('@splidejs/react-splide');
+const ResponsivePagination = require('react-responsive-pagination');
 const i18n = require('i18next');
 const reactI18next = require('react-i18next');
 const html2canvas = require('html2canvas');
@@ -48,6 +49,7 @@ const DatePicker__default = /*#__PURE__*/_interopDefaultLegacy(DatePicker);
 const React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 const ContentLoader__default = /*#__PURE__*/_interopDefaultLegacy(ContentLoader);
 const classNames__default = /*#__PURE__*/_interopDefaultLegacy(classNames);
+const ResponsivePagination__default = /*#__PURE__*/_interopDefaultLegacy(ResponsivePagination);
 const i18n__default = /*#__PURE__*/_interopDefaultLegacy(i18n);
 const html2canvas__default = /*#__PURE__*/_interopDefaultLegacy(html2canvas);
 
@@ -988,6 +990,11 @@ function MCardFooter({ className, children, }) {
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]('card-footer', className) }, { children: children })));
 }
 
+function MPaginator(_a) {
+    var { className, nextLabel, previousLabel, showArrows = true } = _a, props = tslib.__rest(_a, ["className", "nextLabel", "previousLabel", "showArrows"]);
+    return (jsxRuntime.jsx(ResponsivePagination__default["default"], Object.assign({ extraClassName: classNames__default["default"]('m-pagination', className), nextClassName: classNames__default["default"]('m-arrow m-arrow-next', !nextLabel && 'no-label'), nextLabel: nextLabel, previousClassName: classNames__default["default"]('m-arrow m-arrow-prev', !previousLabel && 'no-label'), previousLabel: previousLabel, renderNav: showArrows }, props)));
+}
+
 const LANG = ui.liquidParser.parse('{{site.language}}');
 async function configureI8n(resources, _a = {}) {
     var { lng = LANG, fallbackLng = 'es' } = _a, config = tslib.__rest(_a, ["lng", "fallbackLng"]);
@@ -1044,6 +1051,7 @@ exports.MListItem = MListItem;
 exports.MListItemMovement = MListItemMovement;
 exports.MModal = MModal;
 exports.MOffcanvas = MOffcanvas;
+exports.MPaginator = MPaginator;
 exports.MPermissionGroup = MPermissionGroup;
 exports.MPermissionItem = MPermissionItem;
 exports.MPopover = MPopover;

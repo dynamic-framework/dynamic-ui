@@ -25,4 +25,5 @@ export { default as MCard } from './MCard';
 export { default as MCardHeader } from './MCardHeader';
 export { default as MCardBody } from './MCardBody';
 export { default as MCardFooter } from './MCardFooter';
+export { default as MPaginator } from './MPaginator';
 export type { TabOption } from './MTabs';

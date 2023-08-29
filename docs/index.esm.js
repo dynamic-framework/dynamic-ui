@@ -34,6 +34,7 @@ import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, use
 import { useField } from 'formik';
 import { useDropzone } from 'react-dropzone';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import ResponsivePagination from 'react-responsive-pagination';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import html2canvas from 'html2canvas';
@@ -976,6 +977,11 @@ function MCardFooter({ className, children, }) {
     return (jsx("div", Object.assign({ className: classNames('card-footer', className) }, { children: children })));
 }
 
+function MPaginator(_a) {
+    var { className, nextLabel, previousLabel, showArrows = true } = _a, props = __rest(_a, ["className", "nextLabel", "previousLabel", "showArrows"]);
+    return (jsx(ResponsivePagination, Object.assign({ extraClassName: classNames('m-pagination', className), nextClassName: classNames('m-arrow m-arrow-next', !nextLabel && 'no-label'), nextLabel: nextLabel, previousClassName: classNames('m-arrow m-arrow-prev', !previousLabel && 'no-label'), previousLabel: previousLabel, renderNav: showArrows }, props)));
+}
+
 const LANG = liquidParser.parse('{{site.language}}');
 async function configureI8n(resources, _a = {}) {
     var { lng = LANG, fallbackLng = 'es' } = _a, config = __rest(_a, ["lng", "fallbackLng"]);
@@ -991,5 +997,5 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MBoxFile, MButton, MCard, MCardAccount, MCardBody, MCardFooter, MCardHeader, MCarousel, MCarouselSlide, MChip, MCollapse, MCollapseIconText, MCurrencyText, MDatePicker, MFormikInput, MFormikInputCurrency, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MList, MListItem, MListItemMovement, MModal, MOffcanvas, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MStepper, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
+export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MBoxFile, MButton, MCard, MCardAccount, MCardBody, MCardFooter, MCardHeader, MCarousel, MCarouselSlide, MChip, MCollapse, MCollapseIconText, MCurrencyText, MDatePicker, MFormikInput, MFormikInputCurrency, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MList, MListItem, MListItemMovement, MModal, MOffcanvas, MPaginator, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MStepper, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
 //# sourceMappingURL=index.esm.js.map
