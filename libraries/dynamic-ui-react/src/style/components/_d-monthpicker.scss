@@ -19,7 +19,7 @@
   --#{$prefix}monthpicker-month-hover-bg: var(--#{$prefix}gray-700);
 
   --#{$prefix}monthpicker-month-wrapper-gap: var(--#{$prefix}ref-spacer-2);
-  --#{$prefix}monthpicker-month-wrapper-font-size: var(--#{$prefix}-ref-fs-small);
+  --#{$prefix}monthpicker-month-wrapper-font-size: var(--#{$prefix}ref-fs-small);
 
   --#{$prefix}monthpicker-single-month-width: 46px;
   --#{$prefix}monthpicker-single-month-padding: var(--#{$prefix}ref-spacer-2);
@@ -27,7 +27,7 @@
   --#{$prefix}monthpicker-single-month-text-transform: capitalize;
   --#{$prefix}monthpicker-single-month-radius: var(--#{$prefix}ref-spacer-4);
 
-  --#{$prefix}monthpicker-single-month-after-display: ".";
+  --#{$prefix}monthpicker-single-month-after-display: inline;
   --#{$prefix}monthpicker-single-month-after-content: ".";
 
   --#{$prefix}datepicker-triangle-color: var(--#{$prefix}dark);
