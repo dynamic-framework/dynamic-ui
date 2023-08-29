@@ -17,7 +17,7 @@ import MDatePickerTime, { InnerDatePickerTimeProps } from './MDatePickerTime';
 import MDatePickerInput, { InnerDatePickerProps } from './MDatePickerInput';
 import MDatePickerHeader from './MDatePickerHeader';
 
-type CalendarProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
+export type MDatePickerProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
   date: string;
   setDate: (value: Date | [Date | null, Date | null] | null) => void;
   selectsRange?: boolean;
@@ -50,7 +50,7 @@ export default function MDatePicker({
   headerButtonVariant = 'link',
   headerButtonTheme = 'dark',
   ...props
-}: CalendarProps) {
+}: MDatePickerProps) {
   const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
   const { language } = useLiquidContext();
   const lang = language || 'en';
