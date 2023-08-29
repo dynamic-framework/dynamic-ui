@@ -28,7 +28,7 @@ type TimeInputPickerProps = {
   onChange?: ((value: string) => void) & FormEventHandler<HTMLDInputElement>
 };
 
-type CalendarProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
+export type MDatePickerProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
   date: string;
   onEventChangeDate: (value: Date | [Date | null, Date | null] | null) => void;
   selectsRange?: boolean;
@@ -62,7 +62,7 @@ export default function DDatePicker(
     headerButtonVariant = 'link',
     headerButtonTheme = 'dark',
     ...props
-  }: CalendarProps,
+  }: MDatePickerProps,
 ) {
   const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
   const { language } = useLiquidContext();
