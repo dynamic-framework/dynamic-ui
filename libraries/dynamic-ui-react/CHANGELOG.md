@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.2.1...@dynamic-framework/ui-react@1.2.2) (2023-08-29)
+
+
+### Bug Fixes
+
+* add paginator component ([9d3639a](https://github.com/dynamic-framework/dynamic-ui/commit/9d3639a8d45f5afc1e4097f16c9d4a145ad255a4))
+
+
+
 ## [1.2.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.2.0...@dynamic-framework/ui-react@1.2.1) (2023-08-24)
 
 
