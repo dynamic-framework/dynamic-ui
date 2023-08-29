@@ -4,8 +4,6 @@ import { DateTime } from 'luxon';
 import { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 
-import type { ComponentProps } from 'react';
-
 import { DDatePicker } from '../../components';
 import DMonthPicker from '../../components/DMonthPicker';
 
@@ -111,70 +109,6 @@ const config: Meta<typeof DDatePicker> = {
 export default config;
 type Story = StoryObj<typeof DDatePicker>;
 
-const DDatePickerBase = (props: ComponentProps<typeof DDatePicker>) => {
-  const [date, onEventDate] = useState<string>(DateTime.now().toISO());
-  const handleDate = (value: Date | [Date | null, Date | null] | null) => {
-    if (value) {
-      onEventDate(DateTime.fromJSDate(value as Date).toISODate());
-    }
-  };
-
-  return (
-    <DDatePicker
-      {...props}
-      date={date}
-      dateFormat="dd/MM/yyyy"
-      onEventChangeDate={(value) => handleDate(value)}
-    />
-  );
-};
-
-const MMonthPickerBase = (props: ComponentProps<typeof DMonthPicker>) => {
-  const [date, onEventDate] = useState<string>(DateTime.now().toISO());
-  const handleDate = (value: Date | [Date | null, Date | null] | null) => {
-    if (value) {
-      onEventDate(DateTime.fromJSDate(value as Date).toISODate());
-    }
-  };
-
-  return (
-    <DMonthPicker
-      {...props}
-      date={date}
-      dateFormat="MM/yyyy"
-      onEventChangeDate={(value) => handleDate(value)}
-    />
-  );
-};
-
-const DDatePickerRange = (props: ComponentProps<typeof DDatePicker>) => {
-  const [startDate, setStartDate] = useState<string | null>(DateTime.now().toISO());
-  const [endDate, setEndDate] = useState<string | null>(null);
-
-  const handleChange = (value: Date | [Date | null, Date | null] | null) => {
-    const [newStartDate, newEndDate] = value as Array<Date>;
-    setStartDate(DateTime.fromJSDate(newStartDate).toISODate());
-    setEndDate(DateTime.fromJSDate(newEndDate).toISODate());
-  };
-
-  return (
-    <DDatePicker
-      {...props}
-      {...startDate && {
-        selected: DateTime.fromISO(startDate).toJSDate(),
-        startDate: DateTime.fromISO(startDate).toJSDate(),
-      }}
-      {...endDate && {
-        endDate: DateTime.fromISO(endDate).toJSDate(),
-      }}
-      onEventChangeDate={handleChange}
-      selectsRange
-      dateFormat="dd/MM/yyyy"
-      inline
-    />
-  );
-};
-
 export const Default: Story = {
   decorators: [
     (Story) => (
@@ -183,9 +117,23 @@ export const Default: Story = {
       </div>
     ),
   ],
-  render: (args) => (
-    <DDatePickerBase {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+      if (value) {
+        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+      }
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        dateFormat="dd/MM/yyyy"
+        onEventChangeDate={(value) => handleDate(value)}
+      />
+    );
+  },
   args: {
     inline: false,
   },
@@ -199,9 +147,23 @@ export const DefaultWithMonth: Story = {
       </div>
     ),
   ],
-  render: (args) => (
-    <DDatePickerBase {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+      if (value) {
+        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+      }
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        dateFormat="dd/MM/yyyy"
+        onEventChangeDate={(value) => handleDate(value)}
+      />
+    );
+  },
   args: {
     inline: false,
     withMonthSelector: true,
@@ -209,18 +171,46 @@ export const DefaultWithMonth: Story = {
 };
 
 export const Inline: Story = {
-  render: (args) => (
-    <DDatePickerBase {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+      if (value) {
+        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+      }
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        dateFormat="dd/MM/yyyy"
+        onEventChangeDate={(value) => handleDate(value)}
+      />
+    );
+  },
   args: {
     inline: true,
   },
 };
 
 export const WithTime: Story = {
-  render: (args) => (
-    <DDatePickerBase {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+      if (value) {
+        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+      }
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        dateFormat="dd/MM/yyyy"
+        onEventChangeDate={(value) => handleDate(value)}
+      />
+    );
+  },
   args: {
     inline: true,
     showTimeInput: true,
@@ -229,9 +219,23 @@ export const WithTime: Story = {
 };
 
 export const WithMonthSelector: Story = {
-  render: (args) => (
-    <DDatePickerBase {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+      if (value) {
+        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+      }
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        dateFormat="dd/MM/yyyy"
+        onEventChangeDate={(value) => handleDate(value)}
+      />
+    );
+  },
   args: {
     inline: true,
     withMonthSelector: true,
@@ -239,18 +243,55 @@ export const WithMonthSelector: Story = {
 };
 
 export const MonthPicker: Story = {
-  render: (args) => (
-    <MMonthPickerBase {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+      if (value) {
+        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+      }
+    };
+    return (
+      <DMonthPicker
+        {...args}
+        date={date}
+        dateFormat="MM/yyyy"
+        onEventChangeDate={(value) => handleDate(value)}
+      />
+    );
+  },
   args: {
     inline: true,
   },
 };
 
 export const DateRange: Story = {
-  render: (args) => (
-    <DDatePickerRange {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [startDate, setStartDate] = useState<string | null>(DateTime.now().toISO());
+    const [endDate, setEndDate] = useState<string | null>(null);
+
+    const handleChange = (value: Date | [Date | null, Date | null] | null) => {
+      const [newStartDate, newEndDate] = value as Array<Date>;
+      setStartDate(DateTime.fromJSDate(newStartDate).toISODate());
+      setEndDate(DateTime.fromJSDate(newEndDate).toISODate());
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        {...startDate && {
+          selected: DateTime.fromISO(startDate).toJSDate(),
+          startDate: DateTime.fromISO(startDate).toJSDate(),
+        }}
+        {...endDate && {
+          endDate: DateTime.fromISO(endDate).toJSDate(),
+        }}
+        onEventChangeDate={handleChange}
+        selectsRange
+        dateFormat="dd/MM/yyyy"
+        inline
+      />
+    );
+  },
   args: {
     inline: true,
     selectsRange: true,
@@ -258,9 +299,33 @@ export const DateRange: Story = {
 };
 
 export const DateRangeWithMonthSelector: Story = {
-  render: (args) => (
-    <DDatePickerRange {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [startDate, setStartDate] = useState<string | null>(DateTime.now().toISO());
+    const [endDate, setEndDate] = useState<string | null>(null);
+
+    const handleChange = (value: Date | [Date | null, Date | null] | null) => {
+      const [newStartDate, newEndDate] = value as Array<Date>;
+      setStartDate(DateTime.fromJSDate(newStartDate).toISODate());
+      setEndDate(DateTime.fromJSDate(newEndDate).toISODate());
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        {...startDate && {
+          selected: DateTime.fromISO(startDate).toJSDate(),
+          startDate: DateTime.fromISO(startDate).toJSDate(),
+        }}
+        {...endDate && {
+          endDate: DateTime.fromISO(endDate).toJSDate(),
+        }}
+        onEventChangeDate={handleChange}
+        selectsRange
+        dateFormat="dd/MM/yyyy"
+        inline
+      />
+    );
+  },
   args: {
     inline: true,
     selectsRange: true,
@@ -269,9 +334,23 @@ export const DateRangeWithMonthSelector: Story = {
 };
 
 export const OnPortal: Story = {
-  render: (args) => (
-    <DDatePickerBase {...args} />
-  ),
+  render: function Render({ ...args }) {
+    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const handleDate = (value: Date | [Date | null, Date | null] | null) => {
+      if (value) {
+        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+      }
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        dateFormat="dd/MM/yyyy"
+        onEventChangeDate={(value) => handleDate(value)}
+      />
+    );
+  },
   args: {
     inline: false,
     withMonthSelector: true,
