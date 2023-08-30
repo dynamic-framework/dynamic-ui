@@ -65,7 +65,7 @@
     "@stencil/vue-output-target": "^0.8.6",
     "@types/bootstrap": "^5.2.6",
     "@types/jest": "^27.0.3",
-    "@types/luxon": "~3.2.1",
+    "@types/luxon": "^3.2.1",
     "@types/node": "^18.7.1",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
@@ -81,7 +81,7 @@
     "jest-cli": "26.6.3",
     "lint-staged": "^12.4.1",
     "liquidjs": "^9.39.2",
-    "luxon": "~3.2.1",
+    "luxon": "^3.2.1",
     "postcss-cli": "^10.1.0",
     "puppeteer": "^14.0.0",
     "sass": "^1.51.0",
@@ -92,7 +92,7 @@
   "peerDependencies": {
     "axios": "^1.1.2",
     "liquidjs": "^9.39.2",
-    "luxon": "~3.0.3"
+    "luxon": "^3.2.1"
   },
   "license": "MIT"
 }
