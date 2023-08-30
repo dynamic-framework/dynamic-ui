@@ -2,7 +2,7 @@ import { Meta } from '@storybook/react';
 
 import type { AlertType } from '@dynamic-framework/ui';
 
-import { MButton, MToastContainer } from '../../components';
+import { DButton, DToastContainer } from '../../components';
 import { useToast as useToastHook } from '../../hooks';
 
 import { ALERT_TYPES } from '../constants';
@@ -17,11 +17,11 @@ const Example = ({ message, type, showClose }: Props) => {
   const { toast } = useToastHook();
   return (
     <>
-      <MButton
+      <DButton
         text="Show Toast"
-        onClick={() => toast(message, { type, showClose })}
+        onEventClick={() => toast(message, { type, showClose })}
       />
-      <MToastContainer />
+      <DToastContainer />
     </>
   );
 };

@@ -23,22 +23,20 @@
 @import "bootstrap/scss/offcanvas";
 @import "bootstrap/scss/placeholders";
 
-@import "m-icon";
-@import "m-input";
-@import "m-input-switch";
-@import "m-input-check";
-@import "m-input-select";
-@import "m-input-pin";
-@import "m-button";
-@import "m-quick-action-button";
-@import "m-quick-action-select";
-@import "m-quick-action-check";
-@import "m-quick-action-switch";
-@import "m-progress-bar";
-@import "m-alert";
-@import "m-badge";
-@import "m-chip";
-@import "m-modal";
-@import "m-offcanvas";
-
-@import "m-permission-group"; // TODO: review
+@import "d-icon";
+@import "d-input";
+@import "d-input-switch";
+@import "d-input-check";
+@import "d-input-select";
+@import "d-input-pin";
+@import "d-button";
+@import "d-quick-action-button";
+@import "d-quick-action-select";
+@import "d-quick-action-check";
+@import "d-quick-action-switch";
+@import "d-progress";
+@import "d-alert";
+@import "d-badge";
+@import "d-chip";
+@import "d-modal";
+@import "d-offcanvas";

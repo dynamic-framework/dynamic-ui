@@ -1,0 +1,98 @@
+.pagination {
+  // Page link
+  --#{$prefix}pagination-page-item-size: 2.125rem;
+  --#{$prefix}pagination-page-link-bg: transparent;
+  --#{$prefix}pagination-page-border-radius: 50%;
+  // Arrow
+  --#{$prefix}pagination-arrow-font-size: var(--#{$prefix}ref-fs-small);
+  --#{$prefix}pagination-arrow-padding-y: var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}pagination-arrow-padding-x: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}pagination-arrow-border-radius: var(--#{$prefix}border-radius);
+  --#{$prefix}pagination-arrow-color: var(--#{$prefix}secondary);
+  // Arrow :focus
+  --#{$prefix}pagination-focus-arrow-bg: var(--#{$prefix}secondary-100);
+  // Arrow previous
+  --#{$prefix}pagination-arrow-prev-icon-bg-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234848b7" class="bi bi-chevron-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>');
+  --#{$prefix}pagination-disabled-arrow-prev-icon-bg-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23a1a1b5" class="bi bi-chevron-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>');
+  // Arrow next
+  --#{$prefix}pagination-arrow-next-icon-bg-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234848b7" class="bi bi-chevron-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>');
+  --#{$prefix}pagination-disabled-arrow-next-icon-bg-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23a1a1b5" class="bi bi-chevron-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>');
+  margin: 0;
+
+  .page-item {
+    min-width: var(--#{$prefix}pagination-page-item-size);
+    min-height: var(--#{$prefix}pagination-page-item-size);
+
+    &:not(.active, :hover) .page-link {
+      background-color: var(--#{$prefix}pagination-page-link-bg);
+    }
+  }
+
+  .arrow .page-link {
+    min-width: fit-content;
+    padding: var(--#{$prefix}pagination-arrow-padding-y) var(--#{$prefix}pagination-arrow-padding-x);
+    font-size: var(--#{$prefix}pagination-arrow-font-size);
+    border-radius: var(--#{$prefix}pagination-arrow-border-radius);
+
+    &:focus {
+      background-color: var(--#{$prefix}pagination-focus-arrow-bg);
+    }
+
+    &::after,
+    &::before {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-repeat: no-repeat;
+      background-size: var(--#{$prefix}pagination-arrow-font-size);
+    }
+  }
+
+  .arrow:is(.arrow-prev, .arrow-next):not(.disabled) .page-link {
+    color: var(--#{$prefix}pagination-arrow-color);
+  }
+
+  // Arrow prev
+  .arrow.arrow-prev .page-link::before {
+    min-width: var(--#{$prefix}pagination-arrow-font-size);
+    min-height: var(--#{$prefix}pagination-arrow-font-size);
+    margin-right: var(--#{$prefix}ref-spacer-1);
+    content: "";
+    background-image: var(--#{$prefix}pagination-arrow-prev-icon-bg-image);
+    background-position: center left;
+  }
+
+  // Arrow next
+  .arrow.arrow-next .page-link::after {
+    width: var(--#{$prefix}pagination-arrow-font-size);
+    height: var(--#{$prefix}pagination-arrow-font-size);
+    margin-left: var(--#{$prefix}ref-spacer-1);
+    content: "";
+    background-image: var(--#{$prefix}pagination-arrow-next-icon-bg-image);
+    background-position: center right;
+  }
+
+  // Hide default icon
+  .arrow:is(.arrow-next, .arrow-prev).no-label .page-link > span {
+    display: none;
+  }
+
+  .arrow-prev.disabled .page-link::before {
+    background-image: var(--#{$prefix}pagination-disabled-arrow-prev-icon-bg-image);
+  }
+
+  .arrow-next.disabled .page-link::after {
+    background-image: var(--#{$prefix}pagination-disabled-arrow-next-icon-bg-image);
+  }
+
+  .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: var(--#{$prefix}pagination-page-border-radius);
+  }
+}

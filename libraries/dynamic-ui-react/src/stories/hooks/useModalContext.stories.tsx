@@ -1,16 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MButton, MModal } from '../../components';
+import { DButton, DModal } from '../../components';
 import { ModalContextProvider, useModalContext as useModalContextHook } from '../../contexts';
 import type { ModalProps } from '../../contexts';
 
 const ExampleModal = ({ closeModal }: ModalProps) => (
-  <MModal
+  <DModal
     name="example"
     isCentered
     isStatic
     showCloseButton
-    onMClose={() => closeModal()}
+    onEventClose={() => closeModal()}
   >
     <div slot="header">
       <h5 className="fw-bold">Do you want to reject the offer?</h5>
@@ -19,22 +19,22 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
       <p className="py-3 px-5">Modal body</p>
     </div>
     <div slot="footer">
-      <MButton
+      <DButton
         text="cancel"
         theme="secondary"
         variant="outline"
         className="d-grid"
         isPill
-        onMClick={() => closeModal()}
+        onEventClick={() => closeModal()}
       />
-      <MButton text="ok" className="d-grid" isPill />
+      <DButton text="ok" className="d-grid" isPill />
     </div>
-  </MModal>
+  </DModal>
 );
 
 const ExampleChildren = () => {
   const { openModal } = useModalContextHook();
-  return <MButton text="Open Modal" onMClick={() => openModal('example')} />;
+  return <DButton text="Open Modal" onEventClick={() => openModal('example')} />;
 };
 
 const Example = () => (

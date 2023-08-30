@@ -3,7 +3,8 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useMemo, useState,
+  useMemo,
+  useState,
 } from 'react';
 import type { PropsWithChildren, FC } from 'react';
 import { createPortal } from 'react-dom';

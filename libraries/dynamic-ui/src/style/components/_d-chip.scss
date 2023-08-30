@@ -1,0 +1,52 @@
+.d-chip {
+  --#{$prefix}chip-bg: #{$chip-bg};
+  --#{$prefix}chip-gap: #{$chip-gap};
+  --#{$prefix}chip-color: #{$chip-color};
+  --#{$prefix}chip-border-radius: #{$chip-border-radius};
+  --#{$prefix}chip-padding-x: #{$chip-padding-x};
+  --#{$prefix}chip-padding-y: #{$chip-padding-y};
+  --#{$prefix}chip-font-size: #{$chip-font-size};
+  --#{$prefix}chip-font-weight: #{$chip-font-weight};
+  --#{$prefix}chip-line-height: #{$chip-line-height};
+
+  display: flex;
+  flex-direction: row;
+  gap: var(--#{$prefix}chip-gap);
+  align-items: center;
+  padding: var(--#{$prefix}chip-padding-y) var(--#{$prefix}chip-padding-x);
+  font-size: var(--#{$prefix}chip-font-size);
+  font-weight: var(--#{$prefix}chip-font-weight);
+  line-height: var(--#{$prefix}chip-line-height);
+  color: var(--#{$prefix}chip-color);
+  background-color: var(--#{$prefix}chip-bg);
+  border-radius: var(--#{$prefix}chip-border-radius);
+
+  .d-icon {
+    --#{$prefix}icon-size: var(--#{$prefix}chip-font-size);
+  }
+
+  .d-chip-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--#{$prefix}chip-line-height);
+    height: var(--#{$prefix}chip-line-height);
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: 0;
+  }
+
+  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
+    $color: color-contrast($value);
+    &.d-chip-#{$theme} {
+      --#{$prefix}chip-color: var(--#{$prefix}#{$theme}-700);
+      --#{$prefix}chip-bg: var(--#{$prefix}#{$theme}-100);
+    }
+  }
+
+  &.d-chip-light {
+    --#{$prefix}chip-color: var(--#{$prefix}gray);
+    --#{$prefix}chip-bg: var(--#{$prefix}gray-100);
+  }
+}

@@ -9,25 +9,25 @@ import { defineCustomElements } from '@dynamic-framework/ui/loader';
 
 defineCustomElements();
 
-export const MAlert = /*@__PURE__*/ defineContainer<JSX.MAlert>('m-alert', undefined, [
+export const DAlert = /*@__PURE__*/ defineContainer<JSX.DAlert>('d-alert', undefined, [
   'type',
   'icon',
   'iconFamilyClass',
   'iconFamilyPrefix',
   'showIcon',
   'showClose',
-  'mClose'
+  'eventClose'
 ]);
 
 
-export const MBadge = /*@__PURE__*/ defineContainer<JSX.MBadge>('m-badge', undefined, [
+export const DBadge = /*@__PURE__*/ defineContainer<JSX.DBadge>('d-badge', undefined, [
   'theme',
   'text',
   'isDot'
 ]);
 
 
-export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', undefined, [
+export const DButton = /*@__PURE__*/ defineContainer<JSX.DButton>('d-button', undefined, [
   'theme',
   'size',
   'variant',
@@ -44,22 +44,23 @@ export const MButton = /*@__PURE__*/ defineContainer<JSX.MButton>('m-button', un
   'isPill',
   'isLoading',
   'isDisabled',
-  'mClick'
+  'isStopPropagationEnabled',
+  'eventClick'
 ]);
 
 
-export const MChip = /*@__PURE__*/ defineContainer<JSX.MChip>('m-chip', undefined, [
+export const DChip = /*@__PURE__*/ defineContainer<JSX.DChip>('d-chip', undefined, [
   'theme',
   'text',
   'icon',
   'iconFamilyClass',
   'iconFamilyPrefix',
   'showClose',
-  'mClose'
+  'eventClose'
 ]);
 
 
-export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefined, [
+export const DIcon = /*@__PURE__*/ defineContainer<JSX.DIcon>('d-icon', undefined, [
   'icon',
   'theme',
   'innerClass',
@@ -75,8 +76,8 @@ export const MIcon = /*@__PURE__*/ defineContainer<JSX.MIcon>('m-icon', undefine
 ]);
 
 
-export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undefined, [
-  'mId',
+export const DInput = /*@__PURE__*/ defineContainer<JSX.DInput>('d-input', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -85,7 +86,7 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'placeholder',
   'type',
   'value',
-  'mInputMode',
+  'innerInputMode',
   'pattern',
   'isDisabled',
   'isReadOnly',
@@ -101,30 +102,30 @@ export const MInput = /*@__PURE__*/ defineContainer<JSX.MInput>('m-input', undef
   'hint',
   'isInvalid',
   'isValid',
-  'mChange',
-  'mBlur',
-  'mFocus',
-  'mWheel',
-  'mIconStartClick',
-  'mIconEndClick'
+  'eventChange',
+  'eventBlur',
+  'eventFocus',
+  'eventWheel',
+  'eventIconStartClick',
+  'eventIconEndClick'
 ]);
 
 
-export const MInputCheck = /*@__PURE__*/ defineContainer<JSX.MInputCheck>('m-input-check', undefined, [
+export const DInputCheck = /*@__PURE__*/ defineContainer<JSX.DInputCheck>('d-input-check', undefined, [
   'type',
   'name',
   'label',
   'isChecked',
-  'mId',
+  'innerId',
   'isDisabled',
   'isIndeterminate',
   'value',
-  'mChange'
+  'eventChange'
 ]);
 
 
-export const MInputCounter = /*@__PURE__*/ defineContainer<JSX.MInputCounter>('m-input-counter', undefined, [
-  'mId',
+export const DInputCounter = /*@__PURE__*/ defineContainer<JSX.DInputCounter>('d-input-counter', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -147,13 +148,13 @@ export const MInputCounter = /*@__PURE__*/ defineContainer<JSX.MInputCounter>('m
   'isValid',
   'minValue',
   'maxValue',
-  'mChange',
-  'mClick'
+  'eventChange',
+  'eventClick'
 ]);
 
 
-export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurrencyBase>('m-input-currency-base', undefined, [
-  'mId',
+export const DInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.DInputCurrencyBase>('d-input-currency-base', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -179,14 +180,14 @@ export const MInputCurrencyBase = /*@__PURE__*/ defineContainer<JSX.MInputCurren
   'maxValue',
   'currencyOptions',
   'currencyCode',
-  'mChange',
-  'mBlur',
-  'mFocus'
+  'eventChange',
+  'eventBlur',
+  'eventFocus'
 ]);
 
 
-export const MInputPassword = /*@__PURE__*/ defineContainer<JSX.MInputPassword>('m-input-password', undefined, [
-  'mId',
+export const DInputPassword = /*@__PURE__*/ defineContainer<JSX.DInputPassword>('d-input-password', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -200,12 +201,12 @@ export const MInputPassword = /*@__PURE__*/ defineContainer<JSX.MInputPassword>(
   'hint',
   'isInvalid',
   'isValid',
-  'mChange'
+  'eventChange'
 ]);
 
 
-export const MInputPin = /*@__PURE__*/ defineContainer<JSX.MInputPin>('m-input-pin', undefined, [
-  'mId',
+export const DInputPin = /*@__PURE__*/ defineContainer<JSX.DInputPin>('d-input-pin', undefined, [
+  'innerId',
   'label',
   'labelIcon',
   'labelIconFamilyClass',
@@ -219,16 +220,16 @@ export const MInputPin = /*@__PURE__*/ defineContainer<JSX.MInputPin>('m-input-p
   'iconFamilyClass',
   'iconFamilyPrefix',
   'characters',
-  'mInputMode',
+  'innerInputMode',
   'hint',
   'isInvalid',
   'isValid',
-  'mChange'
+  'eventChange'
 ]);
 
 
-export const MInputSearch = /*@__PURE__*/ defineContainer<JSX.MInputSearch>('m-input-search', undefined, [
-  'mId',
+export const DInputSearch = /*@__PURE__*/ defineContainer<JSX.DInputSearch>('d-input-search', undefined, [
+  'innerId',
   'name',
   'label',
   'labelIcon',
@@ -242,13 +243,13 @@ export const MInputSearch = /*@__PURE__*/ defineContainer<JSX.MInputSearch>('m-i
   'hint',
   'isInvalid',
   'isValid',
-  'mChange',
-  'mClick'
+  'eventChange',
+  'eventClick'
 ]);
 
 
-export const MInputSelect = /*@__PURE__*/ defineContainer<JSX.MInputSelect>('m-input-select', undefined, [
-  'mId',
+export const DInputSelect = /*@__PURE__*/ defineContainer<JSX.DInputSelect>('d-input-select', undefined, [
+  'innerId',
   'name',
   'label',
   'options',
@@ -269,25 +270,25 @@ export const MInputSelect = /*@__PURE__*/ defineContainer<JSX.MInputSelect>('m-i
   'selectedOption',
   'valueExtractor',
   'labelExtractor',
-  'mChange',
-  'mBlur',
-  'mIconStartClick',
-  'mIconEndClick'
+  'eventChange',
+  'eventBlur',
+  'eventIconStartClick',
+  'eventIconEndClick'
 ]);
 
 
-export const MInputSwitch = /*@__PURE__*/ defineContainer<JSX.MInputSwitch>('m-input-switch', undefined, [
+export const DInputSwitch = /*@__PURE__*/ defineContainer<JSX.DInputSwitch>('d-input-switch', undefined, [
   'label',
-  'mId',
+  'innerId',
   'name',
   'isChecked',
   'isDisabled',
   'isReadonly',
-  'mChange'
+  'eventChange'
 ]);
 
 
-export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undefined, [
+export const DModal = /*@__PURE__*/ defineContainer<JSX.DModal>('d-modal', undefined, [
   'name',
   'isStatic',
   'isScrollable',
@@ -297,22 +298,22 @@ export const MModal = /*@__PURE__*/ defineContainer<JSX.MModal>('m-modal', undef
   'modalSize',
   'showCloseButton',
   'footerActionPlacement',
-  'mClose'
+  'eventClose'
 ]);
 
 
-export const MOffcanvas = /*@__PURE__*/ defineContainer<JSX.MOffcanvas>('m-offcanvas', undefined, [
+export const DOffcanvas = /*@__PURE__*/ defineContainer<JSX.DOffcanvas>('d-offcanvas', undefined, [
   'name',
   'isStatic',
   'isScrollable',
   'showCloseButton',
   'openFrom',
   'footerActionPlacement',
-  'mClose'
+  'eventClose'
 ]);
 
 
-export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-progress-bar', undefined, [
+export const DProgress = /*@__PURE__*/ defineContainer<JSX.DProgress>('d-progress', undefined, [
   'currentValue',
   'minValue',
   'maxValue',
@@ -321,7 +322,7 @@ export const MProgressBar = /*@__PURE__*/ defineContainer<JSX.MProgressBar>('m-p
 ]);
 
 
-export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickActionButton>('m-quick-action-button', undefined, [
+export const DQuickActionButton = /*@__PURE__*/ defineContainer<JSX.DQuickActionButton>('d-quick-action-button', undefined, [
   'line1',
   'line2',
   'actionLinkText',
@@ -336,41 +337,41 @@ export const MQuickActionButton = /*@__PURE__*/ defineContainer<JSX.MQuickAction
   'representativeIconHasCircle',
   'representativeIconFamilyClass',
   'representativeIconFamilyPrefix',
-  'mClick',
-  'mClickSecondary'
+  'eventClick',
+  'eventClickSecondary'
 ]);
 
 
-export const MQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.MQuickActionCheck>('m-quick-action-check', undefined, [
-  'mId',
+export const DQuickActionCheck = /*@__PURE__*/ defineContainer<JSX.DQuickActionCheck>('d-quick-action-check', undefined, [
+  'innerId',
   'name',
   'value',
   'line1',
   'line2',
   'line3',
   'isChecked',
-  'mChange'
+  'eventChange'
 ]);
 
 
-export const MQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.MQuickActionSelect>('m-quick-action-select', undefined, [
-  'mId',
+export const DQuickActionSelect = /*@__PURE__*/ defineContainer<JSX.DQuickActionSelect>('d-quick-action-select', undefined, [
+  'innerId',
   'name',
   'value',
   'line1',
   'line2',
   'isSelected',
-  'mChange'
+  'eventChange'
 ]);
 
 
-export const MQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.MQuickActionSwitch>('m-quick-action-switch', undefined, [
-  'mId',
+export const DQuickActionSwitch = /*@__PURE__*/ defineContainer<JSX.DQuickActionSwitch>('d-quick-action-switch', undefined, [
+  'innerId',
   'name',
   'label',
   'hint',
   'isChecked',
   'isDisabled',
-  'mClick'
+  'eventClick'
 ]);
 

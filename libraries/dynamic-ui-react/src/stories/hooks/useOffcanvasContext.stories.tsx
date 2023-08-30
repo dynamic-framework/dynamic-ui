@@ -1,17 +1,17 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MButton, MOffcanvas } from '../../components';
+import { DButton, DOffcanvas } from '../../components';
 import { OffcanvasContextProvider, useOffcanvasContext as useOffcanvasContextHook } from '../../contexts';
 import type { OffcanvasProps } from '../../contexts';
 
 const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
-  <MOffcanvas
+  <DOffcanvas
     name="example"
     isStatic={false}
     isScrollable={false}
     showCloseButton
     openFrom="end"
-    onMClose={() => closeOffcanvas()}
+    onEventClose={() => closeOffcanvas()}
   >
     <div slot="header">
       <h5 className="fw-bold">Advanced filters</h5>
@@ -20,22 +20,22 @@ const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
       <p>Offcanvas body</p>
     </div>
     <div slot="footer">
-      <MButton
+      <DButton
         text="cancel"
         theme="secondary"
         variant="outline"
         className="d-grid"
         isPill
-        onMClick={() => closeOffcanvas()}
+        onEventClick={() => closeOffcanvas()}
       />
-      <MButton text="ok" className="d-grid" isPill />
+      <DButton text="ok" className="d-grid" isPill />
     </div>
-  </MOffcanvas>
+  </DOffcanvas>
 );
 
 const ExampleChildren = () => {
   const { openOffcanvas } = useOffcanvasContextHook();
-  return <MButton text="Open Offcanvas" onMClick={() => openOffcanvas('example')} />;
+  return <DButton text="Open Offcanvas" onEventClick={() => openOffcanvas('example')} />;
 };
 
 const Example = () => (
@@ -55,7 +55,7 @@ const config: Meta<typeof Example> = {
 };
 
 export default config;
-type Story = StoryObj<typeof MOffcanvas>;
+type Story = StoryObj<typeof DOffcanvas>;
 
 export const useOffcanvasContext: Story = {
   render: () => <Example />,
