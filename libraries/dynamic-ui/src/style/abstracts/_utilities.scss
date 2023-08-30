@@ -20,7 +20,7 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "color"), "values"),
-          $all-colors-text,
+          $palette-grays,
         )
       )
     ),
@@ -29,7 +29,7 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "background-color"), "values"),
-          map-merge($all-colors-bg, $bg-soft-colors),
+          map-merge($palette-grays, $bg-soft-colors),
         )
       )
     ),
@@ -49,7 +49,7 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "border-color"), "values"),
-          $all-colors-border,
+          $palette-grays,
         )
       )
     ),

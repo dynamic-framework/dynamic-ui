@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react';
 
-import MSkeleton from '../../src/components/MSkeleton';
+import DSkeleton from '../../src/components/DSkeleton';
 
-describe('MSkeleton', () => {
+describe('DSkeleton', () => {
   test('renders without crashing', () => {
     render(
-      <MSkeleton>
+      <DSkeleton>
         <rect className="hello" x="22" y="13" rx="0" ry="0" width="249" height="51" />
-      </MSkeleton>,
+      </DSkeleton>,
     );
   });
 });

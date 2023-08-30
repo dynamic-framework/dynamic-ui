@@ -1,0 +1,16 @@
+.d-collapse-icon-text {
+  --#{$prefix}collapse-icon-text-header-gap: #{$collapse-icon-text-header-gap};
+  --#{$prefix}collapse-icon-text-header-font-size: #{$collapse-icon-text-header-font-size};
+  --#{$prefix}collapse-icon-text-header-font-weight: #{$collapse-icon-text-header-font-weight};
+
+  .d-collapse-icon-text-header {
+    display: flex;
+    gap: var(--#{$prefix}collapse-icon-text-header-gap);
+    align-items: center;
+  }
+
+  .d-collapse-icon-text-title {
+    font-size: var(--#{$prefix}collapse-icon-text-header-font-size);
+    font-weight: var(--#{$prefix}collapse-icon-text-header-font-weight);
+  }
+}

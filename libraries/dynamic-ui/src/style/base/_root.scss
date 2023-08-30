@@ -1,22 +1,13 @@
 :root {
   @each $color, $value in $bg-soft-colors {
     --#{$prefix}#{$color}: #{$value};
+  }
+
+  @each $color, $value in $palette-grays {
     --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
   }
 
-  @each $color, $value in $colors {
-    --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
-  }
-
-  @each $color, $value in $palette-colors {
-    --#{$prefix}#{$color}: #{$value};
-  }
-
-  @each $color, $value in $palette-colors-rgb {
-    --#{$prefix}#{$color}-rgb: #{$value};
-  }
-
-  @each $color, $value in $theme-color-variants {
+  @each $color, $value in $theme-colors-palletes {
     --#{$prefix}#{$color}: #{$value};
   }
 
@@ -32,7 +23,6 @@
   @each $level, $value in $font-sizes {
     --#{$prefix}ref-fs-#{$level}: #{$value};
   }
-  --#{$prefix}ref-fs-subparagraph: #{$subparagraph-font-size};
   --#{$prefix}ref-fs-small: #{$small-font-size};
 
   --#{$prefix}ref-fw-lighter: #{$font-weight-lighter};

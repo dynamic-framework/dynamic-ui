@@ -1,0 +1,73 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import classNames from 'classnames';
+import { DButton, DIcon } from './proxies';
+import DCard from './DCard';
+import DCardBody from './DCardBody';
+
+type Props = {
+  className?: string;
+  icon: string;
+  theme: string;
+  name: string;
+  number: string;
+  balance: string;
+  balanceText: string;
+  onEventClick: () => void;
+  actionText: string;
+};
+export default function DCardAccount({
+  className,
+  icon,
+  theme,
+  name,
+  number,
+  balance,
+  balanceText,
+  onEventClick,
+  actionText,
+}: Props) {
+  return (
+    <DCard className={classNames(
+      'd-card-account',
+      className,
+    )}
+    >
+      <DCardBody>
+        <div className="d-flex gap-3 align-items-center">
+          <DIcon
+            icon={icon}
+            hasCircle
+            theme={theme}
+            size="1.5rem"
+          />
+          <div className="d-block flex-grow-1">
+            <p className="text-gray-700">
+              {name}
+            </p>
+            <small className="text-gray">
+              {number}
+            </small>
+          </div>
+        </div>
+        <div className="d-block">
+          <p className="fw-bold fs-6 text-body">
+            {balance}
+          </p>
+          <small className="text-gray-700">
+            {balanceText}
+          </small>
+        </div>
+        <div className="d-flex justify-content-end">
+          <DButton
+            text={actionText}
+            variant="link"
+            size="sm"
+            theme="secondary"
+            iconEnd="chevron-right"
+            onEventClick={onEventClick}
+          />
+        </div>
+      </DCardBody>
+    </DCard>
+  );
+}

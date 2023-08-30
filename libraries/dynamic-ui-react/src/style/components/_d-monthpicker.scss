@@ -1,0 +1,90 @@
+// stylelint-disable selector-class-pattern
+
+.react-datepicker.d-month-picker {
+  // Month variables
+  --#{$prefix}monthpicker-header-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-2) 0;
+  --#{$prefix}monthpicker-font-weight: var(--#{$prefix}ref-fw-normal);
+  --#{$prefix}monthpicker-header-color: var(--#{$prefix}white);
+  --#{$prefix}monthpicker-header-bg: var(--#{$prefix}dark);
+
+  --#{$prefix}monthpicker-month-gap: 0;
+  --#{$prefix}monthpicker-month-padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}monthpicker-month-color: var(--#{$prefix}white);
+  --#{$prefix}monthpicker-month-bg: var(--#{$prefix}dark);
+
+  --#{$prefix}monthpicker-month-today-color: var(--#{$prefix}white);
+  --#{$prefix}monthpicker-month-selected-bg: var(--#{$prefix}gray-500);
+  --#{$prefix}monthpicker-month-selected-box-shadow: 0 0 0 1px inset var(--#{$prefix}gray-100);
+
+  --#{$prefix}monthpicker-month-hover-bg: var(--#{$prefix}gray-700);
+
+  --#{$prefix}monthpicker-month-wrapper-gap: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}monthpicker-month-wrapper-font-size: var(--#{$prefix}ref-fs-small);
+
+  --#{$prefix}monthpicker-single-month-width: 46px;
+  --#{$prefix}monthpicker-single-month-padding: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}monthpicker-single-month-margin: 0;
+  --#{$prefix}monthpicker-single-month-text-transform: capitalize;
+  --#{$prefix}monthpicker-single-month-radius: var(--#{$prefix}ref-spacer-4);
+
+  --#{$prefix}monthpicker-single-month-after-display: inline;
+  --#{$prefix}monthpicker-single-month-after-content: ".";
+
+  --#{$prefix}datepicker-triangle-color: var(--#{$prefix}dark);
+
+  font-family: var(--#{$prefix}datepicker-font-family);
+  border: var(--#{$prefix}datepicker-border);
+  box-shadow: var(--#{$prefix}datepicker-box-shadow);
+
+  .react-datepicker__header {
+    padding: var(--#{$prefix}monthpicker-header-padding);
+    font-weight: var(--#{$prefix}monthpicker-font-weight);
+    color: var(--#{$prefix}monthpicker-header-color);
+    background-color: var(--#{$prefix}monthpicker-header-bg);
+  }
+
+  .react-datepicker__month.react-datepicker__monthPicker,
+  .react-datepicker__header.react-datepicker-year-header {
+    gap: var(--#{$prefix}monthpicker-month-gap);
+    padding: var(--#{$prefix}monthpicker-month-padding);
+    color: var(--#{$prefix}monthpicker-month-color);
+    background-color: var(--#{$prefix}monthpicker-month-bg);
+
+  }
+  .react-datepicker__month--selected,
+  .react-datepicker__month-text--in-range,
+  .react-datepicker__month-text--in-selecting-range,
+  .react-datepicker__month-text--keyboard-selected {
+    color: var(--#{$prefix}monthpicker-month-today-color);
+    background-color: var(--#{$prefix}monthpicker-month-selected-bg);
+    box-shadow: var(--#{$prefix}monthpicker-month-selected-box-shadow);
+  }
+  .react-datepicker__month-text:hover {
+    background-color: var(--#{$prefix}monthpicker-month-hover-bg);
+  }
+  .react-datepicker__month-wrapper {
+    display: flex;
+    gap: var(--#{$prefix}monthpicker-month-wrapper-gap);
+    font-size: var(--#{$prefix}monthpicker-month-wrapper-font-size);
+    .react-datepicker__month-text {
+      width: var(--#{$prefix}monthpicker-single-month-width);
+      padding: var(--#{$prefix}monthpicker-single-month-padding);
+      margin: var(--#{$prefix}monthpicker-single-month-margin);
+      text-transform: var(--#{$prefix}monthpicker-single-month-text-transform);
+      border-radius: var(--#{$prefix}monthpicker-single-month-radius);
+      &::after {
+        display: var(--#{$prefix}monthpicker-single-month-after-display);
+        content: var(--#{$prefix}monthpicker-single-month-after-content);
+      }
+    }
+  }
+  .react-datepicker__triangle {
+    &::after,
+    &::before {
+      top: 0;
+      border-bottom-color: var(--#{$prefix}datepicker-triangle-color);
+    }
+  }
+}
+
+// stylelint-enable selector-class-pattern

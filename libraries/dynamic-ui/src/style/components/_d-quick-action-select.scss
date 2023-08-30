@@ -1,0 +1,56 @@
+.d-quick-action-select {
+  --#{$prefix}quick-action-select-padding: #{$quick-action-select-padding};
+  --#{$prefix}quick-action-select-bg: #{$quick-action-select-bg};
+  --#{$prefix}quick-action-select-border-radius: #{$quick-action-select-border-radius};
+
+  --#{$prefix}quick-action-select-line1-font-size: #{$quick-action-select-line1-font-size};
+  --#{$prefix}quick-action-select-line1-font-weight: #{$quick-action-select-line1-font-weight};
+  --#{$prefix}quick-action-select-line1-color: #{$quick-action-select-line1-color};
+
+  --#{$prefix}quick-action-select-line2-font-size: #{$quick-action-select-line2-font-size};
+  --#{$prefix}quick-action-select-line2-font-weight: #{$quick-action-select-line2-font-weight};
+  --#{$prefix}quick-action-select-line2-color: #{$quick-action-select-line2-color};
+
+  --#{$prefix}quick-action-select-hover-bg: #{$quick-action-select-hover-bg};
+
+  --#{$prefix}quick-action-select-checked-bg: #{$quick-action-select-checked-bg};
+  --#{$prefix}quick-action-select-checked-color: #{$quick-action-select-checked-color};
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--#{$prefix}quick-action-select-padding);
+  text-align: left;
+  cursor: pointer;
+  background-color: var(--#{$prefix}quick-action-select-bg);
+  border-radius: var(--#{$prefix}quick-action-select-border-radius);
+
+  input {
+    display: none;
+  }
+
+  &:hover {
+    background: var(--#{$prefix}quick-action-select-hover-bg);
+  }
+
+  &:has(input:checked) {
+    background: var(--#{$prefix}quick-action-select-checked-bg);
+
+    .d-quick-action-select-line1,
+    .d-quick-action-select-line2 {
+      color: var(--#{$prefix}quick-action-select-checked-color);
+    }
+  }
+
+  .d-quick-action-select-line1 {
+    font-size: var(--#{$prefix}quick-action-select-line1-font-size);
+    font-weight: var(--#{$prefix}quick-action-select-line1-font-weight);
+    color: var(--#{$prefix}quick-action-select-line1-color);
+  }
+
+  .d-quick-action-select-line2 {
+    font-size: var(--#{$prefix}quick-action-select-line2-font-size);
+    font-weight: var(--#{$prefix}quick-action-select-line2-font-weight);
+    color: var(--#{$prefix}quick-action-select-line2-color);
+  }
+}

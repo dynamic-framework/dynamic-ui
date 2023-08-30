@@ -1,0 +1,38 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '@dynamic-framework/ui';
+
+import * as DButtonStories from './DButton.stories';
+
+# Button
+
+Consolidation of all the buttons with they respective instance.
+
+The css variables available by default can be seen in the bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                    | Type             | Description                     |
+  |---------------------------------------------|------------------|---------------------------------|
+  | \`--${PREFIX_BS}btn-link-padding-y\`        | css length unit  | Button link padding vertical    |
+  | \`--${PREFIX_BS}btn-link-padding-x\`        | css length unit  | Button link padding horizontal  |
+  | \`--${PREFIX_BS}btn-link-font-size-sm\`     | css length unit  | Button link font size           |
+  | \`--${PREFIX_BS}btn-border-radius\`         | css length unit  | Button border radius            |
+
+  `}
+</Markdown>
+
++ [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/buttons/#variables)
+
+## Args
+<Meta of={DButtonStories} />
+
+<ArgTypes of={DButtonStories} />
+
+<Stories />

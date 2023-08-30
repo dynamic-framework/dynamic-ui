@@ -1,0 +1,12 @@
+.d-popover {
+  position: relative;
+  width: 100%;
+
+  .d-popover-content {
+    width: 100%;
+
+    &:focus-visible {
+      outline: 0;
+    }
+  }
+}

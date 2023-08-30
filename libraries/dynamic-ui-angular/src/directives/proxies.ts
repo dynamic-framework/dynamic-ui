@@ -6,68 +6,68 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 import type { Components } from '@dynamic-framework/ui/components';
 
-import { defineCustomElement as defineMAlert } from '@dynamic-framework/ui/components/m-alert.js';
-import { defineCustomElement as defineMBadge } from '@dynamic-framework/ui/components/m-badge.js';
-import { defineCustomElement as defineMButton } from '@dynamic-framework/ui/components/m-button.js';
-import { defineCustomElement as defineMChip } from '@dynamic-framework/ui/components/m-chip.js';
-import { defineCustomElement as defineMIcon } from '@dynamic-framework/ui/components/m-icon.js';
-import { defineCustomElement as defineMInput } from '@dynamic-framework/ui/components/m-input.js';
-import { defineCustomElement as defineMInputCheck } from '@dynamic-framework/ui/components/m-input-check.js';
-import { defineCustomElement as defineMInputCounter } from '@dynamic-framework/ui/components/m-input-counter.js';
-import { defineCustomElement as defineMInputCurrencyBase } from '@dynamic-framework/ui/components/m-input-currency-base.js';
-import { defineCustomElement as defineMInputPassword } from '@dynamic-framework/ui/components/m-input-password.js';
-import { defineCustomElement as defineMInputPin } from '@dynamic-framework/ui/components/m-input-pin.js';
-import { defineCustomElement as defineMInputSearch } from '@dynamic-framework/ui/components/m-input-search.js';
-import { defineCustomElement as defineMInputSelect } from '@dynamic-framework/ui/components/m-input-select.js';
-import { defineCustomElement as defineMInputSwitch } from '@dynamic-framework/ui/components/m-input-switch.js';
-import { defineCustomElement as defineMModal } from '@dynamic-framework/ui/components/m-modal.js';
-import { defineCustomElement as defineMOffcanvas } from '@dynamic-framework/ui/components/m-offcanvas.js';
-import { defineCustomElement as defineMProgressBar } from '@dynamic-framework/ui/components/m-progress-bar.js';
-import { defineCustomElement as defineMQuickActionButton } from '@dynamic-framework/ui/components/m-quick-action-button.js';
-import { defineCustomElement as defineMQuickActionCheck } from '@dynamic-framework/ui/components/m-quick-action-check.js';
-import { defineCustomElement as defineMQuickActionSelect } from '@dynamic-framework/ui/components/m-quick-action-select.js';
-import { defineCustomElement as defineMQuickActionSwitch } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
+import { defineCustomElement as defineDAlert } from '@dynamic-framework/ui/components/d-alert.js';
+import { defineCustomElement as defineDBadge } from '@dynamic-framework/ui/components/d-badge.js';
+import { defineCustomElement as defineDButton } from '@dynamic-framework/ui/components/d-button.js';
+import { defineCustomElement as defineDChip } from '@dynamic-framework/ui/components/d-chip.js';
+import { defineCustomElement as defineDIcon } from '@dynamic-framework/ui/components/d-icon.js';
+import { defineCustomElement as defineDInput } from '@dynamic-framework/ui/components/d-input.js';
+import { defineCustomElement as defineDInputCheck } from '@dynamic-framework/ui/components/d-input-check.js';
+import { defineCustomElement as defineDInputCounter } from '@dynamic-framework/ui/components/d-input-counter.js';
+import { defineCustomElement as defineDInputCurrencyBase } from '@dynamic-framework/ui/components/d-input-currency-base.js';
+import { defineCustomElement as defineDInputPassword } from '@dynamic-framework/ui/components/d-input-password.js';
+import { defineCustomElement as defineDInputPin } from '@dynamic-framework/ui/components/d-input-pin.js';
+import { defineCustomElement as defineDInputSearch } from '@dynamic-framework/ui/components/d-input-search.js';
+import { defineCustomElement as defineDInputSelect } from '@dynamic-framework/ui/components/d-input-select.js';
+import { defineCustomElement as defineDInputSwitch } from '@dynamic-framework/ui/components/d-input-switch.js';
+import { defineCustomElement as defineDModal } from '@dynamic-framework/ui/components/d-modal.js';
+import { defineCustomElement as defineDOffcanvas } from '@dynamic-framework/ui/components/d-offcanvas.js';
+import { defineCustomElement as defineDProgress } from '@dynamic-framework/ui/components/d-progress.js';
+import { defineCustomElement as defineDQuickActionButton } from '@dynamic-framework/ui/components/d-quick-action-button.js';
+import { defineCustomElement as defineDQuickActionCheck } from '@dynamic-framework/ui/components/d-quick-action-check.js';
+import { defineCustomElement as defineDQuickActionSelect } from '@dynamic-framework/ui/components/d-quick-action-select.js';
+import { defineCustomElement as defineDQuickActionSwitch } from '@dynamic-framework/ui/components/d-quick-action-switch.js';
 @ProxyCmp({
-  defineCustomElementFn: defineMAlert,
+  defineCustomElementFn: defineDAlert,
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type']
 })
 @Component({
-  selector: 'm-alert',
+  selector: 'd-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'showIcon', 'type'],
 })
-export class MAlert {
+export class DAlert {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClose']);
+    proxyOutputs(this, this.el, ['eventClose']);
   }
 }
 
 
-export declare interface MAlert extends Components.MAlert {
+export declare interface DAlert extends Components.DAlert {
   /**
    * Emitted when the button has been clicked.
    */
-  mClose: EventEmitter<CustomEvent<any>>;
+  eventClose: EventEmitter<CustomEvent<any>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMBadge,
+  defineCustomElementFn: defineDBadge,
   inputs: ['isDot', 'text', 'theme']
 })
 @Component({
-  selector: 'm-badge',
+  selector: 'd-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['isDot', 'text', 'theme'],
 })
-export class MBadge {
+export class DBadge {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -76,79 +76,79 @@ export class MBadge {
 }
 
 
-export declare interface MBadge extends Components.MBadge {}
+export declare interface DBadge extends Components.DBadge {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMButton,
-  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isPill', 'size', 'state', 'text', 'theme', 'type', 'value', 'variant']
+  defineCustomElementFn: defineDButton,
+  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isPill', 'isStopPropagationEnabled', 'size', 'state', 'text', 'theme', 'type', 'value', 'variant']
 })
 @Component({
-  selector: 'm-button',
+  selector: 'd-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isPill', 'size', 'state', 'text', 'theme', 'type', 'value', 'variant'],
+  inputs: ['iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'isPill', 'isStopPropagationEnabled', 'size', 'state', 'text', 'theme', 'type', 'value', 'variant'],
 })
-export class MButton {
+export class DButton {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClick']);
+    proxyOutputs(this, this.el, ['eventClick']);
   }
 }
 
 
-export declare interface MButton extends Components.MButton {
+export declare interface DButton extends Components.DButton {
   /**
    * Emitted when the button has been clicked.
    */
-  mClick: EventEmitter<CustomEvent<any>>;
+  eventClick: EventEmitter<CustomEvent<any>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMChip,
+  defineCustomElementFn: defineDChip,
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'text', 'theme']
 })
 @Component({
-  selector: 'm-chip',
+  selector: 'd-chip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['icon', 'iconFamilyClass', 'iconFamilyPrefix', 'showClose', 'text', 'theme'],
 })
-export class MChip {
+export class DChip {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClose']);
+    proxyOutputs(this, this.el, ['eventClose']);
   }
 }
 
 
-export declare interface MChip extends Components.MChip {
+export declare interface DChip extends Components.DChip {
   /**
    * Emitted when the close button has been clicked.
    */
-  mClose: EventEmitter<CustomEvent<any>>;
+  eventClose: EventEmitter<CustomEvent<any>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMIcon,
+  defineCustomElementFn: defineDIcon,
   inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme']
 })
 @Component({
-  selector: 'm-icon',
+  selector: 'd-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['backgroundColor', 'circleSize', 'color', 'familyClass', 'familyPrefix', 'hasCircle', 'icon', 'innerClass', 'isLoading', 'loadingDuration', 'size', 'theme'],
 })
-export class MIcon {
+export class DIcon {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -157,389 +157,389 @@ export class MIcon {
 }
 
 
-export declare interface MIcon extends Components.MIcon {}
+export declare interface DIcon extends Components.DIcon {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInput,
-  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'mInputMode', 'name', 'pattern', 'placeholder', 'type', 'value'],
-  methods: ['focusInput', 'blurInput']
+  defineCustomElementFn: defineDInput,
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'innerInputMode', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'pattern', 'placeholder', 'type', 'value'],
+  methods: ['innerFocus', 'innerBlur']
 })
 @Component({
-  selector: 'm-input',
+  selector: 'd-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'mInputMode', 'name', 'pattern', 'placeholder', 'type', 'value'],
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'innerInputMode', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'pattern', 'placeholder', 'type', 'value'],
 })
-export class MInput {
+export class DInput {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange', 'mBlur', 'mFocus', 'mWheel', 'mIconStartClick', 'mIconEndClick']);
+    proxyOutputs(this, this.el, ['eventChange', 'eventBlur', 'eventFocus', 'eventWheel', 'eventIconStartClick', 'eventIconEndClick']);
   }
 }
 
 
-export declare interface MInput extends Components.MInput {
+export declare interface DInput extends Components.DInput {
   /**
    * Emitted when the input value has changed
    */
-  mChange: EventEmitter<CustomEvent<string | number>>;
+  eventChange: EventEmitter<CustomEvent<string | number>>;
   /**
    * Emitted when blur the input
    */
-  mBlur: EventEmitter<CustomEvent<any>>;
+  eventBlur: EventEmitter<CustomEvent<any>>;
   /**
    * Emitted when blur the input
    */
-  mFocus: EventEmitter<CustomEvent<any>>;
+  eventFocus: EventEmitter<CustomEvent<any>>;
   /**
    * Emitted when blur the input
    */
-  mWheel: EventEmitter<CustomEvent<any>>;
+  eventWheel: EventEmitter<CustomEvent<any>>;
   /**
    * Emitted when click on the left icon
    */
-  mIconStartClick: EventEmitter<CustomEvent<MouseEvent>>;
+  eventIconStartClick: EventEmitter<CustomEvent<MouseEvent>>;
   /**
    * Emitted when click on the right icon
    */
-  mIconEndClick: EventEmitter<CustomEvent<MouseEvent>>;
+  eventIconEndClick: EventEmitter<CustomEvent<MouseEvent>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputCheck,
-  inputs: ['isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'type', 'value']
+  defineCustomElementFn: defineDInputCheck,
+  inputs: ['innerId', 'isChecked', 'isDisabled', 'isIndeterminate', 'label', 'name', 'type', 'value']
 })
 @Component({
-  selector: 'm-input-check',
+  selector: 'd-input-check',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'isDisabled', 'isIndeterminate', 'label', 'mId', 'name', 'type', 'value'],
+  inputs: ['innerId', 'isChecked', 'isDisabled', 'isIndeterminate', 'label', 'name', 'type', 'value'],
 })
-export class MInputCheck {
+export class DInputCheck {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['eventChange']);
   }
 }
 
 
-export declare interface MInputCheck extends Components.MInputCheck {
+export declare interface DInputCheck extends Components.DInputCheck {
   /**
    * Emitted when the switch has changed
    */
-  mChange: EventEmitter<CustomEvent<any>>;
+  eventChange: EventEmitter<CustomEvent<any>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputCounter,
-  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'value']
+  defineCustomElementFn: defineDInputCounter,
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'maxValue', 'minValue', 'name', 'value']
 })
 @Component({
-  selector: 'm-input-counter',
+  selector: 'd-input-counter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'value'],
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'maxValue', 'minValue', 'name', 'value'],
 })
-export class MInputCounter {
+export class DInputCounter {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange', 'mClick']);
+    proxyOutputs(this, this.el, ['eventChange', 'eventClick']);
   }
 }
 
 
-export declare interface MInputCounter extends Components.MInputCounter {
+export declare interface DInputCounter extends Components.DInputCounter {
   /**
    * Event for input change
    */
-  mChange: EventEmitter<CustomEvent<number>>;
+  eventChange: EventEmitter<CustomEvent<number>>;
   /**
    * Event for button pressed
    */
-  mClick: EventEmitter<CustomEvent<number>>;
+  eventClick: EventEmitter<CustomEvent<number>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputCurrencyBase,
-  inputs: ['currencyCode', 'currencyOptions', 'hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'placeholder', 'value']
+  defineCustomElementFn: defineDInputCurrencyBase,
+  inputs: ['currencyCode', 'currencyOptions', 'hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'maxValue', 'minValue', 'name', 'placeholder', 'value']
 })
 @Component({
-  selector: 'm-input-currency-base',
+  selector: 'd-input-currency-base',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['currencyCode', 'currencyOptions', 'hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'maxValue', 'minValue', 'name', 'placeholder', 'value'],
+  inputs: ['currencyCode', 'currencyOptions', 'hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'maxValue', 'minValue', 'name', 'placeholder', 'value'],
 })
-export class MInputCurrencyBase {
+export class DInputCurrencyBase {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange', 'mBlur', 'mFocus']);
+    proxyOutputs(this, this.el, ['eventChange', 'eventBlur', 'eventFocus']);
   }
 }
 
 
-export declare interface MInputCurrencyBase extends Components.MInputCurrencyBase {
+export declare interface DInputCurrencyBase extends Components.DInputCurrencyBase {
   /**
    * Emitted when the inputs change
    */
-  mChange: EventEmitter<CustomEvent<number>>;
+  eventChange: EventEmitter<CustomEvent<number>>;
   /**
    * Emitted when the inputs bur
    */
-  mBlur: EventEmitter<CustomEvent<number>>;
+  eventBlur: EventEmitter<CustomEvent<number>>;
   /**
    * Emitted when the inputs focus
    */
-  mFocus: EventEmitter<CustomEvent<number>>;
+  eventFocus: EventEmitter<CustomEvent<number>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputPassword,
-  inputs: ['hint', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'value']
+  defineCustomElementFn: defineDInputPassword,
+  inputs: ['hint', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'placeholder', 'value']
 })
 @Component({
-  selector: 'm-input-password',
+  selector: 'd-input-password',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'value'],
+  inputs: ['hint', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'placeholder', 'value'],
 })
-export class MInputPassword {
+export class DInputPassword {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['eventChange']);
   }
 }
 
 
-export declare interface MInputPassword extends Components.MInputPassword {
+export declare interface DInputPassword extends Components.DInputPassword {
   /**
    * Emitted when the input value has changed
    */
-  mChange: EventEmitter<CustomEvent<string>>;
+  eventChange: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputPin,
-  inputs: ['characters', 'hint', 'iconFamilyClass', 'iconFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isSecret', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'mInputMode', 'placeholder', 'type']
+  defineCustomElementFn: defineDInputPin,
+  inputs: ['characters', 'hint', 'iconFamilyClass', 'iconFamilyPrefix', 'innerId', 'innerInputMode', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isSecret', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'placeholder', 'type']
 })
 @Component({
-  selector: 'm-input-pin',
+  selector: 'd-input-pin',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['characters', 'hint', 'iconFamilyClass', 'iconFamilyPrefix', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isSecret', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'mInputMode', 'placeholder', 'type'],
+  inputs: ['characters', 'hint', 'iconFamilyClass', 'iconFamilyPrefix', 'innerId', 'innerInputMode', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isSecret', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'placeholder', 'type'],
 })
-export class MInputPin {
+export class DInputPin {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['eventChange']);
   }
 }
 
 
-export declare interface MInputPin extends Components.MInputPin {
+export declare interface DInputPin extends Components.DInputPin {
   /**
    * Emitted when the inputs had changed
    */
-  mChange: EventEmitter<CustomEvent<string>>;
+  eventChange: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputSearch,
-  inputs: ['hint', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'value']
+  defineCustomElementFn: defineDInputSearch,
+  inputs: ['hint', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'placeholder', 'value']
 })
 @Component({
-  selector: 'm-input-search',
+  selector: 'd-input-search',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'placeholder', 'value'],
+  inputs: ['hint', 'innerId', 'isDisabled', 'isInvalid', 'isLoading', 'isReadOnly', 'isValid', 'label', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'placeholder', 'value'],
 })
-export class MInputSearch {
+export class DInputSearch {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange', 'mClick']);
+    proxyOutputs(this, this.el, ['eventChange', 'eventClick']);
   }
 }
 
 
-export declare interface MInputSearch extends Components.MInputSearch {
+export declare interface DInputSearch extends Components.DInputSearch {
   /**
    * Emitted when the input value has changed
    */
-  mChange: EventEmitter<CustomEvent<string>>;
+  eventChange: EventEmitter<CustomEvent<string>>;
   /**
    * Emitted when the button is clicked
    */
-  mClick: EventEmitter<CustomEvent<string>>;
+  eventClick: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputSelect,
-  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'options', 'selectedOption', 'valueExtractor']
+  defineCustomElementFn: defineDInputSelect,
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'options', 'selectedOption', 'valueExtractor']
 })
 @Component({
-  selector: 'm-input-select',
+  selector: 'd-input-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'mId', 'name', 'options', 'selectedOption', 'valueExtractor'],
+  inputs: ['hint', 'iconEnd', 'iconEndFamilyClass', 'iconEndFamilyPrefix', 'iconFamilyClass', 'iconFamilyPrefix', 'iconStart', 'iconStartFamilyClass', 'iconStartFamilyPrefix', 'innerId', 'isDisabled', 'isLoading', 'label', 'labelExtractor', 'labelIcon', 'labelIconFamilyClass', 'labelIconFamilyPrefix', 'name', 'options', 'selectedOption', 'valueExtractor'],
 })
-export class MInputSelect {
+export class DInputSelect {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange', 'mBlur', 'mIconStartClick', 'mIconEndClick']);
+    proxyOutputs(this, this.el, ['eventChange', 'eventBlur', 'eventIconStartClick', 'eventIconEndClick']);
   }
 }
 
 
-export declare interface MInputSelect extends Components.MInputSelect {
+export declare interface DInputSelect extends Components.DInputSelect {
   /**
    * Emitted when the select value has changed
    */
-  mChange: EventEmitter<CustomEvent<any>>;
+  eventChange: EventEmitter<CustomEvent<any>>;
   /**
    * Emitted when blur the input
    */
-  mBlur: EventEmitter<CustomEvent<any>>;
+  eventBlur: EventEmitter<CustomEvent<any>>;
   /**
    * Emitted when click on the left icon
    */
-  mIconStartClick: EventEmitter<CustomEvent<MouseEvent>>;
+  eventIconStartClick: EventEmitter<CustomEvent<MouseEvent>>;
   /**
    * Emitted when click on the right icon
    */
-  mIconEndClick: EventEmitter<CustomEvent<MouseEvent>>;
+  eventIconEndClick: EventEmitter<CustomEvent<MouseEvent>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMInputSwitch,
-  inputs: ['isChecked', 'isDisabled', 'isReadonly', 'label', 'mId', 'name']
+  defineCustomElementFn: defineDInputSwitch,
+  inputs: ['innerId', 'isChecked', 'isDisabled', 'isReadonly', 'label', 'name']
 })
 @Component({
-  selector: 'm-input-switch',
+  selector: 'd-input-switch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'isDisabled', 'isReadonly', 'label', 'mId', 'name'],
+  inputs: ['innerId', 'isChecked', 'isDisabled', 'isReadonly', 'label', 'name'],
 })
-export class MInputSwitch {
+export class DInputSwitch {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['eventChange']);
   }
 }
 
 
-export declare interface MInputSwitch extends Components.MInputSwitch {
+export declare interface DInputSwitch extends Components.DInputSwitch {
   /**
    * Emitted when the switch has changed
    */
-  mChange: EventEmitter<CustomEvent<boolean>>;
+  eventChange: EventEmitter<CustomEvent<boolean>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMModal,
+  defineCustomElementFn: defineDModal,
   inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
 })
 @Component({
-  selector: 'm-modal',
+  selector: 'd-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
 })
-export class MModal {
+export class DModal {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClose']);
+    proxyOutputs(this, this.el, ['eventClose']);
   }
 }
 
 
-export declare interface MModal extends Components.MModal {
+export declare interface DModal extends Components.DModal {
   /**
    * Emitted when the input value has changed
    */
-  mClose: EventEmitter<CustomEvent<void>>;
+  eventClose: EventEmitter<CustomEvent<void>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMOffcanvas,
+  defineCustomElementFn: defineDOffcanvas,
   inputs: ['footerActionPlacement', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton']
 })
 @Component({
-  selector: 'm-offcanvas',
+  selector: 'd-offcanvas',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['footerActionPlacement', 'isScrollable', 'isStatic', 'name', 'openFrom', 'showCloseButton'],
 })
-export class MOffcanvas {
+export class DOffcanvas {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClose']);
+    proxyOutputs(this, this.el, ['eventClose']);
   }
 }
 
 
-export declare interface MOffcanvas extends Components.MOffcanvas {
+export declare interface DOffcanvas extends Components.DOffcanvas {
   /**
    * Emitted when the input value has changed
    */
-  mClose: EventEmitter<CustomEvent<void>>;
+  eventClose: EventEmitter<CustomEvent<void>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMProgressBar,
+  defineCustomElementFn: defineDProgress,
   inputs: ['currentValue', 'enableStripedAnimation', 'hideCurrentValue', 'maxValue', 'minValue']
 })
 @Component({
-  selector: 'm-progress-bar',
+  selector: 'd-progress',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['currentValue', 'enableStripedAnimation', 'hideCurrentValue', 'maxValue', 'minValue'],
 })
-export class MProgressBar {
+export class DProgress {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -548,126 +548,126 @@ export class MProgressBar {
 }
 
 
-export declare interface MProgressBar extends Components.MProgressBar {}
+export declare interface DProgress extends Components.DProgress {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMQuickActionButton,
+  defineCustomElementFn: defineDQuickActionButton,
   inputs: ['actionIcon', 'actionIconFamilyClass', 'actionIconFamilyPrefix', 'actionLinkText', 'actionLinkTheme', 'line1', 'line2', 'representativeIcon', 'representativeIconFamilyClass', 'representativeIconFamilyPrefix', 'representativeIconHasCircle', 'representativeIconTheme', 'representativeImage', 'secondaryActionIcon']
 })
 @Component({
-  selector: 'm-quick-action-button',
+  selector: 'd-quick-action-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['actionIcon', 'actionIconFamilyClass', 'actionIconFamilyPrefix', 'actionLinkText', 'actionLinkTheme', 'line1', 'line2', 'representativeIcon', 'representativeIconFamilyClass', 'representativeIconFamilyPrefix', 'representativeIconHasCircle', 'representativeIconTheme', 'representativeImage', 'secondaryActionIcon'],
 })
-export class MQuickActionButton {
+export class DQuickActionButton {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClick', 'mClickSecondary']);
+    proxyOutputs(this, this.el, ['eventClick', 'eventClickSecondary']);
   }
 }
 
 
-export declare interface MQuickActionButton extends Components.MQuickActionButton {
+export declare interface DQuickActionButton extends Components.DQuickActionButton {
   /**
    * Emitted when the input value has changed
    */
-  mClick: EventEmitter<CustomEvent<any>>;
+  eventClick: EventEmitter<CustomEvent<any>>;
   /**
    * Emitted when the input value has changed
    */
-  mClickSecondary: EventEmitter<CustomEvent<any>>;
+  eventClickSecondary: EventEmitter<CustomEvent<any>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMQuickActionCheck,
-  inputs: ['isChecked', 'line1', 'line2', 'line3', 'mId', 'name', 'value']
+  defineCustomElementFn: defineDQuickActionCheck,
+  inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value']
 })
 @Component({
-  selector: 'm-quick-action-check',
+  selector: 'd-quick-action-check',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isChecked', 'line1', 'line2', 'line3', 'mId', 'name', 'value'],
+  inputs: ['innerId', 'isChecked', 'line1', 'line2', 'line3', 'name', 'value'],
 })
-export class MQuickActionCheck {
+export class DQuickActionCheck {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['eventChange']);
   }
 }
 
 
-export declare interface MQuickActionCheck extends Components.MQuickActionCheck {
+export declare interface DQuickActionCheck extends Components.DQuickActionCheck {
   /**
    * Emitted when the select value has changed
    */
-  mChange: EventEmitter<CustomEvent<string>>;
+  eventChange: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMQuickActionSelect,
-  inputs: ['isSelected', 'line1', 'line2', 'mId', 'name', 'value']
+  defineCustomElementFn: defineDQuickActionSelect,
+  inputs: ['innerId', 'isSelected', 'line1', 'line2', 'name', 'value']
 })
 @Component({
-  selector: 'm-quick-action-select',
+  selector: 'd-quick-action-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['isSelected', 'line1', 'line2', 'mId', 'name', 'value'],
+  inputs: ['innerId', 'isSelected', 'line1', 'line2', 'name', 'value'],
 })
-export class MQuickActionSelect {
+export class DQuickActionSelect {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mChange']);
+    proxyOutputs(this, this.el, ['eventChange']);
   }
 }
 
 
-export declare interface MQuickActionSelect extends Components.MQuickActionSelect {
+export declare interface DQuickActionSelect extends Components.DQuickActionSelect {
   /**
    * Emitted when the select value has changed
    */
-  mChange: EventEmitter<CustomEvent<string>>;
+  eventChange: EventEmitter<CustomEvent<string>>;
 }
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineMQuickActionSwitch,
-  inputs: ['hint', 'isChecked', 'isDisabled', 'label', 'mId', 'name']
+  defineCustomElementFn: defineDQuickActionSwitch,
+  inputs: ['hint', 'innerId', 'isChecked', 'isDisabled', 'label', 'name']
 })
 @Component({
-  selector: 'm-quick-action-switch',
+  selector: 'd-quick-action-switch',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['hint', 'isChecked', 'isDisabled', 'label', 'mId', 'name'],
+  inputs: ['hint', 'innerId', 'isChecked', 'isDisabled', 'label', 'name'],
 })
-export class MQuickActionSwitch {
+export class DQuickActionSwitch {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['mClick']);
+    proxyOutputs(this, this.el, ['eventClick']);
   }
 }
 
 
-export declare interface MQuickActionSwitch extends Components.MQuickActionSwitch {
+export declare interface DQuickActionSwitch extends Components.DQuickActionSwitch {
   /**
    * Emitted when the select value has changed
    */
-  mClick: EventEmitter<CustomEvent<boolean>>;
+  eventClick: EventEmitter<CustomEvent<boolean>>;
 }
 
 

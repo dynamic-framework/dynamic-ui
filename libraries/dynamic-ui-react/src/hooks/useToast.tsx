@@ -3,7 +3,7 @@ import { ToastPosition, Slide, toast as reactToast } from 'react-toastify';
 
 import type { AlertType } from '@dynamic-framework/ui';
 
-import { MAlert } from '../components';
+import { DAlert } from '../components';
 
 export type ToastConfig = {
   type?: AlertType;
@@ -20,13 +20,13 @@ export default function useToast() {
     autoClose = false,
   }: ToastConfig = {}) => {
     reactToast(({ closeToast }) => (
-      <MAlert
+      <DAlert
         type={type}
         showClose={showClose}
-        onMClose={closeToast}
+        onEventClose={closeToast}
       >
         {message}
-      </MAlert>
+      </DAlert>
     ), {
       transition: Slide,
       position,

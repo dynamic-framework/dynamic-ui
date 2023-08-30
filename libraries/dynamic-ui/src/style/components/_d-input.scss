@@ -1,0 +1,190 @@
+.d-input {
+  --#{$prefix}input-gap: #{$spacer-2};
+  // label
+  --#{$prefix}input-label-color: #{$form-label-color};
+  --#{$prefix}input-label-font-weight: #{$form-label-font-weight};
+  --#{$prefix}input-label-font-size: #{$form-label-font-size};
+  --#{$prefix}input-label-padding-x: #{$form-label-padding-x};
+  --#{$prefix}input-label-padding-y: #{$form-label-padding-y};
+  --#{$prefix}input-label-gap: #{$form-label-gap};
+  // label hover
+  --#{$prefix}input-label-focus-color: #{$form-label-focus-color};
+  // label if input has value
+  --#{$prefix}input-label-has-value-color: #{$form-label-has-value-color};
+
+  // input group
+  --#{$prefix}input-group-border-color: #{$input-group-border-color};
+  --#{$prefix}input-group-border-width: #{$input-group-border-width};
+  --#{$prefix}input-group-border-radius: #{$input-group-border-radius};
+  // input group hover
+  --#{$prefix}input-group-hover-border-color: #{$input-group-hover-border-color};
+  // input group focus
+  --#{$prefix}input-group-focus-border-color: #{$input-group-focus-border-color};
+  --#{$prefix}input-group-focus-box-shadow: #{$input-group-focus-box-shadow};
+
+  // input
+  --#{$prefix}input-form-control-text-align: var(--#{$prefix}input-component-form-control-text-align, "left");
+
+  // hint
+  --#{$prefix}input-form-text-padding: #{$form-control-padding-y} #{$form-control-padding-x};
+  --#{$prefix}input-form-text-gap: #{$form-control-gap};
+  --#{$prefix}input-form-text-color: #{$form-control-color};
+
+  // input disabled
+  --#{$prefix}input-group-disabled-border-color: #{$input-disabled-border-color};
+  --#{$prefix}input-group-disabled-bg: #{$input-disabled-bg};
+  --#{$prefix}input-group-disabled-color: #{$input-disabled-color};
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}input-gap);
+  align-items: flex-start;
+
+  // focus
+  &:focus-within {
+    label {
+      color: var(--#{$prefix}input-label-focus-color);
+    }
+
+    .input-group {
+      border-color: var(--#{$prefix}input-group-focus-border-color);
+      box-shadow: var(--#{$prefix}input-group-focus-box-shadow);
+
+      &:hover:has(.form-control:not(:placeholder-shown:disabled)),
+      &:hover {
+        border-color: var(--#{$prefix}input-group-focus-border-color);
+      }
+    }
+  }
+
+  // form-control container
+  .d-input-control {
+    display: flex;
+    flex-direction: column;
+    gap: var(--#{$prefix}input-gap);
+    width: 100%;
+  }
+
+  label {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--#{$prefix}input-label-gap);
+    align-items: center;
+    padding: var(--#{$prefix}input-label-padding-y) var(--#{$prefix}input-label-padding-x);
+    font-size: var(--#{$prefix}input-label-font-size);
+    font-weight: var(--#{$prefix}input-label-font-weight);
+    color: var(--#{$prefix}input-label-color);
+
+    .d-input-icon {
+      .d-icon {
+        --#{$prefix}icon-color: var(--#{$prefix}focus-ring-color);
+      }
+    }
+  }
+
+  // input with elements
+  .input-group {
+    border: var(--#{$prefix}input-group-border-width) solid var(--#{$prefix}input-group-border-color);
+    border-radius: var(--#{$prefix}input-group-border-radius);
+  }
+
+  // hover
+  .input-group:hover:has(.form-control:not(:disabled)) {
+    border-color: var(--#{$prefix}input-group-hover-border-color);
+  }
+
+  // not empty
+  &:has(.form-control:not(:placeholder-shown, :focus)) {
+    .input-group {
+      border-color: var(--#{$prefix}input-group-hover-border-color);
+    }
+
+    label {
+      color: var(--#{$prefix}input-label-has-value-color);
+    }
+  }
+
+  // validation states
+  @each $state, $data in $form-validation-states {
+    $border-color: map-get($data, "border-color");
+    $tooltip-bg-color: map-get($data, "tooltip-bg-color");
+
+    &:has(.form-control.is-#{$state}){
+      .input-group {
+        border-color: $border-color;
+      }
+
+      .input-group ~ .form-text {
+        color: $border-color;
+      }
+
+      .d-input-validation-icon {
+        .d-icon {
+          --#{$prefix}icon-color: #{$tooltip-bg-color};
+        }
+      }
+    }
+  }
+
+  // input hint
+  .input-group ~ .form-text {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--#{$prefix}input-form-text-gap);
+    align-items: center;
+    padding: var(--#{$prefix}input-form-text-padding);
+    color: var(--#{$prefix}input-form-text-color);
+  }
+
+  // input element
+  .form-control {
+    text-align: var(--#{$prefix}input-form-control-text-align);
+    border-width: 0;
+    box-shadow: none;
+
+    &:not(:last-child) {
+      padding-right: 0;
+    }
+
+    &:not(:first-child) {
+      padding-left: 0;
+    }
+  }
+
+  .form-control::-webkit-inner-spin-button,
+  .form-control::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  // input addons
+  .input-group-text {
+    border: 0;
+    outline: 0;
+  }
+
+  // input disabled
+  .form-control:disabled {
+    background: var(--#{$prefix}input-group-disabled-bg);
+  }
+
+
+  &:has(.form-control:disabled) {
+    // input addons disabled
+    .input-group-text {
+      background: var(--#{$prefix}input-group-disabled-bg);
+    }
+
+    // icon disabled
+    .d-input-icon {
+      .d-icon {
+        color: var(--#{$prefix}input-group-disabled-color);
+      }
+    }
+
+    // input with elements disabled
+    .input-group {
+      border-color: var(--#{$prefix}input-group-disabled-border-color);
+    }
+  }
+}
