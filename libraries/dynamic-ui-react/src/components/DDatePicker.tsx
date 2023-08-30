@@ -15,7 +15,7 @@ import { ButtonVariant, ComponentSize } from '@dynamic-framework/ui';
 import { useLiquidContext } from '../contexts';
 
 import DDatePickerTime from './DDatePickerTime';
-import MDatePickerInput from './DDatePickerInput';
+import DDatePickerInput from './DDatePickerInput';
 import DDatePickerHeader from './DDatePickerHeader';
 
 type InputPickerProps = {
@@ -70,7 +70,7 @@ export default function DDatePicker(
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const InputPicker = forwardRef(({ value, onClick }: InputPickerProps, ref) => (
-    <MDatePickerInput
+    <DDatePickerInput
       label={inputLabel}
       innerId={inputId}
       iconEnd={inputIcon}

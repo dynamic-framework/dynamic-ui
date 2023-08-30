@@ -252,8 +252,8 @@ export class DInputCurrencyBase implements ComponentInterface {
   // eslint-disable-next-line class-methods-use-this
   private generateStyleVariables() {
     return {
-      [`--${PREFIX_BS}m-input-currency-component-symbol-color`]: `var(--${PREFIX_BS}secondary)`,
-      [`--${PREFIX_BS}m-input-currency-symbol-color`]: `var(--${PREFIX_BS}m-input-currency-component-symbol-color)`,
+      [`--${PREFIX_BS}input-currency-component-symbol-color`]: `var(--${PREFIX_BS}secondary)`,
+      [`--${PREFIX_BS}input-currency-symbol-color`]: `var(--${PREFIX_BS}input-currency-component-symbol-color)`,
     };
   }
 
