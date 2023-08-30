@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.2.2...@dynamic-framework/ui-react@1.3.0) (2023-08-30)
+
+
+### Features
+
+* adjust d-refactor ([8fd3e8e](https://github.com/dynamic-framework/dynamic-ui/commit/8fd3e8edd1829e131b624486bec6426510e26e64))
+* remove unnecessary color classes and utilities ([e64dc94](https://github.com/dynamic-framework/dynamic-ui/commit/e64dc941191e1eefecbc439100865397303e0675))
+* update alert name ([778ec85](https://github.com/dynamic-framework/dynamic-ui/commit/778ec85ce13c33f9d6cb140264010fe1d8fa22e6))
+* update box-file name ([d30db8e](https://github.com/dynamic-framework/dynamic-ui/commit/d30db8e3a14e630e6b3f649793887a837e4e9993))
+* update button name, pill behavior and some css variables ([4983b4e](https://github.com/dynamic-framework/dynamic-ui/commit/4983b4e0cc5960109403e6bb0d474c9606d26d42))
+* update card and related components name ([6575035](https://github.com/dynamic-framework/dynamic-ui/commit/6575035707cf8e39f163f126d7b91d7093bacafe))
+* update carousel and related components name ([643aef9](https://github.com/dynamic-framework/dynamic-ui/commit/643aef9b20965c7dc1eecf29b8c35e134c6ff07d))
+* update chip and badge name ([c451566](https://github.com/dynamic-framework/dynamic-ui/commit/c4515660d56909ce4c3e9b919854e21b041d36d7))
+* update collapse and related components name ([5691957](https://github.com/dynamic-framework/dynamic-ui/commit/5691957f0aca08df3512b55fa1d80ca249d1d24b))
+* update currency text and related components name ([86a977c](https://github.com/dynamic-framework/dynamic-ui/commit/86a977c52b45d36508bd8e660ded023726731499))
+* update icon name ([c3225dc](https://github.com/dynamic-framework/dynamic-ui/commit/c3225dcc49d25dea92f8d4d7be812d7e8873c2e4))
+* update input and all input related components name ([bde7313](https://github.com/dynamic-framework/dynamic-ui/commit/bde73131e53a58275ef5958decde76908a531d32))
+* update input-check and all quick-action-check name ([9346658](https://github.com/dynamic-framework/dynamic-ui/commit/9346658effc4762f9cec1959967f797da54250cb))
+* update input-pin name and aquick-action-check classes ([2ec8dea](https://github.com/dynamic-framework/dynamic-ui/commit/2ec8deaabcbb8f76e37e607f9bed952aa2cc267b))
+* update input-select and formik-input-select name ([193bdc9](https://github.com/dynamic-framework/dynamic-ui/commit/193bdc93ac93742257c66b3bc5ff874fc1ab7dbd))
+* update input-switch and quick-action-switch name ([6d5adda](https://github.com/dynamic-framework/dynamic-ui/commit/6d5adda4fd3484090ca756692f8a789a78cf68b2))
+* update list and related components name ([88b06b8](https://github.com/dynamic-framework/dynamic-ui/commit/88b06b8e696fa685c137e3ef929b98f8049d94cc))
+* update modal and modal context name ([a9bd6d4](https://github.com/dynamic-framework/dynamic-ui/commit/a9bd6d4857c746d1edd8b5d91011e001fd57d6ed))
+* update offcanvas and offcanvas context name ([4151f9f](https://github.com/dynamic-framework/dynamic-ui/commit/4151f9f1d157faef48eccad221d48731e9baf722))
+* update paginator component name ([f391690](https://github.com/dynamic-framework/dynamic-ui/commit/f3916901d4f16ecd8081afac05b372f132d86974))
+* update popover component name and add support to re-enable event propagation on button ([e539aa6](https://github.com/dynamic-framework/dynamic-ui/commit/e539aa68c92e1be09a0f510eb33a8a9f4e95353d))
+* update progress name ([7666078](https://github.com/dynamic-framework/dynamic-ui/commit/7666078fc73204aecedb37e86ca427e0e04c7fb2))
+* update quick-action-select and quick-action-button name ([91c81a0](https://github.com/dynamic-framework/dynamic-ui/commit/91c81a0fd1cbef9f6695d8045952b7e29014ab83))
+* update skeleton component name ([1b41399](https://github.com/dynamic-framework/dynamic-ui/commit/1b4139981077a2f630ad4af057bc6dcabb70ba46))
+* update stepper component name ([b30f207](https://github.com/dynamic-framework/dynamic-ui/commit/b30f2075213e7c13b913df1219f2d28cf1e5b9f7))
+* update tab and related component name ([73fb5ce](https://github.com/dynamic-framework/dynamic-ui/commit/73fb5ce5e34af1806f5414269f02ea20f6cff928))
+* update tooltip component name ([88b260f](https://github.com/dynamic-framework/dynamic-ui/commit/88b260f5817ea4971d994698ab3cc761aff431a8))
+
+
+### Bug Fixes
+
+* style var reference ([b3b8f60](https://github.com/dynamic-framework/dynamic-ui/commit/b3b8f60ead5469625d49b690960bf8018ff46803))
+
+
+
 ## [1.2.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.2.1...@dynamic-framework/ui-react@1.2.2) (2023-08-29)
 
 
