@@ -6,7 +6,7 @@ import { DButton } from './proxies';
 import DMonthPicker from './DMonthPicker';
 import { useLiquidContext } from '../contexts';
 
-export type MDatePickerHeaderProps = {
+type Props = {
   monthDate: Date;
   decreaseMonth: () => void;
   increaseMonth: () => void;
@@ -40,7 +40,7 @@ export default function DDatePickerHeader({
   iconSize,
   buttonVariant,
   buttonTheme,
-}: MDatePickerHeaderProps) {
+}: Props) {
   const { language } = useLiquidContext();
   const lang = language || 'en';
 

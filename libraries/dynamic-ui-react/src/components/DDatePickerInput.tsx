@@ -1,10 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  ComponentProps, Ref, forwardRef, useImperativeHandle,
+  ComponentProps,
+  Ref,
+  forwardRef,
+  useImperativeHandle,
 } from 'react';
 import { DInput } from './proxies';
 
-type MDatePickerInputProps = {
+type Props = {
   value?: string;
   onEventClick?: () => void;
 } & Omit<ComponentProps<typeof DInput>,
@@ -21,7 +24,7 @@ function DDatePickerInput(
     innerId,
     iconEnd,
     ...props
-  }: MDatePickerInputProps,
+  }: Props,
   ref: Ref<unknown>,
 ) {
   useImperativeHandle(ref, () => ({}), []);

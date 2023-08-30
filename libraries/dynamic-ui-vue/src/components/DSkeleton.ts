@@ -1,8 +1,8 @@
 import { h, defineComponent } from 'vue';
 import { ContentLoader } from 'vue-content-loader';
 
-export const MSkeleton = /*@__PURE__*/ defineComponent({
-  name: 'MSkeleton',
+export const DSkeleton = /*@__PURE__*/ defineComponent({
+  name: 'DSkeleton',
   props: {
     viewBox: {
       type: String,
@@ -14,11 +14,11 @@ export const MSkeleton = /*@__PURE__*/ defineComponent({
     },
     backgroundColor: {
       type: String,
-      default: "#f3f3f3"
+      default: "#e1dffe"
     },
     foregroundColor: {
       type: String,
-      default: "#ecebeb"
+      default: "#f7f7ff"
     }
   },
   setup({

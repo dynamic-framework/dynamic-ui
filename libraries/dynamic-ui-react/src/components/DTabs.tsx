@@ -64,8 +64,8 @@ export default function DTabs(
     <TabContext.Provider value={value}>
       <div
         className={classnames({
-          'm-tabs': true,
-          'm-tabs-vertical': isVertical,
+          'd-tabs': true,
+          'd-tabs-vertical': isVertical,
         })}
       >
         <nav className="nav">

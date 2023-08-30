@@ -203,10 +203,10 @@ export const PersonList: Story = {
     <DQuickActionButton
       {...args}
       style={{
-        [`--${PREFIX_BS}m-quick-action-button-component-border-radius`]: 0,
-        [`--${PREFIX_BS}m-quick-action-button-component-border-right`]: 0,
-        [`--${PREFIX_BS}m-quick-action-button-component-border-left`]: 0,
-        [`--${PREFIX_BS}m-quick-action-button-component-border-bottom`]: 0,
+        [`--${PREFIX_BS}quick-action-button-component-border-radius`]: 0,
+        [`--${PREFIX_BS}quick-action-button-component-border-right`]: 0,
+        [`--${PREFIX_BS}quick-action-button-component-border-left`]: 0,
+        [`--${PREFIX_BS}quick-action-button-component-border-bottom`]: 0,
       }}
     />
   ),

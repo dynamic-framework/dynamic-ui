@@ -2,7 +2,7 @@
 import { ComponentProps, FormEventHandler } from 'react';
 import { DInput } from './proxies';
 
-type MDatePickerTimeProps = {
+type Props = {
   value?: string | number ;
   onEventChange?: ((value: string) => void) & FormEventHandler<HTMLDInputElement>
 } & Omit<ComponentProps<typeof DInput>,
@@ -18,7 +18,7 @@ export default function DDatePickerTime({
   innerId,
   label,
   ...props
-}: MDatePickerTimeProps) {
+}: Props) {
   return (
     <div className="d-flex align-items-center gap-2 flex-column d-datepicker-time">
       {label && (
