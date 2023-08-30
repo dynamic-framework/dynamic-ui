@@ -623,7 +623,7 @@ importers:
   templates/dynamic-retail-dashboard-template:
     dependencies:
       '@dynamic-framework/ui-react':
-        specifier: ^1.2.1
+        specifier: workspace:*
         version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
@@ -650,8 +650,8 @@ importers:
         specifier: ^9.39.2
         version: 9.42.1
       luxon:
-        specifier: ^3.0.3
-        version: 3.0.4
+        specifier: ~3.2.1
+        version: 3.2.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -759,7 +759,7 @@ importers:
   templates/dynamic-retail-product-detail-template:
     dependencies:
       '@dynamic-framework/ui-react':
-        specifier: ^1.1.5
+        specifier: workspace:*
         version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
@@ -786,8 +786,8 @@ importers:
         specifier: ^9.39.2
         version: 9.42.1
       luxon:
-        specifier: ~3.0.4
-        version: 3.0.4
+        specifier: ~3.2.1
+        version: 3.2.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -5237,7 +5237,7 @@ packages:
     dependencies:
       immer: 9.0.21
       react: 18.2.0
-      react-redux: 8.0.2(@types/react-dom@18.2.7)(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+      react-redux: 8.0.2(@types/react-dom@18.0.8)(@types/react@18.2.19)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       redux: 4.2.1
       redux-thunk: 2.4.2(redux@4.2.1)
       reselect: 4.1.8
@@ -16816,7 +16816,6 @@ packages:
   /luxon@3.2.1:
     resolution: {integrity: sha512-QrwPArQCNLAKGO/C+ZIilgIuDnEnKx5QYODdDtbFaxzsbZcc/a7WFq7MhsVYgRlwawLtvOUESTlfJ+hc/USqPg==}
     engines: {node: '>=12'}
-    dev: true
 
   /lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
