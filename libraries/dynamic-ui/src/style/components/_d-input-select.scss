@@ -1,10 +1,10 @@
 .d-input {
   &:has(.form-select:not(:disabled)) {
-    --#{$prefix}m-input-group-border-color: var(--#{$prefix}m-input-group-hover-border-color);
+    --#{$prefix}input-group-border-color: var(--#{$prefix}input-group-hover-border-color);
   }
 
   .form-select {
-    text-align: var(--#{$prefix}m-input-form-control-text-align);
+    text-align: var(--#{$prefix}input-form-control-text-align);
     border-width: 0;
     box-shadow: none;
 

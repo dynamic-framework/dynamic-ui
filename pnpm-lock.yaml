@@ -448,7 +448,7 @@ importers:
         version: link:../../libraries/dynamic-ui
       '@dynamic-framework/ui-react':
         specifier: ^1.1.4
-        version: link:../../libraries/dynamic-ui-react
+        version: 1.2.2(@types/react@18.2.19)(formik@2.2.9)(html2canvas@1.4.1)(liquidjs@9.42.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0)
       '@reduxjs/toolkit':
         specifier: ^1.8.4
         version: 1.8.4(react-redux@8.0.2)(react@18.2.0)
@@ -623,7 +623,7 @@ importers:
   templates/dynamic-retail-dashboard-template:
     dependencies:
       '@dynamic-framework/ui-react':
-        specifier: ^1.2.1
+        specifier: workspace:*
         version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
@@ -650,8 +650,8 @@ importers:
         specifier: ^9.39.2
         version: 9.42.1
       luxon:
-        specifier: ^3.0.3
-        version: 3.0.4
+        specifier: ~3.2.1
+        version: 3.2.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -759,7 +759,7 @@ importers:
   templates/dynamic-retail-product-detail-template:
     dependencies:
       '@dynamic-framework/ui-react':
-        specifier: ^1.1.5
+        specifier: workspace:*
         version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
@@ -786,8 +786,8 @@ importers:
         specifier: ^9.39.2
         version: 9.42.1
       luxon:
-        specifier: ~3.0.4
-        version: 3.0.4
+        specifier: ~3.2.1
+        version: 3.2.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -893,7 +893,7 @@ importers:
         version: link:../../libraries/dynamic-ui
       '@dynamic-framework/ui-react':
         specifier: ^1.1.4
-        version: link:../../libraries/dynamic-ui-react
+        version: 1.2.2(@types/react@18.2.19)(formik@2.2.9)(html2canvas@1.4.1)(liquidjs@9.42.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0)
       '@reduxjs/toolkit':
         specifier: ^1.8.4
         version: 1.8.4(react-redux@8.0.2)(react@18.2.0)
@@ -3030,6 +3030,60 @@ packages:
     resolution: {integrity: sha512-ws57AidsDvREKrZKYffXddNkyaF14iHNHm8VQnZH6t99E8gczjNN0GpvcGny0imC80yQ0tHz1xVUKk/KFQSUyA==}
     engines: {node: '>=10.0.0'}
     dev: true
+
+  /@dynamic-framework/ui-react@1.2.2(@types/react@18.2.19)(formik@2.2.9)(html2canvas@1.4.1)(liquidjs@9.42.1)(luxon@3.0.4)(react-dom@18.2.0)(react-i18next@11.18.6)(react-toastify@9.0.8)(react@18.2.0):
+    resolution: {integrity: sha512-LJeq+j49EcJx2v3UqiKbEybYhpIv9HVMIaFfaxn6/EtIyIrrf+PbprGGgZy5w+yvb2KKtZflpFI0EdetD1AA8Q==}
+    peerDependencies:
+      formik: ^2.2.9
+      html2canvas: ^1.4.1
+      luxon: ~3.0.3
+      react: ^18.1.0
+      react-dom: ^18.1.0
+      react-i18next: ~11.18.3
+      react-toastify: ~9.0.8
+    dependencies:
+      '@dynamic-framework/ui': 1.3.1(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4)
+      '@floating-ui/react': 0.24.1(@types/react@18.2.19)(react-dom@18.2.0)(react@18.2.0)
+      '@splidejs/react-splide': 0.7.12
+      '@splidejs/splide': 4.1.4
+      axios: 1.1.3
+      classnames: 2.3.2
+      date-fns: 2.29.3
+      formik: 2.2.9(react@18.2.0)
+      html2canvas: 1.4.1
+      i18next: 21.9.2
+      luxon: 3.0.4
+      react: 18.2.0
+      react-content-loader: 6.2.0(react@18.2.0)
+      react-datepicker: 4.8.0(react-dom@18.2.0)(react@18.2.0)
+      react-dom: 18.2.0(react@18.2.0)
+      react-dropzone: 14.2.3(react@18.2.0)
+      react-i18next: 11.18.6(i18next@21.9.2)(react-dom@18.2.0)(react@18.2.0)
+      react-responsive-pagination: 2.2.2(react-dom@18.2.0)(react@18.2.0)
+      react-toastify: 9.0.8(react-dom@18.2.0)(react@18.2.0)
+      yup: 1.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - debug
+      - liquidjs
+    dev: false
+
+  /@dynamic-framework/ui@1.3.1(axios@1.1.3)(liquidjs@9.42.1)(luxon@3.0.4):
+    resolution: {integrity: sha512-vWrPGcGW+8f+M4Ox3jWGPsi7vJjZZ0vhoZNmrr6rc25pMoApHWVyBAwrRWxpylphqKE70ChtR+sz93zAEix4aA==}
+    peerDependencies:
+      axios: ^1.1.2
+      liquidjs: ^9.39.2
+      luxon: ~3.0.3
+    dependencies:
+      '@popperjs/core': 2.11.7
+      '@stencil/core': 3.3.0
+      '@stencil/store': 2.0.7(@stencil/core@3.3.0)
+      axios: 1.1.3
+      bootstrap: 5.3.0(@popperjs/core@2.11.7)
+      currency.js: 2.0.4
+      liquidjs: 9.42.1
+      luxon: 3.0.4
+    dev: false
 
   /@emotion/use-insertion-effect-with-fallbacks@1.0.0(react@18.2.0):
     resolution: {integrity: sha512-1eEgUGmkaljiBnRMTdksDV1W4kUnmwgp7X9G8B++9GYwl1lUdqSndSriIrTJ0N7LQaoauY9JJ2yhiOYK5+NI4A==}
@@ -5237,7 +5291,7 @@ packages:
     dependencies:
       immer: 9.0.21
       react: 18.2.0
-      react-redux: 8.0.2(@types/react-dom@18.2.7)(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+      react-redux: 8.0.2(@types/react-dom@18.0.8)(@types/react@18.2.19)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       redux: 4.2.1
       redux-thunk: 2.4.2(redux@4.2.1)
       reselect: 4.1.8
@@ -16816,7 +16870,6 @@ packages:
   /luxon@3.2.1:
     resolution: {integrity: sha512-QrwPArQCNLAKGO/C+ZIilgIuDnEnKx5QYODdDtbFaxzsbZcc/a7WFq7MhsVYgRlwawLtvOUESTlfJ+hc/USqPg==}
     engines: {node: '>=12'}
-    dev: true
 
   /lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
