@@ -1,0 +1,10 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { DQuickActionButton } from '../../components';
+declare const config: Meta<typeof DQuickActionButton>;
+export default config;
+declare type Story = StoryObj<typeof DQuickActionButton>;
+export declare const PersonalInfo: Story;
+export declare const ButtonDoubleAction: Story;
+export declare const AccountBox: Story;
+export declare const Info: Story;
+export declare const PersonList: Story;

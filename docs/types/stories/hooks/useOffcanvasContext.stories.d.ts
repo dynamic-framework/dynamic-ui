@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { MOffcanvas } from '../../components';
+import { DOffcanvas } from '../../components';
 declare const Example: () => import("react/jsx-runtime").JSX.Element;
 declare const config: Meta<typeof Example>;
 export default config;
-declare type Story = StoryObj<typeof MOffcanvas>;
+declare type Story = StoryObj<typeof DOffcanvas>;
 export declare const useOffcanvasContext: Story;

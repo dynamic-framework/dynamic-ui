@@ -1,0 +1,10 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { DList } from '../../components';
+declare const config: Meta<typeof DList>;
+export default config;
+declare type Story = StoryObj<typeof DList>;
+export declare const Default: Story;
+export declare const Flush: Story;
+export declare const Numbered: Story;
+export declare const Horizontal: Story;
+export declare const HorizontalWithBreakpoint: Story;

@@ -5,24 +5,24 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "./stencil-public-runtime";
-import { AlertType } from "./components/m-alert/m-alert-interface";
+import { AlertType } from "./components/d-alert/d-alert-interface";
 import { ComponentSize, InputState } from "./utils/component-interface";
-import { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-import { FormCheckType } from "./components/m-input-check/m-input-check-interface";
+import { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
+import { FormCheckType } from "./components/d-input-check/d-input-check-interface";
 import { Options } from "currency.js";
-import { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
-import { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
-import { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
-export { AlertType } from "./components/m-alert/m-alert-interface";
+import { PinInputMode, PinInputType } from "./components/d-input-pin/d-input-pin-interface";
+import { FullScreenFrom, ModalSize } from "./components/d-modal/d-modal-interface";
+import { PositionToggleFrom } from "./components/d-offcanvas/d-offcanvas-interface";
+export { AlertType } from "./components/d-alert/d-alert-interface";
 export { ComponentSize, InputState } from "./utils/component-interface";
-export { ButtonType, ButtonVariant } from "./components/m-button/m-button-interface";
-export { FormCheckType } from "./components/m-input-check/m-input-check-interface";
+export { ButtonType, ButtonVariant } from "./components/d-button/d-button-interface";
+export { FormCheckType } from "./components/d-input-check/d-input-check-interface";
 export { Options } from "currency.js";
-export { PinInputMode, PinInputType } from "./components/m-input-pin/m-input-pin-interface";
-export { FullScreenFrom, ModalSize } from "./components/m-modal/m-modal-interface";
-export { PositionToggleFrom } from "./components/m-offcanvas/m-offcanvas-interface";
+export { PinInputMode, PinInputType } from "./components/d-input-pin/d-input-pin-interface";
+export { FullScreenFrom, ModalSize } from "./components/d-modal/d-modal-interface";
+export { PositionToggleFrom } from "./components/d-offcanvas/d-offcanvas-interface";
 export namespace Components {
-    interface MAlert {
+    interface DAlert {
         /**
           * Alert icon
          */
@@ -48,7 +48,7 @@ export namespace Components {
          */
         "type": AlertType;
     }
-    interface MBadge {
+    interface DBadge {
         /**
           * Enable dot mode
          */
@@ -62,7 +62,7 @@ export namespace Components {
          */
         "theme": string;
     }
-    interface MButton {
+    interface DButton {
         /**
           * Icon right to display
          */
@@ -100,6 +100,10 @@ export namespace Components {
          */
         "isPill": boolean;
         /**
+          * Flag to start or stop event propagation
+         */
+        "isStopPropagationEnabled": boolean;
+        /**
           * The size
          */
         "size"?: ComponentSize;
@@ -128,7 +132,7 @@ export namespace Components {
          */
         "variant"?: ButtonVariant;
     }
-    interface MChip {
+    interface DChip {
         /**
           * Name of icon to use (in kebab-case)
          */
@@ -146,7 +150,7 @@ export namespace Components {
          */
         "showClose"?: boolean;
         /**
-          * The text of badge
+          * The text of chip
          */
         "text"?: string;
         /**
@@ -154,7 +158,7 @@ export namespace Components {
          */
         "theme": string;
     }
-    interface MIcon {
+    interface DIcon {
         /**
           * Icon background color in css color unit or var
          */
@@ -204,15 +208,7 @@ export namespace Components {
          */
         "theme"?: string;
     }
-    interface MInput {
-        /**
-          * Set blur to internal input
-         */
-        "blurInput": () => Promise<void>;
-        /**
-          * Set focus to internal input
-         */
-        "focusInput": () => Promise<void>;
+    interface DInput {
         /**
           * Hint to display
          */
@@ -250,6 +246,22 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * Set blur to internal input
+         */
+        "innerBlur": () => Promise<void>;
+        /**
+          * Set focus to internal input
+         */
+        "innerFocus": () => Promise<void>;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Input mode
+         */
+        "innerInputMode"?: string;
+        /**
           * Flag to disable the input
          */
         "isDisabled": boolean;
@@ -286,14 +298,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * Input mode
-         */
-        "mInputMode"?: string;
-        /**
           * The name of the input
          */
         "name"?: string;
@@ -314,7 +318,11 @@ export namespace Components {
          */
         "value": string | number;
     }
-    interface MInputCheck {
+    interface DInputCheck {
+        /**
+          * Form control identifier
+         */
+        "innerId": string;
         /**
           * Set checkbox or radio button marked as selected or not
          */
@@ -332,10 +340,6 @@ export namespace Components {
          */
         "label"?: string;
         /**
-          * Form control identifier
-         */
-        "mId": string;
-        /**
           * HTML Name to use within a form or JS reference
          */
         "name"?: string;
@@ -348,7 +352,7 @@ export namespace Components {
          */
         "value"?: string;
     }
-    interface MInputCounter {
+    interface DInputCounter {
         /**
           * Hint to display
          */
@@ -386,6 +390,10 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
           * The input is disabled
          */
         "isDisabled": boolean;
@@ -422,10 +430,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * * The max value of the input
          */
         "maxValue": number;
@@ -442,13 +446,13 @@ export namespace Components {
          */
         "value": number;
     }
-    interface MInputCurrencyBase {
+    interface DInputCurrencyBase {
         /**
           * Currency code
          */
         "currencyCode"?: string;
         /**
-          * Options for the m-input-currency-base
+          * Options for the d-input-currency-base
          */
         "currencyOptions": Options;
         /**
@@ -488,6 +492,10 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
           * The input is disabled
          */
         "isDisabled": boolean;
@@ -524,10 +532,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * * The max value of the input
          */
         "maxValue"?: number;
@@ -548,11 +552,15 @@ export namespace Components {
          */
         "value"?: number;
     }
-    interface MInputPassword {
+    interface DInputPassword {
         /**
           * Hint to display, also used to display validity feedback
          */
         "hint"?: string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Flag to disable the input
          */
@@ -590,10 +598,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
@@ -606,13 +610,13 @@ export namespace Components {
          */
         "value": string;
     }
-    interface MInputPin {
+    interface DInputPin {
         /**
           * Number of characters of the pin
          */
         "characters": number;
         /**
-          * Hint for the m-coupon
+          * Hint for the input
          */
         "hint"?: string;
         /**
@@ -623,6 +627,14 @@ export namespace Components {
           * Right icon family class
          */
         "iconFamilyPrefix"?: string;
+        /**
+          * Id for the input
+         */
+        "innerId": string;
+        /**
+          * Keyboard style
+         */
+        "innerInputMode": PinInputMode;
         /**
           * Flag to disable the input
          */
@@ -664,14 +676,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * Keyboard style
-         */
-        "mInputMode": PinInputMode;
-        /**
           * Placeholder of the inputs
          */
         "placeholder"?: string;
@@ -680,11 +684,15 @@ export namespace Components {
          */
         "type": PinInputType;
     }
-    interface MInputSearch {
+    interface DInputSearch {
         /**
           * Hint to display, also used to display validity feedback
          */
         "hint"?: string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Flag to disable the input
          */
@@ -722,10 +730,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
@@ -738,7 +742,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface MInputSelect {
+    interface DInputSelect {
         /**
           * Hint to display
          */
@@ -776,6 +780,10 @@ export namespace Components {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
           * Flag to disable the input
          */
         "isDisabled": boolean;
@@ -804,10 +812,6 @@ export namespace Components {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
@@ -824,7 +828,11 @@ export namespace Components {
          */
         "valueExtractor": (item: any) => string | number;
     }
-    interface MInputSwitch {
+    interface DInputSwitch {
+        /**
+          * Id
+         */
+        "innerId": string;
         /**
           * Flag to change the check state
          */
@@ -844,13 +852,9 @@ export namespace Components {
         /**
           * Id
          */
-        "mId": string;
-        /**
-          * Id
-         */
         "name"?: string;
     }
-    interface MModal {
+    interface DModal {
         /**
           * Footer action direction
          */
@@ -888,7 +892,7 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
-    interface MOffcanvas {
+    interface DOffcanvas {
         /**
           * Footer action direction
          */
@@ -914,7 +918,7 @@ export namespace Components {
          */
         "showCloseButton"?: boolean;
     }
-    interface MProgressBar {
+    interface DProgress {
         /**
           * Current progress value
          */
@@ -936,7 +940,7 @@ export namespace Components {
          */
         "minValue": number;
     }
-    interface MQuickActionButton {
+    interface DQuickActionButton {
         /**
           * The icon to indicate the action
          */
@@ -994,7 +998,11 @@ export namespace Components {
          */
         "secondaryActionIcon"?: string;
     }
-    interface MQuickActionCheck {
+    interface DQuickActionCheck {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Is selected
          */
@@ -1012,10 +1020,6 @@ export namespace Components {
          */
         "line3": string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * Name of the input
          */
         "name": string;
@@ -1024,7 +1028,11 @@ export namespace Components {
          */
         "value": string;
     }
-    interface MQuickActionSelect {
+    interface DQuickActionSelect {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Is selected
          */
@@ -1038,10 +1046,6 @@ export namespace Components {
          */
         "line2": string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * Name of the input
          */
         "name": string;
@@ -1050,11 +1054,15 @@ export namespace Components {
          */
         "value": string;
     }
-    interface MQuickActionSwitch {
+    interface DQuickActionSwitch {
         /**
           * Hint to display
          */
         "hint": string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Is checked
          */
@@ -1068,240 +1076,236 @@ export namespace Components {
          */
         "label": string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
     }
 }
-export interface MAlertCustomEvent<T> extends CustomEvent<T> {
+export interface DAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMAlertElement;
+    target: HTMLDAlertElement;
 }
-export interface MButtonCustomEvent<T> extends CustomEvent<T> {
+export interface DButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMButtonElement;
+    target: HTMLDButtonElement;
 }
-export interface MChipCustomEvent<T> extends CustomEvent<T> {
+export interface DChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMChipElement;
+    target: HTMLDChipElement;
 }
-export interface MInputCustomEvent<T> extends CustomEvent<T> {
+export interface DInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputElement;
+    target: HTMLDInputElement;
 }
-export interface MInputCheckCustomEvent<T> extends CustomEvent<T> {
+export interface DInputCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputCheckElement;
+    target: HTMLDInputCheckElement;
 }
-export interface MInputCounterCustomEvent<T> extends CustomEvent<T> {
+export interface DInputCounterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputCounterElement;
+    target: HTMLDInputCounterElement;
 }
-export interface MInputCurrencyBaseCustomEvent<T> extends CustomEvent<T> {
+export interface DInputCurrencyBaseCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputCurrencyBaseElement;
+    target: HTMLDInputCurrencyBaseElement;
 }
-export interface MInputPasswordCustomEvent<T> extends CustomEvent<T> {
+export interface DInputPasswordCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputPasswordElement;
+    target: HTMLDInputPasswordElement;
 }
-export interface MInputPinCustomEvent<T> extends CustomEvent<T> {
+export interface DInputPinCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputPinElement;
+    target: HTMLDInputPinElement;
 }
-export interface MInputSearchCustomEvent<T> extends CustomEvent<T> {
+export interface DInputSearchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputSearchElement;
+    target: HTMLDInputSearchElement;
 }
-export interface MInputSelectCustomEvent<T> extends CustomEvent<T> {
+export interface DInputSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputSelectElement;
+    target: HTMLDInputSelectElement;
 }
-export interface MInputSwitchCustomEvent<T> extends CustomEvent<T> {
+export interface DInputSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMInputSwitchElement;
+    target: HTMLDInputSwitchElement;
 }
-export interface MModalCustomEvent<T> extends CustomEvent<T> {
+export interface DModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMModalElement;
+    target: HTMLDModalElement;
 }
-export interface MOffcanvasCustomEvent<T> extends CustomEvent<T> {
+export interface DOffcanvasCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMOffcanvasElement;
+    target: HTMLDOffcanvasElement;
 }
-export interface MQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
+export interface DQuickActionButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMQuickActionButtonElement;
+    target: HTMLDQuickActionButtonElement;
 }
-export interface MQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
+export interface DQuickActionCheckCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMQuickActionCheckElement;
+    target: HTMLDQuickActionCheckElement;
 }
-export interface MQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
+export interface DQuickActionSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMQuickActionSelectElement;
+    target: HTMLDQuickActionSelectElement;
 }
-export interface MQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
+export interface DQuickActionSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLMQuickActionSwitchElement;
+    target: HTMLDQuickActionSwitchElement;
 }
 declare global {
-    interface HTMLMAlertElement extends Components.MAlert, HTMLStencilElement {
+    interface HTMLDAlertElement extends Components.DAlert, HTMLStencilElement {
     }
-    var HTMLMAlertElement: {
-        prototype: HTMLMAlertElement;
-        new (): HTMLMAlertElement;
+    var HTMLDAlertElement: {
+        prototype: HTMLDAlertElement;
+        new (): HTMLDAlertElement;
     };
-    interface HTMLMBadgeElement extends Components.MBadge, HTMLStencilElement {
+    interface HTMLDBadgeElement extends Components.DBadge, HTMLStencilElement {
     }
-    var HTMLMBadgeElement: {
-        prototype: HTMLMBadgeElement;
-        new (): HTMLMBadgeElement;
+    var HTMLDBadgeElement: {
+        prototype: HTMLDBadgeElement;
+        new (): HTMLDBadgeElement;
     };
-    interface HTMLMButtonElement extends Components.MButton, HTMLStencilElement {
+    interface HTMLDButtonElement extends Components.DButton, HTMLStencilElement {
     }
-    var HTMLMButtonElement: {
-        prototype: HTMLMButtonElement;
-        new (): HTMLMButtonElement;
+    var HTMLDButtonElement: {
+        prototype: HTMLDButtonElement;
+        new (): HTMLDButtonElement;
     };
-    interface HTMLMChipElement extends Components.MChip, HTMLStencilElement {
+    interface HTMLDChipElement extends Components.DChip, HTMLStencilElement {
     }
-    var HTMLMChipElement: {
-        prototype: HTMLMChipElement;
-        new (): HTMLMChipElement;
+    var HTMLDChipElement: {
+        prototype: HTMLDChipElement;
+        new (): HTMLDChipElement;
     };
-    interface HTMLMIconElement extends Components.MIcon, HTMLStencilElement {
+    interface HTMLDIconElement extends Components.DIcon, HTMLStencilElement {
     }
-    var HTMLMIconElement: {
-        prototype: HTMLMIconElement;
-        new (): HTMLMIconElement;
+    var HTMLDIconElement: {
+        prototype: HTMLDIconElement;
+        new (): HTMLDIconElement;
     };
-    interface HTMLMInputElement extends Components.MInput, HTMLStencilElement {
+    interface HTMLDInputElement extends Components.DInput, HTMLStencilElement {
     }
-    var HTMLMInputElement: {
-        prototype: HTMLMInputElement;
-        new (): HTMLMInputElement;
+    var HTMLDInputElement: {
+        prototype: HTMLDInputElement;
+        new (): HTMLDInputElement;
     };
-    interface HTMLMInputCheckElement extends Components.MInputCheck, HTMLStencilElement {
+    interface HTMLDInputCheckElement extends Components.DInputCheck, HTMLStencilElement {
     }
-    var HTMLMInputCheckElement: {
-        prototype: HTMLMInputCheckElement;
-        new (): HTMLMInputCheckElement;
+    var HTMLDInputCheckElement: {
+        prototype: HTMLDInputCheckElement;
+        new (): HTMLDInputCheckElement;
     };
-    interface HTMLMInputCounterElement extends Components.MInputCounter, HTMLStencilElement {
+    interface HTMLDInputCounterElement extends Components.DInputCounter, HTMLStencilElement {
     }
-    var HTMLMInputCounterElement: {
-        prototype: HTMLMInputCounterElement;
-        new (): HTMLMInputCounterElement;
+    var HTMLDInputCounterElement: {
+        prototype: HTMLDInputCounterElement;
+        new (): HTMLDInputCounterElement;
     };
-    interface HTMLMInputCurrencyBaseElement extends Components.MInputCurrencyBase, HTMLStencilElement {
+    interface HTMLDInputCurrencyBaseElement extends Components.DInputCurrencyBase, HTMLStencilElement {
     }
-    var HTMLMInputCurrencyBaseElement: {
-        prototype: HTMLMInputCurrencyBaseElement;
-        new (): HTMLMInputCurrencyBaseElement;
+    var HTMLDInputCurrencyBaseElement: {
+        prototype: HTMLDInputCurrencyBaseElement;
+        new (): HTMLDInputCurrencyBaseElement;
     };
-    interface HTMLMInputPasswordElement extends Components.MInputPassword, HTMLStencilElement {
+    interface HTMLDInputPasswordElement extends Components.DInputPassword, HTMLStencilElement {
     }
-    var HTMLMInputPasswordElement: {
-        prototype: HTMLMInputPasswordElement;
-        new (): HTMLMInputPasswordElement;
+    var HTMLDInputPasswordElement: {
+        prototype: HTMLDInputPasswordElement;
+        new (): HTMLDInputPasswordElement;
     };
-    interface HTMLMInputPinElement extends Components.MInputPin, HTMLStencilElement {
+    interface HTMLDInputPinElement extends Components.DInputPin, HTMLStencilElement {
     }
-    var HTMLMInputPinElement: {
-        prototype: HTMLMInputPinElement;
-        new (): HTMLMInputPinElement;
+    var HTMLDInputPinElement: {
+        prototype: HTMLDInputPinElement;
+        new (): HTMLDInputPinElement;
     };
-    interface HTMLMInputSearchElement extends Components.MInputSearch, HTMLStencilElement {
+    interface HTMLDInputSearchElement extends Components.DInputSearch, HTMLStencilElement {
     }
-    var HTMLMInputSearchElement: {
-        prototype: HTMLMInputSearchElement;
-        new (): HTMLMInputSearchElement;
+    var HTMLDInputSearchElement: {
+        prototype: HTMLDInputSearchElement;
+        new (): HTMLDInputSearchElement;
     };
-    interface HTMLMInputSelectElement extends Components.MInputSelect, HTMLStencilElement {
+    interface HTMLDInputSelectElement extends Components.DInputSelect, HTMLStencilElement {
     }
-    var HTMLMInputSelectElement: {
-        prototype: HTMLMInputSelectElement;
-        new (): HTMLMInputSelectElement;
+    var HTMLDInputSelectElement: {
+        prototype: HTMLDInputSelectElement;
+        new (): HTMLDInputSelectElement;
     };
-    interface HTMLMInputSwitchElement extends Components.MInputSwitch, HTMLStencilElement {
+    interface HTMLDInputSwitchElement extends Components.DInputSwitch, HTMLStencilElement {
     }
-    var HTMLMInputSwitchElement: {
-        prototype: HTMLMInputSwitchElement;
-        new (): HTMLMInputSwitchElement;
+    var HTMLDInputSwitchElement: {
+        prototype: HTMLDInputSwitchElement;
+        new (): HTMLDInputSwitchElement;
     };
-    interface HTMLMModalElement extends Components.MModal, HTMLStencilElement {
+    interface HTMLDModalElement extends Components.DModal, HTMLStencilElement {
     }
-    var HTMLMModalElement: {
-        prototype: HTMLMModalElement;
-        new (): HTMLMModalElement;
+    var HTMLDModalElement: {
+        prototype: HTMLDModalElement;
+        new (): HTMLDModalElement;
     };
-    interface HTMLMOffcanvasElement extends Components.MOffcanvas, HTMLStencilElement {
+    interface HTMLDOffcanvasElement extends Components.DOffcanvas, HTMLStencilElement {
     }
-    var HTMLMOffcanvasElement: {
-        prototype: HTMLMOffcanvasElement;
-        new (): HTMLMOffcanvasElement;
+    var HTMLDOffcanvasElement: {
+        prototype: HTMLDOffcanvasElement;
+        new (): HTMLDOffcanvasElement;
     };
-    interface HTMLMProgressBarElement extends Components.MProgressBar, HTMLStencilElement {
+    interface HTMLDProgressElement extends Components.DProgress, HTMLStencilElement {
     }
-    var HTMLMProgressBarElement: {
-        prototype: HTMLMProgressBarElement;
-        new (): HTMLMProgressBarElement;
+    var HTMLDProgressElement: {
+        prototype: HTMLDProgressElement;
+        new (): HTMLDProgressElement;
     };
-    interface HTMLMQuickActionButtonElement extends Components.MQuickActionButton, HTMLStencilElement {
+    interface HTMLDQuickActionButtonElement extends Components.DQuickActionButton, HTMLStencilElement {
     }
-    var HTMLMQuickActionButtonElement: {
-        prototype: HTMLMQuickActionButtonElement;
-        new (): HTMLMQuickActionButtonElement;
+    var HTMLDQuickActionButtonElement: {
+        prototype: HTMLDQuickActionButtonElement;
+        new (): HTMLDQuickActionButtonElement;
     };
-    interface HTMLMQuickActionCheckElement extends Components.MQuickActionCheck, HTMLStencilElement {
+    interface HTMLDQuickActionCheckElement extends Components.DQuickActionCheck, HTMLStencilElement {
     }
-    var HTMLMQuickActionCheckElement: {
-        prototype: HTMLMQuickActionCheckElement;
-        new (): HTMLMQuickActionCheckElement;
+    var HTMLDQuickActionCheckElement: {
+        prototype: HTMLDQuickActionCheckElement;
+        new (): HTMLDQuickActionCheckElement;
     };
-    interface HTMLMQuickActionSelectElement extends Components.MQuickActionSelect, HTMLStencilElement {
+    interface HTMLDQuickActionSelectElement extends Components.DQuickActionSelect, HTMLStencilElement {
     }
-    var HTMLMQuickActionSelectElement: {
-        prototype: HTMLMQuickActionSelectElement;
-        new (): HTMLMQuickActionSelectElement;
+    var HTMLDQuickActionSelectElement: {
+        prototype: HTMLDQuickActionSelectElement;
+        new (): HTMLDQuickActionSelectElement;
     };
-    interface HTMLMQuickActionSwitchElement extends Components.MQuickActionSwitch, HTMLStencilElement {
+    interface HTMLDQuickActionSwitchElement extends Components.DQuickActionSwitch, HTMLStencilElement {
     }
-    var HTMLMQuickActionSwitchElement: {
-        prototype: HTMLMQuickActionSwitchElement;
-        new (): HTMLMQuickActionSwitchElement;
+    var HTMLDQuickActionSwitchElement: {
+        prototype: HTMLDQuickActionSwitchElement;
+        new (): HTMLDQuickActionSwitchElement;
     };
     interface HTMLElementTagNameMap {
-        "m-alert": HTMLMAlertElement;
-        "m-badge": HTMLMBadgeElement;
-        "m-button": HTMLMButtonElement;
-        "m-chip": HTMLMChipElement;
-        "m-icon": HTMLMIconElement;
-        "m-input": HTMLMInputElement;
-        "m-input-check": HTMLMInputCheckElement;
-        "m-input-counter": HTMLMInputCounterElement;
-        "m-input-currency-base": HTMLMInputCurrencyBaseElement;
-        "m-input-password": HTMLMInputPasswordElement;
-        "m-input-pin": HTMLMInputPinElement;
-        "m-input-search": HTMLMInputSearchElement;
-        "m-input-select": HTMLMInputSelectElement;
-        "m-input-switch": HTMLMInputSwitchElement;
-        "m-modal": HTMLMModalElement;
-        "m-offcanvas": HTMLMOffcanvasElement;
-        "m-progress-bar": HTMLMProgressBarElement;
-        "m-quick-action-button": HTMLMQuickActionButtonElement;
-        "m-quick-action-check": HTMLMQuickActionCheckElement;
-        "m-quick-action-select": HTMLMQuickActionSelectElement;
-        "m-quick-action-switch": HTMLMQuickActionSwitchElement;
+        "d-alert": HTMLDAlertElement;
+        "d-badge": HTMLDBadgeElement;
+        "d-button": HTMLDButtonElement;
+        "d-chip": HTMLDChipElement;
+        "d-icon": HTMLDIconElement;
+        "d-input": HTMLDInputElement;
+        "d-input-check": HTMLDInputCheckElement;
+        "d-input-counter": HTMLDInputCounterElement;
+        "d-input-currency-base": HTMLDInputCurrencyBaseElement;
+        "d-input-password": HTMLDInputPasswordElement;
+        "d-input-pin": HTMLDInputPinElement;
+        "d-input-search": HTMLDInputSearchElement;
+        "d-input-select": HTMLDInputSelectElement;
+        "d-input-switch": HTMLDInputSwitchElement;
+        "d-modal": HTMLDModalElement;
+        "d-offcanvas": HTMLDOffcanvasElement;
+        "d-progress": HTMLDProgressElement;
+        "d-quick-action-button": HTMLDQuickActionButtonElement;
+        "d-quick-action-check": HTMLDQuickActionCheckElement;
+        "d-quick-action-select": HTMLDQuickActionSelectElement;
+        "d-quick-action-switch": HTMLDQuickActionSwitchElement;
     }
 }
 declare namespace LocalJSX {
-    interface MAlert {
+    interface DAlert {
         /**
           * Alert icon
          */
@@ -1317,7 +1321,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the button has been clicked.
          */
-        "onMClose"?: (event: MAlertCustomEvent<any>) => void;
+        "onEventClose"?: (event: DAlertCustomEvent<any>) => void;
         /**
           * Show close button
          */
@@ -1331,7 +1335,7 @@ declare namespace LocalJSX {
          */
         "type"?: AlertType;
     }
-    interface MBadge {
+    interface DBadge {
         /**
           * Enable dot mode
          */
@@ -1345,7 +1349,7 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
-    interface MButton {
+    interface DButton {
         /**
           * Icon right to display
          */
@@ -1383,9 +1387,13 @@ declare namespace LocalJSX {
          */
         "isPill"?: boolean;
         /**
+          * Flag to start or stop event propagation
+         */
+        "isStopPropagationEnabled"?: boolean;
+        /**
           * Emitted when the button has been clicked.
          */
-        "onMClick"?: (event: MButtonCustomEvent<any>) => void;
+        "onEventClick"?: (event: DButtonCustomEvent<any>) => void;
         /**
           * The size
          */
@@ -1415,7 +1423,7 @@ declare namespace LocalJSX {
          */
         "variant"?: ButtonVariant;
     }
-    interface MChip {
+    interface DChip {
         /**
           * Name of icon to use (in kebab-case)
          */
@@ -1431,13 +1439,13 @@ declare namespace LocalJSX {
         /**
           * Emitted when the close button has been clicked.
          */
-        "onMClose"?: (event: MChipCustomEvent<any>) => void;
+        "onEventClose"?: (event: DChipCustomEvent<any>) => void;
         /**
           * Show close icon
          */
         "showClose"?: boolean;
         /**
-          * The text of badge
+          * The text of chip
          */
         "text"?: string;
         /**
@@ -1445,7 +1453,7 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
-    interface MIcon {
+    interface DIcon {
         /**
           * Icon background color in css color unit or var
          */
@@ -1495,7 +1503,7 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
-    interface MInput {
+    interface DInput {
         /**
           * Hint to display
          */
@@ -1533,6 +1541,14 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
+          * Input mode
+         */
+        "innerInputMode"?: string;
+        /**
           * Flag to disable the input
          */
         "isDisabled"?: boolean;
@@ -1569,41 +1585,33 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
-          * Input mode
-         */
-        "mInputMode"?: string;
-        /**
           * The name of the input
          */
         "name"?: string;
         /**
           * Emitted when blur the input
          */
-        "onMBlur"?: (event: MInputCustomEvent<any>) => void;
+        "onEventBlur"?: (event: DInputCustomEvent<any>) => void;
         /**
           * Emitted when the input value has changed
          */
-        "onMChange"?: (event: MInputCustomEvent<string | number>) => void;
+        "onEventChange"?: (event: DInputCustomEvent<string | number>) => void;
         /**
           * Emitted when blur the input
          */
-        "onMFocus"?: (event: MInputCustomEvent<any>) => void;
+        "onEventFocus"?: (event: DInputCustomEvent<any>) => void;
         /**
           * Emitted when click on the right icon
          */
-        "onMIconEndClick"?: (event: MInputCustomEvent<MouseEvent>) => void;
+        "onEventIconEndClick"?: (event: DInputCustomEvent<MouseEvent>) => void;
         /**
           * Emitted when click on the left icon
          */
-        "onMIconStartClick"?: (event: MInputCustomEvent<MouseEvent>) => void;
+        "onEventIconStartClick"?: (event: DInputCustomEvent<MouseEvent>) => void;
         /**
           * Emitted when blur the input
          */
-        "onMWheel"?: (event: MInputCustomEvent<any>) => void;
+        "onEventWheel"?: (event: DInputCustomEvent<any>) => void;
         /**
           * Pattern to validate
          */
@@ -1621,7 +1629,11 @@ declare namespace LocalJSX {
          */
         "value"?: string | number;
     }
-    interface MInputCheck {
+    interface DInputCheck {
+        /**
+          * Form control identifier
+         */
+        "innerId": string;
         /**
           * Set checkbox or radio button marked as selected or not
          */
@@ -1639,17 +1651,13 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Form control identifier
-         */
-        "mId": string;
-        /**
           * HTML Name to use within a form or JS reference
          */
         "name"?: string;
         /**
           * Emitted when the switch has changed
          */
-        "onMChange"?: (event: MInputCheckCustomEvent<any>) => void;
+        "onEventChange"?: (event: DInputCheckCustomEvent<any>) => void;
         /**
           * Set whether is a checkbox input or a radio input
          */
@@ -1659,7 +1667,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface MInputCounter {
+    interface DInputCounter {
         /**
           * Hint to display
          */
@@ -1697,6 +1705,10 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
           * The input is disabled
          */
         "isDisabled"?: boolean;
@@ -1733,10 +1745,6 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * * The max value of the input
          */
         "maxValue": number;
@@ -1751,23 +1759,23 @@ declare namespace LocalJSX {
         /**
           * Event for input change
          */
-        "onMChange"?: (event: MInputCounterCustomEvent<number>) => void;
+        "onEventChange"?: (event: DInputCounterCustomEvent<number>) => void;
         /**
           * Event for button pressed
          */
-        "onMClick"?: (event: MInputCounterCustomEvent<number>) => void;
+        "onEventClick"?: (event: DInputCounterCustomEvent<number>) => void;
         /**
           * The value of the input
          */
         "value": number;
     }
-    interface MInputCurrencyBase {
+    interface DInputCurrencyBase {
         /**
           * Currency code
          */
         "currencyCode"?: string;
         /**
-          * Options for the m-input-currency-base
+          * Options for the d-input-currency-base
          */
         "currencyOptions": Options;
         /**
@@ -1807,6 +1815,10 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
           * The input is disabled
          */
         "isDisabled"?: boolean;
@@ -1843,10 +1855,6 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * * The max value of the input
          */
         "maxValue"?: number;
@@ -1861,15 +1869,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the inputs bur
          */
-        "onMBlur"?: (event: MInputCurrencyBaseCustomEvent<number>) => void;
+        "onEventBlur"?: (event: DInputCurrencyBaseCustomEvent<number>) => void;
         /**
           * Emitted when the inputs change
          */
-        "onMChange"?: (event: MInputCurrencyBaseCustomEvent<number>) => void;
+        "onEventChange"?: (event: DInputCurrencyBaseCustomEvent<number>) => void;
         /**
           * Emitted when the inputs focus
          */
-        "onMFocus"?: (event: MInputCurrencyBaseCustomEvent<number>) => void;
+        "onEventFocus"?: (event: DInputCurrencyBaseCustomEvent<number>) => void;
         /**
           * Placeholder for the input
          */
@@ -1879,11 +1887,15 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
-    interface MInputPassword {
+    interface DInputPassword {
         /**
           * Hint to display, also used to display validity feedback
          */
         "hint"?: string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Flag to disable the input
          */
@@ -1921,17 +1933,13 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
         /**
           * Emitted when the input value has changed
          */
-        "onMChange"?: (event: MInputPasswordCustomEvent<string>) => void;
+        "onEventChange"?: (event: DInputPasswordCustomEvent<string>) => void;
         /**
           * The placeholder text
          */
@@ -1941,13 +1949,13 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface MInputPin {
+    interface DInputPin {
         /**
           * Number of characters of the pin
          */
         "characters"?: number;
         /**
-          * Hint for the m-coupon
+          * Hint for the input
          */
         "hint"?: string;
         /**
@@ -1958,6 +1966,14 @@ declare namespace LocalJSX {
           * Right icon family class
          */
         "iconFamilyPrefix"?: string;
+        /**
+          * Id for the input
+         */
+        "innerId": string;
+        /**
+          * Keyboard style
+         */
+        "innerInputMode"?: PinInputMode;
         /**
           * Flag to disable the input
          */
@@ -1999,17 +2015,9 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * Id for the input
-         */
-        "mId": string;
-        /**
-          * Keyboard style
-         */
-        "mInputMode"?: PinInputMode;
-        /**
           * Emitted when the inputs had changed
          */
-        "onMChange"?: (event: MInputPinCustomEvent<string>) => void;
+        "onEventChange"?: (event: DInputPinCustomEvent<string>) => void;
         /**
           * Placeholder of the inputs
          */
@@ -2019,11 +2027,15 @@ declare namespace LocalJSX {
          */
         "type"?: PinInputType;
     }
-    interface MInputSearch {
+    interface DInputSearch {
         /**
           * Hint to display, also used to display validity feedback
          */
         "hint"?: string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Flag to disable the input
          */
@@ -2061,21 +2073,17 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
         /**
           * Emitted when the input value has changed
          */
-        "onMChange"?: (event: MInputSearchCustomEvent<string>) => void;
+        "onEventChange"?: (event: DInputSearchCustomEvent<string>) => void;
         /**
           * Emitted when the button is clicked
          */
-        "onMClick"?: (event: MInputSearchCustomEvent<string>) => void;
+        "onEventClick"?: (event: DInputSearchCustomEvent<string>) => void;
         /**
           * The placeholder text
          */
@@ -2085,7 +2093,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface MInputSelect {
+    interface DInputSelect {
         /**
           * Hint to display
          */
@@ -2123,6 +2131,10 @@ declare namespace LocalJSX {
          */
         "iconStartFamilyPrefix"?: string;
         /**
+          * The id of the input
+         */
+        "innerId": string;
+        /**
           * Flag to disable the input
          */
         "isDisabled"?: boolean;
@@ -2151,29 +2163,25 @@ declare namespace LocalJSX {
          */
         "labelIconFamilyPrefix"?: string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
         /**
           * Emitted when blur the input
          */
-        "onMBlur"?: (event: MInputSelectCustomEvent<any>) => void;
+        "onEventBlur"?: (event: DInputSelectCustomEvent<any>) => void;
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MInputSelectCustomEvent<any>) => void;
+        "onEventChange"?: (event: DInputSelectCustomEvent<any>) => void;
         /**
           * Emitted when click on the right icon
          */
-        "onMIconEndClick"?: (event: MInputSelectCustomEvent<MouseEvent>) => void;
+        "onEventIconEndClick"?: (event: DInputSelectCustomEvent<MouseEvent>) => void;
         /**
           * Emitted when click on the left icon
          */
-        "onMIconStartClick"?: (event: MInputSelectCustomEvent<MouseEvent>) => void;
+        "onEventIconStartClick"?: (event: DInputSelectCustomEvent<MouseEvent>) => void;
         /**
           * The select options
          */
@@ -2187,7 +2195,11 @@ declare namespace LocalJSX {
          */
         "valueExtractor"?: (item: any) => string | number;
     }
-    interface MInputSwitch {
+    interface DInputSwitch {
+        /**
+          * Id
+         */
+        "innerId": string;
         /**
           * Flag to change the check state
          */
@@ -2207,17 +2219,13 @@ declare namespace LocalJSX {
         /**
           * Id
          */
-        "mId": string;
-        /**
-          * Id
-         */
         "name"?: string;
         /**
           * Emitted when the switch has changed
          */
-        "onMChange"?: (event: MInputSwitchCustomEvent<boolean>) => void;
+        "onEventChange"?: (event: DInputSwitchCustomEvent<boolean>) => void;
     }
-    interface MModal {
+    interface DModal {
         /**
           * Footer action direction
          */
@@ -2253,13 +2261,13 @@ declare namespace LocalJSX {
         /**
           * Emitted when the input value has changed
          */
-        "onMClose"?: (event: MModalCustomEvent<void>) => void;
+        "onEventClose"?: (event: DModalCustomEvent<void>) => void;
         /**
           * No display close button
          */
         "showCloseButton"?: boolean;
     }
-    interface MOffcanvas {
+    interface DOffcanvas {
         /**
           * Footer action direction
          */
@@ -2279,7 +2287,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the input value has changed
          */
-        "onMClose"?: (event: MOffcanvasCustomEvent<void>) => void;
+        "onEventClose"?: (event: DOffcanvasCustomEvent<void>) => void;
         /**
           * Position to show offcanvas from
          */
@@ -2289,7 +2297,7 @@ declare namespace LocalJSX {
          */
         "showCloseButton"?: boolean;
     }
-    interface MProgressBar {
+    interface DProgress {
         /**
           * Current progress value
          */
@@ -2311,7 +2319,7 @@ declare namespace LocalJSX {
          */
         "minValue"?: number;
     }
-    interface MQuickActionButton {
+    interface DQuickActionButton {
         /**
           * The icon to indicate the action
          */
@@ -2343,11 +2351,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the input value has changed
          */
-        "onMClick"?: (event: MQuickActionButtonCustomEvent<any>) => void;
+        "onEventClick"?: (event: DQuickActionButtonCustomEvent<any>) => void;
         /**
           * Emitted when the input value has changed
          */
-        "onMClickSecondary"?: (event: MQuickActionButtonCustomEvent<any>) => void;
+        "onEventClickSecondary"?: (event: DQuickActionButtonCustomEvent<any>) => void;
         /**
           * Representative icon, displayed when the representativeImage is not set
          */
@@ -2377,7 +2385,11 @@ declare namespace LocalJSX {
          */
         "secondaryActionIcon"?: string;
     }
-    interface MQuickActionCheck {
+    interface DQuickActionCheck {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Is selected
          */
@@ -2395,23 +2407,23 @@ declare namespace LocalJSX {
          */
         "line3": string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * Name of the input
          */
         "name": string;
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MQuickActionCheckCustomEvent<string>) => void;
+        "onEventChange"?: (event: DQuickActionCheckCustomEvent<string>) => void;
         /**
           * Input value
          */
         "value": string;
     }
-    interface MQuickActionSelect {
+    interface DQuickActionSelect {
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Is selected
          */
@@ -2425,27 +2437,27 @@ declare namespace LocalJSX {
          */
         "line2": string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * Name of the input
          */
         "name": string;
         /**
           * Emitted when the select value has changed
          */
-        "onMChange"?: (event: MQuickActionSelectCustomEvent<string>) => void;
+        "onEventChange"?: (event: DQuickActionSelectCustomEvent<string>) => void;
         /**
           * Input value
          */
         "value": string;
     }
-    interface MQuickActionSwitch {
+    interface DQuickActionSwitch {
         /**
           * Hint to display
          */
         "hint": string;
+        /**
+          * The id of the input
+         */
+        "innerId": string;
         /**
           * Is checked
          */
@@ -2459,67 +2471,63 @@ declare namespace LocalJSX {
          */
         "label": string;
         /**
-          * The id of the input
-         */
-        "mId": string;
-        /**
           * The name of the input
          */
         "name"?: string;
         /**
           * Emitted when the select value has changed
          */
-        "onMClick"?: (event: MQuickActionSwitchCustomEvent<boolean>) => void;
+        "onEventClick"?: (event: DQuickActionSwitchCustomEvent<boolean>) => void;
     }
     interface IntrinsicElements {
-        "m-alert": MAlert;
-        "m-badge": MBadge;
-        "m-button": MButton;
-        "m-chip": MChip;
-        "m-icon": MIcon;
-        "m-input": MInput;
-        "m-input-check": MInputCheck;
-        "m-input-counter": MInputCounter;
-        "m-input-currency-base": MInputCurrencyBase;
-        "m-input-password": MInputPassword;
-        "m-input-pin": MInputPin;
-        "m-input-search": MInputSearch;
-        "m-input-select": MInputSelect;
-        "m-input-switch": MInputSwitch;
-        "m-modal": MModal;
-        "m-offcanvas": MOffcanvas;
-        "m-progress-bar": MProgressBar;
-        "m-quick-action-button": MQuickActionButton;
-        "m-quick-action-check": MQuickActionCheck;
-        "m-quick-action-select": MQuickActionSelect;
-        "m-quick-action-switch": MQuickActionSwitch;
+        "d-alert": DAlert;
+        "d-badge": DBadge;
+        "d-button": DButton;
+        "d-chip": DChip;
+        "d-icon": DIcon;
+        "d-input": DInput;
+        "d-input-check": DInputCheck;
+        "d-input-counter": DInputCounter;
+        "d-input-currency-base": DInputCurrencyBase;
+        "d-input-password": DInputPassword;
+        "d-input-pin": DInputPin;
+        "d-input-search": DInputSearch;
+        "d-input-select": DInputSelect;
+        "d-input-switch": DInputSwitch;
+        "d-modal": DModal;
+        "d-offcanvas": DOffcanvas;
+        "d-progress": DProgress;
+        "d-quick-action-button": DQuickActionButton;
+        "d-quick-action-check": DQuickActionCheck;
+        "d-quick-action-select": DQuickActionSelect;
+        "d-quick-action-switch": DQuickActionSwitch;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "m-alert": LocalJSX.MAlert & JSXBase.HTMLAttributes<HTMLMAlertElement>;
-            "m-badge": LocalJSX.MBadge & JSXBase.HTMLAttributes<HTMLMBadgeElement>;
-            "m-button": LocalJSX.MButton & JSXBase.HTMLAttributes<HTMLMButtonElement>;
-            "m-chip": LocalJSX.MChip & JSXBase.HTMLAttributes<HTMLMChipElement>;
-            "m-icon": LocalJSX.MIcon & JSXBase.HTMLAttributes<HTMLMIconElement>;
-            "m-input": LocalJSX.MInput & JSXBase.HTMLAttributes<HTMLMInputElement>;
-            "m-input-check": LocalJSX.MInputCheck & JSXBase.HTMLAttributes<HTMLMInputCheckElement>;
-            "m-input-counter": LocalJSX.MInputCounter & JSXBase.HTMLAttributes<HTMLMInputCounterElement>;
-            "m-input-currency-base": LocalJSX.MInputCurrencyBase & JSXBase.HTMLAttributes<HTMLMInputCurrencyBaseElement>;
-            "m-input-password": LocalJSX.MInputPassword & JSXBase.HTMLAttributes<HTMLMInputPasswordElement>;
-            "m-input-pin": LocalJSX.MInputPin & JSXBase.HTMLAttributes<HTMLMInputPinElement>;
-            "m-input-search": LocalJSX.MInputSearch & JSXBase.HTMLAttributes<HTMLMInputSearchElement>;
-            "m-input-select": LocalJSX.MInputSelect & JSXBase.HTMLAttributes<HTMLMInputSelectElement>;
-            "m-input-switch": LocalJSX.MInputSwitch & JSXBase.HTMLAttributes<HTMLMInputSwitchElement>;
-            "m-modal": LocalJSX.MModal & JSXBase.HTMLAttributes<HTMLMModalElement>;
-            "m-offcanvas": LocalJSX.MOffcanvas & JSXBase.HTMLAttributes<HTMLMOffcanvasElement>;
-            "m-progress-bar": LocalJSX.MProgressBar & JSXBase.HTMLAttributes<HTMLMProgressBarElement>;
-            "m-quick-action-button": LocalJSX.MQuickActionButton & JSXBase.HTMLAttributes<HTMLMQuickActionButtonElement>;
-            "m-quick-action-check": LocalJSX.MQuickActionCheck & JSXBase.HTMLAttributes<HTMLMQuickActionCheckElement>;
-            "m-quick-action-select": LocalJSX.MQuickActionSelect & JSXBase.HTMLAttributes<HTMLMQuickActionSelectElement>;
-            "m-quick-action-switch": LocalJSX.MQuickActionSwitch & JSXBase.HTMLAttributes<HTMLMQuickActionSwitchElement>;
+            "d-alert": LocalJSX.DAlert & JSXBase.HTMLAttributes<HTMLDAlertElement>;
+            "d-badge": LocalJSX.DBadge & JSXBase.HTMLAttributes<HTMLDBadgeElement>;
+            "d-button": LocalJSX.DButton & JSXBase.HTMLAttributes<HTMLDButtonElement>;
+            "d-chip": LocalJSX.DChip & JSXBase.HTMLAttributes<HTMLDChipElement>;
+            "d-icon": LocalJSX.DIcon & JSXBase.HTMLAttributes<HTMLDIconElement>;
+            "d-input": LocalJSX.DInput & JSXBase.HTMLAttributes<HTMLDInputElement>;
+            "d-input-check": LocalJSX.DInputCheck & JSXBase.HTMLAttributes<HTMLDInputCheckElement>;
+            "d-input-counter": LocalJSX.DInputCounter & JSXBase.HTMLAttributes<HTMLDInputCounterElement>;
+            "d-input-currency-base": LocalJSX.DInputCurrencyBase & JSXBase.HTMLAttributes<HTMLDInputCurrencyBaseElement>;
+            "d-input-password": LocalJSX.DInputPassword & JSXBase.HTMLAttributes<HTMLDInputPasswordElement>;
+            "d-input-pin": LocalJSX.DInputPin & JSXBase.HTMLAttributes<HTMLDInputPinElement>;
+            "d-input-search": LocalJSX.DInputSearch & JSXBase.HTMLAttributes<HTMLDInputSearchElement>;
+            "d-input-select": LocalJSX.DInputSelect & JSXBase.HTMLAttributes<HTMLDInputSelectElement>;
+            "d-input-switch": LocalJSX.DInputSwitch & JSXBase.HTMLAttributes<HTMLDInputSwitchElement>;
+            "d-modal": LocalJSX.DModal & JSXBase.HTMLAttributes<HTMLDModalElement>;
+            "d-offcanvas": LocalJSX.DOffcanvas & JSXBase.HTMLAttributes<HTMLDOffcanvasElement>;
+            "d-progress": LocalJSX.DProgress & JSXBase.HTMLAttributes<HTMLDProgressElement>;
+            "d-quick-action-button": LocalJSX.DQuickActionButton & JSXBase.HTMLAttributes<HTMLDQuickActionButtonElement>;
+            "d-quick-action-check": LocalJSX.DQuickActionCheck & JSXBase.HTMLAttributes<HTMLDQuickActionCheckElement>;
+            "d-quick-action-select": LocalJSX.DQuickActionSelect & JSXBase.HTMLAttributes<HTMLDQuickActionSelectElement>;
+            "d-quick-action-switch": LocalJSX.DQuickActionSwitch & JSXBase.HTMLAttributes<HTMLDQuickActionSwitchElement>;
         }
     }
 }

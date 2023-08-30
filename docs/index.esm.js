@@ -1,35 +1,35 @@
-import { __rest } from 'tslib';
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
+import { ToastContainer, Slide, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { __rest } from 'tslib';
 import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
-import React, { createElement, useState, useEffect, createContext, useMemo, useContext, useCallback, forwardRef, useImperativeHandle, useRef } from 'react';
-import { defineCustomElement } from '@dynamic-framework/ui/components/m-alert.js';
-import { defineCustomElement as defineCustomElement$1 } from '@dynamic-framework/ui/components/m-badge.js';
-import { defineCustomElement as defineCustomElement$2 } from '@dynamic-framework/ui/components/m-button.js';
-import { defineCustomElement as defineCustomElement$3 } from '@dynamic-framework/ui/components/m-chip.js';
-import { defineCustomElement as defineCustomElement$4 } from '@dynamic-framework/ui/components/m-icon.js';
-import { defineCustomElement as defineCustomElement$5 } from '@dynamic-framework/ui/components/m-input.js';
-import { defineCustomElement as defineCustomElement$6 } from '@dynamic-framework/ui/components/m-input-check.js';
-import { defineCustomElement as defineCustomElement$7 } from '@dynamic-framework/ui/components/m-input-counter.js';
-import { defineCustomElement as defineCustomElement$8 } from '@dynamic-framework/ui/components/m-input-currency-base.js';
-import { defineCustomElement as defineCustomElement$9 } from '@dynamic-framework/ui/components/m-input-password.js';
-import { defineCustomElement as defineCustomElement$a } from '@dynamic-framework/ui/components/m-input-pin.js';
-import { defineCustomElement as defineCustomElement$b } from '@dynamic-framework/ui/components/m-input-search.js';
-import { defineCustomElement as defineCustomElement$c } from '@dynamic-framework/ui/components/m-input-select.js';
-import { defineCustomElement as defineCustomElement$d } from '@dynamic-framework/ui/components/m-input-switch.js';
-import { defineCustomElement as defineCustomElement$e } from '@dynamic-framework/ui/components/m-modal.js';
-import { defineCustomElement as defineCustomElement$f } from '@dynamic-framework/ui/components/m-offcanvas.js';
-import { defineCustomElement as defineCustomElement$g } from '@dynamic-framework/ui/components/m-progress-bar.js';
-import { defineCustomElement as defineCustomElement$h } from '@dynamic-framework/ui/components/m-quick-action-button.js';
-import { defineCustomElement as defineCustomElement$i } from '@dynamic-framework/ui/components/m-quick-action-check.js';
-import { defineCustomElement as defineCustomElement$j } from '@dynamic-framework/ui/components/m-quick-action-select.js';
-import { defineCustomElement as defineCustomElement$k } from '@dynamic-framework/ui/components/m-quick-action-switch.js';
-import { PREFIX_BS, liquidParser, formatCurrency } from '@dynamic-framework/ui';
+import React, { createElement, createContext, useMemo, useContext, useState, useCallback, useEffect, forwardRef, useImperativeHandle, useRef } from 'react';
+import { defineCustomElement } from '@dynamic-framework/ui/components/d-alert.js';
+import { defineCustomElement as defineCustomElement$1 } from '@dynamic-framework/ui/components/d-badge.js';
+import { defineCustomElement as defineCustomElement$2 } from '@dynamic-framework/ui/components/d-button.js';
+import { defineCustomElement as defineCustomElement$3 } from '@dynamic-framework/ui/components/d-chip.js';
+import { defineCustomElement as defineCustomElement$4 } from '@dynamic-framework/ui/components/d-icon.js';
+import { defineCustomElement as defineCustomElement$5 } from '@dynamic-framework/ui/components/d-input.js';
+import { defineCustomElement as defineCustomElement$6 } from '@dynamic-framework/ui/components/d-input-check.js';
+import { defineCustomElement as defineCustomElement$7 } from '@dynamic-framework/ui/components/d-input-counter.js';
+import { defineCustomElement as defineCustomElement$8 } from '@dynamic-framework/ui/components/d-input-currency-base.js';
+import { defineCustomElement as defineCustomElement$9 } from '@dynamic-framework/ui/components/d-input-password.js';
+import { defineCustomElement as defineCustomElement$a } from '@dynamic-framework/ui/components/d-input-pin.js';
+import { defineCustomElement as defineCustomElement$b } from '@dynamic-framework/ui/components/d-input-search.js';
+import { defineCustomElement as defineCustomElement$c } from '@dynamic-framework/ui/components/d-input-select.js';
+import { defineCustomElement as defineCustomElement$d } from '@dynamic-framework/ui/components/d-input-switch.js';
+import { defineCustomElement as defineCustomElement$e } from '@dynamic-framework/ui/components/d-modal.js';
+import { defineCustomElement as defineCustomElement$f } from '@dynamic-framework/ui/components/d-offcanvas.js';
+import { defineCustomElement as defineCustomElement$g } from '@dynamic-framework/ui/components/d-progress.js';
+import { defineCustomElement as defineCustomElement$h } from '@dynamic-framework/ui/components/d-quick-action-button.js';
+import { defineCustomElement as defineCustomElement$i } from '@dynamic-framework/ui/components/d-quick-action-check.js';
+import { defineCustomElement as defineCustomElement$j } from '@dynamic-framework/ui/components/d-quick-action-select.js';
+import { defineCustomElement as defineCustomElement$k } from '@dynamic-framework/ui/components/d-quick-action-switch.js';
+import { liquidParser, PREFIX_BS, formatCurrency } from '@dynamic-framework/ui';
 export { liquidParser } from '@dynamic-framework/ui';
 import ContentLoader from 'react-content-loader';
 import classNames from 'classnames';
-import { ToastContainer, Slide, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, useRole, useInteractions, useId, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
 import { useField } from 'formik';
 import { useDropzone } from 'react-dropzone';
@@ -243,60 +243,42 @@ const createReactComponent = (tagName, ReactComponentContext, manipulatePropsFun
 };
 
 /* eslint-disable */
-const MAlert = /*@__PURE__*/ createReactComponent('m-alert', undefined, undefined, defineCustomElement);
-const MBadge = /*@__PURE__*/ createReactComponent('m-badge', undefined, undefined, defineCustomElement$1);
-const MButton = /*@__PURE__*/ createReactComponent('m-button', undefined, undefined, defineCustomElement$2);
-const MChip = /*@__PURE__*/ createReactComponent('m-chip', undefined, undefined, defineCustomElement$3);
-const MIcon = /*@__PURE__*/ createReactComponent('m-icon', undefined, undefined, defineCustomElement$4);
-const MInput = /*@__PURE__*/ createReactComponent('m-input', undefined, undefined, defineCustomElement$5);
-const MInputCheck = /*@__PURE__*/ createReactComponent('m-input-check', undefined, undefined, defineCustomElement$6);
-const MInputCounter = /*@__PURE__*/ createReactComponent('m-input-counter', undefined, undefined, defineCustomElement$7);
-const MInputCurrencyBase = /*@__PURE__*/ createReactComponent('m-input-currency-base', undefined, undefined, defineCustomElement$8);
-const MInputPassword = /*@__PURE__*/ createReactComponent('m-input-password', undefined, undefined, defineCustomElement$9);
-const MInputPin = /*@__PURE__*/ createReactComponent('m-input-pin', undefined, undefined, defineCustomElement$a);
-const MInputSearch = /*@__PURE__*/ createReactComponent('m-input-search', undefined, undefined, defineCustomElement$b);
-const MInputSelect = /*@__PURE__*/ createReactComponent('m-input-select', undefined, undefined, defineCustomElement$c);
-const MInputSwitch = /*@__PURE__*/ createReactComponent('m-input-switch', undefined, undefined, defineCustomElement$d);
-const MModal = /*@__PURE__*/ createReactComponent('m-modal', undefined, undefined, defineCustomElement$e);
-const MOffcanvas = /*@__PURE__*/ createReactComponent('m-offcanvas', undefined, undefined, defineCustomElement$f);
-const MProgressBar = /*@__PURE__*/ createReactComponent('m-progress-bar', undefined, undefined, defineCustomElement$g);
-const MQuickActionButton = /*@__PURE__*/ createReactComponent('m-quick-action-button', undefined, undefined, defineCustomElement$h);
-const MQuickActionCheck = /*@__PURE__*/ createReactComponent('m-quick-action-check', undefined, undefined, defineCustomElement$i);
-const MQuickActionSelect = /*@__PURE__*/ createReactComponent('m-quick-action-select', undefined, undefined, defineCustomElement$j);
-const MQuickActionSwitch = /*@__PURE__*/ createReactComponent('m-quick-action-switch', undefined, undefined, defineCustomElement$k);
+const DAlert = /*@__PURE__*/ createReactComponent('d-alert', undefined, undefined, defineCustomElement);
+const DBadge = /*@__PURE__*/ createReactComponent('d-badge', undefined, undefined, defineCustomElement$1);
+const DButton = /*@__PURE__*/ createReactComponent('d-button', undefined, undefined, defineCustomElement$2);
+const DChip = /*@__PURE__*/ createReactComponent('d-chip', undefined, undefined, defineCustomElement$3);
+const DIcon = /*@__PURE__*/ createReactComponent('d-icon', undefined, undefined, defineCustomElement$4);
+const DInput = /*@__PURE__*/ createReactComponent('d-input', undefined, undefined, defineCustomElement$5);
+const DInputCheck = /*@__PURE__*/ createReactComponent('d-input-check', undefined, undefined, defineCustomElement$6);
+const DInputCounter = /*@__PURE__*/ createReactComponent('d-input-counter', undefined, undefined, defineCustomElement$7);
+const DInputCurrencyBase = /*@__PURE__*/ createReactComponent('d-input-currency-base', undefined, undefined, defineCustomElement$8);
+const DInputPassword = /*@__PURE__*/ createReactComponent('d-input-password', undefined, undefined, defineCustomElement$9);
+const DInputPin = /*@__PURE__*/ createReactComponent('d-input-pin', undefined, undefined, defineCustomElement$a);
+const DInputSearch = /*@__PURE__*/ createReactComponent('d-input-search', undefined, undefined, defineCustomElement$b);
+const DInputSelect = /*@__PURE__*/ createReactComponent('d-input-select', undefined, undefined, defineCustomElement$c);
+const DInputSwitch = /*@__PURE__*/ createReactComponent('d-input-switch', undefined, undefined, defineCustomElement$d);
+const DModal = /*@__PURE__*/ createReactComponent('d-modal', undefined, undefined, defineCustomElement$e);
+const DOffcanvas = /*@__PURE__*/ createReactComponent('d-offcanvas', undefined, undefined, defineCustomElement$f);
+const DProgress = /*@__PURE__*/ createReactComponent('d-progress', undefined, undefined, defineCustomElement$g);
+const DQuickActionButton = /*@__PURE__*/ createReactComponent('d-quick-action-button', undefined, undefined, defineCustomElement$h);
+const DQuickActionCheck = /*@__PURE__*/ createReactComponent('d-quick-action-check', undefined, undefined, defineCustomElement$i);
+const DQuickActionSelect = /*@__PURE__*/ createReactComponent('d-quick-action-select', undefined, undefined, defineCustomElement$j);
+const DQuickActionSwitch = /*@__PURE__*/ createReactComponent('d-quick-action-switch', undefined, undefined, defineCustomElement$k);
 
-function MCollapse({ id, className, Component, hasSeparator = false, defaultCollapsed = false, onChange, children, }) {
-    const [toggle, setToggle] = useState(defaultCollapsed);
-    const onChangeCollapse = () => setToggle((prev) => !prev);
-    useEffect(() => {
-        if (onChange) {
-            onChange(toggle);
-        }
-    }, [toggle, onChange]);
-    useEffect(() => {
-        setToggle(defaultCollapsed);
-    }, [defaultCollapsed]);
-    return (jsxs("div", Object.assign({ id: id, className: classNames('m-collapse collapse-container', className) }, { children: [jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsx(MIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsx("div", Object.assign({ className: classNames({
-                    'collapse-body': true,
-                }), style: {
-                    [`--${PREFIX_BS}m-collapse-separator-display`]: hasSeparator ? 'block' : 'none',
-                } }, { children: children })))] })));
-}
-
-function MCollapseIconText({ children, icon, iconSize = '1.5rem', iconTheme = 'primary', title, iconFamilyClass, iconFamilyPrefix, }) {
-    return (jsx(MCollapse, Object.assign({ defaultCollapsed: true, className: "m-collapse-icon-text", Component: (jsxs("div", Object.assign({ className: "m-collapse-icon-text-header" }, { children: [jsx(MIcon, { icon: icon, size: iconSize, theme: iconTheme, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, hasCircle: true }), jsx("span", Object.assign({ className: "m-collapse-icon-text-title" }, { children: title }))] }))) }, { children: children })));
-}
-
-function MPermissionItem({ permission, permissionState, onChange, onAction = () => { }, }) {
-    return (jsxs("div", Object.assign({ role: "button", tabIndex: 0, onKeyDown: () => { }, className: "d-flex permission-item align-items-center", onClick: onAction }, { children: [jsx("span", Object.assign({ className: "flex-grow-1 label" }, { children: permission.label })), permission.type === 'custom' && (jsx(MBadge, { theme: "tertiary", text: permissionState })), jsx(MInputSwitch, { mId: permission.id, isChecked: !!permission.value, isDisabled: !permission.enabled, onMChange: ({ detail: checked }) => onChange(checked) })] })));
+function DPermissionItem({ permission, permissionState, onChange, onAction = () => { }, }) {
+    return (jsxs("div", Object.assign({ role: "button", tabIndex: 0, onKeyDown: () => { }, className: "d-flex permission-item align-items-center", onClick: onAction }, { children: [jsx("span", Object.assign({ className: "flex-grow-1 label" }, { children: permission.label })), permission.type === 'custom' && (jsx(DBadge, { theme: "tertiary", text: permissionState })), jsx(DInputSwitch, { innerId: permission.id, isChecked: !!permission.value, isDisabled: !permission.enabled, onEventChange: ({ detail: checked }) => onChange(checked) })] })));
 }
 
 function MPermissionGroup({ title, description, permissionState, permissionList, onChangePermission, onCustomAction = () => { }, }) {
-    return (jsxs("div", Object.assign({ className: "row operation-group g-0 mb-3 mb-lg-0" }, { children: [jsxs("div", Object.assign({ className: "col-12 col-lg-4 d-flex flex-column justify-content-center" }, { children: [jsx("h6", Object.assign({ className: "fw-bold mb-3 mb-lg-2" }, { children: title })), jsx("p", Object.assign({ className: "fs-8 d-none d-lg-block m-0" }, { children: description }))] })), jsx("div", Object.assign({ className: "col-12 offset-lg-1 col-lg-7" }, { children: permissionList.map((permission) => (jsx(MPermissionItem, { permission: permission, permissionState: permissionState, onChange: (isChecked) => onChangePermission(permission, isChecked), onAction: () => onCustomAction(permission) }, permission.id))) }))] })));
+    return (jsxs("div", Object.assign({ className: "row operation-group g-0 mb-3 mb-lg-0" }, { children: [jsxs("div", Object.assign({ className: "col-12 col-lg-4 d-flex flex-column justify-content-center" }, { children: [jsx("h6", Object.assign({ className: "fw-bold mb-3 mb-lg-2" }, { children: title })), jsx("p", Object.assign({ className: "fs-8 d-none d-lg-block m-0" }, { children: description }))] })), jsx("div", Object.assign({ className: "col-12 offset-lg-1 col-lg-7" }, { children: permissionList.map((permission) => (jsx(DPermissionItem, { permission: permission, permissionState: permissionState, onChange: (isChecked) => onChangePermission(permission, isChecked), onAction: () => onCustomAction(permission) }, permission.id))) }))] })));
 }
 
 function MSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, }) {
-    return (jsxs("div", { children: [jsx("h6", Object.assign({ className: "fw-bold fs-6" }, { children: title })), jsx("p", Object.assign({ className: "fs-8" }, { children: description })), jsxs("div", Object.assign({ className: "bg-white rounded p-4 d-flex gap-3 shadow-sm text-gray-700 fs-8" }, { children: [jsx(MIcon, { icon: icon, theme: iconTheme, size: iconSize }), Summary] }))] }));
+    return (jsxs("div", { children: [jsx("h6", Object.assign({ className: "fw-bold fs-6" }, { children: title })), jsx("p", Object.assign({ className: "fs-8" }, { children: description })), jsxs("div", Object.assign({ className: "bg-white rounded p-4 d-flex gap-3 shadow-sm text-gray-700 fs-8" }, { children: [jsx(DIcon, { icon: icon, theme: iconTheme, size: iconSize }), Summary] }))] }));
+}
+
+function DToastContainer({ style, position = 'top-right', }) {
+    return (jsx(ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: position, autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: Slide, style: style }));
 }
 
 const LiquidContext = createContext({
@@ -548,50 +530,50 @@ function useOffcanvasContext() {
     return context;
 }
 
-function MDatePickerTime(_a) {
-    var { value, onChange, mId, label } = _a, props = __rest(_a, ["value", "onChange", "mId", "label"]);
-    return (jsxs("div", Object.assign({ className: "d-flex align-items-center gap-2 flex-column m-datepicker-time" }, { children: [label && (jsx("p", Object.assign({ className: "m-datepicker-time-label" }, { children: label }))), jsx(MInput, Object.assign({}, onChange && {
-                onMChange: (time) => onChange(time),
-            }, { type: "time", mId: mId, value: value }, props))] })));
+function DDatePickerTime(_a) {
+    var { value, onEventChange, innerId, label } = _a, props = __rest(_a, ["value", "onEventChange", "innerId", "label"]);
+    return (jsxs("div", Object.assign({ className: "d-flex align-items-center gap-2 flex-column d-datepicker-time" }, { children: [label && (jsx("p", Object.assign({ className: "d-datepicker-time-label" }, { children: label }))), jsx(DInput, Object.assign({}, onEventChange && {
+                onEventChange: (time) => onEventChange(time),
+            }, { type: "time", innerId: innerId, value: value }, props))] })));
 }
 
-function MDatePickerInput(_a, ref) {
-    var { value, onClick, mId, iconEnd } = _a, props = __rest(_a, ["value", "onClick", "mId", "iconEnd"]);
+function DDatePickerInput(_a, ref) {
+    var { value, onEventClick, innerId, iconEnd } = _a, props = __rest(_a, ["value", "onEventClick", "innerId", "iconEnd"]);
     useImperativeHandle(ref, () => ({}), []);
-    return (jsx("div", Object.assign({ role: "button", onClick: onClick, onKeyDown: () => { }, tabIndex: -1 }, { children: jsx(MInput, Object.assign({ isReadOnly: true, type: "text", mId: mId, value: value, onMIconEndClick: onClick, iconEnd: iconEnd }, props)) })));
+    return (jsx("div", Object.assign({ role: "button", onClick: onEventClick, onKeyDown: () => { }, tabIndex: -1 }, { children: jsx(DInput, Object.assign({ isReadOnly: true, type: "text", innerId: innerId, value: value, onEventIconEndClick: onEventClick, iconEnd: iconEnd }, props)) })));
 }
-var MDatePickerInput$1 = forwardRef(MDatePickerInput);
+var DDatePickerInput$1 = forwardRef(DDatePickerInput);
 
-function MMonthPicker(_a) {
-    var { setDate, date } = _a, props = __rest(_a, ["setDate", "date"]);
+function DMonthPicker(_a) {
+    var { onEventChangeDate, date } = _a, props = __rest(_a, ["onEventChangeDate", "date"]);
     const dateJS = (value) => DateTime.fromISO(value).toJSDate();
     const { language } = useLiquidContext();
     const lang = language || 'en';
-    return (jsx(DatePicker, Object.assign({ showMonthYearPicker: true, selected: dateJS(date), calendarClassName: "m-month-picker", onChange: (value) => {
-            setDate(value);
-        }, customInput: (jsx("p", Object.assign({ className: "fw-bold text-capitalize" }, { children: DateTime.fromISO(date).setLocale(lang).toFormat('MMMM yyyy') }))), renderCustomHeader: ({ monthDate, decreaseYear, increaseYear, prevYearButtonDisabled, nextYearButtonDisabled, }) => (jsxs("div", Object.assign({ className: "d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark" }, { children: [jsx(MButton, { iconStart: "chevron-left", size: "sm", variant: "link", theme: "light", onMClick: decreaseYear, isDisabled: prevYearButtonDisabled }), jsx("p", Object.assign({ className: "fs-6 fw-bold" }, { children: monthDate.getFullYear() })), jsx(MButton, { iconStart: "chevron-right", size: "sm", variant: "link", theme: "light", onMClick: increaseYear, isDisabled: nextYearButtonDisabled })] }))) }, props)));
+    return (jsx(DatePicker, Object.assign({ showMonthYearPicker: true, selected: dateJS(date), calendarClassName: "d-month-picker", onChange: (value) => {
+            onEventChangeDate(value);
+        }, customInput: (jsx("p", Object.assign({ className: "fw-bold text-capitalize" }, { children: DateTime.fromISO(date).setLocale(lang).toFormat('MMMM yyyy') }))), renderCustomHeader: ({ monthDate, decreaseYear, increaseYear, prevYearButtonDisabled, nextYearButtonDisabled, }) => (jsxs("div", Object.assign({ className: "d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark" }, { children: [jsx(DButton, { iconStart: "chevron-left", size: "sm", variant: "link", theme: "light", onEventClick: decreaseYear, isDisabled: prevYearButtonDisabled }), jsx("p", Object.assign({ className: "fs-6 fw-bold" }, { children: monthDate.getFullYear() })), jsx(DButton, { iconStart: "chevron-right", size: "sm", variant: "link", theme: "light", onEventClick: increaseYear, isDisabled: nextYearButtonDisabled })] }))) }, props)));
 }
 
-function MDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, decreaseMonthIcon, increaseMonthIcon, iconSize, buttonVariant, buttonTheme, }) {
+function DDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, decreaseMonthIcon, increaseMonthIcon, iconSize, buttonVariant, buttonTheme, }) {
     const { language } = useLiquidContext();
     const lang = language || 'en';
-    return (jsxs("div", Object.assign({ className: "d-flex align-items-center justify-content-between m-datepicker-header" }, { children: [jsx(MButton, { iconStart: decreaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onMClick: decreaseMonth, isDisabled: prevMonthButtonDisabled }), jsx(MMonthPicker, Object.assign({}, !withMonthSelector && { readOnly: true }, { date: monthDate.toISOString(), setDate: (value) => {
+    return (jsxs("div", Object.assign({ className: "d-flex align-items-center justify-content-between d-datepicker-header" }, { children: [jsx(DButton, { iconStart: decreaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onEventClick: decreaseMonth, isDisabled: prevMonthButtonDisabled }), jsx(DMonthPicker, Object.assign({}, !withMonthSelector && { readOnly: true }, { date: monthDate.toISOString(), onEventChangeDate: (value) => {
                     if (value) {
                         changeMonth(DateTime.fromJSDate(value).month - 1);
                         changeYear(DateTime.fromJSDate(value).year);
                     }
-                } }, lang && { locale: lang })), jsx(MButton, { iconStart: increaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onMClick: increaseMonth, isDisabled: nextMonthButtonDisabled })] })));
+                } }, lang && { locale: lang })), jsx(DButton, { iconStart: increaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onEventClick: increaseMonth, isDisabled: nextMonthButtonDisabled })] })));
 }
 
-function MDatePicker(_a) {
-    var { setDate, date, selectsRange, withMonthSelector, inputLabel, inputIcon = 'calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, headerDecreaseMonthIcon = 'chevron-left', headerIncreaseMonthIcon = 'chevron-right', headerIconSize = 'sm', headerButtonVariant = 'link', headerButtonTheme = 'dark' } = _a, props = __rest(_a, ["setDate", "date", "selectsRange", "withMonthSelector", "inputLabel", "inputIcon", "inputId", "timeId", "timeLabel", "headerDecreaseMonthIcon", "headerIncreaseMonthIcon", "headerIconSize", "headerButtonVariant", "headerButtonTheme"]);
+function DDatePicker(_a) {
+    var { onEventChangeDate, date, selectsRange, withMonthSelector, inputLabel, inputIcon = 'calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, headerDecreaseMonthIcon = 'chevron-left', headerIncreaseMonthIcon = 'chevron-right', headerIconSize = 'sm', headerButtonVariant = 'link', headerButtonTheme = 'dark' } = _a, props = __rest(_a, ["onEventChangeDate", "date", "selectsRange", "withMonthSelector", "inputLabel", "inputIcon", "inputId", "timeId", "timeLabel", "headerDecreaseMonthIcon", "headerIncreaseMonthIcon", "headerIconSize", "headerButtonVariant", "headerButtonTheme"]);
     const dateJS = (value) => DateTime.fromISO(value).toJSDate();
     const { language } = useLiquidContext();
     const lang = language || 'en';
     // eslint-disable-next-line react/no-unstable-nested-components
-    const InputPicker = forwardRef(({ value, onClick }, ref) => (jsx(MDatePickerInput$1, { label: inputLabel, mId: inputId, iconEnd: inputIcon, value: value, onClick: onClick, ref: ref })));
-    const TimeInputPicker = useCallback(({ value, onChange }) => (jsx(MDatePickerTime, { onChange: onChange, value: value, label: timeLabel, mId: timeId })), [timeLabel, timeId]);
-    const DatePickerHeader = useCallback((headerProps) => (jsx(MDatePickerHeader, Object.assign({}, headerProps, { decreaseMonthIcon: headerDecreaseMonthIcon, increaseMonthIcon: headerIncreaseMonthIcon, iconSize: headerIconSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, withMonthSelector: !!withMonthSelector }))), [headerButtonTheme,
+    const InputPicker = forwardRef(({ value, onClick }, ref) => (jsx(DDatePickerInput$1, { label: inputLabel, innerId: inputId, iconEnd: inputIcon, value: value, onEventClick: onClick, ref: ref })));
+    const TimeInputPicker = useCallback(({ value, onChange }) => (jsx(DDatePickerTime, { onEventChange: onChange, value: value, label: timeLabel, innerId: timeId })), [timeLabel, timeId]);
+    const DatePickerHeader = useCallback((headerProps) => (jsx(DDatePickerHeader, Object.assign({}, headerProps, { decreaseMonthIcon: headerDecreaseMonthIcon, increaseMonthIcon: headerIncreaseMonthIcon, iconSize: headerIconSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, withMonthSelector: !!withMonthSelector }))), [headerButtonTheme,
         headerButtonVariant,
         headerDecreaseMonthIcon,
         headerIconSize,
@@ -599,11 +581,11 @@ function MDatePicker(_a) {
         withMonthSelector,
     ]);
     return (jsx(DatePicker, Object.assign({ selected: dateJS(date), calendarClassName: "m-date-picker", onChange: (value) => {
-            setDate(value);
+            onEventChangeDate(value);
         }, renderCustomHeader: (headerProps) => jsx(DatePickerHeader, Object.assign({}, headerProps)), customInput: jsx(InputPicker, {}), customTimeInput: jsx(TimeInputPicker, {}), selectsRange: selectsRange }, lang && { locale: lang }, props)));
 }
 
-function MSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
+function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
     const innerBackgroundColor = useMemo(() => {
         if (backgroundColor) {
             return backgroundColor;
@@ -622,14 +604,14 @@ function MSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, child
 }
 
 const TabContext = createContext(undefined);
-function MTabs({ children, defaultSelected, onChange, options, className, isVertical, }) {
+function DTabs({ children, defaultSelected, onEventChange, options, className, isVertical, }) {
     const [selected, setSelected] = useState(defaultSelected);
     const onSelect = useCallback((option) => {
         if (option.tab) {
             setSelected(option.tab);
         }
-        onChange(option);
-    }, [onChange]);
+        onEventChange(option);
+    }, [onEventChange]);
     useEffect(() => {
         setSelected(defaultSelected);
     }, [defaultSelected]);
@@ -638,8 +620,8 @@ function MTabs({ children, defaultSelected, onChange, options, className, isVert
         isSelected,
     }), [isSelected]);
     return (jsx(TabContext.Provider, Object.assign({ value: value }, { children: jsxs("div", Object.assign({ className: classNames({
-                'm-tabs': true,
-                'm-tabs-vertical': isVertical,
+                'd-tabs': true,
+                'd-tabs-vertical': isVertical,
             }) }, { children: [jsx("nav", Object.assign({ className: "nav" }, { children: options.map((option) => (jsx("button", Object.assign({ id: `${option.tab}Tab`, className: classNames('nav-link', {
                             active: option.tab === selected,
                         }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.isDisabled, onClick: () => onSelect(option) }, { children: option.label }), option.label))) })), jsx("div", Object.assign({ className: "tab-content" }, { children: children }))] })) })));
@@ -652,7 +634,7 @@ function useTabContext() {
     return context;
 }
 
-function MTabContent({ tab, children }) {
+function DTabContent({ tab, children }) {
     const { isSelected } = useTabContext();
     if (!isSelected(tab)) {
         return null;
@@ -660,19 +642,17 @@ function MTabContent({ tab, children }) {
     return (jsx("div", Object.assign({ className: "tab-pane fade show active", id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab` }, { children: children })));
 }
 
-function MToastContainer({ style, position = 'top-right', }) {
-    return (jsx(ToastContainer, { toastClassName: () => 'shadow-none p-0 cursor-default', position: position, autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: Slide, style: style }));
-}
-
-function MPopover({ children, renderComponent, isOpen, setIsOpen = () => { }, }) {
+function DPopover({ children, renderComponent, isOpen, setEventIsOpen, }) {
     const [innerIsOpen, setInnerIsOpen] = useState(false);
     useEffect(() => {
         setInnerIsOpen(isOpen);
     }, [isOpen]);
     const onOpenChange = useCallback((value) => {
         setInnerIsOpen(value);
-        setIsOpen(value);
-    }, [setIsOpen]);
+        if (setEventIsOpen) {
+            setEventIsOpen(value);
+        }
+    }, [setEventIsOpen]);
     const { refs, floatingStyles, context } = useFloating({
         open: innerIsOpen,
         onOpenChange,
@@ -692,7 +672,7 @@ function MPopover({ children, renderComponent, isOpen, setIsOpen = () => { }, })
         role,
     ]);
     const headingId = useId();
-    return (jsxs("div", Object.assign({ className: "m-popover" }, { children: [jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsx(FloatingFocusManager, Object.assign({ context: context, modal: false }, { children: jsx("div", Object.assign({ className: "m-popover-content", ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) })))] })));
+    return (jsxs("div", Object.assign({ className: "d-popover" }, { children: [jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsx(FloatingFocusManager, Object.assign({ context: context, modal: false }, { children: jsx("div", Object.assign({ className: "d-popover-content", ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) })))] })));
 }
 
 function useFormatCurrency(...args) {
@@ -705,45 +685,45 @@ function useFormatCurrency(...args) {
     };
 }
 
-function MCurrencyText({ value, className, }) {
+function DCurrencyText({ value, className, }) {
     const { values: [valueFormatted] } = useFormatCurrency(value);
     return (jsx("span", Object.assign({ className: className }, { children: valueFormatted })));
 }
 
-function MFormikInput(_a) {
+function DFormikInput(_a) {
     var { name, hint } = _a, props = __rest(_a, ["name", "hint"]);
     const [field, meta, helpers] = useField(name);
-    return (jsx(MInput, Object.assign({}, props, { name: field.name, value: field.value, onMChange: ({ detail }) => helpers.setValue(detail), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
+    return (jsx(DInput, Object.assign({}, props, { name: field.name, value: field.value, onEventChange: ({ detail }) => helpers.setValue(detail), onEventBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
 }
 
-function MFormikInputSelect(_a) {
+function DFormikInputSelect(_a) {
     var { name, labelExtractor = (item) => item === null || item === void 0 ? void 0 : item.label, valueExtractor = (item) => item === null || item === void 0 ? void 0 : item.value } = _a, props = __rest(_a, ["name", "labelExtractor", "valueExtractor"]);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [field, , helpers] = useField(name);
-    return (jsx(MInputSelect, Object.assign({}, props, { name: field.name, selectedOption: field.value, labelExtractor: labelExtractor, valueExtractor: valueExtractor, onMChange: ({ detail }) => helpers.setValue(detail), onMBlur: ({ detail }) => field.onBlur(detail) })));
+    return (jsx(DInputSelect, Object.assign({}, props, { name: field.name, selectedOption: field.value, labelExtractor: labelExtractor, valueExtractor: valueExtractor, onEventChange: ({ detail }) => helpers.setValue(detail), onEventBlur: ({ detail }) => field.onBlur(detail) })));
 }
 
 const TOOLTIP_FONT_SIZE_BY_SIZE = {
-    sm: `var(--${PREFIX_BS}ref-fs-subparagraph)`,
+    sm: `var(--${PREFIX_BS}ref-fs-small)`,
     default: `var(--${PREFIX_BS}body-font-size)`,
     lg: `var(--${PREFIX_BS}ref-fs-6)`,
 };
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
 const GAP = 2;
-function MTooltip({ classNameContainer, className, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, isOpen = false, placement = 'top', size, Component, children, }) {
+function DTooltip({ classNameContainer, className, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, isOpen = false, placement = 'top', size, Component, children, }) {
     const [open, setOpen] = useState(isOpen);
     const styleVariables = useMemo(() => {
         const defaultFontSize = size
             ? TOOLTIP_FONT_SIZE_BY_SIZE[size]
             : TOOLTIP_FONT_SIZE_BY_SIZE.default;
         return {
-            background: `var(--${PREFIX_BS}m-tooltip-bg, var(--${PREFIX_BS}m-tooltip-component-bg, var(--${PREFIX_BS}secondary)))`,
-            borderRadius: `var(--${PREFIX_BS}m-tooltip-border-radius, var(--${PREFIX_BS}m-tooltip-component-border-radius, var(--${PREFIX_BS}border-radius)))`,
-            color: `var(--${PREFIX_BS}m-tooltip-color, var(--${PREFIX_BS}m-tooltip-component-color, var(--${PREFIX_BS}white)))`,
-            fontSize: `var(--${PREFIX_BS}m-tooltip-font-size, var(--${PREFIX_BS}m-tooltip-component-font-size, ${defaultFontSize}))`,
-            padding: `var(--${PREFIX_BS}m-tooltip-padding, var(--${PREFIX_BS}m-tooltip-component-padding, var(--${PREFIX_BS}ref-spacer-2)))`,
-            maxWidth: `var(--${PREFIX_BS}m-tooltip-max-width, var(--${PREFIX_BS}m-tooltip-component-max-width, 300px))`,
+            background: `var(--${PREFIX_BS}tooltip-bg, var(--${PREFIX_BS}tooltip-component-bg, var(--${PREFIX_BS}secondary)))`,
+            borderRadius: `var(--${PREFIX_BS}tooltip-border-radius, var(--${PREFIX_BS}tooltip-component-border-radius, var(--${PREFIX_BS}border-radius)))`,
+            color: `var(--${PREFIX_BS}tooltip-color, var(--${PREFIX_BS}tooltip-component-color, var(--${PREFIX_BS}white)))`,
+            fontSize: `var(--${PREFIX_BS}tooltip-font-size, var(--${PREFIX_BS}tooltip-component-font-size, ${defaultFontSize}))`,
+            padding: `var(--${PREFIX_BS}tooltip-padding, var(--${PREFIX_BS}tooltip-component-padding, var(--${PREFIX_BS}ref-spacer-2)))`,
+            maxWidth: `var(--${PREFIX_BS}tooltip-max-width, var(--${PREFIX_BS}tooltip-component-max-width, 300px))`,
         };
     }, [size]);
     const arrowRef = useRef(null);
@@ -780,64 +760,82 @@ function MTooltip({ classNameContainer, className, offSet = ARROW_HEIGHT + GAP, 
                             }, width: ARROW_WIDTH, height: ARROW_HEIGHT }), children] }))) })] }));
 }
 
-function MInputCurrency(_a) {
-    var { onChange, onBlur, onFocus } = _a, otherProps = __rest(_a, ["onChange", "onBlur", "onFocus"]);
+function DCollapse({ id, className, Component, hasSeparator = false, defaultCollapsed = false, onEventChange, children, }) {
+    const [toggle, setToggle] = useState(defaultCollapsed);
+    const onChangeCollapse = () => setToggle((prev) => !prev);
+    useEffect(() => {
+        if (onEventChange) {
+            onEventChange(toggle);
+        }
+    }, [toggle, onEventChange]);
+    useEffect(() => {
+        setToggle(defaultCollapsed);
+    }, [defaultCollapsed]);
+    return (jsxs("div", Object.assign({ id: id, className: classNames('collapse-container', className) }, { children: [jsxs("button", Object.assign({ className: "collapse-button", type: "button", onClick: onChangeCollapse }, { children: [jsx("div", Object.assign({ className: "flex-grow-1" }, { children: Component })), jsx(DIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}ref-fs-small)`, icon: toggle ? 'chevron-up' : 'chevron-down' })] })), toggle && (jsx("div", Object.assign({ className: classNames({
+                    'collapse-body': true,
+                }), style: {
+                    [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
+                } }, { children: children })))] })));
+}
+
+function DInputCurrency(_a) {
+    var { onEventChange, onEventBlur, onEventFocus } = _a, otherProps = __rest(_a, ["onEventChange", "onEventBlur", "onEventFocus"]);
     const { currency } = useLiquidContext();
-    return (jsx(MInputCurrencyBase, Object.assign({ currencyOptions: currency, onMChange: ({ detail }) => onChange(detail) }, onBlur && {
-        onMBlur: ({ detail }) => onBlur(detail),
-    }, onFocus && {
-        onMFocus: ({ detail }) => onFocus(detail),
+    return (jsx(DInputCurrencyBase, Object.assign({ currencyOptions: currency, onEventChange: ({ detail }) => onEventChange(detail) }, onEventBlur && {
+        onEventBlur: ({ detail }) => onEventBlur(detail),
+    }, onEventFocus && {
+        onEventFocus: ({ detail }) => onEventFocus(detail),
     }, otherProps)));
 }
 
-function MBoxFile(_a) {
+function DBoxFile(_a) {
     var { icon = 'cloud-upload', iconFamilyClass, iconFamilyPrefix, isDisabled = false, children } = _a, dropzoneOptions = __rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "isDisabled", "children"]);
     const { acceptedFiles, getRootProps, getInputProps, } = useDropzone(Object.assign({ disabled: isDisabled }, dropzoneOptions));
-    return (jsxs("section", Object.assign({ className: classNames('m-box-file', {
-            'm-box-file-selected': !!acceptedFiles.length,
+    return (jsxs("section", Object.assign({ className: classNames('d-box-file', {
+            'd-box-file-selected': !!acceptedFiles.length,
         }) }, { children: [jsxs("div", Object.assign({}, getRootProps({
-                className: classNames('m-box-file-dropzone', {
+                className: classNames('d-box-file-dropzone', {
                     disabled: isDisabled,
                 }),
-            }), { children: [jsx("input", Object.assign({}, getInputProps())), jsx(MIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsx("div", Object.assign({ className: "m-box-content" }, { children: children }))] })), !!acceptedFiles.length && (jsx("aside", Object.assign({ className: "m-box-files" }, { children: acceptedFiles.map((file) => (jsx("div", Object.assign({ className: "m-box-files-text" }, { children: `${file.name} - ${file.size} bytes` }), file.name))) })))] })));
+            }), { children: [jsx("input", Object.assign({}, getInputProps())), jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsx("div", Object.assign({ className: "d-box-content" }, { children: children }))] })), !!acceptedFiles.length && (jsx("aside", Object.assign({ className: "d-box-files" }, { children: acceptedFiles.map((file) => (jsx("div", Object.assign({ className: "d-box-files-text" }, { children: `${file.name} - ${file.size} bytes` }), file.name))) })))] })));
 }
 
-function MCarousel(_a) {
+function DCarousel(_a) {
     var { children, className, options } = _a, props = __rest(_a, ["children", "className", "options"]);
-    return (jsx(Splide, Object.assign({ className: classNames('m-carousel', className), options: Object.assign(Object.assign({}, options), { classes: {
+    return (jsx(Splide, Object.assign({ className: classNames('d-carousel', className), options: Object.assign(Object.assign({}, options), { classes: {
                 // Arrows
-                arrows: 'splide__arrows m-carousel-arrows',
-                arrow: 'splide__arrow m-carousel-arrow',
-                prev: 'splide__arrow--prev m-carousel-arrow-prev',
-                next: 'splide__arrow--next m-carousel-arrow-next',
+                arrows: 'splide__arrows d-carousel-arrows',
+                arrow: 'splide__arrow d-carousel-arrow',
+                prev: 'splide__arrow--prev d-carousel-arrow-prev',
+                next: 'splide__arrow--next d-carousel-arrow-next',
                 // Paginator
-                pagination: 'splide__pagination m-carousel-pagination',
-                page: 'splide__pagination__page m-carousel-pagination-page',
+                pagination: 'splide__pagination d-carousel-pagination',
+                page: 'splide__pagination__page d-carousel-pagination-page',
             } }) }, props, { children: children })));
 }
 
-function MCarouselSlide(_a) {
+function DCarouselSlide(_a) {
     var { className } = _a, props = __rest(_a, ["className"]);
-    return (jsx(SplideSlide, Object.assign({ className: classNames('m-carousel-slide', className) }, props)));
+    return (jsx(SplideSlide, Object.assign({ className: classNames('d-carousel-slide', className) }, props)));
 }
 
-function MList({ children, className, isFlush = false, isNumbered = false, isHorizontal = false, horizontalBreakpoint, }) {
+function DList({ children, className, isFlush = false, isNumbered = false, isHorizontal = false, horizontalBreakpoint, }) {
     if (isFlush && isHorizontal) {
         throw new Error("Horizontal and Flush props don't work together");
     }
-    return (jsx("div", Object.assign({ className: classNames('m-list list-group', {
+    return (jsx("div", Object.assign({ className: classNames('list-group', {
             'list-group-flush': isFlush && !isHorizontal,
             'list-group-numbered': isNumbered,
             'list-group-horizontal': isHorizontal && !horizontalBreakpoint,
         }, (isHorizontal && horizontalBreakpoint) && `list-group-horizontal-${horizontalBreakpoint}`, className) }, { children: children })));
 }
 
-function MListItem({ children, className, isActive = false, isDisabled = false, theme, onMClick, }) {
-    const Tag = useMemo(() => (onMClick ? 'button' : 'div'), [onMClick]);
+function DListItem({ children, className, isActive = false, isDisabled = false, theme, onEventClick, }) {
+    const Tag = useMemo(() => (onEventClick ? 'button' : 'div'), [onEventClick]);
     return (jsx(Tag, Object.assign({}, Tag === 'button' && {
-        onClick: onMClick,
+        onClick: onEventClick,
         type: 'button',
-    }, { className: classNames('m-list-item list-group-item list-group-item-action', theme ? `list-group-item-${theme}` : undefined, className, {
+    }, { className: classNames('list-group-item list-group-item-action', theme ? `list-group-item-${theme}` : undefined, className, {
             active: isActive,
             disabled: isDisabled,
         }) }, isActive && { 'aria-current': true }, { children: children })));
@@ -845,7 +843,7 @@ function MListItem({ children, className, isActive = false, isDisabled = false, 
 
 function useToast() {
     const toast$1 = useCallback((message, { position = 'top-right', type = 'info', showClose = true, autoClose = false, } = {}) => {
-        toast(({ closeToast }) => (jsx(MAlert, Object.assign({ type: type, showClose: showClose, onMClose: closeToast }, { children: message }))), {
+        toast(({ closeToast }) => (jsx(DAlert, Object.assign({ type: type, showClose: showClose, onEventClose: closeToast }, { children: message }))), {
             transition: Slide,
             position,
             autoClose,
@@ -919,7 +917,7 @@ function useScreenshotWebShare() {
     };
 }
 
-function MListItemMovement(_a) {
+function DListItemMovement(_a) {
     var { description, date, amount, classNameMovement } = _a, props = __rest(_a, ["description", "date", "amount", "classNameMovement"]);
     const { format } = useFormatCurrency();
     const value = useMemo(() => {
@@ -935,51 +933,55 @@ function MListItemMovement(_a) {
             valueFormatted,
         };
     }, [format, amount]);
-    return (jsx(MListItem, Object.assign({}, props, { children: jsxs("div", Object.assign({ className: classNames('m-list-item-movement', 'd-flex justify-content-between align-items-center p-3 gap-3', classNameMovement) }, { children: [jsxs("div", Object.assign({ className: "d-flex flex-column gap-1" }, { children: [jsx("span", Object.assign({ className: "fs-6" }, { children: description })), jsx("span", Object.assign({ className: "sp text-gray-700" }, { children: date }))] })), jsx("span", Object.assign({ className: classNames('fs-6', value.theme) }, { children: value.valueFormatted }))] })) })));
+    return (jsx(DListItem, Object.assign({}, props, { children: jsxs("div", Object.assign({ className: classNames('d-flex justify-content-between align-items-center p-3 gap-3', classNameMovement) }, { children: [jsxs("div", Object.assign({ className: "d-flex flex-column gap-1" }, { children: [jsx("span", Object.assign({ className: "fs-6" }, { children: description })), jsx("span", Object.assign({ className: "sp text-gray-700" }, { children: date }))] })), jsx("span", Object.assign({ className: classNames('fs-6', value.theme) }, { children: value.valueFormatted }))] })) })));
 }
 
-function MStepper({ options, currentStep, successIcon = 'check', isVertical = false, }) {
+function DStepper({ options, currentStep, successIcon = 'check', isVertical = false, }) {
     return (jsx("div", Object.assign({ className: classNames({
-            'm-stepper': true,
+            'd-stepper': true,
             'is-vertical': isVertical,
-        }) }, { children: options.map(({ label, value }) => (jsxs("div", Object.assign({ className: "m-step" }, { children: [jsx("div", Object.assign({ className: "m-step-value" }, { children: jsx("div", Object.assign({ className: classNames({
-                            'm-step-icon-container': true,
-                            'm-step-check': value < currentStep,
-                            'm-step-current': value === currentStep,
+        }) }, { children: options.map(({ label, value }) => (jsxs("div", Object.assign({ className: "d-step" }, { children: [jsx("div", Object.assign({ className: "d-step-value" }, { children: jsx("div", Object.assign({ className: classNames({
+                            'd-step-icon-container': true,
+                            'd-step-check': value < currentStep,
+                            'd-step-current': value === currentStep,
                         }) }, { children: value < currentStep
-                            ? (jsx(MIcon, { icon: successIcon, innerClass: "m-step-icon" }))
-                            : value })) })), jsx("div", Object.assign({ className: "m-step-label" }, { children: label }))] }), label))) })));
+                            ? (jsx(DIcon, { icon: successIcon, innerClass: "d-step-icon" }))
+                            : value })) })), jsx("div", Object.assign({ className: "d-step-label" }, { children: label }))] }), label))) })));
 }
 
-function MFormikInputCurrency(_a) {
+function DFormikInputCurrency(_a) {
     var { name, hint } = _a, props = __rest(_a, ["name", "hint"]);
     const [field, meta, helpers] = useField(name);
-    return (jsx(MInputCurrency, Object.assign({}, props, { name: field.name, value: field.value, onChange: (value) => helpers.setValue(value), onMBlur: ({ detail }) => field.onBlur(detail), isInvalid: !!meta.error, hint: meta.error || hint })));
+    return (jsx(DInputCurrency, Object.assign({}, props, { name: field.name, value: field.value, onEventChange: (value) => helpers.setValue(value), onEventBlur: (value) => field.onBlur(value), isInvalid: !!meta.error, hint: (meta === null || meta === void 0 ? void 0 : meta.error) || hint })));
 }
 
-function MCard({ className, style, children, }) {
+function DCard({ className, style, children, }) {
     return (jsx("div", Object.assign({ style: style, className: classNames('card', className) }, { children: children })));
 }
 
-function MCardBody({ className, children, }) {
+function DCardBody({ className, children, }) {
     return (jsx("div", Object.assign({ className: classNames('card-body', className) }, { children: children })));
 }
 
-function MCardAccount({ className, icon, theme, name, number, balance, balanceText, onClick, onClickText, }) {
-    return (jsx(MCard, Object.assign({ className: classNames('m-card-account', className) }, { children: jsxs(MCardBody, { children: [jsxs("div", Object.assign({ className: "d-flex gap-3 align-items-center" }, { children: [jsx(MIcon, { icon: icon, hasCircle: true, theme: theme, size: "1.5rem" }), jsxs("div", Object.assign({ className: "d-block flex-grow-1" }, { children: [jsx("p", Object.assign({ className: "text-gray-700" }, { children: name })), jsx("small", Object.assign({ className: "text-gray" }, { children: number }))] }))] })), jsxs("div", Object.assign({ className: "d-block" }, { children: [jsx("p", Object.assign({ className: "fw-bold fs-6 text-body" }, { children: balance })), jsx("small", Object.assign({ className: "text-gray-700" }, { children: balanceText }))] })), jsx("div", Object.assign({ className: "d-flex justify-content-end" }, { children: jsx(MButton, { text: onClickText, variant: "link", size: "sm", theme: "secondary", iconEnd: "chevron-right", onMClick: onClick }) }))] }) })));
+function DCardAccount({ className, icon, theme, name, number, balance, balanceText, onEventClick, actionText, }) {
+    return (jsx(DCard, Object.assign({ className: classNames('d-card-account', className) }, { children: jsxs(DCardBody, { children: [jsxs("div", Object.assign({ className: "d-flex gap-3 align-items-center" }, { children: [jsx(DIcon, { icon: icon, hasCircle: true, theme: theme, size: "1.5rem" }), jsxs("div", Object.assign({ className: "d-block flex-grow-1" }, { children: [jsx("p", Object.assign({ className: "text-gray-700" }, { children: name })), jsx("small", Object.assign({ className: "text-gray" }, { children: number }))] }))] })), jsxs("div", Object.assign({ className: "d-block" }, { children: [jsx("p", Object.assign({ className: "fw-bold fs-6 text-body" }, { children: balance })), jsx("small", Object.assign({ className: "text-gray-700" }, { children: balanceText }))] })), jsx("div", Object.assign({ className: "d-flex justify-content-end" }, { children: jsx(DButton, { text: actionText, variant: "link", size: "sm", theme: "secondary", iconEnd: "chevron-right", onEventClick: onEventClick }) }))] }) })));
 }
 
-function MCardHeader({ className, children, }) {
+function DCardHeader({ className, children, }) {
     return (jsx("div", Object.assign({ className: classNames('card-header', className) }, { children: children })));
 }
 
-function MCardFooter({ className, children, }) {
+function DCardFooter({ className, children, }) {
     return (jsx("div", Object.assign({ className: classNames('card-footer', className) }, { children: children })));
 }
 
-function MPaginator(_a) {
-    var { className, nextLabel, previousLabel, showArrows = true } = _a, props = __rest(_a, ["className", "nextLabel", "previousLabel", "showArrows"]);
-    return (jsx(ResponsivePagination, Object.assign({ extraClassName: classNames('m-pagination', className), nextClassName: classNames('m-arrow m-arrow-next', !nextLabel && 'no-label'), nextLabel: nextLabel, previousClassName: classNames('m-arrow m-arrow-prev', !previousLabel && 'no-label'), previousLabel: previousLabel, renderNav: showArrows }, props)));
+function DCollapseIconText({ children, icon, iconSize = '1.5rem', iconTheme = 'primary', title, iconFamilyClass, iconFamilyPrefix, }) {
+    return (jsx(DCollapse, Object.assign({ defaultCollapsed: true, className: "d-collapse-icon-text", Component: (jsxs("div", Object.assign({ className: "d-collapse-icon-text-header" }, { children: [jsx(DIcon, { icon: icon, size: iconSize, theme: iconTheme, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, hasCircle: true }), jsx("span", Object.assign({ className: "d-collapse-icon-text-title" }, { children: title }))] }))) }, { children: children })));
+}
+
+function DPaginator(_a) {
+    var { className, nextLabel, previousLabel, showArrows = true, page, onEventPageChange } = _a, props = __rest(_a, ["className", "nextLabel", "previousLabel", "showArrows", "page", "onEventPageChange"]);
+    return (jsx(ResponsivePagination, Object.assign({ extraClassName: classNames('pagination', className), nextClassName: classNames('arrow arrow-next', !nextLabel && 'no-label'), nextLabel: nextLabel, previousClassName: classNames('arrow arrow-prev', !previousLabel && 'no-label'), previousLabel: previousLabel, renderNav: showArrows, current: page, onPageChange: onEventPageChange }, props)));
 }
 
 const LANG = liquidParser.parse('{{site.language}}');
@@ -997,5 +999,5 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-export { LiquidContext$1 as LiquidContext, LiquidContextProvider, MAlert, MBadge, MBoxFile, MButton, MCard, MCardAccount, MCardBody, MCardFooter, MCardHeader, MCarousel, MCarouselSlide, MChip, MCollapse, MCollapseIconText, MCurrencyText, MDatePicker, MFormikInput, MFormikInputCurrency, MFormikInputSelect, MIcon, MInput, MInputCheck, MInputCounter, MInputCurrency, MInputCurrencyBase, MInputPassword, MInputPin, MInputSearch, MInputSelect, MInputSwitch, MList, MListItem, MListItemMovement, MModal, MOffcanvas, MPaginator, MPermissionGroup, MPermissionItem, MPopover, MProgressBar, MQuickActionButton, MQuickActionCheck, MQuickActionSelect, MQuickActionSwitch, MSkeleton, MStepper, MSummaryCard, MTabContent, MTabs, MToastContainer, MTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
+export { DAlert, DBadge, DBoxFile, DButton, DCard, DCardAccount, DCardBody, DCardFooter, DCardHeader, DCarousel, DCarouselSlide, DChip, DCollapse, DCollapseIconText, DCurrencyText, DDatePicker, DFormikInput, DFormikInputCurrency, DFormikInputSelect, DIcon, DInput, DInputCheck, DInputCounter, DInputCurrency, DInputCurrencyBase, DInputPassword, DInputPin, DInputSearch, DInputSelect, DInputSwitch, DList, DListItem, DListItemMovement, DModal, DOffcanvas, DPaginator, DPermissionItem, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSkeleton, DStepper, DTabContent, DTabs, DToastContainer, DTooltip, LiquidContext$1 as LiquidContext, LiquidContextProvider, MPermissionGroup, MSummaryCard, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
 //# sourceMappingURL=index.esm.js.map

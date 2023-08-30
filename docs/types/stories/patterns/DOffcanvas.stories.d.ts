@@ -1,0 +1,12 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { DOffcanvas } from '../../components';
+declare const config: Meta<typeof DOffcanvas>;
+export default config;
+declare type Story = StoryObj<typeof DOffcanvas>;
+export declare const Default: Story;
+export declare const ActionsPlacementStart: Story;
+export declare const ActionsPlacementEnd: Story;
+export declare const WithoutHeader: Story;
+export declare const WithoutActions: Story;
+export declare const OnlyBody: Story;
+export declare const WithoutCancelX: Story;

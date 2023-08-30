@@ -1,0 +1,18 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { DTooltip } from '../../components';
+declare const config: Meta<typeof DTooltip>;
+export default config;
+declare type Story = StoryObj<typeof DTooltip>;
+export declare const Top: Story;
+export declare const Right: Story;
+export declare const Bottom: Story;
+export declare const Left: Story;
+export declare const SmallTop: Story;
+export declare const SmallRight: Story;
+export declare const SmallBottom: Story;
+export declare const SmallLeft: Story;
+export declare const LargeTop: Story;
+export declare const LargeRight: Story;
+export declare const LargeBottom: Story;
+export declare const LargeLeft: Story;
+export declare const LargeText: Story;

@@ -1,0 +1,1 @@
+{"version":3,"file":"d-input-check-interface.js","sourceRoot":"","sources":["../../../../src/components/d-input-check/d-input-check-interface.ts"],"names":[],"mappings":"","sourcesContent":["export type FormCheckType = 'checkbox' | 'radio';\n"]}

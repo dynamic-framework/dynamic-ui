@@ -1,0 +1,14 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { DDatePicker } from '../../components';
+declare const config: Meta<typeof DDatePicker>;
+export default config;
+declare type Story = StoryObj<typeof DDatePicker>;
+export declare const Default: Story;
+export declare const DefaultWithMonth: Story;
+export declare const Inline: Story;
+export declare const WithTime: Story;
+export declare const WithMonthSelector: Story;
+export declare const MonthPicker: Story;
+export declare const DateRange: Story;
+export declare const DateRangeWithMonthSelector: Story;
+export declare const OnPortal: Story;
