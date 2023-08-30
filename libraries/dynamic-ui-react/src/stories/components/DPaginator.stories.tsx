@@ -1,8 +1,7 @@
 import { Meta, StoryFn, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { ComponentProps, useState } from 'react';
 
 import { DPaginator } from '../../components';
-import type { DPaginatorProps } from '../../components';
 
 const meta: Meta<typeof DPaginator> = {
   title: 'Design System/Components/Paginator',
@@ -52,7 +51,7 @@ export const Default: Story = {
     {
       page: initialPage,
       ...args
-    }: DPaginatorProps,
+    }: ComponentProps<typeof DPaginator>,
   ) {
     const [page, setPage] = useState<number>(initialPage);
     return (
@@ -82,7 +81,7 @@ export const LabelArrows: Story = {
     {
       page: initialPage,
       ...args
-    }: DPaginatorProps,
+    }: ComponentProps<typeof DPaginator>,
   ) {
     const [page, setPage] = useState<number>(initialPage);
     return (
@@ -114,7 +113,7 @@ export const NoArrows: Story = {
     {
       page: initialPage,
       ...args
-    }: DPaginatorProps,
+    }: ComponentProps<typeof DPaginator>,
   ) {
     const [page, setPage] = useState<number>(initialPage);
     return (
@@ -145,7 +144,7 @@ export const CustomCurrentPage: Story = {
     {
       page: initialPage,
       ...args
-    }: DPaginatorProps,
+    }: ComponentProps<typeof DPaginator>,
   ) {
     const [page, setPage] = useState<number>(initialPage);
     return (
@@ -176,7 +175,7 @@ export const CustomMaxWidth: Story = {
     {
       page: initialPage,
       ...args
-    }: DPaginatorProps,
+    }: ComponentProps<typeof DPaginator>,
   ) {
     const [page, setPage] = useState<number>(initialPage);
     return (
