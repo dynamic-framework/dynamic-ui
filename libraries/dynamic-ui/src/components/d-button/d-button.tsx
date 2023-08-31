@@ -116,7 +116,11 @@ export class DButton implements ComponentInterface {
 
   private generateStyleVariables() {
     if (this.isPill) {
-      return { [`--${PREFIX_BS}btn-component-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)` };
+      return {
+        [`--${PREFIX_BS}btn-component-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
+        [`--${PREFIX_BS}btn-component-lg-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
+        [`--${PREFIX_BS}btn-component-sm-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
+      };
     }
     return {};
   }

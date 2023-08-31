@@ -1,32 +1,76 @@
 .btn {
+  --#{$prefix}btn-padding-x: #{$btn-padding-x};
+  --#{$prefix}btn-padding-y: #{$btn-padding-y};
+  --#{$prefix}btn-font-family: #{$btn-font-family};
+  @include rfs($btn-font-size, --#{$prefix}btn-font-size);
+  --#{$prefix}btn-font-weight: #{$btn-font-weight};
+  --#{$prefix}btn-line-height: #{$btn-line-height};
+  --#{$prefix}btn-color: #{$btn-color};
+  --#{$prefix}btn-bg: transparent;
+  --#{$prefix}btn-border-width: #{$btn-border-width};
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-border-radius: var(--#{$prefix}btn-component-border-radius, #{$btn-border-radius});
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-box-shadow: #{$btn-box-shadow};
+  --#{$prefix}btn-disabled-opacity: #{$btn-disabled-opacity};
+  --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), .5);
+
   --#{$prefix}btn-link-padding-y: #{$btn-link-padding-y};
   --#{$prefix}btn-link-padding-x: #{$btn-link-padding-x};
-  --#{$prefix}btn-link-font-size-sm: #{$btn-link-font-size-sm};
-  --#{$prefix}btn-border-radius: var(--#{$prefix}btn-component-border-radius, #{$btn-border-radius});
+  @include rfs($btn-link-font-size-sm, --#{$prefix}btn-link-font-size-sm);
+
+  --#{$prefix}btn-lg-padding-y: #{$btn-padding-y-lg};
+  --#{$prefix}btn-lg-padding-x: #{$btn-padding-x-lg};
+  --#{$prefix}btn-lg-font-size: #{$btn-font-size-lg};
+  --#{$prefix}btn-lg-border-radius: var(--#{$prefix}btn-component-lg-border-radius, #{$btn-border-radius-lg});
+
+  --#{$prefix}btn-sm-padding-y: #{$btn-padding-y-sm};
+  --#{$prefix}btn-sm-padding-x: #{$btn-padding-x-sm};
+  --#{$prefix}btn-sm-font-size: #{$btn-font-size-sm};
+  --#{$prefix}btn-sm-border-radius: var(--#{$prefix}btn-component-sm-border-radius, #{$btn-border-radius-sm});
+
 
   display: flex;
   flex-direction: row;
   gap: var(--#{$prefix}btn-gap, $spacer-2);
   align-items: center;
   justify-content: center;
-
-  .d-icon {
-    --#{$prefix}icon-size: var(--#{$prefix}btn-font-size);
-  }
+  padding: var(--#{$prefix}btn-padding-y) var(--#{$prefix}btn-padding-x);
+  font-family: var(--#{$prefix}btn-font-family);
+  @include font-size(var(--#{$prefix}btn-font-size));
+  font-weight: var(--#{$prefix}btn-font-weight);
+  line-height: var(--#{$prefix}btn-line-height);
+  color: var(--#{$prefix}btn-color);
+  text-align: center;
+  text-decoration: if($link-decoration == none, null, none);
+  white-space: $btn-white-space;
+  vertical-align: middle;
+  cursor: if($enable-button-pointers, pointer, null);
+  user-select: none;
+  border: var(--#{$prefix}btn-border-width) solid var(--#{$prefix}btn-border-color);
+  @include border-radius(var(--#{$prefix}btn-border-radius));
+  @include gradient-bg(var(--#{$prefix}btn-bg));
+  @include box-shadow(var(--#{$prefix}btn-box-shadow));
+  @include transition($btn-transition);
 
   // hover selectors
   &:hover,
   &.hover {
-    // copy of .btn:hover bootstrap
     color: var(--#{$prefix}btn-hover-color);
     text-decoration: if($link-hover-decoration == underline, none, null);
     background-color: var(--#{$prefix}btn-hover-bg);
     border-color: var(--#{$prefix}btn-hover-border-color);
-    // end copy
+  }
+
+  .btn-check + &:hover {
+    // override for the checkbox/radio buttons
+    color: var(--#{$prefix}btn-color);
+    background-color: var(--#{$prefix}btn-bg);
+    border-color: var(--#{$prefix}btn-border-color);
   }
 
   // focus selectors
-  .btn-check:focus + &,
+  .btn-check:focus-visible + &,
   &:focus-visible,
   &.focus-visible {
     // copy of .btn:focus bootstrap + focus var
@@ -39,178 +83,109 @@
     outline-offset: var(--#{$prefix}btn-focus-outline-offset, var(--#{$prefix}btn-border-width));
   }
 
+  .btn-check:checked + &,
+  :not(.btn-check) + &:active,
+  &:first-child:active,
+  &.active,
+  &.show {
+    color: var(--#{$prefix}btn-active-color);
+    background-color: var(--#{$prefix}btn-active-bg);
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+    border-color: var(--#{$prefix}btn-active-border-color);
+    @include box-shadow(var(--#{$prefix}btn-active-shadow));
 
-  @each $color, $value in map-remove($theme-colors, "light", "dark") {
-    &.btn-#{$color} {
-      $text-color-100: color-contrast(map-get($theme-colors-palletes, #{$color}-100));
-      $text-color-500: color-contrast($value);
-      $text-color-700: color-contrast(map-get($theme-colors-palletes, #{$color}-700));
-      $text-color-900: color-contrast(map-get($theme-colors-palletes, #{$color}-900));
-
-      --#{$prefix}btn-bg: var(--#{$prefix}#{$color}-500);
-      --#{$prefix}btn-border-color: var(--#{$prefix}#{$color}-500);
-      --#{$prefix}btn-color: #{$text-color-500};
-
-      --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$color}-900);
-      --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color}-900);
-      --#{$prefix}btn-hover-color: #{$text-color-900};
-
-      --#{$prefix}btn-focus-bg: var(--#{$prefix}#{$color}-500);
-      --#{$prefix}btn-focus-border-color: var(--#{$prefix}#{$color}-500);
-      --#{$prefix}btn-focus-color: #{$text-color-500};
-
-      --#{$prefix}btn-active-bg: var(--#{$prefix}#{$color}-700);
-      --#{$prefix}btn-active-border-color: var(--#{$prefix}#{$color}-700);
-      --#{$prefix}btn-active-color: #{$text-color-700};
-
-      --#{$prefix}btn-disabled-bg: var(--#{$prefix}#{$color}-100);
-      --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color}-100);
-      --#{$prefix}btn-disabled-color: #{$text-color-100};
-
-      &.loading {
-        --#{$prefix}btn-disabled-opacity: 1;
-        --#{$prefix}btn-disabled-bg: var(--#{$prefix}#{$color}-700);
-        --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color}-700);
-        --#{$prefix}btn-disabled-color: #{$text-color-700};
-      }
-    }
-
-    &.btn-outline-#{$color} {
-      --#{$prefix}btn-bg: transparent;
-      --#{$prefix}btn-border-color: var(--#{$prefix}#{$color}-500);
-      --#{$prefix}btn-color: var(--#{$prefix}#{$color}-500);
-
-      --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$color}-100);
-      --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color}-700);
-      --#{$prefix}btn-hover-color: var(--#{$prefix}#{$color}-700);
-
-      --#{$prefix}btn-focus-bg: var(--#{$prefix}#{$color}-100);
-      --#{$prefix}btn-focus-border-color: var(--#{$prefix}#{$color});
-      --#{$prefix}btn-focus-color: var(--#{$prefix}#{$color});
-
-      --#{$prefix}btn-active-bg: var(--#{$prefix}#{$color}-300);
-      --#{$prefix}btn-active-border-color: var(--#{$prefix}#{$color}-700);
-      --#{$prefix}btn-active-color: var(--#{$prefix}#{$color}-700);
-
-      --#{$prefix}btn-disabled-bg: transparent;
-      --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color}-100);
-      --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color}-100);
-
-      &.loading {
-        --#{$prefix}btn-disabled-opacity: 1;
-        --#{$prefix}btn-disabled-bg: transparent;
-        --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color}-700);
-        --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color}-700);
-      }
-    }
-
-    &.btn-link-#{$color} {
-      padding: var(--#{$prefix}btn-link-padding-y) var(--#{$prefix}btn-link-padding-x);
-
-      --#{$prefix}btn-bg: transparent;
-      --#{$prefix}btn-border-color: transparent;
-      --#{$prefix}btn-color: var(--#{$prefix}#{$color}-500);
-
-      --#{$prefix}btn-hover-bg: transparent;
-      --#{$prefix}btn-hover-border-color: transparent;
-      --#{$prefix}btn-hover-color: var(--#{$prefix}#{$color}-900);
-
-      --#{$prefix}btn-focus-bg: transparent;
-      --#{$prefix}btn-focus-border-color: transparent;
-      --#{$prefix}btn-focus-color: var(--#{$prefix}#{$color});
-
-      --#{$prefix}btn-active-bg: transparent;
-      --#{$prefix}btn-active-border-color: transparent;
-      --#{$prefix}btn-active-color: var(--#{$prefix}#{$color}-700);
-
-      --#{$prefix}btn-disabled-bg: transparent;
-      --#{$prefix}btn-disabled-border-color: transparent;
-      --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color}-100);
-
-      --#{$prefix}btn-focus-outline-offset: 0;
-
-      &.loading {
-        --#{$prefix}btn-disabled-opacity: 1;
-        --#{$prefix}btn-disabled-bg: transparent;
-        --#{$prefix}btn-disabled-border-color: transparent;
-        --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color}-700);
-      }
-
-      &.btn-sm {
-        font-size: var(--#{$prefix}btn-link-font-size-sm);
-      }
-
-      > span {
-        text-decoration: $link-decoration;
+    &:focus-visible {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      @if $enable-shadows {
+        box-shadow: var(--#{$prefix}btn-active-shadow), var(--#{$prefix}btn-focus-box-shadow);
+      } @else {
+        box-shadow: var(--#{$prefix}btn-focus-box-shadow);
       }
     }
   }
 
-  &.btn-link-light {
-    padding: var(--#{$prefix}btn-link-padding-y) var(--#{$prefix}btn-link-padding-x);
-
-    --#{$prefix}btn-bg: transparent;
-    --#{$prefix}btn-border-color: transparent;
-    --#{$prefix}btn-color: var(--#{$prefix}light);
-
-    --#{$prefix}btn-hover-bg: transparent;
-    --#{$prefix}btn-hover-border-color: transparent;
-    --#{$prefix}btn-hover-color: var(--#{$prefix}light);
-
-    --#{$prefix}btn-active-bg: transparent;
-    --#{$prefix}btn-active-border-color: transparent;
-    --#{$prefix}btn-active-color: var(--#{$prefix}light);
-
-    --#{$prefix}btn-disabled-bg: transparent;
-    --#{$prefix}btn-disabled-border-color: transparent;
-    --#{$prefix}btn-disabled-color: var(--#{$prefix}light);
-
-    --#{$prefix}btn-focus-outline-offset: 0;
-
-    &.loading {
-      --#{$prefix}btn-disabled-opacity: 1;
-    }
-
-    &.btn-sm {
-      font-size: var(--#{$prefix}btn-link-font-size-sm);
-    }
-
-    > span {
-      text-decoration: $link-decoration;
-    }
+  &:disabled,
+  &.disabled,
+  fieldset:disabled & {
+    color: var(--#{$prefix}btn-disabled-color);
+    pointer-events: none;
+    background-color: var(--#{$prefix}btn-disabled-bg);
+    background-image: if($enable-gradients, none, null);
+    border-color: var(--#{$prefix}btn-disabled-border-color);
+    opacity: var(--#{$prefix}btn-disabled-opacity);
+    @include box-shadow(none);
   }
 
-  &.btn-link-dark {
-    padding: var(--#{$prefix}btn-link-padding-y) var(--#{$prefix}btn-link-padding-x);
+  .d-icon {
+    --#{$prefix}icon-size: var(--#{$prefix}btn-font-size);
+  }
+}
 
-    --#{$prefix}btn-bg: transparent;
-    --#{$prefix}btn-border-color: transparent;
-    --#{$prefix}btn-color: var(--#{$prefix}dark);
+@each $color, $value in map-remove($theme-colors, "light", "dark") {
+  .btn-#{$color} {
+    @include df-button-variant($color);
+  }
 
-    --#{$prefix}btn-hover-bg: transparent;
-    --#{$prefix}btn-hover-border-color: transparent;
-    --#{$prefix}btn-hover-color: var(--#{$prefix}dark);
+  .btn-outline-#{$color} {
+    @include df-button-outline-variant($color);
+  }
+}
 
-    --#{$prefix}btn-active-bg: transparent;
-    --#{$prefix}btn-active-border-color: transparent;
-    --#{$prefix}btn-active-color: var(--#{$prefix}dark);
-
-    --#{$prefix}btn-disabled-bg: transparent;
-    --#{$prefix}btn-disabled-border-color: transparent;
-    --#{$prefix}btn-disabled-color: var(--#{$prefix}dark);
-
-    --#{$prefix}btn-focus-outline-offset: 0;
-
-    &.loading {
-      --#{$prefix}btn-disabled-opacity: 1;
+@each $color, $value in $theme-colors {
+  .btn-link-#{$color} {
+    @if $color == "light" {
+      @include df-button-link-variant(
+        $color,
+        $text-color-100: var(--#{$prefix}light),
+        $text-color-500: var(--#{$prefix}light),
+        $text-color-700: var(--#{$prefix}light),
+        $text-color-900: var(--#{$prefix}light),
+      );
+    } @else if $color == "dark" {
+      @include df-button-link-variant(
+        $color,
+        $text-color-100: var(--#{$prefix}dark),
+        $text-color-500: var(--#{$prefix}dark),
+        $text-color-700: var(--#{$prefix}dark),
+        $text-color-900: var(--#{$prefix}dark),
+      );
+    } @else {
+      @include df-button-link-variant($color);
     }
+  }
+}
 
-    &.btn-sm {
-      font-size: var(--#{$prefix}btn-link-font-size-sm);
-    }
+.btn-lg {
+  @include button-size(
+    var(--#{$prefix}btn-lg-padding-y),
+    var(--#{$prefix}btn-lg-padding-x),
+    var(--#{$prefix}btn-lg-font-size),
+    var(--#{$prefix}btn-lg-border-radius),
+  );
+}
 
-    > span {
-      text-decoration: $link-decoration;
-    }
+.btn-sm {
+  @include button-size(
+    var(--#{$prefix}btn-sm-padding-y),
+    var(--#{$prefix}btn-sm-padding-x),
+    var(--#{$prefix}btn-sm-font-size),
+    var(--#{$prefix}btn-sm-border-radius),
+  );
+}
+
+[class^="btn-link"] {
+  text-decoration: var(--#{$prefix}link-decoration);
+
+  > span {
+    text-decoration: var(--#{$prefix}link-decoration);
+  }
+
+  &.btn-sm {
+    @include font-size(var(--#{$prefix}btn-link-font-size-sm));
+  }
+
+  @if $enable-gradients {
+    background-image: none;
   }
 }

@@ -5,7 +5,7 @@ import type { AlertType } from '@dynamic-framework/ui';
 import { DButton, DToastContainer } from '../../components';
 import { useToast as useToastHook } from '../../hooks';
 
-import { ALERT_TYPES } from '../constants';
+import { THEMES } from '../constants';
 
 type Props = {
   message: string;
@@ -33,7 +33,7 @@ const config: Meta<typeof Example> = {
     type: {
       control: 'select',
       type: 'string',
-      options: ALERT_TYPES,
+      options: THEMES,
     },
     showClose: {
       control: 'boolean',

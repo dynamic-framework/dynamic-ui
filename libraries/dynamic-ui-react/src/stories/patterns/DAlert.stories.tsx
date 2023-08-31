@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DAlert } from '../../components';
-import { ALERT_TYPES, ICONS } from '../constants';
+import { THEMES, ICONS } from '../constants';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Patterns/Alert',
@@ -10,7 +10,7 @@ const config: Meta<typeof DAlert> = {
     type: {
       control: 'select',
       type: 'string',
-      options: ALERT_TYPES,
+      options: THEMES,
       table: { defaultValue: { summary: 'light' } },
       description: 'Alert type',
     },

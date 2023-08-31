@@ -32,7 +32,7 @@
     "clean": "rimraf dist",
     "compile": "tsc -p . && rollup -c rollup.config.js",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o docs",
+    "build:storybook": "storybook build -o docs",
     "eslint": "eslint src/**/*{.ts,.tsx}",
     "stylelint": "stylelint \"**/*.{css,scss}\" --rd",
     "lint-staged": "lint-staged"
