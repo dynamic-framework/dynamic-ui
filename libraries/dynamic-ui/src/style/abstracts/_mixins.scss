@@ -1,1 +1,112 @@
-// Theme mixins
+// scss-docs-start df-btn-variant-mixin
+@mixin df-button-variant(
+  $color-name,
+  $default-color: var(--#{$prefix}#{$color-name}-500),
+  $hover-color: var(--#{$prefix}#{$color-name}-900),
+  $active-color: var(--#{$prefix}#{$color-name}-700),
+  $disabled-color: var(--#{$prefix}#{$color-name}-100),
+  $text-color-100: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-100)),
+  $text-color-500: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-500)),
+  $text-color-700: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-700)),
+  $text-color-900: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-900)),
+) {
+  --#{$prefix}btn-color: #{$text-color-500};
+  --#{$prefix}btn-bg: #{$default-color};
+  --#{$prefix}btn-border-color: #{$default-color};
+
+  --#{$prefix}btn-hover-color: #{$text-color-900};
+  --#{$prefix}btn-hover-bg: #{$hover-color};
+  --#{$prefix}btn-hover-border-color: #{$hover-color};
+
+  --#{$prefix}btn-active-color: #{$text-color-700};
+  --#{$prefix}btn-active-bg: #{$active-color};
+  --#{$prefix}btn-active-border-color: #{$active-color};
+
+  --#{$prefix}btn-disabled-color: #{$text-color-100};
+  --#{$prefix}btn-disabled-bg: #{$disabled-color};
+  --#{$prefix}btn-disabled-border-color: #{$disabled-color};
+
+  &.loading {
+    --#{$prefix}btn-disabled-opacity: 1;
+    --#{$prefix}btn-disabled-bg: #{$active-color};
+    --#{$prefix}btn-disabled-border-color: #{$active-color};
+    --#{$prefix}btn-disabled-color: #{$text-color-700};
+  }
+}
+// scss-docs-end df-btn-variant-mixin
+
+
+// scss-docs-start df-btn-outline-variant-mixin
+@mixin df-button-outline-variant($color-name) {
+  --#{$prefix}btn-bg: transparent;
+  --#{$prefix}btn-border-color: var(--#{$prefix}#{$color-name}-500);
+  --#{$prefix}btn-color: var(--#{$prefix}#{$color-name}-500);
+
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$color-name}-100);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color-name}-700);
+  --#{$prefix}btn-hover-color: var(--#{$prefix}#{$color-name}-700);
+
+  --#{$prefix}btn-focus-bg: var(--#{$prefix}#{$color-name}-100);
+  --#{$prefix}btn-focus-border-color: var(--#{$prefix}#{$color-name});
+  --#{$prefix}btn-focus-color: var(--#{$prefix}#{$color-name});
+
+  --#{$prefix}btn-active-bg: var(--#{$prefix}#{$color-name}-300);
+  --#{$prefix}btn-active-border-color: var(--#{$prefix}#{$color-name}-700);
+  --#{$prefix}btn-active-color: var(--#{$prefix}#{$color-name}-700);
+
+  --#{$prefix}btn-disabled-bg: transparent;
+  --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color-name}-100);
+  --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color-name}-100);
+
+  --#{$prefix}gradient: none;
+
+  &.loading {
+    --#{$prefix}btn-disabled-opacity: 1;
+    --#{$prefix}btn-disabled-bg: transparent;
+    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$color-name}-700);
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color-name}-700);
+  }
+}
+// scss-docs-end df-btn-outline-variant-mixin
+
+// scss-docs-start df-btn-link-variant-mixin
+@mixin df-button-link-variant(
+  $color-name,
+  $text-color-100: var(--#{$prefix}#{$color-name}-100),
+  $text-color-500: var(--#{$prefix}#{$color-name}-500),
+  $text-color-700: var(--#{$prefix}#{$color-name}-700),
+  $text-color-900: var(--#{$prefix}#{$color-name}-900),
+) {
+  --#{$prefix}btn-padding-x: var(--#{$prefix}btn-link-padding-x);
+  --#{$prefix}btn-padding-y: var(--#{$prefix}btn-link-padding-y);
+
+  --#{$prefix}btn-bg: transparent;
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-color: #{$text-color-500};
+
+  --#{$prefix}btn-hover-bg: transparent;
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-hover-color: #{$text-color-900};
+
+  --#{$prefix}btn-focus-bg: transparent;
+  --#{$prefix}btn-focus-border-color: transparent;
+  --#{$prefix}btn-focus-color: #{$text-color-500};
+
+  --#{$prefix}btn-active-bg: transparent;
+  --#{$prefix}btn-active-border-color: transparent;
+  --#{$prefix}btn-active-color: #{$text-color-700};
+
+  --#{$prefix}btn-disabled-bg: transparent;
+  --#{$prefix}btn-disabled-border-color: transparent;
+  --#{$prefix}btn-disabled-color: #{$text-color-100};
+
+  --#{$prefix}btn-focus-outline-offset: 0;
+
+  &.loading {
+    --#{$prefix}btn-disabled-opacity: 1;
+    --#{$prefix}btn-disabled-bg: transparent;
+    --#{$prefix}btn-disabled-border-color: transparent;
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color-name}-700);
+  }
+}
+// scss-docs-end df-btn-link-variant-mixin

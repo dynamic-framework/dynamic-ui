@@ -65,13 +65,13 @@ $colors: (
 // custom
 // TODO: check this.
 $bg-gray-soft: #fafafa !default;
-$bg-indigo-soft: #fbfaff !default;
-$bg-magenta-soft: #fff9fa !default;
+$bg-primary-soft: #fff9fa !default;
+$bg-secondary-soft: #fbfaff !default;
 
 $bg-soft-colors: (
   "gray-soft": $bg-gray-soft,
-  "indigo-soft": $bg-indigo-soft,
-  "magenta-soft": $bg-magenta-soft,
+  "primary-soft": $bg-primary-soft,
+  "secondary-soft": $bg-secondary-soft,
 ) !default;
 // end custom
 

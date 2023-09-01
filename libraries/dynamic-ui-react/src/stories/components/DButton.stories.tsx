@@ -2,10 +2,10 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { DButton } from '../../components';
 import {
+  COLOR_THEMES,
   COMPONENT_SIZE,
   ICONS,
   INPUT_STATE,
-  THEMES,
 } from '../constants';
 
 const config: Meta<typeof DButton> = {
@@ -15,7 +15,7 @@ const config: Meta<typeof DButton> = {
     theme: {
       control: 'select',
       type: { name: 'string', required: true },
-      options: THEMES,
+      options: COLOR_THEMES,
       table: { defaultValue: { summary: 'primary' } },
     },
     size: {

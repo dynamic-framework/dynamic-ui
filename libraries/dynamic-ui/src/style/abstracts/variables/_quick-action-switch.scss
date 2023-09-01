@@ -13,7 +13,7 @@ $quick-action-switch-hint-font-size: var(--#{$prefix}ref-fs-small) !default;
 $quick-action-switch-hint-font-weight: var(--#{$prefix}ref-fw-normal) !default;
 $quick-action-switch-hint-color: var(--#{$prefix}gray-400) !default;
 
-$quick-action-switch-hover-bg: var(--#{$prefix}indigo-soft) !default;
+$quick-action-switch-hover-bg: var(--#{$prefix}secondary-soft) !default;
 
 $quick-action-switch-checked-bg: var(--#{$prefix}white) !default;
 $quick-action-switch-checked-label-color: $form-switch-active-label-color !default;
