@@ -3,7 +3,7 @@
 
 @import "variables/+import"; // Include any default variable overrides here
 @import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
+// @import "bootstrap/scss/variables-dark"; re-enable with dark implementation
 
 @import "maps"; // Include any default map overrides here
 @import "bootstrap/scss/maps";
