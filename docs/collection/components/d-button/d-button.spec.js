@@ -26,7 +26,7 @@ it('should render button pill', async () => {
   });
   expect(page.root).toEqualHtml(`
     <d-button>
-      <button class="btn btn-primary" type="button" style="--bs-btn-component-border-radius: var(--bs-border-radius-pill);">
+      <button class="btn btn-primary" type="button" style="--bs-btn-component-border-radius: var(--bs-border-radius-pill); --bs-btn-component-lg-border-radius: var(--bs-border-radius-pill); --bs-btn-component-sm-border-radius: var(--bs-border-radius-pill);">
         <span>${props.text}</span>
       </button>
     </d-button>

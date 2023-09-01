@@ -36,7 +36,11 @@ const DButton = class {
   }
   generateStyleVariables() {
     if (this.isPill) {
-      return { [`--${componentConfig.PREFIX_BS}btn-component-border-radius`]: `var(--${componentConfig.PREFIX_BS}border-radius-pill)` };
+      return {
+        [`--${componentConfig.PREFIX_BS}btn-component-border-radius`]: `var(--${componentConfig.PREFIX_BS}border-radius-pill)`,
+        [`--${componentConfig.PREFIX_BS}btn-component-lg-border-radius`]: `var(--${componentConfig.PREFIX_BS}border-radius-pill)`,
+        [`--${componentConfig.PREFIX_BS}btn-component-sm-border-radius`]: `var(--${componentConfig.PREFIX_BS}border-radius-pill)`,
+      };
     }
     return {};
   }
