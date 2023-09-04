@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.4.1...@dynamic-framework/ui@1.5.0) (2023-09-01)
+
+
+### Features
+
+* change buttons scss generation to use var colors and adjust colors documentation ([3d44445](https://github.com/dynamic-framework/dynamic-ui/commit/3d44445aec863f4b6c1b0d06f142faf9269c2c74))
+
+
+### Bug Fixes
+
+* button test ([8b001d0](https://github.com/dynamic-framework/dynamic-ui/commit/8b001d051bc8580b8937bc9bdb368833778dddef))
+
+
+
 ## [1.4.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.4.0...@dynamic-framework/ui@1.4.1) (2023-08-30)
 
 **Note:** Version bump only for package @dynamic-framework/ui
