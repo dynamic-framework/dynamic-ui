@@ -7,8 +7,6 @@
   --#{$prefix}input-label-padding-x: #{$form-label-padding-x};
   --#{$prefix}input-label-padding-y: #{$form-label-padding-y};
   --#{$prefix}input-label-gap: #{$form-label-gap};
-  // label hover
-  --#{$prefix}input-label-focus-color: #{$form-label-focus-color};
   // label if input has value
   --#{$prefix}input-label-has-value-color: #{$form-label-has-value-color};
 
@@ -42,10 +40,6 @@
 
   // focus
   &:focus-within {
-    label {
-      color: var(--#{$prefix}input-label-focus-color);
-    }
-
     .input-group {
       border-color: var(--#{$prefix}input-group-focus-border-color);
       box-shadow: var(--#{$prefix}input-group-focus-box-shadow);
