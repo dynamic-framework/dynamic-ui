@@ -472,14 +472,14 @@ export declare interface DInputSwitch extends Components.DInputSwitch {
 
 @ProxyCmp({
   defineCustomElementFn: defineDModal,
-  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
+  inputs: ['footerActionPlacement', 'fullScreenFrom', 'innerClass', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton']
 })
 @Component({
   selector: 'd-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['footerActionPlacement', 'fullScreenFrom', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
+  inputs: ['footerActionPlacement', 'fullScreenFrom', 'innerClass', 'isCentered', 'isFullScreen', 'isScrollable', 'isStatic', 'modalSize', 'name', 'showCloseButton'],
 })
 export class DModal {
   protected el: HTMLElement;

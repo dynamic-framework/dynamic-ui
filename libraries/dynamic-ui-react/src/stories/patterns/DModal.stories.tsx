@@ -91,6 +91,7 @@ export const Default: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'fill',
+    innerClass: 'd-block',
   },
 };
 
@@ -131,6 +132,7 @@ export const ActionsPlacementStart: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'start',
+    innerClass: 'd-block',
   },
 };
 
@@ -171,6 +173,7 @@ export const ActionsPlacementEnd: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'end',
+    innerClass: 'd-block',
   },
 };
 
@@ -208,6 +211,7 @@ export const WithoutHeader: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'fill',
+    innerClass: 'd-block',
   },
 };
 
@@ -238,6 +242,7 @@ export const WithoutActions: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'fill',
+    innerClass: 'd-block',
   },
 };
 
@@ -265,6 +270,7 @@ export const OnlyBody: Story = {
     modalSize: 'sm',
     showCloseButton: true,
     footerActionPlacement: 'fill',
+    innerClass: 'd-block',
   },
 };
 
@@ -305,5 +311,6 @@ export const WithoutCancelX: Story = {
     modalSize: 'sm',
     showCloseButton: false,
     footerActionPlacement: 'fill',
+    innerClass: 'd-block',
   },
 };
