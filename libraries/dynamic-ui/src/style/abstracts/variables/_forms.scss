@@ -15,7 +15,6 @@ $form-label-color: var(--#{$prefix}gray) !default;
 // scss-docs-end form-label-variables
 
 // custom
-$form-label-focus-color: var(--#{$prefix}secondary) !default;
 $form-label-has-value-color: var(--#{$prefix}dark) !default;
 $form-label-padding-y: 0 !default;
 $form-label-padding-x: $spacer-2 !default;
@@ -70,7 +69,7 @@ $input-group-border-radius: $input-border-radius !default;
 $input-group-hover-border-color: var(--#{$prefix}gray) !default;
 
 $input-group-focus-border-color: var(--#{$prefix}secondary) !default;
-$input-group-focus-box-shadow: 0 2px 14px rgba(var(--#{$prefix}secondary-rgb), .3) !default;
+$input-group-focus-box-shadow: 0 0 0 1px rgba(var(--#{$prefix}secondary-rgb)) !default;
 // end custom
 
 $input-placeholder-color: var(--#{$prefix}gray-500) !default;
