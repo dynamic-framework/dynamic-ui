@@ -52,7 +52,7 @@ $headings-margin-bottom: 0 !default;
 $headings-font-family: null !default;
 $headings-font-style: null !default;
 $headings-line-height: 1.2 !default;
-$headings-color: null !default;
+$headings-color: var(--#{$prefix}body-color) !default;
 // scss-docs-end headings-variables
 
 // scss-docs-start display-headings
