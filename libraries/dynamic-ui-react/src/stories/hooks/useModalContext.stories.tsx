@@ -11,6 +11,7 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
     isStatic
     showCloseButton
     onEventClose={() => closeModal()}
+    innerClass="d-block"
   >
     <div slot="header">
       <h5 className="fw-bold">Do you want to reject the offer?</h5>

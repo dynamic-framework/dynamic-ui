@@ -22,6 +22,11 @@ export class DModal {
   @Prop() name!: string;
 
   /**
+   * Modal class
+   */
+  @Prop() innerClass?: string;
+
+  /**
    * Is backdrop static
    */
   @Prop() isStatic?: boolean;
@@ -90,6 +95,13 @@ export class DModal {
     return '';
   }
 
+  private generateClasses(): ClassMap {
+    return {
+      'modal fade show': true,
+      [`${this.innerClass}`]: !!this.innerClass,
+    };
+  }
+
   private generateModalDialogClasses(): ClassMap {
     return {
       'modal-dialog': true,
@@ -103,7 +115,7 @@ export class DModal {
   render() {
     return (
       <div
-        class="modal fade show"
+        class={this.generateClasses()}
         id={this.name}
         tabindex="-1"
         aria-labelledby={`${this.name}Label`}
