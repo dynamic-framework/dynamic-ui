@@ -290,6 +290,7 @@ export const DInputSwitch = /*@__PURE__*/ defineContainer<JSX.DInputSwitch>('d-i
 
 export const DModal = /*@__PURE__*/ defineContainer<JSX.DModal>('d-modal', undefined, [
   'name',
+  'innerClass',
   'isStatic',
   'isScrollable',
   'isCentered',

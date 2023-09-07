@@ -44,7 +44,7 @@ export default function DCardAccount({
             <p className="text-gray-700">
               {name}
             </p>
-            <small className="text-gray">
+            <small className="text-gray-500">
               {number}
             </small>
           </div>

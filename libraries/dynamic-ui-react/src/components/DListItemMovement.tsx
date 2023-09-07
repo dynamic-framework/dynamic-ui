@@ -44,7 +44,7 @@ export default function DListItemMovement({
           <span className="fs-6">
             {description}
           </span>
-          <span className="sp text-gray-700">
+          <span className="small text-gray-700">
             {date}
           </span>
         </div>

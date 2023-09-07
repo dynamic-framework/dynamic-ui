@@ -5,8 +5,6 @@
   --#{$prefix}modal-separator-height: #{$modal-separator-height};
   --#{$prefix}modal-separator-bg: #{$modal-separator-bg};
 
-  display: block;
-
   .d-modal-slot > * {
     display: contents;
   }

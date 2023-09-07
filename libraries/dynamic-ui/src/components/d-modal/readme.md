@@ -11,6 +11,7 @@
 | ----------------------- | ------------------------- | ------------------------------------ | ----------------------------------------------------- | ----------- |
 | `footerActionPlacement` | `footer-action-placement` | Footer action direction              | `"center" \| "end" \| "fill" \| "start" \| undefined` | `'fill'`    |
 | `fullScreenFrom`        | `full-screen-from`        | Minimum size to apply the fullscreen | `"lg" \| "md" \| "sm" \| "xl" \| "xxl" \| undefined`  | `undefined` |
+| `innerClass`            | `inner-class`             | Modal class                          | `string \| undefined`                                 | `undefined` |
 | `isCentered`            | `is-centered`             | Is modal centered                    | `boolean \| undefined`                                | `undefined` |
 | `isFullScreen`          | `is-full-screen`          | Is fullscreen in all sizes           | `boolean \| undefined`                                | `undefined` |
 | `isScrollable`          | `is-scrollable`           | Is modal scrollable                  | `boolean \| undefined`                                | `undefined` |
