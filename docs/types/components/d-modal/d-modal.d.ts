@@ -7,6 +7,10 @@ export declare class DModal {
    */
   name: string;
   /**
+   * Modal class
+   */
+  innerClass?: string;
+  /**
    * Is backdrop static
    */
   isStatic?: boolean;
@@ -48,6 +52,7 @@ export declare class DModal {
   private footer;
   private closeHandler;
   private fullScreenClass;
+  private generateClasses;
   private generateModalDialogClasses;
   render(): any;
 }

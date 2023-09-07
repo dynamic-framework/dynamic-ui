@@ -864,6 +864,10 @@ export namespace Components {
          */
         "fullScreenFrom"?: FullScreenFrom;
         /**
+          * Modal class
+         */
+        "innerClass"?: string;
+        /**
           * Is modal centered
          */
         "isCentered"?: boolean;
@@ -2234,6 +2238,10 @@ declare namespace LocalJSX {
           * Minimum size to apply the fullscreen
          */
         "fullScreenFrom"?: FullScreenFrom;
+        /**
+          * Modal class
+         */
+        "innerClass"?: string;
         /**
           * Is modal centered
          */

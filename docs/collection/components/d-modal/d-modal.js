@@ -6,6 +6,7 @@ export class DModal {
       this.eventClose.emit();
     };
     this.name = undefined;
+    this.innerClass = undefined;
     this.isStatic = undefined;
     this.isScrollable = undefined;
     this.isCentered = undefined;
@@ -29,6 +30,12 @@ export class DModal {
     }
     return '';
   }
+  generateClasses() {
+    return {
+      'modal fade show': true,
+      [`${this.innerClass}`]: !!this.innerClass,
+    };
+  }
   generateModalDialogClasses() {
     return {
       'modal-dialog': true,
@@ -39,7 +46,7 @@ export class DModal {
     };
   }
   render() {
-    return (h("div", Object.assign({ class: "modal fade show", id: this.name, tabindex: "-1", "aria-labelledby": `${this.name}Label`, "aria-hidden": "false" }, this.isStatic && ({
+    return (h("div", Object.assign({ class: this.generateClasses(), id: this.name, tabindex: "-1", "aria-labelledby": `${this.name}Label`, "aria-hidden": "false" }, this.isStatic && ({
       [`data-${PREFIX_BS}backdrop`]: 'static',
       [`data-${PREFIX_BS}keyboard`]: 'false',
     })), h("div", { class: this.generateModalDialogClasses() }, h("div", { class: "modal-content" }, (this.header || this.showCloseButton) && (h("div", { class: "modal-header" }, this.showCloseButton && (h("button", { type: "button", class: "d-modal-close", "aria-label": "Close", onClick: this.closeHandler }, h("d-icon", { icon: "x-lg" }))), this.header && (h("div", { class: "d-modal-slot" }, h("slot", { name: "header" }))))), this.body && (h("div", { class: "d-modal-slot modal-body" }, h("slot", { name: "body" }))), this.footer && (h("div", { class: "d-modal-separator" })), this.footer && (h("div", { class: `d-modal-slot modal-footer d-modal-action-${this.footerActionPlacement}` }, h("slot", { name: "footer" })))))));
@@ -62,6 +69,23 @@ export class DModal {
           "text": "the name of the modal"
         },
         "attribute": "name",
+        "reflect": false
+      },
+      "innerClass": {
+        "type": "string",
+        "mutable": false,
+        "complexType": {
+          "original": "string",
+          "resolved": "string | undefined",
+          "references": {}
+        },
+        "required": false,
+        "optional": true,
+        "docs": {
+          "tags": [],
+          "text": "Modal class"
+        },
+        "attribute": "inner-class",
         "reflect": false
       },
       "isStatic": {
