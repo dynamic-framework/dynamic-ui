@@ -82,22 +82,6 @@
     border-radius: var(--#{$prefix}input-group-border-radius);
   }
 
-  // hover
-  .input-group:hover:has(.form-control:not(:disabled)) {
-    border-color: var(--#{$prefix}input-group-hover-border-color);
-  }
-
-  // not empty
-  &:has(.form-control:not(:placeholder-shown, :focus)) {
-    .input-group {
-      border-color: var(--#{$prefix}input-group-hover-border-color);
-    }
-
-    label {
-      color: var(--#{$prefix}input-label-has-value-color);
-    }
-  }
-
   // validation states
   @each $state, $data in $form-validation-states {
     $border-color: map-get($data, "border-color");
