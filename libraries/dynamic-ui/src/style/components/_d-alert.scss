@@ -34,7 +34,7 @@
   }
 
   @each $theme, $value in $theme-colors {
-    $color: color-contrast($value);
+    $color: color-contrast-var($value);
     &.alert-#{$theme} {
       --#{$prefix}alert-color: #{$color};
       --#{$prefix}alert-bg: var(--#{$prefix}#{$theme});

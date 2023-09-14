@@ -2,8 +2,8 @@
 
 // scss-docs-start chip-variables
 $chip-gap: $spacer-1 !default;
-$chip-bg: $color-contrast-light !default;
-$chip-color: $color-contrast-dark !default;
+$chip-bg: var(--#{$prefix}white) !default;
+$chip-color: var(--#{$prefix}gray-900) !default;
 $chip-border-radius: $border-radius-pill !default;
 $chip-padding-x: $spacer-2 !default;
 $chip-padding-y: $spacer-1 !default;

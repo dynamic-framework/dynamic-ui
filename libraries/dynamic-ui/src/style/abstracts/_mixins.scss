@@ -110,3 +110,24 @@
   }
 }
 // scss-docs-end df-btn-link-variant-mixin
+
+// scss-docs-start df-table-variant
+@mixin df-table-variant($state, $background) {
+  .table-#{$state} {
+    $color: color-contrast-var(map-get($all-colors, $background));
+
+    --#{$prefix}table-color: #{$color};
+    --#{$prefix}table-bg: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{100% - $table-bg-scale * -1})")};
+    --#{$prefix}table-border-color: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{(100% - $table-bg-scale) * $table-border-factor})")};
+    --#{$prefix}table-striped-bg: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{(100% - $table-bg-scale) * $table-striped-bg-factor})")};
+    --#{$prefix}table-striped-color: #{$color};
+    --#{$prefix}table-active-bg: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{(100% - $table-bg-scale) * $table-active-bg-factor})")};
+    --#{$prefix}table-active-color: #{$color};
+    --#{$prefix}table-hover-bg: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{(100% - $table-bg-scale) * $table-hover-bg-factor})")};
+    --#{$prefix}table-hover-color: #{$color};
+
+    color: var(--#{$prefix}table-color);
+    border-color: var(--#{$prefix}table-border-color);
+  }
+}
+// scss-docs-end df-table-variant

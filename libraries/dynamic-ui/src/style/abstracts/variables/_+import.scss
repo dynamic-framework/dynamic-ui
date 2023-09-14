@@ -3,6 +3,11 @@
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
+// Prefix for :root CSS variables
+
+$variable-prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
+$prefix: $variable-prefix !default;
+
 @import "colors";
 
 // Characters which are escaped by the escape-svg function
@@ -15,11 +20,6 @@ $escaped-characters: (
 ) !default;
 
 @import "options";
-
-// Prefix for :root CSS variables
-
-$variable-prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
-$prefix: $variable-prefix !default;
 
 // Gradient
 //
@@ -51,12 +51,15 @@ $position-values: (
 // scss-docs-start focus-ring-variables
 $focus-ring-width: .25rem !default;
 $focus-ring-opacity: 1 !default;
-$focus-ring-color: rgba($secondary, $focus-ring-opacity) !default;
+// custom
+$focus-ring-color-mapping: "secondary-rgb" !default;
+$focus-ring-color: var(--#{$prefix}focus-ring-color) !default;
+// end custom
 $focus-ring-blur: 0 !default;
 $focus-ring-box-shadow: 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color !default;
 // scss-docs-end focus-ring-variables
 
-$component-active-color: $white !default;
+$component-active-color: var(--#{$prefix}white) !default;
 $component-active-bg: $focus-ring-color !default;
 
 // scss-docs-start caret-variables
