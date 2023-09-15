@@ -13,7 +13,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "lerna run build --no-private",
-    "build:style": "lerna run build:style --no-private",
+    "build:style": "lerna run build:scss --no-private",
     "clean": "lerna clean",
     "storybook:react": "pnpm run --filter=@dynamic-framework/ui-react storybook",
     "build:storybook:react": "pnpm run --filter=@dynamic-framework/ui-react build:storybook",

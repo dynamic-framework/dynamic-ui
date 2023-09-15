@@ -35,13 +35,10 @@
     "src/style"
   ],
   "scripts": {
-    "build": "pnpm build:stencil && pnpm build:style",
+    "build": "pnpm build:stencil && pnpm build:scss",
     "build:stencil": "stencil build --docs",
     "build:stencil:watch": "stencil build --docs --watch",
-    "build:scss": "sass --load-path=node_modules --no-source-map --style=compressed src/style:dist/css",
-    "build:scss:watch": "sass --load-path=node_modules -w src/style:dist/css",
-    "build:autoprefixer": "postcss dist/css/*.css --replace --use autoprefixer --no-map",
-    "build:style": "pnpm build:scss && pnpm build:autoprefixer",
+    "build:scss": "./scripts/build-scss.sh",
     "test": "stencil test --spec --e2e",
     "test:unit": "stencil test --spec",
     "test:watch": "stencil test --spec --e2e --watchAll",

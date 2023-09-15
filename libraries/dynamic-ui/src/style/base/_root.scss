@@ -1,15 +1,173 @@
-:root {
-  @each $color, $value in $bg-soft-colors {
-    --#{$prefix}#{$color}: #{$value};
+:root,
+[data-bs-theme="dynamic"] {
+  // Note: Custom variable values only support SassScript inside `#{}`.
+
+  // Colors
+  //
+  // Generate palettes for full colors, grays, and theme colors.
+
+  // custom
+  @each $color, $value in $colors {
+    --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
+  }
+  // end custom
+
+  @each $color, $value in $grays {
+    // custom
+    --#{$prefix}gray-#{$color}-rgb: #{to-rgb($value)};
+    // end custom
   }
 
-  @each $color, $value in $palette-grays {
+  @each $color, $value in $bg-soft-colors {
     --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
   }
 
   @each $color, $value in $theme-colors-palletes {
-    --#{$prefix}#{$color}: #{$value};
+    @if str-index($color, "-500") {
+      $base-color-name: str-slice($color, 1, str-index($color, "-500") - 1);
+      --#{$prefix}#{$color}-rgb: var(--#{$prefix}#{$base-color-name}-rgb);
+    } @else {
+      --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
+    }
   }
+
+  @each $color, $value in $colors {
+    // custom
+    --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
+    // end custom
+  }
+
+  // custom
+  @each $color, $value in $grays {
+    --#{$prefix}gray-#{$color}: rgb(var(--#{$prefix}gray-#{$color}-rgb));
+  }
+
+  @each $color, $value in $bg-soft-colors {
+    --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
+  }
+  // end custom
+
+  @each $color, $value in $theme-colors {
+    // custom
+    --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
+    // end custom
+  }
+
+  // custom
+  // original $theme-colors-rgb
+  @each $color, $value in $theme-colors-mapping {
+    --#{$prefix}#{$color}-rgb: var(--#{$prefix}#{$value}-rgb);
+  }
+  // end custom
+
+  // custom
+  @each $color, $value in $theme-colors-palletes {
+    --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
+  }
+  // end custom
+
+  @each $color, $value in $theme-colors-text {
+    --#{$prefix}#{$color}-text-emphasis: #{$value};
+  }
+
+  @each $color, $value in $theme-colors-bg-subtle {
+    --#{$prefix}#{$color}-bg-subtle: #{$value};
+  }
+
+  @each $color, $value in $theme-colors-border-subtle {
+    --#{$prefix}#{$color}-border-subtle: #{$value};
+  }
+
+  // Fonts
+
+  // Note: Use `inspect` for lists so that quoted items keep the quotes.
+  // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
+  --#{$prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
+  --#{$prefix}font-monospace: #{inspect($font-family-monospace)};
+  --#{$prefix}gradient: #{$gradient};
+
+  // Root and body
+  // scss-docs-start root-body-variables
+  @if $font-size-root != null {
+    --#{$prefix}root-font-size: #{$font-size-root};
+  }
+  --#{$prefix}body-font-family: #{inspect($font-family-base)};
+  @include rfs($font-size-base, --#{$prefix}body-font-size);
+  --#{$prefix}body-font-weight: #{$font-weight-base};
+  --#{$prefix}body-line-height: #{$line-height-base};
+  @if $body-text-align != null {
+    --#{$prefix}body-text-align: #{$body-text-align};
+  }
+
+  --#{$prefix}body-color: rgb(var(--#{$prefix}body-color-rgb));
+  --#{$prefix}body-color-rgb: var(--#{$prefix}#{$body-color-mapping}-rgb);
+  --#{$prefix}body-bg: rgb(var(--#{$prefix}body-bg-rgb));
+  --#{$prefix}body-bg-rgb: var(--#{$prefix}#{$body-bg-mapping}-rgb);
+
+  --#{$prefix}emphasis-color: rgb(var(--#{$prefix}emphasis-color-rgb));
+  --#{$prefix}emphasis-color-rgb: #{$body-emphasis-color};
+
+  --#{$prefix}secondary-color: rgba(var(--#{$prefix}secondary-color-rgb), .75);
+  --#{$prefix}secondary-color-rgb: #{$body-secondary-color};
+  --#{$prefix}secondary-bg: rgb(var(--#{$prefix}secondary-bg-rgb));
+  --#{$prefix}secondary-bg-rgb: #{$body-secondary-bg};
+
+  --#{$prefix}tertiary-color: rgba(var(--#{$prefix}tertiary-color-rgb), .5);
+  --#{$prefix}tertiary-color-rgb: #{$body-tertiary-color};
+  --#{$prefix}tertiary-bg: rgb(var(--#{$prefix}tertiary-bg-rgb));
+  --#{$prefix}tertiary-bg-rgb: #{$body-tertiary-bg};
+  // scss-docs-end root-body-variables
+
+  --#{$prefix}heading-color: #{$headings-color};
+
+  --#{$prefix}link-color: rgb(var(--#{$prefix}link-color-rgb));
+  --#{$prefix}link-color-rgb: var(--#{$prefix}#{$link-color-mapping});
+  --#{$prefix}link-decoration: #{$link-decoration};
+
+  --#{$prefix}link-hover-color: rgb(var(--#{$prefix}link-hover-color-rgb));
+  --#{$prefix}link-hover-color-rgb: var(--#{$prefix}#{$link-hover-color-mapping});
+
+  @if $link-hover-decoration != null {
+    --#{$prefix}link-hover-decoration: #{$link-hover-decoration};
+  }
+
+  --#{$prefix}code-color: rgb(var(--#{$prefix}code-color-rgb));
+  --#{$prefix}code-color-rgb: var(--#{$prefix}#{$code-color-mapping}-rgb);
+  --#{$prefix}highlight-bg: #{$mark-bg};
+
+  // scss-docs-start root-border-var
+  --#{$prefix}border-width: #{$border-width};
+  --#{$prefix}border-style: #{$border-style};
+  --#{$prefix}border-color: #{$border-color};
+  --#{$prefix}border-color-translucent: #{$border-color-translucent};
+
+  --#{$prefix}border-radius: #{$border-radius};
+  --#{$prefix}border-radius-sm: #{$border-radius-sm};
+  --#{$prefix}border-radius-lg: #{$border-radius-lg};
+  --#{$prefix}border-radius-xl: #{$border-radius-xl};
+  --#{$prefix}border-radius-xxl: #{$border-radius-xxl};
+  --#{$prefix}border-radius-2xl: var(--#{$prefix}border-radius-xxl); // Deprecated in v5.3.0 for consistency
+  --#{$prefix}border-radius-pill: #{$border-radius-pill};
+  // scss-docs-end root-border-var
+
+  --#{$prefix}box-shadow: #{$box-shadow};
+  --#{$prefix}box-shadow-sm: #{$box-shadow-sm};
+  --#{$prefix}box-shadow-lg: #{$box-shadow-lg};
+  --#{$prefix}box-shadow-inset: #{$box-shadow-inset};
+
+  // Focus styles
+  // scss-docs-start root-focus-variables
+  --#{$prefix}focus-ring-width: #{$focus-ring-width};
+  --#{$prefix}focus-ring-opacity: #{$focus-ring-opacity};
+  --#{$prefix}focus-ring-color: rgba(var(--#{$prefix}#{$focus-ring-color-mapping}), var(--#{$prefix}focus-ring-opacity));
+  // scss-docs-end root-focus-variables
+
+  // scss-docs-start root-form-validation-variables
+  --#{$prefix}form-valid-color: #{$form-valid-color};
+  --#{$prefix}form-valid-border-color: #{$form-valid-border-color};
+  --#{$prefix}form-invalid-color: #{$form-invalid-color};
+  --#{$prefix}form-invalid-border-color: #{$form-invalid-border-color};
+  // scss-docs-end root-form-validation-variables
 
   // only reference root variables
 
@@ -31,9 +189,60 @@
   --#{$prefix}ref-fw-semibold: #{$font-weight-semibold};
   --#{$prefix}ref-fw-bold: #{$font-weight-bold};
   --#{$prefix}ref-fw-bolder: #{$font-weight-bolder};
-
 }
 
-.flex-1 {
-  flex: 1;
+@if $enable-dark-mode {
+  @include color-mode(dark, true) {
+    color-scheme: dark;
+
+    // scss-docs-start root-dark-mode-vars
+    --#{$prefix}body-color: #{$body-color-dark};
+    --#{$prefix}body-color-rgb: #{to-rgb($body-color-dark)};
+    --#{$prefix}body-bg: #{$body-bg-dark};
+    --#{$prefix}body-bg-rgb: #{to-rgb($body-bg-dark)};
+
+    --#{$prefix}emphasis-color: #{$body-emphasis-color-dark};
+    --#{$prefix}emphasis-color-rgb: #{to-rgb($body-emphasis-color-dark)};
+
+    --#{$prefix}secondary-color: #{$body-secondary-color-dark};
+    --#{$prefix}secondary-color-rgb: #{to-rgb($body-secondary-color-dark)};
+    --#{$prefix}secondary-bg: #{$body-secondary-bg-dark};
+    --#{$prefix}secondary-bg-rgb: #{to-rgb($body-secondary-bg-dark)};
+
+    --#{$prefix}tertiary-color: #{$body-tertiary-color-dark};
+    --#{$prefix}tertiary-color-rgb: #{to-rgb($body-tertiary-color-dark)};
+    --#{$prefix}tertiary-bg: #{$body-tertiary-bg-dark};
+    --#{$prefix}tertiary-bg-rgb: #{to-rgb($body-tertiary-bg-dark)};
+
+    @each $color, $value in $theme-colors-text-dark {
+      --#{$prefix}#{$color}-text-emphasis: #{$value};
+    }
+
+    @each $color, $value in $theme-colors-bg-subtle-dark {
+      --#{$prefix}#{$color}-bg-subtle: #{$value};
+    }
+
+    @each $color, $value in $theme-colors-border-subtle-dark {
+      --#{$prefix}#{$color}-border-subtle: #{$value};
+    }
+
+    --#{$prefix}heading-color: #{$headings-color-dark};
+
+    --#{$prefix}link-color: #{$link-color-dark};
+    --#{$prefix}link-hover-color: #{$link-hover-color-dark};
+    --#{$prefix}link-color-rgb: #{to-rgb($link-color-dark)};
+    --#{$prefix}link-hover-color-rgb: #{to-rgb($link-hover-color-dark)};
+
+    --#{$prefix}code-color: #{$code-color-dark};
+
+    --#{$prefix}border-color: #{$border-color-dark};
+    --#{$prefix}border-color-translucent: #{$border-color-translucent-dark};
+
+    --#{$prefix}form-valid-color: #{$form-valid-color-dark};
+    --#{$prefix}form-valid-border-color: #{$form-valid-border-color-dark};
+    --#{$prefix}form-invalid-color: #{$form-invalid-color-dark};
+    --#{$prefix}form-invalid-border-color: #{$form-invalid-border-color-dark};
+    // scss-docs-end root-dark-mode-vars
+  }
 }
+

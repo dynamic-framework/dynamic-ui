@@ -1,9 +1,9 @@
-$box-file-gap: $spacer-3 !default;
+$box-file-gap: var(--#{$prefix}ref-spacer-3) !default;
 $box-file-border: 1px dashed var(--#{$prefix}gray-700) !default;
-$box-file-border-radius: $border-radius !default;
-$box-file-padding: $spacer-5 !default;
+$box-file-border-radius: var(--#{$prefix}border-radius) !default;
+$box-file-padding: var(--#{$prefix}ref-spacer-5) !default;
 $box-file-content-max-width: 220px !default;
-$box-file-icon-size: $spacer-8 !default;
+$box-file-icon-size: var(--#{$prefix}ref-spacer-8) !default;
 $box-file-icon-color: var(--#{$prefix}secondary-300) !default;
 
 $box-file-hover-border: 1px dashed var(--#{$prefix}secondary-700) !default;

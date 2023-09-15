@@ -3,25 +3,34 @@
 // Settings for the `<body>` element.
 
 $body-text-align: null !default;
-$body-color: $gray-900 !default;
-$body-bg: $white !default;
 
-$body-secondary-color: rgba($body-color, .75) !default;
-$body-secondary-bg: $gray-200 !default;
+// custom
+$body-color-mapping: "gray-900" !default;
+$body-color: map-get($all-colors, $body-color-mapping) !default;
+$body-bg-mapping: "white" !default;
+$body-bg: map-get($all-colors, $body-bg-mapping) !default;
 
-$body-tertiary-color: rgba($body-color, .5) !default;
-$body-tertiary-bg: $gray-100 !default;
+$body-secondary-color: var(--#{$prefix}body-color-rgb) !default;
+$body-secondary-bg: var(--#{$prefix}gray-200) !default;
 
-$body-emphasis-color: $black !default;
+$body-tertiary-color: var(--#{$prefix}body-color-rgb) !default;
+$body-tertiary-bg: var(--#{$prefix}gray-100) !default;
+
+$body-emphasis-color: var(--#{$prefix}black) !default;
+// end custom
 
 // Links
 //
 // Style anchor elements.
 
-$link-color: $primary !default;
+// custom
+$link-color-mapping: "primary" !default;
+$link-hover-color-mapping: "primary-700" !default;
+$link-color: map-get($all-colors, $link-color-mapping) !default;
+$link-hover-color: map-get($all-colors, $link-hover-color-mapping) !default;
+// end custom
 $link-decoration: underline !default;
-$link-shade-percentage: 20% !default;
-$link-hover-color: shift-color($link-color, $link-shade-percentage) !default;
+$link-shade-percentage: 20% !default; // unused
 $link-hover-decoration: underline !default;
 
 $stretched-link-pseudo-element: after !default;

@@ -6,7 +6,8 @@
 
 @import "components/+import";
 
-@import "bootstrap/scss/helpers";
+@import "helpers/+import";
+
 @import "bootstrap/scss/utilities/api";
 
 @import "shame";
