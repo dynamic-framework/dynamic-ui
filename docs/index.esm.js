@@ -936,9 +936,12 @@ function DListItemMovement(_a) {
     return (jsx(DListItem, Object.assign({}, props, { children: jsxs("div", Object.assign({ className: classNames('d-flex justify-content-between align-items-center p-3 gap-3', classNameMovement) }, { children: [jsxs("div", Object.assign({ className: "d-flex flex-column gap-1" }, { children: [jsx("span", Object.assign({ className: "fs-6" }, { children: description })), jsx("span", Object.assign({ className: "small text-gray-700" }, { children: date }))] })), jsx("span", Object.assign({ className: classNames('fs-6', value.theme) }, { children: value.valueFormatted }))] })) })));
 }
 
-function DStepper({ options, currentStep, successIcon = 'check', isVertical = false, }) {
+function DStepper$2({ options, currentStep, successIcon = 'check', isVertical = false, }) {
+    if (currentStep < 1 || currentStep > options.length) {
+        throw new Error('Current step should be in the range from 1 to options lenght');
+    }
     return (jsx("div", Object.assign({ className: classNames({
-            'd-stepper': true,
+            'd-stepper-desktop': true,
             'is-vertical': isVertical,
         }) }, { children: options.map(({ label, value }) => (jsxs("div", Object.assign({ className: "d-step" }, { children: [jsx("div", Object.assign({ className: "d-step-value" }, { children: jsx("div", Object.assign({ className: classNames({
                             'd-step-icon-container': true,
@@ -946,7 +949,41 @@ function DStepper({ options, currentStep, successIcon = 'check', isVertical = fa
                             'd-step-current': value === currentStep,
                         }) }, { children: value < currentStep
                             ? (jsx(DIcon, { icon: successIcon, innerClass: "d-step-icon" }))
-                            : value })) })), jsx("div", Object.assign({ className: "d-step-label" }, { children: label }))] }), label))) })));
+                            : value })) })), jsx("div", Object.assign({ className: "d-step-label" }, { children: label }))] }), value))) })));
+}
+
+function DStepper$1({ options, currentStep, }) {
+    if (currentStep < 1 || currentStep > options.length) {
+        throw new Error('Current step should be in the range from 1 to options lenght');
+    }
+    const currentOption = useMemo(() => { var _a; return (_a = options[currentStep - 1]) !== null && _a !== void 0 ? _a : {}; }, [currentStep, options]);
+    const [currentAngle, setCurrentAngle] = useState(0);
+    useEffect(() => {
+        const targetAngle = (currentStep / options.length) * 360;
+        const animationInterval = setInterval(() => {
+            const angleDifference = targetAngle - currentAngle;
+            const step = Math.sign(angleDifference) * 5;
+            if (Math.abs(angleDifference) <= Math.abs(step)) {
+                setCurrentAngle(targetAngle);
+                clearInterval(animationInterval);
+            }
+            else {
+                setCurrentAngle(currentAngle + step);
+            }
+        }, 16);
+        return () => {
+            clearInterval(animationInterval);
+        };
+    }, [currentAngle, currentStep, options.length]);
+    const progressStyle = useMemo(() => `conic-gradient(
+      from 180deg,
+      var(--${PREFIX_BS}step-progress-outter-fill-background-color) ${currentAngle}deg,
+      var(--${PREFIX_BS}step-progress-outter-background-color) 0deg)`, [currentAngle]);
+    return (jsxs("div", Object.assign({ className: "d-stepper" }, { children: [jsx("div", Object.assign({ className: "d-step-bar", style: { background: progressStyle } }, { children: jsx("p", Object.assign({ className: "d-step-number" }, { children: `${currentStep}/${options.length}` })) })), jsx("div", Object.assign({ className: "d-step-info" }, { children: Object.keys(currentOption).length > 0 && (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: "d-step-label" }, { children: currentOption.label })), jsx("div", Object.assign({ className: "d-step-description" }, { children: currentOption.description || '' }))] })) }))] })));
+}
+
+function DStepper({ options, currentStep, successIcon = 'check', isVertical = false, breakpoint = 'lg', }) {
+    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: `d-block d-${breakpoint}-none` }, { children: jsx(DStepper$1, { options: options, currentStep: currentStep }) })), jsx("div", Object.assign({ className: `d-none d-${breakpoint}-block` }, { children: jsx(DStepper$2, { options: options, currentStep: currentStep, successIcon: successIcon, isVertical: isVertical }) }))] }));
 }
 
 function DFormikInputCurrency(_a) {
@@ -999,5 +1036,5 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-export { DAlert, DBadge, DBoxFile, DButton, DCard, DCardAccount, DCardBody, DCardFooter, DCardHeader, DCarousel, DCarouselSlide, DChip, DCollapse, DCollapseIconText, DCurrencyText, DDatePicker, DFormikInput, DFormikInputCurrency, DFormikInputSelect, DIcon, DInput, DInputCheck, DInputCounter, DInputCurrency, DInputCurrencyBase, DInputPassword, DInputPin, DInputSearch, DInputSelect, DInputSwitch, DList, DListItem, DListItemMovement, DModal, DOffcanvas, DPaginator, DPermissionItem, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSkeleton, DStepper, DTabContent, DTabs, DToastContainer, DTooltip, LiquidContext$1 as LiquidContext, LiquidContextProvider, MPermissionGroup, MSummaryCard, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
+export { DAlert, DBadge, DBoxFile, DButton, DCard, DCardAccount, DCardBody, DCardFooter, DCardHeader, DCarousel, DCarouselSlide, DChip, DCollapse, DCollapseIconText, DCurrencyText, DDatePicker, DFormikInput, DFormikInputCurrency, DFormikInputSelect, DIcon, DInput, DInputCheck, DInputCounter, DInputCurrency, DInputCurrencyBase, DInputPassword, DInputPin, DInputSearch, DInputSelect, DInputSwitch, DList, DListItem, DListItemMovement, DModal, DOffcanvas, DPaginator, DPermissionItem, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs, DToastContainer, DTooltip, LiquidContext$1 as LiquidContext, LiquidContextProvider, MPermissionGroup, MSummaryCard, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, useFormatCurrency, useLiquidContext, useModalContext, useOffcanvasContext, useScreenshot, useScreenshotDownload, useScreenshotWebShare, useTabContext, useToast };
 //# sourceMappingURL=index.esm.js.map

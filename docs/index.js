@@ -949,9 +949,12 @@ function DListItemMovement(_a) {
     return (jsxRuntime.jsx(DListItem, Object.assign({}, props, { children: jsxRuntime.jsxs("div", Object.assign({ className: classNames__default["default"]('d-flex justify-content-between align-items-center p-3 gap-3', classNameMovement) }, { children: [jsxRuntime.jsxs("div", Object.assign({ className: "d-flex flex-column gap-1" }, { children: [jsxRuntime.jsx("span", Object.assign({ className: "fs-6" }, { children: description })), jsxRuntime.jsx("span", Object.assign({ className: "small text-gray-700" }, { children: date }))] })), jsxRuntime.jsx("span", Object.assign({ className: classNames__default["default"]('fs-6', value.theme) }, { children: value.valueFormatted }))] })) })));
 }
 
-function DStepper({ options, currentStep, successIcon = 'check', isVertical = false, }) {
+function DStepper$2({ options, currentStep, successIcon = 'check', isVertical = false, }) {
+    if (currentStep < 1 || currentStep > options.length) {
+        throw new Error('Current step should be in the range from 1 to options lenght');
+    }
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]({
-            'd-stepper': true,
+            'd-stepper-desktop': true,
             'is-vertical': isVertical,
         }) }, { children: options.map(({ label, value }) => (jsxRuntime.jsxs("div", Object.assign({ className: "d-step" }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "d-step-value" }, { children: jsxRuntime.jsx("div", Object.assign({ className: classNames__default["default"]({
                             'd-step-icon-container': true,
@@ -959,7 +962,41 @@ function DStepper({ options, currentStep, successIcon = 'check', isVertical = fa
                             'd-step-current': value === currentStep,
                         }) }, { children: value < currentStep
                             ? (jsxRuntime.jsx(DIcon, { icon: successIcon, innerClass: "d-step-icon" }))
-                            : value })) })), jsxRuntime.jsx("div", Object.assign({ className: "d-step-label" }, { children: label }))] }), label))) })));
+                            : value })) })), jsxRuntime.jsx("div", Object.assign({ className: "d-step-label" }, { children: label }))] }), value))) })));
+}
+
+function DStepper$1({ options, currentStep, }) {
+    if (currentStep < 1 || currentStep > options.length) {
+        throw new Error('Current step should be in the range from 1 to options lenght');
+    }
+    const currentOption = React.useMemo(() => { var _a; return (_a = options[currentStep - 1]) !== null && _a !== void 0 ? _a : {}; }, [currentStep, options]);
+    const [currentAngle, setCurrentAngle] = React.useState(0);
+    React.useEffect(() => {
+        const targetAngle = (currentStep / options.length) * 360;
+        const animationInterval = setInterval(() => {
+            const angleDifference = targetAngle - currentAngle;
+            const step = Math.sign(angleDifference) * 5;
+            if (Math.abs(angleDifference) <= Math.abs(step)) {
+                setCurrentAngle(targetAngle);
+                clearInterval(animationInterval);
+            }
+            else {
+                setCurrentAngle(currentAngle + step);
+            }
+        }, 16);
+        return () => {
+            clearInterval(animationInterval);
+        };
+    }, [currentAngle, currentStep, options.length]);
+    const progressStyle = React.useMemo(() => `conic-gradient(
+      from 180deg,
+      var(--${ui.PREFIX_BS}step-progress-outter-fill-background-color) ${currentAngle}deg,
+      var(--${ui.PREFIX_BS}step-progress-outter-background-color) 0deg)`, [currentAngle]);
+    return (jsxRuntime.jsxs("div", Object.assign({ className: "d-stepper" }, { children: [jsxRuntime.jsx("div", Object.assign({ className: "d-step-bar", style: { background: progressStyle } }, { children: jsxRuntime.jsx("p", Object.assign({ className: "d-step-number" }, { children: `${currentStep}/${options.length}` })) })), jsxRuntime.jsx("div", Object.assign({ className: "d-step-info" }, { children: Object.keys(currentOption).length > 0 && (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", Object.assign({ className: "d-step-label" }, { children: currentOption.label })), jsxRuntime.jsx("div", Object.assign({ className: "d-step-description" }, { children: currentOption.description || '' }))] })) }))] })));
+}
+
+function DStepper({ options, currentStep, successIcon = 'check', isVertical = false, breakpoint = 'lg', }) {
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", Object.assign({ className: `d-block d-${breakpoint}-none` }, { children: jsxRuntime.jsx(DStepper$1, { options: options, currentStep: currentStep }) })), jsxRuntime.jsx("div", Object.assign({ className: `d-none d-${breakpoint}-block` }, { children: jsxRuntime.jsx(DStepper$2, { options: options, currentStep: currentStep, successIcon: successIcon, isVertical: isVertical }) }))] }));
 }
 
 function DFormikInputCurrency(_a) {
@@ -1061,6 +1098,8 @@ exports.DQuickActionSelect = DQuickActionSelect;
 exports.DQuickActionSwitch = DQuickActionSwitch;
 exports.DSkeleton = DSkeleton;
 exports.DStepper = DStepper;
+exports.DStepperDesktop = DStepper$2;
+exports.DStepperMobile = DStepper$1;
 exports.DTabContent = DTabContent;
 exports.DTabs = DTabs;
 exports.DToastContainer = DToastContainer;
