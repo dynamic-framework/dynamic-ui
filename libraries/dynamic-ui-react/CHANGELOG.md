@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.5.0...@dynamic-framework/ui-react@1.6.0) (2023-09-15)
+
+
+### Features
+
+* adjust dynamic-react css vars and scss build process ([ff35f2f](https://github.com/dynamic-framework/dynamic-ui/commit/ff35f2f88c073261465d4cc4dcb993a29378a1b4))
+* dstepper component ([c96552e](https://github.com/dynamic-framework/dynamic-ui/commit/c96552e60f0c2821bd55aa5471889b0f898e0376))
+* stepper mobile ([fd4ea9f](https://github.com/dynamic-framework/dynamic-ui/commit/fd4ea9f4fc2888dc5aa69603a5398118a7ed1e7c))
+
+
+
 ## [1.5.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.4.0...@dynamic-framework/ui-react@1.5.0) (2023-09-07)
 
 
