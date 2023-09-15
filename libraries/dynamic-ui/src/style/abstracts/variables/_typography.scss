@@ -92,12 +92,12 @@ $text-muted: var(--#{$prefix}gray) !default;
 
 $initialism-font-size: $small-font-size !default;
 
-$blockquote-margin-y: $spacer !default;
+$blockquote-margin-y: var(--#{$prefix}ref-spacer-3) !default;
 $blockquote-font-size: $font-size-base * 1.25 !default;
 $blockquote-footer-color: var(--#{$prefix}gray-600) !default;
 $blockquote-footer-font-size: $small-font-size !default;
 
-$hr-margin-y: $spacer !default;
+$hr-margin-y: var(--#{$prefix}ref-spacer-3) !default;
 $hr-color: inherit !default;
 
 // fusv-disable

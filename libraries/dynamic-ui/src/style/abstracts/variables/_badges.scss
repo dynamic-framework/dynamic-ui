@@ -4,12 +4,12 @@
 $badge-font-size: $small-font-size !default;
 $badge-font-weight: $font-weight-normal !default;
 $badge-color: var(--#{$prefix}gray-900) !default;
-$badge-padding-y: $spacer-1 !default;
-$badge-padding-x: $spacer-2 !default;
+$badge-padding-y: var(--#{$prefix}ref-spacer-1) !default;
+$badge-padding-x: var(--#{$prefix}ref-spacer-2) !default;
 $badge-border-radius: $border-radius-sm !default;
 
 // custom
 $badge-bg: var(--#{$prefix}white) !default;
-$badge-dot-height: $spacer-3 !default;
+$badge-dot-height: var(--#{$prefix}ref-spacer-3) !default;
 // end custom
 // scss-docs-end badge-variables
