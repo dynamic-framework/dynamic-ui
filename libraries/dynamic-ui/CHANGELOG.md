@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.6.0...@dynamic-framework/ui@1.7.0) (2023-09-15)
+
+
+### Features
+
+* adjust css vars usage ([8931c19](https://github.com/dynamic-framework/dynamic-ui/commit/8931c19117b28b486f33d8896b03ffb9923c4cca))
+* adjust dynamic-react css vars and scss build process ([ff35f2f](https://github.com/dynamic-framework/dynamic-ui/commit/ff35f2f88c073261465d4cc4dcb993a29378a1b4))
+* change  to var spacer ([77224d7](https://github.com/dynamic-framework/dynamic-ui/commit/77224d76d76195ef97381a47b17573645d9a2ed6))
+
+
+
 ## [1.6.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui@1.5.0...@dynamic-framework/ui@1.6.0) (2023-09-07)
 
 
