@@ -31,7 +31,7 @@ export default function DStepper(
       {options.map(({ label, value }) => (
         <div
           className="d-step"
-          key={label}
+          key={value}
         >
           <div className="d-step-value">
             <div
