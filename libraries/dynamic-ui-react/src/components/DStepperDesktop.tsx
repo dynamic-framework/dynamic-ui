@@ -2,7 +2,7 @@ import classNames from 'classnames';
 
 import { DIcon } from './proxies';
 
-export type Step = {
+type Step = {
   label: string;
   value: number;
 };
@@ -24,7 +24,7 @@ export default function DStepper(
 ) {
   return (
     <div className={classNames({
-      'd-stepper': true,
+      'd-stepper-lg': true,
       'is-vertical': isVertical,
     })}
     >
