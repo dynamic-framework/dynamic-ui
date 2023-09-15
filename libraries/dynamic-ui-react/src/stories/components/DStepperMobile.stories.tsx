@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DStepperMobile } from '../../components';
 
 const config: Meta<typeof DStepperMobile> = {
-  title: 'Design System/Components/StepperMobile',
+  title: 'Design System/Components/Stepper Mobile',
   component: DStepperMobile,
   argTypes: {
     currentStep: {

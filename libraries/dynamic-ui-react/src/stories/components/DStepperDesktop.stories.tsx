@@ -4,7 +4,7 @@ import { DStepperDesktop } from '../../components';
 import { ICONS } from '../constants';
 
 const config: Meta<typeof DStepperDesktop> = {
-  title: 'Design System/Components/StepperDesktop',
+  title: 'Design System/Components/Stepper Desktop',
   component: DStepperDesktop,
   argTypes: {
     currentStep: {
