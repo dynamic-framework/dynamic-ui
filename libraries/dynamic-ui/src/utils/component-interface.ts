@@ -7,3 +7,4 @@ export type NavegableProps = {
   'aria-current'?: string,
 };
 export type ComponentSize = 'sm' | 'lg';
+export type BreakpointSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
