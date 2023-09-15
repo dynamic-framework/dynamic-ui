@@ -22,6 +22,10 @@ export default function DStepper(
     isVertical = false,
   } : Props,
 ) {
+  if (currentStep < 1 || currentStep > options.length) {
+    throw new Error('Current step should be in the range from 1 to options lenght');
+  }
+
   return (
     <div className={classNames({
       'd-stepper-lg': true,

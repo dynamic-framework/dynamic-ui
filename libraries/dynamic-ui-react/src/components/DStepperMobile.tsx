@@ -22,6 +22,10 @@ export default function DStepper(
     currentStep,
   } : Props,
 ) {
+  if (currentStep < 1 || currentStep > options.length) {
+    throw new Error('Current step should be in the range from 1 to options lenght');
+  }
+
   const currentOption = useMemo(() => options[currentStep - 1] ?? {}, [currentStep, options]);
   const [currentAngle, setCurrentAngle] = useState(0);
 
