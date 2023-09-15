@@ -16,17 +16,19 @@ $table-accent-bg: transparent !default;
 
 $table-th-font-weight: null !default;
 
+$table-bg-scale: -100% !default;
+
 $table-striped-color: $table-color !default;
 $table-striped-bg-factor: .05 !default;
-$table-striped-bg: rgba($black, $table-striped-bg-factor) !default;
+$table-striped-bg: unquote("color-mix(in srgb, var(--#{$prefix}white), var(--#{$prefix}black) #{(100% - $table-bg-scale) * $table-striped-bg-factor})") !default;
 
 $table-active-color: $table-color !default;
 $table-active-bg-factor: .1 !default;
-$table-active-bg: rgba($black, $table-active-bg-factor) !default;
+$table-active-bg: unquote("color-mix(in srgb, var(--#{$prefix}white), var(--#{$prefix}black) #{(100% - $table-bg-scale) * $table-active-bg-factor})") !default;
 
 $table-hover-color: $table-color !default;
 $table-hover-bg-factor: .075 !default;
-$table-hover-bg: rgba($black, $table-hover-bg-factor) !default;
+$table-hover-bg: unquote("color-mix(in srgb, var(--#{$prefix}white), var(--#{$prefix}black) #{(100% - $table-bg-scale) * $table-hover-bg-factor})") !default;
 
 $table-border-factor: .1 !default;
 $table-border-width: var(--#{$prefix}border-width) !default;
@@ -39,18 +41,17 @@ $table-group-separator-color: currentcolor !default;
 
 $table-caption-color: var(--#{$prefix}secondary-color) !default;
 
-$table-bg-scale: -80% !default;
 // scss-docs-end table-variables
 
 // scss-docs-start table-loop
 $table-variants: (
-  "primary": shift-color($primary, $table-bg-scale),
-  "secondary": shift-color($secondary, $table-bg-scale),
-  "success": shift-color($success, $table-bg-scale),
-  "info": shift-color($info, $table-bg-scale),
-  "warning": shift-color($warning, $table-bg-scale),
-  "danger": shift-color($danger, $table-bg-scale),
-  "light": $light,
-  "dark": $dark,
+  "primary": "primary-100",
+  "secondary": "secondary-100",
+  "success": "success-100",
+  "info": "info-100",
+  "warning": "warning-100",
+  "danger": "danger-100",
+  "light": "light",
+  "dark": "dark",
 ) !default;
 // scss-docs-end table-loop

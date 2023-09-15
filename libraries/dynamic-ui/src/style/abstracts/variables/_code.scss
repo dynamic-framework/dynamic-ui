@@ -1,7 +1,10 @@
 // Code
 
 $code-font-size: $small-font-size !default;
-$code-color: $pink !default;
+// custom
+$code-color-mapping: "primary" !default;
+$code-color: map-get($all-colors, $code-color-mapping) !default;
+// end custom
 
 $kbd-padding-y: .1875rem !default;
 $kbd-padding-x: .375rem !default;
