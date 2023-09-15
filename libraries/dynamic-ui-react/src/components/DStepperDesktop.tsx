@@ -28,7 +28,7 @@ export default function DStepper(
 
   return (
     <div className={classNames({
-      'd-stepper-lg': true,
+      'd-stepper-desktop': true,
       'is-vertical': isVertical,
     })}
     >
