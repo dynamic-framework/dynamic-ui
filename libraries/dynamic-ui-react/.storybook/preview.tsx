@@ -55,6 +55,8 @@ export default {
               'List Item Movement',
               'Paginator',
               'Stepper',
+              'Stepper Desktop',
+              'Stepper Mobile',
               '*',
               'Skeleton',
               'Box File',

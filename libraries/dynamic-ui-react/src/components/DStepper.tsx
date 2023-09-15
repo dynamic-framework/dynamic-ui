@@ -1,10 +1,11 @@
-import classNames from 'classnames';
+import { BreakpointSize } from '@dynamic-framework/ui/dist/types/utils/component-interface';
+import DStepperDesktop from './DStepperDesktop';
+import DStepperMobile from './DStepperMobile';
 
-import { DIcon } from './proxies';
-
-export type Step = {
+type Step = {
   label: string;
   value: number;
+  description?: string;
 };
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
   currentStep: number;
   successIcon?: string;
   isVertical?: boolean;
+  breakpoint?: BreakpointSize;
 };
 
 export default function DStepper(
@@ -20,40 +22,25 @@ export default function DStepper(
     currentStep,
     successIcon = 'check',
     isVertical = false,
+    breakpoint = 'lg',
   } : Props,
 ) {
   return (
-    <div className={classNames({
-      'd-stepper': true,
-      'is-vertical': isVertical,
-    })}
-    >
-      {options.map(({ label, value }) => (
-        <div
-          className="d-step"
-          key={label}
-        >
-          <div className="d-step-value">
-            <div
-              className={classNames({
-                'd-step-icon-container': true,
-                'd-step-check': value < currentStep,
-                'd-step-current': value === currentStep,
-              })}
-            >
-              {value < currentStep
-                ? (
-                  <DIcon
-                    icon={successIcon}
-                    innerClass="d-step-icon"
-                  />
-                )
-                : value}
-            </div>
-          </div>
-          <div className="d-step-label">{label}</div>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className={`d-block d-${breakpoint}-none`}>
+        <DStepperMobile
+          options={options}
+          currentStep={currentStep}
+        />
+      </div>
+      <div className={`d-none d-${breakpoint}-block`}>
+        <DStepperDesktop
+          options={options}
+          currentStep={currentStep}
+          successIcon={successIcon}
+          isVertical={isVertical}
+        />
+      </div>
+    </>
   );
 }
