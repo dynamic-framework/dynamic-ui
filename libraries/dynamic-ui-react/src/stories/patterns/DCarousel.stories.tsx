@@ -1,6 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { SplideProps } from '@splidejs/react-splide';
-
 import DCarousel from '../../components/DCarousel';
 import DCarouselSlide from '../../components/DCarouselSlide';
 
@@ -17,29 +15,25 @@ const config: Meta<typeof DCarousel> = {
 export default config;
 type Story = StoryObj<typeof DCarousel>;
 
-const MCarouselExample = ({ ...props }: SplideProps) => (
-  <DCarousel
-    {...props}
-  >
-    {[1, 2, 3, 4, 5].map((el) => (
-      <DCarouselSlide key={el}>
-        <div className="d-flex flex-column bg-light border p-3 rounded text-center">
-          <h5>{`Slide ${el}`}</h5>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, cumque?
-            Fugiat illum repellat nemo laboriosam voluptatum, temporibus eius facilis
-            expedita incidunt itaque odio non necessitatibus dolore molestias,
-            harum dicta a!
-          </p>
-        </div>
-      </DCarouselSlide>
-    ))}
-  </DCarousel>
-);
-
 export const Default: Story = {
   render: (args) => (
-    <MCarouselExample {...args} />
+    <DCarousel
+      {...args}
+    >
+      {[1, 2, 3, 4, 5].map((el) => (
+        <DCarouselSlide key={el}>
+          <div className="d-flex flex-column bg-light border p-3 rounded text-center">
+            <h5>{`Slide ${el}`}</h5>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, cumque?
+              Fugiat illum repellat nemo laboriosam voluptatum, temporibus eius facilis
+              expedita incidunt itaque odio non necessitatibus dolore molestias,
+              harum dicta a!
+            </p>
+          </div>
+        </DCarouselSlide>
+      ))}
+    </DCarousel>
   ),
   args: {
     options: {
@@ -54,7 +48,23 @@ export const Default: Story = {
 
 export const TwoPerPage: Story = {
   render: (args) => (
-    <MCarouselExample {...args} />
+    <DCarousel
+      {...args}
+    >
+      {[1, 2, 3, 4, 5].map((el) => (
+        <DCarouselSlide key={el}>
+          <div className="d-flex flex-column bg-light border p-3 rounded text-center">
+            <h5>{`Slide ${el}`}</h5>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, cumque?
+              Fugiat illum repellat nemo laboriosam voluptatum, temporibus eius facilis
+              expedita incidunt itaque odio non necessitatibus dolore molestias,
+              harum dicta a!
+            </p>
+          </div>
+        </DCarouselSlide>
+      ))}
+    </DCarousel>
   ),
   args: {
     options: {
@@ -72,7 +82,23 @@ export const TwoPerPage: Story = {
 
 export const WithBreakpoints: Story = {
   render: (args) => (
-    <MCarouselExample {...args} />
+    <DCarousel
+      {...args}
+    >
+      {[1, 2, 3, 4, 5].map((el) => (
+        <DCarouselSlide key={el}>
+          <div className="d-flex flex-column bg-light border p-3 rounded text-center">
+            <h5>{`Slide ${el}`}</h5>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, cumque?
+              Fugiat illum repellat nemo laboriosam voluptatum, temporibus eius facilis
+              expedita incidunt itaque odio non necessitatibus dolore molestias,
+              harum dicta a!
+            </p>
+          </div>
+        </DCarouselSlide>
+      ))}
+    </DCarousel>
   ),
   args: {
     options: {
@@ -102,7 +128,23 @@ export const WithBreakpoints: Story = {
 
 export const AutoplayAndLoop: Story = {
   render: (args) => (
-    <MCarouselExample {...args} />
+    <DCarousel
+      {...args}
+    >
+      {[1, 2, 3, 4, 5].map((el) => (
+        <DCarouselSlide key={el}>
+          <div className="d-flex flex-column bg-light border p-3 rounded text-center">
+            <h5>{`Slide ${el}`}</h5>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, cumque?
+              Fugiat illum repellat nemo laboriosam voluptatum, temporibus eius facilis
+              expedita incidunt itaque odio non necessitatibus dolore molestias,
+              harum dicta a!
+            </p>
+          </div>
+        </DCarouselSlide>
+      ))}
+    </DCarousel>
   ),
   args: {
     options: {

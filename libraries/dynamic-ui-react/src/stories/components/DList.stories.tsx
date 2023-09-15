@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ComponentProps } from 'react';
 
 import { DList, DListItem } from '../../components';
 
@@ -34,28 +33,33 @@ const config: Meta<typeof DList> = {
 export default config;
 type Story = StoryObj<typeof DList>;
 
-const MListExample = (args: ComponentProps<typeof DList>) => (
-  <DList {...args}>
-    {[1, 2, 3].map((item) => (
-      <DListItem
-        key={item}
-        className="py-2 px-4"
-      >
-        Lorem ipsum dolor sit amet consectetur.
-      </DListItem>
-    ))}
-  </DList>
-);
-
 export const Default: Story = {
   render: (args) => (
-    <MListExample {...args} />
+    <DList {...args}>
+      {[1, 2, 3].map((item) => (
+        <DListItem
+          key={item}
+          className="py-2 px-4"
+        >
+          Lorem ipsum dolor sit amet consectetur.
+        </DListItem>
+      ))}
+    </DList>
   ),
 };
 
 export const Flush: Story = {
   render: (args) => (
-    <MListExample {...args} />
+    <DList {...args}>
+      {[1, 2, 3].map((item) => (
+        <DListItem
+          key={item}
+          className="py-2 px-4"
+        >
+          Lorem ipsum dolor sit amet consectetur.
+        </DListItem>
+      ))}
+    </DList>
   ),
   args: {
     isFlush: true,
@@ -64,7 +68,16 @@ export const Flush: Story = {
 
 export const Numbered: Story = {
   render: (args) => (
-    <MListExample {...args} />
+    <DList {...args}>
+      {[1, 2, 3].map((item) => (
+        <DListItem
+          key={item}
+          className="py-2 px-4"
+        >
+          Lorem ipsum dolor sit amet consectetur.
+        </DListItem>
+      ))}
+    </DList>
   ),
   args: {
     isNumbered: true,
@@ -73,7 +86,16 @@ export const Numbered: Story = {
 
 export const Horizontal: Story = {
   render: (args) => (
-    <MListExample {...args} />
+    <DList {...args}>
+      {[1, 2, 3].map((item) => (
+        <DListItem
+          key={item}
+          className="py-2 px-4"
+        >
+          Lorem ipsum dolor sit amet consectetur.
+        </DListItem>
+      ))}
+    </DList>
   ),
   args: {
     isHorizontal: true,
@@ -89,7 +111,16 @@ export const HorizontalWithBreakpoint: Story = {
     ),
   ],
   render: (args) => (
-    <MListExample {...args} />
+    <DList {...args}>
+      {[1, 2, 3].map((item) => (
+        <DListItem
+          key={item}
+          className="py-2 px-4"
+        >
+          Lorem ipsum dolor sit amet consectetur.
+        </DListItem>
+      ))}
+    </DList>
   ),
   args: {
     isHorizontal: true,
