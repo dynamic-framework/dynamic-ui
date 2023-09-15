@@ -11,7 +11,7 @@ $modal-dialog-margin-y-sm-up: 1.75rem !default;
 $modal-title-line-height: $line-height-base !default;
 
 $modal-content-color: null !default;
-$modal-content-bg: $white !default;
+$modal-content-bg: var(--#{$prefix}white) !default;
 $modal-content-border-color: transparent !default;
 $modal-content-border-width: $border-width !default;
 $modal-content-border-radius: $border-radius !default;
@@ -23,7 +23,7 @@ $modal-content-box-shadow-sm-up: $box-shadow-sm !default;
 $modal-body-padding: 0 !default;
 // end custom
 
-$modal-backdrop-bg: $black !default;
+$modal-backdrop-bg: var(--#{$prefix}black) !default;
 $modal-backdrop-opacity: .3 !default;
 
 $modal-header-border-color: transparent !default;

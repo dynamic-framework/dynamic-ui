@@ -305,6 +305,20 @@ $cyans: (
 ) !default;
 // fusv-enable
 
+// custom
+// theme <- colors mapping.
+$theme-colors-mapping: (
+  "primary": "red",
+  "secondary": "indigo",
+  "success": "green",
+  "info": "blue",
+  "warning": "yellow",
+  "danger": "orange",
+  "light": "gray-100",
+  "dark": "gray-900"
+) !default;
+// end custom
+
 // scss-docs-start theme-color-variables
 $primary: $red !default;
 $secondary: $indigo !default;
@@ -338,36 +352,36 @@ $state-colors: (
 ) !default;
 
 // scss-docs-start theme-text-variables
-$primary-text-emphasis: shade-color($primary, 60%) !default;
-$secondary-text-emphasis: shade-color($secondary, 60%) !default;
-$success-text-emphasis: shade-color($success, 60%) !default;
-$info-text-emphasis: shade-color($info, 60%) !default;
-$warning-text-emphasis: shade-color($warning, 60%) !default;
-$danger-text-emphasis: shade-color($danger, 60%) !default;
-$light-text-emphasis: $gray-700 !default;
-$dark-text-emphasis: $gray-700 !default;
+$primary-text-emphasis: var(--#{$prefix}primary-600) !default;
+$secondary-text-emphasis: var(--#{$prefix}secondary-600) !default;
+$success-text-emphasis: var(--#{$prefix}success-600) !default;
+$info-text-emphasis: var(--#{$prefix}info-600) !default;
+$warning-text-emphasis: var(--#{$prefix}warning-600) !default;
+$danger-text-emphasis: var(--#{$prefix}danger-600) !default;
+$light-text-emphasis: var(--#{$prefix}gray-600) !default;
+$dark-text-emphasis: var(--#{$prefix}gray-600) !default;
 // scss-docs-end theme-text-variables
 
 // scss-docs-start theme-bg-subtle-variables
-$primary-bg-subtle: tint-color($primary, 80%) !default;
-$secondary-bg-subtle: tint-color($secondary, 80%) !default;
-$success-bg-subtle: tint-color($success, 80%) !default;
-$info-bg-subtle: tint-color($info, 80%) !default;
-$warning-bg-subtle: tint-color($warning, 80%) !default;
-$danger-bg-subtle: tint-color($danger, 80%) !default;
-$light-bg-subtle: mix($gray-100, $white) !default;
-$dark-bg-subtle: $gray-400 !default;
+$primary-bg-subtle: var(--#{$prefix}primary-100) !default;;
+$secondary-bg-subtle: var(--#{$prefix}secondary-100) !default;
+$success-bg-subtle: var(--#{$prefix}success-100) !default;
+$info-bg-subtle: var(--#{$prefix}info-100) !default;
+$warning-bg-subtle: var(--#{$prefix}warning-100) !default;
+$danger-bg-subtle: var(--#{$prefix}danger-100) !default;
+$light-bg-subtle: var(--#{$prefix}gray-100) !default;
+$dark-bg-subtle: var(--#{$prefix}gray-400) !default;
 // scss-docs-end theme-bg-subtle-variables
 
 // scss-docs-start theme-border-subtle-variables
-$primary-border-subtle: tint-color($primary, 60%) !default;
-$secondary-border-subtle: tint-color($secondary, 60%) !default;
-$success-border-subtle: tint-color($success, 60%) !default;
-$info-border-subtle: tint-color($info, 60%) !default;
-$warning-border-subtle: tint-color($warning, 60%) !default;
-$danger-border-subtle: tint-color($danger, 60%) !default;
-$light-border-subtle: $gray-200 !default;
-$dark-border-subtle: $gray-500 !default;
+$primary-border-subtle: var(--#{$prefix}primary-100) !default;
+$secondary-border-subtle: var(--#{$prefix}secondary-100) !default;
+$success-border-subtle: var(--#{$prefix}success-100) !default;
+$info-border-subtle: var(--#{$prefix}info-100) !default;
+$warning-border-subtle: var(--#{$prefix}warning-100) !default;
+$danger-border-subtle: var(--#{$prefix}danger-100) !default;
+$light-border-subtle: var(--#{$prefix}gray-100) !default;
+$dark-border-subtle: var(--#{$prefix}gray-400) !default;
 // scss-docs-end theme-border-subtle-variables
 
 $primary-100: $red-100 !default;
@@ -484,5 +498,18 @@ $theme-colors-palletes: (
   "danger-600": $danger-600,
   "danger-700": $danger-700,
   "danger-800": $danger-800,
-  "danger-900": $danger-900
+  "danger-900": $danger-900,
+) !default;
+
+$palette-grays: map-prev-key($grays, "gray") !default;
+
+$all-colors: map-merge-multiple(
+  $colors,
+  $theme-colors,
+  $palette-grays,
+  $theme-colors-palletes,
+  (
+    "black": $black,
+    "white": $white,
+  )
 ) !default;

@@ -6,7 +6,7 @@
   background-color: var(--#{$prefix}badge-bg);
 
   @each $theme, $value in $theme-colors {
-    $color: color-contrast($value);
+    $color: color-contrast-var($value);
     &.badge-#{$theme} {
       --#{$prefix}badge-color: #{$color};
       --#{$prefix}badge-bg: var(--#{$prefix}#{$theme});

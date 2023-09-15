@@ -1,0 +1,69 @@
+.d-stepper {
+  /* Container */
+  --#{$prefix}step-container-gap: var(--#{$prefix}ref-spacer-3);
+
+  /* Outter circle */
+  --#{$prefix}step-progress-outter-size: 62px;
+  --#{$prefix}step-progress-outter-z-index: 1;
+  --#{$prefix}step-progress-outter-fill-background-color: var(--#{$prefix}secondary-500);
+  --#{$prefix}step-progress-outter-background-color: var(--#{$prefix}gray-300);
+
+  /* Inner circle */
+  --#{$prefix}step-progress-inner-size: 50px;
+  --#{$prefix}step-progress-inner-z-index: 2;
+  --#{$prefix}step-progress-inner-background-color: var(--#{$prefix}white);
+
+  /* Current step */
+  --#{$prefix}step-current-step-z-index: 3;
+  --#{$prefix}step-current-step-font-weight: var(--#{$prefix}ref-fw-bold);
+  --#{$prefix}step-current-step-color: var(--#{$prefix}gray-700);
+
+  /* Info circle */
+  --#{$prefix}step-info-max-width: 12rem;
+  --#{$prefix}step-info-label-font-size: var(--#{$prefix}ref-fs-6);
+  --#{$prefix}step-info-description-font-size: var(--#{$prefix}ref-fs-small);
+  --#{$prefix}step-info-description-color: var(--#{$prefix}gray-500);
+
+
+  display: flex;
+  gap: var(--#{$prefix}step-container-gap);
+  align-items: center;
+  justify-content: center;
+
+  .d-step-bar {
+    position: relative;
+    z-index: var(--#{$prefix}step-progress-outter-z-index);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--#{$prefix}step-progress-outter-size);
+    height: var(--#{$prefix}step-progress-outter-size);
+    border-radius: var(--#{$prefix}step-progress-outter-size);
+  }
+  .d-step-bar::after {
+    position: absolute;
+    z-index: var(--#{$prefix}step-progress-inner-z-index);
+    width: var(--#{$prefix}step-progress-inner-size);
+    height: var(--#{$prefix}step-progress-inner-size);
+    content: "";
+    background-color: var(--#{$prefix}step-progress-inner-background-color);
+    border-radius: var(--#{$prefix}step-progress-inner-size);
+  }
+  .d-step-number {
+    z-index: var(--#{$prefix}step-current-step-z-index);
+    font-weight: var(--#{$prefix}step-current-step-font-weight);
+    color: var(--#{$prefix}step-current-step-color);
+  }
+  .d-step-info {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--#{$prefix}step-info-max-width);
+  }
+  .d-step-label {
+    font-size: var(--#{$prefix}step-info-label-font-size);
+  }
+  .d-step-description {
+    font-size: var(--#{$prefix}step-info-description-font-size);
+    color: var(--#{$prefix}step-info-description-color);
+  }
+}

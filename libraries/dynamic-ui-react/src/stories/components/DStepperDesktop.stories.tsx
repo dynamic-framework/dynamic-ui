@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DStepper } from '../../components';
+import { DStepperDesktop } from '../../components';
 import { ICONS } from '../constants';
 
-const config: Meta<typeof DStepper> = {
-  title: 'Design System/Components/Stepper',
-  component: DStepper,
+const config: Meta<typeof DStepperDesktop> = {
+  title: 'Design System/Components/Stepper Desktop',
+  component: DStepperDesktop,
   argTypes: {
     currentStep: {
       control: 'number',
@@ -26,17 +26,11 @@ const config: Meta<typeof DStepper> = {
       type: 'boolean',
       description: 'Display vertical stepper',
     },
-    breakpoint: {
-      control: {
-        type: 'radio',
-      },
-      options: ['sm', 'md', 'lg', 'xl', 'xxl'],
-    },
   },
 };
 
 export default config;
-type Story = StoryObj<typeof DStepper>;
+type Story = StoryObj<typeof DStepperDesktop>;
 
 export const Default: Story = {
   decorators: [
@@ -50,7 +44,7 @@ export const Default: Story = {
     ),
   ],
   render: (args) => (
-    <DStepper {...args} />
+    <DStepperDesktop {...args} />
   ),
   args: {
     currentStep: 1,
@@ -74,7 +68,7 @@ export const Vertical: Story = {
     ),
   ],
   render: (args) => (
-    <DStepper {...args} />
+    <DStepperDesktop {...args} />
   ),
   args: {
     currentStep: 1,
