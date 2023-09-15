@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.4.0...@dynamic-framework/ui-react@1.5.0) (2023-09-07)
+
+
+### Features
+
+* change sp to small and text-gray to text-gray-500 ([000b16f](https://github.com/dynamic-framework/dynamic-ui/commit/000b16f17b448059397bb663a79a5de28fc6e49c))
+
+
+### Bug Fixes
+
+* adjust d-modal style and remove display:block ([2e56f46](https://github.com/dynamic-framework/dynamic-ui/commit/2e56f46e2fe392a4b5f061ab1c2f8ec16eb4a4ac))
+
+
+
 ## [1.4.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.3.1...@dynamic-framework/ui-react@1.4.0) (2023-09-01)
 
 
