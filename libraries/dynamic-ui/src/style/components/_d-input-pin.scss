@@ -74,10 +74,6 @@
   }
 
   &:focus-within {
-    label {
-      color: var(--#{$prefix}input-pin-label-focus-color);
-    }
-
     .form-control {
       border-color: var(--#{$prefix}input-pin-form-control-focus-border-color);
       box-shadow: var(--#{$prefix}input-pin-form-control-focus-box-shadow);
@@ -102,7 +98,7 @@
         color: $border-color;
       }
 
-      .input-pin-validation-icon {
+      .d-input-pin-validation-icon {
         .d-icon {
           --#{$prefix}icon-color: #{$tooltip-bg-color};
         }

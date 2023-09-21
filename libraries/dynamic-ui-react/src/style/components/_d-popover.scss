@@ -1,9 +1,12 @@
 .d-popover {
+  --#{$prefix}popover-min-width: max-content;
+  --#{$prefix}popover-z-index: 1;
   position: relative;
   width: 100%;
 
   .d-popover-content {
-    width: 100%;
+    z-index: var(--#{$prefix}popover-z-index);
+    min-width: var(--#{$prefix}popover-min-width);
 
     &:focus-visible {
       outline: 0;
