@@ -5,7 +5,7 @@ import { DInputSwitch } from './d-input-switch';
 
 it('should render base switch', async () => {
   const props = {
-    mId: 'switchTest',
+    id: 'switchTest',
     label: 'toggle',
   };
   const page = await newSpecPage({
@@ -17,6 +17,6 @@ it('should render base switch', async () => {
     ),
   });
   expect(page.root).toEqualHtml(`
-    <d-form-switch label="toggle" mid="switchTest"></d-form-switch>
+    <d-form-switch label="toggle" id="switchTest"></d-form-switch>
   `);
 });
