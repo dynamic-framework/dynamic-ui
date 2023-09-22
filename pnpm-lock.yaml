@@ -864,7 +864,7 @@ importers:
   templates/dynamic-retail-loan-application-template:
     dependencies:
       '@dynamic-framework/ui-react':
-        specifier: ^1.4.0
+        specifier: ^1.6.0
         version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
@@ -878,6 +878,9 @@ importers:
       '@testing-library/user-event':
         specifier: ^13.5.0
         version: 13.5.0(@testing-library/dom@9.3.3)
+      axios:
+        specifier: ^1.5.0
+        version: 1.5.0
       i18next:
         specifier: ~21.9.0
         version: 21.9.2
@@ -1109,7 +1112,7 @@ importers:
   templates/dynamic-retail-pay-debt-template:
     dependencies:
       '@dynamic-framework/ui-react':
-        specifier: ^1.4.0
+        specifier: ^1.6.0
         version: link:../../libraries/dynamic-ui-react
       '@reduxjs/toolkit':
         specifier: ^1.8.4
@@ -9239,6 +9242,16 @@ packages:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
+
+  /axios@1.5.0:
+    resolution: {integrity: sha512-D4DdjDo5CY50Qms0qGQTTw6Q44jl7zRwY7bthds06pUGfChBCTcQs+N743eFWGEd6pRTMd6A+I87aWyFV5wiZQ==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /axobject-query@2.2.0:
     resolution: {integrity: sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==}
