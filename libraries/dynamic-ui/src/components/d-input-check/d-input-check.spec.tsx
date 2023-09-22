@@ -27,14 +27,14 @@ it('should render base checkbox', async () => {
 
 it('should render base radio', async () => {
   const props = {
-    mId: 'radioTest',
+    id: 'radioTest',
     type: 'radio',
   };
   const page = await newSpecPage({
     components: [DInputCheck],
     template: () => (
       <d-input-check
-        innerId={props.mId}
+        innerId={props.id}
         type={props.type as FormCheckType}
       />
     ),

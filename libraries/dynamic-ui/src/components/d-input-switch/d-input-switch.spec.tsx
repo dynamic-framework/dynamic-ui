@@ -5,18 +5,26 @@ import { DInputSwitch } from './d-input-switch';
 
 it('should render base switch', async () => {
   const props = {
-    mId: 'switchTest',
+    id: 'switchTest',
     label: 'toggle',
   };
   const page = await newSpecPage({
     components: [DInputSwitch],
     template: () => (
-      <d-form-switch
+      <d-input-switch
+        innerId={props.id}
         {...props}
       />
     ),
   });
   expect(page.root).toEqualHtml(`
-    <d-form-switch label="toggle" mid="switchTest"></d-form-switch>
+    <d-input-switch id="switchTest">
+      <div class="form-check form-switch">
+        <input class="form-check-input" id="switchTest" role="switch" type="checkbox">
+        <label class="form-check-label" htmlfor="switchTest">
+          toggle
+        </label>
+      </div>
+    </d-input-switch>
   `);
 });

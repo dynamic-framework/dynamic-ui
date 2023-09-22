@@ -2,7 +2,7 @@ import { BreakpointSize } from '@dynamic-framework/ui/dist/types/utils/component
 import DStepperDesktop from './DStepperDesktop';
 import DStepperMobile from './DStepperMobile';
 
-type Step = {
+export type Step = {
   label: string;
   value: number;
   description?: string;

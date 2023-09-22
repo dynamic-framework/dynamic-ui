@@ -16,10 +16,27 @@
     "url": "https://github.com/dynamic-framework/dynamic-ui.git"
   },
   "author": {
-    "name": "Abraham José González Barboza",
-    "email": "agonzalez@modyo.com",
-    "url": "https://github.com/abe-modyo"
+    "name": "Dynamic Framework Team",
+    "email": "support@modyo.com",
+    "url": "https://dynamicframework.dev"
   },
+  "contributors": [
+    {
+      "name": "Abraham José González Barboza",
+      "email": "agonzalez@modyo.com",
+      "url": "https://github.com/abe-modyo"
+    },
+    {
+      "name": "Eduard Fabián Barón Gutiérrez",
+      "email": "ebaron@modyo.com",
+      "url": "https://github.com/efbarong"
+    },
+    {
+      "name": "Johann Felipe Rojas Pineda",
+      "email": "jrojas@modyo.com",
+      "url": "https://github.com/johannrp27"
+    }
+  ],
   "scripts": {
     "test": "jest",
     "build": "pnpm build:react && pnpm build:scss",
