@@ -6,7 +6,7 @@ const config: Meta<typeof DQuickActionSwitch> = {
   title: 'Design System/Components/Quick Action Switch',
   component: DQuickActionSwitch,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -32,8 +32,8 @@ const config: Meta<typeof DQuickActionSwitch> = {
       control: 'boolean',
       type: 'boolean',
     },
-    onEventClick: {
-      action: 'onEventClick',
+    onClick: {
+      action: 'onClick',
     },
   },
 };
@@ -53,7 +53,7 @@ export const Default: Story = {
     ),
   ],
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: false,
@@ -72,7 +72,7 @@ export const Checked: Story = {
     ),
   ],
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: true,
@@ -91,7 +91,7 @@ export const DefaultDisabled: Story = {
     ),
   ],
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: false,
@@ -111,7 +111,7 @@ export const CheckedDisabled: Story = {
     ),
   ],
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
     isChecked: true,
