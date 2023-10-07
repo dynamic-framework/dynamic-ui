@@ -7,7 +7,7 @@ const config: Meta<typeof DInputPin> = {
   title: 'Design System/Components/Input Pin',
   component: DInputPin,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -83,8 +83,8 @@ const config: Meta<typeof DInputPin> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    onEventChange: {
-      action: 'onEventChange',
+    onChange: {
+      action: 'onChange',
     },
   },
 };
@@ -94,7 +94,7 @@ type Story = StoryObj<typeof DInputPin>;
 
 export const Default: Story = {
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -109,7 +109,7 @@ export const Default: Story = {
 
 export const WithoutLabel: Story = {
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     characters: 4,
     type: 'text',
     isDisabled: false,
@@ -122,7 +122,7 @@ export const WithoutLabel: Story = {
 
 export const Error: Story = {
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -137,7 +137,7 @@ export const Error: Story = {
 
 export const Confirm: Story = {
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     label: 'Label',
     characters: 4,
     type: 'text',
@@ -152,7 +152,7 @@ export const Confirm: Story = {
 
 export const Disabled: Story = {
   args: {
-    innerId: 'componentId5',
+    id: 'componentId5',
     label: 'Label',
     characters: 4,
     type: 'text',
