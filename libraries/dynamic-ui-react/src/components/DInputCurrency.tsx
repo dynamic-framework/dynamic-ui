@@ -1,18 +1,17 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { ComponentProps } from 'react';
-import { DInputCurrencyBase } from './proxies';
+import DInputCurrencyBase from './DInputCurrencyBase';
 import { useLiquidContext } from '../contexts';
 
 type Props = {
-  onEventChange: (value: number) => void;
-  onEventBlur?: (value: number) => void;
-  onEventFocus?: (value: number) => void;
-} & Omit<ComponentProps<typeof DInputCurrencyBase>, 'currencyOptions' | 'onChange' | 'onEventChange'>;
+  onChange: (value: number | undefined) => void;
+  onBlur?: (value: number | undefined) => void;
+  onFocus?: (value: number | undefined) => void;
+} & Omit<ComponentProps<typeof DInputCurrencyBase>, 'currencyOptions' | 'onChange'>;
 
 export default function DInputCurrency({
-  onEventChange,
-  onEventBlur,
-  onEventFocus,
+  onChange,
+  onBlur,
+  onFocus,
   ...otherProps
 }: Props) {
   const { currency } = useLiquidContext();
@@ -20,12 +19,12 @@ export default function DInputCurrency({
   return (
     <DInputCurrencyBase
       currencyOptions={currency}
-      onEventChange={({ detail }: CustomEvent<number>) => onEventChange(detail)}
-      {...onEventBlur && {
-        onEventBlur: ({ detail }: CustomEvent<number>) => onEventBlur(detail),
+      onChange={(value) => onChange(value)}
+      {...onBlur && {
+        onBlur: (value) => onBlur(value),
       }}
-      {...onEventFocus && {
-        onEventFocus: ({ detail }: CustomEvent<number>) => onEventFocus(detail),
+      {...onFocus && {
+        onFocus: (value) => onFocus(value),
       }}
       {...otherProps}
     />

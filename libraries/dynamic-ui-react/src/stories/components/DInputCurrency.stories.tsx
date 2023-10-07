@@ -9,7 +9,7 @@ const config: Meta<typeof DInputCurrency> = {
   title: 'Design System/Components/Input Currency',
   component: DInputCurrency,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -104,8 +104,8 @@ const config: Meta<typeof DInputCurrency> = {
       control: 'number',
       type: 'number',
     },
-    onEventChange: {
-      action: 'onEventChange',
+    onChange: {
+      action: 'onChange',
     },
   },
 };
@@ -127,7 +127,7 @@ export const Default: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -151,7 +151,7 @@ export const Value: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -175,7 +175,7 @@ export const Error: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -200,7 +200,7 @@ export const Confirm: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -225,7 +225,7 @@ export const Disabled: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'componentId5',
+    id: 'componentId5',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -250,7 +250,7 @@ export const WithCurrencyCode: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'componentId6',
+    id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
