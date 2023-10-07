@@ -39,6 +39,7 @@
   ],
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "build": "pnpm build:react && pnpm build:scss",
     "build:react": "rimraf dist && tsc -p . && rollup -c rollup.config.js",
     "build:react:watch": "tsc -p . && rollup -c rollup.config.js",
@@ -65,6 +66,7 @@
     "@splidejs/splide": "^4.1.4",
     "axios": "^1.1.2",
     "classnames": "^2.3.2",
+    "currency.js": "^2.0.4",
     "date-fns": "^2.29.3",
     "i18next": "~21.9.0",
     "react-content-loader": "~6.2.0",
