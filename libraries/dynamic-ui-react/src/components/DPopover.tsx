@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useCallback, useEffect, useState } from 'react';
 import {
   useFloating,

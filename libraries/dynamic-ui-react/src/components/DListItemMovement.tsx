@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { ComponentProps, useMemo } from 'react';
 import classNames from 'classnames';
 import DListItem from './DListItem';
