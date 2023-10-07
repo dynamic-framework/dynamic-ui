@@ -1,7 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DButton, DOffcanvas } from '../../components';
-import { OffcanvasContextProvider, useOffcanvasContext as useOffcanvasContextHook } from '../../contexts';
+import {
+  DButton,
+  DOffcanvas,
+  DOffcanvasBody,
+  DOffcanvasFooter,
+  DOffcanvasHeader,
+} from '../../components';
+import {
+  OffcanvasContextProvider,
+  useOffcanvasContext as useOffcanvasContextHook,
+} from '../../contexts';
 import type { OffcanvasProps } from '../../contexts';
 
 const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
@@ -9,33 +18,32 @@ const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
     name="example"
     isStatic={false}
     isScrollable={false}
-    showCloseButton
     openFrom="end"
-    onEventClose={() => closeOffcanvas()}
   >
-    <div slot="header">
+    <DOffcanvasHeader>
       <h5 className="fw-bold">Advanced filters</h5>
-    </div>
-    <div slot="body">
+    </DOffcanvasHeader>
+    <DOffcanvasBody>
       <p>Offcanvas body</p>
-    </div>
-    <div slot="footer">
+
+    </DOffcanvasBody>
+    <DOffcanvasFooter>
       <DButton
         text="cancel"
         theme="secondary"
         variant="outline"
         className="d-grid"
         isPill
-        onEventClick={() => closeOffcanvas()}
+        onClick={() => closeOffcanvas()}
       />
       <DButton text="ok" className="d-grid" isPill />
-    </div>
+    </DOffcanvasFooter>
   </DOffcanvas>
 );
 
 const ExampleChildren = () => {
   const { openOffcanvas } = useOffcanvasContextHook();
-  return <DButton text="Open Offcanvas" onEventClick={() => openOffcanvas('example')} />;
+  return <DButton text="Open Offcanvas" onClick={() => openOffcanvas('example')} />;
 };
 
 const Example = () => (
