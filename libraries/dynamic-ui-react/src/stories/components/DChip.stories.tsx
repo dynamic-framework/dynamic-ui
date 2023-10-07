@@ -33,8 +33,8 @@ const config: Meta<typeof DChip> = {
       table: { defaultValue: { summary: false } },
       type: 'boolean',
     },
-    onEventClose: {
-      action: 'onEventClose',
+    onClose: {
+      action: 'onClose',
     },
   },
 };
