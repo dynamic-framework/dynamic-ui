@@ -6,7 +6,7 @@ const config: Meta<typeof DInputSwitch> = {
   title: 'Design System/Components/Input Switch',
   component: DInputSwitch,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -32,8 +32,8 @@ const config: Meta<typeof DInputSwitch> = {
       control: 'boolean',
       type: 'boolean',
     },
-    onEventChange: {
-      action: 'onEventChange',
+    onChange: {
+      action: 'onChange',
     },
   },
 };
@@ -43,7 +43,7 @@ type Story = StoryObj<typeof DInputSwitch>;
 
 export const WithoutLabel: Story = {
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     isChecked: false,
     isDisabled: false,
   },
@@ -51,7 +51,7 @@ export const WithoutLabel: Story = {
 
 export const Default: Story = {
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     label: 'Label',
     isChecked: false,
     isDisabled: false,
@@ -60,7 +60,7 @@ export const Default: Story = {
 
 export const Checked: Story = {
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     label: 'Label',
     isChecked: true,
     isDisabled: false,
@@ -69,7 +69,7 @@ export const Checked: Story = {
 
 export const Readonly: Story = {
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     label: 'Label',
     isChecked: false,
     isReadonly: true,
@@ -78,7 +78,7 @@ export const Readonly: Story = {
 
 export const Disabled: Story = {
   args: {
-    innerId: 'componentId5',
+    id: 'componentId5',
     label: 'Label',
     isChecked: false,
     isDisabled: true,
@@ -87,7 +87,7 @@ export const Disabled: Story = {
 
 export const CheckedDisabled: Story = {
   args: {
-    innerId: 'componentId6',
+    id: 'componentId6',
     label: 'Label',
     isChecked: true,
     isDisabled: true,
