@@ -1,5 +1,32 @@
-export * from './proxies';
 export * from './banking';
+
+export { default as DAlert } from './DAlert';
+export { default as DBadge } from './DBadge';
+export { default as DButton } from './DButton';
+export { default as DChip } from './DChip';
+export { default as DIcon } from './DIcon';
+export { default as DInput } from './DInput';
+export { default as DInputCheck } from './DInputCheck';
+export { default as DInputCounter } from './DInputCounter';
+export { default as DInputCurrencyBase } from './DInputCurrencyBase';
+export { default as DInputPassword } from './DInputPassword';
+export { default as DInputPin } from './DInputPin';
+export { default as DInputSearch } from './DInputSearch';
+export { default as DInputSelect } from './DInputSelect';
+export { default as DInputSwitch } from './DInputSwitch';
+export { default as DModal } from './DModal';
+export { default as DModalHeader } from './DModalHeader';
+export { default as DModalBody } from './DModalBody';
+export { default as DModalFooter } from './DModalFooter';
+export { default as DOffcanvas } from './DOffcanvas';
+export { default as DOffcanvasHeader } from './DOffcanvasHeader';
+export { default as DOffcanvasBody } from './DOffcanvasBody';
+export { default as DOffcanvasFooter } from './DOffcanvasFooter';
+export { default as DProgress } from './DProgress';
+export { default as DQuickActionButton } from './DQuickActionButton';
+export { default as DQuickActionCheck } from './DQuickActionCheck';
+export { default as DQuickActionSelect } from './DQuickActionSelect';
+export { default as DQuickActionSwitch } from './DQuickActionSwitch';
 
 export { default as DToastContainer } from './DToastContainer';
 export { default as DDatePicker } from './DDatePicker';
