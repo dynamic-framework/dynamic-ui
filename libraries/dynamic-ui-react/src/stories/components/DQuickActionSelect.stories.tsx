@@ -8,7 +8,7 @@ const config: Meta<typeof DQuickActionSelect> = {
   title: 'Design System/Components/Quick Action Select',
   component: DQuickActionSelect,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
     },
@@ -34,8 +34,8 @@ const config: Meta<typeof DQuickActionSelect> = {
       control: 'boolean',
       type: 'boolean',
     },
-    onEventChange: {
-      action: 'onEventChange',
+    onChange: {
+      action: 'onChange',
     },
   },
 };
@@ -55,7 +55,7 @@ export const Default: Story = {
     ),
   ],
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -73,15 +73,15 @@ export const Example: Story = {
       </div>
     ),
   ],
-  render: ({ innerId, ...args }: ComponentProps<typeof DQuickActionSelect>) => (
+  render: ({ id, ...args }: ComponentProps<typeof DQuickActionSelect>) => (
     <>
-      <DQuickActionSelect innerId={`${innerId}2`} {...args} />
-      <DQuickActionSelect innerId={`${innerId}3`} {...args} />
-      <DQuickActionSelect innerId={`${innerId}4`} {...args} />
+      <DQuickActionSelect id={`${id}2`} {...args} />
+      <DQuickActionSelect id={`${id}3`} {...args} />
+      <DQuickActionSelect id={`${id}4`} {...args} />
     </>
   ),
   args: {
-    innerId: 'componentId',
+    id: 'componentId',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -100,7 +100,7 @@ export const Selected: Story = {
     ),
   ],
   args: {
-    innerId: 'componentId5',
+    id: 'componentId5',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
