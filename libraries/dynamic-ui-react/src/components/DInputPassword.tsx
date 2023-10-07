@@ -1,0 +1,65 @@
+import { useState, ChangeEvent } from 'react';
+import { LabelIcon } from '../interfaces/component-interface';
+import DInput from './DInput';
+
+type Props = LabelIcon & {
+  id: string;
+  name?: string;
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  isDisabled?: boolean;
+  isReadOnly?: boolean;
+  isLoading?: boolean;
+  hint?: string;
+  isInvalid?: boolean;
+  isValid?: boolean;
+  onChange?: (value: string) => void;
+};
+
+export default function DInputPassword({
+  id,
+  name,
+  label = '',
+  placeholder = '',
+  value = '',
+  isDisabled = false,
+  isReadOnly = false,
+  isLoading = false,
+  hint,
+  isInvalid = false,
+  isValid = false,
+  onChange,
+  ...rest
+}: Props) {
+  const [visible, setVisible] = useState(false);
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e.target.value);
+  };
+
+  const visibilityHandler = () => {
+    setVisible(!visible);
+  };
+
+  return (
+    <DInput
+      id={id}
+      name={name}
+      label={label}
+      placeholder={placeholder}
+      value={value}
+      iconEnd={!visible ? 'eye-slash' : 'eye'}
+      type={!visible ? 'password' : 'text'}
+      isDisabled={isDisabled}
+      isReadOnly={isReadOnly}
+      isLoading={isLoading}
+      hint={hint}
+      isInvalid={isInvalid}
+      isValid={isValid}
+      onChange={changeHandler}
+      onIconEndClick={visibilityHandler}
+      {...rest}
+    />
+  );
+}
