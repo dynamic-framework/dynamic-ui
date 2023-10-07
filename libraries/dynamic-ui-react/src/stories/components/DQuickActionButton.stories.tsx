@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Meta, StoryObj } from '@storybook/react';
-import { PREFIX_BS } from '@dynamic-framework/ui';
+import { PREFIX_BS } from '../../interfaces/component-config';
 
 import { DQuickActionButton } from '../../components';
 import { THEMES_WITH_EMPTY, ICONS } from '../constants';
@@ -89,11 +91,11 @@ const config: Meta<typeof DQuickActionButton> = {
       description: 'Add circle around the representative icon',
       table: { defaultValue: { summary: false } },
     },
-    onEventClick: {
-      action: 'onEventClick',
+    onClick: {
+      action: 'onClick',
     },
-    onEventClickSecondary: {
-      action: 'onEventClickSecondary',
+    onClickSecondary: {
+      action: 'onClickSecondary',
     },
   },
 };
@@ -207,7 +209,7 @@ export const PersonList: Story = {
         [`--${PREFIX_BS}quick-action-button-component-border-right`]: 0,
         [`--${PREFIX_BS}quick-action-button-component-border-left`]: 0,
         [`--${PREFIX_BS}quick-action-button-component-border-bottom`]: 0,
-      }}
+      } as any}
     />
   ),
   args: {
