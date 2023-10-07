@@ -95,8 +95,8 @@ const config: Meta<typeof DButton> = {
       type: 'string',
       description: 'Change the state of the button',
     },
-    onEventClick: {
-      action: 'onEventClick',
+    onClick: {
+      action: 'onClick',
     },
   },
 };
