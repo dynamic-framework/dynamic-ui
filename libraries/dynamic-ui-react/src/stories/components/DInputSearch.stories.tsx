@@ -7,7 +7,7 @@ const config: Meta<typeof DInputSearch> = {
   title: 'Design System/Components/Input Search',
   component: DInputSearch,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -70,11 +70,11 @@ const config: Meta<typeof DInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    onEventClick: {
-      action: 'onEventClick',
+    onClick: {
+      action: 'onClick',
     },
-    onEventChange: {
-      action: 'onEventChange',
+    onChange: {
+      action: 'onChange',
     },
   },
 };
@@ -84,7 +84,7 @@ type Story = StoryObj<typeof DInputSearch>;
 
 export const Default: Story = {
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -94,7 +94,7 @@ export const Default: Story = {
 
 export const Value: Story = {
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -104,7 +104,7 @@ export const Value: Story = {
 
 export const Error: Story = {
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -115,7 +115,7 @@ export const Error: Story = {
 
 export const Confirm: Story = {
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -126,7 +126,7 @@ export const Confirm: Story = {
 
 export const Disabled: Story = {
   args: {
-    innerId: 'componentId5',
+    id: 'componentId5',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
