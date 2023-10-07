@@ -13,7 +13,7 @@ describe('DTabs', () => {
           { label: 'Tab 2', tab: 'tab2' },
           { label: 'Tab w/o Content', tab: 'empty' },
         ]}
-        onEventChange={() => {}}
+        onChange={() => {}}
       >
         <DTabContent tab="tab1">
           Tab content for Tab 1
