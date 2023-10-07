@@ -1,6 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DButton, DModal } from '../../components';
+import {
+  DButton,
+  DModal,
+  DModalBody,
+  DModalFooter,
+  DModalHeader,
+} from '../../components';
 
 const config: Meta<typeof DModal> = {
   title: 'Design System/Patterns/Modal',
@@ -36,15 +42,6 @@ const config: Meta<typeof DModal> = {
       type: 'string',
       options: ['sm', 'lg', 'xl'],
     },
-    showCloseButton: {
-      control: 'boolean',
-      type: 'boolean',
-    },
-    footerActionPlacement: {
-      control: 'radio',
-      type: 'string',
-      options: ['fill', 'start', 'end'],
-    },
   },
   parameters: {
     layout: 'fullscreen',
@@ -64,13 +61,13 @@ export const Default: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <div slot="header">
+      <DModalHeader showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </div>
-      <div slot="body">
+      </DModalHeader>
+      <DModalBody>
         <p className="py-3 px-5">Modal body</p>
-      </div>
-      <div slot="footer">
+      </DModalBody>
+      <DModalFooter>
         <DButton
           text="cancel"
           theme="secondary"
@@ -79,7 +76,7 @@ export const Default: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DModalFooter>
     </DModal>
   ),
   args: {
@@ -89,9 +86,7 @@ export const Default: Story = {
     isCentered: true,
     isFullScreen: false,
     modalSize: 'sm',
-    showCloseButton: true,
-    footerActionPlacement: 'fill',
-    innerClass: 'd-block',
+    className: 'd-block',
   },
 };
 
@@ -105,13 +100,13 @@ export const ActionsPlacementStart: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <div slot="header">
+      <DModalHeader>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </div>
-      <div slot="body">
+      </DModalHeader>
+      <DModalBody>
         <p className="py-3 px-5">Modal body</p>
-      </div>
-      <div slot="footer">
+      </DModalBody>
+      <DModalFooter actionPlacement="start">
         <DButton
           text="cancel"
           theme="secondary"
@@ -120,7 +115,7 @@ export const ActionsPlacementStart: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DModalFooter>
     </DModal>
   ),
   args: {
@@ -130,9 +125,7 @@ export const ActionsPlacementStart: Story = {
     isCentered: true,
     isFullScreen: false,
     modalSize: 'sm',
-    showCloseButton: true,
-    footerActionPlacement: 'start',
-    innerClass: 'd-block',
+    className: 'd-block',
   },
 };
 
@@ -146,13 +139,13 @@ export const ActionsPlacementEnd: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <div slot="header">
+      <DModalHeader>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </div>
-      <div slot="body">
+      </DModalHeader>
+      <DModalBody>
         <p className="py-3 px-5">Modal body</p>
-      </div>
-      <div slot="footer">
+      </DModalBody>
+      <DModalFooter actionPlacement="end">
         <DButton
           text="cancel"
           theme="secondary"
@@ -161,7 +154,7 @@ export const ActionsPlacementEnd: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DModalFooter>
     </DModal>
   ),
   args: {
@@ -171,9 +164,7 @@ export const ActionsPlacementEnd: Story = {
     isCentered: true,
     isFullScreen: false,
     modalSize: 'sm',
-    showCloseButton: true,
-    footerActionPlacement: 'end',
-    innerClass: 'd-block',
+    className: 'd-block',
   },
 };
 
@@ -187,10 +178,10 @@ export const WithoutHeader: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <div slot="body">
+      <DModalBody>
         <p className="py-3 px-5">Modal body</p>
-      </div>
-      <div slot="footer">
+      </DModalBody>
+      <DModalFooter>
         <DButton
           text="cancel"
           theme="secondary"
@@ -199,7 +190,7 @@ export const WithoutHeader: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DModalFooter>
     </DModal>
   ),
   args: {
@@ -209,9 +200,7 @@ export const WithoutHeader: Story = {
     isCentered: true,
     isFullScreen: false,
     modalSize: 'sm',
-    showCloseButton: true,
-    footerActionPlacement: 'fill',
-    innerClass: 'd-block',
+    className: 'd-block',
   },
 };
 
@@ -225,12 +214,12 @@ export const WithoutActions: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <div slot="header">
+      <DModalHeader>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </div>
-      <div slot="body">
+      </DModalHeader>
+      <DModalBody>
         <p className="py-3 px-5">Modal body</p>
-      </div>
+      </DModalBody>
     </DModal>
   ),
   args: {
@@ -240,9 +229,7 @@ export const WithoutActions: Story = {
     isCentered: true,
     isFullScreen: false,
     modalSize: 'sm',
-    showCloseButton: true,
-    footerActionPlacement: 'fill',
-    innerClass: 'd-block',
+    className: 'd-block',
   },
 };
 
@@ -256,9 +243,9 @@ export const OnlyBody: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <div slot="body">
+      <DModalBody>
         <p className="py-3 px-5">Modal body</p>
-      </div>
+      </DModalBody>
     </DModal>
   ),
   args: {
@@ -268,9 +255,7 @@ export const OnlyBody: Story = {
     isCentered: true,
     isFullScreen: false,
     modalSize: 'sm',
-    showCloseButton: true,
-    footerActionPlacement: 'fill',
-    innerClass: 'd-block',
+    className: 'd-block',
   },
 };
 
@@ -284,13 +269,13 @@ export const WithoutCancelX: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <div slot="header">
+      <DModalHeader>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </div>
-      <div slot="body">
+      </DModalHeader>
+      <DModalBody>
         <p className="py-3 px-5">Modal body</p>
-      </div>
-      <div slot="footer">
+      </DModalBody>
+      <DModalFooter>
         <DButton
           text="cancel"
           theme="secondary"
@@ -299,7 +284,7 @@ export const WithoutCancelX: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DModalFooter>
     </DModal>
   ),
   args: {
@@ -309,8 +294,6 @@ export const WithoutCancelX: Story = {
     isCentered: true,
     isFullScreen: false,
     modalSize: 'sm',
-    showCloseButton: false,
-    footerActionPlacement: 'fill',
-    innerClass: 'd-block',
+    className: 'd-block',
   },
 };

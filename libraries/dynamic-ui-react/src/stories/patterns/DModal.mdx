@@ -6,7 +6,7 @@ import {
   Story,
   Source,
 } from '@storybook/blocks';
-import { PREFIX_BS } from '@dynamic-framework/ui';
+import { PREFIX_BS } from '../../interfaces/component-config';
 
 import * as DModalStories from './DModal.stories';
 import * as useModalContextStories from "../hooks/useModalContext.stories";
@@ -76,7 +76,7 @@ import * as useModalContextStories from "../hooks/useModalContext.stories";
       variant="outline"
       className="d-grid"
       isPill
-      onEventClick={() => closeModal()}
+      onClick={() => closeModal()}
     />
     <DButton text="ok" className="d-grid" isPill />
   </div>
@@ -87,7 +87,7 @@ import * as useModalContextStories from "../hooks/useModalContext.stories";
 ### Modal Usage render of `App.tsx`
 <Source
   code={`
-<DButton text="Open Modal" onEventClick={() => openModal('example')} />
+<DButton text="Open Modal" onClick={() => openModal('example')} />
   `}
 />
 
