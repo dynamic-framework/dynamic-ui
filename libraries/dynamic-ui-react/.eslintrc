@@ -12,7 +12,9 @@
   "rules": {
     "react/require-default-props": "off",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off"
+
   },
   "overrides": [
     {
