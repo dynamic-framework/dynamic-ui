@@ -7,7 +7,7 @@ const config: Meta<typeof DInputCounter> = {
   title: 'Design System/Components/Input Counter',
   component: DInputCounter,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -94,11 +94,8 @@ const config: Meta<typeof DInputCounter> = {
       control: 'number',
       type: 'number',
     },
-    onEventChange: {
-      action: 'onEventChange',
-    },
-    onEventClick: {
-      action: 'onEventClick',
+    onChange: {
+      action: 'onChange',
     },
   },
 };
@@ -108,9 +105,8 @@ type Story = StoryObj<typeof DInputCounter>;
 
 export const Default: Story = {
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     label: 'Label',
-    placeholder: 'Placeholder',
     labelIcon: undefined,
     value: 1,
     minValue: 0,
@@ -120,9 +116,8 @@ export const Default: Story = {
 
 export const Error: Story = {
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     label: 'Label',
-    placeholder: 'Placeholder',
     labelIcon: undefined,
     value: 21,
     minValue: 0,
@@ -133,9 +128,8 @@ export const Error: Story = {
 
 export const Confirm: Story = {
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     label: 'Label',
-    placeholder: 'Placeholder',
     labelIcon: undefined,
     value: 2,
     minValue: 0,
@@ -146,9 +140,8 @@ export const Confirm: Story = {
 
 export const Disabled: Story = {
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     label: 'Label',
-    placeholder: 'Placeholder',
     labelIcon: undefined,
     value: 3,
     minValue: 0,
