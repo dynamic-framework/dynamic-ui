@@ -6,7 +6,7 @@ import {
   Story,
   Source,
 } from '@storybook/blocks';
-import { PREFIX_BS } from '@dynamic-framework/ui';
+import { PREFIX_BS } from '../../interfaces/component-config';
 
 import * as DOffcanvasStories from './DOffcanvas.stories';
 import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.stories";
@@ -72,7 +72,7 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
       variant="outline"
       className="d-grid"
       isPill
-      onEventClick={() => closeOffcanvas()}
+      onClick={() => closeOffcanvas()}
     />
     <DButton text="ok" className="d-grid" isPill />
   </div>
@@ -83,7 +83,7 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
 ### Offcanvas Usage render of `App.tsx`
 <Source
   code={`
-<DButton text="Open Offcanvas" onEventClick={() => openOffcanvas('example')} />
+<DButton text="Open Offcanvas" onClick={() => openOffcanvas('example')} />
   `}
 />
 

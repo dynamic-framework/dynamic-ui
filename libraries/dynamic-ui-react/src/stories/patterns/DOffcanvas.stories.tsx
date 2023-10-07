@@ -1,6 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DButton, DOffcanvas } from '../../components';
+import {
+  DButton,
+  DOffcanvas,
+  DOffcanvasBody,
+  DOffcanvasFooter,
+  DOffcanvasHeader,
+} from '../../components';
 
 const config: Meta<typeof DOffcanvas> = {
   title: 'Design System/Patterns/Offcanvas',
@@ -15,10 +21,6 @@ const config: Meta<typeof DOffcanvas> = {
       type: 'boolean',
     },
     isScrollable: {
-      control: 'boolean',
-      type: 'boolean',
-    },
-    showCloseButton: {
       control: 'boolean',
       type: 'boolean',
     },
@@ -41,13 +43,13 @@ export const Default: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <div slot="header">
+      <DOffcanvasHeader showCloseButton>
         <h5 className="fw-bold">Advanced filters</h5>
-      </div>
-      <div slot="body">
+      </DOffcanvasHeader>
+      <DOffcanvasBody>
         <p>Offcanvas body</p>
-      </div>
-      <div slot="footer">
+      </DOffcanvasBody>
+      <DOffcanvasFooter>
         <DButton
           text="cancel"
           theme="secondary"
@@ -56,14 +58,13 @@ export const Default: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DOffcanvasFooter>
     </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
     isScrollable: false,
-    showCloseButton: true,
     openFrom: 'end',
   },
 };
@@ -78,13 +79,13 @@ export const ActionsPlacementStart: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <div slot="header">
+      <DOffcanvasHeader>
         <h5 className="fw-bold">Advanced filters</h5>
-      </div>
-      <div slot="body">
+      </DOffcanvasHeader>
+      <DOffcanvasBody>
         <p>Offcanvas body</p>
-      </div>
-      <div slot="footer">
+      </DOffcanvasBody>
+      <DOffcanvasFooter footerActionPlacement="start">
         <DButton
           text="cancel"
           theme="secondary"
@@ -93,16 +94,14 @@ export const ActionsPlacementStart: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DOffcanvasFooter>
     </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
     isScrollable: false,
-    showCloseButton: true,
     openFrom: 'end',
-    footerActionPlacement: 'start',
   },
 };
 
@@ -116,13 +115,13 @@ export const ActionsPlacementEnd: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <div slot="header">
+      <DOffcanvasHeader>
         <h5 className="fw-bold">Advanced filters</h5>
-      </div>
-      <div slot="body">
+      </DOffcanvasHeader>
+      <DOffcanvasBody>
         <p>Offcanvas body</p>
-      </div>
-      <div slot="footer">
+      </DOffcanvasBody>
+      <DOffcanvasFooter footerActionPlacement="end">
         <DButton
           text="cancel"
           theme="secondary"
@@ -131,16 +130,14 @@ export const ActionsPlacementEnd: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DOffcanvasFooter>
     </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
     isScrollable: false,
-    showCloseButton: true,
     openFrom: 'end',
-    footerActionPlacement: 'end',
   },
 };
 
@@ -154,10 +151,10 @@ export const WithoutHeader: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <div slot="body">
+      <DOffcanvasBody>
         <p>Offcanvas body</p>
-      </div>
-      <div slot="footer">
+      </DOffcanvasBody>
+      <DOffcanvasFooter>
         <DButton
           text="cancel"
           theme="secondary"
@@ -166,14 +163,13 @@ export const WithoutHeader: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DOffcanvasFooter>
     </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
     isScrollable: false,
-    showCloseButton: true,
     openFrom: 'end',
   },
 };
@@ -188,21 +184,19 @@ export const WithoutActions: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <div slot="header">
+      <DOffcanvasHeader>
         <h5 className="fw-bold">Advanced filters</h5>
-      </div>
-      <div slot="body">
+      </DOffcanvasHeader>
+      <DOffcanvasBody>
         <p>Offcanvas body</p>
-      </div>
+      </DOffcanvasBody>
     </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
     isScrollable: false,
-    showCloseButton: true,
     openFrom: 'end',
-    footerActionPlacement: 'end',
   },
 };
 
@@ -216,18 +210,16 @@ export const OnlyBody: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <div slot="body">
+      <DOffcanvasBody>
         <p>Offcanvas body</p>
-      </div>
+      </DOffcanvasBody>
     </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
     isScrollable: false,
-    showCloseButton: true,
     openFrom: 'end',
-    footerActionPlacement: 'end',
   },
 };
 
@@ -241,13 +233,13 @@ export const WithoutCancelX: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <div slot="header">
+      <DOffcanvasHeader>
         <h5 className="fw-bold">Advanced filters</h5>
-      </div>
-      <div slot="body">
+      </DOffcanvasHeader>
+      <DOffcanvasBody>
         <p>Offcanvas body</p>
-      </div>
-      <div slot="footer">
+      </DOffcanvasBody>
+      <DOffcanvasFooter>
         <DButton
           text="cancel"
           theme="secondary"
@@ -256,15 +248,13 @@ export const WithoutCancelX: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </div>
+      </DOffcanvasFooter>
     </DOffcanvas>
   ),
   args: {
     name: 'exampleOffcanvas',
     isStatic: false,
     isScrollable: false,
-    showCloseButton: false,
     openFrom: 'end',
-    footerActionPlacement: 'end',
   },
 };
