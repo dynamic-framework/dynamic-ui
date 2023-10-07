@@ -30,8 +30,8 @@ const config: Meta<typeof DAlert> = {
       type: 'boolean',
       description: 'Show alert icon',
     },
-    onEventClose: {
-      action: 'onEventClose',
+    onClose: {
+      action: 'onClose',
     },
   },
 };
