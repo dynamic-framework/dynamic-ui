@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { DIcon } from './proxies';
+import DIcon from './DIcon';
 
 type Step = {
   label: string;
@@ -49,7 +49,7 @@ export default function DStepper(
                 ? (
                   <DIcon
                     icon={successIcon}
-                    innerClass="d-step-icon"
+                    className="d-step-icon"
                   />
                 )
                 : value}

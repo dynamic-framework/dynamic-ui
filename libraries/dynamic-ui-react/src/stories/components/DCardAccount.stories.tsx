@@ -36,7 +36,7 @@ const config: Meta<typeof DCardAccount> = {
       control: 'text',
       type: 'string',
     },
-    onEventClick: {
+    onClick: {
       action: 'onClick',
     },
     className: {

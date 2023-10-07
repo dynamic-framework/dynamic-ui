@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import DatePicker, {
   ReactDatePickerCustomHeaderProps,
   ReactDatePickerProps,
@@ -11,12 +10,13 @@ import {
   useCallback,
 } from 'react';
 
-import { ButtonVariant, ComponentSize } from '@dynamic-framework/ui';
 import { useLiquidContext } from '../contexts';
 
 import DDatePickerTime from './DDatePickerTime';
 import DDatePickerInput from './DDatePickerInput';
 import DDatePickerHeader from './DDatePickerHeader';
+import { ComponentSize } from '../interfaces/component-interface';
+import { ButtonVariant } from '../interfaces/DButtonInterface';
 
 type InputPickerProps = {
   value?: string;
@@ -25,12 +25,12 @@ type InputPickerProps = {
 
 type TimeInputPickerProps = {
   value?: string | number ;
-  onChange?: ((value: string) => void) & FormEventHandler<HTMLDInputElement>
+  onChange?: ((value: string) => void) & FormEventHandler<HTMLInputElement>
 };
 
 type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
   date: string;
-  onEventChangeDate: (value: Date | [Date | null, Date | null] | null) => void;
+  onChangeDate: (value: Date | [Date | null, Date | null] | null) => void;
   selectsRange?: boolean;
   withMonthSelector?: boolean;
   inputLabel?: string;
@@ -47,7 +47,7 @@ type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
 
 export default function DDatePicker(
   {
-    onEventChangeDate,
+    onChangeDate,
     date,
     selectsRange,
     withMonthSelector,
@@ -72,20 +72,20 @@ export default function DDatePicker(
   const InputPicker = forwardRef(({ value, onClick }: InputPickerProps, ref) => (
     <DDatePickerInput
       label={inputLabel}
-      innerId={inputId}
+      id={inputId}
       iconEnd={inputIcon}
       value={value}
-      onEventClick={onClick}
+      onClick={onClick}
       ref={ref}
     />
   ));
 
   const TimeInputPicker = useCallback(({ value, onChange }: TimeInputPickerProps) => (
     <DDatePickerTime
-      onEventChange={onChange}
+      onChange={onChange}
       value={value}
       label={timeLabel}
-      innerId={timeId}
+      id={timeId}
     />
   ), [timeLabel, timeId]);
 
@@ -112,7 +112,7 @@ export default function DDatePicker(
       selected={dateJS(date)}
       calendarClassName="m-date-picker"
       onChange={(value) => {
-        onEventChangeDate(value);
+        onChangeDate(value);
       }}
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
       customInput={<InputPicker />}

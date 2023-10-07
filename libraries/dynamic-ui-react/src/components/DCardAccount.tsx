@@ -1,8 +1,8 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import classNames from 'classnames';
-import { DButton, DIcon } from './proxies';
 import DCard from './DCard';
 import DCardBody from './DCardBody';
+import DIcon from './DIcon';
+import DButton from './DButton';
 
 type Props = {
   className?: string;
@@ -12,7 +12,7 @@ type Props = {
   number: string;
   balance: string;
   balanceText: string;
-  onEventClick: () => void;
+  onClick: () => void;
   actionText: string;
 };
 export default function DCardAccount({
@@ -23,7 +23,7 @@ export default function DCardAccount({
   number,
   balance,
   balanceText,
-  onEventClick,
+  onClick,
   actionText,
 }: Props) {
   return (
@@ -64,7 +64,7 @@ export default function DCardAccount({
             size="sm"
             theme="secondary"
             iconEnd="chevron-right"
-            onEventClick={onEventClick}
+            onClick={onClick}
           />
         </div>
       </DCardBody>

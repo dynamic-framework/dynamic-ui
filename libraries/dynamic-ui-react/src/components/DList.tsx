@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import { PropsWithChildren } from 'react';
+import { BreakpointSize } from '../interfaces/component-interface';
 
 type Props = PropsWithChildren<{
   className?: string;
   isFlush?: boolean;
   isNumbered?: boolean;
   isHorizontal?: boolean;
-  horizontalBreakpoint?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  horizontalBreakpoint?: BreakpointSize;
 }>;
 
 export default function DList({

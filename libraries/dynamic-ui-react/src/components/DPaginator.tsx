@@ -4,7 +4,7 @@ import ResponsivePagination, { ResponsivePaginationProps } from 'react-responsiv
 export type Props = {
   className?: ResponsivePaginationProps['extraClassName'];
   page: ResponsivePaginationProps['current'];
-  onEventPageChange: ResponsivePaginationProps['onPageChange'];
+  onPageChange: ResponsivePaginationProps['onPageChange'];
   total: ResponsivePaginationProps['total'];
   previousLabel?: ResponsivePaginationProps['previousLabel'];
   nextLabel?: ResponsivePaginationProps['nextLabel'];
@@ -17,7 +17,7 @@ export default function DPaginator({
   previousLabel,
   showArrows = true,
   page,
-  onEventPageChange,
+  onPageChange,
   ...props
 }: Props) {
   return (
@@ -35,7 +35,7 @@ export default function DPaginator({
       previousLabel={previousLabel}
       renderNav={showArrows}
       current={page}
-      onPageChange={onEventPageChange}
+      onPageChange={onPageChange}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />

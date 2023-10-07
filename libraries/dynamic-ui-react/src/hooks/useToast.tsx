@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { ToastPosition, Slide, toast as reactToast } from 'react-toastify';
 
-import type { AlertType } from '@dynamic-framework/ui';
-
 import { DAlert } from '../components';
+import { AlertType } from '../interfaces/DAlertInterface';
 
 export type ToastConfig = {
   type?: AlertType;
@@ -23,7 +22,8 @@ export default function useToast() {
       <DAlert
         type={type}
         showClose={showClose}
-        onEventClose={closeToast}
+        onClose={closeToast}
+        id="alertID"
       >
         {message}
       </DAlert>

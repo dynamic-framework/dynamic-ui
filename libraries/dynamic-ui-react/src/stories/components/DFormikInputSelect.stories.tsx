@@ -38,7 +38,7 @@ export const Default: Story = {
     <DFormikInputSelect {...args} />
   ),
   args: {
-    innerId: 'field1',
+    id: 'field1',
     label: 'Label',
     labelIcon: undefined,
     name: 'field',
@@ -67,7 +67,7 @@ export const Empty: Story = {
     <DFormikInputSelect {...args} />
   ),
   args: {
-    innerId: 'field2',
+    id: 'field2',
     label: 'Label',
     labelIcon: undefined,
     name: 'field',

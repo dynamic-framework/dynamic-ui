@@ -15,11 +15,11 @@ import {
   FloatingPortal,
   FloatingArrow,
 } from '@floating-ui/react';
-import { PREFIX_BS } from '@dynamic-framework/ui';
 
 import type { PropsWithChildren, ReactNode } from 'react';
 import type { Placement } from '@floating-ui/react';
-import type { ComponentSize } from '@dynamic-framework/ui';
+import { PREFIX_BS } from '../interfaces/component-config';
+import { ComponentSize } from '../interfaces/component-interface';
 
 export type Props = PropsWithChildren<{
   classNameContainer?: string;

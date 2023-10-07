@@ -1,18 +1,17 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { DateTime } from 'luxon';
 
 import { useLiquidContext } from '../contexts';
-import { DButton } from './proxies';
+import DButton from './DButton';
 
 type CalendarProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' > & {
   date: string;
-  onEventChangeDate: (value: Date | null) => void;
+  onChangeDate: (value: Date | null) => void;
 };
 
 export default function DMonthPicker(
   {
-    onEventChangeDate,
+    onChangeDate,
     date,
     ...props
   }: CalendarProps,
@@ -26,7 +25,7 @@ export default function DMonthPicker(
       selected={dateJS(date)}
       calendarClassName="d-month-picker"
       onChange={(value) => {
-        onEventChangeDate(value);
+        onChangeDate(value);
       }}
       customInput={(
         <p className="fw-bold text-capitalize">
@@ -46,7 +45,7 @@ export default function DMonthPicker(
             size="sm"
             variant="link"
             theme="light"
-            onEventClick={decreaseYear}
+            onClick={decreaseYear}
             isDisabled={prevYearButtonDisabled}
           />
           <p className="fs-6 fw-bold">
@@ -57,7 +56,7 @@ export default function DMonthPicker(
             size="sm"
             variant="link"
             theme="light"
-            onEventClick={increaseYear}
+            onClick={increaseYear}
             isDisabled={nextYearButtonDisabled}
           />
         </div>

@@ -8,7 +8,7 @@ describe('DDatePicker', () => {
     render(
       <DDatePicker
         date={DateTime.now().toISO()}
-        onEventChangeDate={() => {}}
+        onChangeDate={() => {}}
       />,
     );
   });

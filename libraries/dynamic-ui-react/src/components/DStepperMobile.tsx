@@ -1,9 +1,9 @@
-import { PREFIX_BS } from '@dynamic-framework/ui';
 import {
   useEffect,
   useMemo,
   useState,
 } from 'react';
+import { PREFIX_BS } from '../interfaces/component-config';
 
 type Step = {
   label: string;

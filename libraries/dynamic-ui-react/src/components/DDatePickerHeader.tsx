@@ -1,10 +1,10 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { DateTime } from 'luxon';
 import { ComponentProps } from 'react';
-import { ButtonVariant, ComponentSize } from '@dynamic-framework/ui';
-import { DButton } from './proxies';
+import DButton from './DButton';
 import DMonthPicker from './DMonthPicker';
 import { useLiquidContext } from '../contexts';
+import { ComponentSize } from '../interfaces/component-interface';
+import { ButtonVariant } from '../interfaces/DButtonInterface';
 
 type Props = {
   monthDate: Date;
@@ -51,13 +51,13 @@ export default function DDatePickerHeader({
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
-        onEventClick={decreaseMonth}
+        onClick={decreaseMonth}
         isDisabled={prevMonthButtonDisabled}
       />
       <DMonthPicker
         {...!withMonthSelector && { readOnly: true }}
         date={monthDate.toISOString()}
-        onEventChangeDate={(value) => {
+        onChangeDate={(value) => {
           if (value) {
             changeMonth(DateTime.fromJSDate(value).month - 1);
             changeYear(DateTime.fromJSDate(value).year);
@@ -70,7 +70,7 @@ export default function DDatePickerHeader({
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
-        onEventClick={increaseMonth}
+        onClick={increaseMonth}
         isDisabled={nextMonthButtonDisabled}
       />
     </div>

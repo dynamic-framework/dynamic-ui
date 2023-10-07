@@ -1,13 +1,12 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { PropsWithChildren } from 'react';
 import { useDropzone } from 'react-dropzone';
 import classnames from 'classnames';
 
 import type { DropzoneOptions } from 'react-dropzone';
+import DIcon from './DIcon';
+import { FamilyIcon } from '../interfaces/component-interface';
 
-import { DIcon } from './proxies';
-
-type Props = PropsWithChildren<
+type Props = FamilyIcon & PropsWithChildren<
 Pick<
 DropzoneOptions,
 | 'accept'
@@ -21,22 +20,18 @@ DropzoneOptions,
 | 'onFileDialogOpen'
 > & {
   icon?: string;
-  iconFamilyClass?: string;
-  iconFamilyPrefix?: string;
   isDisabled: DropzoneOptions['disabled'];
 }
 >;
 
-export default function DBoxFile(
-  {
-    icon = 'cloud-upload',
-    iconFamilyClass,
-    iconFamilyPrefix,
-    isDisabled = false,
-    children,
-    ...dropzoneOptions
-  }: Props,
-) {
+export default function DBoxFile({
+  icon = 'cloud-upload',
+  iconFamilyClass,
+  iconFamilyPrefix,
+  isDisabled = false,
+  children,
+  ...dropzoneOptions
+}: Props) {
   const {
     acceptedFiles,
     getRootProps,

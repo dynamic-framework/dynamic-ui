@@ -25,8 +25,8 @@ const config: Meta<typeof DListItem> = {
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
     },
-    onEventClick: {
-      action: 'onEventClick',
+    onClick: {
+      action: 'onClick',
     },
   },
 };

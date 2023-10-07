@@ -1,6 +1,6 @@
 import { PropsWithChildren, useMemo } from 'react';
 import ContentLoader from 'react-content-loader';
-import { PREFIX_BS } from '@dynamic-framework/ui';
+import { PREFIX_BS } from '../interfaces/component-config';
 
 export type Props = PropsWithChildren<{
   speed?: number;
