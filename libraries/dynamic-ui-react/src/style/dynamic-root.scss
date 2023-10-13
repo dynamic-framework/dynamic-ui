@@ -1,2 +1,6 @@
-@import "@dynamic-framework/ui/src/style/dynamic-root";
+@charset "utf-8";
 
+@import "abstracts/+import";
+
+// @import "bootstrap/scss/root";
+@import "base/root";
