@@ -26,17 +26,17 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
-      - name: Install, Build and Version
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build packages
+        run: pnpm build
+      - name: Version and publish packages
         run: |
-          pnpm set @dynamic-framework:registry=https://registry.npmjs.org/
-          pnpm set "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}"
-
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
-          git update-index --skip-worktree -- .npmrc
-
-          pnpm install --frozen-lockfile
-          pnpm build
+          pnpm exec lerna version --yes --no-private --loglevel verbose
           pnpm run publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
