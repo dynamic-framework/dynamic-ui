@@ -1,9 +1,7 @@
-import {
-  ComponentProps,
-  Ref,
-  forwardRef,
-  useImperativeHandle,
-} from 'react';
+import { forwardRef, useImperativeHandle } from 'react';
+
+import type { ComponentProps, Ref } from 'react';
+
 import DInput from './DInput';
 
 type Props = {
@@ -47,4 +45,6 @@ function DDatePickerInput(
   );
 }
 
-export default forwardRef(DDatePickerInput);
+const ForwardedDDatePickerInput = forwardRef(DDatePickerInput);
+ForwardedDDatePickerInput.displayName = 'DDatePickerInput';
+export default ForwardedDDatePickerInput;

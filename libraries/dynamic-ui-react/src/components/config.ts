@@ -1,8 +1,8 @@
-export type AlertType = 'success' | 'info' | 'light' | 'dark' | 'warning' | 'danger';
-export type AlertTypeIconMap = {
-  [state in AlertType]: string;
-};
+import { AlertTypeIconMap } from './interface';
 
+export const PREFIX_BS = 'bs-';
+export const ICON_FAMILY_CLASS = 'bi';
+export const ICON_FAMILY_PREFIX = 'bi-';
 export const ALERT_TYPE_ICON: AlertTypeIconMap = {
   warning: 'exclamation-circle',
   danger: 'exclamation-triangle',

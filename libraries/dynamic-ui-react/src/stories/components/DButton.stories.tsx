@@ -6,7 +6,7 @@ import {
   COMPONENT_SIZE,
   ICONS,
   INPUT_STATE,
-} from '../constants';
+} from '../config/constants';
 
 const config: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',

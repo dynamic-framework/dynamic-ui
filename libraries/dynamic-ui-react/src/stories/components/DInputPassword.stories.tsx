@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DInputPassword } from '../../components';
-import { ICONS } from '../constants';
+import { ICONS } from '../config/constants';
 
 const config: Meta<typeof DInputPassword> = {
   title: 'Design System/Components/Input Password',

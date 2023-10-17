@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DInputCounter } from '../../components';
-import { ICONS } from '../constants';
+import { ICONS } from '../config/constants';
 
 const config: Meta<typeof DInputCounter> = {
   title: 'Design System/Components/Input Counter',

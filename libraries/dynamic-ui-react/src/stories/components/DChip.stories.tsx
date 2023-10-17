@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DChip } from '../../components';
-import { ICONS, THEMES } from '../constants';
+import { ICONS, THEMES } from '../config/constants';
 
 const config: Meta<typeof DChip> = {
   title: 'Design System/Components/Chip',

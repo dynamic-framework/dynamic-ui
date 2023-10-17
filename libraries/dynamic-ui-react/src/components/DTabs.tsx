@@ -6,8 +6,9 @@ import {
   useEffect,
   useMemo,
 } from 'react';
-import type { PropsWithChildren } from 'react';
 import classnames from 'classnames';
+
+import type { PropsWithChildren } from 'react';
 
 export type DTabOption = {
   label: string;

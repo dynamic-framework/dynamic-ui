@@ -1,16 +1,20 @@
 import classNames from 'classnames';
 import {
-  PropsWithChildren,
-  ReactNode,
-  ReactElement,
   useState,
   useEffect,
   useMemo,
 } from 'react';
-import { PREFIX_BS } from '../interfaces/component-config';
 
-import { CustomStyles } from '../interfaces/component-interface';
+import type {
+  PropsWithChildren,
+  ReactNode,
+  ReactElement,
+} from 'react';
+
+import { PREFIX_BS } from './config';
 import DIcon from './DIcon';
+
+import type { CustomStyles } from './interface';
 
 type Props = PropsWithChildren<{
   id?: string;
@@ -21,15 +25,17 @@ type Props = PropsWithChildren<{
   onChange?: (value: boolean) => void;
 }>;
 
-export default function DCollapse({
-  id,
-  className,
-  Component,
-  hasSeparator = false,
-  defaultCollapsed = false,
-  onChange,
-  children,
-}: Props) {
+export default function DCollapse(
+  {
+    id,
+    className,
+    Component,
+    hasSeparator = false,
+    defaultCollapsed = false,
+    onChange,
+    children,
+  }: Props,
+) {
   const [toggle, setToggle] = useState(defaultCollapsed);
 
   const onChangeCollapse = () => setToggle((prev) => !prev);

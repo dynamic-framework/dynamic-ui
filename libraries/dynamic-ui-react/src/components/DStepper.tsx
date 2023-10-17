@@ -1,6 +1,7 @@
-import { BreakpointSize } from '../interfaces/component-interface';
 import DStepperDesktop from './DStepperDesktop';
 import DStepperMobile from './DStepperMobile';
+
+import type { BreakpointSize } from './interface';
 
 export type Step = {
   label: string;

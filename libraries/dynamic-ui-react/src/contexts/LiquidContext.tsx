@@ -3,7 +3,9 @@ import {
   useContext,
   useMemo,
 } from 'react';
+
 import type { PropsWithChildren } from 'react';
+
 import { liquidParser } from '../utils';
 
 interface LiquidContextInterface {

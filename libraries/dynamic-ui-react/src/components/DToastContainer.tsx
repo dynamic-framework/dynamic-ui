@@ -1,8 +1,7 @@
-import { ToastContainer, Slide, ToastPosition } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 
 import type { CSSProperties } from 'react';
-
-import 'react-toastify/dist/ReactToastify.css';
+import type { ToastPosition } from 'react-toastify';
 
 type Props = {
   style?: CSSProperties & {
@@ -14,10 +13,12 @@ type Props = {
   position?: ToastPosition;
 };
 
-export default function DToastContainer({
-  style,
-  position = 'top-right',
-}: Props) {
+export default function DToastContainer(
+  {
+    style,
+    position = 'top-right',
+  }: Props,
+) {
   return (
     <ToastContainer
       toastClassName={() => 'shadow-none p-0 cursor-default'}

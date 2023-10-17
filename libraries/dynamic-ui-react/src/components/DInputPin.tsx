@@ -1,20 +1,28 @@
 import {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import classNames from 'classnames';
+
+import type {
   ChangeEvent,
   FocusEvent,
   FormEvent,
   KeyboardEvent,
   MouseEvent,
   WheelEvent,
-  useCallback,
-  useEffect,
-  useState,
 } from 'react';
 
-import classNames from 'classnames';
-import { PREFIX_BS } from '../interfaces/component-config';
-import { FamilyIcon, LabelIcon } from '../interfaces/component-interface';
-import { PinInputMode, PinInputType } from '../interfaces/DInputPinInterface';
 import DIcon from './DIcon';
+import { PREFIX_BS } from './config';
+
+import type {
+  FamilyIcon,
+  LabelIcon,
+  PinInputMode,
+  PinInputType,
+} from './interface';
 
 type Props = LabelIcon
 & FamilyIcon
@@ -35,39 +43,42 @@ type Props = LabelIcon
   onChange?: (value: string) => void;
 };
 
-export default function DInputPin({
-  id,
-  label = '',
-  labelIcon,
-  labelIconFamilyClass,
-  labelIconFamilyPrefix,
-  placeholder = '•',
-  type = 'text',
-  isDisabled = false,
-  isLoading = false,
-  isSecret = false,
-  iconFamilyClass,
-  iconFamilyPrefix,
-  characters = 4,
-  innerInputMode = 'text',
-  hint,
-  isInvalid = false,
-  isValid = false,
-  onChange,
-}: Props) {
+export default function DInputPin(
+  {
+    id,
+    label = '',
+    labelIcon,
+    labelIconFamilyClass,
+    labelIconFamilyPrefix,
+    placeholder = '•',
+    type = 'text',
+    isDisabled = false,
+    isLoading = false,
+    isSecret = false,
+    iconFamilyClass,
+    iconFamilyPrefix,
+    characters = 4,
+    innerInputMode = 'text',
+    hint,
+    isInvalid = false,
+    isValid = false,
+    onChange,
+  }: Props,
+) {
   const [pattern, setPattern] = useState<string>('');
 
   useEffect(() => {
     setPattern(type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$');
   }, [type]);
 
-  const nextInput = (event: ChangeEvent<HTMLInputElement>) => {
+  const nextInput = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const input = event.target;
     const regex = new RegExp(pattern);
 
     if (!regex.test(input.value)) {
       input.value = '';
     }
+
     if (input.value !== '') {
       if (input.nextSibling) {
         (input.nextSibling as HTMLElement)?.focus();
@@ -75,42 +86,39 @@ export default function DInputPin({
         input.blur();
       }
     }
-  };
+  }, [pattern]);
 
-  const prevInput = (e: KeyboardEvent) => {
-    if (e.key === 'Backspace') {
-      const { value } = e.currentTarget as HTMLInputElement;
-      const input = e.target as HTMLInputElement;
+  const prevInput = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Backspace') {
+      const { value } = event.currentTarget;
 
-      if (input.previousSibling && value === '') {
-        (input.previousSibling as HTMLElement)?.focus();
+      if (event.currentTarget.previousSibling && value === '') {
+        (event.currentTarget.previousSibling as HTMLElement)?.focus();
       } else {
-        input.blur();
-        input.focus();
+        event.currentTarget.blur();
+        event.currentTarget.focus();
       }
     }
-  };
-
-  const focusInput = useCallback((e: FocusEvent) => {
-    const input = e.target as HTMLInputElement;
-    input.value = '';
   }, []);
 
-  const wheelInput = useCallback((e: WheelEvent) => {
-    const input = e.target as HTMLInputElement;
-    input.blur();
+  const focusInput = useCallback((event: FocusEvent<HTMLInputElement>) => {
+    // eslint-disable-next-line no-param-reassign
+    event.currentTarget.value = '';
   }, []);
 
-  const formChange = useCallback((e: FormEvent) => {
-    const form = e.currentTarget as HTMLFormElement;
-    const formData = new FormData(form);
+  const wheelInput = useCallback((event: WheelEvent<HTMLInputElement>) => {
+    event.currentTarget.blur();
+  }, []);
+
+  const formChange = useCallback((event: FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(event.currentTarget);
     const values = Array.from(formData.values()).join('');
     onChange?.(values);
   }, [onChange]);
 
-  const preventDefaultEvent = (e: MouseEvent | FormEvent) => {
-    e.preventDefault();
-  };
+  const preventDefaultEvent = useCallback((event: MouseEvent | FormEvent) => {
+    event.preventDefault();
+  }, []);
 
   return (
     <div className="d-input-pin">

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+
 import DCard from './DCard';
 import DCardBody from './DCardBody';
 import DIcon from './DIcon';
@@ -15,17 +16,20 @@ type Props = {
   onClick: () => void;
   actionText: string;
 };
-export default function DCardAccount({
-  className,
-  icon,
-  theme,
-  name,
-  number,
-  balance,
-  balanceText,
-  onClick,
-  actionText,
-}: Props) {
+
+export default function DCardAccount(
+  {
+    className,
+    icon,
+    theme,
+    name,
+    number,
+    balance,
+    balanceText,
+    onClick,
+    actionText,
+  }: Props,
+) {
   return (
     <DCard className={classNames(
       'd-card-account',

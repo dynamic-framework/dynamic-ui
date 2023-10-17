@@ -19,7 +19,7 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
     isStatic
     className="d-block"
   >
-    <DModalHeader onClose={closeModal}>
+    <DModalHeader onClose={closeModal} showCloseButton>
       <h5 className="fw-bold">Do you want to reject the offer?</h5>
     </DModalHeader>
     <DModalBody>

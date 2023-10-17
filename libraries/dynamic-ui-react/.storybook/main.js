@@ -25,7 +25,6 @@ module.exports = {
   },
   staticDirs: [
     './public',
-    '../../dynamic-ui/dist',
     '../dist'
   ],
   features: {

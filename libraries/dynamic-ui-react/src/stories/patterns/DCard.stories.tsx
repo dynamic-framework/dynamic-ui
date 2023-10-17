@@ -9,7 +9,7 @@ import {
 } from '../../components';
 
 const config: Meta<typeof DCard> = {
-  title: 'Design System/Components/Card',
+  title: 'Design System/Patterns/Card',
   component: DCard,
   argTypes: {
     className: {

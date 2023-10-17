@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 import classNames from 'classnames';
-import { FamilyIcon } from '../interfaces/component-interface';
+
 import DIcon from './DIcon';
+
+import type { FamilyIcon } from './interface';
 
 type Props = FamilyIcon & {
   theme?: string;
@@ -11,15 +13,17 @@ type Props = FamilyIcon & {
   onClose?: () => void;
 };
 
-export default function DChip({
-  theme = 'primary',
-  text,
-  icon,
-  iconFamilyClass,
-  iconFamilyPrefix,
-  showClose = false,
-  onClose,
-}: Props) {
+export default function DChip(
+  {
+    theme = 'primary',
+    text,
+    icon,
+    iconFamilyClass,
+    iconFamilyPrefix,
+    showClose = false,
+    onClose,
+  }: Props,
+) {
   const generateClasses = useMemo(
     () => ({
       'd-chip': true,

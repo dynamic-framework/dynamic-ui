@@ -3,7 +3,8 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { PREFIX_BS } from '../interfaces/component-config';
+
+import { PREFIX_BS } from './config';
 
 type Step = {
   label: string;
@@ -23,7 +24,7 @@ export default function DStepper(
   } : Props,
 ) {
   if (currentStep < 1 || currentStep > options.length) {
-    throw new Error('Current step should be in the range from 1 to options lenght');
+    throw new Error('Current step should be in the range from 1 to options length');
   }
 
   const currentOption = useMemo(() => options[currentStep - 1] ?? {}, [currentStep, options]);

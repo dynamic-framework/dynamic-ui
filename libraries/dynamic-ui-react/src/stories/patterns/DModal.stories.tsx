@@ -100,7 +100,7 @@ export const ActionsPlacementStart: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader>
+      <DModalHeader showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModalHeader>
       <DModalBody>
@@ -139,7 +139,7 @@ export const ActionsPlacementEnd: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader>
+      <DModalHeader showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModalHeader>
       <DModalBody>
@@ -214,7 +214,7 @@ export const WithoutActions: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader>
+      <DModalHeader showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModalHeader>
       <DModalBody>
@@ -243,6 +243,7 @@ export const OnlyBody: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
+      <DModalHeader showCloseButton />
       <DModalBody>
         <p className="py-3 px-5">Modal body</p>
       </DModalBody>

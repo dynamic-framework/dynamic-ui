@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import DInputCurrency from '../../src/components/DInputCurrency';
+import DInputCurrencyBase from '../../src/components/DInputCurrencyBase';
 
 it('should render base currency', () => {
   const props = {
@@ -14,7 +14,7 @@ it('should render base currency', () => {
   };
 
   const { container } = render(
-    <DInputCurrency
+    <DInputCurrencyBase
       {...props}
     />
   );

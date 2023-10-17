@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 import classNames from 'classnames';
-import { PREFIX_BS } from '../interfaces/component-config';
-import { ClassMap, CustomStyles } from '../interfaces/component-interface';
+
+import { PREFIX_BS } from './config';
+
+import type { ClassMap, CustomStyles } from './interface';
 
 type Props = {
   icon: string;
@@ -18,20 +20,22 @@ type Props = {
   familyPrefix?: string;
 };
 
-export default function DIcon({
-  icon,
-  theme,
-  className = '',
-  size = '1.5rem',
-  isLoading = false,
-  loadingDuration = 1.8,
-  hasCircle = false,
-  circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`,
-  color,
-  backgroundColor,
-  familyClass = 'bi',
-  familyPrefix = 'bi-',
-}: Props) {
+export default function DIcon(
+  {
+    icon,
+    theme,
+    className = '',
+    size = '1.5rem',
+    isLoading = false,
+    loadingDuration = 1.8,
+    hasCircle = false,
+    circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`,
+    color,
+    backgroundColor,
+    familyClass = 'bi',
+    familyPrefix = 'bi-',
+  }: Props,
+) {
   const getColorStyle = useMemo(() => {
     if (color) {
       return { [`--${PREFIX_BS}component-color`]: color };

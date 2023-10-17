@@ -23,14 +23,15 @@ export default function DStepper(
   } : Props,
 ) {
   if (currentStep < 1 || currentStep > options.length) {
-    throw new Error('Current step should be in the range from 1 to options lenght');
+    throw new Error('Current step should be in the range from 1 to options length');
   }
 
   return (
-    <div className={classNames({
-      'd-stepper-desktop': true,
-      'is-vertical': isVertical,
-    })}
+    <div
+      className={classNames({
+        'd-stepper-desktop': true,
+        'is-vertical': isVertical,
+      })}
     >
       {options.map(({ label, value }) => (
         <div

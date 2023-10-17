@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
 import { DInputCurrency } from '../../components';
-import { ICONS } from '../constants';
+import { ICONS } from '../config/constants';
 import { LiquidContextProvider } from '../../contexts';
 
 const config: Meta<typeof DInputCurrency> = {

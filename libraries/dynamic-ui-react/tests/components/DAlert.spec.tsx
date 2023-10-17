@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import DAlert from '../../src/components/DAlert';
-import { AlertType } from '../../src/interfaces/DAlertInterface';
+
+import { AlertType } from '../../src/components/interface';
 
 it('should render info alert', () => {
   const props = {

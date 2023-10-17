@@ -1,10 +1,12 @@
 import {
   useState,
   useEffect,
-  ChangeEvent,
+  useCallback,
 } from 'react';
 
-interface DInputSwitchProps {
+import type { ChangeEvent } from 'react';
+
+interface Props {
   label?: string;
   id: string;
   name?: string;
@@ -14,26 +16,28 @@ interface DInputSwitchProps {
   onChange?: (isChecked: boolean) => void;
 }
 
-export default function DInputSwitch({
-  label,
-  id,
-  name,
-  isChecked,
-  isDisabled,
-  isReadonly,
-  onChange,
-}: DInputSwitchProps) {
+export default function DInputSwitch(
+  {
+    label,
+    id,
+    name,
+    isChecked,
+    isDisabled,
+    isReadonly,
+    onChange,
+  }: Props,
+) {
   const [internalIsChecked, setInternalIsChecked] = useState<boolean | undefined>(isChecked);
 
   useEffect(() => {
     setInternalIsChecked(isChecked);
   }, [isChecked]);
 
-  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.checked;
+  const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.checked;
     setInternalIsChecked(value);
     onChange?.(value);
-  };
+  }, [onChange]);
 
   return (
     <div className="form-check form-switch">

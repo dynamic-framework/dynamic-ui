@@ -1,6 +1,10 @@
-import { useState, ChangeEvent } from 'react';
-import { LabelIcon } from '../interfaces/component-interface';
+import { useCallback, useState } from 'react';
+
+import type { ChangeEvent } from 'react';
+
 import DInput from './DInput';
+
+import type { LabelIcon } from './interface';
 
 type Props = LabelIcon & {
   id: string;
@@ -17,30 +21,32 @@ type Props = LabelIcon & {
   onChange?: (value: string) => void;
 };
 
-export default function DInputPassword({
-  id,
-  name,
-  label = '',
-  placeholder = '',
-  value = '',
-  isDisabled = false,
-  isReadOnly = false,
-  isLoading = false,
-  hint,
-  isInvalid = false,
-  isValid = false,
-  onChange,
-  ...rest
-}: Props) {
+export default function DInputPassword(
+  {
+    id,
+    name,
+    label = '',
+    placeholder = '',
+    value = '',
+    isDisabled = false,
+    isReadOnly = false,
+    isLoading = false,
+    hint,
+    isInvalid = false,
+    isValid = false,
+    onChange,
+    ...rest
+  }: Props,
+) {
   const [visible, setVisible] = useState(false);
 
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange?.(e.target.value);
-  };
+  const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(event.target.value);
+  }, [onChange]);
 
-  const visibilityHandler = () => {
-    setVisible(!visible);
-  };
+  const visibilityHandler = useCallback(() => {
+    setVisible((prevVisible) => !prevVisible);
+  }, []);
 
   return (
     <DInput

@@ -1,12 +1,15 @@
 import {
-  ChangeEvent,
   useCallback,
-  useState,
+  useEffect,
+  useRef,
 } from 'react';
-import { FormCheckType } from '../interfaces/DInputCheckInterface';
+
+import type { ChangeEvent } from 'react';
+
+import type { InputCheckType } from './interface';
 
 type Props = {
-  type: FormCheckType;
+  type: InputCheckType;
   name?: string;
   label?: string;
   isChecked?: boolean;
@@ -17,30 +20,47 @@ type Props = {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function DInputCheck({
-  label,
-  id,
-  isChecked = false,
-  isDisabled = false,
-  onChange,
-  ...rest
-}: Props) {
-  const [internalChecked, setInternalChecked] = useState<boolean>(isChecked);
+export default function DInputCheck(
+  {
+    type,
+    name,
+    label,
+    isChecked = false,
+    id,
+    isDisabled = false,
+    isIndeterminate,
+    value,
+    onChange,
+  }: Props,
+) {
+  const innerRef = useRef<HTMLInputElement>(null);
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const { checked } = event.target;
-    setInternalChecked(checked);
     onChange?.(event);
   }, [onChange]);
+
+  useEffect(() => {
+    if (innerRef.current) {
+      innerRef.current.indeterminate = Boolean(isIndeterminate);
+    }
+  }, [isIndeterminate]);
+
+  useEffect(() => {
+    if (innerRef.current) {
+      innerRef.current.checked = isChecked;
+    }
+  }, [isChecked]);
 
   if (!label) {
     return (
       <input
-        onChange={(event) => handleChange(event)}
+        ref={innerRef}
+        onChange={handleChange}
         className="form-check-input"
         id={id}
-        checked={internalChecked}
         disabled={isDisabled}
-        {...rest}
+        type={type}
+        name={name}
+        value={value}
       />
     );
   }
@@ -48,12 +68,14 @@ export default function DInputCheck({
   return (
     <div className="form-check">
       <input
-        onChange={(event) => handleChange(event)}
+        ref={innerRef}
+        onChange={handleChange}
         className="form-check-input"
         id={id}
-        checked={internalChecked}
         disabled={isDisabled}
-        {...rest}
+        type={type}
+        name={name}
+        value={value}
       />
       <label className="form-check-label" htmlFor={id}>
         {label}

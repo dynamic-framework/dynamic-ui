@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import classNames from 'classnames';
-import { PropsWithChildren, useMemo } from 'react';
+
+import type { PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   className?: string;

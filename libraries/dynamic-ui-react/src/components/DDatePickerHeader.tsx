@@ -1,10 +1,13 @@
+import { useCallback, useMemo } from 'react';
 import { DateTime } from 'luxon';
-import { ComponentProps } from 'react';
+
+import type { ComponentProps } from 'react';
+
 import DButton from './DButton';
 import DMonthPicker from './DMonthPicker';
 import { useLiquidContext } from '../contexts';
-import { ComponentSize } from '../interfaces/component-interface';
-import { ButtonVariant } from '../interfaces/DButtonInterface';
+
+import type { ButtonVariant, ComponentSize } from './interface';
 
 type Props = {
   monthDate: Date;
@@ -26,23 +29,31 @@ type Props = {
 | 'isDisabled'
 >;
 
-export default function DDatePickerHeader({
-  monthDate,
-  changeMonth,
-  changeYear,
-  decreaseMonth,
-  increaseMonth,
-  prevMonthButtonDisabled,
-  nextMonthButtonDisabled,
-  withMonthSelector,
-  decreaseMonthIcon,
-  increaseMonthIcon,
-  iconSize,
-  buttonVariant,
-  buttonTheme,
-}: Props) {
+export default function DDatePickerHeader(
+  {
+    monthDate,
+    changeMonth,
+    changeYear,
+    decreaseMonth,
+    increaseMonth,
+    prevMonthButtonDisabled,
+    nextMonthButtonDisabled,
+    withMonthSelector,
+    decreaseMonthIcon,
+    increaseMonthIcon,
+    iconSize,
+    buttonVariant,
+    buttonTheme,
+  }: Props,
+) {
   const { language } = useLiquidContext();
-  const lang = language || 'en';
+  const locale = useMemo(() => language || 'en', [language]);
+  const onChangeDate = useCallback((value: Date | null) => {
+    if (value) {
+      changeMonth(DateTime.fromJSDate(value).month - 1);
+      changeYear(DateTime.fromJSDate(value).year);
+    }
+  }, [changeMonth, changeYear]);
 
   return (
     <div className="d-flex align-items-center justify-content-between d-datepicker-header">
@@ -57,13 +68,8 @@ export default function DDatePickerHeader({
       <DMonthPicker
         {...!withMonthSelector && { readOnly: true }}
         date={monthDate.toISOString()}
-        onChangeDate={(value) => {
-          if (value) {
-            changeMonth(DateTime.fromJSDate(value).month - 1);
-            changeYear(DateTime.fromJSDate(value).year);
-          }
-        }}
-        {...lang && { locale: lang }}
+        onChangeDate={onChangeDate}
+        {...locale && { locale }}
       />
       <DButton
         iconStart={increaseMonthIcon}

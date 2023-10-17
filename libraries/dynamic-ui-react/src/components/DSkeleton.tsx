@@ -1,6 +1,9 @@
-import { PropsWithChildren, useMemo } from 'react';
+import { useMemo } from 'react';
 import ContentLoader from 'react-content-loader';
-import { PREFIX_BS } from '../interfaces/component-config';
+
+import type { PropsWithChildren } from 'react';
+
+import { PREFIX_BS } from './config';
 
 export type Props = PropsWithChildren<{
   speed?: number;

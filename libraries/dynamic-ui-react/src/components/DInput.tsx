@@ -1,4 +1,14 @@
 import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import classNames from 'classnames';
+
+import type {
   CSSProperties,
   ChangeEvent,
   FocusEvent,
@@ -6,21 +16,17 @@ import {
   MouseEvent,
   ReactNode,
   WheelEvent,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
 } from 'react';
-import classNames from 'classnames';
-import { PREFIX_BS } from '../interfaces/component-config';
-import {
+
+import { PREFIX_BS } from './config';
+import DIcon from './DIcon';
+
+import type {
   EndIcon,
   FamilyIcon,
   LabelIcon,
   StartIcon,
-} from '../interfaces/component-interface';
-import DIcon from './DIcon';
+} from './interface';
 
 type Props = FamilyIcon
 & LabelIcon
@@ -44,15 +50,17 @@ type Props = FamilyIcon
   isInvalid?: boolean;
   isValid?: boolean;
   inputStart?: ReactNode;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
-  onFocus?: (e: FocusEvent) => void;
-  onWheel?: (e: WheelEvent) => void;
-  onIconStartClick?: (e: MouseEvent) => void;
-  onIconEndClick?: (e: MouseEvent) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: FocusEvent) => void;
+  onWheel?: (event: WheelEvent) => void;
+  onIconStartClick?: (event: MouseEvent) => void;
+  onIconEndClick?: (event: MouseEvent) => void;
 };
+
 type Ref = {
   blur: () => void;
+  focus: () => void;
 };
 
 function DInput(
@@ -94,23 +102,26 @@ function DInput(
   }: Props,
   ref: ForwardedRef<Ref>,
 ) {
-  const [innerValue, setInnerValue] = useState(value);
   const innerRef = useRef<HTMLInputElement>(null);
+  const [internalValue, setInternalValue] = useState(value);
 
   useEffect(() => {
-    setInnerValue(value);
+    setInternalValue(value);
   }, [value]);
 
   useImperativeHandle(ref, () => ({
     blur() {
       innerRef.current?.blur();
     },
+    focus() {
+      innerRef.current?.focus();
+    },
   }), []);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInnerValue(event.target.value);
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setInternalValue(event.target.value);
     onChange?.(event);
-  };
+  }, [onChange]);
 
   return (
     <div
@@ -178,7 +189,7 @@ function DInput(
             aria-label={label}
             disabled={isDisabled || isLoading}
             readOnly={isReadOnly}
-            value={innerValue}
+            value={internalValue}
             aria-describedby={`${id}Add ${id}Hint`}
             pattern={pattern}
             onChange={(event) => handleInputChange(event)}

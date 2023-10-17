@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 import DCardAccount from '../../components/DCardAccount';
-import { ICONS, THEMES } from '../constants';
+import { ICONS, THEMES } from '../config/constants';
 
 const config: Meta<typeof DCardAccount> = {
-  title: 'Design System/Components/Card Account',
+  title: 'Design System/Patterns/Card Account',
   component: DCardAccount,
   argTypes: {
     name: {

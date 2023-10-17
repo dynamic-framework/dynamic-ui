@@ -1,10 +1,14 @@
 import {
-  ChangeEvent,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
+
+import type { ChangeEvent } from 'react';
+
 import DInput from './DInput';
-import { LabelIcon } from '../interfaces/component-interface';
+
+import type { LabelIcon } from './interface';
 
 type Props = LabelIcon & {
   id: string;
@@ -22,37 +26,39 @@ type Props = LabelIcon & {
   onClick?: (newValue: string | undefined) => void;
 };
 
-export default function DInputSearch({
-  id,
-  name,
-  label,
-  placeholder,
-  value,
-  isDisabled,
-  isReadOnly,
-  isLoading,
-  hint,
-  isInvalid,
-  isValid,
-  onChange,
-  onClick,
-  ...rest
-}: Props) {
-  const [innerValue, setInnerValue] = useState(value);
+export default function DInputSearch(
+  {
+    id,
+    name,
+    label,
+    placeholder,
+    value,
+    isDisabled,
+    isReadOnly,
+    isLoading,
+    hint,
+    isInvalid,
+    isValid,
+    onChange,
+    onClick,
+    ...rest
+  }: Props,
+) {
+  const [internalValue, setInternalValue] = useState(value);
 
   useEffect(() => {
-    setInnerValue(value);
+    setInternalValue(value);
   }, [value]);
 
-  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
-    setInnerValue(event.target.value);
+    setInternalValue(event.target.value);
     onChange?.(event);
-  };
+  }, [onChange]);
 
-  const clickHandler = () => {
-    onClick?.(innerValue);
-  };
+  const clickHandler = useCallback(() => {
+    onClick?.(internalValue);
+  }, [internalValue, onClick]);
 
   return (
     <DInput
@@ -60,7 +66,7 @@ export default function DInputSearch({
       name={name}
       label={label}
       placeholder={placeholder}
-      value={innerValue}
+      value={internalValue}
       iconEnd="search"
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}

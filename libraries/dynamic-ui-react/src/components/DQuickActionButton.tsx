@@ -1,7 +1,10 @@
-import { CSSProperties, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+
+import type { CSSProperties } from 'react';
+
 import DIcon from './DIcon';
-import { PREFIX_BS } from '../interfaces/component-config';
 import DButton from './DButton';
+import { PREFIX_BS } from './config';
 
 type Props = {
   line1: string;
@@ -23,25 +26,27 @@ type Props = {
   style?: CSSProperties;
 };
 
-export default function DQuickActionButton({
-  line1,
-  line2,
-  actionLinkText,
-  actionLinkTheme = 'secondary',
-  actionIcon,
-  secondaryActionIcon,
-  actionIconFamilyClass,
-  actionIconFamilyPrefix,
-  representativeImage,
-  representativeIcon,
-  representativeIconTheme = 'secondary',
-  representativeIconHasCircle = false,
-  representativeIconFamilyClass,
-  representativeIconFamilyPrefix,
-  onClick,
-  onClickSecondary,
-  style,
-}: Props) {
+export default function DQuickActionButton(
+  {
+    line1,
+    line2,
+    actionLinkText,
+    actionLinkTheme = 'secondary',
+    actionIcon,
+    secondaryActionIcon,
+    actionIconFamilyClass,
+    actionIconFamilyPrefix,
+    representativeImage,
+    representativeIcon,
+    representativeIconTheme = 'secondary',
+    representativeIconHasCircle = false,
+    representativeIconFamilyClass,
+    representativeIconFamilyPrefix,
+    onClick,
+    onClickSecondary,
+    style,
+  }: Props,
+) {
   const globalClickHandler = useCallback(() => {
     if (actionLinkText) {
       return;
@@ -49,16 +54,14 @@ export default function DQuickActionButton({
     onClick?.();
   }, [actionLinkText, onClick]);
 
-  const actionLinkClickHandler = useCallback((event: MouseEvent) => {
-    event.stopPropagation();
+  const actionLinkClickHandler = useCallback(() => {
     if (!actionLinkText) {
       return;
     }
     onClick?.();
   }, [actionLinkText, onClick]);
 
-  const secondActionLinkClickHandler = useCallback((event: MouseEvent) => {
-    event.stopPropagation();
+  const secondaryActionLinkClickHandler = useCallback(() => {
     onClickSecondary?.();
   }, [onClickSecondary]);
 
@@ -110,7 +113,8 @@ export default function DQuickActionButton({
           iconStartFamilyClass={actionIconFamilyClass}
           iconStartFamilyPrefix={actionIconFamilyPrefix}
           theme={actionLinkTheme}
-          onClick={(event) => secondActionLinkClickHandler(event as unknown as MouseEvent)}
+          onClick={secondaryActionLinkClickHandler}
+          isStopPropagationEnabled
         />
       )}
       {actionLinkText && !actionIcon && (
@@ -120,7 +124,8 @@ export default function DQuickActionButton({
           variant="link"
           theme={actionLinkTheme}
           text={actionLinkText}
-          onClick={(event) => actionLinkClickHandler(event as unknown as MouseEvent)}
+          onClick={actionLinkClickHandler}
+          isStopPropagationEnabled
         />
       )}
       {actionIcon && !actionLinkText && (

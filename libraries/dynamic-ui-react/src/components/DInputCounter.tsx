@@ -2,17 +2,22 @@ import {
   useState,
   useEffect,
   useMemo,
-  CSSProperties,
   useCallback,
-  ChangeEvent,
 } from 'react';
-import { PREFIX_BS } from '../interfaces/component-config';
-import {
+
+import type {
+  ChangeEvent,
+  CSSProperties,
+} from 'react';
+
+import DInput from './DInput';
+import { PREFIX_BS } from './config';
+
+import type {
   CustomStyles,
   LabelIcon,
   StartIcon,
-} from '../interfaces/component-interface';
-import DInput from './DInput';
+} from './interface';
 
 type Props = LabelIcon
 & StartIcon
@@ -35,26 +40,28 @@ type Props = LabelIcon
   onChange?: (newNumber: number) => void;
 };
 
-export default function DInputCounter({
-  id,
-  name,
-  label = '',
-  value,
-  isDisabled = false,
-  isReadOnly = false,
-  isLoading = false,
-  iconStart = 'dash-square',
-  iconEnd = 'plus-square',
-  hint,
-  isInvalid = false,
-  isValid = false,
-  minValue,
-  maxValue,
-  style,
-  className,
-  onChange,
-  ...rest
-}: Props) {
+export default function DInputCounter(
+  {
+    id,
+    name,
+    label = '',
+    value,
+    isDisabled = false,
+    isReadOnly = false,
+    isLoading = false,
+    iconStart = 'dash-square',
+    iconEnd = 'plus-square',
+    hint,
+    isInvalid = false,
+    isValid = false,
+    minValue,
+    maxValue,
+    style,
+    className,
+    onChange,
+    ...rest
+  }: Props,
+) {
   const [internalIsInvalid, setInternalIsInvalid] = useState(false);
   const [internalValue, setInternalValue] = useState(value);
 
@@ -73,15 +80,18 @@ export default function DInputCounter({
   }, []);
 
   const clickHandler = useCallback((action: boolean) => {
-    const currentValue = internalValue;
     if (action) {
-      const temp = Number(currentValue) + 1;
-      setInternalValue(temp <= maxValue ? temp : maxValue);
+      setInternalValue((prevInternalValue) => {
+        const newValue = prevInternalValue + 1;
+        return newValue <= maxValue ? newValue : maxValue;
+      });
     } else {
-      const temp = Number(currentValue) - 1;
-      setInternalValue(temp >= minValue ? temp : minValue);
+      setInternalValue((prevInternalValue) => {
+        const newValue = prevInternalValue - 1;
+        return newValue >= minValue ? newValue : minValue;
+      });
     }
-  }, [internalValue, maxValue, minValue]);
+  }, [maxValue, minValue]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,

@@ -1,74 +1,111 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChangeEvent, FocusEvent, MouseEvent } from 'react';
+import { useCallback } from 'react';
 import classNames from 'classnames';
-import { PREFIX_BS } from '../interfaces/component-config';
-import { EndIcon, LabelIcon, StartIcon } from '../interfaces/component-interface';
-import DIcon from './DIcon';
 
-type Props = LabelIcon
+import type {
+  ChangeEvent,
+  FocusEvent,
+  MouseEvent,
+} from 'react';
+
+import DIcon from './DIcon';
+import { PREFIX_BS } from './config';
+
+import type { EndIcon, LabelIcon, StartIcon } from './interface';
+
+export type DefaultOption = {
+  value: string | number;
+  label: string;
+};
+
+export type Props<T> =
+& LabelIcon
 & StartIcon
 & EndIcon
 & {
   id: string;
   name?: string;
   label?: string;
-  options: Array<Record<string, unknown>>;
   isDisabled?: boolean;
   isLoading?: boolean;
   hint?: string;
-  selectedOption?: Record<string, unknown>;
-  valueExtractor?: (item: any) => string | number;
-  labelExtractor?: (item: any) => string;
-  onChange?: (selectedItem: unknown) => void;
   onBlur?: (event: FocusEvent) => void;
   onIconStartClick?: (event: MouseEvent) => void;
   onIconEndClick?: (event: MouseEvent) => void;
+  options: Array<T>;
+  selectedOption?: T;
+  onChange?: (selectedItem: T | undefined) => void;
+  valueExtractor?: (item: T) => string | number;
+  labelExtractor?: (item: T) => string;
 };
 
-export default function DInputSelect({
-  id,
-  name,
-  label = '',
-  options,
-  labelIcon,
-  labelIconFamilyClass,
-  labelIconFamilyPrefix,
-  isDisabled = false,
-  isLoading = false,
-  iconStart,
-  iconStartFamilyClass,
-  iconStartFamilyPrefix,
-  iconEnd,
-  iconEndFamilyClass,
-  iconEndFamilyPrefix,
-  hint,
-  selectedOption,
-  valueExtractor = (item: any) => item?.value,
-  labelExtractor = (item: any) => item?.label,
-  onChange,
-  onBlur,
-  onIconStartClick,
-  onIconEndClick,
-}: Props) {
-  const changeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = event.target;
-    const selected = options.find((option) => valueExtractor(option).toString() === value);
+export default function DInputSelect<T extends object = DefaultOption>(
+  {
+    id,
+    name,
+    label = '',
+    options,
+    labelIcon,
+    labelIconFamilyClass,
+    labelIconFamilyPrefix,
+    isDisabled = false,
+    isLoading = false,
+    iconStart,
+    iconStartFamilyClass,
+    iconStartFamilyPrefix,
+    iconEnd,
+    iconEndFamilyClass,
+    iconEndFamilyPrefix,
+    hint,
+    selectedOption,
+    valueExtractor,
+    labelExtractor,
+    onChange,
+    onBlur,
+    onIconStartClick,
+    onIconEndClick,
+  }: Props<T>,
+) {
+  const internalValueExtractor = useCallback((option: T | DefaultOption) => {
+    if (valueExtractor) {
+      return valueExtractor(option as T);
+    }
+
+    if ('value' in option) {
+      return option?.value;
+    }
+
+    throw new Error('Must provide a valueExtractor for custom object forms');
+  }, [valueExtractor]);
+
+  const internalLabelExtractor = useCallback((option: T | DefaultOption) => {
+    if (labelExtractor) {
+      return labelExtractor(option as T);
+    }
+
+    if ('label' in option) {
+      return option?.label;
+    }
+
+    throw new Error('Must provide a labelExtractor for custom object forms');
+  }, [labelExtractor]);
+
+  const changeHandler = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+    const selected = options
+      .find((option) => internalValueExtractor(option).toString() === event.currentTarget.value);
     onChange?.(selected);
-  };
+  }, [onChange, options, internalValueExtractor]);
 
-  const blurHandler = (event: FocusEvent) => {
+  const blurHandler = useCallback((event: FocusEvent) => {
     onBlur?.(event);
-  };
+  }, [onBlur]);
 
-  const iconStartClickHandler = (event: MouseEvent) => {
+  const iconStartClickHandler = useCallback((event: MouseEvent) => {
     onIconStartClick?.(event);
-  };
+  }, [onIconStartClick]);
 
-  const iconEndClickHandler = (event: MouseEvent) => {
+  const iconEndClickHandler = useCallback((event: MouseEvent) => {
     onIconEndClick?.(event);
-  };
+  }, [onIconEndClick]);
 
   return (
     <div className="d-input">
@@ -119,17 +156,14 @@ export default function DInputSelect({
             aria-describedby={`${id}Add ${id}Hint`}
             onChange={changeHandler}
             onBlur={blurHandler}
+            {...selectedOption && { value: internalValueExtractor(selectedOption) }}
           >
             {options.map((option) => (
               <option
-                value={valueExtractor(option)}
-                key={valueExtractor(option)}
-                selected={
-                  selectedOption
-                  && valueExtractor(option) === valueExtractor(selectedOption)
-                }
+                value={internalValueExtractor(option)}
+                key={internalValueExtractor(option)}
               >
-                {labelExtractor(option)}
+                {internalLabelExtractor(option)}
               </option>
             ))}
           </select>

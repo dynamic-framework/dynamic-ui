@@ -1,25 +1,22 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable react/button-has-type */
-
-import {
-  useMemo,
-  MouseEvent,
-  useCallback,
-  CSSProperties,
-} from 'react';
+import { useMemo, useCallback } from 'react';
 import classNames from 'classnames';
 
-import type { ButtonType, ButtonVariant } from '../interfaces/DButtonInterface';
-import {
+import type { MouseEvent, CSSProperties } from 'react';
+
+import DIcon from './DIcon';
+import { PREFIX_BS } from './config';
+
+import type {
+  ButtonType,
+  ButtonVariant,
   ClassMap,
   ComponentSize,
   CustomStyles,
   EndIcon,
   InputState,
   StartIcon,
-} from '../interfaces/component-interface';
-import { PREFIX_BS } from '../interfaces/component-config';
-import DIcon from './DIcon';
+} from './interface';
 
 type Props = StartIcon & EndIcon & {
   id?: string;
@@ -36,38 +33,41 @@ type Props = StartIcon & EndIcon & {
   isLoading?: boolean;
   isDisabled?: boolean;
   isStopPropagationEnabled?: boolean;
-  onClick?: (event: MouseEvent) => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
-export default function DButton({
-  theme = 'primary',
-  size,
-  variant,
-  state,
-  text = '',
-  iconStart,
-  iconStartFamilyClass,
-  iconStartFamilyPrefix,
-  iconEnd,
-  iconEndFamilyClass,
-  iconEndFamilyPrefix,
-  value,
-  type = 'button',
-  isPill = false,
-  isLoading = false,
-  isDisabled = false,
-  isStopPropagationEnabled = true,
-  className,
-  onClick,
-}: Props) {
+export default function DButton(
+  {
+    theme = 'primary',
+    size,
+    variant,
+    state,
+    text = '',
+    iconStart,
+    iconStartFamilyClass,
+    iconStartFamilyPrefix,
+    iconEnd,
+    iconEndFamilyClass,
+    iconEndFamilyPrefix,
+    value,
+    type = 'button',
+    isPill = false,
+    isLoading = false,
+    isDisabled = false,
+    isStopPropagationEnabled = true,
+    className,
+    onClick,
+  }: Props,
+) {
   const generateClasses = useMemo<ClassMap>(() => {
     const variantClass = variant
       ? `btn-${variant}-${theme}`
       : `btn-${theme}`;
+
     return {
       btn: true,
       [variantClass]: true,
-      [`btn-${size}`]: !!size,
+      ...size && { [`btn-${size}`]: true },
       ...(state && state !== 'disabled') && { [state]: true },
       loading: isLoading,
     };
@@ -84,7 +84,7 @@ export default function DButton({
     return {};
   }, [isPill]);
 
-  const clickHandler = useCallback((event: MouseEvent) => {
+  const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     if (isStopPropagationEnabled) {
       event.stopPropagation();
     }

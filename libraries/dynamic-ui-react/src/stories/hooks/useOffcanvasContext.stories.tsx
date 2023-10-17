@@ -20,12 +20,11 @@ const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
     isScrollable={false}
     openFrom="end"
   >
-    <DOffcanvasHeader>
+    <DOffcanvasHeader onClose={closeOffcanvas} showCloseButton>
       <h5 className="fw-bold">Advanced filters</h5>
     </DOffcanvasHeader>
     <DOffcanvasBody>
       <p>Offcanvas body</p>
-
     </DOffcanvasBody>
     <DOffcanvasFooter>
       <DButton

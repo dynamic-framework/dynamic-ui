@@ -1,8 +1,11 @@
 import { useCallback } from 'react';
-import { ToastPosition, Slide, toast as reactToast } from 'react-toastify';
+import { Slide, toast as reactToast } from 'react-toastify';
 
-import { DAlert } from '../components';
-import { AlertType } from '../interfaces/DAlertInterface';
+import type { ToastPosition } from 'react-toastify';
+
+import DAlert from '../components/DAlert';
+
+import type { AlertType } from '../components/interface';
 
 export type ToastConfig = {
   type?: AlertType;

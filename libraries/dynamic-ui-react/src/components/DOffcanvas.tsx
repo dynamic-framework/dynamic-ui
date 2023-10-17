@@ -1,21 +1,25 @@
-import { PropsWithChildren } from 'react';
-import { PREFIX_BS } from '../interfaces/component-config';
-import { PositionToggleFrom } from '../interfaces/DOffcanvasInterface';
+import type { PropsWithChildren } from 'react';
+
+import { PREFIX_BS } from './config';
+
+import type { OffcanvasPositionToggleFrom } from './interface';
 
 type Props = PropsWithChildren<{
   name: string;
   isStatic?: boolean;
   isScrollable?: boolean;
-  openFrom?: PositionToggleFrom;
+  openFrom?: OffcanvasPositionToggleFrom;
 }>;
 
-export default function DOffcanvas({
-  name,
-  isStatic,
-  isScrollable,
-  openFrom = 'end',
-  children,
-}: Props) {
+export default function DOffcanvas(
+  {
+    name,
+    isStatic,
+    isScrollable,
+    openFrom = 'end',
+    children,
+  }: Props,
+) {
   return (
     <div
       className={`offcanvas offcanvas-${openFrom} show`}

@@ -1,7 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { DInputSelect } from '../../components';
-import { ICONS } from '../constants';
+
+import type { DInputSelectProps } from '../../components';
+
+import { ICONS } from '../config/constants';
 
 const config: Meta<typeof DInputSelect> = {
   title: 'Design System/Components/Input Select',
@@ -140,17 +143,20 @@ export const Icon: Story = {
   },
 };
 
-export const Extractors: Story = {
+export const Extractors: StoryObj<DInputSelectProps<{ id: string; text: string; }>> = {
+  render: (args) => (
+    <DInputSelect<{ id: string; text: string; }> {...args} />
+  ),
   args: {
     id: 'componentId4',
     label: 'Label',
     labelIcon: undefined,
     options: [
-      { text: 'Option 1', id: '1' },
-      { text: 'Option 2', id: '2' },
+      { id: '1', text: 'Option 1' },
+      { id: '2', text: 'Option 2' },
     ],
-    labelExtractor: (item: { text: string; id: string }) => item.text,
-    valueExtractor: (item: { text: string; id: string }) => item.id,
+    labelExtractor: (item) => item.text,
+    valueExtractor: (item) => item.id,
     hint: 'Assistive text',
   },
 };

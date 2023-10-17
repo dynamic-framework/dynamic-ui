@@ -22,7 +22,7 @@ export const Default: Story = {
   decorators: [
     (Story) => (
       <Formik
-        initialValues={{ field: OPTIONS.at(-1) }}
+        initialValues={{ field: OPTIONS[OPTIONS.length - 1] }}
         onSubmit={console.log}
         enableReinitialize
       >
@@ -51,7 +51,7 @@ export const Empty: Story = {
   decorators: [
     (Story) => (
       <Formik
-        initialValues={{ field: {} }}
+        initialValues={{ field: undefined }}
         onSubmit={console.log}
         enableReinitialize
       >

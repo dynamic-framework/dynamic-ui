@@ -5,12 +5,12 @@ import {
   THEMES_WITH_EMPTY,
   FIRST_ICON,
   ICONS,
-} from '../constants';
+} from '../config/constants';
 import {
   ICON_FAMILY_CLASS,
   ICON_FAMILY_PREFIX,
   PREFIX_BS,
-} from '../../interfaces/component-config';
+} from '../../components/config';
 
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',

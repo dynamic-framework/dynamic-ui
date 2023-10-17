@@ -6,29 +6,18 @@ import {
 } from '@storybook/blocks';
 import { PREFIX_BS } from '../../components/config';
 
-import * as DFormikInputSelectStories from './DFormikInputSelect.stories';
+import * as DInputCurrencyBaseStories from './DInputCurrencyBase.stories';
 
-# Formik Input Select
+# Input Currency Base
 
-Component composition to use a `d-input-select` with Formik.
-
-<Markdown>
-  {`
-
-  | ⚡ NOTE ⚡                                                                     |
-  |------------------------------------------------------------------------------|
-  | Remember that you must use this component inside a \`<Formik />\` component! |
-
-  `}
-</Markdown>
+Component composition with `d-input` to make a currency input component.
 
 ## CSS Variables
-
 <Markdown>
   {`
 
-  | Variable                                              | Type            | Description                   |
-  |-------------------------------------------------------|-----------------|-------------------------------|
+  | Variable                                            | Type            | Description                   |
+  |-----------------------------------------------------|-----------------|-------------------------------|
   | \`--${PREFIX_BS}input-control-gap\`                 | css length unit | Space between layout elements |
   | \`--${PREFIX_BS}input-label-color\`                 | css color unit  | Label color                   |
   | \`--${PREFIX_BS}input-label-font-weight\`           | css font weight | Label font weight             |
@@ -49,15 +38,14 @@ Component composition to use a `d-input-select` with Formik.
   | \`--${PREFIX_BS}input-group-disabled-color\`        | css color unit  | Input disable color           |
   | \`--${PREFIX_BS}input-group-disabled-border-color\` | css color unit  | Input disable border color    |
   | \`--${PREFIX_BS}input-form-control-text-align\`     | css text align  | Input text align              |
+  | \`--${PREFIX_BS}input-currency-symbol-color\`       | css color unit  | Color of the currency symbol  |
 
   `}
 </Markdown>
 
 ## Args
-<Meta of={DFormikInputSelectStories} />
+<Meta of={DInputCurrencyBaseStories} />
 
-<ArgTypes of={DFormikInputSelectStories} />
+<ArgTypes of={DInputCurrencyBaseStories} />
 
 <Stories />
-
-

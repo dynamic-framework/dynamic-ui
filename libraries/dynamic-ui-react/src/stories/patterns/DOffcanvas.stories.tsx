@@ -79,7 +79,7 @@ export const ActionsPlacementStart: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <DOffcanvasHeader>
+      <DOffcanvasHeader showCloseButton>
         <h5 className="fw-bold">Advanced filters</h5>
       </DOffcanvasHeader>
       <DOffcanvasBody>
@@ -115,7 +115,7 @@ export const ActionsPlacementEnd: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <DOffcanvasHeader>
+      <DOffcanvasHeader showCloseButton>
         <h5 className="fw-bold">Advanced filters</h5>
       </DOffcanvasHeader>
       <DOffcanvasBody>
@@ -151,6 +151,7 @@ export const WithoutHeader: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
+      <DOffcanvasHeader showCloseButton />
       <DOffcanvasBody>
         <p>Offcanvas body</p>
       </DOffcanvasBody>
@@ -184,7 +185,7 @@ export const WithoutActions: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
-      <DOffcanvasHeader>
+      <DOffcanvasHeader showCloseButton>
         <h5 className="fw-bold">Advanced filters</h5>
       </DOffcanvasHeader>
       <DOffcanvasBody>
@@ -210,6 +211,7 @@ export const OnlyBody: Story = {
   ],
   render: (args) => (
     <DOffcanvas {...args}>
+      <DOffcanvasHeader showCloseButton />
       <DOffcanvasBody>
         <p>Offcanvas body</p>
       </DOffcanvasBody>

@@ -1,4 +1,5 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+
 import DIcon from './DIcon';
 
 type Props = PropsWithChildren<{
@@ -6,11 +7,13 @@ type Props = PropsWithChildren<{
   onClose?: () => void;
 }>;
 
-export default function DModalHeader({
-  showCloseButton,
-  onClose,
-  children,
-}: Props) {
+export default function DModalHeader(
+  {
+    showCloseButton,
+    onClose,
+    children,
+  }: Props,
+) {
   return (
     <div className="modal-header">
       {showCloseButton && (

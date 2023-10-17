@@ -3,8 +3,9 @@ import { Meta } from '@storybook/react';
 import { DButton, DToastContainer } from '../../components';
 import { useToast as useToastHook } from '../../hooks';
 
-import { THEMES } from '../constants';
-import { AlertType } from '../../interfaces/DAlertInterface';
+import { THEMES } from '../config/constants';
+
+import { AlertType } from '../../components/interface';
 
 type Props = {
   message: string;
@@ -47,6 +48,6 @@ export const useToast = {
   args: {
     message: 'the default message',
     type: 'info',
-    showClose: false,
+    showClose: true,
   },
 };

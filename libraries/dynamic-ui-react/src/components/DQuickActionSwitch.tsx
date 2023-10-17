@@ -1,4 +1,7 @@
-import { MouseEvent } from 'react';
+import { useCallback } from 'react';
+
+import type { MouseEvent } from 'react';
+
 import DInputSwitch from './DInputSwitch';
 
 type Props = {
@@ -11,19 +14,21 @@ type Props = {
   onClick?: (isChecked: boolean | undefined) => void;
 };
 
-export default function DQuickActionSwitch({
-  id,
-  name,
-  label,
-  hint,
-  isChecked,
-  isDisabled,
-  onClick,
-}: Props) {
-  const clickHandler = (event: MouseEvent) => {
+export default function DQuickActionSwitch(
+  {
+    id,
+    name,
+    label,
+    hint,
+    isChecked,
+    isDisabled,
+    onClick,
+  }: Props,
+) {
+  const clickHandler = useCallback((event: MouseEvent) => {
     event.stopPropagation();
     onClick?.(isChecked);
-  };
+  }, [isChecked, onClick]);
 
   return (
     <button
@@ -38,7 +43,6 @@ export default function DQuickActionSwitch({
           isDisabled={isDisabled}
           isChecked={isChecked}
           isReadonly
-          onChange={() => {}}
         />
         <label
           className="d-quick-action-switch-label"

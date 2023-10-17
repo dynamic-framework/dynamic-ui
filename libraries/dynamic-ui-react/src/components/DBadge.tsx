@@ -1,5 +1,7 @@
 import classNames from 'classnames';
-import { CSSProperties, useMemo } from 'react';
+import { useMemo } from 'react';
+
+import type { CSSProperties } from 'react';
 
 type Props = {
   text?: string;
@@ -10,14 +12,16 @@ type Props = {
   style?: CSSProperties;
 };
 
-export default function DBadge({
-  text,
-  isDot = false,
-  theme = 'primary',
-  id,
-  className,
-  style,
-}: Props) {
+export default function DBadge(
+  {
+    text,
+    isDot = false,
+    theme = 'primary',
+    id,
+    className,
+    style,
+  }: Props,
+) {
   const generateClasses = useMemo(
     () => ({
       badge: true,

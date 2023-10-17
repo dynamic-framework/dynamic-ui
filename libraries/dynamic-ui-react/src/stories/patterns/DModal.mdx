@@ -6,7 +6,7 @@ import {
   Story,
   Source,
 } from '@storybook/blocks';
-import { PREFIX_BS } from '../../interfaces/component-config';
+import { PREFIX_BS } from '../../components/config';
 
 import * as DModalStories from './DModal.stories';
 import * as useModalContextStories from "../hooks/useModalContext.stories";
@@ -60,16 +60,15 @@ import * as useModalContextStories from "../hooks/useModalContext.stories";
   name="example"
   isCentered
   isStatic
-  showCloseButton
-  onMClose={() => closeModal()}
+  className="d-block"
 >
-  <div slot="header">
+  <DModalHeader onClose={closeModal} showCloseButton>
     <h5 className="fw-bold">Do you want to reject the offer?</h5>
-  </div>
-  <div slot="body">
+  </DModalHeader>
+  <DModalBody>
     <p className="py-3 px-5">Modal body</p>
-  </div>
-  <div slot="footer">
+  </DModalBody>
+  <DModalFooter>
     <DButton
       text="cancel"
       theme="secondary"
@@ -79,7 +78,7 @@ import * as useModalContextStories from "../hooks/useModalContext.stories";
       onClick={() => closeModal()}
     />
     <DButton text="ok" className="d-grid" isPill />
-  </div>
+  </DModalFooter>
 </DModal>
   `}
 />

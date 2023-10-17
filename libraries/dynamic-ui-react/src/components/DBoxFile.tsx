@@ -1,10 +1,12 @@
-import { PropsWithChildren } from 'react';
 import { useDropzone } from 'react-dropzone';
 import classnames from 'classnames';
 
+import type { PropsWithChildren } from 'react';
 import type { DropzoneOptions } from 'react-dropzone';
+
 import DIcon from './DIcon';
-import { FamilyIcon } from '../interfaces/component-interface';
+
+import type { FamilyIcon } from './interface';
 
 type Props = FamilyIcon & PropsWithChildren<
 Pick<
@@ -24,14 +26,16 @@ DropzoneOptions,
 }
 >;
 
-export default function DBoxFile({
-  icon = 'cloud-upload',
-  iconFamilyClass,
-  iconFamilyPrefix,
-  isDisabled = false,
-  children,
-  ...dropzoneOptions
-}: Props) {
+export default function DBoxFile(
+  {
+    icon = 'cloud-upload',
+    iconFamilyClass,
+    iconFamilyPrefix,
+    isDisabled = false,
+    children,
+    ...dropzoneOptions
+  }: Props,
+) {
   const {
     acceptedFiles,
     getRootProps,

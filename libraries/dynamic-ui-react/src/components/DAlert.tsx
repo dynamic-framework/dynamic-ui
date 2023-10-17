@@ -1,9 +1,12 @@
-import { CSSProperties, PropsWithChildren, useMemo } from 'react';
+import { useMemo } from 'react';
 import classNames from 'classnames';
+
+import type { CSSProperties, PropsWithChildren } from 'react';
+
 import DIcon from './DIcon';
-import { ALERT_TYPE_ICON, AlertType } from '../interfaces/DAlertInterface';
-import { PREFIX_BS } from '../interfaces/component-config';
-import { CustomStyles } from '../interfaces/component-interface';
+import { ALERT_TYPE_ICON, PREFIX_BS } from './config';
+
+import type { AlertType, CustomStyles } from './interface';
 
 type Props = PropsWithChildren<{
   id?: string;
@@ -18,19 +21,21 @@ type Props = PropsWithChildren<{
   onClose?: () => void;
 }>;
 
-export default function DAlert({
-  type = 'light',
-  icon,
-  iconFamilyClass,
-  iconFamilyPrefix,
-  showIcon = false,
-  showClose,
-  onClose,
-  children,
-  id,
-  className,
-  style,
-}: Props) {
+export default function DAlert(
+  {
+    type = 'light',
+    icon,
+    iconFamilyClass,
+    iconFamilyPrefix,
+    showIcon = false,
+    showClose,
+    onClose,
+    children,
+    id,
+    className,
+    style,
+  }: Props,
+) {
   const generateClasses = useMemo(
     () => ({
       alert: true,

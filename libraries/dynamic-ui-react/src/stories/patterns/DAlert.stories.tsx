@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DAlert } from '../../components';
-import { THEMES, ICONS } from '../constants';
+import { THEMES, ICONS } from '../config/constants';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Patterns/Alert',

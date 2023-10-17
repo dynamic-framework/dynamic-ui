@@ -1,4 +1,7 @@
-import { ChangeEvent } from 'react';
+import { useCallback } from 'react';
+
+import type { ChangeEvent } from 'react';
+
 import DInputCheck from './DInputCheck';
 
 type Props = {
@@ -12,20 +15,22 @@ type Props = {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function DQuickActionCheck({
-  id,
-  name,
-  value,
-  line1,
-  line2,
-  line3,
-  isChecked,
-  onChange,
-}: Props) {
-  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+export default function DQuickActionCheck(
+  {
+    id,
+    name,
+    value,
+    line1,
+    line2,
+    line3,
+    isChecked,
+    onChange,
+  }: Props,
+) {
+  const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
     onChange?.(event);
-  };
+  }, [onChange]);
 
   return (
     <label
@@ -38,7 +43,7 @@ export default function DQuickActionCheck({
         name={name}
         value={value}
         isChecked={isChecked}
-        onChange={(event) => changeHandler(event)}
+        onChange={changeHandler}
       />
       <div className="d-quick-action-check-detail">
         <span className="d-quick-action-check-line1">

@@ -1,32 +1,15 @@
-import DatePicker, {
-  ReactDatePickerCustomHeaderProps,
-  ReactDatePickerProps,
-} from 'react-datepicker';
+import { useCallback, useMemo } from 'react';
+import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
 
-import {
-  FormEventHandler,
-  forwardRef,
-  useCallback,
-} from 'react';
-
-import { useLiquidContext } from '../contexts';
+import type { ReactDatePickerCustomHeaderProps, ReactDatePickerProps } from 'react-datepicker';
 
 import DDatePickerTime from './DDatePickerTime';
 import DDatePickerInput from './DDatePickerInput';
 import DDatePickerHeader from './DDatePickerHeader';
-import { ComponentSize } from '../interfaces/component-interface';
-import { ButtonVariant } from '../interfaces/DButtonInterface';
+import { useLiquidContext } from '../contexts';
 
-type InputPickerProps = {
-  value?: string;
-  onClick?: () => void;
-};
-
-type TimeInputPickerProps = {
-  value?: string | number ;
-  onChange?: ((value: string) => void) & FormEventHandler<HTMLInputElement>
-};
+import type { ButtonVariant, ComponentSize } from './interface';
 
 type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
   date: string;
@@ -64,30 +47,9 @@ export default function DDatePicker(
     ...props
   }: Props,
 ) {
-  const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
+  const selected = useMemo(() => DateTime.fromISO(date).toJSDate(), [date]);
   const { language } = useLiquidContext();
-  const lang = language || 'en';
-
-  // eslint-disable-next-line react/no-unstable-nested-components
-  const InputPicker = forwardRef(({ value, onClick }: InputPickerProps, ref) => (
-    <DDatePickerInput
-      label={inputLabel}
-      id={inputId}
-      iconEnd={inputIcon}
-      value={value}
-      onClick={onClick}
-      ref={ref}
-    />
-  ));
-
-  const TimeInputPicker = useCallback(({ value, onChange }: TimeInputPickerProps) => (
-    <DDatePickerTime
-      onChange={onChange}
-      value={value}
-      label={timeLabel}
-      id={timeId}
-    />
-  ), [timeLabel, timeId]);
+  const locale = useMemo(() => language || 'en', [language]);
 
   const DatePickerHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
     <DDatePickerHeader
@@ -109,16 +71,14 @@ export default function DDatePicker(
 
   return (
     <DatePicker
-      selected={dateJS(date)}
+      selected={selected}
       calendarClassName="m-date-picker"
-      onChange={(value) => {
-        onChangeDate(value);
-      }}
+      onChange={onChangeDate}
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
-      customInput={<InputPicker />}
-      customTimeInput={<TimeInputPicker />}
+      customInput={<DDatePickerInput id={inputId} iconEnd={inputIcon} />}
+      customTimeInput={<DDatePickerTime id={timeId} label={timeLabel} />}
       selectsRange={selectsRange}
-      {...lang && { locale: lang }}
+      {...locale && { locale }}
       {...props}
     />
   );

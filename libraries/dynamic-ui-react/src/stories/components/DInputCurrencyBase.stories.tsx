@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { DInputSearch } from '../../components';
+import { DInputCurrencyBase } from '../../components';
 import { ICONS } from '../config/constants';
 
-const config: Meta<typeof DInputSearch> = {
-  title: 'Design System/Components/Input Search',
-  component: DInputSearch,
+const config: Meta<typeof DInputCurrencyBase> = {
+  title: 'Design System/Components/Input Currency Base',
+  component: DInputCurrencyBase,
   argTypes: {
     id: {
       control: 'text',
@@ -36,8 +36,8 @@ const config: Meta<typeof DInputSearch> = {
       type: 'string',
     },
     value: {
-      control: 'text',
-      type: 'string',
+      control: 'number',
+      type: 'number',
       description: 'The value of the input',
     },
     isDisabled: {
@@ -55,10 +55,34 @@ const config: Meta<typeof DInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
+    iconStart: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    iconEnd: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
+    },
+    currencyCode: {
+      control: 'text',
+      type: 'string',
     },
     isInvalid: {
       control: 'boolean',
@@ -70,8 +94,13 @@ const config: Meta<typeof DInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    onClick: {
-      action: 'onClick',
+    minValue: {
+      control: 'number',
+      type: 'number',
+    },
+    maxValue: {
+      control: 'number',
+      type: 'number',
     },
     onChange: {
       action: 'onChange',
@@ -80,7 +109,7 @@ const config: Meta<typeof DInputSearch> = {
 };
 
 export default config;
-type Story = StoryObj<typeof DInputSearch>;
+type Story = StoryObj<typeof DInputCurrencyBase>;
 
 export const Default: Story = {
   args: {
@@ -89,6 +118,14 @@ export const Default: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
   },
 };
 
@@ -98,7 +135,15 @@ export const Value: Story = {
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
-    value: 'Value',
+    value: 100,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
   },
 };
 
@@ -109,6 +154,14 @@ export const Error: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
     isInvalid: true,
   },
 };
@@ -120,6 +173,14 @@ export const Confirm: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
     isValid: true,
   },
 };
@@ -131,6 +192,33 @@ export const Disabled: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
     isDisabled: true,
+  },
+};
+
+export const WithCurrencyCode: Story = {
+  args: {
+    id: 'componentId6',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyCode: 'CLP',
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
   },
 };

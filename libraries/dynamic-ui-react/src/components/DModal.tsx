@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
-import { PropsWithChildren, useMemo } from 'react';
+import { useMemo } from 'react';
 import classNames from 'classnames';
-import { FullScreenFrom, ModalSize } from '../interfaces/DModalInterface';
-import { PREFIX_BS } from '../interfaces/component-config';
+
+import type { PropsWithChildren } from 'react';
+
+import { PREFIX_BS } from './config';
+
+import type { ModalFullScreenFrom, ModalSize } from './interface';
 
 type Props = PropsWithChildren<{
   name: string;
@@ -12,21 +14,23 @@ type Props = PropsWithChildren<{
   isScrollable?: boolean;
   isCentered?: boolean;
   isFullScreen?: boolean;
-  fullScreenFrom?: FullScreenFrom;
+  fullScreenFrom?: ModalFullScreenFrom;
   modalSize?: ModalSize;
 }>;
 
-export default function DModal({
-  name,
-  className = '',
-  isStatic,
-  isScrollable,
-  isCentered,
-  isFullScreen,
-  fullScreenFrom,
-  modalSize,
-  children,
-}: Props) {
+export default function DModal(
+  {
+    name,
+    className = '',
+    isStatic,
+    isScrollable,
+    isCentered,
+    isFullScreen,
+    fullScreenFrom,
+    modalSize,
+    children,
+  }: Props,
+) {
   const fullScreenClass = useMemo(() => {
     if (isFullScreen) {
       if (fullScreenFrom) {
@@ -46,8 +50,8 @@ export default function DModal({
     'modal-dialog': true,
     'modal-dialog-centered': !!isCentered,
     'modal-dialog-scrollable': !!isScrollable,
-    [`modal-${modalSize!}`]: !!modalSize,
     [fullScreenClass]: !!isFullScreen,
+    ...modalSize && { [`modal-${modalSize}`]: true },
   }), [fullScreenClass, isCentered, isFullScreen, isScrollable, modalSize]);
 
   return (

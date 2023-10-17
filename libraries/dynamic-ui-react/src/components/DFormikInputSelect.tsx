@@ -1,43 +1,25 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// eslint-disable-next-line max-len
 import { useField } from 'formik';
-
-import type { ComponentProps } from 'react';
 
 import DInputSelect from './DInputSelect';
 
-type Props = Omit<
-ComponentProps<typeof DInputSelect>,
-| 'name'
-| 'labelExtractor'
-| 'valueExtractor'
-| 'selectedOption'
-> & {
+import type { DefaultOption, Props as DInputSelectProps } from './DInputSelect';
+
+type Props<T> = Omit<DInputSelectProps<T>, | 'name'> & {
   name: string;
-  labelExtractor?: (item: any) => string;
-  valueExtractor?: (item: any) => string | number;
 };
 
-export default function DFormikInputSelect(
+export default function DFormikInputSelect<T extends object = DefaultOption>(
   {
     name,
-    labelExtractor = (item) => item?.label,
-    valueExtractor = (item) => item?.value as string,
     ...props
-  }: Props,
+  }: Props<T>,
 ) {
-  const [field,, helpers] = useField<any>(name);
+  const [field,, helpers] = useField<T | undefined>(name);
   return (
-    <DInputSelect
+    <DInputSelect<T>
       {...props}
       name={field.name}
       selectedOption={field.value}
-      labelExtractor={labelExtractor}
-      valueExtractor={valueExtractor}
       onChange={(selected) => helpers.setValue(selected)}
       onBlur={(selected) => field.onBlur(selected)}
     />

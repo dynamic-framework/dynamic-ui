@@ -1,10 +1,6 @@
 .offcanvas {
   --#{$prefix}offcanvas-footer-gap: #{$offcanvas-footer-gap};
 
-  .d-offcanvas-slot > * {
-    display: contents;
-  }
-
   .offcanvas-header {
     flex-direction: row;
     align-items: center;
@@ -35,10 +31,8 @@
     }
   }
 
-  .d-offcanvas-action-fill {
-    div > * {
-      flex: 1;
-    }
+  .d-offcanvas-action-fill > * {
+    flex: 1;
   }
 
   .d-offcanvas-action-start {

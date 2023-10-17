@@ -6,7 +6,7 @@ import {
   Story,
   Source,
 } from '@storybook/blocks';
-import { PREFIX_BS } from '../../interfaces/component-config';
+import { PREFIX_BS } from '../../components/config';
 
 import * as DOffcanvasStories from './DOffcanvas.stories';
 import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.stories";
@@ -55,17 +55,15 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
   name="example"
   isStatic={false}
   isScrollable={false}
-  showCloseButton
   openFrom="end"
-  onMClose={() => closeOffcanvas()}
 >
-  <div slot="header">
+  <DOffcanvasHeader onClose={closeOffcanvas} showCloseButton>
     <h5 className="fw-bold">Advanced filters</h5>
-  </div>
-  <div slot="body">
+  </DOffcanvasHeader>
+  <DOffcanvasBody>
     <p>Offcanvas body</p>
-  </div>
-  <div slot="footer">
+  </DOffcanvasBody>
+  <DOffcanvasFooter>
     <DButton
       text="cancel"
       theme="secondary"
@@ -75,7 +73,7 @@ import * as useOffcanvasContextStories from "../hooks/useOffcanvasContext.storie
       onClick={() => closeOffcanvas()}
     />
     <DButton text="ok" className="d-grid" isPill />
-  </div>
+  </DOffcanvasFooter>
 </DOffcanvas>
   `}
 />

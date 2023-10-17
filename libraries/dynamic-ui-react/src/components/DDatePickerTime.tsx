@@ -1,4 +1,5 @@
-import { ComponentProps, FormEventHandler } from 'react';
+import type { ComponentProps, FormEventHandler } from 'react';
+
 import DInput from './DInput';
 
 type Props = {
@@ -11,13 +12,15 @@ type Props = {
 | 'value'
 >;
 
-export default function DDatePickerTime({
-  value,
-  onChange,
-  id,
-  label,
-  ...props
-}: Props) {
+export default function DDatePickerTime(
+  {
+    value,
+    onChange,
+    id,
+    label,
+    ...props
+  }: Props,
+) {
   return (
     <div className="d-flex align-items-center gap-2 flex-column d-datepicker-time">
       {label && (
@@ -25,7 +28,7 @@ export default function DDatePickerTime({
       )}
       <DInput
         {...onChange && {
-          onChange: (time) => onChange(time as unknown as string),
+          onChange: (event) => onChange(event.target.value),
         }}
         type="time"
         id={id}

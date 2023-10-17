@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Meta, StoryObj } from '@storybook/react';
-import { PREFIX_BS } from '../../interfaces/component-config';
+import { PREFIX_BS } from '../../components/config';
 
 import { DQuickActionButton } from '../../components';
-import { THEMES_WITH_EMPTY, ICONS } from '../constants';
+import { THEMES_WITH_EMPTY, ICONS } from '../config/constants';
 
 const config: Meta<typeof DQuickActionButton> = {
   title: 'Design System/Components/Quick Action Button',

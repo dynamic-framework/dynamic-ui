@@ -9,13 +9,15 @@ type Props = {
   enableStripedAnimation?: boolean;
 };
 
-export default function DProgress({
-  currentValue,
-  minValue = 0,
-  maxValue = 100,
-  hideCurrentValue = false,
-  enableStripedAnimation = false,
-}: Props) {
+export default function DProgress(
+  {
+    currentValue,
+    minValue = 0,
+    maxValue = 100,
+    hideCurrentValue = false,
+    enableStripedAnimation = false,
+  }: Props,
+) {
   const formatProgress = useMemo(
     () => `${currentValue}%`,
     [currentValue],

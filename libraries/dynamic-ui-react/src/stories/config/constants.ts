@@ -1,4 +1,4 @@
-import BOOTSTRAP_ICONS from './bootstrap-icons.json';
+import BOOTSTRAP_ICONS from '../bootstrap-icons.json';
 
 export const ICONS = BOOTSTRAP_ICONS;
 export const FIRST_ICON = BOOTSTRAP_ICONS[0];

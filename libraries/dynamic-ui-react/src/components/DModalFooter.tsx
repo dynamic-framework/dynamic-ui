@@ -1,13 +1,15 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   actionPlacement?: 'start' | 'end' | 'fill' | 'center';
 }>;
 
-export default function DModalFooter({
-  actionPlacement = 'fill',
-  children,
-}: Props) {
+export default function DModalFooter(
+  {
+    actionPlacement = 'fill',
+    children,
+  }: Props,
+) {
   return (
     <>
       <div className="d-modal-separator" />

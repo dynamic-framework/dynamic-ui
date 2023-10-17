@@ -29,3 +29,21 @@ export type EndIcon = {
   iconEndFamilyClass?: string;
   iconEndFamilyPrefix?: string;
 };
+
+export type AlertType = 'success' | 'info' | 'light' | 'dark' | 'warning' | 'danger';
+export type AlertTypeIconMap = {
+  [state in AlertType]: string;
+};
+
+export type ButtonVariant = 'outline' | 'link';
+export type ButtonType = 'submit' | 'reset' | 'button';
+
+export type InputCheckType = 'checkbox' | 'radio';
+
+export type PinInputMode = 'numeric' | 'text' | 'tel';
+export type PinInputType = 'number' | 'text' | 'tel';
+
+export type ModalSize = 'sm' | 'lg' | 'xl';
+export type ModalFullScreenFrom = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+
+export type OffcanvasPositionToggleFrom = 'top' | 'bottom' | 'start' | 'end';

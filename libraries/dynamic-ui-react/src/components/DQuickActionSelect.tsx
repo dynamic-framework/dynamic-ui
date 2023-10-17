@@ -1,4 +1,6 @@
-import { ChangeEvent } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+
+import type { ChangeEvent } from 'react';
 
 type Props = {
   id: string;
@@ -10,18 +12,28 @@ type Props = {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function DQuickActionSelect({
-  id,
-  name,
-  value,
-  line1,
-  line2,
-  isSelected,
-  onChange,
-}: Props) {
-  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+export default function DQuickActionSelect(
+  {
+    id,
+    name,
+    value,
+    line1,
+    line2,
+    isSelected = false,
+    onChange,
+  }: Props,
+) {
+  const innerRef = useRef<HTMLInputElement>(null);
+  const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
     onChange?.(event);
-  };
+  }, [onChange]);
+
+  useEffect(() => {
+    if (innerRef.current) {
+      innerRef.current.checked = isSelected;
+    }
+  }, [isSelected]);
 
   return (
     <label
@@ -29,11 +41,11 @@ export default function DQuickActionSelect({
       htmlFor={id}
     >
       <input
+        ref={innerRef}
         id={id}
         type="radio"
         name={name}
         value={value}
-        checked={isSelected}
         onChange={changeHandler}
       />
       <span className="d-quick-action-select-line1">
