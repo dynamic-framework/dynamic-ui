@@ -3,11 +3,9 @@
   "private": true,
   "workspaces": [],
   "devDependencies": {
-    "commitizen": "^4.3.0",
     "conventional-changelog-conventionalcommits": "^7.0.2",
-    "cz-conventional-changelog": "^3.3.0",
     "husky": "^8.0.3",
-    "lerna": "^7.4.0",
+    "lerna": "~7.3.1",
     "nx": "^16.10.0",
     "typescript": "^5.2.2"
   },
@@ -21,7 +19,7 @@
     "eslint": "lerna run eslint --no-private",
     "stylelint": "lerna run stylelint --no-private",
     "test": "lerna run test --no-private",
-    "publish": "lerna publish --no-private --loglevel error"
+    "publish": "lerna publish --no-private --loglevel verbose"
   },
   "engines": {
     "node": ">=18.18",
