@@ -23,12 +23,7 @@
     "publish": "lerna publish --no-private --loglevel error"
   },
   "engines": {
-    "node": ">=16.16",
+    "node": ">=18.18",
     "pnpm": ">=7.29"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "@stencil/react-output-target@0.5.3": "patches/@stencil__react-output-target@0.5.3.patch"
-    }
   }
 }
