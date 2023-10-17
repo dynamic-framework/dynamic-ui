@@ -29,13 +29,46 @@ export const Default: Story = {
     </DPopover>
   ),
   args: {
+    adjustContentToRender: true,
     renderComponent: (toggle) => (
-      <DButton
-        text="Dropdown Component"
-        iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-        isStopPropagationEnabled={false}
-        className="d-grid"
-      />
+      <div className="d-grid">
+        <DButton
+          text="Dropdown Component"
+          iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
+          isStopPropagationEnabled={false}
+        />
+      </div>
+    ),
+  },
+};
+
+export const WithoutAdjustToContent: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DPopover {...args}>
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+    </DPopover>
+  ),
+  args: {
+    renderComponent: (toggle) => (
+      <div className="d-grid">
+        <DButton
+          text="Dropdown Component"
+          iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
+          isStopPropagationEnabled={false}
+        />
+      </div>
     ),
   },
 };
@@ -59,13 +92,15 @@ export const Open: Story = {
     </DPopover>
   ),
   args: {
+    adjustContentToRender: true,
     renderComponent: (toggle) => (
-      <DButton
-        text="Dropdown Component"
-        iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-        isStopPropagationEnabled={false}
-        className="d-grid"
-      />
+      <div className="d-grid">
+        <DButton
+          text="Dropdown Component"
+          iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
+          isStopPropagationEnabled={false}
+        />
+      </div>
     ),
     isOpen: true,
   },

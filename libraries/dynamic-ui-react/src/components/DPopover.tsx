@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import classNames from 'classnames';
 import {
   useFloating,
   autoUpdate,
@@ -17,8 +18,9 @@ import type { PropsWithChildren, ReactElement } from 'react';
 
 type Props = PropsWithChildren<{
   renderComponent: (isOpen: boolean) => ReactElement;
-  isOpen: boolean,
-  setEventIsOpen?: (isOpen: boolean) => void
+  isOpen: boolean;
+  setEventIsOpen?: (isOpen: boolean) => void;
+  adjustContentToRender?: boolean;
 }>;
 
 export default function DPopover(
@@ -27,6 +29,7 @@ export default function DPopover(
     renderComponent,
     isOpen,
     setEventIsOpen,
+    adjustContentToRender = false,
   }: Props,
 ) {
   const [innerIsOpen, setInnerIsOpen] = useState(false);
@@ -76,7 +79,12 @@ export default function DPopover(
       {innerIsOpen && (
         <FloatingFocusManager context={context} modal={false}>
           <div
-            className="d-popover-content"
+            className={classNames(
+              'd-popover-content',
+              {
+                'w-100': adjustContentToRender,
+              },
+            )}
             ref={refs.setFloating}
             style={floatingStyles}
             aria-labelledby={headingId}
