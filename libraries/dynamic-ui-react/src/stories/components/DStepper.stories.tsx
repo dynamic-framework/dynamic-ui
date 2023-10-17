@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DStepper } from '../../components';
-import { ICONS } from '../constants';
+import { ICONS } from '../config/constants';
 
 const config: Meta<typeof DStepper> = {
   title: 'Design System/Components/Stepper',

@@ -1,6 +1,8 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { ComponentProps, useMemo } from 'react';
+import { useMemo } from 'react';
 import classNames from 'classnames';
+
+import type { ComponentProps } from 'react';
+
 import DListItem from './DListItem';
 import { useFormatCurrency } from '../hooks';
 
@@ -11,13 +13,15 @@ type Props = Omit<ComponentProps<typeof DListItem>, 'children'> & {
   classNameMovement?: string;
 };
 
-export default function DListItemMovement({
-  description,
-  date,
-  amount,
-  classNameMovement,
-  ...props
-}: Props) {
+export default function DListItemMovement(
+  {
+    description,
+    date,
+    amount,
+    classNameMovement,
+    ...props
+  }: Props,
+) {
   const { format } = useFormatCurrency();
   const value = useMemo(() => {
     const valueFormatted = format(amount);

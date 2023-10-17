@@ -27,7 +27,7 @@ jobs:
       - name: Build packages
         run: pnpm build
       - name: Build storybook
-        run: pnpm build:storybook:react
+        run: pnpm build:storybook
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:

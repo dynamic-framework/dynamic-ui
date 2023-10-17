@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { formatCurrency } from '@dynamic-framework/ui';
 
 import { useLiquidContext } from '../contexts';
+import formatCurrency from '../utils/format-currency';
 
 export default function useFormatCurrency(...args: Array<number>) {
   const { currency } = useLiquidContext();

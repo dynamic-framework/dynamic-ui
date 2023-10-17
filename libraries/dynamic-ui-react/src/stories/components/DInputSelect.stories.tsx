@@ -1,13 +1,16 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { DInputSelect } from '../../components';
-import { ICONS } from '../constants';
+
+import type { DInputSelectProps } from '../../components';
+
+import { ICONS } from '../config/constants';
 
 const config: Meta<typeof DInputSelect> = {
   title: 'Design System/Components/Input Select',
   component: DInputSelect,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -80,17 +83,17 @@ const config: Meta<typeof DInputSelect> = {
         },
       },
     },
-    onEventIconStartClick: {
-      action: 'onEventIconStartClick',
+    onIconStartClick: {
+      action: 'onIconStartClick',
     },
-    onEventIconEndClick: {
-      action: 'onEventIconEndClick',
+    onIconEndClick: {
+      action: 'onIconEndClick',
     },
-    onEventChange: {
-      action: 'onEventChange',
+    onChange: {
+      action: 'onChange',
     },
-    onEventBlur: {
-      action: 'onEventBlur',
+    onBlur: {
+      action: 'onBlur',
     },
   },
 };
@@ -100,7 +103,7 @@ type Story = StoryObj<typeof DInputSelect>;
 
 export const Default: Story = {
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -113,7 +116,7 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -127,7 +130,7 @@ export const Disabled: Story = {
 
 export const Icon: Story = {
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     label: 'Label',
     labelIcon: undefined,
     options: [
@@ -140,17 +143,20 @@ export const Icon: Story = {
   },
 };
 
-export const Extractors: Story = {
+export const Extractors: StoryObj<DInputSelectProps<{ id: string; text: string; }>> = {
+  render: (args) => (
+    <DInputSelect<{ id: string; text: string; }> {...args} />
+  ),
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     label: 'Label',
     labelIcon: undefined,
     options: [
-      { text: 'Option 1', id: '1' },
-      { text: 'Option 2', id: '2' },
+      { id: '1', text: 'Option 1' },
+      { id: '2', text: 'Option 2' },
     ],
-    labelExtractor: (item: { text: string; id: string }) => item.text,
-    valueExtractor: (item: { text: string; id: string }) => item.id,
+    labelExtractor: (item) => item.text,
+    valueExtractor: (item) => item.id,
     hint: 'Assistive text',
   },
 };

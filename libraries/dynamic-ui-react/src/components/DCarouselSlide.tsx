@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { SplideSlide } from '@splidejs/react-splide';
 import classNames from 'classnames';
 

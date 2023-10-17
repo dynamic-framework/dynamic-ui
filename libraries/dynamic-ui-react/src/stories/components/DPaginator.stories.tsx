@@ -13,7 +13,7 @@ const meta: Meta<typeof DPaginator> = {
     page: {
       control: 'number',
     },
-    onEventPageChange: {
+    onPageChange: {
       type: 'function',
     },
     previousLabel: {
@@ -58,7 +58,7 @@ export const Default: Story = {
       <DPaginator
         {...args}
         page={page}
-        onEventPageChange={setPage}
+        onPageChange={setPage}
         className="justify-content-center"
       />
     );
@@ -88,7 +88,7 @@ export const LabelArrows: Story = {
       <DPaginator
         {...args}
         page={page}
-        onEventPageChange={setPage}
+        onPageChange={setPage}
         className="justify-content-center"
       />
     );
@@ -120,7 +120,7 @@ export const NoArrows: Story = {
       <DPaginator
         {...args}
         page={page}
-        onEventPageChange={setPage}
+        onPageChange={setPage}
         className="justify-content-center"
       />
     );
@@ -151,7 +151,7 @@ export const CustomCurrentPage: Story = {
       <DPaginator
         {...args}
         page={page}
-        onEventPageChange={setPage}
+        onPageChange={setPage}
         className="justify-content-center"
       />
     );
@@ -182,7 +182,7 @@ export const CustomMaxWidth: Story = {
       <DPaginator
         {...args}
         page={page}
-        onEventPageChange={setPage}
+        onPageChange={setPage}
         className="justify-content-center"
       />
     );

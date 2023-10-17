@@ -2,7 +2,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DList, DListItem } from '../../components';
-import { THEMES } from '../constants';
+import { THEMES } from '../config/constants';
 
 const config: Meta<typeof DListItem> = {
   title: 'Design System/Components/List Item',
@@ -25,8 +25,8 @@ const config: Meta<typeof DListItem> = {
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
     },
-    onEventClick: {
-      action: 'onEventClick',
+    onClick: {
+      action: 'onClick',
     },
   },
 };

@@ -1,36 +1,39 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import { useMemo } from 'react';
+import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
 
-import { useLiquidContext } from '../contexts';
-import { DButton } from './proxies';
+import type { ReactDatePickerProps } from 'react-datepicker';
 
-type CalendarProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' > & {
+import DButton from './DButton';
+import { useLiquidContext } from '../contexts';
+
+type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' > & {
   date: string;
-  onEventChangeDate: (value: Date | null) => void;
+  onChangeDate: (value: Date | null) => void;
 };
 
 export default function DMonthPicker(
   {
-    onEventChangeDate,
+    onChangeDate,
     date,
     ...props
-  }: CalendarProps,
+  }: Props,
 ) {
-  const dateJS = (value: string) => DateTime.fromISO(value).toJSDate();
   const { language } = useLiquidContext();
-  const lang = language || 'en';
+  const selected = useMemo(() => DateTime.fromISO(date).toJSDate(), [date]);
+  const locale = useMemo(() => language || 'en', [language]);
+  const dateFormatted = useMemo(() => (
+    DateTime.fromISO(date).setLocale(locale).toFormat('MMMM yyyy')
+  ), [date, locale]);
   return (
     <DatePicker
       showMonthYearPicker
-      selected={dateJS(date)}
+      selected={selected}
       calendarClassName="d-month-picker"
-      onChange={(value) => {
-        onEventChangeDate(value);
-      }}
+      onChange={onChangeDate}
       customInput={(
         <p className="fw-bold text-capitalize">
-          {DateTime.fromISO(date).setLocale(lang).toFormat('MMMM yyyy')}
+          {dateFormatted}
         </p>
       )}
       renderCustomHeader={({
@@ -46,18 +49,18 @@ export default function DMonthPicker(
             size="sm"
             variant="link"
             theme="light"
-            onEventClick={decreaseYear}
+            onClick={decreaseYear}
             isDisabled={prevYearButtonDisabled}
           />
           <p className="fs-6 fw-bold">
-            { monthDate.getFullYear() }
+            {monthDate.getFullYear()}
           </p>
           <DButton
             iconStart="chevron-right"
             size="sm"
             variant="link"
             theme="light"
-            onEventClick={increaseYear}
+            onClick={increaseYear}
             isDisabled={nextYearButtonDisabled}
           />
         </div>

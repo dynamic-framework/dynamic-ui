@@ -6,7 +6,7 @@ import {
   Story,
   Source,
 } from '@storybook/blocks';
-import { PREFIX_BS } from '@dynamic-framework/ui';
+import { PREFIX_BS } from '../../components/config';
 
 import * as DAlertStories from './DAlert.stories';
 import * as useToastStories from '../hooks/useToast.stories';
@@ -43,7 +43,7 @@ import * as useToastStories from '../hooks/useToast.stories';
 <>
   <DButton
     text="Show Toast"
-    onEventClick={() => toast(message, { type: 'info', showClose: false })}
+    onClick={() => toast(message, { type: 'info', showClose: false })}
   />
   <DToastContainer />
 </>

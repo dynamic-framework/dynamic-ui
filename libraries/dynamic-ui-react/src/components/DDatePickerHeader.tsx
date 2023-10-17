@@ -1,10 +1,13 @@
-/* eslint-disable react/jsx-props-no-spreading */
+import { useCallback, useMemo } from 'react';
 import { DateTime } from 'luxon';
-import { ComponentProps } from 'react';
-import { ButtonVariant, ComponentSize } from '@dynamic-framework/ui';
-import { DButton } from './proxies';
+
+import type { ComponentProps } from 'react';
+
+import DButton from './DButton';
 import DMonthPicker from './DMonthPicker';
 import { useLiquidContext } from '../contexts';
+
+import type { ButtonVariant, ComponentSize } from './interface';
 
 type Props = {
   monthDate: Date;
@@ -26,23 +29,31 @@ type Props = {
 | 'isDisabled'
 >;
 
-export default function DDatePickerHeader({
-  monthDate,
-  changeMonth,
-  changeYear,
-  decreaseMonth,
-  increaseMonth,
-  prevMonthButtonDisabled,
-  nextMonthButtonDisabled,
-  withMonthSelector,
-  decreaseMonthIcon,
-  increaseMonthIcon,
-  iconSize,
-  buttonVariant,
-  buttonTheme,
-}: Props) {
+export default function DDatePickerHeader(
+  {
+    monthDate,
+    changeMonth,
+    changeYear,
+    decreaseMonth,
+    increaseMonth,
+    prevMonthButtonDisabled,
+    nextMonthButtonDisabled,
+    withMonthSelector,
+    decreaseMonthIcon,
+    increaseMonthIcon,
+    iconSize,
+    buttonVariant,
+    buttonTheme,
+  }: Props,
+) {
   const { language } = useLiquidContext();
-  const lang = language || 'en';
+  const locale = useMemo(() => language || 'en', [language]);
+  const onChangeDate = useCallback((value: Date | null) => {
+    if (value) {
+      changeMonth(DateTime.fromJSDate(value).month - 1);
+      changeYear(DateTime.fromJSDate(value).year);
+    }
+  }, [changeMonth, changeYear]);
 
   return (
     <div className="d-flex align-items-center justify-content-between d-datepicker-header">
@@ -51,26 +62,21 @@ export default function DDatePickerHeader({
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
-        onEventClick={decreaseMonth}
+        onClick={decreaseMonth}
         isDisabled={prevMonthButtonDisabled}
       />
       <DMonthPicker
         {...!withMonthSelector && { readOnly: true }}
         date={monthDate.toISOString()}
-        onEventChangeDate={(value) => {
-          if (value) {
-            changeMonth(DateTime.fromJSDate(value).month - 1);
-            changeYear(DateTime.fromJSDate(value).year);
-          }
-        }}
-        {...lang && { locale: lang }}
+        onChangeDate={onChangeDate}
+        {...locale && { locale }}
       />
       <DButton
         iconStart={increaseMonthIcon}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
-        onEventClick={increaseMonth}
+        onClick={increaseMonth}
         isDisabled={nextMonthButtonDisabled}
       />
     </div>

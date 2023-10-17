@@ -1,14 +1,20 @@
 import classNames from 'classnames';
-import { PREFIX_BS } from '@dynamic-framework/ui';
-
 import {
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
+
+import type {
   PropsWithChildren,
   ReactNode,
   ReactElement,
-  useState,
-  useEffect,
 } from 'react';
-import { DIcon } from './proxies';
+
+import { PREFIX_BS } from './config';
+import DIcon from './DIcon';
+
+import type { CustomStyles } from './interface';
 
 type Props = PropsWithChildren<{
   id?: string;
@@ -16,31 +22,37 @@ type Props = PropsWithChildren<{
   Component: ReactElement | ReactNode;
   hasSeparator?: boolean;
   defaultCollapsed?: boolean;
-  onEventChange?: (value: boolean) => void;
+  onChange?: (value: boolean) => void;
 }>;
 
-export default function DCollapse({
-  id,
-  className,
-  Component,
-  hasSeparator = false,
-  defaultCollapsed = false,
-  onEventChange,
-  children,
-}: Props) {
+export default function DCollapse(
+  {
+    id,
+    className,
+    Component,
+    hasSeparator = false,
+    defaultCollapsed = false,
+    onChange,
+    children,
+  }: Props,
+) {
   const [toggle, setToggle] = useState(defaultCollapsed);
 
   const onChangeCollapse = () => setToggle((prev) => !prev);
 
   useEffect(() => {
-    if (onEventChange) {
-      onEventChange(toggle);
+    if (onChange) {
+      onChange(toggle);
     }
-  }, [toggle, onEventChange]);
+  }, [toggle, onChange]);
 
   useEffect(() => {
     setToggle(defaultCollapsed);
   }, [defaultCollapsed]);
+
+  const generateStyles = useMemo<CustomStyles>(() => ({
+    [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
+  }), [hasSeparator]);
 
   return (
     <div
@@ -66,9 +78,7 @@ export default function DCollapse({
           className={classNames({
             'collapse-body': true,
           })}
-          style={{
-            [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
-          }}
+          style={generateStyles}
         >
           {children}
         </div>

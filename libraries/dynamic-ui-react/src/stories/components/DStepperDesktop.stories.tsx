@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DStepperDesktop } from '../../components';
-import { ICONS } from '../constants';
+import { ICONS } from '../config/constants';
 
 const config: Meta<typeof DStepperDesktop> = {
   title: 'Design System/Components/Stepper Desktop',

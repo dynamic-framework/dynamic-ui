@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DAlert } from '../../components';
-import { THEMES, ICONS } from '../constants';
+import { THEMES, ICONS } from '../config/constants';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Patterns/Alert',
@@ -30,8 +30,8 @@ const config: Meta<typeof DAlert> = {
       type: 'boolean',
       description: 'Show alert icon',
     },
-    onEventClose: {
-      action: 'onEventClose',
+    onClose: {
+      action: 'onClose',
     },
   },
 };

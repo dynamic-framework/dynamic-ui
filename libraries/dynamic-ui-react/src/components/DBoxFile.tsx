@@ -1,13 +1,14 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { PropsWithChildren } from 'react';
 import { useDropzone } from 'react-dropzone';
 import classnames from 'classnames';
 
+import type { PropsWithChildren } from 'react';
 import type { DropzoneOptions } from 'react-dropzone';
 
-import { DIcon } from './proxies';
+import DIcon from './DIcon';
 
-type Props = PropsWithChildren<
+import type { FamilyIcon } from './interface';
+
+type Props = FamilyIcon & PropsWithChildren<
 Pick<
 DropzoneOptions,
 | 'accept'
@@ -21,8 +22,6 @@ DropzoneOptions,
 | 'onFileDialogOpen'
 > & {
   icon?: string;
-  iconFamilyClass?: string;
-  iconFamilyPrefix?: string;
   isDisabled: DropzoneOptions['disabled'];
 }
 >;

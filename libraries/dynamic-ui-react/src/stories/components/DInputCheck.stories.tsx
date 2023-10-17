@@ -6,7 +6,7 @@ const config: Meta<typeof DInputCheck> = {
   title: 'Design System/Components/Input Check',
   component: DInputCheck,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -49,7 +49,7 @@ type Story = StoryObj<typeof DInputCheck>;
 
 export const CheckboxWithoutLabel: Story = {
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     type: 'checkbox',
     isChecked: false,
     isDisabled: false,
@@ -58,7 +58,7 @@ export const CheckboxWithoutLabel: Story = {
 
 export const CheckboxDefault: Story = {
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     type: 'checkbox',
     label: 'Label',
     isChecked: false,
@@ -68,7 +68,7 @@ export const CheckboxDefault: Story = {
 
 export const CheckboxChecked: Story = {
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     type: 'checkbox',
     label: 'Label',
     isChecked: true,
@@ -78,7 +78,7 @@ export const CheckboxChecked: Story = {
 
 export const CheckboxDisabled: Story = {
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     type: 'checkbox',
     label: 'Label',
     isChecked: false,
@@ -88,7 +88,7 @@ export const CheckboxDisabled: Story = {
 
 export const RadioWithoutLabel: Story = {
   args: {
-    innerId: 'componentId5',
+    id: 'componentId5',
     type: 'radio',
     isChecked: false,
     isDisabled: false,
@@ -97,7 +97,7 @@ export const RadioWithoutLabel: Story = {
 
 export const RadioDefault: Story = {
   args: {
-    innerId: 'componentId6',
+    id: 'componentId6',
     type: 'radio',
     label: 'Label',
     isChecked: false,
@@ -107,7 +107,7 @@ export const RadioDefault: Story = {
 
 export const RadioChecked: Story = {
   args: {
-    innerId: 'componentId7',
+    id: 'componentId7',
     type: 'radio',
     label: 'Label',
     isChecked: true,
@@ -117,7 +117,7 @@ export const RadioChecked: Story = {
 
 export const RadioDisabled: Story = {
   args: {
-    innerId: 'componentId8',
+    id: 'componentId8',
     type: 'radio',
     label: 'Label',
     isChecked: false,

@@ -40,7 +40,7 @@ export const Default: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'field1',
+    id: 'field1',
     label: 'Label',
     name: 'field',
     placeholder: 'Placeholder',
@@ -77,7 +77,7 @@ export const Empty: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'field2',
+    id: 'field2',
     label: 'Label',
     name: 'field',
     placeholder: 'Placeholder',
@@ -108,7 +108,7 @@ export const WithErrors: Story = {
             <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
               <Story {...args} />
               <DButton
-                onEventClick={() => handleSubmit()}
+                onClick={() => handleSubmit()}
                 text="submit"
               />
             </form>
@@ -123,7 +123,7 @@ export const WithErrors: Story = {
     </LiquidContextProvider>
   ),
   args: {
-    innerId: 'field2',
+    id: 'field2',
     label: 'Label',
     name: 'field',
     placeholder: 'Placeholder',

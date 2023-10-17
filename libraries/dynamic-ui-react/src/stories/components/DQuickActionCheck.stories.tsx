@@ -8,7 +8,7 @@ const config: Meta<typeof DQuickActionCheck> = {
   title: 'Design System/Components/Quick Action Check',
   component: DQuickActionCheck,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
     },
@@ -39,8 +39,8 @@ const config: Meta<typeof DQuickActionCheck> = {
       control: 'boolean',
       type: 'boolean',
     },
-    onEventChange: {
-      action: 'onEventChange',
+    onChange: {
+      action: 'onChange',
     },
   },
 };
@@ -60,7 +60,7 @@ export const Default: Story = {
     ),
   ],
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -78,15 +78,15 @@ export const Example: Story = {
       </div>
     ),
   ],
-  render: ({ innerId, ...args }: ComponentProps<typeof DQuickActionCheck>) => (
+  render: ({ id, ...args }: ComponentProps<typeof DQuickActionCheck>) => (
     <>
-      <DQuickActionCheck innerId={`${innerId}2`} {...args} />
-      <DQuickActionCheck innerId={`${innerId}3`} {...args} />
-      <DQuickActionCheck innerId={`${innerId}4`} {...args} />
+      <DQuickActionCheck id={`${id}2`} {...args} />
+      <DQuickActionCheck id={`${id}3`} {...args} />
+      <DQuickActionCheck id={`${id}4`} {...args} />
     </>
   ),
   args: {
-    innerId: 'componentId',
+    id: 'componentId',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
@@ -105,7 +105,7 @@ export const Checked: Story = {
     ),
   ],
   args: {
-    innerId: 'componentId5',
+    id: 'componentId5',
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',

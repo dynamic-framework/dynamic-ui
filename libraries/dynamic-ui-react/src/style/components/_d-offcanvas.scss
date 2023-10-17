@@ -1,0 +1,45 @@
+.offcanvas {
+  --#{$prefix}offcanvas-footer-gap: #{$offcanvas-footer-gap};
+
+  .offcanvas-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    &:has(.d-offcanvas-close:only-child) {
+      justify-content: flex-end;
+    }
+  }
+
+  .offcanvas-body {
+    padding: 0 var(--#{$prefix}offcanvas-padding-x);
+  }
+
+  .d-offcanvas-footer {
+    display: flex;
+    gap: var(--#{$prefix}offcanvas-footer-gap);
+    padding: var(--#{$prefix}offcanvas-padding-y) var(--#{$prefix}offcanvas-padding-x);
+  }
+
+  .d-offcanvas-close {
+    padding: 0;
+    background: transparent;
+    border: 0;
+
+    .d-icon {
+      --#{$prefix}icon-size: #{$spacer-3};
+    }
+  }
+
+  .d-offcanvas-action-fill > * {
+    flex: 1;
+  }
+
+  .d-offcanvas-action-start {
+    justify-content: flex-start;
+  }
+
+  .d-offcanvas-action-end {
+    justify-content: flex-end;
+  }
+}
