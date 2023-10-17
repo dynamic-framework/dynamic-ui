@@ -1,6 +1,5 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "useNx": true,
   "npmClient": "pnpm",
   "version": "independent",
   "command": {
@@ -8,10 +7,10 @@
       "allowBranch": ["master"],
       "message": "chore(release): update versions",
       "private": false,
-      "noPush": false,
-      "noGitTagVersion": false,
+      "push": true,
+      "gitTagVersion": true,
       "conventionalCommits": true,
-      "noCommitHooks": true,
+      "commitHooks": true,
       "yes": true,
       "changelogPreset": "conventionalcommits",
       "createRelease": "github"
