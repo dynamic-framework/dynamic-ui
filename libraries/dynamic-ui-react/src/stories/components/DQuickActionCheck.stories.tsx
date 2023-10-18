@@ -35,6 +35,10 @@ const config: Meta<typeof DQuickActionCheck> = {
       type: 'string',
       description: 'The text value',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     isChecked: {
       control: 'boolean',
       type: 'boolean',
