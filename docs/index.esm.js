@@ -659,7 +659,7 @@ function DFormikInput(_a) {
 }
 
 function DInputCurrencyBase(_a) {
-    var { id, name, label = '', placeholder = '', value, isDisabled = false, isReadOnly = false, isLoading = false, hint, isInvalid = false, isValid = false, minValue, maxValue, currencyOptions, currencyCode, onChange, onBlur, onFocus } = _a, rest = __rest(_a, ["id", "name", "label", "placeholder", "value", "isDisabled", "isReadOnly", "isLoading", "hint", "isInvalid", "isValid", "minValue", "maxValue", "currencyOptions", "currencyCode", "onChange", "onBlur", "onFocus"]);
+    var { id, name, className, label = '', placeholder = '', value, isDisabled = false, isReadOnly = false, isLoading = false, hint, isInvalid = false, isValid = false, minValue, maxValue, currencyOptions, currencyCode, onChange, onBlur, onFocus } = _a, rest = __rest(_a, ["id", "name", "className", "label", "placeholder", "value", "isDisabled", "isReadOnly", "isLoading", "hint", "isInvalid", "isValid", "minValue", "maxValue", "currencyOptions", "currencyCode", "onChange", "onBlur", "onFocus"]);
     const [internalValueAsNumber, setInternalValueAsNumber] = useState(value);
     const [internalValueAsFormat, setInternalValueAsFormat] = useState('');
     const [internalType, setInternalType] = useState('text');
@@ -726,7 +726,7 @@ function DInputCurrencyBase(_a) {
     const generateSymbolStyleVariables = useMemo(() => ({
         color: `var(--${PREFIX_BS}m-input-currency-symbol-color)`,
     }), []);
-    return (jsx(DInput$1, Object.assign({ ref: currencyInputRef, style: generateStyleVariables, id: id, name: name, label: label, placeholder: placeholder, value: valueAsType, isDisabled: isDisabled, isReadOnly: isReadOnly, isLoading: isLoading, hint: hint, isInvalid: isInvalid || internalIsInvalid, isValid: isValid, type: internalType, innerInputMode: "decimal", pattern: "^[0-9]", onChange: changeHandler, onBlur: blurHandler, onFocus: focusHandler, onWheel: wheelHandler, inputStart: (jsx("span", { slot: "input-start", style: generateSymbolStyleVariables, children: currencyCode || currencyOptions.symbol })) }, rest)));
+    return (jsx(DInput$1, Object.assign({ ref: currencyInputRef, style: generateStyleVariables, id: id, name: name, className: className, label: label, placeholder: placeholder, value: valueAsType, isDisabled: isDisabled, isReadOnly: isReadOnly, isLoading: isLoading, hint: hint, isInvalid: isInvalid || internalIsInvalid, isValid: isValid, type: internalType, innerInputMode: "decimal", pattern: "^[0-9]", onChange: changeHandler, onBlur: blurHandler, onFocus: focusHandler, onWheel: wheelHandler, inputStart: (jsx("span", { slot: "input-start", style: generateSymbolStyleVariables, children: currencyCode || currencyOptions.symbol })) }, rest)));
 }
 
 function DInputCurrency(props) {
