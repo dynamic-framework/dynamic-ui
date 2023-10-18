@@ -1,9 +1,9 @@
-declare type Step = {
+type Step = {
     label: string;
     description?: string;
     value: number;
 };
-declare type Props = {
+type Props = {
     options: Array<Step>;
     currentStep: number;
 };

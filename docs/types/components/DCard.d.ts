@@ -1,5 +1,5 @@
-import { CSSProperties, PropsWithChildren } from 'react';
-declare type Props = PropsWithChildren<{
+import type { CSSProperties, PropsWithChildren } from 'react';
+type Props = PropsWithChildren<{
     className?: string;
     style?: CSSProperties;
 }>;

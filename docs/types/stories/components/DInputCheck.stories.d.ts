@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DInputCheck } from '../../components';
 declare const config: Meta<typeof DInputCheck>;
 export default config;
-declare type Story = StoryObj<typeof DInputCheck>;
+type Story = StoryObj<typeof DInputCheck>;
 export declare const CheckboxWithoutLabel: Story;
 export declare const CheckboxDefault: Story;
 export declare const CheckboxChecked: Story;

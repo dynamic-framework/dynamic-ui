@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DButton } from '../../components';
 declare const config: Meta<typeof DButton>;
 export default config;
-declare type Story = StoryObj<typeof DButton>;
+type Story = StoryObj<typeof DButton>;
 export declare const Primary: Story;
 export declare const PrimaryHover: Story;
 export declare const PrimaryFocus: Story;
