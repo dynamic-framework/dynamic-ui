@@ -21,6 +21,10 @@ const config: Meta<typeof DInputCurrencyBase> = {
       control: 'text',
       type: 'string',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     labelIcon: {
       control: {
         type: 'select',

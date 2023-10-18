@@ -22,7 +22,7 @@ type Props = LabelIcon & {
   hint?: string;
   isInvalid?: boolean;
   isValid?: boolean;
-  onChange?: (event: ChangeEvent) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onClick?: (newValue: string | undefined) => void;
 };
 

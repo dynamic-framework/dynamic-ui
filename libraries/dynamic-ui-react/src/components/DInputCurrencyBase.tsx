@@ -30,6 +30,7 @@ type Props = LabelIcon
 & {
   id: string;
   name?: string;
+  className?: string;
   label?: string;
   placeholder?: string;
   value?: number;
@@ -52,6 +53,7 @@ export default function DInputCurrencyBase(
   {
     id,
     name,
+    className,
     label = '',
     placeholder = '',
     value,
@@ -159,6 +161,7 @@ export default function DInputCurrencyBase(
       style={generateStyleVariables}
       id={id}
       name={name}
+      className={className}
       label={label}
       placeholder={placeholder}
       value={valueAsType}
