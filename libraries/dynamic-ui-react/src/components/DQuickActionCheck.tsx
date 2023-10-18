@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import classNames from 'classnames';
 
 import type { ChangeEvent } from 'react';
 
@@ -11,6 +12,7 @@ type Props = {
   line1: string;
   line2: string;
   line3: string;
+  className?: string;
   isChecked?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -23,6 +25,7 @@ export default function DQuickActionCheck(
     line1,
     line2,
     line3,
+    className,
     isChecked,
     onChange,
   }: Props,
@@ -34,7 +37,7 @@ export default function DQuickActionCheck(
 
   return (
     <label
-      className="d-quick-action-check"
+      className={classNames('d-quick-action-check', className)}
       htmlFor={id}
     >
       <DInputCheck

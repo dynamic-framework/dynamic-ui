@@ -20,6 +20,10 @@ const config: Meta<typeof DQuickActionButton> = {
       type: 'string',
       description: 'The subtitle',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     secondaryActionIcon: {
       control: {
         type: 'select',

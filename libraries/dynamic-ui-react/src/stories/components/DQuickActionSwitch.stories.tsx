@@ -24,6 +24,10 @@ const config: Meta<typeof DQuickActionSwitch> = {
       control: 'text',
       type: 'string',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     isChecked: {
       control: 'boolean',
       type: 'boolean',
