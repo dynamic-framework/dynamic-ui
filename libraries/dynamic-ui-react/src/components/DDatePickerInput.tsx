@@ -1,27 +1,24 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import {
-  ComponentProps,
-  Ref,
-  forwardRef,
-  useImperativeHandle,
-} from 'react';
-import { DInput } from './proxies';
+import { forwardRef, useImperativeHandle } from 'react';
+
+import type { ComponentProps, Ref } from 'react';
+
+import DInput from './DInput';
 
 type Props = {
   value?: string;
-  onEventClick?: () => void;
+  onClick?: () => void;
 } & Omit<ComponentProps<typeof DInput>,
 | 'type'
 | 'isReadOnly'
-| 'onEventIconEndClick'
+| 'onIconEndClick'
 | 'value'
 >;
 
 function DDatePickerInput(
   {
     value,
-    onEventClick,
-    innerId,
+    onClick,
+    id,
     iconEnd,
     ...props
   }: Props,
@@ -31,16 +28,16 @@ function DDatePickerInput(
   return (
     <div
       role="button"
-      onClick={onEventClick}
+      onClick={onClick}
       onKeyDown={() => {}}
       tabIndex={-1}
     >
       <DInput
         isReadOnly
         type="text"
-        innerId={innerId}
+        id={id}
         value={value}
-        onEventIconEndClick={onEventClick}
+        onIconEndClick={onClick}
         iconEnd={iconEnd}
         {...props}
       />
@@ -48,4 +45,6 @@ function DDatePickerInput(
   );
 }
 
-export default forwardRef(DDatePickerInput);
+const ForwardedDDatePickerInput = forwardRef(DDatePickerInput);
+ForwardedDDatePickerInput.displayName = 'DDatePickerInput';
+export default ForwardedDDatePickerInput;

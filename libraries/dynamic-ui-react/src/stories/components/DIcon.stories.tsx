@@ -1,16 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react';
-import {
-  PREFIX_BS,
-  ICON_FAMILY_PREFIX,
-  ICON_FAMILY_CLASS,
-} from '@dynamic-framework/ui';
 
 import { DIcon } from '../../components';
 import {
   THEMES_WITH_EMPTY,
   FIRST_ICON,
   ICONS,
-} from '../constants';
+} from '../config/constants';
+import {
+  ICON_FAMILY_CLASS,
+  ICON_FAMILY_PREFIX,
+  PREFIX_BS,
+} from '../../components/config';
 
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
@@ -33,7 +33,7 @@ const meta: Meta<typeof DIcon> = {
       type: 'string',
       description: 'Theme of the icon',
     },
-    innerClass: {
+    className: {
       control: 'text',
       type: 'string',
       description: 'Add classes',

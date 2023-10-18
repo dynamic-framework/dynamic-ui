@@ -6,7 +6,7 @@ import {
   COMPONENT_SIZE,
   ICONS,
   INPUT_STATE,
-} from '../constants';
+} from '../config/constants';
 
 const config: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',
@@ -95,8 +95,8 @@ const config: Meta<typeof DButton> = {
       type: 'string',
       description: 'Change the state of the button',
     },
-    onEventClick: {
-      action: 'onEventClick',
+    onClick: {
+      action: 'onClick',
     },
   },
 };

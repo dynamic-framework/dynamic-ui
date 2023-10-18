@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useField } from 'formik';
 
 import type { ComponentProps } from 'react';
@@ -22,8 +21,8 @@ export default function DFormikInputCurrency(
       {...props}
       name={field.name}
       value={field.value}
-      onEventChange={(value) => helpers.setValue(value)}
-      onEventBlur={(value) => field.onBlur(value)}
+      onChange={(value) => helpers.setValue(value)}
+      onBlur={(value) => field.onBlur(value)}
       isInvalid={!!meta.error}
       hint={meta?.error || hint}
     />

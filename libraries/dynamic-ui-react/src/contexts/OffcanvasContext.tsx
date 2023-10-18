@@ -5,8 +5,9 @@ import {
   useEffect,
   useMemo, useState,
 } from 'react';
-import type { PropsWithChildren, FC } from 'react';
 import { createPortal } from 'react-dom';
+
+import type { PropsWithChildren, FC } from 'react';
 
 import useStackState from '../hooks/useStackState';
 

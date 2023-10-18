@@ -100,8 +100,8 @@ const config: Meta<typeof DDatePicker> = {
       control: 'number',
       description: 'Number of months showed on calendar',
     },
-    onEventChangeDate: {
-      action: 'onEventChangeDate',
+    onChangeDate: {
+      action: 'onChangeDate',
     },
   },
 };
@@ -118,10 +118,10 @@ export const Default: Story = {
     ),
   ],
   render: function Render({ ...args }) {
-    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const [date, onDate] = useState<string>(DateTime.now().toISO());
     const handleDate = (value: Date | [Date | null, Date | null] | null) => {
       if (value) {
-        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+        onDate(DateTime.fromJSDate(value as Date).toISODate());
       }
     };
 
@@ -130,7 +130,7 @@ export const Default: Story = {
         {...args}
         date={date}
         dateFormat="dd/MM/yyyy"
-        onEventChangeDate={(value) => handleDate(value)}
+        onChangeDate={(value) => handleDate(value)}
       />
     );
   },
@@ -148,10 +148,10 @@ export const DefaultWithMonth: Story = {
     ),
   ],
   render: function Render({ ...args }) {
-    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const [date, onDate] = useState<string>(DateTime.now().toISO());
     const handleDate = (value: Date | [Date | null, Date | null] | null) => {
       if (value) {
-        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+        onDate(DateTime.fromJSDate(value as Date).toISODate());
       }
     };
 
@@ -160,7 +160,7 @@ export const DefaultWithMonth: Story = {
         {...args}
         date={date}
         dateFormat="dd/MM/yyyy"
-        onEventChangeDate={(value) => handleDate(value)}
+        onChangeDate={(value) => handleDate(value)}
       />
     );
   },
@@ -172,10 +172,10 @@ export const DefaultWithMonth: Story = {
 
 export const Inline: Story = {
   render: function Render({ ...args }) {
-    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const [date, onDate] = useState<string>(DateTime.now().toISO());
     const handleDate = (value: Date | [Date | null, Date | null] | null) => {
       if (value) {
-        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+        onDate(DateTime.fromJSDate(value as Date).toISODate());
       }
     };
 
@@ -184,7 +184,7 @@ export const Inline: Story = {
         {...args}
         date={date}
         dateFormat="dd/MM/yyyy"
-        onEventChangeDate={(value) => handleDate(value)}
+        onChangeDate={(value) => handleDate(value)}
       />
     );
   },
@@ -195,10 +195,10 @@ export const Inline: Story = {
 
 export const WithTime: Story = {
   render: function Render({ ...args }) {
-    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const [date, onDate] = useState<string>(DateTime.now().toISO());
     const handleDate = (value: Date | [Date | null, Date | null] | null) => {
       if (value) {
-        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+        onDate(DateTime.fromJSDate(value as Date).toISODate());
       }
     };
 
@@ -207,7 +207,7 @@ export const WithTime: Story = {
         {...args}
         date={date}
         dateFormat="dd/MM/yyyy"
-        onEventChangeDate={(value) => handleDate(value)}
+        onChangeDate={(value) => handleDate(value)}
       />
     );
   },
@@ -220,10 +220,10 @@ export const WithTime: Story = {
 
 export const WithMonthSelector: Story = {
   render: function Render({ ...args }) {
-    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const [date, onDate] = useState<string>(DateTime.now().toISO());
     const handleDate = (value: Date | [Date | null, Date | null] | null) => {
       if (value) {
-        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+        onDate(DateTime.fromJSDate(value as Date).toISODate());
       }
     };
 
@@ -232,7 +232,7 @@ export const WithMonthSelector: Story = {
         {...args}
         date={date}
         dateFormat="dd/MM/yyyy"
-        onEventChangeDate={(value) => handleDate(value)}
+        onChangeDate={(value) => handleDate(value)}
       />
     );
   },
@@ -244,10 +244,10 @@ export const WithMonthSelector: Story = {
 
 export const MonthPicker: Story = {
   render: function Render({ ...args }) {
-    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const [date, onDate] = useState<string>(DateTime.now().toISO());
     const handleDate = (value: Date | [Date | null, Date | null] | null) => {
       if (value) {
-        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+        onDate(DateTime.fromJSDate(value as Date).toISODate());
       }
     };
     return (
@@ -255,7 +255,7 @@ export const MonthPicker: Story = {
         {...args}
         date={date}
         dateFormat="MM/yyyy"
-        onEventChangeDate={(value) => handleDate(value)}
+        onChangeDate={(value) => handleDate(value)}
       />
     );
   },
@@ -285,7 +285,7 @@ export const DateRange: Story = {
         {...endDate && {
           endDate: DateTime.fromISO(endDate).toJSDate(),
         }}
-        onEventChangeDate={handleChange}
+        onChangeDate={handleChange}
         selectsRange
         dateFormat="dd/MM/yyyy"
         inline
@@ -319,7 +319,7 @@ export const DateRangeWithMonthSelector: Story = {
         {...endDate && {
           endDate: DateTime.fromISO(endDate).toJSDate(),
         }}
-        onEventChangeDate={handleChange}
+        onChangeDate={handleChange}
         selectsRange
         dateFormat="dd/MM/yyyy"
         inline
@@ -335,10 +335,10 @@ export const DateRangeWithMonthSelector: Story = {
 
 export const OnPortal: Story = {
   render: function Render({ ...args }) {
-    const [date, onEventDate] = useState<string>(DateTime.now().toISO());
+    const [date, onDate] = useState<string>(DateTime.now().toISO());
     const handleDate = (value: Date | [Date | null, Date | null] | null) => {
       if (value) {
-        onEventDate(DateTime.fromJSDate(value as Date).toISODate());
+        onDate(DateTime.fromJSDate(value as Date).toISODate());
       }
     };
 
@@ -347,7 +347,7 @@ export const OnPortal: Story = {
         {...args}
         date={date}
         dateFormat="dd/MM/yyyy"
-        onEventChangeDate={(value) => handleDate(value)}
+        onChangeDate={(value) => handleDate(value)}
       />
     );
   },

@@ -1,35 +1,37 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { ComponentProps, FormEventHandler } from 'react';
-import { DInput } from './proxies';
+import type { ComponentProps, FormEventHandler } from 'react';
+
+import DInput from './DInput';
 
 type Props = {
   value?: string | number ;
-  onEventChange?: ((value: string) => void) & FormEventHandler<HTMLDInputElement>
+  onChange?: ((value: string) => void) & FormEventHandler<HTMLInputElement>
 } & Omit<ComponentProps<typeof DInput>,
 | 'type'
 | 'isReadOnly'
-| 'onEventChange'
+| 'onChange'
 | 'value'
 >;
 
-export default function DDatePickerTime({
-  value,
-  onEventChange,
-  innerId,
-  label,
-  ...props
-}: Props) {
+export default function DDatePickerTime(
+  {
+    value,
+    onChange,
+    id,
+    label,
+    ...props
+  }: Props,
+) {
   return (
     <div className="d-flex align-items-center gap-2 flex-column d-datepicker-time">
       {label && (
         <p className="d-datepicker-time-label">{label}</p>
       )}
       <DInput
-        {...onEventChange && {
-          onEventChange: (time) => onEventChange(time as unknown as string),
+        {...onChange && {
+          onChange: (event) => onChange(event.target.value),
         }}
         type="time"
-        innerId={innerId}
+        id={id}
         value={value}
         {...props}
       />

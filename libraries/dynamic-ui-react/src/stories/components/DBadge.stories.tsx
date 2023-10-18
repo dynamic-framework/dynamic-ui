@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DBadge } from '../../components';
-import { THEMES } from '../constants';
+import { THEMES } from '../config/constants';
 
 const config: Meta<typeof DBadge> = {
   title: 'Design System/Components/Badge',

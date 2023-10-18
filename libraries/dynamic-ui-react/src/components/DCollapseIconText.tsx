@@ -1,9 +1,11 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import DCollapse from './DCollapse';
-import { DIcon } from './proxies';
+import DIcon from './DIcon';
 
-type Props = PropsWithChildren<{
+import type { FamilyIcon } from './interface';
+
+type Props = FamilyIcon & PropsWithChildren<{
   /**
    * Icon name
    */
@@ -20,19 +22,19 @@ type Props = PropsWithChildren<{
    * Title
    */
   title: string;
-  iconFamilyClass?: string;
-  iconFamilyPrefix?: string;
 }>;
 
-export default function DCollapseIconText({
-  children,
-  icon,
-  iconSize = '1.5rem',
-  iconTheme = 'primary',
-  title,
-  iconFamilyClass,
-  iconFamilyPrefix,
-}: Props) {
+export default function DCollapseIconText(
+  {
+    children,
+    icon,
+    iconSize = '1.5rem',
+    iconTheme = 'primary',
+    title,
+    iconFamilyClass,
+    iconFamilyPrefix,
+  }: Props,
+) {
   return (
     <DCollapse
       defaultCollapsed

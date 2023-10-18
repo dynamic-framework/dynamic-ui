@@ -1,13 +1,14 @@
-/* eslint-disable react/jsx-props-no-spreading */
+import { useMemo } from 'react';
 import classNames from 'classnames';
-import { PropsWithChildren, useMemo } from 'react';
+
+import type { PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   className?: string;
   isActive?: boolean;
   isDisabled?: boolean;
   theme?: string;
-  onEventClick?: () => void;
+  onClick?: () => void;
 }>;
 
 export default function DListItem(
@@ -17,18 +18,18 @@ export default function DListItem(
     isActive = false,
     isDisabled = false,
     theme,
-    onEventClick,
+    onClick,
   }: Props,
 ) {
   const Tag = useMemo(
-    () => (onEventClick ? 'button' : 'div'),
-    [onEventClick],
+    () => (onClick ? 'button' : 'div'),
+    [onClick],
   );
 
   return (
     <Tag
       {...Tag === 'button' && {
-        onClick: onEventClick,
+        onClick,
         type: 'button',
       }}
       className={

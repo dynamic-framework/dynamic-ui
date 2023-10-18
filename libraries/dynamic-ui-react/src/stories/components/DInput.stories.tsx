@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { DInput } from '../../components';
-import { ICONS } from '../constants';
+import { ICONS } from '../config/constants';
 
 const config: Meta<typeof DInput> = {
   title: 'Design System/Components/Input',
   component: DInput,
   argTypes: {
-    innerId: {
+    id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
@@ -106,23 +106,23 @@ const config: Meta<typeof DInput> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    onEventIconStartClick: {
-      action: 'onEventIconStartClicked',
+    onIconStartClick: {
+      action: 'onIconStartClicked',
     },
-    onEventIconEndClick: {
-      action: 'onEventIconStartClicked',
+    onIconEndClick: {
+      action: 'onIconStartClicked',
     },
-    onEventChange: {
-      action: 'onEventChange',
+    onChange: {
+      action: 'onChange',
     },
-    onEventBlur: {
-      action: 'onEventBlur',
+    onBlur: {
+      action: 'onBlur',
     },
-    onEventFocus: {
-      action: 'onEventFocus',
+    onFocus: {
+      action: 'onFocus',
     },
-    onEventWheel: {
-      action: 'onEventWheel',
+    onWheel: {
+      action: 'onWheel',
     },
   },
 };
@@ -132,7 +132,7 @@ type Story = StoryObj<typeof DInput>;
 
 export const Default: Story = {
   args: {
-    innerId: 'componentId1',
+    id: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -146,7 +146,7 @@ export const Default: Story = {
 
 export const Value: Story = {
   args: {
-    innerId: 'componentId2',
+    id: 'componentId2',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -160,7 +160,7 @@ export const Value: Story = {
 
 export const Error: Story = {
   args: {
-    innerId: 'componentId3',
+    id: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -175,7 +175,7 @@ export const Error: Story = {
 
 export const Confirm: Story = {
   args: {
-    innerId: 'componentId4',
+    id: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -190,7 +190,7 @@ export const Confirm: Story = {
 
 export const Disabled: Story = {
   args: {
-    innerId: 'componentId5',
+    id: 'componentId5',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
@@ -205,7 +205,7 @@ export const Disabled: Story = {
 
 export const Text: Story = {
   args: {
-    innerId: 'componentId6',
+    id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,

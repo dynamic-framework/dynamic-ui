@@ -3,9 +3,10 @@ import {
   useContext,
   useMemo,
 } from 'react';
+
 import type { PropsWithChildren } from 'react';
 
-import { liquidParser } from '@dynamic-framework/ui';
+import { liquidParser } from '../utils';
 
 interface LiquidContextInterface {
   language: string;

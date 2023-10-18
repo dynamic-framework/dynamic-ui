@@ -1,6 +1,6 @@
 .d-card-account {
   // Card
-  --#{$prefix}card-border-width: 0px;
+  --#{$prefix}card-border-width: 0;
   --#{$prefix}card-spacer-y: var(--#{$prefix}ref-spacer-3);
   --#{$prefix}card-spacer-x: var(--#{$prefix}ref-spacer-3);
   --#{$prefix}card-color: var(--#{$prefix}body-color);

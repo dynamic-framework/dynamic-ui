@@ -1,18 +1,21 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { Splide, SplideProps } from '@splidejs/react-splide';
+import { Splide } from '@splidejs/react-splide';
 import classNames from 'classnames';
-import { PropsWithChildren } from 'react';
+
+import type { PropsWithChildren } from 'react';
+import type { SplideProps } from '@splidejs/react-splide';
 
 type Props = SplideProps & PropsWithChildren<{
   className?: string;
 }>;
 
-export default function DCarousel({
-  children,
-  className,
-  options,
-  ...props
-}: Props) {
+export default function DCarousel(
+  {
+    children,
+    className,
+    options,
+    ...props
+  }: Props,
+) {
   return (
     <Splide
       className={classNames('d-carousel', className)}

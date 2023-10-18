@@ -1,11 +1,11 @@
 import { Meta } from '@storybook/react';
 
-import type { AlertType } from '@dynamic-framework/ui';
-
 import { DButton, DToastContainer } from '../../components';
 import { useToast as useToastHook } from '../../hooks';
 
-import { THEMES } from '../constants';
+import { THEMES } from '../config/constants';
+
+import { AlertType } from '../../components/interface';
 
 type Props = {
   message: string;
@@ -19,7 +19,7 @@ const Example = ({ message, type, showClose }: Props) => {
     <>
       <DButton
         text="Show Toast"
-        onEventClick={() => toast(message, { type, showClose })}
+        onClick={() => toast(message, { type, showClose })}
       />
       <DToastContainer />
     </>
@@ -48,6 +48,6 @@ export const useToast = {
   args: {
     message: 'the default message',
     type: 'info',
-    showClose: false,
+    showClose: true,
   },
 };

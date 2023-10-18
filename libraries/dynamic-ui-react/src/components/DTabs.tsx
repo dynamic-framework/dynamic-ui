@@ -6,8 +6,9 @@ import {
   useEffect,
   useMemo,
 } from 'react';
-import type { PropsWithChildren } from 'react';
 import classnames from 'classnames';
+
+import type { PropsWithChildren } from 'react';
 
 export type DTabOption = {
   label: string;
@@ -16,7 +17,7 @@ export type DTabOption = {
 };
 
 type Props = PropsWithChildren<{
-  onEventChange: (option: DTabOption) => void;
+  onChange: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
   className?: string;
@@ -33,7 +34,7 @@ export default function DTabs(
   {
     children,
     defaultSelected,
-    onEventChange,
+    onChange,
     options,
     className,
     isVertical,
@@ -45,8 +46,8 @@ export default function DTabs(
     if (option.tab) {
       setSelected(option.tab);
     }
-    onEventChange(option);
-  }, [onEventChange]);
+    onChange(option);
+  }, [onChange]);
 
   useEffect(() => {
     setSelected(defaultSelected);

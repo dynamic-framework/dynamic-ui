@@ -1,4 +1,5 @@
-import { DBadge, DInputSwitch } from '../proxies';
+import DBadge from '../DBadge';
+import DInputSwitch from '../DInputSwitch';
 import { PermissionItemType } from './interface';
 
 type Props = {
@@ -30,10 +31,10 @@ export default function DPermissionItem({
         />
       )}
       <DInputSwitch
-        innerId={permission.id}
+        id={permission.id}
         isChecked={!!permission.value}
         isDisabled={!permission.enabled}
-        onEventChange={({ detail: checked }) => onChange(checked)}
+        onChange={(isChecked) => onChange(isChecked)}
       />
     </div>
   );

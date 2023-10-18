@@ -1,25 +1,29 @@
 import classNames from 'classnames';
-import ResponsivePagination, { ResponsivePaginationProps } from 'react-responsive-pagination';
+import ResponsivePagination from 'react-responsive-pagination';
+
+import type { ResponsivePaginationProps } from 'react-responsive-pagination';
 
 export type Props = {
   className?: ResponsivePaginationProps['extraClassName'];
   page: ResponsivePaginationProps['current'];
-  onEventPageChange: ResponsivePaginationProps['onPageChange'];
+  onPageChange: ResponsivePaginationProps['onPageChange'];
   total: ResponsivePaginationProps['total'];
   previousLabel?: ResponsivePaginationProps['previousLabel'];
   nextLabel?: ResponsivePaginationProps['nextLabel'];
   showArrows?: ResponsivePaginationProps['renderNav'];
   maxWidth?: ResponsivePaginationProps['maxWidth'];
 };
-export default function DPaginator({
-  className,
-  nextLabel,
-  previousLabel,
-  showArrows = true,
-  page,
-  onEventPageChange,
-  ...props
-}: Props) {
+export default function DPaginator(
+  {
+    className,
+    nextLabel,
+    previousLabel,
+    showArrows = true,
+    page,
+    onPageChange,
+    ...props
+  }: Props,
+) {
   return (
     <ResponsivePagination
       extraClassName={classNames('pagination', className)}
@@ -35,8 +39,7 @@ export default function DPaginator({
       previousLabel={previousLabel}
       renderNav={showArrows}
       current={page}
-      onPageChange={onEventPageChange}
-      // eslint-disable-next-line react/jsx-props-no-spreading
+      onPageChange={onPageChange}
       {...props}
     />
   );

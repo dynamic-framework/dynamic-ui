@@ -1,14 +1,17 @@
 import classNames from 'classnames';
-import { PropsWithChildren } from 'react';
+
+import type { PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   className?: string;
 }>;
 
-export default function DCardBody({
-  className,
-  children,
-}: Props) {
+export default function DCardBody(
+  {
+    className,
+    children,
+  }: Props,
+) {
   return (
     <div
       className={classNames(
