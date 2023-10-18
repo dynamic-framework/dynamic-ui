@@ -1,7 +1,7 @@
 {
   "name": "@dynamic-framework/ui-react",
   "sideEffects": false,
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "React Dynamic Framework",
   "license": "MIT",
   "repository": {
