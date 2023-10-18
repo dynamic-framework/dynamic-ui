@@ -1,38 +1,38 @@
 import type { PropsWithChildren, FC } from 'react';
-export type OffcanvasComponent = FC<OffcanvasProps>;
-export type OffcanvasAvailableList = Record<string, OffcanvasComponent>;
-type Props = PropsWithChildren<{
+export declare type OffcanvasComponent = FC<OffcanvasProps>;
+export declare type OffcanvasAvailableList = Record<string, OffcanvasComponent>;
+declare type Props = PropsWithChildren<{
     portalName: string;
     availableOffcanvas: OffcanvasAvailableList;
 }>;
-export type OffcanvasPayload = Record<string, any>;
-export type OffcanvasCallbackContext = {
+export declare type OffcanvasPayload = Record<string, any>;
+export declare type OffcanvasCallbackContext = {
     fromOffcanvas: boolean;
 };
-export type OffcanvasCallbacks = {
+export declare type OffcanvasCallbacks = {
     onBeforeOpen?: (payload?: OffcanvasPayload) => void;
     onAfterOpen?: (payload?: OffcanvasPayload) => void;
     onBeforeClose?: (context: OffcanvasCallbackContext, payload?: OffcanvasPayload) => void;
     onAfterClose?: (context: OffcanvasCallbackContext, payload?: OffcanvasPayload) => void;
 };
-export type OffcanvasStackItem = {
+export declare type OffcanvasStackItem = {
     offcanvasName: keyof OffcanvasAvailableList;
     Component: OffcanvasComponent;
     payload: OffcanvasPayload;
     callbacks?: OffcanvasCallbacks;
 };
-export type OffcanvasConfig = {
+export declare type OffcanvasConfig = {
     payload: OffcanvasPayload;
     callbacks?: OffcanvasCallbacks;
 };
-export type OpenOffcanvasFunction = (name: string, config?: OffcanvasConfig) => void;
-export type CloseOffcanvasFunction = (context?: OffcanvasCallbackContext) => void;
-export type OffcanvasContextType = {
+export declare type OpenOffcanvasFunction = (name: string, config?: OffcanvasConfig) => void;
+export declare type CloseOffcanvasFunction = (context?: OffcanvasCallbackContext) => void;
+export declare type OffcanvasContextType = {
     stack: OffcanvasStackItem[];
     openOffcanvas: OpenOffcanvasFunction;
     closeOffcanvas: CloseOffcanvasFunction;
 };
-export type OffcanvasProps = {
+export declare type OffcanvasProps = {
     name: string;
     payload: OffcanvasPayload;
     openOffcanvas: OpenOffcanvasFunction;

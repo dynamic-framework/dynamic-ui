@@ -1,10 +1,10 @@
-import type { BreakpointSize } from './interface';
-export type Step = {
+import { BreakpointSize } from '@dynamic-framework/ui/dist/types/utils/component-interface';
+declare type Step = {
     label: string;
     value: number;
     description?: string;
 };
-type Props = {
+declare type Props = {
     options: Array<Step>;
     currentStep: number;
     successIcon?: string;

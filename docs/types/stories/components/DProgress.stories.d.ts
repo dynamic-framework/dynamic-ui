@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DProgress } from '../../components';
 declare const config: Meta<typeof DProgress>;
 export default config;
-type Story = StoryObj<typeof DProgress>;
+declare type Story = StoryObj<typeof DProgress>;
 export declare const Default: Story;
 export declare const Stripped: Story;
 export declare const Valueless: Story;

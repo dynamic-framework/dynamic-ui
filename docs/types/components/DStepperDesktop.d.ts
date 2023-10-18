@@ -1,8 +1,8 @@
-type Step = {
+declare type Step = {
     label: string;
     value: number;
 };
-type Props = {
+declare type Props = {
     options: Array<Step>;
     currentStep: number;
     successIcon?: string;

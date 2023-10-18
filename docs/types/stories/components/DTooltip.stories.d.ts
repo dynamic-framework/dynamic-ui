@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DTooltip } from '../../components';
 declare const config: Meta<typeof DTooltip>;
 export default config;
-type Story = StoryObj<typeof DTooltip>;
+declare type Story = StoryObj<typeof DTooltip>;
 export declare const Top: Story;
 export declare const Right: Story;
 export declare const Bottom: Story;

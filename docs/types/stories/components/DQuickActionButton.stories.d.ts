@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DQuickActionButton } from '../../components';
 declare const config: Meta<typeof DQuickActionButton>;
 export default config;
-type Story = StoryObj<typeof DQuickActionButton>;
+declare type Story = StoryObj<typeof DQuickActionButton>;
 export declare const PersonalInfo: Story;
 export declare const ButtonDoubleAction: Story;
 export declare const AccountBox: Story;

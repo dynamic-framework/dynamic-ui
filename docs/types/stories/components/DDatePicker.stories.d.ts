@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DDatePicker } from '../../components';
 declare const config: Meta<typeof DDatePicker>;
 export default config;
-type Story = StoryObj<typeof DDatePicker>;
+declare type Story = StoryObj<typeof DDatePicker>;
 export declare const Default: Story;
 export declare const DefaultWithMonth: Story;
 export declare const Inline: Story;

@@ -1,4 +1,4 @@
-export type PermissionItemType = {
+export declare type PermissionItemType = {
     id: string;
     enabled: boolean;
     label: string;
