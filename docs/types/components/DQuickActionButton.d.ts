@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 type Props = {
     line1: string;
     line2: string;
+    className?: string;
     actionLinkText?: string;
     actionLinkTheme?: string;
     actionIcon?: string;
@@ -18,5 +19,5 @@ type Props = {
     onClickSecondary?: () => void;
     style?: CSSProperties;
 };
-export default function DQuickActionButton({ line1, line2, actionLinkText, actionLinkTheme, actionIcon, secondaryActionIcon, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme, representativeIconHasCircle, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme, actionIcon, secondaryActionIcon, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme, representativeIconHasCircle, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

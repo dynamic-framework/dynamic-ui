@@ -1164,7 +1164,7 @@ function DProgress({ currentValue, minValue = 0, maxValue = 100, hideCurrentValu
     return (jsxRuntime.jsx("div", { className: "progress", children: jsxRuntime.jsx("div", { className: classNames__default["default"](generateClasses), role: "progressbar", "aria-label": "Progress bar", style: { width: `${currentValue}%` }, "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) }));
 }
 
-function DQuickActionButton({ line1, line2, actionLinkText, actionLinkTheme = 'secondary', actionIcon, secondaryActionIcon, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }) {
+function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme = 'secondary', actionIcon, secondaryActionIcon, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }) {
     const globalClickHandler = react.useCallback(() => {
         if (actionLinkText) {
             return;
@@ -1181,20 +1181,20 @@ function DQuickActionButton({ line1, line2, actionLinkText, actionLinkTheme = 's
         onClickSecondary === null || onClickSecondary === void 0 ? void 0 : onClickSecondary();
     }, [onClickSecondary]);
     const Tag = react.useMemo(() => (actionLinkText ? 'div' : 'button'), [actionLinkText]);
-    return (jsxRuntime.jsxs(Tag, { className: "d-quick-action-button", onClick: !actionLinkText ? globalClickHandler : undefined, style: style, children: [representativeIcon && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-representative-icon", size: representativeIconHasCircle
+    return (jsxRuntime.jsxs(Tag, { className: classNames__default["default"]('d-quick-action-button', className), onClick: !actionLinkText ? globalClickHandler : undefined, style: style, children: [representativeIcon && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-representative-icon", size: representativeIconHasCircle
                     ? `var(--${PREFIX_BS}quick-action-button-representative-icon-size)`
                     : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsxRuntime.jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsxRuntime.jsx("div", { className: "d-quick-action-button-content", children: jsxRuntime.jsxs("div", { className: "d-quick-action-button-text", children: [jsxRuntime.jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsxRuntime.jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), secondaryActionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: secondaryActionIcon, iconStartFamilyClass: actionIconFamilyClass, iconStartFamilyPrefix: actionIconFamilyPrefix, theme: actionLinkTheme, onClick: secondaryActionLinkClickHandler, isStopPropagationEnabled: true })), actionLinkText && !actionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-action-link", type: "button", variant: "link", theme: actionLinkTheme, text: actionLinkText, onClick: actionLinkClickHandler, isStopPropagationEnabled: true })), actionIcon && !actionLinkText && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] }));
 }
 
-function DQuickActionCheck({ id, name, value, line1, line2, line3, isChecked, onChange, }) {
+function DQuickActionCheck({ id, name, value, line1, line2, line3, className, isChecked, onChange, }) {
     const changeHandler = react.useCallback((event) => {
         event.stopPropagation();
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
     }, [onChange]);
-    return (jsxRuntime.jsxs("label", { className: "d-quick-action-check", htmlFor: id, children: [jsxRuntime.jsx(DInputCheck, { id: id, type: "radio", name: name, value: value, isChecked: isChecked, onChange: changeHandler }), jsxRuntime.jsxs("div", { className: "d-quick-action-check-detail", children: [jsxRuntime.jsx("span", { className: "d-quick-action-check-line1", children: line1 }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line2", children: line2 })] }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line3", children: line3 })] }));
+    return (jsxRuntime.jsxs("label", { className: classNames__default["default"]('d-quick-action-check', className), htmlFor: id, children: [jsxRuntime.jsx(DInputCheck, { id: id, type: "radio", name: name, value: value, isChecked: isChecked, onChange: changeHandler }), jsxRuntime.jsxs("div", { className: "d-quick-action-check-detail", children: [jsxRuntime.jsx("span", { className: "d-quick-action-check-line1", children: line1 }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line2", children: line2 })] }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line3", children: line3 })] }));
 }
 
-function DQuickActionSelect({ id, name, value, line1, line2, isSelected = false, onChange, }) {
+function DQuickActionSelect({ id, name, value, line1, line2, className, isSelected = false, onChange, }) {
     const innerRef = react.useRef(null);
     const changeHandler = react.useCallback((event) => {
         event.stopPropagation();
@@ -1205,15 +1205,15 @@ function DQuickActionSelect({ id, name, value, line1, line2, isSelected = false,
             innerRef.current.checked = isSelected;
         }
     }, [isSelected]);
-    return (jsxRuntime.jsxs("label", { className: "d-quick-action-select", htmlFor: id, children: [jsxRuntime.jsx("input", { ref: innerRef, id: id, type: "radio", name: name, value: value, onChange: changeHandler }), jsxRuntime.jsx("span", { className: "d-quick-action-select-line1", children: line1 }), jsxRuntime.jsx("span", { className: "d-quick-action-select-line2", children: line2 })] }));
+    return (jsxRuntime.jsxs("label", { className: classNames__default["default"]('d-quick-action-select', className), htmlFor: id, children: [jsxRuntime.jsx("input", { ref: innerRef, id: id, type: "radio", name: name, value: value, onChange: changeHandler }), jsxRuntime.jsx("span", { className: "d-quick-action-select-line1", children: line1 }), jsxRuntime.jsx("span", { className: "d-quick-action-select-line2", children: line2 })] }));
 }
 
-function DQuickActionSwitch({ id, name, label, hint, isChecked, isDisabled, onClick, }) {
+function DQuickActionSwitch({ id, name, label, hint, className, isChecked, isDisabled, onClick, }) {
     const clickHandler = react.useCallback((event) => {
         event.stopPropagation();
         onClick === null || onClick === void 0 ? void 0 : onClick(isChecked);
     }, [isChecked, onClick]);
-    return (jsxRuntime.jsxs("button", { className: "d-quick-action-switch", type: "button", onClick: clickHandler, children: [jsxRuntime.jsxs("div", { className: "d-quick-action-switch-content", children: [jsxRuntime.jsx(DInputSwitch, { id: id, name: name, isDisabled: isDisabled, isChecked: isChecked, isReadonly: true }), jsxRuntime.jsx("label", { className: "d-quick-action-switch-label", htmlFor: id, children: label })] }), jsxRuntime.jsx("div", { className: "d-quick-action-switch-hint", children: hint })] }));
+    return (jsxRuntime.jsxs("button", { className: classNames__default["default"]('d-quick-action-switch', className), type: "button", onClick: clickHandler, children: [jsxRuntime.jsxs("div", { className: "d-quick-action-switch-content", children: [jsxRuntime.jsx(DInputSwitch, { id: id, name: name, isDisabled: isDisabled, isChecked: isChecked, isReadonly: true }), jsxRuntime.jsx("label", { className: "d-quick-action-switch-label", htmlFor: id, children: label })] }), jsxRuntime.jsx("div", { className: "d-quick-action-switch-hint", children: hint })] }));
 }
 
 function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
