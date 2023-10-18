@@ -25,6 +25,7 @@ export type Props<T> =
   id: string;
   name?: string;
   label?: string;
+  className?: string;
   isDisabled?: boolean;
   isLoading?: boolean;
   hint?: string;
@@ -43,6 +44,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     id,
     name,
     label = '',
+    className,
     options,
     labelIcon,
     labelIconFamilyClass,
@@ -108,7 +110,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
   }, [onIconEndClick]);
 
   return (
-    <div className="d-input">
+    <div className={classNames('d-input', className)}>
       {label && (
         <label htmlFor={id}>
           {label}

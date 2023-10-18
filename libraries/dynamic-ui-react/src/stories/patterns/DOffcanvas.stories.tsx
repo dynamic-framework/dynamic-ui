@@ -16,6 +16,10 @@ const config: Meta<typeof DOffcanvas> = {
       control: 'text',
       type: { name: 'string', required: true },
     },
+    className: {
+      control: 'text',
+      type: { name: 'string' },
+    },
     isStatic: {
       control: 'boolean',
       type: 'boolean',

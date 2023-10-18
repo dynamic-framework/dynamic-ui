@@ -30,7 +30,7 @@ type Props = LabelIcon
 & {
   id: string;
   name?: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   value?: number;
   isDisabled?: boolean;

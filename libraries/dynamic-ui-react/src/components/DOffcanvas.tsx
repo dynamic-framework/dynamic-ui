@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import type { PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from './config';
@@ -6,6 +8,7 @@ import type { OffcanvasPositionToggleFrom } from './interface';
 
 type Props = PropsWithChildren<{
   name: string;
+  className?: string;
   isStatic?: boolean;
   isScrollable?: boolean;
   openFrom?: OffcanvasPositionToggleFrom;
@@ -14,6 +17,7 @@ type Props = PropsWithChildren<{
 export default function DOffcanvas(
   {
     name,
+    className,
     isStatic,
     isScrollable,
     openFrom = 'end',
@@ -22,7 +26,13 @@ export default function DOffcanvas(
 ) {
   return (
     <div
-      className={`offcanvas offcanvas-${openFrom} show`}
+      className={classNames(
+        'offcanvas show',
+        {
+          [`offcanvas-${openFrom}`]: openFrom,
+        },
+        className,
+      )}
       id={name}
       tabIndex={-1}
       aria-labelledby={`${name}Label`}
