@@ -1,6 +1,6 @@
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import DListItem from './DListItem';
-declare type Props = Omit<ComponentProps<typeof DListItem>, 'children'> & {
+type Props = Omit<ComponentProps<typeof DListItem>, 'children'> & {
     description: string;
     date: string;
     amount: number;

@@ -1,5 +1,6 @@
-import { PropsWithChildren } from 'react';
-declare type Props = PropsWithChildren<{
+import type { PropsWithChildren } from 'react';
+import type { FamilyIcon } from './interface';
+type Props = FamilyIcon & PropsWithChildren<{
     /**
      * Icon name
      */
@@ -16,8 +17,6 @@ declare type Props = PropsWithChildren<{
      * Title
      */
     title: string;
-    iconFamilyClass?: string;
-    iconFamilyPrefix?: string;
 }>;
 export default function DCollapseIconText({ children, icon, iconSize, iconTheme, title, iconFamilyClass, iconFamilyPrefix, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

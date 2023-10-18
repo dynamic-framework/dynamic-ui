@@ -1,7 +1,7 @@
-import { ComponentProps } from 'react';
-import { ButtonVariant, ComponentSize } from '@dynamic-framework/ui';
-import { DButton } from './proxies';
-declare type Props = {
+import type { ComponentProps } from 'react';
+import DButton from './DButton';
+import type { ButtonVariant, ComponentSize } from './interface';
+type Props = {
     monthDate: Date;
     decreaseMonth: () => void;
     increaseMonth: () => void;

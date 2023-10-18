@@ -1,2 +1,0 @@
-import{r as s,h as e}from"./p-bde3ed36.js";const t=class{constructor(e){s(this,e);this.theme="primary";this.text=undefined;this.isDot=false}generateClasses(){return{badge:true,"badge-dot":this.isDot,[`badge-${this.theme}`]:!!this.theme}}render(){return e("span",{class:this.generateClasses()},e("span",null,this.text))}};export{t as d_badge};
-//# sourceMappingURL=p-2533fec0.entry.js.map
