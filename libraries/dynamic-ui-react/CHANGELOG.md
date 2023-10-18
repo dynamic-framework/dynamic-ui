@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.6.0...@dynamic-framework/ui-react@1.7.0) (2023-10-18)
+
+
+### Features
+
+* adjust DPopover story and add flag to adjust content to render ([19b3c7e](https://github.com/dynamic-framework/dynamic-ui/commit/19b3c7ee10df24e2bdf19d7f620f07e7875f4c08))
+* move styles and remove angular, vue and stencil packages ([7f1f155](https://github.com/dynamic-framework/dynamic-ui/commit/7f1f155a639f40f54411958f0171d823b4c21ecd))
+* move utils from ui package to react package ([4fe7bc3](https://github.com/dynamic-framework/dynamic-ui/commit/4fe7bc30cd8656d882c462efcad7832f7004aeba))
+* refactor DAlert from stencil to react ([41f4f8e](https://github.com/dynamic-framework/dynamic-ui/commit/41f4f8ec22de115dde8a2c91378c490282fa6648))
+* refactor DBadge from stencil to react ([d3678e6](https://github.com/dynamic-framework/dynamic-ui/commit/d3678e6cb63d143afef1011b7dedc195c94d6176))
+* refactor DButton from stencil to react ([1fc85ac](https://github.com/dynamic-framework/dynamic-ui/commit/1fc85acdd8c93f5f738535788e104a6a546d6b8d))
+* refactor DChip from stencil to react ([87caa82](https://github.com/dynamic-framework/dynamic-ui/commit/87caa82117ad7a5a9648f76157a5fa0d34d71823))
+* refactor DIcon from stencil to react ([3cad9c2](https://github.com/dynamic-framework/dynamic-ui/commit/3cad9c2681ccf128d20ece7199a8dfb578e3d6a6))
+* refactor DInput from stencil to react ([0c851cd](https://github.com/dynamic-framework/dynamic-ui/commit/0c851cd514139225db597dbb28549c74ef7f983f))
+* refactor DInputCheck from stencil to react ([520a59c](https://github.com/dynamic-framework/dynamic-ui/commit/520a59c782879b613ead0100e54411985d82e857))
+* refactor DInputCounter from stencil to react ([8400bfa](https://github.com/dynamic-framework/dynamic-ui/commit/8400bfa867fb934ae0d1a98b4b7f87bdad0a5e47))
+* refactor DInputCurrency from stencil to react ([52b1ee7](https://github.com/dynamic-framework/dynamic-ui/commit/52b1ee7d759b98222c8cb38a42f1342550e8d515))
+* refactor DInputCurrencyBase from stencil to react ([cfebe3e](https://github.com/dynamic-framework/dynamic-ui/commit/cfebe3e61029784db67913d954da281f8c5ae08c))
+* refactor DInputPassword from stencil to react ([de6134e](https://github.com/dynamic-framework/dynamic-ui/commit/de6134e3a6c79a1487c88c80f76534da05d0b1fd))
+* refactor DInputPin from stencil to react ([6766e10](https://github.com/dynamic-framework/dynamic-ui/commit/6766e10244294e82e70ed10226a8fd903a64ef3d))
+* refactor DInputSearch from stencil to react ([a5dc1b9](https://github.com/dynamic-framework/dynamic-ui/commit/a5dc1b90243b1fb276b9b7fa315c2f95e5aebc60))
+* refactor DInputSelect from stencil to react ([767a65e](https://github.com/dynamic-framework/dynamic-ui/commit/767a65eaf9c6fce35d8bf891e63653ae371d89a7))
+* refactor DInputSwitch from stencil to react ([ebec342](https://github.com/dynamic-framework/dynamic-ui/commit/ebec342dca31fd9dfd64991f66e603c8666335ba))
+* refactor DModal from stencil to react ([7fa0ec8](https://github.com/dynamic-framework/dynamic-ui/commit/7fa0ec866c3faf8dc8acf61378398cc9baf3527a))
+* refactor DOffcanvas from stencil to react ([2e534ae](https://github.com/dynamic-framework/dynamic-ui/commit/2e534ae9a3ac7eb3017064018b77b94b9f238a41))
+* refactor DProgress from stencil to react ([015fdce](https://github.com/dynamic-framework/dynamic-ui/commit/015fdce20dfed108b56b06108e3b91772ca0b553))
+* refactor DQuickActionButton from stencil to react ([8fe5751](https://github.com/dynamic-framework/dynamic-ui/commit/8fe5751d4357c9ea2d2e7fa282bdfe386ef6e4c4))
+* refactor DQuickActionCheck from stencil to react ([9725ed6](https://github.com/dynamic-framework/dynamic-ui/commit/9725ed6907a9ae9045249d58c6bbffcd35942e5f))
+* refactor DQuickActionSelect from stencil to react ([db857ac](https://github.com/dynamic-framework/dynamic-ui/commit/db857acf9988c9d043069fd8c4e259ebe1ebadc0))
+* refactor DQuickActionSwitch from stencil to react ([e454c96](https://github.com/dynamic-framework/dynamic-ui/commit/e454c962d50d4bb0e3617b4cd083a2963490f30b))
+* refactor innerId, events and import path ([f6eea93](https://github.com/dynamic-framework/dynamic-ui/commit/f6eea93e85247e25c0273bf65fcc9705c276f1f3))
+* remove stencil output from react package ([e6d434b](https://github.com/dynamic-framework/dynamic-ui/commit/e6d434b27df728d62aaef731a26c51162f2ca745))
+
+
+### Bug Fixes
+
+* adjust styles after updating stylelint library ([d5a3fb3](https://github.com/dynamic-framework/dynamic-ui/commit/d5a3fb30501358bccabd329eaaebbcb4cd3e4adf))
+
+
+
 ## [1.6.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.5.0...@dynamic-framework/ui-react@1.6.0) (2023-09-15)
 
 
