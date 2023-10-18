@@ -118,6 +118,20 @@ export const Default: Story = {
   },
 };
 
+export const Selected: Story = {
+  args: {
+    id: 'componentId2',
+    label: 'Label',
+    labelIcon: undefined,
+    options: [
+      { label: 'Option 1', value: '1' },
+      { label: 'Option 2', value: '2' },
+    ],
+    selectedOption: { label: 'Option 2', value: '2' },
+    hint: 'Assistive text',
+  },
+};
+
 export const Disabled: Story = {
   args: {
     id: 'componentId2',

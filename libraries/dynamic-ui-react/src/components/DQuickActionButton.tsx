@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import classNames from 'classnames';
 
 import type { CSSProperties } from 'react';
 
@@ -9,6 +10,7 @@ import { PREFIX_BS } from './config';
 type Props = {
   line1: string;
   line2: string;
+  className?: string;
   actionLinkText?: string;
   actionLinkTheme?: string;
   actionIcon?: string;
@@ -30,6 +32,7 @@ export default function DQuickActionButton(
   {
     line1,
     line2,
+    className,
     actionLinkText,
     actionLinkTheme = 'secondary',
     actionIcon,
@@ -72,7 +75,7 @@ export default function DQuickActionButton(
 
   return (
     <Tag
-      className="d-quick-action-button"
+      className={classNames('d-quick-action-button', className)}
       onClick={!actionLinkText ? globalClickHandler : undefined}
       style={style}
     >

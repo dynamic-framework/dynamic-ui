@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.7.0...@dynamic-framework/ui-react@1.7.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* add className to DOffcanvas ([45c2375](https://github.com/dynamic-framework/dynamic-ui/commit/45c23752dbbc8df3a25177c117ad1ed758c7af98))
+* DInputCurrecyBase optional label and DInputSelect className ([8db416b](https://github.com/dynamic-framework/dynamic-ui/commit/8db416bd86816757dba6b074ba947aa7c83b8e4f))
+
+
+
 ## [1.7.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.6.0...@dynamic-framework/ui-react@1.7.0) (2023-10-18)
 
 
