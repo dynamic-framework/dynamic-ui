@@ -1,0 +1,1 @@
+{"file":"app-globals-00bead7a.js","mappings":";;AACY,MAAC,aAAa,GAAGA;;;;","names":["appGlobalScript"],"sources":["@stencil/core/internal/app-globals"],"sourcesContent":["import appGlobalScript from '/home/runner/work/dynamic-ui/dynamic-ui/libraries/dynamic-ui/src/global/initialize.ts';\nexport const globalScripts = appGlobalScript;\n"],"version":3}

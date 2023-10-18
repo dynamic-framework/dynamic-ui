@@ -1,6 +1,6 @@
-import type { ToastPosition } from 'react-toastify';
-import type { AlertType } from '../components/interface';
-export type ToastConfig = {
+import { ToastPosition } from 'react-toastify';
+import type { AlertType } from '@dynamic-framework/ui';
+export declare type ToastConfig = {
     type?: AlertType;
     showClose?: boolean;
     position?: ToastPosition;

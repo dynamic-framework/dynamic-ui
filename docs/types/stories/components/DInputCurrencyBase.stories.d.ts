@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DInputCurrencyBase } from '../../components';
 declare const config: Meta<typeof DInputCurrencyBase>;
 export default config;
-type Story = StoryObj<typeof DInputCurrencyBase>;
+declare type Story = StoryObj<typeof DInputCurrencyBase>;
 export declare const Default: Story;
 export declare const Value: Story;
 export declare const Error: Story;

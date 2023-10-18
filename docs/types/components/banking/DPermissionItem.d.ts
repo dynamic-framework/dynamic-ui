@@ -1,5 +1,5 @@
 import { PermissionItemType } from './interface';
-type Props = {
+declare type Props = {
     permission: PermissionItemType;
     permissionState: string;
     onChange: (isChecked: boolean) => void;

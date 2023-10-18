@@ -1,6 +1,7 @@
+import { ToastPosition } from 'react-toastify';
 import type { CSSProperties } from 'react';
-import type { ToastPosition } from 'react-toastify';
-type Props = {
+import 'react-toastify/dist/ReactToastify.css';
+declare type Props = {
     style?: CSSProperties & {
         '--toastify-toast-width': any;
         [index: string]: any;

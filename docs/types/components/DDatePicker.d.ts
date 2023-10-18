@@ -1,8 +1,8 @@
-import type { ReactDatePickerProps } from 'react-datepicker';
-import type { ButtonVariant, ComponentSize } from './interface';
-type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
+import { ReactDatePickerProps } from 'react-datepicker';
+import { ButtonVariant, ComponentSize } from '@dynamic-framework/ui';
+declare type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
     date: string;
-    onChangeDate: (value: Date | [Date | null, Date | null] | null) => void;
+    onEventChangeDate: (value: Date | [Date | null, Date | null] | null) => void;
     selectsRange?: boolean;
     withMonthSelector?: boolean;
     inputLabel?: string;
@@ -16,5 +16,5 @@ type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
     headerButtonVariant?: ButtonVariant;
     headerButtonTheme?: string;
 };
-export default function DDatePicker({ onChangeDate, date, selectsRange, withMonthSelector, inputLabel, inputIcon, inputId, timeId, timeLabel, headerDecreaseMonthIcon, headerIncreaseMonthIcon, headerIconSize, headerButtonVariant, headerButtonTheme, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDatePicker({ onEventChangeDate, date, selectsRange, withMonthSelector, inputLabel, inputIcon, inputId, timeId, timeLabel, headerDecreaseMonthIcon, headerIncreaseMonthIcon, headerIconSize, headerButtonVariant, headerButtonTheme, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

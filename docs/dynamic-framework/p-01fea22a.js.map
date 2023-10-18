@@ -1,0 +1,1 @@
+{"version":3,"names":["PREFIX_BS","ICON_FAMILY_CLASS","ICON_FAMILY_PREFIX"],"sources":["./src/utils/component-config.ts"],"sourcesContent":["export const PREFIX_BS = 'bs-';\n\nexport const ICON_FAMILY_CLASS = 'bi';\nexport const ICON_FAMILY_PREFIX = 'bi-';\n"],"mappings":"MAAaA,EAAY,M,MAEZC,EAAoB,K,MACpBC,EAAqB,a"}

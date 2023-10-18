@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DModal } from '../../components';
 declare const config: Meta<typeof DModal>;
 export default config;
-type Story = StoryObj<typeof DModal>;
+declare type Story = StoryObj<typeof DModal>;
 export declare const Default: Story;
 export declare const ActionsPlacementStart: Story;
 export declare const ActionsPlacementEnd: Story;

@@ -1,7 +1,7 @@
 import type { PropsWithChildren, ReactNode } from 'react';
 import type { Placement } from '@floating-ui/react';
-import type { ComponentSize } from './interface';
-export type Props = PropsWithChildren<{
+import type { ComponentSize } from '@dynamic-framework/ui';
+export declare type Props = PropsWithChildren<{
     classNameContainer?: string;
     className?: string;
     offSet?: number;
