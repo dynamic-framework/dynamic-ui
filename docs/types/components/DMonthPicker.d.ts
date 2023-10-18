@@ -1,7 +1,7 @@
-import { ReactDatePickerProps } from 'react-datepicker';
-declare type CalendarProps = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
+import type { ReactDatePickerProps } from 'react-datepicker';
+type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
     date: string;
-    onEventChangeDate: (value: Date | null) => void;
+    onChangeDate: (value: Date | null) => void;
 };
-export default function DMonthPicker({ onEventChangeDate, date, ...props }: CalendarProps): import("react/jsx-runtime").JSX.Element;
+export default function DMonthPicker({ onChangeDate, date, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

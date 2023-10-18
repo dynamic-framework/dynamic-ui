@@ -1,38 +1,38 @@
 import type { PropsWithChildren, FC } from 'react';
-export declare type ModalComponent = FC<ModalProps>;
-export declare type ModalAvailableList = Record<string, ModalComponent>;
-declare type Props = PropsWithChildren<{
+export type ModalComponent = FC<ModalProps>;
+export type ModalAvailableList = Record<string, ModalComponent>;
+type Props = PropsWithChildren<{
     portalName: string;
     availableModals: ModalAvailableList;
 }>;
-export declare type ModalPayload = Record<string, any>;
-export declare type ModalCallbackContext = {
+export type ModalPayload = Record<string, any>;
+export type ModalCallbackContext = {
     fromModal: boolean;
 };
-export declare type ModalCallbacks = {
+export type ModalCallbacks = {
     onBeforeOpen?: (payload?: ModalPayload) => void;
     onAfterOpen?: (payload?: ModalPayload) => void;
     onBeforeClose?: (context: ModalCallbackContext, payload?: ModalPayload) => void;
     onAfterClose?: (context: ModalCallbackContext, payload?: ModalPayload) => void;
 };
-export declare type ModalStackItem = {
+export type ModalStackItem = {
     modalName: keyof ModalAvailableList;
     Component: ModalComponent;
     payload: ModalPayload;
     callbacks?: ModalCallbacks;
 };
-export declare type ModalConfig = {
+export type ModalConfig = {
     payload: ModalPayload;
     callbacks?: ModalCallbacks;
 };
-export declare type OpenModalFunction = (name: string, config?: ModalConfig) => void;
-export declare type CloseModalFunction = (context?: ModalCallbackContext) => void;
-export declare type ModalContextType = {
+export type OpenModalFunction = (name: string, config?: ModalConfig) => void;
+export type CloseModalFunction = (context?: ModalCallbackContext) => void;
+export type ModalContextType = {
     stack: ModalStackItem[];
     openModal: OpenModalFunction;
     closeModal: CloseModalFunction;
 };
-export declare type ModalProps = {
+export type ModalProps = {
     name: string;
     payload: ModalPayload;
     openModal: OpenModalFunction;

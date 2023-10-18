@@ -1,9 +1,6 @@
-import type { ComponentProps } from 'react';
-import { DInputSelect } from './proxies';
-declare type Props = Omit<ComponentProps<typeof DInputSelect>, 'name' | 'labelExtractor' | 'valueExtractor' | 'selectedOption'> & {
+import type { DefaultOption, Props as DInputSelectProps } from './DInputSelect';
+type Props<T> = Omit<DInputSelectProps<T>, 'name'> & {
     name: string;
-    labelExtractor?: (item: any) => string;
-    valueExtractor?: (item: any) => string | number;
 };
-export default function DFormikInputSelect({ name, labelExtractor, valueExtractor, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DFormikInputSelect<T extends object = DefaultOption>({ name, ...props }: Props<T>): import("react/jsx-runtime").JSX.Element;
 export {};

@@ -1,0 +1,22 @@
+import type { CSSProperties } from 'react';
+import type { LabelIcon, StartIcon } from './interface';
+type Props = LabelIcon & StartIcon & {
+    id: string;
+    name?: string;
+    label?: string;
+    value: number;
+    isDisabled?: boolean;
+    isReadOnly?: boolean;
+    isLoading?: boolean;
+    iconEnd?: string;
+    hint?: string;
+    isInvalid?: boolean;
+    isValid?: boolean;
+    minValue: number;
+    maxValue: number;
+    style?: CSSProperties;
+    className?: string;
+    onChange?: (newNumber: number) => void;
+};
+export default function DInputCounter({ id, name, label, value, isDisabled, isReadOnly, isLoading, iconStart, iconEnd, hint, isInvalid, isValid, minValue, maxValue, style, className, onChange, ...rest }: Props): import("react/jsx-runtime").JSX.Element;
+export {};
