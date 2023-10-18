@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
-import type { AlertType } from '@dynamic-framework/ui';
-declare type Props = {
+import { AlertType } from '../../components/interface';
+type Props = {
     message: string;
     type: AlertType;
     showClose: boolean;

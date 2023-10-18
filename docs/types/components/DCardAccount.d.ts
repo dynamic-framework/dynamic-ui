@@ -1,4 +1,4 @@
-declare type Props = {
+type Props = {
     className?: string;
     icon: string;
     theme: string;
@@ -6,8 +6,8 @@ declare type Props = {
     number: string;
     balance: string;
     balanceText: string;
-    onEventClick: () => void;
+    onClick: () => void;
     actionText: string;
 };
-export default function DCardAccount({ className, icon, theme, name, number, balance, balanceText, onEventClick, actionText, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DCardAccount({ className, icon, theme, name, number, balance, balanceText, onClick, actionText, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
