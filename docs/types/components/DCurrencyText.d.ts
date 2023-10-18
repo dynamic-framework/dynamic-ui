@@ -1,4 +1,4 @@
-type Props = {
+declare type Props = {
     value: number;
     className?: string;
 };

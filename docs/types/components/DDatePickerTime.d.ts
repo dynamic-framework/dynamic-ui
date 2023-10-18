@@ -1,8 +1,8 @@
-import type { ComponentProps, FormEventHandler } from 'react';
-import DInput from './DInput';
-type Props = {
+import { ComponentProps, FormEventHandler } from 'react';
+import { DInput } from './proxies';
+declare type Props = {
     value?: string | number;
-    onChange?: ((value: string) => void) & FormEventHandler<HTMLInputElement>;
-} & Omit<ComponentProps<typeof DInput>, 'type' | 'isReadOnly' | 'onChange' | 'value'>;
-export default function DDatePickerTime({ value, onChange, id, label, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+    onEventChange?: ((value: string) => void) & FormEventHandler<HTMLDInputElement>;
+} & Omit<ComponentProps<typeof DInput>, 'type' | 'isReadOnly' | 'onEventChange' | 'value'>;
+export default function DDatePickerTime({ value, onEventChange, innerId, label, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

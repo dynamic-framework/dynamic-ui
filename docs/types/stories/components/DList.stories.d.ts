@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DList } from '../../components';
 declare const config: Meta<typeof DList>;
 export default config;
-type Story = StoryObj<typeof DList>;
+declare type Story = StoryObj<typeof DList>;
 export declare const Default: Story;
 export declare const Flush: Story;
 export declare const Numbered: Story;
