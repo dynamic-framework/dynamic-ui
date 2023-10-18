@@ -10,9 +10,6 @@
 [submodule "templates/dynamic-retail-loan-application-template"]
 	path = templates/dynamic-retail-loan-application-template
 	url = git@github.com:dynamic-framework/dynamic-retail-loan-application-template
-[submodule "templates/dynamic-retail-pay-debt-template"]
-	path = templates/dynamic-retail-pay-debt-template
-	url = git@github.com:dynamic-framework/dynamic-retail-pay-debt-template.git
 [submodule "templates/dynamic-retail-loan-approval-template"]
 	path = templates/dynamic-retail-loan-approval-template
 	url = git@github.com:dynamic-framework/dynamic-retail-loan-approval-template.git

@@ -24,6 +24,10 @@ const config: Meta<typeof DInputSelect> = {
       control: 'text',
       type: 'string',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     labelIcon: {
       control: {
         type: 'select',
