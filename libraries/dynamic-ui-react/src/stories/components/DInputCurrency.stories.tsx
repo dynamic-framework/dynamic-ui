@@ -19,6 +19,10 @@ const config: Meta<typeof DInputCurrency> = {
       type: 'string',
       description: 'The name of the input',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     label: {
       control: 'text',
       type: 'string',
