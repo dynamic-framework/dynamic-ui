@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import classNames from 'classnames';
 
 import type { MouseEvent } from 'react';
 
@@ -9,6 +10,7 @@ type Props = {
   name?: string;
   label: string;
   hint: string;
+  className?: string;
   isChecked?: boolean;
   isDisabled?: boolean;
   onClick?: (isChecked: boolean | undefined) => void;
@@ -20,6 +22,7 @@ export default function DQuickActionSwitch(
     name,
     label,
     hint,
+    className,
     isChecked,
     isDisabled,
     onClick,
@@ -32,7 +35,7 @@ export default function DQuickActionSwitch(
 
   return (
     <button
-      className="d-quick-action-switch"
+      className={classNames('d-quick-action-switch', className)}
       type="button"
       onClick={clickHandler}
     >

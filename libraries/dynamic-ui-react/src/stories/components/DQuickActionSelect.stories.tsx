@@ -30,6 +30,10 @@ const config: Meta<typeof DQuickActionSelect> = {
       type: 'string',
       description: 'The subtitle',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     isSelected: {
       control: 'boolean',
       type: 'boolean',
