@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from 'react';
-export type Props = PropsWithChildren<{
+import { PropsWithChildren } from 'react';
+export declare type Props = PropsWithChildren<{
     speed?: number;
     viewBox?: string;
     backgroundColor?: string;

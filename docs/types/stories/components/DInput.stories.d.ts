@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DInput } from '../../components';
 declare const config: Meta<typeof DInput>;
 export default config;
-type Story = StoryObj<typeof DInput>;
+declare type Story = StoryObj<typeof DInput>;
 export declare const Default: Story;
 export declare const Value: Story;
 export declare const Error: Story;

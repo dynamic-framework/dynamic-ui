@@ -1,3 +1,3 @@
-export { default as DPermissionGroup } from './DPermissionGroup';
+export { default as MPermissionGroup } from './MPermissionGroup';
 export { default as DPermissionItem } from './DPermissionItem';
-export { default as DSummaryCard } from './DSummaryCard';
+export { default as MSummaryCard } from './MSummaryCard';

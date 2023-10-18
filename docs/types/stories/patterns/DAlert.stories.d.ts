@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { DAlert } from '../../components';
 declare const config: Meta<typeof DAlert>;
 export default config;
-type Story = StoryObj<typeof DAlert>;
+declare type Story = StoryObj<typeof DAlert>;
 export declare const Light: Story;
 export declare const Dark: Story;
 export declare const Success: Story;
