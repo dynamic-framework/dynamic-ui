@@ -28,7 +28,7 @@ it('should render my component with header, body, and footer slot', () => {
     <div
       aria-hidden="false"
       aria-labelledby="myModalLabel"
-      class="offcanvas offcanvas-end show"
+      class="offcanvas show offcanvas-end"
       id="myModal"
       tabindex="-1"
     >
