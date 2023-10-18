@@ -1,1 +1,0 @@
-{"version":3,"file":"d-modal-interface.js","sourceRoot":"","sources":["../../../../src/components/d-modal/d-modal-interface.ts"],"names":[],"mappings":"","sourcesContent":["export type ModalSize = 'sm' | 'lg' | 'xl';\nexport type FullScreenFrom = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';\n"]}

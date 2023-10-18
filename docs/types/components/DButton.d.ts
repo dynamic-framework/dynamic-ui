@@ -1,0 +1,21 @@
+import type { MouseEvent, CSSProperties } from 'react';
+import type { ButtonType, ButtonVariant, ComponentSize, EndIcon, InputState, StartIcon } from './interface';
+type Props = StartIcon & EndIcon & {
+    id?: string;
+    className?: string;
+    style?: CSSProperties;
+    theme?: string;
+    size?: ComponentSize;
+    variant?: ButtonVariant;
+    state?: InputState;
+    text?: string;
+    value?: string;
+    type?: ButtonType;
+    isPill?: boolean;
+    isLoading?: boolean;
+    isDisabled?: boolean;
+    isStopPropagationEnabled?: boolean;
+    onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+};
+export default function DButton({ theme, size, variant, state, text, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type, isPill, isLoading, isDisabled, isStopPropagationEnabled, className, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
+export {};
