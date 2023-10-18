@@ -8,6 +8,7 @@ export type Props<T> = LabelIcon & StartIcon & EndIcon & {
     id: string;
     name?: string;
     label?: string;
+    className?: string;
     isDisabled?: boolean;
     isLoading?: boolean;
     hint?: string;
@@ -20,4 +21,4 @@ export type Props<T> = LabelIcon & StartIcon & EndIcon & {
     valueExtractor?: (item: T) => string | number;
     labelExtractor?: (item: T) => string;
 };
-export default function DInputSelect<T extends object = DefaultOption>({ id, name, label, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, isDisabled, isLoading, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, hint, selectedOption, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }: Props<T>): import("react/jsx-runtime").JSX.Element;
+export default function DInputSelect<T extends object = DefaultOption>({ id, name, label, className, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, isDisabled, isLoading, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, hint, selectedOption, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }: Props<T>): import("react/jsx-runtime").JSX.Element;

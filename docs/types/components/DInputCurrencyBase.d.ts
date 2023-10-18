@@ -3,7 +3,7 @@ import type { EndIcon, LabelIcon, StartIcon } from './interface';
 type Props = LabelIcon & StartIcon & EndIcon & {
     id: string;
     name?: string;
-    label: string;
+    label?: string;
     placeholder?: string;
     value?: number;
     isDisabled?: boolean;
