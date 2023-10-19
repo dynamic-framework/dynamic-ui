@@ -60,12 +60,6 @@
   }
 
   label {
-    --#{$prefix}label-padding-y: var(--#{$prefix}input-label-padding-y);
-    --#{$prefix}label-padding-x: var(--#{$prefix}input-label-padding-x);
-    --#{$prefix}label-font-size: var(--#{$prefix}input-label-font-size);
-    --#{$prefix}label-font-weight: var(--#{$prefix}input-label-font-weight);
-    --#{$prefix}label-color: var(--#{$prefix}input-label-color);
-
     display: inline-flex;
     flex-direction: row;
     gap: var(--#{$prefix}input-label-gap);
@@ -172,14 +166,8 @@
 
 .label,
 label {
-  --#{$prefix}label-padding-y: #{$form-label-padding-y};
-  --#{$prefix}label-padding-x: #{$form-label-padding-x};
-  --#{$prefix}label-font-size: #{$form-label-font-size};
-  --#{$prefix}label-font-weight: #{$form-label-font-weight};
-  --#{$prefix}label-color: #{$form-label-color};
-
-  padding: var(--#{$prefix}label-padding-y) var(--#{$prefix}label-padding-x);
-  font-size: var(--#{$prefix}label-font-size);
-  font-weight: var(--#{$prefix}label-font-weight);
-  color: var(--#{$prefix}label-color);
+  padding: var(--#{$prefix}input-label-padding-y, var(--#{$prefix}label-padding-y)) var(--#{$prefix}input-label-padding-x, var(--#{$prefix}label-padding-x));
+  font-size: var(--#{$prefix}input-label-font-size, var(--#{$prefix}label-font-size));
+  font-weight: var(--#{$prefix}input-label-font-weight, var(--#{$prefix}label-font-weight));
+  color: var(--#{$prefix}input-label-color, var(--#{$prefix}label-color));
 }
