@@ -60,15 +60,6 @@
   }
 
   label {
-    display: inline-flex;
-    flex-direction: row;
-    gap: var(--#{$prefix}input-label-gap);
-    align-items: center;
-    padding: var(--#{$prefix}input-label-padding-y) var(--#{$prefix}input-label-padding-x);
-    font-size: var(--#{$prefix}input-label-font-size);
-    font-weight: var(--#{$prefix}input-label-font-weight);
-    color: var(--#{$prefix}input-label-color);
-
     .d-input-icon {
       .d-icon {
         --#{$prefix}icon-color: var(--#{$prefix}focus-ring-color);
@@ -87,7 +78,7 @@
     $border-color: map-get($data, "border-color");
     $tooltip-bg-color: map-get($data, "tooltip-bg-color");
 
-    &:has(.form-control.is-#{$state}){
+    &:has(.form-control.is-#{$state}) {
       .input-group {
         border-color: $border-color;
       }
@@ -148,6 +139,7 @@
 
 
   &:has(.form-control:disabled) {
+
     // input addons disabled
     .input-group-text {
       background: var(--#{$prefix}input-group-disabled-bg);
@@ -166,3 +158,23 @@
     }
   }
 }
+
+.label,
+label {
+  --#{$prefix}label-gap: #{$form-label-gap};
+  --#{$prefix}label-padding-y: #{$form-label-padding-y};
+  --#{$prefix}label-padding-x: #{$form-label-padding-x};
+  --#{$prefix}label-font-size: #{$form-label-font-size};
+  --#{$prefix}label-font-weight: #{$form-label-font-weight};
+  --#{$prefix}label-color: #{$form-label-color};
+
+  display: inline-flex;
+  flex-direction: row;
+  gap: var(--#{$prefix}input-label-gap, var(--#{$prefix}label-gap));
+  align-items: center;
+  padding: var(--#{$prefix}input-label-padding-y, var(--#{$prefix}label-padding-y)) var(--#{$prefix}input-label-padding-x, var(--#{$prefix}label-padding-x));
+  font-size: var(--#{$prefix}input-label-font-size, var(--#{$prefix}label-font-size));
+  font-weight: var(--#{$prefix}input-label-font-weight, var(--#{$prefix}label-font-weight));
+  color: var(--#{$prefix}input-label-color, var(--#{$prefix}label-color));
+}
+
