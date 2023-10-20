@@ -46,7 +46,7 @@ const config: Meta<typeof DInput> = {
       type: 'string',
       description: 'The value of the input',
     },
-    innerInputMode: {
+    inputMode: {
       control: 'text',
       type: 'string',
       description: 'Input mode',
@@ -56,17 +56,17 @@ const config: Meta<typeof DInput> = {
       type: 'string',
       description: 'Pattern to validate',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isReadOnly: {
+    readOnly: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isLoading: {
+    loading: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -96,12 +96,12 @@ const config: Meta<typeof DInput> = {
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
-    isInvalid: {
+    invalid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isValid: {
+    valid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -137,7 +137,7 @@ export const Default: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     type: 'text',
-    value: undefined,
+    value: '',
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
     hint: 'Assistive text',
@@ -169,7 +169,7 @@ export const Error: Story = {
     iconStart: 'emoji-smile-upside-down',
     iconEnd: undefined,
     hint: 'Assistive text',
-    isInvalid: true,
+    invalid: true,
   },
 };
 
@@ -184,7 +184,7 @@ export const Confirm: Story = {
     iconStart: 'emoji-smile-upside-down',
     iconEnd: undefined,
     hint: 'Assistive text',
-    isValid: true,
+    valid: true,
   },
 };
 
@@ -199,7 +199,7 @@ export const Disabled: Story = {
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
     hint: 'Assistive text',
-    isDisabled: true,
+    disabled: true,
   },
 };
 

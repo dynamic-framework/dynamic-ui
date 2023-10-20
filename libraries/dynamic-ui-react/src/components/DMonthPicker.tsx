@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 import type { ReactDatePickerProps } from 'react-datepicker';
 
 import DButton from './DButton';
-import { useLiquidContext } from '../contexts';
+import { useDContext } from '../contexts';
 
 type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' > & {
   date: string;
@@ -19,7 +19,7 @@ export default function DMonthPicker(
     ...props
   }: Props,
 ) {
-  const { language } = useLiquidContext();
+  const { language } = useDContext();
   const selected = useMemo(() => DateTime.fromISO(date).toJSDate(), [date]);
   const locale = useMemo(() => language || 'en', [language]);
   const dateFormatted = useMemo(() => (

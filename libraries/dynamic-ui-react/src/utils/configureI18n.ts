@@ -1,14 +1,11 @@
 import i18n, { InitOptions, Resource, TFunction } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import liquidParser from './liquid-parser';
-
-const LANG = liquidParser.parse('{{site.language}}');
 
 export default async function configureI8n(
   resources: Resource,
   {
-    lng = LANG,
-    fallbackLng = 'es',
+    lng = 'en',
+    fallbackLng = 'en',
     ...config
   }: InitOptions | undefined = {},
 ): Promise<TFunction> {

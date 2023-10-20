@@ -29,18 +29,19 @@ export default {
               'Button',
               'Icon',
               'Input',
+              /*
               'Input Search',
               'Input Password',
+               */
               'Input Currency Base',
+              /*
               'Input Currency',
               'Input Counter',
+               */
               'Input Pin',
               'Input Select',
               'Input Check',
               'Input Switch',
-              'Formik Input',
-              'Formik Input Select',
-              'Formik Input Currency',
               'Datepicker',
               'Progress',
               'Tooltip',
