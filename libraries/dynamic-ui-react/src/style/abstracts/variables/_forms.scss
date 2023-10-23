@@ -8,17 +8,17 @@ $form-text-color: $text-muted !default;
 
 // scss-docs-start form-label-variables
 $form-label-margin-bottom: 0 !default;
-$form-label-font-size: $small-font-size !default;
+$form-label-font-size: var(--#{$prefix}ref-fs-small) !default;
 $form-label-font-style: null !default;
-$form-label-font-weight: $font-weight-bold !default;
+$form-label-font-weight: var(--#{$prefix}ref-fw-bold) !default;
 $form-label-color: var(--#{$prefix}gray) !default;
 // scss-docs-end form-label-variables
 
 // custom
 $form-label-has-value-color: var(--#{$prefix}dark) !default;
 $form-label-padding-y: 0 !default;
-$form-label-padding-x: $spacer-2 !default;
-$form-label-gap: $spacer-1 !default;
+$form-label-padding-x: var(--#{$prefix}ref-spacer-2) !default;
+$form-label-gap: var(--#{$prefix}ref-spacer-1) !default;
 // end custom
 
 // scss-docs-start form-input-variables
