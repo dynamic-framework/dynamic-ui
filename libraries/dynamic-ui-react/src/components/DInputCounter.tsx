@@ -62,17 +62,11 @@ function DInputCounter(
   }, []);
 
   const handleOnIconStartClick = useCallback(() => {
-    setInternalValue((prevInternalValue) => {
-      const newValue = prevInternalValue - 1;
-      return newValue >= minValue ? newValue : minValue;
-    });
+    setInternalValue((prevInternalValue) => Math.max(prevInternalValue - 1, minValue));
   }, [minValue]);
 
   const handleOnIconEndClick = useCallback(() => {
-    setInternalValue((prevInternalValue) => {
-      const newValue = prevInternalValue + 1;
-      return newValue <= maxValue ? newValue : maxValue;
-    });
+    setInternalValue((prevInternalValue) => Math.min(prevInternalValue + 1, maxValue));
   }, [maxValue]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
