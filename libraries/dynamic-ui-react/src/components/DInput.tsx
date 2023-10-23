@@ -1,12 +1,12 @@
 import {
-  CSSProperties,
   forwardRef,
+  useCallback,
 } from 'react';
 import classNames from 'classnames';
 
 import type {
+  CSSProperties,
   ForwardedRef,
-  MouseEvent,
   ReactNode,
   ComponentPropsWithoutRef,
 } from 'react';
@@ -29,6 +29,7 @@ type NonHTMLInputElementProps =
 & StartIcon
 & EndIcon
 & {
+  value?: string;
   style?: CSSProperties;
   label?: string;
   loading?: boolean;
@@ -36,11 +37,12 @@ type NonHTMLInputElementProps =
   invalid?: boolean;
   valid?: boolean;
   inputStart?: ReactNode;
-  onIconStartClick?: (event: MouseEvent) => void;
-  onIconEndClick?: (event: MouseEvent) => void;
+  onChange?: (value?: string) => void;
+  onIconStartClick?: (value?: string) => void;
+  onIconEndClick?: (value?: string) => void;
 };
 
-type Props = Merge<ComponentPropsWithoutRef<'input'>, NonHTMLInputElementProps>;
+type Props = Merge<Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>, NonHTMLInputElementProps>;
 
 function DInput(
   {
@@ -66,6 +68,8 @@ function DInput(
     invalid = false,
     valid = false,
     inputStart,
+    value,
+    onChange,
     onIconStartClick,
     onIconEndClick,
     ...inputProps
@@ -73,6 +77,18 @@ function DInput(
   ref: ForwardedRef<HTMLInputElement>,
 ) {
   const inputRef = useProvidedRefOrCreate(ref as React.RefObject<HTMLInputElement>);
+
+  const handleOnChange = useCallback(() => {
+    onChange?.(value);
+  }, [onChange, value]);
+
+  const handleOnIconStartClick = useCallback(() => {
+    onIconStartClick?.(value);
+  }, [onIconStartClick, value]);
+
+  const handleOnIconEndClick = useCallback(() => {
+    onIconEndClick?.(value);
+  }, [onIconEndClick, value]);
 
   return (
     <div
@@ -114,7 +130,7 @@ function DInput(
               type="button"
               className="input-group-text"
               id={`${id}Start`}
-              onClick={onIconStartClick}
+              onClick={handleOnIconStartClick}
               disabled={disabled || loading}
             >
               {iconStart && (
@@ -138,6 +154,8 @@ function DInput(
             disabled={disabled || loading}
             readOnly={readOnly}
             aria-describedby={`${id}Add ${id}Hint`}
+            value={value}
+            onChange={handleOnChange}
             {...inputProps}
           />
           {((invalid || valid) && !iconEnd && !loading) && (
@@ -158,7 +176,7 @@ function DInput(
               type="button"
               className="input-group-text"
               id={`${id}End`}
-              onClick={onIconEndClick}
+              onClick={handleOnIconEndClick}
               disabled={disabled || loading}
             >
               {iconEnd && (

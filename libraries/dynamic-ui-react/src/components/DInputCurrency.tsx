@@ -4,10 +4,10 @@ import type {
   ForwardedRef,
   ComponentPropsWithoutRef,
 } from 'react';
-import type { Options } from 'currency.js';
 
 import DInput from './DInput';
 import useInputCurrency from '../hooks/useInputCurrency';
+import { useDContext } from '../contexts';
 
 import type { Merge } from '../types';
 
@@ -15,28 +15,27 @@ type NonDInputProps = {
   value?: number;
   minValue?: number;
   maxValue?: number;
-  currencyOptions: Options;
   currencyCode?: string;
   onChange?: (value?: number) => void;
 };
 
 type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'value' | 'type' | 'onChange'>, NonDInputProps>;
 
-function DInputCurrencyBase(
+function DInputCurrency(
   {
     value,
     minValue,
     maxValue,
-    currencyOptions,
     currencyCode,
     invalid,
     onFocus,
     onBlur,
     onChange,
-    ...inputProps
+    ...props
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
+  const { currency: currencyOptions } = useDContext();
   const {
     inputRef,
     innerValue,
@@ -76,11 +75,11 @@ function DInputCurrencyBase(
           {currencyCode || currencyOptions.symbol}
         </span>
       )}
-      {...inputProps}
+      {...props}
     />
   );
 }
 
-const ForwardedDInputCurrencyBase = forwardRef<HTMLInputElement, Props>(DInputCurrencyBase);
-ForwardedDInputCurrencyBase.displayName = 'DInputCurrencyBase';
+const ForwardedDInputCurrencyBase = forwardRef<HTMLInputElement, Props>(DInputCurrency);
+ForwardedDInputCurrencyBase.displayName = 'DInputCurrency';
 export default ForwardedDInputCurrencyBase;
