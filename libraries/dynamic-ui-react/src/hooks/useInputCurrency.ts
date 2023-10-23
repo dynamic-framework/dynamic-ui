@@ -7,6 +7,7 @@ import {
 import currency from 'currency.js';
 
 import type {
+  RefObject,
   ForwardedRef,
   FocusEvent,
   WheelEvent,
@@ -26,7 +27,7 @@ export default function useInputCurrency(
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void,
   ref?: ForwardedRef<HTMLInputElement>,
 ) {
-  const inputRef = useProvidedRefOrCreate(ref as React.RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
 
   const valueFormatted = useMemo(() => {
     if (value === undefined) {

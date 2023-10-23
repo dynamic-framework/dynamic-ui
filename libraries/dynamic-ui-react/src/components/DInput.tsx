@@ -5,6 +5,7 @@ import {
 import classNames from 'classnames';
 
 import type {
+  RefObject,
   CSSProperties,
   ForwardedRef,
   ReactNode,
@@ -76,7 +77,7 @@ function DInput(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const inputRef = useProvidedRefOrCreate(ref as React.RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
 
   const handleOnChange = useCallback(() => {
     onChange?.(value);

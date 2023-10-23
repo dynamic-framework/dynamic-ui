@@ -1,17 +1,20 @@
-import { useCallback, useState } from 'react';
+import { forwardRef, useCallback, useState } from 'react';
 
-import type { ComponentPropsWithoutRef } from 'react';
+import type { ForwardedRef, ComponentPropsWithoutRef, RefObject } from 'react';
 
 import DInput from './DInput';
+import useProvidedRefOrCreate from '../hooks/useProvidedRefOrCreate';
 
 type Props = Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'type'>;
 
-export default function DInputPassword(
+function DInputPassword(
   {
     onIconEndClick,
     ...props
   }: Props,
+  ref: ForwardedRef<HTMLInputElement>,
 ) {
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
   const [visible, setVisible] = useState(false);
 
   const handleOnIconEndClick = useCallback(() => {
@@ -21,6 +24,7 @@ export default function DInputPassword(
 
   return (
     <DInput
+      ref={inputRef}
       iconEnd={!visible ? 'eye-slash' : 'eye'}
       type={!visible ? 'password' : 'text'}
       onIconEndClick={handleOnIconEndClick}
@@ -28,3 +32,7 @@ export default function DInputPassword(
     />
   );
 }
+
+const ForwardedDInputPassword = forwardRef<HTMLInputElement, Props>(DInputPassword);
+ForwardedDInputPassword.displayName = 'DInputPassword';
+export default ForwardedDInputPassword;

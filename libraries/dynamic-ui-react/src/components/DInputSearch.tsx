@@ -1,9 +1,10 @@
 import { forwardRef } from 'react';
 
-import type { ComponentPropsWithoutRef, ForwardedRef } from 'react';
+import type { ComponentPropsWithoutRef, ForwardedRef, RefObject } from 'react';
 
 import DInput from './DInput';
 import useProvidedRefOrCreate from '../hooks/useProvidedRefOrCreate';
+
 import type { Merge } from '../types';
 
 type NonDInputProps = {
@@ -19,7 +20,7 @@ function DInputSearch(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const inputRef = useProvidedRefOrCreate(ref as React.RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
 
   return (
     <DInput

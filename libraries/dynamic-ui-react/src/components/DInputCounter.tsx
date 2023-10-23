@@ -7,6 +7,7 @@ import {
 } from 'react';
 
 import type {
+  RefObject,
   ForwardedRef,
   ComponentPropsWithoutRef,
   CSSProperties,
@@ -44,7 +45,7 @@ function DInputCounter(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const inputRef = useProvidedRefOrCreate(ref as React.RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
   const [internalIsInvalid, setInternalIsInvalid] = useState(false);
   const [internalValue, setInternalValue] = useState<number>(value);
 
