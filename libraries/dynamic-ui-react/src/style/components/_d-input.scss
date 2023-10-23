@@ -64,10 +64,6 @@
     flex-direction: row;
     gap: var(--#{$prefix}input-label-gap);
     align-items: center;
-    padding: var(--#{$prefix}input-label-padding-y) var(--#{$prefix}input-label-padding-x);
-    font-size: var(--#{$prefix}input-label-font-size);
-    font-weight: var(--#{$prefix}input-label-font-weight);
-    color: var(--#{$prefix}input-label-color);
 
     .d-input-icon {
       .d-icon {
@@ -87,7 +83,7 @@
     $border-color: map-get($data, "border-color");
     $tooltip-bg-color: map-get($data, "tooltip-bg-color");
 
-    &:has(.form-control.is-#{$state}){
+    &:has(.form-control.is-#{$state}) {
       .input-group {
         border-color: $border-color;
       }
@@ -148,6 +144,7 @@
 
 
   &:has(.form-control:disabled) {
+
     // input addons disabled
     .input-group-text {
       background: var(--#{$prefix}input-group-disabled-bg);
@@ -165,4 +162,12 @@
       border-color: var(--#{$prefix}input-group-disabled-border-color);
     }
   }
+}
+
+.label,
+label {
+  padding: var(--#{$prefix}input-label-padding-y, var(--#{$prefix}label-padding-y)) var(--#{$prefix}input-label-padding-x, var(--#{$prefix}label-padding-x));
+  font-size: var(--#{$prefix}input-label-font-size, var(--#{$prefix}label-font-size));
+  font-weight: var(--#{$prefix}input-label-font-weight, var(--#{$prefix}label-font-weight));
+  color: var(--#{$prefix}input-label-color, var(--#{$prefix}label-color));
 }
