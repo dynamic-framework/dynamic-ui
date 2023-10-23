@@ -8,7 +8,7 @@ import useProvidedRefOrCreate from '../hooks/useProvidedRefOrCreate';
 import type { Merge } from '../types';
 
 type NonDInputProps = {
-  onClick: (value: string | undefined) => void;
+  onClick?: (value: string | undefined) => void;
 };
 
 type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'onIconEndClick'>, NonDInputProps>;
@@ -16,6 +16,7 @@ type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'on
 function DInputSearch(
   {
     onClick,
+    type,
     ...props
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
@@ -25,8 +26,9 @@ function DInputSearch(
   return (
     <DInput
       ref={inputRef}
-      onIconEndClick={onClick}
+      type="text"
       iconEnd="search"
+      onIconEndClick={onClick}
       {...props}
     />
   );

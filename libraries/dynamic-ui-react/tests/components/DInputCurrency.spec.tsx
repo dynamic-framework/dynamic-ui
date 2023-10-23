@@ -16,7 +16,7 @@ it('should render base currency', () => {
   const { container } = render(
     <DInputCurrencyBase
       {...props}
-    />
+    />,
   );
 
   expect(container).toMatchInlineSnapshot(`
@@ -52,9 +52,8 @@ it('should render base currency', () => {
             id="currencyTest"
             inputmode="decimal"
             pattern="^[0-9]"
-            placeholder=""
             type="text"
-            value=""
+            value="0.00"
           />
         </div>
       </div>
