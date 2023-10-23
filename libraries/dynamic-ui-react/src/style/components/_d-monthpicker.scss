@@ -42,9 +42,10 @@
     font-weight: var(--#{$prefix}monthpicker-font-weight);
     color: var(--#{$prefix}monthpicker-header-color);
     background-color: var(--#{$prefix}monthpicker-header-bg);
+
     .btn-sm {
-      --#{$prefix}btn-padding-x: 0px;
-      --#{$prefix}btn-padding-y: 0px;
+      --#{$prefix}btn-padding-x: 0;
+      --#{$prefix}btn-padding-y: 0;
       --#{$prefix}btn-font-size: var(--#{$prefix}ref-fs-5);
     }
   }
