@@ -1,21 +1,23 @@
 import { useCallback, useMemo } from 'react';
 import DatePicker from 'react-datepicker';
-import { DateTime } from 'luxon';
+import { parseISO } from 'date-fns';
+import type { Locale } from 'date-fns';
 
-import type { ReactDatePickerCustomHeaderProps, ReactDatePickerProps } from 'react-datepicker';
+import type {
+  ReactDatePickerCustomHeaderProps,
+  ReactDatePickerProps,
+} from 'react-datepicker';
 
 import DDatePickerTime from './DDatePickerTime';
 import DDatePickerInput from './DDatePickerInput';
 import DDatePickerHeader from './DDatePickerHeader';
-import { useLiquidContext } from '../contexts';
 
 import type { ButtonVariant, ComponentSize } from './interface';
 
-type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
-  date: string;
-  onChangeDate: (value: Date | [Date | null, Date | null] | null) => void;
-  selectsRange?: boolean;
+type Props = Omit<ReactDatePickerProps, 'selected' | 'selectsRange' | 'locale'> & {
+  date?: string | null;
   withMonthSelector?: boolean;
+  selectsRange?: boolean;
   inputLabel?: string;
   inputIcon?: string;
   inputId?: string;
@@ -26,13 +28,13 @@ type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange'> & {
   headerIconSize?: ComponentSize;
   headerButtonVariant?: ButtonVariant;
   headerButtonTheme?: string;
+  locale?: Locale;
 };
 
 export default function DDatePicker(
   {
-    onChangeDate,
     date,
-    selectsRange,
+    selectsRange = false,
     withMonthSelector,
     inputLabel,
     inputIcon = 'calendar',
@@ -44,16 +46,16 @@ export default function DDatePicker(
     headerIconSize = 'sm',
     headerButtonVariant = 'link',
     headerButtonTheme = 'dark',
+    locale,
     ...props
   }: Props,
 ) {
-  const selected = useMemo(() => DateTime.fromISO(date).toJSDate(), [date]);
-  const { language } = useLiquidContext();
-  const locale = useMemo(() => language || 'en', [language]);
+  const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
 
   const DatePickerHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
     <DDatePickerHeader
       {...headerProps}
+      {...locale && { locale }}
       decreaseMonthIcon={headerDecreaseMonthIcon}
       increaseMonthIcon={headerIncreaseMonthIcon}
       iconSize={headerIconSize}
@@ -67,13 +69,13 @@ export default function DDatePicker(
     headerIconSize,
     headerIncreaseMonthIcon,
     withMonthSelector,
+    locale,
   ]);
 
   return (
     <DatePicker
       selected={selected}
       calendarClassName="m-date-picker"
-      onChange={onChangeDate}
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
       customInput={<DDatePickerInput id={inputId} iconEnd={inputIcon} />}
       customTimeInput={<DDatePickerTime id={timeId} label={timeLabel} />}

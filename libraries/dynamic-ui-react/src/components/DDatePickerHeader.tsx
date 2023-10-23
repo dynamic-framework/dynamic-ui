@@ -1,15 +1,15 @@
-import { useCallback, useMemo } from 'react';
-import { DateTime } from 'luxon';
+import { useCallback } from 'react';
 
 import type { ComponentProps } from 'react';
 
+import { getMonth, getYear } from 'date-fns';
 import DButton from './DButton';
 import DMonthPicker from './DMonthPicker';
-import { useLiquidContext } from '../contexts';
 
 import type { ButtonVariant, ComponentSize } from './interface';
 
 type Props = {
+  locale?: Locale;
   monthDate: Date;
   decreaseMonth: () => void;
   increaseMonth: () => void;
@@ -44,14 +44,13 @@ export default function DDatePickerHeader(
     iconSize,
     buttonVariant,
     buttonTheme,
+    locale,
   }: Props,
 ) {
-  const { language } = useLiquidContext();
-  const locale = useMemo(() => language || 'en', [language]);
   const onChangeDate = useCallback((value: Date | null) => {
     if (value) {
-      changeMonth(DateTime.fromJSDate(value).month - 1);
-      changeYear(DateTime.fromJSDate(value).year);
+      changeMonth(getMonth(value));
+      changeYear(getYear(value));
     }
   }, [changeMonth, changeYear]);
 
