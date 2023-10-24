@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import DCarousel from './DCarousel';
-import DCarouselSlide from '../DCarouselSlide';
+import DCarouselSlide from './components/DCarouselSlide';
 
 const config: Meta<typeof DCarousel> = {
   title: 'Design System/Patterns/Carousel',

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DList from './DList';
-import DListItem from '../DListItem';
+import DListItem from './components/DListItem';
 
 const config: Meta<typeof DList> = {
   title: 'Design System/Components/List',

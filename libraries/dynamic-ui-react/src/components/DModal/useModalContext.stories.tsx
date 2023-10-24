@@ -1,9 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DModal from './DModal';
-import DModalHeader from '../DModalHeader';
-import DModalBody from '../DModalBody';
-import DModalFooter from '../DModalFooter';
 import DButton from '../DButton';
 
 import {
@@ -19,13 +16,13 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
     isStatic
     className="d-block"
   >
-    <DModalHeader onClose={closeModal} showCloseButton>
+    <DModal.Header onClose={closeModal} showCloseButton>
       <h5 className="fw-bold">Do you want to reject the offer?</h5>
-    </DModalHeader>
-    <DModalBody>
+    </DModal.Header>
+    <DModal.Body>
       <p className="py-3 px-5">Modal body</p>
-    </DModalBody>
-    <DModalFooter>
+    </DModal.Body>
+    <DModal.Footer>
       <DButton
         text="cancel"
         theme="secondary"
@@ -35,7 +32,7 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
         onClick={() => closeModal()}
       />
       <DButton text="ok" className="d-grid" isPill />
-    </DModalFooter>
+    </DModal.Footer>
   </DModal>
 );
 

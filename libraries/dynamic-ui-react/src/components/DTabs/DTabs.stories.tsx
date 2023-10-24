@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DTabs from './DTabs';
-import DTabContent from '../DTabContent';
+import DTabContent from './components/DTabContent';
 
 const config: Meta<typeof DTabs> = {
   title: 'Design System/Patterns/Tabs',

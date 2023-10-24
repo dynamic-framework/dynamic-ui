@@ -5,6 +5,10 @@ import type { PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from '../config';
 
+import DModalHeader from './components/DModalHeader';
+import DModalBody from './components/DModalBody';
+import DModalFooter from './components/DModalFooter';
+
 import type { ModalFullScreenFrom, ModalSize } from '../interface';
 
 type Props = PropsWithChildren<{
@@ -18,7 +22,7 @@ type Props = PropsWithChildren<{
   modalSize?: ModalSize;
 }>;
 
-export default function DModal(
+function DModal(
   {
     name,
     className = '',
@@ -74,3 +78,9 @@ export default function DModal(
     </div>
   );
 }
+
+export default Object.assign(DModal, {
+  Header: DModalHeader,
+  Body: DModalBody,
+  Footer: DModalFooter,
+});

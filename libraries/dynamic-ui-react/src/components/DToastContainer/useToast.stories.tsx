@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import DButton from '../DButton';
 import DToastContainer from './DToastContainer';
 
-import { useToast as useToastHook } from '../../hooks';
+import useToastHook from './useToast';
 
 import { THEMES } from '../../stories/config/constants';
 

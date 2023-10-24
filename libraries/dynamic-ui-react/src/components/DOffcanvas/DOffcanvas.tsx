@@ -4,6 +4,10 @@ import type { PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from '../config';
 
+import DOffcanvasHeader from './components/DOffcanvasHeader';
+import DOffcanvasBody from './components/DOffcanvasBody';
+import DOffcanvasFooter from './components/DOffcanvasFooter';
+
 import type { OffcanvasPositionToggleFrom } from '../interface';
 
 type Props = PropsWithChildren<{
@@ -14,7 +18,7 @@ type Props = PropsWithChildren<{
   openFrom?: OffcanvasPositionToggleFrom;
 }>;
 
-export default function DOffcanvas(
+function DOffcanvas(
   {
     name,
     className,
@@ -50,3 +54,9 @@ export default function DOffcanvas(
     </div>
   );
 }
+
+export default Object.assign(DOffcanvas, {
+  Header: DOffcanvasHeader,
+  Body: DOffcanvasBody,
+  Footer: DOffcanvasFooter,
+});

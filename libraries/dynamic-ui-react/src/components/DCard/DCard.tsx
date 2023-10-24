@@ -2,12 +2,16 @@ import classNames from 'classnames';
 
 import type { CSSProperties, PropsWithChildren } from 'react';
 
+import DCardHeader from './components/DCardHeader';
+import DCardBody from './components/DCardBody';
+import DCardFooter from './components/DCardFooter';
+
 type Props = PropsWithChildren<{
   className?: string;
   style?: CSSProperties;
 }>;
 
-export default function DCard(
+function DCard(
   {
     className,
     style,
@@ -26,3 +30,9 @@ export default function DCard(
     </div>
   );
 }
+
+export default Object.assign(DCard, {
+  Header: DCardHeader,
+  Body: DCardBody,
+  Footer: DCardFooter,
+});

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { useFormatCurrency } from '../../hooks';
-import { DContextProvider } from '../../contexts';
+import useFormatCurrency from '../../hooks/useFormatCurrency';
+import { DContextProvider } from '../../contexts/DContext';
 
 const ExampleChildren = () => {
   const { values } = useFormatCurrency(100, 234.12, -233);

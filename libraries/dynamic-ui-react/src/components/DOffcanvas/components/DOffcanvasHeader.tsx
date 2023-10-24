@@ -1,13 +1,13 @@
 import type { PropsWithChildren } from 'react';
 
-import DIcon from '../DIcon';
+import DIcon from '../../DIcon';
 
 type Props = PropsWithChildren<{
   showCloseButton?: boolean;
   onClose?: () => void;
 }>;
 
-export default function DModalHeader(
+export default function DOffcanvasHeader(
   {
     showCloseButton,
     onClose,
@@ -15,18 +15,22 @@ export default function DModalHeader(
   }: Props,
 ) {
   return (
-    <div className="modal-header">
+    <div
+      className="offcanvas-header"
+    >
+      <div className="d-offcanvas-slot">
+        {children}
+      </div>
       {showCloseButton && (
         <button
           type="button"
-          className="d-modal-close"
+          className="d-offcanvas-close"
           aria-label="Close"
           onClick={onClose}
         >
           <DIcon icon="x-lg" />
         </button>
       )}
-      {children}
     </div>
   );
 }

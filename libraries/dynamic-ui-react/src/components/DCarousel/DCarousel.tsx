@@ -4,11 +4,13 @@ import classNames from 'classnames';
 import type { PropsWithChildren } from 'react';
 import type { SplideProps } from '@splidejs/react-splide';
 
+import DCarouselSlide from './components/DCarouselSlide';
+
 type Props = SplideProps & PropsWithChildren<{
   className?: string;
 }>;
 
-export default function DCarousel(
+function DCarousel(
   {
     children,
     className,
@@ -38,3 +40,7 @@ export default function DCarousel(
     </Splide>
   );
 }
+
+export default Object.assign(DCarousel, {
+  Slide: DCarouselSlide,
+});

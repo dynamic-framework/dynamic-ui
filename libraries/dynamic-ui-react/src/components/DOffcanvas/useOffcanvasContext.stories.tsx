@@ -1,9 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DOffcanvas from './DOffcanvas';
-import DOffcanvasHeader from '../DOffcanvasHeader';
-import DOffcanvasBody from '../DOffcanvasBody';
-import DOffcanvasFooter from '../DOffcanvasFooter';
 import DButton from '../DButton';
 
 import {
@@ -19,13 +16,13 @@ const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
     isScrollable={false}
     openFrom="end"
   >
-    <DOffcanvasHeader onClose={closeOffcanvas} showCloseButton>
+    <DOffcanvas.Header onClose={closeOffcanvas} showCloseButton>
       <h5 className="fw-bold">Advanced filters</h5>
-    </DOffcanvasHeader>
-    <DOffcanvasBody>
+    </DOffcanvas.Header>
+    <DOffcanvas.Body>
       <p>Offcanvas body</p>
-    </DOffcanvasBody>
-    <DOffcanvasFooter>
+    </DOffcanvas.Body>
+    <DOffcanvas.Footer>
       <DButton
         text="cancel"
         theme="secondary"
@@ -35,7 +32,7 @@ const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
         onClick={() => closeOffcanvas()}
       />
       <DButton text="ok" className="d-grid" isPill />
-    </DOffcanvasFooter>
+    </DOffcanvas.Footer>
   </DOffcanvas>
 );
 

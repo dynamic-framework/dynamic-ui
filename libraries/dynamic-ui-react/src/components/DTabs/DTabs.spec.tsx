@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import DTabs from './DTabs';
-import DTabContent from '../DTabContent';
+import DTabContent from './components/DTabContent';
 
 describe('DTabs', () => {
   test('renders without crashing', () => {

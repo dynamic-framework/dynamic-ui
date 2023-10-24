@@ -1,9 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DModal from './DModal';
-import DModalHeader from '../DModalHeader';
-import DModalBody from '../DModalBody';
-import DModalFooter from '../DModalFooter';
 import DButton from '../DButton';
 
 const config: Meta<typeof DModal> = {
@@ -59,13 +56,13 @@ export const Default: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader showCloseButton>
+      <DModal.Header showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </DModalHeader>
-      <DModalBody>
+      </DModal.Header>
+      <DModal.Body>
         <p className="py-3 px-5">Modal body</p>
-      </DModalBody>
-      <DModalFooter>
+      </DModal.Body>
+      <DModal.Footer>
         <DButton
           text="cancel"
           theme="secondary"
@@ -74,7 +71,7 @@ export const Default: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </DModalFooter>
+      </DModal.Footer>
     </DModal>
   ),
   args: {
@@ -98,13 +95,13 @@ export const ActionsPlacementStart: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader showCloseButton>
+      <DModal.Header showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </DModalHeader>
-      <DModalBody>
+      </DModal.Header>
+      <DModal.Body>
         <p className="py-3 px-5">Modal body</p>
-      </DModalBody>
-      <DModalFooter actionPlacement="start">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="start">
         <DButton
           text="cancel"
           theme="secondary"
@@ -113,7 +110,7 @@ export const ActionsPlacementStart: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </DModalFooter>
+      </DModal.Footer>
     </DModal>
   ),
   args: {
@@ -137,13 +134,13 @@ export const ActionsPlacementEnd: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader showCloseButton>
+      <DModal.Header showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </DModalHeader>
-      <DModalBody>
+      </DModal.Header>
+      <DModal.Body>
         <p className="py-3 px-5">Modal body</p>
-      </DModalBody>
-      <DModalFooter actionPlacement="end">
+      </DModal.Body>
+      <DModal.Footer actionPlacement="end">
         <DButton
           text="cancel"
           theme="secondary"
@@ -152,7 +149,7 @@ export const ActionsPlacementEnd: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </DModalFooter>
+      </DModal.Footer>
     </DModal>
   ),
   args: {
@@ -176,10 +173,10 @@ export const WithoutHeader: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalBody>
+      <DModal.Body>
         <p className="py-3 px-5">Modal body</p>
-      </DModalBody>
-      <DModalFooter>
+      </DModal.Body>
+      <DModal.Footer>
         <DButton
           text="cancel"
           theme="secondary"
@@ -188,7 +185,7 @@ export const WithoutHeader: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </DModalFooter>
+      </DModal.Footer>
     </DModal>
   ),
   args: {
@@ -212,12 +209,12 @@ export const WithoutActions: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader showCloseButton>
+      <DModal.Header showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </DModalHeader>
-      <DModalBody>
+      </DModal.Header>
+      <DModal.Body>
         <p className="py-3 px-5">Modal body</p>
-      </DModalBody>
+      </DModal.Body>
     </DModal>
   ),
   args: {
@@ -241,10 +238,10 @@ export const OnlyBody: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader showCloseButton />
-      <DModalBody>
+      <DModal.Header showCloseButton />
+      <DModal.Body>
         <p className="py-3 px-5">Modal body</p>
-      </DModalBody>
+      </DModal.Body>
     </DModal>
   ),
   args: {
@@ -268,13 +265,13 @@ export const WithoutCancelX: Story = {
   ],
   render: (args) => (
     <DModal {...args}>
-      <DModalHeader>
+      <DModal.Header>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </DModalHeader>
-      <DModalBody>
+      </DModal.Header>
+      <DModal.Body>
         <p className="py-3 px-5">Modal body</p>
-      </DModalBody>
-      <DModalFooter>
+      </DModal.Body>
+      <DModal.Footer>
         <DButton
           text="cancel"
           theme="secondary"
@@ -283,7 +280,7 @@ export const WithoutCancelX: Story = {
           isPill
         />
         <DButton text="ok" className="d-grid" isPill />
-      </DModalFooter>
+      </DModal.Footer>
     </DModal>
   ),
   args: {

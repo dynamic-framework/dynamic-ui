@@ -1,8 +1,6 @@
 import { render } from '@testing-library/react';
+
 import DOffcanvas from './DOffcanvas';
-import DOffcanvasHeader from '../DOffcanvasHeader';
-import DOffcanvasBody from '../DOffcanvasBody';
-import DOffcanvasFooter from '../DOffcanvasFooter';
 
 it('should render my component with header, body, and footer slot', () => {
   const offcanvas = { name: 'myModal' };
@@ -11,15 +9,15 @@ it('should render my component with header, body, and footer slot', () => {
     <DOffcanvas
       {...offcanvas}
     >
-      <DOffcanvasHeader>
+      <DOffcanvas.Header>
         Test Header
-      </DOffcanvasHeader>
-      <DOffcanvasBody>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
         Test Body
-      </DOffcanvasBody>
-      <DOffcanvasFooter>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
         Test Footer
-      </DOffcanvasFooter>
+      </DOffcanvas.Footer>
     </DOffcanvas>,
   );
 

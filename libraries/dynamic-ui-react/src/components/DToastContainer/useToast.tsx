@@ -3,9 +3,9 @@ import { Slide, toast as reactToast } from 'react-toastify';
 
 import type { ToastPosition } from 'react-toastify';
 
-import DAlert from '../components/DAlert';
+import DAlert from '../DAlert/DAlert';
 
-import type { AlertType } from '../components/interface';
+import type { AlertType } from '../interface';
 
 export type ToastConfig = {
   type?: AlertType;

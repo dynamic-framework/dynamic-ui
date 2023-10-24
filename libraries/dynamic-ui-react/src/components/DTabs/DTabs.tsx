@@ -1,14 +1,15 @@
 import {
-  createContext,
   useState,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
 } from 'react';
 import classnames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
+
+import TabContext from './TabContext';
+import DTabContent from './components/DTabContent';
 
 export type DTabOption = {
   label: string;
@@ -24,13 +25,7 @@ type Props = PropsWithChildren<{
   isVertical?: boolean;
 }>;
 
-type TabContextState = {
-  isSelected: (tab: DTabOption['tab']) => boolean;
-};
-
-const TabContext = createContext<TabContextState | undefined>(undefined);
-
-export default function DTabs(
+function DTabs(
   {
     children,
     defaultSelected,
@@ -102,12 +97,6 @@ export default function DTabs(
   );
 }
 
-export function useTabContext() {
-  const context = useContext(TabContext);
-
-  if (context === undefined) {
-    throw new Error('useTabContext was used outside of MTab');
-  }
-
-  return context;
-}
+export default Object.assign(DTabs, {
+  Tab: DTabContent,
+});

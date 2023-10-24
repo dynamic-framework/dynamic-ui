@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import type { PropsWithChildren } from 'react';
 
 import type { BreakpointSize } from '../interface';
+import DListItem from './components/DListItem';
 
 type Props = PropsWithChildren<{
   className?: string;
@@ -12,7 +13,7 @@ type Props = PropsWithChildren<{
   horizontalBreakpoint?: BreakpointSize;
 }>;
 
-export default function DList(
+function DList(
   {
     children,
     className,
@@ -43,3 +44,7 @@ export default function DList(
     </div>
   );
 }
+
+export default Object.assign(DList, {
+  Item: DListItem,
+});

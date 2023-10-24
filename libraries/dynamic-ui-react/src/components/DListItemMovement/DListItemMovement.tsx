@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import type { ComponentProps } from 'react';
 
-import DListItem from '../DListItem';
+import { DListItem } from '../DList';
 import { useFormatCurrency } from '../../hooks';
 
 type Props = Omit<ComponentProps<typeof DListItem>, 'children'> & {

@@ -2,9 +2,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DListItem from './DListItem';
-import DList from '../DList/DList';
+import DList from '../DList';
 
-import { THEMES } from '../../stories/config/constants';
+import { THEMES } from '../../../stories/config/constants';
 
 const config: Meta<typeof DListItem> = {
   title: 'Design System/Components/List Item',

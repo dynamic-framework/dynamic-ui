@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 
-import { useTabContext } from '../DTabs';
+import { useTabContext } from '../TabContext';
 
 type Props = PropsWithChildren<{
   tab: string;

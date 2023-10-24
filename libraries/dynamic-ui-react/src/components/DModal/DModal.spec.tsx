@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import DModal from './DModal';
-import DModalHeader from '../DModalHeader';
-import DModalBody from '../DModalBody';
-import DModalFooter from '../DModalFooter';
+import DModalHeader from './components/DModalHeader';
+import DModalBody from './components/DModalBody';
+import DModalFooter from './components/DModalFooter';
 
 it('should render my component with header, body, and footer slot', () => {
   const modal = { name: 'myModal' };

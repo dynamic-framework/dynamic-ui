@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 
 import DCard from '../DCard';
-import DCardBody from '../DCardBody';
 import DIcon from '../DIcon';
 import DButton from '../DButton';
 
@@ -36,7 +35,7 @@ export default function DCardAccount(
       className,
     )}
     >
-      <DCardBody>
+      <DCard.Body>
         <div className="d-flex gap-3 align-items-center">
           <DIcon
             icon={icon}
@@ -71,7 +70,7 @@ export default function DCardAccount(
             onClick={onClick}
           />
         </div>
-      </DCardBody>
+      </DCard.Body>
     </DCard>
   );
 }

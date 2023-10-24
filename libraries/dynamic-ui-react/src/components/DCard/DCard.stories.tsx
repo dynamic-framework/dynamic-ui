@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DCard from './DCard';
-import DCardHeader from '../DCardHeader';
-import DCardBody from '../DCardBody';
-import DCardFooter from '../DCardFooter';
+import DCardHeader from './components/DCardHeader';
+import DCardBody from './components/DCardBody';
+import DCardFooter from './components/DCardFooter';
 import DButton from '../DButton';
 
 const config: Meta<typeof DCard> = {
