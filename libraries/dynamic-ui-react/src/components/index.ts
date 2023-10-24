@@ -25,7 +25,7 @@ export { default as DInputSearch } from './DInputSearch';
 export { default as DInputPassword } from './DInputPassword';
 export { default as DInputCheck } from './DInputCheck';
 export { default as DInputPin } from './DInputPin';
-export { default as DInputSelect, Props as DInputSelectProps } from './DInputSelect';
+export { default as DInputSelect, DInputSelectProps } from './DInputSelect';
 export { default as DInputSwitch } from './DInputSwitch';
 export { default as DList } from './DList';
 export { default as DListItem } from './DListItem';

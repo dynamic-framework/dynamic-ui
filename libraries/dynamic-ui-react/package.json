@@ -49,6 +49,8 @@
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build -o docs",
     "eslint": "eslint src/**/*{.ts,.tsx}",
+    "eslint:story": "eslint src/**/*.stories.tsx",
+    "eslint:test": "eslint src/**/*.spec.tsx",
     "stylelint": "stylelint \"**/*.{css,scss}\" --rd",
     "lint-staged": "lint-staged"
   },

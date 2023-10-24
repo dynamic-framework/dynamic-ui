@@ -7,8 +7,10 @@
       "jest",
     ],
   },
-  "include": ["tests"],
-  "exclude":[
+  "include": [
+    "src/components/**/*.spec.tsx"
+  ],
+  "exclude": [
     "src/stories"
   ]
 }

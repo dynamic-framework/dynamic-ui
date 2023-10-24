@@ -1,0 +1,90 @@
+import {
+  Meta,
+  ArgTypes,
+  Markdown,
+  Stories,
+  Story,
+  Source,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '../../components/config';
+
+import * as DOffcanvasStories from './DOffcanvas.stories';
+import * as useOffcanvasContextStories from "../../stories/hooks/useOffcanvasContext.stories";
+
+# Offcanvas
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                     | Type              | Description                                 |
+  |----------------------------------------------|-------------------|---------------------------------------------|
+  | \`--${PREFIX_BS}offcanvas-footer-gap\`       | css length unit   | Space between footer actions                |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={DOffcanvasStories} />
+
+<ArgTypes of={DOffcanvasStories} />
+
+## Example
+
+<Story of={useOffcanvasContextStories.useOffcanvasContext} />
+<br />
+
+### Context Setup - render of `Bootstrap.tsx`
+<Source
+  code={`
+ <OffcanvasContextProvider
+  portalName="examplePortal"
+  availableOffcanvas={{
+    example: ExampleOffcanvas,
+  }}
+>
+  <ExampleChildren />
+</OffcanvasContextProvider>
+  `}
+/>
+
+### Offcanvas Definition - render of `ExampleOffcanvas.tsx`
+<Source
+  code={`
+<DOffcanvas
+  name="example"
+  isStatic={false}
+  isScrollable={false}
+  openFrom="end"
+>
+  <DOffcanvasHeader onClose={closeOffcanvas} showCloseButton>
+    <h5 className="fw-bold">Advanced filters</h5>
+  </DOffcanvasHeader>
+  <DOffcanvasBody>
+    <p>Offcanvas body</p>
+  </DOffcanvasBody>
+  <DOffcanvasFooter>
+    <DButton
+      text="cancel"
+      theme="secondary"
+      variant="outline"
+      className="d-grid"
+      isPill
+      onClick={() => closeOffcanvas()}
+    />
+    <DButton text="ok" className="d-grid" isPill />
+  </DOffcanvasFooter>
+</DOffcanvas>
+  `}
+/>
+
+### Offcanvas Usage render of `App.tsx`
+<Source
+  code={`
+<DButton text="Open Offcanvas" onClick={() => openOffcanvas('example')} />
+  `}
+/>
+
+<Stories />
+
+
