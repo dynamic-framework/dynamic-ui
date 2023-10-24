@@ -36,17 +36,17 @@ const config: Meta<typeof DInputCounter> = {
       type: 'number',
       description: 'The value of the input',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isReadOnly: {
+    readOnly: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isLoading: {
+    loading: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -76,12 +76,12 @@ const config: Meta<typeof DInputCounter> = {
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
-    isInvalid: {
+    invalid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isValid: {
+    valid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -108,7 +108,6 @@ export const Default: Story = {
     id: 'componentId1',
     label: 'Label',
     labelIcon: undefined,
-    value: 1,
     minValue: 0,
     maxValue: 20,
   },
@@ -122,7 +121,7 @@ export const Error: Story = {
     value: 21,
     minValue: 0,
     maxValue: 20,
-    isInvalid: true,
+    invalid: true,
   },
 };
 
@@ -134,7 +133,7 @@ export const Confirm: Story = {
     value: 2,
     minValue: 0,
     maxValue: 20,
-    isValid: true,
+    valid: true,
   },
 };
 
@@ -146,6 +145,6 @@ export const Disabled: Story = {
     value: 3,
     minValue: 0,
     maxValue: 20,
-    isDisabled: true,
+    disabled: true,
   },
 };

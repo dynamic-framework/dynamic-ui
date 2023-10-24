@@ -3,10 +3,13 @@ import {
   useEffect,
   useMemo,
   useCallback,
+  forwardRef,
 } from 'react';
 
 import type {
-  ChangeEvent,
+  RefObject,
+  ForwardedRef,
+  ComponentPropsWithoutRef,
   CSSProperties,
 } from 'react';
 
@@ -15,88 +18,65 @@ import { PREFIX_BS } from './config';
 
 import type {
   CustomStyles,
-  LabelIcon,
-  StartIcon,
 } from './interface';
+import type { Merge } from '../types';
+import useProvidedRefOrCreate from '../hooks/useProvidedRefOrCreate';
 
-type Props = LabelIcon
-& StartIcon
-& {
-  id: string;
-  name?: string;
-  label?: string;
-  value: number;
-  isDisabled?: boolean;
-  isReadOnly?: boolean;
-  isLoading?: boolean;
-  iconEnd?: string;
-  hint?: string;
-  isInvalid?: boolean;
-  isValid?: boolean;
+type NonDInputProps = {
+  value?: number;
   minValue: number;
   maxValue: number;
-  style?: CSSProperties;
-  className?: string;
-  onChange?: (newNumber: number) => void;
+  onChange?: (value?: number) => void;
 };
 
-export default function DInputCounter(
+type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'value' | 'type' | 'onChange'>, NonDInputProps>;
+
+function DInputCounter(
   {
-    id,
-    name,
-    label = '',
-    value,
-    isDisabled = false,
-    isReadOnly = false,
-    isLoading = false,
-    iconStart = 'dash-square',
-    iconEnd = 'plus-square',
-    hint,
-    isInvalid = false,
-    isValid = false,
     minValue,
     maxValue,
+    value = minValue,
+    invalid,
+    iconStart = 'dash-square',
+    iconEnd = 'plus-square',
     style,
-    className,
     onChange,
-    ...rest
+    ...props
   }: Props,
+  ref: ForwardedRef<HTMLInputElement>,
 ) {
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
   const [internalIsInvalid, setInternalIsInvalid] = useState(false);
-  const [internalValue, setInternalValue] = useState(value);
+  const [internalValue, setInternalValue] = useState<number>(value);
 
   useEffect(() => {
     setInternalValue(value);
   }, [value]);
 
   useEffect(() => {
-    onChange?.(internalValue);
-  }, [internalValue, onChange]);
+    onChange?.(Number(internalValue));
+  }, [onChange, internalValue]);
 
-  const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-    const newValue = parseInt(event.target.value || '0', 10);
-    setInternalValue(newValue);
+  const handleOnChange = useCallback((newValue?: string) => {
+    setInternalValue(Number(newValue || '0'));
   }, []);
 
-  const clickHandler = useCallback((action: boolean) => {
-    if (action) {
-      setInternalValue((prevInternalValue) => {
-        const newValue = prevInternalValue + 1;
-        return newValue <= maxValue ? newValue : maxValue;
-      });
-    } else {
-      setInternalValue((prevInternalValue) => {
-        const newValue = prevInternalValue - 1;
-        return newValue >= minValue ? newValue : minValue;
-      });
-    }
-  }, [maxValue, minValue]);
+  const handleOnIconStartClick = useCallback(() => {
+    setInternalValue((prevInternalValue) => Math.max(prevInternalValue - 1, minValue));
+  }, [minValue]);
+
+  const handleOnIconEndClick = useCallback(() => {
+    setInternalValue((prevInternalValue) => Math.min(prevInternalValue + 1, maxValue));
+  }, [maxValue]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,
     [`--${PREFIX_BS}input-component-form-control-text-align`]: 'center',
   }), [style]);
+
+  const valueString = useMemo(() => (
+    internalValue.toString()
+  ), [internalValue]);
 
   useEffect(() => {
     setInternalIsInvalid(!(internalValue >= minValue && internalValue <= maxValue));
@@ -104,25 +84,21 @@ export default function DInputCounter(
 
   return (
     <DInput
-      id={id}
+      ref={inputRef}
+      value={valueString}
       style={generateStyleVariables}
-      className={className}
-      name={name}
-      label={label}
-      value={internalValue}
-      isDisabled={isDisabled}
-      isReadOnly={isReadOnly}
-      isLoading={isLoading}
-      hint={hint}
       iconStart={iconStart}
       iconEnd={iconEnd}
-      isInvalid={internalIsInvalid || isInvalid}
-      isValid={isValid}
+      invalid={internalIsInvalid || invalid}
       type="number"
-      onChange={changeHandler}
-      onIconStartClick={() => clickHandler(false)}
-      onIconEndClick={() => clickHandler(true)}
-      {...rest}
+      onChange={handleOnChange}
+      onIconStartClick={handleOnIconStartClick}
+      onIconEndClick={handleOnIconEndClick}
+      {...props}
     />
   );
 }
+
+const ForwardedDInputCounter = forwardRef<HTMLInputElement, Props>(DInputCounter);
+ForwardedDInputCounter.displayName = 'DInputCounter';
+export default ForwardedDInputCounter;

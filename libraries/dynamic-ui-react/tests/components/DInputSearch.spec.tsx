@@ -12,7 +12,7 @@ it('should render my component', () => {
   const { container } = render(
     <DInputSearch
       {...search}
-    />
+    />,
   );
 
   expect(container).toMatchInlineSnapshot(`

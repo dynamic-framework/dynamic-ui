@@ -1,10 +1,10 @@
-import type { ComponentProps, FormEventHandler } from 'react';
+import type { ComponentProps } from 'react';
 
 import DInput from './DInput';
 
 type Props = {
-  value?: string | number ;
-  onChange?: ((value: string) => void) & FormEventHandler<HTMLInputElement>
+  value?: string;
+  onChange?: (value?: string) => void;
 } & Omit<ComponentProps<typeof DInput>,
 | 'type'
 | 'isReadOnly'
@@ -28,7 +28,7 @@ export default function DDatePickerTime(
       )}
       <DInput
         {...onChange && {
-          onChange: (event) => onChange(event.target.value),
+          onChange,
         }}
         type="time"
         id={id}

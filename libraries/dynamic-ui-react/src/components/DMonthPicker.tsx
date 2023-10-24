@@ -21,7 +21,6 @@ export default function DMonthPicker(
   }: Props,
 ) {
   const selected = useMemo(() => parseISO(date), [date]);
-
   const dateFormatted = useMemo(() => (
     format(new Date(date), 'MMMM yyyy', { locale })
   ), [date, locale]);

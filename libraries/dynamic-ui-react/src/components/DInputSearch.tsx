@@ -1,82 +1,39 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { forwardRef } from 'react';
 
-import type { ChangeEvent } from 'react';
+import type { ComponentPropsWithoutRef, ForwardedRef, RefObject } from 'react';
 
 import DInput from './DInput';
+import useProvidedRefOrCreate from '../hooks/useProvidedRefOrCreate';
 
-import type { LabelIcon } from './interface';
+import type { Merge } from '../types';
 
-type Props = LabelIcon & {
-  id: string;
-  name?: string;
-  label?: string;
-  placeholder?: string;
-  value?: string;
-  isDisabled?: boolean;
-  isReadOnly?: boolean;
-  isLoading?: boolean;
-  hint?: string;
-  isInvalid?: boolean;
-  isValid?: boolean;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClick?: (newValue: string | undefined) => void;
+type NonDInputProps = {
+  onClick?: (value: string | undefined) => void;
 };
 
-export default function DInputSearch(
+type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'onIconEndClick'>, NonDInputProps>;
+
+function DInputSearch(
   {
-    id,
-    name,
-    label,
-    placeholder,
-    value,
-    isDisabled,
-    isReadOnly,
-    isLoading,
-    hint,
-    isInvalid,
-    isValid,
-    onChange,
     onClick,
-    ...rest
+    type,
+    ...props
   }: Props,
+  ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const [internalValue, setInternalValue] = useState(value);
-
-  useEffect(() => {
-    setInternalValue(value);
-  }, [value]);
-
-  const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-    setInternalValue(event.target.value);
-    onChange?.(event);
-  }, [onChange]);
-
-  const clickHandler = useCallback(() => {
-    onClick?.(internalValue);
-  }, [internalValue, onClick]);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
 
   return (
     <DInput
-      id={id}
-      name={name}
-      label={label}
-      placeholder={placeholder}
-      value={internalValue}
+      ref={inputRef}
+      type="text"
       iconEnd="search"
-      isDisabled={isDisabled}
-      isReadOnly={isReadOnly}
-      isLoading={isLoading}
-      hint={hint}
-      isInvalid={isInvalid}
-      isValid={isValid}
-      onChange={changeHandler}
-      onIconEndClick={clickHandler}
-      {...rest}
+      onIconEndClick={onClick}
+      {...props}
     />
   );
 }
+
+const ForwardedDInputSearch = forwardRef<HTMLInputElement, Props>(DInputSearch);
+ForwardedDInputSearch.displayName = 'DInputSearch';
+export default ForwardedDInputSearch;

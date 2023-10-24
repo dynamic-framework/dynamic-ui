@@ -10,7 +10,7 @@ it('should render my component', () => {
   };
 
   const { container } = render(
-    <DInput {...input} />
+    <DInput {...input} />,
   );
 
   expect(container).toMatchInlineSnapshot(`
@@ -35,7 +35,6 @@ it('should render my component', () => {
               class="form-control"
               id="inputId"
               placeholder="Input"
-              type="text"
               value="Value"
             />
           </div>
