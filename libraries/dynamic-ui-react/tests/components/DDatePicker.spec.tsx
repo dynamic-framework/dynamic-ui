@@ -33,12 +33,9 @@ it('should render datepicker', () => {
                 class="input-group"
               >
                 <input
-                  aria-describedby="datepickerAdd datepickerHint"
                   aria-label=""
                   class="form-control"
                   id="datepicker"
-                  placeholder=""
-                  readonly=""
                   type="text"
                   value=""
                 />
