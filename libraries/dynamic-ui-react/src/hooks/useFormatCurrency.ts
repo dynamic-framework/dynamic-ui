@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 
-import { useLiquidContext } from '../contexts';
+import { useDContext } from '../contexts';
 import formatCurrency from '../utils/format-currency';
 
 export default function useFormatCurrency(...args: Array<number>) {
-  const { currency } = useLiquidContext();
+  const { currency } = useDContext();
 
   const format = useCallback(
     (value: number) => formatCurrency(value, currency),

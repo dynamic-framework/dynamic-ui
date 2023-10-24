@@ -7,7 +7,7 @@ import type { ReactDatePickerCustomHeaderProps, ReactDatePickerProps } from 'rea
 import DDatePickerTime from './DDatePickerTime';
 import DDatePickerInput from './DDatePickerInput';
 import DDatePickerHeader from './DDatePickerHeader';
-import { useLiquidContext } from '../contexts';
+import { useDContext } from '../contexts';
 
 import type { ButtonVariant, ComponentSize } from './interface';
 
@@ -48,7 +48,7 @@ export default function DDatePicker(
   }: Props,
 ) {
   const selected = useMemo(() => DateTime.fromISO(date).toJSDate(), [date]);
-  const { language } = useLiquidContext();
+  const { language } = useDContext();
   const locale = useMemo(() => language || 'en', [language]);
 
   const DatePickerHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (

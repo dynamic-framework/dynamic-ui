@@ -40,17 +40,17 @@ const config: Meta<typeof DInputSearch> = {
       type: 'string',
       description: 'The value of the input',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isReadOnly: {
+    readOnly: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isLoading: {
+    loading: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -60,12 +60,12 @@ const config: Meta<typeof DInputSearch> = {
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
-    isInvalid: {
+    invalid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isValid: {
+    valid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -109,7 +109,7 @@ export const Error: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
-    isInvalid: true,
+    invalid: true,
   },
 };
 
@@ -120,7 +120,7 @@ export const Confirm: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
-    isValid: true,
+    valid: true,
   },
 };
 
@@ -131,6 +131,6 @@ export const Disabled: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
-    isDisabled: true,
+    disabled: true,
   },
 };

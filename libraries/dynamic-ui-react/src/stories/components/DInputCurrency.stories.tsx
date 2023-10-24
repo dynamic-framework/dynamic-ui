@@ -3,7 +3,7 @@ import type { ComponentProps } from 'react';
 
 import { DInputCurrency } from '../../components';
 import { ICONS } from '../config/constants';
-import { LiquidContextProvider } from '../../contexts';
+import { DContextProvider } from '../../contexts';
 
 const config: Meta<typeof DInputCurrency> = {
   title: 'Design System/Components/Input Currency',
@@ -46,17 +46,17 @@ const config: Meta<typeof DInputCurrency> = {
       type: 'number',
       description: 'The value of the input',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isReadOnly: {
+    readOnly: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isLoading: {
+    loading: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -90,12 +90,12 @@ const config: Meta<typeof DInputCurrency> = {
       control: 'string',
       type: 'string',
     },
-    isInvalid: {
+    invalid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isValid: {
+    valid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -118,17 +118,10 @@ export default config;
 type Story = StoryObj<typeof DInputCurrency>;
 
 export const Default: Story = {
-  decorators: [
-    (Story) => {
-      // eslint-disable-next-line global-require
-      require('../config/liquidConfig');
-      return <Story />;
-    },
-  ],
   render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <LiquidContextProvider>
+    <DContextProvider>
       <DInputCurrency {...args} />
-    </LiquidContextProvider>
+    </DContextProvider>
   ),
   args: {
     id: 'componentId1',
@@ -142,17 +135,10 @@ export const Default: Story = {
 };
 
 export const Value: Story = {
-  decorators: [
-    (Story) => {
-      // eslint-disable-next-line global-require
-      require('../config/liquidConfig');
-      return <Story />;
-    },
-  ],
   render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <LiquidContextProvider>
+    <DContextProvider>
       <DInputCurrency {...args} />
-    </LiquidContextProvider>
+    </DContextProvider>
   ),
   args: {
     id: 'componentId2',
@@ -166,17 +152,10 @@ export const Value: Story = {
 };
 
 export const Error: Story = {
-  decorators: [
-    (Story) => {
-      // eslint-disable-next-line global-require
-      require('../config/liquidConfig');
-      return <Story />;
-    },
-  ],
   render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <LiquidContextProvider>
+    <DContextProvider>
       <DInputCurrency {...args} />
-    </LiquidContextProvider>
+    </DContextProvider>
   ),
   args: {
     id: 'componentId3',
@@ -186,22 +165,15 @@ export const Error: Story = {
     value: undefined,
     minValue: 0,
     maxValue: 100000,
-    isInvalid: true,
+    invalid: true,
   },
 };
 
 export const Confirm: Story = {
-  decorators: [
-    (Story) => {
-      // eslint-disable-next-line global-require
-      require('../config/liquidConfig');
-      return <Story />;
-    },
-  ],
   render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <LiquidContextProvider>
+    <DContextProvider>
       <DInputCurrency {...args} />
-    </LiquidContextProvider>
+    </DContextProvider>
   ),
   args: {
     id: 'componentId4',
@@ -211,22 +183,15 @@ export const Confirm: Story = {
     value: undefined,
     minValue: 0,
     maxValue: 100000,
-    isValid: true,
+    valid: true,
   },
 };
 
 export const Disabled: Story = {
-  decorators: [
-    (Story) => {
-      // eslint-disable-next-line global-require
-      require('../config/liquidConfig');
-      return <Story />;
-    },
-  ],
   render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <LiquidContextProvider>
+    <DContextProvider>
       <DInputCurrency {...args} />
-    </LiquidContextProvider>
+    </DContextProvider>
   ),
   args: {
     id: 'componentId5',
@@ -236,22 +201,15 @@ export const Disabled: Story = {
     value: undefined,
     minValue: 0,
     maxValue: 100000,
-    isDisabled: true,
+    disabled: true,
   },
 };
 
 export const WithCurrencyCode: Story = {
-  decorators: [
-    (Story) => {
-      // eslint-disable-next-line global-require
-      require('../config/liquidConfig');
-      return <Story />;
-    },
-  ],
   render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <LiquidContextProvider>
+    <DContextProvider>
       <DInputCurrency {...args} />
-    </LiquidContextProvider>
+    </DContextProvider>
   ),
   args: {
     id: 'componentId6',

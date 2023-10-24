@@ -5,7 +5,7 @@ import type { ComponentProps } from 'react';
 
 import DButton from './DButton';
 import DMonthPicker from './DMonthPicker';
-import { useLiquidContext } from '../contexts';
+import { useDContext } from '../contexts';
 
 import type { ButtonVariant, ComponentSize } from './interface';
 
@@ -46,7 +46,7 @@ export default function DDatePickerHeader(
     buttonTheme,
   }: Props,
 ) {
-  const { language } = useLiquidContext();
+  const { language } = useDContext();
   const locale = useMemo(() => language || 'en', [language]);
   const onChangeDate = useCallback((value: Date | null) => {
     if (value) {

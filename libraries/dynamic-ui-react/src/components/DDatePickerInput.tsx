@@ -33,7 +33,7 @@ function DDatePickerInput(
       tabIndex={-1}
     >
       <DInput
-        isReadOnly
+        readOnly
         type="text"
         id={id}
         value={value}

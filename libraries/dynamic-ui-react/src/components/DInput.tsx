@@ -1,25 +1,20 @@
 import {
   forwardRef,
   useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
 } from 'react';
 import classNames from 'classnames';
 
 import type {
+  RefObject,
   CSSProperties,
-  ChangeEvent,
-  FocusEvent,
   ForwardedRef,
-  MouseEvent,
   ReactNode,
-  WheelEvent,
+  ComponentPropsWithoutRef,
 } from 'react';
 
 import { PREFIX_BS } from './config';
 import DIcon from './DIcon';
+import useProvidedRefOrCreate from '../hooks/useProvidedRefOrCreate';
 
 import type {
   EndIcon,
@@ -27,60 +22,41 @@ import type {
   LabelIcon,
   StartIcon,
 } from './interface';
+import type { Merge } from '../types';
 
-type Props = FamilyIcon
+type NonHTMLInputElementProps =
+& FamilyIcon
 & LabelIcon
 & StartIcon
 & EndIcon
 & {
-  id: string;
-  className?: string;
+  value?: string;
   style?: CSSProperties;
-  name?: string;
   label?: string;
-  placeholder?: string;
-  type?: string;
-  value?: string | number;
-  innerInputMode?: 'text' | 'search' | 'email' | 'tel' | 'url' | 'none' | 'numeric' | 'decimal' | undefined;
-  pattern?: string;
-  isDisabled?: boolean;
-  isReadOnly?: boolean;
-  isLoading?: boolean;
+  loading?: boolean;
   hint?: string;
-  isInvalid?: boolean;
-  isValid?: boolean;
+  invalid?: boolean;
+  valid?: boolean;
   inputStart?: ReactNode;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
-  onFocus?: (event: FocusEvent) => void;
-  onWheel?: (event: WheelEvent) => void;
-  onIconStartClick?: (event: MouseEvent) => void;
-  onIconEndClick?: (event: MouseEvent) => void;
+  onChange?: (value?: string) => void;
+  onIconStartClick?: (value?: string) => void;
+  onIconEndClick?: (value?: string) => void;
 };
 
-type Ref = {
-  blur: () => void;
-  focus: () => void;
-};
+type Props = Merge<Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>, NonHTMLInputElementProps>;
 
 function DInput(
   {
     id,
     style,
     className,
-    name,
     label = '',
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
-    placeholder = '',
-    type = 'text',
-    value = '',
-    innerInputMode,
-    pattern,
-    isDisabled = false,
-    isReadOnly = false,
-    isLoading = false,
+    disabled = false,
+    readOnly = false,
+    loading = false,
     iconFamilyClass,
     iconFamilyPrefix,
     iconStart,
@@ -90,38 +66,30 @@ function DInput(
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     hint,
-    isInvalid = false,
-    isValid = false,
+    invalid = false,
+    valid = false,
     inputStart,
+    value,
     onChange,
-    onBlur,
-    onFocus,
-    onWheel,
     onIconStartClick,
     onIconEndClick,
+    ...inputProps
   }: Props,
-  ref: ForwardedRef<Ref>,
+  ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const innerRef = useRef<HTMLInputElement>(null);
-  const [internalValue, setInternalValue] = useState(value);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
 
-  useEffect(() => {
-    setInternalValue(value);
-  }, [value]);
+  const handleOnChange = useCallback(() => {
+    onChange?.(value);
+  }, [onChange, value]);
 
-  useImperativeHandle(ref, () => ({
-    blur() {
-      innerRef.current?.blur();
-    },
-    focus() {
-      innerRef.current?.focus();
-    },
-  }), []);
+  const handleOnIconStartClick = useCallback(() => {
+    onIconStartClick?.(value);
+  }, [onIconStartClick, value]);
 
-  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setInternalValue(event.target.value);
-    onChange?.(event);
-  }, [onChange]);
+  const handleOnIconEndClick = useCallback(() => {
+    onIconEndClick?.(value);
+  }, [onIconEndClick, value]);
 
   return (
     <div
@@ -149,8 +117,8 @@ function DInput(
         <div
           className={classNames({
             'input-group': true,
-            'has-validation': isInvalid,
-            disabled: isDisabled || isLoading,
+            'has-validation': invalid,
+            disabled: disabled || loading,
           })}
         >
           {!!inputStart && (
@@ -163,8 +131,8 @@ function DInput(
               type="button"
               className="input-group-text"
               id={`${id}Start`}
-              onClick={onIconStartClick}
-              disabled={isDisabled || isLoading}
+              onClick={handleOnIconStartClick}
+              disabled={disabled || loading}
             >
               {iconStart && (
                 <DIcon
@@ -177,47 +145,40 @@ function DInput(
             </button>
           )}
           <input
-            ref={innerRef}
+            ref={inputRef}
             id={id}
-            name={name}
-            type={type}
             className={classNames('form-control', {
-              'is-invalid': isInvalid,
-              'is-valid': isValid,
+              'is-invalid': invalid,
+              'is-valid': valid,
             })}
-            placeholder={placeholder}
             aria-label={label}
-            disabled={isDisabled || isLoading}
-            readOnly={isReadOnly}
-            value={internalValue}
+            disabled={disabled || loading}
+            readOnly={readOnly}
             aria-describedby={`${id}Add ${id}Hint`}
-            pattern={pattern}
-            onChange={(event) => handleInputChange(event)}
-            onBlur={onBlur}
-            onFocus={onFocus}
-            onWheel={onWheel}
-            {...innerInputMode && { inputMode: innerInputMode }}
+            value={value}
+            onChange={handleOnChange}
+            {...inputProps}
           />
-          {((isInvalid || isValid) && !iconEnd && !isLoading) && (
+          {((invalid || valid) && !iconEnd && !loading) && (
             <span
               className="input-group-text"
               id={`${id}State`}
             >
               <DIcon
                 className="d-input-validation-icon"
-                icon={isInvalid ? 'exclamation-circle' : 'check'}
+                icon={invalid ? 'exclamation-circle' : 'check'}
                 familyClass={iconFamilyClass}
                 familyPrefix={iconFamilyPrefix}
               />
             </span>
           )}
-          {(iconEnd && !isLoading) && (
+          {(iconEnd && !loading) && (
             <button
               type="button"
               className="input-group-text"
               id={`${id}End`}
-              onClick={onIconEndClick}
-              disabled={isDisabled || isLoading}
+              onClick={handleOnIconEndClick}
+              disabled={disabled || loading}
             >
               {iconEnd && (
                 <DIcon
@@ -229,7 +190,7 @@ function DInput(
               )}
             </button>
           )}
-          {isLoading && (
+          {loading && (
             <div className="input-group-text d-input-icon">
               <span
                 className="spinner-border spinner-border-sm"
@@ -254,6 +215,6 @@ function DInput(
   );
 }
 
-const ForwardedDInput = forwardRef(DInput);
+const ForwardedDInput = forwardRef<HTMLInputElement, Props>(DInput);
 ForwardedDInput.displayName = 'DInput';
 export default ForwardedDInput;

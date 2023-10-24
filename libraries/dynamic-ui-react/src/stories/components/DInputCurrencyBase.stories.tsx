@@ -44,17 +44,17 @@ const config: Meta<typeof DInputCurrencyBase> = {
       type: 'number',
       description: 'The value of the input',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isReadOnly: {
+    readOnly: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isLoading: {
+    loading: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -88,12 +88,12 @@ const config: Meta<typeof DInputCurrencyBase> = {
       control: 'text',
       type: 'string',
     },
-    isInvalid: {
+    invalid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isValid: {
+    valid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -139,7 +139,7 @@ export const Value: Story = {
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
-    value: 100,
+    value: 1000.12,
     minValue: 0,
     maxValue: 100000,
     currencyOptions: {
@@ -166,7 +166,7 @@ export const Error: Story = {
       separator: ',',
       decimal: '.',
     },
-    isInvalid: true,
+    invalid: true,
   },
 };
 
@@ -185,7 +185,7 @@ export const Confirm: Story = {
       separator: ',',
       decimal: '.',
     },
-    isValid: true,
+    valid: true,
   },
 };
 
@@ -204,7 +204,7 @@ export const Disabled: Story = {
       separator: ',',
       decimal: '.',
     },
-    isDisabled: true,
+    disabled: true,
   },
 };
 

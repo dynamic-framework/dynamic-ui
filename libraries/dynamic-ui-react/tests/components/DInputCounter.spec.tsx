@@ -15,7 +15,7 @@ it('should render base counter', () => {
       minValue={props.minValue}
       maxValue={props.maxValue}
       value={props.value}
-    />
+    />,
   );
 
   expect(container).toMatchInlineSnapshot(`
@@ -45,7 +45,6 @@ it('should render base counter', () => {
             aria-label=""
             class="form-control"
             id="counter"
-            placeholder=""
             type="number"
             value="0"
           />

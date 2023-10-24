@@ -11,13 +11,6 @@ export default config;
 type Story = StoryObj<typeof DCurrencyText>;
 
 export const Default: Story = {
-  decorators: [
-    (Story) => {
-      // eslint-disable-next-line global-require
-      require('../config/liquidConfig');
-      return <Story />;
-    },
-  ],
   args: {
     value: 100,
   },

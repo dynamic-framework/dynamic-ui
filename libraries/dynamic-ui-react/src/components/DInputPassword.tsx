@@ -1,71 +1,38 @@
-import { useCallback, useState } from 'react';
+import { forwardRef, useCallback, useState } from 'react';
 
-import type { ChangeEvent } from 'react';
+import type { ForwardedRef, ComponentPropsWithoutRef, RefObject } from 'react';
 
 import DInput from './DInput';
+import useProvidedRefOrCreate from '../hooks/useProvidedRefOrCreate';
 
-import type { LabelIcon } from './interface';
+type Props = Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'type'>;
 
-type Props = LabelIcon & {
-  id: string;
-  name?: string;
-  label?: string;
-  placeholder?: string;
-  value?: string;
-  isDisabled?: boolean;
-  isReadOnly?: boolean;
-  isLoading?: boolean;
-  hint?: string;
-  isInvalid?: boolean;
-  isValid?: boolean;
-  onChange?: (value: string) => void;
-};
-
-export default function DInputPassword(
+function DInputPassword(
   {
-    id,
-    name,
-    label = '',
-    placeholder = '',
-    value = '',
-    isDisabled = false,
-    isReadOnly = false,
-    isLoading = false,
-    hint,
-    isInvalid = false,
-    isValid = false,
-    onChange,
-    ...rest
+    onIconEndClick,
+    ...props
   }: Props,
+  ref: ForwardedRef<HTMLInputElement>,
 ) {
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
   const [visible, setVisible] = useState(false);
 
-  const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    onChange?.(event.target.value);
-  }, [onChange]);
-
-  const visibilityHandler = useCallback(() => {
+  const handleOnIconEndClick = useCallback(() => {
     setVisible((prevVisible) => !prevVisible);
-  }, []);
+    onIconEndClick?.();
+  }, [onIconEndClick]);
 
   return (
     <DInput
-      id={id}
-      name={name}
-      label={label}
-      placeholder={placeholder}
-      value={value}
+      ref={inputRef}
       iconEnd={!visible ? 'eye-slash' : 'eye'}
       type={!visible ? 'password' : 'text'}
-      isDisabled={isDisabled}
-      isReadOnly={isReadOnly}
-      isLoading={isLoading}
-      hint={hint}
-      isInvalid={isInvalid}
-      isValid={isValid}
-      onChange={changeHandler}
-      onIconEndClick={visibilityHandler}
-      {...rest}
+      onIconEndClick={handleOnIconEndClick}
+      {...props}
     />
   );
 }
+
+const ForwardedDInputPassword = forwardRef<HTMLInputElement, Props>(DInputPassword);
+ForwardedDInputPassword.displayName = 'DInputPassword';
+export default ForwardedDInputPassword;
