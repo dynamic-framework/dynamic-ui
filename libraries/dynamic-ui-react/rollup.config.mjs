@@ -1,4 +1,4 @@
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import nodeResolve from '@rollup/plugin-node-resolve';
 
 export default {
   input: {
@@ -14,7 +14,6 @@ export default {
     {
       dir: 'dist/',
       format: 'commonjs',
-      preferConst: true,
       sourcemap: true,
     },
   ],

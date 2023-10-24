@@ -1,36 +1,37 @@
 import { useMemo } from 'react';
 import DatePicker from 'react-datepicker';
-import { DateTime } from 'luxon';
+import { format, parseISO } from 'date-fns';
 
 import type { ReactDatePickerProps } from 'react-datepicker';
 
 import DButton from './DButton';
-import { useDContext } from '../contexts';
 
-type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' > & {
+type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' | 'locale'> & {
   date: string;
   onChangeDate: (value: Date | null) => void;
+  locale?: Locale;
 };
 
 export default function DMonthPicker(
   {
     onChangeDate,
     date,
+    locale,
     ...props
   }: Props,
 ) {
-  const { language } = useDContext();
-  const selected = useMemo(() => DateTime.fromISO(date).toJSDate(), [date]);
-  const locale = useMemo(() => language || 'en', [language]);
+  const selected = useMemo(() => parseISO(date), [date]);
   const dateFormatted = useMemo(() => (
-    DateTime.fromISO(date).setLocale(locale).toFormat('MMMM yyyy')
+    format(new Date(date), 'MMMM yyyy', { locale })
   ), [date, locale]);
+
   return (
     <DatePicker
       showMonthYearPicker
       selected={selected}
       calendarClassName="d-month-picker"
       onChange={onChangeDate}
+      {...locale && { locale }}
       customInput={(
         <p className="fw-bold text-capitalize">
           {dateFormatted}
