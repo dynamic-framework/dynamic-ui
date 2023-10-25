@@ -4,7 +4,9 @@ import {
   useState,
 } from 'react';
 
+import classNames from 'classnames';
 import { PREFIX_BS } from '../config';
+import { BaseProps } from '../interface';
 
 type Step = {
   label: string;
@@ -12,7 +14,7 @@ type Step = {
   value: number;
 };
 
-type Props = {
+type Props = BaseProps & {
   options: Array<Step>;
   currentStep: number;
 };
@@ -21,6 +23,8 @@ export default function DStepper(
   {
     options,
     currentStep,
+    className,
+    style,
   } : Props,
 ) {
   if (currentStep < 1 || currentStep > options.length) {
@@ -59,7 +63,10 @@ export default function DStepper(
   );
 
   return (
-    <div className="d-stepper">
+    <div
+      className={classNames('d-stepper', className)}
+      style={style}
+    >
       <div className="d-step-bar" style={{ background: progressStyle }}>
         <p className="d-step-number">{`${currentStep}/${options.length}`}</p>
       </div>

@@ -9,11 +9,10 @@ import DModalHeader from './components/DModalHeader';
 import DModalBody from './components/DModalBody';
 import DModalFooter from './components/DModalFooter';
 
-import type { ModalFullScreenFrom, ModalSize } from '../interface';
+import type { BaseProps, ModalFullScreenFrom, ModalSize } from '../interface';
 
-type Props = PropsWithChildren<{
+type Props = BaseProps & PropsWithChildren<{
   name: string;
-  className?: string;
   isStatic?: boolean;
   isScrollable?: boolean;
   isCentered?: boolean;
@@ -26,6 +25,7 @@ function DModal(
   {
     name,
     className = '',
+    style,
     isStatic,
     isScrollable,
     isCentered,
@@ -65,6 +65,7 @@ function DModal(
       tabIndex={-1}
       aria-labelledby={`${name}Label`}
       aria-hidden="false"
+      style={style}
       {...isStatic && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',

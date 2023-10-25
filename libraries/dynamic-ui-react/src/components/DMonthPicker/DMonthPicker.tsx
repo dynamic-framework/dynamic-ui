@@ -4,9 +4,11 @@ import { format, parseISO } from 'date-fns';
 
 import type { ReactDatePickerProps } from 'react-datepicker';
 
+import classNames from 'classnames';
 import DButton from '../DButton';
+import { BaseProps } from '../interface';
 
-type Props = Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' | 'locale'> & {
+type Props = BaseProps & Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' | 'locale'> & {
   date: string;
   onChangeDate: (value: Date | null) => void;
   locale?: Locale;
@@ -17,6 +19,7 @@ export default function DMonthPicker(
     onChangeDate,
     date,
     locale,
+    className,
     ...props
   }: Props,
 ) {
@@ -29,7 +32,7 @@ export default function DMonthPicker(
     <DatePicker
       showMonthYearPicker
       selected={selected}
-      calendarClassName="d-month-picker"
+      calendarClassName={classNames('d-month-picker', className)}
       onChange={onChangeDate}
       {...locale && { locale }}
       customInput={(

@@ -15,8 +15,9 @@ import {
 } from '@floating-ui/react';
 
 import type { PropsWithChildren, ReactElement } from 'react';
+import { BaseProps } from '../interface';
 
-type Props = PropsWithChildren<{
+type Props = BaseProps & PropsWithChildren<{
   renderComponent: (isOpen: boolean) => ReactElement;
   isOpen: boolean;
   setEventIsOpen?: (isOpen: boolean) => void;
@@ -30,6 +31,8 @@ export default function DPopover(
     isOpen,
     setEventIsOpen,
     adjustContentToRender = false,
+    className,
+    style,
   }: Props,
 ) {
   const [innerIsOpen, setInnerIsOpen] = useState(false);
@@ -69,7 +72,10 @@ export default function DPopover(
   const headingId = useId();
 
   return (
-    <div className="d-popover">
+    <div
+      className={classNames('d-popover', className)}
+      style={style}
+    >
       <div
         ref={refs.setReference}
         {...getReferenceProps()}

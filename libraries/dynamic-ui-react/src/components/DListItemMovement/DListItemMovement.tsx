@@ -5,12 +5,12 @@ import type { ComponentProps } from 'react';
 
 import { DListItem } from '../DList';
 import { useFormatCurrency } from '../../hooks';
+import { BaseProps } from '../interface';
 
-type Props = Omit<ComponentProps<typeof DListItem>, 'children'> & {
+type Props = BaseProps & Omit<ComponentProps<typeof DListItem>, 'children'> & {
   description: string;
   date: string;
   amount: number;
-  classNameMovement?: string;
 };
 
 export default function DListItemMovement(
@@ -18,7 +18,8 @@ export default function DListItemMovement(
     description,
     date,
     amount,
-    classNameMovement,
+    className,
+    style,
     ...props
   }: Props,
 ) {
@@ -39,10 +40,12 @@ export default function DListItemMovement(
 
   return (
     <DListItem {...props}>
-      <div className={classNames(
-        'd-flex justify-content-between align-items-center p-3 gap-3',
-        classNameMovement,
-      )}
+      <div
+        className={classNames(
+          'd-flex justify-content-between align-items-center p-3 gap-3',
+          className,
+        )}
+        style={style}
       >
         <div className="d-flex flex-column gap-1">
           <span className="fs-6">

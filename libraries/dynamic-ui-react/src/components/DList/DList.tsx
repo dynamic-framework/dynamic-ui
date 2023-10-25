@@ -2,11 +2,10 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import type { BreakpointSize } from '../interface';
+import type { BaseProps, BreakpointSize } from '../interface';
 import DListItem from './components/DListItem';
 
-type Props = PropsWithChildren<{
-  className?: string;
+type Props = BaseProps & PropsWithChildren<{
   isFlush?: boolean;
   isNumbered?: boolean;
   isHorizontal?: boolean;
@@ -17,6 +16,7 @@ function DList(
   {
     children,
     className,
+    style,
     isFlush = false,
     isNumbered = false,
     isHorizontal = false,
@@ -39,6 +39,7 @@ function DList(
         (isHorizontal && horizontalBreakpoint) && `list-group-horizontal-${horizontalBreakpoint}`,
         className,
       )}
+      style={style}
     >
       {children}
     </div>
