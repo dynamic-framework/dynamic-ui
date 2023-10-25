@@ -5,45 +5,47 @@
     "airbnb/hooks",
     "plugin:react/jsx-runtime"
   ],
-  "parserOptions": {
-    "project": ["./tsconfig.json"],
-    "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
-  },
   "rules": {
     "react/require-default-props": "off",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
     "import/prefer-default-export": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["**/*.stories.tsx", "**/*.spec.tsx"]
+      }
+    ]
   },
   "overrides": [
     {
-      "files": ["**/*.stories.tsx"],
+      "files": ["*.ts", "*.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"],
+        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
+      },
+      "extends": [
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ]
+    },
+    {
+      "files": ["*.stories.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.stories.json"],
+        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
+      },
       "rules": {
         "react/jsx-props-no-spreading": "off",
         "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }]
       }
     },
     {
-      "files": ["**/*.spec.tsx"],
+      "files": ["*.spec.tsx"],
       "parserOptions": {
         "project": ["./tsconfig.spec.json"],
         "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
-      },
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": [
-        "airbnb-typescript",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
-      ],
-      "rules": {
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": ["**/*.stories.tsx", "**/*.spec.tsx"]
-          }
-        ]
       }
     }
   ]
