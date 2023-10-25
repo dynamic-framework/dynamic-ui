@@ -1,15 +1,14 @@
 import classNames from 'classnames';
 
-import type { CSSProperties, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import DCardHeader from './components/DCardHeader';
 import DCardBody from './components/DCardBody';
 import DCardFooter from './components/DCardFooter';
 
-type Props = PropsWithChildren<{
-  className?: string;
-  style?: CSSProperties;
-}>;
+import type { BaseProps } from '../interface';
+
+type Props = PropsWithChildren<BaseProps>;
 
 function DCard(
   {

@@ -13,9 +13,12 @@ import DDatePickerTime from '../DDatePickerTime';
 import DDatePickerInput from '../DDatePickerInput';
 import DDatePickerHeader from '../DDatePickerHeader';
 
-import type { ButtonVariant, ComponentSize } from '../interface';
+import type { BaseProps, ButtonVariant, ComponentSize } from '../interface';
 
-type Props = Omit<ReactDatePickerProps, 'selected' | 'selectsRange' | 'locale'> & {
+type Props =
+& BaseProps
+& Omit<ReactDatePickerProps, 'selected' | 'selectsRange' | 'locale'>
+& {
   date?: string | null;
   withMonthSelector?: boolean;
   selectsRange?: boolean;
@@ -48,6 +51,8 @@ export default function DDatePicker(
     headerButtonVariant = 'link',
     headerButtonTheme = 'dark',
     locale,
+    className,
+    style,
     ...props
   }: Props,
 ) {
@@ -76,9 +81,16 @@ export default function DDatePicker(
   return (
     <DatePicker
       selected={selected}
-      calendarClassName="m-date-picker"
+      calendarClassName="d-date-picker"
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
-      customInput={<DDatePickerInput id={inputId} iconEnd={inputIcon} />}
+      customInput={(
+        <DDatePickerInput
+          id={inputId}
+          iconEnd={inputIcon}
+          className={className}
+          style={style}
+        />
+      )}
       customTimeInput={<DDatePickerTime id={timeId} label={timeLabel} />}
       selectsRange={selectsRange}
       {...locale && { locale }}

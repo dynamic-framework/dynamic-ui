@@ -2,12 +2,13 @@
 import { useMemo, useCallback } from 'react';
 import classNames from 'classnames';
 
-import type { MouseEvent, CSSProperties } from 'react';
+import type { MouseEvent } from 'react';
 
 import DIcon from '../DIcon';
 import { PREFIX_BS } from '../config';
 
 import type {
+  BaseProps,
   ButtonType,
   ButtonVariant,
   ClassMap,
@@ -18,10 +19,12 @@ import type {
   StartIconProps,
 } from '../interface';
 
-type Props = StartIconProps & EndIconProps & {
+type Props =
+& BaseProps
+& StartIconProps
+& EndIconProps
+& {
   id?: string;
-  className?: string;
-  style?: CSSProperties;
   theme?: string;
   size?: ComponentSize;
   variant?: ButtonVariant;

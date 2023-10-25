@@ -14,11 +14,12 @@ import type {
 import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 
-import type { CustomStyles } from '../interface';
+import type { BaseProps, CustomStyles } from '../interface';
 
-type Props = PropsWithChildren<{
+type Props =
+& BaseProps
+& PropsWithChildren<{
   id?: string;
-  className?: string;
   Component: ReactElement | ReactNode;
   hasSeparator?: boolean;
   defaultCollapsed?: boolean;
@@ -29,6 +30,7 @@ export default function DCollapse(
   {
     id,
     className,
+    style,
     Component,
     hasSeparator = false,
     defaultCollapsed = false,
@@ -58,6 +60,7 @@ export default function DCollapse(
     <div
       id={id}
       className={classNames('collapse-container', className)}
+      style={style}
     >
       <button
         className="collapse-button"

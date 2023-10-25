@@ -3,10 +3,14 @@ import {
   useEffect,
   useCallback,
 } from 'react';
+import classNames from 'classnames';
 
 import type { ChangeEvent } from 'react';
+import type { BaseProps } from '../interface';
 
-interface Props {
+type Props =
+& BaseProps
+& {
   label?: string;
   id: string;
   name?: string;
@@ -14,7 +18,7 @@ interface Props {
   isDisabled?: boolean;
   isReadonly?: boolean;
   onChange?: (isChecked: boolean) => void;
-}
+};
 
 export default function DInputSwitch(
   {
@@ -24,6 +28,8 @@ export default function DInputSwitch(
     isChecked,
     isDisabled,
     isReadonly,
+    className,
+    style,
     onChange,
   }: Props,
 ) {
@@ -45,7 +51,8 @@ export default function DInputSwitch(
         id={id}
         name={name}
         onChange={isReadonly ? () => false : changeHandler}
-        className="form-check-input"
+        className={classNames('form-check-input', className)}
+        style={style}
         type="checkbox"
         role="switch"
         checked={internalIsChecked}

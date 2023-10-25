@@ -6,9 +6,12 @@ import type { DropzoneOptions } from 'react-dropzone';
 
 import DIcon from '../DIcon';
 
-import type { FamilyIconProps } from '../interface';
+import type { BaseProps, FamilyIconProps } from '../interface';
 
-type Props = FamilyIconProps & PropsWithChildren<
+type Props =
+& BaseProps
+& FamilyIconProps
+& PropsWithChildren<
 Pick<
 DropzoneOptions,
 | 'accept'
@@ -33,6 +36,8 @@ export default function DBoxFile(
     iconFamilyPrefix,
     isDisabled = false,
     children,
+    className,
+    style,
     ...dropzoneOptions
   }: Props,
 ) {
@@ -52,7 +57,9 @@ export default function DBoxFile(
         {
           'd-box-file-selected': !!acceptedFiles.length,
         },
+        className,
       )}
+      style={style}
     >
       <div
         {...getRootProps({
