@@ -49,7 +49,7 @@ it('should render my component', () => {
               type="button"
             >
               <i
-                class="d-icon d-input-icon bi bi-eye-slash"
+                class="d-icon bi bi-eye-slash d-input-icon"
                 style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
               />
             </button>
