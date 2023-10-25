@@ -26,7 +26,7 @@ const defaultState = {
   },
 };
 
-export const DContext = createContext<Required<Props>>(defaultState);
+export const DContext = createContext<Props>(defaultState);
 
 export function DContextProvider(
   {
@@ -47,12 +47,12 @@ export function DContextProvider(
   );
 }
 
-export function useDContext() {
+export function useDContext(): Required<Props> {
   const context = useContext(DContext);
 
   if (context === undefined) {
     throw new Error('useDContext was used outside of DContextProvider');
   }
 
-  return context;
+  return context as Required<Props>;
 }
