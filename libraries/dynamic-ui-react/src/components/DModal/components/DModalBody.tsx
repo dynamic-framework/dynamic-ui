@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import classNames from 'classnames';
-import { BaseProps } from '../../interface';
+
+import type { BaseProps } from '../../interface';
 
 type Props = BaseProps & {
   children: ReactNode;

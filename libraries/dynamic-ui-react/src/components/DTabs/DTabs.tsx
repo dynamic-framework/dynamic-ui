@@ -10,7 +10,8 @@ import type { PropsWithChildren } from 'react';
 
 import TabContext from './TabContext';
 import DTabContent from './components/DTabContent';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 export type DTabOption = {
   label: string;

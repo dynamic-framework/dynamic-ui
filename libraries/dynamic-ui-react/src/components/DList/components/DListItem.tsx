@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
-import { BaseProps } from '../../interface';
+
+import type { BaseProps } from '../../interface';
 
 type Props = BaseProps & PropsWithChildren<{
   isActive?: boolean;

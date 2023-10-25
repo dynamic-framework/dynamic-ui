@@ -4,7 +4,8 @@ import type { CSSProperties } from 'react';
 import type { ToastPosition } from 'react-toastify';
 
 import classNames from 'classnames';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 type Props = BaseProps & {
   style?: CSSProperties & {

@@ -2,8 +2,9 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import type { BaseProps, BreakpointSize } from '../interface';
 import DListItem from './components/DListItem';
+
+import type { BaseProps, BreakpointSize } from '../interface';
 
 type Props = BaseProps & PropsWithChildren<{
   isFlush?: boolean;

@@ -24,7 +24,7 @@ type Props = BaseProps & PropsWithChildren<{
 function DModal(
   {
     name,
-    className = '',
+    className,
     style,
     isStatic,
     isScrollable,
@@ -47,7 +47,7 @@ function DModal(
 
   const generateClasses = useMemo(() => ({
     'modal fade show': true,
-    [`${className}`]: !!className,
+    ...className && { [className]: true },
   }), [className]);
 
   const generateModalDialogClasses = useMemo(() => ({

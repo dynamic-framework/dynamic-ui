@@ -6,7 +6,8 @@ import {
 
 import classNames from 'classnames';
 import { PREFIX_BS } from '../config';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 type Step = {
   label: string;

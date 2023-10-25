@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import type { MouseEvent } from 'react';
 
 import DInputSwitch from '../DInputSwitch';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 type Props = BaseProps & {
   id: string;

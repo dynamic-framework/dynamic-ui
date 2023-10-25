@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import type { ChangeEvent } from 'react';
 
 import DInputCheck from '../DInputCheck';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 type Props = BaseProps & {
   id: string;

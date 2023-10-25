@@ -15,7 +15,7 @@ import {
 } from '@floating-ui/react';
 
 import type { PropsWithChildren, ReactElement } from 'react';
-import { BaseProps } from '../interface';
+import type { BaseProps } from '../interface';
 
 type Props = BaseProps & PropsWithChildren<{
   renderComponent: (isOpen: boolean) => ReactElement;

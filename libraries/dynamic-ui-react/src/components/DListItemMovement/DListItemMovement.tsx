@@ -5,7 +5,8 @@ import type { ComponentProps } from 'react';
 
 import { DListItem } from '../DList';
 import { useFormatCurrency } from '../../hooks';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 type Props = BaseProps & Omit<ComponentProps<typeof DListItem>, 'children'> & {
   description: string;

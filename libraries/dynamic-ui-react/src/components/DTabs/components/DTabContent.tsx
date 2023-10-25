@@ -2,7 +2,8 @@ import type { PropsWithChildren } from 'react';
 
 import classNames from 'classnames';
 import { useTabContext } from '../TabContext';
-import { BaseProps } from '../../interface';
+
+import type { BaseProps } from '../../interface';
 
 type Props = BaseProps & PropsWithChildren<{
   tab: string;

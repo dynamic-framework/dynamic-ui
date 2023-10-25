@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 
 import DIcon from '../DIcon';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 type Step = {
   label: string;

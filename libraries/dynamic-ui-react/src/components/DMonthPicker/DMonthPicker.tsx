@@ -6,7 +6,8 @@ import type { ReactDatePickerProps } from 'react-datepicker';
 
 import classNames from 'classnames';
 import DButton from '../DButton';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 type Props = BaseProps & Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' | 'locale'> & {
   date: string;

@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import DIcon from '../DIcon';
 import DButton from '../DButton';
 import { PREFIX_BS } from '../config';
-import { BaseProps } from '../interface';
+
+import type { BaseProps } from '../interface';
 
 type Props = BaseProps & {
   line1: string;
