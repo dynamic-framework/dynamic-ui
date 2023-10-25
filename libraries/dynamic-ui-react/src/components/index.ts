@@ -4,13 +4,17 @@ export { default as DAlert } from './DAlert';
 export { default as DBadge } from './DBadge';
 export { default as DBoxFile } from './DBoxFile';
 export { default as DButton } from './DButton';
-export { default as DCard } from './DCard';
-export { default as DCardBody } from './DCardBody';
-export { default as DCardFooter } from './DCardFooter';
-export { default as DCardHeader } from './DCardHeader';
+export {
+  default as DCard,
+  DCardHeader,
+  DCardBody,
+  DCardFooter,
+} from './DCard';
 export { default as DCardAccount } from './DCardAccount';
-export { default as DCarousel } from './DCarousel';
-export { default as DCarouselSlide } from './DCarouselSlide';
+export {
+  default as DCarousel,
+  DCarouselSlide,
+} from './DCarousel';
 export { default as DChip } from './DChip';
 export { default as DCollapse } from './DCollapse';
 export { default as DCollapseIconText } from './DCollapseIconText';
@@ -25,19 +29,25 @@ export { default as DInputSearch } from './DInputSearch';
 export { default as DInputPassword } from './DInputPassword';
 export { default as DInputCheck } from './DInputCheck';
 export { default as DInputPin } from './DInputPin';
-export { default as DInputSelect, Props as DInputSelectProps } from './DInputSelect';
+export { default as DInputSelect, DInputSelectProps } from './DInputSelect';
 export { default as DInputSwitch } from './DInputSwitch';
-export { default as DList } from './DList';
-export { default as DListItem } from './DListItem';
+export {
+  default as DList,
+  DListItem,
+} from './DList';
 export { default as DListItemMovement } from './DListItemMovement';
-export { default as DModal } from './DModal';
-export { default as DModalBody } from './DModalBody';
-export { default as DModalFooter } from './DModalFooter';
-export { default as DModalHeader } from './DModalHeader';
-export { default as DOffcanvas } from './DOffcanvas';
-export { default as DOffcanvasBody } from './DOffcanvasBody';
-export { default as DOffcanvasFooter } from './DOffcanvasFooter';
-export { default as DOffcanvasHeader } from './DOffcanvasHeader';
+export {
+  default as DModal,
+  DModalHeader,
+  DModalBody,
+  DModalFooter,
+} from './DModal';
+export {
+  default as DOffcanvas,
+  DOffcanvasHeader,
+  DOffcanvasBody,
+  DOffcanvasFooter,
+} from './DOffcanvas';
 export { default as DPaginator } from './DPaginator';
 export { default as DPopover } from './DPopover';
 export { default as DProgress } from './DProgress';
@@ -49,7 +59,14 @@ export { default as DSkeleton } from './DSkeleton';
 export { default as DStepper } from './DStepper';
 export { default as DStepperDesktop } from './DStepperDesktop';
 export { default as DStepperMobile } from './DStepperMobile';
-export { default as DTabContent } from './DTabContent';
 export { default as DTooltip } from './DTooltip';
-export { default as DTabs, useTabContext, DTabOption } from './DTabs';
-export { default as DToastContainer } from './DToastContainer';
+export {
+  default as DTabs,
+  useTabContext,
+  DTabOption,
+  DTabContent,
+} from './DTabs';
+export {
+  default as DToastContainer,
+  useToast,
+} from './DToastContainer';

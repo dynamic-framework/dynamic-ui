@@ -2,10 +2,17 @@ module.exports = {
   preset: 'ts-jest/presets/js-with-ts',
   verbose: false,
   testEnvironment: 'jsdom',
+  maxWorkers: 4,
+  cacheDirectory: '<rootDir>/.jest-cache',
   setupFilesAfterEnv: [
     '<rootDir>/tests/setupTests.ts',
   ],
   transformIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/dist/',
+    '<rootDir>/dist-transpiled/',
+  ],
+  testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/dist/',
     '<rootDir>/dist-transpiled/',

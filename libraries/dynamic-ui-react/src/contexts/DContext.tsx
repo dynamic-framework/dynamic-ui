@@ -56,5 +56,3 @@ export function useDContext() {
 
   return context;
 }
-
-export default DContextProvider;

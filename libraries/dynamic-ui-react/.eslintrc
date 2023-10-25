@@ -5,10 +5,6 @@
     "airbnb/hooks",
     "plugin:react/jsx-runtime"
   ],
-  "parserOptions": {
-    "project": ["./tsconfig.json"],
-    "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
-  },
   "rules": {
     "react/require-default-props": "off",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
@@ -17,12 +13,54 @@
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": ["src/**/*.ts", "src/**/*.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"],
+        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
+      },
       "extends": [
         "airbnb-typescript",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ]
+    },
+    {
+      "files": ["stories/**/*.ts", "stories/**/*.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"],
+        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
+      },
+      "extends": [
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "rules": {
+        "react/jsx-props-no-spreading": "off",
+        "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }],
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": ["**/*.stories.tsx"] }
+        ]
+      }
+    },
+    {
+      "files": ["src/**/*.spec.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.spec.json"],
+        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true,
+      },
+      "extends": [
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": ["**/*.spec.tsx"] }
+        ]
+      }
     }
   ]
 }

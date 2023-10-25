@@ -4,11 +4,13 @@
     "jsx": "react-jsx",
     "types": [
       "node",
-      "jest",
-    ],
+      "jest"
+    ]
   },
-  "include": ["tests"],
-  "exclude":[
-    "src/stories"
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "stories"
   ]
 }

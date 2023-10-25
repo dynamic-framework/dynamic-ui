@@ -1,0 +1,40 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '../../src/components/config';
+
+import * as DTooltipStories from './DTooltip.stories';
+
+# Tooltip
+
+Tooltip Component.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Floating UI](https://floating-ui.com/docs/react)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                   | Type             | Description                   |
+  |--------------------------------------------|------------------|-------------------------------|
+  | \`--${PREFIX_BS}tooltip-bg\`               | css color unit   | Background and arrow color    |
+  | \`--${PREFIX_BS}tooltip-border-radius\`    | css length unit  | Border radius                 |
+  | \`--${PREFIX_BS}tooltip-color\`            | css color unit   | Text color                    |
+  | \`--${PREFIX_BS}tooltip-font-size\`        | css length unit  | Text font size                |
+  | \`--${PREFIX_BS}tooltip-padding\`          | css length unit  | Padding                       |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={DTooltipStories} />
+
+<ArgTypes of={DTooltipStories} />
+
+<Stories />
+
