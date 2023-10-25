@@ -8,11 +8,10 @@ import DOffcanvasHeader from './components/DOffcanvasHeader';
 import DOffcanvasBody from './components/DOffcanvasBody';
 import DOffcanvasFooter from './components/DOffcanvasFooter';
 
-import type { OffcanvasPositionToggleFrom } from '../interface';
+import type { BaseProps, OffcanvasPositionToggleFrom } from '../interface';
 
-type Props = PropsWithChildren<{
+type Props = BaseProps & PropsWithChildren<{
   name: string;
-  className?: string;
   isStatic?: boolean;
   isScrollable?: boolean;
   openFrom?: OffcanvasPositionToggleFrom;
@@ -22,6 +21,7 @@ function DOffcanvas(
   {
     name,
     className,
+    style,
     isStatic,
     isScrollable,
     openFrom = 'end',
@@ -37,6 +37,7 @@ function DOffcanvas(
         },
         className,
       )}
+      style={style}
       id={name}
       tabIndex={-1}
       aria-labelledby={`${name}Label`}

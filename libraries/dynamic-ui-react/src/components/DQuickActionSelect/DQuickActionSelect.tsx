@@ -2,14 +2,14 @@ import { useCallback, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 
 import type { ChangeEvent } from 'react';
+import { BaseProps } from '../interface';
 
-type Props = {
+type Props = BaseProps & {
   id: string;
   name: string;
   value: string;
   line1: string;
   line2: string;
-  className?: string;
   isSelected?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -22,6 +22,7 @@ export default function DQuickActionSelect(
     line1,
     line2,
     className,
+    style,
     isSelected = false,
     onChange,
   }: Props,
@@ -42,6 +43,7 @@ export default function DQuickActionSelect(
     <label
       className={classNames('d-quick-action-select', className)}
       htmlFor={id}
+      style={style}
     >
       <input
         ref={innerRef}

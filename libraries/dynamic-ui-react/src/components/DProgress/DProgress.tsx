@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
+import { BaseProps } from '../interface';
 
-type Props = {
+type Props = BaseProps & {
   currentValue: number;
   minValue?: number;
   maxValue?: number;
@@ -11,6 +12,8 @@ type Props = {
 
 export default function DProgress(
   {
+    className,
+    style,
     currentValue,
     minValue = 0,
     maxValue = 100,
@@ -31,10 +34,10 @@ export default function DProgress(
   return (
     <div className="progress">
       <div
-        className={classNames(generateClasses)}
+        className={classNames(generateClasses, className)}
         role="progressbar"
         aria-label="Progress bar"
-        style={{ width: `${currentValue}%` }}
+        style={{ width: `${currentValue}%`, ...style }}
         aria-valuenow={currentValue}
         aria-valuemin={minValue}
         aria-valuemax={maxValue}

@@ -1,13 +1,14 @@
 import classNames from 'classnames';
 
 import DIcon from '../DIcon';
+import { BaseProps } from '../interface';
 
 type Step = {
   label: string;
   value: number;
 };
 
-type Props = {
+type Props = BaseProps & {
   options: Array<Step>;
   currentStep: number;
   successIcon?: string;
@@ -20,6 +21,8 @@ export default function DStepper(
     currentStep,
     successIcon = 'check',
     isVertical = false,
+    className,
+    style,
   } : Props,
 ) {
   if (currentStep < 1 || currentStep > options.length) {
@@ -31,7 +34,8 @@ export default function DStepper(
       className={classNames({
         'd-stepper-desktop': true,
         'is-vertical': isVertical,
-      })}
+      }, className)}
+      style={style}
     >
       {options.map(({ label, value }) => (
         <div

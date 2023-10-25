@@ -21,11 +21,10 @@ import type { Placement } from '@floating-ui/react';
 
 import { PREFIX_BS } from '../config';
 
-import type { ComponentSize } from '../interface';
+import type { BaseProps, ComponentSize } from '../interface';
 
-export type Props = PropsWithChildren<{
+export type Props = BaseProps & PropsWithChildren<{
   classNameContainer?: string;
-  className?: string;
   offSet?: number;
   padding?: number;
   withHover?: boolean;
@@ -50,6 +49,7 @@ export default function DTooltip(
   {
     classNameContainer,
     className,
+    style,
     offSet = ARROW_HEIGHT + GAP,
     padding,
     withFocus = false,
@@ -68,6 +68,7 @@ export default function DTooltip(
       ? TOOLTIP_FONT_SIZE_BY_SIZE[size]
       : TOOLTIP_FONT_SIZE_BY_SIZE.default;
     return {
+      ...style,
       background: `var(--${PREFIX_BS}tooltip-bg, var(--${PREFIX_BS}tooltip-component-bg, var(--${PREFIX_BS}secondary)))`,
       borderRadius: `var(--${PREFIX_BS}tooltip-border-radius, var(--${PREFIX_BS}tooltip-component-border-radius, var(--${PREFIX_BS}border-radius)))`,
       color: `var(--${PREFIX_BS}tooltip-color, var(--${PREFIX_BS}tooltip-component-color, var(--${PREFIX_BS}white)))`,
@@ -75,7 +76,7 @@ export default function DTooltip(
       padding: `var(--${PREFIX_BS}tooltip-padding, var(--${PREFIX_BS}tooltip-component-padding, var(--${PREFIX_BS}ref-spacer-2)))`,
       maxWidth: `var(--${PREFIX_BS}tooltip-max-width, var(--${PREFIX_BS}tooltip-component-max-width, 300px))`,
     };
-  }, [size]);
+  }, [size, style]);
 
   const arrowRef = useRef(null);
   const {
