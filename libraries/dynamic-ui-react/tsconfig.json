@@ -30,14 +30,9 @@
     "resolveJsonModule": true
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "src",
+    "stories",
     "@types"
-  ],
-  "exclude": [
-    "src/stories",
-    "src/**/*.stories.tsx",
-    "src/**/*.spec.tsx"
   ],
   "compileOnSave": false,
   "buildOnSave": false
