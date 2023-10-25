@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.7.3...@dynamic-framework/ui-react@1.8.0) (2023-10-25)
+
+
+### Features
+
+* add base property to some components ([59cc048](https://github.com/dynamic-framework/dynamic-ui/commit/59cc04801c156f717ca2d70d895c875c3e41e57c))
+* add classname and style as baseprops ([bcd0e8d](https://github.com/dynamic-framework/dynamic-ui/commit/bcd0e8d9bbf13f7a8a5815823f93d54920659e8d))
+* change d-input to uncontrolled component, delete liquid and formik ([2618562](https://github.com/dynamic-framework/dynamic-ui/commit/26185628dff01b3cd80011508b5a9100b4273cfc))
+* export a non-root css artifact ([a3d2472](https://github.com/dynamic-framework/dynamic-ui/commit/a3d24723028f9277bbf6954ad33199735148868e))
+* refactor d-input related components ([668c965](https://github.com/dynamic-framework/dynamic-ui/commit/668c965dd9465a535fd6937a525c2d9eea4186ee))
+* remove types of navigator share and liquid ([286fc51](https://github.com/dynamic-framework/dynamic-ui/commit/286fc511d5ba25205add4a1d20043ab3eddd84fc))
+* rename common props suffix and add BaseProps ([c4ff3f0](https://github.com/dynamic-framework/dynamic-ui/commit/c4ff3f09ba6f2a7700ee4b03ab982f556078abba))
+* update d-input-counter click callbacks ([66bfd26](https://github.com/dynamic-framework/dynamic-ui/commit/66bfd2678c91d138f4796e30c4439ff11cc14ade))
+
+
+### Bug Fixes
+
+* adjust test of DIcon related components ([84dbb9c](https://github.com/dynamic-framework/dynamic-ui/commit/84dbb9cbba3685d32b8094c1c72c88442032adfa))
+* component import order ([825bdf0](https://github.com/dynamic-framework/dynamic-ui/commit/825bdf0b34f86a2ee2758dfdc8344fb1b4cf4c58))
+* input test details ([3b0d0ee](https://github.com/dynamic-framework/dynamic-ui/commit/3b0d0ee95402abb024cdb45852f1cc3cb0ff79cd))
+* spacing ([c4c1a3d](https://github.com/dynamic-framework/dynamic-ui/commit/c4c1a3d73404add0bfd6775afe9e15a843531add))
+* spacing imports ([aa8283d](https://github.com/dynamic-framework/dynamic-ui/commit/aa8283d4b615b4bd899db1db413a252316dd9464))
+* take RefObject from import ([a8eb9a1](https://github.com/dynamic-framework/dynamic-ui/commit/a8eb9a140c4f40fc1d15c9327811ae94d85a9ba1))
+
+
+
 ## [1.7.3](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.7.2...@dynamic-framework/ui-react@1.7.3) (2023-10-18)
 
 
