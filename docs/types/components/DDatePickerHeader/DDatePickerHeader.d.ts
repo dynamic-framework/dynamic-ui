@@ -1,0 +1,21 @@
+import type { ComponentProps } from 'react';
+import DButton from '../DButton';
+import type { BaseProps, ButtonVariant, ComponentSize } from '../interface';
+type Props = BaseProps & {
+    locale?: Locale;
+    monthDate: Date;
+    decreaseMonth: () => void;
+    increaseMonth: () => void;
+    changeMonth: (monthNumber: number) => void;
+    changeYear: (yearNumber: number) => void;
+    prevMonthButtonDisabled: boolean;
+    nextMonthButtonDisabled: boolean;
+    withMonthSelector: boolean;
+    decreaseMonthIcon: string;
+    increaseMonthIcon: string;
+    iconSize: ComponentSize;
+    buttonVariant: ButtonVariant;
+    buttonTheme: string;
+} & Omit<ComponentProps<typeof DButton>, 'iconStart' | 'onMClick' | 'isDisabled'>;
+export default function DDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, decreaseMonthIcon, increaseMonthIcon, iconSize, buttonVariant, buttonTheme, locale, style, className, }: Props): import("react/jsx-runtime").JSX.Element;
+export {};

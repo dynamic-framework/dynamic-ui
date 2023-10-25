@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 export type ClassMap = {
     [className: string]: boolean;
 };
@@ -11,21 +12,25 @@ export type NavegableProps = {
 };
 export type ComponentSize = 'sm' | 'lg';
 export type BreakpointSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-export type FamilyIcon = {
+export type BaseProps = {
+    style?: CSSProperties;
+    className?: string;
+};
+export type FamilyIconProps = {
     iconFamilyClass?: string;
     iconFamilyPrefix?: string;
 };
-export type LabelIcon = {
+export type LabelIconProps = {
     labelIcon?: string;
     labelIconFamilyClass?: string;
     labelIconFamilyPrefix?: string;
 };
-export type StartIcon = {
+export type StartIconProps = {
     iconStart?: string;
     iconStartFamilyClass?: string;
     iconStartFamilyPrefix?: string;
 };
-export type EndIcon = {
+export type EndIconProps = {
     iconEnd?: string;
     iconEndFamilyClass?: string;
     iconEndFamilyPrefix?: string;
