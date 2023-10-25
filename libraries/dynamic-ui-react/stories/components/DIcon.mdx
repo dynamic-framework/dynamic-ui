@@ -1,0 +1,53 @@
+import {
+  Meta,
+  ArgTypes,
+  Markdown,
+  IconGallery,
+  IconItem,
+  Stories,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '../../src/components/config';
+
+import { ICONS } from '../config/constants';
+
+import * as DIconStories from './DIcon.stories';
+import DIcon from '../../src/components/DIcon/DIcon';
+
+# Icon
+
+Wrapper Component around Bootstrap Icons.
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                | Type            | Description                           |
+  |-----------------------------------------|-----------------|---------------------------------------|
+  | \`--${PREFIX_BS}icon-color\`            | css color unit  | The icon color                        |
+  | \`--${PREFIX_BS}icon-bg-color\`         | css color unit  | The icon background color             |
+  | \`--${PREFIX_BS}icon-size\`             | css length unit | The size of icon                      |
+  | \`--${PREFIX_BS}icon-padding\`          | css length unit | The padding to make icon circle       |
+  | \`--${PREFIX_BS}icon-loading-duration\` | number          | The duration of the loading animation |
+
+  > The colors can ref another css var like a \`var(--${PREFIX_BS}primary)\`
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={DIconStories} />
+
+<ArgTypes of={DIconStories} />
+
+<Stories />
+
+# Iconography
+
+<IconGallery>
+  {ICONS.map((name) => (
+    <IconItem key={name} name={name}>
+      <DIcon icon={name} />
+    </IconItem>
+  ))}
+</IconGallery>
+

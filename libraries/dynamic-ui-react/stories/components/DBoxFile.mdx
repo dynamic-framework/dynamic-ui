@@ -1,0 +1,45 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '../../src/components/config';
+
+import * as DBoxFileStories from './DBoxFile.stories';
+
+# Box File
+
+Drag'n'drop zone component for files.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [React Dropzone](https://react-dropzone.js.org/)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                      | Type            | Description               |
+  |-----------------------------------------------|-----------------|---------------------------|
+  | \`--${PREFIX_BS}box-file-gap\`                | css length unit | Space between elements    |
+  | \`--${PREFIX_BS}box-file-border\`             | css border      | Border                    |
+  | \`--${PREFIX_BS}box-file-border-radius\`      | css length unit | Border radius             |
+  | \`--${PREFIX_BS}box-file-padding\`            | css length unit | Padding                   |
+  | \`--${PREFIX_BS}box-file-content-max-width\`  | css length unit | Max width of the content  |
+  | \`--${PREFIX_BS}box-file-icon-size\`          | css length unit | Icon size                 |
+  | \`--${PREFIX_BS}box-file-icon-color\`         | css color unit  | Icon color                |
+  | \`--${PREFIX_BS}box-file-hover-border\`       | css border      | Hover Border              |
+  | \`--${PREFIX_BS}box-file-hover-bg\`           | css color unit  | Hover background          |
+  | \`--${PREFIX_BS}box-file-selected-border\`    | css border      | Selected border           |
+  | \`--${PREFIX_BS}box-file-selected-bg\`        | css color unit  | Selected background       |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={DBoxFileStories} />
+
+<ArgTypes of={DBoxFileStories} />
+
+<Stories />

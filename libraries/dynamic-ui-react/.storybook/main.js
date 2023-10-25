@@ -1,15 +1,22 @@
+import { dirname, join } from 'node:path';
+
 module.exports = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    '@storybook/addon-controls',
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/addon-viewport',
+    getAbsolutePath("@storybook/addon-controls"),
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-viewport"),
   ],
   framework: {
-    name: '@storybook/react-webpack5',
-    options: {}
+    name: getAbsolutePath("@storybook/react-webpack5"),
+    options: {
+      builder: {
+        fsCache: true,
+        lazyCompilation: true
+      }
+    }
   },
   typescript: {
     check: false,
@@ -21,16 +28,20 @@ module.exports = {
     },
   },
   core: {
-    disableTelemetry: true
+    analytics: true
   },
   staticDirs: [
     './public',
     '../dist'
   ],
   features: {
-    modernInlineRender: true
+    buildStoriesJson: true
   },
   docs: {
     autodocs: 'tag'
-  }
+  },
 };
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, 'package.json')));
+}

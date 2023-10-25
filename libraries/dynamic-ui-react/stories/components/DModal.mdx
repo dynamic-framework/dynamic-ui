@@ -1,0 +1,96 @@
+import {
+  Meta,
+  ArgTypes,
+  Markdown,
+  Stories,
+  Story,
+  Source,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '../../src/components/config';
+
+import * as DModalStories from './DModal.stories';
+import * as useModalContextStories from '../hooks/useModalContext.stories';
+
+# Modal
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                     | Type              | Description                                 |
+  |----------------------------------------------|-------------------|---------------------------------------------|
+  | \`--${PREFIX_BS}modal-body-padding\`         | css length unit   | Body padding                                |
+  | \`--${PREFIX_BS}modal-footer-padding\`       | css length unit   | Footer padding                              |
+  | \`--${PREFIX_BS}modal-separator-margin-x\`   | css length unit   | Separator horizontal padding                |
+  | \`--${PREFIX_BS}modal-separator-height\`     | css length unit   | Separator height (size)                     |
+  | \`--${PREFIX_BS}modal-separator-bg\`         | css color unit    | Separator background (color)                |
+  | \`--${PREFIX_BS}modal-fade-transform\`       | css transform     | Fade transform animation                    |
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={DModalStories} />
+
+<ArgTypes of={DModalStories} />
+
+## Example
+
+<Story of={useModalContextStories.useModalContext} />
+<br />
+
+### Context Setup - render of `Bootstrap.tsx`
+<Source
+  code={`
+<ModalContextProvider
+  portalName="examplePortal"
+  availableModals={{
+    example: ExampleModal,
+  }}
+>
+  <App />
+</ModalContextProvider>
+  `}
+/>
+
+### Modal Definition - render of `ExampleModal.tsx`
+<Source
+  code={`
+<DModal
+  name="example"
+  isCentered
+  isStatic
+  className="d-block"
+>
+  <DModalHeader onClose={closeModal} showCloseButton>
+    <h5 className="fw-bold">Do you want to reject the offer?</h5>
+  </DModalHeader>
+  <DModalBody>
+    <p className="py-3 px-5">Modal body</p>
+  </DModalBody>
+  <DModalFooter>
+    <DButton
+      text="cancel"
+      theme="secondary"
+      variant="outline"
+      className="d-grid"
+      isPill
+      onClick={() => closeModal()}
+    />
+    <DButton text="ok" className="d-grid" isPill />
+  </DModalFooter>
+</DModal>
+  `}
+/>
+
+### Modal Usage render of `App.tsx`
+<Source
+  code={`
+<DButton text="Open Modal" onClick={() => openModal('example')} />
+  `}
+/>
+
+<Stories />
+
+
+

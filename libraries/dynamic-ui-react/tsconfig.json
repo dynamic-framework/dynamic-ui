@@ -29,7 +29,11 @@
     "allowJs": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "@types"],
+  "include": [
+    "src",
+    "stories",
+    "@types"
+  ],
   "compileOnSave": false,
   "buildOnSave": false
 }
