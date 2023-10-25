@@ -3,12 +3,15 @@ import {
   useEffect,
   useRef,
 } from 'react';
+import classNames from 'classnames';
 
 import type { ChangeEvent } from 'react';
 
-import type { InputCheckType } from '../interface';
+import type { BaseProps, InputCheckType } from '../interface';
 
-type Props = {
+type Props =
+& BaseProps
+& {
   type: InputCheckType;
   name?: string;
   label?: string;
@@ -31,6 +34,8 @@ export default function DInputCheck(
     isIndeterminate,
     value,
     onChange,
+    className,
+    style,
   }: Props,
 ) {
   const innerRef = useRef<HTMLInputElement>(null);
@@ -55,7 +60,8 @@ export default function DInputCheck(
       <input
         ref={innerRef}
         onChange={handleChange}
-        className="form-check-input"
+        className={classNames('form-check-input', className)}
+        style={style}
         id={id}
         disabled={isDisabled}
         type={type}
@@ -70,7 +76,8 @@ export default function DInputCheck(
       <input
         ref={innerRef}
         onChange={handleChange}
-        className="form-check-input"
+        className={classNames('form-check-input', className)}
+        style={style}
         id={id}
         disabled={isDisabled}
         type={type}

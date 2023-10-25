@@ -6,14 +6,17 @@ import type { SplideProps } from '@splidejs/react-splide';
 
 import DCarouselSlide from './components/DCarouselSlide';
 
-type Props = SplideProps & PropsWithChildren<{
-  className?: string;
-}>;
+import type { BaseProps } from '../interface';
+
+type Props =
+& SplideProps
+& PropsWithChildren<BaseProps>;
 
 function DCarousel(
   {
     children,
     className,
+    style,
     options,
     ...props
   }: Props,
@@ -21,6 +24,7 @@ function DCarousel(
   return (
     <Splide
       className={classNames('d-carousel', className)}
+      style={style}
       options={{
         ...options,
         classes: {

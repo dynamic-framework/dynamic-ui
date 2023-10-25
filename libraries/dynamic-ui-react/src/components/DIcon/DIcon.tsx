@@ -1,14 +1,17 @@
 import { useMemo } from 'react';
 import classNames from 'classnames';
 
+import type { CSSProperties } from 'react';
+
 import { PREFIX_BS } from '../config';
 
-import type { ClassMap, CustomStyles } from '../interface';
+import type { BaseProps, ClassMap, CustomStyles } from '../interface';
 
-type Props = {
+type Props =
+& BaseProps
+& {
   icon: string;
   theme?: string;
-  className?: string;
   size?: string;
   isLoading?: boolean;
   loadingDuration?: number;
@@ -24,7 +27,8 @@ export default function DIcon(
   {
     icon,
     theme,
-    className = '',
+    style,
+    className,
     size = '1.5rem',
     isLoading = false,
     loadingDuration = 1.8,
@@ -36,7 +40,7 @@ export default function DIcon(
     familyPrefix = 'bi-',
   }: Props,
 ) {
-  const getColorStyle = useMemo(() => {
+  const colorStyle = useMemo(() => {
     if (color) {
       return { [`--${PREFIX_BS}component-color`]: color };
     }
@@ -46,7 +50,7 @@ export default function DIcon(
     return {};
   }, [color, theme]);
 
-  const getBackgroundStyle = useMemo(() => {
+  const backgroundStyle = useMemo(() => {
     if (backgroundColor) {
       return { [`--${PREFIX_BS}icon-component-bg-color`]: backgroundColor };
     }
@@ -60,27 +64,28 @@ export default function DIcon(
     return {};
   }, [backgroundColor, hasCircle, theme]);
 
-  const getCircleSizeStyle = useMemo(() => {
+  const circleSizeStyle = useMemo(() => {
     if (hasCircle) {
       return { [`--${PREFIX_BS}icon-component-padding`]: circleSize };
     }
     return { [`--${PREFIX_BS}icon-component-padding`]: '0' };
   }, [circleSize, hasCircle]);
 
-  const generateStyleVariables = useMemo<CustomStyles>(() => ({
+  const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     [`--${PREFIX_BS}icon-component-size`]: size,
     [`--${PREFIX_BS}icon-component-loading-duration`]: `${loadingDuration}s`,
-    ...getColorStyle,
-    ...getBackgroundStyle,
-    ...getCircleSizeStyle,
-  }), [size, loadingDuration, getColorStyle, getBackgroundStyle, getCircleSizeStyle]);
+    ...colorStyle,
+    ...backgroundStyle,
+    ...circleSizeStyle,
+    ...style,
+  }), [size, loadingDuration, colorStyle, backgroundStyle, circleSizeStyle, style]);
 
   const generateClasses = useMemo<ClassMap>(() => ({
     'd-icon': true,
-    [className]: !!className,
     [familyClass]: true,
     [`${familyPrefix}${icon}`]: true,
     'd-icon-loading': isLoading,
+    ...className && { [className]: true },
   }), [familyClass, familyPrefix, icon, className, isLoading]);
 
   return (

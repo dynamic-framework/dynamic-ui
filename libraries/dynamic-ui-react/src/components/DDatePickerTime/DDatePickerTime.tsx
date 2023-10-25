@@ -1,8 +1,14 @@
+import classNames from 'classnames';
+
 import type { ComponentProps } from 'react';
 
 import DInput from '../DInput';
 
-type Props = {
+import type { BaseProps } from '../interface';
+
+type Props =
+& BaseProps
+& {
   value?: string;
   onChange?: (value?: string) => void;
 } & Omit<ComponentProps<typeof DInput>,
@@ -18,11 +24,19 @@ export default function DDatePickerTime(
     onChange,
     id,
     label,
+    className,
+    style,
     ...props
   }: Props,
 ) {
   return (
-    <div className="d-flex align-items-center gap-2 flex-column d-datepicker-time">
+    <div
+      className={classNames(
+        'd-flex align-items-center gap-2 flex-column d-datepicker-time',
+        className,
+      )}
+      style={style}
+    >
       {label && (
         <p className="d-datepicker-time-label">{label}</p>
       )}

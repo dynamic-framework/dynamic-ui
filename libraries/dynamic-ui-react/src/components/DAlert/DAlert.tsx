@@ -6,12 +6,12 @@ import type { CSSProperties, PropsWithChildren } from 'react';
 import DIcon from '../DIcon';
 import { ALERT_TYPE_ICON, PREFIX_BS } from '../config';
 
-import type { AlertType, CustomStyles } from '../interface';
+import type { AlertType, BaseProps, CustomStyles } from '../interface';
 
-type Props = PropsWithChildren<{
+type Props =
+& BaseProps
+& PropsWithChildren<{
   id?: string;
-  className?: string;
-  style?: CSSProperties;
   type?: AlertType;
   icon?: string;
   iconFamilyClass?: string;

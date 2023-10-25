@@ -2,13 +2,14 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-type Props = PropsWithChildren<{
-  className?: string;
-}>;
+import type { BaseProps } from '../../interface';
+
+type Props = PropsWithChildren<BaseProps>;
 
 export default function DCardFooter(
   {
     className,
+    style,
     children,
   }: Props,
 ) {
@@ -18,6 +19,7 @@ export default function DCardFooter(
         'card-footer',
         className,
       )}
+      style={style}
     >
       {children}
     </div>

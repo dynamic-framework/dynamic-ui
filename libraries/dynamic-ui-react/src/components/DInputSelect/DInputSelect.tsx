@@ -10,7 +10,12 @@ import type {
 import DIcon from '../DIcon';
 import { PREFIX_BS } from '../config';
 
-import type { EndIconProps, LabelIconProps, StartIconProps } from '../interface';
+import type {
+  BaseProps,
+  EndIconProps,
+  LabelIconProps,
+  StartIconProps,
+} from '../interface';
 
 export type DefaultOption = {
   value: string | number;
@@ -18,6 +23,7 @@ export type DefaultOption = {
 };
 
 export type Props<T> =
+& BaseProps
 & LabelIconProps
 & StartIconProps
 & EndIconProps
@@ -25,7 +31,6 @@ export type Props<T> =
   id: string;
   name?: string;
   label?: string;
-  className?: string;
   isDisabled?: boolean;
   isLoading?: boolean;
   hint?: string;
@@ -45,6 +50,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     name,
     label = '',
     className,
+    style,
     options,
     labelIcon,
     labelIconFamilyClass,
@@ -110,7 +116,10 @@ export default function DInputSelect<T extends object = DefaultOption>(
   }, [onIconEndClick]);
 
   return (
-    <div className={classNames('d-input', className)}>
+    <div
+      className={classNames('d-input', className)}
+      style={style}
+    >
       {label && (
         <label htmlFor={id}>
           {label}

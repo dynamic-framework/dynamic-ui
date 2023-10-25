@@ -1,14 +1,17 @@
 import { useCallback } from 'react';
 import { getMonth, getYear } from 'date-fns';
+import classNames from 'classnames';
 
 import type { ComponentProps } from 'react';
 
 import DButton from '../DButton';
 import DMonthPicker from '../DMonthPicker';
 
-import type { ButtonVariant, ComponentSize } from '../interface';
+import type { BaseProps, ButtonVariant, ComponentSize } from '../interface';
 
-type Props = {
+type Props =
+& BaseProps
+& {
   locale?: Locale;
   monthDate: Date;
   decreaseMonth: () => void;
@@ -45,6 +48,8 @@ export default function DDatePickerHeader(
     buttonVariant,
     buttonTheme,
     locale,
+    style,
+    className,
   }: Props,
 ) {
   const onChangeDate = useCallback((value: Date | null) => {
@@ -55,7 +60,13 @@ export default function DDatePickerHeader(
   }, [changeMonth, changeYear]);
 
   return (
-    <div className="d-flex align-items-center justify-content-between d-datepicker-header">
+    <div
+      className={classNames(
+        'd-flex align-items-center justify-content-between d-datepicker-header',
+        className,
+      )}
+      style={style}
+    >
       <DButton
         iconStart={decreaseMonthIcon}
         size={iconSize}

@@ -1,15 +1,15 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
 
-import type { CSSProperties } from 'react';
+import type { BaseProps } from '../interface';
 
-type Props = {
+type Props =
+& BaseProps
+& {
   text?: string;
   isDot?: boolean;
   theme?: string;
   id?: string;
-  className?: string;
-  style?: CSSProperties;
 };
 
 export default function DBadge(

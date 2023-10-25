@@ -3,9 +3,12 @@ import classNames from 'classnames';
 
 import DIcon from '../DIcon';
 
-import type { FamilyIconProps } from '../interface';
+import type { BaseProps, FamilyIconProps } from '../interface';
 
-type Props = FamilyIconProps & {
+type Props =
+& BaseProps
+& FamilyIconProps
+& {
   theme?: string;
   text?: string;
   icon?: string;
@@ -21,6 +24,8 @@ export default function DChip(
     iconFamilyClass,
     iconFamilyPrefix,
     showClose = false,
+    className,
+    style,
     onClose,
   }: Props,
 ) {
@@ -33,7 +38,10 @@ export default function DChip(
   );
 
   return (
-    <span className={classNames(generateClasses)}>
+    <span
+      className={classNames(generateClasses, className)}
+      style={style}
+    >
       {icon && (
         <div className="d-chip-icon-container">
           <DIcon
