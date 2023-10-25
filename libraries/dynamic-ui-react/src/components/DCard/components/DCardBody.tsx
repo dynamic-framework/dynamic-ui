@@ -2,13 +2,14 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-type Props = PropsWithChildren<{
-  className?: string;
-}>;
+import type { BaseProps } from '../../interface';
+
+type Props = PropsWithChildren<BaseProps>;
 
 export default function DCardBody(
   {
     className,
+    style,
     children,
   }: Props,
 ) {
@@ -18,6 +19,7 @@ export default function DCardBody(
         'card-body',
         className,
       )}
+      style={style}
     >
       {children}
     </div>

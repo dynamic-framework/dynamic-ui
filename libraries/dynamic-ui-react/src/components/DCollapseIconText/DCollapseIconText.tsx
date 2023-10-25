@@ -1,11 +1,16 @@
+import classNames from 'classnames';
+
 import type { PropsWithChildren } from 'react';
 
 import DCollapse from '../DCollapse';
 import DIcon from '../DIcon';
 
-import type { FamilyIcon } from '../interface';
+import type { BaseProps, FamilyIconProps } from '../interface';
 
-type Props = FamilyIcon & PropsWithChildren<{
+type Props =
+& BaseProps
+& FamilyIconProps
+& PropsWithChildren<{
   /**
    * Icon name
    */
@@ -33,12 +38,15 @@ export default function DCollapseIconText(
     title,
     iconFamilyClass,
     iconFamilyPrefix,
+    className,
+    style,
   }: Props,
 ) {
   return (
     <DCollapse
       defaultCollapsed
-      className="d-collapse-icon-text"
+      className={classNames('d-collapse-icon-text', className)}
+      style={style}
       Component={(
         <div className="d-collapse-icon-text-header">
           <DIcon

@@ -4,8 +4,11 @@ import DCard from '../DCard';
 import DIcon from '../DIcon';
 import DButton from '../DButton';
 
-type Props = {
-  className?: string;
+import type { BaseProps } from '../interface';
+
+type Props =
+& BaseProps
+& {
   icon: string;
   theme: string;
   name: string;
@@ -19,6 +22,7 @@ type Props = {
 export default function DCardAccount(
   {
     className,
+    style,
     icon,
     theme,
     name,
@@ -30,10 +34,12 @@ export default function DCardAccount(
   }: Props,
 ) {
   return (
-    <DCard className={classNames(
-      'd-card-account',
-      className,
-    )}
+    <DCard
+      className={classNames(
+        'd-card-account',
+        className,
+      )}
+      style={style}
     >
       <DCard.Body>
         <div className="d-flex gap-3 align-items-center">

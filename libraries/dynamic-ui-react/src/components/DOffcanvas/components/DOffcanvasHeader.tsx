@@ -1,8 +1,11 @@
 import type { PropsWithChildren } from 'react';
 
+import classNames from 'classnames';
 import DIcon from '../../DIcon';
 
-type Props = PropsWithChildren<{
+import type { BaseProps } from '../../interface';
+
+type Props = BaseProps & PropsWithChildren<{
   showCloseButton?: boolean;
   onClose?: () => void;
 }>;
@@ -12,11 +15,14 @@ export default function DOffcanvasHeader(
     showCloseButton,
     onClose,
     children,
+    className,
+    style,
   }: Props,
 ) {
   return (
     <div
-      className="offcanvas-header"
+      className={classNames('offcanvas-header', className)}
+      style={style}
     >
       <div className="d-offcanvas-slot">
         {children}

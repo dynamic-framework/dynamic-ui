@@ -6,7 +6,6 @@ import classNames from 'classnames';
 
 import type {
   RefObject,
-  CSSProperties,
   ForwardedRef,
   ReactNode,
   ComponentPropsWithoutRef,
@@ -17,21 +16,22 @@ import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
 import type {
-  EndIcon,
-  FamilyIcon,
-  LabelIcon,
-  StartIcon,
+  BaseProps,
+  EndIconProps,
+  FamilyIconProps,
+  LabelIconProps,
+  StartIconProps,
 } from '../interface';
 import type { Merge } from '../../types';
 
 type NonHTMLInputElementProps =
-& FamilyIcon
-& LabelIcon
-& StartIcon
-& EndIcon
+& BaseProps
+& FamilyIconProps
+& LabelIconProps
+& StartIconProps
+& EndIconProps
 & {
   value?: string;
-  style?: CSSProperties;
   label?: string;
   loading?: boolean;
   hint?: string;

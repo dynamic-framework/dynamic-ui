@@ -18,14 +18,17 @@ import DIcon from '../DIcon';
 import { PREFIX_BS } from '../config';
 
 import type {
-  FamilyIcon,
-  LabelIcon,
+  BaseProps,
+  FamilyIconProps,
+  LabelIconProps,
   PinInputMode,
   PinInputType,
 } from '../interface';
 
-type Props = LabelIcon
-& FamilyIcon
+type Props =
+& BaseProps
+& LabelIconProps
+& FamilyIconProps
 & {
   id: string;
   label?: string;
@@ -62,6 +65,8 @@ export default function DInputPin(
     hint,
     isInvalid = false,
     isValid = false,
+    className,
+    style,
     onChange,
   }: Props,
 ) {
@@ -121,7 +126,10 @@ export default function DInputPin(
   }, []);
 
   return (
-    <div className="d-input-pin">
+    <div
+      className={classNames('d-input-pin', className)}
+      style={style}
+    >
       {label && (
         <label htmlFor="pinIndex0">
           {label}

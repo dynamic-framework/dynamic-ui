@@ -1,7 +1,7 @@
 import DStepperDesktop from '../DStepperDesktop';
 import DStepperMobile from '../DStepperMobile';
 
-import type { BreakpointSize } from '../interface';
+import type { BaseProps, BreakpointSize } from '../interface';
 
 export type Step = {
   label: string;
@@ -9,7 +9,7 @@ export type Step = {
   description?: string;
 };
 
-type Props = {
+type Props = BaseProps & {
   options: Array<Step>;
   currentStep: number;
   successIcon?: string;
@@ -24,10 +24,15 @@ export default function DStepper(
     successIcon = 'check',
     isVertical = false,
     breakpoint = 'lg',
+    className,
+    style,
   } : Props,
 ) {
   return (
-    <>
+    <div
+      className={className}
+      style={style}
+    >
       <div className={`d-block d-${breakpoint}-none`}>
         <DStepperMobile
           options={options}
@@ -42,6 +47,6 @@ export default function DStepper(
           isVertical={isVertical}
         />
       </div>
-    </>
+    </div>
   );
 }

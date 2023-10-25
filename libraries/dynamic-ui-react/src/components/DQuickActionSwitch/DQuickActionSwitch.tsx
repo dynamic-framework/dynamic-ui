@@ -5,12 +5,13 @@ import type { MouseEvent } from 'react';
 
 import DInputSwitch from '../DInputSwitch';
 
-type Props = {
+import type { BaseProps } from '../interface';
+
+type Props = BaseProps & {
   id: string;
   name?: string;
   label: string;
   hint: string;
-  className?: string;
   isChecked?: boolean;
   isDisabled?: boolean;
   onClick?: (isChecked: boolean | undefined) => void;
@@ -22,9 +23,10 @@ export default function DQuickActionSwitch(
     name,
     label,
     hint,
-    className,
     isChecked,
     isDisabled,
+    className,
+    style,
     onClick,
   }: Props,
 ) {
@@ -38,6 +40,7 @@ export default function DQuickActionSwitch(
       className={classNames('d-quick-action-switch', className)}
       type="button"
       onClick={clickHandler}
+      style={style}
     >
       <div className="d-quick-action-switch-content">
         <DInputSwitch

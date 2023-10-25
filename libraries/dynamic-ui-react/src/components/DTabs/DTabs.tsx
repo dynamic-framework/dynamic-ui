@@ -11,17 +11,18 @@ import type { PropsWithChildren } from 'react';
 import TabContext from './TabContext';
 import DTabContent from './components/DTabContent';
 
+import type { BaseProps } from '../interface';
+
 export type DTabOption = {
   label: string;
   tab: string;
   isDisabled?: boolean;
 };
 
-type Props = PropsWithChildren<{
+type Props = BaseProps & PropsWithChildren<{
   onChange: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
-  className?: string;
   isVertical?: boolean;
 }>;
 
@@ -32,6 +33,7 @@ function DTabs(
     onChange,
     options,
     className,
+    style,
     isVertical,
   }: Props,
 ) {
@@ -62,7 +64,8 @@ function DTabs(
         className={classnames({
           'd-tabs': true,
           'd-tabs-vertical': isVertical,
-        })}
+        }, className)}
+        style={style}
       >
         <nav className="nav">
           {options.map((option) => (

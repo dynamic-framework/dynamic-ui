@@ -3,8 +3,9 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-type Props = PropsWithChildren<{
-  className?: string;
+import type { BaseProps } from '../../interface';
+
+type Props = BaseProps & PropsWithChildren<{
   isActive?: boolean;
   isDisabled?: boolean;
   theme?: string;
@@ -15,6 +16,7 @@ export default function DListItem(
   {
     children,
     className,
+    style,
     isActive = false,
     isDisabled = false,
     theme,
@@ -43,6 +45,7 @@ export default function DListItem(
           },
         )
       }
+      style={style}
       {...isActive && { 'aria-current': true }}
     >
       {children}

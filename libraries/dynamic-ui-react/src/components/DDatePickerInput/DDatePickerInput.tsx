@@ -4,7 +4,11 @@ import type { ComponentProps, Ref } from 'react';
 
 import DInput from '../DInput';
 
-type Props = {
+import type { BaseProps } from '../interface';
+
+type Props =
+& BaseProps
+& {
   value?: string;
   onClick?: () => void;
 } & Omit<ComponentProps<typeof DInput>,
@@ -20,6 +24,8 @@ function DDatePickerInput(
     onClick,
     id,
     iconEnd,
+    className,
+    style,
     ...props
   }: Props,
   ref: Ref<unknown>,
@@ -39,6 +45,8 @@ function DDatePickerInput(
         value={value}
         onIconEndClick={onClick}
         iconEnd={iconEnd}
+        className={className}
+        style={style}
         {...props}
       />
     </div>
