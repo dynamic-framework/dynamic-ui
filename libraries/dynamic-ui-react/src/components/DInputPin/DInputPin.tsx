@@ -18,14 +18,14 @@ import DIcon from '../DIcon';
 import { PREFIX_BS } from '../config';
 
 import type {
-  FamilyIcon,
-  LabelIcon,
+  FamilyIconProps,
+  LabelIconProps,
   PinInputMode,
   PinInputType,
 } from '../interface';
 
-type Props = LabelIcon
-& FamilyIcon
+type Props = LabelIconProps
+& FamilyIconProps
 & {
   id: string;
   label?: string;

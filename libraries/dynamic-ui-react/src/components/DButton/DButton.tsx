@@ -13,12 +13,12 @@ import type {
   ClassMap,
   ComponentSize,
   CustomStyles,
-  EndIcon,
+  EndIconProps,
   InputState,
-  StartIcon,
+  StartIconProps,
 } from '../interface';
 
-type Props = StartIcon & EndIcon & {
+type Props = StartIconProps & EndIconProps & {
   id?: string;
   className?: string;
   style?: CSSProperties;

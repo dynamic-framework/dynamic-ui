@@ -3,9 +3,9 @@ import classNames from 'classnames';
 
 import DIcon from '../DIcon';
 
-import type { FamilyIcon } from '../interface';
+import type { FamilyIconProps } from '../interface';
 
-type Props = FamilyIcon & {
+type Props = FamilyIconProps & {
   theme?: string;
   text?: string;
   icon?: string;

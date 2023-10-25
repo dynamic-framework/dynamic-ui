@@ -17,18 +17,18 @@ import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
 import type {
-  EndIcon,
-  FamilyIcon,
-  LabelIcon,
-  StartIcon,
+  EndIconProps,
+  FamilyIconProps,
+  LabelIconProps,
+  StartIconProps,
 } from '../interface';
 import type { Merge } from '../../types';
 
 type NonHTMLInputElementProps =
-& FamilyIcon
-& LabelIcon
-& StartIcon
-& EndIcon
+& FamilyIconProps
+& LabelIconProps
+& StartIconProps
+& EndIconProps
 & {
   value?: string;
   style?: CSSProperties;

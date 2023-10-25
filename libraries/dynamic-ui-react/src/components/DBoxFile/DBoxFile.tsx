@@ -6,9 +6,9 @@ import type { DropzoneOptions } from 'react-dropzone';
 
 import DIcon from '../DIcon';
 
-import type { FamilyIcon } from '../interface';
+import type { FamilyIconProps } from '../interface';
 
-type Props = FamilyIcon & PropsWithChildren<
+type Props = FamilyIconProps & PropsWithChildren<
 Pick<
 DropzoneOptions,
 | 'accept'

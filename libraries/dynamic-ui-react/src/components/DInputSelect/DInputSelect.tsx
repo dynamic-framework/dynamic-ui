@@ -10,7 +10,7 @@ import type {
 import DIcon from '../DIcon';
 import { PREFIX_BS } from '../config';
 
-import type { EndIcon, LabelIcon, StartIcon } from '../interface';
+import type { EndIconProps, LabelIconProps, StartIconProps } from '../interface';
 
 export type DefaultOption = {
   value: string | number;
@@ -18,9 +18,9 @@ export type DefaultOption = {
 };
 
 export type Props<T> =
-& LabelIcon
-& StartIcon
-& EndIcon
+& LabelIconProps
+& StartIconProps
+& EndIconProps
 & {
   id: string;
   name?: string;

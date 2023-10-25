@@ -3,9 +3,9 @@ import type { PropsWithChildren } from 'react';
 import DCollapse from '../DCollapse';
 import DIcon from '../DIcon';
 
-import type { FamilyIcon } from '../interface';
+import type { FamilyIconProps } from '../interface';
 
-type Props = FamilyIcon & PropsWithChildren<{
+type Props = FamilyIconProps & PropsWithChildren<{
   /**
    * Icon name
    */
