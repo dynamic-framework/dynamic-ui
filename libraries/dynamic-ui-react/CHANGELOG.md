@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.8.0...@dynamic-framework/ui-react@1.8.1) (2023-10-26)
+
+
+### Bug Fixes
+
+* d-input change event value ([72b3e13](https://github.com/dynamic-framework/dynamic-ui/commit/72b3e1336515b22ef918ec96852bb29e41eaa12c))
+
+
+
 ## [1.8.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.7.3...@dynamic-framework/ui-react@1.8.0) (2023-10-25)
 
 
