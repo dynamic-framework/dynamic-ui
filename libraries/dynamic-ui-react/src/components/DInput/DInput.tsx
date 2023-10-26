@@ -9,6 +9,7 @@ import type {
   ForwardedRef,
   ReactNode,
   ComponentPropsWithoutRef,
+  ChangeEvent,
 } from 'react';
 
 import { PREFIX_BS } from '../config';
@@ -79,9 +80,9 @@ function DInput(
 ) {
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
 
-  const handleOnChange = useCallback(() => {
-    onChange?.(value);
-  }, [onChange, value]);
+  const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(event.currentTarget.value);
+  }, [onChange]);
 
   const handleOnIconStartClick = useCallback(() => {
     onIconStartClick?.(value);
