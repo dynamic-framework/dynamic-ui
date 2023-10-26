@@ -508,9 +508,9 @@ function useProvidedRefOrCreate(providedRef) {
 function DInput(_a, ref) {
     var { id, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, readOnly = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, hint, invalid = false, valid = false, inputStart, value, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = __rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "disabled", "readOnly", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "hint", "invalid", "valid", "inputStart", "value", "onChange", "onIconStartClick", "onIconEndClick"]);
     const inputRef = useProvidedRefOrCreate(ref);
-    const handleOnChange = useCallback(() => {
-        onChange === null || onChange === void 0 ? void 0 : onChange(value);
-    }, [onChange, value]);
+    const handleOnChange = useCallback((event) => {
+        onChange === null || onChange === void 0 ? void 0 : onChange(event.currentTarget.value);
+    }, [onChange]);
     const handleOnIconStartClick = useCallback(() => {
         onIconStartClick === null || onIconStartClick === void 0 ? void 0 : onIconStartClick(value);
     }, [onIconStartClick, value]);
