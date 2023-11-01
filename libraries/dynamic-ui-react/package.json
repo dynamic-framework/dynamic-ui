@@ -1,6 +1,6 @@
 {
   "name": "@dynamic-framework/ui-react",
-  "sideEffects": false,
+  "sideEffects": ["*.css"],
   "version": "1.8.0",
   "description": "React Dynamic Framework",
   "license": "MIT",

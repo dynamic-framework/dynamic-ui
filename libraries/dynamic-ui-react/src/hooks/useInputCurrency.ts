@@ -19,6 +19,14 @@ import { PREFIX_BS } from '../components/config';
 
 import type { CustomStyles } from '../components/interface';
 
+function formatValue(value: number | undefined, currencyOptions: Options) {
+  if (value === undefined) {
+    return '';
+  }
+
+  return currency(value, { ...currencyOptions, symbol: '' }).format();
+}
+
 export default function useInputCurrency(
   currencyOptions: Options,
   value?: number,
@@ -29,40 +37,23 @@ export default function useInputCurrency(
 ) {
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
 
-  const valueFormatted = useMemo(() => {
-    if (value === undefined) {
-      return '';
-    }
-    return currency(value, { ...currencyOptions, symbol: '' }).format();
-  }, [currencyOptions, value]);
-
-  const [innerValue, setInnerValue] = useState<string | undefined>(valueFormatted);
   const [innerType, setInnerType] = useState('text');
+  const [innerNumber, setInnerNumber] = useState<number | undefined>(value);
+  const [innerString, setInnerString] = useState<string | undefined>(
+    formatValue(value, currencyOptions),
+  );
 
   const handleOnFocus = useCallback((event: FocusEvent<HTMLInputElement>) => {
     event.stopPropagation();
-    if (inputRef.current) {
-      if (event.currentTarget.value) {
-        const currencyValue = currency(event.currentTarget.value, { ...currencyOptions, symbol: '' });
-        setInnerValue((currencyValue.intValue / 100).toString());
-      }
-
-      setInnerType('number');
-    }
+    setInnerType('number');
     onFocus?.(event);
-  }, [currencyOptions, inputRef, onFocus]);
+  }, [onFocus]);
 
   const handleOnBlur = useCallback((event: FocusEvent<HTMLInputElement>) => {
     event.stopPropagation();
-    if (inputRef.current) {
-      setInnerType('text');
-
-      if (event.currentTarget.value) {
-        setInnerValue(currency(event.currentTarget.value, { ...currencyOptions, symbol: '' }).format());
-      }
-    }
+    setInnerType('text');
     onBlur?.(event);
-  }, [currencyOptions, inputRef, onBlur]);
+  }, [onBlur]);
 
   const handleOnWheel = useCallback((event: WheelEvent<HTMLInputElement>) => {
     event.stopPropagation();
@@ -79,13 +70,32 @@ export default function useInputCurrency(
   }), []);
 
   const handleOnChange = useCallback((newValue?: string) => {
-    setInnerValue(newValue);
-    onChange?.(newValue !== undefined ? Number(newValue) : undefined);
-  }, [onChange]);
+    console.log('handleOnChange ', newValue);
+    const newNumber = (newValue === undefined || newValue === '')
+      ? undefined
+      : Number(newValue);
+    setInnerNumber(newNumber);
+    setInnerString(formatValue(newNumber, currencyOptions));
+  }, [currencyOptions]);
 
   useEffect(() => {
-    setInnerValue(valueFormatted);
-  }, [valueFormatted]);
+    onChange?.(innerNumber);
+  }, [onChange, innerNumber]);
+
+  useEffect(() => {
+    setInnerNumber(value);
+  }, [value]);
+
+  const innerValue = useMemo<string>(() => {
+    if (value === undefined || value.toString() === '') {
+      return '';
+    }
+    const valueToUse = innerType === 'number'
+      ? innerNumber?.toString()
+      : innerString;
+
+    return valueToUse ?? '';
+  }, [value, innerType, innerNumber, innerString]);
 
   return {
     inputRef,

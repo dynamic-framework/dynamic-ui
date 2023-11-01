@@ -55,6 +55,7 @@ function DInputCurrency(
     ref,
   );
 
+  console.log(innerValue);
   return (
     <DInput
       ref={inputRef}
