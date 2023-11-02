@@ -956,7 +956,7 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
             setEventIsOpen(value);
         }
     }, [setEventIsOpen]);
-    const { refs, floatingStyles: floatingStylesBase, context, } = useFloating({
+    const { refs, floatingStyles, context, } = useFloating({
         open: innerIsOpen,
         onOpenChange,
         middleware: [
@@ -975,10 +975,10 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
         role,
     ]);
     const headingId = useId();
-    const floatingStyles = useMemo(() => (Object.assign(Object.assign({}, floatingStylesBase), adjustContentToRender && {
+    const generateStyleVariables = useMemo(() => (Object.assign(Object.assign({}, style), adjustContentToRender && {
         [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
-    })), [floatingStylesBase, adjustContentToRender]);
-    return (jsxs("div", { className: classNames('d-popover', className), style: style, children: [jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsx(FloatingFocusManager, { context: context, modal: false, children: jsx("div", Object.assign({ className: classNames('d-popover-content', {
+    })), [style, adjustContentToRender]);
+    return (jsxs("div", { className: classNames('d-popover', className), style: generateStyleVariables, children: [jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsx(FloatingFocusManager, { context: context, modal: false, children: jsx("div", Object.assign({ className: classNames('d-popover-content', {
                         'w-100': adjustContentToRender,
                     }), ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) }))] }));
 }

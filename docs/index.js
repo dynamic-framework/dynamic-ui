@@ -958,7 +958,7 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
             setEventIsOpen(value);
         }
     }, [setEventIsOpen]);
-    const { refs, floatingStyles: floatingStylesBase, context, } = react.useFloating({
+    const { refs, floatingStyles, context, } = react.useFloating({
         open: innerIsOpen,
         onOpenChange,
         middleware: [
@@ -977,10 +977,10 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
         role,
     ]);
     const headingId = react.useId();
-    const floatingStyles = React.useMemo(() => (Object.assign(Object.assign({}, floatingStylesBase), adjustContentToRender && {
+    const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign({}, style), adjustContentToRender && {
         [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
-    })), [floatingStylesBase, adjustContentToRender]);
-    return (jsxRuntime.jsxs("div", { className: classNames('d-popover', className), style: style, children: [jsxRuntime.jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsxRuntime.jsx(react.FloatingFocusManager, { context: context, modal: false, children: jsxRuntime.jsx("div", Object.assign({ className: classNames('d-popover-content', {
+    })), [style, adjustContentToRender]);
+    return (jsxRuntime.jsxs("div", { className: classNames('d-popover', className), style: generateStyleVariables, children: [jsxRuntime.jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsxRuntime.jsx(react.FloatingFocusManager, { context: context, modal: false, children: jsxRuntime.jsx("div", Object.assign({ className: classNames('d-popover-content', {
                         'w-100': adjustContentToRender,
                     }), ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) }))] }));
 }
