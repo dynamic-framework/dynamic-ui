@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.8.1...@dynamic-framework/ui-react@1.9.0) (2023-11-02)
+
+
+### Features
+
+* adjust DPopover content on small viewport size ([4ad6e8e](https://github.com/dynamic-framework/dynamic-ui/commit/4ad6e8eee02046ecd99a9467f8dac7f908277ab8))
+
+
+### Bug Fixes
+
+* change border value when input has value ([1efa73e](https://github.com/dynamic-framework/dynamic-ui/commit/1efa73eb949d03b5f6ba62c21e6f187914cc475d))
+* d-input currency on change behavior ([6facb6e](https://github.com/dynamic-framework/dynamic-ui/commit/6facb6eccce25dd722e0914489251be606efed56))
+* DAlert classname ([e40a4f7](https://github.com/dynamic-framework/dynamic-ui/commit/e40a4f73ddc606a3f97427c153d5740a429c26a5))
+* use the same root var to the border radios of arrow and pages in DPaginator ([6114578](https://github.com/dynamic-framework/dynamic-ui/commit/6114578e3de5aff50c42b21c526865eab87c99da))
+
+
+
 ## [1.8.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.8.0...@dynamic-framework/ui-react@1.8.1) (2023-10-26)
 
 
