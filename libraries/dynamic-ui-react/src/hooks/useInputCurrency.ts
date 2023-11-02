@@ -70,7 +70,6 @@ export default function useInputCurrency(
   }), []);
 
   const handleOnChange = useCallback((newValue?: string) => {
-    console.log('handleOnChange ', newValue);
     const newNumber = (newValue === undefined || newValue === '')
       ? undefined
       : Number(newValue);
