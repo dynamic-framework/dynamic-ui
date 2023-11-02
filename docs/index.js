@@ -95,12 +95,7 @@ function DSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, 
 }
 
 function DAlert({ type = 'light', icon, iconFamilyClass, iconFamilyPrefix, showIcon = false, showClose, onClose, children, id, className, style, }) {
-    const generateClasses = React.useMemo(() => ({
-        alert: true,
-        [`alert-${type}`]: true,
-        'fade show': !!showClose,
-        className: !!className,
-    }), [type, showClose, className]);
+    const generateClasses = React.useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose }, className && { [className]: true })), [type, showClose, className]);
     const getIcon = React.useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);
     const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3' }), type === 'light' && {
         [`--${PREFIX_BS}alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)`,
@@ -613,37 +608,27 @@ const ForwardedDInputCounter = React.forwardRef(DInputCounter);
 ForwardedDInputCounter.displayName = 'DInputCounter';
 var DInputCounter$1 = ForwardedDInputCounter;
 
+function formatValue(value, currencyOptions) {
+    if (value === undefined) {
+        return '';
+    }
+    return currency(value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' })).format();
+}
 function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref) {
     const inputRef = useProvidedRefOrCreate(ref);
-    const valueFormatted = React.useMemo(() => {
-        if (value === undefined) {
-            return '';
-        }
-        return currency(value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' })).format();
-    }, [currencyOptions, value]);
-    const [innerValue, setInnerValue] = React.useState(valueFormatted);
     const [innerType, setInnerType] = React.useState('text');
+    const [innerNumber, setInnerNumber] = React.useState(value);
+    const [innerString, setInnerString] = React.useState(formatValue(value, currencyOptions));
     const handleOnFocus = React.useCallback((event) => {
         event.stopPropagation();
-        if (inputRef.current) {
-            if (event.currentTarget.value) {
-                const currencyValue = currency(event.currentTarget.value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' }));
-                setInnerValue((currencyValue.intValue / 100).toString());
-            }
-            setInnerType('number');
-        }
+        setInnerType('number');
         onFocus === null || onFocus === void 0 ? void 0 : onFocus(event);
-    }, [currencyOptions, inputRef, onFocus]);
+    }, [onFocus]);
     const handleOnBlur = React.useCallback((event) => {
         event.stopPropagation();
-        if (inputRef.current) {
-            setInnerType('text');
-            if (event.currentTarget.value) {
-                setInnerValue(currency(event.currentTarget.value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' })).format());
-            }
-        }
+        setInnerType('text');
         onBlur === null || onBlur === void 0 ? void 0 : onBlur(event);
-    }, [currencyOptions, inputRef, onBlur]);
+    }, [onBlur]);
     const handleOnWheel = React.useCallback((event) => {
         var _a;
         event.stopPropagation();
@@ -657,12 +642,27 @@ function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref
         color: `var(--${PREFIX_BS}m-input-currency-symbol-color)`,
     }), []);
     const handleOnChange = React.useCallback((newValue) => {
-        setInnerValue(newValue);
-        onChange === null || onChange === void 0 ? void 0 : onChange(newValue !== undefined ? Number(newValue) : undefined);
-    }, [onChange]);
+        const newNumber = (newValue === undefined || newValue === '')
+            ? undefined
+            : Number(newValue);
+        setInnerNumber(newNumber);
+        setInnerString(formatValue(newNumber, currencyOptions));
+    }, [currencyOptions]);
     React.useEffect(() => {
-        setInnerValue(valueFormatted);
-    }, [valueFormatted]);
+        onChange === null || onChange === void 0 ? void 0 : onChange(innerNumber);
+    }, [onChange, innerNumber]);
+    React.useEffect(() => {
+        setInnerNumber(value);
+    }, [value]);
+    const innerValue = React.useMemo(() => {
+        if (value === undefined || value.toString() === '') {
+            return '';
+        }
+        const valueToUse = innerType === 'number'
+            ? innerNumber === null || innerNumber === void 0 ? void 0 : innerNumber.toString()
+            : innerString;
+        return valueToUse !== null && valueToUse !== void 0 ? valueToUse : '';
+    }, [value, innerType, innerNumber, innerString]);
     return {
         inputRef,
         innerValue,
@@ -958,7 +958,7 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
             setEventIsOpen(value);
         }
     }, [setEventIsOpen]);
-    const { refs, floatingStyles, context } = react.useFloating({
+    const { refs, floatingStyles: floatingStylesBase, context, } = react.useFloating({
         open: innerIsOpen,
         onOpenChange,
         middleware: [
@@ -977,6 +977,9 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
         role,
     ]);
     const headingId = react.useId();
+    const floatingStyles = React.useMemo(() => (Object.assign(Object.assign({}, floatingStylesBase), adjustContentToRender && {
+        [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
+    })), [floatingStylesBase, adjustContentToRender]);
     return (jsxRuntime.jsxs("div", { className: classNames('d-popover', className), style: style, children: [jsxRuntime.jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsxRuntime.jsx(react.FloatingFocusManager, { context: context, modal: false, children: jsxRuntime.jsx("div", Object.assign({ className: classNames('d-popover-content', {
                         'w-100': adjustContentToRender,
                     }), ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) }))] }));

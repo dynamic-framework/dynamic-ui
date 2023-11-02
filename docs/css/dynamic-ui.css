@@ -7400,6 +7400,12 @@ textarea.form-control-lg {
   border: var(--bs-input-group-border-width) solid var(--bs-input-group-border-color);
   border-radius: var(--bs-input-group-border-radius);
 }
+.d-input:has(.form-control:not(:-moz-placeholder-shown, :focus)) .input-group {
+  border-color: var(--bs-input-group-hover-border-color);
+}
+.d-input:has(.form-control:not(:placeholder-shown, :focus)) .input-group {
+  border-color: var(--bs-input-group-hover-border-color);
+}
 .d-input:has(.form-control.is-valid) .input-group {
   border-color: var(--bs-form-valid-border-color);
 }
@@ -9997,7 +10003,7 @@ label {
 }
 
 .d-popover {
-  --bs-popover-min-width: max-content;
+  --bs-popover-min-width: var(--bs-popover-component-min-width, max-content);
   --bs-popover-z-index: 1;
   position: relative;
   width: 100%;
@@ -10654,7 +10660,7 @@ label {
 .pagination {
   --bs-pagination-page-item-size: 2.125rem;
   --bs-pagination-page-link-bg: transparent;
-  --bs-pagination-page-border-radius: 50%;
+  --bs-pagination-page-border-radius: var(--bs-border-radius);
   --bs-pagination-arrow-font-size: var(--bs-ref-fs-small);
   --bs-pagination-arrow-padding-y: var(--bs-ref-spacer-1);
   --bs-pagination-arrow-padding-x: var(--bs-ref-spacer-2);

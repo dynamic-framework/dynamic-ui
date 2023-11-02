@@ -93,12 +93,7 @@ function DSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, 
 }
 
 function DAlert({ type = 'light', icon, iconFamilyClass, iconFamilyPrefix, showIcon = false, showClose, onClose, children, id, className, style, }) {
-    const generateClasses = useMemo(() => ({
-        alert: true,
-        [`alert-${type}`]: true,
-        'fade show': !!showClose,
-        className: !!className,
-    }), [type, showClose, className]);
+    const generateClasses = useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose }, className && { [className]: true })), [type, showClose, className]);
     const getIcon = useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);
     const generateStyleVariables = useMemo(() => (Object.assign(Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3' }), type === 'light' && {
         [`--${PREFIX_BS}alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)`,
@@ -611,37 +606,27 @@ const ForwardedDInputCounter = forwardRef(DInputCounter);
 ForwardedDInputCounter.displayName = 'DInputCounter';
 var DInputCounter$1 = ForwardedDInputCounter;
 
+function formatValue(value, currencyOptions) {
+    if (value === undefined) {
+        return '';
+    }
+    return currency(value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' })).format();
+}
 function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref) {
     const inputRef = useProvidedRefOrCreate(ref);
-    const valueFormatted = useMemo(() => {
-        if (value === undefined) {
-            return '';
-        }
-        return currency(value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' })).format();
-    }, [currencyOptions, value]);
-    const [innerValue, setInnerValue] = useState(valueFormatted);
     const [innerType, setInnerType] = useState('text');
+    const [innerNumber, setInnerNumber] = useState(value);
+    const [innerString, setInnerString] = useState(formatValue(value, currencyOptions));
     const handleOnFocus = useCallback((event) => {
         event.stopPropagation();
-        if (inputRef.current) {
-            if (event.currentTarget.value) {
-                const currencyValue = currency(event.currentTarget.value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' }));
-                setInnerValue((currencyValue.intValue / 100).toString());
-            }
-            setInnerType('number');
-        }
+        setInnerType('number');
         onFocus === null || onFocus === void 0 ? void 0 : onFocus(event);
-    }, [currencyOptions, inputRef, onFocus]);
+    }, [onFocus]);
     const handleOnBlur = useCallback((event) => {
         event.stopPropagation();
-        if (inputRef.current) {
-            setInnerType('text');
-            if (event.currentTarget.value) {
-                setInnerValue(currency(event.currentTarget.value, Object.assign(Object.assign({}, currencyOptions), { symbol: '' })).format());
-            }
-        }
+        setInnerType('text');
         onBlur === null || onBlur === void 0 ? void 0 : onBlur(event);
-    }, [currencyOptions, inputRef, onBlur]);
+    }, [onBlur]);
     const handleOnWheel = useCallback((event) => {
         var _a;
         event.stopPropagation();
@@ -655,12 +640,27 @@ function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref
         color: `var(--${PREFIX_BS}m-input-currency-symbol-color)`,
     }), []);
     const handleOnChange = useCallback((newValue) => {
-        setInnerValue(newValue);
-        onChange === null || onChange === void 0 ? void 0 : onChange(newValue !== undefined ? Number(newValue) : undefined);
-    }, [onChange]);
+        const newNumber = (newValue === undefined || newValue === '')
+            ? undefined
+            : Number(newValue);
+        setInnerNumber(newNumber);
+        setInnerString(formatValue(newNumber, currencyOptions));
+    }, [currencyOptions]);
     useEffect(() => {
-        setInnerValue(valueFormatted);
-    }, [valueFormatted]);
+        onChange === null || onChange === void 0 ? void 0 : onChange(innerNumber);
+    }, [onChange, innerNumber]);
+    useEffect(() => {
+        setInnerNumber(value);
+    }, [value]);
+    const innerValue = useMemo(() => {
+        if (value === undefined || value.toString() === '') {
+            return '';
+        }
+        const valueToUse = innerType === 'number'
+            ? innerNumber === null || innerNumber === void 0 ? void 0 : innerNumber.toString()
+            : innerString;
+        return valueToUse !== null && valueToUse !== void 0 ? valueToUse : '';
+    }, [value, innerType, innerNumber, innerString]);
     return {
         inputRef,
         innerValue,
@@ -956,7 +956,7 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
             setEventIsOpen(value);
         }
     }, [setEventIsOpen]);
-    const { refs, floatingStyles, context } = useFloating({
+    const { refs, floatingStyles: floatingStylesBase, context, } = useFloating({
         open: innerIsOpen,
         onOpenChange,
         middleware: [
@@ -975,6 +975,9 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
         role,
     ]);
     const headingId = useId();
+    const floatingStyles = useMemo(() => (Object.assign(Object.assign({}, floatingStylesBase), adjustContentToRender && {
+        [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
+    })), [floatingStylesBase, adjustContentToRender]);
     return (jsxs("div", { className: classNames('d-popover', className), style: style, children: [jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsx(FloatingFocusManager, { context: context, modal: false, children: jsx("div", Object.assign({ className: classNames('d-popover-content', {
                         'w-100': adjustContentToRender,
                     }), ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) }))] }));
