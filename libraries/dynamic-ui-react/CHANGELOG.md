@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.9.0...@dynamic-framework/ui-react@1.9.1) (2023-11-02)
+
+
+### Bug Fixes
+
+* adjust DPopover min with content ([0a87526](https://github.com/dynamic-framework/dynamic-ui/commit/0a875269646b44b894692ff088f1507237042866))
+
+
+
 ## [1.9.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.8.1...@dynamic-framework/ui-react@1.9.0) (2023-11-02)
 
 
