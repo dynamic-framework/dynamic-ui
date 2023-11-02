@@ -53,7 +53,7 @@ export default function DPopover(
 
   const {
     refs,
-    floatingStyles: floatingStylesBase,
+    floatingStyles,
     context,
   } = useFloating({
     open: innerIsOpen,
@@ -78,17 +78,17 @@ export default function DPopover(
 
   const headingId = useId();
 
-  const floatingStyles = useMemo(() => ({
-    ...floatingStylesBase,
+  const generateStyleVariables = useMemo(() => ({
+    ...style,
     ...adjustContentToRender && {
       [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
     },
-  }), [floatingStylesBase, adjustContentToRender]);
+  }), [style, adjustContentToRender]);
 
   return (
     <div
       className={classNames('d-popover', className)}
-      style={style}
+      style={generateStyleVariables}
     >
       <div
         ref={refs.setReference}
