@@ -78,6 +78,13 @@
     border-radius: var(--#{$prefix}input-group-border-radius);
   }
 
+  // not empty
+  &:has(.form-control:not(:placeholder-shown, :focus)) {
+    .input-group {
+      border-color: var(--#{$prefix}input-group-hover-border-color);
+    }
+  }
+
   // validation states
   @each $state, $data in $form-validation-states {
     $border-color: map-get($data, "border-color");

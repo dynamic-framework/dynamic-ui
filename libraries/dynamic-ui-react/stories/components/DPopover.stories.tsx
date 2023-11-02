@@ -31,7 +31,6 @@ export const Default: Story = {
     </DPopover>
   ),
   args: {
-    adjustContentToRender: true,
     renderComponent: (toggle) => (
       <div className="d-grid">
         <DButton
@@ -44,7 +43,7 @@ export const Default: Story = {
   },
 };
 
-export const WithoutAdjustToContent: Story = {
+export const AdjustToContent: Story = {
   decorators: [
     (Story) => (
       <div
@@ -63,6 +62,7 @@ export const WithoutAdjustToContent: Story = {
     </DPopover>
   ),
   args: {
+    adjustContentToRender: true,
     renderComponent: (toggle) => (
       <div className="d-grid">
         <DButton
