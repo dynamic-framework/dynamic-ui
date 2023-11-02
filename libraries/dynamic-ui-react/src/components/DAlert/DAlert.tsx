@@ -41,7 +41,7 @@ export default function DAlert(
       alert: true,
       [`alert-${type}`]: true,
       'fade show': !!showClose,
-      className: !!className,
+      ...className && { [className]: true },
     }),
     [type, showClose, className],
   );

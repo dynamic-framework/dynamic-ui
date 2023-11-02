@@ -2,7 +2,7 @@
   // Page link
   --#{$prefix}pagination-page-item-size: 2.125rem;
   --#{$prefix}pagination-page-link-bg: transparent;
-  --#{$prefix}pagination-page-border-radius: 50%;
+  --#{$prefix}pagination-page-border-radius: var(--#{$prefix}border-radius);
   // Arrow
   --#{$prefix}pagination-arrow-font-size: var(--#{$prefix}ref-fs-small);
   --#{$prefix}pagination-arrow-padding-y: var(--#{$prefix}ref-spacer-1);

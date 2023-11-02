@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import classNames from 'classnames';
 import {
   useFloating,
@@ -16,6 +18,7 @@ import {
 
 import type { PropsWithChildren, ReactElement } from 'react';
 import type { BaseProps } from '../interface';
+import { PREFIX_BS } from '../config';
 
 type Props = BaseProps & PropsWithChildren<{
   renderComponent: (isOpen: boolean) => ReactElement;
@@ -48,7 +51,11 @@ export default function DPopover(
     }
   }, [setEventIsOpen]);
 
-  const { refs, floatingStyles, context } = useFloating({
+  const {
+    refs,
+    floatingStyles: floatingStylesBase,
+    context,
+  } = useFloating({
     open: innerIsOpen,
     onOpenChange,
     middleware: [
@@ -70,6 +77,13 @@ export default function DPopover(
   ]);
 
   const headingId = useId();
+
+  const floatingStyles = useMemo(() => ({
+    ...floatingStylesBase,
+    ...adjustContentToRender && {
+      [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
+    },
+  }), [floatingStylesBase, adjustContentToRender]);
 
   return (
     <div
