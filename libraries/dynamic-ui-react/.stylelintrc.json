@@ -25,28 +25,6 @@
         ],
         "scss/selector-no-union-class-name": true
       }
-    },
-    {
-      "files": "scss/**/*.{test,spec}.scss",
-      "rules": {
-        "scss/dollar-variable-default": null,
-        "declaration-no-important": null
-      }
-    },
-    {
-      "files": "site/**/*.scss",
-      "rules": {
-        "scss/dollar-variable-default": null
-      }
-    },
-    {
-      "files": "site/**/examples/**/*.css",
-      "rules": {
-        "comment-empty-line-before": null,
-        "property-no-vendor-prefix": null,
-        "selector-no-qualifying-type": null,
-        "value-no-vendor-prefix": null
-      }
     }
   ]
 }
