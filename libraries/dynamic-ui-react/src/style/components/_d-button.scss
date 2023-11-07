@@ -14,10 +14,7 @@
   --#{$prefix}btn-box-shadow: #{$btn-box-shadow};
   --#{$prefix}btn-disabled-opacity: #{$btn-disabled-opacity};
   --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), .5);
-
-  --#{$prefix}btn-link-padding-y: #{$btn-link-padding-y};
-  --#{$prefix}btn-link-padding-x: #{$btn-link-padding-x};
-  @include rfs($btn-link-font-size-sm, --#{$prefix}btn-link-font-size-sm);
+  --#{$prefix}btn–text-decoration: if($link-decoration == none, null, none);
 
   --#{$prefix}btn-lg-padding-y: #{$btn-padding-y-lg};
   --#{$prefix}btn-lg-padding-x: #{$btn-padding-x-lg};
@@ -28,7 +25,6 @@
   --#{$prefix}btn-sm-padding-x: #{$btn-padding-x-sm};
   --#{$prefix}btn-sm-font-size: #{$btn-font-size-sm};
   --#{$prefix}btn-sm-border-radius: var(--#{$prefix}btn-component-sm-border-radius, #{$btn-border-radius-sm});
-
 
   display: flex;
   flex-direction: row;
@@ -42,7 +38,7 @@
   line-height: var(--#{$prefix}btn-line-height);
   color: var(--#{$prefix}btn-color);
   text-align: center;
-  text-decoration: if($link-decoration == none, null, none);
+  text-decoration: none;
   white-space: $btn-white-space;
   vertical-align: middle;
   cursor: if($enable-button-pointers, pointer, null);
@@ -53,11 +49,14 @@
   @include box-shadow(var(--#{$prefix}btn-box-shadow));
   @include transition($btn-transition);
 
+  > span {
+    text-decoration: var(--#{$prefix}btn-text-decoration);
+  }
+
   // hover selectors
   &:hover,
   &.hover {
     color: var(--#{$prefix}btn-hover-color);
-    text-decoration: if($link-hover-decoration == underline, none, null);
     background-color: var(--#{$prefix}btn-hover-bg);
     border-color: var(--#{$prefix}btn-hover-border-color);
   }
@@ -74,9 +73,9 @@
   &:focus-visible,
   &.focus-visible {
     // copy of .btn:focus bootstrap + focus var
-    color: var(var(--#{$prefix}btn-focus-color), var(--#{$prefix}btn-hover-color));
-    @include gradient-bg(var(var(--#{$prefix}btn-focus-bg), var(--#{$prefix}btn-hover-bg)));
-    border-color: var(var(--#{$prefix}btn-focus-border-color), var(--#{$prefix}btn-hover-border-color));
+    color: var(--#{$prefix}btn-focus-color, var(--#{$prefix}btn-hover-color));
+    @include gradient-bg(var(--#{$prefix}btn-focus-bg, var(--#{$prefix}btn-hover-bg)));
+    border-color: var(--#{$prefix}btn-focus-border-color, var(--#{$prefix}btn-hover-border-color));
     // end copy
 
     outline: var(--#{$prefix}btn-focus-border-width, var(--#{$prefix}btn-border-width)) solid var(--#{$prefix}btn-focus-outline-color, var(--#{$prefix}focus-ring-color));
@@ -130,29 +129,9 @@
   .btn-outline-#{$color} {
     @include df-button-outline-variant($color);
   }
-}
 
-@each $color, $value in $theme-colors {
   .btn-link-#{$color} {
-    @if $color == "light" {
-      @include df-button-link-variant(
-        $color,
-        $text-color-100: var(--#{$prefix}light),
-        $text-color-500: var(--#{$prefix}light),
-        $text-color-700: var(--#{$prefix}light),
-        $text-color-900: var(--#{$prefix}light),
-      );
-    } @else if $color == "dark" {
-      @include df-button-link-variant(
-        $color,
-        $text-color-100: var(--#{$prefix}dark),
-        $text-color-500: var(--#{$prefix}dark),
-        $text-color-700: var(--#{$prefix}dark),
-        $text-color-900: var(--#{$prefix}dark),
-      );
-    } @else {
-      @include df-button-link-variant($color);
-    }
+    @include df-button-link-variant($color);
   }
 }
 
@@ -174,16 +153,8 @@
   );
 }
 
-[class^="btn-link"] {
-  text-decoration: var(--#{$prefix}link-decoration);
-
-  > span {
-    text-decoration: var(--#{$prefix}link-decoration);
-  }
-
-  &.btn-sm {
-    @include font-size(var(--#{$prefix}btn-link-font-size-sm));
-  }
+[class*="btn-link-"] {
+  --#{$prefix}btn-text-decoration: var(--#{$prefix}link-decoration);
 
   @if $enable-gradients {
     background-image: none;
