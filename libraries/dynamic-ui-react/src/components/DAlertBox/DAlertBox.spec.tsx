@@ -1,32 +1,35 @@
 import { render } from '@testing-library/react';
-import DAlert from './DAlert';
+import DAlertBox from './DAlertBox';
 
-import { AlertType } from '../interface';
+import { AlertBoxTheme } from '../interface';
 
 it('should render info alert', () => {
   const props = {
-    theme: 'info',
+    theme: 'box-secondary',
     text: 'Test',
     id: 'alertID',
   };
 
   const { container } = render(
-    <DAlert
+    <DAlertBox
       id={props.id}
-      type={props.theme as AlertType}
+      theme={props.theme as AlertBoxTheme}
     >
       {props.text}
-    </DAlert>,
+    </DAlertBox>,
   );
 
   expect(container).toMatchInlineSnapshot(`
     <div>
       <div
-        class="alert alert-info"
+        class="alert alert-box alert-box-secondary"
         id="alertID"
         role="alert"
-        style="--bs-alert-component-separator-opacity: 0.3;"
       >
+        <i
+          class="d-icon bi bi-info-circle alert-icon"
+          style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
+        />
         <div
           class="alert-text"
         >

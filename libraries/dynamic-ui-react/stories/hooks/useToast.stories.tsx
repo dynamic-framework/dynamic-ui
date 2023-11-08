@@ -7,11 +7,11 @@ import useToastHook from '../../src/components/DToastContainer/useToast';
 
 import { THEMES } from '../config/constants';
 
-import { AlertType } from '../../src/components/interface';
+import { ToastType } from '../../src/components/interface';
 
 type Props = {
   message: string;
-  type: AlertType;
+  type: ToastType;
   showClose: boolean;
 };
 
@@ -29,7 +29,7 @@ const Example = ({ message, type, showClose }: Props) => {
 };
 
 const config: Meta<typeof Example> = {
-  title: 'Design System/Patterns/Alert',
+  title: 'Design System/Patterns/Toast',
   component: Example,
   argTypes: {
     type: {
