@@ -55,7 +55,7 @@ export default function DMonthPicker(
             variant="link"
             theme="light"
             onClick={decreaseYear}
-            isDisabled={prevYearButtonDisabled}
+            disabled={prevYearButtonDisabled}
           />
           <p className="fs-6 fw-bold">
             {monthDate.getFullYear()}
@@ -66,7 +66,7 @@ export default function DMonthPicker(
             variant="link"
             theme="light"
             onClick={increaseYear}
-            isDisabled={nextYearButtonDisabled}
+            disabled={nextYearButtonDisabled}
           />
         </div>
       )}

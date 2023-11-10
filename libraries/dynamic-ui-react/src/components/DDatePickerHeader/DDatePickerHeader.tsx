@@ -73,7 +73,7 @@ export default function DDatePickerHeader(
         variant={buttonVariant}
         theme={buttonTheme}
         onClick={decreaseMonth}
-        isDisabled={prevMonthButtonDisabled}
+        disabled={prevMonthButtonDisabled}
       />
       <DMonthPicker
         {...!withMonthSelector && { readOnly: true }}
@@ -87,7 +87,7 @@ export default function DDatePickerHeader(
         variant={buttonVariant}
         theme={buttonTheme}
         onClick={increaseMonth}
-        isDisabled={nextMonthButtonDisabled}
+        disabled={nextMonthButtonDisabled}
       />
     </div>
   );
