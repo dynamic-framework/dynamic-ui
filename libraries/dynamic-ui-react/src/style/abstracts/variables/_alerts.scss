@@ -17,6 +17,7 @@ $alert-dismissible-padding-r: $alert-padding-x * 3 !default; // 3x covers width 
 // custom
 $alert-gap: $spacer-3 !default;
 $alert-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
+$alert-close-icon-size: .75rem !default;
 // end custom
 // scss-docs-end alert-variables
 
