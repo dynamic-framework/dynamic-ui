@@ -30,11 +30,13 @@ export type StartIconProps = {
   iconStart?: string;
   iconStartFamilyClass?: string;
   iconStartFamilyPrefix?: string;
+  iconStartAriaText?: string;
 };
 export type EndIconProps = {
   iconEnd?: string;
   iconEndFamilyClass?: string;
   iconEndFamilyPrefix?: string;
+  iconEndAriaText?: string;
 };
 
 export type ToastType = 'success' | 'info' | 'warning' | 'danger';

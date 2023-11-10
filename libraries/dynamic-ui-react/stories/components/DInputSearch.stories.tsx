@@ -60,6 +60,10 @@ const config: Meta<typeof DInputSearch> = {
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
+    iconEndAriaText: {
+      control: 'text',
+      type: 'string',
+    },
     invalid: {
       control: 'boolean',
       type: 'boolean',
@@ -89,6 +93,7 @@ export const Default: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
+    iconEndAriaText: 'search',
   },
 };
 
@@ -99,6 +104,7 @@ export const Value: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: 'Value',
+    iconEndAriaText: 'search',
   },
 };
 
@@ -110,6 +116,7 @@ export const Error: Story = {
     labelIcon: undefined,
     value: undefined,
     invalid: true,
+    iconEndAriaText: 'search',
   },
 };
 
@@ -121,6 +128,7 @@ export const Confirm: Story = {
     labelIcon: undefined,
     value: undefined,
     valid: true,
+    iconEndAriaText: 'search',
   },
 };
 
@@ -132,5 +140,6 @@ export const Disabled: Story = {
     labelIcon: undefined,
     value: undefined,
     disabled: true,
+    iconEndAriaText: 'search',
   },
 };
