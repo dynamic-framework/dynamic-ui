@@ -5,16 +5,15 @@ import type { PropsWithChildren } from 'react';
 
 import DIcon from '../DIcon';
 
-import type { BaseProps, AlertBoxTheme } from '../interface';
+import type { BaseProps, AlertBoxTheme, FamilyIconProps } from '../interface';
 
 type Props =
   & BaseProps
+  & FamilyIconProps
   & PropsWithChildren<{
     id?: string;
     theme?: AlertBoxTheme;
     icon?: string;
-    iconFamilyClass?: string;
-    iconFamilyPrefix?: string;
   }>;
 
 export default function DAlertBox(
