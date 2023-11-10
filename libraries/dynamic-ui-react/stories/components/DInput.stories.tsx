@@ -85,16 +85,16 @@ const config: Meta<typeof DInput> = {
       control: 'text',
       type: 'string',
     },
+    iconEndAriaText: {
+      control: 'text',
+      type: 'string',
+    },
     iconEnd: {
       control: {
         type: 'select',
         labels: {
           undefined: 'empty',
         },
-      },
-      iconEndAriaText: {
-        control: 'text',
-        type: 'string',
       },
       type: 'string',
       options: [undefined, ...ICONS],
