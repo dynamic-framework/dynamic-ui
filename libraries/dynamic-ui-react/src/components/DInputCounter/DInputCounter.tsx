@@ -39,6 +39,8 @@ function DInputCounter(
     invalid,
     iconStart = 'dash-square',
     iconEnd = 'plus-square',
+    iconStartAriaText = 'decrease action',
+    iconEndAriaText = 'increase action',
     style,
     onChange,
     ...props
@@ -94,6 +96,8 @@ function DInputCounter(
       onChange={handleOnChange}
       onIconStartClick={handleOnIconStartClick}
       onIconEndClick={handleOnIconEndClick}
+      iconStartAriaText={iconStartAriaText}
+      iconEndAriaText={iconEndAriaText}
       {...props}
     />
   );
