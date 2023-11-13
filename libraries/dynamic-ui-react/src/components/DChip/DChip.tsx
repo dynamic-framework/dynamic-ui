@@ -13,6 +13,7 @@ type Props =
   text?: string;
   icon?: string;
   showClose?: boolean;
+  closeAriaText?: string;
   onClose?: () => void;
 };
 
@@ -24,6 +25,7 @@ export default function DChip(
     iconFamilyClass,
     iconFamilyPrefix,
     showClose = false,
+    closeAriaText = 'close',
     className,
     style,
     onClose,
@@ -57,6 +59,7 @@ export default function DChip(
           type="button"
           className="d-chip-icon-container"
           onClick={onClose}
+          aria-label={closeAriaText}
         >
           <DIcon icon="x-lg" />
         </button>

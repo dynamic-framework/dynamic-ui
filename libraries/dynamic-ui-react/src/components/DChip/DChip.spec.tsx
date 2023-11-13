@@ -21,6 +21,7 @@ it('should render badge', () => {
           ${props.text}
         </span>
         <button
+          aria-label="close"
           class="d-chip-icon-container"
           type="button"
         >
