@@ -46,9 +46,9 @@ export default function DQuickActionSwitch(
         <DInputSwitch
           id={id}
           name={name}
-          isDisabled={isDisabled}
-          isChecked={isChecked}
-          isReadonly
+          disabled={isDisabled}
+          checked={isChecked}
+          readonly
         />
         <label
           className="d-quick-action-switch-label"
