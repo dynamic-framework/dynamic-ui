@@ -48,7 +48,7 @@ export default function DQuickActionCheck(
         type="radio"
         name={name}
         value={value}
-        isChecked={isChecked}
+        checked={isChecked}
         onChange={changeHandler}
       />
       <div className="d-quick-action-check-detail">
