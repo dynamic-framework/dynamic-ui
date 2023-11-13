@@ -35,7 +35,7 @@ it('should render my component', () => {
             class="input-group"
           >
             <input
-              aria-describedby="passwordIdAdd passwordIdHint"
+              aria-describedby="passwordIdEnd"
               aria-label="Label"
               class="form-control"
               id="passwordId"
@@ -44,6 +44,7 @@ it('should render my component', () => {
               value="Value"
             />
             <button
+              aria-label="show/hide password"
               class="input-group-text"
               id="passwordIdEnd"
               type="button"

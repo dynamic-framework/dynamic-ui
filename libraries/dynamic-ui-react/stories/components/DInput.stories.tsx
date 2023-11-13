@@ -149,7 +149,7 @@ export const Default: Story = {
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
     iconStartAriaText: 'start action',
-    iconEndAriaText: 'end-action',
+    iconEndAriaText: 'end action',
     hint: 'Assistive text',
   },
 };
@@ -165,7 +165,7 @@ export const Value: Story = {
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
     iconStartAriaText: 'start action',
-    iconEndAriaText: 'end-action',
+    iconEndAriaText: 'end action',
     hint: 'Assistive text',
   },
 };
@@ -213,7 +213,7 @@ export const Disabled: Story = {
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
     iconStartAriaText: 'start action',
-    iconEndAriaText: 'end-action',
+    iconEndAriaText: 'end action',
     hint: 'Assistive text',
     disabled: true,
   },

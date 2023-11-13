@@ -11,6 +11,7 @@ it('should render base button', () => {
   expect(container).toMatchInlineSnapshot(`
     <div>
       <button
+        aria-label="Test"
         class="btn btn-primary"
         type="button"
       >
@@ -25,7 +26,7 @@ it('should render base button', () => {
 it('should render button pill', () => {
   const props = {
     text: 'Test',
-    isPill: true,
+    pill: true,
   };
 
   const { container } = render(
@@ -35,6 +36,7 @@ it('should render button pill', () => {
   expect(container).toMatchInlineSnapshot(`
     <div>
       <button
+        aria-label="Test"
         class="btn btn-primary"
         style="--bs-btn-component-border-radius: var(--bs-border-radius-pill); --bs-btn-component-lg-border-radius: var(--bs-border-radius-pill); --bs-btn-component-sm-border-radius: var(--bs-border-radius-pill);"
         type="button"

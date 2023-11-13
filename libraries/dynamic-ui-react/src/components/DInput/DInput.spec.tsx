@@ -30,7 +30,6 @@ it('should render my component', () => {
             class="input-group"
           >
             <input
-              aria-describedby="inputIdAdd inputIdHint"
               aria-label="Label"
               class="form-control"
               id="inputId"

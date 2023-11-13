@@ -168,9 +168,9 @@ function DInput(
             aria-label={label}
             disabled={disabled || loading}
             readOnly={readOnly}
-            aria-describedby={ariaDescribedby}
             value={value}
             onChange={handleOnChange}
+            {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
             {...inputProps}
           />
           {((invalid || valid) && !iconEnd && !loading) && (

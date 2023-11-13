@@ -31,6 +31,7 @@ it('should render base counter', () => {
           class="input-group"
         >
           <button
+            aria-label="decrease action"
             class="input-group-text"
             id="counterStart"
             type="button"
@@ -41,7 +42,7 @@ it('should render base counter', () => {
             />
           </button>
           <input
-            aria-describedby="counterAdd counterHint"
+            aria-describedby="counterStart counterEnd"
             aria-label=""
             class="form-control"
             id="counter"
@@ -49,6 +50,7 @@ it('should render base counter', () => {
             value="0"
           />
           <button
+            aria-label="increase action"
             class="input-group-text"
             id="counterEnd"
             type="button"

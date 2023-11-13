@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 
 import type {
@@ -31,8 +31,8 @@ export type Props<T> =
   id: string;
   name?: string;
   label?: string;
-  isDisabled?: boolean;
-  isLoading?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
   hint?: string;
   onBlur?: (event: FocusEvent) => void;
   onIconStartClick?: (event: MouseEvent) => void;
@@ -55,14 +55,16 @@ export default function DInputSelect<T extends object = DefaultOption>(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
-    isDisabled = false,
-    isLoading = false,
+    disabled = false,
+    loading = false,
     iconStart,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
+    iconStartAriaText,
     iconEnd,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
+    iconEndAriaText,
     hint,
     selectedOption,
     valueExtractor,
@@ -115,6 +117,16 @@ export default function DInputSelect<T extends object = DefaultOption>(
     onIconEndClick?.(event);
   }, [onIconEndClick]);
 
+  const ariaDescribedby = useMemo(() => (
+    [
+      iconStart && `${id}Start`,
+      hint && `${id}Hint`,
+      iconEnd && `${id}End`,
+    ]
+      .filter(Boolean)
+      .join(' ')
+  ), [id, iconStart, iconEnd, hint]);
+
   return (
     <div
       className={classNames('d-input', className)}
@@ -137,7 +149,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
       <div className="d-input-control">
         <div className={classNames({
           'input-group': true,
-          disabled: isDisabled || isLoading,
+          disabled: disabled || loading,
         })}
         >
           {iconStart && (
@@ -146,7 +158,8 @@ export default function DInputSelect<T extends object = DefaultOption>(
               className="input-group-text"
               id={`${id}Start`}
               onClick={iconStartClickHandler}
-              disabled={isDisabled || isLoading}
+              disabled={disabled || loading}
+              aria-label={iconStartAriaText}
             >
               {iconStart && (
                 <DIcon
@@ -163,10 +176,10 @@ export default function DInputSelect<T extends object = DefaultOption>(
             name={name}
             className="form-select"
             aria-label={label}
-            disabled={isDisabled || isLoading}
-            aria-describedby={`${id}Add ${id}Hint`}
+            disabled={disabled || loading}
             onChange={changeHandler}
             onBlur={blurHandler}
+            {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
             {...selectedOption && { value: internalValueExtractor(selectedOption) }}
           >
             {options.map((option) => (
@@ -178,13 +191,14 @@ export default function DInputSelect<T extends object = DefaultOption>(
               </option>
             ))}
           </select>
-          {iconEnd && !isLoading && (
+          {iconEnd && !loading && (
             <button
               type="button"
               className="input-group-text"
               id={`${id}End`}
               onClick={iconEndClickHandler}
-              disabled={isDisabled || isLoading}
+              disabled={disabled || loading}
+              aria-label={iconEndAriaText}
             >
               {iconEnd && (
                 <DIcon
@@ -196,7 +210,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
               )}
             </button>
           )}
-          {isLoading && (
+          {loading && (
             <div className="input-group-text form-control-icon loading">
               <span
                 className="spinner-border spinner-border-sm"

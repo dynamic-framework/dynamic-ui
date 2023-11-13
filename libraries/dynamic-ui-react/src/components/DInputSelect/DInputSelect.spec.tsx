@@ -28,7 +28,6 @@ it('should render my component with options', () => {
             class="input-group"
           >
             <select
-              aria-describedby="Random-idAdd Random-idHint"
               aria-label=""
               class="form-select"
               id="Random-id"
