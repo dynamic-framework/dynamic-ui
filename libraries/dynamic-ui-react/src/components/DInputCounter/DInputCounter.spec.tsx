@@ -43,7 +43,6 @@ it('should render base counter', () => {
           </button>
           <input
             aria-describedby="counterStart counterEnd"
-            aria-label=""
             class="form-control"
             id="counter"
             type="number"

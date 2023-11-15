@@ -33,7 +33,6 @@ it('should render my component', () => {
         >
           <input
             aria-describedby="searchIdEnd"
-            aria-label="Label"
             class="form-control"
             id="searchId"
             placeholder="Search"

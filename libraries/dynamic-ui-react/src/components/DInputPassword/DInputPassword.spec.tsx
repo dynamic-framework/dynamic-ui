@@ -36,7 +36,6 @@ it('should render my component', () => {
           >
             <input
               aria-describedby="passwordIdEnd"
-              aria-label="Label"
               class="form-control"
               id="passwordId"
               placeholder="Password"

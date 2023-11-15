@@ -46,7 +46,6 @@ it('should render base currency', () => {
             </span>
           </div>
           <input
-            aria-label="labelTest"
             class="form-control"
             id="currencyTest"
             inputmode="decimal"

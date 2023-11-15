@@ -30,7 +30,6 @@ it('should render my component', () => {
             class="input-group"
           >
             <input
-              aria-label="Label"
               class="form-control"
               id="inputId"
               placeholder="Input"
