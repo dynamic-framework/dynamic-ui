@@ -36,6 +36,10 @@ const config: Meta<typeof DQuickActionButton> = {
       description: 'The second action icon',
       table: { defaultValue: { summary: 'chevron-left' } },
     },
+    secondaryActionAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
     actionLinkText: {
       control: 'text',
       type: 'string',
@@ -144,6 +148,7 @@ export const ButtonDoubleAction: Story = {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank **** 721',
     secondaryActionIcon: 'star',
+    secondaryActionAriaLabel: 'fav',
     representativeImage: 'https://i.pravatar.cc/150?img=2',
   },
 };
