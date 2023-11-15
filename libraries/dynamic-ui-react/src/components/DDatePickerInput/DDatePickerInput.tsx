@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef } from 'react';
 
 import type { ComponentProps, Ref } from 'react';
 
@@ -11,7 +11,8 @@ type Props =
 & {
   value?: string;
   onClick?: () => void;
-} & Omit<ComponentProps<typeof DInput>,
+} & Omit<
+ComponentProps<typeof DInput>,
 | 'type'
 | 'isReadOnly'
 | 'onIconEndClick'
@@ -28,28 +29,22 @@ function DDatePickerInput(
     style,
     ...props
   }: Props,
-  ref: Ref<unknown>,
+  ref: Ref<HTMLInputElement>,
 ) {
-  useImperativeHandle(ref, () => ({}), []);
   return (
-    <div
-      role="button"
+    <DInput
+      ref={ref}
       onClick={onClick}
-      onKeyDown={() => {}}
-      tabIndex={-1}
-    >
-      <DInput
-        readOnly
-        type="text"
-        id={id}
-        value={value}
-        onIconEndClick={onClick}
-        iconEnd={iconEnd}
-        className={className}
-        style={style}
-        {...props}
-      />
-    </div>
+      readOnly
+      type="text"
+      id={id}
+      value={value}
+      onIconEndClick={onClick}
+      iconEnd={iconEnd}
+      className={className}
+      style={style}
+      {...props}
+    />
   );
 }
 
