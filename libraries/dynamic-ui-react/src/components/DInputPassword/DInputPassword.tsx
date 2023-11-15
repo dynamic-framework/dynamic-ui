@@ -10,7 +10,7 @@ type Props = Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'type'>;
 function DInputPassword(
   {
     onIconEndClick,
-    iconEndAriaText = 'show/hide password',
+    iconEndAriaLabel = 'show/hide password',
     ...props
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
@@ -29,7 +29,7 @@ function DInputPassword(
       iconEnd={!visible ? 'eye-slash' : 'eye'}
       type={!visible ? 'password' : 'text'}
       onIconEndClick={handleOnIconEndClick}
-      iconEndAriaText={iconEndAriaText}
+      iconEndAriaLabel={iconEndAriaLabel}
       {...props}
     />
   );

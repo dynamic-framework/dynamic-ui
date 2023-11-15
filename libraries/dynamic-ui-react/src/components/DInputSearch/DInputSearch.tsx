@@ -17,7 +17,7 @@ function DInputSearch(
   {
     onClick,
     type,
-    iconEndAriaText = 'search',
+    iconEndAriaLabel = 'search',
     ...props
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
@@ -29,7 +29,7 @@ function DInputSearch(
       ref={inputRef}
       type="text"
       iconEnd="search"
-      iconEndAriaText={iconEndAriaText}
+      iconEndAriaLabel={iconEndAriaLabel}
       onIconEndClick={onClick}
       {...props}
     />

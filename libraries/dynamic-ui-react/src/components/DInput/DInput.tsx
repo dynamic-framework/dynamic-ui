@@ -63,11 +63,13 @@ function DInput(
     iconStart,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
-    iconStartAriaText,
+    iconStartAriaLabel,
+    iconStartTabIndex,
     iconEnd,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
-    iconEndAriaText,
+    iconEndAriaLabel,
+    iconEndTabIndex,
     hint,
     invalid = false,
     valid = false,
@@ -146,7 +148,8 @@ function DInput(
               id={`${id}Start`}
               onClick={handleOnIconStartClick}
               disabled={disabled || loading}
-              aria-label={iconStartAriaText}
+              aria-label={iconStartAriaLabel}
+              tabIndex={iconStartTabIndex}
             >
               {iconStart && (
                 <DIcon
@@ -165,7 +168,6 @@ function DInput(
               'is-invalid': invalid,
               'is-valid': valid,
             })}
-            aria-label={label}
             disabled={disabled || loading}
             readOnly={readOnly}
             value={value}
@@ -193,7 +195,8 @@ function DInput(
               id={`${id}End`}
               onClick={handleOnIconEndClick}
               disabled={disabled || loading}
-              aria-label={iconEndAriaText}
+              aria-label={iconEndAriaLabel}
+              tabIndex={iconEndTabIndex}
             >
               {iconEnd && (
                 <DIcon

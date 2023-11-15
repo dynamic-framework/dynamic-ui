@@ -60,11 +60,11 @@ export default function DInputSelect<T extends object = DefaultOption>(
     iconStart,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
-    iconStartAriaText,
+    iconStartAriaLabel,
     iconEnd,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
-    iconEndAriaText,
+    iconEndAriaLabel,
     hint,
     selectedOption,
     valueExtractor,
@@ -159,7 +159,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
               id={`${id}Start`}
               onClick={iconStartClickHandler}
               disabled={disabled || loading}
-              aria-label={iconStartAriaText}
+              aria-label={iconStartAriaLabel}
             >
               {iconStart && (
                 <DIcon
@@ -198,7 +198,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
               id={`${id}End`}
               onClick={iconEndClickHandler}
               disabled={disabled || loading}
-              aria-label={iconEndAriaText}
+              aria-label={iconEndAriaLabel}
             >
               {iconEnd && (
                 <DIcon
