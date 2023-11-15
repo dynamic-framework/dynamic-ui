@@ -81,11 +81,11 @@ const config: Meta<typeof DInputCurrency> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    iconStartAriaText: {
+    iconStartAriaLabel: {
       control: 'text',
       type: 'string',
     },
-    iconEndAriaText: {
+    iconEndAriaLabel: {
       control: 'text',
       type: 'string',
     },

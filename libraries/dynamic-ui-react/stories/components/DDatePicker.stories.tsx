@@ -19,7 +19,7 @@ const config: Meta<typeof DDatePicker> = {
     },
     date: {
       type: 'string',
-      control: 'text',
+      control: 'date',
       description: 'Date as string (DEFINE ISO)',
     },
     inline: {
@@ -116,24 +116,10 @@ export const Default: Story = {
       </div>
     ),
   ],
-  render: function Render({ ...args }) {
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
   args: {
+    inputAriaLabel: 'Calendar',
+    date: new Date().toISOString(),
+    dateFormat: 'dd/MM/yyyy',
     inline: false,
   },
 };
@@ -146,49 +132,23 @@ export const DefaultWithMonth: Story = {
       </div>
     ),
   ],
-  render: function Render({ ...args }) {
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
   args: {
     inline: false,
     withMonthSelector: true,
+    inputAriaLabel: 'Calendar',
+    date: new Date().toISOString(),
+    dateFormat: 'dd/MM/yyyy',
   },
 };
 
 export const Inline: Story = {
-  render: function Render({ ...args }) {
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
   args: {
     inline: true,
+    inputAriaLabel: 'Calendar',
+    date: new Date().toISOString(),
+    dateFormat: 'dd/MM/yyyy',
+    headerPrevMonthAriaLabel: 'decrease month',
+    headerNextMonthAriaLabel: 'increase month',
   },
 };
 
@@ -255,6 +215,8 @@ export const MonthPicker: Story = {
         date={date}
         dateFormat="MM/yyyy"
         onChangeDate={(value) => handleDate(value)}
+        headerPrevYearAriaLabel="decrease year"
+        headerNextYearAriaLabel="increase year"
       />
     );
   },
@@ -355,5 +317,7 @@ export const OnPortal: Story = {
     withMonthSelector: true,
     withPortal: true,
     showTimeInput: true,
+    timeLabel: 'Select time',
+    inputAriaLabel: 'Calendar',
   },
 };

@@ -57,11 +57,11 @@ const config: Meta<typeof DInputSelect> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    iconStartAriaText: {
+    iconStartAriaLabel: {
       control: 'text',
       type: 'string',
     },
-    iconEndAriaText: {
+    iconEndAriaLabel: {
       control: 'text',
       type: 'string',
     },
@@ -165,8 +165,8 @@ export const Icon: Story = {
     hint: 'Assistive text',
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
-    iconStartAriaText: 'start action',
-    iconEndAriaText: 'end action',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
   },
 };
 

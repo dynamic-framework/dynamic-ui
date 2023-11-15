@@ -60,7 +60,7 @@ const config: Meta<typeof DInputPassword> = {
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
-    iconEndAriaText: {
+    iconEndAriaLabel: {
       control: 'text',
       type: 'string',
     },
@@ -90,7 +90,7 @@ export const Default: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
-    iconEndAriaText: 'show/hide password',
+    iconEndAriaLabel: 'show/hide password',
   },
 };
 
@@ -101,7 +101,7 @@ export const Value: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: '12345',
-    iconEndAriaText: 'show/hide password',
+    iconEndAriaLabel: 'show/hide password',
   },
 };
 
@@ -113,7 +113,7 @@ export const Error: Story = {
     labelIcon: undefined,
     value: undefined,
     invalid: true,
-    iconEndAriaText: 'show/hide password',
+    iconEndAriaLabel: 'show/hide password',
   },
 };
 
@@ -125,7 +125,7 @@ export const Confirm: Story = {
     labelIcon: undefined,
     value: undefined,
     valid: true,
-    iconEndAriaText: 'show/hide password',
+    iconEndAriaLabel: 'show/hide password',
   },
 };
 
@@ -137,6 +137,6 @@ export const Disabled: Story = {
     labelIcon: undefined,
     value: undefined,
     disabled: true,
-    iconEndAriaText: 'show/hide password',
+    iconEndAriaLabel: 'show/hide password',
   },
 };

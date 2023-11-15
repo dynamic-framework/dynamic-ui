@@ -71,11 +71,11 @@ const config: Meta<typeof DInputCounter> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    iconStartAriaText: {
+    iconStartAriaLabel: {
       control: 'text',
       type: 'string',
     },
-    iconEndAriaText: {
+    iconEndAriaLabel: {
       control: 'text',
       type: 'string',
     },
@@ -118,8 +118,8 @@ export const Default: Story = {
     labelIcon: undefined,
     minValue: 0,
     maxValue: 20,
-    iconStartAriaText: 'decrease action',
-    iconEndAriaText: 'increase action',
+    iconStartAriaLabel: 'decrease action',
+    iconEndAriaLabel: 'increase action',
   },
 };
 
@@ -132,8 +132,8 @@ export const Error: Story = {
     minValue: 0,
     maxValue: 20,
     invalid: true,
-    iconStartAriaText: 'decrease action',
-    iconEndAriaText: 'increase action',
+    iconStartAriaLabel: 'decrease action',
+    iconEndAriaLabel: 'increase action',
   },
 };
 
@@ -146,8 +146,8 @@ export const Confirm: Story = {
     minValue: 0,
     maxValue: 20,
     valid: true,
-    iconStartAriaText: 'decrease action',
-    iconEndAriaText: 'increase action',
+    iconStartAriaLabel: 'decrease action',
+    iconEndAriaLabel: 'increase action',
   },
 };
 
@@ -160,7 +160,7 @@ export const Disabled: Story = {
     minValue: 0,
     maxValue: 20,
     disabled: true,
-    iconStartAriaText: 'decrease action',
-    iconEndAriaText: 'increase action',
+    iconStartAriaLabel: 'decrease action',
+    iconEndAriaLabel: 'increase action',
   },
 };
