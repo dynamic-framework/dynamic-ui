@@ -30,11 +30,12 @@ type Props =
   variant?: ButtonVariant;
   state?: InputState;
   text?: string;
+  ariaLabel?: string;
   value?: string;
   type?: ButtonType;
   pill?: boolean;
   loading?: boolean;
-  loadingAriaText?: string;
+  loadingAriaLabel?: string;
   disabled?: boolean;
   isStopPropagationEnabled?: boolean;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -47,6 +48,7 @@ export default function DButton(
     variant,
     state,
     text = '',
+    ariaLabel,
     iconStart,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
@@ -57,7 +59,7 @@ export default function DButton(
     type = 'button',
     pill = false,
     loading = false,
-    loadingAriaText,
+    loadingAriaLabel,
     disabled = false,
     isStopPropagationEnabled = true,
     className,
@@ -100,9 +102,11 @@ export default function DButton(
     state === 'disabled' || loading || disabled
   ), [state, loading, disabled]);
 
-  const ariaLabel = useMemo(() => (
-    loading ? (loadingAriaText || text) : text
-  ), [loading, loadingAriaText, text]);
+  const newAriaLabel = useMemo(() => (
+    loading
+      ? (loadingAriaLabel || ariaLabel || text)
+      : (ariaLabel || text)
+  ), [loading, loadingAriaLabel, ariaLabel, text]);
 
   return (
     <button
@@ -111,7 +115,7 @@ export default function DButton(
       type={type}
       disabled={isDisabled}
       onClick={clickHandler}
-      aria-label={ariaLabel}
+      aria-label={newAriaLabel}
       {...value && { value }}
     >
       {iconStart && (
