@@ -4,12 +4,13 @@ type Props = BaseProps & {
     type: InputCheckType;
     name?: string;
     label?: string;
-    isChecked?: boolean;
+    ariaLabel?: string;
+    checked?: boolean;
     id: string;
-    isDisabled?: boolean;
-    isIndeterminate?: boolean;
+    disabled?: boolean;
+    indeterminate?: boolean;
     value?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
-export default function DInputCheck({ type, name, label, isChecked, id, isDisabled, isIndeterminate, value, onChange, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DInputCheck({ type, name, label, ariaLabel, checked, id, disabled, indeterminate, value, onChange, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

@@ -6,6 +6,7 @@ type Props = BaseProps & {
     actionLinkTheme?: string;
     actionIcon?: string;
     secondaryActionIcon?: string;
+    secondaryActionAriaLabel?: string;
     actionIconFamilyClass?: string;
     actionIconFamilyPrefix?: string;
     representativeImage?: string;
@@ -17,5 +18,5 @@ type Props = BaseProps & {
     onClick?: () => void;
     onClickSecondary?: () => void;
 };
-export default function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme, actionIcon, secondaryActionIcon, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme, representativeIconHasCircle, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme, actionIcon, secondaryActionIcon, secondaryActionAriaLabel, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme, representativeIconHasCircle, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

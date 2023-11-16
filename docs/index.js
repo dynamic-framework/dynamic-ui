@@ -26,21 +26,21 @@ function DBadge({ text, isDot = false, theme = 'primary', id, className, style, 
     return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, { children: jsxRuntime.jsx("span", { children: text }) })));
 }
 
-function DInputSwitch({ label, id, name, isChecked, isDisabled, isReadonly, className, style, onChange, }) {
-    const [internalIsChecked, setInternalIsChecked] = React.useState(isChecked);
+function DInputSwitch({ label, ariaLabel, id, name, checked, disabled, readonly, className, style, onChange, }) {
+    const [internalIsChecked, setInternalIsChecked] = React.useState(checked);
     React.useEffect(() => {
-        setInternalIsChecked(isChecked);
-    }, [isChecked]);
+        setInternalIsChecked(checked);
+    }, [checked]);
     const changeHandler = React.useCallback((event) => {
         const value = event.currentTarget.checked;
         setInternalIsChecked(value);
         onChange === null || onChange === void 0 ? void 0 : onChange(value);
     }, [onChange]);
-    return (jsxRuntime.jsxs("div", { className: "form-check form-switch", children: [jsxRuntime.jsx("input", { id: id, name: name, onChange: isReadonly ? () => false : changeHandler, className: classNames('form-check-input', className), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: isDisabled }), label && (jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] }));
+    return (jsxRuntime.jsxs("div", { className: "form-check form-switch", children: [jsxRuntime.jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', className), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] }));
 }
 
 function DPermissionItem({ permission, permissionState, onChange, onAction = () => { }, }) {
-    return (jsxRuntime.jsxs("div", { role: "button", tabIndex: 0, onKeyDown: () => { }, className: "d-flex permission-item align-items-center", onClick: onAction, children: [jsxRuntime.jsx("span", { className: "flex-grow-1 label", children: permission.label }), permission.type === 'custom' && (jsxRuntime.jsx(DBadge, { theme: "tertiary", text: permissionState })), jsxRuntime.jsx(DInputSwitch, { id: permission.id, isChecked: !!permission.value, isDisabled: !permission.enabled, onChange: (isChecked) => onChange(isChecked) })] }));
+    return (jsxRuntime.jsxs("div", { role: "button", tabIndex: 0, onKeyDown: () => { }, className: "d-flex permission-item align-items-center", onClick: onAction, children: [jsxRuntime.jsx("span", { className: "flex-grow-1 label", children: permission.label }), permission.type === 'custom' && (jsxRuntime.jsx(DBadge, { theme: "tertiary", text: permissionState })), jsxRuntime.jsx(DInputSwitch, { id: permission.id, checked: !!permission.value, disabled: !permission.enabled, onChange: (isChecked) => onChange(isChecked) })] }));
 }
 
 function DPermissionGroup({ title, description, permissionState, permissionList, onChangePermission, onCustomAction = () => { }, }) {
@@ -53,8 +53,6 @@ const ALERT_TYPE_ICON = {
     danger: 'exclamation-triangle',
     success: 'check-circle',
     info: 'info-circle',
-    light: 'info-circle',
-    dark: 'info-circle',
 };
 
 function DIcon({ icon, theme, style, className, size = '1.5rem', isLoading = false, loadingDuration = 1.8, hasCircle = false, circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`, color, backgroundColor, familyClass = 'bi', familyPrefix = 'bi-', }) {
@@ -94,13 +92,16 @@ function DSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, 
     return (jsxRuntime.jsxs("div", { children: [jsxRuntime.jsx("h6", { className: "fw-bold fs-6", children: title }), jsxRuntime.jsx("p", { className: "fs-8", children: description }), jsxRuntime.jsxs("div", { className: "bg-white rounded p-4 d-flex gap-3 shadow-sm text-gray-700 fs-8", children: [jsxRuntime.jsx(DIcon, { icon: icon, theme: iconTheme, size: iconSize }), Summary] })] }));
 }
 
-function DAlert({ type = 'light', icon, iconFamilyClass, iconFamilyPrefix, showIcon = false, showClose, onClose, children, id, className, style, }) {
+function DToast({ type = 'success', icon, iconFamilyClass, iconFamilyPrefix, showIcon = false, showClose, onClose, children, id, className, style, }) {
     const generateClasses = React.useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose }, className && { [className]: true })), [type, showClose, className]);
     const getIcon = React.useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);
-    const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3' }), type === 'light' && {
-        [`--${PREFIX_BS}alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)`,
-    })), [style, type]);
+    const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3' })), [style]);
     return (jsxRuntime.jsxs("div", { className: classNames(generateClasses), style: generateStyleVariables, role: "alert", id: id, children: [(showIcon || icon) && (jsxRuntime.jsx(DIcon, Object.assign({ className: "alert-icon", icon: getIcon }, iconFamilyClass && { familyClass: iconFamilyClass }, iconFamilyPrefix && { familyPrefix: iconFamilyPrefix }))), jsxRuntime.jsx("div", { className: "alert-text", children: children }), showClose && (jsxRuntime.jsx("div", { className: "alert-separator" })), showClose && (jsxRuntime.jsx("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { className: "alert-close-icon", icon: "x-lg", familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) }))] }));
+}
+
+function DAlertBox({ theme = 'box-secondary', icon = 'info-circle', iconFamilyClass, iconFamilyPrefix, children, id, className, style, }) {
+    const generateClasses = React.useMemo(() => (Object.assign({ 'alert alert-box': true, [`alert-${theme}`]: true }, className && { [className]: true })), [theme, className]);
+    return (jsxRuntime.jsxs("div", { className: classNames(generateClasses), style: style, role: "alert", id: id, children: [jsxRuntime.jsx(DIcon, Object.assign({ className: "alert-icon", icon: icon }, iconFamilyClass && { familyClass: iconFamilyClass }, iconFamilyPrefix && { familyPrefix: iconFamilyPrefix })), jsxRuntime.jsx("div", { className: "alert-text", children: children })] }));
 }
 
 function DBoxFile(_a) {
@@ -115,15 +116,15 @@ function DBoxFile(_a) {
             }), { children: [jsxRuntime.jsx("input", Object.assign({}, getInputProps())), jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsxRuntime.jsx("div", { className: "d-box-content", children: children })] })), !!acceptedFiles.length && (jsxRuntime.jsx("aside", { className: "d-box-files", children: acceptedFiles.map((file) => (jsxRuntime.jsx("div", { className: "d-box-files-text", children: `${file.name} - ${file.size} bytes` }, file.name))) }))] }));
 }
 
-function DButton({ theme = 'primary', size, variant, state, text = '', iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type = 'button', isPill = false, isLoading = false, isDisabled = false, isStopPropagationEnabled = true, className, onClick, }) {
+function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type = 'button', pill = false, loading = false, loadingAriaLabel, disabled = false, isStopPropagationEnabled = true, className, onClick, }) {
     const generateClasses = React.useMemo(() => {
         const variantClass = variant
             ? `btn-${variant}-${theme}`
             : `btn-${theme}`;
-        return Object.assign(Object.assign(Object.assign({ btn: true, [variantClass]: true }, size && { [`btn-${size}`]: true }), (state && state !== 'disabled') && { [state]: true }), { loading: isLoading });
-    }, [variant, theme, size, state, isLoading]);
+        return Object.assign(Object.assign(Object.assign({ btn: true, [variantClass]: true }, size && { [`btn-${size}`]: true }), (state && state !== 'disabled') && { [state]: true }), { loading });
+    }, [variant, theme, size, state, loading]);
     const generateStyleVariables = React.useMemo(() => {
-        if (isPill) {
+        if (pill) {
             return {
                 [`--${PREFIX_BS}btn-component-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
                 [`--${PREFIX_BS}btn-component-lg-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
@@ -131,14 +132,18 @@ function DButton({ theme = 'primary', size, variant, state, text = '', iconStart
             };
         }
         return {};
-    }, [isPill]);
+    }, [pill]);
     const clickHandler = React.useCallback((event) => {
         if (isStopPropagationEnabled) {
             event.stopPropagation();
         }
         onClick === null || onClick === void 0 ? void 0 : onClick(event);
     }, [isStopPropagationEnabled, onClick]);
-    return (jsxRuntime.jsxs("button", Object.assign({ className: classNames(generateClasses, className), style: generateStyleVariables, type: type, disabled: state === 'disabled' || isLoading || isDisabled }, value && { value }, { onClick: clickHandler, children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })), (text && !isLoading) && (jsxRuntime.jsx("span", { children: text })), isLoading && (jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) })), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix }))] })));
+    const isDisabled = React.useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
+    const newAriaLabel = React.useMemo(() => (loading
+        ? (loadingAriaLabel || ariaLabel || text)
+        : (ariaLabel || text)), [loading, loadingAriaLabel, ariaLabel, text]);
+    return (jsxRuntime.jsxs("button", Object.assign({ className: classNames(generateClasses, className), style: generateStyleVariables, type: type, disabled: isDisabled, onClick: clickHandler, "aria-label": newAriaLabel }, value && { value }, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })), (text && !loading) && (jsxRuntime.jsx("span", { children: text })), loading && (jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) })), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix }))] })));
 }
 
 function DCardHeader({ className, style, children, }) {
@@ -188,12 +193,12 @@ var DCarousel$1 = Object.assign(DCarousel, {
     Slide: DCarouselSlide,
 });
 
-function DChip({ theme = 'primary', text, icon, iconFamilyClass, iconFamilyPrefix, showClose = false, className, style, onClose, }) {
+function DChip({ theme = 'primary', text, icon, iconFamilyClass, iconFamilyPrefix, showClose = false, closeAriaLabel = 'close', className, style, onClose, }) {
     const generateClasses = React.useMemo(() => ({
         'd-chip': true,
         [`d-chip-${theme}`]: !!theme,
     }), [theme]);
-    return (jsxRuntime.jsxs("span", { className: classNames(generateClasses, className), style: style, children: [icon && (jsxRuntime.jsx("div", { className: "d-chip-icon-container", children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), jsxRuntime.jsx("span", { children: text }), showClose && (jsxRuntime.jsx("button", { type: "button", className: "d-chip-icon-container", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: "x-lg" }) }))] }));
+    return (jsxRuntime.jsxs("span", { className: classNames(generateClasses, className), style: style, children: [icon && (jsxRuntime.jsx("div", { className: "d-chip-icon-container", children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), jsxRuntime.jsx("span", { children: text }), showClose && (jsxRuntime.jsx("button", { type: "button", className: "d-chip-icon-container", onClick: onClose, "aria-label": closeAriaLabel, children: jsxRuntime.jsx(DIcon, { icon: "x-lg" }) }))] }));
 }
 
 function DCollapse({ id, className, style, Component, hasSeparator = false, defaultCollapsed = false, onChange, children, }) {
@@ -503,7 +508,7 @@ function useProvidedRefOrCreate(providedRef) {
 }
 
 function DInput(_a, ref) {
-    var { id, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, readOnly = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, hint, invalid = false, valid = false, inputStart, value, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "disabled", "readOnly", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "hint", "invalid", "valid", "inputStart", "value", "onChange", "onIconStartClick", "onIconEndClick"]);
+    var { id, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, readOnly = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, hint, invalid = false, valid = false, inputStart, value, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "disabled", "readOnly", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "hint", "invalid", "valid", "inputStart", "value", "onChange", "onIconStartClick", "onIconEndClick"]);
     const inputRef = useProvidedRefOrCreate(ref);
     const handleOnChange = React.useCallback((event) => {
         onChange === null || onChange === void 0 ? void 0 : onChange(event.currentTarget.value);
@@ -514,6 +519,13 @@ function DInput(_a, ref) {
     const handleOnIconEndClick = React.useCallback(() => {
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(value);
     }, [onIconEndClick, value]);
+    const ariaDescribedby = React.useMemo(() => ([
+        iconStart && `${id}Start`,
+        hint && `${id}Hint`,
+        iconEnd && `${id}End`,
+    ]
+        .filter(Boolean)
+        .join(' ')), [id, iconStart, iconEnd, hint]);
     return (jsxRuntime.jsxs("div", { className: classNames({
             'd-input': true,
             className: !!className,
@@ -521,10 +533,10 @@ function DInput(_a, ref) {
                             'input-group': true,
                             'has-validation': invalid,
                             disabled: disabled || loading,
-                        }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", children: inputStart })), iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading, children: iconStart && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), jsxRuntime.jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
+                        }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", children: inputStart })), iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading, "aria-label": iconStartAriaLabel, tabIndex: iconStartTabIndex, children: iconStart && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), jsxRuntime.jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
                                     'is-invalid': invalid,
                                     'is-valid': valid,
-                                }), "aria-label": label, disabled: disabled || loading, readOnly: readOnly, "aria-describedby": `${id}Add ${id}Hint`, value: value, onChange: handleOnChange }, inputProps)), ((invalid || valid) && !iconEnd && !loading) && (jsxRuntime.jsx("span", { className: "input-group-text", id: `${id}State`, children: jsxRuntime.jsx(DIcon, { className: "d-input-validation-icon", icon: invalid ? 'exclamation-circle' : 'check', familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, children: iconEnd && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text d-input-icon", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })] }));
+                                }), disabled: disabled || loading, readOnly: readOnly, value: value, onChange: handleOnChange }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps)), ((invalid || valid) && !iconEnd && !loading) && (jsxRuntime.jsx("span", { className: "input-group-text", id: `${id}State`, children: jsxRuntime.jsx(DIcon, { className: "d-input-validation-icon", icon: invalid ? 'exclamation-circle' : 'check', familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, "aria-label": iconEndAriaLabel, tabIndex: iconEndTabIndex, children: iconEnd && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text d-input-icon", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })] }));
 }
 const ForwardedDInput = React.forwardRef(DInput);
 ForwardedDInput.displayName = 'DInput';
@@ -532,53 +544,58 @@ var DInput$1 = ForwardedDInput;
 
 function DDatePickerTime(_a) {
     var { value, onChange, id, label, className, style } = _a, props = tslib.__rest(_a, ["value", "onChange", "id", "label", "className", "style"]);
-    return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center gap-2 flex-column d-datepicker-time', className), style: style, children: [label && (jsxRuntime.jsx("p", { className: "d-datepicker-time-label", children: label })), jsxRuntime.jsx(DInput$1, Object.assign({}, onChange && {
+    return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center gap-2 flex-column d-datepicker-time', className), style: style, children: [label && (jsxRuntime.jsx("label", { htmlFor: id, className: "d-datepicker-time-label", children: label })), jsxRuntime.jsx(DInput$1, Object.assign({}, onChange && {
                 onChange,
             }, { type: "time", id: id, value: value }, props))] }));
 }
 
 function DDatePickerInput(_a, ref) {
     var { value, onClick, id, iconEnd, className, style } = _a, props = tslib.__rest(_a, ["value", "onClick", "id", "iconEnd", "className", "style"]);
-    React.useImperativeHandle(ref, () => ({}), []);
-    return (jsxRuntime.jsx("div", { role: "button", onClick: onClick, onKeyDown: () => { }, tabIndex: -1, children: jsxRuntime.jsx(DInput$1, Object.assign({ readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd, className: className, style: style }, props)) }));
+    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: ref, onClick: onClick, readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd, className: className, style: style }, props)));
 }
 const ForwardedDDatePickerInput = React.forwardRef(DDatePickerInput);
 ForwardedDDatePickerInput.displayName = 'DDatePickerInput';
 var DDatePickerInput$1 = ForwardedDDatePickerInput;
 
 function DMonthPicker(_a) {
-    var { onChangeDate, date, locale, className } = _a, props = tslib.__rest(_a, ["onChangeDate", "date", "locale", "className"]);
+    var { onChangeDate, date, locale, className, headerPrevYearAriaLabel = 'decrease year', headerNextYearAriaLabel = 'increase year' } = _a, props = tslib.__rest(_a, ["onChangeDate", "date", "locale", "className", "headerPrevYearAriaLabel", "headerNextYearAriaLabel"]);
     const selected = React.useMemo(() => dateFns.parseISO(date), [date]);
     const dateFormatted = React.useMemo(() => (dateFns.format(new Date(date), 'MMMM yyyy', { locale })), [date, locale]);
-    return (jsxRuntime.jsx(DatePicker, Object.assign({ showMonthYearPicker: true, selected: selected, calendarClassName: classNames('d-month-picker', className), onChange: onChangeDate }, locale && { locale }, { customInput: (jsxRuntime.jsx("p", { className: "fw-bold text-capitalize", children: dateFormatted })), renderCustomHeader: ({ monthDate, decreaseYear, increaseYear, prevYearButtonDisabled, nextYearButtonDisabled, }) => (jsxRuntime.jsxs("div", { className: "d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark", children: [jsxRuntime.jsx(DButton, { iconStart: "chevron-left", size: "sm", variant: "link", theme: "light", onClick: decreaseYear, isDisabled: prevYearButtonDisabled }), jsxRuntime.jsx("p", { className: "fs-6 fw-bold", children: monthDate.getFullYear() }), jsxRuntime.jsx(DButton, { iconStart: "chevron-right", size: "sm", variant: "link", theme: "light", onClick: increaseYear, isDisabled: nextYearButtonDisabled })] })) }, props)));
+    return (jsxRuntime.jsx(DatePicker, Object.assign({ showMonthYearPicker: true, selected: selected, calendarClassName: classNames('d-month-picker', className), onChange: onChangeDate }, locale && { locale }, { customInput: (jsxRuntime.jsx("p", { className: "fw-bold text-capitalize", children: dateFormatted })), renderCustomHeader: ({ monthDate, decreaseYear, increaseYear, prevYearButtonDisabled, nextYearButtonDisabled, }) => (jsxRuntime.jsxs("div", { className: "d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark", children: [jsxRuntime.jsx(DButton, { iconStart: "chevron-left", size: "sm", variant: "link", theme: "light", onClick: decreaseYear, disabled: prevYearButtonDisabled, ariaLabel: headerPrevYearAriaLabel }), jsxRuntime.jsx("p", { className: "fs-6 fw-bold", children: monthDate.getFullYear() }), jsxRuntime.jsx(DButton, { iconStart: "chevron-right", size: "sm", variant: "link", theme: "light", onClick: increaseYear, disabled: nextYearButtonDisabled, ariaLabel: headerNextYearAriaLabel })] })) }, props)));
 }
 
-function DDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, decreaseMonthIcon, increaseMonthIcon, iconSize, buttonVariant, buttonTheme, locale, style, className, }) {
+function DDatePickerHeader(_a) {
+    var { monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, prevMonthIcon, nextMonthIcon, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', iconSize, buttonVariant, buttonTheme, locale, style, className } = _a, props = tslib.__rest(_a, ["monthDate", "changeMonth", "changeYear", "decreaseMonth", "increaseMonth", "prevMonthButtonDisabled", "nextMonthButtonDisabled", "withMonthSelector", "prevMonthIcon", "nextMonthIcon", "prevMonthAriaLabel", "nextMonthAriaLabel", "iconSize", "buttonVariant", "buttonTheme", "locale", "style", "className"]);
+    console.log(props);
+    console.log(prevMonthAriaLabel);
     const onChangeDate = React.useCallback((value) => {
         if (value) {
             changeMonth(dateFns.getMonth(value));
             changeYear(dateFns.getYear(value));
         }
     }, [changeMonth, changeYear]);
-    return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center justify-content-between d-datepicker-header', className), style: style, children: [jsxRuntime.jsx(DButton, { iconStart: decreaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: decreaseMonth, isDisabled: prevMonthButtonDisabled }), jsxRuntime.jsx(DMonthPicker, Object.assign({}, !withMonthSelector && { readOnly: true }, { date: monthDate.toISOString(), onChangeDate: onChangeDate }, locale && { locale })), jsxRuntime.jsx(DButton, { iconStart: increaseMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: increaseMonth, isDisabled: nextMonthButtonDisabled })] }));
+    return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center justify-content-between d-datepicker-header', className), style: style, children: [jsxRuntime.jsx(DButton, { iconStart: prevMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel }), jsxRuntime.jsx(DMonthPicker, Object.assign({}, !withMonthSelector && { readOnly: true }, { date: monthDate.toISOString(), onChangeDate: onChangeDate }, locale && { locale })), jsxRuntime.jsx(DButton, { iconStart: nextMonthIcon, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel })] }));
 }
 
 function DDatePicker(_a) {
-    var { date, selectsRange = false, withMonthSelector, inputLabel, inputIcon = 'calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, headerDecreaseMonthIcon = 'chevron-left', headerIncreaseMonthIcon = 'chevron-right', headerIconSize = 'sm', headerButtonVariant = 'link', headerButtonTheme = 'dark', locale, className, style } = _a, props = tslib.__rest(_a, ["date", "selectsRange", "withMonthSelector", "inputLabel", "inputIcon", "inputId", "timeId", "timeLabel", "headerDecreaseMonthIcon", "headerIncreaseMonthIcon", "headerIconSize", "headerButtonVariant", "headerButtonTheme", "locale", "className", "style"]);
+    var { date, selectsRange = false, withMonthSelector, inputLabel, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputIcon = 'calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, headerPrevMonthIcon = 'chevron-left', headerPrevMonthAriaLabel = 'decrease month', headerNextMonthIcon = 'chevron-right', headerNextMonthAriaLabel = 'increase month', headerIconSize = 'sm', headerButtonVariant = 'link', headerButtonTheme = 'dark', locale, className, style } = _a, props = tslib.__rest(_a, ["date", "selectsRange", "withMonthSelector", "inputLabel", "inputAriaLabel", "inputActionAriaLabel", "inputIcon", "inputId", "timeId", "timeLabel", "headerPrevMonthIcon", "headerPrevMonthAriaLabel", "headerNextMonthIcon", "headerNextMonthAriaLabel", "headerIconSize", "headerButtonVariant", "headerButtonTheme", "locale", "className", "style"]);
     const selected = React.useMemo(() => (date ? dateFns.parseISO(date) : null), [date]);
-    const DatePickerHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DDatePickerHeader, Object.assign({}, headerProps, locale && { locale }, { decreaseMonthIcon: headerDecreaseMonthIcon, increaseMonthIcon: headerIncreaseMonthIcon, iconSize: headerIconSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, withMonthSelector: !!withMonthSelector }))), [headerButtonTheme,
+    const DatePickerHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DDatePickerHeader, Object.assign({}, headerProps, locale && { locale }, { prevMonthIcon: headerPrevMonthIcon, nextMonthIcon: headerNextMonthIcon, prevMonthAriaLabel: headerPrevMonthAriaLabel, nextMonthAriaLabel: headerNextMonthAriaLabel, iconSize: headerIconSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, withMonthSelector: !!withMonthSelector }))), [
+        headerButtonTheme,
         headerButtonVariant,
-        headerDecreaseMonthIcon,
+        headerPrevMonthIcon,
+        headerPrevMonthAriaLabel,
         headerIconSize,
-        headerIncreaseMonthIcon,
+        headerNextMonthIcon,
+        headerNextMonthAriaLabel,
         withMonthSelector,
         locale,
     ]);
-    return (jsxRuntime.jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: (headerProps) => jsxRuntime.jsx(DatePickerHeader, Object.assign({}, headerProps)), customInput: (jsxRuntime.jsx(DDatePickerInput$1, { id: inputId, iconEnd: inputIcon, className: className, style: style })), customTimeInput: jsxRuntime.jsx(DDatePickerTime, { id: timeId, label: timeLabel }), selectsRange: selectsRange }, locale && { locale }, props)));
+    return (jsxRuntime.jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: (headerProps) => jsxRuntime.jsx(DatePickerHeader, Object.assign({}, headerProps)), customInput: (jsxRuntime.jsx(DDatePickerInput$1, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconEnd: inputIcon, className: className, style: style })), customTimeInput: jsxRuntime.jsx(DDatePickerTime, { id: timeId, label: timeLabel }), selectsRange: selectsRange }, locale && { locale }, props)));
 }
 
 function DInputCounter(_a, ref) {
-    var { minValue, maxValue, value = minValue, invalid, iconStart = 'dash-square', iconEnd = 'plus-square', style, onChange } = _a, props = tslib.__rest(_a, ["minValue", "maxValue", "value", "invalid", "iconStart", "iconEnd", "style", "onChange"]);
+    var { minValue, maxValue, value = minValue, invalid, iconStart = 'dash-square', iconEnd = 'plus-square', iconStartAriaLabel = 'decrease action', iconEndAriaLabel = 'increase action', style, onChange } = _a, props = tslib.__rest(_a, ["minValue", "maxValue", "value", "invalid", "iconStart", "iconEnd", "iconStartAriaLabel", "iconEndAriaLabel", "style", "onChange"]);
     const inputRef = useProvidedRefOrCreate(ref);
     const [internalIsInvalid, setInternalIsInvalid] = React.useState(false);
     const [internalValue, setInternalValue] = React.useState(value);
@@ -602,7 +619,7 @@ function DInputCounter(_a, ref) {
     React.useEffect(() => {
         setInternalIsInvalid(!(internalValue >= minValue && internalValue <= maxValue));
     }, [internalValue, minValue, maxValue]);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, value: valueString, style: generateStyleVariables, iconStart: iconStart, iconEnd: iconEnd, invalid: internalIsInvalid || invalid, type: "number", onChange: handleOnChange, onIconStartClick: handleOnIconStartClick, onIconEndClick: handleOnIconEndClick }, props)));
+    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, value: valueString, style: generateStyleVariables, iconStart: iconStart, iconEnd: iconEnd, invalid: internalIsInvalid || invalid, type: "number", onChange: handleOnChange, onIconStartClick: handleOnIconStartClick, onIconEndClick: handleOnIconEndClick, iconStartAriaLabel: iconStartAriaLabel, iconEndAriaLabel: iconEndAriaLabel }, props)));
 }
 const ForwardedDInputCounter = React.forwardRef(DInputCounter);
 ForwardedDInputCounter.displayName = 'DInputCounter';
@@ -696,47 +713,47 @@ ForwardedDInputCurrencyBase.displayName = 'DInputCurrency';
 var DInputCurrency$1 = ForwardedDInputCurrencyBase;
 
 function DInputSearch(_a, ref) {
-    var { onClick, type } = _a, props = tslib.__rest(_a, ["onClick", "type"]);
+    var { onClick, type, iconEndAriaLabel = 'search' } = _a, props = tslib.__rest(_a, ["onClick", "type", "iconEndAriaLabel"]);
     const inputRef = useProvidedRefOrCreate(ref);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, type: "text", iconEnd: "search", onIconEndClick: onClick }, props)));
+    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, type: "text", iconEnd: "search", iconEndAriaLabel: iconEndAriaLabel, onIconEndClick: onClick }, props)));
 }
 const ForwardedDInputSearch = React.forwardRef(DInputSearch);
 ForwardedDInputSearch.displayName = 'DInputSearch';
 var DInputSearch$1 = ForwardedDInputSearch;
 
 function DInputPassword(_a, ref) {
-    var { onIconEndClick } = _a, props = tslib.__rest(_a, ["onIconEndClick"]);
+    var { onIconEndClick, iconEndAriaLabel = 'show/hide password' } = _a, props = tslib.__rest(_a, ["onIconEndClick", "iconEndAriaLabel"]);
     const inputRef = useProvidedRefOrCreate(ref);
     const [visible, setVisible] = React.useState(false);
     const handleOnIconEndClick = React.useCallback(() => {
         setVisible((prevVisible) => !prevVisible);
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick();
     }, [onIconEndClick]);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, iconEnd: !visible ? 'eye-slash' : 'eye', type: !visible ? 'password' : 'text', onIconEndClick: handleOnIconEndClick }, props)));
+    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, iconEnd: !visible ? 'eye-slash' : 'eye', type: !visible ? 'password' : 'text', onIconEndClick: handleOnIconEndClick, iconEndAriaLabel: iconEndAriaLabel }, props)));
 }
 const ForwardedDInputPassword = React.forwardRef(DInputPassword);
 ForwardedDInputPassword.displayName = 'DInputPassword';
 var DInputPassword$1 = ForwardedDInputPassword;
 
-function DInputCheck({ type, name, label, isChecked = false, id, isDisabled = false, isIndeterminate, value, onChange, className, style, }) {
+function DInputCheck({ type, name, label, ariaLabel, checked = false, id, disabled = false, indeterminate, value, onChange, className, style, }) {
     const innerRef = React.useRef(null);
     const handleChange = React.useCallback((event) => {
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
     }, [onChange]);
     React.useEffect(() => {
         if (innerRef.current) {
-            innerRef.current.indeterminate = Boolean(isIndeterminate);
+            innerRef.current.indeterminate = Boolean(indeterminate);
         }
-    }, [isIndeterminate]);
+    }, [indeterminate]);
     React.useEffect(() => {
         if (innerRef.current) {
-            innerRef.current.checked = isChecked;
+            innerRef.current.checked = checked;
         }
-    }, [isChecked]);
+    }, [checked]);
     if (!label) {
-        return (jsxRuntime.jsx("input", { ref: innerRef, onChange: handleChange, className: classNames('form-check-input', className), style: style, id: id, disabled: isDisabled, type: type, name: name, value: value }));
+        return (jsxRuntime.jsx("input", { ref: innerRef, onChange: handleChange, className: classNames('form-check-input', className), style: style, id: id, disabled: disabled, type: type, name: name, value: value, "aria-label": ariaLabel }));
     }
-    return (jsxRuntime.jsxs("div", { className: "form-check", children: [jsxRuntime.jsx("input", { ref: innerRef, onChange: handleChange, className: classNames('form-check-input', className), style: style, id: id, disabled: isDisabled, type: type, name: name, value: value }), jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label })] }));
+    return (jsxRuntime.jsxs("div", { className: "form-check", children: [jsxRuntime.jsx("input", { ref: innerRef, onChange: handleChange, className: classNames('form-check-input', className), style: style, id: id, disabled: disabled, type: type, name: name, value: value }), jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label })] }));
 }
 
 function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder = '•', type = 'text', isDisabled = false, isLoading = false, isSecret = false, iconFamilyClass, iconFamilyPrefix, characters = 4, innerInputMode = 'text', hint, isInvalid = false, isValid = false, className, style, onChange, }) {
@@ -795,7 +812,7 @@ function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconF
                         }), type: isSecret ? 'password' : type, "aria-describedby": `${id}State`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onChange: nextInput, onKeyDown: prevInput, onFocus: focusInput, onWheel: wheelInput, onClick: preventDefaultEvent, autoComplete: "off", placeholder: placeholder, disabled: isDisabled || isLoading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), (isInvalid || isValid) && !isLoading && (jsxRuntime.jsx("span", { className: "input-group-text", id: `${id}State`, children: jsxRuntime.jsx(DIcon, { className: "d-input-pin-validation-icon", icon: isInvalid ? 'exclamation-circle' : 'check', familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), isLoading && (jsxRuntime.jsx("div", { className: "input-group-text d-input-pin-icon", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
 }
 
-function DInputSelect({ id, name, label = '', className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, isDisabled = false, isLoading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, hint, selectedOption, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
+function DInputSelect({ id, name, label = '', className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, selectedOption, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
     const internalValueExtractor = React.useCallback((option) => {
         if (valueExtractor) {
             return valueExtractor(option);
@@ -828,10 +845,17 @@ function DInputSelect({ id, name, label = '', className, style, options, labelIc
     const iconEndClickHandler = React.useCallback((event) => {
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(event);
     }, [onIconEndClick]);
+    const ariaDescribedby = React.useMemo(() => ([
+        iconStart && `${id}Start`,
+        hint && `${id}Hint`,
+        iconEnd && `${id}End`,
+    ]
+        .filter(Boolean)
+        .join(' ')), [id, iconStart, iconEnd, hint]);
     return (jsxRuntime.jsxs("div", { className: classNames('d-input', className), style: style, children: [label && (jsxRuntime.jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsxRuntime.jsx(DIcon, { className: "mdinput-icon", icon: labelIcon, size: `var(--${PREFIX_BS}input-label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix }))] })), jsxRuntime.jsxs("div", { className: "d-input-control", children: [jsxRuntime.jsxs("div", { className: classNames({
                             'input-group': true,
-                            disabled: isDisabled || isLoading,
-                        }), children: [iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: isDisabled || isLoading, children: iconStart && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), jsxRuntime.jsx("select", Object.assign({ id: id, name: name, className: "form-select", "aria-label": label, disabled: isDisabled || isLoading, "aria-describedby": `${id}Add ${id}Hint`, onChange: changeHandler, onBlur: blurHandler }, selectedOption && { value: internalValueExtractor(selectedOption) }, { children: options.map((option) => (jsxRuntime.jsx("option", { value: internalValueExtractor(option), children: internalLabelExtractor(option) }, internalValueExtractor(option)))) })), iconEnd && !isLoading && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: isDisabled || isLoading, children: iconEnd && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), isLoading && (jsxRuntime.jsx("div", { className: "input-group-text form-control-icon loading", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })] }));
+                            disabled: disabled || loading,
+                        }), children: [iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), jsxRuntime.jsx("select", Object.assign({ id: id, name: name, className: "form-select", "aria-label": label, disabled: disabled || loading, onChange: changeHandler, onBlur: blurHandler }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, selectedOption && { value: internalValueExtractor(selectedOption) }, { children: options.map((option) => (jsxRuntime.jsx("option", { value: internalValueExtractor(option), children: internalLabelExtractor(option) }, internalValueExtractor(option)))) })), iconEnd && !loading && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text form-control-icon loading", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })] }));
 }
 
 function DListItem({ children, className, style, isActive = false, isDisabled = false, theme, onClick, }) {
@@ -994,7 +1018,7 @@ function DProgress({ className, style, currentValue, minValue = 0, maxValue = 10
     return (jsxRuntime.jsx("div", { className: "progress", children: jsxRuntime.jsx("div", { className: classNames(generateClasses, className), role: "progressbar", "aria-label": "Progress bar", style: Object.assign({ width: `${currentValue}%` }, style), "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) }));
 }
 
-function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme = 'secondary', actionIcon, secondaryActionIcon, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }) {
+function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme = 'secondary', actionIcon, secondaryActionIcon, secondaryActionAriaLabel, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }) {
     const globalClickHandler = React.useCallback(() => {
         if (actionLinkText) {
             return;
@@ -1013,7 +1037,7 @@ function DQuickActionButton({ line1, line2, className, actionLinkText, actionLin
     const Tag = React.useMemo(() => (actionLinkText ? 'div' : 'button'), [actionLinkText]);
     return (jsxRuntime.jsxs(Tag, { className: classNames('d-quick-action-button', className), onClick: !actionLinkText ? globalClickHandler : undefined, style: style, children: [representativeIcon && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-representative-icon", size: representativeIconHasCircle
                     ? `var(--${PREFIX_BS}quick-action-button-representative-icon-size)`
-                    : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsxRuntime.jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsxRuntime.jsx("div", { className: "d-quick-action-button-content", children: jsxRuntime.jsxs("div", { className: "d-quick-action-button-text", children: [jsxRuntime.jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsxRuntime.jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), secondaryActionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: secondaryActionIcon, iconStartFamilyClass: actionIconFamilyClass, iconStartFamilyPrefix: actionIconFamilyPrefix, theme: actionLinkTheme, onClick: secondaryActionLinkClickHandler, isStopPropagationEnabled: true })), actionLinkText && !actionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-action-link", type: "button", variant: "link", theme: actionLinkTheme, text: actionLinkText, onClick: actionLinkClickHandler, isStopPropagationEnabled: true })), actionIcon && !actionLinkText && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] }));
+                    : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsxRuntime.jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsxRuntime.jsx("div", { className: "d-quick-action-button-content", children: jsxRuntime.jsxs("div", { className: "d-quick-action-button-text", children: [jsxRuntime.jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsxRuntime.jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), secondaryActionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: secondaryActionIcon, ariaLabel: secondaryActionAriaLabel, iconStartFamilyClass: actionIconFamilyClass, iconStartFamilyPrefix: actionIconFamilyPrefix, theme: actionLinkTheme, onClick: secondaryActionLinkClickHandler, isStopPropagationEnabled: true })), actionLinkText && !actionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-action-link", type: "button", variant: "link", theme: actionLinkTheme, text: actionLinkText, onClick: actionLinkClickHandler, isStopPropagationEnabled: true })), actionIcon && !actionLinkText && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] }));
 }
 
 function DQuickActionCheck({ id, name, value, line1, line2, line3, className, style, isChecked, onChange, }) {
@@ -1021,7 +1045,7 @@ function DQuickActionCheck({ id, name, value, line1, line2, line3, className, st
         event.stopPropagation();
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
     }, [onChange]);
-    return (jsxRuntime.jsxs("label", { className: classNames('d-quick-action-check', className), htmlFor: id, style: style, children: [jsxRuntime.jsx(DInputCheck, { id: id, type: "radio", name: name, value: value, isChecked: isChecked, onChange: changeHandler }), jsxRuntime.jsxs("div", { className: "d-quick-action-check-detail", children: [jsxRuntime.jsx("span", { className: "d-quick-action-check-line1", children: line1 }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line2", children: line2 })] }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line3", children: line3 })] }));
+    return (jsxRuntime.jsxs("label", { className: classNames('d-quick-action-check', className), htmlFor: id, style: style, children: [jsxRuntime.jsx(DInputCheck, { id: id, type: "radio", name: name, value: value, checked: isChecked, onChange: changeHandler }), jsxRuntime.jsxs("div", { className: "d-quick-action-check-detail", children: [jsxRuntime.jsx("span", { className: "d-quick-action-check-line1", children: line1 }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line2", children: line2 })] }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line3", children: line3 })] }));
 }
 
 function DQuickActionSelect({ id, name, value, line1, line2, className, style, isSelected = false, onChange, }) {
@@ -1043,7 +1067,7 @@ function DQuickActionSwitch({ id, name, label, hint, isChecked, isDisabled, clas
         event.stopPropagation();
         onClick === null || onClick === void 0 ? void 0 : onClick(isChecked);
     }, [isChecked, onClick]);
-    return (jsxRuntime.jsxs("button", { className: classNames('d-quick-action-switch', className), type: "button", onClick: clickHandler, style: style, children: [jsxRuntime.jsxs("div", { className: "d-quick-action-switch-content", children: [jsxRuntime.jsx(DInputSwitch, { id: id, name: name, isDisabled: isDisabled, isChecked: isChecked, isReadonly: true }), jsxRuntime.jsx("label", { className: "d-quick-action-switch-label", htmlFor: id, children: label })] }), jsxRuntime.jsx("div", { className: "d-quick-action-switch-hint", children: hint })] }));
+    return (jsxRuntime.jsxs("button", { className: classNames('d-quick-action-switch', className), type: "button", onClick: clickHandler, style: style, children: [jsxRuntime.jsxs("div", { className: "d-quick-action-switch-content", children: [jsxRuntime.jsx(DInputSwitch, { id: id, name: name, disabled: isDisabled, checked: isChecked, readonly: true }), jsxRuntime.jsx("label", { className: "d-quick-action-switch-label", htmlFor: id, children: label })] }), jsxRuntime.jsx("div", { className: "d-quick-action-switch-hint", children: hint })] }));
 }
 
 function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
@@ -1213,7 +1237,7 @@ function DToastContainer({ style, position = 'top-right', className, }) {
 
 function useToast() {
     const toast = React.useCallback((message, { position = 'top-right', type = 'info', showClose = true, autoClose = false, } = {}) => {
-        reactToastify.toast(({ closeToast }) => (jsxRuntime.jsx(DAlert, { type: type, showClose: showClose, onClose: closeToast, id: "alertID", children: message })), {
+        reactToastify.toast(({ closeToast }) => (jsxRuntime.jsx(DToast, { type: type, showClose: showClose, onClose: closeToast, id: "alertID", children: message })), {
             transition: reactToastify.Slide,
             position,
             autoClose,
@@ -1238,7 +1262,7 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-exports.DAlert = DAlert;
+exports.DAlertBox = DAlertBox;
 exports.DBadge = DBadge;
 exports.DBoxFile = DBoxFile;
 exports.DButton = DButton;
@@ -1294,6 +1318,7 @@ exports.DStepperMobile = DStepper$1;
 exports.DSummaryCard = DSummaryCard;
 exports.DTabContent = DTabContent;
 exports.DTabs = DTabs$1;
+exports.DToast = DToast;
 exports.DToastContainer = DToastContainer;
 exports.DTooltip = DTooltip;
 exports.ModalContext = ModalContext;

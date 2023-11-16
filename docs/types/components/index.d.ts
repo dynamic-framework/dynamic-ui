@@ -1,5 +1,6 @@
 export * from './banking';
-export { default as DAlert } from './DAlert';
+export { default as DToast } from './DToast';
+export { default as DAlertBox } from './DAlertBox';
 export { default as DBadge } from './DBadge';
 export { default as DBoxFile } from './DBoxFile';
 export { default as DButton } from './DButton';
