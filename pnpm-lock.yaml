@@ -129,9 +129,6 @@ importers:
       '@types/jest':
         specifier: ^29.5.6
         version: 29.5.6
-      '@types/jest-axe':
-        specifier: ^3.5.8
-        version: 3.5.8
       '@types/node':
         specifier: ^18.15.3
         version: 18.18.5
@@ -5258,13 +5255,6 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jest-axe@3.5.8:
-    resolution: {integrity: sha512-KlwSkM932uxMevwx3YHtZYXkhs2wXgw9GxmsDVcuetPC4D5sUrSP2pCjS8524vwsOfZvFZpY+1USCgZCzlT+cA==}
-    dependencies:
-      '@types/jest': 29.5.6
-      axe-core: 3.5.6
-    dev: true
-
   /@types/jest@29.5.6:
     resolution: {integrity: sha512-/t9NnzkOpXb4Nfvg17ieHE6EeSjDS2SGSpNYfoLbUAeL/EOueU/RSdOWFpfQTXBEM7BguYW1XQ0EbM+6RlIh6w==}
     dependencies:
@@ -6197,11 +6187,6 @@ packages:
   /available-typed-arrays@1.0.5:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
-    dev: true
-
-  /axe-core@3.5.6:
-    resolution: {integrity: sha512-LEUDjgmdJoA3LqklSTwKYqkjcZ4HKc4ddIYGSAiSkr46NTjzg2L9RNB+lekO9P7Dlpa87+hBtzc2Fzn/+GUWMQ==}
-    engines: {node: '>=4'}
     dev: true
 
   /axe-core@4.7.2:
