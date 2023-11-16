@@ -48,7 +48,7 @@
       "files": ["src/**/*.spec.tsx"],
       "parserOptions": {
         "project": ["./tsconfig.spec.json"],
-        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true,
+        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
       },
       "extends": [
         "airbnb-typescript",

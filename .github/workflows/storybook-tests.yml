@@ -1,0 +1,29 @@
+name: Storybook Tests
+on: deployment_status
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v2.4.0
+        with:
+          version: 7
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build packages
+        run: pnpm build
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      - name: Run Storybook tests
+        run: pnpm test:storybook
+        env:
+          TARGET_URL: '${{ github.event.deployment_status.target_url }}'
