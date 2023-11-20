@@ -11,7 +11,7 @@ type Props = BaseProps & {
   value: string;
   line1: string;
   line2: string;
-  isSelected?: boolean;
+  selected?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -24,7 +24,7 @@ export default function DQuickActionSelect(
     line2,
     className,
     style,
-    isSelected = false,
+    selected = false,
     onChange,
   }: Props,
 ) {
@@ -36,9 +36,9 @@ export default function DQuickActionSelect(
 
   useEffect(() => {
     if (innerRef.current) {
-      innerRef.current.checked = isSelected;
+      innerRef.current.checked = selected;
     }
-  }, [isSelected]);
+  }, [selected]);
 
   return (
     <label

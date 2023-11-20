@@ -118,7 +118,7 @@ export default function DQuickActionButton(
           iconStartFamilyPrefix={actionIconFamilyPrefix}
           theme={actionLinkTheme}
           onClick={secondaryActionLinkClickHandler}
-          isStopPropagationEnabled
+          stopPropagationEnabled
         />
       )}
       {actionLinkText && !actionIcon && (
@@ -129,7 +129,7 @@ export default function DQuickActionButton(
           theme={actionLinkTheme}
           text={actionLinkText}
           onClick={actionLinkClickHandler}
-          isStopPropagationEnabled
+          stopPropagationEnabled
         />
       )}
       {actionIcon && !actionLinkText && (

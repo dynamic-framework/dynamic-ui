@@ -14,7 +14,7 @@ type Props = BaseProps & {
   line1: string;
   line2: string;
   line3: string;
-  isChecked?: boolean;
+  checked?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -28,7 +28,7 @@ export default function DQuickActionCheck(
     line3,
     className,
     style,
-    isChecked,
+    checked,
     onChange,
   }: Props,
 ) {
@@ -48,7 +48,7 @@ export default function DQuickActionCheck(
         type="radio"
         name={name}
         value={value}
-        checked={isChecked}
+        checked={checked}
         onChange={changeHandler}
       />
       <div className="d-quick-action-check-detail">

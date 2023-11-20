@@ -21,7 +21,7 @@ export const Movement: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(300px - 1rem)' }} className="position-relative">
-        <DList isFlush>
+        <DList flush>
           <Story />
         </DList>
       </div>
@@ -45,7 +45,7 @@ export const Movements: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(300px - 1rem)' }} className="position-relative">
-        <DList isFlush>
+        <DList flush>
           <Story />
         </DList>
       </div>

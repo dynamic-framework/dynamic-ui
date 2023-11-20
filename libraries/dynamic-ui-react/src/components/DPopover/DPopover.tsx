@@ -21,9 +21,9 @@ import type { BaseProps } from '../interface';
 import { PREFIX_BS } from '../config';
 
 type Props = BaseProps & PropsWithChildren<{
-  renderComponent: (isOpen: boolean) => ReactElement;
-  isOpen: boolean;
-  setEventIsOpen?: (isOpen: boolean) => void;
+  renderComponent: (open: boolean) => ReactElement;
+  open: boolean;
+  setOpen?: (open: boolean) => void;
   adjustContentToRender?: boolean;
 }>;
 
@@ -31,32 +31,32 @@ export default function DPopover(
   {
     children,
     renderComponent,
-    isOpen,
-    setEventIsOpen,
+    open,
+    setOpen,
     adjustContentToRender = false,
     className,
     style,
   }: Props,
 ) {
-  const [innerIsOpen, setInnerIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    setInnerIsOpen(isOpen);
-  }, [isOpen]);
+    setIsOpen(open);
+  }, [open]);
 
   const onOpenChange = useCallback((value: boolean) => {
-    setInnerIsOpen(value);
-    if (setEventIsOpen) {
-      setEventIsOpen(value);
+    setIsOpen(value);
+    if (setOpen) {
+      setOpen(value);
     }
-  }, [setEventIsOpen]);
+  }, [setOpen]);
 
   const {
     refs,
     floatingStyles,
     context,
   } = useFloating({
-    open: innerIsOpen,
+    open: isOpen,
     onOpenChange,
     middleware: [
       offset(0),
@@ -94,9 +94,9 @@ export default function DPopover(
         ref={refs.setReference}
         {...getReferenceProps()}
       >
-        {renderComponent(innerIsOpen)}
+        {renderComponent(isOpen)}
       </div>
-      {innerIsOpen && (
+      {isOpen && (
         <FloatingFocusManager context={context} modal={false}>
           <div
             className={classNames(

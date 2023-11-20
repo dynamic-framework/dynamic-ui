@@ -13,7 +13,7 @@ type Props =
   icon: string;
   theme?: string;
   size?: string;
-  isLoading?: boolean;
+  loading?: boolean;
   loadingDuration?: number;
   hasCircle?: boolean;
   circleSize?: string;
@@ -30,7 +30,7 @@ export default function DIcon(
     style,
     className,
     size = '1.5rem',
-    isLoading = false,
+    loading = false,
     loadingDuration = 1.8,
     hasCircle = false,
     circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`,
@@ -84,9 +84,9 @@ export default function DIcon(
     'd-icon': true,
     [familyClass]: true,
     [`${familyPrefix}${icon}`]: true,
-    'd-icon-loading': isLoading,
+    'd-icon-loading': loading,
     ...className && { [className]: true },
-  }), [familyClass, familyPrefix, icon, className, isLoading]);
+  }), [familyClass, familyPrefix, icon, className, loading]);
 
   return (
     <i

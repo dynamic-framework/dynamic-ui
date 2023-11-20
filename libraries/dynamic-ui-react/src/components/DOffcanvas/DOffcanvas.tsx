@@ -12,8 +12,8 @@ import type { BaseProps, OffcanvasPositionToggleFrom } from '../interface';
 
 type Props = BaseProps & PropsWithChildren<{
   name: string;
-  isStatic?: boolean;
-  isScrollable?: boolean;
+  staticBackdrop?: boolean;
+  scrollable?: boolean;
   openFrom?: OffcanvasPositionToggleFrom;
 }>;
 
@@ -22,8 +22,8 @@ function DOffcanvas(
     name,
     className,
     style,
-    isStatic,
-    isScrollable,
+    staticBackdrop,
+    scrollable,
     openFrom = 'end',
     children,
   }: Props,
@@ -42,11 +42,11 @@ function DOffcanvas(
       tabIndex={-1}
       aria-labelledby={`${name}Label`}
       aria-hidden="false"
-      {...isStatic && ({
+      {...staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
       })}
-      {...isScrollable && ({
+      {...scrollable && ({
         [`data-${PREFIX_BS}scroll`]: 'true',
         [`data-${PREFIX_BS}keyboard`]: 'false',
       })}

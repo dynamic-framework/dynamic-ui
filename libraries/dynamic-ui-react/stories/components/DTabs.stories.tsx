@@ -11,7 +11,7 @@ const config: Meta<typeof DTabs> = {
       type: 'string',
       control: 'string',
     },
-    isVertical: {
+    vertical: {
       type: 'boolean',
       control: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -46,7 +46,7 @@ export const Default: Story = {
       { label: 'Tab 2', tab: 'tab2' },
       { label: 'Tab w/o Content', tab: 'empty' },
     ],
-    isVertical: false,
+    vertical: false,
   },
 };
 
@@ -74,6 +74,6 @@ export const Vertical: Story = {
       { label: 'Tab 2', tab: 'tab2' },
       { label: 'Tab w/o Content', tab: 'empty' },
     ],
-    isVertical: true,
+    vertical: true,
   },
 };

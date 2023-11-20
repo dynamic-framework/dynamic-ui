@@ -16,14 +16,14 @@ import type { BaseProps } from '../interface';
 export type DTabOption = {
   label: string;
   tab: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
 };
 
 type Props = BaseProps & PropsWithChildren<{
   onChange: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
-  isVertical?: boolean;
+  vertical?: boolean;
 }>;
 
 function DTabs(
@@ -34,7 +34,7 @@ function DTabs(
     options,
     className,
     style,
-    isVertical,
+    vertical,
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -63,7 +63,7 @@ function DTabs(
       <div
         className={classnames({
           'd-tabs': true,
-          'd-tabs-vertical': isVertical,
+          'd-tabs-vertical': vertical,
         }, className)}
         style={style}
       >
@@ -85,7 +85,7 @@ function DTabs(
               role="tab"
               aria-controls={`${option.tab}Pane`}
               aria-selected={option.tab === selected}
-              disabled={option.isDisabled}
+              disabled={option.disabled}
               onClick={() => onSelect(option)}
             >
               {option.label}

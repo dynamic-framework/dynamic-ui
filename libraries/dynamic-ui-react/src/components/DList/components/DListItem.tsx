@@ -6,8 +6,8 @@ import type { PropsWithChildren } from 'react';
 import type { BaseProps } from '../../interface';
 
 type Props = BaseProps & PropsWithChildren<{
-  isActive?: boolean;
-  isDisabled?: boolean;
+  active?: boolean;
+  disabled?: boolean;
   theme?: string;
   onClick?: () => void;
 }>;
@@ -17,8 +17,8 @@ export default function DListItem(
     children,
     className,
     style,
-    isActive = false,
-    isDisabled = false,
+    active = false,
+    disabled = false,
     theme,
     onClick,
   }: Props,
@@ -40,13 +40,13 @@ export default function DListItem(
           theme ? `list-group-item-${theme}` : undefined,
           className,
           {
-            active: isActive,
-            disabled: isDisabled,
+            active,
+            disabled,
           },
         )
       }
       style={style}
-      {...isActive && { 'aria-current': true }}
+      {...active && { 'aria-current': true }}
     >
       {children}
     </Tag>

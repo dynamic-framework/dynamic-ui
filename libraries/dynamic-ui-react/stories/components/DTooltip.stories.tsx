@@ -63,7 +63,7 @@ export const Top: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
   },
 };
 
@@ -75,7 +75,7 @@ export const Right: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
   },
 };
 
@@ -87,7 +87,7 @@ export const Bottom: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
   },
 };
 
@@ -99,7 +99,7 @@ export const Left: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
   },
 };
 
@@ -111,7 +111,7 @@ export const SmallTop: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'sm',
   },
 };
@@ -124,7 +124,7 @@ export const SmallRight: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'sm',
   },
 };
@@ -137,7 +137,7 @@ export const SmallBottom: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'sm',
   },
 };
@@ -150,7 +150,7 @@ export const SmallLeft: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'sm',
   },
 };
@@ -163,7 +163,7 @@ export const LargeTop: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'lg',
   },
 };
@@ -176,7 +176,7 @@ export const LargeRight: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'lg',
   },
 };
@@ -189,7 +189,7 @@ export const LargeBottom: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'lg',
   },
 };
@@ -202,7 +202,7 @@ export const LargeLeft: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'lg',
   },
 };
@@ -215,7 +215,7 @@ export const LargeText: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    isOpen: true,
+    open: true,
     size: 'lg',
   },
 };

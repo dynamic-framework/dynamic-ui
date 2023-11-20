@@ -37,7 +37,7 @@ type Props =
   loading?: boolean;
   loadingAriaLabel?: string;
   disabled?: boolean;
-  isStopPropagationEnabled?: boolean;
+  stopPropagationEnabled?: boolean;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -61,7 +61,7 @@ export default function DButton(
     loading = false,
     loadingAriaLabel,
     disabled = false,
-    isStopPropagationEnabled = true,
+    stopPropagationEnabled = true,
     className,
     onClick,
   }: Props,
@@ -92,11 +92,11 @@ export default function DButton(
   }, [pill]);
 
   const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    if (isStopPropagationEnabled) {
+    if (stopPropagationEnabled) {
       event.stopPropagation();
     }
     onClick?.(event);
-  }, [isStopPropagationEnabled, onClick]);
+  }, [stopPropagationEnabled, onClick]);
 
   const isDisabled = useMemo(() => (
     state === 'disabled' || loading || disabled

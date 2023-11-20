@@ -44,7 +44,7 @@ const meta: Meta<typeof DIcon> = {
       description: 'Size of the icon in css length unit',
       table: { defaultValue: { summary: '1rem' } },
     },
-    isLoading: {
+    loading: {
       control: 'boolean',
       table: { defaultValue: { summary: false } },
       type: 'boolean',
@@ -99,7 +99,7 @@ export const Default: Story = {
     icon: FIRST_ICON,
     size: '120px',
     hasCircle: false,
-    isLoading: false,
+    loading: false,
   },
 };
 
@@ -108,7 +108,7 @@ export const Circle: Story = {
     icon: FIRST_ICON,
     size: '120px',
     hasCircle: true,
-    isLoading: false,
+    loading: false,
     circleSize: `calc(var(--${PREFIX_BS}icon-component-size) * 1)`,
   },
 };

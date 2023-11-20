@@ -12,8 +12,8 @@ import type { ModalProps } from '../../src/contexts';
 const ExampleModal = ({ closeModal }: ModalProps) => (
   <DModal
     name="example"
-    isCentered
-    isStatic
+    centered
+    staticBackdrop
     className="d-block"
   >
     <DModal.Header onClose={closeModal} showCloseButton>

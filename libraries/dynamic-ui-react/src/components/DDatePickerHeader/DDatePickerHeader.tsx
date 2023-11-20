@@ -54,7 +54,6 @@ export default function DDatePickerHeader(
     locale,
     style,
     className,
-    ...props
   }: Props,
 ) {
   const onChangeDate = useCallback((value: Date | null) => {

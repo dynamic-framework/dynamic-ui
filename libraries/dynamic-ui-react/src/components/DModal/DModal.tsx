@@ -13,10 +13,10 @@ import type { BaseProps, ModalFullScreenFrom, ModalSize } from '../interface';
 
 type Props = BaseProps & PropsWithChildren<{
   name: string;
-  isStatic?: boolean;
-  isScrollable?: boolean;
-  isCentered?: boolean;
-  isFullScreen?: boolean;
+  staticBackdrop?: boolean;
+  scrollable?: boolean;
+  centered?: boolean;
+  fullScreen?: boolean;
   fullScreenFrom?: ModalFullScreenFrom;
   modalSize?: ModalSize;
 }>;
@@ -26,24 +26,24 @@ function DModal(
     name,
     className,
     style,
-    isStatic,
-    isScrollable,
-    isCentered,
-    isFullScreen,
+    staticBackdrop,
+    scrollable,
+    centered,
+    fullScreen,
     fullScreenFrom,
     modalSize,
     children,
   }: Props,
 ) {
   const fullScreenClass = useMemo(() => {
-    if (isFullScreen) {
+    if (fullScreen) {
       if (fullScreenFrom) {
         return `modal-fullscreen-${fullScreenFrom}-down`;
       }
       return 'modal-fullscreen';
     }
     return '';
-  }, [fullScreenFrom, isFullScreen]);
+  }, [fullScreenFrom, fullScreen]);
 
   const generateClasses = useMemo(() => ({
     'modal fade show': true,
@@ -52,11 +52,11 @@ function DModal(
 
   const generateModalDialogClasses = useMemo(() => ({
     'modal-dialog': true,
-    'modal-dialog-centered': !!isCentered,
-    'modal-dialog-scrollable': !!isScrollable,
-    [fullScreenClass]: !!isFullScreen,
+    'modal-dialog-centered': !!centered,
+    'modal-dialog-scrollable': !!scrollable,
+    [fullScreenClass]: !!fullScreen,
     ...modalSize && { [`modal-${modalSize}`]: true },
-  }), [fullScreenClass, isCentered, isFullScreen, isScrollable, modalSize]);
+  }), [fullScreenClass, centered, fullScreen, scrollable, modalSize]);
 
   return (
     <div
@@ -66,7 +66,7 @@ function DModal(
       aria-labelledby={`${name}Label`}
       aria-hidden="false"
       style={style}
-      {...isStatic && ({
+      {...staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
       })}
