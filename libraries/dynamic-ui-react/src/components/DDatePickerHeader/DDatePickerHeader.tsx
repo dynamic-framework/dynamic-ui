@@ -57,8 +57,6 @@ export default function DDatePickerHeader(
     ...props
   }: Props,
 ) {
-  console.log(props);
-  console.log(prevMonthAriaLabel);
   const onChangeDate = useCallback((value: Date | null) => {
     if (value) {
       changeMonth(getMonth(value));
