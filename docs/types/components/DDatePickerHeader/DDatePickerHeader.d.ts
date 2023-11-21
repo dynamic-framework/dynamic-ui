@@ -19,5 +19,5 @@ type Props = BaseProps & {
     buttonVariant: ButtonVariant;
     buttonTheme: string;
 } & Omit<ComponentProps<typeof DButton>, 'iconStart' | 'onMClick' | 'isDisabled'>;
-export default function DDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, prevMonthIcon, nextMonthIcon, prevMonthAriaLabel, nextMonthAriaLabel, iconSize, buttonVariant, buttonTheme, locale, style, className, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, prevMonthIcon, nextMonthIcon, prevMonthAriaLabel, nextMonthAriaLabel, iconSize, buttonVariant, buttonTheme, locale, style, className, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

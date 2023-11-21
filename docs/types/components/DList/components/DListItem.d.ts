@@ -1,10 +1,10 @@
 import type { PropsWithChildren } from 'react';
 import type { BaseProps } from '../../interface';
 type Props = BaseProps & PropsWithChildren<{
-    isActive?: boolean;
-    isDisabled?: boolean;
+    active?: boolean;
+    disabled?: boolean;
     theme?: string;
     onClick?: () => void;
 }>;
-export default function DListItem({ children, className, style, isActive, isDisabled, theme, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DListItem({ children, className, style, active, disabled, theme, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

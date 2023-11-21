@@ -14,8 +14,8 @@ type Props = BaseProps & StartIconProps & EndIconProps & {
     loading?: boolean;
     loadingAriaLabel?: string;
     disabled?: boolean;
-    isStopPropagationEnabled?: boolean;
+    stopPropagationEnabled?: boolean;
     onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
-export default function DButton({ theme, size, variant, state, text, ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type, pill, loading, loadingAriaLabel, disabled, isStopPropagationEnabled, className, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DButton({ theme, size, variant, state, text, ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type, pill, loading, loadingAriaLabel, disabled, stopPropagationEnabled, className, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

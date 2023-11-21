@@ -7,7 +7,7 @@ type Props = BaseProps & {
     options: Array<Step>;
     currentStep: number;
     successIcon?: string;
-    isVertical?: boolean;
+    vertical?: boolean;
 };
-export default function DStepper({ options, currentStep, successIcon, isVertical, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DStepper({ options, currentStep, successIcon, vertical, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

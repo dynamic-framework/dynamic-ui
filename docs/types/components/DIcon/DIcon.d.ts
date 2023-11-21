@@ -3,7 +3,7 @@ type Props = BaseProps & {
     icon: string;
     theme?: string;
     size?: string;
-    isLoading?: boolean;
+    loading?: boolean;
     loadingDuration?: number;
     hasCircle?: boolean;
     circleSize?: string;
@@ -12,5 +12,5 @@ type Props = BaseProps & {
     familyClass?: string;
     familyPrefix?: string;
 };
-export default function DIcon({ icon, theme, style, className, size, isLoading, loadingDuration, hasCircle, circleSize, color, backgroundColor, familyClass, familyPrefix, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DIcon({ icon, theme, style, className, size, loading, loadingDuration, hasCircle, circleSize, color, backgroundColor, familyClass, familyPrefix, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

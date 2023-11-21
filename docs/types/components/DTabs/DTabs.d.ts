@@ -4,15 +4,15 @@ import type { BaseProps } from '../interface';
 export type DTabOption = {
     label: string;
     tab: string;
-    isDisabled?: boolean;
+    disabled?: boolean;
 };
 type Props = BaseProps & PropsWithChildren<{
     onChange: (option: DTabOption) => void;
     options: Array<DTabOption>;
     defaultSelected: string;
-    isVertical?: boolean;
+    vertical?: boolean;
 }>;
-declare function DTabs({ children, defaultSelected, onChange, options, className, style, isVertical, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DTabs({ children, defaultSelected, onChange, options, className, style, vertical, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DTabs & {
     Tab: typeof DTabContent;
 };

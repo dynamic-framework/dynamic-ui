@@ -5,14 +5,14 @@ import DModalFooter from './components/DModalFooter';
 import type { BaseProps, ModalFullScreenFrom, ModalSize } from '../interface';
 type Props = BaseProps & PropsWithChildren<{
     name: string;
-    isStatic?: boolean;
-    isScrollable?: boolean;
-    isCentered?: boolean;
-    isFullScreen?: boolean;
+    staticBackdrop?: boolean;
+    scrollable?: boolean;
+    centered?: boolean;
+    fullScreen?: boolean;
     fullScreenFrom?: ModalFullScreenFrom;
     modalSize?: ModalSize;
 }>;
-declare function DModal({ name, className, style, isStatic, isScrollable, isCentered, isFullScreen, fullScreenFrom, modalSize, children, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, modalSize, children, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DModal & {
     Header: typeof DModalHeader;
     Body: typeof DModalBody;

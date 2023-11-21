@@ -15,12 +15,12 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { createPortal } from 'react-dom';
 
-function DBadge({ text, isDot = false, theme = 'primary', id, className, style, }) {
+function DBadge({ text, dot = false, theme = 'primary', id, className, style, }) {
     const generateClasses = useMemo(() => ({
         badge: true,
-        'badge-dot': isDot,
+        'badge-dot': dot,
         [`badge-${theme}`]: !!theme,
-    }), [isDot, theme]);
+    }), [dot, theme]);
     return (jsx("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, { children: jsx("span", { children: text }) })));
 }
 
@@ -42,7 +42,7 @@ function DPermissionItem({ permission, permissionState, onChange, onAction = () 
 }
 
 function DPermissionGroup({ title, description, permissionState, permissionList, onChangePermission, onCustomAction = () => { }, }) {
-    return (jsxs("div", { className: "row operation-group g-0 mb-3 mb-lg-0", children: [jsxs("div", { className: "col-12 col-lg-4 d-flex flex-column justify-content-center", children: [jsx("h6", { className: "fw-bold mb-3 mb-lg-2", children: title }), jsx("p", { className: "fs-8 d-none d-lg-block m-0", children: description })] }), jsx("div", { className: "col-12 offset-lg-1 col-lg-7", children: permissionList.map((permission) => (jsx(DPermissionItem, { permission: permission, permissionState: permissionState, onChange: (isChecked) => onChangePermission(permission, isChecked), onAction: () => onCustomAction(permission) }, permission.id))) })] }));
+    return (jsxs("div", { className: "row operation-group g-0 mb-3 mb-lg-0", children: [jsxs("div", { className: "col-12 col-lg-4 d-flex flex-column justify-content-center", children: [jsx("h6", { className: "fw-bold mb-3 mb-lg-2", children: title }), jsx("p", { className: "fs-8 d-none d-lg-block m-0", children: description })] }), jsx("div", { className: "col-12 offset-lg-1 col-lg-7", children: permissionList.map((permission) => (jsx(DPermissionItem, { permission: permission, permissionState: permissionState, onChange: (checked) => onChangePermission(permission, checked), onAction: () => onCustomAction(permission) }, permission.id))) })] }));
 }
 
 const PREFIX_BS = 'bs-';
@@ -53,7 +53,7 @@ const ALERT_TYPE_ICON = {
     info: 'info-circle',
 };
 
-function DIcon({ icon, theme, style, className, size = '1.5rem', isLoading = false, loadingDuration = 1.8, hasCircle = false, circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`, color, backgroundColor, familyClass = 'bi', familyPrefix = 'bi-', }) {
+function DIcon({ icon, theme, style, className, size = '1.5rem', loading = false, loadingDuration = 1.8, hasCircle = false, circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`, color, backgroundColor, familyClass = 'bi', familyPrefix = 'bi-', }) {
     const colorStyle = useMemo(() => {
         if (color) {
             return { [`--${PREFIX_BS}component-color`]: color };
@@ -82,7 +82,7 @@ function DIcon({ icon, theme, style, className, size = '1.5rem', isLoading = fal
         return { [`--${PREFIX_BS}icon-component-padding`]: '0' };
     }, [circleSize, hasCircle]);
     const generateStyleVariables = useMemo(() => (Object.assign(Object.assign(Object.assign(Object.assign({ [`--${PREFIX_BS}icon-component-size`]: size, [`--${PREFIX_BS}icon-component-loading-duration`]: `${loadingDuration}s` }, colorStyle), backgroundStyle), circleSizeStyle), style)), [size, loadingDuration, colorStyle, backgroundStyle, circleSizeStyle, style]);
-    const generateClasses = useMemo(() => (Object.assign({ 'd-icon': true, [familyClass]: true, [`${familyPrefix}${icon}`]: true, 'd-icon-loading': isLoading }, className && { [className]: true })), [familyClass, familyPrefix, icon, className, isLoading]);
+    const generateClasses = useMemo(() => (Object.assign({ 'd-icon': true, [familyClass]: true, [`${familyPrefix}${icon}`]: true, 'd-icon-loading': loading }, className && { [className]: true })), [familyClass, familyPrefix, icon, className, loading]);
     return (jsx("i", { className: classNames(generateClasses), style: generateStyleVariables }));
 }
 
@@ -103,18 +103,18 @@ function DAlertBox({ theme = 'box-secondary', icon = 'info-circle', iconFamilyCl
 }
 
 function DBoxFile(_a) {
-    var { icon = 'cloud-upload', iconFamilyClass, iconFamilyPrefix, isDisabled = false, children, className, style } = _a, dropzoneOptions = __rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "isDisabled", "children", "className", "style"]);
-    const { acceptedFiles, getRootProps, getInputProps, } = useDropzone(Object.assign({ disabled: isDisabled }, dropzoneOptions));
+    var { icon = 'cloud-upload', iconFamilyClass, iconFamilyPrefix, disabled = false, children, className, style } = _a, dropzoneOptions = __rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "disabled", "children", "className", "style"]);
+    const { acceptedFiles, getRootProps, getInputProps, } = useDropzone(Object.assign({ disabled }, dropzoneOptions));
     return (jsxs("section", { className: classNames('d-box-file', {
             'd-box-file-selected': !!acceptedFiles.length,
         }, className), style: style, children: [jsxs("div", Object.assign({}, getRootProps({
                 className: classNames('d-box-file-dropzone', {
-                    disabled: isDisabled,
+                    disabled,
                 }),
             }), { children: [jsx("input", Object.assign({}, getInputProps())), jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsx("div", { className: "d-box-content", children: children })] })), !!acceptedFiles.length && (jsx("aside", { className: "d-box-files", children: acceptedFiles.map((file) => (jsx("div", { className: "d-box-files-text", children: `${file.name} - ${file.size} bytes` }, file.name))) }))] }));
 }
 
-function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type = 'button', pill = false, loading = false, loadingAriaLabel, disabled = false, isStopPropagationEnabled = true, className, onClick, }) {
+function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type = 'button', pill = false, loading = false, loadingAriaLabel, disabled = false, stopPropagationEnabled = true, className, onClick, }) {
     const generateClasses = useMemo(() => {
         const variantClass = variant
             ? `btn-${variant}-${theme}`
@@ -132,11 +132,11 @@ function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel
         return {};
     }, [pill]);
     const clickHandler = useCallback((event) => {
-        if (isStopPropagationEnabled) {
+        if (stopPropagationEnabled) {
             event.stopPropagation();
         }
         onClick === null || onClick === void 0 ? void 0 : onClick(event);
-    }, [isStopPropagationEnabled, onClick]);
+    }, [stopPropagationEnabled, onClick]);
     const isDisabled = useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
     const newAriaLabel = useMemo(() => (loading
         ? (loadingAriaLabel || ariaLabel || text)
@@ -562,10 +562,7 @@ function DMonthPicker(_a) {
     return (jsx(DatePicker, Object.assign({ showMonthYearPicker: true, selected: selected, calendarClassName: classNames('d-month-picker', className), onChange: onChangeDate }, locale && { locale }, { customInput: (jsx("p", { className: "fw-bold text-capitalize", children: dateFormatted })), renderCustomHeader: ({ monthDate, decreaseYear, increaseYear, prevYearButtonDisabled, nextYearButtonDisabled, }) => (jsxs("div", { className: "d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark", children: [jsx(DButton, { iconStart: "chevron-left", size: "sm", variant: "link", theme: "light", onClick: decreaseYear, disabled: prevYearButtonDisabled, ariaLabel: headerPrevYearAriaLabel }), jsx("p", { className: "fs-6 fw-bold", children: monthDate.getFullYear() }), jsx(DButton, { iconStart: "chevron-right", size: "sm", variant: "link", theme: "light", onClick: increaseYear, disabled: nextYearButtonDisabled, ariaLabel: headerNextYearAriaLabel })] })) }, props)));
 }
 
-function DDatePickerHeader(_a) {
-    var { monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, prevMonthIcon, nextMonthIcon, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', iconSize, buttonVariant, buttonTheme, locale, style, className } = _a, props = __rest(_a, ["monthDate", "changeMonth", "changeYear", "decreaseMonth", "increaseMonth", "prevMonthButtonDisabled", "nextMonthButtonDisabled", "withMonthSelector", "prevMonthIcon", "nextMonthIcon", "prevMonthAriaLabel", "nextMonthAriaLabel", "iconSize", "buttonVariant", "buttonTheme", "locale", "style", "className"]);
-    console.log(props);
-    console.log(prevMonthAriaLabel);
+function DDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, prevMonthIcon, nextMonthIcon, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', iconSize, buttonVariant, buttonTheme, locale, style, className, }) {
     const onChangeDate = useCallback((value) => {
         if (value) {
             changeMonth(getMonth(value));
@@ -754,7 +751,7 @@ function DInputCheck({ type, name, label, ariaLabel, checked = false, id, disabl
     return (jsxs("div", { className: "form-check", children: [jsx("input", { ref: innerRef, onChange: handleChange, className: classNames('form-check-input', className), style: style, id: id, disabled: disabled, type: type, name: name, value: value }), jsx("label", { className: "form-check-label", htmlFor: id, children: label })] }));
 }
 
-function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder = '•', type = 'text', isDisabled = false, isLoading = false, isSecret = false, iconFamilyClass, iconFamilyPrefix, characters = 4, innerInputMode = 'text', hint, isInvalid = false, isValid = false, className, style, onChange, }) {
+function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder = '•', type = 'text', disabled = false, loading = false, secret = false, iconFamilyClass, iconFamilyPrefix, characters = 4, innerInputMode = 'text', hint, invalid = false, valid = false, className, style, onChange, }) {
     const [pattern, setPattern] = useState('');
     useEffect(() => {
         setPattern(type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$');
@@ -805,9 +802,9 @@ function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconF
     }, []);
     return (jsxs("div", { className: classNames('d-input-pin', className), style: style, children: [label && (jsxs("label", { htmlFor: "pinIndex0", children: [label, labelIcon && (jsx(DIcon, { className: "d-input-pin-icon", icon: labelIcon, size: `var(--${PREFIX_BS}input-label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix }))] })), jsxs("form", { id: id, className: "d-input-pin-controls", onInput: formChange, onSubmit: preventDefaultEvent, children: [Array.from({ length: characters }).map((_, index) => (jsx("input", Object.assign({ className: classNames({
                             'form-control': true,
-                            'is-invalid': isInvalid,
-                            'is-valid': isValid,
-                        }), type: isSecret ? 'password' : type, "aria-describedby": `${id}State`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onChange: nextInput, onKeyDown: prevInput, onFocus: focusInput, onWheel: wheelInput, onClick: preventDefaultEvent, autoComplete: "off", placeholder: placeholder, disabled: isDisabled || isLoading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), (isInvalid || isValid) && !isLoading && (jsx("span", { className: "input-group-text", id: `${id}State`, children: jsx(DIcon, { className: "d-input-pin-validation-icon", icon: isInvalid ? 'exclamation-circle' : 'check', familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), isLoading && (jsx("div", { className: "input-group-text d-input-pin-icon", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
+                            'is-invalid': invalid,
+                            'is-valid': valid,
+                        }), type: secret ? 'password' : type, "aria-describedby": `${id}State`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onChange: nextInput, onKeyDown: prevInput, onFocus: focusInput, onWheel: wheelInput, onClick: preventDefaultEvent, autoComplete: "off", placeholder: placeholder, disabled: disabled || loading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), (invalid || valid) && !loading && (jsx("span", { className: "input-group-text", id: `${id}State`, children: jsx(DIcon, { className: "d-input-pin-validation-icon", icon: invalid ? 'exclamation-circle' : 'check', familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), loading && (jsx("div", { className: "input-group-text d-input-pin-icon", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
 }
 
 function DInputSelect({ id, name, label = '', className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, selectedOption, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
@@ -856,26 +853,26 @@ function DInputSelect({ id, name, label = '', className, style, options, labelIc
                         }), children: [iconStart && (jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsx(DIcon, { className: "d-input-icon", icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), jsx("select", Object.assign({ id: id, name: name, className: "form-select", "aria-label": label, disabled: disabled || loading, onChange: changeHandler, onBlur: blurHandler }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, selectedOption && { value: internalValueExtractor(selectedOption) }, { children: options.map((option) => (jsx("option", { value: internalValueExtractor(option), children: internalLabelExtractor(option) }, internalValueExtractor(option)))) })), iconEnd && !loading && (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsx(DIcon, { className: "d-input-icon", icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsx("div", { className: "input-group-text form-control-icon loading", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })] }));
 }
 
-function DListItem({ children, className, style, isActive = false, isDisabled = false, theme, onClick, }) {
+function DListItem({ children, className, style, active = false, disabled = false, theme, onClick, }) {
     const Tag = useMemo(() => (onClick ? 'button' : 'div'), [onClick]);
     return (jsx(Tag, Object.assign({}, Tag === 'button' && {
         onClick,
         type: 'button',
     }, { className: classNames('list-group-item list-group-item-action', theme ? `list-group-item-${theme}` : undefined, className, {
-            active: isActive,
-            disabled: isDisabled,
-        }), style: style }, isActive && { 'aria-current': true }, { children: children })));
+            active,
+            disabled,
+        }), style: style }, active && { 'aria-current': true }, { children: children })));
 }
 
-function DList({ children, className, style, isFlush = false, isNumbered = false, isHorizontal = false, horizontalBreakpoint, }) {
-    if (isFlush && isHorizontal) {
+function DList({ children, className, style, flush = false, numbered = false, horizontal = false, horizontalBreakpoint, }) {
+    if (flush && horizontal) {
         throw new Error("Horizontal and Flush props don't work together");
     }
     return (jsx("div", { className: classNames('list-group', {
-            'list-group-flush': isFlush && !isHorizontal,
-            'list-group-numbered': isNumbered,
-            'list-group-horizontal': isHorizontal && !horizontalBreakpoint,
-        }, (isHorizontal && horizontalBreakpoint) && `list-group-horizontal-${horizontalBreakpoint}`, className), style: style, children: children }));
+            'list-group-flush': flush && !horizontal,
+            'list-group-numbered': numbered,
+            'list-group-horizontal': horizontal && !horizontalBreakpoint,
+        }, (horizontal && horizontalBreakpoint) && `list-group-horizontal-${horizontalBreakpoint}`, className), style: style, children: children }));
 }
 var DList$1 = Object.assign(DList, {
     Item: DListItem,
@@ -912,19 +909,19 @@ function DModalFooter({ className, style, actionPlacement = 'fill', children, })
     return (jsxs(Fragment, { children: [jsx("div", { className: "d-modal-separator" }), jsx("div", { className: classNames(`d-modal-slot modal-footer d-modal-action-${actionPlacement}`, className), style: style, children: children })] }));
 }
 
-function DModal({ name, className, style, isStatic, isScrollable, isCentered, isFullScreen, fullScreenFrom, modalSize, children, }) {
+function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, modalSize, children, }) {
     const fullScreenClass = useMemo(() => {
-        if (isFullScreen) {
+        if (fullScreen) {
             if (fullScreenFrom) {
                 return `modal-fullscreen-${fullScreenFrom}-down`;
             }
             return 'modal-fullscreen';
         }
         return '';
-    }, [fullScreenFrom, isFullScreen]);
+    }, [fullScreenFrom, fullScreen]);
     const generateClasses = useMemo(() => (Object.assign({ 'modal fade show': true }, className && { [className]: true })), [className]);
-    const generateModalDialogClasses = useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!isCentered, 'modal-dialog-scrollable': !!isScrollable, [fullScreenClass]: !!isFullScreen }, modalSize && { [`modal-${modalSize}`]: true })), [fullScreenClass, isCentered, isFullScreen, isScrollable, modalSize]);
-    return (jsx("div", Object.assign({ className: classNames(generateClasses), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style }, isStatic && ({
+    const generateModalDialogClasses = useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, modalSize && { [`modal-${modalSize}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, modalSize]);
+    return (jsx("div", Object.assign({ className: classNames(generateClasses), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), { children: jsx("div", { className: classNames(generateModalDialogClasses), children: jsx("div", { className: "modal-content", children: children }) }) })));
@@ -947,13 +944,13 @@ function DOffcanvasFooter({ footerActionPlacement = 'fill', children, className,
     return (jsx("div", { className: classNames(`d-offcanvas-slot d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className), style: style, children: children }));
 }
 
-function DOffcanvas({ name, className, style, isStatic, isScrollable, openFrom = 'end', children, }) {
+function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', children, }) {
     return (jsx("div", Object.assign({ className: classNames('offcanvas show', {
             [`offcanvas-${openFrom}`]: openFrom,
-        }, className), style: style, id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false" }, isStatic && ({
+        }, className), style: style, id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false" }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
-    }), isScrollable && ({
+    }), scrollable && ({
         [`data-${PREFIX_BS}scroll`]: 'true',
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), { children: children })));
@@ -969,19 +966,19 @@ function DPaginator(_a) {
     return (jsx(ResponsivePagination, Object.assign({ extraClassName: classNames('pagination', className), nextClassName: classNames('arrow arrow-next', !nextLabel && 'no-label'), nextLabel: nextLabel, previousClassName: classNames('arrow arrow-prev', !previousLabel && 'no-label'), previousLabel: previousLabel, renderNav: showArrows, current: page, onPageChange: onPageChange }, props)));
 }
 
-function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustContentToRender = false, className, style, }) {
-    const [innerIsOpen, setInnerIsOpen] = useState(false);
+function DPopover({ children, renderComponent, open, setOpen, adjustContentToRender = false, className, style, }) {
+    const [isOpen, setIsOpen] = useState(false);
     useEffect(() => {
-        setInnerIsOpen(isOpen);
-    }, [isOpen]);
+        setIsOpen(open);
+    }, [open]);
     const onOpenChange = useCallback((value) => {
-        setInnerIsOpen(value);
-        if (setEventIsOpen) {
-            setEventIsOpen(value);
+        setIsOpen(value);
+        if (setOpen) {
+            setOpen(value);
         }
-    }, [setEventIsOpen]);
+    }, [setOpen]);
     const { refs, floatingStyles, context, } = useFloating({
-        open: innerIsOpen,
+        open: isOpen,
         onOpenChange,
         middleware: [
             offset(0),
@@ -1002,7 +999,7 @@ function DPopover({ children, renderComponent, isOpen, setEventIsOpen, adjustCon
     const generateStyleVariables = useMemo(() => (Object.assign(Object.assign({}, style), adjustContentToRender && {
         [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
     })), [style, adjustContentToRender]);
-    return (jsxs("div", { className: classNames('d-popover', className), style: generateStyleVariables, children: [jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(innerIsOpen) })), innerIsOpen && (jsx(FloatingFocusManager, { context: context, modal: false, children: jsx("div", Object.assign({ className: classNames('d-popover-content', {
+    return (jsxs("div", { className: classNames('d-popover', className), style: generateStyleVariables, children: [jsx("div", Object.assign({ ref: refs.setReference }, getReferenceProps(), { children: renderComponent(isOpen) })), isOpen && (jsx(FloatingFocusManager, { context: context, modal: false, children: jsx("div", Object.assign({ className: classNames('d-popover-content', {
                         'w-100': adjustContentToRender,
                     }), ref: refs.setFloating, style: floatingStyles, "aria-labelledby": headingId }, getFloatingProps(), { children: children })) }))] }));
 }
@@ -1035,18 +1032,18 @@ function DQuickActionButton({ line1, line2, className, actionLinkText, actionLin
     const Tag = useMemo(() => (actionLinkText ? 'div' : 'button'), [actionLinkText]);
     return (jsxs(Tag, { className: classNames('d-quick-action-button', className), onClick: !actionLinkText ? globalClickHandler : undefined, style: style, children: [representativeIcon && (jsx(DIcon, { className: "d-quick-action-button-representative-icon", size: representativeIconHasCircle
                     ? `var(--${PREFIX_BS}quick-action-button-representative-icon-size)`
-                    : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsx("div", { className: "d-quick-action-button-content", children: jsxs("div", { className: "d-quick-action-button-text", children: [jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), secondaryActionIcon && (jsx(DButton, { className: "d-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: secondaryActionIcon, ariaLabel: secondaryActionAriaLabel, iconStartFamilyClass: actionIconFamilyClass, iconStartFamilyPrefix: actionIconFamilyPrefix, theme: actionLinkTheme, onClick: secondaryActionLinkClickHandler, isStopPropagationEnabled: true })), actionLinkText && !actionIcon && (jsx(DButton, { className: "d-quick-action-button-action-link", type: "button", variant: "link", theme: actionLinkTheme, text: actionLinkText, onClick: actionLinkClickHandler, isStopPropagationEnabled: true })), actionIcon && !actionLinkText && (jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] }));
+                    : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsx("div", { className: "d-quick-action-button-content", children: jsxs("div", { className: "d-quick-action-button-text", children: [jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), secondaryActionIcon && (jsx(DButton, { className: "d-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: secondaryActionIcon, ariaLabel: secondaryActionAriaLabel, iconStartFamilyClass: actionIconFamilyClass, iconStartFamilyPrefix: actionIconFamilyPrefix, theme: actionLinkTheme, onClick: secondaryActionLinkClickHandler, stopPropagationEnabled: true })), actionLinkText && !actionIcon && (jsx(DButton, { className: "d-quick-action-button-action-link", type: "button", variant: "link", theme: actionLinkTheme, text: actionLinkText, onClick: actionLinkClickHandler, stopPropagationEnabled: true })), actionIcon && !actionLinkText && (jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] }));
 }
 
-function DQuickActionCheck({ id, name, value, line1, line2, line3, className, style, isChecked, onChange, }) {
+function DQuickActionCheck({ id, name, value, line1, line2, line3, className, style, checked, onChange, }) {
     const changeHandler = useCallback((event) => {
         event.stopPropagation();
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
     }, [onChange]);
-    return (jsxs("label", { className: classNames('d-quick-action-check', className), htmlFor: id, style: style, children: [jsx(DInputCheck, { id: id, type: "radio", name: name, value: value, checked: isChecked, onChange: changeHandler }), jsxs("div", { className: "d-quick-action-check-detail", children: [jsx("span", { className: "d-quick-action-check-line1", children: line1 }), jsx("span", { className: "d-quick-action-check-line2", children: line2 })] }), jsx("span", { className: "d-quick-action-check-line3", children: line3 })] }));
+    return (jsxs("label", { className: classNames('d-quick-action-check', className), htmlFor: id, style: style, children: [jsx(DInputCheck, { id: id, type: "radio", name: name, value: value, checked: checked, onChange: changeHandler }), jsxs("div", { className: "d-quick-action-check-detail", children: [jsx("span", { className: "d-quick-action-check-line1", children: line1 }), jsx("span", { className: "d-quick-action-check-line2", children: line2 })] }), jsx("span", { className: "d-quick-action-check-line3", children: line3 })] }));
 }
 
-function DQuickActionSelect({ id, name, value, line1, line2, className, style, isSelected = false, onChange, }) {
+function DQuickActionSelect({ id, name, value, line1, line2, className, style, selected = false, onChange, }) {
     const innerRef = useRef(null);
     const changeHandler = useCallback((event) => {
         event.stopPropagation();
@@ -1054,18 +1051,18 @@ function DQuickActionSelect({ id, name, value, line1, line2, className, style, i
     }, [onChange]);
     useEffect(() => {
         if (innerRef.current) {
-            innerRef.current.checked = isSelected;
+            innerRef.current.checked = selected;
         }
-    }, [isSelected]);
+    }, [selected]);
     return (jsxs("label", { className: classNames('d-quick-action-select', className), htmlFor: id, style: style, children: [jsx("input", { ref: innerRef, id: id, type: "radio", name: name, value: value, onChange: changeHandler }), jsx("span", { className: "d-quick-action-select-line1", children: line1 }), jsx("span", { className: "d-quick-action-select-line2", children: line2 })] }));
 }
 
-function DQuickActionSwitch({ id, name, label, hint, isChecked, isDisabled, className, style, onClick, }) {
+function DQuickActionSwitch({ id, name, label, hint, checked, disabled, className, style, onClick, }) {
     const clickHandler = useCallback((event) => {
         event.stopPropagation();
-        onClick === null || onClick === void 0 ? void 0 : onClick(isChecked);
-    }, [isChecked, onClick]);
-    return (jsxs("button", { className: classNames('d-quick-action-switch', className), type: "button", onClick: clickHandler, style: style, children: [jsxs("div", { className: "d-quick-action-switch-content", children: [jsx(DInputSwitch, { id: id, name: name, disabled: isDisabled, checked: isChecked, readonly: true }), jsx("label", { className: "d-quick-action-switch-label", htmlFor: id, children: label })] }), jsx("div", { className: "d-quick-action-switch-hint", children: hint })] }));
+        onClick === null || onClick === void 0 ? void 0 : onClick(checked);
+    }, [checked, onClick]);
+    return (jsxs("button", { className: classNames('d-quick-action-switch', className), type: "button", onClick: clickHandler, style: style, children: [jsxs("div", { className: "d-quick-action-switch-content", children: [jsx(DInputSwitch, { id: id, name: name, disabled: disabled, checked: checked, readonly: true }), jsx("label", { className: "d-quick-action-switch-label", htmlFor: id, children: label })] }), jsx("div", { className: "d-quick-action-switch-hint", children: hint })] }));
 }
 
 function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
@@ -1086,13 +1083,13 @@ function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, child
     return (jsx(ContentLoader, { speed: speed, viewBox: viewBox, backgroundColor: innerBackgroundColor, foregroundColor: innerForegroundColor, children: children }));
 }
 
-function DStepper$2({ options, currentStep, successIcon = 'check', isVertical = false, className, style, }) {
+function DStepper$2({ options, currentStep, successIcon = 'check', vertical = false, className, style, }) {
     if (currentStep < 1 || currentStep > options.length) {
         throw new Error('Current step should be in the range from 1 to options length');
     }
     return (jsx("div", { className: classNames({
             'd-stepper-desktop': true,
-            'is-vertical': isVertical,
+            'is-vertical': vertical,
         }, className), style: style, children: options.map(({ label, value }) => (jsxs("div", { className: "d-step", children: [jsx("div", { className: "d-step-value", children: jsx("div", { className: classNames({
                             'd-step-icon-container': true,
                             'd-step-check': value < currentStep,
@@ -1132,8 +1129,8 @@ function DStepper$1({ options, currentStep, className, style, }) {
     return (jsxs("div", { className: classNames('d-stepper', className), style: style, children: [jsx("div", { className: "d-step-bar", style: { background: progressStyle }, children: jsx("p", { className: "d-step-number", children: `${currentStep}/${options.length}` }) }), jsx("div", { className: "d-step-info", children: Object.keys(currentOption).length > 0 && (jsxs(Fragment, { children: [jsx("div", { className: "d-step-label", children: currentOption.label }), jsx("div", { className: "d-step-description", children: currentOption.description || '' })] })) })] }));
 }
 
-function DStepper({ options, currentStep, successIcon = 'check', isVertical = false, breakpoint = 'lg', className, style, }) {
-    return (jsxs("div", { className: className, style: style, children: [jsx("div", { className: `d-block d-${breakpoint}-none`, children: jsx(DStepper$1, { options: options, currentStep: currentStep }) }), jsx("div", { className: `d-none d-${breakpoint}-block`, children: jsx(DStepper$2, { options: options, currentStep: currentStep, successIcon: successIcon, isVertical: isVertical }) })] }));
+function DStepper({ options, currentStep, successIcon = 'check', vertical = false, breakpoint = 'lg', className, style, }) {
+    return (jsxs("div", { className: className, style: style, children: [jsx("div", { className: `d-block d-${breakpoint}-none`, children: jsx(DStepper$1, { options: options, currentStep: currentStep }) }), jsx("div", { className: `d-none d-${breakpoint}-block`, children: jsx(DStepper$2, { options: options, currentStep: currentStep, successIcon: successIcon, vertical: vertical }) })] }));
 }
 
 const TOOLTIP_FONT_SIZE_BY_SIZE = {
@@ -1144,8 +1141,8 @@ const TOOLTIP_FONT_SIZE_BY_SIZE = {
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
 const GAP = 2;
-function DTooltip({ classNameContainer, className, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, isOpen = false, placement = 'top', size, Component, children, }) {
-    const [open, setOpen] = useState(isOpen);
+function DTooltip({ classNameContainer, className, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, placement = 'top', size, Component, children, }) {
+    const [isOpen, setIsOpen] = useState(open);
     const styleVariables = useMemo(() => {
         const defaultFontSize = size
             ? TOOLTIP_FONT_SIZE_BY_SIZE[size]
@@ -1154,8 +1151,8 @@ function DTooltip({ classNameContainer, className, style, offSet = ARROW_HEIGHT 
     }, [size, style]);
     const arrowRef = useRef(null);
     const { refs, context, floatingStyles, } = useFloating({
-        open,
-        onOpenChange: setOpen,
+        open: isOpen,
+        onOpenChange: setIsOpen,
         placement,
         whileElementsMounted: autoUpdate,
         middleware: [
@@ -1181,7 +1178,7 @@ function DTooltip({ classNameContainer, className, style, offSet = ARROW_HEIGHT 
         dismiss,
         role,
     ]);
-    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: className, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: open && (jsxs("div", Object.assign({ className: classNameContainer, ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), styleVariables) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, style: {
+    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: className, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNameContainer, ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), styleVariables) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, style: {
                                 fill: styleVariables.background,
                             }, width: ARROW_WIDTH, height: ARROW_HEIGHT }), children] }))) })] }));
 }
@@ -1203,7 +1200,7 @@ function DTabContent({ tab, children, className, style, }) {
     return (jsx("div", { className: classNames('tab-pane fade show active', className), id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab`, style: style, children: children }));
 }
 
-function DTabs({ children, defaultSelected, onChange, options, className, style, isVertical, }) {
+function DTabs({ children, defaultSelected, onChange, options, className, style, vertical, }) {
     const [selected, setSelected] = useState(defaultSelected);
     const onSelect = useCallback((option) => {
         if (option.tab) {
@@ -1220,10 +1217,10 @@ function DTabs({ children, defaultSelected, onChange, options, className, style,
     }), [isSelected]);
     return (jsx(TabContext.Provider, { value: value, children: jsxs("div", { className: classNames({
                 'd-tabs': true,
-                'd-tabs-vertical': isVertical,
+                'd-tabs-vertical': vertical,
             }, className), style: style, children: [jsx("nav", { className: "nav", children: options.map((option) => (jsx("button", { id: `${option.tab}Tab`, className: classNames('nav-link', {
                             active: option.tab === selected,
-                        }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.isDisabled, onClick: () => onSelect(option), children: option.label }, option.label))) }), jsx("div", { className: "tab-content", children: children })] }) }));
+                        }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.disabled, onClick: () => onSelect(option), children: option.label }, option.label))) }), jsx("div", { className: "tab-content", children: children })] }) }));
 }
 var DTabs$1 = Object.assign(DTabs, {
     Tab: DTabContent,

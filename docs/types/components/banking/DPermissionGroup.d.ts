@@ -4,7 +4,7 @@ type Props = {
     description: string;
     permissionState: string;
     permissionList: Array<PermissionItemType>;
-    onChangePermission: (permission: PermissionItemType, isChecked: boolean) => void;
+    onChangePermission: (permission: PermissionItemType, checked: boolean) => void;
     onCustomAction?: (permission: PermissionItemType) => void;
 };
 export default function DPermissionGroup({ title, description, permissionState, permissionList, onChangePermission, onCustomAction, }: Props): import("react/jsx-runtime").JSX.Element;
