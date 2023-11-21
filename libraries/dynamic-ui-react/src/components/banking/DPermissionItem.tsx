@@ -32,8 +32,8 @@ export default function DPermissionItem({
       )}
       <DInputSwitch
         id={permission.id}
-        isChecked={!!permission.value}
-        isDisabled={!permission.enabled}
+        checked={!!permission.value}
+        disabled={!permission.enabled}
         onChange={(isChecked) => onChange(isChecked)}
       />
     </div>

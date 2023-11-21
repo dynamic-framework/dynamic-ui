@@ -21,8 +21,10 @@ type Props =
   prevMonthButtonDisabled: boolean;
   nextMonthButtonDisabled: boolean;
   withMonthSelector: boolean;
-  decreaseMonthIcon: string;
-  increaseMonthIcon: string;
+  prevMonthIcon: string;
+  nextMonthIcon: string;
+  prevMonthAriaLabel?: string;
+  nextMonthAriaLabel?: string;
   iconSize: ComponentSize;
   buttonVariant: ButtonVariant;
   buttonTheme: string;
@@ -42,8 +44,10 @@ export default function DDatePickerHeader(
     prevMonthButtonDisabled,
     nextMonthButtonDisabled,
     withMonthSelector,
-    decreaseMonthIcon,
-    increaseMonthIcon,
+    prevMonthIcon,
+    nextMonthIcon,
+    prevMonthAriaLabel = 'decrease month',
+    nextMonthAriaLabel = 'increase month',
     iconSize,
     buttonVariant,
     buttonTheme,
@@ -68,12 +72,13 @@ export default function DDatePickerHeader(
       style={style}
     >
       <DButton
-        iconStart={decreaseMonthIcon}
+        iconStart={prevMonthIcon}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
         onClick={decreaseMonth}
-        isDisabled={prevMonthButtonDisabled}
+        disabled={prevMonthButtonDisabled}
+        ariaLabel={prevMonthAriaLabel}
       />
       <DMonthPicker
         {...!withMonthSelector && { readOnly: true }}
@@ -82,12 +87,13 @@ export default function DDatePickerHeader(
         {...locale && { locale }}
       />
       <DButton
-        iconStart={increaseMonthIcon}
+        iconStart={nextMonthIcon}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
         onClick={increaseMonth}
-        isDisabled={nextMonthButtonDisabled}
+        disabled={nextMonthButtonDisabled}
+        ariaLabel={nextMonthAriaLabel}
       />
     </div>
   );

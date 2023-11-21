@@ -36,7 +36,7 @@ export const Default: Story = {
         <DButton
           text="Dropdown Component"
           iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-          isStopPropagationEnabled={false}
+          stopPropagationEnabled={false}
         />
       </div>
     ),
@@ -68,7 +68,7 @@ export const AdjustToContent: Story = {
         <DButton
           text="Dropdown Component"
           iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-          isStopPropagationEnabled={false}
+          stopPropagationEnabled={false}
         />
       </div>
     ),
@@ -100,11 +100,11 @@ export const Open: Story = {
         <DButton
           text="Dropdown Component"
           iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-          isStopPropagationEnabled={false}
+          stopPropagationEnabled={false}
         />
       </div>
     ),
-    isOpen: true,
+    open: true,
   },
 };
 

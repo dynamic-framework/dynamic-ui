@@ -34,15 +34,15 @@ type Props =
   label?: string;
   placeholder?: string;
   type?: PinInputType;
-  isDisabled?: boolean;
-  isReadOnly?: boolean;
-  isLoading?: boolean;
-  isSecret?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  loading?: boolean;
+  secret?: boolean;
   characters?: number;
   innerInputMode?: PinInputMode;
   hint?: string;
-  isInvalid?: boolean;
-  isValid?: boolean;
+  invalid?: boolean;
+  valid?: boolean;
   onChange?: (value: string) => void;
 };
 
@@ -55,16 +55,16 @@ export default function DInputPin(
     labelIconFamilyPrefix,
     placeholder = '•',
     type = 'text',
-    isDisabled = false,
-    isLoading = false,
-    isSecret = false,
+    disabled = false,
+    loading = false,
+    secret = false,
     iconFamilyClass,
     iconFamilyPrefix,
     characters = 4,
     innerInputMode = 'text',
     hint,
-    isInvalid = false,
-    isValid = false,
+    invalid = false,
+    valid = false,
     className,
     style,
     onChange,
@@ -154,10 +154,10 @@ export default function DInputPin(
           <input
             className={classNames({
               'form-control': true,
-              'is-invalid': isInvalid,
-              'is-valid': isValid,
+              'is-invalid': invalid,
+              'is-valid': valid,
             })}
-            type={isSecret ? 'password' : type}
+            type={secret ? 'password' : type}
             aria-describedby={`${id}State`}
             inputMode={innerInputMode}
             id={`pinIndex${index}`}
@@ -170,7 +170,7 @@ export default function DInputPin(
             onClick={preventDefaultEvent}
             autoComplete="off"
             placeholder={placeholder}
-            disabled={isDisabled || isLoading}
+            disabled={disabled || loading}
             required
             // eslint-disable-next-line react/no-array-index-key
             key={index}
@@ -179,20 +179,20 @@ export default function DInputPin(
             )}
           />
         ))}
-        {(isInvalid || isValid) && !isLoading && (
+        {(invalid || valid) && !loading && (
           <span
             className="input-group-text"
             id={`${id}State`}
           >
             <DIcon
               className="d-input-pin-validation-icon"
-              icon={isInvalid ? 'exclamation-circle' : 'check'}
+              icon={invalid ? 'exclamation-circle' : 'check'}
               familyClass={iconFamilyClass}
               familyPrefix={iconFamilyPrefix}
             />
           </span>
         )}
-        {isLoading && (
+        {loading && (
           <div className="input-group-text d-input-pin-icon">
             <span
               className="spinner-border spinner-border-sm"

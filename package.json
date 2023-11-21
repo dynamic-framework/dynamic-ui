@@ -19,6 +19,7 @@
     "eslint": "lerna run eslint --no-private",
     "stylelint": "lerna run stylelint --no-private",
     "test": "lerna run test --no-private",
+    "test:storybook": "lerna run test:storybook --no-private",
     "publish": "lerna publish --no-private --loglevel verbose"
   },
   "engines": {

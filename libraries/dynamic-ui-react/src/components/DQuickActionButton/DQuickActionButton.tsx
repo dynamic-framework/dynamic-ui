@@ -14,6 +14,7 @@ type Props = BaseProps & {
   actionLinkTheme?: string;
   actionIcon?: string;
   secondaryActionIcon?: string;
+  secondaryActionAriaLabel?: string;
   actionIconFamilyClass?: string;
   actionIconFamilyPrefix?: string;
   representativeImage?: string;
@@ -35,6 +36,7 @@ export default function DQuickActionButton(
     actionLinkTheme = 'secondary',
     actionIcon,
     secondaryActionIcon,
+    secondaryActionAriaLabel,
     actionIconFamilyClass,
     actionIconFamilyPrefix,
     representativeImage,
@@ -111,11 +113,12 @@ export default function DQuickActionButton(
           type="button"
           variant="link"
           iconStart={secondaryActionIcon}
+          ariaLabel={secondaryActionAriaLabel}
           iconStartFamilyClass={actionIconFamilyClass}
           iconStartFamilyPrefix={actionIconFamilyPrefix}
           theme={actionLinkTheme}
           onClick={secondaryActionLinkClickHandler}
-          isStopPropagationEnabled
+          stopPropagationEnabled
         />
       )}
       {actionLinkText && !actionIcon && (
@@ -126,7 +129,7 @@ export default function DQuickActionButton(
           theme={actionLinkTheme}
           text={actionLinkText}
           onClick={actionLinkClickHandler}
-          isStopPropagationEnabled
+          stopPropagationEnabled
         />
       )}
       {actionIcon && !actionLinkText && (

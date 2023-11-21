@@ -7,7 +7,7 @@ type Props =
 & BaseProps
 & {
   text?: string;
-  isDot?: boolean;
+  dot?: boolean;
   theme?: string;
   id?: string;
 };
@@ -15,7 +15,7 @@ type Props =
 export default function DBadge(
   {
     text,
-    isDot = false,
+    dot = false,
     theme = 'primary',
     id,
     className,
@@ -25,10 +25,10 @@ export default function DBadge(
   const generateClasses = useMemo(
     () => ({
       badge: true,
-      'badge-dot': isDot,
+      'badge-dot': dot,
       [`badge-${theme}`]: !!theme,
     }),
-    [isDot, theme],
+    [dot, theme],
   );
 
   return (

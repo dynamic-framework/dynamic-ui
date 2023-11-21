@@ -15,10 +15,11 @@ type Props =
   type: InputCheckType;
   name?: string;
   label?: string;
-  isChecked?: boolean;
+  ariaLabel?: string;
+  checked?: boolean;
   id: string;
-  isDisabled?: boolean;
-  isIndeterminate?: boolean;
+  disabled?: boolean;
+  indeterminate?: boolean;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -28,10 +29,11 @@ export default function DInputCheck(
     type,
     name,
     label,
-    isChecked = false,
+    ariaLabel,
+    checked = false,
     id,
-    isDisabled = false,
-    isIndeterminate,
+    disabled = false,
+    indeterminate,
     value,
     onChange,
     className,
@@ -45,15 +47,15 @@ export default function DInputCheck(
 
   useEffect(() => {
     if (innerRef.current) {
-      innerRef.current.indeterminate = Boolean(isIndeterminate);
+      innerRef.current.indeterminate = Boolean(indeterminate);
     }
-  }, [isIndeterminate]);
+  }, [indeterminate]);
 
   useEffect(() => {
     if (innerRef.current) {
-      innerRef.current.checked = isChecked;
+      innerRef.current.checked = checked;
     }
-  }, [isChecked]);
+  }, [checked]);
 
   if (!label) {
     return (
@@ -63,10 +65,11 @@ export default function DInputCheck(
         className={classNames('form-check-input', className)}
         style={style}
         id={id}
-        disabled={isDisabled}
+        disabled={disabled}
         type={type}
         name={name}
         value={value}
+        aria-label={ariaLabel}
       />
     );
   }
@@ -79,7 +82,7 @@ export default function DInputCheck(
         className={classNames('form-check-input', className)}
         style={style}
         id={id}
-        disabled={isDisabled}
+        disabled={disabled}
         type={type}
         name={name}
         value={value}

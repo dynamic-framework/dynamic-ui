@@ -33,6 +33,6 @@ export const Default: Story = {
     accept: {
       'image/png': ['.png'],
     },
-    isDisabled: false,
+    disabled: false,
   },
 };

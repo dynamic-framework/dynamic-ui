@@ -81,6 +81,14 @@ const config: Meta<typeof DInput> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
+    iconStartAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
     iconEnd: {
       control: {
         type: 'select',
@@ -140,6 +148,8 @@ export const Default: Story = {
     value: '',
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
     hint: 'Assistive text',
   },
 };
@@ -154,6 +164,8 @@ export const Value: Story = {
     value: 'Value',
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
     hint: 'Assistive text',
   },
 };
@@ -167,6 +179,7 @@ export const Error: Story = {
     type: 'text',
     value: undefined,
     iconStart: 'emoji-smile-upside-down',
+    iconStartAriaLabel: 'start action',
     iconEnd: undefined,
     hint: 'Assistive text',
     invalid: true,
@@ -182,6 +195,7 @@ export const Confirm: Story = {
     type: 'text',
     value: undefined,
     iconStart: 'emoji-smile-upside-down',
+    iconStartAriaLabel: 'start action',
     iconEnd: undefined,
     hint: 'Assistive text',
     valid: true,
@@ -198,6 +212,8 @@ export const Disabled: Story = {
     value: undefined,
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
     hint: 'Assistive text',
     disabled: true,
   },

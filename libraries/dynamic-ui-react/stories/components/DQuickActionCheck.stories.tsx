@@ -39,7 +39,7 @@ const config: Meta<typeof DQuickActionCheck> = {
       control: 'text',
       type: 'string',
     },
-    isChecked: {
+    checked: {
       control: 'boolean',
       type: 'boolean',
     },
@@ -113,6 +113,6 @@ export const Checked: Story = {
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
-    isChecked: true,
+    checked: true,
   },
 };

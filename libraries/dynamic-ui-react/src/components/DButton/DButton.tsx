@@ -30,12 +30,14 @@ type Props =
   variant?: ButtonVariant;
   state?: InputState;
   text?: string;
+  ariaLabel?: string;
   value?: string;
   type?: ButtonType;
-  isPill?: boolean;
-  isLoading?: boolean;
-  isDisabled?: boolean;
-  isStopPropagationEnabled?: boolean;
+  pill?: boolean;
+  loading?: boolean;
+  loadingAriaLabel?: string;
+  disabled?: boolean;
+  stopPropagationEnabled?: boolean;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -46,6 +48,7 @@ export default function DButton(
     variant,
     state,
     text = '',
+    ariaLabel,
     iconStart,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
@@ -54,10 +57,11 @@ export default function DButton(
     iconEndFamilyPrefix,
     value,
     type = 'button',
-    isPill = false,
-    isLoading = false,
-    isDisabled = false,
-    isStopPropagationEnabled = true,
+    pill = false,
+    loading = false,
+    loadingAriaLabel,
+    disabled = false,
+    stopPropagationEnabled = true,
     className,
     onClick,
   }: Props,
@@ -72,12 +76,12 @@ export default function DButton(
       [variantClass]: true,
       ...size && { [`btn-${size}`]: true },
       ...(state && state !== 'disabled') && { [state]: true },
-      loading: isLoading,
+      loading,
     };
-  }, [variant, theme, size, state, isLoading]);
+  }, [variant, theme, size, state, loading]);
 
   const generateStyleVariables = useMemo<CustomStyles>(() => {
-    if (isPill) {
+    if (pill) {
       return {
         [`--${PREFIX_BS}btn-component-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
         [`--${PREFIX_BS}btn-component-lg-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
@@ -85,23 +89,34 @@ export default function DButton(
       };
     }
     return {};
-  }, [isPill]);
+  }, [pill]);
 
   const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    if (isStopPropagationEnabled) {
+    if (stopPropagationEnabled) {
       event.stopPropagation();
     }
     onClick?.(event);
-  }, [isStopPropagationEnabled, onClick]);
+  }, [stopPropagationEnabled, onClick]);
+
+  const isDisabled = useMemo(() => (
+    state === 'disabled' || loading || disabled
+  ), [state, loading, disabled]);
+
+  const newAriaLabel = useMemo(() => (
+    loading
+      ? (loadingAriaLabel || ariaLabel || text)
+      : (ariaLabel || text)
+  ), [loading, loadingAriaLabel, ariaLabel, text]);
 
   return (
     <button
       className={classNames(generateClasses, className)}
       style={generateStyleVariables}
       type={type}
-      disabled={state === 'disabled' || isLoading || isDisabled}
-      {...value && { value }}
+      disabled={isDisabled}
       onClick={clickHandler}
+      aria-label={newAriaLabel}
+      {...value && { value }}
     >
       {iconStart && (
         <DIcon
@@ -110,10 +125,10 @@ export default function DButton(
           familyPrefix={iconStartFamilyPrefix}
         />
       )}
-      {(text && !isLoading) && (
+      {(text && !loading) && (
         <span>{text}</span>
       )}
-      {isLoading && (
+      {loading && (
         <span
           className="spinner-border spinner-border-sm"
           role="status"

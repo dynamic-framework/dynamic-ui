@@ -20,7 +20,7 @@ const config: Meta<typeof DBadge> = {
       table: { defaultValue: { summary: 'primary' } },
       description: 'The theme to use.',
     },
-    isDot: {
+    dot: {
       control: 'boolean',
       type: 'boolean',
       description: 'Enable dot mode',
@@ -42,7 +42,7 @@ export const Dot: Story = {
   args: {
     theme: 'primary',
     text: '+2',
-    isDot: true,
+    dot: true,
   },
 };
 
@@ -50,6 +50,6 @@ export const Empty: Story = {
   args: {
     theme: 'primary',
     text: undefined,
-    isDot: true,
+    dot: true,
   },
 };

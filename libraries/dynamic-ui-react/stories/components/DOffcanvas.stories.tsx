@@ -15,11 +15,11 @@ const config: Meta<typeof DOffcanvas> = {
       control: 'text',
       type: { name: 'string' },
     },
-    isStatic: {
+    staticBackdrop: {
       control: 'boolean',
       type: 'boolean',
     },
-    isScrollable: {
+    scrollable: {
       control: 'boolean',
       type: 'boolean',
     },
@@ -62,8 +62,8 @@ export const Default: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
-    isStatic: false,
-    isScrollable: false,
+    staticBackdrop: false,
+    scrollable: false,
     openFrom: 'end',
   },
 };
@@ -98,8 +98,8 @@ export const ActionsPlacementStart: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
-    isStatic: false,
-    isScrollable: false,
+    staticBackdrop: false,
+    scrollable: false,
     openFrom: 'end',
   },
 };
@@ -134,8 +134,8 @@ export const ActionsPlacementEnd: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
-    isStatic: false,
-    isScrollable: false,
+    staticBackdrop: false,
+    scrollable: false,
     openFrom: 'end',
   },
 };
@@ -168,8 +168,8 @@ export const WithoutHeader: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
-    isStatic: false,
-    isScrollable: false,
+    staticBackdrop: false,
+    scrollable: false,
     openFrom: 'end',
   },
 };
@@ -194,8 +194,8 @@ export const WithoutActions: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
-    isStatic: false,
-    isScrollable: false,
+    staticBackdrop: false,
+    scrollable: false,
     openFrom: 'end',
   },
 };
@@ -218,8 +218,8 @@ export const OnlyBody: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
-    isStatic: false,
-    isScrollable: false,
+    staticBackdrop: false,
+    scrollable: false,
     openFrom: 'end',
   },
 };
@@ -254,8 +254,8 @@ export const WithoutCancelX: Story = {
   ),
   args: {
     name: 'exampleOffcanvas',
-    isStatic: false,
-    isScrollable: false,
+    staticBackdrop: false,
+    scrollable: false,
     openFrom: 'end',
   },
 };
