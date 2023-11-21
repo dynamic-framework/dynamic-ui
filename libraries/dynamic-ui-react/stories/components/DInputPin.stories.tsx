@@ -36,22 +36,22 @@ const config: Meta<typeof DInputPin> = {
       type: 'string',
       description: 'Type of the inputs',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isReadOnly: {
+    readOnly: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isLoading: {
+    loading: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isSecret: {
+    secret: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -73,12 +73,12 @@ const config: Meta<typeof DInputPin> = {
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
-    isInvalid: {
+    invalid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isValid: {
+    valid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -99,11 +99,11 @@ export const Default: Story = {
     characters: 4,
     type: 'text',
     hint: 'Assistive text',
-    isDisabled: false,
-    isLoading: false,
-    isSecret: false,
-    isInvalid: false,
-    isValid: false,
+    disabled: false,
+    loading: false,
+    secret: false,
+    invalid: false,
+    valid: false,
   },
 };
 
@@ -112,11 +112,11 @@ export const WithoutLabel: Story = {
     id: 'componentId2',
     characters: 4,
     type: 'text',
-    isDisabled: false,
-    isLoading: false,
-    isSecret: false,
-    isInvalid: false,
-    isValid: false,
+    disabled: false,
+    loading: false,
+    secret: false,
+    invalid: false,
+    valid: false,
   },
 };
 
@@ -127,11 +127,11 @@ export const Error: Story = {
     characters: 4,
     type: 'text',
     hint: 'Assistive text',
-    isDisabled: false,
-    isLoading: false,
-    isSecret: false,
-    isInvalid: true,
-    isValid: false,
+    disabled: false,
+    loading: false,
+    secret: false,
+    invalid: true,
+    valid: false,
   },
 };
 
@@ -142,11 +142,11 @@ export const Confirm: Story = {
     characters: 4,
     type: 'text',
     hint: 'Assistive text',
-    isDisabled: false,
-    isLoading: false,
-    isSecret: false,
-    isInvalid: false,
-    isValid: true,
+    disabled: false,
+    loading: false,
+    secret: false,
+    invalid: false,
+    valid: true,
   },
 };
 
@@ -157,10 +157,10 @@ export const Disabled: Story = {
     characters: 4,
     type: 'text',
     hint: 'Assistive text',
-    isDisabled: true,
-    isLoading: false,
-    isSecret: false,
-    isInvalid: false,
-    isValid: false,
+    disabled: true,
+    loading: false,
+    secret: false,
+    invalid: false,
+    valid: false,
   },
 };

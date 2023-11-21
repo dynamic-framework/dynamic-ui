@@ -30,15 +30,19 @@ const config: Meta<typeof DInputCheck> = {
       control: 'text',
       type: 'string',
     },
-    isChecked: {
+    ariaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    checked: {
       control: 'boolean',
       type: 'boolean',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
     },
-    isIndeterminate: {
+    indeterminate: {
       control: 'boolean',
     },
   },
@@ -51,8 +55,9 @@ export const CheckboxWithoutLabel: Story = {
   args: {
     id: 'componentId1',
     type: 'checkbox',
-    isChecked: false,
-    isDisabled: false,
+    checked: false,
+    disabled: false,
+    ariaLabel: 'Label',
   },
 };
 
@@ -61,8 +66,8 @@ export const CheckboxDefault: Story = {
     id: 'componentId2',
     type: 'checkbox',
     label: 'Label',
-    isChecked: false,
-    isDisabled: false,
+    checked: false,
+    disabled: false,
   },
 };
 
@@ -71,8 +76,8 @@ export const CheckboxChecked: Story = {
     id: 'componentId3',
     type: 'checkbox',
     label: 'Label',
-    isChecked: true,
-    isDisabled: false,
+    checked: true,
+    disabled: false,
   },
 };
 
@@ -81,8 +86,8 @@ export const CheckboxDisabled: Story = {
     id: 'componentId4',
     type: 'checkbox',
     label: 'Label',
-    isChecked: false,
-    isDisabled: true,
+    checked: false,
+    disabled: true,
   },
 };
 
@@ -90,8 +95,9 @@ export const RadioWithoutLabel: Story = {
   args: {
     id: 'componentId5',
     type: 'radio',
-    isChecked: false,
-    isDisabled: false,
+    checked: false,
+    disabled: false,
+    ariaLabel: 'Label',
   },
 };
 
@@ -100,8 +106,8 @@ export const RadioDefault: Story = {
     id: 'componentId6',
     type: 'radio',
     label: 'Label',
-    isChecked: false,
-    isDisabled: false,
+    checked: false,
+    disabled: false,
   },
 };
 
@@ -110,8 +116,8 @@ export const RadioChecked: Story = {
     id: 'componentId7',
     type: 'radio',
     label: 'Label',
-    isChecked: true,
-    isDisabled: false,
+    checked: true,
+    disabled: false,
   },
 };
 
@@ -120,7 +126,7 @@ export const RadioDisabled: Story = {
     id: 'componentId8',
     type: 'radio',
     label: 'Label',
-    isChecked: false,
-    isDisabled: true,
+    checked: false,
+    disabled: true,
   },
 };

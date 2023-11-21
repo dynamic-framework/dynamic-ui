@@ -32,8 +32,7 @@ it('should render my component', () => {
           class="input-group"
         >
           <input
-            aria-describedby="searchIdAdd searchIdHint"
-            aria-label="Label"
+            aria-describedby="searchIdEnd"
             class="form-control"
             id="searchId"
             placeholder="Search"
@@ -41,6 +40,7 @@ it('should render my component', () => {
             value="Value"
           />
           <button
+            aria-label="search"
             class="input-group-text"
             id="searchIdEnd"
             type="button"

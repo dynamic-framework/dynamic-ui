@@ -34,7 +34,7 @@ const config: Meta<typeof DQuickActionSelect> = {
       control: 'text',
       type: 'string',
     },
-    isSelected: {
+    selected: {
       control: 'boolean',
       type: 'boolean',
     },
@@ -108,6 +108,6 @@ export const Selected: Story = {
     name: 'name',
     line1: 'total',
     line2: '$ 7.432.450',
-    isSelected: true,
+    selected: true,
   },
 };

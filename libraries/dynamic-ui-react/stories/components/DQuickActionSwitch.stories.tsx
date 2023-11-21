@@ -28,11 +28,11 @@ const config: Meta<typeof DQuickActionSwitch> = {
       control: 'text',
       type: 'string',
     },
-    isChecked: {
+    checked: {
       control: 'boolean',
       type: 'boolean',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
     },
@@ -60,7 +60,7 @@ export const Default: Story = {
     id: 'componentId1',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
-    isChecked: false,
+    checked: false,
   },
 };
 
@@ -79,7 +79,7 @@ export const Checked: Story = {
     id: 'componentId2',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
-    isChecked: true,
+    checked: true,
   },
 };
 
@@ -98,8 +98,8 @@ export const DefaultDisabled: Story = {
     id: 'componentId3',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
-    isChecked: false,
-    isDisabled: true,
+    checked: false,
+    disabled: true,
   },
 };
 
@@ -118,7 +118,7 @@ export const CheckedDisabled: Story = {
     id: 'componentId4',
     label: 'Program',
     hint: 'This payment is applied with the periodicity and date that you define',
-    isChecked: true,
-    isDisabled: true,
+    checked: true,
+    disabled: true,
   },
 };

@@ -79,6 +79,14 @@ const config: Meta<typeof DInputCurrencyBase> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
+    iconStartAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
     hint: {
       control: 'text',
       type: 'string',

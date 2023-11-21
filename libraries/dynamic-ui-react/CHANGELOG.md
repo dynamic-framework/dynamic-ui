@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * change border value when input has value ([1efa73e](https://github.com/dynamic-framework/dynamic-ui/commit/1efa73eb949d03b5f6ba62c21e6f187914cc475d))
 * d-input currency on change behavior ([6facb6e](https://github.com/dynamic-framework/dynamic-ui/commit/6facb6eccce25dd722e0914489251be606efed56))
-* DAlert classname ([e40a4f7](https://github.com/dynamic-framework/dynamic-ui/commit/e40a4f73ddc606a3f97427c153d5740a429c26a5))
+* DToast classname ([e40a4f7](https://github.com/dynamic-framework/dynamic-ui/commit/e40a4f73ddc606a3f97427c153d5740a429c26a5))
 * use the same root var to the border radios of arrow and pages in DPaginator ([6114578](https://github.com/dynamic-framework/dynamic-ui/commit/6114578e3de5aff50c42b21c526865eab87c99da))
 
 
@@ -99,7 +99,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * adjust DPopover story and add flag to adjust content to render ([19b3c7e](https://github.com/dynamic-framework/dynamic-ui/commit/19b3c7ee10df24e2bdf19d7f620f07e7875f4c08))
 * move styles and remove angular, vue and stencil packages ([7f1f155](https://github.com/dynamic-framework/dynamic-ui/commit/7f1f155a639f40f54411958f0171d823b4c21ecd))
 * move utils from ui package to react package ([4fe7bc3](https://github.com/dynamic-framework/dynamic-ui/commit/4fe7bc30cd8656d882c462efcad7832f7004aeba))
-* refactor DAlert from stencil to react ([41f4f8e](https://github.com/dynamic-framework/dynamic-ui/commit/41f4f8ec22de115dde8a2c91378c490282fa6648))
+* refactor DToast from stencil to react ([41f4f8e](https://github.com/dynamic-framework/dynamic-ui/commit/41f4f8ec22de115dde8a2c91378c490282fa6648))
 * refactor DBadge from stencil to react ([d3678e6](https://github.com/dynamic-framework/dynamic-ui/commit/d3678e6cb63d143afef1011b7dedc195c94d6176))
 * refactor DButton from stencil to react ([1fc85ac](https://github.com/dynamic-framework/dynamic-ui/commit/1fc85acdd8c93f5f738535788e104a6a546d6b8d))
 * refactor DChip from stencil to react ([87caa82](https://github.com/dynamic-framework/dynamic-ui/commit/87caa82117ad7a5a9648f76157a5fa0d34d71823))

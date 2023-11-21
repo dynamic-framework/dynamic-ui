@@ -25,7 +25,7 @@ DropzoneOptions,
 | 'onFileDialogOpen'
 > & {
   icon?: string;
-  isDisabled: DropzoneOptions['disabled'];
+  disabled: DropzoneOptions['disabled'];
 }
 >;
 
@@ -34,7 +34,7 @@ export default function DBoxFile(
     icon = 'cloud-upload',
     iconFamilyClass,
     iconFamilyPrefix,
-    isDisabled = false,
+    disabled = false,
     children,
     className,
     style,
@@ -46,7 +46,7 @@ export default function DBoxFile(
     getRootProps,
     getInputProps,
   } = useDropzone({
-    disabled: isDisabled,
+    disabled,
     ...dropzoneOptions,
   });
 
@@ -66,7 +66,7 @@ export default function DBoxFile(
           className: classnames(
             'd-box-file-dropzone',
             {
-              disabled: isDisabled,
+              disabled,
             },
           ),
         })}

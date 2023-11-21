@@ -12,8 +12,8 @@ type Props = BaseProps & {
   name?: string;
   label: string;
   hint: string;
-  isChecked?: boolean;
-  isDisabled?: boolean;
+  checked?: boolean;
+  disabled?: boolean;
   onClick?: (isChecked: boolean | undefined) => void;
 };
 
@@ -23,8 +23,8 @@ export default function DQuickActionSwitch(
     name,
     label,
     hint,
-    isChecked,
-    isDisabled,
+    checked,
+    disabled,
     className,
     style,
     onClick,
@@ -32,8 +32,8 @@ export default function DQuickActionSwitch(
 ) {
   const clickHandler = useCallback((event: MouseEvent) => {
     event.stopPropagation();
-    onClick?.(isChecked);
-  }, [isChecked, onClick]);
+    onClick?.(checked);
+  }, [checked, onClick]);
 
   return (
     <button
@@ -46,9 +46,9 @@ export default function DQuickActionSwitch(
         <DInputSwitch
           id={id}
           name={name}
-          isDisabled={isDisabled}
-          isChecked={isChecked}
-          isReadonly
+          disabled={disabled}
+          checked={checked}
+          readonly
         />
         <label
           className="d-quick-action-switch-label"

@@ -11,15 +11,15 @@ const config: Meta<typeof DList> = {
       type: 'string',
       control: 'text',
     },
-    isFlush: {
+    flush: {
       type: 'boolean',
       control: 'boolean',
     },
-    isHorizontal: {
+    horizontal: {
       type: 'boolean',
       control: 'boolean',
     },
-    isNumbered: {
+    numbered: {
       type: 'boolean',
       control: 'boolean',
     },
@@ -63,7 +63,7 @@ export const Flush: Story = {
     </DList>
   ),
   args: {
-    isFlush: true,
+    flush: true,
   },
 };
 
@@ -81,7 +81,7 @@ export const Numbered: Story = {
     </DList>
   ),
   args: {
-    isNumbered: true,
+    numbered: true,
   },
 };
 
@@ -99,7 +99,7 @@ export const Horizontal: Story = {
     </DList>
   ),
   args: {
-    isHorizontal: true,
+    horizontal: true,
   },
 };
 
@@ -124,7 +124,7 @@ export const HorizontalWithBreakpoint: Story = {
     </DList>
   ),
   args: {
-    isHorizontal: true,
+    horizontal: true,
     horizontalBreakpoint: 'md',
   },
   name: 'Horizontal with breakpoint',

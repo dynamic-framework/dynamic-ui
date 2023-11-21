@@ -13,6 +13,8 @@ type Props = BaseProps & Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' 
   date: string;
   onChangeDate: (value: Date | null) => void;
   locale?: Locale;
+  headerPrevYearAriaLabel?: string;
+  headerNextYearAriaLabel?: string;
 };
 
 export default function DMonthPicker(
@@ -21,6 +23,8 @@ export default function DMonthPicker(
     date,
     locale,
     className,
+    headerPrevYearAriaLabel = 'decrease year',
+    headerNextYearAriaLabel = 'increase year',
     ...props
   }: Props,
 ) {
@@ -55,7 +59,8 @@ export default function DMonthPicker(
             variant="link"
             theme="light"
             onClick={decreaseYear}
-            isDisabled={prevYearButtonDisabled}
+            disabled={prevYearButtonDisabled}
+            ariaLabel={headerPrevYearAriaLabel}
           />
           <p className="fs-6 fw-bold">
             {monthDate.getFullYear()}
@@ -66,7 +71,8 @@ export default function DMonthPicker(
             variant="link"
             theme="light"
             onClick={increaseYear}
-            isDisabled={nextYearButtonDisabled}
+            disabled={nextYearButtonDisabled}
+            ariaLabel={headerNextYearAriaLabel}
           />
         </div>
       )}

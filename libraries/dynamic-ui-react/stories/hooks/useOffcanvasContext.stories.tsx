@@ -12,8 +12,8 @@ import type { OffcanvasProps } from '../../src/contexts';
 const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
   <DOffcanvas
     name="example"
-    isStatic={false}
-    isScrollable={false}
+    staticBackdrop={false}
+    scrollable={false}
     openFrom="end"
   >
     <DOffcanvas.Header onClose={closeOffcanvas} showCloseButton>

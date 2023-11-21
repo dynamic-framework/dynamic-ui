@@ -12,32 +12,34 @@ type Props =
 & BaseProps
 & {
   label?: string;
+  ariaLabel?: string;
   id: string;
   name?: string;
-  isChecked?: boolean;
-  isDisabled?: boolean;
-  isReadonly?: boolean;
+  checked?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
   onChange?: (isChecked: boolean) => void;
 };
 
 export default function DInputSwitch(
   {
     label,
+    ariaLabel,
     id,
     name,
-    isChecked,
-    isDisabled,
-    isReadonly,
+    checked,
+    disabled,
+    readonly,
     className,
     style,
     onChange,
   }: Props,
 ) {
-  const [internalIsChecked, setInternalIsChecked] = useState<boolean | undefined>(isChecked);
+  const [internalIsChecked, setInternalIsChecked] = useState<boolean | undefined>(checked);
 
   useEffect(() => {
-    setInternalIsChecked(isChecked);
-  }, [isChecked]);
+    setInternalIsChecked(checked);
+  }, [checked]);
 
   const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.checked;
@@ -50,13 +52,14 @@ export default function DInputSwitch(
       <input
         id={id}
         name={name}
-        onChange={isReadonly ? () => false : changeHandler}
+        onChange={readonly ? () => false : changeHandler}
         className={classNames('form-check-input', className)}
         style={style}
         type="checkbox"
         role="switch"
         checked={internalIsChecked}
-        disabled={isDisabled}
+        disabled={disabled}
+        aria-label={ariaLabel}
       />
       {label && (
         <label

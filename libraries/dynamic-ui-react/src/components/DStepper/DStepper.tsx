@@ -13,7 +13,7 @@ type Props = BaseProps & {
   options: Array<Step>;
   currentStep: number;
   successIcon?: string;
-  isVertical?: boolean;
+  vertical?: boolean;
   breakpoint?: BreakpointSize;
 };
 
@@ -22,7 +22,7 @@ export default function DStepper(
     options,
     currentStep,
     successIcon = 'check',
-    isVertical = false,
+    vertical = false,
     breakpoint = 'lg',
     className,
     style,
@@ -44,7 +44,7 @@ export default function DStepper(
           options={options}
           currentStep={currentStep}
           successIcon={successIcon}
-          isVertical={isVertical}
+          vertical={vertical}
         />
       </div>
     </div>

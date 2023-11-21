@@ -8,15 +8,16 @@ module.exports = {
     getAbsolutePath("@storybook/addon-essentials"),
     getAbsolutePath("@storybook/addon-interactions"),
     getAbsolutePath("@storybook/addon-viewport"),
+    getAbsolutePath("@storybook/addon-a11y"),
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-webpack5"),
     options: {
       builder: {
         fsCache: true,
-        lazyCompilation: true
-      }
-    }
+        lazyCompilation: false,
+      },
+    },
   },
   typescript: {
     check: false,
@@ -24,21 +25,22 @@ module.exports = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
-      propFilter: prop => prop.parent ? !/node_modules/.test(prop.parent.fileName) : true
+      propFilter: prop => prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
   },
   core: {
-    analytics: true
+    analytics: true,
+    disableTelemetry: true,
   },
   staticDirs: [
     './public',
-    '../dist'
+    '../dist',
   ],
   features: {
-    buildStoriesJson: true
+    buildStoriesJson: true,
   },
   docs: {
-    autodocs: 'tag'
+    autodocs: 'tag',
   },
 };
 

@@ -57,17 +57,25 @@ const config: Meta<typeof DInputSelect> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
+    iconStartAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    isLoading: {
+    loading: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -141,7 +149,7 @@ export const Disabled: Story = {
       { label: 'Option 2', value: '2' },
     ],
     hint: 'Assistive text',
-    isDisabled: true,
+    disabled: true,
   },
 };
 
@@ -157,6 +165,8 @@ export const Icon: Story = {
     hint: 'Assistive text',
     iconStart: 'emoji-smile-upside-down',
     iconEnd: 'emoji-smile-upside-down',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
   },
 };
 

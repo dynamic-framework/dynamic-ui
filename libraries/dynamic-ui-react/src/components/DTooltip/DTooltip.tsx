@@ -30,7 +30,7 @@ export type Props = BaseProps & PropsWithChildren<{
   withHover?: boolean;
   withFocus?: boolean;
   withClick?: boolean;
-  isOpen?: boolean;
+  open?: boolean;
   size?: ComponentSize;
   placement?: Placement;
   Component: ReactNode;
@@ -55,14 +55,14 @@ export default function DTooltip(
     withFocus = false,
     withClick = false,
     withHover = true,
-    isOpen = false,
+    open = false,
     placement = 'top',
     size,
     Component,
     children,
   }: Props,
 ) {
-  const [open, setOpen] = useState(isOpen);
+  const [isOpen, setIsOpen] = useState(open);
   const styleVariables = useMemo(() => {
     const defaultFontSize = size
       ? TOOLTIP_FONT_SIZE_BY_SIZE[size]
@@ -84,8 +84,8 @@ export default function DTooltip(
     context,
     floatingStyles,
   } = useFloating({
-    open,
-    onOpenChange: setOpen,
+    open: isOpen,
+    onOpenChange: setIsOpen,
     placement,
     whileElementsMounted: autoUpdate,
     middleware: [
@@ -125,7 +125,7 @@ export default function DTooltip(
         {Component}
       </div>
       <FloatingPortal>
-        {open && (
+        {isOpen && (
           <div
             className={classNameContainer}
             ref={refs.setFloating}

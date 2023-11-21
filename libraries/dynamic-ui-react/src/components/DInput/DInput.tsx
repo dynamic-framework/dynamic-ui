@@ -1,6 +1,7 @@
 import {
   forwardRef,
   useCallback,
+  useMemo,
 } from 'react';
 import classNames from 'classnames';
 
@@ -63,9 +64,13 @@ function DInput(
     iconStart,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
+    iconStartAriaLabel,
+    iconStartTabIndex,
     iconEnd,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
+    iconEndAriaLabel,
+    iconEndTabIndex,
     hint,
     invalid = false,
     valid = false,
@@ -91,6 +96,16 @@ function DInput(
   const handleOnIconEndClick = useCallback(() => {
     onIconEndClick?.(value);
   }, [onIconEndClick, value]);
+
+  const ariaDescribedby = useMemo(() => (
+    [
+      iconStart && `${id}Start`,
+      hint && `${id}Hint`,
+      iconEnd && `${id}End`,
+    ]
+      .filter(Boolean)
+      .join(' ')
+  ), [id, iconStart, iconEnd, hint]);
 
   return (
     <div
@@ -134,6 +149,8 @@ function DInput(
               id={`${id}Start`}
               onClick={handleOnIconStartClick}
               disabled={disabled || loading}
+              aria-label={iconStartAriaLabel}
+              tabIndex={iconStartTabIndex}
             >
               {iconStart && (
                 <DIcon
@@ -152,12 +169,11 @@ function DInput(
               'is-invalid': invalid,
               'is-valid': valid,
             })}
-            aria-label={label}
             disabled={disabled || loading}
             readOnly={readOnly}
-            aria-describedby={`${id}Add ${id}Hint`}
             value={value}
             onChange={handleOnChange}
+            {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
             {...inputProps}
           />
           {((invalid || valid) && !iconEnd && !loading) && (
@@ -180,6 +196,8 @@ function DInput(
               id={`${id}End`}
               onClick={handleOnIconEndClick}
               disabled={disabled || loading}
+              aria-label={iconEndAriaLabel}
+              tabIndex={iconEndTabIndex}
             >
               {iconEnd && (
                 <DIcon

@@ -38,7 +38,12 @@ export default function DDatePickerTime(
       style={style}
     >
       {label && (
-        <p className="d-datepicker-time-label">{label}</p>
+        <label
+          htmlFor={id}
+          className="d-datepicker-time-label"
+        >
+          {label}
+        </label>
       )}
       <DInput
         {...onChange && {

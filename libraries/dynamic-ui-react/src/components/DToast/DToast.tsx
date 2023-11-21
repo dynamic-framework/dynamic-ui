@@ -6,13 +6,13 @@ import type { CSSProperties, PropsWithChildren } from 'react';
 import DIcon from '../DIcon';
 import { ALERT_TYPE_ICON, PREFIX_BS } from '../config';
 
-import type { AlertType, BaseProps, CustomStyles } from '../interface';
+import type { ToastType, BaseProps, CustomStyles } from '../interface';
 
 type Props =
 & BaseProps
 & PropsWithChildren<{
   id?: string;
-  type?: AlertType;
+  type?: ToastType;
   icon?: string;
   iconFamilyClass?: string;
   iconFamilyPrefix?: string;
@@ -21,9 +21,9 @@ type Props =
   onClose?: () => void;
 }>;
 
-export default function DAlert(
+export default function DToast(
   {
-    type = 'light',
+    type = 'success',
     icon,
     iconFamilyClass,
     iconFamilyPrefix,
@@ -51,10 +51,7 @@ export default function DAlert(
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,
     [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3',
-    ...type === 'light' && {
-      [`--${PREFIX_BS}alert-component-icon-color`]: `var(--${PREFIX_BS}secondary)`,
-    },
-  }), [style, type]);
+  }), [style]);
 
   return (
     <div

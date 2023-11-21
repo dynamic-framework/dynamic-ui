@@ -3,6 +3,7 @@
   --#{$prefix}alert-box-shadow: #{$alert-box-shadow};
   --#{$prefix}alert-icon-color: var(--#{$prefix}alert-component-icon-color, var(--#{$prefix}alert-color));
   --#{$prefix}alert-separator-opacity: var(--#{$prefix}alert-component-separator-opacity);
+  --#{$prefix}alert-close-icon-size: #{$alert-close-icon-size};
 
   display: flex;
   flex-direction: row;
@@ -25,12 +26,13 @@
     --#{$prefix}btn-close-bg: transparent;
   }
 
-  .alert-icon .d-icon {
+  .alert-icon.d-icon {
     --#{$prefix}icon-color: var(--#{$prefix}alert-icon-color);
   }
 
   .alert-close-icon {
     --#{$prefix}icon-color: var(--#{$prefix}alert-icon-color);
+    --#{$prefix}icon-size: var(--#{$prefix}alert-close-icon-size);
   }
 
   @each $theme, $value in $theme-colors {
@@ -40,6 +42,24 @@
       --#{$prefix}alert-bg: var(--#{$prefix}#{$theme});
       --#{$prefix}alert-border-color: var(--#{$prefix}#{$theme});
       --#{$prefix}alert-link-color: #{$color};
+    }
+  }
+
+  &.alert-box {
+    --#{$prefix}alert-color: var(--#{$prefix}gray-900);
+
+    border-width: 0 0 0 5px;
+
+    @each $theme, $value in $alert-boxes {
+      $background: nth($value, 1);
+      $color: nth($value, 2);
+
+      &.alert-box-#{$theme} {
+        --#{$prefix}alert-icon-color: #{$color};
+        --#{$prefix}alert-border-color: #{$color};
+
+        --#{$prefix}alert-bg: #{$background};
+      }
     }
   }
 }

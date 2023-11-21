@@ -20,36 +20,31 @@ it('should render datepicker', () => {
         class="react-datepicker__input-container"
       >
         <div
-          role="button"
-          tabindex="-1"
+          class="d-input"
         >
           <div
-            class="d-input"
+            class="d-input-control"
           >
             <div
-              class="d-input-control"
+              class="input-group"
             >
-              <div
-                class="input-group"
+              <input
+                class="form-control"
+                id="datepicker"
+                type="text"
+                value=""
+              />
+              <button
+                aria-label="open calendar"
+                class="input-group-text"
+                id="datepickerEnd"
+                type="button"
               >
-                <input
-                  aria-label=""
-                  class="form-control"
-                  id="datepicker"
-                  type="text"
-                  value=""
+                <i
+                  class="d-icon bi bi-calendar d-input-icon"
+                  style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
                 />
-                <button
-                  class="input-group-text"
-                  id="datepickerEnd"
-                  type="button"
-                >
-                  <i
-                    class="d-icon bi bi-calendar d-input-icon"
-                    style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-                  />
-                </button>
-              </div>
+              </button>
             </div>
           </div>
         </div>

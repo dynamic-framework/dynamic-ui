@@ -27,6 +27,7 @@
   --#{$prefix}datepicker-month-gap: var(--#{$prefix}ref-fs-small);
   --#{$prefix}datepicker-month-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-month-margin: 0;
+  --#{$prefix}datepicker-month-color: var(--#{$prefix}white);
 
   --#{$prefix}datepicker-week-gap: 1.875rem;
 
@@ -90,6 +91,14 @@
       font-weight: var(--#{$prefix}datepicker-day-name-weight);
       line-height: var(--#{$prefix}datepicker-day-name-size);
       color: var(--#{$prefix}datepicker-day-name-color);
+    }
+  }
+
+  &.d-month-picker {
+    .react-datepicker__month-container {
+      .d-icon {
+        --#{$prefix}icon-component-color: var(--#{$prefix}datepicker-month-color);
+      }
     }
   }
 

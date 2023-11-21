@@ -23,12 +23,16 @@ type Props =
   withMonthSelector?: boolean;
   selectsRange?: boolean;
   inputLabel?: string;
+  inputAriaLabel?: string;
+  inputActionAriaLabel?: string;
   inputIcon?: string;
   inputId?: string;
   timeId?: string;
   timeLabel?: string;
-  headerDecreaseMonthIcon?: string;
-  headerIncreaseMonthIcon?: string;
+  headerPrevMonthIcon?: string;
+  headerNextMonthIcon?: string;
+  headerPrevMonthAriaLabel?: string;
+  headerNextMonthAriaLabel?: string;
   headerIconSize?: ComponentSize;
   headerButtonVariant?: ButtonVariant;
   headerButtonTheme?: string;
@@ -41,12 +45,16 @@ export default function DDatePicker(
     selectsRange = false,
     withMonthSelector,
     inputLabel,
+    inputAriaLabel,
+    inputActionAriaLabel = 'open calendar',
     inputIcon = 'calendar',
     inputId = 'input-calendar',
     timeId = 'input-time',
     timeLabel,
-    headerDecreaseMonthIcon = 'chevron-left',
-    headerIncreaseMonthIcon = 'chevron-right',
+    headerPrevMonthIcon = 'chevron-left',
+    headerPrevMonthAriaLabel = 'decrease month',
+    headerNextMonthIcon = 'chevron-right',
+    headerNextMonthAriaLabel = 'increase month',
     headerIconSize = 'sm',
     headerButtonVariant = 'link',
     headerButtonTheme = 'dark',
@@ -62,18 +70,23 @@ export default function DDatePicker(
     <DDatePickerHeader
       {...headerProps}
       {...locale && { locale }}
-      decreaseMonthIcon={headerDecreaseMonthIcon}
-      increaseMonthIcon={headerIncreaseMonthIcon}
+      prevMonthIcon={headerPrevMonthIcon}
+      nextMonthIcon={headerNextMonthIcon}
+      prevMonthAriaLabel={headerPrevMonthAriaLabel}
+      nextMonthAriaLabel={headerNextMonthAriaLabel}
       iconSize={headerIconSize}
       buttonVariant={headerButtonVariant}
       buttonTheme={headerButtonTheme}
       withMonthSelector={!!withMonthSelector}
     />
-  ), [headerButtonTheme,
+  ), [
+    headerButtonTheme,
     headerButtonVariant,
-    headerDecreaseMonthIcon,
+    headerPrevMonthIcon,
+    headerPrevMonthAriaLabel,
     headerIconSize,
-    headerIncreaseMonthIcon,
+    headerNextMonthIcon,
+    headerNextMonthAriaLabel,
     withMonthSelector,
     locale,
   ]);
@@ -86,6 +99,8 @@ export default function DDatePicker(
       customInput={(
         <DDatePickerInput
           id={inputId}
+          aria-label={inputAriaLabel}
+          iconEndAriaLabel={inputActionAriaLabel}
           iconEnd={inputIcon}
           className={className}
           style={style}

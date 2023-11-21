@@ -30,17 +30,23 @@ export type StartIconProps = {
   iconStart?: string;
   iconStartFamilyClass?: string;
   iconStartFamilyPrefix?: string;
+  iconStartAriaLabel?: string;
+  iconStartTabIndex?: number;
 };
 export type EndIconProps = {
   iconEnd?: string;
   iconEndFamilyClass?: string;
   iconEndFamilyPrefix?: string;
+  iconEndAriaLabel?: string;
+  iconEndTabIndex?: number;
 };
 
-export type AlertType = 'success' | 'info' | 'light' | 'dark' | 'warning' | 'danger';
-export type AlertTypeIconMap = {
-  [state in AlertType]: string;
+export type ToastType = 'success' | 'info' | 'warning' | 'danger';
+export type ToastTypeIconMap = {
+  [state in ToastType]: string;
 };
+
+export type AlertBoxTheme = 'box-info' | 'box-white' | 'box-secondary';
 
 export type ButtonVariant = 'outline' | 'link';
 export type ButtonType = 'submit' | 'reset' | 'button';

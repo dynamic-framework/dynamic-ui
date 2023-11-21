@@ -13,11 +13,11 @@ const config: Meta<typeof DListItem> = {
     className: {
       type: 'string',
     },
-    isActive: {
+    active: {
       type: 'boolean',
       control: 'boolean',
     },
-    isDisabled: {
+    disabled: {
       type: 'boolean',
       control: 'boolean',
     },
@@ -73,7 +73,7 @@ export const Active: Story = {
     </DListItem>
   ),
   args: {
-    isActive: true,
+    active: true,
   },
 };
 
@@ -95,7 +95,7 @@ export const Disabled: Story = {
     </DListItem>
   ),
   args: {
-    isDisabled: true,
+    disabled: true,
   },
 };
 

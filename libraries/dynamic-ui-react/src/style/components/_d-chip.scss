@@ -9,7 +9,7 @@
   --#{$prefix}chip-font-weight: #{$chip-font-weight};
   --#{$prefix}chip-line-height: #{$chip-line-height};
 
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   gap: var(--#{$prefix}chip-gap);
   align-items: center;

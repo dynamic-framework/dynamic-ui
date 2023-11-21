@@ -22,7 +22,7 @@ const config: Meta<typeof DStepper> = {
       },
       options: [undefined, ...ICONS],
     },
-    isVertical: {
+    vertical: {
       control: 'boolean',
       type: 'boolean',
       description: 'Display vertical stepper',
@@ -84,6 +84,6 @@ export const Vertical: Story = {
       { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
       { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
     ],
-    isVertical: true,
+    vertical: true,
   },
 };
