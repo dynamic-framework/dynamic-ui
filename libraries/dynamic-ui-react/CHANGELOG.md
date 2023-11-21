@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.9.1...@dynamic-framework/ui-react@1.10.0) (2023-11-21)
+
+
+### Features
+
+* add ariaLabel to DButton ([7e7f8c9](https://github.com/dynamic-framework/dynamic-ui/commit/7e7f8c96bce28f0d0bad0f6912a31acddd467234))
+* add ariaLabel to DInput icons ([868cffc](https://github.com/dynamic-framework/dynamic-ui/commit/868cffc0bbf2e6e06a216fd2d9bda7dff428f9a9))
+* adjust a11y of DChip ([c1aa1e8](https://github.com/dynamic-framework/dynamic-ui/commit/c1aa1e8bb57b8e51976cb389180bd3944e2a73c1))
+* adjust a11y of DDatePicker ([db9f559](https://github.com/dynamic-framework/dynamic-ui/commit/db9f559393f631f30dc6fdbbaa62922471fdfe8c))
+* adjust a11y of DInput and DInputSearch ([0622f28](https://github.com/dynamic-framework/dynamic-ui/commit/0622f28c01cb9436d6e1fa847c0e0082084e0ff4))
+* adjust a11y of DInputCheck ([c1a18f7](https://github.com/dynamic-framework/dynamic-ui/commit/c1a18f7ddc8220a04e6d12f167ea56384bce1257))
+* adjust a11y of DInputPassword ([c3fe255](https://github.com/dynamic-framework/dynamic-ui/commit/c3fe255f28185efaf3858c6dc99c29ac460841c0))
+* adjust a11y of DInputSwitch ([edea4a9](https://github.com/dynamic-framework/dynamic-ui/commit/edea4a9a3594498e127cbc4d109b60d6817aeab1))
+* adjust a11y of DQuickActionButton ([581ba46](https://github.com/dynamic-framework/dynamic-ui/commit/581ba46e239cb676303e625952e47a2eff223033))
+* adjust a11y to DChip ([9dc12a1](https://github.com/dynamic-framework/dynamic-ui/commit/9dc12a1d47f330f1125055be10281194adcc596f))
+* adjust a11y to DInputCounter ([45f4b45](https://github.com/dynamic-framework/dynamic-ui/commit/45f4b45e2a11e574d7d4d23c15bab52adca64ca0))
+* adjust a11y to DInputSelect and adjust test ([31e6e57](https://github.com/dynamic-framework/dynamic-ui/commit/31e6e5718768b3610d7c9352e88cf1ceb720f5c7))
+* adjust and chage DAlert to DToast and create a DAlertBox ([f236edf](https://github.com/dynamic-framework/dynamic-ui/commit/f236edf582a1afff823677f7e498fb6a420586b4))
+* adjust stories of DButton DDatepicker and DInput ([dc6937d](https://github.com/dynamic-framework/dynamic-ui/commit/dc6937dd80d922bd53558960cf3321889a0855fd))
+* adjust story of DInput, DInputCurrencyBase and DInputCurrency ([5a7abf6](https://github.com/dynamic-framework/dynamic-ui/commit/5a7abf68b7259f21e72ce9b26c0c8b1027cc6a58))
+* rename is<Properties> properties to <properties> ([9295437](https://github.com/dynamic-framework/dynamic-ui/commit/929543701846de5bf32510bb9886c71347ef230f))
+* review accesibility of DButton and adjust some properties to use the same api of DInput ([3a26691](https://github.com/dynamic-framework/dynamic-ui/commit/3a266910241605fc5862bcab3b73f9da479fd565))
+* use FamilyIconProps on DAlertBox ([30b8a24](https://github.com/dynamic-framework/dynamic-ui/commit/30b8a2433f6043b8e89f7453bd91925130f2baa6))
+
+
+### Bug Fixes
+
+* adjust DButton default, outline and link style ([4427ed2](https://github.com/dynamic-framework/dynamic-ui/commit/4427ed23dfe658f3190390d141f9ffb9f77afc48))
+* adjust test ([493e720](https://github.com/dynamic-framework/dynamic-ui/commit/493e7203475d3adc2d84802cbbf391d3c74136ec))
+* remove console.log and adjust import ([70f57a2](https://github.com/dynamic-framework/dynamic-ui/commit/70f57a2e4b953a7800c560ef01aa59d78e4821b8))
+
+
+
 ## [1.9.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.9.0...@dynamic-framework/ui-react@1.9.1) (2023-11-02)
 
 
