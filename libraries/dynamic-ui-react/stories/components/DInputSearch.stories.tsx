@@ -74,7 +74,7 @@ const config: Meta<typeof DInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    floating: {
+    floatingLabel: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -157,6 +157,6 @@ export const Floating: Story = {
     labelIcon: undefined,
     value: undefined,
     iconEndAriaLabel: 'search',
-    floating: true,
+    floatingLabel: true,
   },
 };

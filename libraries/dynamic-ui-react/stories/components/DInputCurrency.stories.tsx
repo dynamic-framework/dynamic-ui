@@ -116,7 +116,7 @@ const config: Meta<typeof DInputCurrency> = {
       control: 'number',
       type: 'number',
     },
-    floating: {
+    floatingLabel: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -250,6 +250,6 @@ export const Floating: Story = {
     value: undefined,
     minValue: 0,
     maxValue: 100000,
-    floating: true,
+    floatingLabel: true,
   },
 };

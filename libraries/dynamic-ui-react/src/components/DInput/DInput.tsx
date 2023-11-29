@@ -39,7 +39,7 @@ type NonHTMLInputElementProps =
   hint?: string;
   invalid?: boolean;
   valid?: boolean;
-  floating?: boolean;
+  floatingLabel?: boolean;
   inputStart?: ReactNode;
   onChange?: (value?: string) => void;
   onIconStartClick?: (value?: string) => void;
@@ -75,7 +75,7 @@ function DInput(
     hint,
     invalid = false,
     valid = false,
-    floating = false,
+    floatingLabel = false,
     inputStart,
     value,
     onChange,
@@ -142,8 +142,8 @@ function DInput(
     </label>
   ), [id, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix]);
 
-  const floatingComponent = useMemo(() => {
-    if (floating) {
+  const dynamicComponent = useMemo(() => {
+    if (floatingLabel) {
       return (
         <div className="form-floating">
           {inputComponent}
@@ -152,7 +152,7 @@ function DInput(
       );
     }
     return inputComponent;
-  }, [floating, inputComponent, labelComponent]);
+  }, [floatingLabel, inputComponent, labelComponent]);
 
   return (
     <div
@@ -162,7 +162,7 @@ function DInput(
       })}
       style={style}
     >
-      {label && !floating && (
+      {label && !floatingLabel && (
         labelComponent
       )}
       <div className="d-input-control">
@@ -198,7 +198,7 @@ function DInput(
               )}
             </button>
           )}
-          {floatingComponent}
+          {dynamicComponent}
           {((invalid || valid) && !iconEnd && !loading) && (
             <span
               className="input-group-text"

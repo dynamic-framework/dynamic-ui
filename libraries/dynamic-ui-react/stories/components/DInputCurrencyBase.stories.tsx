@@ -114,7 +114,7 @@ const config: Meta<typeof DInputCurrencyBase> = {
       control: 'number',
       type: 'number',
     },
-    floating: {
+    floatingLabel: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -255,6 +255,6 @@ export const Floating: Story = {
       separator: ',',
       decimal: '.',
     },
-    floating: true,
+    floatingLabel: true,
   },
 };

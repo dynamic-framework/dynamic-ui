@@ -74,7 +74,7 @@ const config: Meta<typeof DInputPassword> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    floating: {
+    floatingLabel: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -154,6 +154,6 @@ export const Floating: Story = {
     labelIcon: undefined,
     value: undefined,
     iconEndAriaLabel: 'show/hide password',
-    floating: true,
+    floatingLabel: true,
   },
 };

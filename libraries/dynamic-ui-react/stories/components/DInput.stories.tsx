@@ -114,7 +114,7 @@ const config: Meta<typeof DInput> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
-    floating: {
+    floatingLabel: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -250,6 +250,6 @@ export const Floating: Story = {
     iconStartAriaLabel: 'start action',
     iconEndAriaLabel: 'end action',
     hint: 'Assistive text',
-    floating: true,
+    floatingLabel: true,
   },
 };
