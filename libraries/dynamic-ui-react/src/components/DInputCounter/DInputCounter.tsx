@@ -29,7 +29,7 @@ type NonDInputProps = {
   onChange?: (value?: number) => void;
 };
 
-type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'value' | 'type' | 'onChange'>, NonDInputProps>;
+type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'value' | 'type' | 'onChange' | 'floating'>, NonDInputProps>;
 
 function DInputCounter(
   {
