@@ -114,6 +114,11 @@ const config: Meta<typeof DInput> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
+    floating: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
     onIconStartClick: {
       action: 'onIconStartClicked',
     },
@@ -229,5 +234,22 @@ export const Text: Story = {
     value: undefined,
     iconStart: undefined,
     iconEnd: undefined,
+  },
+};
+
+export const Floating: Story = {
+  args: {
+    id: 'componentId7',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    type: 'text',
+    value: '',
+    iconStart: 'emoji-smile-upside-down',
+    iconEnd: 'emoji-smile-upside-down',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
+    hint: 'Assistive text',
+    floating: true,
   },
 };

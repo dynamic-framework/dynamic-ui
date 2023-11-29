@@ -114,6 +114,11 @@ const config: Meta<typeof DInputCurrencyBase> = {
       control: 'number',
       type: 'number',
     },
+    floating: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
     onChange: {
       action: 'onChange',
     },
@@ -232,5 +237,24 @@ export const WithCurrencyCode: Story = {
       separator: ',',
       decimal: '.',
     },
+  },
+};
+
+export const Floating: Story = {
+  args: {
+    id: 'componentId7',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    currencyOptions: {
+      symbol: '$',
+      precision: 2,
+      separator: ',',
+      decimal: '.',
+    },
+    floating: true,
   },
 };
