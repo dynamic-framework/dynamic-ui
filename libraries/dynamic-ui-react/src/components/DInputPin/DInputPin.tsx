@@ -53,7 +53,7 @@ export default function DInputPin(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
-    placeholder = '•',
+    placeholder,
     type = 'text',
     disabled = false,
     loading = false,
