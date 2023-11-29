@@ -8,4 +8,6 @@ export const ALERT_TYPE_ICON: ToastTypeIconMap = {
   danger: 'exclamation-triangle',
   success: 'check-circle',
   info: 'info-circle',
+  dark: 'info-circle',
+  light: 'info-circle',
 };
