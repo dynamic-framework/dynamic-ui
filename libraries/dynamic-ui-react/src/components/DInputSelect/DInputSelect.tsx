@@ -28,7 +28,7 @@ export type Props<T> =
 & StartIconProps
 & EndIconProps
 & {
-  id: string;
+  id?: string;
   name?: string;
   label?: string;
   disabled?: boolean;
@@ -39,7 +39,7 @@ export type Props<T> =
   onIconEndClick?: (event: MouseEvent) => void;
   options: Array<T>;
   value?: string | number;
-  onChange?: (selectedItem: T | undefined) => void;
+  onChange?: (selectedItem: T) => void;
   valueExtractor?: (item: T) => string | number;
   labelExtractor?: (item: T) => string;
 };
@@ -102,7 +102,9 @@ export default function DInputSelect<T extends object = DefaultOption>(
   const changeHandler = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     const selected = options
       .find((option) => internalValueExtractor(option).toString() === event.currentTarget.value);
-    onChange?.(selected);
+    if (selected) {
+      onChange?.(selected);
+    }
   }, [onChange, options, internalValueExtractor]);
 
   const blurHandler = useCallback((event: FocusEvent) => {
