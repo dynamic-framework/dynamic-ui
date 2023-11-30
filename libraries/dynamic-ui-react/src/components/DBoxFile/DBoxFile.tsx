@@ -23,9 +23,9 @@ DropzoneOptions,
 | 'onDropRejected'
 | 'onFileDialogCancel'
 | 'onFileDialogOpen'
+| 'disabled'
 > & {
   icon?: string;
-  disabled: DropzoneOptions['disabled'];
 }
 >;
 

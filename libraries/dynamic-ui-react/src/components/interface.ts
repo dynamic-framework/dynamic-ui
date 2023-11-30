@@ -41,7 +41,7 @@ export type EndIconProps = {
   iconEndTabIndex?: number;
 };
 
-export type ToastType = 'success' | 'info' | 'warning' | 'danger';
+export type ToastType = 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark';
 export type ToastTypeIconMap = {
   [state in ToastType]: string;
 };
