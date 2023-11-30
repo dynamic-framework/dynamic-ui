@@ -39,7 +39,7 @@ export type Props<T> =
   onIconEndClick?: (event: MouseEvent) => void;
   options: Array<T>;
   value?: string | number;
-  onChange?: (selectedItem: T | undefined) => void;
+  onChange?: (selectedOption: T | undefined) => void;
   valueExtractor?: (item: T) => string | number;
   labelExtractor?: (item: T) => string;
 };
