@@ -39,9 +39,7 @@
     color: var(--#{$prefix}input-pin-label-color);
 
     .d-input-pin-icon {
-      .d-icon {
-        --#{$prefix}icon-color: var(--#{$prefix}focus-ring-color);
-      }
+      --#{$prefix}icon-color: var(--#{$prefix}focus-ring-color);
     }
   }
 
@@ -99,9 +97,7 @@
       }
 
       .d-input-pin-validation-icon {
-        .d-icon {
-          --#{$prefix}icon-color: #{$tooltip-bg-color};
-        }
+        --#{$prefix}icon-color: #{$tooltip-bg-color};
       }
     }
   }
