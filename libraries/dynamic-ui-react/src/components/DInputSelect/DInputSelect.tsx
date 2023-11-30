@@ -34,6 +34,7 @@ export type Props<T> =
   disabled?: boolean;
   loading?: boolean;
   hint?: string;
+  floatingLabel?: boolean;
   onBlur?: (event: FocusEvent) => void;
   onIconStartClick?: (event: MouseEvent) => void;
   onIconEndClick?: (event: MouseEvent) => void;
@@ -42,7 +43,6 @@ export type Props<T> =
   onChange?: (selectedItem: T | undefined) => void;
   valueExtractor?: (item: T) => string | number;
   labelExtractor?: (item: T) => string;
-  floatingLabel?: boolean;
 };
 
 export default function DInputSelect<T extends object = DefaultOption>(
@@ -133,7 +133,10 @@ export default function DInputSelect<T extends object = DefaultOption>(
     <select
       id={id}
       name={name}
-      className="form-select"
+      className={classNames({
+        'form-select': true,
+        'floating-label': floatingLabel,
+      })}
       aria-label={label}
       disabled={disabled || loading}
       onChange={changeHandler}
@@ -163,6 +166,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     name,
     options,
     selectedOption,
+    floatingLabel,
   ]);
 
   const labelComponent = useMemo(() => (
