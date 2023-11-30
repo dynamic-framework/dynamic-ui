@@ -2,6 +2,7 @@
   &:has(.form-select:not(:disabled)) {
     --#{$prefix}input-group-border-color: var(--#{$prefix}input-group-hover-border-color);
   }
+ 
   .form-floating:not(:last-child) {
     .form-select {
       padding-right: $form-select-padding-x * 2;
