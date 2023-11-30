@@ -13,17 +13,25 @@ type Props = {
   message: string;
   type: ToastType;
   showClose: boolean;
+  autoClose: number | false;
 };
 
-const Example = ({ message, type, showClose }: Props) => {
+const Example = (
+  {
+    message,
+    type,
+    showClose,
+    autoClose,
+  }: Props,
+) => {
   const { toast } = useToastHook();
   return (
     <>
       <DButton
         text="Show Toast"
-        onClick={() => toast(message, { type, showClose })}
+        onClick={() => toast(message, { type, showClose, autoClose })}
       />
-      <DToastContainer />
+      <DToastContainer position="bottom-center" />
     </>
   );
 };
@@ -40,6 +48,16 @@ const config: Meta<typeof Example> = {
     showClose: {
       control: 'boolean',
       type: 'boolean',
+    },
+    autoClose: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'number',
+      options: [undefined, 1000, 3000, 6000],
     },
   },
 };

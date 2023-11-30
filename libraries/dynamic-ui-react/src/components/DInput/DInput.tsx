@@ -41,7 +41,7 @@ type NonHTMLInputElementProps =
   valid?: boolean;
   floatingLabel?: boolean;
   inputStart?: ReactNode;
-  onChange?: (value?: string) => void;
+  onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
   onIconEndClick?: (value?: string) => void;
 };
