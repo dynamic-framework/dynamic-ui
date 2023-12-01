@@ -106,6 +106,11 @@ const config: Meta<typeof DInputSelect> = {
     onBlur: {
       action: 'onBlur',
     },
+    floatingLabel: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
   },
 };
 
@@ -185,5 +190,19 @@ export const Extractors: StoryObj<DInputSelectProps<{ id: string; text: string; 
     labelExtractor: (item) => item.text,
     valueExtractor: (item) => item.id,
     hint: 'Assistive text',
+  },
+};
+
+export const Floating: Story = {
+  args: {
+    id: 'componentId5',
+    label: 'Label',
+    labelIcon: undefined,
+    options: [
+      { label: 'Option 1', value: '1' },
+      { label: 'Option 2', value: '2' },
+    ],
+    hint: 'Assistive text',
+    floatingLabel: true,
   },
 };

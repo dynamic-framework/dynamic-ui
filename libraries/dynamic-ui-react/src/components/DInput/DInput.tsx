@@ -39,6 +39,7 @@ type NonHTMLInputElementProps =
   hint?: string;
   invalid?: boolean;
   valid?: boolean;
+  floatingLabel?: boolean;
   inputStart?: ReactNode;
   onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
@@ -74,6 +75,7 @@ function DInput(
     hint,
     invalid = false,
     valid = false,
+    floatingLabel = false,
     inputStart,
     value,
     onChange,
@@ -107,6 +109,51 @@ function DInput(
       .join(' ')
   ), [id, iconStart, iconEnd, hint]);
 
+  const inputComponent = useMemo(() => (
+    <input
+      ref={inputRef}
+      id={id}
+      className={classNames('form-control', {
+        'is-invalid': invalid,
+        'is-valid': valid,
+      })}
+      disabled={disabled || loading}
+      readOnly={readOnly}
+      value={value}
+      onChange={handleOnChange}
+      {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
+      {...inputProps}
+    />
+  ), [ariaDescribedby, disabled, handleOnChange, id, inputProps,
+    inputRef, invalid, loading, readOnly, valid, value]);
+
+  const labelComponent = useMemo(() => (
+    <label htmlFor={id}>
+      {label}
+      {labelIcon && (
+        <DIcon
+          className="d-input-icon"
+          icon={labelIcon}
+          size={`var(--${PREFIX_BS}input-label-font-size)`}
+          familyClass={labelIconFamilyClass}
+          familyPrefix={labelIconFamilyPrefix}
+        />
+      )}
+    </label>
+  ), [id, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix]);
+
+  const dynamicComponent = useMemo(() => {
+    if (floatingLabel) {
+      return (
+        <div className="form-floating">
+          {inputComponent}
+          {labelComponent}
+        </div>
+      );
+    }
+    return inputComponent;
+  }, [floatingLabel, inputComponent, labelComponent]);
+
   return (
     <div
       className={classNames({
@@ -115,19 +162,8 @@ function DInput(
       })}
       style={style}
     >
-      {label && (
-        <label htmlFor={id}>
-          {label}
-          {labelIcon && (
-            <DIcon
-              className="d-input-icon"
-              icon={labelIcon}
-              size={`var(--${PREFIX_BS}input-label-font-size)`}
-              familyClass={labelIconFamilyClass}
-              familyPrefix={labelIconFamilyPrefix}
-            />
-          )}
-        </label>
+      {label && !floatingLabel && (
+        labelComponent
       )}
       <div className="d-input-control">
         <div
@@ -162,20 +198,7 @@ function DInput(
               )}
             </button>
           )}
-          <input
-            ref={inputRef}
-            id={id}
-            className={classNames('form-control', {
-              'is-invalid': invalid,
-              'is-valid': valid,
-            })}
-            disabled={disabled || loading}
-            readOnly={readOnly}
-            value={value}
-            onChange={handleOnChange}
-            {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
-            {...inputProps}
-          />
+          {dynamicComponent}
           {((invalid || valid) && !iconEnd && !loading) && (
             <span
               className="input-group-text"

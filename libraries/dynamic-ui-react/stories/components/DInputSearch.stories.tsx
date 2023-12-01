@@ -74,6 +74,11 @@ const config: Meta<typeof DInputSearch> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
+    floatingLabel: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
     onClick: {
       action: 'onClick',
     },
@@ -141,5 +146,17 @@ export const Disabled: Story = {
     value: undefined,
     disabled: true,
     iconEndAriaLabel: 'search',
+  },
+};
+
+export const Floating: Story = {
+  args: {
+    id: 'componentId1',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    iconEndAriaLabel: 'search',
+    floatingLabel: true,
   },
 };
