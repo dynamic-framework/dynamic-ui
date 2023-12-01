@@ -116,6 +116,11 @@ const config: Meta<typeof DInputCurrency> = {
       control: 'number',
       type: 'number',
     },
+    floatingLabel: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
     onChange: {
       action: 'onChange',
     },
@@ -228,5 +233,23 @@ export const WithCurrencyCode: Story = {
     minValue: 0,
     maxValue: 100000,
     currencyCode: 'CLP',
+  },
+};
+
+export const Floating: Story = {
+  render: (args: ComponentProps<typeof DInputCurrency>) => (
+    <DContextProvider>
+      <DInputCurrency {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId6',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    minValue: 0,
+    maxValue: 100000,
+    floatingLabel: true,
   },
 };

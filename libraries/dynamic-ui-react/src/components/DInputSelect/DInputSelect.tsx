@@ -28,18 +28,19 @@ export type Props<T> =
 & StartIconProps
 & EndIconProps
 & {
-  id: string;
+  id?: string;
   name?: string;
   label?: string;
   disabled?: boolean;
   loading?: boolean;
   hint?: string;
+  floatingLabel?: boolean;
   onBlur?: (event: FocusEvent) => void;
   onIconStartClick?: (event: MouseEvent) => void;
   onIconEndClick?: (event: MouseEvent) => void;
   options: Array<T>;
-  selectedOption?: T;
-  onChange?: (selectedItem: T | undefined) => void;
+  value?: string | number;
+  onChange?: (selectedOption: T) => void;
   valueExtractor?: (item: T) => string | number;
   labelExtractor?: (item: T) => string;
 };
@@ -66,7 +67,8 @@ export default function DInputSelect<T extends object = DefaultOption>(
     iconEndFamilyPrefix,
     iconEndAriaLabel,
     hint,
-    selectedOption,
+    value,
+    floatingLabel = false,
     valueExtractor,
     labelExtractor,
     onChange,
@@ -102,7 +104,9 @@ export default function DInputSelect<T extends object = DefaultOption>(
   const changeHandler = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     const selected = options
       .find((option) => internalValueExtractor(option).toString() === event.currentTarget.value);
-    onChange?.(selected);
+    if (selected) {
+      onChange?.(selected);
+    }
   }, [onChange, options, internalValueExtractor]);
 
   const blurHandler = useCallback((event: FocusEvent) => {
@@ -127,24 +131,85 @@ export default function DInputSelect<T extends object = DefaultOption>(
       .join(' ')
   ), [id, iconStart, iconEnd, hint]);
 
+  const selectComponent = useMemo(() => (
+    <select
+      id={id}
+      name={name}
+      className={classNames({
+        'form-select': true,
+        'floating-label': floatingLabel,
+      })}
+      aria-label={label}
+      disabled={disabled || loading}
+      onChange={changeHandler}
+      onBlur={blurHandler}
+      {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
+      {...value && { value }}
+    >
+      {options.map((option) => (
+        <option
+          value={internalValueExtractor(option)}
+          key={internalValueExtractor(option)}
+        >
+          {internalLabelExtractor(option)}
+        </option>
+      ))}
+    </select>
+  ), [
+    ariaDescribedby,
+    blurHandler,
+    changeHandler,
+    disabled,
+    id,
+    internalLabelExtractor,
+    internalValueExtractor,
+    label,
+    loading,
+    name,
+    options,
+    value,
+    floatingLabel,
+  ]);
+
+  const labelComponent = useMemo(() => (
+    <label htmlFor={id}>
+      {label}
+      {labelIcon && (
+        <DIcon
+          className="mdinput-icon"
+          icon={labelIcon}
+          size={`var(--${PREFIX_BS}input-label-font-size)`}
+          familyClass={labelIconFamilyClass}
+          familyPrefix={labelIconFamilyPrefix}
+        />
+      )}
+    </label>
+  ), [
+    id,
+    label,
+    labelIcon,
+    labelIconFamilyClass,
+    labelIconFamilyPrefix,
+  ]);
+
+  const dynamicComponent = useMemo(() => {
+    if (floatingLabel) {
+      return (
+        <div className="form-floating">
+          {selectComponent}
+          {labelComponent}
+        </div>
+      );
+    } return selectComponent;
+  }, [floatingLabel, labelComponent, selectComponent]);
+
   return (
     <div
       className={classNames('d-input', className)}
       style={style}
     >
-      {label && (
-        <label htmlFor={id}>
-          {label}
-          {labelIcon && (
-            <DIcon
-              className="mdinput-icon"
-              icon={labelIcon}
-              size={`var(--${PREFIX_BS}input-label-font-size)`}
-              familyClass={labelIconFamilyClass}
-              familyPrefix={labelIconFamilyPrefix}
-            />
-          )}
-        </label>
+      {label && !floatingLabel && (
+        labelComponent
       )}
       <div className="d-input-control">
         <div className={classNames({
@@ -171,26 +236,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
               )}
             </button>
           )}
-          <select
-            id={id}
-            name={name}
-            className="form-select"
-            aria-label={label}
-            disabled={disabled || loading}
-            onChange={changeHandler}
-            onBlur={blurHandler}
-            {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
-            {...selectedOption && { value: internalValueExtractor(selectedOption) }}
-          >
-            {options.map((option) => (
-              <option
-                value={internalValueExtractor(option)}
-                key={internalValueExtractor(option)}
-              >
-                {internalLabelExtractor(option)}
-              </option>
-            ))}
-          </select>
+          {dynamicComponent}
           {iconEnd && !loading && (
             <button
               type="button"
