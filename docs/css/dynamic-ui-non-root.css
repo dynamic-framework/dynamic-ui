@@ -7245,12 +7245,16 @@ label {
 .d-input:has(.form-select:not(:disabled)) {
   --bs-input-group-border-color: var(--bs-input-group-hover-border-color);
 }
+.d-input .form-floating:not(:last-child) .form-select {
+  padding-right: 2rem;
+  background-position: right center;
+}
 .d-input .form-select {
   text-align: var(--bs-input-form-control-text-align);
   border-width: 0;
   box-shadow: none;
 }
-.d-input .form-select:not(:last-child) {
+.d-input .form-select:not(:last-child, .floating-label) {
   padding-right: 2rem;
   background-position: right center;
 }
@@ -7292,7 +7296,7 @@ label {
   font-weight: var(--bs-input-pin-label-font-weight);
   color: var(--bs-input-pin-label-color);
 }
-.d-input-pin label .d-input-pin-icon .d-icon {
+.d-input-pin label .d-input-pin-icon {
   --bs-icon-color: var(--bs-focus-ring-color);
 }
 .d-input-pin .d-input-pin-controls {
@@ -7335,7 +7339,7 @@ label {
 .d-input-pin:has(.form-control.is-valid) .form-text {
   color: var(--bs-form-valid-border-color);
 }
-.d-input-pin:has(.form-control.is-valid) .d-input-pin-validation-icon .d-icon {
+.d-input-pin:has(.form-control.is-valid) .d-input-pin-validation-icon {
   --bs-icon-color: var(--bs-success);
 }
 .d-input-pin:has(.form-control.is-invalid) .form-control {
@@ -7344,7 +7348,7 @@ label {
 .d-input-pin:has(.form-control.is-invalid) .form-text {
   color: var(--bs-form-invalid-border-color);
 }
-.d-input-pin:has(.form-control.is-invalid) .d-input-pin-validation-icon .d-icon {
+.d-input-pin:has(.form-control.is-invalid) .d-input-pin-validation-icon {
   --bs-icon-color: var(--bs-danger);
 }
 .d-input-pin .input-group-text {
