@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.10.0...@dynamic-framework/ui-react@1.11.0) (2023-12-01)
+
+
+### Features
+
+* add floating control ([2749c03](https://github.com/dynamic-framework/dynamic-ui/commit/2749c0331247f93cdf07ac5570eee25a21561011))
+* adjust DInputPin tests ([0c4a421](https://github.com/dynamic-framework/dynamic-ui/commit/0c4a42169c95b3cdfe7801fb5d5748104ca9d14f))
+* adjust useToast story ([58f40c8](https://github.com/dynamic-framework/dynamic-ui/commit/58f40c87b9019c565403c8af2867ed9da22ea85a))
+* change DInputSelect api from selectedOption with object to value with value ([add2e07](https://github.com/dynamic-framework/dynamic-ui/commit/add2e0725442e164f9552d8c1b202b515a264c20))
+* enable DToast light and dark theme ([e875941](https://github.com/dynamic-framework/dynamic-ui/commit/e8759410c12837d845541b3c796ad8a397e0ad47))
+* enable floating label on DInputCounter ([d6c6c40](https://github.com/dynamic-framework/dynamic-ui/commit/d6c6c40d8a1a488dc56172e3cf3aed78b2eee29c))
+* remove default placeholder of DInputPin ([50c262a](https://github.com/dynamic-framework/dynamic-ui/commit/50c262a9b5269ab6916480dba4d79c7502df5df4))
+* replace as floatingLabel prop ([8172311](https://github.com/dynamic-framework/dynamic-ui/commit/81723118ef1555ecd61170cf43722194143111f9))
+* update stories ([52b159b](https://github.com/dynamic-framework/dynamic-ui/commit/52b159b5ec2833be00d9db0abac26ada9b4ed74a))
+
+
+### Bug Fixes
+
+* adjust DBoxFile DInput and DInputSelect api details ([71981fb](https://github.com/dynamic-framework/dynamic-ui/commit/71981fb06f97c692fbbc78b9265e702b905f5968))
+* adjust DInputPin validation icon color ([40d4e45](https://github.com/dynamic-framework/dynamic-ui/commit/40d4e450f5ee495d877e536bacd450e8b36b5247))
+* set icon rule on floating ([469d9e6](https://github.com/dynamic-framework/dynamic-ui/commit/469d9e6d913f8a2efdd7eecb498a8e9e6e1ba0bc))
+* stylelint details on d-input-select.scss ([61505c2](https://github.com/dynamic-framework/dynamic-ui/commit/61505c2d8a736da7d66c2a3da905ef7f4ae7e334))
+
+
+
 ## [1.10.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.9.1...@dynamic-framework/ui-react@1.10.0) (2023-11-21)
 
 
