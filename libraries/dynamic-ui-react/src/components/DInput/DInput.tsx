@@ -124,8 +124,19 @@ function DInput(
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       {...inputProps}
     />
-  ), [ariaDescribedby, disabled, handleOnChange, id, inputProps,
-    inputRef, invalid, loading, readOnly, valid, value]);
+  ), [
+    ariaDescribedby,
+    disabled,
+    handleOnChange,
+    id,
+    inputProps,
+    inputRef,
+    invalid,
+    loading,
+    readOnly,
+    valid,
+    value,
+  ]);
 
   const labelComponent = useMemo(() => (
     <label htmlFor={id}>
@@ -140,7 +151,13 @@ function DInput(
         />
       )}
     </label>
-  ), [id, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix]);
+  ), [
+    id,
+    label,
+    labelIcon,
+    labelIconFamilyClass,
+    labelIconFamilyPrefix,
+  ]);
 
   const dynamicComponent = useMemo(() => {
     if (floatingLabel) {
