@@ -38,8 +38,8 @@ export type Props<T> =
   onIconStartClick?: (event: MouseEvent) => void;
   onIconEndClick?: (event: MouseEvent) => void;
   options: Array<T>;
-  selectedOption?: T;
-  onChange?: (selectedItem: T) => void;
+  value?: string | number;
+  onChange?: (selectedOption: T) => void;
   valueExtractor?: (item: T) => string | number;
   labelExtractor?: (item: T) => string;
 };
@@ -66,7 +66,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     iconEndFamilyPrefix,
     iconEndAriaLabel,
     hint,
-    selectedOption,
+    value,
     valueExtractor,
     labelExtractor,
     onChange,
@@ -182,7 +182,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
             onChange={changeHandler}
             onBlur={blurHandler}
             {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
-            {...selectedOption && { value: internalValueExtractor(selectedOption) }}
+            {...value && { value }}
           >
             {options.map((option) => (
               <option
