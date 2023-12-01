@@ -139,7 +139,7 @@ export const Selected: Story = {
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
     ],
-    selectedOption: { label: 'Option 2', value: '2' },
+    value: '2',
     hint: 'Assistive text',
   },
 };

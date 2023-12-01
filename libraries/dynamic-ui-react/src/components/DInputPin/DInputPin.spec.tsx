@@ -27,7 +27,6 @@ it('should render my component', () => {
           inputmode="text"
           maxlength="1"
           name="pin-0"
-          placeholder="•"
           required=""
           type="text"
         />
@@ -39,7 +38,6 @@ it('should render my component', () => {
           inputmode="text"
           maxlength="1"
           name="pin-1"
-          placeholder="•"
           required=""
           type="text"
         />
@@ -51,7 +49,6 @@ it('should render my component', () => {
           inputmode="text"
           maxlength="1"
           name="pin-2"
-          placeholder="•"
           required=""
           type="text"
         />
@@ -63,7 +60,6 @@ it('should render my component', () => {
           inputmode="text"
           maxlength="1"
           name="pin-3"
-          placeholder="•"
           required=""
           type="text"
         />
