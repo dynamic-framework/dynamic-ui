@@ -94,6 +94,11 @@ const config: Meta<typeof DInputCounter> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
+    floatingLabel: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
     minValue: {
       control: 'number',
       type: 'number',
@@ -160,6 +165,20 @@ export const Disabled: Story = {
     minValue: 0,
     maxValue: 20,
     disabled: true,
+    iconStartAriaLabel: 'decrease action',
+    iconEndAriaLabel: 'increase action',
+  },
+};
+
+export const Floating: Story = {
+  args: {
+    id: 'componentId5',
+    label: 'Label',
+    labelIcon: undefined,
+    value: 3,
+    minValue: 0,
+    maxValue: 20,
+    floatingLabel: true,
     iconStartAriaLabel: 'decrease action',
     iconEndAriaLabel: 'increase action',
   },
