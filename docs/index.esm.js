@@ -508,7 +508,7 @@ function useProvidedRefOrCreate(providedRef) {
 }
 
 function DInput(_a, ref) {
-    var { id, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, readOnly = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, hint, invalid = false, valid = false, floatingLabel = false, inputStart, value, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = __rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "disabled", "readOnly", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "hint", "invalid", "valid", "floatingLabel", "inputStart", "value", "onChange", "onIconStartClick", "onIconEndClick"]);
+    var { id, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, readOnly = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, hint, invalid = false, valid = false, floatingLabel = false, inputStart, value, placeholder = '', onChange, onIconStartClick, onIconEndClick } = _a, inputProps = __rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "disabled", "readOnly", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "hint", "invalid", "valid", "floatingLabel", "inputStart", "value", "placeholder", "onChange", "onIconStartClick", "onIconEndClick"]);
     const inputRef = useProvidedRefOrCreate(ref);
     const handleOnChange = useCallback((event) => {
         onChange === null || onChange === void 0 ? void 0 : onChange(event.currentTarget.value);
@@ -529,7 +529,7 @@ function DInput(_a, ref) {
     const inputComponent = useMemo(() => (jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
             'is-invalid': invalid,
             'is-valid': valid,
-        }), disabled: disabled || loading, readOnly: readOnly, value: value, onChange: handleOnChange }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
+        }), disabled: disabled || loading, readOnly: readOnly, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
         ariaDescribedby,
         disabled,
         handleOnChange,
@@ -538,6 +538,8 @@ function DInput(_a, ref) {
         inputRef,
         invalid,
         loading,
+        placeholder,
+        floatingLabel,
         readOnly,
         valid,
         value,
@@ -1066,12 +1068,13 @@ function DPopover({ children, renderComponent, open, setOpen, adjustContentToRen
 }
 
 function DProgress({ className, style, currentValue, minValue = 0, maxValue = 100, hideCurrentValue = false, enableStripedAnimation = false, }) {
-    const formatProgress = useMemo(() => `${currentValue}%`, [currentValue]);
+    const percentage = useMemo(() => (Math.round((currentValue * 100) / maxValue)), [currentValue, maxValue]);
+    const formatProgress = useMemo(() => `${percentage}%`, [percentage]);
     const generateClasses = useMemo(() => ({
         'progress-bar': true,
         'progress-bar-striped progress-bar-animated': enableStripedAnimation,
     }), [enableStripedAnimation]);
-    return (jsx("div", { className: "progress", children: jsx("div", { className: classNames(generateClasses, className), role: "progressbar", "aria-label": "Progress bar", style: Object.assign({ width: `${currentValue}%` }, style), "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) }));
+    return (jsx("div", { className: classNames('progress', className), children: jsx("div", { className: classNames(generateClasses), role: "progressbar", "aria-label": "Progress bar", style: Object.assign({ width: formatProgress }, style), "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) }));
 }
 
 function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme = 'secondary', actionIcon, secondaryActionIcon, secondaryActionAriaLabel, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, }) {
