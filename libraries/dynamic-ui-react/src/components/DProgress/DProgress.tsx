@@ -22,9 +22,13 @@ export default function DProgress(
     enableStripedAnimation = false,
   }: Props,
 ) {
+  const percentage = useMemo(() => (
+    Math.round((currentValue * 100) / maxValue)
+  ), [currentValue, maxValue]);
+
   const formatProgress = useMemo(
-    () => `${currentValue}%`,
-    [currentValue],
+    () => `${percentage}%`,
+    [percentage],
   );
 
   const generateClasses = useMemo(() => ({
@@ -33,12 +37,12 @@ export default function DProgress(
   }), [enableStripedAnimation]);
 
   return (
-    <div className="progress">
+    <div className={classNames('progress', className)}>
       <div
-        className={classNames(generateClasses, className)}
+        className={classNames(generateClasses)}
         role="progressbar"
         aria-label="Progress bar"
-        style={{ width: `${currentValue}%`, ...style }}
+        style={{ width: formatProgress, ...style }}
         aria-valuenow={currentValue}
         aria-valuemin={minValue}
         aria-valuemax={maxValue}
