@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.11.0...@dynamic-framework/ui-react@1.11.1) (2023-12-04)
+
+
+### Bug Fixes
+
+* DProgress value and className ([cd5fcdb](https://github.com/dynamic-framework/dynamic-ui/commit/cd5fcdb01641e881a17ee7ab1dcb8974080379a0))
+
+
+
 ## [1.11.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.10.0...@dynamic-framework/ui-react@1.11.0) (2023-12-01)
 
 
