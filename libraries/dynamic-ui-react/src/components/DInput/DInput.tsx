@@ -78,6 +78,7 @@ function DInput(
     floatingLabel = false,
     inputStart,
     value,
+    placeholder = '',
     onChange,
     onIconStartClick,
     onIconEndClick,
@@ -121,6 +122,7 @@ function DInput(
       readOnly={readOnly}
       value={value}
       onChange={handleOnChange}
+      {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       {...inputProps}
     />
@@ -133,6 +135,8 @@ function DInput(
     inputRef,
     invalid,
     loading,
+    placeholder,
+    floatingLabel,
     readOnly,
     valid,
     value,
