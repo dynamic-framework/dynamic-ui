@@ -7,11 +7,11 @@ import useToastHook from '../../src/components/DToastContainer/useToast';
 
 import { THEMES } from '../config/constants';
 
-import { ToastType } from '../../src/components/interface';
+import { AlertType } from '../../src/components/interface';
 
 type Props = {
   message: string;
-  type: ToastType;
+  type: AlertType;
   showClose: boolean;
   autoClose: number | false;
 };

@@ -1,7 +1,7 @@
 .alert {
   --#{$prefix}alert-gap: #{$alert-gap};
   --#{$prefix}alert-box-shadow: #{$alert-box-shadow};
-  --#{$prefix}alert-icon-color: var(--#{$prefix}alert-component-icon-color, var(--#{$prefix}alert-color));
+  --#{$prefix}alert-icon-color: var(--#{$prefix}alert-color);
   --#{$prefix}alert-separator-opacity: var(--#{$prefix}alert-component-separator-opacity);
   --#{$prefix}alert-close-icon-size: #{$alert-close-icon-size};
 
@@ -45,21 +45,22 @@
     }
   }
 
-  &.alert-box {
+  &.alert-soft {
     --#{$prefix}alert-color: var(--#{$prefix}gray-900);
-
     border-width: 0 0 0 5px;
 
-    @each $theme, $value in $alert-boxes {
-      $background: nth($value, 1);
-      $color: nth($value, 2);
+    @each $theme, $value in map-remove($theme-colors, "light", "dark") {
+      &.alert-#{$theme} {
+        --#{$prefix}alert-icon-color: var(--#{$prefix}#{$theme}-500);
 
-      &.alert-box-#{$theme} {
-        --#{$prefix}alert-icon-color: #{$color};
-        --#{$prefix}alert-border-color: #{$color};
-
-        --#{$prefix}alert-bg: #{$background};
+        --#{$prefix}alert-bg: var(--#{$prefix}#{$theme}-100);
       }
+    }
+
+    &.alert-light {
+      --#{$prefix}alert-icon-color: var(--#{$prefix}secondary-500);
+      --#{$prefix}alert-border-color: var(--#{$prefix}secondary-500);
+      --#{$prefix}alert-bg: var(--#{$prefix}white);
     }
   }
 }
