@@ -179,7 +179,7 @@ function DInput(
     <div
       className={classNames({
         'd-input': true,
-        className: !!className,
+        ...className && { [className]: true },
       })}
       style={style}
     >
