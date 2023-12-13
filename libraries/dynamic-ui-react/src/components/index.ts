@@ -23,6 +23,7 @@ export { default as DCurrencyText } from './DCurrencyText';
 export { default as DDatePicker } from './DDatePicker';
 export { default as DIcon } from './DIcon';
 export { default as DInput } from './DInput';
+export { default as DInputMask } from './DInputMask';
 export { default as DInputCounter } from './DInputCounter';
 export { default as DInputCurrencyBase } from './DInputCurrencyBase';
 export { default as DInputCurrency } from './DInputCurrency';
