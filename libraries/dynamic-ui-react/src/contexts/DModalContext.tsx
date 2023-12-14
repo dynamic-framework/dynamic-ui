@@ -32,7 +32,7 @@ type OpenModalFunction<P = unknown> = (name: string, payload: P) => void;
 type CloseModalFunction = () => void;
 type ModalContextType<T extends Record<string, unknown>> = {
   stack: ModalStackItem<string, T[keyof T]>[];
-  openModal: OpenModalFunction;
+  openModal: OpenModalFunction<T[keyof T]>;
   closeModal: CloseModalFunction;
 };
 export type ModalProps<P = unknown> = {
@@ -55,7 +55,7 @@ export function DModalContextProvider<T extends Record<string, unknown>>(
   const [stack, { push, pop, peek }] = useStackState<ModalStackItem<string, T[keyof T]>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
-  const openModal = useCallback<OpenModalFunction<T[keyof T]>>(
+  const openModal = useCallback<ModalContextType<T>['openModal']>(
     (modalName, payload) => {
       const Component = availableModals[modalName as keyof T] as ModalComponent<T[keyof T]>;
       if (!Component) {

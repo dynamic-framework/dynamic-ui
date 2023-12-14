@@ -45,7 +45,7 @@ const ExampleOffcanvas = ({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasP
 );
 
 const ExampleChildren = () => {
-  const { openOffcanvas } = useDOffcanvasContext();
+  const { openOffcanvas } = useDOffcanvasContext<OffcanvasPayload>();
   return (
     <DButton
       text="Open Offcanvas"

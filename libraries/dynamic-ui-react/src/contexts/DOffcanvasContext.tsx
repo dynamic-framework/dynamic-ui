@@ -32,7 +32,7 @@ type OpenOffcanvasFunction<P = unknown> = (name: string, payload: P) => void;
 type CloseOffcanvasFunction = () => void;
 type OffcanvasContextType<T extends Record<string, unknown>> = {
   stack: OffcanvasStackItem<string, T[keyof T]>[];
-  openOffcanvas: OpenOffcanvasFunction;
+  openOffcanvas: OpenOffcanvasFunction<T[keyof T]>;
   closeOffcanvas: CloseOffcanvasFunction;
 };
 export type OffcanvasProps<P = any> = {
@@ -55,7 +55,7 @@ export function DOffcanvasContextProvider<T extends Record<string, unknown>>(
   const [stack, { push, pop, peek }] = useStackState<OffcanvasStackItem<string, T[keyof T]>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
-  const openOffcanvas = useCallback<OpenOffcanvasFunction<T[keyof T]>>(
+  const openOffcanvas = useCallback<OffcanvasContextType<T>['openOffcanvas']>(
     (offcanvasName, payload) => {
       const Component = (
         availableOffcanvas[offcanvasName as keyof T] as OffcanvasComponent<T[keyof T]>
