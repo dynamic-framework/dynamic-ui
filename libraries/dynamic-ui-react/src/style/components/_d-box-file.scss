@@ -1,5 +1,6 @@
 .d-box-file {
   --#{$prefix}box-file-gap: #{$box-file-gap};
+  --#{$prefix}box-file-bg: #{$box-file-background};
   --#{$prefix}box-file-border: #{$box-file-border};
   --#{$prefix}box-file-border-radius: #{$box-file-border-radius};
   --#{$prefix}box-file-padding: #{$box-file-padding};
@@ -18,6 +19,7 @@
   gap: var(--#{$prefix}box-file-gap);
   width: 100%;
   cursor: pointer;
+  background: var(--#{$prefix}box-file-bg);
   border: var(--#{$prefix}box-file-border);
   border-radius: var(--#{$prefix}box-file-border-radius);
 
