@@ -4,12 +4,19 @@ import DModal from '../../src/components/DModal/DModal';
 import DButton from '../../src/components/DButton';
 
 import {
-  ModalContextProvider,
-  useModalContext as useModalContextHook,
-} from '../../src/contexts';
-import type { ModalProps } from '../../src/contexts';
+  DModalContextProvider,
+  useDModalContext,
+} from '../../src';
 
-const ExampleModal = ({ closeModal }: ModalProps) => (
+import type { ModalProps } from '../../src';
+
+type ModalPayload = {
+  example: {
+    description: string;
+  };
+};
+
+const ExampleModal = ({ closeModal, payload }: ModalProps<ModalPayload['example']>) => (
   <DModal
     name="example"
     centered
@@ -19,8 +26,9 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
     <DModal.Header onClose={closeModal} showCloseButton>
       <h5 className="fw-bold">Do you want to reject the offer?</h5>
     </DModal.Header>
-    <DModal.Body>
-      <p className="py-3 px-5">Modal body</p>
+    <DModal.Body className="py-3 px-5">
+      <p>Modal body</p>
+      <small>{payload.description}</small>
     </DModal.Body>
     <DModal.Footer>
       <DButton
@@ -28,28 +36,33 @@ const ExampleModal = ({ closeModal }: ModalProps) => (
         theme="secondary"
         variant="outline"
         className="d-grid"
-        isPill
+        pill
         onClick={() => closeModal()}
       />
-      <DButton text="ok" className="d-grid" isPill />
+      <DButton text="ok" className="d-grid" pill />
     </DModal.Footer>
   </DModal>
 );
 
 const ExampleChildren = () => {
-  const { openModal } = useModalContextHook();
-  return <DButton text="Open Modal" onClick={() => openModal('example')} />;
+  const { openModal } = useDModalContext();
+  return (
+    <DButton
+      text="Open Modal"
+      onClick={() => openModal('example', { description: 'from modal payload' })}
+    />
+  );
 };
 
 const Example = () => (
-  <ModalContextProvider
+  <DModalContextProvider<ModalPayload>
     portalName="examplePortal"
     availableModals={{
       example: ExampleModal,
     }}
   >
     <ExampleChildren />
-  </ModalContextProvider>
+  </DModalContextProvider>
 );
 
 const config: Meta<typeof Example> = {

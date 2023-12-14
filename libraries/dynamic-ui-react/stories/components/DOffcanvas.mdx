@@ -34,17 +34,28 @@ import * as useOffcanvasContextStories from '../hooks/useOffcanvasContext.storie
 <Story of={useOffcanvasContextStories.useOffcanvasContext} />
 <br />
 
+### Context Setup - type with all offcanvas payloads`
+<Source
+  code={`
+type OffcanvasPayload = {
+  example: {
+    description: string;
+  };
+};
+  `}
+/>
+
 ### Context Setup - render of `Bootstrap.tsx`
 <Source
   code={`
- <OffcanvasContextProvider
+<DOffcanvasContextProvider<OffcanvasPayload>
   portalName="examplePortal"
   availableOffcanvas={{
     example: ExampleOffcanvas,
   }}
 >
   <ExampleChildren />
-</OffcanvasContextProvider>
+</DOffcanvasContextProvider>
   `}
 />
 
@@ -53,27 +64,28 @@ import * as useOffcanvasContextStories from '../hooks/useOffcanvasContext.storie
   code={`
 <DOffcanvas
   name="example"
-  isStatic={false}
-  isScrollable={false}
+  staticBackdrop={false}
+  scrollable={false}
   openFrom="end"
 >
-  <DOffcanvasHeader onClose={closeOffcanvas} showCloseButton>
+  <DOffcanvas.Header onClose={closeOffcanvas} showCloseButton>
     <h5 className="fw-bold">Advanced filters</h5>
-  </DOffcanvasHeader>
-  <DOffcanvasBody>
+  </DOffcanvas.Header>
+  <DOffcanvas.Body>
     <p>Offcanvas body</p>
-  </DOffcanvasBody>
-  <DOffcanvasFooter>
+    <small>{payload.description}</small>
+  </DOffcanvas.Body>
+  <DOffcanvas.Footer>
     <DButton
       text="cancel"
       theme="secondary"
       variant="outline"
       className="d-grid"
-      isPill
+      pill
       onClick={() => closeOffcanvas()}
     />
-    <DButton text="ok" className="d-grid" isPill />
-  </DOffcanvasFooter>
+    <DButton text="ok" className="d-grid" pill />
+  </DOffcanvas.Footer>
 </DOffcanvas>
   `}
 />

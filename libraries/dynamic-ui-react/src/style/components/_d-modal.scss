@@ -6,14 +6,17 @@
   --#{$prefix}modal-separator-bg: #{$modal-separator-bg};
 
   .modal-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    &:has(.d-modal-close:only-child) {
+      justify-content: flex-end;
+    }
   }
 
   .d-modal-close {
-    align-self: flex-end;
     padding: 0;
-    margin-bottom: $spacer-3;
     background: transparent;
     border: 0;
 
