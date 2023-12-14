@@ -41,12 +41,10 @@ export type EndIconProps = {
   iconEndTabIndex?: number;
 };
 
-export type ToastType = 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark';
-export type ToastTypeIconMap = {
-  [state in ToastType]: string;
+export type AlertType = 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | 'primary' | 'secondary';
+export type AlertTypeIconMap = {
+  [state in AlertType]: string;
 };
-
-export type AlertBoxTheme = 'box-info' | 'box-white' | 'box-secondary';
 
 export type ButtonVariant = 'outline' | 'link';
 export type ButtonType = 'submit' | 'reset' | 'button';
