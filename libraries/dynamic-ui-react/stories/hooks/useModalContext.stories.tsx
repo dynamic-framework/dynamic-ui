@@ -16,7 +16,7 @@ type ModalPayload = {
   };
 };
 
-const ExampleModal = ({ closeModal }: ModalProps<ModalPayload['example']>) => (
+const ExampleModal = ({ closeModal, payload }: ModalProps<ModalPayload['example']>) => (
   <DModal
     name="example"
     centered
@@ -28,6 +28,7 @@ const ExampleModal = ({ closeModal }: ModalProps<ModalPayload['example']>) => (
     </DModal.Header>
     <DModal.Body className="py-3 px-5">
       <p>Modal body</p>
+      <small>{payload.description}</small>
     </DModal.Body>
     <DModal.Footer>
       <DButton
