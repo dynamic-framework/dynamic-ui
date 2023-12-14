@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import DToast from '../../src/components/DToast/DToast';
+import DAlert from '../../src/components/DAlert/DAlert';
 import { THEMES, ICONS } from '../config/constants';
 
-const config: Meta<typeof DToast> = {
-  title: 'Design System/Patterns/Toast',
-  component: DToast,
+const config: Meta<typeof DAlert> = {
+  title: 'Design System/Components/Alert',
+  component: DAlert,
   argTypes: {
     type: {
       control: 'select',
@@ -30,6 +30,11 @@ const config: Meta<typeof DToast> = {
       type: 'boolean',
       description: 'Show toast icon',
     },
+    soft: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Soft style',
+    },
     onClose: {
       action: 'onClose',
     },
@@ -37,7 +42,7 @@ const config: Meta<typeof DToast> = {
 };
 
 export default config;
-type Story = StoryObj<typeof DToast>;
+type Story = StoryObj<typeof DAlert>;
 
 export const Success: Story = {
   args: {
@@ -102,47 +107,65 @@ export const WarningIcon: Story = {
   },
 };
 
-export const SuccessClose: Story = {
+export const SuccessSoft: Story = {
   args: {
     showIcon: true,
     children: 'Default toast',
     type: 'success',
-    showClose: true,
+    soft: true,
   },
 };
 
-export const DangerClose: Story = {
+export const DangerSoft: Story = {
   args: {
     showIcon: true,
     children: 'Default toast',
     type: 'danger',
-    showClose: true,
+    soft: true,
   },
 };
 
-export const InfoClose: Story = {
+export const InfoSoft: Story = {
   args: {
     showIcon: true,
     children: 'Default toast',
     type: 'info',
-    showClose: true,
+    soft: true,
   },
 };
 
-export const WarningClose: Story = {
+export const WarningSoft: Story = {
   args: {
     showIcon: true,
     children: 'Default toast',
     type: 'warning',
-    showClose: true,
+    soft: true,
   },
 };
 
-export const WithIcon: Story = {
+export const PrimarySoft: Story = {
   args: {
-    icon: 'clock',
+    showIcon: true,
     children: 'Default toast',
-    type: 'warning',
-    showClose: true,
+    type: 'primary',
+    soft: true,
+  },
+};
+
+export const SecondarySoft: Story = {
+  args: {
+    showIcon: true,
+    children: 'Default toast',
+    type: 'secondary',
+    soft: true,
+  },
+};
+
+export const LightSoft: Story = {
+  args: {
+    showIcon: true,
+    children: 'Default toast',
+    type: 'light',
+    soft: true,
   },
 };

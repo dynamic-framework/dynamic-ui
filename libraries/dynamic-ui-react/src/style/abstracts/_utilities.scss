@@ -21,7 +21,7 @@ $utilities: map-merge(
         values: map-merge(
           map-get(map-get($utilities, "color"), "values"),
           // TODO: try to move the map-loop to $utilities-text map libraries/dynamic-ui/node_modules/bootstrap/scss/_maps.scss
-          map-loop($palette-grays, rgba-css-var, "$key", "text"),
+          map-loop(map-merge-multiple($theme-colors-palletes, $palette-grays), rgba-css-var, "$key", "text"),
         )
       )
     ),
@@ -31,10 +31,7 @@ $utilities: map-merge(
         values: map-merge(
           map-get(map-get($utilities, "background-color"), "values"),
           // TODO: try to move the map-loop to $utilities-bg map libraries/dynamic-ui/node_modules/bootstrap/scss/_maps.scss
-          map-merge(
-            map-loop($palette-grays, rgba-css-var, "$key", "bg"),
-            map-loop($bg-soft-colors, rgba-css-var, "$key", "bg")
-          )
+          map-loop(map-merge-multiple($theme-colors-palletes, $palette-grays, $bg-soft-colors), rgba-css-var, "$key", "bg"),
         )
       )
     ),
