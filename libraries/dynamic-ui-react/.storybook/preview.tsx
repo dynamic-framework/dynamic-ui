@@ -29,6 +29,7 @@ export default {
               'Button',
               'Icon',
               'Input',
+              'Input Mask',
               'Input Search',
               'Input Password',
               'Input Currency Base',
