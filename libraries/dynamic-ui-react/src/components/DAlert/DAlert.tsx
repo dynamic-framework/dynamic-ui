@@ -6,28 +6,30 @@ import type { CSSProperties, PropsWithChildren } from 'react';
 import DIcon from '../DIcon';
 import { ALERT_TYPE_ICON, PREFIX_BS } from '../config';
 
-import type { ToastType, BaseProps, CustomStyles } from '../interface';
+import type { AlertType, BaseProps, CustomStyles } from '../interface';
 
 type Props =
 & BaseProps
 & PropsWithChildren<{
   id?: string;
-  type?: ToastType;
+  type?: AlertType;
   icon?: string;
   iconFamilyClass?: string;
   iconFamilyPrefix?: string;
   showIcon?: boolean;
   showClose?: boolean;
+  soft?: boolean;
   onClose?: () => void;
 }>;
 
-export default function DToast(
+export default function DAlert(
   {
     type = 'success',
     icon,
     iconFamilyClass,
     iconFamilyPrefix,
-    showIcon = false,
+    showIcon = true,
+    soft = false,
     showClose,
     onClose,
     children,
@@ -41,9 +43,10 @@ export default function DToast(
       alert: true,
       [`alert-${type}`]: true,
       'fade show': !!showClose,
+      'alert-soft': soft,
       ...className && { [className]: true },
     }),
-    [type, showClose, className],
+    [type, showClose, soft, className],
   );
 
   const getIcon = useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);

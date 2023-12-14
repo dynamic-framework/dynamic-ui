@@ -3,13 +3,10 @@ import {
   ArgTypes,
   Markdown,
   Stories,
-  Story,
-  Source,
 } from '@storybook/blocks';
 import { PREFIX_BS } from '../../src/components/config';
 
-import * as DToastStories from './DToast.stories';
-import * as useToastStories from '../hooks/useToast.stories';
+import * as DAlertStories from './DAlert.stories';
 
 # Toast
 
@@ -18,7 +15,6 @@ Alert Component.
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap Alerts](https://getbootstrap.com/docs/5.3/components/alerts/)
-+ [React Toastify](https://fkhadra.github.io/react-toastify/introduction/)
 
 ## CSS Variables
 <Markdown>
@@ -36,27 +32,9 @@ To understand in more detail the aspects covered by this component, review the f
 </Markdown>
 
 ## Args
-<Meta of={DToastStories} />
+<Meta of={DAlertStories} />
 
-<ArgTypes of={DToastStories} />
-
-## Example
-
-<Story of={useToastStories.useToast} />
-<br />
-
-### Toast Usage
-<Source
-  code={`
-<>
-  <DButton
-    text="Show Toast"
-    onClick={() => toast(message, { type: 'info', showClose: false })}
-  />
-  <DToastContainer />
-</>
-  `}
-/>
+<ArgTypes of={DAlertStories} />
 
 <Stories />
 

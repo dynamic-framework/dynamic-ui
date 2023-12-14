@@ -1,0 +1,36 @@
+import {
+  Meta,
+  Story,
+  Source,
+} from '@storybook/blocks';
+
+import * as useToastStories from '../hooks/useToast.stories';
+
+# Toast
+
+Toast Component.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [React Toastify](https://fkhadra.github.io/react-toastify/introduction/)
+
+<Meta of={useToastStories} />
+
+## Example
+
+<Story of={useToastStories.useToast} />
+<br />
+
+### Toast Usage
+<Source
+  code={`
+<>
+  <DButton
+    text="Show Toast"
+    onClick={() => toast(message, { type: 'info', showClose: false })}
+  />
+  <DToastContainer />
+</>
+  `}
+/>
+
