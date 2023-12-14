@@ -38,6 +38,7 @@ type Props =
   loadingAriaLabel?: string;
   disabled?: boolean;
   stopPropagationEnabled?: boolean;
+  form?: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -63,6 +64,7 @@ export default function DButton(
     disabled = false,
     stopPropagationEnabled = true,
     className,
+    form,
     onClick,
   }: Props,
 ) {
@@ -116,6 +118,7 @@ export default function DButton(
       disabled={isDisabled}
       onClick={clickHandler}
       aria-label={newAriaLabel}
+      form={form}
       {...value && { value }}
     >
       {iconStart && (
