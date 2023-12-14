@@ -28,7 +28,7 @@ export default function DAlert(
     icon,
     iconFamilyClass,
     iconFamilyPrefix,
-    showIcon = false,
+    showIcon = true,
     soft = false,
     showClose,
     onClose,
