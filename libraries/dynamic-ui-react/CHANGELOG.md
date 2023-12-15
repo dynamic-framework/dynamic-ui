@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.12.0...@dynamic-framework/ui-react@1.12.1) (2023-12-15)
+
+
+### Bug Fixes
+
+* adjust line variable of DStepperDesktop ([fe9d2cc](https://github.com/dynamic-framework/dynamic-ui/commit/fe9d2cc0150918e46421d862f84dfe15b91f1d27))
+
+
+
 ## [1.12.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.11.1...@dynamic-framework/ui-react@1.12.0) (2023-12-15)
 
 
