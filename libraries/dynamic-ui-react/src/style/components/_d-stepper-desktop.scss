@@ -131,7 +131,7 @@
         width: 0;
         height: 100%;
         content: "";
-        border: var(--#{$prefix}step-icon-container-border-width) solid var(--#{$prefix}step-icon-container-border-color);
+        border: var(--#{$prefix}step-line-stroke) solid var(--#{$prefix}step-line-color);
       }
 
       &:first-child .d-step-value::after {

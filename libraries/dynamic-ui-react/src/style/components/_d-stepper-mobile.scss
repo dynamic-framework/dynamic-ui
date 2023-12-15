@@ -24,7 +24,6 @@
   --#{$prefix}step-info-description-font-size: var(--#{$prefix}ref-fs-small);
   --#{$prefix}step-info-description-color: var(--#{$prefix}gray-500);
 
-
   display: flex;
   gap: var(--#{$prefix}step-container-gap);
   align-items: center;
@@ -40,6 +39,7 @@
     height: var(--#{$prefix}step-progress-outter-size);
     border-radius: var(--#{$prefix}step-progress-outter-size);
   }
+
   .d-step-bar::after {
     position: absolute;
     z-index: var(--#{$prefix}step-progress-inner-z-index);
@@ -49,19 +49,23 @@
     background-color: var(--#{$prefix}step-progress-inner-background-color);
     border-radius: var(--#{$prefix}step-progress-inner-size);
   }
+
   .d-step-number {
     z-index: var(--#{$prefix}step-current-step-z-index);
     font-weight: var(--#{$prefix}step-current-step-font-weight);
     color: var(--#{$prefix}step-current-step-color);
   }
+
   .d-step-info {
     display: flex;
     flex-direction: column;
     max-width: var(--#{$prefix}step-info-max-width);
   }
+
   .d-step-label {
     font-size: var(--#{$prefix}step-info-label-font-size);
   }
+
   .d-step-description {
     font-size: var(--#{$prefix}step-info-description-font-size);
     color: var(--#{$prefix}step-info-description-color);
