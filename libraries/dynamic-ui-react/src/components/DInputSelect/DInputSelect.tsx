@@ -52,7 +52,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     label = '',
     className,
     style,
-    options,
+    options = [],
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,

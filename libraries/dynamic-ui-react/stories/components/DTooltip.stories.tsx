@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DTooltip from '../../src/components/DTooltip/DTooltip';
+import { THEMES } from '../config/constants';
 
 const config: Meta<typeof DTooltip> = {
   title: 'Design System/Components/Tooltip',
@@ -26,13 +27,20 @@ const config: Meta<typeof DTooltip> = {
       control: 'boolean',
       defaultValue: false,
     },
-    classNameContainer: {
-      type: 'string',
-      control: 'text',
-    },
     className: {
       type: 'string',
       control: 'text',
+    },
+    childrenClassName: {
+      type: 'string',
+      control: 'text',
+    },
+    theme: {
+      control: 'select',
+      type: 'string',
+      options: THEMES,
+      table: { defaultValue: { summary: 'primary' } },
+      description: 'The theme to use.',
     },
     Component: {
       defaultValue: 'Link',
@@ -64,6 +72,7 @@ export const Top: Story = {
     withClick: false,
     withFocus: false,
     open: true,
+    theme: 'secondary',
   },
 };
 
@@ -76,6 +85,7 @@ export const Right: Story = {
     withClick: false,
     withFocus: false,
     open: true,
+    theme: 'secondary',
   },
 };
 
@@ -88,6 +98,7 @@ export const Bottom: Story = {
     withClick: false,
     withFocus: false,
     open: true,
+    theme: 'secondary',
   },
 };
 
@@ -100,6 +111,7 @@ export const Left: Story = {
     withClick: false,
     withFocus: false,
     open: true,
+    theme: 'secondary',
   },
 };
 
@@ -113,6 +125,7 @@ export const SmallTop: Story = {
     withFocus: false,
     open: true,
     size: 'sm',
+    theme: 'secondary',
   },
 };
 
@@ -126,6 +139,7 @@ export const SmallRight: Story = {
     withFocus: false,
     open: true,
     size: 'sm',
+    theme: 'secondary',
   },
 };
 
@@ -139,6 +153,7 @@ export const SmallBottom: Story = {
     withFocus: false,
     open: true,
     size: 'sm',
+    theme: 'secondary',
   },
 };
 
@@ -152,6 +167,7 @@ export const SmallLeft: Story = {
     withFocus: false,
     open: true,
     size: 'sm',
+    theme: 'secondary',
   },
 };
 
@@ -165,6 +181,7 @@ export const LargeTop: Story = {
     withFocus: false,
     open: true,
     size: 'lg',
+    theme: 'secondary',
   },
 };
 
@@ -178,6 +195,7 @@ export const LargeRight: Story = {
     withFocus: false,
     open: true,
     size: 'lg',
+    theme: 'secondary',
   },
 };
 
@@ -191,6 +209,7 @@ export const LargeBottom: Story = {
     withFocus: false,
     open: true,
     size: 'lg',
+    theme: 'secondary',
   },
 };
 
@@ -204,6 +223,7 @@ export const LargeLeft: Story = {
     withFocus: false,
     open: true,
     size: 'lg',
+    theme: 'secondary',
   },
 };
 
@@ -217,5 +237,6 @@ export const LargeText: Story = {
     withFocus: false,
     open: true,
     size: 'lg',
+    theme: 'secondary',
   },
 };
