@@ -24,6 +24,9 @@ export default function DModalHeader(
       className={classNames('modal-header', className)}
       style={style}
     >
+      <div className="d-modal-slot">
+        {children}
+      </div>
       {showCloseButton && (
         <button
           type="button"
@@ -34,7 +37,6 @@ export default function DModalHeader(
           <DIcon icon="x-lg" />
         </button>
       )}
-      {children}
     </div>
   );
 }

@@ -3,12 +3,12 @@ import { Slide, toast as reactToast } from 'react-toastify';
 
 import type { ToastPosition } from 'react-toastify';
 
-import DToast from '../DToast/DToast';
+import DAlert from '../DAlert/DAlert';
 
-import type { ToastType } from '../interface';
+import type { AlertType } from '../interface';
 
 export type ToastConfig = {
-  type?: ToastType;
+  type?: AlertType;
   showClose?: boolean;
   position?: ToastPosition;
   autoClose?: number | false;
@@ -22,14 +22,14 @@ export default function useToast() {
     autoClose = false,
   }: ToastConfig = {}) => {
     reactToast(({ closeToast }) => (
-      <DToast
+      <DAlert
         type={type}
         showClose={showClose}
         onClose={closeToast}
         id="alertID"
       >
         {message}
-      </DToast>
+      </DAlert>
     ), {
       transition: Slide,
       position,

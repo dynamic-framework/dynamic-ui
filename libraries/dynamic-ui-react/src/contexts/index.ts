@@ -1,3 +1,3 @@
 export * from './DContext';
-export * from './ModalContext';
-export * from './OffcanvasContext';
+export * from './DModalContext';
+export * from './DOffcanvasContext';

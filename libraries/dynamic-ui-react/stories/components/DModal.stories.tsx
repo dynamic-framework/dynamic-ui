@@ -32,7 +32,7 @@ const config: Meta<typeof DModal> = {
       type: 'string',
       options: ['sm', 'md', 'lg', 'xl', 'xxl'],
     },
-    modalSize: {
+    size: {
       control: 'radio',
       type: 'string',
       options: ['sm', 'lg', 'xl'],
@@ -68,9 +68,9 @@ export const Default: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DModal.Footer>
     </DModal>
   ),
@@ -80,7 +80,7 @@ export const Default: Story = {
     scrollable: false,
     centered: true,
     fullScreen: false,
-    modalSize: 'sm',
+    size: 'sm',
     className: 'd-block',
   },
 };
@@ -107,9 +107,9 @@ export const ActionsPlacementStart: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DModal.Footer>
     </DModal>
   ),
@@ -119,7 +119,7 @@ export const ActionsPlacementStart: Story = {
     scrollable: false,
     centered: true,
     fullScreen: false,
-    modalSize: 'sm',
+    size: 'sm',
     className: 'd-block',
   },
 };
@@ -146,9 +146,9 @@ export const ActionsPlacementEnd: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DModal.Footer>
     </DModal>
   ),
@@ -158,7 +158,7 @@ export const ActionsPlacementEnd: Story = {
     scrollable: false,
     centered: true,
     fullScreen: false,
-    modalSize: 'sm',
+    size: 'sm',
     className: 'd-block',
   },
 };
@@ -182,9 +182,9 @@ export const WithoutHeader: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DModal.Footer>
     </DModal>
   ),
@@ -194,7 +194,7 @@ export const WithoutHeader: Story = {
     scrollable: false,
     centered: true,
     fullScreen: false,
-    modalSize: 'sm',
+    size: 'sm',
     className: 'd-block',
   },
 };
@@ -223,7 +223,7 @@ export const WithoutActions: Story = {
     scrollable: false,
     centered: true,
     fullScreen: false,
-    modalSize: 'sm',
+    size: 'sm',
     className: 'd-block',
   },
 };
@@ -250,7 +250,7 @@ export const OnlyBody: Story = {
     scrollable: false,
     centered: true,
     fullScreen: false,
-    modalSize: 'sm',
+    size: 'sm',
     className: 'd-block',
   },
 };
@@ -277,9 +277,9 @@ export const WithoutCancelX: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DModal.Footer>
     </DModal>
   ),
@@ -289,7 +289,7 @@ export const WithoutCancelX: Story = {
     scrollable: false,
     centered: true,
     fullScreen: false,
-    modalSize: 'sm',
+    size: 'sm',
     className: 'd-block',
   },
 };

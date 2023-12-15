@@ -1,7 +1,6 @@
 export * from './banking';
 
-export { default as DToast } from './DToast';
-export { default as DAlertBox } from './DAlertBox';
+export { default as DAlert } from './DAlert';
 export { default as DBadge } from './DBadge';
 export { default as DBoxFile } from './DBoxFile';
 export { default as DButton } from './DButton';
@@ -23,6 +22,7 @@ export { default as DCurrencyText } from './DCurrencyText';
 export { default as DDatePicker } from './DDatePicker';
 export { default as DIcon } from './DIcon';
 export { default as DInput } from './DInput';
+export { default as DInputMask } from './DInputMask';
 export { default as DInputCounter } from './DInputCounter';
 export { default as DInputCurrencyBase } from './DInputCurrencyBase';
 export { default as DInputCurrency } from './DInputCurrency';
