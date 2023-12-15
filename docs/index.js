@@ -9,6 +9,7 @@ var reactSplide = require('@splidejs/react-splide');
 var currency = require('currency.js');
 var DatePicker = require('react-datepicker');
 var dateFns = require('date-fns');
+var mask = require('@react-input/mask');
 var ResponsivePagination = require('react-responsive-pagination');
 var react = require('@floating-ui/react');
 var ContentLoader = require('react-content-loader');
@@ -55,6 +56,8 @@ const ALERT_TYPE_ICON = {
     info: 'info-circle',
     dark: 'info-circle',
     light: 'info-circle',
+    primary: 'info-circle',
+    secondary: 'info-circle',
 };
 
 function DIcon({ icon, theme, style, className, size = '1.5rem', loading = false, loadingDuration = 1.8, hasCircle = false, circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`, color, backgroundColor, familyClass = 'bi', familyPrefix = 'bi-', }) {
@@ -94,16 +97,11 @@ function DSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, 
     return (jsxRuntime.jsxs("div", { children: [jsxRuntime.jsx("h6", { className: "fw-bold fs-6", children: title }), jsxRuntime.jsx("p", { className: "fs-8", children: description }), jsxRuntime.jsxs("div", { className: "bg-white rounded p-4 d-flex gap-3 shadow-sm text-gray-700 fs-8", children: [jsxRuntime.jsx(DIcon, { icon: icon, theme: iconTheme, size: iconSize }), Summary] })] }));
 }
 
-function DToast({ type = 'success', icon, iconFamilyClass, iconFamilyPrefix, showIcon = false, showClose, onClose, children, id, className, style, }) {
-    const generateClasses = React.useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose }, className && { [className]: true })), [type, showClose, className]);
+function DAlert({ type = 'success', icon, iconFamilyClass, iconFamilyPrefix, showIcon = true, soft = false, showClose, onClose, children, id, className, style, }) {
+    const generateClasses = React.useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose, 'alert-soft': soft }, className && { [className]: true })), [type, showClose, soft, className]);
     const getIcon = React.useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);
     const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3' })), [style]);
     return (jsxRuntime.jsxs("div", { className: classNames(generateClasses), style: generateStyleVariables, role: "alert", id: id, children: [(showIcon || icon) && (jsxRuntime.jsx(DIcon, Object.assign({ className: "alert-icon", icon: getIcon }, iconFamilyClass && { familyClass: iconFamilyClass }, iconFamilyPrefix && { familyPrefix: iconFamilyPrefix }))), jsxRuntime.jsx("div", { className: "alert-text", children: children }), showClose && (jsxRuntime.jsx("div", { className: "alert-separator" })), showClose && (jsxRuntime.jsx("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { className: "alert-close-icon", icon: "x-lg", familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) }))] }));
-}
-
-function DAlertBox({ theme = 'box-secondary', icon = 'info-circle', iconFamilyClass, iconFamilyPrefix, children, id, className, style, }) {
-    const generateClasses = React.useMemo(() => (Object.assign({ 'alert alert-box': true, [`alert-${theme}`]: true }, className && { [className]: true })), [theme, className]);
-    return (jsxRuntime.jsxs("div", { className: classNames(generateClasses), style: style, role: "alert", id: id, children: [jsxRuntime.jsx(DIcon, Object.assign({ className: "alert-icon", icon: icon }, iconFamilyClass && { familyClass: iconFamilyClass }, iconFamilyPrefix && { familyPrefix: iconFamilyPrefix })), jsxRuntime.jsx("div", { className: "alert-text", children: children })] }));
 }
 
 function DBoxFile(_a) {
@@ -118,7 +116,7 @@ function DBoxFile(_a) {
             }), { children: [jsxRuntime.jsx("input", Object.assign({}, getInputProps())), jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsxRuntime.jsx("div", { className: "d-box-content", children: children })] })), !!acceptedFiles.length && (jsxRuntime.jsx("aside", { className: "d-box-files", children: acceptedFiles.map((file) => (jsxRuntime.jsx("div", { className: "d-box-files-text", children: `${file.name} - ${file.size} bytes` }, file.name))) }))] }));
 }
 
-function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type = 'button', pill = false, loading = false, loadingAriaLabel, disabled = false, stopPropagationEnabled = true, className, onClick, }) {
+function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type = 'button', pill = false, loading = false, loadingAriaLabel, disabled = false, stopPropagationEnabled = true, className, form, onClick, }) {
     const generateClasses = React.useMemo(() => {
         const variantClass = variant
             ? `btn-${variant}-${theme}`
@@ -145,7 +143,7 @@ function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel
     const newAriaLabel = React.useMemo(() => (loading
         ? (loadingAriaLabel || ariaLabel || text)
         : (ariaLabel || text)), [loading, loadingAriaLabel, ariaLabel, text]);
-    return (jsxRuntime.jsxs("button", Object.assign({ className: classNames(generateClasses, className), style: generateStyleVariables, type: type, disabled: isDisabled, onClick: clickHandler, "aria-label": newAriaLabel }, value && { value }, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })), (text && !loading) && (jsxRuntime.jsx("span", { children: text })), loading && (jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) })), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix }))] })));
+    return (jsxRuntime.jsxs("button", Object.assign({ className: classNames(generateClasses, className), style: generateStyleVariables, type: type, disabled: isDisabled, onClick: clickHandler, "aria-label": newAriaLabel, form: form }, value && { value }, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })), (text && !loading) && (jsxRuntime.jsx("span", { children: text })), loading && (jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) })), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix }))] })));
 }
 
 function DCardHeader({ className, style, children, }) {
@@ -251,6 +249,35 @@ function useDContext() {
     return context;
 }
 
+function useDisableBodyScrollEffect(disable) {
+    React.useEffect(() => {
+        if (disable) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.paddingRight = '0';
+        }
+        else {
+            document.body.style.overflow = 'unset';
+            document.body.style.paddingRight = 'unset';
+        }
+    }, [disable]);
+}
+
+function usePortal(portalName) {
+    const [hasPortal, setHasPortal] = React.useState(false);
+    React.useEffect(() => {
+        const previousPortal = document.querySelector(`#${portalName}`);
+        if (previousPortal) {
+            previousPortal.remove();
+        }
+        const portal = document.createElement('div');
+        portal.id = portalName;
+        portal.className = 'd-portal';
+        document.body.appendChild(portal);
+        setHasPortal(true);
+    }, [portalName]);
+    return { created: hasPortal };
+}
+
 /**
  * useStackState inspired from rooks
  * @see https://github.com/imbhargav5/rooks/blob/main/packages/rooks/src/hooks/useStackState.ts
@@ -296,72 +323,26 @@ function useStackState(initialList) {
     return [list, controls];
 }
 
-const ModalContext = React.createContext(undefined);
-function enhanceModal(Modal, callbacks) {
-    return function EnhancedModal(_a) {
-        var { name, payload } = _a, otherProps = tslib.__rest(_a, ["name", "payload"]);
-        React.useEffect(() => {
-            if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAfterOpen) {
-                callbacks.onAfterOpen(payload);
-            }
-            return () => {
-                if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAfterClose) {
-                    callbacks.onAfterClose({ fromModal: false }, payload);
-                }
-            };
-        }, [payload]);
-        return (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        jsxRuntime.jsx(Modal, Object.assign({ name: name, payload: payload }, otherProps)));
-    };
-}
-function ModalContextProvider({ portalName, children, availableModals, }) {
-    const [hasPortal, setHasPortal] = React.useState(false);
-    React.useEffect(() => {
-        const previousPortal = document.querySelector(`#${portalName}`);
-        if (previousPortal) {
-            previousPortal.remove();
-        }
-        const portal = document.createElement('div');
-        portal.id = portalName;
-        document.body.appendChild(portal);
-        setHasPortal(true);
-    }, [portalName]);
+const DModalContext = React.createContext(undefined);
+function DModalContextProvider({ portalName, children, availableModals, }) {
+    const { created } = usePortal(portalName);
     const [stack, { push, pop, peek }] = useStackState([]);
-    React.useEffect(() => {
-        if (stack.length) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = '0';
-        }
-        else {
-            document.body.style.overflow = 'unset';
-            document.body.style.paddingRight = 'unset';
-        }
-    }, [stack.length]);
-    const openModal = React.useCallback((modalName, { payload, callbacks } = { payload: {} }) => {
+    useDisableBodyScrollEffect(Boolean(stack.length));
+    const openModal = React.useCallback((modalName, payload) => {
         const Component = availableModals[modalName];
         if (!Component) {
-            throw new Error(`there is no component for modal ${modalName}`);
+            throw new Error(`there is no component for modal ${modalName.toString()}`);
         }
-        const stackItem = {
+        push({
             modalName,
             Component,
             payload,
-            callbacks,
-        };
-        if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onBeforeOpen) {
-            callbacks.onBeforeOpen(payload);
-        }
-        push(stackItem);
+        });
     }, [availableModals, push]);
-    const closeModal = React.useCallback((context = { fromModal: false }) => {
-        var _a;
+    const closeModal = React.useCallback(() => {
         const stackItem = peek();
         if (!stackItem) {
             return;
-        }
-        if ((_a = stackItem.callbacks) === null || _a === void 0 ? void 0 : _a.onBeforeClose) {
-            stackItem.callbacks.onBeforeClose(context, stackItem.payload);
         }
         pop();
     }, [peek, pop]);
@@ -370,85 +351,36 @@ function ModalContextProvider({ portalName, children, availableModals, }) {
         openModal,
         closeModal,
     }), [stack, openModal, closeModal]);
-    return (jsxRuntime.jsxs(ModalContext.Provider, { value: value, children: [children, hasPortal && reactDom.createPortal(jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [stack.map(({ Component, modalName, callbacks, payload, }) => {
-                        const EnhancedComponent = enhanceModal(Component, callbacks);
-                        return (jsxRuntime.jsx(EnhancedComponent, { name: modalName, payload: payload, openModal: openModal, closeModal: closeModal }, modalName));
-                    }), !!stack.length && jsxRuntime.jsx("div", { className: "modal-backdrop fade show" })] }), document.getElementById(portalName))] }));
+    return (jsxRuntime.jsxs(DModalContext.Provider, { value: value, children: [children, created && reactDom.createPortal(jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [stack.map(({ Component, modalName, payload, }) => (jsxRuntime.jsx(Component, { name: modalName, payload: payload, openModal: openModal, closeModal: closeModal }, modalName))), !!stack.length && jsxRuntime.jsx("div", { className: "modal-backdrop fade show" })] }), document.getElementById(portalName))] }));
 }
-function useModalContext() {
-    const context = React.useContext(ModalContext);
+function useDModalContext() {
+    const context = React.useContext(DModalContext);
     if (context === undefined) {
         throw new Error('useModalContext was used outside of ModalContextProvider');
     }
     return context;
 }
 
-const OffcanvasContext = React.createContext(undefined);
-function enhanceOffcanvas(Offcanvas, callbacks) {
-    return function EnhancedOffcanvas(_a) {
-        var { name, payload } = _a, otherProps = tslib.__rest(_a, ["name", "payload"]);
-        React.useEffect(() => {
-            if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAfterOpen) {
-                callbacks.onAfterOpen(payload);
-            }
-            return () => {
-                if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAfterClose) {
-                    callbacks.onAfterClose({ fromOffcanvas: false }, payload);
-                }
-            };
-        }, [payload]);
-        return (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        jsxRuntime.jsx(Offcanvas, Object.assign({ name: name, payload: payload }, otherProps)));
-    };
-}
-function OffcanvasContextProvider({ portalName, children, availableOffcanvas, }) {
-    const [hasPortal, setHasPortal] = React.useState(false);
-    React.useEffect(() => {
-        const previousPortal = document.querySelector(`#${portalName}`);
-        if (previousPortal) {
-            previousPortal.remove();
-        }
-        const portal = document.createElement('div');
-        portal.id = portalName;
-        document.body.appendChild(portal);
-        setHasPortal(true);
-    }, [portalName]);
+const DOffcanvasContext = React.createContext(undefined);
+function DOffcanvasContextProvider({ portalName, children, availableOffcanvas, }) {
+    const { created } = usePortal(portalName);
     const [stack, { push, pop, peek }] = useStackState([]);
-    React.useEffect(() => {
-        if (stack.length) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = '0';
-        }
-        else {
-            document.body.style.overflow = 'unset';
-            document.body.style.paddingRight = 'unset';
-        }
-    }, [stack.length]);
-    const openOffcanvas = React.useCallback((offcanvasName, { payload, callbacks } = { payload: {} }) => {
+    useDisableBodyScrollEffect(Boolean(stack.length));
+    const openOffcanvas = React.useCallback((offcanvasName, payload) => {
         const Component = availableOffcanvas[offcanvasName];
         if (!Component) {
             throw new Error(`there is no component for offcanvas ${offcanvasName}`);
         }
-        const stackItem = {
+        push({
             offcanvasName,
             Component,
             payload,
-            callbacks,
-        };
-        if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onBeforeOpen) {
-            callbacks.onBeforeOpen(payload);
-        }
-        push(stackItem);
+        });
     }, [availableOffcanvas, push]);
-    const closeOffcanvas = React.useCallback((context = { fromOffcanvas: false }) => {
-        var _a;
+    const closeOffcanvas = React.useCallback(() => {
         const stackItem = peek();
         if (!stackItem) {
             return;
-        }
-        if ((_a = stackItem.callbacks) === null || _a === void 0 ? void 0 : _a.onBeforeClose) {
-            stackItem.callbacks.onBeforeClose(context, stackItem.payload);
         }
         pop();
     }, [peek, pop]);
@@ -457,13 +389,10 @@ function OffcanvasContextProvider({ portalName, children, availableOffcanvas, })
         openOffcanvas,
         closeOffcanvas,
     }), [stack, openOffcanvas, closeOffcanvas]);
-    return (jsxRuntime.jsxs(OffcanvasContext.Provider, { value: value, children: [children, hasPortal && reactDom.createPortal(jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [stack.map(({ Component, offcanvasName, callbacks, payload, }) => {
-                        const EnhancedComponent = enhanceOffcanvas(Component, callbacks);
-                        return (jsxRuntime.jsx(EnhancedComponent, { name: offcanvasName, payload: payload, openOffcanvas: openOffcanvas, closeOffcanvas: closeOffcanvas }, offcanvasName));
-                    }), !!stack.length && jsxRuntime.jsx("div", { className: "offcanvas-backdrop fade show" })] }), document.getElementById(portalName))] }));
+    return (jsxRuntime.jsxs(DOffcanvasContext.Provider, { value: value, children: [children, created && reactDom.createPortal(jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [stack.map(({ Component, offcanvasName, payload, }) => (jsxRuntime.jsx(Component, { name: offcanvasName, payload: payload, openOffcanvas: openOffcanvas, closeOffcanvas: closeOffcanvas }, offcanvasName))), !!stack.length && jsxRuntime.jsx("div", { className: "offcanvas-backdrop fade show" })] }), document.getElementById(portalName))] }));
 }
-function useOffcanvasContext() {
-    const context = React.useContext(OffcanvasContext);
+function useDOffcanvasContext() {
+    const context = React.useContext(DOffcanvasContext);
     if (context === undefined) {
         throw new Error('useOffcanvasContext was used outside of OffcanvasContextProvider');
     }
@@ -559,10 +488,7 @@ function DInput(_a, ref) {
         }
         return inputComponent;
     }, [floatingLabel, inputComponent, labelComponent]);
-    return (jsxRuntime.jsxs("div", { className: classNames({
-            'd-input': true,
-            className: !!className,
-        }), style: style, children: [label && !floatingLabel && (labelComponent), jsxRuntime.jsxs("div", { className: "d-input-control", children: [jsxRuntime.jsxs("div", { className: classNames({
+    return (jsxRuntime.jsxs("div", { className: classNames(Object.assign({ 'd-input': true }, className && { [className]: true })), style: style, children: [label && !floatingLabel && (labelComponent), jsxRuntime.jsxs("div", { className: "d-input-control", children: [jsxRuntime.jsxs("div", { className: classNames({
                             'input-group': true,
                             'has-validation': invalid,
                             disabled: disabled || loading,
@@ -620,6 +546,13 @@ function DDatePicker(_a) {
     ]);
     return (jsxRuntime.jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: (headerProps) => jsxRuntime.jsx(DatePickerHeader, Object.assign({}, headerProps)), customInput: (jsxRuntime.jsx(DDatePickerInput$1, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconEnd: inputIcon, className: className, style: style })), customTimeInput: jsxRuntime.jsx(DDatePickerTime, { id: timeId, label: timeLabel }), selectsRange: selectsRange }, locale && { locale }, props)));
 }
+
+function DInputMask(props, ref) {
+    return (jsxRuntime.jsx(mask.InputMask, Object.assign({ ref: ref, component: DInput$1 }, props)));
+}
+const ForwardedDInputMask = React.forwardRef(DInputMask);
+ForwardedDInputMask.displayName = 'DInputMask';
+var DInputMask$1 = ForwardedDInputMask;
 
 function DInputCounter(_a, ref) {
     var { minValue, maxValue, value = minValue, invalid, iconStart = 'dash-square', iconEnd = 'plus-square', iconStartAriaLabel = 'decrease action', iconEndAriaLabel = 'increase action', style, onChange } = _a, props = tslib.__rest(_a, ["minValue", "maxValue", "value", "invalid", "iconStart", "iconEnd", "iconStartAriaLabel", "iconEndAriaLabel", "style", "onChange"]);
@@ -839,7 +772,7 @@ function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconF
                         }), type: secret ? 'password' : type, "aria-describedby": `${id}State`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onChange: nextInput, onKeyDown: prevInput, onFocus: focusInput, onWheel: wheelInput, onClick: preventDefaultEvent, autoComplete: "off", placeholder: placeholder, disabled: disabled || loading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), (invalid || valid) && !loading && (jsxRuntime.jsx("span", { className: "input-group-text", id: `${id}State`, children: jsxRuntime.jsx(DIcon, { className: "d-input-pin-validation-icon", icon: invalid ? 'exclamation-circle' : 'check', familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text d-input-pin-icon", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
 }
 
-function DInputSelect({ id, name, label = '', className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, floatingLabel = false, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
+function DInputSelect({ id, name, label = '', className, style, options = [], labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, floatingLabel = false, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
     const internalValueExtractor = React.useCallback((option) => {
         if (valueExtractor) {
             return valueExtractor(option);
@@ -963,7 +896,7 @@ function DListItemMovement(_a) {
 }
 
 function DModalHeader({ showCloseButton, onClose, children, className, style, }) {
-    return (jsxRuntime.jsxs("div", { className: classNames('modal-header', className), style: style, children: [showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-modal-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: "x-lg" }) })), children] }));
+    return (jsxRuntime.jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsxRuntime.jsx("div", { className: "d-modal-slot", children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-modal-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: "x-lg" }) }))] }));
 }
 
 function DModalBody({ children, className, style, }) {
@@ -974,7 +907,7 @@ function DModalFooter({ className, style, actionPlacement = 'fill', children, })
     return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", { className: "d-modal-separator" }), jsxRuntime.jsx("div", { className: classNames(`d-modal-slot modal-footer d-modal-action-${actionPlacement}`, className), style: style, children: children })] }));
 }
 
-function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, modalSize, children, }) {
+function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, }) {
     const fullScreenClass = React.useMemo(() => {
         if (fullScreen) {
             if (fullScreenFrom) {
@@ -985,7 +918,7 @@ function DModal({ name, className, style, staticBackdrop, scrollable, centered, 
         return '';
     }, [fullScreenFrom, fullScreen]);
     const generateClasses = React.useMemo(() => (Object.assign({ 'modal fade show': true }, className && { [className]: true })), [className]);
-    const generateModalDialogClasses = React.useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, modalSize && { [`modal-${modalSize}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, modalSize]);
+    const generateModalDialogClasses = React.useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, size && { [`modal-${size}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, size]);
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames(generateClasses), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
@@ -1199,22 +1132,11 @@ function DStepper({ options, currentStep, successIcon = 'check', vertical = fals
     return (jsxRuntime.jsxs("div", { className: className, style: style, children: [jsxRuntime.jsx("div", { className: `d-block d-${breakpoint}-none`, children: jsxRuntime.jsx(DStepper$1, { options: options, currentStep: currentStep }) }), jsxRuntime.jsx("div", { className: `d-none d-${breakpoint}-block`, children: jsxRuntime.jsx(DStepper$2, { options: options, currentStep: currentStep, successIcon: successIcon, vertical: vertical }) })] }));
 }
 
-const TOOLTIP_FONT_SIZE_BY_SIZE = {
-    sm: `var(--${PREFIX_BS}ref-fs-small)`,
-    default: `var(--${PREFIX_BS}body-font-size)`,
-    lg: `var(--${PREFIX_BS}ref-fs-6)`,
-};
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
 const GAP = 2;
-function DTooltip({ classNameContainer, className, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, placement = 'top', size, Component, children, }) {
+function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, theme = 'primary', placement = 'top', size, Component, children, }) {
     const [isOpen, setIsOpen] = React.useState(open);
-    const styleVariables = React.useMemo(() => {
-        const defaultFontSize = size
-            ? TOOLTIP_FONT_SIZE_BY_SIZE[size]
-            : TOOLTIP_FONT_SIZE_BY_SIZE.default;
-        return Object.assign(Object.assign({}, style), { background: `var(--${PREFIX_BS}tooltip-bg, var(--${PREFIX_BS}tooltip-component-bg, var(--${PREFIX_BS}secondary)))`, borderRadius: `var(--${PREFIX_BS}tooltip-border-radius, var(--${PREFIX_BS}tooltip-component-border-radius, var(--${PREFIX_BS}border-radius)))`, color: `var(--${PREFIX_BS}tooltip-color, var(--${PREFIX_BS}tooltip-component-color, var(--${PREFIX_BS}white)))`, fontSize: `var(--${PREFIX_BS}tooltip-font-size, var(--${PREFIX_BS}tooltip-component-font-size, ${defaultFontSize}))`, padding: `var(--${PREFIX_BS}tooltip-padding, var(--${PREFIX_BS}tooltip-component-padding, var(--${PREFIX_BS}ref-spacer-2)))`, maxWidth: `var(--${PREFIX_BS}tooltip-max-width, var(--${PREFIX_BS}tooltip-component-max-width, 300px))` });
-    }, [size, style]);
     const arrowRef = React.useRef(null);
     const { refs, context, floatingStyles, } = react.useFloating({
         open: isOpen,
@@ -1244,9 +1166,8 @@ function DTooltip({ classNameContainer, className, style, offSet = ARROW_HEIGHT 
         dismiss,
         role,
     ]);
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", Object.assign({ className: className, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsxRuntime.jsx(react.FloatingPortal, { children: isOpen && (jsxRuntime.jsxs("div", Object.assign({ className: classNameContainer, ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), styleVariables) }, getFloatingProps(), { children: [jsxRuntime.jsx(react.FloatingArrow, { ref: arrowRef, context: context, style: {
-                                fill: styleVariables.background,
-                            }, width: ARROW_WIDTH, height: ARROW_HEIGHT }), children] }))) })] }));
+    const generateClasses = React.useMemo(() => (Object.assign({ 'd-tooltip': true, [`d-tooltip-${size}`]: !!size, [`d-tooltip-${theme}`]: !!theme }, className && { [className]: true })), [size, theme, className]);
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", Object.assign({ className: childrenClassName, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsxRuntime.jsx(react.FloatingPortal, { children: isOpen && (jsxRuntime.jsxs("div", Object.assign({ className: classNames(generateClasses), ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), style) }, getFloatingProps(), { children: [jsxRuntime.jsx(react.FloatingArrow, { ref: arrowRef, context: context, width: ARROW_WIDTH, height: ARROW_HEIGHT }), children] }))) })] }));
 }
 
 const TabContext = React.createContext(undefined);
@@ -1298,7 +1219,7 @@ function DToastContainer({ style, position = 'top-right', className, }) {
 
 function useToast() {
     const toast = React.useCallback((message, { position = 'top-right', type = 'info', showClose = true, autoClose = false, } = {}) => {
-        reactToastify.toast(({ closeToast }) => (jsxRuntime.jsx(DToast, { type: type, showClose: showClose, onClose: closeToast, id: "alertID", children: message })), {
+        reactToastify.toast(({ closeToast }) => (jsxRuntime.jsx(DAlert, { type: type, showClose: showClose, onClose: closeToast, id: "alertID", children: message })), {
             transition: reactToastify.Slide,
             position,
             autoClose,
@@ -1323,7 +1244,7 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-exports.DAlertBox = DAlertBox;
+exports.DAlert = DAlert;
 exports.DBadge = DBadge;
 exports.DBoxFile = DBoxFile;
 exports.DButton = DButton;
@@ -1347,6 +1268,7 @@ exports.DInputCheck = DInputCheck;
 exports.DInputCounter = DInputCounter$1;
 exports.DInputCurrency = DInputCurrency$1;
 exports.DInputCurrencyBase = DInputCurrencyBase$1;
+exports.DInputMask = DInputMask$1;
 exports.DInputPassword = DInputPassword$1;
 exports.DInputPin = DInputPin;
 exports.DInputSearch = DInputSearch$1;
@@ -1357,10 +1279,14 @@ exports.DListItem = DListItem;
 exports.DListItemMovement = DListItemMovement;
 exports.DModal = DModal$1;
 exports.DModalBody = DModalBody;
+exports.DModalContext = DModalContext;
+exports.DModalContextProvider = DModalContextProvider;
 exports.DModalFooter = DModalFooter;
 exports.DModalHeader = DModalHeader;
 exports.DOffcanvas = DOffcanvas$1;
 exports.DOffcanvasBody = DOffcanvasBody;
+exports.DOffcanvasContext = DOffcanvasContext;
+exports.DOffcanvasContextProvider = DOffcanvasContextProvider;
 exports.DOffcanvasFooter = DOffcanvasFooter;
 exports.DOffcanvasHeader = DOffcanvasHeader;
 exports.DPaginator = DPaginator;
@@ -1379,20 +1305,17 @@ exports.DStepperMobile = DStepper$1;
 exports.DSummaryCard = DSummaryCard;
 exports.DTabContent = DTabContent;
 exports.DTabs = DTabs$1;
-exports.DToast = DToast;
 exports.DToastContainer = DToastContainer;
 exports.DTooltip = DTooltip;
-exports.ModalContext = ModalContext;
-exports.ModalContextProvider = ModalContextProvider;
-exports.OffcanvasContext = OffcanvasContext;
-exports.OffcanvasContextProvider = OffcanvasContextProvider;
 exports.configureI18n = configureI8n;
 exports.formatCurrency = formatCurrency;
 exports.useDContext = useDContext;
+exports.useDModalContext = useDModalContext;
+exports.useDOffcanvasContext = useDOffcanvasContext;
+exports.useDisableBodyScrollEffect = useDisableBodyScrollEffect;
 exports.useFormatCurrency = useFormatCurrency;
 exports.useInputCurrency = useInputCurrency;
-exports.useModalContext = useModalContext;
-exports.useOffcanvasContext = useOffcanvasContext;
+exports.usePortal = usePortal;
 exports.useProvidedRefOrCreate = useProvidedRefOrCreate;
 exports.useStackState = useStackState;
 exports.useTabContext = useTabContext;

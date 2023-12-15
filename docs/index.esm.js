@@ -7,6 +7,7 @@ import { SplideSlide, Splide } from '@splidejs/react-splide';
 import currency from 'currency.js';
 import DatePicker from 'react-datepicker';
 import { parseISO, format, getMonth, getYear } from 'date-fns';
+import { InputMask } from '@react-input/mask';
 import ResponsivePagination from 'react-responsive-pagination';
 import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, useRole, useInteractions, useId, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
 import ContentLoader from 'react-content-loader';
@@ -53,6 +54,8 @@ const ALERT_TYPE_ICON = {
     info: 'info-circle',
     dark: 'info-circle',
     light: 'info-circle',
+    primary: 'info-circle',
+    secondary: 'info-circle',
 };
 
 function DIcon({ icon, theme, style, className, size = '1.5rem', loading = false, loadingDuration = 1.8, hasCircle = false, circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`, color, backgroundColor, familyClass = 'bi', familyPrefix = 'bi-', }) {
@@ -92,16 +95,11 @@ function DSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, 
     return (jsxs("div", { children: [jsx("h6", { className: "fw-bold fs-6", children: title }), jsx("p", { className: "fs-8", children: description }), jsxs("div", { className: "bg-white rounded p-4 d-flex gap-3 shadow-sm text-gray-700 fs-8", children: [jsx(DIcon, { icon: icon, theme: iconTheme, size: iconSize }), Summary] })] }));
 }
 
-function DToast({ type = 'success', icon, iconFamilyClass, iconFamilyPrefix, showIcon = false, showClose, onClose, children, id, className, style, }) {
-    const generateClasses = useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose }, className && { [className]: true })), [type, showClose, className]);
+function DAlert({ type = 'success', icon, iconFamilyClass, iconFamilyPrefix, showIcon = true, soft = false, showClose, onClose, children, id, className, style, }) {
+    const generateClasses = useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose, 'alert-soft': soft }, className && { [className]: true })), [type, showClose, soft, className]);
     const getIcon = useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);
     const generateStyleVariables = useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3' })), [style]);
     return (jsxs("div", { className: classNames(generateClasses), style: generateStyleVariables, role: "alert", id: id, children: [(showIcon || icon) && (jsx(DIcon, Object.assign({ className: "alert-icon", icon: getIcon }, iconFamilyClass && { familyClass: iconFamilyClass }, iconFamilyPrefix && { familyPrefix: iconFamilyPrefix }))), jsx("div", { className: "alert-text", children: children }), showClose && (jsx("div", { className: "alert-separator" })), showClose && (jsx("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { className: "alert-close-icon", icon: "x-lg", familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) }))] }));
-}
-
-function DAlertBox({ theme = 'box-secondary', icon = 'info-circle', iconFamilyClass, iconFamilyPrefix, children, id, className, style, }) {
-    const generateClasses = useMemo(() => (Object.assign({ 'alert alert-box': true, [`alert-${theme}`]: true }, className && { [className]: true })), [theme, className]);
-    return (jsxs("div", { className: classNames(generateClasses), style: style, role: "alert", id: id, children: [jsx(DIcon, Object.assign({ className: "alert-icon", icon: icon }, iconFamilyClass && { familyClass: iconFamilyClass }, iconFamilyPrefix && { familyPrefix: iconFamilyPrefix })), jsx("div", { className: "alert-text", children: children })] }));
 }
 
 function DBoxFile(_a) {
@@ -116,7 +114,7 @@ function DBoxFile(_a) {
             }), { children: [jsx("input", Object.assign({}, getInputProps())), jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }), jsx("div", { className: "d-box-content", children: children })] })), !!acceptedFiles.length && (jsx("aside", { className: "d-box-files", children: acceptedFiles.map((file) => (jsx("div", { className: "d-box-files-text", children: `${file.name} - ${file.size} bytes` }, file.name))) }))] }));
 }
 
-function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type = 'button', pill = false, loading = false, loadingAriaLabel, disabled = false, stopPropagationEnabled = true, className, onClick, }) {
+function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, value, type = 'button', pill = false, loading = false, loadingAriaLabel, disabled = false, stopPropagationEnabled = true, className, form, onClick, }) {
     const generateClasses = useMemo(() => {
         const variantClass = variant
             ? `btn-${variant}-${theme}`
@@ -143,7 +141,7 @@ function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel
     const newAriaLabel = useMemo(() => (loading
         ? (loadingAriaLabel || ariaLabel || text)
         : (ariaLabel || text)), [loading, loadingAriaLabel, ariaLabel, text]);
-    return (jsxs("button", Object.assign({ className: classNames(generateClasses, className), style: generateStyleVariables, type: type, disabled: isDisabled, onClick: clickHandler, "aria-label": newAriaLabel }, value && { value }, { children: [iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })), (text && !loading) && (jsx("span", { children: text })), loading && (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) })), iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix }))] })));
+    return (jsxs("button", Object.assign({ className: classNames(generateClasses, className), style: generateStyleVariables, type: type, disabled: isDisabled, onClick: clickHandler, "aria-label": newAriaLabel, form: form }, value && { value }, { children: [iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })), (text && !loading) && (jsx("span", { children: text })), loading && (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) })), iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix }))] })));
 }
 
 function DCardHeader({ className, style, children, }) {
@@ -249,6 +247,35 @@ function useDContext() {
     return context;
 }
 
+function useDisableBodyScrollEffect(disable) {
+    useEffect(() => {
+        if (disable) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.paddingRight = '0';
+        }
+        else {
+            document.body.style.overflow = 'unset';
+            document.body.style.paddingRight = 'unset';
+        }
+    }, [disable]);
+}
+
+function usePortal(portalName) {
+    const [hasPortal, setHasPortal] = useState(false);
+    useEffect(() => {
+        const previousPortal = document.querySelector(`#${portalName}`);
+        if (previousPortal) {
+            previousPortal.remove();
+        }
+        const portal = document.createElement('div');
+        portal.id = portalName;
+        portal.className = 'd-portal';
+        document.body.appendChild(portal);
+        setHasPortal(true);
+    }, [portalName]);
+    return { created: hasPortal };
+}
+
 /**
  * useStackState inspired from rooks
  * @see https://github.com/imbhargav5/rooks/blob/main/packages/rooks/src/hooks/useStackState.ts
@@ -294,72 +321,26 @@ function useStackState(initialList) {
     return [list, controls];
 }
 
-const ModalContext = createContext(undefined);
-function enhanceModal(Modal, callbacks) {
-    return function EnhancedModal(_a) {
-        var { name, payload } = _a, otherProps = __rest(_a, ["name", "payload"]);
-        useEffect(() => {
-            if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAfterOpen) {
-                callbacks.onAfterOpen(payload);
-            }
-            return () => {
-                if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAfterClose) {
-                    callbacks.onAfterClose({ fromModal: false }, payload);
-                }
-            };
-        }, [payload]);
-        return (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        jsx(Modal, Object.assign({ name: name, payload: payload }, otherProps)));
-    };
-}
-function ModalContextProvider({ portalName, children, availableModals, }) {
-    const [hasPortal, setHasPortal] = useState(false);
-    useEffect(() => {
-        const previousPortal = document.querySelector(`#${portalName}`);
-        if (previousPortal) {
-            previousPortal.remove();
-        }
-        const portal = document.createElement('div');
-        portal.id = portalName;
-        document.body.appendChild(portal);
-        setHasPortal(true);
-    }, [portalName]);
+const DModalContext = createContext(undefined);
+function DModalContextProvider({ portalName, children, availableModals, }) {
+    const { created } = usePortal(portalName);
     const [stack, { push, pop, peek }] = useStackState([]);
-    useEffect(() => {
-        if (stack.length) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = '0';
-        }
-        else {
-            document.body.style.overflow = 'unset';
-            document.body.style.paddingRight = 'unset';
-        }
-    }, [stack.length]);
-    const openModal = useCallback((modalName, { payload, callbacks } = { payload: {} }) => {
+    useDisableBodyScrollEffect(Boolean(stack.length));
+    const openModal = useCallback((modalName, payload) => {
         const Component = availableModals[modalName];
         if (!Component) {
-            throw new Error(`there is no component for modal ${modalName}`);
+            throw new Error(`there is no component for modal ${modalName.toString()}`);
         }
-        const stackItem = {
+        push({
             modalName,
             Component,
             payload,
-            callbacks,
-        };
-        if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onBeforeOpen) {
-            callbacks.onBeforeOpen(payload);
-        }
-        push(stackItem);
+        });
     }, [availableModals, push]);
-    const closeModal = useCallback((context = { fromModal: false }) => {
-        var _a;
+    const closeModal = useCallback(() => {
         const stackItem = peek();
         if (!stackItem) {
             return;
-        }
-        if ((_a = stackItem.callbacks) === null || _a === void 0 ? void 0 : _a.onBeforeClose) {
-            stackItem.callbacks.onBeforeClose(context, stackItem.payload);
         }
         pop();
     }, [peek, pop]);
@@ -368,85 +349,36 @@ function ModalContextProvider({ portalName, children, availableModals, }) {
         openModal,
         closeModal,
     }), [stack, openModal, closeModal]);
-    return (jsxs(ModalContext.Provider, { value: value, children: [children, hasPortal && createPortal(jsxs(Fragment, { children: [stack.map(({ Component, modalName, callbacks, payload, }) => {
-                        const EnhancedComponent = enhanceModal(Component, callbacks);
-                        return (jsx(EnhancedComponent, { name: modalName, payload: payload, openModal: openModal, closeModal: closeModal }, modalName));
-                    }), !!stack.length && jsx("div", { className: "modal-backdrop fade show" })] }), document.getElementById(portalName))] }));
+    return (jsxs(DModalContext.Provider, { value: value, children: [children, created && createPortal(jsxs(Fragment, { children: [stack.map(({ Component, modalName, payload, }) => (jsx(Component, { name: modalName, payload: payload, openModal: openModal, closeModal: closeModal }, modalName))), !!stack.length && jsx("div", { className: "modal-backdrop fade show" })] }), document.getElementById(portalName))] }));
 }
-function useModalContext() {
-    const context = useContext(ModalContext);
+function useDModalContext() {
+    const context = useContext(DModalContext);
     if (context === undefined) {
         throw new Error('useModalContext was used outside of ModalContextProvider');
     }
     return context;
 }
 
-const OffcanvasContext = createContext(undefined);
-function enhanceOffcanvas(Offcanvas, callbacks) {
-    return function EnhancedOffcanvas(_a) {
-        var { name, payload } = _a, otherProps = __rest(_a, ["name", "payload"]);
-        useEffect(() => {
-            if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAfterOpen) {
-                callbacks.onAfterOpen(payload);
-            }
-            return () => {
-                if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAfterClose) {
-                    callbacks.onAfterClose({ fromOffcanvas: false }, payload);
-                }
-            };
-        }, [payload]);
-        return (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        jsx(Offcanvas, Object.assign({ name: name, payload: payload }, otherProps)));
-    };
-}
-function OffcanvasContextProvider({ portalName, children, availableOffcanvas, }) {
-    const [hasPortal, setHasPortal] = useState(false);
-    useEffect(() => {
-        const previousPortal = document.querySelector(`#${portalName}`);
-        if (previousPortal) {
-            previousPortal.remove();
-        }
-        const portal = document.createElement('div');
-        portal.id = portalName;
-        document.body.appendChild(portal);
-        setHasPortal(true);
-    }, [portalName]);
+const DOffcanvasContext = createContext(undefined);
+function DOffcanvasContextProvider({ portalName, children, availableOffcanvas, }) {
+    const { created } = usePortal(portalName);
     const [stack, { push, pop, peek }] = useStackState([]);
-    useEffect(() => {
-        if (stack.length) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = '0';
-        }
-        else {
-            document.body.style.overflow = 'unset';
-            document.body.style.paddingRight = 'unset';
-        }
-    }, [stack.length]);
-    const openOffcanvas = useCallback((offcanvasName, { payload, callbacks } = { payload: {} }) => {
+    useDisableBodyScrollEffect(Boolean(stack.length));
+    const openOffcanvas = useCallback((offcanvasName, payload) => {
         const Component = availableOffcanvas[offcanvasName];
         if (!Component) {
             throw new Error(`there is no component for offcanvas ${offcanvasName}`);
         }
-        const stackItem = {
+        push({
             offcanvasName,
             Component,
             payload,
-            callbacks,
-        };
-        if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onBeforeOpen) {
-            callbacks.onBeforeOpen(payload);
-        }
-        push(stackItem);
+        });
     }, [availableOffcanvas, push]);
-    const closeOffcanvas = useCallback((context = { fromOffcanvas: false }) => {
-        var _a;
+    const closeOffcanvas = useCallback(() => {
         const stackItem = peek();
         if (!stackItem) {
             return;
-        }
-        if ((_a = stackItem.callbacks) === null || _a === void 0 ? void 0 : _a.onBeforeClose) {
-            stackItem.callbacks.onBeforeClose(context, stackItem.payload);
         }
         pop();
     }, [peek, pop]);
@@ -455,13 +387,10 @@ function OffcanvasContextProvider({ portalName, children, availableOffcanvas, })
         openOffcanvas,
         closeOffcanvas,
     }), [stack, openOffcanvas, closeOffcanvas]);
-    return (jsxs(OffcanvasContext.Provider, { value: value, children: [children, hasPortal && createPortal(jsxs(Fragment, { children: [stack.map(({ Component, offcanvasName, callbacks, payload, }) => {
-                        const EnhancedComponent = enhanceOffcanvas(Component, callbacks);
-                        return (jsx(EnhancedComponent, { name: offcanvasName, payload: payload, openOffcanvas: openOffcanvas, closeOffcanvas: closeOffcanvas }, offcanvasName));
-                    }), !!stack.length && jsx("div", { className: "offcanvas-backdrop fade show" })] }), document.getElementById(portalName))] }));
+    return (jsxs(DOffcanvasContext.Provider, { value: value, children: [children, created && createPortal(jsxs(Fragment, { children: [stack.map(({ Component, offcanvasName, payload, }) => (jsx(Component, { name: offcanvasName, payload: payload, openOffcanvas: openOffcanvas, closeOffcanvas: closeOffcanvas }, offcanvasName))), !!stack.length && jsx("div", { className: "offcanvas-backdrop fade show" })] }), document.getElementById(portalName))] }));
 }
-function useOffcanvasContext() {
-    const context = useContext(OffcanvasContext);
+function useDOffcanvasContext() {
+    const context = useContext(DOffcanvasContext);
     if (context === undefined) {
         throw new Error('useOffcanvasContext was used outside of OffcanvasContextProvider');
     }
@@ -557,10 +486,7 @@ function DInput(_a, ref) {
         }
         return inputComponent;
     }, [floatingLabel, inputComponent, labelComponent]);
-    return (jsxs("div", { className: classNames({
-            'd-input': true,
-            className: !!className,
-        }), style: style, children: [label && !floatingLabel && (labelComponent), jsxs("div", { className: "d-input-control", children: [jsxs("div", { className: classNames({
+    return (jsxs("div", { className: classNames(Object.assign({ 'd-input': true }, className && { [className]: true })), style: style, children: [label && !floatingLabel && (labelComponent), jsxs("div", { className: "d-input-control", children: [jsxs("div", { className: classNames({
                             'input-group': true,
                             'has-validation': invalid,
                             disabled: disabled || loading,
@@ -618,6 +544,13 @@ function DDatePicker(_a) {
     ]);
     return (jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: (headerProps) => jsx(DatePickerHeader, Object.assign({}, headerProps)), customInput: (jsx(DDatePickerInput$1, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconEnd: inputIcon, className: className, style: style })), customTimeInput: jsx(DDatePickerTime, { id: timeId, label: timeLabel }), selectsRange: selectsRange }, locale && { locale }, props)));
 }
+
+function DInputMask(props, ref) {
+    return (jsx(InputMask, Object.assign({ ref: ref, component: DInput$1 }, props)));
+}
+const ForwardedDInputMask = forwardRef(DInputMask);
+ForwardedDInputMask.displayName = 'DInputMask';
+var DInputMask$1 = ForwardedDInputMask;
 
 function DInputCounter(_a, ref) {
     var { minValue, maxValue, value = minValue, invalid, iconStart = 'dash-square', iconEnd = 'plus-square', iconStartAriaLabel = 'decrease action', iconEndAriaLabel = 'increase action', style, onChange } = _a, props = __rest(_a, ["minValue", "maxValue", "value", "invalid", "iconStart", "iconEnd", "iconStartAriaLabel", "iconEndAriaLabel", "style", "onChange"]);
@@ -837,7 +770,7 @@ function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconF
                         }), type: secret ? 'password' : type, "aria-describedby": `${id}State`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onChange: nextInput, onKeyDown: prevInput, onFocus: focusInput, onWheel: wheelInput, onClick: preventDefaultEvent, autoComplete: "off", placeholder: placeholder, disabled: disabled || loading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), (invalid || valid) && !loading && (jsx("span", { className: "input-group-text", id: `${id}State`, children: jsx(DIcon, { className: "d-input-pin-validation-icon", icon: invalid ? 'exclamation-circle' : 'check', familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), loading && (jsx("div", { className: "input-group-text d-input-pin-icon", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
 }
 
-function DInputSelect({ id, name, label = '', className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, floatingLabel = false, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
+function DInputSelect({ id, name, label = '', className, style, options = [], labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, floatingLabel = false, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
     const internalValueExtractor = useCallback((option) => {
         if (valueExtractor) {
             return valueExtractor(option);
@@ -961,7 +894,7 @@ function DListItemMovement(_a) {
 }
 
 function DModalHeader({ showCloseButton, onClose, children, className, style, }) {
-    return (jsxs("div", { className: classNames('modal-header', className), style: style, children: [showCloseButton && (jsx("button", { type: "button", className: "d-modal-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: "x-lg" }) })), children] }));
+    return (jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsx("div", { className: "d-modal-slot", children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-modal-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: "x-lg" }) }))] }));
 }
 
 function DModalBody({ children, className, style, }) {
@@ -972,7 +905,7 @@ function DModalFooter({ className, style, actionPlacement = 'fill', children, })
     return (jsxs(Fragment, { children: [jsx("div", { className: "d-modal-separator" }), jsx("div", { className: classNames(`d-modal-slot modal-footer d-modal-action-${actionPlacement}`, className), style: style, children: children })] }));
 }
 
-function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, modalSize, children, }) {
+function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, }) {
     const fullScreenClass = useMemo(() => {
         if (fullScreen) {
             if (fullScreenFrom) {
@@ -983,7 +916,7 @@ function DModal({ name, className, style, staticBackdrop, scrollable, centered, 
         return '';
     }, [fullScreenFrom, fullScreen]);
     const generateClasses = useMemo(() => (Object.assign({ 'modal fade show': true }, className && { [className]: true })), [className]);
-    const generateModalDialogClasses = useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, modalSize && { [`modal-${modalSize}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, modalSize]);
+    const generateModalDialogClasses = useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, size && { [`modal-${size}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, size]);
     return (jsx("div", Object.assign({ className: classNames(generateClasses), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
@@ -1197,22 +1130,11 @@ function DStepper({ options, currentStep, successIcon = 'check', vertical = fals
     return (jsxs("div", { className: className, style: style, children: [jsx("div", { className: `d-block d-${breakpoint}-none`, children: jsx(DStepper$1, { options: options, currentStep: currentStep }) }), jsx("div", { className: `d-none d-${breakpoint}-block`, children: jsx(DStepper$2, { options: options, currentStep: currentStep, successIcon: successIcon, vertical: vertical }) })] }));
 }
 
-const TOOLTIP_FONT_SIZE_BY_SIZE = {
-    sm: `var(--${PREFIX_BS}ref-fs-small)`,
-    default: `var(--${PREFIX_BS}body-font-size)`,
-    lg: `var(--${PREFIX_BS}ref-fs-6)`,
-};
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
 const GAP = 2;
-function DTooltip({ classNameContainer, className, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, placement = 'top', size, Component, children, }) {
+function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, theme = 'primary', placement = 'top', size, Component, children, }) {
     const [isOpen, setIsOpen] = useState(open);
-    const styleVariables = useMemo(() => {
-        const defaultFontSize = size
-            ? TOOLTIP_FONT_SIZE_BY_SIZE[size]
-            : TOOLTIP_FONT_SIZE_BY_SIZE.default;
-        return Object.assign(Object.assign({}, style), { background: `var(--${PREFIX_BS}tooltip-bg, var(--${PREFIX_BS}tooltip-component-bg, var(--${PREFIX_BS}secondary)))`, borderRadius: `var(--${PREFIX_BS}tooltip-border-radius, var(--${PREFIX_BS}tooltip-component-border-radius, var(--${PREFIX_BS}border-radius)))`, color: `var(--${PREFIX_BS}tooltip-color, var(--${PREFIX_BS}tooltip-component-color, var(--${PREFIX_BS}white)))`, fontSize: `var(--${PREFIX_BS}tooltip-font-size, var(--${PREFIX_BS}tooltip-component-font-size, ${defaultFontSize}))`, padding: `var(--${PREFIX_BS}tooltip-padding, var(--${PREFIX_BS}tooltip-component-padding, var(--${PREFIX_BS}ref-spacer-2)))`, maxWidth: `var(--${PREFIX_BS}tooltip-max-width, var(--${PREFIX_BS}tooltip-component-max-width, 300px))` });
-    }, [size, style]);
     const arrowRef = useRef(null);
     const { refs, context, floatingStyles, } = useFloating({
         open: isOpen,
@@ -1242,9 +1164,8 @@ function DTooltip({ classNameContainer, className, style, offSet = ARROW_HEIGHT 
         dismiss,
         role,
     ]);
-    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: className, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNameContainer, ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), styleVariables) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, style: {
-                                fill: styleVariables.background,
-                            }, width: ARROW_WIDTH, height: ARROW_HEIGHT }), children] }))) })] }));
+    const generateClasses = useMemo(() => (Object.assign({ 'd-tooltip': true, [`d-tooltip-${size}`]: !!size, [`d-tooltip-${theme}`]: !!theme }, className && { [className]: true })), [size, theme, className]);
+    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: childrenClassName, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNames(generateClasses), ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), style) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, width: ARROW_WIDTH, height: ARROW_HEIGHT }), children] }))) })] }));
 }
 
 const TabContext = createContext(undefined);
@@ -1296,7 +1217,7 @@ function DToastContainer({ style, position = 'top-right', className, }) {
 
 function useToast() {
     const toast$1 = useCallback((message, { position = 'top-right', type = 'info', showClose = true, autoClose = false, } = {}) => {
-        toast(({ closeToast }) => (jsx(DToast, { type: type, showClose: showClose, onClose: closeToast, id: "alertID", children: message })), {
+        toast(({ closeToast }) => (jsx(DAlert, { type: type, showClose: showClose, onClose: closeToast, id: "alertID", children: message })), {
             transition: Slide,
             position,
             autoClose,
@@ -1321,5 +1242,5 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-export { DAlertBox, DBadge, DBoxFile, DButton, DCard$1 as DCard, DCardAccount, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DCollapseIconText, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DInput$1 as DInput, DInputCheck, DInputCounter$1 as DInputCounter, DInputCurrency$1 as DInputCurrency, DInputCurrencyBase$1 as DInputCurrencyBase, DInputPassword$1 as DInputPassword, DInputPin, DInputSearch$1 as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListItem, DListItemMovement, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPermissionGroup, DPermissionItem, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DSummaryCard, DTabContent, DTabs$1 as DTabs, DToast, DToastContainer, DTooltip, ModalContext, ModalContextProvider, OffcanvasContext, OffcanvasContextProvider, configureI8n as configureI18n, formatCurrency, useDContext, useFormatCurrency, useInputCurrency, useModalContext, useOffcanvasContext, useProvidedRefOrCreate, useStackState, useTabContext, useToast };
+export { DAlert, DBadge, DBoxFile, DButton, DCard$1 as DCard, DCardAccount, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DCollapseIconText, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DInput$1 as DInput, DInputCheck, DInputCounter$1 as DInputCounter, DInputCurrency$1 as DInputCurrency, DInputCurrencyBase$1 as DInputCurrencyBase, DInputMask$1 as DInputMask, DInputPassword$1 as DInputPassword, DInputPin, DInputSearch$1 as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListItem, DListItemMovement, DModal$1 as DModal, DModalBody, DModalContext, DModalContextProvider, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasContext, DOffcanvasContextProvider, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPermissionGroup, DPermissionItem, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DSummaryCard, DTabContent, DTabs$1 as DTabs, DToastContainer, DTooltip, configureI8n as configureI18n, formatCurrency, useDContext, useDModalContext, useDOffcanvasContext, useDisableBodyScrollEffect, useFormatCurrency, useInputCurrency, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, useToast };
 //# sourceMappingURL=index.esm.js.map

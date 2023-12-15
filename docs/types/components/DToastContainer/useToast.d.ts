@@ -1,7 +1,7 @@
 import type { ToastPosition } from 'react-toastify';
-import type { ToastType } from '../interface';
+import type { AlertType } from '../interface';
 export type ToastConfig = {
-    type?: ToastType;
+    type?: AlertType;
     showClose?: boolean;
     position?: ToastPosition;
     autoClose?: number | false;
