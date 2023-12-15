@@ -41,7 +41,11 @@ it('should render my component with header, body, and footer slot', () => {
           <div
             class="modal-header"
           >
-            Test Header
+            <div
+              class="d-modal-slot"
+            >
+              Test Header
+            </div>
           </div>
           <div
             class="d-modal-slot modal-body"

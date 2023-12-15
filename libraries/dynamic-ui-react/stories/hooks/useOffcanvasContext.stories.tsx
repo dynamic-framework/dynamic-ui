@@ -4,12 +4,19 @@ import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
 
 import {
-  OffcanvasContextProvider,
-  useOffcanvasContext as useOffcanvasContextHook,
-} from '../../src/contexts';
-import type { OffcanvasProps } from '../../src/contexts';
+  DOffcanvasContextProvider,
+  useDOffcanvasContext,
+} from '../../src';
 
-const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
+import type { OffcanvasProps } from '../../src';
+
+type OffcanvasPayload = {
+  example: {
+    description: string;
+  };
+};
+
+const ExampleOffcanvas = ({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasPayload['example']>) => (
   <DOffcanvas
     name="example"
     staticBackdrop={false}
@@ -21,6 +28,7 @@ const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
     </DOffcanvas.Header>
     <DOffcanvas.Body>
       <p>Offcanvas body</p>
+      <small>{payload.description}</small>
     </DOffcanvas.Body>
     <DOffcanvas.Footer>
       <DButton
@@ -28,28 +36,33 @@ const ExampleOffcanvas = ({ closeOffcanvas }: OffcanvasProps) => (
         theme="secondary"
         variant="outline"
         className="d-grid"
-        isPill
+        pill
         onClick={() => closeOffcanvas()}
       />
-      <DButton text="ok" className="d-grid" isPill />
+      <DButton text="ok" className="d-grid" pill />
     </DOffcanvas.Footer>
   </DOffcanvas>
 );
 
 const ExampleChildren = () => {
-  const { openOffcanvas } = useOffcanvasContextHook();
-  return <DButton text="Open Offcanvas" onClick={() => openOffcanvas('example')} />;
+  const { openOffcanvas } = useDOffcanvasContext<OffcanvasPayload>();
+  return (
+    <DButton
+      text="Open Offcanvas"
+      onClick={() => openOffcanvas('example', { description: 'from modal payload' })}
+    />
+  );
 };
 
 const Example = () => (
-  <OffcanvasContextProvider
+  <DOffcanvasContextProvider<OffcanvasPayload>
     portalName="examplePortal"
     availableOffcanvas={{
       example: ExampleOffcanvas,
     }}
   >
     <ExampleChildren />
-  </OffcanvasContextProvider>
+  </DOffcanvasContextProvider>
 );
 
 const config: Meta<typeof Example> = {

@@ -19,6 +19,7 @@ import * as useModalContextStories from '../hooks/useModalContext.stories';
 
   | Variable                                     | Type              | Description                                 |
   |----------------------------------------------|-------------------|---------------------------------------------|
+  | \`--${PREFIX_BS}modal-header-gap\`           | css length unit   | Space between header items                  |
   | \`--${PREFIX_BS}modal-body-padding\`         | css length unit   | Body padding                                |
   | \`--${PREFIX_BS}modal-footer-padding\`       | css length unit   | Footer padding                              |
   | \`--${PREFIX_BS}modal-separator-margin-x\`   | css length unit   | Separator horizontal padding                |
@@ -39,17 +40,28 @@ import * as useModalContextStories from '../hooks/useModalContext.stories';
 <Story of={useModalContextStories.useModalContext} />
 <br />
 
+### Context Setup - type with all modal payloads`
+<Source
+  code={`
+type ModalPayload = {
+  example: {
+    description: string;
+  };
+};
+  `}
+/>
+
 ### Context Setup - render of `Bootstrap.tsx`
 <Source
   code={`
-<ModalContextProvider
+<DModalContextProvider<ModalPayload>
   portalName="examplePortal"
   availableModals={{
     example: ExampleModal,
   }}
 >
-  <App />
-</ModalContextProvider>
+  <ExampleChildren />
+</DModalContextProvider>
   `}
 />
 
@@ -58,27 +70,28 @@ import * as useModalContextStories from '../hooks/useModalContext.stories';
   code={`
 <DModal
   name="example"
-  isCentered
-  isStatic
+  centered
+  staticBackdrop
   className="d-block"
 >
-  <DModalHeader onClose={closeModal} showCloseButton>
+  <DModal.Header onClose={closeModal} showCloseButton>
     <h5 className="fw-bold">Do you want to reject the offer?</h5>
-  </DModalHeader>
-  <DModalBody>
-    <p className="py-3 px-5">Modal body</p>
-  </DModalBody>
-  <DModalFooter>
+  </DModal.Header>
+  <DModal.Body className="py-3 px-5">
+    <p>Modal body</p>
+    <small>{payload.description}</small>
+  </DModal.Body>
+  <DModal.Footer>
     <DButton
       text="cancel"
       theme="secondary"
       variant="outline"
       className="d-grid"
-      isPill
+      pill
       onClick={() => closeModal()}
     />
-    <DButton text="ok" className="d-grid" isPill />
-  </DModalFooter>
+    <DButton text="ok" className="d-grid" pill />
+  </DModal.Footer>
 </DModal>
   `}
 />
