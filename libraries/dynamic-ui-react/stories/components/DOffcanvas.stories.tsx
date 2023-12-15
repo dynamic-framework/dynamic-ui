@@ -54,9 +54,9 @@ export const Default: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -90,9 +90,9 @@ export const ActionsPlacementStart: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -126,9 +126,9 @@ export const ActionsPlacementEnd: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -160,9 +160,9 @@ export const WithoutHeader: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -246,9 +246,9 @@ export const WithoutCancelX: Story = {
           theme="secondary"
           variant="outline"
           className="d-grid"
-          isPill
+          pill
         />
-        <DButton text="ok" className="d-grid" isPill />
+        <DButton text="ok" className="d-grid" pill />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),

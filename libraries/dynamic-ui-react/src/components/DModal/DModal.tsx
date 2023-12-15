@@ -18,7 +18,7 @@ type Props = BaseProps & PropsWithChildren<{
   centered?: boolean;
   fullScreen?: boolean;
   fullScreenFrom?: ModalFullScreenFrom;
-  modalSize?: ModalSize;
+  size?: ModalSize;
 }>;
 
 function DModal(
@@ -31,7 +31,7 @@ function DModal(
     centered,
     fullScreen,
     fullScreenFrom,
-    modalSize,
+    size,
     children,
   }: Props,
 ) {
@@ -55,8 +55,8 @@ function DModal(
     'modal-dialog-centered': !!centered,
     'modal-dialog-scrollable': !!scrollable,
     [fullScreenClass]: !!fullScreen,
-    ...modalSize && { [`modal-${modalSize}`]: true },
-  }), [fullScreenClass, centered, fullScreen, scrollable, modalSize]);
+    ...size && { [`modal-${size}`]: true },
+  }), [fullScreenClass, centered, fullScreen, scrollable, size]);
 
   return (
     <div
