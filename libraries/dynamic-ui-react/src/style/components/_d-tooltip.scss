@@ -1,0 +1,35 @@
+.d-tooltip {
+  --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-component-font-size, var(--#{$prefix}body-font-size));
+  --#{$prefix}tooltip-sm-font-size: var(--#{$prefix}ref-fs-small);
+  --#{$prefix}tooltip-lg-font-size: var(--#{$prefix}ref-fs-6);
+  --#{$prefix}tooltip-bg: var(--#{$prefix}tooltip-component-bg, transparent);
+  --#{$prefix}tooltip-border-radius: var(--#{$prefix}tooltip-component-border-radius, var(--#{$prefix}border-radius));
+  --#{$prefix}tooltip-color: var(--#{$prefix}tooltip-component-color, var(--#{$prefix}body-color));
+  --#{$prefix}tooltip-padding: var(--#{$prefix}tooltip-component-padding, var(--#{$prefix}ref-spacer-2));
+  --#{$prefix}tooltip-max-width: var(--#{$prefix}tooltip-component-max-width, 300px);
+  max-width: var(--#{$prefix}tooltip-max-width);
+  padding: var(--#{$prefix}tooltip-padding);
+
+  font-size: var(--#{$prefix}tooltip-font-size);
+  color: var(--#{$prefix}tooltip-color);
+  background: var(--#{$prefix}tooltip-bg);
+  border-radius: var(--#{$prefix}tooltip-border-radius);
+  fill: var(--#{$prefix}tooltip-bg);
+
+  &.d-tooltip-sm {
+    --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-sm-font-size);
+  }
+
+  &.d-tooltip-lg {
+    --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-lg-font-size);
+  }
+
+  @each $theme, $value in $theme-colors {
+    $color: color-contrast-var($value);
+
+    &.d-tooltip-#{$theme} {
+      --#{$prefix}tooltip-color: var(--#{$prefix}tooltip-component-color, #{$color});
+      --#{$prefix}tooltip-bg: var(--#{$prefix}tooltip-component-bg, var(--#{$prefix}#{$theme}));
+    }
+  }
+}
