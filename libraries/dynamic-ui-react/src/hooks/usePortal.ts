@@ -9,6 +9,7 @@ export default function usePortal(portalName: string) {
     }
     const portal = document.createElement('div');
     portal.id = portalName;
+    portal.className = 'd-portal';
     document.body.appendChild(portal);
     setHasPortal(true);
   }, [portalName]);

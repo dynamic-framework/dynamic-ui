@@ -1,8 +1,10 @@
 .offcanvas {
+  --#{$prefix}offcanvas-header-gap: #{$offcanvas-header-gap};
   --#{$prefix}offcanvas-footer-gap: #{$offcanvas-footer-gap};
 
   .offcanvas-header {
     flex-direction: row;
+    gap: var(--#{$prefix}offcanvas-header-gap);
     align-items: center;
     justify-content: space-between;
 
@@ -22,6 +24,7 @@
   }
 
   .d-offcanvas-close {
+    align-self: flex-start;
     padding: 0;
     background: transparent;
     border: 0;
@@ -43,3 +46,4 @@
     justify-content: flex-end;
   }
 }
+

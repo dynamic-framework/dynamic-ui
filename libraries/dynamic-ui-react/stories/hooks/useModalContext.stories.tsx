@@ -21,7 +21,6 @@ const ExampleModal = ({ closeModal, payload }: ModalProps<ModalPayload['example'
     name="example"
     centered
     staticBackdrop
-    className="d-block"
   >
     <DModal.Header onClose={closeModal} showCloseButton>
       <h5 className="fw-bold">Do you want to reject the offer?</h5>
