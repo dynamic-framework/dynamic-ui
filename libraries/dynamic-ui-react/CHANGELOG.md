@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.11.1...@dynamic-framework/ui-react@1.12.0) (2023-12-15)
+
+
+### Features
+
+* add DInputMask component ([f9c06a8](https://github.com/dynamic-framework/dynamic-ui/commit/f9c06a8bc770dfed8883bc2e6b01106aa534c669))
+* add form property to DButton ([1ec91d8](https://github.com/dynamic-framework/dynamic-ui/commit/1ec91d8c1d3e42eaee6fcbf39a437a3bf9ebf4ea))
+* adjust behaviors of DModalContextProvider an DOffcanvasContextProvider ([79a264b](https://github.com/dynamic-framework/dynamic-ui/commit/79a264bc7d728eb460bfeeebaf92ddafd1a722ae))
+* adjust modal and offcanvas header design, add portal class and rename modalSize property ([99c17bf](https://github.com/dynamic-framework/dynamic-ui/commit/99c17bf4b47871cc29ed4db21abae86bbbb1558a))
+* adjust useModalContext example ([3d244de](https://github.com/dynamic-framework/dynamic-ui/commit/3d244de3c4067b5a960144ff3cc682228b064eee))
+* adjust variables of DBoxFile ([113ba6d](https://github.com/dynamic-framework/dynamic-ui/commit/113ba6d5950514bdb18ec8fabdb380ebd60cf9c7))
+* default show icon in DAlert ([2faccb5](https://github.com/dynamic-framework/dynamic-ui/commit/2faccb51cc23df1e68b6e78556a6b4635ed9ba98))
+* DTooltip themes ([9ee207c](https://github.com/dynamic-framework/dynamic-ui/commit/9ee207c92db86af015945223da84d0ba0c231ce5))
+* enable light and dark default bootstrap theme to DButton and btn-link css class ([4a34f9e](https://github.com/dynamic-framework/dynamic-ui/commit/4a34f9e6b329418f5256684be3d5fc57de6ab428))
+* generate text-theme-code and bg-theme-code classes ([ccf83b9](https://github.com/dynamic-framework/dynamic-ui/commit/ccf83b9d727d05a157db060553c9992662f374ae))
+* secure payload type on modal and offcanvas context usage ([a4e06a0](https://github.com/dynamic-framework/dynamic-ui/commit/a4e06a096bf60bb6d92633a33174bb3e1117f7cf))
+* unify alerts and separate documentation for toast ([c26d7b7](https://github.com/dynamic-framework/dynamic-ui/commit/c26d7b76f4f4b2bff304bf82b2e20ad46f18516f))
+
+
+### Bug Fixes
+
+* className behavior on DInput ([43aa7a4](https://github.com/dynamic-framework/dynamic-ui/commit/43aa7a491fda1389a883f462c359c6b21393880c))
+
+
+
 ## [1.11.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.11.0...@dynamic-framework/ui-react@1.11.1) (2023-12-04)
 
 
