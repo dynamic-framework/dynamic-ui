@@ -10430,7 +10430,7 @@ label {
   width: 0;
   height: 100%;
   content: "";
-  border: var(--bs-step-icon-container-border-width) solid var(--bs-step-icon-container-border-color);
+  border: var(--bs-step-line-stroke) solid var(--bs-step-line-color);
 }
 .d-stepper-desktop.is-vertical .d-step:first-child .d-step-value::after {
   top: 50%;
