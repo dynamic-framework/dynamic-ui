@@ -3,7 +3,7 @@ import type { ComponentProps } from 'react';
 
 import DInputCurrency from '../../src/components/DInputCurrency/DInputCurrency';
 import { ICONS } from '../config/constants';
-import { DContextProvider } from '../../src/contexts';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DInputCurrency> = {
   title: 'Design System/Components/Input Currency',
