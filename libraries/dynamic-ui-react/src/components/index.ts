@@ -36,7 +36,6 @@ export {
   default as DList,
   DListItem,
 } from './DList';
-export { default as DListItemMovement } from './DListItemMovement';
 export {
   default as DModal,
   DModalHeader,
