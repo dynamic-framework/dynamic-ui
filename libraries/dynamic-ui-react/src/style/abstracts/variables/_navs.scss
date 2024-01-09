@@ -6,7 +6,7 @@ $nav-link-padding-x: $spacer-1 !default;
 $nav-link-font-size: var(--#{$prefix}body-font-size) !default;
 $nav-link-font-weight: var(--#{$prefix}ref-fw-normal) !default;
 $nav-link-color: var(--#{$prefix}gray-500) !default;
-$nav-link-hover-color: var(--#{$prefix}gray-600) !default;
+$nav-link-hover-color: var(--#{$prefix}secondary-600) !default;
 $nav-link-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out !default;
 $nav-link-disabled-color: var(--#{$prefix}gray-200) !default;
 $nav-link-focus-box-shadow: $focus-ring-box-shadow !default;
