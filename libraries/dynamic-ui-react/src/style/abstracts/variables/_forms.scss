@@ -68,8 +68,8 @@ $input-group-border-radius: $input-border-radius !default;
 
 $input-group-hover-border-color: var(--#{$prefix}gray) !default;
 
-$input-group-focus-border-color: var(--#{$prefix}secondary-700) !default;
-$input-group-focus-box-shadow: 0 0 0 1px rgba(var(--#{$prefix}secondary-700-rgb)) !default;
+$input-group-focus-border-color: var(--#{$prefix}secondary) !default;
+$input-group-focus-box-shadow: 0 0 0 1px rgba(var(--#{$prefix}secondary-rgb)) !default;
 // end custom
 
 $input-placeholder-color: var(--#{$prefix}gray-500) !default;
