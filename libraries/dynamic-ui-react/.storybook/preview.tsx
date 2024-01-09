@@ -73,6 +73,10 @@ export default {
               'Collapse',
               'Collapse Icon Text',
             ],
+            'Utils', 
+            [ 
+              'Currency Text'
+            ]
           ],
         ],
       },
