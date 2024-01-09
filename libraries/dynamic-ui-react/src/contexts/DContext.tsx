@@ -2,18 +2,23 @@ import {
   createContext,
   useContext,
   useMemo,
+  useState,
 } from 'react';
 
 import type { PropsWithChildren } from 'react';
 
-export type Props = {
-  language?: string;
-  currency?: {
+type Props = {
+  language: string;
+  currency: {
     symbol: string;
     precision: number;
     separator: string;
     decimal: string;
   }
+};
+
+type Context = Props & {
+  setContext: (value: Props) => void;
 };
 
 const defaultState = {
@@ -24,21 +29,30 @@ const defaultState = {
     separator: ',',
     decimal: '.',
   },
+  setContext: () => {},
 };
 
-export const DContext = createContext<Required<Props>>(defaultState);
+export const DContext = createContext<Context>(defaultState);
 
 export function DContextProvider(
   {
     language = defaultState.language,
     currency = defaultState.currency,
     children,
-  }: PropsWithChildren<Props>,
+  }: PropsWithChildren<Partial<Props>>,
 ) {
-  const value = useMemo(() => ({
+  const [
+    internalContext,
+    setInternalContext,
+  ] = useState<Props>({
     language,
     currency,
-  }), [language, currency]);
+  });
+
+  const value = useMemo(() => ({
+    ...internalContext,
+    setContext: (newValue: Props) => setInternalContext(newValue),
+  }), [internalContext]);
 
   return (
     <DContext.Provider value={value}>
