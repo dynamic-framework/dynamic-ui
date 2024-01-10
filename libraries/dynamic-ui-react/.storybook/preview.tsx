@@ -75,6 +75,7 @@ export default {
             ],
             'Utils', 
             [ 
+              'Hooks',
               'Currency Text'
             ]
           ],

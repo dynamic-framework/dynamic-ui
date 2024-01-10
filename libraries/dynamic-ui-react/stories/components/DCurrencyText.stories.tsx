@@ -28,15 +28,15 @@ export const CustomCurrencyProps: Story = {
     <DContextProvider
       currency={{
         symbol: '€',
-        decimal: '.',
-        precision: 3,
-        separator: '_',
+        decimal: ',',
+        separator: '.',
+        precision: 2,
       }}
     >
       <DCurrencyText {...args} />
     </DContextProvider>
   ),
   args: {
-    value: 1000.123,
+    value: 1000.1,
   },
 };
