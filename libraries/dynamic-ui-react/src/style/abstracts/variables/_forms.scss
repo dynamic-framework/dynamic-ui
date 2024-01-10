@@ -62,6 +62,7 @@ $input-focus-width: 1px !default;            // unused
 $input-focus-box-shadow: $input-btn-focus-box-shadow !default;
 
 // custom
+$input-group-disabled-color: var(--#{$prefix}secondary-100) !default;
 $input-group-border-color: var(--#{$prefix}gray-300) !default;
 $input-group-border-width: 1px !default;
 $input-group-border-radius: $input-border-radius !default;

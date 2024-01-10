@@ -98,6 +98,12 @@ function DInputCounter(
       onIconEndClick={handleOnIconEndClick}
       iconStartAriaLabel={iconStartAriaLabel}
       iconEndAriaLabel={iconEndAriaLabel}
+      {...internalValue === minValue && {
+        iconStartDisabled: true,
+      }}
+      {...internalValue === maxValue && {
+        iconEndDisabled: true,
+      }}
       {...props}
     />
   );
