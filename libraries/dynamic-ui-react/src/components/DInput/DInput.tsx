@@ -63,11 +63,13 @@ function DInput(
     iconFamilyClass,
     iconFamilyPrefix,
     iconStart,
+    iconStartDisabled,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
     iconStartAriaLabel,
     iconStartTabIndex,
     iconEnd,
+    iconEndDisabled,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndAriaLabel,
@@ -205,18 +207,16 @@ function DInput(
               className="input-group-text"
               id={`${id}Start`}
               onClick={handleOnIconStartClick}
-              disabled={disabled || loading}
+              disabled={disabled || loading || iconStartDisabled}
               aria-label={iconStartAriaLabel}
               tabIndex={iconStartTabIndex}
             >
-              {iconStart && (
-                <DIcon
-                  className="d-input-icon"
-                  icon={iconStart}
-                  familyClass={iconStartFamilyClass}
-                  familyPrefix={iconStartFamilyPrefix}
-                />
-              )}
+              <DIcon
+                className="d-input-icon"
+                icon={iconStart}
+                familyClass={iconStartFamilyClass}
+                familyPrefix={iconStartFamilyPrefix}
+              />
             </button>
           )}
           {dynamicComponent}
@@ -239,18 +239,16 @@ function DInput(
               className="input-group-text"
               id={`${id}End`}
               onClick={handleOnIconEndClick}
-              disabled={disabled || loading}
+              disabled={disabled || loading || iconEndDisabled}
               aria-label={iconEndAriaLabel}
               tabIndex={iconEndTabIndex}
             >
-              {iconEnd && (
-                <DIcon
-                  className="d-input-icon"
-                  icon={iconEnd}
-                  familyClass={iconEndFamilyClass}
-                  familyPrefix={iconEndFamilyPrefix}
-                />
-              )}
+              <DIcon
+                className="d-input-icon"
+                icon={iconEnd}
+                familyClass={iconEndFamilyClass}
+                familyPrefix={iconEndFamilyPrefix}
+              />
             </button>
           )}
           {loading && (
