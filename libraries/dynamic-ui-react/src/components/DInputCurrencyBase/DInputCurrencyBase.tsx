@@ -29,7 +29,6 @@ function DInputCurrencyBase(
     maxValue,
     currencyOptions,
     currencyCode,
-    invalid,
     onFocus,
     onBlur,
     onChange,
