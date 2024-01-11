@@ -82,6 +82,7 @@ export default function DDatePickerHeader(
       />
       <DMonthPicker
         {...!withMonthSelector && { readOnly: true }}
+        {...withMonthSelector && { className: 'cursor-pointer' }}
         date={monthDate.toISOString()}
         onChangeDate={onChangeDate}
         {...locale && { locale }}
