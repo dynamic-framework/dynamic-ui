@@ -50,7 +50,6 @@ export default {
               'Quick Action Switch',
               'List',
               'List Item',
-              'List Item Movement',
               'Paginator',
               'Stepper',
               'Stepper Desktop',
