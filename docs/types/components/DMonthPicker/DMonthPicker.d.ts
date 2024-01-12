@@ -7,5 +7,5 @@ type Props = BaseProps & Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' 
     headerPrevYearAriaLabel?: string;
     headerNextYearAriaLabel?: string;
 };
-export default function DMonthPicker({ onChangeDate, date, locale, className, headerPrevYearAriaLabel, headerNextYearAriaLabel, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DMonthPicker({ onChangeDate, date, locale, className, calendarClassName, headerPrevYearAriaLabel, headerNextYearAriaLabel, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

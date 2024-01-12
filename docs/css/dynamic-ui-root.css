@@ -252,7 +252,7 @@
   --bs-focus-ring-opacity: 1;
   --bs-focus-ring-color: rgba(var(--bs-secondary-rgb), var(--bs-focus-ring-opacity));
   --bs-form-valid-color: var(--bs-gray);
-  --bs-form-valid-border-color: var(--bs-gray);
+  --bs-form-valid-border-color: var(--bs-success);
   --bs-form-invalid-color: var(--bs-danger);
   --bs-form-invalid-border-color: var(--bs-danger);
   --bs-ref-spacer-0: 0;

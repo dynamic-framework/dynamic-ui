@@ -24,7 +24,6 @@ export { default as DInputPin } from './DInputPin';
 export { default as DInputSelect, DInputSelectProps } from './DInputSelect';
 export { default as DInputSwitch } from './DInputSwitch';
 export { default as DList, DListItem, } from './DList';
-export { default as DListItemMovement } from './DListItemMovement';
 export { default as DModal, DModalHeader, DModalBody, DModalFooter, } from './DModal';
 export { default as DOffcanvas, DOffcanvasHeader, DOffcanvasBody, DOffcanvasFooter, } from './DOffcanvas';
 export { default as DPaginator } from './DPaginator';

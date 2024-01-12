@@ -253,7 +253,7 @@
   --bs-focus-ring-opacity: 1;
   --bs-focus-ring-color: rgba(var(--bs-secondary-rgb), var(--bs-focus-ring-opacity));
   --bs-form-valid-color: var(--bs-gray);
-  --bs-form-valid-border-color: var(--bs-gray);
+  --bs-form-valid-border-color: var(--bs-success);
   --bs-form-invalid-color: var(--bs-danger);
   --bs-form-invalid-border-color: var(--bs-danger);
   --bs-ref-spacer-0: 0;
@@ -2650,7 +2650,7 @@ textarea.form-control-lg {
 .form-select:focus {
   border-color: var(--bs-focus-ring-color);
   outline: 0;
-  box-shadow: var(--bs-box-shadow-inset), 0 0 0 0 rgba(var(--bs-secondary-rgb), 0);
+  box-shadow: var(--bs-box-shadow-inset), 0 0 0 1px rgba(var(--bs-secondary-rgb), 1);
 }
 .form-select[multiple], .form-select[size]:not([size="1"]) {
   padding-right: 1rem;
@@ -2813,7 +2813,7 @@ textarea.form-control-lg {
 
 .form-range {
   width: 100%;
-  height: 1rem;
+  height: calc(1rem + 2px);
   padding: 0;
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -3139,7 +3139,7 @@ textarea.form-control-lg {
 }
 .was-validated .form-control:valid:focus, .form-control.is-valid:focus {
   border-color: var(--bs-form-valid-border-color);
-  box-shadow: 0 0 0 0 rgba(var(--bs-success-rgb), 0);
+  box-shadow: 0 0 0 1px rgba(var(--bs-success-rgb), 1);
 }
 
 .was-validated .form-select:valid, .form-select.is-valid {
@@ -3147,7 +3147,7 @@ textarea.form-control-lg {
 }
 .was-validated .form-select:valid:focus, .form-select.is-valid:focus {
   border-color: var(--bs-form-valid-border-color);
-  box-shadow: 0 0 0 0 rgba(var(--bs-success-rgb), 0);
+  box-shadow: 0 0 0 1px rgba(var(--bs-success-rgb), 1);
 }
 
 .was-validated .form-check-input:valid, .form-check-input.is-valid {
@@ -3157,7 +3157,7 @@ textarea.form-control-lg {
   background-color: var(--bs-form-valid-color);
 }
 .was-validated .form-check-input:valid:focus, .form-check-input.is-valid:focus {
-  box-shadow: 0 0 0 0 rgba(var(--bs-success-rgb), 0);
+  box-shadow: 0 0 0 1px rgba(var(--bs-success-rgb), 1);
 }
 .was-validated .form-check-input:valid ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {
   color: var(--bs-form-valid-color);
@@ -3209,7 +3209,7 @@ textarea.form-control-lg {
 }
 .was-validated .form-control:invalid:focus, .form-control.is-invalid:focus {
   border-color: var(--bs-form-invalid-border-color);
-  box-shadow: 0 0 0 0 rgba(var(--bs-danger-rgb), 0);
+  box-shadow: 0 0 0 1px rgba(var(--bs-danger-rgb), 1);
 }
 
 .was-validated .form-select:invalid, .form-select.is-invalid {
@@ -3217,7 +3217,7 @@ textarea.form-control-lg {
 }
 .was-validated .form-select:invalid:focus, .form-select.is-invalid:focus {
   border-color: var(--bs-form-invalid-border-color);
-  box-shadow: 0 0 0 0 rgba(var(--bs-danger-rgb), 0);
+  box-shadow: 0 0 0 1px rgba(var(--bs-danger-rgb), 1);
 }
 
 .was-validated .form-check-input:invalid, .form-check-input.is-invalid {
@@ -3227,7 +3227,7 @@ textarea.form-control-lg {
   background-color: var(--bs-form-invalid-color);
 }
 .was-validated .form-check-input:invalid:focus, .form-check-input.is-invalid:focus {
-  box-shadow: 0 0 0 0 rgba(var(--bs-danger-rgb), 0);
+  box-shadow: 0 0 0 1px rgba(var(--bs-danger-rgb), 1);
 }
 .was-validated .form-check-input:invalid ~ .form-check-label, .form-check-input.is-invalid ~ .form-check-label {
   color: var(--bs-form-invalid-color);
@@ -3677,7 +3677,7 @@ textarea.form-control-lg {
   --bs-nav-link-font-size: var(--bs-body-font-size);
   --bs-nav-link-font-weight: var(--bs-ref-fw-normal);
   --bs-nav-link-color: var(--bs-gray-500);
-  --bs-nav-link-hover-color: var(--bs-gray-600);
+  --bs-nav-link-hover-color: var(--bs-secondary-600);
   --bs-nav-link-disabled-color: var(--bs-gray-200);
   display: flex;
   flex-wrap: wrap;
@@ -3720,7 +3720,7 @@ textarea.form-control-lg {
   --bs-nav-tabs-border-width: 0;
   --bs-nav-tabs-border-color: transparent;
   --bs-nav-tabs-border-radius: 1rem;
-  --bs-nav-tabs-link-hover-border-color: var(--bs-gray-600);
+  --bs-nav-tabs-link-hover-border-color: var(--bs-secondary-600);
   --bs-nav-tabs-link-active-color: var(--bs-secondary);
   --bs-nav-tabs-link-active-bg: transparent;
   --bs-nav-tabs-link-active-border-color: transparent;
@@ -7365,7 +7365,7 @@ textarea.form-control-lg {
   --bs-input-form-text-color: var(--bs-gray);
   --bs-input-group-disabled-border-color: var(--bs-gray-200);
   --bs-input-group-disabled-bg: var(--bs-gray-100);
-  --bs-input-group-disabled-color: var(--bs-gray);
+  --bs-input-group-disabled-color: var(--bs-secondary-100);
   display: flex;
   flex-direction: column;
   gap: var(--bs-input-gap);
@@ -7374,12 +7374,6 @@ textarea.form-control-lg {
 .d-input:focus-within .input-group {
   border-color: var(--bs-input-group-focus-border-color);
   box-shadow: var(--bs-input-group-focus-box-shadow);
-}
-.d-input:focus-within .input-group:hover:has(.form-control:not(:-moz-placeholder-shown:disabled)) {
-  border-color: var(--bs-input-group-focus-border-color);
-}
-.d-input:focus-within .input-group:hover:has(.form-control:not(:placeholder-shown:disabled)), .d-input:focus-within .input-group:hover {
-  border-color: var(--bs-input-group-focus-border-color);
 }
 .d-input .d-input-control {
   display: flex;
@@ -7400,14 +7394,15 @@ textarea.form-control-lg {
   border: var(--bs-input-group-border-width) solid var(--bs-input-group-border-color);
   border-radius: var(--bs-input-group-border-radius);
 }
-.d-input:has(.form-control:not(:-moz-placeholder-shown, :focus)) .input-group {
+.d-input .input-group:not(:focus-within):not(.has-validation):has(.form-control:not(:-moz-placeholder-shown, :disabled)) {
   border-color: var(--bs-input-group-hover-border-color);
 }
-.d-input:has(.form-control:not(:placeholder-shown, :focus)) .input-group {
+.d-input .input-group:not(:focus-within):not(.has-validation):has(.form-control:not(:placeholder-shown, :disabled)) {
   border-color: var(--bs-input-group-hover-border-color);
 }
 .d-input:has(.form-control.is-valid) .input-group {
   border-color: var(--bs-form-valid-border-color);
+  box-shadow: 0 0 0 1px rgba(var(--bs-success-rgb), 1);
 }
 .d-input:has(.form-control.is-valid) .input-group ~ .form-text {
   color: var(--bs-form-valid-border-color);
@@ -7417,6 +7412,7 @@ textarea.form-control-lg {
 }
 .d-input:has(.form-control.is-invalid) .input-group {
   border-color: var(--bs-form-invalid-border-color);
+  box-shadow: 0 0 0 1px rgba(var(--bs-danger-rgb), 1);
 }
 .d-input:has(.form-control.is-invalid) .input-group ~ .form-text {
   color: var(--bs-form-invalid-border-color);
@@ -7449,14 +7445,26 @@ textarea.form-control-lg {
   -webkit-appearance: none;
           appearance: none;
 }
+.d-input .form-control.is-invalid:focus,
+.d-input .form-control.is-valid:focus {
+  border: 0;
+  box-shadow: unset;
+}
 .d-input .input-group-text {
   border: 0;
   outline: 0;
 }
+.d-input .input-group-text:disabled {
+  color: var(--bs-input-group-disabled-color);
+}
 .d-input .form-control:disabled {
   background: var(--bs-input-group-disabled-bg);
 }
+.d-input:has(.form-control:disabled) {
+  border-color: var(--bs-input-group-disabled-color);
+}
 .d-input:has(.form-control:disabled) .input-group-text {
+  color: var(--bs-input-group-disabled-color);
   background: var(--bs-input-group-disabled-bg);
 }
 .d-input:has(.form-control:disabled) .d-input-icon .d-icon {
@@ -8502,7 +8510,7 @@ label {
   --bs-quick-action-check-border-radius: var(--bs-border-radius-sm);
   --bs-quick-action-check-line1-font-size: var(--bs-body-font-size);
   --bs-quick-action-check-line1-font-weight: var(--bs-ref-fw-bold);
-  --bs-quick-action-check-line1-color: var(--bs-light-text-emphasis);
+  --bs-quick-action-check-line1-color: var(--bs-gray-900);
   --bs-quick-action-check-line2-font-size: var(--bs-ref-fs-small);
   --bs-quick-action-check-line2-font-weight: var(--bs-ref-fw-normal);
   --bs-quick-action-check-line2-color: var(--bs-gray);
@@ -9815,16 +9823,17 @@ label {
   --bs-datepicker-day-names-font-size: var(--bs-ref-spacer-3);
   --bs-datepicker-day-name-weight: var(--bs-ref-fw-bold);
   --bs-datepicker-day-name-margin: 0;
-  --bs-datepicker-day-name-size: 20px;
+  --bs-datepicker-day-name-size: var(--bs-ref-spacer-3);
   --bs-datepicker-day-name-color: var(--bs-gray-500);
-  --bs-datepicker-month-gap: var(--bs-ref-fs-small);
+  --bs-datepicker-month-gap: var(--bs-ref-spacer-2);
   --bs-datepicker-month-padding: var(--bs-ref-spacer-3) var(--bs-ref-spacer-4) var(--bs-ref-spacer-4);
   --bs-datepicker-month-margin: 0;
   --bs-datepicker-month-color: var(--bs-white);
-  --bs-datepicker-week-gap: 1.875rem;
+  --bs-datepicker-week-gap: var(--bs-ref-spacer-2);
   --bs-datepicker-day-margin: 0;
   --bs-datepicker-day-font-size: var(--bs-ref-fs-small);
-  --bs-datepicker-day-size: 20px;
+  --bs-datepicker-day-size: var(--bs-ref-spacer-3);
+  --bs-datepicker-day-padding: var(--bs-ref-spacer-3);
   --bs-datepicker-day-radius: 100%;
   --bs-datepicker-day-bg-hover: var(--bs-body);
   --bs-datepicker-day-color-hover: var(--bs-info-100);
@@ -9863,13 +9872,17 @@ label {
 }
 .react-datepicker .react-datepicker__header .react-datepicker__day-names {
   display: flex;
-  justify-content: space-between;
+  gap: var(--bs-ref-spacer-2);
   margin: var(--bs-datepicker-day-names-margin);
   font-size: var(--bs-datepicker-day-names-font-size);
 }
 .react-datepicker .react-datepicker__header .react-datepicker__day-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: var(--bs-datepicker-day-name-size);
   height: var(--bs-datepicker-day-name-size);
+  padding: var(--bs-datepicker-day-padding);
   margin: var(--bs-datepicker-day-name-margin);
   font-weight: var(--bs-datepicker-day-name-weight);
   line-height: var(--bs-datepicker-day-name-size);
@@ -9890,8 +9903,12 @@ label {
   gap: var(--bs-datepicker-week-gap);
 }
 .react-datepicker .react-datepicker__month .react-datepicker__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: var(--bs-datepicker-day-size);
   height: var(--bs-datepicker-day-size);
+  padding: var(--bs-datepicker-day-padding);
   margin: var(--bs-datepicker-day-margin);
   font-size: var(--bs-datepicker-day-font-size);
   line-height: var(--bs-datepicker-day-size);
@@ -9950,6 +9967,9 @@ label {
 }
 .react-datepicker .react-datepicker__day--outside-month {
   color: var(--bs-datepicker-day-outside-month-color);
+}
+.react-datepicker .react-datepicker-wrapper {
+  margin-inline: auto;
 }
 .react-datepicker .react-datepicker__input-time-container {
   width: 100%;
@@ -10103,6 +10123,7 @@ label {
   --bs-tabs-nav-padding-y: 1rem;
   --bs-tabs-link-border-height: 2px;
   --bs-tabs-link-line-height: 1.5rem;
+  --bs-tabs-link-hover-color: var(--bs-secondary-600);
   --bs-tabs-link-border-border-radius: 50rem;
   --bs-tabs-link-border-active-color: var(--bs-secondary);
   --bs-tabs-link-border-active-font-weight: var(--bs-ref-fw-bold);
@@ -10117,6 +10138,9 @@ label {
 .d-tabs .nav-link {
   position: relative;
   line-height: var(--bs-tabs-link-line-height);
+}
+.d-tabs .nav-link:hover {
+  color: var(--bs-tabs-link-hover-color);
 }
 .d-tabs .nav-link.active {
   font-weight: var(--bs-tabs-link-border-active-font-weight);

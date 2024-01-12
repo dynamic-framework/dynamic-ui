@@ -27,6 +27,7 @@ export type LabelIconProps = {
 };
 export type StartIconProps = {
     iconStart?: string;
+    iconStartDisabled?: boolean;
     iconStartFamilyClass?: string;
     iconStartFamilyPrefix?: string;
     iconStartAriaLabel?: string;
@@ -34,6 +35,7 @@ export type StartIconProps = {
 };
 export type EndIconProps = {
     iconEnd?: string;
+    iconEndDisabled?: boolean;
     iconEndFamilyClass?: string;
     iconEndFamilyPrefix?: string;
     iconEndAriaLabel?: string;
