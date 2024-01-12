@@ -94,6 +94,12 @@ const config: Meta<typeof DDatePicker> = {
       control: 'boolean',
       description: 'Show year dropdown on calendar',
     },
+    withMonthSelector: {
+      type: 'boolean',
+      control: 'boolean',
+      description: 'Show month dropdown on calendar header',
+      defaultValue: false,
+    },
     monthsShown: {
       type: 'number',
       control: 'number',
@@ -116,6 +122,22 @@ export const Default: Story = {
       </div>
     ),
   ],
+  render: function Render({ ...args }) {
+    const [date, setDate] = useState(args.date);
+    const handleDate = (value: Date | null) => {
+      if (value) {
+        setDate(new Date(value).toISOString());
+      }
+    };
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        dateFormat="dd/MM/yyyy"
+        onChange={(value) => handleDate(value)}
+      />
+    );
+  },
   args: {
     inputAriaLabel: 'Calendar',
     date: new Date().toISOString(),
@@ -227,13 +249,13 @@ export const MonthPicker: Story = {
 
 export const DateRange: Story = {
   render: function Render({ ...args }) {
-    const [startDate, setStartDate] = useState<string | null>(new Date().toISOString());
-    const [endDate, setEndDate] = useState<string | null>(null);
+    const [startDate, setStartDate] = useState<Date>(new Date());
+    const [endDate, setEndDate] = useState<Date>();
 
-    const handleChange = (value: Date | [Date | null, Date | null] | null) => {
+    const handleChange = (value: [Date | null, Date | null]) => {
       const [newStartDate, newEndDate] = value as Array<Date>;
-      setStartDate(new Date(newStartDate).toISOString());
-      setEndDate(new Date(newEndDate).toISOString());
+      setStartDate(newStartDate);
+      setEndDate(newEndDate);
     };
 
     return (
@@ -261,13 +283,13 @@ export const DateRange: Story = {
 
 export const DateRangeWithMonthSelector: Story = {
   render: function Render({ ...args }) {
-    const [startDate, setStartDate] = useState<string | null>(new Date().toISOString());
-    const [endDate, setEndDate] = useState<string | null>(null);
+    const [startDate, setStartDate] = useState<Date>(new Date());
+    const [endDate, setEndDate] = useState<Date>();
 
-    const handleChange = (value: Date | [Date | null, Date | null] | null) => {
+    const handleChange = (value: [Date | null, Date | null]) => {
       const [newStartDate, newEndDate] = value as Array<Date>;
-      setStartDate(new Date(newStartDate).toISOString());
-      setEndDate(new Date(newEndDate).toISOString());
+      setStartDate(newStartDate);
+      setEndDate(newEndDate);
     };
 
     return (

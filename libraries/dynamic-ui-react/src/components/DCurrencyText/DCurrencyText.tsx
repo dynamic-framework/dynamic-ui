@@ -2,11 +2,8 @@ import useFormatCurrency from '../../hooks/useFormatCurrency';
 
 import type { BaseProps } from '../interface';
 
-type Props =
-& BaseProps
-& {
+type Props = BaseProps & {
   value: number;
-  className?: string;
 };
 
 export default function DCurrencyText(
