@@ -14,7 +14,12 @@ type Props = {
     precision: number;
     separator: string;
     decimal: string;
-  }
+  },
+  icon: {
+    familyClass?: string;
+    familyPrefix?: string;
+    materialStyle?: boolean;
+  };
 };
 
 type Context = Props & {
@@ -29,6 +34,11 @@ const defaultState = {
     separator: ',',
     decimal: '.',
   },
+  icon: {
+    familyClass: 'bi',
+    familyPrefix: 'bi-',
+    materialStyle: false,
+  },
   setContext: () => {},
 };
 
@@ -38,6 +48,7 @@ export function DContextProvider(
   {
     language = defaultState.language,
     currency = defaultState.currency,
+    icon = defaultState.icon,
     children,
   }: PropsWithChildren<Partial<Props>>,
 ) {
@@ -47,6 +58,7 @@ export function DContextProvider(
   ] = useState<Props>({
     language,
     currency,
+    icon,
   });
 
   const value = useMemo(() => ({
