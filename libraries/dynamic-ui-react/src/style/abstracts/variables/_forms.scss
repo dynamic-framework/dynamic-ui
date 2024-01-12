@@ -58,10 +58,11 @@ $input-hover-border-color: var(--#{$prefix}gray) !default;
 $input-focus-bg: $input-bg !default;
 $input-focus-border-color: var(--#{$prefix}focus-ring-color) !default; // unused
 $input-focus-color: $input-color !default;                      // unused
-$input-focus-width: $input-btn-focus-width !default;            // unused
+$input-focus-width: 1px !default;            // unused
 $input-focus-box-shadow: $input-btn-focus-box-shadow !default;
 
 // custom
+$input-group-disabled-color: var(--#{$prefix}secondary-100) !default;
 $input-group-border-color: var(--#{$prefix}gray-300) !default;
 $input-group-border-width: 1px !default;
 $input-group-border-radius: $input-border-radius !default;
@@ -285,7 +286,7 @@ $form-feedback-icon-invalid: null !default;
 
 // scss-docs-start form-validation-colors
 $form-valid-color: $form-label-color !default;
-$form-valid-border-color: $input-group-hover-border-color !default;
+$form-valid-border-color: $form-feedback-valid-color !default;
 $form-invalid-color: $form-feedback-invalid-color !default;
 $form-invalid-border-color: $form-feedback-invalid-color !default;
 // scss-docs-end form-validation-colors

@@ -6,11 +6,11 @@ import { DContextProvider } from '../../src/contexts/DContext';
 const ExampleChildren = () => {
   const { values } = useFormatCurrency(100, 234.12, -233);
   return (
-    <>
+    <div className="p-3">
       {values.map((value) => (
         <pre key={value}>{value}</pre>
       ))}
-    </>
+    </div>
   );
 };
 
@@ -21,7 +21,7 @@ const Example = () => (
 );
 
 const config: Meta<typeof Example> = {
-  title: 'Hooks/useFormatCurrency',
+  title: 'Design System/Utils/Hooks/useFormatCurrency',
   component: Example,
 };
 

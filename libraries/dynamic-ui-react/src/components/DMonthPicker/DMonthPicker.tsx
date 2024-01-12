@@ -23,6 +23,7 @@ export default function DMonthPicker(
     date,
     locale,
     className,
+    calendarClassName,
     headerPrevYearAriaLabel = 'decrease year',
     headerNextYearAriaLabel = 'increase year',
     ...props
@@ -37,7 +38,8 @@ export default function DMonthPicker(
     <DatePicker
       showMonthYearPicker
       selected={selected}
-      calendarClassName={classNames('d-month-picker', className)}
+      className={className}
+      calendarClassName={classNames('d-month-picker', calendarClassName)}
       onChange={onChangeDate}
       {...locale && { locale }}
       customInput={(
