@@ -20,21 +20,22 @@
 
   --#{$prefix}datepicker-day-name-weight: var(--#{$prefix}ref-fw-bold);
   --#{$prefix}datepicker-day-name-margin: 0;
-  --#{$prefix}datepicker-day-name-size: 20px;
+  --#{$prefix}datepicker-day-name-size: var(--#{$prefix}ref-spacer-3);
   --#{$prefix}datepicker-day-name-color: var(--#{$prefix}gray-500);
 
   // Calendar variables
-  --#{$prefix}datepicker-month-gap: var(--#{$prefix}ref-fs-small);
+  --#{$prefix}datepicker-month-gap: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}datepicker-month-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-month-margin: 0;
   --#{$prefix}datepicker-month-color: var(--#{$prefix}white);
 
-  --#{$prefix}datepicker-week-gap: 1.875rem;
+  --#{$prefix}datepicker-week-gap: var(--#{$prefix}ref-spacer-2);
 
   // Day variables
   --#{$prefix}datepicker-day-margin: 0;
   --#{$prefix}datepicker-day-font-size: var(--#{$prefix}ref-fs-small);
-  --#{$prefix}datepicker-day-size: 20px;
+  --#{$prefix}datepicker-day-size: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}datepicker-day-padding: var(--#{$prefix}ref-spacer-3);
   --#{$prefix}datepicker-day-radius: 100%;
 
   --#{$prefix}datepicker-day-bg-hover: var(--#{$prefix}body);
@@ -80,13 +81,17 @@
 
     .react-datepicker__day-names {
       display: flex;
-      justify-content: space-between;
+      gap: var(--#{$prefix}ref-spacer-2);
       margin: var(--#{$prefix}datepicker-day-names-margin);
       font-size: var(--#{$prefix}datepicker-day-names-font-size);
     }
     .react-datepicker__day-name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: var(--#{$prefix}datepicker-day-name-size);
       height: var(--#{$prefix}datepicker-day-name-size);
+      padding: var(--#{$prefix}datepicker-day-padding);
       margin: var(--#{$prefix}datepicker-day-name-margin);
       font-weight: var(--#{$prefix}datepicker-day-name-weight);
       line-height: var(--#{$prefix}datepicker-day-name-size);
@@ -115,8 +120,12 @@
     }
 
     .react-datepicker__day {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: var(--#{$prefix}datepicker-day-size);
       height: var(--#{$prefix}datepicker-day-size);
+      padding: var(--#{$prefix}datepicker-day-padding);
       margin: var(--#{$prefix}datepicker-day-margin);
       font-size: var(--#{$prefix}datepicker-day-font-size);
       line-height: var(--#{$prefix}datepicker-day-size);
@@ -183,6 +192,10 @@
 
   .react-datepicker__day--outside-month {
     color: var(--#{$prefix}datepicker-day-outside-month-color);
+  }
+
+  .react-datepicker-wrapper {
+    margin-inline: auto;
   }
 
   /* Start time selector */
