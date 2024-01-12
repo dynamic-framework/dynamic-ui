@@ -99,7 +99,7 @@ $input-btn-font-size: $font-size-base !default;
 $input-btn-line-height: $line-height-base !default;
 
 $input-btn-focus-width: 0 !default;
-$input-btn-focus-color-opacity: 0 !default;
+$input-btn-focus-color-opacity: 1 !default;
 $input-btn-focus-color: rgba(var(--#{$prefix}secondary-rgb), $input-btn-focus-color-opacity) !default;
 $input-btn-focus-blur: 0 !default;
 $input-btn-focus-box-shadow: none !default;

@@ -27,7 +27,6 @@ function DInputCurrency(
     minValue,
     maxValue,
     currencyCode,
-    invalid,
     onFocus,
     onBlur,
     onChange,
