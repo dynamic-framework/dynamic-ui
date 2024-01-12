@@ -31,7 +31,7 @@
   // input disabled
   --#{$prefix}input-group-disabled-border-color: #{$input-disabled-border-color};
   --#{$prefix}input-group-disabled-bg: #{$input-disabled-bg};
-  --#{$prefix}input-group-disabled-color: #{$input-disabled-color};
+  --#{$prefix}input-group-disabled-color: #{$input-group-disabled-color};
 
   display: flex;
   flex-direction: column;
@@ -74,7 +74,7 @@
   }
 
   // not empty
-  .input-group:not(:focus-within):not(.has-validation):has(.form-control:not(:placeholder-shown)) {
+  .input-group:not(:focus-within):not(.has-validation):has(.form-control:not(:placeholder-shown, :disabled)) {
     border-color: var(--#{$prefix}input-group-hover-border-color);
   }
 
@@ -144,6 +144,10 @@
   .input-group-text {
     border: 0;
     outline: 0;
+
+    &:disabled {
+      color: var(--#{$prefix}input-group-disabled-color);
+    }
   }
 
   // input disabled
@@ -153,9 +157,11 @@
 
 
   &:has(.form-control:disabled) {
+    border-color: var(--#{$prefix}input-group-disabled-color);
 
     // input addons disabled
     .input-group-text {
+      color: var(--#{$prefix}input-group-disabled-color);
       background: var(--#{$prefix}input-group-disabled-bg);
     }
 

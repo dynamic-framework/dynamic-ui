@@ -33,6 +33,7 @@ it('should render base counter', () => {
           <button
             aria-label="decrease action"
             class="input-group-text"
+            disabled=""
             id="counterStart"
             type="button"
           >
