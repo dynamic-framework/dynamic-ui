@@ -21,6 +21,7 @@
   .nav-link {
     position: relative;
     line-height: var(--#{$prefix}tabs-link-line-height);
+
     &:hover {
       color: var(--#{$prefix}tabs-link-hover-color);
     }
