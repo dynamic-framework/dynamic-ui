@@ -12,6 +12,7 @@ export { default as DCollapseIconText } from './DCollapseIconText';
 export { default as DCurrencyText } from './DCurrencyText';
 export { default as DDatePicker } from './DDatePicker';
 export { default as DIcon } from './DIcon';
+export { default as DIconBase } from './DIconBase';
 export { default as DInput } from './DInput';
 export { default as DInputMask } from './DInputMask';
 export { default as DInputCounter } from './DInputCounter';

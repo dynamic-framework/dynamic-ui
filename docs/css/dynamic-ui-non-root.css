@@ -7029,13 +7029,13 @@ textarea.form-control-lg {
   --bs-icon-size: var(--bs-icon-component-size, 1.5rem);
   --bs-icon-padding: var(--bs-icon-component-padding, 0);
   --bs-icon-loading-duration: var(--bs-icon-component-loading-duration, 1.8);
-  display: flex;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
   width: var(--bs-icon-size);
   height: var(--bs-icon-size);
   padding: var(--bs-icon-padding);
-  font-size: var(--bs-icon-size);
+  font-size: var(--bs-icon-size) !important;
   color: var(--bs-icon-color);
   background-color: var(--bs-icon-bg-color);
   border-radius: var(--bs-icon-padding);
