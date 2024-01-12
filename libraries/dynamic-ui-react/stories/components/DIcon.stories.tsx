@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import type { ComponentProps } from 'react';
 
 import DIcon from '../../src/components/DIcon/DIcon';
 import {
@@ -11,6 +12,7 @@ import {
   ICON_FAMILY_PREFIX,
   PREFIX_BS,
 } from '../../src/components/config';
+import { DContextProvider, DInput } from '../../src';
 
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
@@ -99,7 +101,6 @@ export const Default: Story = {
     icon: FIRST_ICON,
     size: '120px',
     hasCircle: false,
-    loading: false,
   },
 };
 
@@ -108,7 +109,95 @@ export const Circle: Story = {
     icon: FIRST_ICON,
     size: '120px',
     hasCircle: true,
-    loading: false,
     circleSize: `calc(var(--${PREFIX_BS}icon-component-size) * 1)`,
+  },
+};
+
+export const MaterialStyle: Story = {
+  render: (args: ComponentProps<typeof DIcon>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyClass: 'material-symbols-outlined',
+      }}
+    >
+      <DIcon {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    icon: 'rebase',
+    size: '120px',
+  },
+  argTypes: {
+    icon: {
+      control: 'text',
+      type: 'string',
+      description: 'Material style icon',
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'To use icons with Material Symbols style configuration it is necessary to use a DContextProvide with familyClass and the flag materialStyle=true',
+      },
+    },
+  },
+};
+
+export const MaterialStyleHasCircle: Story = {
+  render: (args: ComponentProps<typeof DIcon>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyClass: 'material-symbols-outlined',
+      }}
+    >
+      <DIcon {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    icon: 'rebase',
+    size: '120px',
+    hasCircle: true,
+  },
+  argTypes: {
+    icon: {
+      control: 'text',
+      type: 'string',
+      description: 'Material style icon',
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'To use icons with Material Symbols style configuration it is necessary to use a DContextProvide with familyClass and the flag materialStyle=true',
+      },
+    },
+  },
+};
+
+export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyClass: 'material-symbols-outlined',
+      }}
+    >
+      <DInput
+        {...args}
+      />
+    </DContextProvider>
+  ),
+  args: {
+    iconStart: 'alternate_email',
+    iconEnd: 'cached',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'The DContextProvider configuration can be used in conjunction with any other component that uses DIcon',
+      },
+    },
   },
 };
