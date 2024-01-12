@@ -44,7 +44,7 @@ export default function DIconBase(
 ) {
   const colorStyle = useMemo(() => {
     if (color) {
-      return { [`--${PREFIX_BS}component-color`]: color };
+      return { [`--${PREFIX_BS}icon-component-color`]: color };
     }
     if (theme) {
       return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${theme})` };
