@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.13.0...@dynamic-framework/ui-react@1.14.0) (2024-01-12)
+
+
+### Features
+
+* add support to use icons with material config style and store the icon config on DContextProvider ([a5e0879](https://github.com/dynamic-framework/dynamic-ui/commit/a5e08793fd66e70cc765b20911a63d8b9caa728b))
+
+
+### Bug Fixes
+
+* DIcon color ([3698208](https://github.com/dynamic-framework/dynamic-ui/commit/3698208ac6facf434dacfca4d5af6939e1669a3e))
+
+
+
 ## [1.13.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.12.1...@dynamic-framework/ui-react@1.13.0) (2024-01-12)
 
 
