@@ -23,7 +23,7 @@ const config: Meta<typeof DButton> = {
       control: {
         type: 'select',
         labels: {
-          undefined: 'empty',
+          undefined: 'default',
         },
       },
       type: 'string',
