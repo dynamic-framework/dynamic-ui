@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import DInput from '../../src/components/DInput/DInput';
 import { ICONS } from '../config/constants';
+import { DIcon } from '../../src';
 
 const config: Meta<typeof DInput> = {
   title: 'Design System/Components/Input',
@@ -251,5 +252,33 @@ export const Floating: Story = {
     iconEndAriaLabel: 'end action',
     hint: 'Assistive text',
     floatingLabel: true,
+  },
+};
+
+export const CustomInputStart: Story = {
+  args: {
+    id: 'componentId8',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    inputStart: (
+      <DIcon
+        icon="person"
+      />
+    ),
+  },
+};
+
+export const CustomInputEnd: Story = {
+  args: {
+    id: 'componentId9',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    inputEnd: (
+      <DIcon
+        icon="arrow-right"
+      />
+    ),
   },
 };
