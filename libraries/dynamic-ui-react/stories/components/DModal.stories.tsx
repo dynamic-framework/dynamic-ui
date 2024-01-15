@@ -85,6 +85,92 @@ export const Default: Story = {
   },
 };
 
+export const CloseIcon: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DModal {...args}>
+      <DModal.Header
+        icon="x-circle"
+        showCloseButton
+      >
+        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+      </DModal.Header>
+      <DModal.Body>
+        <p className="py-3 px-5">Modal body</p>
+      </DModal.Body>
+      <DModal.Footer>
+        <DButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          pill
+        />
+        <DButton text="ok" className="d-grid" pill />
+      </DModal.Footer>
+    </DModal>
+  ),
+  args: {
+    name: 'exampleModal',
+    staticBackdrop: false,
+    scrollable: false,
+    centered: true,
+    fullScreen: false,
+    size: 'sm',
+    className: 'd-block',
+  },
+};
+
+export const MaterialStyleCloseIcon: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DModal {...args}>
+      <DModal.Header
+        icon="disabled_by_default"
+        iconFamilyClass="material-symbols-outlined"
+        materialStyle
+        showCloseButton
+      >
+        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+      </DModal.Header>
+      <DModal.Body>
+        <p className="py-3 px-5">Modal body</p>
+      </DModal.Body>
+      <DModal.Footer>
+        <DButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          pill
+        />
+        <DButton text="ok" className="d-grid" pill />
+      </DModal.Footer>
+    </DModal>
+  ),
+  args: {
+    name: 'exampleModal',
+    staticBackdrop: false,
+    scrollable: false,
+    centered: true,
+    fullScreen: false,
+    size: 'sm',
+    className: 'd-block',
+  },
+};
+
 export const ActionsPlacementStart: Story = {
   decorators: [
     (Story) => (
