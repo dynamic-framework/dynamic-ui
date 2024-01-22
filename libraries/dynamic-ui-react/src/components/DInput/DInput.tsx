@@ -41,6 +41,7 @@ type NonHTMLInputElementProps =
   valid?: boolean;
   floatingLabel?: boolean;
   inputStart?: ReactNode;
+  inputEnd?: ReactNode;
   onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
   onIconEndClick?: (value?: string) => void;
@@ -79,6 +80,7 @@ function DInput(
     valid = false,
     floatingLabel = false,
     inputStart,
+    inputEnd,
     value,
     placeholder = '',
     onChange,
@@ -260,6 +262,11 @@ function DInput(
               >
                 <span className="visually-hidden">Loading...</span>
               </span>
+            </div>
+          )}
+          {!!inputEnd && (
+            <div className="input-group-text">
+              {inputEnd}
             </div>
           )}
         </div>
