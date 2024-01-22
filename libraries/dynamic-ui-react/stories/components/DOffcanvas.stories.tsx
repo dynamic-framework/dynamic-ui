@@ -68,6 +68,86 @@ export const Default: Story = {
   },
 };
 
+export const CloseIcon: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DOffcanvas {...args}>
+      <DOffcanvas.Header
+        icon="x-circle"
+        showCloseButton
+      >
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          pill
+        />
+        <DButton text="ok" className="d-grid" pill />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  ),
+  args: {
+    name: 'exampleOffcanvas',
+    staticBackdrop: false,
+    scrollable: false,
+    openFrom: 'end',
+  },
+};
+
+export const MaterialStyleCloseIcon: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DOffcanvas {...args}>
+      <DOffcanvas.Header
+        icon="disabled_by_default"
+        iconFamilyClass="material-symbols-outlined"
+        materialStyle
+        showCloseButton
+      >
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          pill
+        />
+        <DButton text="ok" className="d-grid" pill />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  ),
+  args: {
+    name: 'exampleOffcanvas',
+    staticBackdrop: false,
+    scrollable: false,
+    openFrom: 'end',
+  },
+};
+
 export const ActionsPlacementStart: Story = {
   decorators: [
     (Story) => (
