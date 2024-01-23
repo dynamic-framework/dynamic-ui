@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.13.0...@dynamic-framework/ui-react@1.14.0) (2024-01-12)
+
+
+### Features
+
+* add support to use icons with material config style and store the icon config on DContextProvider ([a5e0879](https://github.com/dynamic-framework/dynamic-ui/commit/a5e08793fd66e70cc765b20911a63d8b9caa728b))
+
+
+### Bug Fixes
+
+* DIcon color ([3698208](https://github.com/dynamic-framework/dynamic-ui/commit/3698208ac6facf434dacfca4d5af6939e1669a3e))
+
+
+
+## [1.13.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.12.1...@dynamic-framework/ui-react@1.13.0) (2024-01-12)
+
+
+### Features
+
+* add support to set DContext on hook ([59e1ce3](https://github.com/dynamic-framework/dynamic-ui/commit/59e1ce334b551ef0ade6ed8b3d6af5f3ff9dc8a4))
+* set disabled on counter limits ([09b282a](https://github.com/dynamic-framework/dynamic-ui/commit/09b282ae1168986dc9de93178517a6a1e5139aad))
+* support props to disable icons ([29d6b24](https://github.com/dynamic-framework/dynamic-ui/commit/29d6b24fdc5281ebc97bf4daeb8b6692d94865fc))
+
+
+### Bug Fixes
+
+* DInput feedback colors ([3057717](https://github.com/dynamic-framework/dynamic-ui/commit/3057717dc6aeb43d030af908817e9bf6d14cf008))
+
+
+
 ## [1.12.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.12.0...@dynamic-framework/ui-react@1.12.1) (2023-12-15)
 
 
