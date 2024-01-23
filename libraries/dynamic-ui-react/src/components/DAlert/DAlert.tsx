@@ -7,7 +7,6 @@ import DIcon from '../DIcon';
 import { ALERT_TYPE_ICON, PREFIX_BS } from '../config';
 
 import type { AlertType, BaseProps, CustomStyles } from '../interface';
-import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
@@ -30,9 +29,9 @@ export default function DAlert(
     type = 'success',
     icon,
     closeIcon = 'x-lg',
-    iconFamilyClass: propFamilyClass,
-    iconFamilyPrefix: propFamilyPrefix,
-    materialStyle: propMaterialStyle = false,
+    iconFamilyClass,
+    iconFamilyPrefix,
+    materialStyle = false,
     showIcon = true,
     soft = false,
     showClose,
@@ -54,14 +53,6 @@ export default function DAlert(
     [type, showClose, soft, className],
   );
 
-  const {
-    icon: {
-      familyClass,
-      familyPrefix,
-      materialStyle,
-    },
-  } = useDContext();
-
   const getIcon = useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
@@ -80,9 +71,6 @@ export default function DAlert(
         <DIcon
           className="alert-icon"
           icon={getIcon}
-          familyClass={propFamilyClass || familyClass}
-          familyPrefix={propFamilyPrefix || familyPrefix}
-          materialStyle={propMaterialStyle || materialStyle}
         />
       )}
       <div className="alert-text">
@@ -101,9 +89,9 @@ export default function DAlert(
           <DIcon
             className="alert-close-icon"
             icon={closeIcon}
-            familyClass={propFamilyClass || familyClass}
-            familyPrefix={propFamilyPrefix || familyPrefix}
-            materialStyle={propMaterialStyle || materialStyle}
+            familyClass={iconFamilyClass}
+            familyPrefix={iconFamilyPrefix}
+            materialStyle={materialStyle}
           />
         </button>
       )}
