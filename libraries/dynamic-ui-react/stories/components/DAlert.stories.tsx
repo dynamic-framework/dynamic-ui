@@ -1,7 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import { ComponentProps } from 'react';
 import DAlert from '../../src/components/DAlert/DAlert';
 import { THEMES, ICONS } from '../config/constants';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Components/Alert',
@@ -29,6 +31,12 @@ const config: Meta<typeof DAlert> = {
       control: 'boolean',
       type: 'boolean',
       description: 'Show toast icon',
+    },
+    closeIcon: {
+      control: 'select',
+      type: 'string',
+      options: ICONS,
+      description: 'Name of icon to use (in kebab-case)',
     },
     soft: {
       control: 'boolean',
@@ -167,5 +175,39 @@ export const LightSoft: Story = {
     children: 'Default toast',
     type: 'light',
     soft: true,
+  },
+};
+
+export const MaterialStyle: Story = {
+  render: (args: ComponentProps<typeof DAlert>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyClass: 'material-symbols-outlined',
+      }}
+    >
+      <DAlert {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    icon: 'info',
+    showClose: true,
+    children: 'Default toast',
+    type: 'secondary',
+    closeIcon: 'close',
+  },
+  argTypes: {
+    icon: {
+      control: 'text',
+      type: 'string',
+      description: 'Material style icon',
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'To use alerts with Material Symbols style configuration it is necessary to use a DContextProvide with familyClass and the flag materialStyle=true',
+      },
+    },
   },
 };
