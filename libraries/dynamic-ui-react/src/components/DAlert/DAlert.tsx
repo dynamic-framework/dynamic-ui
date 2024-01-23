@@ -7,6 +7,7 @@ import DIcon from '../DIcon';
 import { ALERT_TYPE_ICON, PREFIX_BS } from '../config';
 
 import type { AlertType, BaseProps, CustomStyles } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
@@ -18,6 +19,8 @@ type Props =
   iconFamilyPrefix?: string;
   showIcon?: boolean;
   showClose?: boolean;
+  closeIcon?: string;
+  materialStyle?: boolean;
   soft?: boolean;
   onClose?: () => void;
 }>;
@@ -26,8 +29,10 @@ export default function DAlert(
   {
     type = 'success',
     icon,
-    iconFamilyClass,
-    iconFamilyPrefix,
+    closeIcon = 'x-lg',
+    iconFamilyClass: propFamilyClass,
+    iconFamilyPrefix: propFamilyPrefix,
+    materialStyle: propMaterialStyle = false,
     showIcon = true,
     soft = false,
     showClose,
@@ -49,6 +54,14 @@ export default function DAlert(
     [type, showClose, soft, className],
   );
 
+  const {
+    icon: {
+      familyClass,
+      familyPrefix,
+      materialStyle,
+    },
+  } = useDContext();
+
   const getIcon = useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
@@ -67,8 +80,9 @@ export default function DAlert(
         <DIcon
           className="alert-icon"
           icon={getIcon}
-          {...iconFamilyClass && { familyClass: iconFamilyClass }}
-          {...iconFamilyPrefix && { familyPrefix: iconFamilyPrefix }}
+          familyClass={propFamilyClass || familyClass}
+          familyPrefix={propFamilyPrefix || familyPrefix}
+          materialStyle={propMaterialStyle || materialStyle}
         />
       )}
       <div className="alert-text">
@@ -86,9 +100,10 @@ export default function DAlert(
         >
           <DIcon
             className="alert-close-icon"
-            icon="x-lg"
-            familyClass={iconFamilyClass}
-            familyPrefix={iconFamilyPrefix}
+            icon={closeIcon}
+            familyClass={propFamilyClass || familyClass}
+            familyPrefix={propFamilyPrefix || familyPrefix}
+            materialStyle={propMaterialStyle || materialStyle}
           />
         </button>
       )}
