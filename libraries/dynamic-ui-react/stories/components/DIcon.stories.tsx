@@ -118,7 +118,11 @@ export const MaterialStyle: Story = {
     <DContextProvider
       icon={{
         materialStyle: true,
+        familyPrefix: '',
         familyClass: 'material-symbols-outlined',
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
       }}
     >
       <DIcon {...args} />
@@ -149,7 +153,11 @@ export const MaterialStyleHasCircle: Story = {
     <DContextProvider
       icon={{
         materialStyle: true,
+        familyPrefix: '',
         familyClass: 'material-symbols-outlined',
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
       }}
     >
       <DIcon {...args} />
@@ -181,7 +189,11 @@ export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
     <DContextProvider
       icon={{
         materialStyle: true,
+        familyPrefix: '',
         familyClass: 'material-symbols-outlined',
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
       }}
     >
       <DInput

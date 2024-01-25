@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import DInputSelect from '../../src/components/DInputSelect/DInputSelect';
-import { DInputSelectProps } from '../../src/components/DInputSelect';
+import DInputSelect from '../../src/components/DInputSelect';
+import type { DInputSelectProps } from '../../src/components/DInputSelect';
 
 import { ICONS } from '../config/constants';
 

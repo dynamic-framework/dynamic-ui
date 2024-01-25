@@ -7,19 +7,26 @@ import {
 
 import type { PropsWithChildren } from 'react';
 
+type CurrencyProps = {
+  symbol: string;
+  precision: number;
+  separator: string;
+  decimal: string;
+};
+
+type IconProps = {
+  familyClass: string;
+  familyPrefix: string;
+  materialStyle: boolean;
+  xIcon: string;
+  xLgIcon: string;
+  chevronDownIcon: string;
+};
+
 type Props = {
   language: string;
-  currency: {
-    symbol: string;
-    precision: number;
-    separator: string;
-    decimal: string;
-  },
-  icon: {
-    familyClass?: string;
-    familyPrefix?: string;
-    materialStyle?: boolean;
-  };
+  currency: CurrencyProps,
+  icon: IconProps;
 };
 
 type Context = Props & {
@@ -38,6 +45,9 @@ const defaultState = {
     familyClass: 'bi',
     familyPrefix: 'bi-',
     materialStyle: false,
+    xIcon: 'x',
+    xLgIcon: 'x-lg',
+    chevronDownIcon: 'chevron-down',
   },
   setContext: () => {},
 };

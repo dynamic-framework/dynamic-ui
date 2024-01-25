@@ -1,0 +1,81 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+} from '@storybook/blocks';
+import { PREFIX_BS } from '../../src/components/config';
+
+import * as DSelect from './DSelect.stories';
+
+# Select
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [React Select](https://react-select.com/home)
+
+## CSS Variables
+<Markdown>
+  {`
+
+  | Variable                                                | Type            | Description                                   |
+  |---------------------------------------------------------|-----------------|-----------------------------------------------|
+  | \`--${PREFIX_BS}input-gap\`                             | css length unit | Space between layout elements                 |
+  | \`--${PREFIX_BS}input-label-color\`                     | css color unit  | Label color                                   |
+  | \`--${PREFIX_BS}input-label-font-weight\`               | css font weight | Label font weight                             |
+  | \`--${PREFIX_BS}input-label-font-size\`                 | css length unit | Label font size                               |
+  | \`--${PREFIX_BS}input-label-padding-x\`                 | css length unit | Label horizontal padding                      |
+  | \`--${PREFIX_BS}input-label-padding-y\`                 | css length unit | Label vertical padding                        |
+  | \`--${PREFIX_BS}input-label-gap\`                       | css length unit | Space between label elements                  |
+  | \`--${PREFIX_BS}input-group-border-color\`              | css color unit  | Input border color                            |
+  | \`--${PREFIX_BS}input-group-border-width\`              | css length unit | Input border width                            |
+  | \`--${PREFIX_BS}input-group-border-radius\`             | css length unit | Input border radius                           |
+  | \`--${PREFIX_BS}input-group-hover-border-color\`        | css color unit  | Input hover border color                      |
+  | \`--${PREFIX_BS}input-group-focus-border-color\`        | css color unit  | Input focus border color                      |
+  | \`--${PREFIX_BS}input-group-focus-box-shadow\`          | css shadow      | Input focus box shadow                        |
+  | \`--${PREFIX_BS}input-padding-x\`                       | css length unit | Input padding x                               |
+  | \`--${PREFIX_BS}input-padding-y\`                       | css length unit | Input padding y                               |
+  | \`--${PREFIX_BS}input-font-family\`                     | css font family | Input font family                             |
+  | \`--${PREFIX_BS}input-font-size\`                       | css length unit | Input font size                               |
+  | \`--${PREFIX_BS}input-font-weight\`                     | css length unit | Input font weight                             |
+  | \`--${PREFIX_BS}input-line-height\`                     | css length unit | Input line-height                             |
+  | \`--${PREFIX_BS}input-color\`                           | css color unit  | Input text color                              |
+  | \`--${PREFIX_BS}input-bg\`                              | css color unit  | Input background color                        |
+  | \`--${PREFIX_BS}input-focus-color\`                     | css color unit  | Input focus text color                        |
+  | \`--${PREFIX_BS}input-focus-bg\`                        | css color unit  | Input focus background color                  |
+  | \`--${PREFIX_BS}input-placeholder-color\`               | css color unit  | Input placeholder text color                  |
+  | \`--${PREFIX_BS}input-form-text-padding\`               | css length unit | Hint padding                                  |
+  | \`--${PREFIX_BS}input-form-text-gap\`                   | css length unit | Space between hint elements                   |
+  | \`--${PREFIX_BS}input-form-text-color\`                 | css color unit  | Hint color                                    |
+  | \`--${PREFIX_BS}input-group-disabled-bg\`               | css color unit  | Input disable background                      |
+  | \`--${PREFIX_BS}input-group-disabled-color\`            | css color unit  | Input disable color                           |
+  | \`--${PREFIX_BS}input-group-disabled-border-color\`     | css color unit  | Input disable border color                    |
+  | \`--${PREFIX_BS}select-menu-shadow\`                    | css shadow      | Input menu shadow                             |
+  | \`--${PREFIX_BS}select-option-focus-bg\`                | css color unit  | Input menu option focus background            |
+  | \`--${PREFIX_BS}select-option-selected-color\`          | css color unit  | Input menu selected option text color         |
+  | \`--${PREFIX_BS}select-option-selected-bg\`             | css color unit  | Input menu selected option background color   |
+  | \`--${PREFIX_BS}select-option-is-checkbox-font-size\`   | css length unit | Input menu option checkbox label font size    |
+  | \`--${PREFIX_BS}select-option-is-checkbox-font-weight\` | css length unit | Input menu option checkbox label font weight  |
+  | \`--${PREFIX_BS}select-option-is-checkbox-color\`       | css color unit  | Input menu option checkbox text color         |
+  | \`--${PREFIX_BS}select-option-has-icon-icon-size\`      | css length unit | Input menu option icon size                   |
+  | \`--${PREFIX_BS}select-multi-value-padding-x\`          | css length unit | Input multi value padding x                   |
+  | \`--${PREFIX_BS}select-multi-value-padding-y\`          | css length unit | Input multi value padding y                   |
+  | \`--${PREFIX_BS}select-multi-value-margin-right\`       | css length unit | Input multi value margin right                |
+  | \`--${PREFIX_BS}select-multi-value-background\`         | css color unit  | Input multi value background color            |
+  | \`--${PREFIX_BS}select-multi-value-border-radius\`      | css length unit | Input multi value border radius               |
+  | \`--${PREFIX_BS}select-multi-value-label-color\`        | css color unit  | Input multi value label color                 |
+  | \`--${PREFIX_BS}select-indicator-width\`                | css length unit | Input indicator width                         |
+  | \`--${PREFIX_BS}select-indicator-height\`               | css length unit | Input indicator height                        |
+
+
+  `}
+</Markdown>
+
+## Args
+<Meta of={DSelect} />
+
+<ArgTypes of={DSelect} />
+
+<Stories />
+
+
