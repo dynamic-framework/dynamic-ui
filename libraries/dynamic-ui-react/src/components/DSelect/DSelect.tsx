@@ -46,12 +46,12 @@ SelectProps<Option, IsMulti, Group>,
   menuWithMaxContent?: boolean;
   onIconStartClick?: (value?: SelectProps<Option, IsMulti, Group>['defaultValue']) => void;
   onIconEndClick?: (value?: SelectProps<Option, IsMulti, Group>['defaultValue']) => void;
-  disabled: SelectProps<Option, IsMulti, Group>['isDisabled'];
-  clearable: SelectProps<Option, IsMulti, Group>['isClearable'];
-  loading: SelectProps<Option, IsMulti, Group>['isLoading'];
-  rtl: SelectProps<Option, IsMulti, Group>['isRtl'];
-  searchable: SelectProps<Option, IsMulti, Group>['isSearchable'];
-  multi: SelectProps<Option, IsMulti, Group>['isMulti'];
+  disabled?: SelectProps<Option, IsMulti, Group>['isDisabled'];
+  clearable?: SelectProps<Option, IsMulti, Group>['isClearable'];
+  loading?: SelectProps<Option, IsMulti, Group>['isLoading'];
+  rtl?: SelectProps<Option, IsMulti, Group>['isRtl'];
+  searchable?: SelectProps<Option, IsMulti, Group>['isSearchable'];
+  multi?: SelectProps<Option, IsMulti, Group>['isMulti'];
 };
 
 function DSelect<
