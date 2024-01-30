@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.14.0...@dynamic-framework/ui-react@1.14.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* remove context ([f5048ce](https://github.com/dynamic-framework/dynamic-ui/commit/f5048cef55b87791d2723b3732e339c151538591))
+
+
+
 ## [1.14.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.13.0...@dynamic-framework/ui-react@1.14.0) (2024-01-12)
 
 
