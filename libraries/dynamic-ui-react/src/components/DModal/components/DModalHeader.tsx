@@ -3,10 +3,15 @@ import type { PropsWithChildren } from 'react';
 import classNames from 'classnames';
 import DIcon from '../../DIcon';
 
-import type { BaseProps } from '../../interface';
+import type { BaseProps, FamilyIconProps } from '../../interface';
 
-type Props = BaseProps & PropsWithChildren<{
+type Props =
+& BaseProps
+& FamilyIconProps
+& PropsWithChildren<{
   showCloseButton?: boolean;
+  icon?: string;
+  materialStyle?: boolean;
   onClose?: () => void;
 }>;
 
@@ -17,6 +22,10 @@ export default function DModalHeader(
     children,
     className,
     style,
+    iconFamilyClass,
+    iconFamilyPrefix,
+    icon = 'x-lg',
+    materialStyle = false,
   }: Props,
 ) {
   return (
@@ -34,7 +43,12 @@ export default function DModalHeader(
           aria-label="Close"
           onClick={onClose}
         >
-          <DIcon icon="x-lg" />
+          <DIcon
+            icon={icon}
+            familyClass={iconFamilyClass}
+            familyPrefix={iconFamilyPrefix}
+            materialStyle={materialStyle}
+          />
         </button>
       )}
     </div>

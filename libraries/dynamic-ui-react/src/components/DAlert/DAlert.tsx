@@ -18,6 +18,8 @@ type Props =
   iconFamilyPrefix?: string;
   showIcon?: boolean;
   showClose?: boolean;
+  closeIcon?: string;
+  materialStyle?: boolean;
   soft?: boolean;
   onClose?: () => void;
 }>;
@@ -26,8 +28,10 @@ export default function DAlert(
   {
     type = 'success',
     icon,
+    closeIcon = 'x-lg',
     iconFamilyClass,
     iconFamilyPrefix,
+    materialStyle = false,
     showIcon = true,
     soft = false,
     showClose,
@@ -67,8 +71,6 @@ export default function DAlert(
         <DIcon
           className="alert-icon"
           icon={getIcon}
-          {...iconFamilyClass && { familyClass: iconFamilyClass }}
-          {...iconFamilyPrefix && { familyPrefix: iconFamilyPrefix }}
         />
       )}
       <div className="alert-text">
@@ -86,9 +88,10 @@ export default function DAlert(
         >
           <DIcon
             className="alert-close-icon"
-            icon="x-lg"
+            icon={closeIcon}
             familyClass={iconFamilyClass}
             familyPrefix={iconFamilyPrefix}
+            materialStyle={materialStyle}
           />
         </button>
       )}
