@@ -8,8 +8,10 @@ type Props = BaseProps & PropsWithChildren<{
     iconFamilyPrefix?: string;
     showIcon?: boolean;
     showClose?: boolean;
+    closeIcon?: string;
+    materialStyle?: boolean;
     soft?: boolean;
     onClose?: () => void;
 }>;
-export default function DAlert({ type, icon, iconFamilyClass, iconFamilyPrefix, showIcon, soft, showClose, onClose, children, id, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DAlert({ type, icon, closeIcon, iconFamilyClass, iconFamilyPrefix, materialStyle, showIcon, soft, showClose, onClose, children, id, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

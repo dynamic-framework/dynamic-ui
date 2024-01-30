@@ -1,8 +1,10 @@
 import type { PropsWithChildren } from 'react';
-import type { BaseProps } from '../../interface';
-type Props = BaseProps & PropsWithChildren<{
+import type { BaseProps, FamilyIconProps } from '../../interface';
+type Props = BaseProps & FamilyIconProps & PropsWithChildren<{
     showCloseButton?: boolean;
+    icon?: string;
+    materialStyle?: boolean;
     onClose?: () => void;
 }>;
-export default function DModalHeader({ showCloseButton, onClose, children, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon, materialStyle, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
