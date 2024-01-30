@@ -119,66 +119,6 @@ export const Primary: Story = {
   },
 };
 
-export const PrimaryHover: Story = {
-  args: {
-    theme: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: false,
-    pill: true,
-    state: 'hover',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const PrimaryFocus: Story = {
-  args: {
-    theme: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: false,
-    pill: true,
-    state: 'focus-visible',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const PrimaryDisabled: Story = {
-  args: {
-    theme: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: false,
-    pill: true,
-    state: 'disabled',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const PrimaryActive: Story = {
-  args: {
-    theme: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: false,
-    pill: true,
-    state: 'active',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
 export const PrimaryIconRight: Story = {
   args: {
     theme: 'primary',
@@ -193,64 +133,6 @@ export const PrimaryIconRight: Story = {
   },
 };
 
-export const PrimaryLoading: Story = {
-  args: {
-    theme: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: true,
-    loadingAriaLabel: 'Loading',
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const PrimaryLoadingIconRight: Story = {
-  args: {
-    theme: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: true,
-    loadingAriaLabel: 'Loading',
-    pill: true,
-    iconStart: undefined,
-    iconEnd: 'chevron-right',
-  },
-};
-
-export const PrimarySm: Story = {
-  args: {
-    theme: 'primary',
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: false,
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-    size: 'sm',
-  },
-};
-
-export const PrimaryLg: Story = {
-  args: {
-    theme: 'primary',
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: false,
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-    size: 'lg',
-  },
-};
-
 export const Secondary: Story = {
   args: {
     theme: 'secondary',
@@ -260,66 +142,6 @@ export const Secondary: Story = {
     variant: 'outline',
     loading: false,
     pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const SecondaryHover: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'outline',
-    loading: false,
-    pill: true,
-    state: 'hover',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const SecondaryFocus: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'outline',
-    loading: false,
-    pill: true,
-    state: 'focus-visible',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const SecondaryDisabled: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'outline',
-    loading: false,
-    pill: true,
-    state: 'disabled',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const SecondaryActive: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'outline',
-    loading: false,
-    pill: true,
-    state: 'active',
     iconStart: undefined,
     iconEnd: undefined,
   },
@@ -339,64 +161,6 @@ export const SecondaryIconRight: Story = {
   },
 };
 
-export const SecondaryLoading: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'outline',
-    loading: true,
-    loadingAriaLabel: 'Loading',
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const SecondaryLoadingIconRight: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'outline',
-    loading: true,
-    loadingAriaLabel: 'Loading',
-    pill: true,
-    iconStart: undefined,
-    iconEnd: 'chevron-right',
-  },
-};
-
-export const SecondarySm: Story = {
-  args: {
-    theme: 'secondary',
-    text: 'Default',
-    type: 'button',
-    variant: 'outline',
-    loading: false,
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-    size: 'sm',
-  },
-};
-
-export const SecondaryLg: Story = {
-  args: {
-    theme: 'secondary',
-    text: 'Default',
-    type: 'button',
-    variant: 'outline',
-    loading: false,
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-    size: 'lg',
-  },
-};
-
 export const Link: Story = {
   args: {
     theme: 'secondary',
@@ -406,66 +170,6 @@ export const Link: Story = {
     variant: 'link',
     loading: false,
     pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const LinkHover: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'link',
-    loading: false,
-    pill: true,
-    state: 'hover',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const LinkFocus: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'link',
-    loading: false,
-    pill: true,
-    state: 'focus-visible',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const LinkDisabled: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'link',
-    loading: false,
-    pill: true,
-    state: 'disabled',
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const LinkActive: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'link',
-    loading: false,
-    pill: true,
-    state: 'active',
     iconStart: undefined,
     iconEnd: undefined,
   },
@@ -482,63 +186,5 @@ export const LinkIconRight: Story = {
     pill: true,
     iconStart: undefined,
     iconEnd: 'chevron-right',
-  },
-};
-
-export const LinkLoading: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'link',
-    loading: true,
-    loadingAriaLabel: 'Loading',
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
-export const LinkLoadingIconRight: Story = {
-  args: {
-    theme: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: 'link',
-    loading: true,
-    loadingAriaLabel: 'Loading',
-    pill: true,
-    iconStart: undefined,
-    iconEnd: 'chevron-right',
-  },
-};
-
-export const LinkSm: Story = {
-  args: {
-    theme: 'secondary',
-    text: 'Default',
-    type: 'button',
-    variant: 'link',
-    loading: false,
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-    size: 'sm',
-  },
-};
-
-export const LinkLg: Story = {
-  args: {
-    theme: 'secondary',
-    text: 'Default',
-    type: 'button',
-    variant: 'link',
-    loading: false,
-    pill: true,
-    iconStart: undefined,
-    iconEnd: undefined,
-    size: 'lg',
   },
 };
