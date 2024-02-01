@@ -8,10 +8,94 @@ import {
   INPUT_STATE,
   THEMES,
 } from '../config/constants';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',
   component: DButton,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+The style of our buttons is highly based on bootstrap, however,
+boostrap darkens or lightens the color of a button to generate its different states,
+we use the established palettes in the variables.
+
+## Differences between bootstrap and our implementation:
+
+### For our buttons:
+
+#### normal
+* **default** background \`-500\`, text contrast with background
+* **hover** background \`-600\`, text contrast with background
+* **focus** background \`-600\`, text contrast with background
+* **active** background \`-700\`, text contrast with background
+* **disabled** background \`-100\`, text contrast with background
+
+#### outline
+* **default** border-color \`-600\`, text color background
+* **hover** border-color \`-600\`, background hover \`-100\`, text color background
+* **focus** border-color \`-600\`, background focus \`-100\`, text color background
+* **active** border-color \`-600\`, background active \`-200\`, text color background
+* **disabled** border-color \`-100\`, text contrast with background
+
+### For bootstrap buttons:
+
+#### normal
+* **default** background \`-500\`, text contrast with background
+
+> **mix-color**: The other states use the default color of the text to determine which color to mix with, if it is light, \`black\` is used, if it is dark, \`white\` is used.
+
+* **hover** background mix between \`mix-color\` and \`-500\` at \`15%\`, text contrast with background color, border-color mix at \`20%\` for dark and \`10%\` for light.
+* **focus** use hover settings with outline
+* **active** background mix between \`mix-color\` and \`-500\` at \`20%\`, text contrast with background color, border-color mix at \`25%\` for dark and \`10%\` for light.
+* **disabled** default style with \`.65\` opacity.
+
+#### outline
+* **default** border-color \`-500\`, text color \`-500\`
+* **hover** border-color \`-500\`, background hover \`-500\`, text contrast with background
+* **focus** use hover settings with outline
+* **active** use hover settings
+* **disabled** default style with \`.65\` opacity.
+
+## CSS Variables
+
+The css variables available by default can be seen in the
+bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
+
+
+| Variable                                | Type              | Description                       |
+|-----------------------------------------|-------------------|-----------------------------------|
+| --${PREFIX_BS}btn-padding-x             | css length unit   | Button padding horizontal         |
+| --${PREFIX_BS}btn-padding-y             | css length unit   | Button padding vertical           |
+| --${PREFIX_BS}btn-font-size             | css length unit   | Button font size                  |
+| --${PREFIX_BS}btn-font-weight           | css weight unit   | Button font weight                |
+| --${PREFIX_BS}btn-line-height           | css length unit   | Button line height                |
+| --${PREFIX_BS}btn-color                 | css color unit    | Button text color                 |
+| --${PREFIX_BS}btn-bg                    | css color unit    | Button background color           |
+| --${PREFIX_BS}btn-border-width          | css length unit   | Button border width               |
+| --${PREFIX_BS}btn-border-color          | css color unit    | Button border color               |
+| --${PREFIX_BS}btn-border-radius         | css length unit   | Button border radius              |
+| --${PREFIX_BS}btn-hover-border-color    | css color unit    | Button hover border color         |
+| --${PREFIX_BS}btn-box-shadow            | css box shadow    | Button box shadow                 |
+| --${PREFIX_BS}btn-disabled-opacity      | css length unit   | Button link padding vertical      |
+| --${PREFIX_BS}btn-focus-box-shadow      | css box shadow    | Button focus box shadow           |
+| --${PREFIX_BS}btn–text-decoration       | text decoration   | Button text decoration            |
+| --${PREFIX_BS}btn-lg-padding-x          | css length unit   | Button large padding horizontal   |
+| --${PREFIX_BS}btn-lg-padding-y          | css length unit   | Button large padding vertical     |
+| --${PREFIX_BS}btn-lg-font-size          | css length unit   | Button large font size            |
+| --${PREFIX_BS}btn-lg-border-radius      | css length unit   | Button large border radius        |
+| --${PREFIX_BS}btn-sm-padding-x          | css length unit   | Button small padding horizontal   |
+| --${PREFIX_BS}btn-sm-padding-y          | css length unit   | Button small padding vertical     |
+| --${PREFIX_BS}btn-sm-font-size          | css length unit   | Button small font size            |
+| --${PREFIX_BS}btn-sm-border-radius      | css length unit   | Button small border radius        |
+
++ [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/buttons/#variables)
+
+        `,
+      },
+    },
+  },
   argTypes: {
     theme: {
       control: 'select',
@@ -100,6 +184,7 @@ const config: Meta<typeof DButton> = {
       action: 'onClick',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
