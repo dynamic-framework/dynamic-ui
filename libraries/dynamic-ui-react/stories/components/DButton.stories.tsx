@@ -97,6 +97,26 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
     },
   },
   argTypes: {
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'text',
+      type: 'string',
+    },
+    id: {
+      control: 'text',
+      type: 'string',
+    },
+    form: {
+      control: 'text',
+      type: 'string',
+    },
+    ariaLabel: {
+      control: 'text',
+      type: 'string',
+    },
     theme: {
       control: 'select',
       type: { name: 'string', required: true },
@@ -145,6 +165,26 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
       },
       options: [undefined, ...ICONS],
     },
+    iconStartDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconStartFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconStartFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    iconStartAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    iconStartTabIndex: {
+      control: 'number',
+      type: 'number',
+    },
     iconEnd: {
       control: {
         type: 'select',
@@ -153,6 +193,26 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
         },
       },
       options: [undefined, ...ICONS],
+    },
+    iconEndDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconEndFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndTabIndex: {
+      control: 'number',
+      type: 'number',
     },
     value: {
       control: 'text',
@@ -163,6 +223,15 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
       control: 'boolean',
       table: { defaultValue: { summary: false } },
       type: 'boolean',
+    },
+    disabled: {
+      control: 'boolean',
+      table: { defaultValue: { summary: false } },
+      type: 'boolean',
+    },
+    loadingAriaLabel: {
+      control: 'text',
+      type: 'string',
     },
     pill: {
       control: 'boolean',
@@ -179,6 +248,11 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
       options: [undefined, ...INPUT_STATE],
       type: 'string',
       description: 'Change the state of the button',
+    },
+    stopPropagationEnabled: {
+      control: 'boolean',
+      table: { defaultValue: { summary: true } },
+      type: 'boolean',
     },
     onClick: {
       action: 'onClick',
