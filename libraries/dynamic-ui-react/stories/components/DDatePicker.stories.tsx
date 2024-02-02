@@ -5,13 +5,178 @@ import es from 'date-fns/locale/es';
 
 import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
 import DMonthPicker from '../../src/components/DMonthPicker';
+import { PREFIX_BS } from '../../src/components/config';
+import { ICONS } from '../config/constants';
 
 registerLocale('es', es);
 
 const config: Meta<typeof DDatePicker> = {
   title: 'Design System/Components/Datepicker',
   component: DDatePicker,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Datepicker with range and month support
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [React Datepicker](https://reactdatepicker.com/)
+
+## CSS Variables
+| Variable                                                | Type               | Description                                      |
+|---------------------------------------------------------|--------------------|--------------------------------------------------|
+| --${PREFIX_BS}datepicker-font-family                    | css font family    | Datepicker font family                           |
+| --${PREFIX_BS}datepicker-border                         | css length unit    | Datepicker border                                |
+| --${PREFIX_BS}datepicker-box-shadow                     | css shadow unit    | Datepicker box shadow                            |
+| --${PREFIX_BS}datepicker-font-size                      | css font unit      | Datepicker font size                             |
+| --${PREFIX_BS}datepicker-header-gap                     | css length unit    | Datepicker header gap                            |
+| --${PREFIX_BS}datepicker-header-padding                 | css length unit    | Datepicker header padding                        |
+| --${PREFIX_BS}datepicker-header-background-color        | css color unit     | Datepicker header background color               |
+| --${PREFIX_BS}datepicker-header-border                  | css length unit    | Datepicker header border                         |
+| --${PREFIX_BS}datepicker-header-font-size               | css font unit      | Datepicker header font size                      |
+| --${PREFIX_BS}datepicker-day-names-margin               | css length unit    | Datepicker header days margin                    |
+| --${PREFIX_BS}datepicker-day-names-font-size            | css length unit    | Datepicker header days font size                 |
+| --${PREFIX_BS}datepicker-day-name-weight                | css weight unit    | Datepicker header days weight                    |
+| --${PREFIX_BS}datepicker-day-name-margin                | css length unit    | Datepicker header days margin                    |
+| --${PREFIX_BS}datepicker-day-name-size                  | css length unit    | Datepicker header days size                      |
+| --${PREFIX_BS}datepicker-day-name-color                 | css color unit     | Datepicker header days color                     |
+| --${PREFIX_BS}datepicker-month-gap                      | css length unit    | Datepicker month gap                             |
+| --${PREFIX_BS}datepicker-month-padding                  | css length unit    | Datepicker month padding                         |
+| --${PREFIX_BS}datepicker-month-margin                   | css length unit    | Datepicker month margin                          |
+| --${PREFIX_BS}datepicker-week-gap                       | css length unit    | Datepicker week gap                              |
+| --${PREFIX_BS}datepicker-day-margin                     | css length unit    | Datepicker day margin                            |
+| --${PREFIX_BS}datepicker-day-font-size                  | css font unit      | Datepicker day font size                         |
+| --${PREFIX_BS}datepicker-day-size                       | css length unit    | Datepicker day size                              |
+| --${PREFIX_BS}datepicker-day-radius                     | css length unit    | Datepicker day border radius                     |
+| --${PREFIX_BS}datepicker-day-bg-hover                   | css color unit     | Datepicker day hover background                  |
+| --${PREFIX_BS}datepicker-day-color-hover                | css color unit     | Datepicker day hover color                       |
+| --${PREFIX_BS}datepicker-day-selected-color             | css color unit     | Datepicker day selected color                    |
+| --${PREFIX_BS}datepicker-day-selected-bg                | css color unit     | Datepicker day selected background               |
+| --${PREFIX_BS}datepicker-day-in-range-color             | css color unit     | Datepicker date range color                      |
+| --${PREFIX_BS}datepicker-day-in-range-bg                | css color unit     | Datepicker date range background                 |
+| --${PREFIX_BS}datepicker-day-outside-month-color        | css color unit     | Datepicker day outside color                     |
+| --${PREFIX_BS}datepicker-day-today-font-weight          | css weight unit    | Datepicker today weight                          |
+| --${PREFIX_BS}datepicker-day-today-box-shadow           | css shadow unit    | Datepicker today box shadow                      |
+| --${PREFIX_BS}datepicker-time-container-margin          | css length unit    | Datepicker container time margin                 |
+| --${PREFIX_BS}datepicker-time-container-align           | css align unit     | Datepicker container time alignment              |
+| --${PREFIX_BS}datepicker-time-input-width               | css length unit    | Datepicker time width                            |
+| --${PREFIX_BS}datepicker-time-input-margin              | css length unit    | Datepicker time margin                           |
+| --${PREFIX_BS}datepicker-time-input-align               | css align unit     | Datepicker time alignment                        |
+| --${PREFIX_BS}datepicker-time-input-padding             | css length unit    | Datepicker time padding                          |
+| --${PREFIX_BS}datepicker-time-input-gap                 | css length unit    | Datepicker time gap                              |
+| --${PREFIX_BS}datepicker-time-input-label-weight        | css weight unit    | Datepicker time weight                           |
+| --${PREFIX_BS}datepicker-time-input-label-color         | css color unit     | Datepicker label time color                      |
+| --${PREFIX_BS}datepicker-time-input-label-size          | css length unit    | Datepicker label time size                       |
+| --${PREFIX_BS}monthpicker-header-padding                | css length unit    | Monthpicker header padding                       |
+| --${PREFIX_BS}monthpicker-font-weight                   | css weight unit    | Monthpicker font weight                          |
+| --${PREFIX_BS}monthpicker-header-color                  | css color unit     | Monthpicker header color                         |
+| --${PREFIX_BS}monthpicker-header-bg                     | css color unit     | Monthpicker header background color              |
+| --${PREFIX_BS}monthpicker-month-gap                     | css length unit    | Monthpicker month gap                            |
+| --${PREFIX_BS}monthpicker-month-padding                 | css length unit    | Monthpicker month padding                        |
+| --${PREFIX_BS}monthpicker-month-color                   | css color unit     | Monthpicker month color                          |
+| --${PREFIX_BS}monthpicker-month-bg                      | css color unit     | Monthpicker month background                     |
+| --${PREFIX_BS}monthpicker-month-today-color             | css color unit     | Monthpicker month today color                    |
+| --${PREFIX_BS}monthpicker-month-selected-bg             | css color unit     | Monthpicker month selected bg                    |
+| --${PREFIX_BS}monthpicker-month-selected-box-shadow     | css box shadow     | Monthpicker month selected box shadow            |
+| --${PREFIX_BS}monthpicker-month-hover-bg                | css color unit     | Monthpicker month hover background               |
+| --${PREFIX_BS}monthpicker-month-wrapper-gap             | css length unit    | Monthpicker month wrapper gap                    |
+| --${PREFIX_BS}monthpicker-month-wrapper-font-size       | css length unit    | Monthpicker month wrapper font size              |
+| --${PREFIX_BS}monthpicker-single-month-width            | css length unit    | Monthpicker single month width                   |
+| --${PREFIX_BS}monthpicker-single-month-padding          | css length unit    | Monthpicker single month padding                 |
+| --${PREFIX_BS}monthpicker-single-month-margin           | css length unit    | Monthpicker single month margin                  |
+| --${PREFIX_BS}monthpicker-single-month-text-transform   | css text transform | Monthpicker single month text transform          |
+| --${PREFIX_BS}monthpicker-single-month-radius           | css length unit    | Monthpicker single month border radius           |
+| --${PREFIX_BS}monthpicker-single-month-after-display    | css display unit   | Monthpicker single month after display           |
+| --${PREFIX_BS}monthpicker-single-month-after-content    | css content        | Monthpicker single month content                 |
+| --${PREFIX_BS}datepicker-triangle-color                 | css color unit     | Datepicker triangle color                        |
+| --${PREFIX_BS}datepicker-webkit-time-color              | css color unit     | Datepicker webkit time color                     |
+| --${PREFIX_BS}datepicker-webkit-time-align              | css align unit     | Datepicker webkit time align                     |
+| --${PREFIX_BS}datepicker-webkit-edit-text-padding       | css length unit    | Datepicker webkit edit text padding              |
+| --${PREFIX_BS}datepicker-webkit-edit-ampm-padding       | css length unit    | Datepicker webkit edit am/pm padding             |
+| --${PREFIX_BS}datepicker-webkit-edit-ampm-color         | css color unit     | Datepicker webkit edit am/pm color               |
+| --${PREFIX_BS}datepicker-webkit-edit-ampm-bg            | css color unit     | Datepicker webkit edit am/pm background color    |
+| --${PREFIX_BS}datepicker-webkit-edit-ampm-radius        | css length unit    | Datepicker webkit edit am/pm border radius       |
+| --${PREFIX_BS}datepicker-calendar-picker-icon           | css url icon       | Datepicker picker icon                           |
+        `,
+      },
+    },
+  },
   argTypes: {
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'text',
+      type: 'string',
+    },
+    inputLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    inputAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    inputActionAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    inputIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    headerPrevMonthIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    headerNextMonthIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    headerPrevMonthAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    headerNextMonthAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    headerButtonTheme: {
+      control: 'text',
+      type: 'string',
+    },
+    inputId: {
+      control: 'text',
+      type: 'string',
+    },
+    timeId: {
+      control: 'text',
+      type: 'string',
+    },
+    timeLabel: {
+      control: 'text',
+      type: 'string',
+    },
     autoFocus: {
       type: 'boolean',
       control: 'boolean',
@@ -109,6 +274,7 @@ const config: Meta<typeof DDatePicker> = {
       action: 'onChange',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
@@ -143,6 +309,9 @@ export const Default: Story = {
     date: new Date().toISOString(),
     dateFormat: 'dd/MM/yyyy',
     inline: false,
+    inputIcon: 'calendar',
+    headerPrevMonthIcon: 'chevron-left',
+    headerNextMonthIcon: 'chevron-right',
   },
 };
 
@@ -236,7 +405,7 @@ export const MonthPicker: Story = {
         {...args}
         date={date}
         dateFormat="MM/yyyy"
-        onChangeDate={(value) => handleDate(value)}
+        onChange={(value) => handleDate(value)}
         headerPrevYearAriaLabel="decrease year"
         headerNextYearAriaLabel="increase year"
       />
@@ -259,7 +428,7 @@ export const DateRange: Story = {
     };
 
     return (
-      <DDatePicker
+      <DDatePicker<string, boolean>
         {...args}
         {...startDate && {
           selected: new Date(startDate),
@@ -293,7 +462,7 @@ export const DateRangeWithMonthSelector: Story = {
     };
 
     return (
-      <DDatePicker
+      <DDatePicker<string, boolean>
         {...args}
         {...startDate && {
           selected: new Date(startDate),
