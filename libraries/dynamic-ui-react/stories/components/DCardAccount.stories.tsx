@@ -2,6 +2,9 @@ import { Meta, StoryObj } from '@storybook/react';
 import DCardAccount from '../../src/components/DCardAccount/DCardAccount';
 import { ICONS, THEMES } from '../config/constants';
 
+/**
+ * DCard component composition to make a CardAccount
+ */
 const config: Meta<typeof DCardAccount> = {
   title: 'Design System/Patterns/Card Account',
   component: DCardAccount,
@@ -44,6 +47,7 @@ const config: Meta<typeof DCardAccount> = {
       type: 'string',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
@@ -70,5 +74,12 @@ export const Default: Story = {
     balance: '$50.000.000',
     balanceText: 'Available balance',
     actionText: 'Details',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };
