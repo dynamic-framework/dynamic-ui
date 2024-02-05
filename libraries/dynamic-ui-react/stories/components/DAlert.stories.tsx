@@ -255,7 +255,7 @@ export const MaterialStyle: Story = {
         sourceState: 'shown',
       },
       description: {
-        story: 'To use alerts with Material Symbols style you could use a `DContextProvider` with `familyClass` and the flag `materialStyle=true` or use the flags directly over the `DAlert` component as a props`',
+        story: 'To use alerts with Material Symbols style use a `DContextProvider` with `familyClass` and the flag `materialStyle=true` or use the flags directly over the `DAlert` component as a props`',
       },
     },
   },
