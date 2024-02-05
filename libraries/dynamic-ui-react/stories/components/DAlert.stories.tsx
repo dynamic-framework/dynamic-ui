@@ -255,7 +255,7 @@ export const MaterialStyle: Story = {
         sourceState: 'shown',
       },
       description: {
-        story: 'To use alerts with Material Symbols style configuration it is necessary to use a `DContextProvide` with `familyClass` and the flag `materialStyle=true`',
+        story: 'To use alerts with Material Symbols style configuration it is necessary to use a `DContextProvider` with `familyClass` and the flag `materialStyle=true`',
       },
     },
   },
