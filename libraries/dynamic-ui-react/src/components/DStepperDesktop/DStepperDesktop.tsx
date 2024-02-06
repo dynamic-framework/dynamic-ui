@@ -32,10 +32,13 @@ export default function DStepper(
 
   return (
     <div
-      className={classNames({
-        'd-stepper-desktop': true,
-        'is-vertical': vertical,
-      }, className)}
+      className={classNames(
+        {
+          'd-stepper-desktop': true,
+          'is-vertical': vertical,
+        },
+        className,
+      )}
       style={style}
     >
       {options.map(({ label, value }) => (
