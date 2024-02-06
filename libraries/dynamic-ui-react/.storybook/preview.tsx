@@ -15,17 +15,15 @@ export default {
         order: [
           'Design System',
           [
-            'Tokens',
-            [
-              'Typography',
-              'Colors',
-              'Spacing',
-              'Border',
-              'Shadow',
-              'Layout',
-            ],
+            'Typography',
+            'Colors',
+            'Spacing',
+            'Border',
+            'Shadow',
+            'Layout',
             'Components',
             [
+              'Context Provider',
               'Button',
               'Icon',
               'Input',
@@ -72,8 +70,8 @@ export default {
               'Collapse',
               'Collapse Icon Text',
             ],
-            'Utils', 
-            [ 
+            'Utils',
+            [
               'Hooks',
               'Currency Text'
             ]
