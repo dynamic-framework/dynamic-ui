@@ -1,22 +1,16 @@
-import { Meta, StoryObj } from '@storybook/react';
-
+import { DOffcanvasContextProvider, useDOffcanvasContext } from '../../src';
 import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
 
-import {
-  DOffcanvasContextProvider,
-  useDOffcanvasContext,
-} from '../../src';
-
 import type { OffcanvasProps } from '../../src';
 
-type OffcanvasPayload = {
+type OffcanvasPayloads = {
   example: {
     description: string;
   };
 };
 
-const ExampleOffcanvas = ({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasPayload['example']>) => (
+const ExampleOffcanvas = ({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasPayloads['example']>) => (
   <DOffcanvas
     name="example"
     staticBackdrop={false}
@@ -44,35 +38,23 @@ const ExampleOffcanvas = ({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasP
   </DOffcanvas>
 );
 
-const ExampleChildren = () => {
-  const { openOffcanvas } = useDOffcanvasContext<OffcanvasPayload>();
+const ExampleOffcanvasUsage = () => {
+  const { openOffcanvas } = useDOffcanvasContext<OffcanvasPayloads>();
   return (
     <DButton
       text="Open Offcanvas"
-      onClick={() => openOffcanvas('example', { description: 'from modal payload' })}
+      onClick={() => openOffcanvas('example', { description: 'from offcanvas payload' })}
     />
   );
 };
 
-const Example = () => (
-  <DOffcanvasContextProvider<OffcanvasPayload>
+export const ExampleOffcanvasRoot = () => (
+  <DOffcanvasContextProvider<OffcanvasPayloads>
     portalName="examplePortal"
     availableOffcanvas={{
       example: ExampleOffcanvas,
     }}
   >
-    <ExampleChildren />
+    <ExampleOffcanvasUsage />
   </DOffcanvasContextProvider>
 );
-
-const config: Meta<typeof Example> = {
-  title: 'Design System/Patterns/Offcanvas',
-  component: Example,
-};
-
-export default config;
-type Story = StoryObj<typeof DOffcanvas>;
-
-export const useOffcanvasContext: Story = {
-  render: () => <Example />,
-};

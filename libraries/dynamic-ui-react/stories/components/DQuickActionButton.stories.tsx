@@ -1,15 +1,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Meta, StoryObj } from '@storybook/react';
+
 import { PREFIX_BS } from '../../src/components/config';
-
-import DQuickActionButton from '../../src/components/DQuickActionButton/DQuickActionButton';
-
 import { THEMES_WITH_EMPTY, ICONS } from '../config/constants';
+import DQuickActionButton from '../../src/components/DQuickActionButton/DQuickActionButton';
 
 const config: Meta<typeof DQuickActionButton> = {
   title: 'Design System/Components/Quick Action Button',
   component: DQuickActionButton,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+## CSS Variables
+| Variable                                                                | Type              | Description                           |
+|-------------------------------------------------------------------------|-------------------|---------------------------------------|
+| --${PREFIX_BS}quick-action-button-gap                                   | css length unit   | Content gap                           |
+| --${PREFIX_BS}quick-action-button-padding                               | css length unit   | Content padding                       |
+| --${PREFIX_BS}quick-action-button-bg                                    | css color unit    | Content background color              |
+| --${PREFIX_BS}quick-action-button-border-color                          | css color unit    | Quick action border color             |
+| --${PREFIX_BS}quick-action-button-border-style                          | css border style  | Quick action border style             |
+| --${PREFIX_BS}quick-action-button-border-with                           | css length unit   | Quick action border width             |
+| --${PREFIX_BS}quick-action-button-border-top                            | css border        | Quick action border top               |
+| --${PREFIX_BS}quick-action-button-border-right                          | css border        | Quick action border right             |
+| --${PREFIX_BS}quick-action-button-border-bottom                         | css border        | Quick action border bottom            |
+| --${PREFIX_BS}quick-action-button-border-end                            | css border        | Quick action border left              |
+| --${PREFIX_BS}quick-action-button-border-radius                         | css length unit   | Quick action border radius            |
+| --${PREFIX_BS}quick-action-button-box-shadow                            | css box shadow    | Quick action box shadow               |
+| --${PREFIX_BS}quick-action-button-line1-font-size                       | css length unit   | First line font size                  |
+| --${PREFIX_BS}quick-action-button-line1-font-weight                     | css font weight   | First line font weight                |
+| --${PREFIX_BS}quick-action-button-line1-color                           | css color unit    | First line color                      |
+| --${PREFIX_BS}quick-action-button-line2-font-size                       | css length unit   | Second line font size                 |
+| --${PREFIX_BS}quick-action-button-line2-font-weight                     | css length unit   | Second line font weight               |
+| --${PREFIX_BS}quick-action-button-line2-color                           | css color unit    | Second line color                     |
+| --${PREFIX_BS}quick-action-button-representative-image-size             | css length unit   | Representative image size             |
+| --${PREFIX_BS}quick-action-button-representative-image-border-radius    | css length unit   | Representative image border-radius    |
+| --${PREFIX_BS}quick-action-button-representative-icon-size              | css length unit   | Representative icon size              |
+| --${PREFIX_BS}quick-action-button-action-icon-color                     | css color unit    | Action icon color                     |
+| --${PREFIX_BS}quick-action-button-hover-bg                              | css color unit    | Content hover background              |
+| --${PREFIX_BS}quick-action-button-hover-border-color                    | css color unit    | Content hover border color            |
+| --${PREFIX_BS}quick-action-button-hover-action-icon-color               | css color unit    | Content action icon hover color       |
+| --${PREFIX_BS}quick-action-button-hover-box-shadow                      | css box shadow    | Content hover box shadow              |
+| --${PREFIX_BS}quick-action-button-active-bg                             | css color unit    | Content active background             |
+| --${PREFIX_BS}quick-action-button-active-border-color                   | css color unit    | Content active border color           |
+| --${PREFIX_BS}quick-action-button-active-action-icon-color              | css color unit    | Content action icon active color      |
+| --${PREFIX_BS}quick-action-button-active-box-shadow                     | css box shadow    | Content active color box shadow       |
+        `,
+      },
+    },
+  },
   argTypes: {
     line1: {
       control: 'text',
@@ -25,6 +65,10 @@ const config: Meta<typeof DQuickActionButton> = {
       control: 'text',
       type: 'string',
     },
+    style: {
+      control: 'text',
+      type: 'string',
+    },
     secondaryActionIcon: {
       control: {
         type: 'select',
@@ -37,6 +81,14 @@ const config: Meta<typeof DQuickActionButton> = {
       table: { defaultValue: { summary: 'chevron-left' } },
     },
     secondaryActionAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    actionIconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    actionIconFamilyPrefix: {
       control: 'text',
       type: 'string',
     },
@@ -82,6 +134,14 @@ const config: Meta<typeof DQuickActionButton> = {
       options: [undefined, ...ICONS],
       description: 'The representative icon',
     },
+    representativeIconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    representativeIconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
     representativeIconTheme: {
       control: {
         type: 'select',
@@ -107,6 +167,7 @@ const config: Meta<typeof DQuickActionButton> = {
       action: 'onClickSecondary',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
