@@ -11,7 +11,7 @@ const config: Meta<typeof DTabs> = {
     docs: {
       description: {
         component: `
-Wrapper around Bootstrap Nava & Tabs.
+Wrapper around Bootstrap Navs & Tabs.
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
