@@ -1,12 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
-
+import { DModalContextProvider, useDModalContext } from '../../src';
 import DModal from '../../src/components/DModal/DModal';
 import DButton from '../../src/components/DButton';
-
-import {
-  DModalContextProvider,
-  useDModalContext,
-} from '../../src';
 
 import type { ModalProps } from '../../src';
 
@@ -43,7 +37,7 @@ const ExampleModal = ({ closeModal, payload }: ModalProps<ModalPayload['example'
   </DModal>
 );
 
-const ExampleChildren = () => {
+const ExampleModalUsage = () => {
   const { openModal } = useDModalContext<ModalPayload>();
   return (
     <DButton
@@ -53,25 +47,13 @@ const ExampleChildren = () => {
   );
 };
 
-const Example = () => (
+export const ExampleModalRoot = () => (
   <DModalContextProvider<ModalPayload>
     portalName="examplePortal"
     availableModals={{
       example: ExampleModal,
     }}
   >
-    <ExampleChildren />
+    <ExampleModalUsage />
   </DModalContextProvider>
 );
-
-const config: Meta<typeof Example> = {
-  title: 'Design System/Patterns/Modal',
-  component: Example,
-};
-
-export default config;
-type Story = StoryObj<typeof Example>;
-
-export const useModalContext: Story = {
-  args: {},
-};
