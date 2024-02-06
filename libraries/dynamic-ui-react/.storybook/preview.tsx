@@ -26,6 +26,7 @@ export default {
             ],
             'Components',
             [
+              'Context Provider',
               'Button',
               'Icon',
               'Input',
@@ -72,8 +73,8 @@ export default {
               'Collapse',
               'Collapse Icon Text',
             ],
-            'Utils', 
-            [ 
+            'Utils',
+            [
               'Hooks',
               'Currency Text'
             ]
