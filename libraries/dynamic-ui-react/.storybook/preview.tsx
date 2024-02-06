@@ -23,6 +23,7 @@ export default {
             'Layout',
             'Components',
             [
+              'Context Provider',
               'Button',
               'Icon',
               'Input',
