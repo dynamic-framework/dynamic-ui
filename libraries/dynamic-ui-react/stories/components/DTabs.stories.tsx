@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import DTabs from '../../src/components/DTabs/DTabs';
-import DTabContent from '../../src/components/DTabs/components/DTabContent';
+import DTabs from '../../src/components/DTabs';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DTabs> = {
@@ -66,8 +65,8 @@ export const Default: Story = {
   ],
   render: (args) => (
     <DTabs {...args}>
-      <DTabContent tab="tab1">Tab content for Tab 1</DTabContent>
-      <DTabContent tab="tab2">Tab content for Tab 2</DTabContent>
+      <DTabs.Tab tab="tab1">Tab content for Tab 1</DTabs.Tab>
+      <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
     </DTabs>
   ),
   args: {
@@ -94,8 +93,8 @@ export const Vertical: Story = {
   ],
   render: (args) => (
     <DTabs {...args}>
-      <DTabContent tab="tab1">Tab content for Tab 1</DTabContent>
-      <DTabContent tab="tab2">Tab content for Tab 2</DTabContent>
+      <DTabs.Tab tab="tab1">Tab content for Tab 1</DTabs.Tab>
+      <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
     </DTabs>
   ),
   args: {
