@@ -2,11 +2,42 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import DCollapse from '../../src/components/DCollapse/DCollapse';
 import DIcon from '../../src/components/DIcon';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DCollapse> = {
   title: 'Design System/Patterns/Collapse',
   component: DCollapse,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+## CSS Variables
+| Variable                                  | Type              | Description                                 |
+|-------------------------------------------|-------------------|---------------------------------------------|
+| --${PREFIX_BS}collapse-bg                 | css color unit    | Collapse background                         |
+| --${PREFIX_BS}collapse-border-radius      | css length unit   | Collapse border radius                      |
+| --${PREFIX_BS}collapse-box-shadow         | css box shadow    | Collapse box shadow                         |
+| --${PREFIX_BS}collapse-button-padding-x   | css length unit   | Collapse header button padding horizontal   |
+| --${PREFIX_BS}collapse-button-padding-y   | css length unit   | Collapse header button padding vertical     |
+| --${PREFIX_BS}collapse-button-gap         | css length unit   | Collapse header button gap                  |
+| --${PREFIX_BS}collapse-body-padding-x     | css length unit   | Collapse body padding horizontal            |
+| --${PREFIX_BS}collapse-body-padding-y     | css length unit   | Collapse body padding vertical              |
+| --${PREFIX_BS}collapse-separator-display  | css display       | Collapse separator display                  |
+| --${PREFIX_BS}collapse-separator-height   | css length unit   | Collapse separator size                     |
+| --${PREFIX_BS}collapse-separator-bg       | css color unit    | Collapse separator color                    |
+        `,
+      },
+    },
+  },
   argTypes: {
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'text',
+      type: 'string',
+    },
     Component: {
       options: ['Text', 'Custom'],
       mapping: {
@@ -26,6 +57,7 @@ const config: Meta<typeof DCollapse> = {
       control: 'boolean',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
