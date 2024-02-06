@@ -48,8 +48,7 @@ const config: Meta<typeof DCollapseIconText> = {
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     iconSize: {
       control: 'text',

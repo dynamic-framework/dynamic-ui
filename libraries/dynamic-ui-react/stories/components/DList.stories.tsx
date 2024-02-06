@@ -21,8 +21,7 @@ To understand in more detail the aspects covered by this component, review the f
   },
   argTypes: {
     style: {
-      type: 'string',
-      control: 'text',
+      control: 'object',
     },
     className: {
       type: 'string',

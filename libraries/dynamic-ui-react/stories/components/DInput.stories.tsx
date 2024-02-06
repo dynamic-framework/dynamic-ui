@@ -66,8 +66,7 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     label: {
       control: 'text',

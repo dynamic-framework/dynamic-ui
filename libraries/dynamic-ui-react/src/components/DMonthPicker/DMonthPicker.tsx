@@ -9,17 +9,22 @@ import DButton from '../DButton';
 
 import type { BaseProps } from '../interface';
 
-type Props = BaseProps & Omit<ReactDatePickerProps, 'onChange' | 'selectsRange' | 'locale'> & {
+type Props<
+  CustomModifierNames extends string = never,
+  WithRange extends boolean | undefined = undefined,
+> = BaseProps & Omit<ReactDatePickerProps<CustomModifierNames, WithRange>, 'selectsRange' | 'locale'> & {
   date: string;
-  onChangeDate: (value: Date | null) => void;
   locale?: Locale;
   headerPrevYearAriaLabel?: string;
   headerNextYearAriaLabel?: string;
 };
 
-export default function DMonthPicker(
+export default function DMonthPicker<
+  CustomModifierNames extends string = never,
+  WithRange extends boolean | undefined = undefined,
+>(
   {
-    onChangeDate,
+    onChange,
     date,
     locale,
     className,
@@ -27,7 +32,7 @@ export default function DMonthPicker(
     headerPrevYearAriaLabel = 'decrease year',
     headerNextYearAriaLabel = 'increase year',
     ...props
-  }: Props,
+  }: Props<CustomModifierNames, WithRange>,
 ) {
   const selected = useMemo(() => parseISO(date), [date]);
   const dateFormatted = useMemo(() => (
@@ -35,12 +40,12 @@ export default function DMonthPicker(
   ), [date, locale]);
 
   return (
-    <DatePicker
+    <DatePicker<CustomModifierNames, WithRange>
       showMonthYearPicker
       selected={selected}
       className={className}
       calendarClassName={classNames('d-month-picker', calendarClassName)}
-      onChange={onChangeDate}
+      onChange={onChange}
       {...locale && { locale }}
       customInput={(
         <p className="fw-bold text-capitalize">

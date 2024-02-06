@@ -36,8 +36,7 @@ This part of the documentation talks about \`DOffcanvas\` directly covering its 
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     name: {
       control: 'text',

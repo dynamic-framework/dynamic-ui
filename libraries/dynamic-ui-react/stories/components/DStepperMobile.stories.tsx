@@ -34,10 +34,11 @@ const config: Meta<typeof DStepperMobile> = {
   },
   argTypes: {
     className: {
+      control: 'text',
       type: 'string',
     },
     style: {
-      type: 'string',
+      control: 'object',
     },
     currentStep: {
       control: 'number',

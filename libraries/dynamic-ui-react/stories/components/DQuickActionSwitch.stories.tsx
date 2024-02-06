@@ -52,8 +52,7 @@ const config: Meta<typeof DQuickActionSwitch> = {
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     hint: {
       control: 'text',

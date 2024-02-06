@@ -53,8 +53,7 @@ const config: Meta<typeof DQuickActionCheck> = {
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     line1: {
       control: 'text',

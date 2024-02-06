@@ -40,8 +40,7 @@ This part of the documentation talks about \`DModal\` directly covering its inli
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     name: {
       control: 'text',
