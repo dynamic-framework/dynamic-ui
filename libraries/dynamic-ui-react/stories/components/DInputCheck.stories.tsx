@@ -5,6 +5,25 @@ import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
 const config: Meta<typeof DInputCheck> = {
   title: 'Design System/Components/Input Check',
   component: DInputCheck,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Create consistent cross-browser and cross-device checkboxes and radios with our completely rewritten checks component.
+
+**Checkbox:** Allows the user to make multiple selections from a set of options.
+
+**Radio:** It is a type of graphical interface widget that allows the user to choose an option from a predefined set of options.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap Checks and Radios](https://getbootstrap.com/docs/5.3/forms/overview/)
++ [Bootstrap Checks](https://getbootstrap.com/docs/5.3/forms/checks-radios/#checks)
++ [Bootstrap Radios](https://getbootstrap.com/docs/5.3/forms/checks-radios/#radios)
+        `,
+      },
+    },
+  },
   argTypes: {
     id: {
       control: 'text',
@@ -15,6 +34,14 @@ const config: Meta<typeof DInputCheck> = {
       control: 'text',
       type: 'string',
       description: 'The name of the input',
+    },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'text',
+      type: 'string',
     },
     type: {
       control: 'select',
@@ -46,6 +73,7 @@ const config: Meta<typeof DInputCheck> = {
       control: 'boolean',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

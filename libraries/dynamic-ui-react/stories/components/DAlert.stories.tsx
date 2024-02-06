@@ -4,11 +4,44 @@ import { ComponentProps } from 'react';
 import DAlert from '../../src/components/DAlert/DAlert';
 import { THEMES, ICONS } from '../config/constants';
 import { DContextProvider } from '../../src';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Components/Alert',
   component: DAlert,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap Alerts](https://getbootstrap.com/docs/5.3/components/alerts/)
+
+## CSS Variables
+| Variable                                  | Type             | Description              |
+|-------------------------------------------|------------------|--------------------------|
+| --${PREFIX_BS}alert-gap                   | css length unit  | Content separation       |
+| --${PREFIX_BS}alert-box-shadow            | css box shadow   | Toast box shadow         |
+| --${PREFIX_BS}alert-icon-color            | css color unit   | Toast icon color         |
+| --${PREFIX_BS}alert-separator-opacity     | css length unit  | Toast separator opacity  |
+| --${PREFIX_BS}alert-close-icon-size       | css length unit  | Toast close icon size    |
+        `,
+      },
+    },
+  },
   argTypes: {
+    id: {
+      control: 'text',
+      type: 'string',
+    },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'text',
+      type: 'string',
+    },
     type: {
       control: 'select',
       type: 'string',
@@ -21,6 +54,18 @@ const config: Meta<typeof DAlert> = {
       type: 'string',
       options: ICONS,
       description: 'Name of icon to use (in kebab-case)',
+    },
+    iconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    materialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     showClose: {
       control: 'boolean',
@@ -47,6 +92,7 @@ const config: Meta<typeof DAlert> = {
       action: 'onClose',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
@@ -205,8 +251,11 @@ export const MaterialStyle: Story = {
   },
   parameters: {
     docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
       description: {
-        story: 'To use alerts with Material Symbols style configuration it is necessary to use a DContextProvide with familyClass and the flag materialStyle=true',
+        story: 'To use alerts with Material Symbols style use a `DContextProvider` with `familyClass` and the flag `materialStyle=true` or use the flags directly over the `DAlert` component as a props`',
       },
     },
   },
