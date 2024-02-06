@@ -6,7 +6,35 @@ import DButton from '../../src/components/DButton';
 
 const config: Meta<typeof DPopover> = {
   title: 'Design System/Patterns/Popover',
+  parameters: {
+    docs: {
+      description: {
+        component: `
+This component only complies with the behavior of a popover, it has no design, other components are used as an example to assemble it.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Floating UI](https://floating-ui.com/docs/react)
+        `,
+      },
+    },
+  },
   component: DPopover,
+  argTypes: {
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'text',
+      type: 'string',
+    },
+    adjustContentToRender: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+  },
+  tags: ['autodocs'],
 };
 
 export default config;
@@ -41,6 +69,13 @@ export const Default: Story = {
       </div>
     ),
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
 };
 
 export const AdjustToContent: Story = {
@@ -72,6 +107,13 @@ export const AdjustToContent: Story = {
         />
       </div>
     ),
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };
 
@@ -106,6 +148,13 @@ export const Open: Story = {
     ),
     open: true,
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
 };
 
 export const Plain: Story = {
@@ -128,5 +177,12 @@ export const Plain: Story = {
     renderComponent: () => (
       <div>Lorem</div>
     ),
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };
