@@ -9,7 +9,23 @@ import { THEMES } from '../config/constants';
 const config: Meta<typeof DListItem> = {
   title: 'Design System/Components/List Item',
   component: DListItem,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+List item for use within a [List](/docs/design-system-components-list--docs) component.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
+        `,
+      },
+    },
+  },
   argTypes: {
+    style: {
+      type: 'string',
+    },
     className: {
       type: 'string',
     },
@@ -31,6 +47,7 @@ const config: Meta<typeof DListItem> = {
       action: 'onClick',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
