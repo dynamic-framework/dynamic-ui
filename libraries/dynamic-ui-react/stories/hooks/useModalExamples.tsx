@@ -10,34 +10,36 @@ type ModalPayload = {
   };
 };
 
-const ExampleModal = ({ closeModal, payload }: ModalProps<ModalPayload['example']>) => (
-  <DModal
-    name="example"
-    centered
-    staticBackdrop
-  >
-    <DModal.Header onClose={closeModal} showCloseButton>
-      <h5 className="fw-bold">Do you want to reject the offer?</h5>
-    </DModal.Header>
-    <DModal.Body className="py-3 px-5">
-      <p>Modal body</p>
-      <small>{payload.description}</small>
-    </DModal.Body>
-    <DModal.Footer>
-      <DButton
-        text="cancel"
-        theme="secondary"
-        variant="outline"
-        className="d-grid"
-        pill
-        onClick={() => closeModal()}
-      />
-      <DButton text="ok" className="d-grid" pill />
-    </DModal.Footer>
-  </DModal>
-);
+function ExampleModal({ closeModal, payload }: ModalProps<ModalPayload['example']>) {
+  return (
+    <DModal
+      name="example"
+      centered
+      staticBackdrop
+    >
+      <DModal.Header onClose={closeModal} showCloseButton>
+        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+      </DModal.Header>
+      <DModal.Body className="py-3 px-5">
+        <p>Modal body</p>
+        <small>{payload.description}</small>
+      </DModal.Body>
+      <DModal.Footer>
+        <DButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          pill
+          onClick={() => closeModal()}
+        />
+        <DButton text="ok" className="d-grid" pill />
+      </DModal.Footer>
+    </DModal>
+  );
+}
 
-const ExampleModalUsage = () => {
+function ExampleModalUsage() {
   const { openModal } = useDModalContext<ModalPayload>();
   return (
     <DButton
@@ -45,15 +47,17 @@ const ExampleModalUsage = () => {
       onClick={() => openModal('example', { description: 'from modal payload' })}
     />
   );
-};
+}
 
-export const ExampleModalRoot = () => (
-  <DModalContextProvider<ModalPayload>
-    portalName="examplePortal"
-    availableModals={{
-      example: ExampleModal,
-    }}
-  >
-    <ExampleModalUsage />
-  </DModalContextProvider>
-);
+export function ExampleModalRoot() {
+  return (
+    <DModalContextProvider<ModalPayload>
+      portalName="examplePortal"
+      availableModals={{
+        example: ExampleModal,
+      }}
+    >
+      <ExampleModalUsage />
+    </DModalContextProvider>
+  );
+}
