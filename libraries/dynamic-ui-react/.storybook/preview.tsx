@@ -15,15 +15,12 @@ export default {
         order: [
           'Design System',
           [
-            'Tokens',
-            [
-              'Typography',
-              'Colors',
-              'Spacing',
-              'Border',
-              'Shadow',
-              'Layout',
-            ],
+            'Typography',
+            'Colors',
+            'Spacing',
+            'Border',
+            'Shadow',
+            'Layout',
             'Components',
             [
               'Context Provider',
