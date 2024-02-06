@@ -49,8 +49,7 @@ Component with a partial API of \`d-input\` to take a pin/otp code.
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     label: {
       control: 'text',

@@ -61,8 +61,7 @@ Component composition with \`d-input\` to make a currency input component.
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     labelIcon: {
       control: {

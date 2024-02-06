@@ -9,10 +9,11 @@ const config: Meta<typeof DStepper> = {
   component: DStepper,
   argTypes: {
     className: {
+      control: 'text',
       type: 'string',
     },
     style: {
-      type: 'string',
+      control: 'object',
     },
     currentStep: {
       control: 'number',

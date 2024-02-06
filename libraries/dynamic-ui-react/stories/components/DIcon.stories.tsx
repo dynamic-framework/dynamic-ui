@@ -62,8 +62,7 @@ To work with libraries that use this style, there is the materialStyle flag. By 
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     icon: {
       control: 'select',

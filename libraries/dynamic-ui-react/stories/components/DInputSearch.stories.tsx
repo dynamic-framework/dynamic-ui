@@ -57,8 +57,7 @@ Component composition with \`d-input\` to make a search input component.
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     label: {
       control: 'text',

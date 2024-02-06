@@ -29,8 +29,7 @@ const config: Meta<typeof DChip> = {
   },
   argTypes: {
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     className: {
       control: 'text',

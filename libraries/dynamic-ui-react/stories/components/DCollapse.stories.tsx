@@ -35,8 +35,7 @@ const config: Meta<typeof DCollapse> = {
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     Component: {
       options: ['Text', 'Custom'],

@@ -24,9 +24,10 @@ To understand in more detail the aspects covered by this component, review the f
   },
   argTypes: {
     style: {
-      type: 'string',
+      control: 'object',
     },
     className: {
+      control: 'text',
       type: 'string',
     },
     active: {

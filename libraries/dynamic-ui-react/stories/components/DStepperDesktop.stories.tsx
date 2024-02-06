@@ -40,10 +40,11 @@ const config: Meta<typeof DStepperDesktop> = {
   },
   argTypes: {
     className: {
+      control: 'text',
       type: 'string',
     },
     style: {
-      type: 'string',
+      control: 'object',
     },
     currentStep: {
       control: 'number',

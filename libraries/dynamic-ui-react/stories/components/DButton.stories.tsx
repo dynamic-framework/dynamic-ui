@@ -102,8 +102,7 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     id: {
       control: 'text',

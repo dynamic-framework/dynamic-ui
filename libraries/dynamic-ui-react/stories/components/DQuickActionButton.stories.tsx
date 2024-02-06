@@ -66,8 +66,7 @@ const config: Meta<typeof DQuickActionButton> = {
       type: 'string',
     },
     style: {
-      control: 'text',
-      type: 'string',
+      control: 'object',
     },
     secondaryActionIcon: {
       control: {
