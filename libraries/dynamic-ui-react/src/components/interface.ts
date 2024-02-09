@@ -43,6 +43,11 @@ export type EndIconProps = {
   iconEndTabIndex?: number;
 };
 
+export type StateIcons = {
+  invalidIcon?: string;
+  validIcon?: string;
+};
+
 export type AlertType = 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | 'primary' | 'secondary';
 export type AlertTypeIconMap = {
   [state in AlertType]: string;
