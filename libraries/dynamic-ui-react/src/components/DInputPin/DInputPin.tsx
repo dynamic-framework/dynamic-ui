@@ -23,12 +23,14 @@ import type {
   LabelIconProps,
   PinInputMode,
   PinInputType,
+  StateIcons,
 } from '../interface';
 
 type Props =
 & BaseProps
 & LabelIconProps
 & FamilyIconProps
+& StateIcons
 & {
   id: string;
   label?: string;
@@ -61,6 +63,8 @@ export default function DInputPin(
     iconFamilyClass,
     iconFamilyPrefix,
     characters = 4,
+    invalidIcon = 'exclamation-circle',
+    validIcon = 'check',
     innerInputMode = 'text',
     hint,
     invalid = false,
@@ -186,7 +190,7 @@ export default function DInputPin(
           >
             <DIcon
               className="d-input-pin-validation-icon"
-              icon={invalid ? 'exclamation-circle' : 'check'}
+              icon={invalid ? invalidIcon : validIcon}
               familyClass={iconFamilyClass}
               familyPrefix={iconFamilyPrefix}
             />

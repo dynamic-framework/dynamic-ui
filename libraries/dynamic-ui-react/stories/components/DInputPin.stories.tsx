@@ -107,11 +107,6 @@ Component with a partial API of \`d-input\` to take a pin/otp code.
       type: 'string',
       description: 'Keyboard style',
     },
-    hint: {
-      control: 'text',
-      type: 'string',
-      description: 'Hint to display, also used to display validity feedback',
-    },
     invalid: {
       control: 'boolean',
       type: 'boolean',
@@ -121,6 +116,31 @@ Component with a partial API of \`d-input\` to take a pin/otp code.
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
+    },
+    hint: {
+      control: 'text',
+      type: 'string',
+      description: 'Hint to display, also used to display validity feedback',
+    },
+    validIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    invalidIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
     },
     onChange: {
       action: 'onChange',

@@ -23,6 +23,7 @@ import type {
   FamilyIconProps,
   LabelIconProps,
   StartIconProps,
+  StateIcons,
 } from '../interface';
 import type { Merge } from '../../types';
 
@@ -32,6 +33,7 @@ type NonHTMLInputElementProps =
 & LabelIconProps
 & StartIconProps
 & EndIconProps
+& StateIcons
 & {
   value?: string;
   label?: string;
@@ -42,8 +44,7 @@ type NonHTMLInputElementProps =
   floatingLabel?: boolean;
   inputStart?: ReactNode;
   inputEnd?: ReactNode;
-  invalidIcon?: string;
-  validIcon?: string;
+
   onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
   onIconEndClick?: (value?: string) => void;
