@@ -128,6 +128,26 @@ a \`DContextProvider\` to get the currency config.
       control: 'text',
       type: 'string',
     },
+    validIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    invalidIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
     hint: {
       control: 'text',
       type: 'string',
