@@ -1,0 +1,58 @@
+import { Meta } from '@storybook/blocks';
+import { DAlert } from '../src';
+
+<Meta title="Design System/Quick Start/Platform" />
+
+<div className="inline-story">
+
+  # Platform configurations
+
+  <br />
+  ### Style in Modyo platform
+  <DAlert type="warning" soft>It's recommended to use the style in the platform</DAlert>
+
+  1. On Moydo platform, navigate to `Templates -> Snippets -> Libs` and replace `variables_css` with the framework variables
+  [dynamic-ui-root.css](https://unpkg.com/@dynamic-framework/ui-react@1.14.1/dist/css/dynamic-ui-root.css) and
+  `bootstrap_css` with the framework style [dynamic-ui-non-root.css](https://unpkg.com/@dynamic-framework/ui-react@1.14.1/dist/css/dynamic-ui-non-root.css).
+
+  <img
+    src="https://cdn.modyo.cloud/uploads/ae5a47ae-c179-4870-9efb-30c920e6ac8d/original/Snippet_variables.png"
+    alt="snippets in platform"
+  />
+
+  <br />
+  <br />
+
+  2. To local development include the framework style conditionally in widget.
+
+  ```ts
+  if (process.env.NODE_ENV === 'development') {
+  require('@dynamic-framework/ui-react/dist/css/dynamic-ui.css');
+}
+  require('./styles/base.scss');
+  ```
+  > [Example in branch docs of dynamic-react-base-template](https://github.com/dynamic-framework/dynamic-react-base-template/blob/7e75d986c45cbf5dce6d417657acb38ed4ac4b30/src/index.tsx#L12)
+
+  <br />
+  ### Font in Modyo Platform
+  > the framework use `Source Sans Pro`
+
+  Navigate to `Templates -> Views -> JavaScript -> base` and update the families array.
+
+  <img
+    src="https://cdn.modyo.cloud/uploads/928ae7df-6a4b-46bb-9113-485ec866b6e1/original/Font_configuration.png"
+    alt="base js in platform"
+  />
+  <br />
+  <DAlert type="info" soft>If the variables sheet has been configured, replace `--bs-font-sans-serif` variable with a custom font</DAlert>
+
+  <br />
+  ### Icons in Modyo Platform
+  Navigate to `Templates -> General -> head` and and the link to icon font family.
+
+  <img
+    src="https://cdn.modyo.cloud/uploads/6cd3b4a0-4e98-42a8-9c4a-ca5db619f513/original/Icon_configuration.png"
+    alt="icon configuration in platform"
+  />
+</div>
+
