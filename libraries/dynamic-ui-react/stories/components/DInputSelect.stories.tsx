@@ -1,13 +1,52 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import DInputSelect from '../../src/components/DInputSelect';
-import type { DInputSelectProps } from '../../src/components/DInputSelect';
-
 import { ICONS } from '../config/constants';
+import { PREFIX_BS } from '../../src/components/config';
+
+import type { DInputSelectProps } from '../../src/components/DInputSelect';
 
 const config: Meta<typeof DInputSelect> = {
   title: 'Design System/Components/Input Select',
   component: DInputSelect,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Customize the native \`<select>s\` with custom CSS that changes the element’s initial appearance, with a partial API of \`d-input\` over the HTML select component.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap Select](https://getbootstrap.com/docs/5.3/forms/select/)
++ [Bootstrap Custom Select](https://getbootstrap.com/docs/5.3/forms/input-group/#custom-select)
+
+## CSS Variables
+| Variable                                        | Type            | Description                   |
+|-------------------------------------------------|-----------------|-------------------------------|
+| --${PREFIX_BS}input-control-gap                 | css length unit | Space between layout elements |
+| --${PREFIX_BS}input-label-color                 | css color unit  | Label color                   |
+| --${PREFIX_BS}input-label-font-weight           | css font weight | Label font weight             |
+| --${PREFIX_BS}input-label-font-size             | css length unit | Label font size               |
+| --${PREFIX_BS}input-label-padding-x             | css length unit | Label horizontal padding      |
+| --${PREFIX_BS}input-label-padding-y             | css length unit | Label vertical padding        |
+| --${PREFIX_BS}input-label-gap                   | css length unit | Space between label elements  |
+| --${PREFIX_BS}input-group-border-color          | css color unit  | Input border color            |
+| --${PREFIX_BS}input-group-border-width          | css length unit | Input border width            |
+| --${PREFIX_BS}input-group-border-radius         | css length unit | Input border radius           |
+| --${PREFIX_BS}input-group-hover-border-color    | css color unit  | Input hover border color      |
+| --${PREFIX_BS}input-group-focus-border-color    | css color unit  | Input focus border color      |
+| --${PREFIX_BS}input-group-focus-box-shadow      | css shadow      | Input focus box shadow        |
+| --${PREFIX_BS}input-form-text-padding           | css length unit | Hint padding                  |
+| --${PREFIX_BS}input-form-text-gap               | css length unit | Space between hint elements   |
+| --${PREFIX_BS}input-form-text-color             | css color unit  | Hint color                    |
+| --${PREFIX_BS}input-group-disabled-bg           | css color unit  | Input disable background      |
+| --${PREFIX_BS}input-group-disabled-color        | css color unit  | Input disable color           |
+| --${PREFIX_BS}input-group-disabled-border-color | css color unit  | Input disable border color    |
+| --${PREFIX_BS}input-form-control-text-align     | css text align  | Input text align              |
+        `,
+      },
+    },
+  },
   argTypes: {
     id: {
       control: 'text',
@@ -19,11 +58,18 @@ const config: Meta<typeof DInputSelect> = {
       type: 'string',
       description: 'Name of the input',
     },
-    label: {
+    className: {
       control: 'text',
       type: 'string',
     },
-    className: {
+    style: {
+      control: 'object',
+    },
+    value: {
+      control: 'text',
+      type: 'string',
+    },
+    label: {
       control: 'text',
       type: 'string',
     },
@@ -37,6 +83,14 @@ const config: Meta<typeof DInputSelect> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
+    labelIconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    labelIconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
     iconStart: {
       control: {
         type: 'select',
@@ -46,6 +100,26 @@ const config: Meta<typeof DInputSelect> = {
       },
       type: 'string',
       options: [undefined, ...ICONS],
+    },
+    iconStartDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconStartFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconStartFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    iconStartAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    iconStartTabIndex: {
+      control: 'number',
+      type: 'number',
     },
     iconEnd: {
       control: {
@@ -57,13 +131,25 @@ const config: Meta<typeof DInputSelect> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    iconStartAriaLabel: {
+    iconEndDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconEndFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
     },
     iconEndAriaLabel: {
       control: 'text',
       type: 'string',
+    },
+    iconEndTabIndex: {
+      control: 'number',
+      type: 'number',
     },
     hint: {
       control: 'text',
@@ -112,6 +198,7 @@ const config: Meta<typeof DInputSelect> = {
       table: { defaultValue: { summary: false } },
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

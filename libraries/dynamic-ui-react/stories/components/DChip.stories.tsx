@@ -2,11 +2,39 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import DChip from '../../src/components/DChip/DChip';
 import { ICONS, THEMES } from '../config/constants';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DChip> = {
   title: 'Design System/Components/Chip',
   component: DChip,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+## CSS Variables
+| Variable                            | Type            | Description                        |
+|-------------------------------------|-----------------|------------------------------------|
+| --${PREFIX_BS}chip-bg               | css color unit  | Background color                   |
+| --${PREFIX_BS}chip-gap              | css length unit | Separation between chip elements   |
+| --${PREFIX_BS}chip-color            | css color unit  | Text color                         |
+| --${PREFIX_BS}chip-border-radius    | css length unit | Border radius                      |
+| --${PREFIX_BS}chip-padding-x        | css length unit | Padding horizontal                 |
+| --${PREFIX_BS}chip-padding-y        | css length unit | Padding vertical                   |
+| --${PREFIX_BS}chip-font-size        | css length unit | Font size                          |
+| --${PREFIX_BS}chip-font-weight      | css font weight | Font weight                        |
+| --${PREFIX_BS}chip-line-height      | css length unit | Line height                        |
+        `,
+      },
+    },
+  },
   argTypes: {
+    style: {
+      control: 'object',
+    },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     text: {
       control: 'text',
       type: 'string',
@@ -28,15 +56,28 @@ const config: Meta<typeof DChip> = {
       },
       options: [undefined, ...ICONS],
     },
+    iconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
     showClose: {
       control: 'boolean',
       table: { defaultValue: { summary: false } },
       type: 'boolean',
     },
+    closeAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
     onClose: {
       action: 'onClose',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

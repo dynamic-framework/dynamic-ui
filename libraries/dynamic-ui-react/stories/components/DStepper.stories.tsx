@@ -8,6 +8,13 @@ const config: Meta<typeof DStepper> = {
   title: 'Design System/Components/Stepper',
   component: DStepper,
   argTypes: {
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'object',
+    },
     currentStep: {
       control: 'number',
       type: 'number',
@@ -34,6 +41,7 @@ const config: Meta<typeof DStepper> = {
       options: ['sm', 'md', 'lg', 'xl', 'xxl'],
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

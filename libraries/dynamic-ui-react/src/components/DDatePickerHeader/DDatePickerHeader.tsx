@@ -84,7 +84,7 @@ export default function DDatePickerHeader(
         {...!withMonthSelector && { readOnly: true }}
         {...withMonthSelector && { className: 'cursor-pointer' }}
         date={monthDate.toISOString()}
-        onChangeDate={onChangeDate}
+        onChange={onChangeDate}
         {...locale && { locale }}
       />
       <DButton

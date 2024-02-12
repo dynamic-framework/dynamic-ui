@@ -6,7 +6,23 @@ import DListItem from '../../src/components/DList/components/DListItem';
 const config: Meta<typeof DList> = {
   title: 'Design System/Components/List',
   component: DList,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+List of elements
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
+        `,
+      },
+    },
+  },
   argTypes: {
+    style: {
+      control: 'object',
+    },
     className: {
       type: 'string',
       control: 'text',
@@ -29,6 +45,7 @@ const config: Meta<typeof DList> = {
       options: [undefined, 'sm', 'md', 'lg', 'xl', 'xxl'],
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

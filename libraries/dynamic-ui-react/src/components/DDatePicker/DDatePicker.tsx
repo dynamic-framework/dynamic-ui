@@ -15,9 +15,12 @@ import DDatePickerHeader from '../DDatePickerHeader';
 
 import type { BaseProps, ButtonVariant, ComponentSize } from '../interface';
 
-type Props =
+type Props<
+  CustomModifierNames extends string = never,
+  WithRange extends boolean | undefined = undefined,
+> =
 & BaseProps
-& Omit<ReactDatePickerProps, 'selected' | 'selectsRange' | 'locale'>
+& Omit<ReactDatePickerProps<CustomModifierNames, WithRange>, 'selected' | 'selectsRange' | 'locale'>
 & {
   date?: string | null;
   withMonthSelector?: boolean;
@@ -39,7 +42,10 @@ type Props =
   locale?: Locale;
 };
 
-export default function DDatePicker(
+export default function DDatePicker<
+  CustomModifierNames extends string = never,
+  WithRange extends boolean | undefined = undefined,
+>(
   {
     date,
     selectsRange = false,
@@ -62,7 +68,7 @@ export default function DDatePicker(
     className,
     style,
     ...props
-  }: Props,
+  }: Props<CustomModifierNames, WithRange>,
 ) {
   const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
 
@@ -92,7 +98,7 @@ export default function DDatePicker(
   ]);
 
   return (
-    <DatePicker
+    <DatePicker<string, boolean>
       selected={selected}
       calendarClassName="d-date-picker"
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}

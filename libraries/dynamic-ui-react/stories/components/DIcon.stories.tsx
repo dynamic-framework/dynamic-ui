@@ -17,7 +17,53 @@ import { DContextProvider, DInput } from '../../src';
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
   component: DIcon,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Wrapper Component around [Bootstrap Icons.](https://icons.getbootstrap.com/)
+
+To use the DIcon you need to add the icon suite CSS to your site, we recommend adding this CSS in the platform but you can add it in the index.html of the widget as well.
+
+## CSS Variables
+
+| Variable                            | Type            | Description                           |
+|-------------------------------------|-----------------|---------------------------------------|
+| --${PREFIX_BS}icon-color            | css color unit  | The icon color                        |
+| --${PREFIX_BS}icon-bg-color         | css color unit  | The icon background color             |
+| --${PREFIX_BS}icon-size             | css length unit | The size of icon                      |
+| --${PREFIX_BS}icon-padding          | css length unit | The padding to make icon circle       |
+| --${PREFIX_BS}icon-loading-duration | number          | The duration of the loading animation |
+
+> The colors can ref another css var like a var(--${PREFIX_BS}primary)
+
+## Fonts with material symbols style configuration
+
+By default the DIcon is configured to use icon fonts that define the icon from a class, icon fonts that work in the material symbols style define the name of the icon in the content of the tag.
+
+To work with libraries that use this style, there is the materialStyle flag. By setting it to true, the icon is selected by placing its name in the content of the tag, and not, using the name and the familyClass to generate a class.
+
+### Normal icon font render:
+\`\`\`
+<i class="bi bi-123" />
+\`\`\`
+
+### Material Symbols icon font render:
+\`\`\`
+<i class="material-symbols-outlined">rebase</i>
+\`\`\`
+        `,
+      },
+    },
+  },
   argTypes: {
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'object',
+    },
     icon: {
       control: 'select',
       type: { name: 'string', required: true },
@@ -34,11 +80,6 @@ const meta: Meta<typeof DIcon> = {
       options: THEMES_WITH_EMPTY,
       type: 'string',
       description: 'Theme of the icon',
-    },
-    className: {
-      control: 'text',
-      type: 'string',
-      description: 'Add classes',
     },
     size: {
       type: 'string',
@@ -62,6 +103,12 @@ const meta: Meta<typeof DIcon> = {
       type: 'boolean',
       control: 'boolean',
       description: 'Add circle around the icon',
+      table: { defaultValue: { summary: false } },
+    },
+    materialStyle: {
+      type: 'boolean',
+      control: 'boolean',
+      description: 'To use material style icons',
       table: { defaultValue: { summary: false } },
     },
     circleSize: {
@@ -91,6 +138,7 @@ const meta: Meta<typeof DIcon> = {
       table: { defaultValue: { summary: ICON_FAMILY_PREFIX } },
     },
   },
+  tags: ['autodocs'],
 };
 
 export default meta;
