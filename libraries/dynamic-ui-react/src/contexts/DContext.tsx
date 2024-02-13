@@ -22,10 +22,11 @@ type IconProps = {
 };
 
 type IconMapProps = {
-  xIcon: string;
-  xLgIcon: string;
-  chevronDownIcon: string;
+  x: string;
+  xLg: string;
+  chevronDown: string;
   alert: AlertTypeIconMap;
+  upload: string;
   input: {
     invalid: string;
     valid: string;
@@ -62,9 +63,10 @@ const defaultState = {
     materialStyle: false,
   },
   iconMap: {
-    xIcon: 'x',
-    xLgIcon: 'x-lg',
-    chevronDownIcon: 'chevron-down',
+    x: 'x',
+    xLg: 'x-lg',
+    chevronDown: 'chevron-down',
+    upload: 'cloud-upload',
     alert: {
       warning: 'exclamation-circle',
       danger: 'exclamation-triangle',

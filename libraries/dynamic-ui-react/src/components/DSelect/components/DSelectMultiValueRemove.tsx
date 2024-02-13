@@ -14,14 +14,14 @@ export default function DSelectMultiValueRemove<
 ) {
   const {
     iconMap: {
-      xIcon,
+      x,
     },
   } = useDContext();
   return (
     <components.MultiValueRemove<Option, IsMulti, Group>
       {...props}
     >
-      <DIcon icon={xIcon} />
+      <DIcon icon={x} />
     </components.MultiValueRemove>
   );
 }

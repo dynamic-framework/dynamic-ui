@@ -398,9 +398,10 @@ export const MaterialStyleCloseIcon: Story = {
         familyPrefix: '',
       }}
       iconMap={{
-        xIcon: 'close_small',
-        xLgIcon: 'close',
-        chevronDownIcon: 'expand_more',
+        x: 'close_small',
+        xLg: 'close',
+        chevronDown: 'expand_more',
+        upload: 'cloud_upload',
         alert: {
           warning: 'warning',
           danger: 'error',

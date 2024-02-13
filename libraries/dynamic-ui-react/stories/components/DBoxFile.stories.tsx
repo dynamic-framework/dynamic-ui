@@ -1,8 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DBoxFile from '../../src/components/DBoxFile/DBoxFile';
 import { PREFIX_BS } from '../../src/components/config';
 import { ICONS } from '../config/constants';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DBoxFile> = {
   title: 'Design System/Components/Box File',
@@ -67,6 +70,10 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
+    iconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     minSize: {
       control: 'number',
       type: 'number',
@@ -124,6 +131,72 @@ export const Default: Story = {
       'image/png': ['.png'],
     },
     disabled: false,
-    icon: 'cloud-upload',
+  },
+};
+
+export const MaterialIcon: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args: ComponentProps<typeof DBoxFile>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        x: 'close_small',
+        xLg: 'close',
+        chevronDown: 'expand_more',
+        upload: 'cloud_upload',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DBoxFile {...args}>
+        <div className="text-center">
+          <span className="text-secondary text-decoration-underline me-1">Select and upload the file</span>
+          or drag and drop it here (png)
+        </div>
+      </DBoxFile>
+    </DContextProvider>
+  ),
+  args: {
+    accept: {
+      'image/png': ['.png'],
+    },
+    disabled: false,
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

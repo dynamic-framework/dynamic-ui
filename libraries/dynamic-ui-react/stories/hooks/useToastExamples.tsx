@@ -31,9 +31,10 @@ export function UseToastMaterialExample() {
         familyPrefix: '',
       }}
       iconMap={{
-        xIcon: 'close',
-        xLgIcon: 'close',
-        chevronDownIcon: 'expand_more',
+        x: 'close',
+        xLg: 'close',
+        chevronDown: 'expand_more',
+        upload: 'cloud_upload',
         alert: {
           warning: 'warning',
           danger: 'error',
@@ -43,6 +44,15 @@ export function UseToastMaterialExample() {
           light: 'info',
           primary: 'info',
           secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
         },
       }}
     >

@@ -52,11 +52,11 @@ export default function DAlert(
   const {
     iconMap: {
       alert,
-      xLgIcon,
+      xLg,
     },
   } = useDContext();
   const icon = useMemo(() => propIcon || alert[type], [alert, propIcon, type]);
-  const closeIcon = useMemo(() => (propCloseIcon || xLgIcon), [propCloseIcon, xLgIcon]);
+  const closeIcon = useMemo(() => (propCloseIcon || xLg), [propCloseIcon, xLg]);
 
   const generateClasses = useMemo(
     () => ({

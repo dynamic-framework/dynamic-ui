@@ -50,10 +50,10 @@ export default function DChip(
   );
   const {
     iconMap: {
-      xLgIcon,
+      xLg,
     },
   } = useDContext();
-  const iconClose = useMemo(() => iconCloseProp || xLgIcon, [iconCloseProp, xLgIcon]);
+  const iconClose = useMemo(() => iconCloseProp || xLg, [iconCloseProp, xLg]);
   return (
     <span
       className={classNames(generateClasses, className)}

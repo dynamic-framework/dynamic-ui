@@ -31,10 +31,10 @@ export default function DModalHeader(
 ) {
   const {
     iconMap: {
-      xLgIcon,
+      xLg,
     },
   } = useDContext();
-  const icon = useMemo(() => iconProp || xLgIcon, [iconProp, xLgIcon]);
+  const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
   return (
     <div
       className={classNames('modal-header', className)}
