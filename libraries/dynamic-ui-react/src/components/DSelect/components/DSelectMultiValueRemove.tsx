@@ -13,7 +13,7 @@ export default function DSelectMultiValueRemove<
   props: MultiValueRemoveProps<Option, IsMulti, Group>,
 ) {
   const {
-    icon: {
+    iconMap: {
       xIcon,
     },
   } = useDContext();

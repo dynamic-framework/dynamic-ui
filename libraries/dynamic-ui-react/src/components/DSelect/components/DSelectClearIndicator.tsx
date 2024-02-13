@@ -13,7 +13,7 @@ export default function DSelectClearIndicator<
   props: ClearIndicatorProps<Option, IsMulti, Group>,
 ) {
   const {
-    icon: {
+    iconMap: {
       xLgIcon,
     },
   } = useDContext();

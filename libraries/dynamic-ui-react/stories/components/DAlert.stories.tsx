@@ -230,6 +230,8 @@ export const MaterialStyle: Story = {
         materialStyle: true,
         familyPrefix: '',
         familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
         xIcon: 'close',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',

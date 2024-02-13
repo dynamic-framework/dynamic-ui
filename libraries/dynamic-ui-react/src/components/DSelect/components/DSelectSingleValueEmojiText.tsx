@@ -3,11 +3,9 @@ import { components } from 'react-select';
 
 import type { GroupBase, SingleValueProps } from 'react-select';
 
-import DIcon from '../../DIcon';
+import type { OptionEmoji } from './DSelectOptionEmoji';
 
-import type { OptionIcon } from './DSelectOptionIcon';
-
-export default function DSelectSingleValueIcon<
+export default function DSelectSingleValueEmojiText<
   Option,
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>,
@@ -27,8 +25,8 @@ export default function DSelectSingleValueIcon<
       getValue={getValue}
       {...props}
     >
-      <DIcon icon={(value as OptionIcon).icon} />
-      {children}
+      <span>{(value as OptionEmoji).emoji}</span>
+      <span>{children}</span>
     </components.SingleValue>
   );
 }

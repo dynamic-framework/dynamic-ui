@@ -18,6 +18,9 @@ type IconProps = {
   familyClass: string;
   familyPrefix: string;
   materialStyle: boolean;
+};
+
+type IconMapProps = {
   xIcon: string;
   xLgIcon: string;
   chevronDownIcon: string;
@@ -27,6 +30,7 @@ type Props = {
   language: string;
   currency: CurrencyProps,
   icon: IconProps;
+  iconMap: IconMapProps;
 };
 
 type Context = Props & {
@@ -45,6 +49,8 @@ const defaultState = {
     familyClass: 'bi',
     familyPrefix: 'bi-',
     materialStyle: false,
+  },
+  iconMap: {
     xIcon: 'x',
     xLgIcon: 'x-lg',
     chevronDownIcon: 'chevron-down',
@@ -59,6 +65,7 @@ export function DContextProvider(
     language = defaultState.language,
     currency = defaultState.currency,
     icon = defaultState.icon,
+    iconMap = defaultState.iconMap,
     children,
   }: PropsWithChildren<Partial<Props>>,
 ) {
@@ -69,6 +76,7 @@ export function DContextProvider(
     language,
     currency,
     icon,
+    iconMap,
   });
 
   const value = useMemo(() => ({

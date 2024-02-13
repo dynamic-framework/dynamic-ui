@@ -8,13 +8,14 @@ import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 import DSelectOptionCheck from './components/DSelectOptionCheck';
 import DSelectOptionIcon from './components/DSelectOptionIcon';
-import DSelectSingleValueIcon from './components/DSelectSingleValueIcon';
+import DSelectSingleValueIconText from './components/DSelectSingleValueIconText';
 import DSelectDropdownIndicator from './components/DSelectDropdownIndicator';
 import DSelectClearIndicator from './components/DSelectClearIndicator';
 import DSelectMultiValueRemove from './components/DSelectMultiValueRemove';
 import DSelectLoadingIndicator from './components/DSelectLoadingIndicator';
 import DSelectOptionEmoji from './components/DSelectOptionEmoji';
 import DSelectSingleValueEmoji from './components/DSelectSingleValueEmoji';
+import DSelectSingleValueEmojiText from './components/DSelectSingleValueEmojiText';
 
 import type {
   BaseProps,
@@ -237,11 +238,12 @@ function DSelect<
 export default Object.assign(DSelect, {
   OptionCheck: DSelectOptionCheck,
   OptionIcon: DSelectOptionIcon,
-  SingleValueIcon: DSelectSingleValueIcon,
+  SingleValueIconText: DSelectSingleValueIconText,
   DropdownIndicator: DSelectDropdownIndicator,
   ClearIndicator: DSelectClearIndicator,
   MultiValueRemove: DSelectMultiValueRemove,
   LoadingIndicator: DSelectLoadingIndicator,
   OptionEmoji: DSelectOptionEmoji,
   SingleValueEmoji: DSelectSingleValueEmoji,
+  SingleValueEmojiText: DSelectSingleValueEmojiText,
 });

@@ -13,7 +13,7 @@ export default function DSelectDropdownIndicator<
   props: DropdownIndicatorProps<Option, IsMulti, Group>,
 ) {
   const {
-    icon: {
+    iconMap: {
       chevronDownIcon,
     },
   } = useDContext();
