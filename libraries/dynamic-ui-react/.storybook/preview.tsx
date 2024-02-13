@@ -18,6 +18,12 @@ export default {
         order: [
           'Design System',
           [
+            'Quick Start',
+            [
+              'Install',
+              'Widget',
+              'Platform'
+            ],
             'Typography',
             'Colors',
             'Spacing',

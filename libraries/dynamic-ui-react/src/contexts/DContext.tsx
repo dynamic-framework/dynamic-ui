@@ -7,19 +7,30 @@ import {
 
 import type { PropsWithChildren } from 'react';
 
+type CurrencyProps = {
+  symbol: string;
+  precision: number;
+  separator: string;
+  decimal: string;
+};
+
+type IconProps = {
+  familyClass: string;
+  familyPrefix: string;
+  materialStyle: boolean;
+};
+
+type IconMapProps = {
+  xIcon: string;
+  xLgIcon: string;
+  chevronDownIcon: string;
+};
+
 type Props = {
   language: string;
-  currency: {
-    symbol: string;
-    precision: number;
-    separator: string;
-    decimal: string;
-  },
-  icon: {
-    familyClass?: string;
-    familyPrefix?: string;
-    materialStyle?: boolean;
-  };
+  currency: CurrencyProps,
+  icon: IconProps;
+  iconMap: IconMapProps;
 };
 
 type Context = Props & {
@@ -39,6 +50,11 @@ const defaultState = {
     familyPrefix: 'bi-',
     materialStyle: false,
   },
+  iconMap: {
+    xIcon: 'x',
+    xLgIcon: 'x-lg',
+    chevronDownIcon: 'chevron-down',
+  },
   setContext: () => {},
 };
 
@@ -49,6 +65,7 @@ export function DContextProvider(
     language = defaultState.language,
     currency = defaultState.currency,
     icon = defaultState.icon,
+    iconMap = defaultState.iconMap,
     children,
   }: PropsWithChildren<Partial<Props>>,
 ) {
@@ -59,6 +76,7 @@ export function DContextProvider(
     language,
     currency,
     icon,
+    iconMap,
   });
 
   const value = useMemo(() => ({
