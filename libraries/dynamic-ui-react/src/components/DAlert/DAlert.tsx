@@ -4,9 +4,10 @@ import classNames from 'classnames';
 import type { CSSProperties, PropsWithChildren } from 'react';
 
 import DIcon from '../DIcon';
-import { ALERT_TYPE_ICON, PREFIX_BS } from '../config';
+import { PREFIX_BS } from '../config';
 
 import type { AlertType, BaseProps, CustomStyles } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
@@ -16,10 +17,13 @@ type Props =
   icon?: string;
   iconFamilyClass?: string;
   iconFamilyPrefix?: string;
+  iconMaterialStyle?: boolean;
   showIcon?: boolean;
   showClose?: boolean;
   closeIcon?: string;
-  materialStyle?: boolean;
+  closeIconFamilyClass?: string;
+  closeIconFamilyPrefix?: string;
+  closeIconMaterialStyle?: boolean;
   soft?: boolean;
   onClose?: () => void;
 }>;
@@ -27,11 +31,14 @@ type Props =
 export default function DAlert(
   {
     type = 'success',
-    icon,
-    closeIcon = 'x-lg',
+    icon: propIcon,
     iconFamilyClass,
     iconFamilyPrefix,
-    materialStyle = false,
+    iconMaterialStyle = false,
+    closeIcon: propCloseIcon,
+    closeIconFamilyClass,
+    closeIconFamilyPrefix,
+    closeIconMaterialStyle = false,
     showIcon = true,
     soft = false,
     showClose,
@@ -42,6 +49,15 @@ export default function DAlert(
     style,
   }: Props,
 ) {
+  const {
+    iconMap: {
+      alert,
+      xLgIcon,
+    },
+  } = useDContext();
+  const icon = useMemo(() => propIcon || alert[type], [alert, propIcon, type]);
+  const closeIcon = useMemo(() => (propCloseIcon || xLgIcon), [propCloseIcon, xLgIcon]);
+
   const generateClasses = useMemo(
     () => ({
       alert: true,
@@ -52,8 +68,6 @@ export default function DAlert(
     }),
     [type, showClose, soft, className],
   );
-
-  const getIcon = useMemo(() => icon || ALERT_TYPE_ICON[type] || '', [icon, type]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,
@@ -70,7 +84,10 @@ export default function DAlert(
       {(showIcon || icon) && (
         <DIcon
           className="alert-icon"
-          icon={getIcon}
+          icon={icon}
+          familyClass={iconFamilyClass}
+          familyPrefix={iconFamilyPrefix}
+          materialStyle={iconMaterialStyle}
         />
       )}
       <div className="alert-text">
@@ -89,9 +106,9 @@ export default function DAlert(
           <DIcon
             className="alert-close-icon"
             icon={closeIcon}
-            familyClass={iconFamilyClass}
-            familyPrefix={iconFamilyPrefix}
-            materialStyle={materialStyle}
+            familyClass={closeIconFamilyClass}
+            familyPrefix={closeIconFamilyPrefix}
+            materialStyle={closeIconMaterialStyle}
           />
         </button>
       )}

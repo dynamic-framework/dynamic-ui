@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DButton from '../../src/components/DButton/DButton';
 
 import {
@@ -9,6 +11,7 @@ import {
   THEMES,
 } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',
@@ -91,7 +94,6 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
 | --${PREFIX_BS}btn-sm-border-radius      | css length unit   | Button small border radius        |
 
 + [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/buttons/#variables)
-
         `,
       },
     },
@@ -344,5 +346,65 @@ export const LinkIconRight: Story = {
     pill: true,
     iconStart: undefined,
     iconEnd: 'chevron-right',
+  },
+};
+
+/**
+ * To use buttons with Material Symbols style use a `DContextProvider` with `familyClass`
+ * and the flag `materialStyle=true` or use the flags directly over the
+ * `DButton` component as a props
+ */
+export const MaterialSecondaryIconRight: Story = {
+  render: (args: ComponentProps<typeof DButton>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DButton {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    theme: 'primary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    loading: false,
+    pill: true,
+    iconStart: undefined,
+    iconEnd: 'chevron_right',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

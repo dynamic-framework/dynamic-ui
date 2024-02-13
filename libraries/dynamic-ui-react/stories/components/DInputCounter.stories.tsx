@@ -1,8 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DInputCounter from '../../src/components/DInputCounter/DInputCounter';
 import { ICONS } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DInputCounter> = {
   title: 'Design System/Components/Input Counter',
@@ -223,5 +226,62 @@ export const Floating: Story = {
     floatingLabel: true,
     iconStartAriaLabel: 'decrease action',
     iconEndAriaLabel: 'increase action',
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInputCounter>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DInputCounter
+        {...args}
+      />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId6',
+    label: 'Label',
+    labelIcon: undefined,
+    value: 3,
+    minValue: 0,
+    maxValue: 20,
+    iconStartAriaLabel: 'decrease action',
+    iconEndAriaLabel: 'increase action',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

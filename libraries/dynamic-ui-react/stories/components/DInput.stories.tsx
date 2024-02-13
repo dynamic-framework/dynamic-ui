@@ -1,8 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DInput from '../../src/components/DInput/DInput';
 import { ICONS } from '../config/constants';
-import { DIcon } from '../../src';
+import { DContextProvider, DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInput> = {
@@ -386,6 +388,13 @@ export const CustomInputStart: Story = {
       />
     ),
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
 };
 
 export const CustomInputEnd: Story = {
@@ -399,5 +408,170 @@ export const CustomInputEnd: Story = {
         icon="arrow-right"
       />
     ),
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId10',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    iconStart: 'face_5',
+    iconEnd: 'face_5',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIconError: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId11',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    invalid: true,
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIconConfirm: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId12',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

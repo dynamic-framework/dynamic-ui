@@ -163,7 +163,7 @@ export const Circle: Story = {
 
 /**
  * To use icons with Material Symbols style configuration it is necessary to use a
- * DContextProvide with familyClass and the flag materialStyle=tru
+ * `DContextProvide` with ``familyClass`` and the flag `materialStyle=true`
  */
 export const MaterialStyle: Story = {
   render: (args: ComponentProps<typeof DIcon>) => (
@@ -177,6 +177,25 @@ export const MaterialStyle: Story = {
         xIcon: 'close',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
       }}
     >
       <DIcon {...args} />
@@ -193,11 +212,18 @@ export const MaterialStyle: Story = {
       description: 'Material style icon',
     },
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
 };
 
 /**
  * To use icons with Material Symbols style configuration it is necessary to use a
- * DContextProvide with familyClass and the flag materialStyle=true
+ * `DContextProvide` with `familyClass` and the flag `materialStyle=true`
  */
 export const MaterialStyleHasCircle: Story = {
   render: (args: ComponentProps<typeof DIcon>) => (
@@ -211,6 +237,25 @@ export const MaterialStyleHasCircle: Story = {
         xIcon: 'close',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
       }}
     >
       <DIcon {...args} />
@@ -228,11 +273,18 @@ export const MaterialStyleHasCircle: Story = {
       description: 'Material style icon',
     },
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
 };
 
 /**
- * The DContextProvider configuration can be used in conjunction with any other
- * component that uses DIcon
+ * The `DContextProvider` configuration can be used in conjunction with any other
+ * component that uses `DIcon`
  */
 export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
   render: (args: ComponentProps<typeof DInput>) => (
@@ -246,6 +298,25 @@ export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
         xIcon: 'close',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
       }}
     >
       <DInput
@@ -256,5 +327,12 @@ export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
   args: {
     iconStart: 'alternate_email',
     iconEnd: 'cached',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

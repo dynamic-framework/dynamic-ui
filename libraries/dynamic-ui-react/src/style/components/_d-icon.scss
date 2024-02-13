@@ -5,7 +5,7 @@
   --#{$prefix}icon-padding: var(--#{$prefix}icon-component-padding, 0);
   --#{$prefix}icon-loading-duration: var(--#{$prefix}icon-component-loading-duration, 1.8);
 
-  display: flex;
+  display: inline-flex !important; /* stylelint-disable-line declaration-no-important */
   align-items: center;
   justify-content: center;
   width: var(--#{$prefix}icon-size);

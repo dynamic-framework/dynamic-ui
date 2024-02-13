@@ -26,6 +26,7 @@ import type {
   StateIcons,
 } from '../interface';
 import type { Merge } from '../../types';
+import { useDContext } from '../../contexts';
 
 type NonHTMLInputElementProps =
 & BaseProps
@@ -77,8 +78,8 @@ function DInput(
     iconEndFamilyPrefix,
     iconEndAriaLabel,
     iconEndTabIndex,
-    invalidIcon = 'exclamation-circle',
-    validIcon = 'check',
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     hint,
     invalid = false,
     valid = false,
@@ -180,6 +181,16 @@ function DInput(
     }
     return inputComponent;
   }, [floatingLabel, inputComponent, labelComponent]);
+
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
 
   return (
     <div

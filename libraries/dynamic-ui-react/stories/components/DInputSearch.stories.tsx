@@ -1,8 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DInputSearch from '../../src/components/DInputSearch/DInputSearch';
 import { ICONS } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DInputSearch> = {
   title: 'Design System/Components/Input Search',
@@ -194,12 +197,65 @@ export const Disabled: Story = {
 
 export const Floating: Story = {
   args: {
-    id: 'componentId1',
+    id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
     iconEndAriaLabel: 'search',
     floatingLabel: true,
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInputSearch>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DInputSearch {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId7',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    iconEndAriaLabel: 'search',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

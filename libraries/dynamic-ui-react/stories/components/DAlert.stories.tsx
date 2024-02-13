@@ -62,7 +62,7 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
-    materialStyle: {
+    iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
     },
@@ -223,6 +223,11 @@ export const LightSoft: Story = {
   },
 };
 
+/**
+ * To use alerts with Material Symbols style use a `DContextProvider` with `familyClass`
+ * and the flag `materialStyle=true` or use the flags directly over the
+ * `DAlert` component as a props
+ */
 export const MaterialStyle: Story = {
   render: (args: ComponentProps<typeof DAlert>) => (
     <DContextProvider
@@ -235,32 +240,39 @@ export const MaterialStyle: Story = {
         xIcon: 'close',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
       }}
     >
       <DAlert {...args} />
     </DContextProvider>
   ),
   args: {
-    icon: 'info',
     showClose: true,
     children: 'Default toast',
     type: 'secondary',
-    closeIcon: 'close',
-  },
-  argTypes: {
-    icon: {
-      control: 'text',
-      type: 'string',
-      description: 'Material style icon',
-    },
   },
   parameters: {
     docs: {
       canvas: {
         sourceState: 'shown',
-      },
-      description: {
-        story: 'To use alerts with Material Symbols style use a `DContextProvider` with `familyClass` and the flag `materialStyle=true` or use the flags directly over the `DAlert` component as a props`',
       },
     },
   },

@@ -30,6 +30,21 @@ export function UseToastMaterialExample() {
         familyClass: 'material-symbols-outlined',
         familyPrefix: '',
       }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+      }}
     >
       <DButton
         text="Show Toast"
@@ -40,8 +55,6 @@ export function UseToastMaterialExample() {
               type: 'info',
               showClose: true,
               autoClose: 500,
-              icon: 'info',
-              closeIcon: 'close',
             },
           )
         )}

@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 import type { PropsWithChildren } from 'react';
+import type { AlertTypeIconMap } from '../components/interface';
 
 type CurrencyProps = {
   symbol: string;
@@ -24,6 +25,16 @@ type IconMapProps = {
   xIcon: string;
   xLgIcon: string;
   chevronDownIcon: string;
+  alert: AlertTypeIconMap;
+  input: {
+    invalid: string;
+    valid: string;
+    search: string;
+    show: string;
+    hide: string;
+    decrease: string;
+    increase: string;
+  };
 };
 
 type Props = {
@@ -54,6 +65,25 @@ const defaultState = {
     xIcon: 'x',
     xLgIcon: 'x-lg',
     chevronDownIcon: 'chevron-down',
+    alert: {
+      warning: 'exclamation-circle',
+      danger: 'exclamation-triangle',
+      success: 'check-circle',
+      info: 'info-circle',
+      dark: 'info-circle',
+      light: 'info-circle',
+      primary: 'info-circle',
+      secondary: 'info-circle',
+    },
+    input: {
+      invalid: 'exclamation-circle',
+      valid: 'check',
+      search: 'search',
+      show: 'eye',
+      hide: 'eye-slash',
+      increase: 'plus-square',
+      decrease: 'dash-square',
+    },
   },
   setContext: () => {},
 };

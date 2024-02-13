@@ -1,8 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
 import { ICONS } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DInputPassword> = {
   title: 'Design System/Components/Input Password',
@@ -191,12 +194,65 @@ export const Disabled: Story = {
 
 export const Floating: Story = {
   args: {
-    id: 'componentId1',
+    id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
     iconEndAriaLabel: 'show/hide password',
     floatingLabel: true,
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInputPassword>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DInputPassword {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId7',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    iconEndAriaLabel: 'show/hide password',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };
