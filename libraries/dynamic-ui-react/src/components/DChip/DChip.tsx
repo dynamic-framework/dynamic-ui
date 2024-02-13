@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import DIcon from '../DIcon';
 
 import type { BaseProps, FamilyIconProps } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
@@ -12,6 +13,10 @@ type Props =
   theme?: string;
   text?: string;
   icon?: string;
+  iconClose?: string;
+  iconCloseFamilyClass?: string;
+  iconCloseFamilyPrefix?: string;
+  iconCloseMaterialStyle?: boolean;
   showClose?: boolean;
   closeAriaLabel?: string;
   onClose?: () => void;
@@ -24,6 +29,11 @@ export default function DChip(
     icon,
     iconFamilyClass,
     iconFamilyPrefix,
+    iconMaterialStyle,
+    iconClose: iconCloseProp,
+    iconCloseFamilyClass,
+    iconCloseFamilyPrefix,
+    iconCloseMaterialStyle,
     showClose = false,
     closeAriaLabel = 'close',
     className,
@@ -38,7 +48,12 @@ export default function DChip(
     }),
     [theme],
   );
-
+  const {
+    iconMap: {
+      xLgIcon,
+    },
+  } = useDContext();
+  const iconClose = useMemo(() => iconCloseProp || xLgIcon, [iconCloseProp, xLgIcon]);
   return (
     <span
       className={classNames(generateClasses, className)}
@@ -50,6 +65,7 @@ export default function DChip(
             icon={icon}
             familyClass={iconFamilyClass}
             familyPrefix={iconFamilyPrefix}
+            materialStyle={iconMaterialStyle}
           />
         </div>
       )}
@@ -61,7 +77,12 @@ export default function DChip(
           onClick={onClose}
           aria-label={closeAriaLabel}
         >
-          <DIcon icon="x-lg" />
+          <DIcon
+            icon={iconClose}
+            familyClass={iconCloseFamilyClass}
+            familyPrefix={iconCloseFamilyPrefix}
+            materialStyle={iconCloseMaterialStyle}
+          />
         </button>
       )}
     </span>

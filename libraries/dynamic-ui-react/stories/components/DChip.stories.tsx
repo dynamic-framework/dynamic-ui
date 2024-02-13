@@ -1,8 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DChip from '../../src/components/DChip/DChip';
 import { ICONS, THEMES } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DChip> = {
   title: 'Design System/Components/Chip',
@@ -64,6 +68,31 @@ const config: Meta<typeof DChip> = {
       control: 'text',
       type: 'string',
     },
+    iconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconClose: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
+    iconCloseFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconCloseFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    iconCloseMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     showClose: {
       control: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -111,5 +140,56 @@ export const Close: Story = {
     text: 'Default',
     icon: 'fire',
     showClose: true,
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInputPassword>) => (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyPrefix: '',
+        familyClass: 'material-symbols-outlined',
+      }}
+      iconMap={{
+        xIcon: 'close_small',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
+        alert: {
+          warning: 'warning',
+          danger: 'error',
+          success: 'done',
+          info: 'info',
+          dark: 'info',
+          light: 'info',
+          primary: 'info',
+          secondary: 'info',
+        },
+        input: {
+          invalid: 'priority_high',
+          valid: 'done',
+          search: 'search',
+          show: 'visibility',
+          hide: 'visibility_off',
+          increase: 'add_box',
+          decrease: 'indeterminate_check_box',
+        },
+      }}
+    >
+      <DChip {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    theme: 'secondary',
+    text: 'Default',
+    icon: 'local_fire_department',
+    showClose: true,
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

@@ -20,6 +20,7 @@ export type BaseProps = {
 export type FamilyIconProps = {
   iconFamilyClass?: string;
   iconFamilyPrefix?: string;
+  iconMaterialStyle?: boolean;
 };
 export type LabelIconProps = {
   labelIcon?: string;
