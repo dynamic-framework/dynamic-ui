@@ -23,6 +23,7 @@ import type {
   FamilyIconProps,
   LabelIconProps,
   StartIconProps,
+  StateIcons,
 } from '../interface';
 import type { Merge } from '../../types';
 
@@ -32,6 +33,7 @@ type NonHTMLInputElementProps =
 & LabelIconProps
 & StartIconProps
 & EndIconProps
+& StateIcons
 & {
   value?: string;
   label?: string;
@@ -42,6 +44,7 @@ type NonHTMLInputElementProps =
   floatingLabel?: boolean;
   inputStart?: ReactNode;
   inputEnd?: ReactNode;
+
   onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
   onIconEndClick?: (value?: string) => void;
@@ -74,6 +77,8 @@ function DInput(
     iconEndFamilyPrefix,
     iconEndAriaLabel,
     iconEndTabIndex,
+    invalidIcon = 'exclamation-circle',
+    validIcon = 'check',
     hint,
     invalid = false,
     valid = false,
@@ -226,7 +231,7 @@ function DInput(
             >
               <DIcon
                 className="d-input-validation-icon"
-                icon={invalid ? 'exclamation-circle' : 'check'}
+                icon={invalid ? invalidIcon : validIcon}
                 familyClass={iconFamilyClass}
                 familyPrefix={iconFamilyPrefix}
               />

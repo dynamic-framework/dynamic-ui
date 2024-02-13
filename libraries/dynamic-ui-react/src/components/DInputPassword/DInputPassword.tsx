@@ -5,7 +5,13 @@ import type { ForwardedRef, ComponentPropsWithoutRef, RefObject } from 'react';
 import DInput from '../DInput';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
-type Props = Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'type'>;
+type Props = Omit<
+ComponentPropsWithoutRef<typeof DInput>,
+| 'iconEnd'
+| 'type'
+| 'invalidIcon'
+| 'validIcon'
+>;
 
 function DInputPassword(
   {

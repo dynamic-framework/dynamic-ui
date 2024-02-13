@@ -11,7 +11,16 @@ type NonDInputProps = {
   onClick?: (value: string | undefined) => void;
 };
 
-type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'onIconEndClick'>, NonDInputProps>;
+type Props = Merge<
+Omit<
+ComponentPropsWithoutRef<typeof DInput>,
+| 'iconEnd'
+| 'onIconEndClick'
+| 'invalidIcon'
+| 'validIcon'
+>,
+NonDInputProps
+>;
 
 function DInputSearch(
   {
