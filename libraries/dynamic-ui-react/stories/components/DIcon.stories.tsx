@@ -174,7 +174,7 @@ export const MaterialStyle: Story = {
         familyClass: 'material-symbols-outlined',
       }}
       iconMap={{
-        xIcon: 'close',
+        xIcon: 'close_small',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
         alert: {
@@ -234,7 +234,7 @@ export const MaterialStyleHasCircle: Story = {
         familyClass: 'material-symbols-outlined',
       }}
       iconMap={{
-        xIcon: 'close',
+        xIcon: 'close_small',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
         alert: {
@@ -295,7 +295,7 @@ export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
         familyClass: 'material-symbols-outlined',
       }}
       iconMap={{
-        xIcon: 'close',
+        xIcon: 'close_small',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
         alert: {

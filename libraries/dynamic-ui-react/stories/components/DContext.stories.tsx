@@ -91,7 +91,7 @@ export const IconSettings: Story = {
       materialStyle: false,
     },
     iconMap: {
-      xIcon: 'close',
+      xIcon: 'close_small',
       xLgIcon: 'close',
       chevronDownIcon: 'expand_more',
       alert: {

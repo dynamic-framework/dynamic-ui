@@ -237,7 +237,7 @@ export const MaterialStyle: Story = {
         familyClass: 'material-symbols-outlined',
       }}
       iconMap={{
-        xIcon: 'close',
+        xIcon: 'close_small',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
         alert: {

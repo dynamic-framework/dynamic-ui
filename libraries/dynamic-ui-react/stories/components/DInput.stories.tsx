@@ -427,7 +427,7 @@ export const MaterialIcon: Story = {
         familyClass: 'material-symbols-outlined',
       }}
       iconMap={{
-        xIcon: 'close',
+        xIcon: 'close_small',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
         alert: {
@@ -482,7 +482,7 @@ export const MaterialIconError: Story = {
         familyClass: 'material-symbols-outlined',
       }}
       iconMap={{
-        xIcon: 'close',
+        xIcon: 'close_small',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
         alert: {
@@ -534,7 +534,7 @@ export const MaterialIconConfirm: Story = {
         familyClass: 'material-symbols-outlined',
       }}
       iconMap={{
-        xIcon: 'close',
+        xIcon: 'close_small',
         xLgIcon: 'close',
         chevronDownIcon: 'expand_more',
         alert: {
