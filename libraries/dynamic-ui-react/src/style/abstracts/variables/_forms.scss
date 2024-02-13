@@ -40,10 +40,10 @@ $input-font-size-lg: $input-font-size !default;
 $input-bg: var(--#{$prefix}white) !default;
 $input-disabled-color: var(--#{$prefix}gray) !default;
 $input-disabled-bg: var(--#{$prefix}gray-100) !default;
-$input-disabled-border-color: var(--#{$prefix}gray-200) !default;
+$input-disabled-border-color: var(--#{$prefix}gray-300) !default;
 
 $input-color: var(--#{$prefix}gray) !default;
-$input-border-color: var(--#{$prefix}gray-200) !default;      // unused
+$input-border-color: var(--#{$prefix}gray-300) !default;      // unused
 $input-border-width: $input-btn-border-width !default;          // unused
 $input-box-shadow: $box-shadow-inset !default;                  // unused
 

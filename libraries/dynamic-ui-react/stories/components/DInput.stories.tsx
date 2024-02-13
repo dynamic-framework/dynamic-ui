@@ -68,6 +68,14 @@ To understand in more detail the aspects covered by this component, review the f
     style: {
       control: 'object',
     },
+    iconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
     label: {
       control: 'text',
       type: 'string',
@@ -81,6 +89,14 @@ To understand in more detail the aspects covered by this component, review the f
       },
       type: 'string',
       options: [undefined, ...ICONS],
+    },
+    labelIconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    labelIconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
     },
     placeholder: {
       control: 'text',
@@ -132,11 +148,23 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
       options: [undefined, ...ICONS],
     },
+    iconStartDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     iconStartAriaLabel: {
       control: 'text',
       type: 'string',
     },
-    iconEndAriaLabel: {
+    iconStartTabIndex: {
+      control: 'number',
+      type: 'number',
+    },
+    iconStartFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconStartFamilyPrefix: {
       control: 'text',
       type: 'string',
     },
@@ -149,6 +177,26 @@ To understand in more detail the aspects covered by this component, review the f
       },
       type: 'string',
       options: [undefined, ...ICONS],
+    },
+    iconEndDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconEndAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndTabIndex: {
+      control: 'number',
+      type: 'number',
+    },
+    iconEndFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndFamilyPrefix: {
+      control: 'text',
+      type: 'string',
     },
     hint: {
       control: 'text',
