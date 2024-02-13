@@ -90,5 +90,10 @@ export const IconSettings: Story = {
       familyPrefix: 'bi-',
       materialStyle: false,
     },
+    iconMap: {
+      xIcon: 'close_small',
+      xLgIcon: 'close',
+      chevronDownIcon: 'expand_more',
+    },
   },
 };

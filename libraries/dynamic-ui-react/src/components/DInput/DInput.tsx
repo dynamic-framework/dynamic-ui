@@ -59,7 +59,6 @@ function DInput(
     labelIconFamilyClass,
     labelIconFamilyPrefix,
     disabled = false,
-    readOnly = false,
     loading = false,
     iconFamilyClass,
     iconFamilyPrefix,
@@ -123,7 +122,6 @@ function DInput(
         'is-valid': valid,
       })}
       disabled={disabled || loading}
-      readOnly={readOnly}
       value={value}
       onChange={handleOnChange}
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
@@ -141,7 +139,6 @@ function DInput(
     loading,
     placeholder,
     floatingLabel,
-    readOnly,
     valid,
     value,
   ]);

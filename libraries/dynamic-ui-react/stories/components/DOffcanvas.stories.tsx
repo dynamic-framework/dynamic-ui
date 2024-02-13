@@ -350,6 +350,12 @@ export const MaterialStyleCloseIcon: Story = {
       icon={{
         materialStyle: true,
         familyClass: 'material-symbols-outlined',
+        familyPrefix: '',
+      }}
+      iconMap={{
+        xIcon: 'close',
+        xLgIcon: 'close',
+        chevronDownIcon: 'expand_more',
       }}
     >
       <DOffcanvas {...args}>
