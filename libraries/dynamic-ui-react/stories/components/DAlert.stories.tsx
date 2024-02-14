@@ -5,6 +5,7 @@ import DAlert from '../../src/components/DAlert/DAlert';
 import { THEMES, ICONS } from '../config/constants';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Components/Alert',
@@ -231,36 +232,7 @@ export const LightSoft: Story = {
 export const MaterialStyle: Story = {
   render: (args: ComponentProps<typeof DAlert>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DAlert {...args} />
     </DContextProvider>

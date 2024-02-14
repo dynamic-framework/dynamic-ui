@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
 import DButton from '../../src/components/DButton/DButton';
+import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 import {
   COMPONENT_SIZE,
@@ -357,36 +358,7 @@ export const LinkIconRight: Story = {
 export const MaterialSecondaryIconRight: Story = {
   render: (args: ComponentProps<typeof DButton>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DButton {...args} />
     </DContextProvider>

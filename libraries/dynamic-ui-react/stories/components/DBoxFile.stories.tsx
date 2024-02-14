@@ -6,6 +6,7 @@ import DBoxFile from '../../src/components/DBoxFile/DBoxFile';
 import { PREFIX_BS } from '../../src/components/config';
 import { ICONS } from '../config/constants';
 import { DContextProvider } from '../../src';
+import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DBoxFile> = {
   title: 'Design System/Components/Box File',
@@ -147,36 +148,7 @@ export const MaterialIcon: Story = {
   ],
   render: (args: ComponentProps<typeof DBoxFile>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DBoxFile {...args}>
         <div className="text-center">

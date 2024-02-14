@@ -6,6 +6,7 @@ import DInput from '../../src/components/DInput/DInput';
 import { ICONS } from '../config/constants';
 import { DContextProvider, DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DInput> = {
   title: 'Design System/Components/Input',
@@ -421,36 +422,7 @@ export const CustomInputEnd: Story = {
 export const MaterialIcon: Story = {
   render: (args: ComponentProps<typeof DInput>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DInput {...args} />
     </DContextProvider>
@@ -477,36 +449,7 @@ export const MaterialIcon: Story = {
 export const MaterialIconError: Story = {
   render: (args: ComponentProps<typeof DInput>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DInput {...args} />
     </DContextProvider>
@@ -530,36 +473,7 @@ export const MaterialIconError: Story = {
 export const MaterialIconConfirm: Story = {
   render: (args: ComponentProps<typeof DInput>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DInput {...args} />
     </DContextProvider>

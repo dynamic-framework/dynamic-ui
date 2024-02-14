@@ -13,6 +13,7 @@ import {
   PREFIX_BS,
 } from '../../src/components/config';
 import { DContextProvider, DInput } from '../../src';
+import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
@@ -168,36 +169,7 @@ export const Circle: Story = {
 export const MaterialStyle: Story = {
   render: (args: ComponentProps<typeof DIcon>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DIcon {...args} />
     </DContextProvider>
@@ -229,36 +201,7 @@ export const MaterialStyle: Story = {
 export const MaterialStyleHasCircle: Story = {
   render: (args: ComponentProps<typeof DIcon>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DIcon {...args} />
     </DContextProvider>
@@ -291,36 +234,7 @@ export const MaterialStyleHasCircle: Story = {
 export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
   render: (args: ComponentProps<typeof DInput>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DInput
         {...args}

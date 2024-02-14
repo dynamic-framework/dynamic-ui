@@ -4,6 +4,7 @@ import DModal from '../../src/components/DModal/DModal';
 import { DContextProvider } from '../../src';
 import DButton from '../../src/components/DButton';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DModal> = {
   title: 'Design System/Components/Modal',
@@ -392,36 +393,7 @@ export const MaterialStyleCloseIcon: Story = {
   ],
   render: (args) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyClass: 'material-symbols-outlined',
-        familyPrefix: '',
-      }}
-      iconMap={{
-        x: 'close_small',
-        xLg: 'close',
-        chevronDown: 'expand_more',
-        upload: 'cloud_upload',
-        alert: {
-          warning: 'warning',
-          danger: 'error',
-          success: 'done',
-          info: 'info',
-          dark: 'info',
-          light: 'info',
-          primary: 'info',
-          secondary: 'info',
-        },
-        input: {
-          invalid: 'priority_high',
-          valid: 'done',
-          search: 'search',
-          show: 'visibility',
-          hide: 'visibility_off',
-          increase: 'add_box',
-          decrease: 'indeterminate_check_box',
-        },
-      }}
+      {...DContextProviderConfigMaterial}
     >
       <DModal {...args}>
         <DModal.Header
