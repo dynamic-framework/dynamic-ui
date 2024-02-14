@@ -9,7 +9,10 @@ export const DContextProviderConfigMaterial = {
     xLg: 'close',
     chevronUp: 'expand_less',
     chevronDown: 'expand_more',
+    chevronLeft: 'chevron_left',
+    chevronRight: 'chevron_right',
     upload: 'cloud_upload',
+    calendar: 'calendar_month',
     alert: {
       warning: 'warning',
       danger: 'error',

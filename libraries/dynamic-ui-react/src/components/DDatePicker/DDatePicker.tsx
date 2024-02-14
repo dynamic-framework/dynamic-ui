@@ -13,13 +13,20 @@ import DDatePickerTime from '../DDatePickerTime';
 import DDatePickerInput from '../DDatePickerInput';
 import DDatePickerHeader from '../DDatePickerHeader';
 
-import type { BaseProps, ButtonVariant, ComponentSize } from '../interface';
+import type {
+  BaseProps,
+  ButtonVariant,
+  ComponentSize,
+  FamilyIconProps,
+} from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props<
   CustomModifierNames extends string = never,
   WithRange extends boolean | undefined = undefined,
 > =
 & BaseProps
+& FamilyIconProps
 & Omit<ReactDatePickerProps<CustomModifierNames, WithRange>, 'selected' | 'selectsRange' | 'locale'>
 & {
   date?: string | null;
@@ -28,12 +35,12 @@ type Props<
   inputLabel?: string;
   inputAriaLabel?: string;
   inputActionAriaLabel?: string;
-  inputIcon?: string;
+  iconInput?: string;
   inputId?: string;
   timeId?: string;
   timeLabel?: string;
-  headerPrevMonthIcon?: string;
-  headerNextMonthIcon?: string;
+  iconHeaderPrevMonth?: string;
+  iconHeaderNextMonth?: string;
   headerPrevMonthAriaLabel?: string;
   headerNextMonthAriaLabel?: string;
   headerIconSize?: ComponentSize;
@@ -53,13 +60,15 @@ export default function DDatePicker<
     inputLabel,
     inputAriaLabel,
     inputActionAriaLabel = 'open calendar',
-    inputIcon = 'calendar',
     inputId = 'input-calendar',
     timeId = 'input-time',
     timeLabel,
-    headerPrevMonthIcon = 'chevron-left',
+    iconInput: propIconInput,
+    iconHeaderPrevMonth: propIconHeaderPrevMonth,
+    iconHeaderNextMonth: propIconHeaderNextMonth,
+    iconFamilyClass,
+    iconFamilyPrefix,
     headerPrevMonthAriaLabel = 'decrease month',
-    headerNextMonthIcon = 'chevron-right',
     headerNextMonthAriaLabel = 'increase month',
     headerIconSize = 'sm',
     headerButtonVariant = 'link',
@@ -70,14 +79,30 @@ export default function DDatePicker<
     ...props
   }: Props<CustomModifierNames, WithRange>,
 ) {
+  const {
+    iconMap: {
+      calendar,
+      chevronLeft,
+      chevronRight,
+    },
+  } = useDContext();
   const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
+  const iconInput = useMemo(() => propIconInput || calendar, [calendar, propIconInput]);
+  const iconPrevMonth = useMemo(
+    () => propIconHeaderPrevMonth || chevronLeft,
+    [chevronLeft, propIconHeaderPrevMonth],
+  );
+  const iconNextMonth = useMemo(
+    () => propIconHeaderNextMonth || chevronRight,
+    [chevronRight, propIconHeaderNextMonth],
+  );
 
   const DatePickerHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
     <DDatePickerHeader
       {...headerProps}
       {...locale && { locale }}
-      prevMonthIcon={headerPrevMonthIcon}
-      nextMonthIcon={headerNextMonthIcon}
+      iconPrevMonth={iconPrevMonth}
+      iconNextMonth={iconNextMonth}
       prevMonthAriaLabel={headerPrevMonthAriaLabel}
       nextMonthAriaLabel={headerNextMonthAriaLabel}
       iconSize={headerIconSize}
@@ -88,13 +113,13 @@ export default function DDatePicker<
   ), [
     headerButtonTheme,
     headerButtonVariant,
-    headerPrevMonthIcon,
     headerPrevMonthAriaLabel,
     headerIconSize,
-    headerNextMonthIcon,
     headerNextMonthAriaLabel,
     withMonthSelector,
     locale,
+    iconPrevMonth,
+    iconNextMonth,
   ]);
 
   return (
@@ -107,7 +132,7 @@ export default function DDatePicker<
           id={inputId}
           aria-label={inputAriaLabel}
           iconEndAriaLabel={inputActionAriaLabel}
-          iconEnd={inputIcon}
+          iconEnd={iconInput}
           className={className}
           style={style}
         />
