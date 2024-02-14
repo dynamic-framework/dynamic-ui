@@ -12,7 +12,10 @@ export type Step = {
 type Props = BaseProps & {
   options: Array<Step>;
   currentStep: number;
-  successIcon?: string;
+  iconSuccess?: string;
+  iconSuccessFamilyClass?: string;
+  iconSuccessFamilyPrefix?: string;
+  iconSuccessMaterialStyle?: boolean;
   vertical?: boolean;
   breakpoint?: BreakpointSize;
 };
@@ -21,7 +24,10 @@ export default function DStepper(
   {
     options,
     currentStep,
-    successIcon = 'check',
+    iconSuccess = 'check',
+    iconSuccessFamilyClass,
+    iconSuccessFamilyPrefix,
+    iconSuccessMaterialStyle = false,
     vertical = false,
     breakpoint = 'lg',
     className,
@@ -43,8 +49,11 @@ export default function DStepper(
         <DStepperDesktop
           options={options}
           currentStep={currentStep}
-          successIcon={successIcon}
           vertical={vertical}
+          iconSuccess={iconSuccess}
+          iconSuccessFamilyClass={iconSuccessFamilyClass}
+          iconSuccessFamilyPrefix={iconSuccessFamilyPrefix}
+          iconSuccessMaterialStyle={iconSuccessMaterialStyle}
         />
       </div>
     </div>

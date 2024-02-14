@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 
+import { useMemo } from 'react';
 import DIcon from '../DIcon';
 
 import type { BaseProps } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Step = {
   label: string;
@@ -12,7 +14,10 @@ type Step = {
 type Props = BaseProps & {
   options: Array<Step>;
   currentStep: number;
-  successIcon?: string;
+  iconSuccess?: string;
+  iconSuccessFamilyClass?: string;
+  iconSuccessFamilyPrefix?: string;
+  iconSuccessMaterialStyle?: boolean;
   vertical?: boolean;
 };
 
@@ -20,12 +25,23 @@ export default function DStepper(
   {
     options,
     currentStep,
-    successIcon = 'check',
+    iconSuccess: propIconSuccess,
+    iconSuccessFamilyClass,
+    iconSuccessFamilyPrefix,
+    iconSuccessMaterialStyle = false,
     vertical = false,
     className,
     style,
   } : Props,
 ) {
+  const {
+    iconMap: {
+      input,
+    },
+  } = useDContext();
+
+  const icon = useMemo(() => propIconSuccess || input.valid, [input.valid, propIconSuccess]);
+
   if (currentStep < 1 || currentStep > options.length) {
     throw new Error('Current step should be in the range from 1 to options length');
   }
@@ -57,7 +73,10 @@ export default function DStepper(
               {value < currentStep
                 ? (
                   <DIcon
-                    icon={successIcon}
+                    icon={icon}
+                    familyClass={iconSuccessFamilyClass}
+                    familyPrefix={iconSuccessFamilyPrefix}
+                    materialStyle={iconSuccessMaterialStyle}
                     className="d-step-icon"
                   />
                 )
