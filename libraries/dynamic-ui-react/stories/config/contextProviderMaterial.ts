@@ -7,6 +7,7 @@ export const DContextProviderConfigMaterial = {
   iconMap: {
     x: 'close_small',
     xLg: 'close',
+    chevronUp: 'expand_less',
     chevronDown: 'expand_more',
     upload: 'cloud_upload',
     alert: {

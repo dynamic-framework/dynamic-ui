@@ -25,6 +25,7 @@ type IconMapProps = {
   x: string;
   xLg: string;
   chevronDown: string;
+  chevronUp: string;
   alert: AlertTypeIconMap;
   upload: string;
   input: {
@@ -66,6 +67,7 @@ const defaultState = {
     x: 'x',
     xLg: 'x-lg',
     chevronDown: 'chevron-down',
+    chevronUp: 'chevron-up',
     upload: 'cloud-upload',
     alert: {
       warning: 'exclamation-circle',
