@@ -36,11 +36,11 @@ export default function DStepper(
 ) {
   const {
     iconMap: {
-      input,
+      check,
     },
   } = useDContext();
 
-  const icon = useMemo(() => propIconSuccess || input.valid, [input.valid, propIconSuccess]);
+  const icon = useMemo(() => propIconSuccess || check, [check, propIconSuccess]);
 
   if (currentStep < 1 || currentStep > options.length) {
     throw new Error('Current step should be in the range from 1 to options length');

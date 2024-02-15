@@ -31,6 +31,7 @@ type IconMapProps = {
   alert: AlertTypeIconMap;
   upload: string;
   calendar: string;
+  check: string;
   input: {
     invalid: string;
     valid: string;
@@ -75,6 +76,7 @@ const defaultState = {
     chevronRight: 'chevron-right',
     upload: 'cloud-upload',
     calendar: 'calendar',
+    check: 'check',
     alert: {
       warning: 'exclamation-circle',
       danger: 'exclamation-triangle',

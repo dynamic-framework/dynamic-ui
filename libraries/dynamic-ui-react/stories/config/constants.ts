@@ -26,6 +26,7 @@ export const CONTEXT_PROVIDER_CONFIG_MATERIAL = {
     chevronRight: 'chevron_right',
     upload: 'cloud_upload',
     calendar: 'calendar_month',
+    check: 'verified',
     alert: {
       warning: 'warning',
       danger: 'error',
