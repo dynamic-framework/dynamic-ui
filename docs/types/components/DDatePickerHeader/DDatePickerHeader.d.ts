@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import DButton from '../DButton';
-import type { BaseProps, ButtonVariant, ComponentSize } from '../interface';
-type Props = BaseProps & {
+import type { BaseProps, ButtonVariant, ComponentSize, FamilyIconProps } from '../interface';
+type Props = BaseProps & FamilyIconProps & {
     locale?: Locale;
     monthDate: Date;
     decreaseMonth: () => void;
@@ -11,13 +11,13 @@ type Props = BaseProps & {
     prevMonthButtonDisabled: boolean;
     nextMonthButtonDisabled: boolean;
     withMonthSelector: boolean;
-    prevMonthIcon: string;
-    nextMonthIcon: string;
+    iconPrevMonth: string;
+    iconNextMonth: string;
     prevMonthAriaLabel?: string;
     nextMonthAriaLabel?: string;
     iconSize: ComponentSize;
     buttonVariant: ButtonVariant;
     buttonTheme: string;
 } & Omit<ComponentProps<typeof DButton>, 'iconStart' | 'onMClick' | 'isDisabled'>;
-export default function DDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, prevMonthIcon, nextMonthIcon, prevMonthAriaLabel, nextMonthAriaLabel, iconSize, buttonVariant, buttonTheme, locale, style, className, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDatePickerHeader({ monthDate, changeMonth, changeYear, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, withMonthSelector, iconPrevMonth, iconNextMonth, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, prevMonthAriaLabel, nextMonthAriaLabel, iconSize, buttonVariant, buttonTheme, locale, style, className, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

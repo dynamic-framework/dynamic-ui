@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 import type { BaseProps, FamilyIconProps } from '../../interface';
 type Props = BaseProps & FamilyIconProps & PropsWithChildren<{
     showCloseButton?: boolean;
@@ -6,5 +6,5 @@ type Props = BaseProps & FamilyIconProps & PropsWithChildren<{
     materialStyle?: boolean;
     onClose?: () => void;
 }>;
-export default function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon, materialStyle, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

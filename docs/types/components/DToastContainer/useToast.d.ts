@@ -5,7 +5,9 @@ export type ToastConfig = {
     showClose?: boolean;
     position?: ToastPosition;
     autoClose?: number | false;
+    icon?: string;
+    iconClose?: string;
 };
 export default function useToast(): {
-    toast: (message: string, { position, type, showClose, autoClose, }?: ToastConfig) => void;
+    toast: (message: string, { position, type, showClose, autoClose, icon, iconClose, }?: ToastConfig) => void;
 };

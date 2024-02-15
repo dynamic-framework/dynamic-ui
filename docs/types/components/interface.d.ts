@@ -19,11 +19,13 @@ export type BaseProps = {
 export type FamilyIconProps = {
     iconFamilyClass?: string;
     iconFamilyPrefix?: string;
+    iconMaterialStyle?: boolean;
 };
 export type LabelIconProps = {
     labelIcon?: string;
     labelIconFamilyClass?: string;
     labelIconFamilyPrefix?: string;
+    labelIconMaterialStyle?: boolean;
 };
 export type StartIconProps = {
     iconStart?: string;
@@ -32,6 +34,7 @@ export type StartIconProps = {
     iconStartFamilyPrefix?: string;
     iconStartAriaLabel?: string;
     iconStartTabIndex?: number;
+    iconStartMaterialStyle?: boolean;
 };
 export type EndIconProps = {
     iconEnd?: string;
@@ -40,6 +43,11 @@ export type EndIconProps = {
     iconEndFamilyPrefix?: string;
     iconEndAriaLabel?: string;
     iconEndTabIndex?: number;
+    iconEndMaterialStyle?: boolean;
+};
+export type StateIcons = {
+    invalidIcon?: string;
+    validIcon?: string;
 };
 export type AlertType = 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | 'primary' | 'secondary';
 export type AlertTypeIconMap = {

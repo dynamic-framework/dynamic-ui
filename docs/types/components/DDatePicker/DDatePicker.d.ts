@@ -1,19 +1,19 @@
 import type { Locale } from 'date-fns';
 import type { ReactDatePickerProps } from 'react-datepicker';
-import type { BaseProps, ButtonVariant, ComponentSize } from '../interface';
-type Props = BaseProps & Omit<ReactDatePickerProps, 'selected' | 'selectsRange' | 'locale'> & {
+import type { BaseProps, ButtonVariant, ComponentSize, FamilyIconProps } from '../interface';
+type Props<CustomModifierNames extends string = never, WithRange extends boolean | undefined = undefined> = BaseProps & FamilyIconProps & Omit<ReactDatePickerProps<CustomModifierNames, WithRange>, 'selected' | 'selectsRange' | 'locale'> & {
     date?: string | null;
     withMonthSelector?: boolean;
     selectsRange?: boolean;
     inputLabel?: string;
     inputAriaLabel?: string;
     inputActionAriaLabel?: string;
-    inputIcon?: string;
+    iconInput?: string;
     inputId?: string;
     timeId?: string;
     timeLabel?: string;
-    headerPrevMonthIcon?: string;
-    headerNextMonthIcon?: string;
+    iconHeaderPrevMonth?: string;
+    iconHeaderNextMonth?: string;
     headerPrevMonthAriaLabel?: string;
     headerNextMonthAriaLabel?: string;
     headerIconSize?: ComponentSize;
@@ -21,5 +21,5 @@ type Props = BaseProps & Omit<ReactDatePickerProps, 'selected' | 'selectsRange' 
     headerButtonTheme?: string;
     locale?: Locale;
 };
-export default function DDatePicker({ date, selectsRange, withMonthSelector, inputLabel, inputAriaLabel, inputActionAriaLabel, inputIcon, inputId, timeId, timeLabel, headerPrevMonthIcon, headerPrevMonthAriaLabel, headerNextMonthIcon, headerNextMonthAriaLabel, headerIconSize, headerButtonVariant, headerButtonTheme, locale, className, style, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDatePicker<CustomModifierNames extends string = never, WithRange extends boolean | undefined = undefined>({ date, selectsRange, withMonthSelector, inputLabel, inputAriaLabel, inputActionAriaLabel, inputId, timeId, timeLabel, iconInput: iconInputProp, iconHeaderPrevMonth: iconHeaderPrevMonthProp, iconHeaderNextMonth: iconHeaderNextMonthProp, iconMaterialStyle: iconMaterialStyleProp, iconFamilyClass, iconFamilyPrefix, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerIconSize, headerButtonVariant, headerButtonTheme, locale, className, style, ...props }: Props<CustomModifierNames, WithRange>): import("react/jsx-runtime").JSX.Element;
 export {};

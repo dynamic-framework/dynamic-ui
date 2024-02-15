@@ -3,9 +3,13 @@ type Props = BaseProps & FamilyIconProps & {
     theme?: string;
     text?: string;
     icon?: string;
+    iconClose?: string;
+    iconCloseFamilyClass?: string;
+    iconCloseFamilyPrefix?: string;
+    iconCloseMaterialStyle?: boolean;
     showClose?: boolean;
     closeAriaLabel?: string;
     onClose?: () => void;
 };
-export default function DChip({ theme, text, icon, iconFamilyClass, iconFamilyPrefix, showClose, closeAriaLabel, className, style, onClose, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DChip({ theme, text, icon, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, closeAriaLabel, className, style, onClose, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

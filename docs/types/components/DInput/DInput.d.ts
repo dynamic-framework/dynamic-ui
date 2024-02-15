@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import type { BaseProps, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps } from '../interface';
-declare const ForwardedDInput: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "value" | "onChange">, "value" | "loading" | "label" | "invalid" | "onChange" | keyof BaseProps | keyof FamilyIconProps | keyof LabelIconProps | keyof StartIconProps | keyof EndIconProps | "hint" | "valid" | "floatingLabel" | "inputStart" | "inputEnd" | "onIconStartClick" | "onIconEndClick"> & BaseProps & FamilyIconProps & LabelIconProps & StartIconProps & EndIconProps & {
+import type { BaseProps, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps, StateIcons } from '../interface';
+declare const ForwardedDInput: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "value" | "onChange">, "value" | "loading" | "label" | "invalid" | "onChange" | keyof BaseProps | keyof FamilyIconProps | keyof LabelIconProps | keyof StartIconProps | keyof EndIconProps | keyof StateIcons | "hint" | "valid" | "floatingLabel" | "inputStart" | "inputEnd" | "onIconStartClick" | "onIconEndClick"> & BaseProps & FamilyIconProps & LabelIconProps & StartIconProps & EndIconProps & StateIcons & {
     value?: string | undefined;
     label?: string | undefined;
     loading?: boolean | undefined;

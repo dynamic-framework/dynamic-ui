@@ -6,8 +6,11 @@ type Step = {
 type Props = BaseProps & {
     options: Array<Step>;
     currentStep: number;
-    successIcon?: string;
+    iconSuccess?: string;
+    iconSuccessFamilyClass?: string;
+    iconSuccessFamilyPrefix?: string;
+    iconSuccessMaterialStyle?: boolean;
     vertical?: boolean;
 };
-export default function DStepper({ options, currentStep, successIcon, vertical, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DStepper({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
