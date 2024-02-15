@@ -66,6 +66,7 @@ export default function DDatePicker<
     iconInput: propIconInput,
     iconHeaderPrevMonth: propIconHeaderPrevMonth,
     iconHeaderNextMonth: propIconHeaderNextMonth,
+    iconMaterialStyle: propIconMaterialStyle,
     iconFamilyClass,
     iconFamilyPrefix,
     headerPrevMonthAriaLabel = 'decrease month',
@@ -103,6 +104,7 @@ export default function DDatePicker<
       {...locale && { locale }}
       iconPrevMonth={iconPrevMonth}
       iconNextMonth={iconNextMonth}
+      iconMaterialStyle={propIconMaterialStyle}
       prevMonthAriaLabel={headerPrevMonthAriaLabel}
       nextMonthAriaLabel={headerNextMonthAriaLabel}
       iconSize={headerIconSize}
@@ -120,6 +122,7 @@ export default function DDatePicker<
     locale,
     iconPrevMonth,
     iconNextMonth,
+    propIconMaterialStyle,
   ]);
 
   return (
@@ -132,6 +135,7 @@ export default function DDatePicker<
           id={inputId}
           aria-label={inputAriaLabel}
           iconEndAriaLabel={inputActionAriaLabel}
+          iconMaterialStyle={propIconMaterialStyle}
           iconEnd={iconInput}
           className={className}
           style={style}

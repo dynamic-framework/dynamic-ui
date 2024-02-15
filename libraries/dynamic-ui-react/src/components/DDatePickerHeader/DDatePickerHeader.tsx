@@ -54,6 +54,7 @@ export default function DDatePickerHeader(
     iconNextMonth,
     iconFamilyClass,
     iconFamilyPrefix,
+    iconMaterialStyle,
     prevMonthAriaLabel = 'decrease month',
     nextMonthAriaLabel = 'increase month',
     iconSize,
@@ -83,6 +84,7 @@ export default function DDatePickerHeader(
         iconStart={iconPrevMonth}
         iconStartFamilyClass={iconFamilyClass}
         iconStartFamilyPrefix={iconFamilyPrefix}
+        iconStartMaterialStyle={iconMaterialStyle}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
@@ -103,6 +105,7 @@ export default function DDatePickerHeader(
         iconStart={iconNextMonth}
         iconStartFamilyClass={iconFamilyClass}
         iconStartFamilyPrefix={iconFamilyPrefix}
+        iconStartMaterialStyle={iconMaterialStyle}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
