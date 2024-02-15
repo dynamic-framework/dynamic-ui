@@ -1,8 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DChip from '../../src/components/DChip/DChip';
-import { ICONS, THEMES } from '../config/constants';
+import { ICONS, THEMES, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DChip> = {
   title: 'Design System/Components/Chip',
@@ -64,6 +68,31 @@ const config: Meta<typeof DChip> = {
       control: 'text',
       type: 'string',
     },
+    iconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconClose: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
+    iconCloseFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconCloseFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    iconCloseMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     showClose: {
       control: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -111,5 +140,28 @@ export const Close: Story = {
     text: 'Default',
     icon: 'fire',
     showClose: true,
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInputPassword>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DChip {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    theme: 'secondary',
+    text: 'Default',
+    icon: 'local_fire_department',
+    showClose: true,
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

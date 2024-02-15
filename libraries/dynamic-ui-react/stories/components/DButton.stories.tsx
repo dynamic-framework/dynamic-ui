@@ -1,14 +1,18 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DButton from '../../src/components/DButton/DButton';
 
 import {
   COMPONENT_SIZE,
+  CONTEXT_PROVIDER_CONFIG_MATERIAL,
   ICONS,
   INPUT_STATE,
   THEMES,
 } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',
@@ -91,7 +95,6 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
 | --${PREFIX_BS}btn-sm-border-radius      | css length unit   | Button small border radius        |
 
 + [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/buttons/#variables)
-
         `,
       },
     },
@@ -176,6 +179,10 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
       control: 'text',
       type: 'string',
     },
+    iconStartMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     iconStartAriaLabel: {
       control: 'text',
       type: 'string',
@@ -204,6 +211,10 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
     iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
+    },
+    iconEndMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     iconEndAriaLabel: {
       control: 'text',
@@ -344,5 +355,37 @@ export const LinkIconRight: Story = {
     pill: true,
     iconStart: undefined,
     iconEnd: 'chevron-right',
+  },
+};
+
+/**
+ * To use buttons with Material Symbols style use a `DContextProvider` with `familyClass`
+ * and the flag `materialStyle=true` or use the flags directly over the
+ * `DButton` component as a props
+ */
+export const MaterialSecondaryIconRight: Story = {
+  render: (args: ComponentProps<typeof DButton>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DButton {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    theme: 'primary',
+    size: undefined,
+    text: 'Default',
+    type: 'button',
+    loading: false,
+    pill: true,
+    iconStart: undefined,
+    iconEnd: 'chevron_right',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

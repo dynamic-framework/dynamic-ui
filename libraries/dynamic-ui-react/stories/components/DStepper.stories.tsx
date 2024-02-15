@@ -1,8 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import { ComponentProps } from 'react';
 import DStepper from '../../src/components/DStepper/DStepper';
 
-import { ICONS } from '../config/constants';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS } from '../config/constants';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DStepper> = {
   title: 'Design System/Components/Stepper',
@@ -20,7 +22,7 @@ const config: Meta<typeof DStepper> = {
       type: 'number',
       description: 'Current step number',
     },
-    successIcon: {
+    iconSuccess: {
       control: {
         type: 'select',
         labels: {
@@ -28,6 +30,18 @@ const config: Meta<typeof DStepper> = {
         },
       },
       options: [undefined, ...ICONS],
+    },
+    iconSuccessMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconSuccessFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconSuccessFamilyPrefix: {
+      control: 'text',
+      type: 'string',
     },
     vertical: {
       control: 'boolean',
@@ -62,7 +76,7 @@ export const Default: Story = {
     <DStepper {...args} />
   ),
   args: {
-    currentStep: 1,
+    currentStep: 2,
     options: [
       { label: 'Lorem ipsum dolor sit amet', value: 1 },
       { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
@@ -86,12 +100,43 @@ export const Vertical: Story = {
     <DStepper {...args} />
   ),
   args: {
-    currentStep: 1,
+    currentStep: 2,
     options: [
       { label: 'Lorem ipsum dolor sit amet', value: 1 },
       { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
       { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
     ],
     vertical: true,
+  },
+};
+
+/**
+ * To use Stepper with Material Symbols style use a `DContextProvider` with `familyClass`
+ * and the flag `materialStyle=true` or use the flags directly over the
+ * `DStepper` component as a props
+ */
+export const MaterialStyle: Story = {
+  render: (args: ComponentProps<typeof DStepper>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DStepper {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    currentStep: 2,
+    options: [
+      { label: 'Lorem ipsum dolor sit amet', value: 1 },
+      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
+      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+    ],
+    iconSuccess: 'verified',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

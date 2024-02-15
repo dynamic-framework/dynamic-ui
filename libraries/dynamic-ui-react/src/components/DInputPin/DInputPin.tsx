@@ -1,6 +1,6 @@
 import {
   useCallback,
-  useEffect,
+  useEffect, useMemo,
   useState,
 } from 'react';
 import classNames from 'classnames';
@@ -25,6 +25,7 @@ import type {
   PinInputType,
   StateIcons,
 } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
@@ -63,8 +64,8 @@ export default function DInputPin(
     iconFamilyClass,
     iconFamilyPrefix,
     characters = 4,
-    invalidIcon = 'exclamation-circle',
-    validIcon = 'check',
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     innerInputMode = 'text',
     hint,
     invalid = false,
@@ -128,6 +129,16 @@ export default function DInputPin(
   const preventDefaultEvent = useCallback((event: MouseEvent | FormEvent) => {
     event.preventDefault();
   }, []);
+
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
 
   return (
     <div

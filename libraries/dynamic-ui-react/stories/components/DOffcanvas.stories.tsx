@@ -4,6 +4,7 @@ import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
 import { PREFIX_BS } from '../../src/components/config';
 import { DContextProvider } from '../../src';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DOffcanvas> = {
   title: 'Design System/Components/Offcanvas',
@@ -347,20 +348,10 @@ export const MaterialStyleCloseIcon: Story = {
   ],
   render: (args) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyClass: 'material-symbols-outlined',
-        familyPrefix: '',
-      }}
-      iconMap={{
-        xIcon: 'close',
-        xLgIcon: 'close',
-        chevronDownIcon: 'expand_more',
-      }}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DOffcanvas {...args}>
         <DOffcanvas.Header
-          icon="cancel"
           showCloseButton
         >
           <h5 className="fw-bold">Advanced filters</h5>

@@ -1,8 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DInputCounter from '../../src/components/DInputCounter/DInputCounter';
-import { ICONS } from '../config/constants';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DInputCounter> = {
   title: 'Design System/Components/Input Counter',
@@ -223,5 +226,34 @@ export const Floating: Story = {
     floatingLabel: true,
     iconStartAriaLabel: 'decrease action',
     iconEndAriaLabel: 'increase action',
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInputCounter>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DInputCounter
+        {...args}
+      />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId6',
+    label: 'Label',
+    labelIcon: undefined,
+    value: 3,
+    minValue: 0,
+    maxValue: 20,
+    iconStartAriaLabel: 'decrease action',
+    iconEndAriaLabel: 'increase action',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

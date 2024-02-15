@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { ComponentProps } from 'react';
 import DAlert from '../../src/components/DAlert/DAlert';
-import { THEMES, ICONS } from '../config/constants';
+import { THEMES, ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
@@ -62,7 +62,7 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
-    materialStyle: {
+    iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
     },
@@ -76,7 +76,7 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'boolean',
       description: 'Show toast icon',
     },
-    closeIcon: {
+    iconClose: {
       control: 'select',
       type: 'string',
       options: ICONS,
@@ -223,44 +223,28 @@ export const LightSoft: Story = {
   },
 };
 
+/**
+ * To use alerts with Material Symbols style use a `DContextProvider` with `familyClass`
+ * and the flag `materialStyle=true` or use the flags directly over the
+ * `DAlert` component as a props
+ */
 export const MaterialStyle: Story = {
   render: (args: ComponentProps<typeof DAlert>) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyPrefix: '',
-        familyClass: 'material-symbols-outlined',
-      }}
-      iconMap={{
-        xIcon: 'close',
-        xLgIcon: 'close',
-        chevronDownIcon: 'expand_more',
-      }}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DAlert {...args} />
     </DContextProvider>
   ),
   args: {
-    icon: 'info',
     showClose: true,
     children: 'Default toast',
     type: 'secondary',
-    closeIcon: 'close',
-  },
-  argTypes: {
-    icon: {
-      control: 'text',
-      type: 'string',
-      description: 'Material style icon',
-    },
   },
   parameters: {
     docs: {
       canvas: {
         sourceState: 'shown',
-      },
-      description: {
-        story: 'To use alerts with Material Symbols style use a `DContextProvider` with `familyClass` and the flag `materialStyle=true` or use the flags directly over the `DAlert` component as a props`',
       },
     },
   },

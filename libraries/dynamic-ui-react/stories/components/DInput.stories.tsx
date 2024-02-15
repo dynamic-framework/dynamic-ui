@@ -1,8 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DInput from '../../src/components/DInput/DInput';
-import { ICONS } from '../config/constants';
-import { DIcon } from '../../src';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
+import { DContextProvider, DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInput> = {
@@ -76,6 +78,10 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
+    iconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     label: {
       control: 'text',
       type: 'string',
@@ -97,6 +103,10 @@ To understand in more detail the aspects covered by this component, review the f
     labelIconFamilyPrefix: {
       control: 'text',
       type: 'string',
+    },
+    labelIconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     placeholder: {
       control: 'text',
@@ -168,6 +178,10 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
+    iconStartMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     iconEnd: {
       control: {
         type: 'select',
@@ -217,6 +231,10 @@ To understand in more detail the aspects covered by this component, review the f
     iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
+    },
+    iconEndMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     hint: {
       control: 'text',
@@ -386,6 +404,13 @@ export const CustomInputStart: Story = {
       />
     ),
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
 };
 
 export const CustomInputEnd: Story = {
@@ -399,5 +424,86 @@ export const CustomInputEnd: Story = {
         icon="arrow-right"
       />
     ),
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId10',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    iconStart: 'face_5',
+    iconEnd: 'face_5',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIconError: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId11',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    invalid: true,
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIconConfirm: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId12',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

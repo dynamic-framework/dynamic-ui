@@ -7,10 +7,16 @@ import type { ComponentProps } from 'react';
 import DButton from '../DButton';
 import DMonthPicker from '../DMonthPicker';
 
-import type { BaseProps, ButtonVariant, ComponentSize } from '../interface';
+import type {
+  BaseProps,
+  ButtonVariant,
+  ComponentSize,
+  FamilyIconProps,
+} from '../interface';
 
 type Props =
 & BaseProps
+& FamilyIconProps
 & {
   locale?: Locale;
   monthDate: Date;
@@ -21,8 +27,8 @@ type Props =
   prevMonthButtonDisabled: boolean;
   nextMonthButtonDisabled: boolean;
   withMonthSelector: boolean;
-  prevMonthIcon: string;
-  nextMonthIcon: string;
+  iconPrevMonth: string;
+  iconNextMonth: string;
   prevMonthAriaLabel?: string;
   nextMonthAriaLabel?: string;
   iconSize: ComponentSize;
@@ -44,8 +50,11 @@ export default function DDatePickerHeader(
     prevMonthButtonDisabled,
     nextMonthButtonDisabled,
     withMonthSelector,
-    prevMonthIcon,
-    nextMonthIcon,
+    iconPrevMonth,
+    iconNextMonth,
+    iconFamilyClass,
+    iconFamilyPrefix,
+    iconMaterialStyle,
     prevMonthAriaLabel = 'decrease month',
     nextMonthAriaLabel = 'increase month',
     iconSize,
@@ -72,7 +81,10 @@ export default function DDatePickerHeader(
       style={style}
     >
       <DButton
-        iconStart={prevMonthIcon}
+        iconStart={iconPrevMonth}
+        iconStartFamilyClass={iconFamilyClass}
+        iconStartFamilyPrefix={iconFamilyPrefix}
+        iconStartMaterialStyle={iconMaterialStyle}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}
@@ -85,10 +97,15 @@ export default function DDatePickerHeader(
         {...withMonthSelector && { className: 'cursor-pointer' }}
         date={monthDate.toISOString()}
         onChange={onChangeDate}
+        iconPrevMonth={iconPrevMonth}
+        iconNextMonth={iconNextMonth}
         {...locale && { locale }}
       />
       <DButton
-        iconStart={nextMonthIcon}
+        iconStart={iconNextMonth}
+        iconStartFamilyClass={iconFamilyClass}
+        iconStartFamilyPrefix={iconFamilyPrefix}
+        iconStartMaterialStyle={iconMaterialStyle}
         size={iconSize}
         variant={buttonVariant}
         theme={buttonTheme}

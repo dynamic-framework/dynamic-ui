@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 import type { PropsWithChildren } from 'react';
+import type { AlertTypeIconMap } from '../components/interface';
 
 type CurrencyProps = {
   symbol: string;
@@ -21,9 +22,25 @@ type IconProps = {
 };
 
 type IconMapProps = {
-  xIcon: string;
-  xLgIcon: string;
-  chevronDownIcon: string;
+  x: string;
+  xLg: string;
+  chevronDown: string;
+  chevronUp: string;
+  chevronLeft: string;
+  chevronRight: string;
+  alert: AlertTypeIconMap;
+  upload: string;
+  calendar: string;
+  check: string;
+  input: {
+    invalid: string;
+    valid: string;
+    search: string;
+    show: string;
+    hide: string;
+    decrease: string;
+    increase: string;
+  };
 };
 
 type Props = {
@@ -51,9 +68,34 @@ const defaultState = {
     materialStyle: false,
   },
   iconMap: {
-    xIcon: 'x',
-    xLgIcon: 'x-lg',
-    chevronDownIcon: 'chevron-down',
+    x: 'x',
+    xLg: 'x-lg',
+    chevronUp: 'chevron-up',
+    chevronDown: 'chevron-down',
+    chevronLeft: 'chevron-left',
+    chevronRight: 'chevron-right',
+    upload: 'cloud-upload',
+    calendar: 'calendar',
+    check: 'check',
+    alert: {
+      warning: 'exclamation-circle',
+      danger: 'exclamation-triangle',
+      success: 'check-circle',
+      info: 'info-circle',
+      dark: 'info-circle',
+      light: 'info-circle',
+      primary: 'info-circle',
+      secondary: 'info-circle',
+    },
+    input: {
+      invalid: 'exclamation-circle',
+      valid: 'check',
+      search: 'search',
+      show: 'eye',
+      hide: 'eye-slash',
+      increase: 'plus-square',
+      decrease: 'dash-square',
+    },
   },
   setContext: () => {},
 };

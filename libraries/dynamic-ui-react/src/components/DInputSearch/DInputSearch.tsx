@@ -5,27 +5,12 @@ import type { ComponentPropsWithoutRef, ForwardedRef, RefObject } from 'react';
 import DInput from '../DInput';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
-import type { Merge } from '../../types';
-
-type NonDInputProps = {
-  onClick?: (value: string | undefined) => void;
-};
-
-type Props = Merge<
-Omit<
-ComponentPropsWithoutRef<typeof DInput>,
-| 'iconEnd'
-| 'onIconEndClick'
-| 'invalidIcon'
-| 'validIcon'
->,
-NonDInputProps
->;
+type Props = ComponentPropsWithoutRef<typeof DInput>;
 
 function DInputSearch(
   {
-    onClick,
     type,
+    iconEnd: iconEndProp,
     iconEndAriaLabel = 'search',
     ...props
   }: Props,
@@ -39,7 +24,6 @@ function DInputSearch(
       type="text"
       iconEnd="search"
       iconEndAriaLabel={iconEndAriaLabel}
-      onIconEndClick={onClick}
       {...props}
     />
   );

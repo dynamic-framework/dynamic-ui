@@ -50,7 +50,6 @@ export default {
               'Progress',
               'Tooltip',
               'Card',
-              'Card Account',
               'Quick Action Button',
               'Quick Action Check',
               'Quick Action Select',
@@ -77,7 +76,6 @@ export default {
               'Popover',
               'Tabs',
               'Collapse',
-              'Collapse Icon Text',
             ],
             'Utils',
             [

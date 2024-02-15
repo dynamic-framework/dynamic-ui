@@ -14,14 +14,14 @@ export default function DSelectDropdownIndicator<
 ) {
   const {
     iconMap: {
-      chevronDownIcon,
+      chevronDown,
     },
   } = useDContext();
   return (
     <components.DropdownIndicator<Option, IsMulti, Group>
       {...props}
     >
-      <DIcon icon={chevronDownIcon} />
+      <DIcon icon={chevronDown} />
     </components.DropdownIndicator>
   );
 }

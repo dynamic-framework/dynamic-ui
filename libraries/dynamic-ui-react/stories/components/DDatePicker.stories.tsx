@@ -6,7 +6,8 @@ import es from 'date-fns/locale/es';
 import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
 import DMonthPicker from '../../src/components/DMonthPicker';
 import { PREFIX_BS } from '../../src/components/config';
-import { ICONS } from '../config/constants';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
+import { DContextProvider } from '../../src';
 
 registerLocale('es', es);
 
@@ -122,7 +123,7 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
-    inputIcon: {
+    iconInput: {
       control: {
         type: 'select',
         labels: {
@@ -132,7 +133,7 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    headerPrevMonthIcon: {
+    iconHeaderPrevMonth: {
       control: {
         type: 'select',
         labels: {
@@ -142,7 +143,7 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    headerNextMonthIcon: {
+    iconHeaderNextMonth: {
       control: {
         type: 'select',
         labels: {
@@ -151,6 +152,14 @@ To understand in more detail the aspects covered by this component, review the f
       },
       type: 'string',
       options: [undefined, ...ICONS],
+    },
+    iconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
     },
     headerPrevMonthAriaLabel: {
       control: 'text',
@@ -308,9 +317,9 @@ export const Default: Story = {
     date: new Date().toISOString(),
     dateFormat: 'dd/MM/yyyy',
     inline: false,
-    inputIcon: 'calendar',
-    headerPrevMonthIcon: 'chevron-left',
-    headerNextMonthIcon: 'chevron-right',
+    iconInput: 'calendar',
+    iconHeaderPrevMonth: 'chevron-left',
+    iconHeaderNextMonth: 'chevron-right',
   },
 };
 
@@ -500,6 +509,38 @@ export const OnPortal: Story = {
         dateFormat="dd/MM/yyyy"
         onChange={(value) => handleDate(value)}
       />
+    );
+  },
+  args: {
+    inline: false,
+    withMonthSelector: true,
+    withPortal: true,
+    showTimeInput: true,
+    timeLabel: 'Select time',
+    inputAriaLabel: 'Calendar',
+  },
+};
+
+export const MaterialStyle: Story = {
+  render: function Render({ ...args }) {
+    const [date, onDate] = useState<string>(new Date().toISOString());
+    const handleDate = (value: Date | null) => {
+      if (value) {
+        onDate(new Date(value).toISOString());
+      }
+    };
+
+    return (
+      <DContextProvider
+        {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+      >
+        <DDatePicker
+          {...args}
+          date={date}
+          dateFormat="dd/MM/yyyy"
+          onChange={(value) => handleDate(value)}
+        />
+      </DContextProvider>
     );
   },
   args: {

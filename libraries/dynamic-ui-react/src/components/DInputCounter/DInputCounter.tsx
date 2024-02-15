@@ -21,6 +21,7 @@ import type {
 } from '../interface';
 import type { Merge } from '../../types';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import { useDContext } from '../../contexts';
 
 type NonDInputProps = {
   value?: number;
@@ -47,8 +48,8 @@ function DInputCounter(
     maxValue,
     value = minValue,
     invalid,
-    iconStart = 'dash-square',
-    iconEnd = 'plus-square',
+    iconStart: iconStartProp,
+    iconEnd: iconEndProp,
     iconStartAriaLabel = 'decrease action',
     iconEndAriaLabel = 'increase action',
     style,
@@ -93,6 +94,17 @@ function DInputCounter(
   useEffect(() => {
     setInternalIsInvalid(!(internalValue >= minValue && internalValue <= maxValue));
   }, [internalValue, minValue, maxValue]);
+
+  const { iconMap: { input } } = useDContext();
+
+  const iconEnd = useMemo(
+    () => iconEndProp || input.increase,
+    [iconEndProp, input.increase],
+  );
+  const iconStart = useMemo(
+    () => iconStartProp || input.decrease,
+    [iconStartProp, input.decrease],
+  );
 
   return (
     <DInput

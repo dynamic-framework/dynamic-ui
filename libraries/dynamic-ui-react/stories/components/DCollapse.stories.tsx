@@ -3,6 +3,8 @@ import { Meta, StoryObj } from '@storybook/react';
 import DCollapse from '../../src/components/DCollapse/DCollapse';
 import DIcon from '../../src/components/DIcon';
 import { PREFIX_BS } from '../../src/components/config';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DCollapse> = {
   title: 'Design System/Patterns/Collapse',
@@ -54,6 +56,36 @@ const config: Meta<typeof DCollapse> = {
     },
     hasSeparator: {
       control: 'boolean',
+    },
+    iconOpen: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
+    iconClose: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
+    iconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
     },
   },
   tags: ['autodocs'],
@@ -140,5 +172,37 @@ export const Collapsed: Story = {
     ),
     defaultCollapsed: true,
     hasSeparator: true,
+  },
+};
+
+export const MaterialIcon: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px', height: '320px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DCollapse {...args}>
+        <div className="row d-flex flex-column gap-3 pt-3">
+          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        </div>
+      </DCollapse>
+    </DContextProvider>
+  ),
+  args: {
+    Component: (
+      <p>Text</p>
+    ),
+    defaultCollapsed: true,
+    hasSeparator: true,
+    iconClose: 'unfold_more',
+    iconOpen: 'unfold_less',
   },
 };

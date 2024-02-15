@@ -4,6 +4,7 @@ import DModal from '../../src/components/DModal/DModal';
 import { DContextProvider } from '../../src';
 import DButton from '../../src/components/DButton';
 import { PREFIX_BS } from '../../src/components/config';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DModal> = {
   title: 'Design System/Components/Modal',
@@ -392,20 +393,10 @@ export const MaterialStyleCloseIcon: Story = {
   ],
   render: (args) => (
     <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyClass: 'material-symbols-outlined',
-        familyPrefix: '',
-      }}
-      iconMap={{
-        xIcon: 'close',
-        xLgIcon: 'close',
-        chevronDownIcon: 'expand_more',
-      }}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DModal {...args}>
         <DModal.Header
-          icon="cancel"
           showCloseButton
         >
           <h5 className="fw-bold">Do you want to reject the offer?</h5>

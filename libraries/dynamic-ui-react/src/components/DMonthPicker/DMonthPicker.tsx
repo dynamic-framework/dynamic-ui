@@ -7,16 +7,21 @@ import type { ReactDatePickerProps } from 'react-datepicker';
 import classNames from 'classnames';
 import DButton from '../DButton';
 
-import type { BaseProps } from '../interface';
+import type { BaseProps, FamilyIconProps } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props<
   CustomModifierNames extends string = never,
   WithRange extends boolean | undefined = undefined,
-> = BaseProps & Omit<ReactDatePickerProps<CustomModifierNames, WithRange>, 'selectsRange' | 'locale'> & {
+> = BaseProps
+& FamilyIconProps
+& Omit<ReactDatePickerProps<CustomModifierNames, WithRange>, 'selectsRange' | 'locale'> & {
   date: string;
   locale?: Locale;
   headerPrevYearAriaLabel?: string;
   headerNextYearAriaLabel?: string;
+  iconPrevMonth?: string;
+  iconNextMonth?: string;
 };
 
 export default function DMonthPicker<
@@ -31,10 +36,29 @@ export default function DMonthPicker<
     calendarClassName,
     headerPrevYearAriaLabel = 'decrease year',
     headerNextYearAriaLabel = 'increase year',
+    iconFamilyClass,
+    iconFamilyPrefix,
+    iconPrevMonth: iconPrevMonthProp,
+    iconNextMonth: iconNextMonthProp,
     ...props
   }: Props<CustomModifierNames, WithRange>,
 ) {
   const selected = useMemo(() => parseISO(date), [date]);
+  const {
+    iconMap: {
+      chevronLeft,
+      chevronRight,
+    },
+  } = useDContext();
+  const iconPrevMonth = useMemo(
+    () => iconPrevMonthProp || chevronLeft,
+    [chevronLeft, iconPrevMonthProp],
+  );
+  const iconNextMonth = useMemo(
+    () => iconNextMonthProp || chevronRight,
+    [chevronRight, iconNextMonthProp],
+  );
+
   const dateFormatted = useMemo(() => (
     format(new Date(date), 'MMMM yyyy', { locale })
   ), [date, locale]);
@@ -61,25 +85,29 @@ export default function DMonthPicker<
       }) => (
         <div className="d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark">
           <DButton
-            iconStart="chevron-left"
+            iconStart={iconPrevMonth}
             size="sm"
             variant="link"
             theme="light"
             onClick={decreaseYear}
             disabled={prevYearButtonDisabled}
             ariaLabel={headerPrevYearAriaLabel}
+            iconStartFamilyClass={iconFamilyClass}
+            iconStartFamilyPrefix={iconFamilyPrefix}
           />
           <p className="fs-6 fw-bold">
             {monthDate.getFullYear()}
           </p>
           <DButton
-            iconStart="chevron-right"
+            iconStart={iconNextMonth}
             size="sm"
             variant="link"
             theme="light"
             onClick={increaseYear}
             disabled={nextYearButtonDisabled}
             ariaLabel={headerNextYearAriaLabel}
+            iconEndFamilyClass={iconFamilyPrefix}
+            iconEndFamilyPrefix={iconFamilyPrefix}
           />
         </div>
       )}

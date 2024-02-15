@@ -1,8 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
-import { ICONS } from '../config/constants';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DInputPassword> = {
   title: 'Design System/Components/Input Password',
@@ -191,12 +194,37 @@ export const Disabled: Story = {
 
 export const Floating: Story = {
   args: {
-    id: 'componentId1',
+    id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
     iconEndAriaLabel: 'show/hide password',
     floatingLabel: true,
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInputPassword>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DInputPassword {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId7',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    labelIcon: undefined,
+    value: undefined,
+    iconEndAriaLabel: 'show/hide password',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

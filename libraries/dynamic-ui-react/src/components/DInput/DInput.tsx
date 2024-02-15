@@ -26,6 +26,7 @@ import type {
   StateIcons,
 } from '../interface';
 import type { Merge } from '../../types';
+import { useDContext } from '../../contexts';
 
 type NonHTMLInputElementProps =
 & BaseProps
@@ -61,24 +62,28 @@ function DInput(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
+    labelIconMaterialStyle,
     disabled = false,
     loading = false,
     iconFamilyClass,
     iconFamilyPrefix,
+    iconMaterialStyle,
     iconStart,
     iconStartDisabled,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
     iconStartAriaLabel,
     iconStartTabIndex,
+    iconStartMaterialStyle,
     iconEnd,
     iconEndDisabled,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndAriaLabel,
     iconEndTabIndex,
-    invalidIcon = 'exclamation-circle',
-    validIcon = 'check',
+    iconEndMaterialStyle,
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     hint,
     invalid = false,
     valid = false,
@@ -158,6 +163,7 @@ function DInput(
           size={`var(--${PREFIX_BS}input-label-font-size)`}
           familyClass={labelIconFamilyClass}
           familyPrefix={labelIconFamilyPrefix}
+          materialStyle={labelIconMaterialStyle}
         />
       )}
     </label>
@@ -167,6 +173,7 @@ function DInput(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
+    labelIconMaterialStyle,
   ]);
 
   const dynamicComponent = useMemo(() => {
@@ -180,6 +187,16 @@ function DInput(
     }
     return inputComponent;
   }, [floatingLabel, inputComponent, labelComponent]);
+
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
 
   return (
     <div
@@ -220,6 +237,7 @@ function DInput(
                 icon={iconStart}
                 familyClass={iconStartFamilyClass}
                 familyPrefix={iconStartFamilyPrefix}
+                materialStyle={iconStartMaterialStyle}
               />
             </button>
           )}
@@ -234,6 +252,7 @@ function DInput(
                 icon={invalid ? invalidIcon : validIcon}
                 familyClass={iconFamilyClass}
                 familyPrefix={iconFamilyPrefix}
+                materialStyle={iconMaterialStyle}
               />
             </span>
           )}
@@ -252,6 +271,7 @@ function DInput(
                 icon={iconEnd}
                 familyClass={iconEndFamilyClass}
                 familyPrefix={iconEndFamilyPrefix}
+                materialStyle={iconEndMaterialStyle}
               />
             </button>
           )}
