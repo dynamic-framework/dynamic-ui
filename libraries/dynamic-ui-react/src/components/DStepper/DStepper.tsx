@@ -24,7 +24,7 @@ export default function DStepper(
   {
     options,
     currentStep,
-    iconSuccess = 'check',
+    iconSuccess,
     iconSuccessFamilyClass,
     iconSuccessFamilyPrefix,
     iconSuccessMaterialStyle = false,
