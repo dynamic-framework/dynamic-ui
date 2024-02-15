@@ -26,6 +26,7 @@ export type LabelIconProps = {
   labelIcon?: string;
   labelIconFamilyClass?: string;
   labelIconFamilyPrefix?: string;
+  labelIconMaterialStyle?: boolean;
 };
 export type StartIconProps = {
   iconStart?: string;

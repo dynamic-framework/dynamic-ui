@@ -78,6 +78,10 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
+    iconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     label: {
       control: 'text',
       type: 'string',
@@ -99,6 +103,10 @@ To understand in more detail the aspects covered by this component, review the f
     labelIconFamilyPrefix: {
       control: 'text',
       type: 'string',
+    },
+    labelIconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     placeholder: {
       control: 'text',
@@ -170,6 +178,10 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
+    iconStartMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     iconEnd: {
       control: {
         type: 'select',
@@ -219,6 +231,10 @@ To understand in more detail the aspects covered by this component, review the f
     iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
+    },
+    iconEndMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     hint: {
       control: 'text',

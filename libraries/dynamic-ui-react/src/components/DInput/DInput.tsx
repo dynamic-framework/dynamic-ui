@@ -62,22 +62,26 @@ function DInput(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
+    labelIconMaterialStyle,
     disabled = false,
     loading = false,
     iconFamilyClass,
     iconFamilyPrefix,
+    iconMaterialStyle,
     iconStart,
     iconStartDisabled,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
     iconStartAriaLabel,
     iconStartTabIndex,
+    iconStartMaterialStyle,
     iconEnd,
     iconEndDisabled,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndAriaLabel,
     iconEndTabIndex,
+    iconEndMaterialStyle,
     invalidIcon: invalidIconProp,
     validIcon: validIconProp,
     hint,
@@ -159,6 +163,7 @@ function DInput(
           size={`var(--${PREFIX_BS}input-label-font-size)`}
           familyClass={labelIconFamilyClass}
           familyPrefix={labelIconFamilyPrefix}
+          materialStyle={labelIconMaterialStyle}
         />
       )}
     </label>
@@ -168,6 +173,7 @@ function DInput(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
+    labelIconMaterialStyle,
   ]);
 
   const dynamicComponent = useMemo(() => {
@@ -231,6 +237,7 @@ function DInput(
                 icon={iconStart}
                 familyClass={iconStartFamilyClass}
                 familyPrefix={iconStartFamilyPrefix}
+                materialStyle={iconStartMaterialStyle}
               />
             </button>
           )}
@@ -245,6 +252,7 @@ function DInput(
                 icon={invalid ? invalidIcon : validIcon}
                 familyClass={iconFamilyClass}
                 familyPrefix={iconFamilyPrefix}
+                materialStyle={iconMaterialStyle}
               />
             </span>
           )}
@@ -263,6 +271,7 @@ function DInput(
                 icon={iconEnd}
                 familyClass={iconEndFamilyClass}
                 familyPrefix={iconEndFamilyPrefix}
+                materialStyle={iconEndMaterialStyle}
               />
             </button>
           )}
