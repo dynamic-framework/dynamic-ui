@@ -3,9 +3,8 @@ import { Meta, StoryObj } from '@storybook/react';
 import DCollapse from '../../src/components/DCollapse/DCollapse';
 import DIcon from '../../src/components/DIcon';
 import { PREFIX_BS } from '../../src/components/config';
-import { ICONS } from '../config/constants';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DCollapse> = {
   title: 'Design System/Patterns/Collapse',
@@ -186,7 +185,7 @@ export const MaterialIcon: Story = {
   ],
   render: (args) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DCollapse {...args}>
         <div className="row d-flex flex-column gap-3 pt-3">

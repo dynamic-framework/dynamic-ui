@@ -3,11 +3,10 @@ import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
 import DChip from '../../src/components/DChip/DChip';
-import { ICONS, THEMES } from '../config/constants';
+import { ICONS, THEMES, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
 import { DContextProvider } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DChip> = {
   title: 'Design System/Components/Chip',
@@ -147,7 +146,7 @@ export const Close: Story = {
 export const MaterialIcon: Story = {
   render: (args: ComponentProps<typeof DInputPassword>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DChip {...args} />
     </DContextProvider>

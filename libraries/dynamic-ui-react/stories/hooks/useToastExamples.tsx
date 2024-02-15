@@ -2,7 +2,7 @@ import useToast from '../../src/components/DToastContainer/useToast';
 import DButton from '../../src/components/DButton';
 import DToastContainer from '../../src/components/DToastContainer';
 import { DContextProvider } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 export function UseToastExample() {
   const { toast } = useToast();
@@ -26,7 +26,7 @@ export function UseToastMaterialExample() {
   const { toast } = useToast();
   return (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DButton
         text="Show Toast"

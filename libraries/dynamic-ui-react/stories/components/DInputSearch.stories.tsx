@@ -3,10 +3,9 @@ import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
 import DInputSearch from '../../src/components/DInputSearch/DInputSearch';
-import { ICONS } from '../config/constants';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 import { DContextProvider } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DInputSearch> = {
   title: 'Design System/Components/Input Search',
@@ -211,7 +210,7 @@ export const Floating: Story = {
 export const MaterialIcon: Story = {
   render: (args: ComponentProps<typeof DInputSearch>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DInputSearch {...args} />
     </DContextProvider>

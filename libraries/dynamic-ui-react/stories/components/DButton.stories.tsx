@@ -3,10 +3,10 @@ import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
 import DButton from '../../src/components/DButton/DButton';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 import {
   COMPONENT_SIZE,
+  CONTEXT_PROVIDER_CONFIG_MATERIAL,
   ICONS,
   INPUT_STATE,
   THEMES,
@@ -358,7 +358,7 @@ export const LinkIconRight: Story = {
 export const MaterialSecondaryIconRight: Story = {
   render: (args: ComponentProps<typeof DButton>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DButton {...args} />
     </DContextProvider>

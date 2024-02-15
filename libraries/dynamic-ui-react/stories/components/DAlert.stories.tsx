@@ -2,10 +2,9 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { ComponentProps } from 'react';
 import DAlert from '../../src/components/DAlert/DAlert';
-import { THEMES, ICONS } from '../config/constants';
+import { THEMES, ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Components/Alert',
@@ -232,7 +231,7 @@ export const LightSoft: Story = {
 export const MaterialStyle: Story = {
   render: (args: ComponentProps<typeof DAlert>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DAlert {...args} />
     </DContextProvider>

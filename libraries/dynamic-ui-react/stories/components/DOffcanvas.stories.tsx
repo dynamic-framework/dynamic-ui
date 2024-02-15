@@ -4,7 +4,7 @@ import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
 import { PREFIX_BS } from '../../src/components/config';
 import { DContextProvider } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DOffcanvas> = {
   title: 'Design System/Components/Offcanvas',
@@ -348,7 +348,7 @@ export const MaterialStyleCloseIcon: Story = {
   ],
   render: (args) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DOffcanvas {...args}>
         <DOffcanvas.Header

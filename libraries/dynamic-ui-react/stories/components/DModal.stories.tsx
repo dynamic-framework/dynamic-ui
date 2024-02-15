@@ -4,7 +4,7 @@ import DModal from '../../src/components/DModal/DModal';
 import { DContextProvider } from '../../src';
 import DButton from '../../src/components/DButton';
 import { PREFIX_BS } from '../../src/components/config';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DModal> = {
   title: 'Design System/Components/Modal',
@@ -393,7 +393,7 @@ export const MaterialStyleCloseIcon: Story = {
   ],
   render: (args) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DModal {...args}>
         <DModal.Header

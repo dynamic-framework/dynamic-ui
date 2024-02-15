@@ -3,9 +3,8 @@ import { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
 import DStepper from '../../src/components/DStepper/DStepper';
 
-import { ICONS } from '../config/constants';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS } from '../config/constants';
 import { DContextProvider } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DStepper> = {
   title: 'Design System/Components/Stepper',
@@ -119,7 +118,7 @@ export const Vertical: Story = {
 export const MaterialStyle: Story = {
   render: (args: ComponentProps<typeof DStepper>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DStepper {...args} />
     </DContextProvider>

@@ -6,9 +6,8 @@ import es from 'date-fns/locale/es';
 import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
 import DMonthPicker from '../../src/components/DMonthPicker';
 import { PREFIX_BS } from '../../src/components/config';
-import { ICONS } from '../config/constants';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 registerLocale('es', es);
 
@@ -533,7 +532,7 @@ export const MaterialStyle: Story = {
 
     return (
       <DContextProvider
-        {...DContextProviderConfigMaterial}
+        {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
       >
         <DDatePicker
           {...args}

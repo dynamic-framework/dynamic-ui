@@ -6,8 +6,7 @@ import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 import type { OptionIcon, OptionEmoji } from '../../src/components/DSelect';
-import { ICONS } from '../config/constants';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS } from '../config/constants';
 
 const config: Meta<typeof DSelect> = {
   title: 'Design System/Components/Select',
@@ -444,7 +443,7 @@ export const MaterialStyleIcons: Story = {
   },
   render: (args) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DSelect {...args} />
     </DContextProvider>

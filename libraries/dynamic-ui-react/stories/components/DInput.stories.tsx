@@ -3,10 +3,9 @@ import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
 import DInput from '../../src/components/DInput/DInput';
-import { ICONS } from '../config/constants';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider, DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DInput> = {
   title: 'Design System/Components/Input',
@@ -422,7 +421,7 @@ export const CustomInputEnd: Story = {
 export const MaterialIcon: Story = {
   render: (args: ComponentProps<typeof DInput>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DInput {...args} />
     </DContextProvider>
@@ -449,7 +448,7 @@ export const MaterialIcon: Story = {
 export const MaterialIconError: Story = {
   render: (args: ComponentProps<typeof DInput>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DInput {...args} />
     </DContextProvider>
@@ -473,7 +472,7 @@ export const MaterialIconError: Story = {
 export const MaterialIconConfirm: Story = {
   render: (args: ComponentProps<typeof DInput>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DInput {...args} />
     </DContextProvider>

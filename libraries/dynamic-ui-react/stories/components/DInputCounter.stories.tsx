@@ -3,10 +3,9 @@ import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
 import DInputCounter from '../../src/components/DInputCounter/DInputCounter';
-import { ICONS } from '../config/constants';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 import { DContextProvider } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const config: Meta<typeof DInputCounter> = {
   title: 'Design System/Components/Input Counter',
@@ -233,7 +232,7 @@ export const Floating: Story = {
 export const MaterialIcon: Story = {
   render: (args: ComponentProps<typeof DInputCounter>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DInputCounter
         {...args}

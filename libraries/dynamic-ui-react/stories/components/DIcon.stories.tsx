@@ -6,6 +6,7 @@ import {
   THEMES_WITH_EMPTY,
   FIRST_ICON,
   ICONS,
+  CONTEXT_PROVIDER_CONFIG_MATERIAL,
 } from '../config/constants';
 import {
   ICON_FAMILY_CLASS,
@@ -13,7 +14,6 @@ import {
   PREFIX_BS,
 } from '../../src/components/config';
 import { DContextProvider, DInput } from '../../src';
-import { DContextProviderConfigMaterial } from '../config/contextProviderMaterial';
 
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
@@ -169,7 +169,7 @@ export const Circle: Story = {
 export const MaterialStyle: Story = {
   render: (args: ComponentProps<typeof DIcon>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DIcon {...args} />
     </DContextProvider>
@@ -201,7 +201,7 @@ export const MaterialStyle: Story = {
 export const MaterialStyleHasCircle: Story = {
   render: (args: ComponentProps<typeof DIcon>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DIcon {...args} />
     </DContextProvider>
@@ -234,7 +234,7 @@ export const MaterialStyleHasCircle: Story = {
 export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
   render: (args: ComponentProps<typeof DInput>) => (
     <DContextProvider
-      {...DContextProviderConfigMaterial}
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
       <DInput
         {...args}
