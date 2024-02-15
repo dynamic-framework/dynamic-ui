@@ -2,6 +2,9 @@ import type { Preview } from '@storybook/react';
 
 export default {
   parameters: {
+    docs: {
+      toc: true,
+    },
     layout: 'centered',
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
@@ -15,17 +18,21 @@ export default {
         order: [
           'Design System',
           [
-            'Tokens',
+            'Quick Start',
             [
-              'Typography',
-              'Colors',
-              'Spacing',
-              'Border',
-              'Shadow',
-              'Layout',
+              'Install',
+              'Widget',
+              'Platform'
             ],
+            'Typography',
+            'Colors',
+            'Spacing',
+            'Border',
+            'Shadow',
+            'Layout',
             'Components',
             [
+              'Context Provider',
               'Button',
               'Icon',
               'Input',
@@ -43,7 +50,6 @@ export default {
               'Progress',
               'Tooltip',
               'Card',
-              'Card Account',
               'Quick Action Button',
               'Quick Action Check',
               'Quick Action Select',
@@ -70,10 +76,9 @@ export default {
               'Popover',
               'Tabs',
               'Collapse',
-              'Collapse Icon Text',
             ],
-            'Utils', 
-            [ 
+            'Utils',
+            [
               'Hooks',
               'Currency Text'
             ]

@@ -1,11 +1,37 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DProgress from '../../src/components/DProgress/DProgress';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DProgress> = {
   title: 'Design System/Components/Progress',
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Wrapper around Bootstrap Progress.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap Progress](https://getbootstrap.com/docs/5.3/components/progress/)
+
+## CSS Variables
+| Variable                                   | Type              | Description                           |
+|--------------------------------------------|-------------------|---------------------------------------|
+| --${PREFIX_BS}progress-bar-font-weight     | css length unit   | Text font weight                      |
+        `,
+      },
+    },
+  },
   component: DProgress,
   argTypes: {
+    style: {
+      control: 'object',
+    },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     currentValue: {
       control: 'number',
       type: 'number',
@@ -34,6 +60,7 @@ const config: Meta<typeof DProgress> = {
       table: { defaultValue: { summary: false } },
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

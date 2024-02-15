@@ -1,6 +1,6 @@
 import {
   useCallback,
-  useEffect,
+  useEffect, useMemo,
   useState,
 } from 'react';
 import classNames from 'classnames';
@@ -23,12 +23,15 @@ import type {
   LabelIconProps,
   PinInputMode,
   PinInputType,
+  StateIcons,
 } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
 & LabelIconProps
 & FamilyIconProps
+& StateIcons
 & {
   id: string;
   label?: string;
@@ -61,6 +64,8 @@ export default function DInputPin(
     iconFamilyClass,
     iconFamilyPrefix,
     characters = 4,
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     innerInputMode = 'text',
     hint,
     invalid = false,
@@ -125,6 +130,16 @@ export default function DInputPin(
     event.preventDefault();
   }, []);
 
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
+
   return (
     <div
       className={classNames('d-input-pin', className)}
@@ -186,7 +201,7 @@ export default function DInputPin(
           >
             <DIcon
               className="d-input-pin-validation-icon"
-              icon={invalid ? 'exclamation-circle' : 'check'}
+              icon={invalid ? invalidIcon : validIcon}
               familyClass={iconFamilyClass}
               familyPrefix={iconFamilyPrefix}
             />

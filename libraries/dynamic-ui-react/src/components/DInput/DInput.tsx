@@ -23,8 +23,10 @@ import type {
   FamilyIconProps,
   LabelIconProps,
   StartIconProps,
+  StateIcons,
 } from '../interface';
 import type { Merge } from '../../types';
+import { useDContext } from '../../contexts';
 
 type NonHTMLInputElementProps =
 & BaseProps
@@ -32,6 +34,7 @@ type NonHTMLInputElementProps =
 & LabelIconProps
 & StartIconProps
 & EndIconProps
+& StateIcons
 & {
   value?: string;
   label?: string;
@@ -42,6 +45,7 @@ type NonHTMLInputElementProps =
   floatingLabel?: boolean;
   inputStart?: ReactNode;
   inputEnd?: ReactNode;
+
   onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
   onIconEndClick?: (value?: string) => void;
@@ -58,23 +62,28 @@ function DInput(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
+    labelIconMaterialStyle,
     disabled = false,
-    readOnly = false,
     loading = false,
     iconFamilyClass,
     iconFamilyPrefix,
+    iconMaterialStyle,
     iconStart,
     iconStartDisabled,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
     iconStartAriaLabel,
     iconStartTabIndex,
+    iconStartMaterialStyle,
     iconEnd,
     iconEndDisabled,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndAriaLabel,
     iconEndTabIndex,
+    iconEndMaterialStyle,
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     hint,
     invalid = false,
     valid = false,
@@ -123,7 +132,6 @@ function DInput(
         'is-valid': valid,
       })}
       disabled={disabled || loading}
-      readOnly={readOnly}
       value={value}
       onChange={handleOnChange}
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
@@ -141,7 +149,6 @@ function DInput(
     loading,
     placeholder,
     floatingLabel,
-    readOnly,
     valid,
     value,
   ]);
@@ -156,6 +163,7 @@ function DInput(
           size={`var(--${PREFIX_BS}input-label-font-size)`}
           familyClass={labelIconFamilyClass}
           familyPrefix={labelIconFamilyPrefix}
+          materialStyle={labelIconMaterialStyle}
         />
       )}
     </label>
@@ -165,6 +173,7 @@ function DInput(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
+    labelIconMaterialStyle,
   ]);
 
   const dynamicComponent = useMemo(() => {
@@ -178,6 +187,16 @@ function DInput(
     }
     return inputComponent;
   }, [floatingLabel, inputComponent, labelComponent]);
+
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
 
   return (
     <div
@@ -218,6 +237,7 @@ function DInput(
                 icon={iconStart}
                 familyClass={iconStartFamilyClass}
                 familyPrefix={iconStartFamilyPrefix}
+                materialStyle={iconStartMaterialStyle}
               />
             </button>
           )}
@@ -229,9 +249,10 @@ function DInput(
             >
               <DIcon
                 className="d-input-validation-icon"
-                icon={invalid ? 'exclamation-circle' : 'check'}
+                icon={invalid ? invalidIcon : validIcon}
                 familyClass={iconFamilyClass}
                 familyPrefix={iconFamilyPrefix}
+                materialStyle={iconMaterialStyle}
               />
             </span>
           )}
@@ -250,6 +271,7 @@ function DInput(
                 icon={iconEnd}
                 familyClass={iconEndFamilyClass}
                 familyPrefix={iconEndFamilyPrefix}
+                materialStyle={iconEndMaterialStyle}
               />
             </button>
           )}

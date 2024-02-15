@@ -1,11 +1,20 @@
-import { forwardRef, useCallback, useState } from 'react';
+import {
+  forwardRef,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 
 import type { ForwardedRef, ComponentPropsWithoutRef, RefObject } from 'react';
 
 import DInput from '../DInput';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import { useDContext } from '../../contexts';
 
-type Props = Omit<ComponentPropsWithoutRef<typeof DInput>, 'iconEnd' | 'type'>;
+type Props = Omit<
+ComponentPropsWithoutRef<typeof DInput>,
+| 'type'
+>;
 
 function DInputPassword(
   {
@@ -22,11 +31,17 @@ function DInputPassword(
     setVisible((prevVisible) => !prevVisible);
     onIconEndClick?.();
   }, [onIconEndClick]);
+  const { iconMap: { input } } = useDContext();
+
+  const iconEnd = useMemo(
+    () => (!visible ? input.hide : input.show),
+    [input.hide, input.show, visible],
+  );
 
   return (
     <DInput
       ref={inputRef}
-      iconEnd={!visible ? 'eye-slash' : 'eye'}
+      iconEnd={iconEnd}
       type={!visible ? 'password' : 'text'}
       onIconEndClick={handleOnIconEndClick}
       iconEndAriaLabel={iconEndAriaLabel}

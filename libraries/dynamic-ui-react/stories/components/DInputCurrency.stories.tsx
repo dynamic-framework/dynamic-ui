@@ -4,10 +4,46 @@ import type { ComponentProps } from 'react';
 import DInputCurrency from '../../src/components/DInputCurrency/DInputCurrency';
 import { ICONS } from '../config/constants';
 import { DContextProvider } from '../../src';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputCurrency> = {
   title: 'Design System/Components/Input Currency',
   component: DInputCurrency,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Component composition with \`d-input-currency-base\` to make a currency input component that use
+a \`DContextProvider\` to get the currency config.
+
+## CSS Variables
+| Variable                                        | Type            | Description                   |
+|-------------------------------------------------|-----------------|-------------------------------|
+| --${PREFIX_BS}input-control-gap                 | css length unit | Space between layout elements |
+| --${PREFIX_BS}input-label-color                 | css color unit  | Label color                   |
+| --${PREFIX_BS}input-label-font-weight           | css font weight | Label font weight             |
+| --${PREFIX_BS}input-label-font-size             | css length unit | Label font size               |
+| --${PREFIX_BS}input-label-padding-x             | css length unit | Label horizontal padding      |
+| --${PREFIX_BS}input-label-padding-y             | css length unit | Label vertical padding        |
+| --${PREFIX_BS}input-label-gap                   | css length unit | Space between label elements  |
+| --${PREFIX_BS}input-group-border-color          | css color unit  | Input border color            |
+| --${PREFIX_BS}input-group-border-width          | css length unit | Input border width            |
+| --${PREFIX_BS}input-group-border-radius         | css length unit | Input border radius           |
+| --${PREFIX_BS}input-group-hover-border-color    | css color unit  | Input hover border color      |
+| --${PREFIX_BS}input-group-focus-border-color    | css color unit  | Input focus border color      |
+| --${PREFIX_BS}input-group-focus-box-shadow      | css shadow      | Input focus box shadow        |
+| --${PREFIX_BS}input-form-text-padding           | css length unit | Hint padding                  |
+| --${PREFIX_BS}input-form-text-gap               | css length unit | Space between hint elements   |
+| --${PREFIX_BS}input-form-text-color             | css color unit  | Hint color                    |
+| --${PREFIX_BS}input-group-disabled-bg           | css color unit  | Input disable background      |
+| --${PREFIX_BS}input-group-disabled-color        | css color unit  | Input disable color           |
+| --${PREFIX_BS}input-group-disabled-border-color | css color unit  | Input disable border color    |
+| --${PREFIX_BS}input-form-control-text-align     | css text align  | Input text align              |
+| --${PREFIX_BS}input-currency-symbol-color       | css color unit  | Color of the currency symbol  |
+        `,
+      },
+    },
+  },
   argTypes: {
     id: {
       control: 'text',
@@ -22,6 +58,9 @@ const config: Meta<typeof DInputCurrency> = {
     className: {
       control: 'text',
       type: 'string',
+    },
+    style: {
+      control: 'object',
     },
     label: {
       control: 'text',
@@ -89,6 +128,26 @@ const config: Meta<typeof DInputCurrency> = {
       control: 'text',
       type: 'string',
     },
+    validIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    invalidIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
     hint: {
       control: 'text',
       type: 'string',
@@ -125,6 +184,7 @@ const config: Meta<typeof DInputCurrency> = {
       action: 'onChange',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
