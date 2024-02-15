@@ -19,11 +19,6 @@ export default {
           'Design System',
           [
             'Quick Start',
-            [
-              'Install',
-              'Widget',
-              'Platform'
-            ],
             'Typography',
             'Colors',
             'Spacing',
