@@ -76,7 +76,7 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'boolean',
       description: 'Show toast icon',
     },
-    closeIcon: {
+    iconClose: {
       control: 'select',
       type: 'string',
       options: ICONS,
