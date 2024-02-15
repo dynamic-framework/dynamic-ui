@@ -25,7 +25,7 @@ export default function DStepper(
   {
     options,
     currentStep,
-    iconSuccess: propIconSuccess,
+    iconSuccess: iconSuccessProp,
     iconSuccessFamilyClass,
     iconSuccessFamilyPrefix,
     iconSuccessMaterialStyle = false,
@@ -40,7 +40,7 @@ export default function DStepper(
     },
   } = useDContext();
 
-  const icon = useMemo(() => propIconSuccess || check, [check, propIconSuccess]);
+  const icon = useMemo(() => iconSuccessProp || check, [check, iconSuccessProp]);
 
   if (currentStep < 1 || currentStep > options.length) {
     throw new Error('Current step should be in the range from 1 to options length');

@@ -63,10 +63,10 @@ export default function DDatePicker<
     inputId = 'input-calendar',
     timeId = 'input-time',
     timeLabel,
-    iconInput: propIconInput,
-    iconHeaderPrevMonth: propIconHeaderPrevMonth,
-    iconHeaderNextMonth: propIconHeaderNextMonth,
-    iconMaterialStyle: propIconMaterialStyle,
+    iconInput: iconInputProp,
+    iconHeaderPrevMonth: iconHeaderPrevMonthProp,
+    iconHeaderNextMonth: iconHeaderNextMonthProp,
+    iconMaterialStyle: iconMaterialStyleProp,
     iconFamilyClass,
     iconFamilyPrefix,
     headerPrevMonthAriaLabel = 'decrease month',
@@ -88,14 +88,14 @@ export default function DDatePicker<
     },
   } = useDContext();
   const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
-  const iconInput = useMemo(() => propIconInput || calendar, [calendar, propIconInput]);
+  const iconInput = useMemo(() => iconInputProp || calendar, [calendar, iconInputProp]);
   const iconPrevMonth = useMemo(
-    () => propIconHeaderPrevMonth || chevronLeft,
-    [chevronLeft, propIconHeaderPrevMonth],
+    () => iconHeaderPrevMonthProp || chevronLeft,
+    [chevronLeft, iconHeaderPrevMonthProp],
   );
   const iconNextMonth = useMemo(
-    () => propIconHeaderNextMonth || chevronRight,
-    [chevronRight, propIconHeaderNextMonth],
+    () => iconHeaderNextMonthProp || chevronRight,
+    [chevronRight, iconHeaderNextMonthProp],
   );
 
   const DatePickerHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
@@ -104,7 +104,7 @@ export default function DDatePicker<
       {...locale && { locale }}
       iconPrevMonth={iconPrevMonth}
       iconNextMonth={iconNextMonth}
-      iconMaterialStyle={propIconMaterialStyle}
+      iconMaterialStyle={iconMaterialStyleProp}
       prevMonthAriaLabel={headerPrevMonthAriaLabel}
       nextMonthAriaLabel={headerNextMonthAriaLabel}
       iconSize={headerIconSize}
@@ -112,17 +112,16 @@ export default function DDatePicker<
       buttonTheme={headerButtonTheme}
       withMonthSelector={!!withMonthSelector}
     />
-  ), [
-    headerButtonTheme,
-    headerButtonVariant,
-    headerPrevMonthAriaLabel,
-    headerIconSize,
-    headerNextMonthAriaLabel,
-    withMonthSelector,
-    locale,
+  ), [locale,
     iconPrevMonth,
     iconNextMonth,
-    propIconMaterialStyle,
+    iconMaterialStyleProp,
+    headerPrevMonthAriaLabel,
+    headerNextMonthAriaLabel,
+    headerIconSize,
+    headerButtonVariant,
+    headerButtonTheme,
+    withMonthSelector,
   ]);
 
   return (
@@ -135,7 +134,7 @@ export default function DDatePicker<
           id={inputId}
           aria-label={inputAriaLabel}
           iconEndAriaLabel={inputActionAriaLabel}
-          iconMaterialStyle={propIconMaterialStyle}
+          iconMaterialStyle={iconMaterialStyleProp}
           iconEnd={iconInput}
           className={className}
           style={style}

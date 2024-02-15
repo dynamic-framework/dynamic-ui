@@ -38,8 +38,8 @@ export default function DMonthPicker<
     headerNextYearAriaLabel = 'increase year',
     iconFamilyClass,
     iconFamilyPrefix,
-    iconPrevMonth: propIconPrevMonth,
-    iconNextMonth: propIconNextMonth,
+    iconPrevMonth: iconPrevMonthProp,
+    iconNextMonth: iconNextMonthProp,
     ...props
   }: Props<CustomModifierNames, WithRange>,
 ) {
@@ -51,12 +51,12 @@ export default function DMonthPicker<
     },
   } = useDContext();
   const iconPrevMonth = useMemo(
-    () => propIconPrevMonth || chevronLeft,
-    [chevronLeft, propIconPrevMonth],
+    () => iconPrevMonthProp || chevronLeft,
+    [chevronLeft, iconPrevMonthProp],
   );
   const iconNextMonth = useMemo(
-    () => propIconNextMonth || chevronRight,
-    [chevronRight, propIconNextMonth],
+    () => iconNextMonthProp || chevronRight,
+    [chevronRight, iconNextMonthProp],
   );
 
   const dateFormatted = useMemo(() => (

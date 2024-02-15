@@ -40,8 +40,8 @@ export default function DCollapse(
     defaultCollapsed = false,
     onChange,
     children,
-    iconOpen: propIconOpen,
-    iconClose: propIconClose,
+    iconOpen: iconOpenProp,
+    iconClose: iconCloseProp,
     iconFamilyClass,
     iconFamilyPrefix,
     iconMaterialStyle = false,
@@ -57,8 +57,8 @@ export default function DCollapse(
     },
   } = useDContext();
 
-  const iconOpen = useMemo(() => propIconOpen || chevronUp, [chevronUp, propIconOpen]);
-  const iconClose = useMemo(() => propIconClose || chevronDown, [chevronDown, propIconClose]);
+  const iconOpen = useMemo(() => iconOpenProp || chevronUp, [chevronUp, iconOpenProp]);
+  const iconClose = useMemo(() => iconCloseProp || chevronDown, [chevronDown, iconCloseProp]);
 
   useEffect(() => {
     if (onChange) {

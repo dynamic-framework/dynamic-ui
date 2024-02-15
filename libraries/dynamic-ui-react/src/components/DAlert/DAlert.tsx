@@ -20,10 +20,10 @@ type Props =
   iconMaterialStyle?: boolean;
   showIcon?: boolean;
   showClose?: boolean;
-  closeIcon?: string;
-  closeIconFamilyClass?: string;
-  closeIconFamilyPrefix?: string;
-  closeIconMaterialStyle?: boolean;
+  iconClose?: string;
+  iconCloseFamilyClass?: string;
+  iconCloseFamilyPrefix?: string;
+  iconCloseMaterialStyle?: boolean;
   soft?: boolean;
   onClose?: () => void;
 }>;
@@ -31,14 +31,14 @@ type Props =
 export default function DAlert(
   {
     type = 'success',
-    icon: propIcon,
+    icon: iconProp,
     iconFamilyClass,
     iconFamilyPrefix,
     iconMaterialStyle = false,
-    closeIcon: propCloseIcon,
-    closeIconFamilyClass,
-    closeIconFamilyPrefix,
-    closeIconMaterialStyle = false,
+    iconClose: iconCloseProp,
+    iconCloseFamilyClass,
+    iconCloseFamilyPrefix,
+    iconCloseMaterialStyle = false,
     showIcon = true,
     soft = false,
     showClose,
@@ -55,8 +55,8 @@ export default function DAlert(
       xLg,
     },
   } = useDContext();
-  const icon = useMemo(() => propIcon || alert[type], [alert, propIcon, type]);
-  const closeIcon = useMemo(() => (propCloseIcon || xLg), [propCloseIcon, xLg]);
+  const icon = useMemo(() => iconProp || alert[type], [alert, iconProp, type]);
+  const iconClose = useMemo(() => (iconCloseProp || xLg), [iconCloseProp, xLg]);
 
   const generateClasses = useMemo(
     () => ({
@@ -105,10 +105,10 @@ export default function DAlert(
         >
           <DIcon
             className="alert-close-icon"
-            icon={closeIcon}
-            familyClass={closeIconFamilyClass}
-            familyPrefix={closeIconFamilyPrefix}
-            materialStyle={closeIconMaterialStyle}
+            icon={iconClose}
+            familyClass={iconCloseFamilyClass}
+            familyPrefix={iconCloseFamilyPrefix}
+            materialStyle={iconCloseMaterialStyle}
           />
         </button>
       )}
