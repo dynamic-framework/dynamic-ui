@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import DButton from '../DButton';
 
 import type { BaseProps, FamilyIconProps } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props<
   CustomModifierNames extends string = never,
@@ -19,8 +20,8 @@ type Props<
   locale?: Locale;
   headerPrevYearAriaLabel?: string;
   headerNextYearAriaLabel?: string;
-  iconPrevMonth: string;
-  iconNextMonth: string;
+  iconPrevMonth?: string;
+  iconNextMonth?: string;
 };
 
 export default function DMonthPicker<
@@ -37,12 +38,27 @@ export default function DMonthPicker<
     headerNextYearAriaLabel = 'increase year',
     iconFamilyClass,
     iconFamilyPrefix,
-    iconPrevMonth,
-    iconNextMonth,
+    iconPrevMonth: propIconPrevMonth,
+    iconNextMonth: propIconNextMonth,
     ...props
   }: Props<CustomModifierNames, WithRange>,
 ) {
   const selected = useMemo(() => parseISO(date), [date]);
+  const {
+    iconMap: {
+      chevronLeft,
+      chevronRight,
+    },
+  } = useDContext();
+  const iconPrevMonth = useMemo(
+    () => propIconPrevMonth || chevronLeft,
+    [chevronLeft, propIconPrevMonth],
+  );
+  const iconNextMonth = useMemo(
+    () => propIconNextMonth || chevronRight,
+    [chevronRight, propIconNextMonth],
+  );
+
   const dateFormatted = useMemo(() => (
     format(new Date(date), 'MMMM yyyy', { locale })
   ), [date, locale]);
