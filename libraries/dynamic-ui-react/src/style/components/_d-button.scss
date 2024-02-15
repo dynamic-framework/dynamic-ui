@@ -26,7 +26,7 @@
   --#{$prefix}btn-sm-font-size: #{$btn-font-size-sm};
   --#{$prefix}btn-sm-border-radius: var(--#{$prefix}btn-component-sm-border-radius, #{$btn-border-radius-sm});
 
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   gap: var(--#{$prefix}btn-gap, $spacer-2);
   align-items: center;
@@ -57,6 +57,7 @@
   &:hover,
   &.hover {
     color: var(--#{$prefix}btn-hover-color);
+    text-decoration: none;
     background-color: var(--#{$prefix}btn-hover-bg);
     border-color: var(--#{$prefix}btn-hover-border-color);
   }
@@ -155,6 +156,10 @@
   }
 
   .btn-link-#{$color} {
+    span {
+      text-decoration: underline;
+    }
+
     @include df-button-link-variant($color);
   }
 }
