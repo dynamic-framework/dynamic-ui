@@ -34,6 +34,7 @@ export type StartIconProps = {
   iconStartFamilyPrefix?: string;
   iconStartAriaLabel?: string;
   iconStartTabIndex?: number;
+  iconStartMaterialStyle?: boolean;
 };
 export type EndIconProps = {
   iconEnd?: string;
@@ -42,6 +43,7 @@ export type EndIconProps = {
   iconEndFamilyPrefix?: string;
   iconEndAriaLabel?: string;
   iconEndTabIndex?: number;
+  iconEndMaterialStyle?: boolean;
 };
 
 export type StateIcons = {

@@ -179,6 +179,10 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
       control: 'text',
       type: 'string',
     },
+    iconStartMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     iconStartAriaLabel: {
       control: 'text',
       type: 'string',
@@ -207,6 +211,10 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
     iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
+    },
+    iconEndMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     iconEndAriaLabel: {
       control: 'text',
