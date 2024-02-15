@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.14.1...@dynamic-framework/ui-react@1.15.0) (2024-02-15)
+
+
+### Features
+
+* add DSelect base support with DContext usage and adjust DInput feedback color ([4030cd5](https://github.com/dynamic-framework/dynamic-ui/commit/4030cd594f4cb179cc31987f0f755df318ee6929))
+* add example to use DSelect with emoji and text single value and adjust DContext iconMap config ([1d75336](https://github.com/dynamic-framework/dynamic-ui/commit/1d753361417c4218d5ce03c82857c9f2c2687169))
+* use calendar icons on DCalendar from DContext ([cc8823d](https://github.com/dynamic-framework/dynamic-ui/commit/cc8823d4e094a425b3d1c0139b0ec637026e2d9b))
+* use close icon on box file from DContext and remove unnecesary icon suffix ([f6462e7](https://github.com/dynamic-framework/dynamic-ui/commit/f6462e745642b790487c4fecf2d46400c097e57e))
+* use close icon on chip from DContext ([0e522b6](https://github.com/dynamic-framework/dynamic-ui/commit/0e522b6d6fccda8ff3422fddaa0bb3604df0afd6))
+* use close icon on modal from DContext ([9f00063](https://github.com/dynamic-framework/dynamic-ui/commit/9f0006334bcd97f970d0230a8b16f2582645a4e9))
+* use close icon on offcanvas from DContext ([28e8280](https://github.com/dynamic-framework/dynamic-ui/commit/28e8280cddfd3330fc2a06aebd433f201e56a12a))
+* use DContext iconMap ([c2df6b7](https://github.com/dynamic-framework/dynamic-ui/commit/c2df6b7c062ff620e77b55099a212052df1616e8))
+* use material icons on DButton from DContext ([b651c73](https://github.com/dynamic-framework/dynamic-ui/commit/b651c731bffcfdd088df650d25e0753e393c4336))
+* use material style prop on DInput from DContext ([25a33af](https://github.com/dynamic-framework/dynamic-ui/commit/25a33afcacfc3e4e396e7037c24eff2b97e2a56f))
+* use success icon on stepper from DContext ([8c881a9](https://github.com/dynamic-framework/dynamic-ui/commit/8c881a904088ffdc271fa892da0fa9c6b6bbfa62))
+* use toggle icon on collapse from DContext ([2a32b12](https://github.com/dynamic-framework/dynamic-ui/commit/2a32b124dd188930d0e949c656ca20c8a5c25c6c))
+
+
+### Bug Fixes
+
+* text libraries/dynamic-ui-react/stories/components/DAlert.stories.tsx ([dc41394](https://github.com/dynamic-framework/dynamic-ui/commit/dc413945715f846b272877ff16ad1569ea44b24d))
+* text on libraries/dynamic-ui-react/stories/components/DAlert.stories.tsx ([80891d7](https://github.com/dynamic-framework/dynamic-ui/commit/80891d78b65555047034d11b91533aefd89468d7))
+* typo libraries/dynamic-ui-react/stories/components/DAlert.stories.tsx ([fdf4bb8](https://github.com/dynamic-framework/dynamic-ui/commit/fdf4bb8e01250318acab14e944ec82f71a443a01))
+* typo libraries/dynamic-ui-react/stories/components/DTabs.stories.tsx ([10a03d1](https://github.com/dynamic-framework/dynamic-ui/commit/10a03d1be74e2974f2c182fffa87b0b86a453762))
+
+
+
 ## [1.14.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.14.0...@dynamic-framework/ui-react@1.14.1) (2024-01-30)
 
 

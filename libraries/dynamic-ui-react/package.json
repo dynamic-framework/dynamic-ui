@@ -3,7 +3,7 @@
   "sideEffects": [
     "*.css"
   ],
-  "version": "1.14.1",
+  "version": "1.15.0",
   "description": "React Dynamic Framework",
   "license": "MIT",
   "repository": {
