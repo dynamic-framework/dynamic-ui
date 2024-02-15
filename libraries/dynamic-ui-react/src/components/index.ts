@@ -10,14 +10,12 @@ export {
   DCardBody,
   DCardFooter,
 } from './DCard';
-export { default as DCardAccount } from './DCardAccount';
 export {
   default as DCarousel,
   DCarouselSlide,
 } from './DCarousel';
 export { default as DChip } from './DChip';
 export { default as DCollapse } from './DCollapse';
-export { default as DCollapseIconText } from './DCollapseIconText';
 export { default as DCurrencyText } from './DCurrencyText';
 export { default as DDatePicker } from './DDatePicker';
 export { default as DIcon } from './DIcon';
