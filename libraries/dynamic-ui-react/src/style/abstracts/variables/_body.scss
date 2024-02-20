@@ -7,7 +7,7 @@ $body-text-align: null !default;
 // custom
 $body-color-mapping: "gray-900" !default;
 $body-color: map-get($all-colors, $body-color-mapping) !default;
-$body-bg-mapping: "white" !default;
+$body-bg-mapping: "secondary-soft" !default;
 $body-bg: map-get($all-colors, $body-bg-mapping) !default;
 
 $body-secondary-color: var(--#{$prefix}body-color-rgb) !default;
