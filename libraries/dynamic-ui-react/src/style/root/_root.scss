@@ -121,11 +121,11 @@
   --#{$prefix}heading-color: #{$headings-color};
 
   --#{$prefix}link-color: rgb(var(--#{$prefix}link-color-rgb));
-  --#{$prefix}link-color-rgb: var(--#{$prefix}#{$link-color-mapping});
+  --#{$prefix}link-color-rgb: var(--#{$prefix}#{$link-color-mapping}-rgb);
   --#{$prefix}link-decoration: #{$link-decoration};
 
   --#{$prefix}link-hover-color: rgb(var(--#{$prefix}link-hover-color-rgb));
-  --#{$prefix}link-hover-color-rgb: var(--#{$prefix}#{$link-hover-color-mapping});
+  --#{$prefix}link-hover-color-rgb: var(--#{$prefix}#{$link-hover-color-mapping}-rgb);
 
   @if $link-hover-decoration != null {
     --#{$prefix}link-hover-decoration: #{$link-hover-decoration};
