@@ -213,7 +213,7 @@
   --bs-body-color: rgb(var(--bs-body-color-rgb));
   --bs-body-color-rgb: var(--bs-gray-900-rgb);
   --bs-body-bg: rgb(var(--bs-body-bg-rgb));
-  --bs-body-bg-rgb: var(--bs-white-rgb);
+  --bs-body-bg-rgb: var(--bs-secondary-soft-rgb);
   --bs-emphasis-color: rgb(var(--bs-emphasis-color-rgb));
   --bs-emphasis-color-rgb: var(--bs-black);
   --bs-secondary-color: rgba(var(--bs-secondary-color-rgb), .75);
@@ -226,10 +226,10 @@
   --bs-tertiary-bg-rgb: var(--bs-gray-100);
   --bs-heading-color: inherit;
   --bs-link-color: rgb(var(--bs-link-color-rgb));
-  --bs-link-color-rgb: var(--bs-primary);
+  --bs-link-color-rgb: var(--bs-primary-rgb);
   --bs-link-decoration: underline;
   --bs-link-hover-color: rgb(var(--bs-link-hover-color-rgb));
-  --bs-link-hover-color-rgb: var(--bs-primary-700);
+  --bs-link-hover-color-rgb: var(--bs-primary-700-rgb);
   --bs-link-hover-decoration: underline;
   --bs-code-color: rgb(var(--bs-code-color-rgb));
   --bs-code-color-rgb: var(--bs-primary-rgb);
@@ -7674,7 +7674,7 @@ label {
   --bs-btn-lg-padding-y: 0.875rem;
   --bs-btn-lg-padding-x: 1.5rem;
   --bs-btn-lg-font-size: 1.125rem;
-  --bs-btn-lg-border-radius: var(--bs-btn-component-lg-border-radius, 1.5rem);
+  --bs-btn-lg-border-radius: var(--bs-btn-component-lg-border-radius, 1rem);
   --bs-btn-sm-padding-y: 0.25rem;
   --bs-btn-sm-padding-x: 1rem;
   --bs-btn-sm-font-size: 0.875rem;

@@ -7383,7 +7383,7 @@ label {
   --bs-btn-lg-padding-y: 0.875rem;
   --bs-btn-lg-padding-x: 1.5rem;
   --bs-btn-lg-font-size: 1.125rem;
-  --bs-btn-lg-border-radius: var(--bs-btn-component-lg-border-radius, 1.5rem);
+  --bs-btn-lg-border-radius: var(--bs-btn-component-lg-border-radius, 1rem);
   --bs-btn-sm-padding-y: 0.25rem;
   --bs-btn-sm-padding-x: 1rem;
   --bs-btn-sm-font-size: 0.875rem;
