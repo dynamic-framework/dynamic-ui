@@ -14,16 +14,20 @@ import type {
 import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 
-import type { BaseProps, CustomStyles } from '../interface';
+import type { BaseProps, CustomStyles, FamilyIconProps } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
+& FamilyIconProps
 & PropsWithChildren<{
   id?: string;
   Component: ReactElement | ReactNode;
   hasSeparator?: boolean;
   defaultCollapsed?: boolean;
   onChange?: (value: boolean) => void;
+  iconOpen?: string;
+  iconClose?: string;
 }>;
 
 export default function DCollapse(
@@ -36,11 +40,25 @@ export default function DCollapse(
     defaultCollapsed = false,
     onChange,
     children,
+    iconOpen: iconOpenProp,
+    iconClose: iconCloseProp,
+    iconFamilyClass,
+    iconFamilyPrefix,
+    iconMaterialStyle = false,
   }: Props,
 ) {
   const [toggle, setToggle] = useState(defaultCollapsed);
 
   const onChangeCollapse = () => setToggle((prev) => !prev);
+  const {
+    iconMap: {
+      chevronDown,
+      chevronUp,
+    },
+  } = useDContext();
+
+  const iconOpen = useMemo(() => iconOpenProp || chevronUp, [chevronUp, iconOpenProp]);
+  const iconClose = useMemo(() => iconCloseProp || chevronDown, [chevronDown, iconCloseProp]);
 
   useEffect(() => {
     if (onChange) {
@@ -73,7 +91,10 @@ export default function DCollapse(
         <DIcon
           color={`var(--${PREFIX_BS}gray)`}
           size={`var(--${PREFIX_BS}ref-fs-small)`}
-          icon={toggle ? 'chevron-up' : 'chevron-down'}
+          icon={toggle ? iconOpen : iconClose}
+          familyClass={iconFamilyClass}
+          familyPrefix={iconFamilyPrefix}
+          materialStyle={iconMaterialStyle}
         />
       </button>
       {toggle && (

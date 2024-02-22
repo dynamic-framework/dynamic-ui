@@ -1,0 +1,64 @@
+import { Meta } from '@storybook/blocks';
+import { DTabs } from '../src';
+
+<Meta title="Design System/Quick Start" />
+
+<div className="inline-story">
+
+  # Dynamic Framework
+
+  Dynamic Framework components come with production-ready code, design guides, and an active community of financial experience experts.
+
+  [Github Repository](https://github.com/dynamic-framework/dynamic-ui)
+
+  <br />
+  ### Requirements
+  - node@18+
+
+  <br />
+  ### Install
+  <DTabs
+    className="code-example"
+    defaultSelected="npm"
+    options={[
+      {
+        label: 'npm',
+        tab: 'npm'
+      },
+      {
+        label: 'yarn',
+        tab: 'yarn'
+      },
+      {
+        label: 'pnpm',
+        tab: 'pnpm'
+      }
+    ]}
+  >
+    <DTabs.Tab tab="npm">
+      ```shell
+      npm install @dynamic-framework/ui-react@latest
+      ```
+    </DTabs.Tab>
+    <DTabs.Tab tab="yarn">
+      ```shell
+      yarn add @dynamic-framework/ui-react@latest
+      ```
+    </DTabs.Tab>
+    <DTabs.Tab tab="pnpm">
+      ```shell
+      pnpm add @dynamic-framework/ui-react@latest
+      ```
+    </DTabs.Tab>
+  </DTabs>
+
+  <br />
+  ### Getting started with templates
+
+  Modyo provides a base of templates with the framework configured ready to use. The simplest is dynamic-react-base-template, it is recommended to download this template using the CLI
+
+  ```shell
+  npx @modyo/cli@latest get dynamic-react-base-template
+  ```
+</div>
+

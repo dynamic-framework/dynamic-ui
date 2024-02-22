@@ -1,36 +1,98 @@
 import {
   Meta,
-  Story,
-  Source,
+  Canvas,
 } from '@storybook/blocks';
 
-import * as useToastStories from '../hooks/useToast.stories';
+import {UseToastExample, UseToastMaterialExample} from "./useToastExamples";
 
 # Toast
-
-Toast Component.
+Toasts use `DToastContainer` and the `useToast` hook which are an abstraction to configure `react-toastify` in conjunction with a DAlert to generate toasts
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [React Toastify](https://fkhadra.github.io/react-toastify/introduction/)
 
-<Meta of={useToastStories} />
+<Meta title="Design System/Patterns/Toast" />
 
-## Example
 
-<Story of={useToastStories.useToast} />
-<br />
+## Example of usage
 
-### Toast Usage
-<Source
-  code={`
-<>
-  <DButton
-    text="Show Toast"
-    onClick={() => toast(message, { type: 'info', showClose: false })}
-  />
-  <DToastContainer />
-</>
-  `}
-/>
+```tsx
+import {
+  DButton,
+  DToastContainer,
+  useToast,
+} from '@dynamic-framework/ui-react';
 
+export default function UseToastExamples() {
+  const { toast } = useToast();
+  return (
+    <>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
+            'Example',
+            { type: 'info', showClose: true, autoClose: 500 },
+          )
+        )}
+      />
+      <DToastContainer position="bottom-center" />
+    </>
+  );
+}
+```
+
+<Canvas>
+  <div className="d-flex flex-colum justify-content-end align-items-end" style={{ height: '300px' }}>
+    <UseToastExample />
+  </div>
+</Canvas>
+
+## Example of usage with material symbols
+To use material symbols it is necessary to configure the DContextProvider
+
+```tsx
+import {
+  DButton,
+  DToastContainer,
+  DContextProvider,
+  useToast,
+} from '@dynamic-framework/ui-react';
+
+export default function UseToastExamples() {
+  const { toast } = useToast();
+  return (
+    <DContextProvider
+      icon={{
+        materialStyle: true,
+        familyClass: 'material-symbols-outlined',
+        familyPrefix: '',
+      }}
+    >
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
+            'Example',
+            {
+              type: 'info',
+              showClose: true,
+              autoClose: 500,
+              icon: 'info',
+              iconClose: 'close',
+            },
+          )
+        )}
+      />
+      <DToastContainer position="bottom-center" />
+    </>
+  )
+}
+```
+
+<Canvas>
+  <div className="d-flex flex-colum justify-content-end align-items-end" style={{ height: '300px' }}>
+    <UseToastMaterialExample />
+  </div>
+</Canvas>

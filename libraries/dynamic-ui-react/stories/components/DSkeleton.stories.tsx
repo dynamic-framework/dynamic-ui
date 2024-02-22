@@ -5,6 +5,20 @@ import DSkeleton from '../../src/components/DSkeleton/DSkeleton';
 const config: Meta<typeof DSkeleton> = {
   title: 'Design System/Components/Skeleton',
   component: DSkeleton,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Component to build placeholder experiences.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [React Content Loader](https://github.com/danilowoz/react-content-loader)
++ [Skeleton React](https://skeletonreact.com/)
+        `,
+      },
+    },
+  },
   argTypes: {
     speed: {
       control: 'number',
@@ -23,6 +37,7 @@ const config: Meta<typeof DSkeleton> = {
       type: 'string',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

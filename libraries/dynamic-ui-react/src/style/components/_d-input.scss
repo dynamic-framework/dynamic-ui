@@ -7,8 +7,6 @@
   --#{$prefix}input-label-padding-x: #{$form-label-padding-x};
   --#{$prefix}input-label-padding-y: #{$form-label-padding-y};
   --#{$prefix}input-label-gap: #{$form-label-gap};
-  // label if input has value
-  --#{$prefix}input-label-has-value-color: #{$form-label-has-value-color};
 
   // input group
   --#{$prefix}input-group-border-color: #{$input-group-border-color};
@@ -31,7 +29,7 @@
   // input disabled
   --#{$prefix}input-group-disabled-border-color: #{$input-disabled-border-color};
   --#{$prefix}input-group-disabled-bg: #{$input-disabled-bg};
-  --#{$prefix}input-group-disabled-color: #{$input-group-disabled-color};
+  --#{$prefix}input-group-disabled-color: #{$input-disabled-color};
 
   display: flex;
   flex-direction: column;
@@ -74,7 +72,7 @@
   }
 
   // not empty
-  .input-group:not(:focus-within):not(.has-validation):has(.form-control:not(:placeholder-shown, :disabled)) {
+  .input-group:not(:focus-within):not(.has-validation):has(.form-control:not(:placeholder-shown)) {
     border-color: var(--#{$prefix}input-group-hover-border-color);
   }
 
@@ -95,9 +93,7 @@
       }
 
       .d-input-validation-icon {
-        .d-icon {
-          --#{$prefix}icon-color: #{$tooltip-bg-color};
-        }
+        --#{$prefix}icon-color: #{$tooltip-bg-color};
       }
     }
   }
@@ -144,10 +140,6 @@
   .input-group-text {
     border: 0;
     outline: 0;
-
-    &:disabled {
-      color: var(--#{$prefix}input-group-disabled-color);
-    }
   }
 
   // input disabled
@@ -157,11 +149,9 @@
 
 
   &:has(.form-control:disabled) {
-    border-color: var(--#{$prefix}input-group-disabled-color);
 
     // input addons disabled
     .input-group-text {
-      color: var(--#{$prefix}input-group-disabled-color);
       background: var(--#{$prefix}input-group-disabled-bg);
     }
 

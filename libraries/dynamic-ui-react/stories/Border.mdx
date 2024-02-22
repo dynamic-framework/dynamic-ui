@@ -1,0 +1,153 @@
+import { Meta } from '@storybook/blocks';
+
+import { THEMES } from './config/constants';
+
+<Meta title="Design System/Border" />
+
+# Border
+
+Bootstrap includes border utilities to quickly style the **border** and **border-radius** of an element. Great for images, buttons, or any other element.
+
+To understand in more detail review the following documentation : [Bootstrap Border](https://getbootstrap.com/docs/5.3/utilities/borders/#border)
+
+## Border placement
+
+<div className="row gap-2 mt-3">
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="border-black border-1 border-top bg-light ratio ratio-1x1" />
+    <div className="text-center">
+      border-top
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="border-black border-1 border-end bg-light ratio ratio-1x1" />
+    <div className="text-center">
+      border-end
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="border-black border-1 border-bottom bg-light ratio ratio-1x1" />
+    <div className="text-center">
+      border-bottom
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="border-black border-1 border-start bg-light ratio ratio-1x1" />
+    <div className="text-center">
+      border-start
+    </div>
+  </div>
+</div>
+
+## Border color
+
+<div className="row gap-2 mt-3">
+  {THEMES.map((color) => (
+    <div key={color} className="col-2 d-flex justify-content-start align-items-center flex-column">
+      <div className={`border-${color} border border-2 bg-light ratio ratio-1x1`} />
+      <div className="text-center">
+        border-{color}
+      </div>
+    </div>
+  ))}
+</div>
+
+## Border radius
+
+<div className="row gap-2 mt-3">
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-top bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded-top
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-end bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded-end
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-bottom bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded-bottom
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-start bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded-start
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-circle bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded-circle
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-pill bg-gray-200 ratio ratio-4x3" />
+    <div className="text-center">
+      rounded-pill
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-0 bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded-0
+    </div>
+  </div>
+</div>
+
+## Border radius size
+
+<div className="row gap-2 mt-3">
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-0 bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded 0px - 0rem
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-1 bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded 8px - 0.5rem
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-2 bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded 16px - 1rem
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-3 bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded 24px - 1.5rem
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-4 bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded 32px - 2rem
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-5 bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded 40px - 2.5rem
+    </div>
+  </div>
+  <div className="col-2 d-flex justify-content-start align-items-center flex-column">
+    <div className="rounded-pill bg-gray-200 ratio ratio-1x1" />
+    <div className="text-center">
+      rounded 50% - 50rem
+    </div>
+  </div>
+</div>

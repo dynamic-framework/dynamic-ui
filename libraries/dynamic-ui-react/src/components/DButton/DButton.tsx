@@ -53,9 +53,11 @@ export default function DButton(
     iconStart,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
+    iconStartMaterialStyle,
     iconEnd,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
+    iconEndMaterialStyle,
     value,
     type = 'button',
     pill = false,
@@ -126,6 +128,7 @@ export default function DButton(
           icon={iconStart}
           familyClass={iconStartFamilyClass}
           familyPrefix={iconStartFamilyPrefix}
+          materialStyle={iconStartMaterialStyle}
         />
       )}
       {(text && !loading) && (
@@ -145,6 +148,7 @@ export default function DButton(
           icon={iconEnd}
           familyClass={iconEndFamilyClass}
           familyPrefix={iconEndFamilyPrefix}
+          materialStyle={iconEndMaterialStyle}
         />
       )}
     </button>

@@ -2,15 +2,54 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import DInputPin from '../../src/components/DInputPin/DInputPin';
 import { ICONS } from '../config/constants';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputPin> = {
   title: 'Design System/Components/Input Pin',
   component: DInputPin,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Component with a partial API of \`d-input\` to take a pin/otp code.
+
+## CSS Variables
+| Variable                                                   | Type             | Description                         |
+|------------------------------------------------------------|------------------|-------------------------------------|
+| --${PREFIX_BS}input-pin-gap                                | css length unit  | Space between layout elements       |
+| --${PREFIX_BS}input-pin-label-gap                          | css length unit  | Space between label elements        |
+| --${PREFIX_BS}input-pin-label-focus-color                  | css color unit   | Label focus color                   |
+| --${PREFIX_BS}input-pin-label-padding-x                    | css length unit  | Label horizontal padding            |
+| --${PREFIX_BS}input-pin-label-padding-y                    | css length unit  | Label vertical padding              |
+| --${PREFIX_BS}input-pin-label-font-weight                  | css font weight  | Label font weight                   |
+| --${PREFIX_BS}input-pin-label-font-size                    | css length unit  | Label font size                     |
+| --${PREFIX_BS}input-pin-label-color                        | css color unit   | Label color                         |
+| --${PREFIX_BS}input-pin-form-control-gap                   | css length unit  | Space between inputs                |
+| --${PREFIX_BS}input-pin-form-control-width                 | css length unit  | Input width                         |
+| --${PREFIX_BS}input-pin-form-control-height                | css length unit  | Input height                        |
+| --${PREFIX_BS}input-pin-form-control-border-color          | css color unit   | Input border color                  |
+| --${PREFIX_BS}input-pin-form-control-focus-border-color    | css color unit   | Input focus border color            |
+| --${PREFIX_BS}input-pin-form-control-focus-box-shadow      | css box shadow   | Input focus box shadow              |
+| --${PREFIX_BS}input-pin-form-control-hover-border-color    | css color unit   | Input hover border color            |
+| --${PREFIX_BS}input-pin-form-text-padding                  | css length unit  | Input text padding                  |
+| --${PREFIX_BS}input-pin-form-text-gap                      | css length unit  | Space between input text elements   |
+| --${PREFIX_BS}input-pin-form-text-color                    | css color unit   | Input text color                    |
+        `,
+      },
+    },
+  },
   argTypes: {
     id: {
       control: 'text',
       type: 'string',
       description: 'The id of the input',
+    },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'object',
     },
     label: {
       control: 'text',
@@ -68,11 +107,6 @@ const config: Meta<typeof DInputPin> = {
       type: 'string',
       description: 'Keyboard style',
     },
-    hint: {
-      control: 'text',
-      type: 'string',
-      description: 'Hint to display, also used to display validity feedback',
-    },
     invalid: {
       control: 'boolean',
       type: 'boolean',
@@ -83,10 +117,36 @@ const config: Meta<typeof DInputPin> = {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
     },
+    hint: {
+      control: 'text',
+      type: 'string',
+      description: 'Hint to display, also used to display validity feedback',
+    },
+    validIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    invalidIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
     onChange: {
       action: 'onChange',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

@@ -4,7 +4,6 @@
   --#{$prefix}tabs-nav-padding-y: #{$nav-nav-padding-y};
   --#{$prefix}tabs-link-border-height: #{$nav-link-border-height};
   --#{$prefix}tabs-link-line-height: #{$nav-link-line-height};
-  --#{$prefix}tabs-link-hover-color: #{$nav-link-hover-color};
   --#{$prefix}tabs-link-border-border-radius: #{$nav-link-border-border-radius};
   --#{$prefix}tabs-link-border-active-color: #{$nav-link-border-active-color};
   --#{$prefix}tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
@@ -21,10 +20,6 @@
   .nav-link {
     position: relative;
     line-height: var(--#{$prefix}tabs-link-line-height);
-
-    &:hover {
-      color: var(--#{$prefix}tabs-link-hover-color);
-    }
 
     &.active {
       font-weight: var(--#{$prefix}tabs-link-border-active-font-weight);

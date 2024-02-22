@@ -2,7 +2,7 @@
   --#{$prefix}badge-bg: #{$badge-bg};
   --#{$prefix}badge-dot-height: #{$badge-dot-height};
 
-  display: block;
+  display: inline-block;
   background-color: var(--#{$prefix}badge-bg);
 
   @each $theme, $value in $theme-colors {

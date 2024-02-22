@@ -1,9 +1,10 @@
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren, useMemo } from 'react';
 
 import classNames from 'classnames';
 import DIcon from '../../DIcon';
 
 import type { BaseProps, FamilyIconProps } from '../../interface';
+import { useDContext } from '../../../contexts';
 
 type Props =
 & BaseProps
@@ -24,10 +25,17 @@ export default function DOffcanvasHeader(
     style,
     iconFamilyClass,
     iconFamilyPrefix,
-    icon = 'x-lg',
+    icon: iconProp,
     materialStyle = false,
   }: Props,
 ) {
+  const {
+    iconMap: {
+      xLg,
+    },
+  } = useDContext();
+  const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
+
   return (
     <div
       className={classNames('offcanvas-header', className)}

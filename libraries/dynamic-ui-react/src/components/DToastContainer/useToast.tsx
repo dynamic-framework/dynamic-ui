@@ -12,6 +12,8 @@ export type ToastConfig = {
   showClose?: boolean;
   position?: ToastPosition;
   autoClose?: number | false;
+  icon?: string;
+  iconClose?: string;
 };
 
 export default function useToast() {
@@ -20,6 +22,8 @@ export default function useToast() {
     type = 'info',
     showClose = true,
     autoClose = false,
+    icon,
+    iconClose,
   }: ToastConfig = {}) => {
     reactToast(({ closeToast }) => (
       <DAlert
@@ -27,6 +31,8 @@ export default function useToast() {
         showClose={showClose}
         onClose={closeToast}
         id="alertID"
+        icon={icon}
+        iconClose={iconClose}
       >
         {message}
       </DAlert>

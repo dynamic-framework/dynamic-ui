@@ -1,12 +1,13 @@
 import { useDropzone } from 'react-dropzone';
 import classnames from 'classnames';
 
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren, useMemo } from 'react';
 import type { DropzoneOptions } from 'react-dropzone';
 
 import DIcon from '../DIcon';
 
 import type { BaseProps, FamilyIconProps } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
@@ -31,9 +32,10 @@ DropzoneOptions,
 
 export default function DBoxFile(
   {
-    icon = 'cloud-upload',
+    icon: iconProp,
     iconFamilyClass,
     iconFamilyPrefix,
+    iconMaterialStyle,
     disabled = false,
     children,
     className,
@@ -49,7 +51,12 @@ export default function DBoxFile(
     disabled,
     ...dropzoneOptions,
   });
-
+  const {
+    iconMap: {
+      upload,
+    },
+  } = useDContext();
+  const icon = useMemo(() => iconProp || upload, [iconProp, upload]);
   return (
     <section
       className={classnames(
@@ -76,6 +83,7 @@ export default function DBoxFile(
           icon={icon}
           familyClass={iconFamilyClass}
           familyPrefix={iconFamilyPrefix}
+          materialStyle={iconMaterialStyle}
         />
         <div className="d-box-content">
           {children}

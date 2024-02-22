@@ -6,20 +6,48 @@ import {
 } from 'react';
 
 import type { PropsWithChildren } from 'react';
+import type { AlertTypeIconMap } from '../components/interface';
+
+type CurrencyProps = {
+  symbol: string;
+  precision: number;
+  separator: string;
+  decimal: string;
+};
+
+type IconProps = {
+  familyClass: string;
+  familyPrefix: string;
+  materialStyle: boolean;
+};
+
+type IconMapProps = {
+  x: string;
+  xLg: string;
+  chevronDown: string;
+  chevronUp: string;
+  chevronLeft: string;
+  chevronRight: string;
+  alert: AlertTypeIconMap;
+  upload: string;
+  calendar: string;
+  check: string;
+  input: {
+    invalid: string;
+    valid: string;
+    search: string;
+    show: string;
+    hide: string;
+    decrease: string;
+    increase: string;
+  };
+};
 
 type Props = {
   language: string;
-  currency: {
-    symbol: string;
-    precision: number;
-    separator: string;
-    decimal: string;
-  },
-  icon: {
-    familyClass?: string;
-    familyPrefix?: string;
-    materialStyle?: boolean;
-  };
+  currency: CurrencyProps,
+  icon: IconProps;
+  iconMap: IconMapProps;
 };
 
 type Context = Props & {
@@ -39,6 +67,36 @@ const defaultState = {
     familyPrefix: 'bi-',
     materialStyle: false,
   },
+  iconMap: {
+    x: 'x',
+    xLg: 'x-lg',
+    chevronUp: 'chevron-up',
+    chevronDown: 'chevron-down',
+    chevronLeft: 'chevron-left',
+    chevronRight: 'chevron-right',
+    upload: 'cloud-upload',
+    calendar: 'calendar',
+    check: 'check',
+    alert: {
+      warning: 'exclamation-circle',
+      danger: 'exclamation-triangle',
+      success: 'check-circle',
+      info: 'info-circle',
+      dark: 'info-circle',
+      light: 'info-circle',
+      primary: 'info-circle',
+      secondary: 'info-circle',
+    },
+    input: {
+      invalid: 'exclamation-circle',
+      valid: 'check',
+      search: 'search',
+      show: 'eye',
+      hide: 'eye-slash',
+      increase: 'plus-square',
+      decrease: 'dash-square',
+    },
+  },
   setContext: () => {},
 };
 
@@ -49,6 +107,7 @@ export function DContextProvider(
     language = defaultState.language,
     currency = defaultState.currency,
     icon = defaultState.icon,
+    iconMap = defaultState.iconMap,
     children,
   }: PropsWithChildren<Partial<Props>>,
 ) {
@@ -59,6 +118,7 @@ export function DContextProvider(
     language,
     currency,
     icon,
+    iconMap,
   });
 
   const value = useMemo(() => ({

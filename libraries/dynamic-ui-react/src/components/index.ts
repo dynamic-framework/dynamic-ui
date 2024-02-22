@@ -10,14 +10,12 @@ export {
   DCardBody,
   DCardFooter,
 } from './DCard';
-export { default as DCardAccount } from './DCardAccount';
 export {
   default as DCarousel,
   DCarouselSlide,
 } from './DCarousel';
 export { default as DChip } from './DChip';
 export { default as DCollapse } from './DCollapse';
-export { default as DCollapseIconText } from './DCollapseIconText';
 export { default as DCurrencyText } from './DCurrencyText';
 export { default as DDatePicker } from './DDatePicker';
 export { default as DIcon } from './DIcon';
@@ -31,8 +29,9 @@ export { default as DInputSearch } from './DInputSearch';
 export { default as DInputPassword } from './DInputPassword';
 export { default as DInputCheck } from './DInputCheck';
 export { default as DInputPin } from './DInputPin';
-export { default as DInputSelect, DInputSelectProps } from './DInputSelect';
+export { default as DInputSelect, DInputSelectDefaultOption, DInputSelectProps } from './DInputSelect';
 export { default as DInputSwitch } from './DInputSwitch';
+export { default as DSelect } from './DSelect';
 export {
   default as DList,
   DListItem,
