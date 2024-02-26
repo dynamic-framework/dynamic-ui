@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.15.0...@dynamic-framework/ui-react@1.15.1) (2024-02-21)
+
+
+### Bug Fixes
+
+* adjust design details of root variables and buttons ([ff7f51f](https://github.com/dynamic-framework/dynamic-ui/commit/ff7f51fed5a347e2559486e6b33fa5cde0eab631))
+
+
+
 ## [1.15.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.14.1...@dynamic-framework/ui-react@1.15.0) (2024-02-15)
 
 
