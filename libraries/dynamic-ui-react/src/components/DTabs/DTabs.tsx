@@ -62,12 +62,16 @@ function DTabs(
     <TabContext.Provider value={value}>
       <div
         className={classnames({
-          'd-tabs': true,
-          'd-tabs-vertical': vertical,
+          'd-flex': true,
+          'flex-column': !vertical,
         }, className)}
         style={style}
       >
-        <nav className="nav">
+        <nav className={classnames({
+          nav: true,
+          'flex-column align-items-center': vertical,
+        })}
+        >
           {options.map((option) => (
             <button
               key={option.label}
