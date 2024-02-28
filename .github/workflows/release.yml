@@ -37,6 +37,7 @@ jobs:
 
           pnpm install --frozen-lockfile
           pnpm build
+          pnpm run version
           pnpm run publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

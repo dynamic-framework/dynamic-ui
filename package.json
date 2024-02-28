@@ -20,7 +20,8 @@
     "stylelint": "lerna run stylelint --no-private",
     "test": "lerna run test --no-private",
     "test:storybook": "lerna run test:storybook --no-private",
-    "publish": "lerna publish --no-private --loglevel verbose"
+    "version": "lerna version --no-private --loglevel verbose",
+    "publish": "lerna publish from-git --no-private --loglevel verbose"
   },
   "engines": {
     "node": ">=18.18",
