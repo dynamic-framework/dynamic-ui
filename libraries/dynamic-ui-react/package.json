@@ -57,7 +57,8 @@
     "eslint:stories": "eslint stories/**/*.stories.tsx",
     "eslint:test": "eslint src/**/*.spec.tsx",
     "stylelint": "stylelint \"**/*.{css,scss}\" --rd",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "postversion": "pnpm build:scss"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
