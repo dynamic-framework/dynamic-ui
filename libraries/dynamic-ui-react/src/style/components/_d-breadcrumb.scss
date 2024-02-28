@@ -2,7 +2,7 @@
   float: left;
   padding: 0 var(--#{$prefix}breadcrumb-item-padding-x);
   color: var(--#{$prefix}breadcrumb-divider-color);
-  content: var(--#{$prefix}breadcrumb-divider, "/") /* rtl: var(--bs-breadcrumb-divider, "/") */;
+  content: var(--#{$prefix}breadcrumb-divider, "/");
 }
 
 .breadcrumb .last {
