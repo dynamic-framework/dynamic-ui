@@ -1,7 +1,8 @@
-import type { ReactNode } from 'react';
+import { CSSProperties, useMemo, type ReactNode } from 'react';
 import classNames from 'classnames';
 
-import type { BaseProps } from '../../interface';
+import type { BaseProps, CustomStyles } from '../../interface';
+import { PREFIX_BS } from '../../config';
 
 type Props = BaseProps & {
   children: ReactNode;
@@ -14,10 +15,15 @@ export default function DModalBody(
     style,
   }: Props,
 ) {
+  const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
+    ...style,
+    [`--${PREFIX_BS}modal-component-body-padding`]: 0,
+  }), [style]);
+
   return (
     <div
       className={classNames('d-modal-slot modal-body', className)}
-      style={style}
+      style={generateStyleVariables}
     >
       {children}
     </div>
