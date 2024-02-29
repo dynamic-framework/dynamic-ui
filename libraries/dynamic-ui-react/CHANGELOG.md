@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.15.1...@dynamic-framework/ui-react@1.16.0) (2024-02-29)
+
+
+### Features
+
+* adjust css style of accordion ([3a86aa2](https://github.com/dynamic-framework/dynamic-ui/commit/3a86aa2972c6407545981da2acadff3c29d5a0dd))
+* adjust style of DBadge component and css ([774b0b4](https://github.com/dynamic-framework/dynamic-ui/commit/774b0b470a34228666e4d25bc17bc87102e6064a))
+
+
+### Bug Fixes
+
+* adjust breadcrumb css style ([f6aea0f](https://github.com/dynamic-framework/dynamic-ui/commit/f6aea0ff1011f794444bb3bc07249f58fe01434e))
+* adjust light and dark colors of soft badge and link button ([42b8615](https://github.com/dynamic-framework/dynamic-ui/commit/42b861546e9e4c3963730f31f592e443c10ecdad))
+* DContext partial props on hook usage ([2d59615](https://github.com/dynamic-framework/dynamic-ui/commit/2d5961527910e551f16e027cbfd8a0cf8a2c17b4))
+* import indent libraries/dynamic-ui-react/src/contexts/DContext.tsx ([0f21865](https://github.com/dynamic-framework/dynamic-ui/commit/0f21865d6095f470cd96ff387fa459a87bf33a81))
+* remove comment libraries/dynamic-ui-react/src/style/components/_d-breadcrumb.scss ([9414f69](https://github.com/dynamic-framework/dynamic-ui/commit/9414f69cddeb1a045b00b26eed0ff4b254f86adb))
+
+
+
 ## [1.15.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.15.0...@dynamic-framework/ui-react@1.15.1) (2024-02-21)
 
 
