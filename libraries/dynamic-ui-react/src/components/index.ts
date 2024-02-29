@@ -1,5 +1,3 @@
-export * from './banking';
-
 export { default as DAlert } from './DAlert';
 export { default as DBadge } from './DBadge';
 export { default as DBoxFile } from './DBoxFile';
