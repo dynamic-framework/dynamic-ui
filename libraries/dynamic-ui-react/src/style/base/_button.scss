@@ -160,7 +160,21 @@
       text-decoration: underline;
     }
 
-    @include df-button-link-variant($color);
+    @if $color == "light" {
+      @include df-button-link-variant(
+        "gray",
+        $default-color: $value,
+        $hover-bg-color: var(--#{$prefix}gray-300),
+        $active-bg-color: var(--#{$prefix}gray-500)
+      );
+    } @else if $color == "dark" {
+      @include df-button-link-variant(
+        "gray",
+        $default-color: $value
+      );
+    } @else {
+      @include df-button-link-variant($color);
+    }
   }
 }
 
