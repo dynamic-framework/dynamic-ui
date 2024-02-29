@@ -4,4 +4,16 @@
     color: color-contrast-var($value) if($enable-important-utilities, !important, null);
     background-color: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
   }
+
+  .text-bg-soft-#{$color} {
+    color: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
+
+    @if $color == "light" {
+      background-color: RGBA(var(--#{$prefix}gray-700-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
+    } @else if $color == "dark" {
+      background-color: RGBA(var(--#{$prefix}gray-200-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
+    } @else {
+      background-color: RGBA(var(--#{$prefix}#{$color}-100-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
+    }
+  }
 }

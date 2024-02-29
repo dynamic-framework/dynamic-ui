@@ -29,7 +29,7 @@
   }
 
   .modal-body {
-    padding: var(--#{$prefix}modal-body-padding);
+    padding: var(--#{$prefix}modal-component-body-padding, var(--#{$prefix}modal-body-padding));
   }
 
   .d-modal-separator {

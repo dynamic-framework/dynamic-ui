@@ -1,7 +1,7 @@
 // Modals
 
 // scss-docs-start modal-variables
-$modal-inner-padding: 0 !default;
+$modal-inner-padding: $spacer-3 !default;
 
 // custom
 $modal-header-gap: $spacer-4 !default;
@@ -24,7 +24,7 @@ $modal-content-box-shadow-xs: $box-shadow-sm !default;
 $modal-content-box-shadow-sm-up: $box-shadow-sm !default;
 
 // custom
-$modal-body-padding: 0 !default;
+$modal-body-padding: $modal-inner-padding !default;
 // end custom
 
 $modal-backdrop-bg: var(--#{$prefix}black) !default;
