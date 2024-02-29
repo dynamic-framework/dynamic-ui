@@ -39,9 +39,9 @@ type Props = {
     iconMap: IconMapProps;
 };
 type Context = Props & {
-    setContext: (value: Props) => void;
+    setContext: (value: Partial<Props>) => void;
 };
-export declare const DContext: import("react").Context<Context>;
+export declare const DContext: import("react").Context<Partial<Context>>;
 export declare function DContextProvider({ language, currency, icon, iconMap, children, }: PropsWithChildren<Partial<Props>>): import("react/jsx-runtime").JSX.Element;
 export declare function useDContext(): Context;
 export {};

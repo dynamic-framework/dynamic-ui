@@ -1,5 +1,5 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
-import React, { useMemo, useState, useEffect, useCallback, createContext, useContext, forwardRef, useRef } from 'react';
+import React, { useMemo, createContext, useState, useCallback, useContext, useEffect, forwardRef, useRef } from 'react';
 import classNames from 'classnames';
 import { __rest } from 'tslib';
 import { useDropzone } from 'react-dropzone';
@@ -16,36 +16,6 @@ import { ToastContainer, Slide, toast } from 'react-toastify';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { createPortal } from 'react-dom';
-
-function DBadge({ text, dot = false, theme = 'primary', id, className, style, }) {
-    const generateClasses = useMemo(() => ({
-        badge: true,
-        'badge-dot': dot,
-        [`badge-${theme}`]: !!theme,
-    }), [dot, theme]);
-    return (jsx("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, { children: jsx("span", { children: text }) })));
-}
-
-function DInputSwitch({ label, ariaLabel, id, name, checked, disabled, readonly, className, style, onChange, }) {
-    const [internalIsChecked, setInternalIsChecked] = useState(checked);
-    useEffect(() => {
-        setInternalIsChecked(checked);
-    }, [checked]);
-    const changeHandler = useCallback((event) => {
-        const value = event.currentTarget.checked;
-        setInternalIsChecked(value);
-        onChange === null || onChange === void 0 ? void 0 : onChange(value);
-    }, [onChange]);
-    return (jsxs("div", { className: "form-check form-switch", children: [jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', className), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] }));
-}
-
-function DPermissionItem({ permission, permissionState, onChange, onAction = () => { }, }) {
-    return (jsxs("div", { role: "button", tabIndex: 0, onKeyDown: () => { }, className: "d-flex permission-item align-items-center", onClick: onAction, children: [jsx("span", { className: "flex-grow-1 label", children: permission.label }), permission.type === 'custom' && (jsx(DBadge, { theme: "tertiary", text: permissionState })), jsx(DInputSwitch, { id: permission.id, checked: !!permission.value, disabled: !permission.enabled, onChange: (isChecked) => onChange(isChecked) })] }));
-}
-
-function DPermissionGroup({ title, description, permissionState, permissionList, onChangePermission, onCustomAction = () => { }, }) {
-    return (jsxs("div", { className: "row operation-group g-0 mb-3 mb-lg-0", children: [jsxs("div", { className: "col-12 col-lg-4 d-flex flex-column justify-content-center", children: [jsx("h6", { className: "fw-bold mb-3 mb-lg-2", children: title }), jsx("p", { className: "fs-8 d-none d-lg-block m-0", children: description })] }), jsx("div", { className: "col-12 offset-lg-1 col-lg-7", children: permissionList.map((permission) => (jsx(DPermissionItem, { permission: permission, permissionState: permissionState, onChange: (checked) => onChangePermission(permission, checked), onAction: () => onCustomAction(permission) }, permission.id))) })] }));
-}
 
 const PREFIX_BS = 'bs-';
 
@@ -144,7 +114,8 @@ function DContextProvider({ language = defaultState.language, currency = default
         icon,
         iconMap,
     });
-    const value = useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext: (newValue) => setInternalContext(newValue) })), [internalContext]);
+    const setContext = useCallback((newValue) => (setInternalContext((prevInternalContext) => (Object.assign(Object.assign({}, prevInternalContext), newValue)))), []);
+    const value = useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext })), [internalContext, setContext]);
     return (jsx(DContext.Provider, { value: value, children: children }));
 }
 function useDContext() {
@@ -311,10 +282,6 @@ function DIcon(_a) {
     return (jsx(DIconBase, Object.assign({ familyClass: propFamilyClass || familyClass, familyPrefix: propFamilyPrefix || familyPrefix, materialStyle: propMaterialStyle || materialStyle }, props)));
 }
 
-function DSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, }) {
-    return (jsxs("div", { children: [jsx("h6", { className: "fw-bold fs-6", children: title }), jsx("p", { className: "fs-8", children: description }), jsxs("div", { className: "bg-white rounded p-4 d-flex gap-3 shadow-sm text-gray-700 fs-8", children: [jsx(DIcon, { icon: icon, theme: iconTheme, size: iconSize }), Summary] })] }));
-}
-
 function DAlert({ type = 'success', icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle = false, showIcon = true, soft = false, showClose, onClose, children, id, className, style, }) {
     const { iconMap: { alert, xLg, }, } = useDContext();
     const icon = useMemo(() => iconProp || alert[type], [alert, iconProp, type]);
@@ -322,6 +289,16 @@ function DAlert({ type = 'success', icon: iconProp, iconFamilyClass, iconFamilyP
     const generateClasses = useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose, 'alert-soft': soft }, className && { [className]: true })), [type, showClose, soft, className]);
     const generateStyleVariables = useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3' })), [style]);
     return (jsxs("div", { className: classNames(generateClasses), style: generateStyleVariables, role: "alert", id: id, children: [(showIcon || icon) && (jsx(DIcon, { className: "alert-icon", icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsx("div", { className: "alert-text", children: children }), showClose && (jsx("div", { className: "alert-separator" })), showClose && (jsx("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { className: "alert-close-icon", icon: iconClose, familyClass: iconCloseFamilyClass, familyPrefix: iconCloseFamilyPrefix, materialStyle: iconCloseMaterialStyle }) }))] }));
+}
+
+function DBadge({ text, dot = false, soft = false, theme = 'primary', id, className, style, }) {
+    const generateClasses = useMemo(() => ({
+        badge: true,
+        'rounded-circle p-2': dot,
+        [`text-bg-${theme}`]: !!theme && !soft,
+        [`text-bg-soft-${theme}`]: !!theme && soft,
+    }), [dot, soft, theme]);
+    return (jsx("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, { children: jsx("span", { children: text }) })));
 }
 
 function DBoxFile(_a) {
@@ -917,6 +894,19 @@ function DInputSelect({ id, name, label = '', className, style, options = [], la
                         }), children: [iconStart && (jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsx(DIcon, { className: "d-input-icon", icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), dynamicComponent, iconEnd && !loading && (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsx(DIcon, { className: "d-input-icon", icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsx("div", { className: "input-group-text form-control-icon loading", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })] }));
 }
 
+function DInputSwitch({ label, ariaLabel, id, name, checked, disabled, readonly, className, style, onChange, }) {
+    const [internalIsChecked, setInternalIsChecked] = useState(checked);
+    useEffect(() => {
+        setInternalIsChecked(checked);
+    }, [checked]);
+    const changeHandler = useCallback((event) => {
+        const value = event.currentTarget.checked;
+        setInternalIsChecked(value);
+        onChange === null || onChange === void 0 ? void 0 : onChange(value);
+    }, [onChange]);
+    return (jsxs("div", { className: "form-check form-switch", children: [jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', className), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] }));
+}
+
 function DSelectOptionCheck(_a) {
     var { innerProps, children, isSelected } = _a, props = __rest(_a, ["innerProps", "children", "isSelected"]);
     return (jsx(components.Option, Object.assign({ className: classNames({
@@ -1050,7 +1040,8 @@ function DModalHeader({ showCloseButton, onClose, children, className, style, ic
 }
 
 function DModalBody({ children, className, style, }) {
-    return (jsx("div", { className: classNames('d-modal-slot modal-body', className), style: style, children: children }));
+    const generateStyleVariables = useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}modal-component-body-padding`]: 0 })), [style]);
+    return (jsx("div", { className: classNames('d-modal-slot modal-body', className), style: generateStyleVariables, children: children }));
 }
 
 function DModalFooter({ className, style, actionPlacement = 'fill', children, }) {
@@ -1398,5 +1389,5 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-export { DAlert, DBadge, DBoxFile, DButton, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DIconBase, DInput$1 as DInput, DInputCheck, DInputCounter$1 as DInputCounter, DInputCurrency$1 as DInputCurrency, DInputCurrencyBase$1 as DInputCurrencyBase, DInputMask$1 as DInputMask, DInputPassword$1 as DInputPassword, DInputPin, DInputSearch$1 as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListItem, DModal$1 as DModal, DModalBody, DModalContext, DModalContextProvider, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasContext, DOffcanvasContextProvider, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPermissionGroup, DPermissionItem, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSelect$1 as DSelect, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DSummaryCard, DTabContent, DTabs$1 as DTabs, DToastContainer, DTooltip, configureI8n as configureI18n, formatCurrency, useDContext, useDModalContext, useDOffcanvasContext, useDisableBodyScrollEffect, useFormatCurrency, useInputCurrency, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, useToast };
+export { DAlert, DBadge, DBoxFile, DButton, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DIconBase, DInput$1 as DInput, DInputCheck, DInputCounter$1 as DInputCounter, DInputCurrency$1 as DInputCurrency, DInputCurrencyBase$1 as DInputCurrencyBase, DInputMask$1 as DInputMask, DInputPassword$1 as DInputPassword, DInputPin, DInputSearch$1 as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListItem, DModal$1 as DModal, DModalBody, DModalContext, DModalContextProvider, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasContext, DOffcanvasContextProvider, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSelect$1 as DSelect, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DToastContainer, DTooltip, configureI8n as configureI18n, formatCurrency, useDContext, useDModalContext, useDOffcanvasContext, useDisableBodyScrollEffect, useFormatCurrency, useInputCurrency, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, useToast };
 //# sourceMappingURL=index.esm.js.map

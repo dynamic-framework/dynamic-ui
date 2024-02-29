@@ -19,36 +19,6 @@ var i18n = require('i18next');
 var reactI18next = require('react-i18next');
 var reactDom = require('react-dom');
 
-function DBadge({ text, dot = false, theme = 'primary', id, className, style, }) {
-    const generateClasses = React.useMemo(() => ({
-        badge: true,
-        'badge-dot': dot,
-        [`badge-${theme}`]: !!theme,
-    }), [dot, theme]);
-    return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, { children: jsxRuntime.jsx("span", { children: text }) })));
-}
-
-function DInputSwitch({ label, ariaLabel, id, name, checked, disabled, readonly, className, style, onChange, }) {
-    const [internalIsChecked, setInternalIsChecked] = React.useState(checked);
-    React.useEffect(() => {
-        setInternalIsChecked(checked);
-    }, [checked]);
-    const changeHandler = React.useCallback((event) => {
-        const value = event.currentTarget.checked;
-        setInternalIsChecked(value);
-        onChange === null || onChange === void 0 ? void 0 : onChange(value);
-    }, [onChange]);
-    return (jsxRuntime.jsxs("div", { className: "form-check form-switch", children: [jsxRuntime.jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', className), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] }));
-}
-
-function DPermissionItem({ permission, permissionState, onChange, onAction = () => { }, }) {
-    return (jsxRuntime.jsxs("div", { role: "button", tabIndex: 0, onKeyDown: () => { }, className: "d-flex permission-item align-items-center", onClick: onAction, children: [jsxRuntime.jsx("span", { className: "flex-grow-1 label", children: permission.label }), permission.type === 'custom' && (jsxRuntime.jsx(DBadge, { theme: "tertiary", text: permissionState })), jsxRuntime.jsx(DInputSwitch, { id: permission.id, checked: !!permission.value, disabled: !permission.enabled, onChange: (isChecked) => onChange(isChecked) })] }));
-}
-
-function DPermissionGroup({ title, description, permissionState, permissionList, onChangePermission, onCustomAction = () => { }, }) {
-    return (jsxRuntime.jsxs("div", { className: "row operation-group g-0 mb-3 mb-lg-0", children: [jsxRuntime.jsxs("div", { className: "col-12 col-lg-4 d-flex flex-column justify-content-center", children: [jsxRuntime.jsx("h6", { className: "fw-bold mb-3 mb-lg-2", children: title }), jsxRuntime.jsx("p", { className: "fs-8 d-none d-lg-block m-0", children: description })] }), jsxRuntime.jsx("div", { className: "col-12 offset-lg-1 col-lg-7", children: permissionList.map((permission) => (jsxRuntime.jsx(DPermissionItem, { permission: permission, permissionState: permissionState, onChange: (checked) => onChangePermission(permission, checked), onAction: () => onCustomAction(permission) }, permission.id))) })] }));
-}
-
 const PREFIX_BS = 'bs-';
 
 function DIconBase({ icon, theme, style, className, size = '1.5rem', loading = false, loadingDuration = 1.8, hasCircle = false, circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`, color, backgroundColor, materialStyle = false, familyClass = 'bi', familyPrefix = 'bi-', }) {
@@ -146,7 +116,8 @@ function DContextProvider({ language = defaultState.language, currency = default
         icon,
         iconMap,
     });
-    const value = React.useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext: (newValue) => setInternalContext(newValue) })), [internalContext]);
+    const setContext = React.useCallback((newValue) => (setInternalContext((prevInternalContext) => (Object.assign(Object.assign({}, prevInternalContext), newValue)))), []);
+    const value = React.useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext })), [internalContext, setContext]);
     return (jsxRuntime.jsx(DContext.Provider, { value: value, children: children }));
 }
 function useDContext() {
@@ -313,10 +284,6 @@ function DIcon(_a) {
     return (jsxRuntime.jsx(DIconBase, Object.assign({ familyClass: propFamilyClass || familyClass, familyPrefix: propFamilyPrefix || familyPrefix, materialStyle: propMaterialStyle || materialStyle }, props)));
 }
 
-function DSummaryCard({ title, description, icon, iconSize, iconTheme, Summary, }) {
-    return (jsxRuntime.jsxs("div", { children: [jsxRuntime.jsx("h6", { className: "fw-bold fs-6", children: title }), jsxRuntime.jsx("p", { className: "fs-8", children: description }), jsxRuntime.jsxs("div", { className: "bg-white rounded p-4 d-flex gap-3 shadow-sm text-gray-700 fs-8", children: [jsxRuntime.jsx(DIcon, { icon: icon, theme: iconTheme, size: iconSize }), Summary] })] }));
-}
-
 function DAlert({ type = 'success', icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle = false, showIcon = true, soft = false, showClose, onClose, children, id, className, style, }) {
     const { iconMap: { alert, xLg, }, } = useDContext();
     const icon = React.useMemo(() => iconProp || alert[type], [alert, iconProp, type]);
@@ -324,6 +291,16 @@ function DAlert({ type = 'success', icon: iconProp, iconFamilyClass, iconFamilyP
     const generateClasses = React.useMemo(() => (Object.assign({ alert: true, [`alert-${type}`]: true, 'fade show': !!showClose, 'alert-soft': soft }, className && { [className]: true })), [type, showClose, soft, className]);
     const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}alert-component-separator-opacity`]: '0.3' })), [style]);
     return (jsxRuntime.jsxs("div", { className: classNames(generateClasses), style: generateStyleVariables, role: "alert", id: id, children: [(showIcon || icon) && (jsxRuntime.jsx(DIcon, { className: "alert-icon", icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsxRuntime.jsx("div", { className: "alert-text", children: children }), showClose && (jsxRuntime.jsx("div", { className: "alert-separator" })), showClose && (jsxRuntime.jsx("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { className: "alert-close-icon", icon: iconClose, familyClass: iconCloseFamilyClass, familyPrefix: iconCloseFamilyPrefix, materialStyle: iconCloseMaterialStyle }) }))] }));
+}
+
+function DBadge({ text, dot = false, soft = false, theme = 'primary', id, className, style, }) {
+    const generateClasses = React.useMemo(() => ({
+        badge: true,
+        'rounded-circle p-2': dot,
+        [`text-bg-${theme}`]: !!theme && !soft,
+        [`text-bg-soft-${theme}`]: !!theme && soft,
+    }), [dot, soft, theme]);
+    return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, { children: jsxRuntime.jsx("span", { children: text }) })));
 }
 
 function DBoxFile(_a) {
@@ -919,6 +896,19 @@ function DInputSelect({ id, name, label = '', className, style, options = [], la
                         }), children: [iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), dynamicComponent, iconEnd && !loading && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsxRuntime.jsx(DIcon, { className: "d-input-icon", icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text form-control-icon loading", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })] }));
 }
 
+function DInputSwitch({ label, ariaLabel, id, name, checked, disabled, readonly, className, style, onChange, }) {
+    const [internalIsChecked, setInternalIsChecked] = React.useState(checked);
+    React.useEffect(() => {
+        setInternalIsChecked(checked);
+    }, [checked]);
+    const changeHandler = React.useCallback((event) => {
+        const value = event.currentTarget.checked;
+        setInternalIsChecked(value);
+        onChange === null || onChange === void 0 ? void 0 : onChange(value);
+    }, [onChange]);
+    return (jsxRuntime.jsxs("div", { className: "form-check form-switch", children: [jsxRuntime.jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', className), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] }));
+}
+
 function DSelectOptionCheck(_a) {
     var { innerProps, children, isSelected } = _a, props = tslib.__rest(_a, ["innerProps", "children", "isSelected"]);
     return (jsxRuntime.jsx(Select.components.Option, Object.assign({ className: classNames({
@@ -1052,7 +1042,8 @@ function DModalHeader({ showCloseButton, onClose, children, className, style, ic
 }
 
 function DModalBody({ children, className, style, }) {
-    return (jsxRuntime.jsx("div", { className: classNames('d-modal-slot modal-body', className), style: style, children: children }));
+    const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}modal-component-body-padding`]: 0 })), [style]);
+    return (jsxRuntime.jsx("div", { className: classNames('d-modal-slot modal-body', className), style: generateStyleVariables, children: children }));
 }
 
 function DModalFooter({ className, style, actionPlacement = 'fill', children, }) {
@@ -1444,8 +1435,6 @@ exports.DOffcanvasContextProvider = DOffcanvasContextProvider;
 exports.DOffcanvasFooter = DOffcanvasFooter;
 exports.DOffcanvasHeader = DOffcanvasHeader;
 exports.DPaginator = DPaginator;
-exports.DPermissionGroup = DPermissionGroup;
-exports.DPermissionItem = DPermissionItem;
 exports.DPopover = DPopover;
 exports.DProgress = DProgress;
 exports.DQuickActionButton = DQuickActionButton;
@@ -1457,7 +1446,6 @@ exports.DSkeleton = DSkeleton;
 exports.DStepper = DStepper;
 exports.DStepperDesktop = DStepper$2;
 exports.DStepperMobile = DStepper$1;
-exports.DSummaryCard = DSummaryCard;
 exports.DTabContent = DTabContent;
 exports.DTabs = DTabs$1;
 exports.DToastContainer = DToastContainer;
