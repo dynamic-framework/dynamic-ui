@@ -2,8 +2,9 @@ import { CSSProperties, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import type { BaseProps, CustomStyles } from '../../interface';
 import { PREFIX_BS } from '../../config';
+
+import type { BaseProps, CustomStyles } from '../../interface';
 
 type Props = BaseProps & {
   children: ReactNode;
