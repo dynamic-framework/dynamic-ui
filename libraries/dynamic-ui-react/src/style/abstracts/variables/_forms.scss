@@ -24,6 +24,7 @@ $form-label-gap: var(--#{$prefix}ref-spacer-1) !default;
 // scss-docs-start form-input-variables
 $input-padding-y: .75rem !default;
 $input-padding-x: $spacer-3 !default;
+
 $input-font-family: $input-btn-font-family !default;
 $input-font-size: $input-btn-font-size !default;
 $input-font-weight: $font-weight-base !default;
