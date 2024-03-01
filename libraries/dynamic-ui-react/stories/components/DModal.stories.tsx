@@ -94,7 +94,7 @@ export const Default: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -136,7 +136,7 @@ export const CloseIcon: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -175,7 +175,7 @@ export const ActionsPlacementStart: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer actionPlacement="start">
         <DButton
@@ -214,7 +214,7 @@ export const ActionsPlacementEnd: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer actionPlacement="end">
         <DButton
@@ -250,7 +250,7 @@ export const WithoutHeader: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -289,7 +289,7 @@ export const WithoutActions: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
     </DModal>
   ),
@@ -316,7 +316,7 @@ export const OnlyBody: Story = {
     <DModal {...args}>
       <DModal.Header showCloseButton />
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
     </DModal>
   ),
@@ -345,7 +345,7 @@ export const WithoutCancelX: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -402,7 +402,7 @@ export const MaterialStyleCloseIcon: Story = {
           <h5 className="fw-bold">Do you want to reject the offer?</h5>
         </DModal.Header>
         <DModal.Body>
-          <p className="py-3 px-5">Modal body</p>
+          <p>Modal body</p>
         </DModal.Body>
         <DModal.Footer>
           <DButton
