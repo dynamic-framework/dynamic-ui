@@ -73,7 +73,7 @@
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide": "^4.1.4",
     "@types/react-datepicker": "^4.19.1",
-    "bootstrap": "^5.3.2",
+    "bootstrap": "^5.3.3",
     "classnames": "^2.3.2",
     "currency.js": "^2.0.4",
     "date-fns": "^2.30.0",
