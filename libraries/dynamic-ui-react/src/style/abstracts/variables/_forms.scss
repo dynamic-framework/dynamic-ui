@@ -45,7 +45,7 @@ $input-disabled-border-color: var(--#{$prefix}gray-300) !default;
 $input-color: var(--#{$prefix}gray) !default;
 $input-border-color: var(--#{$prefix}gray-300) !default;      // unused
 $input-border-width: $input-btn-border-width !default;          // unused
-$input-box-shadow: none !default;
+$input-box-shadow: var(--#{$prefix}box-shadow-inset) !default; // unused
 
 $input-border-radius: $border-radius-sm !default;
 $input-border-radius-sm: $border-radius-sm !default;            // unused
