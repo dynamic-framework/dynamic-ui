@@ -45,7 +45,7 @@ $input-disabled-border-color: var(--#{$prefix}gray-300) !default;
 $input-color: var(--#{$prefix}gray) !default;
 $input-border-color: var(--#{$prefix}gray-300) !default;      // unused
 $input-border-width: $input-btn-border-width !default;          // unused
-
+$input-box-shadow: none !default;
 
 $input-border-radius: $border-radius-sm !default;
 $input-border-radius-sm: $border-radius-sm !default;            // unused
@@ -184,7 +184,6 @@ $form-control-gap: .5rem !default;
 $form-control-color: var(--#{$prefix}gray) !default;
 
 $form-control-icon-size: .75rem !default;
-$input-box-shadow: none !default;
 // end custom
 
 // scss-docs-start form-select-variables
