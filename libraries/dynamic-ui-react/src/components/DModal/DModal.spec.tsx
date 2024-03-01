@@ -49,7 +49,6 @@ it('should render my component with header, body, and footer slot', () => {
           </div>
           <div
             class="d-modal-slot modal-body"
-            style="--bs-modal-component-body-padding: 0;"
           >
             Test Body
           </div>
