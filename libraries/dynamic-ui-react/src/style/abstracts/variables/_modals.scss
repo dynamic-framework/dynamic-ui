@@ -1,7 +1,7 @@
 // Modals
 
 // scss-docs-start modal-variables
-$modal-inner-padding: 1rem !default;
+$modal-inner-padding: $spacer-3 !default;
 
 // custom
 $modal-header-gap: $spacer-4 !default;
