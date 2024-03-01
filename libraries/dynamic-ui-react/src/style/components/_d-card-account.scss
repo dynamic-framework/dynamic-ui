@@ -13,3 +13,7 @@
     gap: var(--#{$prefix}card-body-gap);
   }
 }
+
+.card {
+  --bs-card-border-width: 0;
+}

@@ -102,7 +102,7 @@ $input-btn-focus-width: 0 !default;
 $input-btn-focus-color-opacity: 1 !default;
 $input-btn-focus-color: rgba(var(--#{$prefix}secondary-rgb), $input-btn-focus-color-opacity) !default;
 $input-btn-focus-blur: 0 !default;
-$input-btn-focus-box-shadow: none !default;
+
 
 $input-btn-padding-y-sm: $spacer-2 !default;
 $input-btn-padding-x-sm: $spacer-3 !default;
