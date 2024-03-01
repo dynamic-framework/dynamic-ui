@@ -20,6 +20,7 @@ $dropdown-box-shadow: 0 !default;
 
 $dropdown-link-color: rgb(var(--#{$prefix}gray-500-rgb)) !default;
 $dropdown-link-hover-bg: rgb(var(--#{$prefix}gray-100-rgb)) !default;
+$dropdown-link-hover-color: $dropdown-link-color !default;
 
 $dropdown-link-active-color: $component-active-color !default;
 $dropdown-link-active-bg: $component-active-bg !default;
