@@ -183,6 +183,9 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^4.6.0
         version: 4.6.0(eslint@8.52.0)
+      glob:
+        specifier: ^10.3.10
+        version: 10.3.10
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.18.5)
@@ -8928,7 +8931,7 @@ packages:
     engines: {node: '>=14'}
     dependencies:
       cross-spawn: 7.0.3
-      signal-exit: 4.0.2
+      signal-exit: 4.1.0
     dev: true
 
   /fork-ts-checker-webpack-plugin@8.0.0(typescript@5.2.2)(webpack@5.89.0):
