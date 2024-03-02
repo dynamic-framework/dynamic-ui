@@ -60,7 +60,7 @@ $input-focus-bg: $input-bg !default;
 $input-focus-border-color: var(--#{$prefix}focus-ring-color) !default; // unused
 $input-focus-color: $input-color !default;                      // unused
 $input-focus-width: 1px !default;
-$input-focus-box-shadow: 0 0 0 1px rgba(var(--bs-secondary-rgb)) !default;
+$input-focus-box-shadow: 0 0 0 1px rgba(var(--#{$prefix}secondary-rgb)) !default;
 
 // custom
 $input-group-disabled-color: var(--#{$prefix}secondary-100) !default;
@@ -93,10 +93,13 @@ $form-color-width: 3rem !default;
 // scss-docs-end form-input-variables
 
 // scss-docs-start form-check-variables
-$form-check-input-width: 1.5em !default;
-$form-check-min-height: $font-size-base * $line-height-base !default;
-$form-check-padding-start: $form-check-input-width + .5em !default;
-$form-check-margin-bottom: .125rem !default;
+// custom
+$form-check-size-multiplier: 1.5 !default;
+// end custom
+$form-check-input-width: 1em * $form-check-size-multiplier !default;
+$form-check-min-height: $font-size-base * $line-height-base * $form-check-size-multiplier !default;
+$form-check-padding-start: $form-check-input-width + .5em * $form-check-size-multiplier !default;
+$form-check-margin-bottom: .125rem * $form-check-size-multiplier !default;
 $form-check-label-color: null !default;
 $form-check-label-cursor: null !default;
 $form-check-transition: null !default;
@@ -237,6 +240,7 @@ $form-range-track-height: .5rem !default;
 $form-range-track-cursor: pointer !default;
 $form-range-track-bg: var(--#{$prefix}gray-300) !default;
 $form-range-track-border-radius: 1rem !default;
+$form-range-track-box-shadow: var(--#{$prefix}box-shadow-inset) !default;
 
 $form-range-thumb-width: 1rem !default;
 $form-range-thumb-height: $form-range-thumb-width !default;

@@ -30,7 +30,9 @@ $dropdown-link-disabled-color: var(--#{$prefix}tertiary-color) !default;
 
 $dropdown-item-padding-y: var(--#{$prefix}ref-spacer-2) !default;
 $dropdown-item-padding-x: var(--#{$prefix}ref-spacer-3) !default;
+// custom
 $dropdown-item-border-radius: var(--#{$prefix}border-radius-sm) !default;
+// end custom
 
 $dropdown-header-color: var(--#{$prefix}gray-600) !default;
 $dropdown-header-padding-x: $dropdown-item-padding-x !default;
