@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
   useCallback,
@@ -8,6 +9,7 @@ import {
 
 import type { PropsWithChildren } from 'react';
 import type { AlertTypeIconMap } from '../components/interface';
+import { DPortalContextProvider, PortalContextProps } from './DPortalContext';
 
 type CurrencyProps = {
   symbol: string;
@@ -49,7 +51,7 @@ type Props = {
   currency: CurrencyProps,
   icon: IconProps;
   iconMap: IconMapProps;
-};
+} & PortalContextProps<any>;
 
 type Context = Props & {
   setContext: (value: Partial<Props>) => void;
@@ -99,6 +101,8 @@ const defaultState = {
     },
   },
   setContext: () => {},
+  portalName: 'modalPortal',
+  availablePortals: {},
 };
 
 export const DContext = createContext<Partial<Context>>(defaultState);
@@ -109,6 +113,8 @@ export function DContextProvider(
     currency = defaultState.currency,
     icon = defaultState.icon,
     iconMap = defaultState.iconMap,
+    portalName = defaultState.portalName,
+    availablePortals = defaultState.availablePortals,
     children,
   }: PropsWithChildren<Partial<Props>>,
 ) {
@@ -136,7 +142,12 @@ export function DContextProvider(
 
   return (
     <DContext.Provider value={value}>
-      {children}
+      <DPortalContextProvider
+        portalName={portalName}
+        availablePortals={availablePortals}
+      >
+        {children}
+      </DPortalContextProvider>
     </DContext.Provider>
   );
 }
