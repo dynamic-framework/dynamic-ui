@@ -63,10 +63,9 @@ export default {
             ],
             'Patterns',
             [
+              'Portal',
               'Toast',
               'AlertBox',
-              'Modal',
-              'Offcanvas',
               'Carousel',
               'Popover',
               'Tabs',
