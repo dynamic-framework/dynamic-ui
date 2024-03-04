@@ -40,7 +40,7 @@ export default function DModalHeader(
       className={classNames('modal-header', className)}
       style={style}
     >
-      <div className="d-modal-slot">
+      <div>
         {children}
       </div>
       {showCloseButton && (

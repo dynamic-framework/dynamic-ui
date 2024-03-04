@@ -19,7 +19,7 @@ export default function DModalFooter(
     <>
       <div className="d-modal-separator" />
       <div
-        className={classNames(`d-modal-slot modal-footer d-modal-action-${actionPlacement}`, className)}
+        className={classNames(`modal-footer d-modal-action-${actionPlacement}`, className)}
         style={style}
       >
         {children}

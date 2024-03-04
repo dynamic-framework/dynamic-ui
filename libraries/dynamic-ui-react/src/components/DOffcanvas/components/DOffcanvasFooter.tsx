@@ -17,7 +17,7 @@ export default function DOffcanvasFooter(
 ) {
   return (
     <div
-      className={classNames(`d-offcanvas-slot d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className)}
+      className={classNames(`d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className)}
       style={style}
     >
       {children}

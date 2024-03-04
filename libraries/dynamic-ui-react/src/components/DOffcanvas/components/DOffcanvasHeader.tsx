@@ -41,7 +41,7 @@ export default function DOffcanvasHeader(
       className={classNames('offcanvas-header', className)}
       style={style}
     >
-      <div className="d-offcanvas-slot">
+      <div>
         {children}
       </div>
       {showCloseButton && (
