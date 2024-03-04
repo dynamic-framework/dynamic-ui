@@ -1036,16 +1036,15 @@ var DList$1 = Object.assign(DList, {
 function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
     const { iconMap: { xLg, }, } = useDContext();
     const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsx("div", { className: "d-modal-slot", children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-modal-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }));
+    return (jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-modal-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }));
 }
 
 function DModalBody({ children, className, style, }) {
-    const generateStyleVariables = useMemo(() => (Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}modal-component-body-padding`]: 0 })), [style]);
-    return (jsx("div", { className: classNames('d-modal-slot modal-body', className), style: generateStyleVariables, children: children }));
+    return (jsx("div", { className: classNames('modal-body', className), style: style, children: children }));
 }
 
 function DModalFooter({ className, style, actionPlacement = 'fill', children, }) {
-    return (jsxs(Fragment, { children: [jsx("div", { className: "d-modal-separator" }), jsx("div", { className: classNames(`d-modal-slot modal-footer d-modal-action-${actionPlacement}`, className), style: style, children: children })] }));
+    return (jsxs(Fragment, { children: [jsx("div", { className: "d-modal-separator" }), jsx("div", { className: classNames(`modal-footer d-modal-action-${actionPlacement}`, className), style: style, children: children })] }));
 }
 
 function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, }) {
@@ -1074,15 +1073,15 @@ var DModal$1 = Object.assign(DModal, {
 function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
     const { iconMap: { xLg, }, } = useDContext();
     const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsx("div", { className: "d-offcanvas-slot", children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-offcanvas-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }));
+    return (jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-offcanvas-close", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }));
 }
 
 function DOffcanvasBody({ children, className, style, }) {
-    return (jsx("div", { className: classNames('d-offcanvas-slot offcanvas-body', className), style: style, children: children }));
+    return (jsx("div", { className: classNames('offcanvas-body', className), style: style, children: children }));
 }
 
 function DOffcanvasFooter({ footerActionPlacement = 'fill', children, className, style, }) {
-    return (jsx("div", { className: classNames(`d-offcanvas-slot d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className), style: style, children: children }));
+    return (jsx("div", { className: classNames(`d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className), style: style, children: children }));
 }
 
 function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', children, }) {
@@ -1332,7 +1331,7 @@ function DTabContent({ tab, children, className, style, }) {
     return (jsx("div", { className: classNames('tab-pane fade show active', className), id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab`, style: style, children: children }));
 }
 
-function DTabs({ children, defaultSelected, onChange, options, className, style, vertical, }) {
+function DTabs({ children, defaultSelected, onChange, options, className, style, vertical, pill, }) {
     const [selected, setSelected] = useState(defaultSelected);
     const onSelect = useCallback((option) => {
         if (option.tab) {
@@ -1347,10 +1346,11 @@ function DTabs({ children, defaultSelected, onChange, options, className, style,
     const value = useMemo(() => ({
         isSelected,
     }), [isSelected]);
+    const generateClasses = useMemo(() => (Object.assign({ nav: true, 'flex-column align-items-center': vertical, 'nav-pills': pill, 'nav-tabs': !pill }, className && { [className]: true })), [vertical, pill, className]);
     return (jsx(TabContext.Provider, { value: value, children: jsxs("div", { className: classNames({
-                'd-tabs': true,
-                'd-tabs-vertical': vertical,
-            }, className), style: style, children: [jsx("nav", { className: "nav", children: options.map((option) => (jsx("button", { id: `${option.tab}Tab`, className: classNames('nav-link', {
+                'd-flex': true,
+                'flex-column': !vertical,
+            }, className), style: style, children: [jsx("nav", { className: classNames(generateClasses), children: options.map((option) => (jsx("button", { id: `${option.tab}Tab`, className: classNames('nav-link', {
                             active: option.tab === selected,
                         }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.disabled, onClick: () => onSelect(option), children: option.label }, option.label))) }), jsx("div", { className: "tab-content", children: children })] }) }));
 }
