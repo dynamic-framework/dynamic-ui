@@ -5,7 +5,7 @@
   ],
   "version": "1.16.0",
   "description": "React Dynamic Framework",
-  "license": "MIT",
+  "license": "https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dynamic-framework/dynamic-ui.git"

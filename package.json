@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "workspaces": [],
+  "license": "https://github.com/dynamic-framework/dynamic-ui/blob/master/LICENSE.md",
   "devDependencies": {
     "conventional-changelog-conventionalcommits": "^6.1.0",
     "husky": "^8.0.3",
