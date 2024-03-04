@@ -1,4 +1,4 @@
-.d-tabs {
+.nav {
   --#{$prefix}tabs-nav-gap: #{$nav-nav-gap};
   --#{$prefix}tabs-nav-padding-x: #{$nav-nav-padding-x};
   --#{$prefix}tabs-nav-padding-y: #{$nav-nav-padding-y};
@@ -9,14 +9,11 @@
   --#{$prefix}tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
   --#{$prefix}tabs-link-border-active-bg: #{$nav-link-border-active-bg};
 
-  display: flex;
-  flex-direction: column;
+  gap: var(--#{$prefix}tabs-nav-gap);
+  padding: var(--#{$prefix}tabs-nav-padding-y) var(--#{$prefix}tabs-nav-padding-x);
+}
 
-  .nav {
-    gap: var(--#{$prefix}tabs-nav-gap);
-    padding: var(--#{$prefix}tabs-nav-padding-y) var(--#{$prefix}tabs-nav-padding-x);
-  }
-
+.nav-tabs {
   .nav-link {
     position: relative;
     line-height: var(--#{$prefix}tabs-link-line-height);
@@ -40,17 +37,11 @@
     content: " ";
     border-radius: var(--#{$prefix}tabs-link-border-border-radius);
   }
+}
 
-  &.d-tabs-vertical {
-    flex-direction: row;
-
-    .nav {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .tab-content {
-      flex: 1;
-    }
+.nav-pills {
+  .nav-link {
+    position: relative;
+    line-height: var(--#{$prefix}tabs-link-line-height);
   }
 }
