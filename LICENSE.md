@@ -42,7 +42,7 @@ NOW THEREFORE, in consideration of the mutual covenants contained herein and int
 
 “Micro Frontend or Widget Software” means any software identified as such in Modyo documentation or in the Modyo Website or in an Order Form that is provided to clients and partners to test, demo, examine as examples of code used to build digital experiences that may be integrated to third party software or to the Licensor Software.
 
- “Order Form” means any form specifically referencing this Agreement that sets forth the Licensor Software and Associated Services to be provided to Licensee by Licensor and the Fees payable by Licensee in consideration of the provision of such Licensor Software and Associated Services, together with any other additional terms and conditions applicable to the provision of such Licensor Software and Associated Services.
+“Order Form” means any form specifically referencing this Agreement that sets forth the Licensor Software and Associated Services to be provided to Licensee by Licensor and the Fees payable by Licensee in consideration of the provision of such Licensor Software and Associated Services, together with any other additional terms and conditions applicable to the provision of such Licensor Software and Associated Services.
 
 “Professional Services” means any professional and other services described in an Order Form or Statement of Work to be provided by Licensor pursuant to a separate professional services agreement entered into by the Parties.
 
@@ -54,7 +54,7 @@ NOW THEREFORE, in consideration of the mutual covenants contained herein and int
 
 “Term” means the term set forth in an Order Form.
 
- “Territory” means the geographic area specified in the Order Form.
+“Territory” means the geographic area specified in the Order Form.
 
 “Third Party Software” means any third party software identified as such in Modyo documentation, in an Order Form, including without limitation plug-ins, add-ons, application programming interfaces, utilities or scripts that may be provided by Licensor to Licensee hereunder.
 
