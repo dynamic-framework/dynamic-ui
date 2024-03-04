@@ -1,8 +1,8 @@
 // Navs
 
 // scss-docs-start nav-variables
-$nav-link-padding-y: 0 !default;
-$nav-link-padding-x: $spacer-1 !default;
+$nav-link-padding-y: .5rem !default;
+$nav-link-padding-x: 1rem !default;
 $nav-link-font-size: var(--#{$prefix}body-font-size) !default;
 $nav-link-font-weight: var(--#{$prefix}ref-fw-normal) !default;
 $nav-link-color: var(--#{$prefix}gray-500) !default;
