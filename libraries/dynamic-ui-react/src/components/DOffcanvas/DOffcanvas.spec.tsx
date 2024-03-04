@@ -33,19 +33,17 @@ it('should render my component with header, body, and footer slot', () => {
       <div
         class="offcanvas-header"
       >
-        <div
-          class="d-offcanvas-slot"
-        >
+        <div>
           Test Header
         </div>
       </div>
       <div
-        class="d-offcanvas-slot offcanvas-body"
+        class="offcanvas-body"
       >
         Test Body
       </div>
       <div
-        class="d-offcanvas-slot d-offcanvas-footer d-offcanvas-action-fill"
+        class="d-offcanvas-footer d-offcanvas-action-fill"
       >
         Test Footer
       </div>

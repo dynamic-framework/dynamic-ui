@@ -16,7 +16,7 @@ export default function DModalBody(
 ) {
   return (
     <div
-      className={classNames('d-modal-slot modal-body', className)}
+      className={classNames('modal-body', className)}
       style={style}
     >
       {children}
