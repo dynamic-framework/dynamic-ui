@@ -4,10 +4,10 @@ import {
   useEffect,
   useMemo,
 } from 'react';
+import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import classNames from 'classnames';
 import TabContext from './TabContext';
 import DTabContent from './components/DTabContent';
 
