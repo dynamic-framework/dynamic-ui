@@ -14,7 +14,7 @@ const config: Meta<typeof DOffcanvas> = {
     docs: {
       description: {
         component: `
-To achieve the behavior of an offcanvas it is necessary to use the \`DOffcanvasContextProvider\` and the \`useDOffcanvasContext\` hook,
+To achieve the behavior of an offcanvas it is necessary to use the \`DContextProvider\` and the \`useDPortalContext\` hook,
 however, it is possible to create an inline offcanvas simply using \`DOffcanvas\`
 
 This part of the documentation talks about \`DOffcanvas\` directly covering its inline use.
