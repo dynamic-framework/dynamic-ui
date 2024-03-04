@@ -8,7 +8,8 @@
     @include font-size(var(--#{$prefix}accordion-btn-font-size));
   }
 
-  .accordion-item .show {
+  .accordion-item .show,
+  .accordion-item .collapsing {
     background-color: var(--#{$prefix}accordion-active-bg);
   }
 

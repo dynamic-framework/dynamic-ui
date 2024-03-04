@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Meta, StoryObj } from '@storybook/react';
 
 import DTabs from '../../src/components/DTabs';
@@ -73,6 +74,9 @@ export const Default: Story = {
     options: [
       { label: 'Tab 1', tab: 'tab1' },
       { label: 'Tab 2', tab: 'tab2' },
+      { label: 'Tab 3', tab: 'tab3' },
+      { label: 'Tab 4', tab: 'tab4' },
+      { label: 'Tab 5', tab: 'tab5' },
       { label: 'Tab w/o Content', tab: 'empty' },
     ],
     vertical: false,
@@ -104,5 +108,63 @@ export const Vertical: Story = {
       { label: 'Tab w/o Content', tab: 'empty' },
     ],
     vertical: true,
+  },
+};
+
+export const Pills: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DTabs {...args}>
+      <DTabs.Tab tab="tab1">Tab content for Tab 1</DTabs.Tab>
+      <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
+    </DTabs>
+  ),
+  args: {
+    defaultSelected: 'tab2',
+    options: [
+      { label: 'Tab 1', tab: 'tab1' },
+      { label: 'Tab 2', tab: 'tab2' },
+      { label: 'Tab w/o Content', tab: 'empty' },
+    ],
+    vertical: false,
+    pill: true,
+  },
+};
+
+export const VerticalPills: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DTabs {...args}>
+      <DTabs.Tab tab="tab1">Tab content for Tab 1</DTabs.Tab>
+      <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
+    </DTabs>
+  ),
+  args: {
+    defaultSelected: 'tab2',
+    options: [
+      { label: 'Tab 1', tab: 'tab1' },
+      { label: 'Tab 2', tab: 'tab2' },
+      { label: 'Tab w/o Content', tab: 'empty' },
+    ],
+    vertical: true,
+    pill: true,
   },
 };

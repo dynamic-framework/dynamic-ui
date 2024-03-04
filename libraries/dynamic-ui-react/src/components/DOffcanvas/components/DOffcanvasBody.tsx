@@ -16,7 +16,7 @@ export default function DOffcanvasBody(
 ) {
   return (
     <div
-      className={classNames('d-offcanvas-slot offcanvas-body', className)}
+      className={classNames('offcanvas-body', className)}
       style={style}
     >
       {children}

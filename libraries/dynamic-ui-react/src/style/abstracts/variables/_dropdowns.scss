@@ -4,31 +4,35 @@
 
 // scss-docs-start dropdown-variables
 $dropdown-min-width: 10rem !default;
-$dropdown-padding-x: 0 !default;
+$dropdown-padding-x: .5rem !default;
 $dropdown-padding-y: .5rem !default;
 $dropdown-spacer: .125rem !default;
 $dropdown-font-size: $font-size-base !default;
 $dropdown-color: var(--#{$prefix}body-color) !default;
-$dropdown-bg: var(--#{$prefix}body-bg) !default;
+$dropdown-bg: var(--#{$prefix}white) !default;
 $dropdown-border-color: var(--#{$prefix}border-color-translucent) !default;
-$dropdown-border-radius: 0 !default;
+$dropdown-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $dropdown-border-width: 0 !default;
+
 $dropdown-inner-border-radius: calc(#{$dropdown-border-radius} - #{$dropdown-border-width}) !default;
 $dropdown-divider-bg: $dropdown-border-color !default;
 $dropdown-divider-margin-y: var(--#{$prefix}ref-spacer-2) !default;
-$dropdown-box-shadow: 0 !default;
+$dropdown-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
 
-$dropdown-link-color: var(--#{$prefix}body-color) !default;
+$dropdown-link-color: rgb(var(--#{$prefix}gray-500-rgb)) !default;
+$dropdown-link-hover-bg: rgb(var(--#{$prefix}gray-100-rgb)) !default;
 $dropdown-link-hover-color: $dropdown-link-color !default;
-$dropdown-link-hover-bg: var(--#{$prefix}tertiary-bg) !default;
 
 $dropdown-link-active-color: $component-active-color !default;
 $dropdown-link-active-bg: $component-active-bg !default;
 
 $dropdown-link-disabled-color: var(--#{$prefix}tertiary-color) !default;
 
-$dropdown-item-padding-y: var(--#{$prefix}ref-spacer-1) !default;
+$dropdown-item-padding-y: var(--#{$prefix}ref-spacer-2) !default;
 $dropdown-item-padding-x: var(--#{$prefix}ref-spacer-3) !default;
+// custom
+$dropdown-item-border-radius: var(--#{$prefix}border-radius-sm) !default;
+// end custom
 
 $dropdown-header-color: var(--#{$prefix}gray-600) !default;
 $dropdown-header-padding-x: $dropdown-item-padding-x !default;

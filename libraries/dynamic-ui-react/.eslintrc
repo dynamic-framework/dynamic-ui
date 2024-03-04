@@ -13,6 +13,15 @@
   },
   "overrides": [
     {
+      "files": ["scripts/*.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": true }
+        ]
+      }
+    },
+    {
       "files": ["src/**/*.ts", "src/**/*.tsx"],
       "parserOptions": {
         "project": ["./tsconfig.json"],
