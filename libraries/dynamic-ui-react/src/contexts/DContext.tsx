@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -51,7 +52,7 @@ type Props = {
 };
 
 type Context = Props & {
-  setContext: (value: Props) => void;
+  setContext: (value: Partial<Props>) => void;
 };
 
 const defaultState = {
@@ -100,7 +101,7 @@ const defaultState = {
   setContext: () => {},
 };
 
-export const DContext = createContext<Context>(defaultState);
+export const DContext = createContext<Partial<Context>>(defaultState);
 
 export function DContextProvider(
   {
@@ -114,17 +115,24 @@ export function DContextProvider(
   const [
     internalContext,
     setInternalContext,
-  ] = useState<Props>({
+  ] = useState<Partial<Props>>({
     language,
     currency,
     icon,
     iconMap,
   });
 
+  const setContext = useCallback((newValue: Partial<Props>) => (
+    setInternalContext((prevInternalContext) => ({
+      ...prevInternalContext,
+      ...newValue,
+    }))
+  ), []);
+
   const value = useMemo(() => ({
     ...internalContext,
-    setContext: (newValue: Props) => setInternalContext(newValue),
-  }), [internalContext]);
+    setContext,
+  }), [internalContext, setContext]);
 
   return (
     <DContext.Provider value={value}>
@@ -134,7 +142,7 @@ export function DContextProvider(
 }
 
 export function useDContext() {
-  const context = useContext(DContext);
+  const context = useContext(DContext) as Context;
 
   if (context === undefined) {
     throw new Error('useDContext was used outside of DContextProvider');

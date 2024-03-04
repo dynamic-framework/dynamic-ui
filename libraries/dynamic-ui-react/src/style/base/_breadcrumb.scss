@@ -1,0 +1,10 @@
+.breadcrumb .separator {
+  float: left;
+  padding: 0 var(--#{$prefix}breadcrumb-item-padding-x);
+  color: var(--#{$prefix}breadcrumb-divider-color);
+  content: var(--#{$prefix}breadcrumb-divider, "/");
+}
+
+.breadcrumb .last {
+  color: var(--#{$prefix}breadcrumb-item-active-color);
+}
