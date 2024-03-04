@@ -23,10 +23,6 @@ $modal-content-inner-border-radius: subtract($modal-content-border-radius, $moda
 $modal-content-box-shadow-xs: $box-shadow-sm !default;
 $modal-content-box-shadow-sm-up: $box-shadow-sm !default;
 
-// custom
-$modal-body-padding: $modal-inner-padding !default;
-// end custom
-
 $modal-backdrop-bg: var(--#{$prefix}black) !default;
 $modal-backdrop-opacity: .3 !default;
 
