@@ -19,6 +19,7 @@ type Story = StoryObj<typeof DContextProvider>;
  * + English language
  * + Boostrap icons
  * + Currencies with $1,000.00 format
+ * + Default portal DOM id
  */
 export const Default: Story = {};
 
@@ -94,6 +95,11 @@ export const IconSettings: Story = {
       x: 'close_small',
       xLg: 'close',
       chevronDown: 'expand_more',
+      calendar: 'event',
+      check: 'done',
+      chevronLeft: 'chevron_left',
+      chevronRight: 'chevron_right',
+      chevronUp: 'expand_less',
       upload: 'cloud_upload',
       alert: {
         warning: 'warning',
