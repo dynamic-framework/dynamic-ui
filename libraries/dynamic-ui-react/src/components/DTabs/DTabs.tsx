@@ -4,7 +4,7 @@ import {
   useEffect,
   useMemo,
 } from 'react';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
@@ -24,6 +24,7 @@ type Props = BaseProps & PropsWithChildren<{
   options: Array<DTabOption>;
   defaultSelected: string;
   vertical?: boolean;
+  pill?: boolean;
 }>;
 
 function DTabs(
@@ -35,6 +36,7 @@ function DTabs(
     className,
     style,
     vertical,
+    pill,
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -58,22 +60,33 @@ function DTabs(
     isSelected,
   }), [isSelected]);
 
+  const generateClasses = useMemo(
+    () => ({
+      nav: true,
+      'flex-column align-items-center': vertical,
+      'nav-pills': pill,
+      'nav-tabs': !pill,
+      ...className && { [className]: true },
+    }),
+    [vertical, pill, className],
+  );
+
   return (
     <TabContext.Provider value={value}>
       <div
-        className={classnames({
-          'd-tabs': true,
-          'd-tabs-vertical': vertical,
+        className={classNames({
+          'd-flex': true,
+          'flex-column': !vertical,
         }, className)}
         style={style}
       >
-        <nav className="nav">
+        <nav className={classNames(generateClasses)}>
           {options.map((option) => (
             <button
               key={option.label}
               id={`${option.tab}Tab`}
               className={
-                classnames(
+                classNames(
                   'nav-link',
                   {
                     active: option.tab === selected,
