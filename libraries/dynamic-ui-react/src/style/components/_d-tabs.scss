@@ -8,9 +8,11 @@
   --#{$prefix}tabs-link-border-active-color: #{$nav-link-border-active-color};
   --#{$prefix}tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
   --#{$prefix}tabs-link-border-active-bg: #{$nav-link-border-active-bg};
+
   gap: var(--#{$prefix}tabs-nav-gap);
   padding: var(--#{$prefix}tabs-nav-padding-y) var(--#{$prefix}tabs-nav-padding-x);
 }
+
 .nav-tabs {
   .nav-link {
     position: relative;
@@ -25,6 +27,7 @@
       }
     }
   }
+
   .nav-link::before {
     position: absolute;
     right: 0;
@@ -35,6 +38,7 @@
     border-radius: var(--#{$prefix}tabs-link-border-border-radius);
   }
 }
+
 .nav-pills {
   .nav-link {
     position: relative;
