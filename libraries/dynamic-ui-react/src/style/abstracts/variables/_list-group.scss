@@ -7,8 +7,8 @@ $list-group-border-color: var(--#{$prefix}gray-300) !default;
 $list-group-border-width: 1px !default;
 $list-group-border-radius: var(--#{$prefix}border-radius-sm) !default;
 
-$list-group-item-padding-y: var(--#{$prefix}ref-spacer-1) !default;
-$list-group-item-padding-x: var(--#{$prefix}ref-spacer-1) !default;
+$list-group-item-padding-y: .75rem !default;
+$list-group-item-padding-x: 1rem !default;
 
 // fusv-disable
 $list-group-item-bg-scale: 0% !default;
