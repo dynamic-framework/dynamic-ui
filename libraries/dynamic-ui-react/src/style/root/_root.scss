@@ -104,7 +104,7 @@
   --#{$prefix}body-bg: rgb(var(--#{$prefix}body-bg-rgb));
   --#{$prefix}body-bg-rgb: var(--#{$prefix}#{$body-bg-mapping}-rgb);
 
-  --#{$prefix}emphasis-color: var(--#{$prefix}emphasis-color-rgb);
+  --#{$prefix}emphasis-color: rgb(var(--#{$prefix}emphasis-color-rgb));
   --#{$prefix}emphasis-color-rgb: #{$body-emphasis-color};
 
   --#{$prefix}secondary-color: rgba(var(--#{$prefix}secondary-color-rgb), .75);
