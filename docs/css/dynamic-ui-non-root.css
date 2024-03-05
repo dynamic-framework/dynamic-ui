@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.16.0
+ * dynamic-framework 1.16.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -2398,22 +2398,22 @@ textarea.form-control-lg {
 .form-check {
   display: block;
   min-height: 1.8rem;
-  padding-left: 2.25em;
+  padding-left: 0.75em;
   margin-bottom: 0.1875rem;
 }
 .form-check .form-check-input {
   float: left;
-  margin-left: -2.25em;
+  margin-left: -0.75em;
 }
 
 .form-check-reverse {
-  padding-right: 2.25em;
+  padding-right: 0.75em;
   padding-left: 0;
   text-align: right;
 }
 .form-check-reverse .form-check-input {
   float: right;
-  margin-right: -2.25em;
+  margin-right: -0.75em;
   margin-left: 0;
 }
 
@@ -3959,11 +3959,11 @@ textarea.form-control-lg {
   --bs-card-title-spacer-y: 0.5rem;
   --bs-card-title-color: ;
   --bs-card-subtitle-color: ;
-  --bs-card-border-width: 0;
+  --bs-card-border-width: 0px;
   --bs-card-border-color: var(--bs-border-color-translucent);
   --bs-card-border-radius: var(--bs-border-radius);
   --bs-card-box-shadow: var(--bs-box-shadow-sm);
-  --bs-card-inner-border-radius: calc(var(--bs-border-radius) - 0);
+  --bs-card-inner-border-radius: calc(var(--bs-border-radius) - 0px);
   --bs-card-cap-padding-y: 0.5rem;
   --bs-card-cap-padding-x: 1rem;
   --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.03);
@@ -4568,8 +4568,8 @@ textarea.form-control-lg {
   --bs-list-group-border-color: var(--bs-gray-300);
   --bs-list-group-border-width: 1px;
   --bs-list-group-border-radius: var(--bs-border-radius-sm);
-  --bs-list-group-item-padding-x: var(--bs-ref-spacer-1);
-  --bs-list-group-item-padding-y: var(--bs-ref-spacer-1);
+  --bs-list-group-item-padding-x: 1rem;
+  --bs-list-group-item-padding-y: 0.75rem;
   --bs-list-group-action-color: var(--bs-gray-700);
   --bs-list-group-action-hover-color: var(--bs-gray-700);
   --bs-list-group-action-hover-bg: var(--bs-gray-100);
@@ -5057,7 +5057,7 @@ textarea.form-control-lg {
 }
 .modal.fade .modal-dialog {
   transition: transform 0.5s ease-out;
-  transform: var(--bs-modal-fade-transform, translate(0, 100vh));
+  transform: translate(0, -50px);
 }
 @media (prefers-reduced-motion: reduce) {
   .modal.fade .modal-dialog {
@@ -5831,7 +5831,7 @@ textarea.form-control-lg {
   --bs-offcanvas-padding-x: 1.5rem;
   --bs-offcanvas-padding-y: 1.5rem;
   --bs-offcanvas-color: var(--bs-body-color);
-  --bs-offcanvas-bg: var(--bs-body-bg);
+  --bs-offcanvas-bg: var(--bs-white);
   --bs-offcanvas-border-width: 1px;
   --bs-offcanvas-border-color: transparent;
   --bs-offcanvas-box-shadow: 0 8px 12px 0 rgba(22, 23, 35, 0.05);

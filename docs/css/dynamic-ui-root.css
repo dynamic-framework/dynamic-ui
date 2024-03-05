@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.16.0
+ * dynamic-framework 1.16.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -206,7 +206,7 @@
   --bs-danger-border-subtle: var(--bs-danger-100);
   --bs-light-border-subtle: var(--bs-gray-100);
   --bs-dark-border-subtle: var(--bs-gray-400);
-  --bs-font-sans-serif: "Source Sans Pro", sans-serif;
+  --bs-font-sans-serif: "Source Sans 3", sans-serif;
   --bs-font-monospace: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-root-font-size: 16px;
@@ -219,7 +219,7 @@
   --bs-body-bg: rgb(var(--bs-body-bg-rgb));
   --bs-body-bg-rgb: var(--bs-secondary-soft-rgb);
   --bs-emphasis-color: rgb(var(--bs-emphasis-color-rgb));
-  --bs-emphasis-color-rgb: var(--bs-black);
+  --bs-emphasis-color-rgb: var(--bs-black-rgb);
   --bs-secondary-color: rgba(var(--bs-secondary-color-rgb), .75);
   --bs-secondary-color-rgb: var(--bs-body-color-rgb);
   --bs-secondary-bg: rgb(var(--bs-secondary-bg-rgb));
