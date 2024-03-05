@@ -98,7 +98,7 @@ $form-check-size-multiplier: 1.5 !default;
 // end custom
 $form-check-input-width: 1em * $form-check-size-multiplier !default;
 $form-check-min-height: $font-size-base * $line-height-base * $form-check-size-multiplier !default;
-$form-check-padding-start: $form-check-input-width + .5em * $form-check-size-multiplier !default;
+$form-check-padding-start: $form-check-input-width - .5em * $form-check-size-multiplier !default;
 $form-check-margin-bottom: .125rem * $form-check-size-multiplier !default;
 $form-check-label-color: null !default;
 $form-check-label-cursor: null !default;
