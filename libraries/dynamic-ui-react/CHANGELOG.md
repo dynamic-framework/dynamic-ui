@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.0...@dynamic-framework/ui-react@1.16.1) (2024-03-04)
+
+
+### Bug Fixes
+
+* adjust border radius ([8834013](https://github.com/dynamic-framework/dynamic-ui/commit/8834013edd2fa6ca09189b583221d20cfcc1512a))
+* adjust border radius ([1ea7a30](https://github.com/dynamic-framework/dynamic-ui/commit/1ea7a30015b0aa1104a36a025ebdb2efb705adcb))
+* build-scss script ([8389907](https://github.com/dynamic-framework/dynamic-ui/commit/83899074b30b3f67ec32c527878a0a8facfb79e0))
+* change order line ([776d83c](https://github.com/dynamic-framework/dynamic-ui/commit/776d83c5c6ef2f0c93e9317a554f558653fcf5e2))
+* enable shadows ([11499c4](https://github.com/dynamic-framework/dynamic-ui/commit/11499c49b244864498564a07c668fdfba19a23ee))
+* fix forms dropdowns and borders ([77b735f](https://github.com/dynamic-framework/dynamic-ui/commit/77b735fa2c4e5e5d5424dfe0737bd2fb9e71d155))
+* fix forms, dropdowns and borders ([1e542bb](https://github.com/dynamic-framework/dynamic-ui/commit/1e542bb2fc7b3055dcc861e0184393a50bbfa3a5))
+* form-check height ([b9dad52](https://github.com/dynamic-framework/dynamic-ui/commit/b9dad526aee77236bbdffb70a1b0bef49b5a60e1))
+* input-group , dropdowns and form-check ([bb4a75a](https://github.com/dynamic-framework/dynamic-ui/commit/bb4a75ab5cbba78192f4b61df7a94bae518a7017))
+* style spacing ([5628e20](https://github.com/dynamic-framework/dynamic-ui/commit/5628e20107475170dd12b795d09d07c49326d6d6))
+
+
+
 ## [1.16.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.15.1...@dynamic-framework/ui-react@1.16.0) (2024-02-29)
 
 
