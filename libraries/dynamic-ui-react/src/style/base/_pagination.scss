@@ -23,9 +23,9 @@
     min-width: var(--#{$prefix}pagination-page-item-size);
     min-height: var(--#{$prefix}pagination-page-item-size);
 
-    &:not(.active, :hover) .page-link {
-      background-color: var(--#{$prefix}pagination-page-link-bg);
-    }
+    // &:not(.active, :hover) .page-link {
+    //   background-color: var(--#{$prefix}pagination-page-link-bg);
+    // }
   }
 
   .arrow .page-link {
@@ -33,10 +33,6 @@
     padding: var(--#{$prefix}pagination-arrow-padding-y) var(--#{$prefix}pagination-arrow-padding-x);
     font-size: var(--#{$prefix}pagination-arrow-font-size);
     border-radius: var(--#{$prefix}pagination-arrow-border-radius);
-
-    &:focus {
-      background-color: var(--#{$prefix}pagination-focus-arrow-bg);
-    }
 
     &::after,
     &::before {
