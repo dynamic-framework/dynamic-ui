@@ -3,7 +3,7 @@
   "sideEffects": [
     "*.css"
   ],
-  "version": "1.16.1",
+  "version": "1.16.2",
   "description": "React Dynamic Framework",
   "license": "https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md",
   "repository": {
