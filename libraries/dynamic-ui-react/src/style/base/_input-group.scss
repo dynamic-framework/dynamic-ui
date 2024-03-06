@@ -1,0 +1,17 @@
+// bootstrap reset layer
+.input-group .form-control {
+  border: 0;
+  &:focus {
+    border: 0;
+    box-shadow: none;
+  }
+}
+
+.input-group {
+  border: $input-border-width solid $input-border-color;
+  @include border-radius($input-border-radius, 0);
+  &:focus-within {
+    border-color: $input-focus-border-color;
+    box-shadow: $input-focus-box-shadow;
+  }
+}
