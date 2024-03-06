@@ -22,10 +22,6 @@
   .page-item {
     min-width: var(--#{$prefix}pagination-page-item-size);
     min-height: var(--#{$prefix}pagination-page-item-size);
-
-    // &:not(.active, :hover) .page-link {
-    //   background-color: var(--#{$prefix}pagination-page-link-bg);
-    // }
   }
 
   .arrow .page-link {
