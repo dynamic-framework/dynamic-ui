@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.1...@dynamic-framework/ui-react@1.16.2) (2024-03-05)
+
+
+### Bug Fixes
+
+* -emphasis-color value ([56567d2](https://github.com/dynamic-framework/dynamic-ui/commit/56567d24f76185dbf5e5e4fe9bb54c5f0ab25ff9))
+* card inner border radius calc ([fa4a5b6](https://github.com/dynamic-framework/dynamic-ui/commit/fa4a5b66ef45523b55df69f98fb48615424fe826))
+* error with modal transition ([690b6ed](https://github.com/dynamic-framework/dynamic-ui/commit/690b6edebe3f4f8ffe747e0634ea19fa8e8a8ce4))
+* margin form check ([c208024](https://github.com/dynamic-framework/dynamic-ui/commit/c2080240b7b259dbc4d026005a06461e842a4c50))
+* padding correction for list-groups and bg white on offcanvas ([32206b8](https://github.com/dynamic-framework/dynamic-ui/commit/32206b89cd690bfb368a3b051ca332086771d6e5))
+* remove duplicate var ([75228ad](https://github.com/dynamic-framework/dynamic-ui/commit/75228ad119ea79133f0544e2e9466e6f4b2176e0))
+* tooltip background ([17f629f](https://github.com/dynamic-framework/dynamic-ui/commit/17f629f1676b7e35eb396aa708385fd97f590b06))
+
+
+
 ## [1.16.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.0...@dynamic-framework/ui-react@1.16.1) (2024-03-04)
 
 
