@@ -2,6 +2,7 @@
 
 // scss-docs-start pagination-variables
 $pagination-color: var(--#{$prefix}gray) !default;
+$pagination-bg: transparent !default;
 $pagination-border-width: 0 !default;
 
 $pagination-focus-color: var(--#{$prefix}white) !default;
