@@ -13,7 +13,7 @@ $quick-action-button-line2-font-size: var(--#{$prefix}ref-fs-small) !default;
 $quick-action-button-line2-font-weight: var(--#{$prefix}ref-fw-normal) !default;
 $quick-action-button-line2-color: var(--#{$prefix}gray-500) !default;
 
-$quick-action-button-representative-image-size: 2.25rem !default;
+$quick-action-button-representative-image-size: var(--#{$prefix}ref-spacer-9) !default;
 $quick-action-button-representative-image-border-radius: $spacer-2 !default;
 $quick-action-button-representative-icon-size: var(--#{$prefix}ref-spacer-6) !default;
 
