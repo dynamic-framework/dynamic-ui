@@ -129,7 +129,7 @@ $input-group-addon-border-color: transparent !default;
 // custom
 $form-control-padding-y: 0 !default;
 $form-control-padding-x: $spacer-2 !default;
-$form-control-gap: .5rem !default;
+$form-control-gap: var(--#{$prefix}ref-spacer-2) !default;
 $form-control-color: var(--#{$prefix}gray) !default;
 
 $form-control-icon-size: var(--#{$prefix}ref-spacer-3) !default;

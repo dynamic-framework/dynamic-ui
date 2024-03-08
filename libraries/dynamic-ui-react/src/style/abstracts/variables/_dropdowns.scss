@@ -3,7 +3,7 @@
 // Dropdown menu container and contents.
 
 // scss-docs-start dropdown-variables
-$dropdown-padding-x: .5rem !default;
+$dropdown-padding-x: var(--#{$prefix}--#{$prefix}ref-spacer-2) !default;
 $dropdown-bg: var(--#{$prefix}white) !default;
 $dropdown-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $dropdown-border-width: 0 !default;

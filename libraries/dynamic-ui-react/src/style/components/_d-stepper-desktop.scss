@@ -11,7 +11,7 @@
   /* Base step */
   --#{$prefix}step-label-height: var(--#{$prefix}ref-spacer-12);
   --#{$prefix}step-icon-size: 1.125rem;
-  --#{$prefix}step-gap: .5rem;
+  --#{$prefix}step-gap: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}step-z-index: 2;
 
   /* Checked step */
