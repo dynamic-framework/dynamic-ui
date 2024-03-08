@@ -12,6 +12,6 @@ $border-radius: 1rem !default;
 $border-radius-sm: .5rem !default;
 $border-radius-lg: var(--#{$prefix}ref-spacer-6) !default;
 $border-radius-xl: var(--#{$prefix}ref-spacer-8) !default;
-$border-radius-xxl: 2.5rem !default;
+$border-radius-xxl: var(--#{$prefix}ref-spacer-10) !default;
 $border-radius-pill: 50rem !default;
 // scss-docs-end border-radius-variables
