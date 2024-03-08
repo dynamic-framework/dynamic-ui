@@ -21,7 +21,7 @@ $modal-backdrop-opacity: .3 !default;
 $modal-header-border-color: transparent !default;
 $modal-header-padding-y: $spacer-3 !default;
 $modal-header-padding-x: $spacer-4 !default;
-$modal-header-padding: $spacer-5 $spacer-4 $spacer-3 !default; // Keep this for backwards compatibility
+$modal-header-padding: var(--#{$prefix}ref-spacer-8) $spacer-4 $spacer-3 !default; // Keep this for backwards compatibility
 
 $modal-footer-border-color: transparent !default;
 
