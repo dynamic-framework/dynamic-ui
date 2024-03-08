@@ -5,11 +5,11 @@
 // scss-docs-start btn-variables
 $btn-color: var(--#{$prefix}body-color) !default;
 $btn-padding-y: $spacer-2 !default;
-$btn-padding-x: $spacer-3 !default;
+$btn-padding-x: var(--#{$prefix}ref-spacer-4) !default;
 $btn-line-height: $line-height-base * 1rem !default;
 
 $btn-padding-y-sm: $spacer-1 !default;
-$btn-padding-x-sm: $spacer-3 !default;
+$btn-padding-x-sm: var(--#{$prefix}ref-spacer-4) !default;
 $btn-font-size-sm: $small-font-size !default;
 
 $btn-padding-y-lg: .875rem !default;

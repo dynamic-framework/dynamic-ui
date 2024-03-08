@@ -26,7 +26,7 @@ $nav-tabs-link-active-border-color: transparent !default;
 
 // custom
 $nav-nav-padding-x: var(--#{$prefix}ref-spacer-6) !default;
-$nav-nav-padding-y: $spacer-3 !default;
+$nav-nav-padding-y: var(--#{$prefix}ref-spacer-4) !default;
 $nav-nav-gap: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 

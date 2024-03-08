@@ -82,10 +82,10 @@ $sub-sup-font-size: .75em !default;
 $text-muted: var(--#{$prefix}gray) !default;
 // fusv-enable
 
-$blockquote-margin-y: var(--#{$prefix}ref-spacer-3) !default;
+$blockquote-margin-y: var(--#{$prefix}ref-spacer-4) !default;
 $blockquote-footer-color: var(--#{$prefix}gray-600) !default;
 
-$hr-margin-y: var(--#{$prefix}ref-spacer-3) !default;
+$hr-margin-y: var(--#{$prefix}ref-spacer-4) !default;
 $hr-color: inherit !default;
 
 $hr-border-color: $border-color !default; // Allows for inherited colors

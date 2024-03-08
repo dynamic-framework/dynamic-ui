@@ -1,8 +1,8 @@
 .d-card-account {
   // Card
   --#{$prefix}card-border-width: 0;
-  --#{$prefix}card-spacer-y: var(--#{$prefix}ref-spacer-3);
-  --#{$prefix}card-spacer-x: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}card-spacer-y: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}card-spacer-x: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}card-color: var(--#{$prefix}body-color);
   // Card body
   --#{$prefix}card-body-gap: #{$spacer};

@@ -15,7 +15,7 @@ $alert-color-scale: 100% !default;
 // fusv-enable
 
 // custom
-$alert-gap: $spacer-3 !default;
+$alert-gap: var(--#{$prefix}ref-spacer-4) !default;
 $alert-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
 $alert-close-icon-size: .75rem !default;
 // end custom

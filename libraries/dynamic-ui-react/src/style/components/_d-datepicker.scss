@@ -6,26 +6,26 @@
   --#{$prefix}datepicker-font-family: var(--#{$prefix}font-sans-serif);
   --#{$prefix}datepicker-border: 0px;
   --#{$prefix}datepicker-box-shadow: var(--#{$prefix}box-shadow);
-  --#{$prefix}datepicker-font-size: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}datepicker-font-size: var(--#{$prefix}ref-spacer-4);
 
   // Header variables
-  --#{$prefix}datepicker-header-gap: var(--#{$prefix}ref-spacer-3);
-  --#{$prefix}datepicker-header-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-6);
+  --#{$prefix}datepicker-header-gap: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}datepicker-header-padding: var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-6);
   --#{$prefix}datepicker-header-background-color: var(--#{$prefix}secondary-soft);
   --#{$prefix}datepicker-header-border: 0;
   --#{$prefix}datepicker-header-font-size: var(--#{$prefix}ref-fs-6);
 
   --#{$prefix}datepicker-day-names-margin: 0;
-  --#{$prefix}datepicker-day-names-font-size: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}datepicker-day-names-font-size: var(--#{$prefix}ref-spacer-4);
 
   --#{$prefix}datepicker-day-name-weight: var(--#{$prefix}ref-fw-bold);
   --#{$prefix}datepicker-day-name-margin: 0;
-  --#{$prefix}datepicker-day-name-size: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}datepicker-day-name-size: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-day-name-color: var(--#{$prefix}gray-500);
 
   // Calendar variables
   --#{$prefix}datepicker-month-gap: var(--#{$prefix}ref-spacer-2);
-  --#{$prefix}datepicker-month-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-6) var(--#{$prefix}ref-spacer-6);
+  --#{$prefix}datepicker-month-padding: var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-6) var(--#{$prefix}ref-spacer-6);
   --#{$prefix}datepicker-month-margin: 0;
   --#{$prefix}datepicker-month-color: var(--#{$prefix}white);
 
@@ -34,8 +34,8 @@
   // Day variables
   --#{$prefix}datepicker-day-margin: 0;
   --#{$prefix}datepicker-day-font-size: var(--#{$prefix}ref-fs-small);
-  --#{$prefix}datepicker-day-size: var(--#{$prefix}ref-spacer-3);
-  --#{$prefix}datepicker-day-padding: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}datepicker-day-size: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}datepicker-day-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-day-radius: 100%;
 
   --#{$prefix}datepicker-day-bg-hover: var(--#{$prefix}body);
@@ -59,7 +59,7 @@
   --#{$prefix}datepicker-time-input-margin: 0;
   --#{$prefix}datepicker-time-input-align: center;
 
-  --#{$prefix}datepicker-time-input-padding: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}datepicker-time-input-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-time-input-gap: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}datepicker-time-input-label-weight: var(--#{$prefix}ref-fw-bold);
   --#{$prefix}datepicker-time-input-label-color: var(--#{$prefix}gray-700);
