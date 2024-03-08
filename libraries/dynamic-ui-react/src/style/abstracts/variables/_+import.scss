@@ -50,7 +50,7 @@ $input-btn-font-size-sm: $small-font-size !default;
 
 $input-btn-padding-y-lg: 1.125rem !default;
 $input-btn-padding-x-lg: var(--#{$prefix}ref-spacer-6) !default;
-$input-btn-font-size-lg: 1rem !default;
+$input-btn-font-size-lg: var(--#{$prefix}ref-spacer-4) !default;
 
 $input-btn-border-width: var(--#{$prefix}border-width) !default;
 // scss-docs-end input-btn-variables

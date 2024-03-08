@@ -8,7 +8,7 @@ $border-color-translucent: rgba(var(--#{$prefix}black-rgb), .175) !default;
 // scss-docs-end border-variables
 
 // scss-docs-start border-radius-variables
-$border-radius: 1rem !default;
+$border-radius: var(--#{$prefix}ref-spacer-4) !default;
 $border-radius-sm: .5rem !default;
 $border-radius-lg: var(--#{$prefix}ref-spacer-6) !default;
 $border-radius-xl: var(--#{$prefix}ref-spacer-8) !default;
