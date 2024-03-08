@@ -105,7 +105,7 @@ function DTabs(
             </button>
           ))}
         </nav>
-        <div className="tab-content">
+        <div className="tab-content w-100">
           {children}
         </div>
       </div>
