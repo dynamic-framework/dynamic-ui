@@ -19,14 +19,14 @@ $pagination-color: var(--#{$prefix}gray) !default;
 $pagination-bg: transparent !default;
 $pagination-border-width: 0 !default;
 
-$pagination-focus-color: var(--#{$prefix}white) !default;
-$pagination-focus-bg: var(--#{$prefix}secondary) !default;
-$pagination-focus-box-shadow: 0 !default;
-
 $pagination-hover-color: var(--#{$prefix}secondary) !default;
 $pagination-hover-bg: var(--#{$prefix}secondary-100) !default;
 $pagination-hover-border-color: 0 !default; // Todo in v6: remove this?
 
+$pagination-focus-color: #{$pagination-hover-color} !default;
+$pagination-focus-bg: #{$pagination-hover-bg} !default;
+$pagination-focus-box-shadow: 0 !default;
+$pagination-focus-outline: 0 !default;
 
 $pagination-disabled-color: var(--#{$prefix}gray-400) !default;
 $pagination-disabled-bg: var(--#{$prefix}transparent) !default;
