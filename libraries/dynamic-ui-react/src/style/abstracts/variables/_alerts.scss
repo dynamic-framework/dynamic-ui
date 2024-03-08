@@ -17,6 +17,6 @@ $alert-color-scale: 100% !default;
 // custom
 $alert-gap: var(--#{$prefix}ref-spacer-4) !default;
 $alert-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
-$alert-close-icon-size: .75rem !default;
+$alert-close-icon-size: var(--#{$prefix}ref-spacer-3) !default;
 // end custom
 // scss-docs-end alert-variables

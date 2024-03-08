@@ -18,7 +18,7 @@ $form-label-gap: var(--#{$prefix}ref-spacer-1) !default;
 // end custom
 
 // scss-docs-start form-input-variables
-$input-padding-y: .75rem !default;
+$input-padding-y: var(--#{$prefix}ref-spacer-3) !default;
 $input-padding-x: 1rem !default;
 
 $input-line-height: 1.375 !default;
@@ -132,7 +132,7 @@ $form-control-padding-x: $spacer-2 !default;
 $form-control-gap: .5rem !default;
 $form-control-color: var(--#{$prefix}gray) !default;
 
-$form-control-icon-size: .75rem !default;
+$form-control-icon-size: var(--#{$prefix}ref-spacer-3) !default;
 // end custom
 
 // scss-docs-start form-select-variables
