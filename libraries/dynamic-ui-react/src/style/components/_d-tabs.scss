@@ -11,6 +11,14 @@
 
   gap: var(--#{$prefix}tabs-nav-gap);
   padding: var(--#{$prefix}tabs-nav-padding-y) var(--#{$prefix}tabs-nav-padding-x);
+
+  &.flex-column {
+    flex: 1 0 auto;
+
+    .nav-link {
+      width: 100%;
+    }
+  }
 }
 
 .nav-tabs {
@@ -44,4 +52,8 @@
     position: relative;
     line-height: var(--#{$prefix}tabs-link-line-height);
   }
+}
+
+.tab-content {
+  width: 100%;
 }
