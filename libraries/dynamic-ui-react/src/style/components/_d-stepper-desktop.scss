@@ -9,7 +9,7 @@
   --#{$prefix}step-icon-container-z-index: 3;
 
   /* Base step */
-  --#{$prefix}step-label-height: 3rem;
+  --#{$prefix}step-label-height: var(--#{$prefix}ref-spacer-12);
   --#{$prefix}step-icon-size: 1.125rem;
   --#{$prefix}step-gap: .5rem;
   --#{$prefix}step-z-index: 2;
