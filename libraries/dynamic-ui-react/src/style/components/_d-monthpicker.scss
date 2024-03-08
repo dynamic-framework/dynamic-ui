@@ -8,7 +8,7 @@
   --#{$prefix}monthpicker-header-bg: var(--#{$prefix}dark);
 
   --#{$prefix}monthpicker-month-gap: 0;
-  --#{$prefix}monthpicker-month-padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}monthpicker-month-padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-6) var(--#{$prefix}ref-spacer-3);
   --#{$prefix}monthpicker-month-color: var(--#{$prefix}white);
   --#{$prefix}monthpicker-month-bg: var(--#{$prefix}dark);
 
@@ -25,7 +25,7 @@
   --#{$prefix}monthpicker-single-month-padding: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}monthpicker-single-month-margin: 0;
   --#{$prefix}monthpicker-single-month-text-transform: capitalize;
-  --#{$prefix}monthpicker-single-month-radius: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}monthpicker-single-month-radius: var(--#{$prefix}ref-spacer-6);
   --#{$prefix}monthpicker-single-month-line-height: var(--#{$prefix}ref-fs-6);
 
   --#{$prefix}monthpicker-single-month-after-display: inline;

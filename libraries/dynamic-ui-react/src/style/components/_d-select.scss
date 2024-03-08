@@ -65,8 +65,8 @@
   --#{$prefix}select-multi-value-border-radius: #{$spacer-1};
   --#{$prefix}select-multi-value-label-color: var(--#{$prefix}secondary);
 
-  --#{$prefix}select-indicator-width: #{$spacer-4};
-  --#{$prefix}select-indicator-height: #{$spacer-4};
+  --#{$prefix}select-indicator-width: var(--#{$prefix}ref-spacer-6);
+  --#{$prefix}select-indicator-height: var(--#{$prefix}ref-spacer-6);
 
   display: flex;
   flex-direction: column;

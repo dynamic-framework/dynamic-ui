@@ -10,7 +10,7 @@
 
   // Header variables
   --#{$prefix}datepicker-header-gap: var(--#{$prefix}ref-spacer-3);
-  --#{$prefix}datepicker-header-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}datepicker-header-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-6);
   --#{$prefix}datepicker-header-background-color: var(--#{$prefix}secondary-soft);
   --#{$prefix}datepicker-header-border: 0;
   --#{$prefix}datepicker-header-font-size: var(--#{$prefix}ref-fs-6);
@@ -25,7 +25,7 @@
 
   // Calendar variables
   --#{$prefix}datepicker-month-gap: var(--#{$prefix}ref-spacer-2);
-  --#{$prefix}datepicker-month-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}datepicker-month-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-6) var(--#{$prefix}ref-spacer-6);
   --#{$prefix}datepicker-month-margin: 0;
   --#{$prefix}datepicker-month-color: var(--#{$prefix}white);
 

@@ -13,7 +13,7 @@ $btn-padding-x-sm: $spacer-3 !default;
 $btn-font-size-sm: $small-font-size !default;
 
 $btn-padding-y-lg: .875rem !default;
-$btn-padding-x-lg: $spacer-4 !default;
+$btn-padding-x-lg: var(--#{$prefix}ref-spacer-6) !default;
 $btn-font-size-lg: $h6-font-size !default;
 
 $btn-border-width: $input-btn-border-width !default;
