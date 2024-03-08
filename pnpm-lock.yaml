@@ -66,8 +66,8 @@ importers:
         specifier: ^14.2.3
         version: 14.2.3(react@18.2.0)
       react-responsive-pagination:
-        specifier: ^2.2.3
-        version: 2.2.3(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^2.4.1
+        version: 2.4.1(react-dom@18.2.0)(react@18.2.0)
       react-select:
         specifier: ^5.8.0
         version: 5.8.0(@types/react@18.2.31)(react-dom@18.2.0)(react@18.2.0)
@@ -13402,8 +13402,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /react-responsive-pagination@2.2.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Rn9ts0AZzM0X+pcmVcSMNJAPD/ChO+1Yowssl56TidZcPHXdeg40FKdO7cw6MR1umaLFT/er/2GQTG6EUpw1VQ==}
+  /react-responsive-pagination@2.4.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-mrM3tQza4VeijvowJG0ithVEk4OQn9FQAn/J40mzPRwvDoQdcjmEQegQ4vwe9umtylccimQ5K6S/qWJ08r+hrw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
