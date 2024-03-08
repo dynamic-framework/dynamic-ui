@@ -3,18 +3,8 @@
 // Customizes the `.table` component with basic values, each used across all table variations.
 
 // scss-docs-start table-variables
-$table-cell-padding-y: .5rem !default;
-$table-cell-padding-x: .5rem !default;
-$table-cell-padding-y-sm: .25rem !default;
-$table-cell-padding-x-sm: .25rem !default;
-
-$table-cell-vertical-align: top !default;
-
 $table-color: var(--#{$prefix}body-color) !default;
 $table-bg: transparent !default;
-$table-accent-bg: transparent !default;
-
-$table-th-font-weight: null !default;
 
 $table-bg-scale: -100% !default;
 
@@ -31,15 +21,7 @@ $table-hover-bg-factor: .075 !default;
 $table-hover-bg: unquote("color-mix(in srgb, var(--#{$prefix}white), var(--#{$prefix}black) #{(100% - $table-bg-scale) * $table-hover-bg-factor})") !default;
 
 $table-border-factor: .1 !default;
-$table-border-width: var(--#{$prefix}border-width) !default;
-$table-border-color: var(--#{$prefix}border-color) !default;
 
-$table-striped-order: odd !default;
-$table-striped-columns-order: even !default;
-
-$table-group-separator-color: currentcolor !default;
-
-$table-caption-color: var(--#{$prefix}secondary-color) !default;
 
 // scss-docs-end table-variables
 

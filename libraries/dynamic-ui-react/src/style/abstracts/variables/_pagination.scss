@@ -1,41 +1,19 @@
 // Pagination
 
 // scss-docs-start pagination-variables
-$pagination-padding-y: .375rem !default;
-$pagination-padding-x: .75rem !default;
-$pagination-padding-y-sm: .25rem !default;
-$pagination-padding-x-sm: .5rem !default;
-$pagination-padding-y-lg: .75rem !default;
-$pagination-padding-x-lg: 1.5rem !default;
-
-$pagination-font-size: $font-size-base !default;
-
 $pagination-color: var(--#{$prefix}gray) !default;
 $pagination-bg: transparent !default;
-$pagination-border-radius: var(--#{$prefix}border-radius) !default;
 $pagination-border-width: 0 !default;
-$pagination-margin-start: calc(#{$pagination-border-width} * -1) !default;
-$pagination-border-color: var(--#{$prefix}border-color) !default;
 
 $pagination-focus-color: var(--#{$prefix}white) !default;
 $pagination-focus-bg: var(--#{$prefix}secondary) !default;
 $pagination-focus-box-shadow: 0 !default;
-$pagination-focus-outline: 0 !default;
 
 $pagination-hover-color: var(--#{$prefix}secondary) !default;
 $pagination-hover-bg: var(--#{$prefix}secondary-100) !default;
 $pagination-hover-border-color: 0 !default; // Todo in v6: remove this?
 
-$pagination-active-color: $component-active-color !default;
-$pagination-active-bg: $component-active-bg !default;
-$pagination-active-border-color: $component-active-bg !default;
 
 $pagination-disabled-color: var(--#{$prefix}gray-400) !default;
 $pagination-disabled-bg: var(--#{$prefix}transparent) !default;
-$pagination-disabled-border-color: var(--#{$prefix}border-color) !default;
-
-$pagination-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
-
-$pagination-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
-$pagination-border-radius-lg: var(--#{$prefix}border-radius-lg) !default;
 // scss-docs-end pagination-variables

@@ -4,9 +4,6 @@
 
 // scss-docs-start font-variables
 $font-family-sans-serif: "Source Sans 3", sans-serif !default;
-$font-family-monospace: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace !default;
-$font-family-base: var(--#{$prefix}font-sans-serif) !default;
-$font-family-code: var(--#{$prefix}font-monospace) !default;
 
 // $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and margins
 // $font-size-base affects the font size of the body text
@@ -49,11 +46,8 @@ $font-sizes: (
 
 // scss-docs-start headings-variables
 $headings-margin-bottom: 0 !default;
-$headings-font-family: null !default;
-$headings-font-style: null !default;
 $headings-font-weight: $font-weight-bold !default;
 $headings-line-height: 1.2 !default;
-$headings-color: null !default;
 // scss-docs-end headings-variables
 
 // scss-docs-start display-headings
@@ -73,14 +67,11 @@ $display-font-sizes: (
   6: $display6-font-size
 ) !default;
 
-$display-font-family: null !default;
-$display-font-style:  null !default;
 $display-font-weight: $font-weight-base !default;
 $display-line-height: $headings-line-height !default;
 // scss-docs-end display-headings
 
 // scss-docs-start type-variables
-$lead-font-size: $font-size-base * 1.25 !default;
 $lead-font-weight: $font-weight-normal !default;
 
 $small-font-size: $font-size-sm !default;
@@ -91,33 +82,14 @@ $sub-sup-font-size: .75em !default;
 $text-muted: var(--#{$prefix}gray) !default;
 // fusv-enable
 
-$initialism-font-size: $small-font-size !default;
-
 $blockquote-margin-y: var(--#{$prefix}ref-spacer-3) !default;
-$blockquote-font-size: $font-size-base * 1.25 !default;
 $blockquote-footer-color: var(--#{$prefix}gray-600) !default;
-$blockquote-footer-font-size: $small-font-size !default;
 
 $hr-margin-y: var(--#{$prefix}ref-spacer-3) !default;
 $hr-color: inherit !default;
 
-// fusv-disable
-$hr-bg-color: null !default; // Deprecated in v5.2.0
-$hr-height: null !default; // Deprecated in v5.2.0
-// fusv-enable
-
 $hr-border-color: $border-color !default; // Allows for inherited colors
-$hr-border-width: $border-width !default;
 $hr-opacity: 1 !default;
 
-$legend-margin-bottom: .5rem !default;
-$legend-font-size: 1.5rem !default;
-$legend-font-weight: null !default;
-
-$dt-font-weight: $font-weight-bold !default;
-
-$list-inline-padding: .5rem !default;
-
-$mark-padding: .1875em !default;
 $mark-bg: var(--#{$prefix}warning-100) !default;
 // scss-docs-end type-variables
