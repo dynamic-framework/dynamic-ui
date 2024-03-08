@@ -75,9 +75,9 @@ function DTabs(
     <TabContext.Provider value={value}>
       <div
         className={classNames({
-          'd-flex': true,
+          'd-flex w-100': true,
           'flex-column': !vertical,
-        }, className)}
+        })}
         style={style}
       >
         <nav className={classNames(generateClasses)}>
