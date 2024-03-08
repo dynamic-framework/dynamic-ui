@@ -56,8 +56,8 @@ export const Default: Story = {
   decorators: [
     (Story) => (
       <div
-        style={{ width: '320px', height: '320px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        style={{ width: '576px', height: '220px' }}
+        className="d-flex justify-content-center gap-3"
       >
         <Story />
       </div>
@@ -65,18 +65,21 @@ export const Default: Story = {
   ],
   render: (args) => (
     <DTabs {...args}>
-      <DTabs.Tab tab="tab1">Tab content for Tab 1</DTabs.Tab>
+      <DTabs.Tab tab="tab1">
+        Tab content for Tab 1. Lorem ipsum dolor sit amet consectetur,
+        adipisicing elit. Eligendi error beatae temporibus cupiditate
+        quasi ut enim vero, consectetur mollitia soluta! Officiis maxime
+        laboriosam, beatae quia earum id velit, doloribus, voluptatibus
+        soluta ea molestiae? Quo molestiae rem iusto atque beatae aliquam.
+      </DTabs.Tab>
       <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
     </DTabs>
   ),
   args: {
-    defaultSelected: 'tab2',
+    defaultSelected: 'tab1',
     options: [
       { label: 'Tab 1', tab: 'tab1' },
       { label: 'Tab 2', tab: 'tab2' },
-      { label: 'Tab 3', tab: 'tab3' },
-      { label: 'Tab 4', tab: 'tab4' },
-      { label: 'Tab 5', tab: 'tab5' },
       { label: 'Tab w/o Content', tab: 'empty' },
     ],
     vertical: false,
@@ -87,8 +90,8 @@ export const Vertical: Story = {
   decorators: [
     (Story) => (
       <div
-        style={{ width: '320px', height: '320px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        style={{ width: '576px', height: '220px' }}
+        className="d-flex justify-content-center gap-3"
       >
         <Story />
       </div>
@@ -96,7 +99,13 @@ export const Vertical: Story = {
   ],
   render: (args) => (
     <DTabs {...args}>
-      <DTabs.Tab tab="tab1">Tab content for Tab 1</DTabs.Tab>
+      <DTabs.Tab tab="tab1">
+        Tab content for Tab 1. Lorem ipsum dolor sit amet consectetur,
+        adipisicing elit. Eligendi error beatae temporibus cupiditate
+        quasi ut enim vero, consectetur mollitia soluta! Officiis maxime
+        laboriosam, beatae quia earum id velit, doloribus, voluptatibus
+        soluta ea molestiae? Quo molestiae rem iusto atque beatae aliquam.
+      </DTabs.Tab>
       <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
     </DTabs>
   ),
@@ -115,8 +124,8 @@ export const Pills: Story = {
   decorators: [
     (Story) => (
       <div
-        style={{ width: '320px', height: '320px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        style={{ width: '576px', height: '220px' }}
+        className="d-flex justify-content-center gap-3"
       >
         <Story />
       </div>
@@ -124,7 +133,13 @@ export const Pills: Story = {
   ],
   render: (args) => (
     <DTabs {...args}>
-      <DTabs.Tab tab="tab1">Tab content for Tab 1</DTabs.Tab>
+      <DTabs.Tab tab="tab1">
+        Tab content for Tab 1. Lorem ipsum dolor sit amet consectetur,
+        adipisicing elit. Eligendi error beatae temporibus cupiditate
+        quasi ut enim vero, consectetur mollitia soluta! Officiis maxime
+        laboriosam, beatae quia earum id velit, doloribus, voluptatibus
+        soluta ea molestiae? Quo molestiae rem iusto atque beatae aliquam.
+      </DTabs.Tab>
       <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
     </DTabs>
   ),
@@ -144,8 +159,8 @@ export const VerticalPills: Story = {
   decorators: [
     (Story) => (
       <div
-        style={{ width: '320px', height: '320px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        style={{ width: '576px', height: '220px' }}
+        className="d-flex justify-content-center gap-3"
       >
         <Story />
       </div>
@@ -153,7 +168,13 @@ export const VerticalPills: Story = {
   ],
   render: (args) => (
     <DTabs {...args}>
-      <DTabs.Tab tab="tab1">Tab content for Tab 1</DTabs.Tab>
+      <DTabs.Tab tab="tab1">
+        Tab content for Tab 1. Lorem ipsum dolor sit amet consectetur,
+        adipisicing elit. Eligendi error beatae temporibus cupiditate
+        quasi ut enim vero, consectetur mollitia soluta! Officiis maxime
+        laboriosam, beatae quia earum id velit, doloribus, voluptatibus
+        soluta ea molestiae? Quo molestiae rem iusto atque beatae aliquam.
+      </DTabs.Tab>
       <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
     </DTabs>
   ),
