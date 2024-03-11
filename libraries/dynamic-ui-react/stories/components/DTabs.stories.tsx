@@ -45,6 +45,12 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'boolean',
       table: { defaultValue: { summary: false } },
     },
+    variant: {
+      type: 'string',
+      options: ['tabs', 'pills', 'underline'],
+      control: 'select',
+      table: { defaultValue: { summary: 'underline' } },
+    },
   },
   tags: ['autodocs'],
 };
@@ -151,7 +157,7 @@ export const Pills: Story = {
       { label: 'Tab w/o Content', tab: 'empty' },
     ],
     vertical: false,
-    pill: true,
+    variant: 'pills',
   },
 };
 
@@ -186,6 +192,6 @@ export const VerticalPills: Story = {
       { label: 'Tab w/o Content', tab: 'empty' },
     ],
     vertical: true,
-    pill: true,
+    variant: 'pills',
   },
 };

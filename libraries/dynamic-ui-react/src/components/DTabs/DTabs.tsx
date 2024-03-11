@@ -19,12 +19,14 @@ export type DTabOption = {
   disabled?: boolean;
 };
 
+export type TabVariant = 'tabs' | 'pills' | 'underline';
+
 type Props = BaseProps & PropsWithChildren<{
   onChange: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
   vertical?: boolean;
-  pill?: boolean;
+  variant?: TabVariant;
 }>;
 
 function DTabs(
@@ -36,7 +38,7 @@ function DTabs(
     className,
     style,
     vertical,
-    pill,
+    variant = 'underline',
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -64,11 +66,10 @@ function DTabs(
     () => ({
       nav: true,
       'flex-column align-items-center': vertical,
-      'nav-pills': pill,
-      'nav-tabs': !pill,
+      [`nav-${variant}`]: true,
       ...className && { [className]: true },
     }),
-    [vertical, pill, className],
+    [vertical, variant, className],
   );
 
   return (

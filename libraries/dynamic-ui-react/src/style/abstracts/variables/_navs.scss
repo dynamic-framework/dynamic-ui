@@ -34,3 +34,5 @@ $nav-pills-border-radius: 100px !default;
 $nav-pills-link-active-color: var(--#{$prefix}white) !default;
 $nav-pills-link-active-bg: var(--#{$prefix}secondary) !default;
 // scss-docs-end nav-variables
+
+$nav-underline-link-active-color: var(--#{$prefix}secondary) !default;

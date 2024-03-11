@@ -20,36 +20,12 @@
     }
   }
 }
-
-.nav-tabs {
-  .nav-link {
-    position: relative;
-    line-height: var(--#{$prefix}tabs-link-line-height);
-
-    &.active {
-      font-weight: var(--#{$prefix}tabs-link-border-active-font-weight);
-      color: var(--#{$prefix}tabs-link-border-active-color);
-
-      &::before {
-        background: var(--#{$prefix}tabs-link-border-active-bg);
-      }
-    }
-  }
-
-  .nav-link::before {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: var(--#{$prefix}tabs-link-border-height);
-    content: " ";
-    border-radius: var(--#{$prefix}tabs-link-border-border-radius);
+.nav-underline .nav-link {
+  &:not(.active):hover {
+    border-bottom-color: transparent;
   }
 }
-
-.nav-pills {
-  .nav-link {
-    position: relative;
-    line-height: var(--#{$prefix}tabs-link-line-height);
-  }
+.nav-link:focus-visible {
+  --#{$prefix}focus-ring-opacity: .25;
+  --#{$prefix}focus-ring-color: rgba(var(--#{$prefix}secondary-rgb), var(--#{$prefix}focus-ring-opacity));
 }
