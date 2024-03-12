@@ -16,13 +16,13 @@ $nav-link-border-active-font-weight: var(--#{$prefix}ref-fw-bold) !default;
 $nav-link-border-active-bg: var(--#{$prefix}secondary) !default;
 // end custom
 
-$nav-tabs-border-color: transparent !default;
-$nav-tabs-border-width: 0 !default;
-$nav-tabs-border-radius: var(--#{$prefix}border-radius) !default;
-$nav-tabs-link-hover-border-color: $nav-link-hover-color !default;
+// $nav-tabs-border-color: transparent !default;
+// $nav-tabs-border-width: 0 !default;
+$nav-tabs-border-radius: var(--#{$prefix}border-radius-sm) !default;
+// $nav-tabs-link-hover-border-color: $nav-link-hover-color !default;
 $nav-tabs-link-active-color: var(--#{$prefix}secondary) !default;
-$nav-tabs-link-active-bg: transparent !default;
-$nav-tabs-link-active-border-color: transparent !default;
+$nav-tabs-link-active-bg: var(--#{$prefix}secondary-100) !default;
+$nav-tabs-link-active-border-color: var(--#{$prefix}secondary) !default;
 
 // custom
 $nav-nav-padding-x: $spacer-4 !default;

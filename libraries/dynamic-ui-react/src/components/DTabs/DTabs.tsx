@@ -65,7 +65,7 @@ function DTabs(
   const generateClasses = useMemo(
     () => ({
       nav: true,
-      'flex-column align-items-center': vertical,
+      'flex-column align-items-center': vertical && variant !== 'tabs',
       [`nav-${variant}`]: true,
       ...className && { [className]: true },
     }),
@@ -77,7 +77,7 @@ function DTabs(
       <div
         className={classNames({
           'd-flex w-100': true,
-          'flex-column': !vertical,
+          'flex-column': !vertical || variant === 'tabs',
         })}
         style={style}
       >

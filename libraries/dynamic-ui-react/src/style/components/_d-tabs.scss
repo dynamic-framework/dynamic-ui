@@ -1,4 +1,5 @@
-.nav {
+.nav-pills,
+ .nav-underline {
   --#{$prefix}tabs-nav-gap: #{$nav-nav-gap};
   --#{$prefix}tabs-nav-padding-x: #{$nav-nav-padding-x};
   --#{$prefix}tabs-nav-padding-y: #{$nav-nav-padding-y};
@@ -20,6 +21,20 @@
     }
   }
 }
+
+.nav-tabs {
+  --#{$prefix}tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
+  .nav-link {
+    &.active {
+      font-weight: var(--#{$prefix}tabs-link-border-active-font-weight);
+      border-bottom: 0;
+    }
+    &:not(.active):is(:hover, :focus) {
+      border-color: transparent;
+    }
+  }
+}
+
 .nav-underline .nav-link {
   &:not(.active):hover {
     border-bottom-color: transparent;

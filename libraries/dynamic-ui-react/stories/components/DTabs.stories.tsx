@@ -195,3 +195,38 @@ export const VerticalPills: Story = {
     variant: 'pills',
   },
 };
+
+export const Tabs: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '576px', height: '220px' }}
+        className="d-flex justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DTabs {...args}>
+      <DTabs.Tab tab="tab1">
+        Tab content for Tab 1. Lorem ipsum dolor sit amet consectetur,
+        adipisicing elit. Eligendi error beatae temporibus cupiditate
+        quasi ut enim vero, consectetur mollitia soluta! Officiis maxime
+        laboriosam, beatae quia earum id velit, doloribus, voluptatibus
+        soluta ea molestiae? Quo molestiae rem iusto atque beatae aliquam.
+      </DTabs.Tab>
+      <DTabs.Tab tab="tab2">Tab content for Tab 2</DTabs.Tab>
+    </DTabs>
+  ),
+  args: {
+    defaultSelected: 'tab2',
+    options: [
+      { label: 'Tab 1', tab: 'tab1' },
+      { label: 'Tab 2', tab: 'tab2' },
+      { label: 'Tab w/o Content', tab: 'empty' },
+    ],
+    vertical: false,
+    variant: 'tabs',
+  },
+};
