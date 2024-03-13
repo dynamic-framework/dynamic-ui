@@ -9,7 +9,7 @@ $nav-link-disabled-color: var(--#{$prefix}gray-200) !default;
 
 // custom
 $nav-link-border-height: 2px !default;
-$nav-link-line-height: $spacer-4 !default;
+$nav-link-line-height: var(--#{$prefix}ref-spacer-6) !default;
 $nav-link-border-border-radius: $border-radius-pill !default;
 $nav-link-border-active-color: var(--#{$prefix}secondary) !default;
 $nav-link-border-active-font-weight: var(--#{$prefix}ref-fw-bold) !default;
@@ -25,9 +25,9 @@ $nav-tabs-link-active-bg: transparent !default;
 $nav-tabs-link-active-border-color: transparent !default;
 
 // custom
-$nav-nav-padding-x: $spacer-4 !default;
-$nav-nav-padding-y: $spacer-3 !default;
-$nav-nav-gap: $spacer-4 !default;
+$nav-nav-padding-x: var(--#{$prefix}ref-spacer-6) !default;
+$nav-nav-padding-y: var(--#{$prefix}ref-spacer-4) !default;
+$nav-nav-gap: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 
 $nav-pills-border-radius: 100px !default;

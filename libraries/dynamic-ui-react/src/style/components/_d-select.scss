@@ -11,7 +11,7 @@
   --#{$prefix}select-option-is-checkbox-font-size: var(--#{$prefix}body-font-size);
   --#{$prefix}select-option-is-checkbox-font-weight: var(--#{$prefix}ref-fw-normal);
   --#{$prefix}select-option-is-checkbox-color: var(--#{$prefix}gray-900);
-  --#{$prefix}select-option-has-icon-icon-size: #{$spacer-3};
+  --#{$prefix}select-option-has-icon-icon-size: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}select-multi-value-padding-x: var(--#{$prefix}select-gap);
   --#{$prefix}select-multi-value-padding-y: 0;
   --#{$prefix}select-multi-value-margin-right: var(--#{$prefix}select-gap);
@@ -19,8 +19,8 @@
   --#{$prefix}select-multi-value-border-radius: #{$spacer-1};
   --#{$prefix}select-multi-value-label-color: var(--#{$prefix}secondary);
 
-  --#{$prefix}select-indicator-width: #{$spacer-4};
-  --#{$prefix}select-indicator-height: #{$spacer-4};
+  --#{$prefix}select-indicator-width: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}select-indicator-height: var(--#{$prefix}ref-spacer-4);
 
   // focus
   &:focus-within {
