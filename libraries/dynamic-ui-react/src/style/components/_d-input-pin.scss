@@ -30,12 +30,12 @@
   }
 
   &:focus-within {
-    .form-control:not(.is-invalid):not(.is-valid) {
+    .form-control:not(.is-invalid, .is-valid) {
       border-color: var(--#{$prefix}input-pin-form-control-focus-border-color);
       box-shadow: var(--#{$prefix}input-pin-form-control-focus-box-shadow);
     }
 
-    &:has(.form-control:hover) .form-control:not(.is-invalid):not(.is-valid) {
+    &:has(.form-control:hover) .form-control:not(.is-invalid, .is-valid) {
       border-color: var(--#{$prefix}input-pin-form-control-focus-border-color);
     }
   }

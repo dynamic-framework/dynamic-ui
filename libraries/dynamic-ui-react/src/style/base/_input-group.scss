@@ -107,4 +107,8 @@
       --#{$prefix}icon-color: var(--#{$prefix}input-disabled-color);
     }
   }
+
+  button:disabled .d-icon {
+    --#{$prefix}icon-color: var(--#{$prefix}input-disabled-color);
+  }
 }
