@@ -1,0 +1,12 @@
+.form-text {
+  --#{$prefix}form-text-padding: #{$form-text-padding-y} #{$form-text-padding-x};
+  --#{$prefix}form-text-gap: var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}form-text-color: #{$form-text-color};
+
+  display: inline-flex;
+  flex-direction: row;
+  gap: var(--#{$prefix}form-text-gap);
+  align-items: center;
+  padding: var(--#{$prefix}form-text-padding);
+  color: var(--#{$prefix}form-text-color);
+}

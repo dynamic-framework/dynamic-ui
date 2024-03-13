@@ -14,29 +14,26 @@ const config: Meta<typeof DInputCurrencyBase> = {
 Component composition with \`d-input\` to make a currency input component.
 
 ## CSS Variables
-| Variable                                        | Type            | Description                   |
-|-------------------------------------------------|-----------------|-------------------------------|
-| --${PREFIX_BS}input-control-gap                 | css length unit | Space between layout elements |
-| --${PREFIX_BS}input-label-color                 | css color unit  | Label color                   |
-| --${PREFIX_BS}input-label-font-weight           | css font weight | Label font weight             |
-| --${PREFIX_BS}input-label-font-size             | css length unit | Label font size               |
-| --${PREFIX_BS}input-label-padding-x             | css length unit | Label horizontal padding      |
-| --${PREFIX_BS}input-label-padding-y             | css length unit | Label vertical padding        |
-| --${PREFIX_BS}input-label-gap                   | css length unit | Space between label elements  |
-| --${PREFIX_BS}input-group-border-color          | css color unit  | Input border color            |
-| --${PREFIX_BS}input-group-border-width          | css length unit | Input border width            |
-| --${PREFIX_BS}input-group-border-radius         | css length unit | Input border radius           |
-| --${PREFIX_BS}input-group-hover-border-color    | css color unit  | Input hover border color      |
-| --${PREFIX_BS}input-group-focus-border-color    | css color unit  | Input focus border color      |
-| --${PREFIX_BS}input-group-focus-box-shadow      | css shadow      | Input focus box shadow        |
-| --${PREFIX_BS}input-form-text-padding           | css length unit | Hint padding                  |
-| --${PREFIX_BS}input-form-text-gap               | css length unit | Space between hint elements   |
-| --${PREFIX_BS}input-form-text-color             | css color unit  | Hint color                    |
-| --${PREFIX_BS}input-group-disabled-bg           | css color unit  | Input disable background      |
-| --${PREFIX_BS}input-group-disabled-color        | css color unit  | Input disable color           |
-| --${PREFIX_BS}input-group-disabled-border-color | css color unit  | Input disable border color    |
-| --${PREFIX_BS}input-form-control-text-align     | css text align  | Input text align              |
-| --${PREFIX_BS}input-currency-symbol-color       | css color unit  | Color of the currency symbol  |
+| Variable                                         | Type            | Description                   |
+|--------------------------------------------------|-----------------|-------------------------------|
+| --${PREFIX_BS}label-color                        | css color unit  | Label color                   |
+| --${PREFIX_BS}label-font-weight                  | css font weight | Label font weight             |
+| --${PREFIX_BS}label-font-size                    | css length unit | Label font size               |
+| --${PREFIX_BS}label-padding-x                    | css length unit | Label horizontal padding      |
+| --${PREFIX_BS}label-padding-y                    | css length unit | Label vertical padding        |
+| --${PREFIX_BS}input-border-color                 | css color unit  | Input border color            |
+| --${PREFIX_BS}input-border-width                 | css length unit | Input border width            |
+| --${PREFIX_BS}input-border-radius                | css length unit | Input border radius           |
+| --${PREFIX_BS}input-focus-border-color           | css color unit  | Input focus border color      |
+| --${PREFIX_BS}input-focus-box-shadow             | css shadow      | Input focus box shadow        |
+| --${PREFIX_BS}input-disabled-bg                  | css color unit  | Input disable background      |
+| --${PREFIX_BS}input-disabled-color               | css color unit  | Input disable color           |
+| --${PREFIX_BS}input-disabled-border-color        | css color unit  | Input disable border color    |
+| --${PREFIX_BS}form-text-padding                  | css length unit | Hint padding                  |
+| --${PREFIX_BS}form-text-gap                      | css length unit | Space between hint elements   |
+| --${PREFIX_BS}form-text-color                    | css color unit  | Hint color                    |
+| --${PREFIX_BS}form-control-text-align            | css text align  | Input text align              |
+| --${PREFIX_BS}input-currency-symbol-color        | css color unit  | Color of the currency symbol  |
         `,
       },
     },
@@ -194,24 +191,6 @@ export const Default: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     value: undefined,
-    minValue: 0,
-    maxValue: 100000,
-    currencyOptions: {
-      symbol: '$',
-      precision: 2,
-      separator: ',',
-      decimal: '.',
-    },
-  },
-};
-
-export const Value: Story = {
-  args: {
-    id: 'componentId2',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    labelIcon: undefined,
-    value: 1000.12,
     minValue: 0,
     maxValue: 100000,
     currencyOptions: {

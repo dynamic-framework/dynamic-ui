@@ -6,10 +6,10 @@ $badge-font-weight: $font-weight-normal !default;
 $badge-color: var(--#{$prefix}gray-900) !default;
 $badge-padding-y: var(--#{$prefix}ref-spacer-1) !default;
 $badge-padding-x: var(--#{$prefix}ref-spacer-2) !default;
-$badge-border-radius: $border-radius-sm !default;
+$badge-border-radius: var(--#{$prefix}border-radius-sm) !default;
 
 // custom
 $badge-bg: var(--#{$prefix}white) !default;
-$badge-dot-height: var(--#{$prefix}ref-spacer-3) !default;
+$badge-dot-height: var(--#{$prefix}ref-spacer-4) !default;
 // end custom
 // scss-docs-end badge-variables

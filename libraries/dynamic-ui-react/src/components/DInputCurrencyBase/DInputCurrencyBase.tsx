@@ -10,6 +10,7 @@ import DInput from '../DInput';
 import useInputCurrency from '../../hooks/useInputCurrency';
 
 import type { Merge } from '../../types';
+import { useDisableInputWheel } from '../../hooks';
 
 type NonDInputProps = {
   value?: number;
@@ -37,13 +38,15 @@ function DInputCurrencyBase(
   ref: ForwardedRef<HTMLInputElement>,
 ) {
   const {
+    handleOnWheel,
+  } = useDisableInputWheel(ref);
+  const {
     inputRef,
     innerValue,
     innerType,
     handleOnFocus,
     handleOnChange,
     handleOnBlur,
-    handleOnWheel,
     generateStyleVariables,
     generateSymbolStyleVariables,
   } = useInputCurrency(

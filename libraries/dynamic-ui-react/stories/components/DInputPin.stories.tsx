@@ -14,26 +14,21 @@ const config: Meta<typeof DInputPin> = {
 Component with a partial API of \`d-input\` to take a pin/otp code.
 
 ## CSS Variables
-| Variable                                                   | Type             | Description                         |
-|------------------------------------------------------------|------------------|-------------------------------------|
-| --${PREFIX_BS}input-pin-gap                                | css length unit  | Space between layout elements       |
-| --${PREFIX_BS}input-pin-label-gap                          | css length unit  | Space between label elements        |
-| --${PREFIX_BS}input-pin-label-focus-color                  | css color unit   | Label focus color                   |
-| --${PREFIX_BS}input-pin-label-padding-x                    | css length unit  | Label horizontal padding            |
-| --${PREFIX_BS}input-pin-label-padding-y                    | css length unit  | Label vertical padding              |
-| --${PREFIX_BS}input-pin-label-font-weight                  | css font weight  | Label font weight                   |
-| --${PREFIX_BS}input-pin-label-font-size                    | css length unit  | Label font size                     |
-| --${PREFIX_BS}input-pin-label-color                        | css color unit   | Label color                         |
-| --${PREFIX_BS}input-pin-form-control-gap                   | css length unit  | Space between inputs                |
-| --${PREFIX_BS}input-pin-form-control-width                 | css length unit  | Input width                         |
-| --${PREFIX_BS}input-pin-form-control-height                | css length unit  | Input height                        |
-| --${PREFIX_BS}input-pin-form-control-border-color          | css color unit   | Input border color                  |
-| --${PREFIX_BS}input-pin-form-control-focus-border-color    | css color unit   | Input focus border color            |
-| --${PREFIX_BS}input-pin-form-control-focus-box-shadow      | css box shadow   | Input focus box shadow              |
-| --${PREFIX_BS}input-pin-form-control-hover-border-color    | css color unit   | Input hover border color            |
-| --${PREFIX_BS}input-pin-form-text-padding                  | css length unit  | Input text padding                  |
-| --${PREFIX_BS}input-pin-form-text-gap                      | css length unit  | Space between input text elements   |
-| --${PREFIX_BS}input-pin-form-text-color                    | css color unit   | Input text color                    |
+| Variable                                                    | Type             | Description                         |
+|-------------------------------------------------------------|------------------|-------------------------------------|
+| --${PREFIX_BS}label-color                                   | css color unit   | Label color                         |
+| --${PREFIX_BS}label-font-weight                             | css font weight  | Label font weight                   |
+| --${PREFIX_BS}label-font-size                               | css length unit  | Label font size                     |
+| --${PREFIX_BS}label-padding-x                               | css length unit  | Label horizontal padding            |
+| --${PREFIX_BS}label-padding-y                               | css length unit  | Label vertical padding              |
+| --${PREFIX_BS}input-pin-form-gap                            | css length unit  | Space between inputs                |
+| --${PREFIX_BS}input-pin-form-control-size                   | css length unit  | Input width                         |
+| --${PREFIX_BS}input-pin-form-control-focus-border-color     | css color unit   | Input focus border color            |
+| --${PREFIX_BS}input-pin-form-control-focus-box-shadow       | css box shadow   | Input focus box shadow              |
+| --${PREFIX_BS}form-text-padding                             | css length unit  | Hint padding                        |
+| --${PREFIX_BS}form-text-gap                                 | css length unit  | Space between hint elements         |
+| --${PREFIX_BS}form-text-color                               | css color unit   | Hint color                          |
+| --${PREFIX_BS}form-control-text-align                       | css text align   | Input text align                    |
         `,
       },
     },

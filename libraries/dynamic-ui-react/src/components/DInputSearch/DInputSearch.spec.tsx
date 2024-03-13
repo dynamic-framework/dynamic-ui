@@ -17,40 +17,34 @@ it('should render my component', () => {
 
   expect(container).toMatchInlineSnapshot(`
   <div>
-    <div
-      class="d-input"
-    >
+    <div>
       <label
         for="searchId"
       >
         Label
       </label>
       <div
-        class="d-input-control"
+        class="input-group"
       >
-        <div
-          class="input-group"
+        <input
+          aria-describedby="searchIdEnd"
+          class="form-control"
+          id="searchId"
+          placeholder="Search"
+          type="text"
+          value="Value"
+        />
+        <button
+          aria-label="search"
+          class="input-group-text"
+          id="searchIdEnd"
+          type="button"
         >
-          <input
-            aria-describedby="searchIdEnd"
-            class="form-control"
-            id="searchId"
-            placeholder="Search"
-            type="text"
-            value="Value"
+          <i
+            class="d-icon bi bi-search"
+            style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
           />
-          <button
-            aria-label="search"
-            class="input-group-text"
-            id="searchIdEnd"
-            type="button"
-          >
-            <i
-              class="d-icon bi bi-search d-input-icon"
-              style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-            />
-          </button>
-        </div>
+        </button>
       </div>
     </div>
   </div>
