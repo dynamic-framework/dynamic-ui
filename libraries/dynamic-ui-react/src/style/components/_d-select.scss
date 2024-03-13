@@ -1,66 +1,20 @@
 // stylelint-disable selector-class-pattern
 
 .d-select {
-  --#{$prefix}input-gap: #{$spacer-2};
-
-  // label
-  --#{$prefix}input-label-color: #{$form-label-color};
-  --#{$prefix}input-label-font-weight: #{$form-label-font-weight};
-  --#{$prefix}input-label-font-size: #{$form-label-font-size};
-  --#{$prefix}input-label-padding-x: #{$form-label-padding-x};
-  --#{$prefix}input-label-padding-y: #{$form-label-padding-y};
-  --#{$prefix}input-label-gap: #{$form-label-gap};
-
-  // input group
-  --#{$prefix}input-group-border-color: #{$input-group-border-color};
-  --#{$prefix}input-group-border-width: #{$input-group-border-width};
-  --#{$prefix}input-group-border-radius: #{$input-group-border-radius};
-  // input group hover
-  --#{$prefix}input-group-hover-border-color: #{$input-group-hover-border-color};
-  // input group focus
-  --#{$prefix}input-group-focus-border-color: #{$input-group-focus-border-color};
-  --#{$prefix}input-group-focus-box-shadow: #{$input-group-focus-box-shadow};
-
-  // input
-  --#{$prefix}input-padding-y: #{$input-padding-y};
-  --#{$prefix}input-padding-x: #{$input-padding-x};
-  --#{$prefix}input-font-family: #{$input-font-family};
-  --#{$prefix}input-font-size: #{$input-font-size};
-  --#{$prefix}input-font-weight: #{$input-font-weight};
-  --#{$prefix}input-line-height: #{$input-line-height};
-  --#{$prefix}input-color: #{$input-color};
-  --#{$prefix}input-bg: #{$input-bg};
-  --#{$prefix}input-focus-color: #{$input-focus-color};
-  --#{$prefix}input-focus-bg: #{$input-focus-bg};
-  --#{$prefix}input-placeholder-color: #{$input-placeholder-color};
-
-  // hint
-  --#{$prefix}input-form-text-padding: #{$form-control-padding-y} #{$form-control-padding-x};
-  --#{$prefix}input-form-text-gap: #{$form-control-gap};
-  --#{$prefix}input-form-text-color: #{$form-control-color};
-
-  // input disabled
-  --#{$prefix}input-group-disabled-border-color: #{$input-disabled-border-color};
-  --#{$prefix}input-group-disabled-bg: #{$input-disabled-bg};
-  --#{$prefix}input-group-disabled-color: #{$input-disabled-color};
+  --#{$prefix}select-gap: #{$spacer-2};
 
   // select
   --#{$prefix}select-menu-shadow: #{$box-shadow-sm};
-
   --#{$prefix}select-option-focus-bg: var(--#{$prefix}gray-100);
-
   --#{$prefix}select-option-selected-color: var(--#{$prefix}secondary);
   --#{$prefix}select-option-selected-bg: var(--#{$prefix}gray-100);
-
   --#{$prefix}select-option-is-checkbox-font-size: var(--#{$prefix}body-font-size);
   --#{$prefix}select-option-is-checkbox-font-weight: var(--#{$prefix}ref-fw-normal);
   --#{$prefix}select-option-is-checkbox-color: var(--#{$prefix}gray-900);
-
   --#{$prefix}select-option-has-icon-icon-size: #{$spacer-3};
-
-  --#{$prefix}select-multi-value-padding-x: var(--#{$prefix}input-gap);
+  --#{$prefix}select-multi-value-padding-x: var(--#{$prefix}select-gap);
   --#{$prefix}select-multi-value-padding-y: 0;
-  --#{$prefix}select-multi-value-margin-right: var(--#{$prefix}input-gap);
+  --#{$prefix}select-multi-value-margin-right: var(--#{$prefix}select-gap);
   --#{$prefix}select-multi-value-background: var(--#{$prefix}gray-100);
   --#{$prefix}select-multi-value-border-radius: #{$spacer-1};
   --#{$prefix}select-multi-value-label-color: var(--#{$prefix}secondary);
@@ -68,75 +22,61 @@
   --#{$prefix}select-indicator-width: #{$spacer-4};
   --#{$prefix}select-indicator-height: #{$spacer-4};
 
-  display: flex;
-  flex-direction: column;
-  gap: var(--#{$prefix}input-gap);
-  align-items: flex-start;
-
   // focus
   &:focus-within {
     .input-group {
-      border-color: var(--#{$prefix}input-group-focus-border-color);
-      box-shadow: var(--#{$prefix}input-group-focus-box-shadow);
+      border-color: var(--#{$prefix}input-focus-border-color);
+      box-shadow: var(--#{$prefix}input-focus-box-shadow);
     }
   }
 
   .d-select-control {
     display: flex;
     flex-direction: column;
-    gap: var(--#{$prefix}input-gap);
-    width: 100%;
-  }
-
-  label {
-    display: inline-flex;
-    flex-direction: row;
-    gap: var(--#{$prefix}input-label-gap);
-    align-items: center;
-
-    .d-select-icon {
-      .d-icon {
-        --#{$prefix}icon-color: var(--#{$prefix}focus-ring-color);
-      }
-    }
+    gap: var(--#{$prefix}select-gap);
   }
 
   // input with elements
   .input-group {
-    border: var(--#{$prefix}input-group-border-width) solid var(--#{$prefix}input-group-border-color);
-    border-radius: var(--#{$prefix}input-group-border-radius);
-  }
-
-  // not empty
-  .input-group:not(.disabled):not(:focus-within):not(.has-validation):has(.d-select__value-container--has-value) {
-    border-color: var(--#{$prefix}input-group-hover-border-color);
-  }
-
-  // input hint
-  .input-group ~ .form-text {
-    display: inline-flex;
-    flex-direction: row;
-    gap: var(--#{$prefix}input-form-text-gap);
-    align-items: center;
-    padding: var(--#{$prefix}input-form-text-padding);
-    color: var(--#{$prefix}input-form-text-color);
+    border: var(--#{$prefix}input-border-width) solid var(--#{$prefix}input-border-color);
+    border-radius: var(--#{$prefix}input-border-radius);
   }
 
   // select control
   .d-select-component {
-    border-radius: var(--#{$prefix}input-group-border-radius);
+    border-radius: var(--#{$prefix}input-border-radius);
+  }
+
+  // validation states
+  @each $state, $data in $form-validation-states {
+    $border-color: map-get($data, "border-color");
+    $tooltip-bg-color: map-get($data, "tooltip-bg-color");
+    $box-shadow: map-get($data, "focus-box-shadow");
+
+    .input-group:has(.d-select-component.is-#{$state}) {
+      border-color: $border-color;
+      box-shadow: $box-shadow;
+
+      ~ .form-text {
+        color: $border-color;
+      }
+
+      .input-group-validation-icon {
+        --#{$prefix}icon-color: #{$tooltip-bg-color};
+      }
+    }
   }
 
   .d-select__control {
     width: 100%;
-    padding: var(--#{$prefix}input-padding-y) var(--#{$prefix}input-padding-x);
-    font-family: var(--#{$prefix}input-font-family);
-    @include rfs($input-font-size, --#{$prefix}input-font-size);
-    font-weight: var(--#{$prefix}input-font-weight);
-    line-height: var(--#{$prefix}input-line-height);
-    color: var(--#{$prefix}input-color);
+    padding: $input-padding-y $input-padding-x;
+    font-family: $input-font-family;
+    @include rfs($input-font-size, $input-font-size);
+    font-weight: $input-font-weight;
+    line-height: $input-line-height;
+    color: $input-color;
     appearance: none; // Fix appearance for date inputs in Safari
-    background-color: var(--#{$prefix}input-bg);
+    background-color: $input-bg;
     background-clip: padding-box;
     // border: $input-border-width solid $input-border-color;
 
@@ -146,23 +86,23 @@
 
     // Customize the `:focus` state to imitate native WebKit styles.
     &:focus {
-      color: var(--#{$prefix}input-focus-color);
-      background-color: var(--#{$prefix}input-focus-bg);
+      color: $input-focus-color;
+      background-color: $input-focus-bg;
       outline: 0;
     }
   }
 
   .d-select__placeholder {
-    color: var(--#{$prefix}input-placeholder-color);
+    color: $input-placeholder-color;
     // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
     opacity: 1;
   }
 
   // select menu
   .d-select__menu-list {
-    top: calc(var(--#{$prefix}input-group-border-width) * 2);
-    background: var(--#{$prefix}input-bg);
-    border-radius: var(--#{$prefix}input-group-border-radius);
+    top: calc(var(--#{$prefix}input-border-width) * 2);
+    background: $input-bg;
+    border-radius: var(--#{$prefix}input-border-radius);
     box-shadow: var(--#{$prefix}select-menu-shadow);
   }
 
@@ -173,7 +113,7 @@
   // select option
   .d-select__option {
     display: block;
-    padding: var(--#{$prefix}input-padding-y) var(--#{$prefix}input-padding-x);
+    padding: $input-padding-y $input-padding-x;
   }
 
   .d-select__option--is-focused {
@@ -191,11 +131,11 @@
 
     > label {
       width: 100%;
-      padding: var(--#{$prefix}input-padding-x);
+      padding: $input-padding-x;
     }
 
     .form-check-input {
-      margin-right: var(--#{$prefix}input-padding-x);
+      margin-right: $input-padding-x;
     }
   }
 
@@ -221,7 +161,7 @@
   .d-select__option--has-icon {
     display: flex;
     flex-direction: row;
-    gap: var(--#{$prefix}input-padding-x);
+    gap: $input-padding-x;
     align-items: center;
     white-space: nowrap;
 
@@ -239,14 +179,22 @@
   }
 
   .d-select__indicator-separator {
-    width: var(--#{$prefix}input-gap);
+    width: var(--#{$prefix}select-gap);
   }
 
   &.disabled .d-select__control {
-    background: var(--#{$prefix}input-group-disabled-bg);
+    background: var(--#{$prefix}input-disabled-bg);
   }
 
   &.disabled .input-group {
-    border-color: var(--#{$prefix}input-group-disabled-border-color);
+    border-color: var(--#{$prefix}input-disabled-border-color);
+  }
+
+  &.disabled .d-select__single-value {
+    color: var(--#{$prefix}input-disabled-color);
+  }
+
+  &.disabled .d-icon {
+    --#{$prefix}icon-color: var(--#{$prefix}input-disabled-color);
   }
 }

@@ -84,7 +84,7 @@ function DInputCounter(
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,
-    [`--${PREFIX_BS}input-component-form-control-text-align`]: 'center',
+    [`--${PREFIX_BS}form-control-component-text-align`]: 'center',
   }), [style]);
 
   const valueString = useMemo(() => (

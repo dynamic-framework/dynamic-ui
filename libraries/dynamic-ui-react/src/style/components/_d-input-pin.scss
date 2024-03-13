@@ -1,58 +1,24 @@
 .d-input-pin {
-  --#{$prefix}input-pin-gap: #{$spacer-2};
+  --#{$prefix}input-pin-form-gap: var(--#{$prefix}ref-spacer-1);
 
-  --#{$prefix}input-pin-label-gap: #{$form-label-gap};
-  --#{$prefix}input-pin-label-focus-color: #{$input-group-focus-border-color};
-  --#{$prefix}input-pin-label-padding-x: #{$form-label-padding-x};
-  --#{$prefix}input-pin-label-padding-y: #{$form-label-padding-y};
-  --#{$prefix}input-pin-label-font-weight: #{$form-label-font-weight};
-  --#{$prefix}input-pin-label-font-size: #{$form-label-font-size};
-  --#{$prefix}input-pin-label-color: #{$form-label-color};
-
-  --#{$prefix}input-pin-form-control-gap: #{$spacer-1};
-  --#{$prefix}input-pin-form-control-width: 4rem;
-  --#{$prefix}input-pin-form-control-height: 4rem;
-  --#{$prefix}input-pin-form-control-border-color: #{$input-group-hover-border-color};
-
-  --#{$prefix}input-pin-form-control-focus-border-color: #{$input-group-focus-border-color};
-  --#{$prefix}input-pin-form-control-focus-box-shadow: #{$input-group-focus-box-shadow};
-
-  --#{$prefix}input-pin-form-control-hover-border-color: #{$input-group-hover-border-color};
-
-  --#{$prefix}input-pin-form-text-padding: #{$form-control-padding-y} #{$form-control-padding-x};
-  --#{$prefix}input-pin-form-text-gap: #{$form-control-gap};
-  --#{$prefix}input-pin-form-text-color: #{$form-control-color};
+  --#{$prefix}input-pin-form-control-size: 4rem;
+  --#{$prefix}input-pin-form-control-focus-border-color: #{$input-focus-border-color};
+  --#{$prefix}input-pin-form-control-focus-box-shadow: #{$input-focus-box-shadow};
 
   display: flex;
   flex-direction: column;
-  gap: var(--#{$prefix}input-pin-gap);
   align-items: flex-start;
 
-  label {
-    display: inline-flex;
-    flex-direction: row;
-    gap: var(--#{$prefix}input-pin-label-gap);
-    align-items: center;
-    padding: var(--#{$prefix}input-pin-label-padding-y) var(--#{$prefix}input-pin-label-padding-x);
-    font-size: var(--#{$prefix}input-pin-label-font-size);
-    font-weight: var(--#{$prefix}input-pin-label-font-weight);
-    color: var(--#{$prefix}input-pin-label-color);
-
-    .d-input-pin-icon {
-      --#{$prefix}icon-color: var(--#{$prefix}focus-ring-color);
-    }
-  }
-
-  .d-input-pin-controls {
+  form {
     display: flex;
     flex-direction: row;
-    gap: var(--#{$prefix}input-pin-form-control-gap);
+    gap: var(--#{$prefix}input-pin-form-gap);
     width: 100%;
   }
 
   .form-control {
-    width: var(--#{$prefix}input-pin-form-control-width);
-    height: var(--#{$prefix}input-pin-form-control-height);
+    width: var(--#{$prefix}input-pin-form-control-size);
+    height: var(--#{$prefix}input-pin-form-control-size);
     text-align: center;
     box-shadow: none;
   }
@@ -63,21 +29,13 @@
     appearance: none;
   }
 
-  .form-control:not(:placeholder-shown) {
-    border-color: var(--#{$prefix}input-pin-form-control-border-color);
-  }
-
-  &:has(.form-control:hover) .form-control:not(:disabled) {
-    border-color: var(--#{$prefix}input-pin-form-control-hover-border-color);
-  }
-
   &:focus-within {
-    .form-control {
+    .form-control:not(.is-invalid):not(.is-valid) {
       border-color: var(--#{$prefix}input-pin-form-control-focus-border-color);
       box-shadow: var(--#{$prefix}input-pin-form-control-focus-box-shadow);
     }
 
-    &:has(.form-control:hover) .form-control {
+    &:has(.form-control:hover) .form-control:not(.is-invalid):not(.is-valid) {
       border-color: var(--#{$prefix}input-pin-form-control-focus-border-color);
     }
   }
@@ -86,32 +44,25 @@
   @each $state, $data in $form-validation-states {
     $border-color: map-get($data, "border-color");
     $tooltip-bg-color: map-get($data, "tooltip-bg-color");
+    $box-shadow: map-get($data, "focus-box-shadow");
 
     &:has(.form-control.is-#{$state}){
       .form-control {
         border-color: $tooltip-bg-color;
+        box-shadow: $box-shadow;
       }
 
       .form-text {
         color: $border-color;
       }
 
-      .d-input-pin-validation-icon {
+      .input-group-validation-icon {
         --#{$prefix}icon-color: #{$tooltip-bg-color};
       }
     }
   }
 
   .input-group-text {
-    padding-left: var(--#{$prefix}input-pin-form-control-gap);
-  }
-
-  .form-text {
-    display: inline-flex;
-    flex-direction: row;
-    gap: var(--#{$prefix}input-pin-form-text-gap);
-    align-items: center;
-    padding: var(--#{$prefix}input-pin-form-text-padding);
-    color: var(--#{$prefix}input-pin-form-text-color);
+    padding-left: var(--#{$prefix}input-pin-form-gap);
   }
 }

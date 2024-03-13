@@ -66,7 +66,7 @@ export default function useInputCurrency(
   }), []);
 
   const generateSymbolStyleVariables = useMemo(() => ({
-    color: `var(--${PREFIX_BS}m-input-currency-symbol-color)`,
+    color: `var(--${PREFIX_BS}input-currency-symbol-color)`,
   }), []);
 
   const handleOnChange = useCallback((newValue?: string) => {
