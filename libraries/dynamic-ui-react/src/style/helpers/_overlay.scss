@@ -1,0 +1,17 @@
+.overlay {
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    border-radius: inherit;
+    opacity: var(--#{$prefix}overlay);
+  }
+
+  > * {
+    position: relative;
+  }
+
+  &.overlay-black::before {
+    background-color: var(--#{$prefix}black);
+  }
+}
