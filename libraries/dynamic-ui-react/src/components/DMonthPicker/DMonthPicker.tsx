@@ -83,7 +83,7 @@ export default function DMonthPicker<
         prevYearButtonDisabled,
         nextYearButtonDisabled,
       }) => (
-        <div className="d-flex align-items-center justify-content-between gap-4 fs-6 bg-dark">
+        <div className="d-flex align-items-center justify-content-between gap-6 fs-6 bg-dark">
           <DButton
             iconStart={iconPrevMonth}
             size="sm"

@@ -1,5 +1,5 @@
 // scss-docs-start form-text-variables
-$form-text-margin-top: .5rem !default;
+$form-text-margin-top: $spacer-2 !default;
 $form-text-color: $text-muted !default;
 // scss-docs-end form-text-variables
 
@@ -18,18 +18,16 @@ $form-label-gap: var(--#{$prefix}ref-spacer-1) !default;
 // end custom
 
 // scss-docs-start form-input-variables
-$input-padding-y: .75rem !default;
-$input-padding-x: 1rem !default;
+$input-padding-y: $spacer-3 !default;
+$input-padding-x: $spacer-4 !default;
 
-$input-line-height: 1.375 !default;
+$input-padding-x-sm: $spacer-2 !default;
+$input-padding-y-sm: $spacer-1 !default;
+$input-font-size-sm: $font-size-sm !default;
 
-$input-padding-x-sm: .5rem !default;
-$input-padding-y-sm: .25rem !default;
-$input-font-size-sm: .875rem !default;
-
-$input-padding-x-lg: 1rem !default;
-$input-padding-y-lg: 1rem !default;
-$input-font-size-lg: 1.25rem !default;
+$input-padding-x-lg: $spacer-4 !default;
+$input-padding-y-lg: $spacer-4 !default;
+$input-font-size-lg: var(--#{$prefix}ref-spacer-5) !default;
 
 $input-bg: var(--#{$prefix}white) !default;
 $input-disabled-color: var(--#{$prefix}gray) !default;
@@ -129,10 +127,10 @@ $input-group-addon-border-color: transparent !default;
 // custom
 $form-control-padding-y: 0 !default;
 $form-control-padding-x: $spacer-2 !default;
-$form-control-gap: .5rem !default;
+$form-control-gap: var(--#{$prefix}ref-spacer-2) !default;
 $form-control-color: var(--#{$prefix}gray) !default;
 
-$form-control-icon-size: .75rem !default;
+$form-control-icon-size: var(--#{$prefix}ref-spacer-3) !default;
 // end custom
 
 // scss-docs-start form-select-variables

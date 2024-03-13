@@ -36,7 +36,7 @@ $transition-fade: opacity .3s linear !default;
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
 // scss-docs-start input-btn-variables
-$input-btn-padding-y: .625rem !default;
+$input-btn-padding-y: $spacer-3 !default;
 $input-btn-padding-x: $spacer-4 !default;
 
 $input-btn-focus-width: 0 !default;
@@ -45,12 +45,12 @@ $input-btn-focus-color: rgba(var(--#{$prefix}secondary-rgb), $input-btn-focus-co
 $input-btn-focus-blur: 0 !default;
 
 $input-btn-padding-y-sm: $spacer-2 !default;
-$input-btn-padding-x-sm: $spacer-3 !default;
+$input-btn-padding-x-sm: var(--#{$prefix}ref-spacer-4) !default;
 $input-btn-font-size-sm: $small-font-size !default;
 
-$input-btn-padding-y-lg: 1.125rem !default;
-$input-btn-padding-x-lg: $spacer-4 !default;
-$input-btn-font-size-lg: 1rem !default;
+$input-btn-padding-y-lg: $spacer-4 !default;
+$input-btn-padding-x-lg: var(--#{$prefix}ref-spacer-6) !default;
+$input-btn-font-size-lg: var(--#{$prefix}ref-spacer-4) !default;
 
 $input-btn-border-width: var(--#{$prefix}border-width) !default;
 // scss-docs-end input-btn-variables

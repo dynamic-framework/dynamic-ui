@@ -6,8 +6,8 @@ $list-group-bg: transparent !default;
 $list-group-border-color: var(--#{$prefix}gray-300) !default;
 $list-group-border-radius: var(--#{$prefix}border-radius-sm) !default;
 
-$list-group-item-padding-y: .75rem !default;
-$list-group-item-padding-x: 1rem !default;
+$list-group-item-padding-y: var(--#{$prefix}ref-spacer-3) !default;
+$list-group-item-padding-x: var(--#{$prefix}ref-spacer-4) !default;
 
 // fusv-disable
 $list-group-item-bg-scale: 0% !default;
@@ -27,11 +27,11 @@ $list-group-action-active-bg: var(--#{$prefix}gray-200) !default;
 $list-group-item-border-radius: 0 !default;
 
 $list-group-item-bg-light: var(--#{$prefix}light) !default;
-$list-group-item-picture-width: 2.25rem !default;
-$list-group-item-picture-height: 2.25rem !default;
+$list-group-item-picture-width: var(--#{$prefix}ref-spacer-9) !default;
+$list-group-item-picture-height: var(--#{$prefix}ref-spacer-9) !default;
 $list-group-item-picture-border-radius: $border-radius-sm !default;
 
-$list-group-item-content-padding-y: var(--#{$prefix}ref-spacer-3) !default;
-$list-group-item-content-padding-x: var(--#{$prefix}ref-spacer-3) !default;
+$list-group-item-content-padding-y: var(--#{$prefix}ref-spacer-4) !default;
+$list-group-item-content-padding-x: var(--#{$prefix}ref-spacer-4) !default;
 // end custom
 // scss-docs-end list-group-variables
