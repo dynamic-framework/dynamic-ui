@@ -3,12 +3,6 @@
   --#{$prefix}tabs-nav-gap: #{$nav-nav-gap};
   --#{$prefix}tabs-nav-padding-x: #{$nav-nav-padding-x};
   --#{$prefix}tabs-nav-padding-y: #{$nav-nav-padding-y};
-  --#{$prefix}tabs-link-border-height: #{$nav-link-border-height};
-  --#{$prefix}tabs-link-line-height: #{$nav-link-line-height};
-  --#{$prefix}tabs-link-border-border-radius: #{$nav-link-border-border-radius};
-  --#{$prefix}tabs-link-border-active-color: #{$nav-link-border-active-color};
-  --#{$prefix}tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
-  --#{$prefix}tabs-link-border-active-bg: #{$nav-link-border-active-bg};
 
   gap: var(--#{$prefix}tabs-nav-gap);
   padding: var(--#{$prefix}tabs-nav-padding-y) var(--#{$prefix}tabs-nav-padding-x);
