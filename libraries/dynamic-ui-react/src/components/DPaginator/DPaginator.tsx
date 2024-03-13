@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import ResponsivePagination from 'react-responsive-pagination';
 
 import type { ResponsivePaginationProps } from 'react-responsive-pagination';
@@ -26,16 +25,8 @@ export default function DPaginator(
 ) {
   return (
     <ResponsivePagination
-      extraClassName={classNames('pagination', className)}
-      nextClassName={classNames(
-        'arrow arrow-next',
-        !nextLabel && 'no-label',
-      )}
+      extraClassName={className}
       nextLabel={nextLabel}
-      previousClassName={classNames(
-        'arrow arrow-prev',
-        !previousLabel && 'no-label',
-      )}
       previousLabel={previousLabel}
       renderNav={showArrows}
       current={page}
