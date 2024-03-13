@@ -119,7 +119,6 @@ function DSelect<
           {label}
           {labelIcon && (
             <DIcon
-              className="d-select-icon"
               icon={labelIcon}
               size={`var(--${PREFIX_BS}input-label-font-size)`}
               familyClass={labelIconFamilyClass}
@@ -128,109 +127,108 @@ function DSelect<
           )}
         </label>
       )}
-      <div className="d-select-control">
-        <div
-          className={classNames({
-            'input-group': true,
-            'has-validation': invalid,
-            disabled: disabled || loading,
-          })}
-        >
-          {iconStart && (
-            <button
-              type="button"
-              className="input-group-text"
-              id={`${id}Start`}
-              onClick={handleOnIconStartClick}
-              disabled={disabled || loading}
-              aria-label={iconStartAriaLabel}
-              tabIndex={iconStartTabIndex}
-            >
-              <DIcon
-                className="d-input-icon"
-                icon={iconStart}
-                familyClass={iconStartFamilyClass}
-                familyPrefix={iconStartFamilyPrefix}
-              />
-            </button>
-          )}
-          <Select<Option, IsMulti, Group>
-            styles={{
-              control: (base) => ({
-                ...base,
-                minHeight: 'unset',
-              }),
-              container: (base) => ({
-                ...base,
-                width: '100%',
-              }),
-              menu: (base) => ({
-                ...base,
-                width: menuWithMaxContent ? 'max-context' : '100%',
-              }),
-            }}
-            className="d-select-component"
-            classNamePrefix="d-select"
-            isDisabled={disabled || loading}
-            isClearable={clearable}
-            isLoading={loading}
-            isRtl={rtl}
-            isSearchable={searchable}
-            isMulti={multi}
-            defaultValue={defaultValue}
-            unstyled
-            components={{
-              DropdownIndicator: DSelectDropdownIndicator,
-              ClearIndicator: DSelectClearIndicator,
-              MultiValueRemove: DSelectMultiValueRemove,
-              LoadingIndicator: DSelectLoadingIndicator,
-              ...components,
-            }}
-            {...props}
-          />
-          {((invalid || valid) && !iconEnd && !loading) && (
-            <span
-              className="input-group-text"
-              id={`${id}State`}
-            >
-              <DIcon
-                className="d-input-validation-icon"
-                icon={invalid ? 'exclamation-circle' : 'check'}
-                familyClass={iconFamilyClass}
-                familyPrefix={iconFamilyPrefix}
-              />
-            </span>
-          )}
-          {(iconEnd && !loading) && (
-            <button
-              type="button"
-              className="input-group-text"
-              id={`${id}End`}
-              onClick={handleOnIconEndClick}
-              disabled={disabled || loading}
-              aria-label={iconEndAriaLabel}
-              tabIndex={iconEndTabIndex}
-            >
-              {iconEnd && (
-                <DIcon
-                  className="d-input-icon"
-                  icon={iconEnd}
-                  familyClass={iconEndFamilyClass}
-                  familyPrefix={iconEndFamilyPrefix}
-                />
-              )}
-            </button>
-          )}
-        </div>
-        {hint && (
-          <div
-            className="form-text"
-            id={`${id}Hint`}
+      <div
+        className={classNames({
+          'input-group': true,
+          'has-validation': invalid,
+          disabled: disabled || loading,
+        })}
+      >
+        {iconStart && (
+          <button
+            type="button"
+            className="input-group-text"
+            id={`${id}Start`}
+            onClick={handleOnIconStartClick}
+            disabled={disabled || loading}
+            aria-label={iconStartAriaLabel}
+            tabIndex={iconStartTabIndex}
           >
-            {hint}
-          </div>
+            <DIcon
+              icon={iconStart}
+              familyClass={iconStartFamilyClass}
+              familyPrefix={iconStartFamilyPrefix}
+            />
+          </button>
+        )}
+        <Select<Option, IsMulti, Group>
+          styles={{
+            control: (base) => ({
+              ...base,
+              minHeight: 'unset',
+            }),
+            container: (base) => ({
+              ...base,
+              flex: 1,
+            }),
+            menu: (base) => ({
+              ...base,
+              width: menuWithMaxContent ? 'max-context' : '100%',
+            }),
+          }}
+          className={classNames('d-select-component', {
+            'is-invalid': invalid,
+            'is-valid': valid,
+          })}
+          classNamePrefix="d-select"
+          isDisabled={disabled || loading}
+          isClearable={clearable}
+          isLoading={loading}
+          isRtl={rtl}
+          isSearchable={searchable}
+          isMulti={multi}
+          defaultValue={defaultValue}
+          unstyled
+          components={{
+            DropdownIndicator: DSelectDropdownIndicator,
+            ClearIndicator: DSelectClearIndicator,
+            MultiValueRemove: DSelectMultiValueRemove,
+            LoadingIndicator: DSelectLoadingIndicator,
+            ...components,
+          }}
+          {...props}
+        />
+        {((invalid || valid) && !iconEnd && !loading) && (
+          <span
+            className="input-group-text"
+            id={`${id}State`}
+          >
+            <DIcon
+              className="input-group-validation-icon"
+              icon={invalid ? 'exclamation-circle' : 'check'}
+              familyClass={iconFamilyClass}
+              familyPrefix={iconFamilyPrefix}
+            />
+          </span>
+        )}
+        {(iconEnd && !loading) && (
+          <button
+            type="button"
+            className="input-group-text"
+            id={`${id}End`}
+            onClick={handleOnIconEndClick}
+            disabled={disabled || loading}
+            aria-label={iconEndAriaLabel}
+            tabIndex={iconEndTabIndex}
+          >
+            {iconEnd && (
+              <DIcon
+                icon={iconEnd}
+                familyClass={iconEndFamilyClass}
+                familyPrefix={iconEndFamilyPrefix}
+              />
+            )}
+          </button>
         )}
       </div>
+      {hint && (
+        <div
+          className="form-text"
+          id={`${id}Hint`}
+        >
+          {hint}
+        </div>
+      )}
     </div>
   );
 }

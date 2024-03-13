@@ -158,7 +158,6 @@ function DInput(
       {label}
       {labelIcon && (
         <DIcon
-          className="d-input-icon"
           icon={labelIcon}
           size={`var(--${PREFIX_BS}input-label-font-size)`}
           familyClass={labelIconFamilyClass}
@@ -200,107 +199,97 @@ function DInput(
 
   return (
     <div
-      className={classNames({
-        'd-input': true,
-        ...className && { [className]: true },
-      })}
+      className={className}
       style={style}
     >
-      {label && !floatingLabel && (
-        labelComponent
-      )}
-      <div className="d-input-control">
-        <div
-          className={classNames({
-            'input-group': true,
-            'has-validation': invalid,
-            disabled: disabled || loading,
-          })}
-        >
-          {!!inputStart && (
-            <div className="input-group-text">
-              {inputStart}
-            </div>
-          )}
-          {iconStart && (
-            <button
-              type="button"
-              className="input-group-text"
-              id={`${id}Start`}
-              onClick={handleOnIconStartClick}
-              disabled={disabled || loading || iconStartDisabled}
-              aria-label={iconStartAriaLabel}
-              tabIndex={iconStartTabIndex}
-            >
-              <DIcon
-                className="d-input-icon"
-                icon={iconStart}
-                familyClass={iconStartFamilyClass}
-                familyPrefix={iconStartFamilyPrefix}
-                materialStyle={iconStartMaterialStyle}
-              />
-            </button>
-          )}
-          {dynamicComponent}
-          {((invalid || valid) && !iconEnd && !loading) && (
-            <span
-              className="input-group-text"
-              id={`${id}State`}
-            >
-              <DIcon
-                className="d-input-validation-icon"
-                icon={invalid ? invalidIcon : validIcon}
-                familyClass={iconFamilyClass}
-                familyPrefix={iconFamilyPrefix}
-                materialStyle={iconMaterialStyle}
-              />
-            </span>
-          )}
-          {(iconEnd && !loading) && (
-            <button
-              type="button"
-              className="input-group-text"
-              id={`${id}End`}
-              onClick={handleOnIconEndClick}
-              disabled={disabled || loading || iconEndDisabled}
-              aria-label={iconEndAriaLabel}
-              tabIndex={iconEndTabIndex}
-            >
-              <DIcon
-                className="d-input-icon"
-                icon={iconEnd}
-                familyClass={iconEndFamilyClass}
-                familyPrefix={iconEndFamilyPrefix}
-                materialStyle={iconEndMaterialStyle}
-              />
-            </button>
-          )}
-          {loading && (
-            <div className="input-group-text d-input-icon">
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              >
-                <span className="visually-hidden">Loading...</span>
-              </span>
-            </div>
-          )}
-          {!!inputEnd && (
-            <div className="input-group-text">
-              {inputEnd}
-            </div>
-          )}
-        </div>
-        {hint && (
-          <div
-            className="form-text"
-            id={`${id}Hint`}
+      {label && !floatingLabel && labelComponent}
+      <div
+        className={classNames({
+          'input-group': true,
+          'has-validation': invalid || valid,
+        })}
+      >
+        {!!inputStart && (
+          <div className="input-group-text">
+            {inputStart}
+          </div>
+        )}
+        {iconStart && (
+          <button
+            type="button"
+            className="input-group-text"
+            id={`${id}Start`}
+            onClick={handleOnIconStartClick}
+            disabled={disabled || loading || iconStartDisabled}
+            aria-label={iconStartAriaLabel}
+            tabIndex={iconStartTabIndex}
           >
-            {hint}
+            <DIcon
+              icon={iconStart}
+              familyClass={iconStartFamilyClass}
+              familyPrefix={iconStartFamilyPrefix}
+              materialStyle={iconStartMaterialStyle}
+            />
+          </button>
+        )}
+        {dynamicComponent}
+        {((invalid || valid) && !iconEnd && !loading) && (
+          <span
+            className="input-group-text"
+            id={`${id}State`}
+          >
+            <DIcon
+              className="input-group-validation-icon"
+              icon={invalid ? invalidIcon : validIcon}
+              familyClass={iconFamilyClass}
+              familyPrefix={iconFamilyPrefix}
+              materialStyle={iconMaterialStyle}
+            />
+          </span>
+        )}
+        {(iconEnd && !loading) && (
+          <button
+            type="button"
+            className="input-group-text"
+            id={`${id}End`}
+            onClick={handleOnIconEndClick}
+            disabled={disabled || loading || iconEndDisabled}
+            aria-label={iconEndAriaLabel}
+            tabIndex={iconEndTabIndex}
+          >
+            <DIcon
+              icon={iconEnd}
+              familyClass={iconEndFamilyClass}
+              familyPrefix={iconEndFamilyPrefix}
+              materialStyle={iconEndMaterialStyle}
+            />
+          </button>
+        )}
+        {loading && (
+          <div className="input-group-text">
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </span>
+          </div>
+        )}
+        {!!inputEnd && (
+          <div className="input-group-text">
+            {inputEnd}
           </div>
         )}
       </div>
+      {hint && (
+        <div
+          className="form-text"
+          id={`${id}Hint`}
+        >
+          {hint}
+        </div>
+      )}
     </div>
   );
 }

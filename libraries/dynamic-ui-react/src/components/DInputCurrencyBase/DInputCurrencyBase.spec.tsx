@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react';
-import DInputCurrency from './DInputCurrency';
-import { DContextProvider } from '../../contexts';
+import DInputCurrencyBase from './DInputCurrencyBase';
 
 it('should render base currency', () => {
   const props = {
@@ -8,14 +7,16 @@ it('should render base currency', () => {
     label: 'labelTest',
     value: 0,
     placeholder: undefined,
+    currencyOptions: {
+      separator: ',',
+      symbol: '$',
+    },
   };
 
   const { container } = render(
-    <DContextProvider>
-      <DInputCurrency
-        {...props}
-      />
-    </DContextProvider>,
+    <DInputCurrencyBase
+      {...props}
+    />,
   );
 
   expect(container).toMatchInlineSnapshot(`

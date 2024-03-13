@@ -20,40 +20,34 @@ it('should render my component', () => {
 
   expect(container).toMatchInlineSnapshot(`
     <div>
-      <div
-        class="d-input"
-      >
+      <div>
         <label
           for="passwordId"
         >
           Label
         </label>
         <div
-          class="d-input-control"
+          class="input-group"
         >
-          <div
-            class="input-group"
+          <input
+            aria-describedby="passwordIdEnd"
+            class="form-control"
+            id="passwordId"
+            placeholder="Password"
+            type="password"
+            value="Value"
+          />
+          <button
+            aria-label="show/hide password"
+            class="input-group-text"
+            id="passwordIdEnd"
+            type="button"
           >
-            <input
-              aria-describedby="passwordIdEnd"
-              class="form-control"
-              id="passwordId"
-              placeholder="Password"
-              type="password"
-              value="Value"
+            <i
+              class="d-icon bi bi-eye-slash"
+              style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
             />
-            <button
-              aria-label="show/hide password"
-              class="input-group-text"
-              id="passwordIdEnd"
-              type="button"
-            >
-              <i
-                class="d-icon bi bi-eye-slash d-input-icon"
-                style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-              />
-            </button>
-          </div>
+          </button>
         </div>
       </div>
     </div>

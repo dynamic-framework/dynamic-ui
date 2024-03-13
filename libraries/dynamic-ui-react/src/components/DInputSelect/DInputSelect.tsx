@@ -176,7 +176,6 @@ export default function DInputSelect<T extends object = DefaultOption>(
       {label}
       {labelIcon && (
         <DIcon
-          className="mdinput-icon"
           icon={labelIcon}
           size={`var(--${PREFIX_BS}input-label-font-size)`}
           familyClass={labelIconFamilyClass}
@@ -205,78 +204,73 @@ export default function DInputSelect<T extends object = DefaultOption>(
 
   return (
     <div
-      className={classNames('d-input', className)}
+      className={className}
       style={style}
     >
       {label && !floatingLabel && (
         labelComponent
       )}
-      <div className="d-input-control">
-        <div className={classNames({
-          'input-group': true,
-          disabled: disabled || loading,
-        })}
-        >
-          {iconStart && (
-            <button
-              type="button"
-              className="input-group-text"
-              id={`${id}Start`}
-              onClick={iconStartClickHandler}
-              disabled={disabled || loading}
-              aria-label={iconStartAriaLabel}
-            >
-              {iconStart && (
-                <DIcon
-                  className="d-input-icon"
-                  icon={iconStart}
-                  familyClass={iconStartFamilyClass}
-                  familyPrefix={iconStartFamilyPrefix}
-                />
-              )}
-            </button>
-          )}
-          {dynamicComponent}
-          {iconEnd && !loading && (
-            <button
-              type="button"
-              className="input-group-text"
-              id={`${id}End`}
-              onClick={iconEndClickHandler}
-              disabled={disabled || loading}
-              aria-label={iconEndAriaLabel}
-            >
-              {iconEnd && (
-                <DIcon
-                  className="d-input-icon"
-                  icon={iconEnd}
-                  familyClass={iconEndFamilyClass}
-                  familyPrefix={iconEndFamilyPrefix}
-                />
-              )}
-            </button>
-          )}
-          {loading && (
-            <div className="input-group-text form-control-icon loading">
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              >
-                <span className="visually-hidden">Loading...</span>
-              </span>
-            </div>
-          )}
-        </div>
-        {hint && (
-          <div
-            className="form-text"
-            id={`${id}Hint`}
+      <div className={classNames({
+        'input-group': true,
+      })}
+      >
+        {iconStart && (
+          <button
+            type="button"
+            className="input-group-text"
+            id={`${id}Start`}
+            onClick={iconStartClickHandler}
+            disabled={disabled || loading}
+            aria-label={iconStartAriaLabel}
           >
-            {hint}
+            {iconStart && (
+              <DIcon
+                icon={iconStart}
+                familyClass={iconStartFamilyClass}
+                familyPrefix={iconStartFamilyPrefix}
+              />
+            )}
+          </button>
+        )}
+        {dynamicComponent}
+        {iconEnd && !loading && (
+          <button
+            type="button"
+            className="input-group-text"
+            id={`${id}End`}
+            onClick={iconEndClickHandler}
+            disabled={disabled || loading}
+            aria-label={iconEndAriaLabel}
+          >
+            {iconEnd && (
+              <DIcon
+                icon={iconEnd}
+                familyClass={iconEndFamilyClass}
+                familyPrefix={iconEndFamilyPrefix}
+              />
+            )}
+          </button>
+        )}
+        {loading && (
+          <div className="input-group-text form-control-icon loading">
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </span>
           </div>
         )}
       </div>
+      {hint && (
+        <div
+          className="form-text"
+          id={`${id}Hint`}
+        >
+          {hint}
+        </div>
+      )}
     </div>
   );
 }
