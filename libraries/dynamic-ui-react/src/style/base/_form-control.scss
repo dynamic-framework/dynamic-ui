@@ -1,0 +1,10 @@
+.form-control {
+  --#{$prefix}form-control-text-align: var(--#{$prefix}form-control-component-text-align, "left");
+
+  text-align: var(--#{$prefix}form-control-text-align);
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+}

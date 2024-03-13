@@ -16,7 +16,6 @@ it('should render my component', () => {
       class="d-input-pin"
     >
       <form
-        class="d-input-pin-controls"
         id="myPin"
       >
         <input

@@ -150,7 +150,6 @@ export default function DInputPin(
           {label}
           {labelIcon && (
             <DIcon
-              className="d-input-pin-icon"
               icon={labelIcon}
               size={`var(--${PREFIX_BS}input-label-font-size)`}
               familyClass={labelIconFamilyClass}
@@ -161,7 +160,6 @@ export default function DInputPin(
       )}
       <form
         id={id}
-        className="d-input-pin-controls"
         onInput={formChange}
         onSubmit={preventDefaultEvent}
       >
@@ -200,7 +198,7 @@ export default function DInputPin(
             id={`${id}State`}
           >
             <DIcon
-              className="d-input-pin-validation-icon"
+              className="input-group-validation-icon"
               icon={invalid ? invalidIcon : validIcon}
               familyClass={iconFamilyClass}
               familyPrefix={iconFamilyPrefix}
@@ -208,7 +206,7 @@ export default function DInputPin(
           </span>
         )}
         {loading && (
-          <div className="input-group-text d-input-pin-icon">
+          <div className="input-group-text">
             <span
               className="spinner-border spinner-border-sm"
               role="status"

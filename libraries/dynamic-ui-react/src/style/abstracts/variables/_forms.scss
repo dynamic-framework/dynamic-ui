@@ -10,13 +10,6 @@ $form-label-font-weight: var(--#{$prefix}ref-fw-bold) !default;
 $form-label-color: var(--#{$prefix}gray) !default;
 // scss-docs-end form-label-variables
 
-// custom
-$form-label-has-value-color: var(--#{$prefix}dark) !default;
-$form-label-padding-y: 0 !default;
-$form-label-padding-x: var(--#{$prefix}ref-spacer-2) !default;
-$form-label-gap: var(--#{$prefix}ref-spacer-1) !default;
-// end custom
-
 // scss-docs-start form-input-variables
 $input-padding-y: $spacer-3 !default;
 $input-padding-x: $spacer-4 !default;
@@ -30,36 +23,22 @@ $input-padding-y-lg: $spacer-4 !default;
 $input-font-size-lg: var(--#{$prefix}ref-spacer-5) !default;
 
 $input-bg: var(--#{$prefix}white) !default;
-$input-disabled-color: var(--#{$prefix}gray) !default;
+$input-disabled-color: var(--#{$prefix}gray-300) !default;
 $input-disabled-bg: var(--#{$prefix}gray-100) !default;
 $input-disabled-border-color: var(--#{$prefix}gray-300) !default;
 
 $input-color: var(--#{$prefix}gray) !default;
-$input-box-shadow: none !default;
+$input-box-shadow: 0 0 0 transparent !default; // to avoid the none in the bootstrap box-shadow calculation
 
 $input-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-lg: var(--#{$prefix}border-radius-sm) !default;
 
-// custom
-$input-hover-border-color: var(--#{$prefix}gray) !default;
-// end custom
-
 $input-focus-border-color: var(--#{$prefix}focus-ring-color) !default; // unused
 $input-focus-width: 1px !default;
 $input-focus-box-shadow: 0 0 0 1px rgba(var(--#{$prefix}secondary-rgb)) !default;
 
-// custom
-$input-group-disabled-color: var(--#{$prefix}secondary-100) !default;
-$input-group-border-color: var(--#{$prefix}gray-300) !default;
-$input-group-border-width: 1px !default;
-$input-group-border-radius: $input-border-radius !default;
-
-$input-group-hover-border-color: var(--#{$prefix}gray) !default;
-
-$input-group-focus-border-color: var(--#{$prefix}secondary) !default;
-$input-group-focus-box-shadow: 0 0 0 1px rgba(var(--#{$prefix}secondary-rgb)) !default;
-// end custom
+$input-placeholder-color: var(--#{$prefix}gray-300) !default;
 
 $input-plaintext-color: var(--#{$prefix}body-color) !default;
 // scss-docs-end form-input-variables
@@ -74,7 +53,7 @@ $form-check-padding-start: $form-check-input-width - .5em * $form-check-size-mul
 $form-check-margin-bottom: .125rem * $form-check-size-multiplier !default;
 
 // custom
-$form-check-input-border-color: var(--#{$prefix}gray-300) !default;
+$form-check-input-border-color: var(--#{$prefix}gray-400) !default;
 // end custom
 
 $form-check-input-focus-box-shadow: none !default;
@@ -125,15 +104,13 @@ $input-group-addon-border-color: transparent !default;
 // scss-docs-end input-group-variables
 
 // custom
-$form-control-padding-y: 0 !default;
-$form-control-padding-x: $spacer-2 !default;
-$form-control-gap: var(--#{$prefix}ref-spacer-2) !default;
-$form-control-color: var(--#{$prefix}gray) !default;
-
-$form-control-icon-size: var(--#{$prefix}ref-spacer-3) !default;
+$form-text-padding-y: 0 !default;
+$form-text-padding-x: $spacer-2 !default;
+$form-text-color: var(--#{$prefix}gray) !default;
 // end custom
 
 // scss-docs-start form-select-variables
+$form-select-disabled-color: $input-disabled-color !default;
 $form-select-bg-size: 24px !default; // In pixels because image dimensions
 $form-select-bg-opacity: 0 !default;
 $form-select-indicator-color: var(--#{$prefix}gray-500) !default;
