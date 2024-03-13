@@ -2,9 +2,9 @@
 
 .d-carousel {
   // Arrows
-  --#{$prefix}carousel-arrow-space: calc(var(--#{$prefix}ref-spacer-3) * -1);
+  --#{$prefix}carousel-arrow-space: calc(var(--#{$prefix}ref-spacer-4) * -1);
   // Pagination
-  --#{$prefix}carousel-pagination-bottom: calc(var(--#{$prefix}ref-spacer-3) * -1);
+  --#{$prefix}carousel-pagination-bottom: calc(var(--#{$prefix}ref-spacer-4) * -1);
   --#{$prefix}carousel-pagination-page-bg: var(--#{$prefix}secondary-100);
   --#{$prefix}carousel-pagination-active-page-bg: var(--#{$prefix}secondary);
   // :focus

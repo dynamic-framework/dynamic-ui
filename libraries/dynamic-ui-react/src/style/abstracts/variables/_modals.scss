@@ -1,13 +1,13 @@
 // Modals
 
 // scss-docs-start modal-variables
-$modal-inner-padding: $spacer-4 !default;
+$modal-inner-padding: var(--#{$prefix}ref-spacer-6) !default;
 
 // custom
-$modal-header-gap: $spacer-4 !default;
+$modal-header-gap: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 
-$modal-footer-margin-between: $spacer-3 !default;
+$modal-footer-margin-between: var(--#{$prefix}ref-spacer-4) !default;
 
 $modal-content-bg: var(--#{$prefix}white) !default;
 $modal-content-border-color: transparent !default;
@@ -19,19 +19,19 @@ $modal-backdrop-bg: var(--#{$prefix}black) !default;
 $modal-backdrop-opacity: .3 !default;
 
 $modal-header-border-color: transparent !default;
-$modal-header-padding-y: $spacer-3 !default;
-$modal-header-padding-x: $spacer-4 !default;
-$modal-header-padding: $spacer-5 $spacer-4 $spacer-3 !default; // Keep this for backwards compatibility
+$modal-header-padding-y: var(--#{$prefix}ref-spacer-4) !default;
+$modal-header-padding-x: var(--#{$prefix}ref-spacer-6) !default;
+$modal-header-padding: var(--#{$prefix}ref-spacer-8) var(--#{$prefix}ref-spacer-6) var(--#{$prefix}ref-spacer-4) !default; // Keep this for backwards compatibility
 
 $modal-footer-border-color: transparent !default;
 
 // custom
 $modal-separator-bg: var(--#{$prefix}gray-200) !default;
 $modal-separator-height: 1px !default;
-$modal-separator-margin-x: $spacer-4 !default;
+$modal-separator-margin-x: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 
 // custom
-$modal-footer-padding: $spacer-4 !default;
+$modal-footer-padding: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 // scss-docs-end modal-variables

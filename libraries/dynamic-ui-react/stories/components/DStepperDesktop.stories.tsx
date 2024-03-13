@@ -18,6 +18,7 @@ const config: Meta<typeof DStepperDesktop> = {
 | --${PREFIX_BS}step-icon-container-background-color  | css color unit     | Icon container background color    |
 | --${PREFIX_BS}step-icon-container-size              | css length unit    | Icon container size                |
 | --${PREFIX_BS}step-icon-container-border-width      | css length unit    | Icon container border width        |
+| --${PREFIX_BS}step-icon-container-font-size         | css length unit    | Icon container font size           |
 | --${PREFIX_BS}step-icon-container-border-color      | css color unit     | Icon container border color        |
 | --${PREFIX_BS}step-icon-container-border-radius     | css length unit    | Icon container border radius       |
 | --${PREFIX_BS}step-icon-container-z-index           | css index unit     | Icon container z-index             |
@@ -51,7 +52,7 @@ const config: Meta<typeof DStepperDesktop> = {
       type: 'number',
       description: 'Current step number',
     },
-    successIcon: {
+    iconSuccess: {
       control: {
         type: 'select',
         labels: {
