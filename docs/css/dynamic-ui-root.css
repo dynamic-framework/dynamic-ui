@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.16.1
+ * dynamic-framework 1.16.2
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -207,13 +207,13 @@
   --bs-light-border-subtle: var(--bs-gray-100);
   --bs-dark-border-subtle: var(--bs-gray-400);
   --bs-font-sans-serif: "Source Sans 3", sans-serif;
-  --bs-font-monospace: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-root-font-size: 16px;
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
-  --bs-body-line-height: 1.2;
+  --bs-body-line-height: 1.5;
   --bs-body-color: rgb(var(--bs-body-color-rgb));
   --bs-body-color-rgb: var(--bs-gray-900-rgb);
   --bs-body-bg: rgb(var(--bs-body-bg-rgb));
@@ -242,11 +242,11 @@
   --bs-border-style: solid;
   --bs-border-color: var(--bs-gray-200);
   --bs-border-color-translucent: rgba(var(--bs-black-rgb), 0.175);
-  --bs-border-radius: 1rem;
-  --bs-border-radius-sm: 0.5rem;
-  --bs-border-radius-lg: 1.5rem;
-  --bs-border-radius-xl: 2rem;
-  --bs-border-radius-xxl: 2.5rem;
+  --bs-border-radius: var(--bs-ref-spacer-4);
+  --bs-border-radius-sm: var(--bs-ref-spacer-2);
+  --bs-border-radius-lg: var(--bs-ref-spacer-6);
+  --bs-border-radius-xl: var(--bs-ref-spacer-8);
+  --bs-border-radius-xxl: var(--bs-ref-spacer-10);
   --bs-border-radius-2xl: var(--bs-border-radius-xxl);
   --bs-border-radius-pill: 50rem;
   --bs-box-shadow: 0 12px 14px 0 rgba(22, 23, 35, 0.2);
@@ -263,12 +263,18 @@
   --bs-ref-spacer-0: 0;
   --bs-ref-spacer-1: 0.25rem;
   --bs-ref-spacer-2: 0.5rem;
-  --bs-ref-spacer-3: 1rem;
-  --bs-ref-spacer-4: 1.5rem;
-  --bs-ref-spacer-5: 2rem;
-  --bs-ref-spacer-6: 2.5rem;
-  --bs-ref-spacer-7: 3rem;
-  --bs-ref-spacer-8: 3.5rem;
+  --bs-ref-spacer-3: 0.75rem;
+  --bs-ref-spacer-4: 1rem;
+  --bs-ref-spacer-5: 1.25rem;
+  --bs-ref-spacer-6: 1.5rem;
+  --bs-ref-spacer-7: 1.75rem;
+  --bs-ref-spacer-8: 2rem;
+  --bs-ref-spacer-9: 2.25rem;
+  --bs-ref-spacer-10: 2.5rem;
+  --bs-ref-spacer-11: 2.75rem;
+  --bs-ref-spacer-12: 3rem;
+  --bs-ref-spacer-13: 3.25rem;
+  --bs-ref-spacer-14: 3.5rem;
   --bs-ref-display-1: 7.5rem;
   --bs-ref-display-2: 4.5rem;
   --bs-ref-display-3: 4rem;
