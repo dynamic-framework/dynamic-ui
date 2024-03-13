@@ -19,12 +19,14 @@ export type DTabOption = {
   disabled?: boolean;
 };
 
+export type TabVariant = 'tabs' | 'pills' | 'underline';
+
 type Props = BaseProps & PropsWithChildren<{
   onChange: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
   vertical?: boolean;
-  pill?: boolean;
+  variant?: TabVariant;
 }>;
 
 function DTabs(
@@ -36,7 +38,7 @@ function DTabs(
     className,
     style,
     vertical,
-    pill,
+    variant = 'underline',
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -63,21 +65,20 @@ function DTabs(
   const generateClasses = useMemo(
     () => ({
       nav: true,
-      'flex-column align-items-center': vertical,
-      'nav-pills': pill,
-      'nav-tabs': !pill,
+      'flex-column align-items-center': vertical && variant !== 'tabs',
+      [`nav-${variant}`]: true,
       ...className && { [className]: true },
     }),
-    [vertical, pill, className],
+    [vertical, variant, className],
   );
 
   return (
     <TabContext.Provider value={value}>
       <div
         className={classNames({
-          'd-flex': true,
-          'flex-column': !vertical,
-        }, className)}
+          'd-flex w-100': true,
+          'flex-column': !vertical || variant === 'tabs',
+        })}
         style={style}
       >
         <nav className={classNames(generateClasses)}>
@@ -105,7 +106,7 @@ function DTabs(
             </button>
           ))}
         </nav>
-        <div className="tab-content">
+        <div className="tab-content w-100">
           {children}
         </div>
       </div>
