@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.16.2
+ * dynamic-framework 1.17.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -231,7 +231,7 @@
   --bs-heading-color: inherit;
   --bs-link-color: rgb(var(--bs-link-color-rgb));
   --bs-link-color-rgb: var(--bs-primary-rgb);
-  --bs-link-decoration: underline;
+  --bs-link-decoration: none;
   --bs-link-hover-color: rgb(var(--bs-link-hover-color-rgb));
   --bs-link-hover-color-rgb: var(--bs-primary-700-rgb);
   --bs-link-hover-decoration: underline;
@@ -242,11 +242,11 @@
   --bs-border-style: solid;
   --bs-border-color: var(--bs-gray-200);
   --bs-border-color-translucent: rgba(var(--bs-black-rgb), 0.175);
-  --bs-border-radius: var(--bs-ref-spacer-4);
-  --bs-border-radius-sm: var(--bs-ref-spacer-2);
-  --bs-border-radius-lg: var(--bs-ref-spacer-6);
-  --bs-border-radius-xl: var(--bs-ref-spacer-8);
-  --bs-border-radius-xxl: var(--bs-ref-spacer-10);
+  --bs-border-radius: 1rem;
+  --bs-border-radius-sm: 0.5rem;
+  --bs-border-radius-lg: 1.5rem;
+  --bs-border-radius-xl: 2rem;
+  --bs-border-radius-xxl: 2.5rem;
   --bs-border-radius-2xl: var(--bs-border-radius-xxl);
   --bs-border-radius-pill: 50rem;
   --bs-box-shadow: 0 12px 14px 0 rgba(22, 23, 35, 0.2);
