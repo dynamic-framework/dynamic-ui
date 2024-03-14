@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.17.1...@dynamic-framework/ui-react@1.18.0) (2024-03-14)
+
+
+### Features
+
+* take btn border radius from :root ([f943362](https://github.com/dynamic-framework/dynamic-ui/commit/f94336222431f90c3e71985598ecd8ca901c84b4))
+
+
+
 ## [1.17.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.17.0...@dynamic-framework/ui-react@1.17.1) (2024-03-14)
 
 
