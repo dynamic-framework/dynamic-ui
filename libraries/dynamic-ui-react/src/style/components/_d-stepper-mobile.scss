@@ -52,6 +52,7 @@
 
   .d-step-number {
     z-index: var(--#{$prefix}step-current-step-z-index);
+    margin-bottom: 0;
     font-weight: var(--#{$prefix}step-current-step-font-weight);
     color: var(--#{$prefix}step-current-step-color);
   }
