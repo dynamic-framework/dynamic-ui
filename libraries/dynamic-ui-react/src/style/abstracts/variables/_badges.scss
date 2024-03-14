@@ -1,7 +1,7 @@
 // Badges
 
 // scss-docs-start badge-variables
-$badge-font-size: $small-font-size !default;
+$badge-font-size: var(--#{$prefix}body-font-size) !default;
 $badge-font-weight: $font-weight-normal !default;
 $badge-color: var(--#{$prefix}gray-900) !default;
 $badge-padding-y: var(--#{$prefix}ref-spacer-1) !default;

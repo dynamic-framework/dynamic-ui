@@ -45,7 +45,7 @@
 // scss-docs-start df-btn-outline-variant-mixin
 @mixin df-button-outline-variant(
   $color-name,
-  $default-color: var(--#{$prefix}#{$color-name}-600),
+  $default-color: var(--#{$prefix}#{$color-name}-500),
   $hover-bg-color: var(--#{$prefix}#{$color-name}-100),
   $focus-bg-color: var(--#{$prefix}#{$color-name}-100),
   $active-bg-color: var(--#{$prefix}#{$color-name}-200),
