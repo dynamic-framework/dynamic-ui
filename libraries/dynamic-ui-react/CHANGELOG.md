@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.17.0...@dynamic-framework/ui-react@1.17.1) (2024-03-14)
+
+
+### Bug Fixes
+
+* spacers doc and DStepperMobile margin ([5eab52c](https://github.com/dynamic-framework/dynamic-ui/commit/5eab52ca794de602b47cfec365bb751c5d9a8fca))
+
+
+
 ## [1.17.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.2...@dynamic-framework/ui-react@1.17.0) (2024-03-13)
 
 
