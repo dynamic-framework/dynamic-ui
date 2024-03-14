@@ -1,6 +1,5 @@
 .modal {
   --#{$prefix}modal-header-gap: #{$offcanvas-header-gap};
-  --#{$prefix}modal-body-padding: #{$modal-body-padding};
   --#{$prefix}modal-footer-padding: #{$modal-footer-padding};
   --#{$prefix}modal-separator-margin-x: #{$modal-separator-margin-x};
   --#{$prefix}modal-separator-height: #{$modal-separator-height};
@@ -24,12 +23,8 @@
     border: 0;
 
     .d-icon {
-      --#{$prefix}icon-size: #{$spacer-3};
+      --#{$prefix}icon-size: var(--#{$prefix}ref-spacer-4);
     }
-  }
-
-  .modal-body {
-    padding: var(--#{$prefix}modal-body-padding);
   }
 
   .d-modal-separator {

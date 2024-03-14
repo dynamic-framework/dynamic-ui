@@ -23,8 +23,10 @@ import type {
   FamilyIconProps,
   LabelIconProps,
   StartIconProps,
+  StateIcons,
 } from '../interface';
 import type { Merge } from '../../types';
+import { useDContext } from '../../contexts';
 
 type NonHTMLInputElementProps =
 & BaseProps
@@ -32,6 +34,7 @@ type NonHTMLInputElementProps =
 & LabelIconProps
 & StartIconProps
 & EndIconProps
+& StateIcons
 & {
   value?: string;
   label?: string;
@@ -42,6 +45,7 @@ type NonHTMLInputElementProps =
   floatingLabel?: boolean;
   inputStart?: ReactNode;
   inputEnd?: ReactNode;
+
   onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
   onIconEndClick?: (value?: string) => void;
@@ -58,23 +62,28 @@ function DInput(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
+    labelIconMaterialStyle,
     disabled = false,
-    readOnly = false,
     loading = false,
     iconFamilyClass,
     iconFamilyPrefix,
+    iconMaterialStyle,
     iconStart,
     iconStartDisabled,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
     iconStartAriaLabel,
     iconStartTabIndex,
+    iconStartMaterialStyle,
     iconEnd,
     iconEndDisabled,
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndAriaLabel,
     iconEndTabIndex,
+    iconEndMaterialStyle,
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     hint,
     invalid = false,
     valid = false,
@@ -123,7 +132,6 @@ function DInput(
         'is-valid': valid,
       })}
       disabled={disabled || loading}
-      readOnly={readOnly}
       value={value}
       onChange={handleOnChange}
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
@@ -141,7 +149,6 @@ function DInput(
     loading,
     placeholder,
     floatingLabel,
-    readOnly,
     valid,
     value,
   ]);
@@ -151,11 +158,11 @@ function DInput(
       {label}
       {labelIcon && (
         <DIcon
-          className="d-input-icon"
           icon={labelIcon}
           size={`var(--${PREFIX_BS}input-label-font-size)`}
           familyClass={labelIconFamilyClass}
           familyPrefix={labelIconFamilyPrefix}
+          materialStyle={labelIconMaterialStyle}
         />
       )}
     </label>
@@ -165,6 +172,7 @@ function DInput(
     labelIcon,
     labelIconFamilyClass,
     labelIconFamilyPrefix,
+    labelIconMaterialStyle,
   ]);
 
   const dynamicComponent = useMemo(() => {
@@ -179,106 +187,109 @@ function DInput(
     return inputComponent;
   }, [floatingLabel, inputComponent, labelComponent]);
 
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
+
   return (
     <div
-      className={classNames({
-        'd-input': true,
-        ...className && { [className]: true },
-      })}
+      className={className}
       style={style}
     >
-      {label && !floatingLabel && (
-        labelComponent
-      )}
-      <div className="d-input-control">
-        <div
-          className={classNames({
-            'input-group': true,
-            'has-validation': invalid,
-            disabled: disabled || loading,
-          })}
-        >
-          {!!inputStart && (
-            <div className="input-group-text">
-              {inputStart}
-            </div>
-          )}
-          {iconStart && (
-            <button
-              type="button"
-              className="input-group-text"
-              id={`${id}Start`}
-              onClick={handleOnIconStartClick}
-              disabled={disabled || loading || iconStartDisabled}
-              aria-label={iconStartAriaLabel}
-              tabIndex={iconStartTabIndex}
-            >
-              <DIcon
-                className="d-input-icon"
-                icon={iconStart}
-                familyClass={iconStartFamilyClass}
-                familyPrefix={iconStartFamilyPrefix}
-              />
-            </button>
-          )}
-          {dynamicComponent}
-          {((invalid || valid) && !iconEnd && !loading) && (
-            <span
-              className="input-group-text"
-              id={`${id}State`}
-            >
-              <DIcon
-                className="d-input-validation-icon"
-                icon={invalid ? 'exclamation-circle' : 'check'}
-                familyClass={iconFamilyClass}
-                familyPrefix={iconFamilyPrefix}
-              />
-            </span>
-          )}
-          {(iconEnd && !loading) && (
-            <button
-              type="button"
-              className="input-group-text"
-              id={`${id}End`}
-              onClick={handleOnIconEndClick}
-              disabled={disabled || loading || iconEndDisabled}
-              aria-label={iconEndAriaLabel}
-              tabIndex={iconEndTabIndex}
-            >
-              <DIcon
-                className="d-input-icon"
-                icon={iconEnd}
-                familyClass={iconEndFamilyClass}
-                familyPrefix={iconEndFamilyPrefix}
-              />
-            </button>
-          )}
-          {loading && (
-            <div className="input-group-text d-input-icon">
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              >
-                <span className="visually-hidden">Loading...</span>
-              </span>
-            </div>
-          )}
-          {!!inputEnd && (
-            <div className="input-group-text">
-              {inputEnd}
-            </div>
-          )}
-        </div>
-        {hint && (
-          <div
-            className="form-text"
-            id={`${id}Hint`}
+      {label && !floatingLabel && labelComponent}
+      <div
+        className={classNames({
+          'input-group': true,
+          'has-validation': invalid || valid,
+        })}
+      >
+        {!!inputStart && (
+          <div className="input-group-text">
+            {inputStart}
+          </div>
+        )}
+        {iconStart && (
+          <button
+            type="button"
+            className="input-group-text"
+            id={`${id}Start`}
+            onClick={handleOnIconStartClick}
+            disabled={disabled || loading || iconStartDisabled}
+            aria-label={iconStartAriaLabel}
+            tabIndex={iconStartTabIndex}
           >
-            {hint}
+            <DIcon
+              icon={iconStart}
+              familyClass={iconStartFamilyClass}
+              familyPrefix={iconStartFamilyPrefix}
+              materialStyle={iconStartMaterialStyle}
+            />
+          </button>
+        )}
+        {dynamicComponent}
+        {((invalid || valid) && !iconEnd && !loading) && (
+          <span
+            className="input-group-text"
+            id={`${id}State`}
+          >
+            <DIcon
+              className="input-group-validation-icon"
+              icon={invalid ? invalidIcon : validIcon}
+              familyClass={iconFamilyClass}
+              familyPrefix={iconFamilyPrefix}
+              materialStyle={iconMaterialStyle}
+            />
+          </span>
+        )}
+        {(iconEnd && !loading) && (
+          <button
+            type="button"
+            className="input-group-text"
+            id={`${id}End`}
+            onClick={handleOnIconEndClick}
+            disabled={disabled || loading || iconEndDisabled}
+            aria-label={iconEndAriaLabel}
+            tabIndex={iconEndTabIndex}
+          >
+            <DIcon
+              icon={iconEnd}
+              familyClass={iconEndFamilyClass}
+              familyPrefix={iconEndFamilyPrefix}
+              materialStyle={iconEndMaterialStyle}
+            />
+          </button>
+        )}
+        {loading && (
+          <div className="input-group-text">
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </span>
+          </div>
+        )}
+        {!!inputEnd && (
+          <div className="input-group-text">
+            {inputEnd}
           </div>
         )}
       </div>
+      {hint && (
+        <div
+          className="form-text"
+          id={`${id}Hint`}
+        >
+          {hint}
+        </div>
+      )}
     </div>
   );
 }

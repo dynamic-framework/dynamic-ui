@@ -21,46 +21,41 @@ it('should render base counter', () => {
   expect(container).toMatchInlineSnapshot(`
   <div>
     <div
-      class="d-input"
-      style="--bs-input-component-form-control-text-align: center;"
+      style="--bs-form-control-component-text-align: center;"
     >
       <div
-        class="d-input-control"
+        class="input-group"
       >
-        <div
-          class="input-group"
+        <button
+          aria-label="decrease action"
+          class="input-group-text"
+          disabled=""
+          id="counterStart"
+          type="button"
         >
-          <button
-            aria-label="decrease action"
-            class="input-group-text"
-            disabled=""
-            id="counterStart"
-            type="button"
-          >
-            <i
-              class="d-icon bi bi-dash-square d-input-icon"
-              style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-            />
-          </button>
-          <input
-            aria-describedby="counterStart counterEnd"
-            class="form-control"
-            id="counter"
-            type="number"
-            value="0"
+          <i
+            class="d-icon bi bi-dash-square"
+            style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
           />
-          <button
-            aria-label="increase action"
-            class="input-group-text"
-            id="counterEnd"
-            type="button"
-          >
-            <i
-              class="d-icon bi bi-plus-square d-input-icon"
-              style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-            />
-          </button>
-        </div>
+        </button>
+        <input
+          aria-describedby="counterStart counterEnd"
+          class="form-control"
+          id="counter"
+          type="number"
+          value="0"
+        />
+        <button
+          aria-label="increase action"
+          class="input-group-text"
+          id="counterEnd"
+          type="button"
+        >
+          <i
+            class="d-icon bi bi-plus-square"
+            style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
+          />
+        </button>
       </div>
     </div>
   </div>

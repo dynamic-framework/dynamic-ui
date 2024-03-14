@@ -1,0 +1,114 @@
+// bootstrap reset layer
+.input-group > .form-select,
+.input-group > .form-control {
+  border: 0;
+
+  &:not(:first-child) {
+    padding-left: 0;
+  }
+
+  &:focus {
+    border: 0;
+    box-shadow: none;
+  }
+}
+
+.input-group > .form-select:not(:last-child) {
+  padding-right: $form-select-indicator-padding - $form-select-padding-x;
+  background-position: right 0 center;
+}
+
+.input-group > .form-control:not(:last-child) {
+  padding-right: 0;
+}
+
+.input-group > .form-floating .form-select,
+.input-group > .form-floating .form-control {
+  border: 0;
+
+  &:focus {
+    border: 0;
+    box-shadow: none;
+  }
+}
+
+.input-group > .form-floating:not(:first-child) .form-select,
+.input-group > .form-floating:not(:first-child) .form-control {
+  padding-left: 0;
+}
+
+.input-group > .form-floating:not(:last-child) .form-select {
+  padding-right: $form-select-indicator-padding - $form-select-padding-x;
+  background-position: right 0 center;
+}
+
+.input-group > .form-floating:not(:last-child) .form-control {
+  padding-right: 0;
+}
+// end bootstrap reset layer
+
+.input-group {
+  // input group
+  --#{$prefix}input-border-color: #{$input-border-color};
+  --#{$prefix}input-border-width: #{$input-border-width};
+  --#{$prefix}input-border-radius: #{$input-border-radius};
+
+  // input group focus
+  --#{$prefix}input-focus-border-color: #{$input-focus-border-color};
+  --#{$prefix}input-focus-box-shadow: #{$input-focus-box-shadow};
+
+  // input group disabled
+  --#{$prefix}input-disabled-border-color: #{$input-disabled-border-color};
+  --#{$prefix}input-disabled-bg: #{$input-disabled-bg};
+  --#{$prefix}input-disabled-color: #{$input-disabled-color};
+
+
+  border: var(--#{$prefix}input-border-width) solid var(--#{$prefix}input-border-color);
+  @include border-radius(var(--#{$prefix}input-border-radius), 0);
+
+  &:focus-within {
+    border-color: var(--#{$prefix}input-focus-border-color);
+    box-shadow: var(--#{$prefix}input-focus-box-shadow);
+  }
+
+  // validation states
+  @each $state, $data in $form-validation-states {
+    $border-color: map-get($data, "border-color");
+    $tooltip-bg-color: map-get($data, "tooltip-bg-color");
+    $box-shadow: map-get($data, "focus-box-shadow");
+
+    &:has(.form-control.is-#{$state}) {
+      border-color: $border-color;
+      box-shadow: $box-shadow;
+
+      ~ .form-text {
+        color: $border-color;
+      }
+
+      .input-group-validation-icon {
+        --#{$prefix}icon-color: #{$tooltip-bg-color};
+      }
+    }
+  }
+
+  // disabled state
+  &:has(.form-select:disabled),
+  &:has(.form-control:disabled) {
+    border-color: var(--#{$prefix}input-disabled-border-color);
+
+    // input addons disabled
+    .input-group-text {
+      color: var(--#{$prefix}input-disabled-color);
+      background: var(--#{$prefix}input-disabled-bg);
+    }
+
+    // icon disabled
+    .d-icon {
+      --#{$prefix}icon-color: var(--#{$prefix}input-disabled-color);
+    }
+  }
+
+  button:disabled .d-icon {
+    --#{$prefix}icon-color: var(--#{$prefix}input-disabled-color);
+  }
+}

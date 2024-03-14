@@ -1,0 +1,54 @@
+.collapse-container {
+  // Container
+  --#{$prefix}collapse-bg: var(--#{$prefix}white);
+  --#{$prefix}collapse-border-radius: var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}collapse-box-shadow: var(--#{$prefix}box-shadow-sm);
+  // Button
+  --#{$prefix}collapse-button-padding-x: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}collapse-button-padding-y: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}collapse-button-gap: var(--#{$prefix}ref-spacer-4);
+  // Body
+  --#{$prefix}collapse-body-padding-x: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}collapse-body-padding-y: var(--#{$prefix}ref-spacer-4);
+  // Separator
+  --#{$prefix}collapse-separator-display: none;
+  --#{$prefix}collapse-separator-height: 1px;
+  --#{$prefix}collapse-separator-bg: var(--#{$prefix}gray-200);
+
+  background-color: var(--#{$prefix}collapse-bg);
+  border-radius: var(--#{$prefix}collapse-border-radius);
+  box-shadow: var(--#{$prefix}collapse-box-shadow);
+
+  .collapse-button {
+    display: flex;
+    gap: var(--#{$prefix}collapse-button-gap);
+    align-items: center;
+    width: 100%;
+    padding: var(--#{$prefix}collapse-button-padding-y) var(--#{$prefix}collapse-button-padding-x);
+    text-align: left;
+    user-select: none;
+    background: transparent;
+    border: 0;
+
+    &:focus,
+    &:focus-visible {
+      outline: 0;
+    }
+  }
+
+  .collapse-body {
+    position: relative;
+    padding: var(--#{$prefix}collapse-body-padding-y) var(--#{$prefix}collapse-body-padding-x);
+    padding-top: 0;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      display: var(--#{$prefix}collapse-separator-display);
+      width: calc(100% - (var(--#{$prefix}collapse-body-padding-x) * 2));
+      height: var(--#{$prefix}collapse-separator-height);
+      content: " ";
+      background-color: var(--#{$prefix}collapse-separator-bg);
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import {
   useCallback,
-  useEffect,
+  useEffect, useMemo,
   useState,
 } from 'react';
 import classNames from 'classnames';
@@ -23,12 +23,15 @@ import type {
   LabelIconProps,
   PinInputMode,
   PinInputType,
+  StateIcons,
 } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
 & LabelIconProps
 & FamilyIconProps
+& StateIcons
 & {
   id: string;
   label?: string;
@@ -61,6 +64,8 @@ export default function DInputPin(
     iconFamilyClass,
     iconFamilyPrefix,
     characters = 4,
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     innerInputMode = 'text',
     hint,
     invalid = false,
@@ -125,6 +130,16 @@ export default function DInputPin(
     event.preventDefault();
   }, []);
 
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
+
   return (
     <div
       className={classNames('d-input-pin', className)}
@@ -135,7 +150,6 @@ export default function DInputPin(
           {label}
           {labelIcon && (
             <DIcon
-              className="d-input-pin-icon"
               icon={labelIcon}
               size={`var(--${PREFIX_BS}input-label-font-size)`}
               familyClass={labelIconFamilyClass}
@@ -146,7 +160,6 @@ export default function DInputPin(
       )}
       <form
         id={id}
-        className="d-input-pin-controls"
         onInput={formChange}
         onSubmit={preventDefaultEvent}
       >
@@ -185,15 +198,15 @@ export default function DInputPin(
             id={`${id}State`}
           >
             <DIcon
-              className="d-input-pin-validation-icon"
-              icon={invalid ? 'exclamation-circle' : 'check'}
+              className="input-group-validation-icon"
+              icon={invalid ? invalidIcon : validIcon}
               familyClass={iconFamilyClass}
               familyPrefix={iconFamilyPrefix}
             />
           </span>
         )}
         {loading && (
-          <div className="input-group-text d-input-pin-icon">
+          <div className="input-group-text">
             <span
               className="spinner-border spinner-border-sm"
               role="status"

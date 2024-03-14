@@ -1,12 +1,48 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DModal from '../../src/components/DModal/DModal';
+import { DContextProvider } from '../../src';
 import DButton from '../../src/components/DButton';
+import { PREFIX_BS } from '../../src/components/config';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DModal> = {
-  title: 'Design System/Patterns/Modal',
+  title: 'Design System/Components/Modal',
   component: DModal,
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component: `
+To achieve the behavior of a modal it is necessary to use the \`DModalContextProvider\` and the \`useDModalContext\` hook,
+however, it is possible to create an inline modal simply using \`DModal\`
+
+This part of the documentation talks about \`DModal\` directly covering its inline use.
+
+> To achieve the behavior of a modal review the modal topic in patterns
+
+## CSS Variables
+| Variable                                 | Type              | Description                                 |
+|------------------------------------------|-------------------|---------------------------------------------|
+| --${PREFIX_BS}modal-header-gap           | css length unit   | Space between header items                  |
+| --${PREFIX_BS}modal-body-padding         | css length unit   | Body padding                                |
+| --${PREFIX_BS}modal-footer-padding       | css length unit   | Footer padding                              |
+| --${PREFIX_BS}modal-separator-margin-x   | css length unit   | Separator horizontal padding                |
+| --${PREFIX_BS}modal-separator-height     | css length unit   | Separator height (size)                     |
+| --${PREFIX_BS}modal-separator-bg         | css color unit    | Separator background (color)                |
+| --${PREFIX_BS}modal-fade-transform       | css transform     | Fade transform animation                    |
+        `,
+      },
+    },
+  },
   argTypes: {
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'object',
+    },
     name: {
       control: 'text',
       type: { name: 'string', required: true },
@@ -38,9 +74,7 @@ const config: Meta<typeof DModal> = {
       options: ['sm', 'lg', 'xl'],
     },
   },
-  parameters: {
-    layout: 'fullscreen',
-  },
+  tags: ['autodocs'],
 };
 
 export default config;
@@ -60,7 +94,7 @@ export const Default: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -102,51 +136,7 @@ export const CloseIcon: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
-      </DModal.Body>
-      <DModal.Footer>
-        <DButton
-          text="cancel"
-          theme="secondary"
-          variant="outline"
-          className="d-grid"
-          pill
-        />
-        <DButton text="ok" className="d-grid" pill />
-      </DModal.Footer>
-    </DModal>
-  ),
-  args: {
-    name: 'exampleModal',
-    staticBackdrop: false,
-    scrollable: false,
-    centered: true,
-    fullScreen: false,
-    size: 'sm',
-    className: 'd-block',
-  },
-};
-
-export const MaterialStyleCloseIcon: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
-        <Story />
-      </div>
-    ),
-  ],
-  render: (args) => (
-    <DModal {...args}>
-      <DModal.Header
-        icon="disabled_by_default"
-        iconFamilyClass="material-symbols-outlined"
-        materialStyle
-        showCloseButton
-      >
-        <h5 className="fw-bold">Do you want to reject the offer?</h5>
-      </DModal.Header>
-      <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -185,7 +175,7 @@ export const ActionsPlacementStart: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer actionPlacement="start">
         <DButton
@@ -224,7 +214,7 @@ export const ActionsPlacementEnd: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer actionPlacement="end">
         <DButton
@@ -260,7 +250,7 @@ export const WithoutHeader: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -299,7 +289,7 @@ export const WithoutActions: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
     </DModal>
   ),
@@ -326,7 +316,7 @@ export const OnlyBody: Story = {
     <DModal {...args}>
       <DModal.Header showCloseButton />
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
     </DModal>
   ),
@@ -355,7 +345,7 @@ export const WithoutCancelX: Story = {
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body>
-        <p className="py-3 px-5">Modal body</p>
+        <p>Modal body</p>
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -368,6 +358,64 @@ export const WithoutCancelX: Story = {
         <DButton text="ok" className="d-grid" pill />
       </DModal.Footer>
     </DModal>
+  ),
+  args: {
+    name: 'exampleModal',
+    staticBackdrop: false,
+    scrollable: false,
+    centered: true,
+    fullScreen: false,
+    size: 'sm',
+    className: 'd-block',
+  },
+};
+
+/**
+ * To use material symbols or any other material symbols style icon suite you can
+ * use a `DContextProvider` to achieve global configuration or use the same configuration
+ * variables on the `DModal`, in this case, for the close icon on the
+ * `DModal.Header` or `DModalHeader`.
+ */
+export const MaterialStyleCloseIcon: Story = {
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DModal {...args}>
+        <DModal.Header
+          showCloseButton
+        >
+          <h5 className="fw-bold">Do you want to reject the offer?</h5>
+        </DModal.Header>
+        <DModal.Body>
+          <p>Modal body</p>
+        </DModal.Body>
+        <DModal.Footer>
+          <DButton
+            text="cancel"
+            theme="secondary"
+            variant="outline"
+            className="d-grid"
+            pill
+          />
+          <DButton text="ok" className="d-grid" pill />
+        </DModal.Footer>
+      </DModal>
+    </DContextProvider>
   ),
   args: {
     name: 'exampleModal',

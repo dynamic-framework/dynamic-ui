@@ -21,6 +21,8 @@ import type {
 } from '../interface';
 import type { Merge } from '../../types';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import { useDContext } from '../../contexts';
+import { useDisableInputWheel } from '../../hooks';
 
 type NonDInputProps = {
   value?: number;
@@ -29,7 +31,17 @@ type NonDInputProps = {
   onChange?: (value?: number) => void;
 };
 
-type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'value' | 'type' | 'onChange'>, NonDInputProps>;
+type Props = Merge<
+Omit<
+ComponentPropsWithoutRef<typeof DInput>,
+| 'value'
+| 'type'
+| 'onChange'
+| 'invalidIcon'
+| 'validIcon'
+>,
+NonDInputProps
+>;
 
 function DInputCounter(
   {
@@ -37,8 +49,8 @@ function DInputCounter(
     maxValue,
     value = minValue,
     invalid,
-    iconStart = 'dash-square',
-    iconEnd = 'plus-square',
+    iconStart: iconStartProp,
+    iconEnd: iconEndProp,
     iconStartAriaLabel = 'decrease action',
     iconEndAriaLabel = 'increase action',
     style,
@@ -47,6 +59,9 @@ function DInputCounter(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
+  const {
+    handleOnWheel,
+  } = useDisableInputWheel(ref);
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
   const [internalIsInvalid, setInternalIsInvalid] = useState(false);
   const [internalValue, setInternalValue] = useState<number>(value);
@@ -73,7 +88,7 @@ function DInputCounter(
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,
-    [`--${PREFIX_BS}input-component-form-control-text-align`]: 'center',
+    [`--${PREFIX_BS}form-control-component-text-align`]: 'center',
   }), [style]);
 
   const valueString = useMemo(() => (
@@ -83,6 +98,17 @@ function DInputCounter(
   useEffect(() => {
     setInternalIsInvalid(!(internalValue >= minValue && internalValue <= maxValue));
   }, [internalValue, minValue, maxValue]);
+
+  const { iconMap: { input } } = useDContext();
+
+  const iconEnd = useMemo(
+    () => iconEndProp || input.increase,
+    [iconEndProp, input.increase],
+  );
+  const iconStart = useMemo(
+    () => iconStartProp || input.decrease,
+    [iconStartProp, input.decrease],
+  );
 
   return (
     <DInput
@@ -94,6 +120,7 @@ function DInputCounter(
       invalid={internalIsInvalid || invalid}
       type="number"
       onChange={handleOnChange}
+      onWheel={handleOnWheel}
       onIconStartClick={handleOnIconStartClick}
       onIconEndClick={handleOnIconEndClick}
       iconStartAriaLabel={iconStartAriaLabel}

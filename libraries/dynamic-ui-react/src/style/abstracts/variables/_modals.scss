@@ -1,62 +1,37 @@
 // Modals
 
 // scss-docs-start modal-variables
-$modal-inner-padding: 0 !default;
+$modal-inner-padding: var(--#{$prefix}ref-spacer-6) !default;
 
 // custom
-$modal-header-gap: $spacer-4 !default;
+$modal-header-gap: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 
-$modal-footer-margin-between: $spacer-3 !default;
+$modal-footer-margin-between: var(--#{$prefix}ref-spacer-4) !default;
 
-$modal-dialog-margin: .5rem !default;
-$modal-dialog-margin-y-sm-up: 1.75rem !default;
-
-$modal-title-line-height: $line-height-base !default;
-
-$modal-content-color: null !default;
 $modal-content-bg: var(--#{$prefix}white) !default;
 $modal-content-border-color: transparent !default;
-$modal-content-border-width: $border-width !default;
-$modal-content-border-radius: $border-radius !default;
-$modal-content-inner-border-radius: subtract($modal-content-border-radius, $modal-content-border-width) !default;
-$modal-content-box-shadow-xs: $box-shadow-sm !default;
-$modal-content-box-shadow-sm-up: $box-shadow-sm !default;
-
-// custom
-$modal-body-padding: 0 !default;
-// end custom
+$modal-content-border-radius: var(--#{$prefix}border-radius) !default;
+$modal-content-box-shadow-xs: var(--#{$prefix}box-shadow-sm) !default;
+$modal-content-box-shadow-sm-up: var(--#{$prefix}box-shadow-sm) !default;
 
 $modal-backdrop-bg: var(--#{$prefix}black) !default;
 $modal-backdrop-opacity: .3 !default;
 
 $modal-header-border-color: transparent !default;
-$modal-header-border-width: $modal-content-border-width !default;
-$modal-header-padding-y: $spacer-3 !default;
-$modal-header-padding-x: $spacer-4 !default;
-$modal-header-padding: $spacer-5 $spacer-4 $spacer-3 !default; // Keep this for backwards compatibility
+$modal-header-padding-y: var(--#{$prefix}ref-spacer-4) !default;
+$modal-header-padding-x: var(--#{$prefix}ref-spacer-6) !default;
+$modal-header-padding: var(--#{$prefix}ref-spacer-8) var(--#{$prefix}ref-spacer-6) var(--#{$prefix}ref-spacer-4) !default; // Keep this for backwards compatibility
 
-$modal-footer-bg: null !default;
 $modal-footer-border-color: transparent !default;
-$modal-footer-border-width: $modal-header-border-width !default;
 
 // custom
 $modal-separator-bg: var(--#{$prefix}gray-200) !default;
 $modal-separator-height: 1px !default;
-$modal-separator-margin-x: $spacer-4 !default;
+$modal-separator-margin-x: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 
 // custom
-$modal-footer-padding: $spacer-4 !default;
+$modal-footer-padding: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
-
-$modal-sm: 300px !default;
-$modal-md: 500px !default;
-$modal-lg: 800px !default;
-$modal-xl: 1140px !default;
-
-$modal-fade-transform: var(--#{$prefix}modal-fade-transform, translate(0, 100vh)) !default;
-$modal-show-transform: none !default;
-$modal-transition: transform .5s ease-out !default;
-$modal-scale-transform: scale(1.02) !default;
 // scss-docs-end modal-variables

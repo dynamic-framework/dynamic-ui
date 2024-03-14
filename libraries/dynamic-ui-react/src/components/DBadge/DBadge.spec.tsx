@@ -14,7 +14,7 @@ it('should render badge', () => {
   expect(container).toMatchInlineSnapshot(`
     <div>
       <span
-        class="badge badge-primary"
+        class="badge text-bg-primary"
       >
         <span>
           Test

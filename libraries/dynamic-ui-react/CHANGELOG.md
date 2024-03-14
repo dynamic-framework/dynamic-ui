@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.2...@dynamic-framework/ui-react@1.17.0) (2024-03-13)
+
+
+### Features
+
+* input with bootstrap ([194a4de](https://github.com/dynamic-framework/dynamic-ui/commit/194a4deadbc26b83100daebf650514237c5d5cc3))
+* jump 4 by 4 in spacers ([ab93b9f](https://github.com/dynamic-framework/dynamic-ui/commit/ab93b9fade43ecfb4691f4d467eb8399e34d5f5e))
+* overlay utility ([58d87de](https://github.com/dynamic-framework/dynamic-ui/commit/58d87de537ea60687a24b718908cc1b7f3a02d08))
+* overlay utility ([5275edd](https://github.com/dynamic-framework/dynamic-ui/commit/5275edd72344864d046396cd60b530e18bdbfd0c))
+
+
+### Bug Fixes
+
+* adjust design of counter and disable wheel ([59938fd](https://github.com/dynamic-framework/dynamic-ui/commit/59938fd8b54d38f9f79bdb37a9dc0e52ced155b7))
+* focus bg color and text color using hover values ([c7e4365](https://github.com/dynamic-framework/dynamic-ui/commit/c7e4365e44e2da16fe504c4d814c8524bb8fbc41))
+* focus pagination ([9de69a7](https://github.com/dynamic-framework/dynamic-ui/commit/9de69a774377a3d072016a0a22b850896d71be41))
+* focus pagination and padding ([a8a714f](https://github.com/dynamic-framework/dynamic-ui/commit/a8a714f6f39f6d6939a70ecfa159a1479cf85826))
+* input-groups borders and focus ([811e60b](https://github.com/dynamic-framework/dynamic-ui/commit/811e60bf1a499360e1e596bc30fbc51b75c84806))
+* pagination focus ([f26052e](https://github.com/dynamic-framework/dynamic-ui/commit/f26052e48013aa8d706438260b00738be53d214c))
+* pagination size and padding ([89178b3](https://github.com/dynamic-framework/dynamic-ui/commit/89178b3a9ca01ecbdde283c36f80c3d002c536ae))
+* remove ref and use pure spacer ([1acb036](https://github.com/dynamic-framework/dynamic-ui/commit/1acb0368386a9b00254cbac656f931fb78741a71))
+* remove reset paragraph margin ([10561d1](https://github.com/dynamic-framework/dynamic-ui/commit/10561d1b795adeaec8d2f15e1fff853e1a9d6570))
+* rename to singular input-group file ([9d2823f](https://github.com/dynamic-framework/dynamic-ui/commit/9d2823f2f6deb4b72fdfdbe745df4d0e0fd39d5b))
+
+
+
+## [1.16.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.1...@dynamic-framework/ui-react@1.16.2) (2024-03-05)
+
+
+### Bug Fixes
+
+* -emphasis-color value ([56567d2](https://github.com/dynamic-framework/dynamic-ui/commit/56567d24f76185dbf5e5e4fe9bb54c5f0ab25ff9))
+* card inner border radius calc ([fa4a5b6](https://github.com/dynamic-framework/dynamic-ui/commit/fa4a5b66ef45523b55df69f98fb48615424fe826))
+* error with modal transition ([690b6ed](https://github.com/dynamic-framework/dynamic-ui/commit/690b6edebe3f4f8ffe747e0634ea19fa8e8a8ce4))
+* margin form check ([c208024](https://github.com/dynamic-framework/dynamic-ui/commit/c2080240b7b259dbc4d026005a06461e842a4c50))
+* padding correction for list-groups and bg white on offcanvas ([32206b8](https://github.com/dynamic-framework/dynamic-ui/commit/32206b89cd690bfb368a3b051ca332086771d6e5))
+* remove duplicate var ([75228ad](https://github.com/dynamic-framework/dynamic-ui/commit/75228ad119ea79133f0544e2e9466e6f4b2176e0))
+* tooltip background ([17f629f](https://github.com/dynamic-framework/dynamic-ui/commit/17f629f1676b7e35eb396aa708385fd97f590b06))
+
+
+
+## [1.16.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.0...@dynamic-framework/ui-react@1.16.1) (2024-03-04)
+
+
+### Bug Fixes
+
+* adjust border radius ([8834013](https://github.com/dynamic-framework/dynamic-ui/commit/8834013edd2fa6ca09189b583221d20cfcc1512a))
+* adjust border radius ([1ea7a30](https://github.com/dynamic-framework/dynamic-ui/commit/1ea7a30015b0aa1104a36a025ebdb2efb705adcb))
+* build-scss script ([8389907](https://github.com/dynamic-framework/dynamic-ui/commit/83899074b30b3f67ec32c527878a0a8facfb79e0))
+* change order line ([776d83c](https://github.com/dynamic-framework/dynamic-ui/commit/776d83c5c6ef2f0c93e9317a554f558653fcf5e2))
+* enable shadows ([11499c4](https://github.com/dynamic-framework/dynamic-ui/commit/11499c49b244864498564a07c668fdfba19a23ee))
+* fix forms dropdowns and borders ([77b735f](https://github.com/dynamic-framework/dynamic-ui/commit/77b735fa2c4e5e5d5424dfe0737bd2fb9e71d155))
+* fix forms, dropdowns and borders ([1e542bb](https://github.com/dynamic-framework/dynamic-ui/commit/1e542bb2fc7b3055dcc861e0184393a50bbfa3a5))
+* form-check height ([b9dad52](https://github.com/dynamic-framework/dynamic-ui/commit/b9dad526aee77236bbdffb70a1b0bef49b5a60e1))
+* input-group , dropdowns and form-check ([bb4a75a](https://github.com/dynamic-framework/dynamic-ui/commit/bb4a75ab5cbba78192f4b61df7a94bae518a7017))
+* style spacing ([5628e20](https://github.com/dynamic-framework/dynamic-ui/commit/5628e20107475170dd12b795d09d07c49326d6d6))
+
+
+
+## [1.16.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.15.1...@dynamic-framework/ui-react@1.16.0) (2024-02-29)
+
+
+### Features
+
+* adjust css style of accordion ([3a86aa2](https://github.com/dynamic-framework/dynamic-ui/commit/3a86aa2972c6407545981da2acadff3c29d5a0dd))
+* adjust style of DBadge component and css ([774b0b4](https://github.com/dynamic-framework/dynamic-ui/commit/774b0b470a34228666e4d25bc17bc87102e6064a))
+
+
+### Bug Fixes
+
+* adjust breadcrumb css style ([f6aea0f](https://github.com/dynamic-framework/dynamic-ui/commit/f6aea0ff1011f794444bb3bc07249f58fe01434e))
+* adjust light and dark colors of soft badge and link button ([42b8615](https://github.com/dynamic-framework/dynamic-ui/commit/42b861546e9e4c3963730f31f592e443c10ecdad))
+* DContext partial props on hook usage ([2d59615](https://github.com/dynamic-framework/dynamic-ui/commit/2d5961527910e551f16e027cbfd8a0cf8a2c17b4))
+* import indent libraries/dynamic-ui-react/src/contexts/DContext.tsx ([0f21865](https://github.com/dynamic-framework/dynamic-ui/commit/0f21865d6095f470cd96ff387fa459a87bf33a81))
+* remove comment libraries/dynamic-ui-react/src/style/components/_d-breadcrumb.scss ([9414f69](https://github.com/dynamic-framework/dynamic-ui/commit/9414f69cddeb1a045b00b26eed0ff4b254f86adb))
+
+
+
+## [1.15.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.15.0...@dynamic-framework/ui-react@1.15.1) (2024-02-21)
+
+
+### Bug Fixes
+
+* adjust design details of root variables and buttons ([ff7f51f](https://github.com/dynamic-framework/dynamic-ui/commit/ff7f51fed5a347e2559486e6b33fa5cde0eab631))
+
+
+
+## [1.15.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.14.1...@dynamic-framework/ui-react@1.15.0) (2024-02-15)
+
+
+### Features
+
+* add DSelect base support with DContext usage and adjust DInput feedback color ([4030cd5](https://github.com/dynamic-framework/dynamic-ui/commit/4030cd594f4cb179cc31987f0f755df318ee6929))
+* add example to use DSelect with emoji and text single value and adjust DContext iconMap config ([1d75336](https://github.com/dynamic-framework/dynamic-ui/commit/1d753361417c4218d5ce03c82857c9f2c2687169))
+* use calendar icons on DCalendar from DContext ([cc8823d](https://github.com/dynamic-framework/dynamic-ui/commit/cc8823d4e094a425b3d1c0139b0ec637026e2d9b))
+* use close icon on box file from DContext and remove unnecesary icon suffix ([f6462e7](https://github.com/dynamic-framework/dynamic-ui/commit/f6462e745642b790487c4fecf2d46400c097e57e))
+* use close icon on chip from DContext ([0e522b6](https://github.com/dynamic-framework/dynamic-ui/commit/0e522b6d6fccda8ff3422fddaa0bb3604df0afd6))
+* use close icon on modal from DContext ([9f00063](https://github.com/dynamic-framework/dynamic-ui/commit/9f0006334bcd97f970d0230a8b16f2582645a4e9))
+* use close icon on offcanvas from DContext ([28e8280](https://github.com/dynamic-framework/dynamic-ui/commit/28e8280cddfd3330fc2a06aebd433f201e56a12a))
+* use DContext iconMap ([c2df6b7](https://github.com/dynamic-framework/dynamic-ui/commit/c2df6b7c062ff620e77b55099a212052df1616e8))
+* use material icons on DButton from DContext ([b651c73](https://github.com/dynamic-framework/dynamic-ui/commit/b651c731bffcfdd088df650d25e0753e393c4336))
+* use material style prop on DInput from DContext ([25a33af](https://github.com/dynamic-framework/dynamic-ui/commit/25a33afcacfc3e4e396e7037c24eff2b97e2a56f))
+* use success icon on stepper from DContext ([8c881a9](https://github.com/dynamic-framework/dynamic-ui/commit/8c881a904088ffdc271fa892da0fa9c6b6bbfa62))
+* use toggle icon on collapse from DContext ([2a32b12](https://github.com/dynamic-framework/dynamic-ui/commit/2a32b124dd188930d0e949c656ca20c8a5c25c6c))
+
+
+### Bug Fixes
+
+* text libraries/dynamic-ui-react/stories/components/DAlert.stories.tsx ([dc41394](https://github.com/dynamic-framework/dynamic-ui/commit/dc413945715f846b272877ff16ad1569ea44b24d))
+* text on libraries/dynamic-ui-react/stories/components/DAlert.stories.tsx ([80891d7](https://github.com/dynamic-framework/dynamic-ui/commit/80891d78b65555047034d11b91533aefd89468d7))
+* typo libraries/dynamic-ui-react/stories/components/DAlert.stories.tsx ([fdf4bb8](https://github.com/dynamic-framework/dynamic-ui/commit/fdf4bb8e01250318acab14e944ec82f71a443a01))
+* typo libraries/dynamic-ui-react/stories/components/DTabs.stories.tsx ([10a03d1](https://github.com/dynamic-framework/dynamic-ui/commit/10a03d1be74e2974f2c182fffa87b0b86a453762))
+
+
+
+## [1.14.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.14.0...@dynamic-framework/ui-react@1.14.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* remove context ([f5048ce](https://github.com/dynamic-framework/dynamic-ui/commit/f5048cef55b87791d2723b3732e339c151538591))
+
+
+
 ## [1.14.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.13.0...@dynamic-framework/ui-react@1.14.0) (2024-01-12)
 
 

@@ -2,10 +2,34 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import DTooltip from '../../src/components/DTooltip/DTooltip';
 import { THEMES } from '../config/constants';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DTooltip> = {
   title: 'Design System/Components/Tooltip',
   component: DTooltip,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Floating UI](https://floating-ui.com/docs/react)
+
+## CSS Variables
+| Variable                                   | Type             | Description                   |
+|--------------------------------------------|------------------|-------------------------------|
+| --${PREFIX_BS}tooltip-bg               | css color unit   | Background and arrow color    |
+| --${PREFIX_BS}tooltip-border-radius    | css length unit  | Border radius                 |
+| --${PREFIX_BS}tooltip-color            | css color unit   | Text color                    |
+| --${PREFIX_BS}tooltip-font-size        | css length unit  | Text font size                |
+| --${PREFIX_BS}tooltip-sm-font-size     | css length unit  | Small tooltip text font size  |
+| --${PREFIX_BS}tooltip-lg-font-size     | css length unit  | Small tooltip text font size  |
+| --${PREFIX_BS}tooltip-padding          | css length unit  | Padding                       |
+| --${PREFIX_BS}tooltip-max-width        | css length unit  | Max width                     |
+        `,
+      },
+    },
+  },
   argTypes: {
     placement: {
       control: 'select',
@@ -58,6 +82,7 @@ const config: Meta<typeof DTooltip> = {
       type: 'number',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
@@ -71,7 +96,7 @@ export const Top: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     theme: 'secondary',
   },
 };
@@ -84,7 +109,7 @@ export const Right: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     theme: 'secondary',
   },
 };
@@ -97,7 +122,7 @@ export const Bottom: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     theme: 'secondary',
   },
 };
@@ -110,7 +135,7 @@ export const Left: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     theme: 'secondary',
   },
 };
@@ -123,7 +148,7 @@ export const SmallTop: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'sm',
     theme: 'secondary',
   },
@@ -137,7 +162,7 @@ export const SmallRight: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'sm',
     theme: 'secondary',
   },
@@ -151,7 +176,7 @@ export const SmallBottom: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'sm',
     theme: 'secondary',
   },
@@ -165,7 +190,7 @@ export const SmallLeft: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'sm',
     theme: 'secondary',
   },
@@ -179,7 +204,7 @@ export const LargeTop: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'lg',
     theme: 'secondary',
   },
@@ -193,7 +218,7 @@ export const LargeRight: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'lg',
     theme: 'secondary',
   },
@@ -207,7 +232,7 @@ export const LargeBottom: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'lg',
     theme: 'secondary',
   },
@@ -221,7 +246,7 @@ export const LargeLeft: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'lg',
     theme: 'secondary',
   },
@@ -235,7 +260,7 @@ export const LargeText: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: true,
+    open: false,
     size: 'lg',
     theme: 'secondary',
   },

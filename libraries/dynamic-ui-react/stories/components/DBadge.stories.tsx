@@ -1,13 +1,37 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DBadge from '../../src/components/DBadge/DBadge';
-
 import { THEMES } from '../config/constants';
 
 const config: Meta<typeof DBadge> = {
   title: 'Design System/Components/Badge',
   component: DBadge,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Wrapper around Bootstrap Badge.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap Badge](https://getbootstrap.com/docs/5.3/components/badge/)
++ [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/badge/#css)
+        `,
+      },
+    },
+  },
   argTypes: {
+    id: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'object',
+    },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
     text: {
       control: 'text',
       type: 'string',
@@ -25,7 +49,12 @@ const config: Meta<typeof DBadge> = {
       type: 'boolean',
       description: 'Enable dot mode',
     },
+    soft: {
+      control: 'boolean',
+      type: 'boolean',
+    },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

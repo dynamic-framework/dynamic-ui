@@ -13,6 +13,15 @@
   },
   "overrides": [
     {
+      "files": ["scripts/*.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": true }
+        ]
+      }
+    },
+    {
       "files": ["src/**/*.ts", "src/**/*.tsx"],
       "parserOptions": {
         "project": ["./tsconfig.json"],
@@ -37,7 +46,6 @@
       ],
       "rules": {
         "react/jsx-props-no-spreading": "off",
-        "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }],
         "import/no-extraneous-dependencies": [
           "error",
           { "devDependencies": ["**/*.stories.tsx"] }

@@ -1,0 +1,19 @@
+.accordion {
+  --#{$prefix}accordion-btn-font-weight: #{$accordion-button-font-weight};
+  --#{$prefix}accordion-btn-font-size: #{$accordion-button-font-size};
+  --#{$prefix}accordion-body-padding-top: #{$accordion-body-padding-top};
+
+  .accordion-button {
+    font-weight: var(--#{$prefix}accordion-btn-font-weight);
+    @include font-size(var(--#{$prefix}accordion-btn-font-size));
+  }
+
+  .accordion-item .show,
+  .accordion-item .collapsing {
+    background-color: var(--#{$prefix}accordion-active-bg);
+  }
+
+  .accordion-body {
+    padding-top: var(--#{$prefix}accordion-body-padding-top);
+  }
+}

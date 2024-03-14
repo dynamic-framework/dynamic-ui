@@ -1,15 +1,46 @@
 import { Meta, StoryObj } from '@storybook/react';
 import DCarousel from '../../src/components/DCarousel/DCarousel';
-import DCarouselSlide from '../../src/components/DCarousel/components/DCarouselSlide';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DCarousel> = {
   title: 'Design System/Patterns/Carousel',
   component: DCarousel,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Carousel of elements and components
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Splide](https://splidejs.com/)
++ [Splide React Integration](https://splidejs.com/integration/react-splide/)
+
+## CSS Variables
+| Variable                                         | Type            | Description                   |
+|--------------------------------------------------|-----------------|-------------------------------|
+| --${PREFIX_BS}carousel-arrow-space               | css length unit | Arrow separation              |
+| --${PREFIX_BS}carousel-pagination-bottom         | css length unit | Pagination bottom separation  |
+| --${PREFIX_BS}carousel-pagination-page-bg        | css color       | Background of dot page        |
+| --${PREFIX_BS}carousel-pagination-active-page-bg | css color       | Background of active dot page |
+| --${PREFIX_BS}carousel-focus-outline-color       | css color       | Color of focus ring           |
+        `,
+      },
+    },
+  },
   argTypes: {
     options: {
       control: 'object',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'object',
+    },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
@@ -21,7 +52,7 @@ export const Default: Story = {
       {...args}
     >
       {[1, 2, 3, 4, 5].map((el) => (
-        <DCarouselSlide key={el}>
+        <DCarousel.Slide key={el}>
           <div className="d-flex flex-column bg-light border p-3 rounded text-center">
             <h5>{`Slide ${el}`}</h5>
             <p>
@@ -31,7 +62,7 @@ export const Default: Story = {
               harum dicta a!
             </p>
           </div>
-        </DCarouselSlide>
+        </DCarousel.Slide>
       ))}
     </DCarousel>
   ),
@@ -52,7 +83,7 @@ export const TwoPerPage: Story = {
       {...args}
     >
       {[1, 2, 3, 4, 5].map((el) => (
-        <DCarouselSlide key={el}>
+        <DCarousel.Slide key={el}>
           <div className="d-flex flex-column bg-light border p-3 rounded text-center">
             <h5>{`Slide ${el}`}</h5>
             <p>
@@ -62,7 +93,7 @@ export const TwoPerPage: Story = {
               harum dicta a!
             </p>
           </div>
-        </DCarouselSlide>
+        </DCarousel.Slide>
       ))}
     </DCarousel>
   ),
@@ -86,7 +117,7 @@ export const WithBreakpoints: Story = {
       {...args}
     >
       {[1, 2, 3, 4, 5].map((el) => (
-        <DCarouselSlide key={el}>
+        <DCarousel.Slide key={el}>
           <div className="d-flex flex-column bg-light border p-3 rounded text-center">
             <h5>{`Slide ${el}`}</h5>
             <p>
@@ -96,7 +127,7 @@ export const WithBreakpoints: Story = {
               harum dicta a!
             </p>
           </div>
-        </DCarouselSlide>
+        </DCarousel.Slide>
       ))}
     </DCarousel>
   ),
@@ -132,7 +163,7 @@ export const AutoplayAndLoop: Story = {
       {...args}
     >
       {[1, 2, 3, 4, 5].map((el) => (
-        <DCarouselSlide key={el}>
+        <DCarousel.Slide key={el}>
           <div className="d-flex flex-column bg-light border p-3 rounded text-center">
             <h5>{`Slide ${el}`}</h5>
             <p>
@@ -142,7 +173,7 @@ export const AutoplayAndLoop: Story = {
               harum dicta a!
             </p>
           </div>
-        </DCarouselSlide>
+        </DCarousel.Slide>
       ))}
     </DCarousel>
   ),

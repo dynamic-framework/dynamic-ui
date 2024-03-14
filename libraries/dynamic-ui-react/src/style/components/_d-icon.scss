@@ -1,19 +1,17 @@
 .d-icon {
   --#{$prefix}icon-color: var(--#{$prefix}icon-component-color, inherit);
   --#{$prefix}icon-bg-color: var(--#{$prefix}icon-component-bg-color, inherit);
-  --#{$prefix}icon-size: var(--#{$prefix}icon-component-size, 1.5rem);
+  --#{$prefix}icon-size: var(--#{$prefix}icon-component-size, $spacer-6);
   --#{$prefix}icon-padding: var(--#{$prefix}icon-component-padding, 0);
   --#{$prefix}icon-loading-duration: var(--#{$prefix}icon-component-loading-duration, 1.8);
 
-  // we need to use important in this case to avoid to use the display of the family class
-  display: inline-flex !important; // stylelint-disable-line declaration-no-important
+  display: inline-flex !important; /* stylelint-disable-line declaration-no-important */
   align-items: center;
   justify-content: center;
   width: var(--#{$prefix}icon-size);
   height: var(--#{$prefix}icon-size);
   padding: var(--#{$prefix}icon-padding);
-  // we need to use important in this case to avoid to use the font-size of the family class
-  font-size: var(--#{$prefix}icon-size) !important; // stylelint-disable-line declaration-no-important
+  font-size: var(--#{$prefix}icon-size) !important; /* stylelint-disable-line declaration-no-important */
   color: var(--#{$prefix}icon-color);
   background-color: var(--#{$prefix}icon-bg-color);
   border-radius: var(--#{$prefix}icon-padding);

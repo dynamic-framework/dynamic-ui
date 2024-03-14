@@ -1,8 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import type { ComponentProps } from 'react';
+
 import DInput from '../../src/components/DInput/DInput';
-import { ICONS } from '../config/constants';
-import { DIcon } from '../../src';
+import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
+import { DContextProvider, DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInput> = {
@@ -23,29 +25,25 @@ To understand in more detail the aspects covered by this component, review the f
 + [Bootstrap Input Group](https://getbootstrap.com/docs/5.3/forms/input-group/)
 
 ## CSS Variables
-
-| Variable                                        | Type            | Description                   |
-|-------------------------------------------------|-----------------|-------------------------------|
-| --${PREFIX_BS}input-control-gap                 | css length unit | Space between layout elements |
-| --${PREFIX_BS}input-label-color                 | css color unit  | Label color                   |
-| --${PREFIX_BS}input-label-font-weight           | css font weight | Label font weight             |
-| --${PREFIX_BS}input-label-font-size             | css length unit | Label font size               |
-| --${PREFIX_BS}input-label-padding-x             | css length unit | Label horizontal padding      |
-| --${PREFIX_BS}input-label-padding-y             | css length unit | Label vertical padding        |
-| --${PREFIX_BS}input-label-gap                   | css length unit | Space between label elements  |
-| --${PREFIX_BS}input-group-border-color          | css color unit  | Input border color            |
-| --${PREFIX_BS}input-group-border-width          | css length unit | Input border width            |
-| --${PREFIX_BS}input-group-border-radius         | css length unit | Input border radius           |
-| --${PREFIX_BS}input-group-hover-border-color    | css color unit  | Input hover border color      |
-| --${PREFIX_BS}input-group-focus-border-color    | css color unit  | Input focus border color      |
-| --${PREFIX_BS}input-group-focus-box-shadow      | css shadow      | Input focus box shadow        |
-| --${PREFIX_BS}input-form-text-padding           | css length unit | Hint padding                  |
-| --${PREFIX_BS}input-form-text-gap               | css length unit | Space between hint elements   |
-| --${PREFIX_BS}input-form-text-color             | css color unit  | Hint color                    |
-| --${PREFIX_BS}input-group-disabled-bg           | css color unit  | Input disable background      |
-| --${PREFIX_BS}input-group-disabled-color        | css color unit  | Input disable color           |
-| --${PREFIX_BS}input-group-disabled-border-color | css color unit  | Input disable border color    |
-| --${PREFIX_BS}input-form-control-text-align     | css text align  | Input text align              |
+| Variable                                         | Type            | Description                   |
+|--------------------------------------------------|-----------------|-------------------------------|
+| --${PREFIX_BS}label-color                        | css color unit  | Label color                   |
+| --${PREFIX_BS}label-font-weight                  | css font weight | Label font weight             |
+| --${PREFIX_BS}label-font-size                    | css length unit | Label font size               |
+| --${PREFIX_BS}label-padding-x                    | css length unit | Label horizontal padding      |
+| --${PREFIX_BS}label-padding-y                    | css length unit | Label vertical padding        |
+| --${PREFIX_BS}input-border-color                 | css color unit  | Input border color            |
+| --${PREFIX_BS}input-border-width                 | css length unit | Input border width            |
+| --${PREFIX_BS}input-border-radius                | css length unit | Input border radius           |
+| --${PREFIX_BS}input-focus-border-color           | css color unit  | Input focus border color      |
+| --${PREFIX_BS}input-focus-box-shadow             | css shadow      | Input focus box shadow        |
+| --${PREFIX_BS}input-disabled-bg                  | css color unit  | Input disable background      |
+| --${PREFIX_BS}input-disabled-color               | css color unit  | Input disable color           |
+| --${PREFIX_BS}input-disabled-border-color        | css color unit  | Input disable border color    |
+| --${PREFIX_BS}form-text-padding                  | css length unit | Hint padding                  |
+| --${PREFIX_BS}form-text-gap                      | css length unit | Space between hint elements   |
+| --${PREFIX_BS}form-text-color                    | css color unit  | Hint color                    |
+| --${PREFIX_BS}form-control-text-align            | css text align  | Input text align              |
         `,
       },
     },
@@ -66,8 +64,19 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
     },
     style: {
+      control: 'object',
+    },
+    iconFamilyClass: {
       control: 'text',
       type: 'string',
+    },
+    iconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    iconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     label: {
       control: 'text',
@@ -82,6 +91,18 @@ To understand in more detail the aspects covered by this component, review the f
       },
       type: 'string',
       options: [undefined, ...ICONS],
+    },
+    labelIconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    labelIconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    labelIconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     placeholder: {
       control: 'text',
@@ -133,13 +154,29 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
       options: [undefined, ...ICONS],
     },
+    iconStartDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     iconStartAriaLabel: {
       control: 'text',
       type: 'string',
     },
-    iconEndAriaLabel: {
+    iconStartTabIndex: {
+      control: 'number',
+      type: 'number',
+    },
+    iconStartFamilyClass: {
       control: 'text',
       type: 'string',
+    },
+    iconStartFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    iconStartMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     iconEnd: {
       control: {
@@ -150,6 +187,50 @@ To understand in more detail the aspects covered by this component, review the f
       },
       type: 'string',
       options: [undefined, ...ICONS],
+    },
+    validIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    invalidIcon: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, ...ICONS],
+    },
+    iconEndDisabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    iconEndAriaLabel: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndTabIndex: {
+      control: 'number',
+      type: 'number',
+    },
+    iconEndFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    iconEndMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
     },
     hint: {
       control: 'text',
@@ -204,26 +285,6 @@ export const Default: Story = {
     labelIcon: undefined,
     type: 'text',
     value: '',
-    iconStart: 'emoji-smile-upside-down',
-    iconEnd: 'emoji-smile-upside-down',
-    iconStartAriaLabel: 'start action',
-    iconEndAriaLabel: 'end action',
-    hint: 'Assistive text',
-  },
-};
-
-export const Value: Story = {
-  args: {
-    id: 'componentId2',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    labelIcon: undefined,
-    type: 'text',
-    value: 'Value',
-    iconStart: 'emoji-smile-upside-down',
-    iconEnd: 'emoji-smile-upside-down',
-    iconStartAriaLabel: 'start action',
-    iconEndAriaLabel: 'end action',
     hint: 'Assistive text',
   },
 };
@@ -319,6 +380,13 @@ export const CustomInputStart: Story = {
       />
     ),
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
 };
 
 export const CustomInputEnd: Story = {
@@ -332,5 +400,87 @@ export const CustomInputEnd: Story = {
         icon="arrow-right"
       />
     ),
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId10',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    iconStart: 'face_5',
+    iconEnd: 'face_5',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIconError: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId11',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    invalid: true,
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const MaterialIconConfirm: Story = {
+  render: (args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <DInput {...args} />
+    </DContextProvider>
+  ),
+  args: {
+    id: 'componentId12',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    type: 'text',
+    valid: true,
+  },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
   },
 };

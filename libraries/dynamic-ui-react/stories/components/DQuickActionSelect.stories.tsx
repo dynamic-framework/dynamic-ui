@@ -2,11 +2,35 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import type { ComponentProps } from 'react';
 
+import { PREFIX_BS } from '../../src/components/config';
 import DQuickActionSelect from '../../src/components/DQuickActionSelect/DQuickActionSelect';
 
 const config: Meta<typeof DQuickActionSelect> = {
   title: 'Design System/Components/Quick Action Select',
   component: DQuickActionSelect,
+  parameters: {
+    docs: {
+      description: {
+        component: `
+## CSS Variables
+| Variable                                                      | Type              | Description                           |
+|---------------------------------------------------------------|-------------------|---------------------------------------|
+| --${PREFIX_BS}quick-action-select-padding                     | css length unit   | Content padding                       |
+| --${PREFIX_BS}quick-action-select-bg                          | css color unit    | Content background color              |
+| --${PREFIX_BS}quick-action-select-border-radius               | css length unit   | Quick action border radius            |
+| --${PREFIX_BS}quick-action-select-line1-font-size             | css length unit   | First line font size                  |
+| --${PREFIX_BS}quick-action-select-line1-font-weight           | css font weight   | First line font weight                |
+| --${PREFIX_BS}quick-action-select-line1-color                 | css color unit    | First line color                      |
+| --${PREFIX_BS}quick-action-select-line2-font-size             | css length unit   | Second line font size                 |
+| --${PREFIX_BS}quick-action-select-line2-font-weight           | css length unit   | Second line font weight               |
+| --${PREFIX_BS}quick-action-select-line2-color                 | css color unit    | Second line color                     |
+| --${PREFIX_BS}quick-action-select-hover-bg                    | css color unit    | Content hover background              |
+| --${PREFIX_BS}quick-action-select-checked-bg                  | css color unit    | Content checked background            |
+| --${PREFIX_BS}quick-action-select-checked-color               | css color unit    | Content checked color                 |
+        `,
+      },
+    },
+  },
   argTypes: {
     id: {
       control: 'text',
@@ -20,6 +44,13 @@ const config: Meta<typeof DQuickActionSelect> = {
       control: 'text',
       type: 'string',
     },
+    className: {
+      control: 'text',
+      type: 'string',
+    },
+    style: {
+      control: 'object',
+    },
     line1: {
       control: 'text',
       type: 'string',
@@ -30,10 +61,6 @@ const config: Meta<typeof DQuickActionSelect> = {
       type: 'string',
       description: 'The subtitle',
     },
-    className: {
-      control: 'text',
-      type: 'string',
-    },
     selected: {
       control: 'boolean',
       type: 'boolean',
@@ -42,6 +69,7 @@ const config: Meta<typeof DQuickActionSelect> = {
       action: 'onChange',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;

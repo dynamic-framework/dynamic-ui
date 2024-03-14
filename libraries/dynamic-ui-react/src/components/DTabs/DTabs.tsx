@@ -4,7 +4,7 @@ import {
   useEffect,
   useMemo,
 } from 'react';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
@@ -19,11 +19,14 @@ export type DTabOption = {
   disabled?: boolean;
 };
 
+export type TabVariant = 'tabs' | 'pills' | 'underline';
+
 type Props = BaseProps & PropsWithChildren<{
   onChange: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
   vertical?: boolean;
+  variant?: TabVariant;
 }>;
 
 function DTabs(
@@ -35,6 +38,7 @@ function DTabs(
     className,
     style,
     vertical,
+    variant = 'underline',
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -58,22 +62,32 @@ function DTabs(
     isSelected,
   }), [isSelected]);
 
+  const generateClasses = useMemo(
+    () => ({
+      nav: true,
+      'flex-column align-items-center': vertical && variant !== 'tabs',
+      [`nav-${variant}`]: true,
+      ...className && { [className]: true },
+    }),
+    [vertical, variant, className],
+  );
+
   return (
     <TabContext.Provider value={value}>
       <div
-        className={classnames({
-          'd-tabs': true,
-          'd-tabs-vertical': vertical,
-        }, className)}
+        className={classNames({
+          'd-flex w-100': true,
+          'flex-column': !vertical || variant === 'tabs',
+        })}
         style={style}
       >
-        <nav className="nav">
+        <nav className={classNames(generateClasses)}>
           {options.map((option) => (
             <button
               key={option.label}
               id={`${option.tab}Tab`}
               className={
-                classnames(
+                classNames(
                   'nav-link',
                   {
                     active: option.tab === selected,
@@ -92,7 +106,7 @@ function DTabs(
             </button>
           ))}
         </nav>
-        <div className="tab-content">
+        <div className="tab-content w-100">
           {children}
         </div>
       </div>

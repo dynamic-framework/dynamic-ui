@@ -1,0 +1,28 @@
+.pagination {
+  --#{$prefix}pagination-page-item-size: #{$pagination-page-item-size};
+  --#{$prefix}pagination-border-radius: #{$pagination-page-border-radius};
+
+  margin: 0;
+
+  .page-item {
+    min-width: var(--#{$prefix}pagination-page-item-size);
+    min-height: var(--#{$prefix}pagination-page-item-size);
+  }
+
+  .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--#{$prefix}pagination-border-radius);
+  }
+}
+
+.pagination-lg {
+  --#{$prefix}pagination-page-item-size: #{$pagination-page-item-size-lg};
+}
+
+.pagination-sm {
+  --#{$prefix}pagination-page-item-size: #{$pagination-page-item-size-sm};
+}

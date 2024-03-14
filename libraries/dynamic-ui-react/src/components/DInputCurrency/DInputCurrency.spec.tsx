@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
-import DInputCurrencyBase from '../DInputCurrencyBase';
+import DInputCurrency from './DInputCurrency';
+import { DContextProvider } from '../../contexts';
 
 it('should render base currency', () => {
   const props = {
@@ -7,22 +8,19 @@ it('should render base currency', () => {
     label: 'labelTest',
     value: 0,
     placeholder: undefined,
-    currencyOptions: {
-      separator: ',',
-      symbol: '$',
-    },
   };
 
   const { container } = render(
-    <DInputCurrencyBase
-      {...props}
-    />,
+    <DContextProvider>
+      <DInputCurrency
+        {...props}
+      />
+    </DContextProvider>,
   );
 
   expect(container).toMatchInlineSnapshot(`
   <div>
     <div
-      class="d-input"
       style="--bs-input-currency-component-symbol-color: var(--bs-secondary); --bs-input-currency-symbol-color: var(--bs-input-currency-component-symbol-color);"
     >
       <label
@@ -31,29 +29,25 @@ it('should render base currency', () => {
         labelTest
       </label>
       <div
-        class="d-input-control"
+        class="input-group"
       >
         <div
-          class="input-group"
+          class="input-group-text"
         >
-          <div
-            class="input-group-text"
+          <span
+            slot="input-start"
           >
-            <span
-              slot="input-start"
-            >
-              $
-            </span>
-          </div>
-          <input
-            class="form-control"
-            id="currencyTest"
-            inputmode="decimal"
-            pattern="^[0-9]"
-            type="text"
-            value="0.00"
-          />
+            $
+          </span>
         </div>
+        <input
+          class="form-control"
+          id="currencyTest"
+          inputmode="decimal"
+          pattern="^[0-9]"
+          type="text"
+          value="0.00"
+        />
       </div>
     </div>
   </div>
