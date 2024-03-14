@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.17.0
+ * dynamic-framework 1.17.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -86,6 +86,9 @@
   --bs-danger-700-rgb: 127, 28, 28;
   --bs-danger-800-rgb: 84, 19, 19;
   --bs-danger-900-rgb: 42, 9, 9;
+  --bs-btn-border-radius: var(--bs-border-radius-pill);
+  --bs-btn-lg-border-radius: var(--bs-border-radius-pill);
+  --bs-btn-sm-border-radius: var(--bs-border-radius-pill);
   --bs-blue: rgb(var(--bs-blue-rgb));
   --bs-indigo: rgb(var(--bs-indigo-rgb));
   --bs-purple: rgb(var(--bs-purple-rgb));

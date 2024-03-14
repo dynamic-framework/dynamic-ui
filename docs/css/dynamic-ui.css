@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.17.0
+ * dynamic-framework 1.17.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -87,6 +87,9 @@
   --bs-danger-700-rgb: 127, 28, 28;
   --bs-danger-800-rgb: 84, 19, 19;
   --bs-danger-900-rgb: 42, 9, 9;
+  --bs-btn-border-radius: var(--bs-border-radius-pill);
+  --bs-btn-lg-border-radius: var(--bs-border-radius-pill);
+  --bs-btn-sm-border-radius: var(--bs-border-radius-pill);
   --bs-blue: rgb(var(--bs-blue-rgb));
   --bs-indigo: rgb(var(--bs-indigo-rgb));
   --bs-purple: rgb(var(--bs-purple-rgb));
@@ -3911,7 +3914,7 @@ textarea.form-control-lg {
 }
 
 .btn-group {
-  border-radius: var(--bs-border-radius-sm);
+  border-radius: var(--bs-border-radius-pill);
 }
 .btn-group > :not(.btn-check:first-child) + .btn,
 .btn-group > .btn-group:not(:first-child) {
@@ -4136,7 +4139,7 @@ textarea.form-control-lg {
   --bs-navbar-toggler-font-size: 1.125rem;
   --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28var%28--bs-body-color-rgb%29, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   --bs-navbar-toggler-border-color: rgba(var(--bs-emphasis-color-rgb), 0.15);
-  --bs-navbar-toggler-border-radius: var(--bs-border-radius-sm);
+  --bs-navbar-toggler-border-radius: var(--bs-border-radius-pill);
   --bs-navbar-toggler-focus-width: 0;
   --bs-navbar-toggler-transition: box-shadow 0.15s ease-in-out;
   position: relative;
@@ -7207,7 +7210,6 @@ body {
   --bs-btn-bg: transparent;
   --bs-btn-border-width: var(--bs-border-width);
   --bs-btn-border-color: transparent;
-  --bs-btn-border-radius: var(--bs-btn-component-border-radius, var(--bs-border-radius-sm));
   --bs-btn-hover-border-color: transparent;
   --bs-btn-box-shadow: none;
   --bs-btn-disabled-opacity: 1;
@@ -7216,11 +7218,9 @@ body {
   --bs-btn-lg-padding-y: 1rem;
   --bs-btn-lg-padding-x: 2rem;
   --bs-btn-lg-font-size: 1.125rem;
-  --bs-btn-lg-border-radius: var(--bs-btn-component-lg-border-radius, var(--bs-border-radius));
   --bs-btn-sm-padding-y: 0.5rem;
   --bs-btn-sm-padding-x: 1rem;
   --bs-btn-sm-font-size: 0.875rem;
-  --bs-btn-sm-border-radius: var(--bs-btn-component-sm-border-radius, var(--bs-border-radius-sm));
   display: inline-flex;
   flex-direction: row;
   gap: var(--bs-btn-gap, 0.5rem);
