@@ -38,7 +38,6 @@ it('should render button pill', () => {
       <button
         aria-label="Test"
         class="btn btn-primary"
-        style="--bs-btn-component-border-radius: var(--bs-border-radius-pill); --bs-btn-component-lg-border-radius: var(--bs-border-radius-pill); --bs-btn-component-sm-border-radius: var(--bs-border-radius-pill);"
         type="button"
       >
         <span>

@@ -31,6 +31,10 @@
     }
   }
 
+  --#{$prefix}btn-border-radius: #{$btn-border-radius};
+  --#{$prefix}btn-lg-border-radius: #{$btn-border-radius-lg};
+  --#{$prefix}btn-sm-border-radius: #{$btn-border-radius-sm};
+
   @each $color, $value in $colors {
     // custom
     --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
