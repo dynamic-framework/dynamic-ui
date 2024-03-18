@@ -1,6 +1,6 @@
 .d-tooltip {
   --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-component-font-size, var(--#{$prefix}body-font-size));
-  --#{$prefix}tooltip-sm-font-size: var(--#{$prefix}ref-fs-small);
+  --#{$prefix}tooltip-sm-font-size: var(--#{$prefix}fs-small);
   --#{$prefix}tooltip-lg-font-size: var(--#{$prefix}ref-fs-6);
   --#{$prefix}tooltip-bg: var(--#{$prefix}tooltip-component-bg, transparent);
   --#{$prefix}tooltip-border-radius: var(--#{$prefix}tooltip-component-border-radius, var(--#{$prefix}border-radius));
