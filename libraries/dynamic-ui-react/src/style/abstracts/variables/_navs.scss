@@ -1,44 +1,35 @@
 // Navs
 
 // scss-docs-start nav-variables
-$nav-link-padding-y: .5rem !default;
-$nav-link-padding-x: 1rem !default;
 $nav-link-font-size: var(--#{$prefix}body-font-size) !default;
 $nav-link-font-weight: var(--#{$prefix}ref-fw-normal) !default;
 $nav-link-color: var(--#{$prefix}gray-500) !default;
 $nav-link-hover-color: var(--#{$prefix}secondary-600) !default;
-$nav-link-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out !default;
 $nav-link-disabled-color: var(--#{$prefix}gray-200) !default;
-$nav-link-focus-box-shadow: $focus-ring-box-shadow !default;
+
 // custom
 $nav-link-border-height: 2px !default;
-$nav-link-line-height: $spacer-4 !default;
+$nav-link-line-height: var(--#{$prefix}ref-spacer-6) !default;
 $nav-link-border-border-radius: $border-radius-pill !default;
 $nav-link-border-active-color: var(--#{$prefix}secondary) !default;
 $nav-link-border-active-font-weight: var(--#{$prefix}ref-fw-bold) !default;
 $nav-link-border-active-bg: var(--#{$prefix}secondary) !default;
 // end custom
 
-
-$nav-tabs-border-color: transparent !default;
-$nav-tabs-border-width: 0 !default;
-$nav-tabs-border-radius: $border-radius !default;
-$nav-tabs-link-hover-border-color: $nav-link-hover-color !default;
+$nav-tabs-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $nav-tabs-link-active-color: var(--#{$prefix}secondary) !default;
-$nav-tabs-link-active-bg: transparent !default;
-$nav-tabs-link-active-border-color: transparent !default;
+$nav-tabs-link-active-bg: var(--#{$prefix}secondary-100) !default;
+$nav-tabs-link-active-border-color: var(--#{$prefix}secondary) !default;
+
 // custom
-$nav-nav-padding-x: $spacer-4 !default;
-$nav-nav-padding-y: $spacer-3 !default;
-$nav-nav-gap: $spacer-4 !default;
+$nav-nav-padding-x: var(--#{$prefix}ref-spacer-6) !default;
+$nav-nav-padding-y: var(--#{$prefix}ref-spacer-4) !default;
+$nav-nav-gap: var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 
 $nav-pills-border-radius: 100px !default;
 $nav-pills-link-active-color: var(--#{$prefix}white) !default;
 $nav-pills-link-active-bg: var(--#{$prefix}secondary) !default;
-
-
-$nav-underline-gap: 1rem !default;
-$nav-underline-border-width: .125rem !default;
-$nav-underline-link-active-color: var(--#{$prefix}emphasis-color) !default;
 // scss-docs-end nav-variables
+
+$nav-underline-link-active-color: var(--#{$prefix}secondary) !default;

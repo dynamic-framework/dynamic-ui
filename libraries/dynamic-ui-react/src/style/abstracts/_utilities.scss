@@ -20,7 +20,6 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "color"), "values"),
-          // TODO: try to move the map-loop to $utilities-text map libraries/dynamic-ui/node_modules/bootstrap/scss/_maps.scss
           map-loop(map-merge-multiple($theme-colors-palletes, $palette-grays), rgba-css-var, "$key", "text"),
         )
       )
@@ -30,7 +29,6 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "background-color"), "values"),
-          // TODO: try to move the map-loop to $utilities-bg map libraries/dynamic-ui/node_modules/bootstrap/scss/_maps.scss
           map-loop(map-merge-multiple($theme-colors-palletes, $palette-grays, $bg-soft-colors), rgba-css-var, "$key", "bg"),
         )
       )
@@ -57,14 +55,31 @@ $utilities: map-merge(
         )
       )
     ),
+    "font-weight": map-merge(
+      map-get($utilities, "font-weight"),
+      (
+        responsive: true
+      )
+    ),
     "border-color": map-merge(
       map-get($utilities, "border-color"),
       (
         values: map-merge(
           map-get(map-get($utilities, "border-color"), "values"),
-          // TODO: try to move the map-loop to $utilities-border map libraries/dynamic-ui/node_modules/bootstrap/scss/_maps.scss
           map-loop($palette-grays, rgba-css-var, "$key", "border"),
         )
+      )
+    ),
+    "overlay": (
+      property: opacity,
+      class: "overlay",
+      css-var: true,
+      values: (
+        0: 0,
+        25: .25,
+        50: .5,
+        75: .75,
+        100: 1
       )
     ),
     "cursor": (

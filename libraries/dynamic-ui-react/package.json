@@ -3,7 +3,7 @@
   "sideEffects": [
     "*.css"
   ],
-  "version": "1.16.1",
+  "version": "1.18.0",
   "description": "React Dynamic Framework",
   "license": "https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md",
   "repository": {
@@ -81,7 +81,7 @@
     "react-content-loader": "^6.2.1",
     "react-datepicker": "^4.21.0",
     "react-dropzone": "^14.2.3",
-    "react-responsive-pagination": "^2.2.3",
+    "react-responsive-pagination": "^2.4.1",
     "react-select": "^5.8.0",
     "react-toastify": "^9.1.3"
   },

@@ -10,7 +10,6 @@ import type {
   RefObject,
   ForwardedRef,
   FocusEvent,
-  WheelEvent,
 } from 'react';
 import type { Options } from 'currency.js';
 
@@ -55,18 +54,13 @@ export default function useInputCurrency(
     onBlur?.(event);
   }, [onBlur]);
 
-  const handleOnWheel = useCallback((event: WheelEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-    inputRef.current?.blur();
-  }, [inputRef]);
-
   const generateStyleVariables = useMemo<CustomStyles>(() => ({
     [`--${PREFIX_BS}input-currency-component-symbol-color`]: `var(--${PREFIX_BS}secondary)`,
     [`--${PREFIX_BS}input-currency-symbol-color`]: `var(--${PREFIX_BS}input-currency-component-symbol-color)`,
   }), []);
 
   const generateSymbolStyleVariables = useMemo(() => ({
-    color: `var(--${PREFIX_BS}m-input-currency-symbol-color)`,
+    color: `var(--${PREFIX_BS}input-currency-symbol-color)`,
   }), []);
 
   const handleOnChange = useCallback((newValue?: string) => {
@@ -103,7 +97,6 @@ export default function useInputCurrency(
     handleOnFocus,
     handleOnChange,
     handleOnBlur,
-    handleOnWheel,
     generateStyleVariables,
     generateSymbolStyleVariables,
   };

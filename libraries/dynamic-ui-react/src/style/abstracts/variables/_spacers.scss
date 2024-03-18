@@ -6,14 +6,20 @@
 
 // scss-docs-start spacer-variables-maps
 $spacer: 1rem !default;
-$spacer-1: $spacer * .25 !default;  // 4px
-$spacer-2: $spacer * .5, !default;  // 8px
-$spacer-3: $spacer !default;        // 16px
-$spacer-4: $spacer * 1.5 !default;  // 24px
-$spacer-5: $spacer * 2 !default;    // 32px
-$spacer-6: $spacer * 2.5 !default;  // 40px
-$spacer-7: $spacer * 3 !default;    // 48px
-$spacer-8: $spacer * 3.5 !default;  // 56px
+$spacer-1: $spacer * .25 !default;    // 4px
+$spacer-2: $spacer * .5 !default;     // 8px
+$spacer-3: $spacer * .75 !default;    // 12px
+$spacer-4: $spacer !default;          // 16px
+$spacer-5: $spacer * 1.25 !default;   // 20px
+$spacer-6: $spacer * 1.5 !default;    // 24px
+$spacer-7: $spacer * 1.75 !default;   // 28px
+$spacer-8: $spacer * 2 !default;      // 32px
+$spacer-9: $spacer * 2.25 !default;   // 36px
+$spacer-10: $spacer * 2.5 !default;   // 40px
+$spacer-11: $spacer * 2.75 !default;  // 44px
+$spacer-12: $spacer * 3 !default;     // 48px
+$spacer-13: $spacer * 3.25 !default;  // 52px
+$spacer-14: $spacer * 3.5 !default;   // 56px
 $spacers: (
   0: 0,
   1: $spacer-1,
@@ -24,5 +30,11 @@ $spacers: (
   6: $spacer-6,
   7: $spacer-7,
   8: $spacer-8,
+  9: $spacer-9,
+  10: $spacer-10,
+  11: $spacer-11,
+  12: $spacer-12,
+  13: $spacer-13,
+  14: $spacer-14,
 ) !default;
 // scss-docs-end spacer-variables-maps
