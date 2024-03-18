@@ -55,6 +55,12 @@ $utilities: map-merge(
         )
       )
     ),
+    "font-weight": map-merge(
+      map-get($utilities, "font-weight"),
+      (
+        responsive: true
+      )
+    ),
     "border-color": map-merge(
       map-get($utilities, "border-color"),
       (
