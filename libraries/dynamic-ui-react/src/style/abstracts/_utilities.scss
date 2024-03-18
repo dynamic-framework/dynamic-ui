@@ -84,7 +84,21 @@ $utilities: map-merge(
     ),
     "cursor": (
       property: cursor,
-      values: $cursors,
+      values: $cursors
+    ),
+    "font-size": map-merge(
+      map-get($utilities, "font-size"),
+      (
+        responsive: true,
+        rfs: false
+      )
+    ),
+    "display": (
+      class: "display",
+      responsive: true,
+      css-var: true,
+      css-variable-name: display-font-size,
+      values: $display-font-sizes
     ),
   )
 );

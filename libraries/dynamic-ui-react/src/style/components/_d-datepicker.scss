@@ -33,7 +33,7 @@
 
   // Day variables
   --#{$prefix}datepicker-day-margin: 0;
-  --#{$prefix}datepicker-day-font-size: var(--#{$prefix}ref-fs-small);
+  --#{$prefix}datepicker-day-font-size: var(--#{$prefix}fs-small);
   --#{$prefix}datepicker-day-size: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-day-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-day-radius: 100%;
@@ -63,7 +63,7 @@
   --#{$prefix}datepicker-time-input-gap: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}datepicker-time-input-label-weight: var(--#{$prefix}ref-fw-bold);
   --#{$prefix}datepicker-time-input-label-color: var(--#{$prefix}gray-700);
-  --#{$prefix}datepicker-time-input-label-size: var(--#{$prefix}ref-fs-small);
+  --#{$prefix}datepicker-time-input-label-size: var(--#{$prefix}fs-small);
 
   font-family: var(--#{$prefix}datepicker-font-family);
   font-size: var(--#{$prefix}datepicker-font-size);
