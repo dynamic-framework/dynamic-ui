@@ -4,4 +4,6 @@
 $card-border-width: 0px !default; // stylelint-disable-line length-zero-no-unit
 $card-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
 $card-bg: var(--#{$prefix}white) !default;
+$card-spacer-y: 1.5rem !default;
+$card-spacer-x: 1.5rem !default;
 // scss-docs-end card-variables
