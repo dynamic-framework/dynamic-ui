@@ -9,9 +9,9 @@ $pagination-padding-y-lg: var(--#{$prefix}ref-spacer-2) !default;
 $pagination-padding-x-lg: var(--#{$prefix}ref-spacer-2) !default;
 
 // custom
-$pagination-page-item-size: 2rem !default;
-$pagination-page-item-size-lg: 2.5rem !default;
-$pagination-page-item-size-sm: 1.5rem !default;
+$pagination-page-item-size: $spacer-8 !default;
+$pagination-page-item-size-lg: $spacer-10 !default;
+$pagination-page-item-size-sm: $spacer-6 !default;
 $pagination-page-border-radius: $pagination-page-item-size !default;
 // end custom
 

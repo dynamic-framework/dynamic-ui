@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.17.1...@dynamic-framework/ui-react@1.18.0) (2024-03-14)
+
+
+### Features
+
+* take btn border radius from :root ([f943362](https://github.com/dynamic-framework/dynamic-ui/commit/f94336222431f90c3e71985598ecd8ca901c84b4))
+
+
+
+## [1.17.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.17.0...@dynamic-framework/ui-react@1.17.1) (2024-03-14)
+
+
+### Bug Fixes
+
+* spacers doc and DStepperMobile margin ([5eab52c](https://github.com/dynamic-framework/dynamic-ui/commit/5eab52ca794de602b47cfec365bb751c5d9a8fca))
+
+
+
+## [1.17.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.2...@dynamic-framework/ui-react@1.17.0) (2024-03-13)
+
+
+### Features
+
+* input with bootstrap ([194a4de](https://github.com/dynamic-framework/dynamic-ui/commit/194a4deadbc26b83100daebf650514237c5d5cc3))
+* jump 4 by 4 in spacers ([ab93b9f](https://github.com/dynamic-framework/dynamic-ui/commit/ab93b9fade43ecfb4691f4d467eb8399e34d5f5e))
+* overlay utility ([58d87de](https://github.com/dynamic-framework/dynamic-ui/commit/58d87de537ea60687a24b718908cc1b7f3a02d08))
+* overlay utility ([5275edd](https://github.com/dynamic-framework/dynamic-ui/commit/5275edd72344864d046396cd60b530e18bdbfd0c))
+
+
+### Bug Fixes
+
+* adjust design of counter and disable wheel ([59938fd](https://github.com/dynamic-framework/dynamic-ui/commit/59938fd8b54d38f9f79bdb37a9dc0e52ced155b7))
+* focus bg color and text color using hover values ([c7e4365](https://github.com/dynamic-framework/dynamic-ui/commit/c7e4365e44e2da16fe504c4d814c8524bb8fbc41))
+* focus pagination ([9de69a7](https://github.com/dynamic-framework/dynamic-ui/commit/9de69a774377a3d072016a0a22b850896d71be41))
+* focus pagination and padding ([a8a714f](https://github.com/dynamic-framework/dynamic-ui/commit/a8a714f6f39f6d6939a70ecfa159a1479cf85826))
+* input-groups borders and focus ([811e60b](https://github.com/dynamic-framework/dynamic-ui/commit/811e60bf1a499360e1e596bc30fbc51b75c84806))
+* pagination focus ([f26052e](https://github.com/dynamic-framework/dynamic-ui/commit/f26052e48013aa8d706438260b00738be53d214c))
+* pagination size and padding ([89178b3](https://github.com/dynamic-framework/dynamic-ui/commit/89178b3a9ca01ecbdde283c36f80c3d002c536ae))
+* remove ref and use pure spacer ([1acb036](https://github.com/dynamic-framework/dynamic-ui/commit/1acb0368386a9b00254cbac656f931fb78741a71))
+* remove reset paragraph margin ([10561d1](https://github.com/dynamic-framework/dynamic-ui/commit/10561d1b795adeaec8d2f15e1fff853e1a9d6570))
+* rename to singular input-group file ([9d2823f](https://github.com/dynamic-framework/dynamic-ui/commit/9d2823f2f6deb4b72fdfdbe745df4d0e0fd39d5b))
+
+
+
 ## [1.16.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.16.1...@dynamic-framework/ui-react@1.16.2) (2024-03-05)
 
 

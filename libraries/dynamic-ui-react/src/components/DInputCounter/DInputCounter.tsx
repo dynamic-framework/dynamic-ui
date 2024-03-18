@@ -22,6 +22,7 @@ import type {
 import type { Merge } from '../../types';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 import { useDContext } from '../../contexts';
+import { useDisableInputWheel } from '../../hooks';
 
 type NonDInputProps = {
   value?: number;
@@ -58,6 +59,9 @@ function DInputCounter(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
+  const {
+    handleOnWheel,
+  } = useDisableInputWheel(ref);
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
   const [internalIsInvalid, setInternalIsInvalid] = useState(false);
   const [internalValue, setInternalValue] = useState<number>(value);
@@ -84,7 +88,7 @@ function DInputCounter(
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...style,
-    [`--${PREFIX_BS}input-component-form-control-text-align`]: 'center',
+    [`--${PREFIX_BS}form-control-component-text-align`]: 'center',
   }), [style]);
 
   const valueString = useMemo(() => (
@@ -116,6 +120,7 @@ function DInputCounter(
       invalid={internalIsInvalid || invalid}
       type="number"
       onChange={handleOnChange}
+      onWheel={handleOnWheel}
       onIconStartClick={handleOnIconStartClick}
       onIconEndClick={handleOnIconEndClick}
       iconStartAriaLabel={iconStartAriaLabel}

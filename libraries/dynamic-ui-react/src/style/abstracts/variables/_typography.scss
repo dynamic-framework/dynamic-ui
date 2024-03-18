@@ -21,9 +21,7 @@ $font-weight-bolder: 800 !default;
 
 $font-weight-base: $font-weight-normal !default;
 
-$line-height-base: 1.2 !default;
-$line-height-sm: 1.2 !default;
-$line-height-lg: 1.2 !default;
+$line-height-base: 1.5 !default;
 
 $h1-font-size: $font-size-base * 4 !default;
 $h2-font-size: $font-size-base * 3.5 !default;
@@ -82,10 +80,10 @@ $sub-sup-font-size: .75em !default;
 $text-muted: var(--#{$prefix}gray) !default;
 // fusv-enable
 
-$blockquote-margin-y: var(--#{$prefix}ref-spacer-3) !default;
+$blockquote-margin-y: var(--#{$prefix}ref-spacer-4) !default;
 $blockquote-footer-color: var(--#{$prefix}gray-600) !default;
 
-$hr-margin-y: var(--#{$prefix}ref-spacer-3) !default;
+$hr-margin-y: var(--#{$prefix}ref-spacer-4) !default;
 $hr-color: inherit !default;
 
 $hr-border-color: $border-color !default; // Allows for inherited colors

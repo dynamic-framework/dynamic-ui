@@ -17,35 +17,29 @@ it('should render my component with options', () => {
   );
 
   expect(container).toMatchInlineSnapshot(`
+  <div>
     <div>
       <div
-        class="d-input"
+        class="input-group"
       >
-        <div
-          class="d-input-control"
+        <select
+          aria-label=""
+          class="form-select"
+          id="Random-id"
         >
-          <div
-            class="input-group"
+          <option
+            value="1"
           >
-            <select
-              aria-label=""
-              class="form-select"
-              id="Random-id"
-            >
-              <option
-                value="1"
-              >
-                Option 1
-              </option>
-              <option
-                value="2"
-              >
-                Option 2
-              </option>
-            </select>
-          </div>
-        </div>
+            Option 1
+          </option>
+          <option
+            value="2"
+          >
+            Option 2
+          </option>
+        </select>
       </div>
     </div>
+  </div>
   `);
 });

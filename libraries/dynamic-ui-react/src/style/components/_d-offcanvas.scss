@@ -30,7 +30,7 @@
     border: 0;
 
     .d-icon {
-      --#{$prefix}icon-size: #{$spacer-3};
+      --#{$prefix}icon-size: var(--#{$prefix}ref-spacer-4);
     }
   }
 

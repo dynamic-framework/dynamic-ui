@@ -18,27 +18,21 @@ it('should render my component', () => {
 
   expect(container).toMatchInlineSnapshot(`
     <div>
-      <div
-        class="d-input"
-      >
+      <div>
         <label
           for="inputId"
         >
           Label
         </label>
         <div
-          class="d-input-control"
+          class="input-group"
         >
-          <div
-            class="input-group"
-          >
-            <input
-              class="form-control"
-              id="inputId"
-              placeholder="Input"
-              value=""
-            />
-          </div>
+          <input
+            class="form-control"
+            id="inputId"
+            placeholder="Input"
+            value=""
+          />
         </div>
       </div>
     </div>

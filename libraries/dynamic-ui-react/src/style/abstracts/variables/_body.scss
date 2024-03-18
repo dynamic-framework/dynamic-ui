@@ -28,11 +28,5 @@ $link-color: map-get($all-colors, $link-color-mapping) !default;
 $link-hover-color: map-get($all-colors, $link-hover-color-mapping) !default;
 // end custom
 
-$link-decoration: underline !default;
+$link-decoration: none !default;
 $link-hover-decoration: underline !default;
-
-// Paragraphs
-//
-// Style p element.
-
-$paragraph-margin-bottom: 0 !default;

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import type { MouseEvent } from 'react';
 
 import DIcon from '../DIcon';
-import { PREFIX_BS } from '../config';
 
 import type {
   BaseProps,
@@ -13,7 +12,6 @@ import type {
   ButtonVariant,
   ClassMap,
   ComponentSize,
-  CustomStyles,
   EndIconProps,
   InputState,
   StartIconProps,
@@ -60,12 +58,12 @@ export default function DButton(
     iconEndMaterialStyle,
     value,
     type = 'button',
-    pill = false,
     loading = false,
     loadingAriaLabel,
     disabled = false,
     stopPropagationEnabled = true,
     className,
+    style,
     form,
     onClick,
   }: Props,
@@ -83,17 +81,6 @@ export default function DButton(
       loading,
     };
   }, [variant, theme, size, state, loading]);
-
-  const generateStyleVariables = useMemo<CustomStyles>(() => {
-    if (pill) {
-      return {
-        [`--${PREFIX_BS}btn-component-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
-        [`--${PREFIX_BS}btn-component-lg-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
-        [`--${PREFIX_BS}btn-component-sm-border-radius`]: `var(--${PREFIX_BS}border-radius-pill)`,
-      };
-    }
-    return {};
-  }, [pill]);
 
   const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     if (stopPropagationEnabled) {
@@ -115,7 +102,7 @@ export default function DButton(
   return (
     <button
       className={classNames(generateClasses, className)}
-      style={generateStyleVariables}
+      style={style}
       type={type}
       disabled={isDisabled}
       onClick={clickHandler}
