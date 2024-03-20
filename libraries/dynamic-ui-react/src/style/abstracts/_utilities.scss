@@ -55,6 +55,12 @@ $utilities: map-merge(
         )
       )
     ),
+    "font-weight": map-merge(
+      map-get($utilities, "font-weight"),
+      (
+        responsive: true
+      )
+    ),
     "border-color": map-merge(
       map-get($utilities, "border-color"),
       (
@@ -74,6 +80,19 @@ $utilities: map-merge(
         50: .5,
         75: .75,
         100: 1
+      )
+    ),
+    "text-truncate": (
+      responsive: true,
+      class: "text-truncate",
+      css-var: true,
+      values: (
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 6,
+        6: 6
       )
     ),
     "cursor": (
