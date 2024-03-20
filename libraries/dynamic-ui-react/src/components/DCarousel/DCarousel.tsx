@@ -1,7 +1,11 @@
 import { Splide } from '@splidejs/react-splide';
 import classNames from 'classnames';
 
-import type { PropsWithChildren } from 'react';
+import { forwardRef } from 'react';
+import type {
+  PropsWithChildren,
+  Ref,
+} from 'react';
 import type { SplideProps } from '@splidejs/react-splide';
 
 import DCarouselSlide from './components/DCarouselSlide';
@@ -20,11 +24,13 @@ function DCarousel(
     options,
     ...props
   }: Props,
+  ref: Ref<Splide>,
 ) {
   return (
     <Splide
       className={classNames('d-carousel', className)}
       style={style}
+      ref={ref}
       options={{
         ...options,
         classes: {
@@ -44,7 +50,8 @@ function DCarousel(
     </Splide>
   );
 }
-
-export default Object.assign(DCarousel, {
+const ForwardedDInput = forwardRef(DCarousel);
+ForwardedDInput.displayName = 'DCarousel';
+export default Object.assign(ForwardedDInput, {
   Slide: DCarouselSlide,
 });
