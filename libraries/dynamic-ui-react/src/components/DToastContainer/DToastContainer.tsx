@@ -1,39 +1,48 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ToastContainer, Slide } from 'react-toastify';
 
 import type { CSSProperties } from 'react';
-import type { ToastPosition } from 'react-toastify';
+import type { ToastContainerProps } from 'react-toastify';
 
 import classNames from 'classnames';
+import { BaseProps } from '../interface';
 
-import type { BaseProps } from '../interface';
-
-type Props = BaseProps & {
+type Props = BaseProps
+& Pick<ToastContainerProps,
+| 'autoClose'
+| 'closeOnClick'
+| 'position'
+| 'transition'
+> & {
+  stacked?: boolean;
   style?: CSSProperties & {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     '--toastify-toast-width': any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [index: string]: any;
-  },
-  position?: ToastPosition;
+  }
 };
 
 export default function DToastContainer(
   {
     style,
-    position = 'top-right',
     className,
+    closeOnClick,
+    position = 'bottom-center',
+    autoClose = false,
+    stacked = false,
+    transition = Slide,
   }: Props,
 ) {
   return (
     <ToastContainer
       toastClassName={() => classNames('shadow-none p-0 cursor-default', className)}
       position={position}
-      autoClose={false}
-      hideProgressBar
-      closeOnClick={false}
+      autoClose={autoClose}
+      closeOnClick={closeOnClick}
+      transition={transition}
       closeButton={false}
-      transition={Slide}
       style={style}
+      hideProgressBar
+      stacked={stacked}
     />
   );
 }
