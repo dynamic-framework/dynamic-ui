@@ -66,5 +66,5 @@ export {
 } from './DTabs';
 export {
   default as DToastContainer,
-  useToast,
+  useDToast,
 } from './DToastContainer';
