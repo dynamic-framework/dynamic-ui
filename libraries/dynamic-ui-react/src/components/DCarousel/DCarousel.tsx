@@ -1,7 +1,7 @@
 import { Splide } from '@splidejs/react-splide';
 import classNames from 'classnames';
-
 import { forwardRef } from 'react';
+
 import type {
   ForwardedRef,
   PropsWithChildren,
