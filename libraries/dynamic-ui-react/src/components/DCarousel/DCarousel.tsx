@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { forwardRef } from 'react';
 import type {
-  LegacyRef,
+  ForwardedRef,
   PropsWithChildren,
 } from 'react';
 import type { SplideProps } from '@splidejs/react-splide';
@@ -24,7 +24,7 @@ function DCarousel(
     options,
     ...props
   }: Props,
-  ref: LegacyRef<Splide>,
+  ref: ForwardedRef<Splide>,
 ) {
   return (
     <Splide
