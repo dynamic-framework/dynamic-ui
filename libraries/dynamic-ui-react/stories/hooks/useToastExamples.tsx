@@ -16,8 +16,7 @@ export function UseToastExample() {
             'Example',
             {
               type: 'info',
-              showClose: true,
-              autoClose: 500,
+              autoClose: 1000,
             },
           )
         )}
@@ -43,7 +42,6 @@ export function UseToastMaterialExample() {
             {
               type: 'info',
               showClose: true,
-              autoClose: 500,
               containerId: 'example2',
             },
           )
