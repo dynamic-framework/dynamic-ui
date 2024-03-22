@@ -21,7 +21,7 @@ type PortalAvailableList<T extends Record<string, unknown>> = {
 
 export type PortalContextProps<T extends Record<string, unknown>> = PropsWithChildren<{
   portalName: string;
-  availablePortals: PortalAvailableList<T>;
+  availablePortals?: PortalAvailableList<T>;
 }>;
 type PortalStackItem<N extends string = string, P = any> = {
   name: N;
@@ -38,8 +38,6 @@ export type PortalContextType<T extends Record<string, unknown>> = {
 export type PortalProps<P = unknown> = {
   name: string;
   payload: P;
-  openPortal: OpenPortalFunction<P>;
-  closePortal: ClosePortalFunction;
 };
 
 export const DPortalContext = createContext<PortalContextType<any> | undefined>(undefined);
@@ -52,11 +50,15 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   }: PortalContextProps<T>,
 ) {
   const { created } = usePortal(portalName);
-  const [stack, { push, pop, peek }] = useStackState<PortalStackItem<string, T[keyof T]>>([]);
+  const [stack, { push, pop, isEmpty }] = useStackState<PortalStackItem<string, T[keyof T]>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   const openPortal = useCallback<PortalContextType<T>['openPortal']>(
     (name, payload) => {
+      if (!availablePortals) {
+        throw new Error(`there is no component for portal ${name.toString()}`);
+      }
+
       const Component = availablePortals[name as keyof T] as PortalComponent<T[keyof T]>;
       if (!Component) {
         throw new Error(`there is no component for portal ${name.toString()}`);
@@ -72,13 +74,12 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   const closePortal = useCallback<PortalContextType<T>['closePortal']>(
     () => {
-      const stackItem = peek();
-      if (!stackItem) {
+      if (isEmpty()) {
         return;
       }
       pop();
     },
-    [peek, pop],
+    [isEmpty, pop],
   );
 
   const value = useMemo(() => ({
@@ -100,14 +101,11 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
             },
           ) => (
             <Component
-              key={name}
               name={name}
               payload={payload}
-              openPortal={openPortal}
-              closePortal={closePortal}
             />
           ))}
-          {!!stack.length && <div className="modal-backdrop fade show" />}
+          {!!stack.length && <div className="backdrop fade show" />}
         </>,
         document.getElementById(portalName) as Element,
       )}

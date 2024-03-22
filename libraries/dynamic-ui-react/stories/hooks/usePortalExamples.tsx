@@ -17,7 +17,8 @@ type PortalPayloads = {
   }
 };
 
-function ExampleModal({ closePortal, payload }: PortalProps<PortalPayloads['modalExample']>) {
+function ExampleModal({ payload }: PortalProps<PortalPayloads['modalExample']>) {
+  const { closePortal } = useDPortalContext<PortalPayloads>();
   return (
     <DModal
       name="modalExample"
@@ -50,7 +51,8 @@ function ExampleModal({ closePortal, payload }: PortalProps<PortalPayloads['moda
   );
 }
 
-function ExampleOffcanvas({ closePortal, payload }: PortalProps<PortalPayloads['offcanvasExample']>) {
+function ExampleOffcanvas({ payload }: PortalProps<PortalPayloads['offcanvasExample']>) {
+  const { closePortal } = useDPortalContext<PortalPayloads>();
   return (
     <DOffcanvas
       name="offcanvasExample"

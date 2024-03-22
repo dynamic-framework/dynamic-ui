@@ -47,6 +47,7 @@ function DModal(
 
   const generateClasses = useMemo(() => ({
     'modal fade show': true,
+    portal: true,
     ...className && { [className]: true },
   }), [className]);
 

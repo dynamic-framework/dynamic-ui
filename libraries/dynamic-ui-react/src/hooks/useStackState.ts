@@ -33,22 +33,12 @@ export default function useStackState<T>(initialList: T[]): [
   );
 
   const pop = useCallback(() => {
-    setList((prevList) => {
-      if (prevList.length === 0) {
-        return prevList;
-      }
-      const [, ...newList] = prevList;
-      return newList;
-    });
+    setList((prevList) => (
+      prevList.slice(0, prevList.length - 1)
+    ));
   }, []);
 
-  const peek = useCallback(() => {
-    if (list.length > 0) {
-      return list[list.length - 1];
-    }
-
-    return undefined;
-  }, [list]);
+  const peek = useCallback(() => list.at(-1), [list]);
 
   const clear = () => setList([]);
 
