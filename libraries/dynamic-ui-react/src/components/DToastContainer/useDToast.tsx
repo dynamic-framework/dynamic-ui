@@ -4,7 +4,11 @@ import {
 } from 'react';
 
 import {
-  Bounce, Flip, toast as reactToast, Slide, Zoom,
+  Bounce, 
+  Flip, 
+  Slide, 
+  Zoom,
+  toast as reactToast, 
 } from 'react-toastify';
 
 import type { ToastPosition } from 'react-toastify';
