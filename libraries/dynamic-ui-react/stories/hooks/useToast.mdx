@@ -3,7 +3,11 @@ import {
   Canvas,
 } from '@storybook/blocks';
 
-import {UseToastExample, UseToastMaterialExample} from "./useToastExamples";
+import {
+  UseToastExample, 
+  UseToastMaterialExample, 
+  UseToastTransitionExample,
+} from "./useToastExamples";
 
 # Toast
 Toasts use `DToastContainer` and the `useDToast` hook which are an abstraction to configure `react-toastify` in conjunction with a DAlert to generate toasts
@@ -96,3 +100,12 @@ export default function UseToastExamples() {
     <UseToastMaterialExample />
   </div>
 </Canvas>
+
+## Example with available transitions
+
+<Canvas >
+  <div className="d-flex flex-colum justify-content-end align-items-end" style={{ height: '300px' }}>
+    <UseToastTransitionExample />
+  </div>
+</Canvas>
+

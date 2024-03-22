@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ToastContainer, Slide } from 'react-toastify';
+import {
+  ToastContainer,
+  Slide,
+  Zoom,
+  Flip,
+  Bounce,
+} from 'react-toastify';
 
-import type { CSSProperties } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 import type { ToastContainerProps } from 'react-toastify';
 
 import classNames from 'classnames';
@@ -12,14 +18,14 @@ type Props = BaseProps
 | 'autoClose'
 | 'closeOnClick'
 | 'position'
-| 'transition'
 > & {
   containerId?: string;
   stacked?: boolean;
   style?: CSSProperties & {
     '--toastify-toast-width': any;
     [index: string]: any;
-  }
+  },
+  transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
 };
 
 export default function DToastContainer(
@@ -30,17 +36,24 @@ export default function DToastContainer(
     position = 'bottom-center',
     autoClose = false,
     stacked = false,
-    transition = Slide,
+    transition = 'slide',
     containerId,
   }: Props,
 ) {
+  const toastTransition = useMemo(() => ({
+    bounce: Bounce,
+    flip: Flip,
+    slide: Slide,
+    zoom: Zoom,
+  }), []);
+
   return (
     <ToastContainer
       toastClassName={() => classNames('shadow-none p-0 cursor-default', className)}
       position={position}
       autoClose={autoClose}
       closeOnClick={closeOnClick}
-      transition={transition}
+      transition={toastTransition[transition]}
       closeButton={false}
       style={style}
       hideProgressBar

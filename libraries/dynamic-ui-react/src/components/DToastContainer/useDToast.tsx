@@ -1,5 +1,11 @@
-import { useCallback } from 'react';
-import { Slide, toast as reactToast } from 'react-toastify';
+import {
+  useCallback,
+  useMemo,
+} from 'react';
+
+import {
+  Bounce, Flip, toast as reactToast, Slide, Zoom,
+} from 'react-toastify';
 
 import type { ToastPosition } from 'react-toastify';
 
@@ -16,13 +22,22 @@ export type ToastConfig = {
   autoClose?: number | false;
   stacked?: boolean;
   containerId?: string;
+  transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
 };
 
 export default function useDToast() {
+  const toastTransition = useMemo(() => ({
+    bounce: Bounce,
+    flip: Flip,
+    slide: Slide,
+    zoom: Zoom,
+  }), []);
+
   const toast = useCallback((message: string, {
     type = 'info',
     icon,
     iconClose,
+    transition,
     ...rest
   }: ToastConfig) => {
     reactToast(({ closeToast }) => (
@@ -36,10 +51,10 @@ export default function useDToast() {
         {message}
       </DAlert>
     ), {
-      transition: Slide,
+      transition: transition ? toastTransition[transition] : undefined,
       ...rest,
     });
-  }, []);
+  }, [toastTransition]);
 
   return {
     toast,
