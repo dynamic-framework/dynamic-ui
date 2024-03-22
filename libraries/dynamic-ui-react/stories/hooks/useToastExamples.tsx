@@ -13,7 +13,11 @@ export function UseToastExample() {
         onClick={() => (
           toast(
             'Example',
-            { type: 'info', showClose: true, autoClose: 500 },
+            {
+              type: 'info',
+              showClose: true,
+              autoClose: 500,
+            },
           )
         )}
       />
@@ -37,11 +41,12 @@ export function UseToastMaterialExample() {
               type: 'info',
               showClose: true,
               autoClose: 500,
+              containerId: 'example2',
             },
           )
         )}
       />
-      <DToastContainer position="bottom-center" />
+      <DToastContainer position="bottom-center" containerId="example2" />
     </DContextProvider>
   );
 }

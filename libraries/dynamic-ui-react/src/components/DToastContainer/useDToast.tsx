@@ -15,6 +15,7 @@ export type ToastConfig = {
   position?: ToastPosition;
   autoClose?: number | false;
   stacked?: boolean;
+  containerId?: string;
 };
 
 export default function useDToast() {

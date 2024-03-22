@@ -14,6 +14,7 @@ type Props = BaseProps
 | 'position'
 | 'transition'
 > & {
+  containerId?: string;
   stacked?: boolean;
   style?: CSSProperties & {
     '--toastify-toast-width': any;
@@ -30,6 +31,7 @@ export default function DToastContainer(
     autoClose = false,
     stacked = false,
     transition = Slide,
+    containerId,
   }: Props,
 ) {
   return (
@@ -43,6 +45,7 @@ export default function DToastContainer(
       style={style}
       hideProgressBar
       stacked={stacked}
+      containerId={containerId}
     />
   );
 }
