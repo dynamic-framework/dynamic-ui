@@ -2,7 +2,7 @@
 
 // scss-docs-start nav-variables
 $nav-link-font-size: var(--#{$prefix}body-font-size) !default;
-$nav-link-font-weight: var(--#{$prefix}ref-fw-normal) !default;
+$nav-link-font-weight: var(--#{$prefix}fw-normal) !default;
 $nav-link-color: var(--#{$prefix}gray-500) !default;
 $nav-link-hover-color: var(--#{$prefix}secondary-600) !default;
 $nav-link-disabled-color: var(--#{$prefix}gray-200) !default;
@@ -12,7 +12,7 @@ $nav-link-border-height: 2px !default;
 $nav-link-line-height: var(--#{$prefix}ref-spacer-6) !default;
 $nav-link-border-border-radius: $border-radius-pill !default;
 $nav-link-border-active-color: var(--#{$prefix}secondary) !default;
-$nav-link-border-active-font-weight: var(--#{$prefix}ref-fw-bold) !default;
+$nav-link-border-active-font-weight: var(--#{$prefix}fw-bold) !default;
 $nav-link-border-active-bg: var(--#{$prefix}secondary) !default;
 // end custom
 

@@ -18,7 +18,7 @@
   --#{$prefix}datepicker-day-names-margin: 0;
   --#{$prefix}datepicker-day-names-font-size: var(--#{$prefix}ref-spacer-4);
 
-  --#{$prefix}datepicker-day-name-weight: var(--#{$prefix}ref-fw-bold);
+  --#{$prefix}datepicker-day-name-weight: var(--#{$prefix}fw-bold);
   --#{$prefix}datepicker-day-name-margin: 0;
   --#{$prefix}datepicker-day-name-size: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-day-name-color: var(--#{$prefix}gray-500);
@@ -49,7 +49,7 @@
 
   --#{$prefix}datepicker-day-outside-month-color: var(--#{$prefix}gray-400);
 
-  --#{$prefix}datepicker-day-today-font-weight: var(--#{$prefix}ref-fw-normal);
+  --#{$prefix}datepicker-day-today-font-weight: var(--#{$prefix}fw-normal);
   --#{$prefix}datepicker-day-today-box-shadow: 0 0 0 2px inset var(--#{$prefix}secondary);
 
   // Time variables
@@ -61,7 +61,7 @@
 
   --#{$prefix}datepicker-time-input-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}datepicker-time-input-gap: var(--#{$prefix}ref-spacer-2);
-  --#{$prefix}datepicker-time-input-label-weight: var(--#{$prefix}ref-fw-bold);
+  --#{$prefix}datepicker-time-input-label-weight: var(--#{$prefix}fw-bold);
   --#{$prefix}datepicker-time-input-label-color: var(--#{$prefix}gray-700);
   --#{$prefix}datepicker-time-input-label-size: var(--#{$prefix}fs-small);
 
