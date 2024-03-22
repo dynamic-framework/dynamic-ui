@@ -46,8 +46,7 @@ function DModal(
   }, [fullScreenFrom, fullScreen]);
 
   const generateClasses = useMemo(() => ({
-    'modal fade show': true,
-    portal: true,
+    'modal portal fade show': true,
     ...className && { [className]: true },
   }), [className]);
 
