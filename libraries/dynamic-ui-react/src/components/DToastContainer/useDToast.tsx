@@ -20,9 +20,10 @@ export type ToastConfig = {
 
 export default function useDToast() {
   const toast = useCallback((message: string, {
-    type = 'info',
     icon,
     iconClose,
+    type = 'info',
+    showClose = true,
     ...rest
   }: ToastConfig) => {
     reactToast(({ closeToast }) => (
@@ -32,6 +33,7 @@ export default function useDToast() {
         type={type}
         icon={icon}
         iconClose={iconClose}
+        showClose={showClose}
       >
         {message}
       </DAlert>
