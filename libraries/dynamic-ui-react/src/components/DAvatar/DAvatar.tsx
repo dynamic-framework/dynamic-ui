@@ -6,7 +6,8 @@ type Props =
 & {
   id?: string;
   size?: AvatarSize;
-  image: string;
+  image?: string;
+  title?: string;
 };
 
 export default function DAvatar(
@@ -14,6 +15,7 @@ export default function DAvatar(
     id,
     size,
     image,
+    title,
     className,
     style,
   }: Props,
@@ -27,7 +29,8 @@ export default function DAvatar(
       style={style}
       id={id}
     >
-      <img src={image} alt="avatar" className="avatar-img" />
+      {image && <img src={image} alt="avatar" className="avatar-img" />}
+      {title && <span className="avatar-title">{title}</span>}
     </div>
   );
 }

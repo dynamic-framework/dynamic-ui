@@ -101,3 +101,9 @@ export const Group: Story = {
     },
   },
 };
+
+export const Title: Story = {
+  args: {
+    title: 'AB',
+  },
+};
