@@ -1,6 +1,6 @@
 @import "bootstrap/scss/reboot";
 
-@import "bootstrap/scss/type";
+// @import "bootstrap/scss/type"; we use our own bootstrap based implementation
 
 @import "bootstrap/scss/images";
 @import "bootstrap/scss/containers";
@@ -34,6 +34,7 @@
 @import "bootstrap/scss/placeholders";
 @import "bootstrap/scss/badge";
 
+@import "type";
 @import "body";
 @import "accordion";
 @import "form-switch";
@@ -41,7 +42,7 @@
 @import "form-control";
 @import "form-text";
 @import "input-group";
-@import "button";
+@import "buttons";
 @import "progress";
 @import "alert";
 @import "collapse";
