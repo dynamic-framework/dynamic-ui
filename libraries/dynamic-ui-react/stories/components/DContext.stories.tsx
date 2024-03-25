@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { DContextProvider } from '../../src';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 /**
  * Context Provider to share settings between components
@@ -84,36 +85,5 @@ export const IconSettings: Story = {
       },
     },
   },
-  args: {
-    icon: {
-      familyClass: 'bi',
-      familyPrefix: 'bi-',
-      materialStyle: false,
-    },
-    iconMap: {
-      x: 'close_small',
-      xLg: 'close',
-      chevronDown: 'expand_more',
-      upload: 'cloud_upload',
-      alert: {
-        warning: 'warning',
-        danger: 'error',
-        success: 'done',
-        info: 'info',
-        dark: 'info',
-        light: 'info',
-        primary: 'info',
-        secondary: 'info',
-      },
-      input: {
-        invalid: 'priority_high',
-        valid: 'done',
-        search: 'search',
-        show: 'visibility',
-        hide: 'visibility_off',
-        increase: 'add_box',
-        decrease: 'indeterminate_check_box',
-      },
-    },
-  },
+  args: CONTEXT_PROVIDER_CONFIG_MATERIAL,
 };
