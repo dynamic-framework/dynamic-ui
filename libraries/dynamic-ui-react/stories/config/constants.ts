@@ -10,6 +10,7 @@ export const THEMES_WITH_EMPTY = [undefined, ...THEMES];
 export const INPUT_STATE = ['focus-visible', 'hover', 'active', 'disabled'];
 
 export const COMPONENT_SIZE = [undefined, 'sm', 'lg'];
+export const AVATAR_SIZE = [undefined, 'xs', 'sm', 'lg', 'xl', 'xxl'];
 
 export const CONTEXT_PROVIDER_CONFIG_MATERIAL = {
   icon: {
