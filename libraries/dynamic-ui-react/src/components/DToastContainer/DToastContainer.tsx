@@ -42,12 +42,17 @@ export default function DToastContainer(
     containerId,
   }: Props,
 ) {
-  const toastTransition = useMemo(() => ({
+  const toastTransitions = useMemo(() => ({
     bounce: Bounce,
     flip: Flip,
     slide: Slide,
     zoom: Zoom,
   }), []);
+
+  const selectedTransition = useMemo(
+    () => toastTransitions[transition],
+    [toastTransitions, transition],
+  );
 
   return (
     <ToastContainer
@@ -55,7 +60,7 @@ export default function DToastContainer(
       position={position}
       autoClose={autoClose}
       closeOnClick={closeOnClick}
-      transition={toastTransition[transition]}
+      transition={selectedTransition}
       closeButton={false}
       style={style}
       hideProgressBar
