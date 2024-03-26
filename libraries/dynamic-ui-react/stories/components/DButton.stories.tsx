@@ -21,6 +21,15 @@ const config: Meta<typeof DButton> = {
     docs: {
       description: {
         component: `
+> We work with button variables at two levels, variables in root per variant (default, outline, link)
+>and internal variables in each button that use the previous ones.
+
+> - in the root there are variables for theme (\`--bs-primary\`, \`--bs-info\`, ...),
+> - then variables for variant and theme for buttons (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, ...)
+> - and finally for selectors by variant and theme (\`.btn-primary\`, \`.btn-outline-info\`, ...)
+>   we define internal variables (\`.btn-color\`, \`.btn-hover- bg\`, ...) that use the previous ones.
+
+
 The style of our buttons is highly based on bootstrap, however,
 boostrap darkens or lightens the color of a button to generate its different states,
 we use the established palettes in the variables.
@@ -32,16 +41,16 @@ we use the established palettes in the variables.
 #### normal
 * **default** background \`-500\`, text contrast with background
 * **hover** background \`-600\`, text contrast with background
-* **focus** background \`-600\`, text contrast with background
+* **focus** background \`-500\`, text contrast with background
 * **active** background \`-700\`, text contrast with background
-* **disabled** background \`-100\`, text contrast with background
+* **disabled** background \`-500\`, text contrast with background
 
 #### outline
-* **default** border-color \`-600\`, text color background
-* **hover** border-color \`-600\`, background hover \`-100\`, text color background
-* **focus** border-color \`-600\`, background focus \`-100\`, text color background
-* **active** border-color \`-600\`, background active \`-200\`, text color background
-* **disabled** border-color \`-100\`, text contrast with background
+* **default** border-color \`-500\`, background transparent, text color \`-500\`
+* **hover** border-color \`-500\`, background hover \`-100\`, text color \`-500\`
+* **focus** border-color \`-500\`, background focus \`transparent\`, text color \`-500\`
+* **active** border-color \`-700\`, background active \`-100\`, text color \`-700\`
+* **disabled** border-color \`-500\`, background transparent, text color \`-500\`
 
 ### For bootstrap buttons:
 
@@ -67,11 +76,11 @@ we use the established palettes in the variables.
 The css variables available by default can be seen in the
 bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
 
-
 | Variable                                | Type              | Description                       |
 |-----------------------------------------|-------------------|-----------------------------------|
 | --${PREFIX_BS}btn-padding-x             | css length unit   | Button padding horizontal         |
 | --${PREFIX_BS}btn-padding-y             | css length unit   | Button padding vertical           |
+| --${PREFIX_BS}btn-font-family           | css font family   | Button font family                |
 | --${PREFIX_BS}btn-font-size             | css length unit   | Button font size                  |
 | --${PREFIX_BS}btn-font-weight           | css weight unit   | Button font weight                |
 | --${PREFIX_BS}btn-line-height           | css length unit   | Button line height                |
@@ -155,7 +164,7 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
           undefined: 'empty',
         },
       },
-      options: [undefined, 'outline', 'text'],
+      options: [undefined, 'outline', 'link'],
       description: 'The variant to use.',
     },
     iconStart: {

@@ -1,126 +1,142 @@
-// scss-docs-start df-btn-variant-mixin
-@mixin df-button-variant(
+// scss-docs-start df-button-variant-variables-mixin
+@mixin df-button-variant-variables(
   $color-name,
   $default-color: var(--#{$prefix}#{$color-name}-500),
   $hover-color: var(--#{$prefix}#{$color-name}-600),
-  $focus-color: var(--#{$prefix}#{$color-name}-600),
+  $focus-color: var(--#{$prefix}#{$color-name}-500),
   $active-color: var(--#{$prefix}#{$color-name}-700),
-  $disabled-color: var(--#{$prefix}#{$color-name}-100),
   $default-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-500)),
   $hover-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-600)),
   $focus-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-600)),
   $active-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-700)),
-  $disabled-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-100)),
+  $disabled-opacity: .5
 ) {
-  --#{$prefix}btn-color: #{$default-text-color};
-  --#{$prefix}btn-bg: #{$default-color};
-  --#{$prefix}btn-border-color: #{$default-color};
+  --#{$prefix}btn-#{$color-name}-color: #{$default-text-color};
+  --#{$prefix}btn-#{$color-name}-bg: #{$default-color};
+  --#{$prefix}btn-#{$color-name}-border-color: #{$default-color};
 
-  --#{$prefix}btn-hover-color: #{$hover-text-color};
-  --#{$prefix}btn-hover-bg: #{$hover-color};
-  --#{$prefix}btn-hover-border-color: #{$hover-color};
+  --#{$prefix}btn-#{$color-name}-hover-color: #{$hover-text-color};
+  --#{$prefix}btn-#{$color-name}-hover-bg: #{$hover-color};
+  --#{$prefix}btn-#{$color-name}-hover-border-color: #{$hover-color};
 
-  --#{$prefix}btn-focus-color: #{$focus-text-color};
-  --#{$prefix}btn-focus-bg: #{$focus-color};
-  --#{$prefix}btn-focus-border-color: #{$focus-color};
+  --#{$prefix}btn-#{$color-name}-focus-color: #{$focus-text-color};
+  --#{$prefix}btn-#{$color-name}-focus-bg: #{$focus-color};
+  --#{$prefix}btn-#{$color-name}-focus-border-color: #{$focus-color};
 
-  --#{$prefix}btn-active-color: #{$active-text-color};
-  --#{$prefix}btn-active-bg: #{$active-color};
-  --#{$prefix}btn-active-border-color: #{$active-color};
+  --#{$prefix}btn-#{$color-name}-active-color: #{$active-text-color};
+  --#{$prefix}btn-#{$color-name}-active-bg: #{$active-color};
+  --#{$prefix}btn-#{$color-name}-active-border-color: #{$active-color};
 
-  --#{$prefix}btn-disabled-color: #{$disabled-text-color};
-  --#{$prefix}btn-disabled-bg: #{$disabled-color};
-  --#{$prefix}btn-disabled-border-color: #{$disabled-color};
-
-  &.loading {
-    --#{$prefix}btn-disabled-opacity: 1;
-    --#{$prefix}btn-disabled-bg: #{$active-color};
-    --#{$prefix}btn-disabled-border-color: #{$active-color};
-    --#{$prefix}btn-disabled-color: #{$hover-text-color};
-  }
+  --#{$prefix}btn-#{$color-name}-disabled-color: #{$default-text-color};
+  --#{$prefix}btn-#{$color-name}-disabled-bg: #{$default-color};
+  --#{$prefix}btn-#{$color-name}-disabled-border-color: #{$default-color};
+  --#{$prefix}btn-#{$color-name}-disabled-opacity: #{$disabled-opacity};
 }
-// scss-docs-end df-btn-variant-mixin
+// scss-docs-end df-button-variant-variables-mixin
 
-
-// scss-docs-start df-btn-outline-variant-mixin
-@mixin df-button-outline-variant(
+// scss-docs-start df-btn-outline-variant-variables-mixin
+@mixin df-button-outline-variant-variables(
   $color-name,
   $default-color: var(--#{$prefix}#{$color-name}-500),
   $hover-bg-color: var(--#{$prefix}#{$color-name}-100),
-  $focus-bg-color: var(--#{$prefix}#{$color-name}-100),
-  $active-bg-color: var(--#{$prefix}#{$color-name}-200),
-  $disabled-color: var(--#{$prefix}#{$color-name}-100),
-  $disabled-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-100)),
+  $hover-text-color: var(--#{$prefix}#{$color-name}-500),
+  $focus-text-color: var(--#{$prefix}#{$color-name}-500),
+  $active-text-color: var(--#{$prefix}#{$color-name}-700),
+  $active-bg-color: var(--#{$prefix}#{$color-name}-100),
+  $active-border-color: var(--#{$prefix}#{$color-name}-700),
+  $disabled-opacity: .5
 ) {
-  --#{$prefix}btn-bg: transparent;
-  --#{$prefix}btn-border-color: #{$default-color};
-  --#{$prefix}btn-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-bg: transparent;
+  --#{$prefix}btn-outline-#{$color-name}-border-color: #{$default-color};
 
-  --#{$prefix}btn-hover-bg: #{$hover-bg-color};
-  --#{$prefix}btn-hover-border-color: #{$default-color};
-  --#{$prefix}btn-hover-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-hover-color: #{$hover-text-color};
+  --#{$prefix}btn-outline-#{$color-name}-hover-bg: #{$hover-bg-color};
+  --#{$prefix}btn-outline-#{$color-name}-hover-border-color: #{$default-color};
 
-  --#{$prefix}btn-focus-bg: #{$focus-bg-color};
-  --#{$prefix}btn-focus-border-color: #{$default-color};
-  --#{$prefix}btn-focus-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-focus-color: #{$focus-text-color};
+  --#{$prefix}btn-outline-#{$color-name}-focus-bg: transparent;
+  --#{$prefix}btn-outline-#{$color-name}-focus-border-color: #{$default-color};
 
-  --#{$prefix}btn-active-bg: #{$active-bg-color};
-  --#{$prefix}btn-active-border-color: #{$default-color};
-  --#{$prefix}btn-active-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-active-color: #{$active-text-color};
+  --#{$prefix}btn-outline-#{$color-name}-active-bg: #{$active-bg-color};
+  --#{$prefix}btn-outline-#{$color-name}-active-border-color: #{$active-border-color};
 
-  --#{$prefix}btn-disabled-bg: transparent;
-  --#{$prefix}btn-disabled-border-color: #{$disabled-color};
-  --#{$prefix}btn-disabled-color: #{$disabled-text-color};
-
-  --#{$prefix}gradient: none;
-
-  &.loading {
-    --#{$prefix}btn-disabled-opacity: 1;
-    --#{$prefix}btn-disabled-bg: transparent;
-    --#{$prefix}btn-disabled-border-color: #{$default-color};
-    --#{$prefix}btn-disabled-color: #{$default-color};
-  }
+  --#{$prefix}btn-outline-#{$color-name}-disabled-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-disabled-bg: transparent;
+  --#{$prefix}btn-outline-#{$color-name}-disabled-border-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-disabled-opacity: #{$disabled-opacity};
 }
-// scss-docs-end df-btn-outline-variant-mixin
+// scss-docs-end df-btn-outline-variant-variables-mixin
 
-// scss-docs-start df-btn-link-variant-mixin
-@mixin df-button-link-variant(
+// scss-docs-start df-btn-link-variant-variables-mixin
+@mixin df-button-link-variant-variables(
   $color-name,
-  $default-color: var(--#{$prefix}#{$color-name}-600),
+  $default-color: var(--#{$prefix}#{$color-name}-500),
   $hover-bg-color: var(--#{$prefix}#{$color-name}-100),
-  $active-bg-color: var(--#{$prefix}#{$color-name}-200),
-  $disable-color: var(--#{$prefix}#{$color-name}-300),
+  $hover-text-color: var(--#{$prefix}#{$color-name}-500),
+  $focus-text-color: var(--#{$prefix}#{$color-name}-500),
+  $active-text-color: var(--#{$prefix}#{$color-name}-700),
+  $active-bg-color: var(--#{$prefix}#{$color-name}-100),
+  $disabled-opacity: .5
 ) {
-  --#{$prefix}btn-bg: transparent;
-  --#{$prefix}btn-border-color: transparent;
-  --#{$prefix}btn-color: #{$default-color};
+  --#{$prefix}btn-link-#{$color-name}-bg: transparent;
+  --#{$prefix}btn-link-#{$color-name}-border-color: transparent;
+  --#{$prefix}btn-link-#{$color-name}-color: #{$default-color};
 
-  --#{$prefix}btn-hover-bg: #{$hover-bg-color};
-  --#{$prefix}btn-hover-border-color: transparent;
-  --#{$prefix}btn-hover-color: #{$default-color};
+  --#{$prefix}btn-link-#{$color-name}-hover-bg: #{$hover-bg-color};
+  --#{$prefix}btn-link-#{$color-name}-hover-border-color: transparent;
+  --#{$prefix}btn-link-#{$color-name}-hover-color: #{$hover-text-color};
 
-  --#{$prefix}btn-focus-bg: transparent;
-  --#{$prefix}btn-focus-border-color: transparent;
-  --#{$prefix}btn-focus-color: #{$default-color};
+  --#{$prefix}btn-link-#{$color-name}-focus-bg: transparent;
+  --#{$prefix}btn-link-#{$color-name}-focus-border-color: transparent;
+  --#{$prefix}btn-link-#{$color-name}-focus-color: #{$focus-text-color};
 
-  --#{$prefix}btn-active-bg: #{$active-bg-color};
-  --#{$prefix}btn-active-border-color: transparent;
-  --#{$prefix}btn-active-color: #{$default-color};
+  --#{$prefix}btn-link-#{$color-name}-active-bg: #{$active-bg-color};
+  --#{$prefix}btn-link-#{$color-name}-active-border-color: transparent;
+  --#{$prefix}btn-link-#{$color-name}-active-color: #{$active-text-color};
 
-  --#{$prefix}btn-disabled-bg: transparent;
-  --#{$prefix}btn-disabled-border-color: transparent;
-  --#{$prefix}btn-disabled-color: #{$disable-color};
+  --#{$prefix}btn-link-#{$color-name}-disabled-bg: transparent;
+  --#{$prefix}btn-link-#{$color-name}-disabled-border-color: transparent;
+  --#{$prefix}btn-link-#{$color-name}-disabled-color: #{$default-color};
+  --#{$prefix}btn-link-#{$color-name}-disabled-opacity: #{$disabled-opacity};
+}
+// scss-docs-end df-btn-link-variant-variables-mixin
 
-  --#{$prefix}btn-focus-outline-offset: 0;
+// scss-docs-start df-btn-variant-mixin
+@mixin df-button-variant-mapper($color-name, $variant-name: "") {
+  @if $variant-name != "" {
+    $variant-name: "#{$variant-name}-";
+  }
+
+  --#{$prefix}btn-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-color);
+  --#{$prefix}btn-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-bg);
+  --#{$prefix}btn-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-border-color);
+
+  --#{$prefix}btn-hover-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-hover-color);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-hover-bg);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-hover-border-color);
+
+  --#{$prefix}btn-focus-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-focus-color);
+  --#{$prefix}btn-focus-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-focus-bg);
+  --#{$prefix}btn-focus-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-focus-border-color);
+
+  --#{$prefix}btn-active-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-color);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-bg);
+  --#{$prefix}btn-active-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-border-color);
+
+  --#{$prefix}btn-disabled-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-color);
+  --#{$prefix}btn-disabled-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-bg);
+  --#{$prefix}btn-disabled-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-border-color);
+  --#{$prefix}btn-disabled-opacity: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-opacity);
 
   &.loading {
-    --#{$prefix}btn-disabled-opacity: 1;
-    --#{$prefix}btn-disabled-bg: transparent;
-    --#{$prefix}btn-disabled-border-color: transparent;
-    --#{$prefix}btn-disabled-color: #{$default-color};
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-color);
+    --#{$prefix}btn-disabled-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-bg);
+    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-border-color);
   }
 }
-// scss-docs-end df-btn-link-variant-mixin
+// scss-docs-end df-btn-variant-mixin
 
 // scss-docs-start df-table-variant
 @mixin df-table-variant($state, $background) {
