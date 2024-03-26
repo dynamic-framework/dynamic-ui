@@ -4,11 +4,11 @@ import {
 } from 'react';
 
 import {
-  Bounce, 
-  Flip, 
-  Slide, 
+  Bounce,
+  Flip,
+  Slide,
   Zoom,
-  toast as reactToast, 
+  toast as reactToast,
 } from 'react-toastify';
 
 import type { ToastPosition } from 'react-toastify';
@@ -57,7 +57,7 @@ export default function useDToast() {
         {message}
       </DAlert>
     ), {
-      transition: transition ? toastTransition[transition] : undefined,
+      transition: transition && toastTransition[transition],
       ...rest,
     });
   }, [toastTransition]);
