@@ -3,7 +3,7 @@
 .react-datepicker.d-month-picker {
   // Month variables
   --#{$prefix}monthpicker-header-padding: var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-2) 0;
-  --#{$prefix}monthpicker-font-weight: var(--#{$prefix}ref-fw-normal);
+  --#{$prefix}monthpicker-font-weight: var(--#{$prefix}fw-normal);
   --#{$prefix}monthpicker-header-color: var(--#{$prefix}white);
   --#{$prefix}monthpicker-header-bg: var(--#{$prefix}dark);
 
