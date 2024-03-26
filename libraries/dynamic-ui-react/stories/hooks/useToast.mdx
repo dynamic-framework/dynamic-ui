@@ -4,8 +4,8 @@ import {
 } from '@storybook/blocks';
 
 import {
-  UseToastExample, 
-  UseToastMaterialExample, 
+  UseToastExample,
+  UseToastMaterialExample,
   UseToastTransitionExample,
 } from "./useToastExamples";
 
@@ -37,7 +37,11 @@ export default function UseDToastExamples() {
         onClick={() => (
           toast(
             'Example',
-            { type: 'info', showClose: true, autoClose: 500 },
+            {
+              type: 'info',
+              showClose: true,
+              autoClose: 500,
+            },
           )
         )}
       />
@@ -96,15 +100,45 @@ export default function UseToastExamples() {
 ```
 
 <Canvas>
-  <div className="d-flex flex-colum justify-content-end align-items-end" style={{ height: '300px' }}>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
     <UseToastMaterialExample />
   </div>
 </Canvas>
 
 ## Example with available transitions
 
+```tsx
+import {
+  DButton,
+  DToastContainer,
+  useDToast,
+} from '@dynamic-framework/ui-react';
+
+export default function UseDToastExamples() {
+  const { toast } = useDToast();
+  return (
+    <>
+      <DButton
+        text="Show Toast Bounce"
+        onClick={() => (
+          toast(
+            'Example',
+            {
+              type: 'info',
+              showClose: true,
+              autoClose: 500,
+              transition: 'bounce',
+            },
+          )
+        )}
+      />
+      <DToastContainer position="top-right" />
+    </>
+  );
+}
+```
 <Canvas >
-  <div className="d-flex flex-colum justify-content-end align-items-end" style={{ height: '300px' }}>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
     <UseToastTransitionExample />
   </div>
 </Canvas>

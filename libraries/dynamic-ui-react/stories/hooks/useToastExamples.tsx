@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import useDToast from '../../src/components/DToastContainer/useDToast';
 import DButton from '../../src/components/DButton';
 import DToastContainer from '../../src/components/DToastContainer';
@@ -61,21 +59,56 @@ export function UseToastMaterialExample() {
 
 export function UseToastTransitionExample() {
   const { toast } = useDToast();
-  const transitions = ['slide', 'flip', 'bounce', 'zoom'];
-  const [transition, setTransition] = useState(transitions[0]);
 
   return (
-    <div className="d-flex flex-column gap-4">
-      <select
-        className="form-select"
-        onChange={({ target: { value } }) => setTransition(value)}
-      >
-        {transitions.map((item) => (
-          <option value={item} key={item}>{item.toUpperCase()}</option>
-        ))}
-      </select>
+    <div className="d-flex gap-4">
       <DButton
-        text="Show Toast"
+        text="Show Toast Slide"
+        onClick={() => (
+          toast(
+            'Example',
+            {
+              type: 'info',
+              showClose: true,
+              autoClose: 500,
+              containerId: 'example3',
+              transition: 'slide',
+            },
+          )
+        )}
+      />
+      <DButton
+        text="Show Toast Flip"
+        onClick={() => (
+          toast(
+            'Example',
+            {
+              type: 'info',
+              showClose: true,
+              autoClose: 500,
+              containerId: 'example3',
+              transition: 'flip',
+            },
+          )
+        )}
+      />
+      <DButton
+        text="Show Toast Bounce"
+        onClick={() => (
+          toast(
+            'Example',
+            {
+              type: 'info',
+              showClose: true,
+              autoClose: 500,
+              containerId: 'example3',
+              transition: 'bounce',
+            },
+          )
+        )}
+      />
+      <DButton
+        text="Show Toast Zoom"
         onClick={() => (
           toast(
             'Example',
@@ -91,7 +124,7 @@ export function UseToastTransitionExample() {
       <DToastContainer
         containerId="example3"
         position="top-right"
-        transition={transition as 'slide' | 'flip' | 'bounce' | 'zoom'}
+        transition="zoom"
       />
     </div>
   );
