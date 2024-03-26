@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMemo } from 'react';
+import type { CSSProperties } from 'react';
+
 import {
   ToastContainer,
   Slide,
@@ -6,11 +9,10 @@ import {
   Flip,
   Bounce,
 } from 'react-toastify';
-
-import { useMemo, type CSSProperties } from 'react';
 import type { ToastContainerProps } from 'react-toastify';
 
 import classNames from 'classnames';
+
 import { BaseProps } from '../interface';
 
 type Props = BaseProps
