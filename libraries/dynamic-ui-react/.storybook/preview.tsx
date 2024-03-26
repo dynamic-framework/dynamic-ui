@@ -60,6 +60,7 @@ export default {
               'Box File',
               'Chip',
               'Badge',
+              'Avatar'
             ],
             'Patterns',
             [
