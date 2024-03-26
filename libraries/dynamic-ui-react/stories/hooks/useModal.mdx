@@ -1,0 +1,130 @@
+import {
+  Meta,
+  Canvas,
+} from '@storybook/blocks';
+
+import {
+  ExampleModalRoot,
+} from './useModalExamples';
+
+# Modal
+
+To achieve the behavior of a modal it is necessary to use the `DContextProvider` and the `useDPortalContext` hook,
+however, it is possible to create an inline modal simply using `DModal`
+
+This part of the documentation talks about `DModal` and directly covers its behavior.
+
+> To achieve inline use of a modal, review the modal topic in components.
+
+<Meta title="Design System/Patterns/Modal" />
+
+## Modal Types `types.ts`
+Type to define the payload of all the modals, its structure is an object literal
+where the key is used for the name of the modal and value for the payload.
+
+```typescript
+type ModalPayloads = {
+  example: {
+    description: string;
+  };
+};
+```
+
+
+## Modal Definition `ExampleModal.tsx`
+```tsx
+import {
+  DModal,
+  DButton,
+} from '@dynamic-framework/ui-react';
+
+import type {
+  PortalProps,
+} from '@dynamic-framework/ui-react';
+
+import type { ModalPayloads } from './types';
+
+function ExampleModal({ closePortal, payload }: PortalProps<ModalPayloads['example']>) {
+  return (
+    <DModal
+      name="example"
+      centered
+      staticBackdrop
+    >
+      <DModal.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Do you want to reject the offer?</h5>
+      </DModal.Header>
+      <DModal.Body className="py-3 px-5">
+        <p>Modal body</p>
+        <small>{payload.description}</small>
+      </DModal.Body>
+      <DModal.Footer>
+        <DButton
+          text="cancel"
+          theme="secondary"
+          variant="outline"
+          className="d-grid"
+          pill
+          onClick={() => closePortal()}
+        />
+        <DButton text="ok" className="d-grid" pill />
+      </DModal.Footer>
+    </DModal>
+  );
+}
+```
+
+## Modal Setting on the main file `App.tsx`
+The available modals are configured on the `DContextProvider` so that they can
+then be opened with the `useDModalContext` hook. The payload type of the modals
+is only necessary if payload will be used.
+
+```tsx
+import {
+  DContextProvider,
+} from '@dynamic-framework/ui-react';
+
+import ExampleModal from './ExampleModal';
+import ExampleModalUsage from './ExampleModalUsage';
+
+import type { ModalPayloads } from './types';
+
+function App() {
+  return (
+    <DContextProvider<ModalPayloads>
+      portalName="examplePortal"
+      availablePortals={{
+        example: ExampleModal,
+      }}
+    >
+      <ExampleModalUsage />
+    </DContextProvider>
+  );
+}
+```
+
+## Modal Usage `ExampleModalUsage.tsx`
+```tsx
+import {
+  DButton,
+  useDPortalContext,
+} from '@dynamic-framework/ui-react';
+
+import type { ModalPayloads } from './types';
+
+function ExampleModalUsage() {
+  const { openPortal } = useDPortalContext<ModalPayloads>();
+  return (
+    <DButton
+      text="Open Modal"
+      onClick={() => openPortal('example', { description: 'from portal payload' })}
+    />
+  );
+}
+```
+
+<Canvas>
+  <div className="d-flex flex-colum justify-content-end align-items-end">
+    <ExampleModalRoot />
+  </div>
+</Canvas>
