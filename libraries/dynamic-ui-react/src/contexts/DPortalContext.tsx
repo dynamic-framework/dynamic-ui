@@ -38,8 +38,6 @@ export type PortalContextType<T extends Record<string, unknown>> = {
 export type PortalProps<P = unknown> = {
   name: string;
   payload: P;
-  openPortal: OpenPortalFunction<P>;
-  closePortal: ClosePortalFunction;
 };
 
 export const DPortalContext = createContext<PortalContextType<any> | undefined>(undefined);
@@ -105,8 +103,6 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
             <Component
               name={name}
               payload={payload}
-              openPortal={openPortal}
-              closePortal={closePortal}
             />
           ))}
           {!!stack.length && <div className="backdrop fade show" />}

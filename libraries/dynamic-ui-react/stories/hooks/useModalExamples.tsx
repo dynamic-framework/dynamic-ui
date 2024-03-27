@@ -13,7 +13,8 @@ type ModalPayloads = {
   };
 };
 
-function ExampleModal({ closePortal, payload }: PortalProps<ModalPayloads['example']>) {
+function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
+  const { closePortal } = useDPortalContext();
   return (
     <DModal
       name="example"

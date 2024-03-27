@@ -44,7 +44,8 @@ import type {
 
 import type { ModalPayloads } from './types';
 
-function ExampleModal({ closePortal, payload }: PortalProps<ModalPayloads['example']>) {
+function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
+  const { closePortal } = useDPortalContext();
   return (
     <DModal
       name="example"

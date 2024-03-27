@@ -13,7 +13,8 @@ type OffcanvasPayloads = {
   };
 };
 
-function ExampleOffcanvas({ closePortal, payload }: PortalProps<OffcanvasPayloads['example']>) {
+function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>) {
+  const { closePortal } = useDPortalContext();
   return (
     <DOffcanvas
       name="example"
