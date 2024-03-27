@@ -1,39 +1,70 @@
-import { ToastContainer, Slide } from 'react-toastify';
-
+import { useMemo } from 'react';
 import type { CSSProperties } from 'react';
-import type { ToastPosition } from 'react-toastify';
+
+import {
+  ToastContainer,
+  Slide,
+  Zoom,
+  Flip,
+  Bounce,
+} from 'react-toastify';
+import type { ToastContainerProps } from 'react-toastify';
 
 import classNames from 'classnames';
 
-import type { BaseProps } from '../interface';
+import { BaseProps } from '../interface';
 
-type Props = BaseProps & {
+type Props = BaseProps
+& Pick<ToastContainerProps,
+| 'autoClose'
+| 'closeOnClick'
+| 'position'
+> & {
+  containerId?: string;
+  stacked?: boolean;
   style?: CSSProperties & {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    '--toastify-toast-width': any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [index: string]: any;
+    '--toastify-toast-width': string | number;
+    [index: string]: string | number;
   },
-  position?: ToastPosition;
+  transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
+};
+
+const TOAST_TRANSITIONS = {
+  bounce: Bounce,
+  flip: Flip,
+  slide: Slide,
+  zoom: Zoom,
 };
 
 export default function DToastContainer(
   {
     style,
-    position = 'top-right',
     className,
+    closeOnClick,
+    position = 'bottom-center',
+    autoClose = false,
+    stacked = false,
+    transition = 'slide',
+    containerId,
   }: Props,
 ) {
+  const selectedTransition = useMemo(
+    () => TOAST_TRANSITIONS[transition],
+    [transition],
+  );
+
   return (
     <ToastContainer
       toastClassName={() => classNames('shadow-none p-0 cursor-default', className)}
       position={position}
-      autoClose={false}
-      hideProgressBar
-      closeOnClick={false}
+      autoClose={autoClose}
+      closeOnClick={closeOnClick}
+      transition={selectedTransition}
       closeButton={false}
-      transition={Slide}
       style={style}
+      hideProgressBar
+      stacked={stacked}
+      containerId={containerId}
     />
   );
 }
