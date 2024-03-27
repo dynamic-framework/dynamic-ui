@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo } from 'react';
 import type { CSSProperties } from 'react';
 
@@ -24,8 +23,8 @@ type Props = BaseProps
   containerId?: string;
   stacked?: boolean;
   style?: CSSProperties & {
-    '--toastify-toast-width': any;
-    [index: string]: any;
+    '--toastify-toast-width': string | number;
+    [index: string]: string | number;
   },
   transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
 };
