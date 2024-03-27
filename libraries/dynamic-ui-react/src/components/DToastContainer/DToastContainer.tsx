@@ -30,6 +30,13 @@ type Props = BaseProps
   transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
 };
 
+const TOAST_TRANSITIONS = {
+  bounce: Bounce,
+  flip: Flip,
+  slide: Slide,
+  zoom: Zoom,
+};
+
 export default function DToastContainer(
   {
     style,
@@ -42,16 +49,9 @@ export default function DToastContainer(
     containerId,
   }: Props,
 ) {
-  const toastTransitions = useMemo(() => ({
-    bounce: Bounce,
-    flip: Flip,
-    slide: Slide,
-    zoom: Zoom,
-  }), []);
-
   const selectedTransition = useMemo(
-    () => toastTransitions[transition],
-    [toastTransitions, transition],
+    () => TOAST_TRANSITIONS[transition],
+    [transition],
   );
 
   return (

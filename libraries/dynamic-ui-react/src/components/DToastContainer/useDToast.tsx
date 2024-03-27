@@ -1,6 +1,5 @@
 import {
   useCallback,
-  useMemo,
 } from 'react';
 
 import {
@@ -29,14 +28,14 @@ export type ToastConfig = {
   transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
 };
 
-export default function useDToast() {
-  const toastTransition = useMemo(() => ({
-    bounce: Bounce,
-    flip: Flip,
-    slide: Slide,
-    zoom: Zoom,
-  }), []);
+const TOAST_TRANSITIONS = {
+  bounce: Bounce,
+  flip: Flip,
+  slide: Slide,
+  zoom: Zoom,
+};
 
+export default function useDToast() {
   const toast = useCallback((message: string, {
     icon,
     iconClose,
@@ -57,10 +56,10 @@ export default function useDToast() {
         {message}
       </DAlert>
     ), {
-      transition: transition && toastTransition[transition],
+      transition: transition && TOAST_TRANSITIONS[transition],
       ...rest,
     });
-  }, [toastTransition]);
+  }, []);
 
   return {
     toast,
