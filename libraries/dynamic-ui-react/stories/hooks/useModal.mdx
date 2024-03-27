@@ -9,7 +9,7 @@ import {
 
 # Modal
 
-To achieve the behavior of a modal it is necessary to use the `DModalContextProvider` and the `useDModalContext` hook,
+To achieve the behavior of a modal it is necessary to use the `DContextProvider` and the `useDPortalContext` hook,
 however, it is possible to create an inline modal simply using `DModal`
 
 This part of the documentation talks about `DModal` and directly covers its behavior.
@@ -39,19 +39,20 @@ import {
 } from '@dynamic-framework/ui-react';
 
 import type {
-  ModalProps,
+  PortalProps,
 } from '@dynamic-framework/ui-react';
 
 import type { ModalPayloads } from './types';
 
-function ExampleModal({ closeModal, payload }: ModalProps<ModalPayloads['example']>) {
+function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
+  const { closePortal } = useDPortalContext();
   return (
     <DModal
       name="example"
       centered
       staticBackdrop
     >
-      <DModal.Header onClose={closeModal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body className="py-3 px-5">
@@ -65,7 +66,7 @@ function ExampleModal({ closeModal, payload }: ModalProps<ModalPayloads['example
           variant="outline"
           className="d-grid"
           pill
-          onClick={() => closeModal()}
+          onClick={() => closePortal()}
         />
         <DButton text="ok" className="d-grid" pill />
       </DModal.Footer>
@@ -75,13 +76,13 @@ function ExampleModal({ closeModal, payload }: ModalProps<ModalPayloads['example
 ```
 
 ## Modal Setting on the main file `App.tsx`
-The available modals are configured on the `DModalContextProvider` so that they can
+The available modals are configured on the `DContextProvider` so that they can
 then be opened with the `useDModalContext` hook. The payload type of the modals
 is only necessary if payload will be used.
 
 ```tsx
 import {
-  DModalContextProvider,
+  DContextProvider,
 } from '@dynamic-framework/ui-react';
 
 import ExampleModal from './ExampleModal';
@@ -91,14 +92,14 @@ import type { ModalPayloads } from './types';
 
 function App() {
   return (
-    <DModalContextProvider<ModalPayloads>
+    <DContextProvider<ModalPayloads>
       portalName="examplePortal"
-      availableModals={{
+      availablePortals={{
         example: ExampleModal,
       }}
     >
       <ExampleModalUsage />
-    </DModalContextProvider>
+    </DContextProvider>
   );
 }
 ```
@@ -107,17 +108,17 @@ function App() {
 ```tsx
 import {
   DButton,
-  useDModalContext,
+  useDPortalContext,
 } from '@dynamic-framework/ui-react';
 
 import type { ModalPayloads } from './types';
 
 function ExampleModalUsage() {
-  const { openModal } = useDModalContext<ModalPayloads>();
+  const { openPortal } = useDPortalContext<ModalPayloads>();
   return (
     <DButton
       text="Open Modal"
-      onClick={() => openModal('example', { description: 'from modal payload' })}
+      onClick={() => openPortal('example', { description: 'from portal payload' })}
     />
   );
 }

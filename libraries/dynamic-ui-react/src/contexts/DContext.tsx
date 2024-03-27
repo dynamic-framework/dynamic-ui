@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
   useCallback,
@@ -7,6 +8,9 @@ import {
 } from 'react';
 
 import type { PropsWithChildren } from 'react';
+
+import { DPortalContextProvider, PortalContextProps } from './DPortalContext';
+
 import type { AlertTypeIconMap } from '../components/interface';
 
 type CurrencyProps = {
@@ -44,15 +48,15 @@ type IconMapProps = {
   };
 };
 
-type Props = {
+type Props<T extends Record<string, unknown>> = {
   language: string;
   currency: CurrencyProps,
   icon: IconProps;
   iconMap: IconMapProps;
-};
+} & PortalContextProps<T>;
 
-type Context = Props & {
-  setContext: (value: Partial<Props>) => void;
+type Context<T extends Record<string, unknown>> = Props<T> & {
+  setContext: (value: Partial<Props<T>>) => void;
 };
 
 const defaultState = {
@@ -99,30 +103,33 @@ const defaultState = {
     },
   },
   setContext: () => {},
+  portalName: 'd-portal',
 };
 
-export const DContext = createContext<Partial<Context>>(defaultState);
+export const DContext = createContext<Partial<Context<any>>>(defaultState);
 
-export function DContextProvider(
+export function DContextProvider<T extends Record<string, unknown>>(
   {
     language = defaultState.language,
     currency = defaultState.currency,
     icon = defaultState.icon,
     iconMap = defaultState.iconMap,
+    portalName = defaultState.portalName,
+    availablePortals,
     children,
-  }: PropsWithChildren<Partial<Props>>,
+  }: PropsWithChildren<Partial<Props<T>>>,
 ) {
   const [
     internalContext,
     setInternalContext,
-  ] = useState<Partial<Props>>({
+  ] = useState<Partial<Props<T>>>({
     language,
     currency,
     icon,
     iconMap,
   });
 
-  const setContext = useCallback((newValue: Partial<Props>) => (
+  const setContext = useCallback((newValue: Partial<Props<T>>) => (
     setInternalContext((prevInternalContext) => ({
       ...prevInternalContext,
       ...newValue,
@@ -136,13 +143,18 @@ export function DContextProvider(
 
   return (
     <DContext.Provider value={value}>
-      {children}
+      <DPortalContextProvider
+        portalName={portalName}
+        availablePortals={availablePortals}
+      >
+        {children}
+      </DPortalContextProvider>
     </DContext.Provider>
   );
 }
 
-export function useDContext() {
-  const context = useContext(DContext) as Context;
+export function useDContext<T extends Record<string, unknown>>() {
+  const context = useContext(DContext) as Context<T>;
 
   if (context === undefined) {
     throw new Error('useDContext was used outside of DContextProvider');

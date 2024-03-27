@@ -20,6 +20,7 @@ type Story = StoryObj<typeof DContextProvider>;
  * + English language
  * + Boostrap icons
  * + Currencies with $1,000.00 format
+ * + Default portal DOM id
  */
 export const Default: Story = {};
 

@@ -67,7 +67,7 @@ export default {
               'Toast',
               'AlertBox',
               'Modal',
-              'Offcanvas',
+              'OffCanvas',
               'Carousel',
               'Popover',
               'Tabs',

@@ -1,8 +1,11 @@
-import { DOffcanvasContextProvider, useDOffcanvasContext } from '../../src';
+import {
+  DContextProvider,
+  useDPortalContext,
+} from '../../src';
 import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
 
-import type { OffcanvasProps } from '../../src';
+import type { PortalProps } from '../../src';
 
 type OffcanvasPayloads = {
   example: {
@@ -10,7 +13,8 @@ type OffcanvasPayloads = {
   };
 };
 
-function ExampleOffcanvas({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasPayloads['example']>) {
+function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>) {
+  const { closePortal } = useDPortalContext();
   return (
     <DOffcanvas
       name="example"
@@ -18,7 +22,7 @@ function ExampleOffcanvas({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasP
       scrollable={false}
       openFrom="end"
     >
-      <DOffcanvas.Header onClose={closeOffcanvas} showCloseButton>
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Advanced filters</h5>
       </DOffcanvas.Header>
       <DOffcanvas.Body>
@@ -32,7 +36,7 @@ function ExampleOffcanvas({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasP
           variant="outline"
           className="d-grid"
           pill
-          onClick={() => closeOffcanvas()}
+          onClick={() => closePortal()}
         />
         <DButton text="ok" className="d-grid" pill />
       </DOffcanvas.Footer>
@@ -41,24 +45,24 @@ function ExampleOffcanvas({ closeOffcanvas, payload }: OffcanvasProps<OffcanvasP
 }
 
 function ExampleOffcanvasUsage() {
-  const { openOffcanvas } = useDOffcanvasContext<OffcanvasPayloads>();
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
   return (
     <DButton
       text="Open Offcanvas"
-      onClick={() => openOffcanvas('example', { description: 'from offcanvas payload' })}
+      onClick={() => openPortal('example', { description: 'from portal payload' })}
     />
   );
 }
 
 export function ExampleOffcanvasRoot() {
   return (
-    <DOffcanvasContextProvider<OffcanvasPayloads>
+    <DContextProvider<OffcanvasPayloads>
       portalName="examplePortal"
-      availableOffcanvas={{
+      availablePortals={{
         example: ExampleOffcanvas,
       }}
     >
       <ExampleOffcanvasUsage />
-    </DOffcanvasContextProvider>
+    </DContextProvider>
   );
 }

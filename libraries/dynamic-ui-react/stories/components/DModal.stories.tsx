@@ -14,7 +14,7 @@ const config: Meta<typeof DModal> = {
     docs: {
       description: {
         component: `
-To achieve the behavior of a modal it is necessary to use the \`DModalContextProvider\` and the \`useDModalContext\` hook,
+To achieve the behavior of a modal it is necessary to use the \`DContextProvider\` and the \`useDPortalContext\` hook,
 however, it is possible to create an inline modal simply using \`DModal\`
 
 This part of the documentation talks about \`DModal\` directly covering its inline use.

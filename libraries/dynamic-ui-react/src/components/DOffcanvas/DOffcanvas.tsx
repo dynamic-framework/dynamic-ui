@@ -31,7 +31,7 @@ function DOffcanvas(
   return (
     <div
       className={classNames(
-        'offcanvas show',
+        'offcanvas portal show',
         {
           [`offcanvas-${openFrom}`]: openFrom,
         },

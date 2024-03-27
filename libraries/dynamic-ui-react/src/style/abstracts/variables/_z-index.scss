@@ -1,0 +1,11 @@
+// Z-index master list
+//
+// Warning: Avoid customizing these values. They're used for a bird's eye view
+// of components dependent on the z-axis and are designed to all work together.
+
+// scss-docs-start zindex-stack
+$zindex-offcanvas-backdrop: 1050 !default;
+$zindex-offcanvas: 1055 !default;
+$zindex-modal-backdrop: 1050 !default;
+$zindex-modal: 1055 !default;
+// scss-docs-end zindex-stack
