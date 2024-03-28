@@ -169,6 +169,8 @@
   --#{$prefix}form-invalid-border-color: #{$form-invalid-border-color};
   // scss-docs-end root-form-validation-variables
 
+  --#{$prefix}heading-line-height: #{$headings-line-height-value};
+
   @each $level, $value in $display-font-size-values {
     --#{$prefix}display-#{$level}: #{$value};
   }

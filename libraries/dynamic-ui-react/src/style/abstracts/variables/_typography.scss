@@ -79,7 +79,8 @@ $font-sizes: (
 // scss-docs-start headings-variables
 $headings-margin-bottom: 0 !default;
 $headings-font-weight: $font-weight-bold !default;
-$headings-line-height: 1.2 !default;
+$headings-line-height-value: 1.2 !default;
+$headings-line-height: var(--#{$prefix}heading-line-height) !default;
 // scss-docs-end headings-variables
 
 // scss-docs-start display-headings
