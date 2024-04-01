@@ -1,14 +1,14 @@
-.d-tooltip {
+.tooltip {
   --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-component-font-size, var(--#{$prefix}body-font-size));
-  --#{$prefix}tooltip-sm-font-size: var(--#{$prefix}fs-small);
-  --#{$prefix}tooltip-lg-font-size: var(--#{$prefix}ref-fs-6);
-  --#{$prefix}tooltip-bg: var(--#{$prefix}tooltip-component-bg, transparent);
-  --#{$prefix}tooltip-border-radius: var(--#{$prefix}tooltip-component-border-radius, var(--#{$prefix}border-radius));
-  --#{$prefix}tooltip-color: var(--#{$prefix}tooltip-component-color, var(--#{$prefix}body-color));
-  --#{$prefix}tooltip-padding: var(--#{$prefix}tooltip-component-padding, var(--#{$prefix}ref-spacer-2));
   --#{$prefix}tooltip-max-width: var(--#{$prefix}tooltip-component-max-width, 300px);
+  --#{$prefix}tooltip-color: var(--#{$prefix}tooltip-component-color, var(--#{$prefix}body-color));
+  --#{$prefix}tooltip-bg: var(--#{$prefix}tooltip-component-bg, var(--#{$prefix}secondary-500));
+  --#{$prefix}tooltip-border-radius: var(--#{$prefix}tooltip-component-border-radius, var(--#{$prefix}ref-spacer-1));
+  --#{$prefix}tooltip-padding-y: var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}tooltip-padding-x: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}tooltip-opacity: 1;
   max-width: var(--#{$prefix}tooltip-max-width);
-  padding: var(--#{$prefix}tooltip-padding);
+  padding: var(--#{$prefix}tooltip-padding-y) var(--#{$prefix}tooltip-padding-x);
 
   font-size: var(--#{$prefix}tooltip-font-size);
   color: var(--#{$prefix}tooltip-color);
@@ -17,10 +17,12 @@
   fill: var(--#{$prefix}tooltip-bg);
 
   &.d-tooltip-sm {
+    --#{$prefix}tooltip-sm-font-size: var(--#{$prefix}fs-small);
     --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-sm-font-size);
   }
 
   &.d-tooltip-lg {
+    --#{$prefix}tooltip-lg-font-size: var(--#{$prefix}ref-fs-8);
     --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-lg-font-size);
   }
 

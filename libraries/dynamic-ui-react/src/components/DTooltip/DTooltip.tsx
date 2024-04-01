@@ -97,7 +97,7 @@ export default function DTooltip(
 
   const generateClasses = useMemo(
     () => ({
-      'd-tooltip': true,
+      'tooltip show': true,
       [`d-tooltip-${size}`]: !!size,
       [`d-tooltip-${theme}`]: !!theme,
       ...className && { [className]: true },
