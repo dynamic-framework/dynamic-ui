@@ -85,6 +85,12 @@
     flex-grow: 1;
   }
 
+  .d-quick-action-button-action-link,
+  .d-quick-action-button-secondary-action-link {
+    --#{$prefix}btn-padding-x: .75rem;
+    --#{$prefix}btn-padding-y: .5rem;
+  }
+
   .d-quick-action-button-line1 {
     font-size: var(--#{$prefix}quick-action-button-line1-font-size);
     font-weight: var(--#{$prefix}quick-action-button-line1-font-weight);
