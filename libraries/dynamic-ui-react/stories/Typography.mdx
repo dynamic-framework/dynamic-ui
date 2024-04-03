@@ -18,29 +18,40 @@ Based on this, the following variables are found in the `:root`: `--bs-rfs-displ
 `--bs-rfs-display-3`, `--bs-rfs-display-4`, `--bs-rfs-display-5`, `--bs-rfs-display-6`, `--bs-rfs-fs-1`,
 `--bs-rfs-fs-2`, `--bs-rfs-fs-3`, `--bs-rfs-fs-4`, `--bs-rfs-fs-5`, `--bs-rfs-fs-6` and `--bs-rfs-fs-small`.
 
-which are used in each tag as [fallback value](https://developer.mozilla.org/en-US/docs/Web/CSS/var#declaration-value)
-as you can see in the example below
+Which are used in each tag using a reference variable
+
+```css
+--bs-fs-display-1: var(--bs-rfs-display-1);
+--bs-fs-display-2: var(--bs-rfs-display-2);
+--bs-fs-display-3: var(--bs-rfs-display-3);
+--bs-fs-display-4: var(--bs-rfs-display-4);
+--bs-fs-display-5: var(--bs-rfs-display-5);
+--bs-fs-display-6: var(--bs-rfs-display-6);
+--bs-fs-1: var(--bs-rfs-fs-1);
+--bs-fs-2: var(--bs-rfs-fs-2);
+--bs-fs-3: var(--bs-rfs-fs-3);
+--bs-fs-4: var(--bs-rfs-fs-4);
+--bs-fs-5: var(--bs-rfs-fs-5);
+--bs-fs-6: var(--bs-rfs-fs-6);
+--bs-fs-small: var(--bs-rfs-fs-small);
+```
 
 ```css
 h1, .h1 {
-  font-size: var(--bs-fs-1, var(--bs-rfs-fs-1));
+  font-size: var(--bs-fs-1);
 }
 
 .fs-3 {
-  font-size: var(--bs-fs-3, var(--bs-rfs-fs-3)) !important;
+  font-size: var(--bs-fs-3) !important;
 }
 
 .display-2 {
-  --bs-display-font-size: var(--bs-display-2, var(--bs-rfs-display-2));
+  --bs-display-font-size: var(--bs-fs-display-2);
 }
 ```
 
-allowing direct values to be defined using the first argument of each var as a css variable,
-which would be the following values: `--bs-display-1`, `--bs-display-2`, `--bs-display-3`, `--bs-display-4`,
-`--bs-display-5`, `--bs-display-6`, `--bs-fs-1`, `--bs-fs-2`, `--bs-fs-3`, `--bs-fs-4`, `--bs-fs-5`, `--bs-fs-6`
-and `--bs-fs-small`.
+Thanks to this you can define a direct value in the reference variable to not use the bootstrap rfs calculation.
 
-> we only provide definition for rfs values like bootstrap, the variables described above exist as an alternative mechanism to define a direct value.
 
 ## Heading
 
