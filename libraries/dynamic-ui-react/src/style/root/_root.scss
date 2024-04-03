@@ -173,12 +173,15 @@
 
   @each $level, $value in $display-font-size-values {
     @include rfs($value, --#{$prefix}rfs-display-#{$level});
+    --#{$prefix}fs-display-#{$level}: var(--#{$prefix}rfs-display-#{$level});
   }
 
   @each $level, $value in $font-size-values {
     @include rfs($value, --#{$prefix}rfs-fs-#{$level});
+    --#{$prefix}fs-#{$level}: var(--#{$prefix}rfs-fs-#{$level});
   }
   @include rfs($small-font-size-value, --#{$prefix}rfs-fs-small);
+  --#{$prefix}fs-small: var(--#{$prefix}rfs-fs-small);
 
   --#{$prefix}fw-lighter: #{$font-weight-lighter-value};
   --#{$prefix}fw-light: #{$font-weight-light-value};
