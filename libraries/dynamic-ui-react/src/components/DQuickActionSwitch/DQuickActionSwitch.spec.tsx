@@ -35,13 +35,13 @@ it('should render my component', () => {
             role="switch"
             type="checkbox"
           />
+          <label
+            class="form-check-label"
+            for="component"
+          >
+            total
+          </label>
         </div>
-        <label
-          class="d-quick-action-switch-label"
-          for="component"
-        >
-          total
-        </label>
       </div>
       <div
         class="d-quick-action-switch-hint"
