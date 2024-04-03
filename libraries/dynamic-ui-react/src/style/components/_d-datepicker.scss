@@ -13,7 +13,7 @@
   --#{$prefix}datepicker-header-padding: var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-6);
   --#{$prefix}datepicker-header-background-color: var(--#{$prefix}secondary-soft);
   --#{$prefix}datepicker-header-border: 0;
-  --#{$prefix}datepicker-header-font-size: var(--#{$prefix}ref-fs-6);
+  --#{$prefix}datepicker-header-font-size: var(--#{$prefix}fs-6);
 
   --#{$prefix}datepicker-day-names-margin: 0;
   --#{$prefix}datepicker-day-names-font-size: var(--#{$prefix}ref-spacer-4);
@@ -239,7 +239,7 @@
     }
   }
   .d-datepicker-header {
-    font-size: var(--#{$prefix}ref-fs-6);
+    font-size: var(--#{$prefix}fs-6);
   }
 }
 

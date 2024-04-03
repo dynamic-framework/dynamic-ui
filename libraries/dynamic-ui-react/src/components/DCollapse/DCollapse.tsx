@@ -90,7 +90,7 @@ export default function DCollapse(
         </div>
         <DIcon
           color={`var(--${PREFIX_BS}gray)`}
-          size={`var(--${PREFIX_BS}ref-fs-small)`}
+          size={`var(--${PREFIX_BS}fs-small)`}
           icon={toggle ? iconOpen : iconClose}
           familyClass={iconFamilyClass}
           familyPrefix={iconFamilyPrefix}
