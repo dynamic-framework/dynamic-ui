@@ -11,7 +11,7 @@ $font-size-root: 16px !default;
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
 
 // custom
-$font-size-sm: var(--#{$prefix}rfs-fs-small) !default;
+$font-size-sm: var(--#{$prefix}fs-fs-small) !default;
 $font-size-sm-value: .875em !default;
 // end custom
 
@@ -45,12 +45,12 @@ $h4-font-size-value: $font-size-base * 2 !default;
 $h5-font-size-value: $font-size-base * 1.5 !default;
 $h6-font-size-value: $font-size-base * 1.125 !default;
 
-$h1-font-size: var(--#{$prefix}fs-1, var(--#{$prefix}rfs-fs-1)) !default;
-$h2-font-size: var(--#{$prefix}fs-2, var(--#{$prefix}rfs-fs-2)) !default;
-$h3-font-size: var(--#{$prefix}fs-3, var(--#{$prefix}rfs-fs-3)) !default;
-$h4-font-size: var(--#{$prefix}fs-4, var(--#{$prefix}rfs-fs-4)) !default;
-$h5-font-size: var(--#{$prefix}fs-5, var(--#{$prefix}rfs-fs-5)) !default;
-$h6-font-size: var(--#{$prefix}fs-6, var(--#{$prefix}rfs-fs-6)) !default;
+$h1-font-size: var(--#{$prefix}fs-1) !default;
+$h2-font-size: var(--#{$prefix}fs-2) !default;
+$h3-font-size: var(--#{$prefix}fs-3) !default;
+$h4-font-size: var(--#{$prefix}fs-4) !default;
+$h5-font-size: var(--#{$prefix}fs-5) !default;
+$h6-font-size: var(--#{$prefix}fs-6) !default;
 // end custom
 // scss-docs-end font-variables
 
@@ -92,12 +92,12 @@ $display4-font-size-value: 3.5rem !default;
 $display5-font-size-value: 3rem !default;
 $display6-font-size-value: 2.5rem !default;
 
-$display1-font-size: var(--#{$prefix}display-1, var(--#{$prefix}rfs-display-1)) !default;
-$display2-font-size: var(--#{$prefix}display-2, var(--#{$prefix}rfs-display-2)) !default;
-$display3-font-size: var(--#{$prefix}display-3, var(--#{$prefix}rfs-display-3)) !default;
-$display4-font-size: var(--#{$prefix}display-4, var(--#{$prefix}rfs-display-4)) !default;
-$display5-font-size: var(--#{$prefix}display-5, var(--#{$prefix}rfs-display-5)) !default;
-$display6-font-size: var(--#{$prefix}display-6, var(--#{$prefix}rfs-display-6)) !default;
+$display1-font-size: var(--#{$prefix}fs-display-1) !default;
+$display2-font-size: var(--#{$prefix}fs-display-2) !default;
+$display3-font-size: var(--#{$prefix}fs-display-3) !default;
+$display4-font-size: var(--#{$prefix}fs-display-4) !default;
+$display5-font-size: var(--#{$prefix}fs-display-5) !default;
+$display6-font-size: var(--#{$prefix}fs-display-6) !default;
 
 $display-font-size-values: (
   1: $display1-font-size-value,
