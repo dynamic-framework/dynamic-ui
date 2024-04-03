@@ -1,0 +1,23 @@
+.tooltip {
+  --#{$prefix}tooltip-sm-font-size: #{$tooltip-font-size-sm};
+  --#{$prefix}tooltip-lg-font-size: #{$tooltip-font-size-lg};
+
+  fill: var(--#{$prefix}tooltip-bg);
+
+  &.tooltip-sm {
+    --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-sm-font-size);
+  }
+
+  &.tooltip-lg {
+    --#{$prefix}tooltip-font-size: var(--#{$prefix}tooltip-lg-font-size);
+  }
+
+  @each $theme, $value in $theme-colors {
+    $color: color-contrast-var($value);
+
+    &.tooltip-#{$theme} {
+      --#{$prefix}tooltip-color: var(--#{$prefix}tooltip-component-color, #{$color});
+      --#{$prefix}tooltip-bg: var(--#{$prefix}tooltip-component-bg, var(--#{$prefix}#{$theme}));
+    }
+  }
+}

@@ -169,14 +169,19 @@
   --#{$prefix}form-invalid-border-color: #{$form-invalid-border-color};
   // scss-docs-end root-form-validation-variables
 
+  --#{$prefix}heading-line-height: #{$headings-line-height-value};
+
   @each $level, $value in $display-font-size-values {
-    --#{$prefix}display-#{$level}: #{$value};
+    @include rfs($value, --#{$prefix}rfs-display-#{$level});
+    --#{$prefix}fs-display-#{$level}: var(--#{$prefix}rfs-display-#{$level});
   }
 
   @each $level, $value in $font-size-values {
-    --#{$prefix}fs-#{$level}: #{$value};
+    @include rfs($value, --#{$prefix}rfs-fs-#{$level});
+    --#{$prefix}fs-#{$level}: var(--#{$prefix}rfs-fs-#{$level});
   }
-  --#{$prefix}fs-small: #{$small-font-size-value};
+  @include rfs($small-font-size-value, --#{$prefix}rfs-fs-small);
+  --#{$prefix}fs-small: var(--#{$prefix}rfs-fs-small);
 
   --#{$prefix}fw-lighter: #{$font-weight-lighter-value};
   --#{$prefix}fw-light: #{$font-weight-light-value};

@@ -100,12 +100,14 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
               payload,
             },
           ) => (
-            <Component
-              name={name}
-              payload={payload}
-            />
+            <>
+              <div className="backdrop fade show" />
+              <Component
+                name={name}
+                payload={payload}
+              />
+            </>
           ))}
-          {!!stack.length && <div className="backdrop fade show" />}
         </>,
         document.getElementById(portalName) as Element,
       )}
