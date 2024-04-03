@@ -14,7 +14,7 @@ $enable-grid-classes: true !default;
 $enable-container-classes: true !default;
 $enable-cssgrid: false !default;
 $enable-button-pointers: true !default;
-$enable-rfs: false !default;
+$enable-rfs: true !default;
 $enable-validation-icons: false !default;
 $enable-negative-margins: false !default;
 $enable-deprecation-messages: true !default;
@@ -22,9 +22,3 @@ $enable-important-utilities: true !default;
 
 $enable-dark-mode: false !default;
 $color-mode-type: data !default; // `data` or `media-query`
-
-// custom
-@if ($enable-rfs) {
-  @error "RFS not supported in favor of using css variables";
-}
-// end custom
