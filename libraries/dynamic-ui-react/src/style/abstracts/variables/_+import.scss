@@ -65,6 +65,7 @@ $input-btn-border-width: var(--#{$prefix}border-width) !default;
 
 @import "cards";
 @import "accordion";
+@import "tooltip";
 @import "badges";
 @import "modals";
 @import "alerts";

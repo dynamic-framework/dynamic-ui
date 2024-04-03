@@ -47,6 +47,11 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'boolean',
       defaultValue: false,
     },
+    open: {
+      type: 'boolean',
+      control: 'boolean',
+      defaultValue: false,
+    },
     withFocus: {
       type: 'boolean',
       control: 'boolean',
