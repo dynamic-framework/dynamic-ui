@@ -1,6 +1,6 @@
 .backdrop {
   // scss-docs-start modal-backdrop-css-vars
-  --#{$prefix}backdrop-zindex: #{$zindex-modal-backdrop};
+  --#{$prefix}backdrop-zindex: #{$zindex-modal};
   --#{$prefix}backdrop-bg: #{$modal-backdrop-bg};
   --#{$prefix}backdrop-opacity: #{$modal-backdrop-opacity};
   // scss-docs-end modal-backdrop-css-vars
