@@ -12,6 +12,7 @@ export type NavegableProps = {
 };
 export type ComponentSize = 'sm' | 'lg';
 export type BreakpointSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+export type AvatarSize = 'xs' | 'sm' | 'lg' | 'xl' | 'xxl';
 export type BaseProps = {
     style?: CSSProperties;
     className?: string;

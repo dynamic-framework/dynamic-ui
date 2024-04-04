@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from 'react';
+import { PortalContextProps } from './DPortalContext';
 import type { AlertTypeIconMap } from '../components/interface';
 type CurrencyProps = {
     symbol: string;
@@ -32,16 +33,16 @@ type IconMapProps = {
         increase: string;
     };
 };
-type Props = {
+type Props<T extends Record<string, unknown>> = {
     language: string;
     currency: CurrencyProps;
     icon: IconProps;
     iconMap: IconMapProps;
+} & PortalContextProps<T>;
+type Context<T extends Record<string, unknown>> = Props<T> & {
+    setContext: (value: Partial<Props<T>>) => void;
 };
-type Context = Props & {
-    setContext: (value: Partial<Props>) => void;
-};
-export declare const DContext: import("react").Context<Partial<Context>>;
-export declare function DContextProvider({ language, currency, icon, iconMap, children, }: PropsWithChildren<Partial<Props>>): import("react/jsx-runtime").JSX.Element;
-export declare function useDContext(): Context;
+export declare const DContext: import("react").Context<Partial<Context<any>>>;
+export declare function DContextProvider<T extends Record<string, unknown>>({ language, currency, icon, iconMap, portalName, availablePortals, children, }: PropsWithChildren<Partial<Props<T>>>): import("react/jsx-runtime").JSX.Element;
+export declare function useDContext<T extends Record<string, unknown>>(): Context<T>;
 export {};

@@ -1,10 +1,11 @@
-import type { PropsWithChildren } from 'react';
+/// <reference types="react" />
+import { Splide } from '@splidejs/react-splide';
 import type { SplideProps } from '@splidejs/react-splide';
 import DCarouselSlide from './components/DCarouselSlide';
 import type { BaseProps } from '../interface';
-type Props = SplideProps & PropsWithChildren<BaseProps>;
-declare function DCarousel({ children, className, style, options, ...props }: Props): import("react/jsx-runtime").JSX.Element;
-declare const _default: typeof DCarousel & {
+declare const _default: import("react").ForwardRefExoticComponent<SplideProps & BaseProps & {
+    children?: import("react").ReactNode;
+} & import("react").RefAttributes<Splide>> & {
     Slide: typeof DCarouselSlide;
 };
 export default _default;

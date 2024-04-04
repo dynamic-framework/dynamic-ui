@@ -38,4 +38,4 @@ export { default as DStepperDesktop } from './DStepperDesktop';
 export { default as DStepperMobile } from './DStepperMobile';
 export { default as DTooltip } from './DTooltip';
 export { default as DTabs, useTabContext, DTabOption, DTabContent, } from './DTabs';
-export { default as DToastContainer, useToast, } from './DToastContainer';
+export { default as DToastContainer, useDToast, } from './DToastContainer';

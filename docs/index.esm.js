@@ -1,7 +1,8 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
-import React, { useMemo, createContext, useState, useCallback, useContext, useEffect, forwardRef, useRef } from 'react';
+import React, { useMemo, useEffect, useState, useCallback, createContext, useContext, forwardRef, useRef } from 'react';
 import classNames from 'classnames';
 import { __rest } from 'tslib';
+import { createPortal } from 'react-dom';
 import { useDropzone } from 'react-dropzone';
 import { SplideSlide, Splide } from '@splidejs/react-splide';
 import currency from 'currency.js';
@@ -12,10 +13,9 @@ import Select, { components } from 'react-select';
 import ResponsivePagination from 'react-responsive-pagination';
 import { useFloating, offset, flip, shift, autoUpdate, useClick, useDismiss, useRole, useInteractions, useId, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
 import ContentLoader from 'react-content-loader';
-import { ToastContainer, Slide, toast } from 'react-toastify';
+import { ToastContainer, Bounce, Flip, Slide, Zoom, toast } from 'react-toastify';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { createPortal } from 'react-dom';
 
 const PREFIX_BS = 'bs-';
 
@@ -59,71 +59,6 @@ function DIconBase({ icon, theme, style, className, size = '1.5rem', loading = f
         icon,
     ]);
     return (jsx("i", { className: classNames(generateClasses), style: generateStyleVariables, children: materialStyle && icon }));
-}
-
-const defaultState = {
-    language: 'en',
-    currency: {
-        symbol: '$',
-        precision: 2,
-        separator: ',',
-        decimal: '.',
-    },
-    icon: {
-        familyClass: 'bi',
-        familyPrefix: 'bi-',
-        materialStyle: false,
-    },
-    iconMap: {
-        x: 'x',
-        xLg: 'x-lg',
-        chevronUp: 'chevron-up',
-        chevronDown: 'chevron-down',
-        chevronLeft: 'chevron-left',
-        chevronRight: 'chevron-right',
-        upload: 'cloud-upload',
-        calendar: 'calendar',
-        check: 'check',
-        alert: {
-            warning: 'exclamation-circle',
-            danger: 'exclamation-triangle',
-            success: 'check-circle',
-            info: 'info-circle',
-            dark: 'info-circle',
-            light: 'info-circle',
-            primary: 'info-circle',
-            secondary: 'info-circle',
-        },
-        input: {
-            invalid: 'exclamation-circle',
-            valid: 'check',
-            search: 'search',
-            show: 'eye',
-            hide: 'eye-slash',
-            increase: 'plus-square',
-            decrease: 'dash-square',
-        },
-    },
-    setContext: () => { },
-};
-const DContext = createContext(defaultState);
-function DContextProvider({ language = defaultState.language, currency = defaultState.currency, icon = defaultState.icon, iconMap = defaultState.iconMap, children, }) {
-    const [internalContext, setInternalContext,] = useState({
-        language,
-        currency,
-        icon,
-        iconMap,
-    });
-    const setContext = useCallback((newValue) => (setInternalContext((prevInternalContext) => (Object.assign(Object.assign({}, prevInternalContext), newValue)))), []);
-    const value = useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext })), [internalContext, setContext]);
-    return (jsx(DContext.Provider, { value: value, children: children }));
-}
-function useDContext() {
-    const context = useContext(DContext);
-    if (context === undefined) {
-        throw new Error('useDContext was used outside of DContextProvider');
-    }
-    return context;
 }
 
 function useDisableBodyScrollEffect(disable) {
@@ -173,20 +108,9 @@ function useStackState(initialList) {
         ]);
     }, []);
     const pop = useCallback(() => {
-        setList((prevList) => {
-            if (prevList.length === 0) {
-                return prevList;
-            }
-            const [, ...newList] = prevList;
-            return newList;
-        });
+        setList((prevList) => (prevList.slice(0, prevList.length - 1)));
     }, []);
-    const peek = useCallback(() => {
-        if (list.length > 0) {
-            return list[list.length - 1];
-        }
-        return undefined;
-    }, [list]);
+    const peek = useCallback(() => list.at(-1), [list]);
     const clear = () => setList([]);
     const isEmpty = useCallback(() => list.length === 0, [list]);
     const controls = {
@@ -200,78 +124,108 @@ function useStackState(initialList) {
     return [list, controls];
 }
 
-const DModalContext = createContext(undefined);
-function DModalContextProvider({ portalName, children, availableModals, }) {
+const DPortalContext = createContext(undefined);
+function DPortalContextProvider({ portalName, children, availablePortals, }) {
     const { created } = usePortal(portalName);
-    const [stack, { push, pop, peek }] = useStackState([]);
+    const [stack, { push, pop, isEmpty }] = useStackState([]);
     useDisableBodyScrollEffect(Boolean(stack.length));
-    const openModal = useCallback((modalName, payload) => {
-        const Component = availableModals[modalName];
+    const openPortal = useCallback((name, payload) => {
+        if (!availablePortals) {
+            throw new Error(`there is no component for portal ${name.toString()}`);
+        }
+        const Component = availablePortals[name];
         if (!Component) {
-            throw new Error(`there is no component for modal ${modalName.toString()}`);
+            throw new Error(`there is no component for portal ${name.toString()}`);
         }
         push({
-            modalName,
+            name,
             Component,
             payload,
         });
-    }, [availableModals, push]);
-    const closeModal = useCallback(() => {
-        const stackItem = peek();
-        if (!stackItem) {
+    }, [availablePortals, push]);
+    const closePortal = useCallback(() => {
+        if (isEmpty()) {
             return;
         }
         pop();
-    }, [peek, pop]);
+    }, [isEmpty, pop]);
     const value = useMemo(() => ({
         stack,
-        openModal,
-        closeModal,
-    }), [stack, openModal, closeModal]);
-    return (jsxs(DModalContext.Provider, { value: value, children: [children, created && createPortal(jsxs(Fragment, { children: [stack.map(({ Component, modalName, payload, }) => (jsx(Component, { name: modalName, payload: payload, openModal: openModal, closeModal: closeModal }, modalName))), !!stack.length && jsx("div", { className: "modal-backdrop fade show" })] }), document.getElementById(portalName))] }));
+        openPortal,
+        closePortal,
+    }), [stack, openPortal, closePortal]);
+    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && createPortal(jsx(Fragment, { children: stack.map(({ Component, name, payload, }) => (jsxs(Fragment, { children: [jsx("div", { className: "backdrop fade show" }), jsx(Component, { name: name, payload: payload })] }))) }), document.getElementById(portalName))] }));
 }
-function useDModalContext() {
-    const context = useContext(DModalContext);
+function useDPortalContext() {
+    const context = useContext(DPortalContext);
     if (context === undefined) {
-        throw new Error('useModalContext was used outside of ModalContextProvider');
+        throw new Error('usePortalContext was used outside of PortalContextProvider');
     }
     return context;
 }
 
-const DOffcanvasContext = createContext(undefined);
-function DOffcanvasContextProvider({ portalName, children, availableOffcanvas, }) {
-    const { created } = usePortal(portalName);
-    const [stack, { push, pop, peek }] = useStackState([]);
-    useDisableBodyScrollEffect(Boolean(stack.length));
-    const openOffcanvas = useCallback((offcanvasName, payload) => {
-        const Component = availableOffcanvas[offcanvasName];
-        if (!Component) {
-            throw new Error(`there is no component for offcanvas ${offcanvasName}`);
-        }
-        push({
-            offcanvasName,
-            Component,
-            payload,
-        });
-    }, [availableOffcanvas, push]);
-    const closeOffcanvas = useCallback(() => {
-        const stackItem = peek();
-        if (!stackItem) {
-            return;
-        }
-        pop();
-    }, [peek, pop]);
-    const value = useMemo(() => ({
-        stack,
-        openOffcanvas,
-        closeOffcanvas,
-    }), [stack, openOffcanvas, closeOffcanvas]);
-    return (jsxs(DOffcanvasContext.Provider, { value: value, children: [children, created && createPortal(jsxs(Fragment, { children: [stack.map(({ Component, offcanvasName, payload, }) => (jsx(Component, { name: offcanvasName, payload: payload, openOffcanvas: openOffcanvas, closeOffcanvas: closeOffcanvas }, offcanvasName))), !!stack.length && jsx("div", { className: "offcanvas-backdrop fade show" })] }), document.getElementById(portalName))] }));
+const defaultState = {
+    language: 'en',
+    currency: {
+        symbol: '$',
+        precision: 2,
+        separator: ',',
+        decimal: '.',
+    },
+    icon: {
+        familyClass: 'bi',
+        familyPrefix: 'bi-',
+        materialStyle: false,
+    },
+    iconMap: {
+        x: 'x',
+        xLg: 'x-lg',
+        chevronUp: 'chevron-up',
+        chevronDown: 'chevron-down',
+        chevronLeft: 'chevron-left',
+        chevronRight: 'chevron-right',
+        upload: 'cloud-upload',
+        calendar: 'calendar',
+        check: 'check',
+        alert: {
+            warning: 'exclamation-circle',
+            danger: 'exclamation-triangle',
+            success: 'check-circle',
+            info: 'info-circle',
+            dark: 'info-circle',
+            light: 'info-circle',
+            primary: 'info-circle',
+            secondary: 'info-circle',
+        },
+        input: {
+            invalid: 'exclamation-circle',
+            valid: 'check',
+            search: 'search',
+            show: 'eye',
+            hide: 'eye-slash',
+            increase: 'plus-square',
+            decrease: 'dash-square',
+        },
+    },
+    setContext: () => { },
+    portalName: 'd-portal',
+};
+const DContext = createContext(defaultState);
+function DContextProvider({ language = defaultState.language, currency = defaultState.currency, icon = defaultState.icon, iconMap = defaultState.iconMap, portalName = defaultState.portalName, availablePortals, children, }) {
+    const [internalContext, setInternalContext,] = useState({
+        language,
+        currency,
+        icon,
+        iconMap,
+    });
+    const setContext = useCallback((newValue) => (setInternalContext((prevInternalContext) => (Object.assign(Object.assign({}, prevInternalContext), newValue)))), []);
+    const value = useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext })), [internalContext, setContext]);
+    return (jsx(DContext.Provider, { value: value, children: jsx(DPortalContextProvider, { portalName: portalName, availablePortals: availablePortals, children: children }) }));
 }
-function useDOffcanvasContext() {
-    const context = useContext(DOffcanvasContext);
+function useDContext() {
+    const context = useContext(DContext);
     if (context === undefined) {
-        throw new Error('useOffcanvasContext was used outside of OffcanvasContextProvider');
+        throw new Error('useDContext was used outside of DContextProvider');
     }
     return context;
 }
@@ -361,9 +315,9 @@ function DCarouselSlide(_a) {
     return (jsx(SplideSlide, Object.assign({ className: classNames('d-carousel-slide', className) }, props)));
 }
 
-function DCarousel(_a) {
+function DCarousel(_a, ref) {
     var { children, className, style, options } = _a, props = __rest(_a, ["children", "className", "style", "options"]);
-    return (jsx(Splide, Object.assign({ className: classNames('d-carousel', className), style: style, options: Object.assign(Object.assign({}, options), { classes: {
+    return (jsx(Splide, Object.assign({ className: classNames('d-carousel', className), style: style, ref: ref, options: Object.assign(Object.assign({}, options), { classes: {
                 // Arrows
                 arrows: 'splide__arrows d-carousel-arrows',
                 arrow: 'splide__arrow d-carousel-arrow',
@@ -374,7 +328,9 @@ function DCarousel(_a) {
                 page: 'splide__pagination__page d-carousel-pagination-page',
             } }) }, props, { children: children })));
 }
-var DCarousel$1 = Object.assign(DCarousel, {
+const ForwardedDCarousel = forwardRef(DCarousel);
+ForwardedDCarousel.displayName = 'DCarousel';
+var DCarousel$1 = Object.assign(ForwardedDCarousel, {
     Slide: DCarouselSlide,
 });
 
@@ -405,7 +361,7 @@ function DCollapse({ id, className, style, Component, hasSeparator = false, defa
     const generateStyles = useMemo(() => ({
         [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
     }), [hasSeparator]);
-    return (jsxs("div", { id: id, className: classNames('collapse-container', className), style: style, children: [jsxs("button", { className: "collapse-button", type: "button", onClick: onChangeCollapse, children: [jsx("div", { className: "flex-grow-1", children: Component }), jsx(DIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}ref-fs-small)`, icon: toggle ? iconOpen : iconClose, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })] }), toggle && (jsx("div", { className: classNames({
+    return (jsxs("div", { id: id, className: classNames('collapse-container', className), style: style, children: [jsxs("button", { className: "collapse-button", type: "button", onClick: onChangeCollapse, children: [jsx("div", { className: "flex-grow-1", children: Component }), jsx(DIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}fs-small)`, icon: toggle ? iconOpen : iconClose, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })] }), toggle && (jsx("div", { className: classNames({
                     'collapse-body': true,
                 }), style: generateStyles, children: children }))] }));
 }
@@ -1057,7 +1013,7 @@ function DModal({ name, className, style, staticBackdrop, scrollable, centered, 
         }
         return '';
     }, [fullScreenFrom, fullScreen]);
-    const generateClasses = useMemo(() => (Object.assign({ 'modal fade show': true }, className && { [className]: true })), [className]);
+    const generateClasses = useMemo(() => (Object.assign({ 'modal portal fade show': true }, className && { [className]: true })), [className]);
     const generateModalDialogClasses = useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, size && { [`modal-${size}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, size]);
     return (jsx("div", Object.assign({ className: classNames(generateClasses), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
@@ -1085,7 +1041,7 @@ function DOffcanvasFooter({ footerActionPlacement = 'fill', children, className,
 }
 
 function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', children, }) {
-    return (jsx("div", Object.assign({ className: classNames('offcanvas show', {
+    return (jsx("div", Object.assign({ className: classNames('offcanvas portal show', {
             [`offcanvas-${openFrom}`]: openFrom,
         }, className), style: style, id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false" }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
@@ -1203,7 +1159,7 @@ function DQuickActionSwitch({ id, name, label, hint, checked, disabled, classNam
         event.stopPropagation();
         onClick === null || onClick === void 0 ? void 0 : onClick(checked);
     }, [checked, onClick]);
-    return (jsxs("button", { className: classNames('d-quick-action-switch', className), type: "button", onClick: clickHandler, style: style, children: [jsxs("div", { className: "d-quick-action-switch-content", children: [jsx(DInputSwitch, { id: id, name: name, disabled: disabled, checked: checked, readonly: true }), jsx("label", { className: "d-quick-action-switch-label", htmlFor: id, children: label })] }), jsx("div", { className: "d-quick-action-switch-hint", children: hint })] }));
+    return (jsxs("button", { className: classNames('d-quick-action-switch', className), type: "button", onClick: clickHandler, style: style, children: [jsx("div", { className: "d-quick-action-switch-content", children: jsx(DInputSwitch, { id: id, name: name, disabled: disabled, checked: checked, readonly: true, label: label }) }), jsx("div", { className: "d-quick-action-switch-hint", children: hint })] }));
 }
 
 function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
@@ -1310,8 +1266,8 @@ function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT +
         dismiss,
         role,
     ]);
-    const generateClasses = useMemo(() => (Object.assign({ 'd-tooltip': true, [`d-tooltip-${size}`]: !!size, [`d-tooltip-${theme}`]: !!theme }, className && { [className]: true })), [size, theme, className]);
-    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: childrenClassName, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNames(generateClasses), ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), style) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, width: ARROW_WIDTH, height: ARROW_HEIGHT }), children] }))) })] }));
+    const generateClasses = useMemo(() => (Object.assign({ 'tooltip show': true, [`tooltip-${size}`]: !!size, [`tooltip-${theme}`]: !!theme }, className && { [className]: true })), [size, theme, className]);
+    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: childrenClassName, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNames(generateClasses), ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), style) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, width: ARROW_WIDTH, height: ARROW_HEIGHT }), jsx("div", { className: "tooltip-inner", children: children })] }))) })] }));
 }
 
 const TabContext = createContext(undefined);
@@ -1358,17 +1314,27 @@ var DTabs$1 = Object.assign(DTabs, {
     Tab: DTabContent,
 });
 
-function DToastContainer({ style, position = 'top-right', className, }) {
-    return (jsx(ToastContainer, { toastClassName: () => classNames('shadow-none p-0 cursor-default', className), position: position, autoClose: false, hideProgressBar: true, closeOnClick: false, closeButton: false, transition: Slide, style: style }));
+const TOAST_TRANSITIONS$1 = {
+    bounce: Bounce,
+    flip: Flip,
+    slide: Slide,
+    zoom: Zoom,
+};
+function DToastContainer({ style, className, closeOnClick, position = 'bottom-center', autoClose = false, stacked = false, transition = 'slide', containerId, }) {
+    const selectedTransition = useMemo(() => TOAST_TRANSITIONS$1[transition], [transition]);
+    return (jsx(ToastContainer, { toastClassName: () => classNames('shadow-none p-0 cursor-default', className), position: position, autoClose: autoClose, closeOnClick: closeOnClick, transition: selectedTransition, closeButton: false, style: style, hideProgressBar: true, stacked: stacked, containerId: containerId }));
 }
 
-function useToast() {
-    const toast$1 = useCallback((message, { position = 'top-right', type = 'info', showClose = true, autoClose = false, icon, iconClose, } = {}) => {
-        toast(({ closeToast }) => (jsx(DAlert, { type: type, showClose: showClose, onClose: closeToast, id: "alertID", icon: icon, iconClose: iconClose, children: message })), {
-            transition: Slide,
-            position,
-            autoClose,
-        });
+const TOAST_TRANSITIONS = {
+    bounce: Bounce,
+    flip: Flip,
+    slide: Slide,
+    zoom: Zoom,
+};
+function useDToast() {
+    const toast$1 = useCallback((message, _a) => {
+        var { icon, iconClose, type = 'info', showClose = true, transition } = _a, rest = __rest(_a, ["icon", "iconClose", "type", "showClose", "transition"]);
+        toast(({ closeToast }) => (jsx(DAlert, { onClose: closeToast, id: "alertID", type: type, icon: icon, iconClose: iconClose, showClose: showClose, children: message })), Object.assign({ transition: transition && TOAST_TRANSITIONS[transition] }, rest));
     }, []);
     return {
         toast: toast$1,
@@ -1389,5 +1355,5 @@ async function configureI8n(resources, _a = {}) {
         .then((t) => t);
 }
 
-export { DAlert, DBadge, DBoxFile, DButton, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DIconBase, DInput$1 as DInput, DInputCheck, DInputCounter$1 as DInputCounter, DInputCurrency$1 as DInputCurrency, DInputCurrencyBase$1 as DInputCurrencyBase, DInputMask$1 as DInputMask, DInputPassword$1 as DInputPassword, DInputPin, DInputSearch$1 as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListItem, DModal$1 as DModal, DModalBody, DModalContext, DModalContextProvider, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasContext, DOffcanvasContextProvider, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSelect$1 as DSelect, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DToastContainer, DTooltip, configureI8n as configureI18n, formatCurrency, useDContext, useDModalContext, useDOffcanvasContext, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, useToast };
+export { DAlert, DBadge, DBoxFile, DButton, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DIconBase, DInput$1 as DInput, DInputCheck, DInputCounter$1 as DInputCounter, DInputCurrency$1 as DInputCurrency, DInputCurrencyBase$1 as DInputCurrencyBase, DInputMask$1 as DInputMask, DInputPassword$1 as DInputPassword, DInputPin, DInputSearch$1 as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPopover, DPortalContext, DPortalContextProvider, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSelect$1 as DSelect, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DToastContainer, DTooltip, configureI8n as configureI18n, formatCurrency, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, usePortal, useProvidedRefOrCreate, useStackState, useTabContext };
 //# sourceMappingURL=index.esm.js.map
