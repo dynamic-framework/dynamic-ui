@@ -55,6 +55,12 @@ $utilities: map-merge(
         )
       )
     ),
+    "font-weight": map-merge(
+      map-get($utilities, "font-weight"),
+      (
+        responsive: true
+      )
+    ),
     "border-color": map-merge(
       map-get($utilities, "border-color"),
       (
@@ -76,9 +82,36 @@ $utilities: map-merge(
         100: 1
       )
     ),
+    "text-truncate": (
+      responsive: true,
+      class: "text-truncate",
+      css-var: true,
+      values: (
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 6,
+        6: 6
+      )
+    ),
     "cursor": (
       property: cursor,
-      values: $cursors,
+      values: $cursors
+    ),
+    "font-size": map-merge(
+      map-get($utilities, "font-size"),
+      (
+        responsive: true,
+        rfs: false
+      )
+    ),
+    "display-font-size": (
+      class: "display",
+      responsive: true,
+      css-var: true,
+      css-variable-name: display-font-size,
+      values: $display-font-sizes
     ),
   )
 );

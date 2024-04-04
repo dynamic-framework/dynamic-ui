@@ -9,29 +9,63 @@ $font-family-sans-serif: "Source Sans 3", sans-serif !default;
 // $font-size-base affects the font size of the body text
 $font-size-root: 16px !default;
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
-$font-size-sm: $font-size-base * .875 !default;   // 14px
+
+// custom
+$font-size-sm: var(--#{$prefix}fs-small) !default;
+$font-size-sm-value: .875em !default;
+// end custom
+
 $font-size-lg: $font-size-base * 1.125 !default;  // 18px
 
-$font-weight-lighter: lighter !default;
-$font-weight-light: 200 !default;
-$font-weight-normal: 400 !default;
-$font-weight-semibold: 600 !default;
-$font-weight-bold: 700 !default;
-$font-weight-bolder: 800 !default;
+// custom
+$font-weight-lighter-value: lighter !default;
+$font-weight-light-value: 200 !default;
+$font-weight-normal-value: 400 !default;
+$font-weight-semibold-value: 600 !default;
+$font-weight-bold-value: 700 !default;
+$font-weight-bolder-value: 800 !default;
+
+$font-weight-lighter: var(--#{$prefix}fw-lighter) !default;
+$font-weight-light: var(--#{$prefix}fw-light) !default;
+$font-weight-normal: var(--#{$prefix}fw-normal) !default;
+$font-weight-semibold: var(--#{$prefix}fw-semibold) !default;
+$font-weight-bold: var(--#{$prefix}fw-bold) !default;
+$font-weight-bolder: var(--#{$prefix}fw-bolder) !default;
+// end custom
 
 $font-weight-base: $font-weight-normal !default;
 
 $line-height-base: 1.5 !default;
 
-$h1-font-size: $font-size-base * 4 !default;
-$h2-font-size: $font-size-base * 3.5 !default;
-$h3-font-size: $font-size-base * 3 !default;
-$h4-font-size: $font-size-base * 2 !default;
-$h5-font-size: $font-size-base * 1.5 !default;
-$h6-font-size: $font-size-base * 1.125 !default;
+// custom
+$h1-font-size-value: $font-size-base * 4 !default;
+$h2-font-size-value: $font-size-base * 3.5 !default;
+$h3-font-size-value: $font-size-base * 3 !default;
+$h4-font-size-value: $font-size-base * 2 !default;
+$h5-font-size-value: $font-size-base * 1.5 !default;
+$h6-font-size-value: $font-size-base * 1.125 !default;
+
+$h1-font-size: var(--#{$prefix}fs-1) !default;
+$h2-font-size: var(--#{$prefix}fs-2) !default;
+$h3-font-size: var(--#{$prefix}fs-3) !default;
+$h4-font-size: var(--#{$prefix}fs-4) !default;
+$h5-font-size: var(--#{$prefix}fs-5) !default;
+$h6-font-size: var(--#{$prefix}fs-6) !default;
+// end custom
 // scss-docs-end font-variables
 
 // scss-docs-start font-sizes
+// custom
+$font-size-values: (
+  1: $h1-font-size-value,
+  2: $h2-font-size-value,
+  3: $h3-font-size-value,
+  4: $h4-font-size-value,
+  5: $h5-font-size-value,
+  6: $h6-font-size-value
+) !default;
+// end custom
+
 $font-sizes: (
   1: $h1-font-size,
   2: $h2-font-size,
@@ -45,16 +79,35 @@ $font-sizes: (
 // scss-docs-start headings-variables
 $headings-margin-bottom: 0 !default;
 $headings-font-weight: $font-weight-bold !default;
-$headings-line-height: 1.2 !default;
+$headings-line-height-value: 1.2 !default;
+$headings-line-height: var(--#{$prefix}heading-line-height) !default;
 // scss-docs-end headings-variables
 
 // scss-docs-start display-headings
-$display1-font-size: 7.5rem !default;
-$display2-font-size: 4.5rem !default;
-$display3-font-size: 4rem !default;
-$display4-font-size: 3.5rem !default;
-$display5-font-size: 3rem !default;
-$display6-font-size: 2.5rem !default;
+// custom
+$display1-font-size-value: 7.5rem !default;
+$display2-font-size-value: 4.5rem !default;
+$display3-font-size-value: 4rem !default;
+$display4-font-size-value: 3.5rem !default;
+$display5-font-size-value: 3rem !default;
+$display6-font-size-value: 2.5rem !default;
+
+$display1-font-size: var(--#{$prefix}fs-display-1) !default;
+$display2-font-size: var(--#{$prefix}fs-display-2) !default;
+$display3-font-size: var(--#{$prefix}fs-display-3) !default;
+$display4-font-size: var(--#{$prefix}fs-display-4) !default;
+$display5-font-size: var(--#{$prefix}fs-display-5) !default;
+$display6-font-size: var(--#{$prefix}fs-display-6) !default;
+
+$display-font-size-values: (
+  1: $display1-font-size-value,
+  2: $display2-font-size-value,
+  3: $display3-font-size-value,
+  4: $display4-font-size-value,
+  5: $display5-font-size-value,
+  6: $display6-font-size-value
+) !default;
+// end custom
 
 $display-font-sizes: (
   1: $display1-font-size,
@@ -72,7 +125,10 @@ $display-line-height: $headings-line-height !default;
 // scss-docs-start type-variables
 $lead-font-weight: $font-weight-normal !default;
 
+// custom
 $small-font-size: $font-size-sm !default;
+$small-font-size-value: $font-size-sm-value !default;
+// end custom
 
 $sub-sup-font-size: .75em !default;
 

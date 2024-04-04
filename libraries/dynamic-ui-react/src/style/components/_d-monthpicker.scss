@@ -3,7 +3,7 @@
 .react-datepicker.d-month-picker {
   // Month variables
   --#{$prefix}monthpicker-header-padding: var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-2) 0;
-  --#{$prefix}monthpicker-font-weight: var(--#{$prefix}ref-fw-normal);
+  --#{$prefix}monthpicker-font-weight: var(--#{$prefix}fw-normal);
   --#{$prefix}monthpicker-header-color: var(--#{$prefix}white);
   --#{$prefix}monthpicker-header-bg: var(--#{$prefix}dark);
 
@@ -19,14 +19,14 @@
   --#{$prefix}monthpicker-month-hover-bg: var(--#{$prefix}gray-700);
 
   --#{$prefix}monthpicker-month-wrapper-gap: var(--#{$prefix}ref-spacer-2);
-  --#{$prefix}monthpicker-month-wrapper-font-size: var(--#{$prefix}ref-fs-small);
+  --#{$prefix}monthpicker-month-wrapper-font-size: var(--#{$prefix}fs-small);
 
   --#{$prefix}monthpicker-single-month-width: 46px;
   --#{$prefix}monthpicker-single-month-padding: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}monthpicker-single-month-margin: 0;
   --#{$prefix}monthpicker-single-month-text-transform: capitalize;
   --#{$prefix}monthpicker-single-month-radius: var(--#{$prefix}ref-spacer-6);
-  --#{$prefix}monthpicker-single-month-line-height: var(--#{$prefix}ref-fs-6);
+  --#{$prefix}monthpicker-single-month-line-height: var(--#{$prefix}fs-6);
 
   --#{$prefix}monthpicker-single-month-after-display: inline;
   --#{$prefix}monthpicker-single-month-after-content: ".";
@@ -46,7 +46,7 @@
     .btn-sm {
       --#{$prefix}btn-padding-x: 0;
       --#{$prefix}btn-padding-y: 0;
-      --#{$prefix}btn-font-size: var(--#{$prefix}ref-fs-5);
+      --#{$prefix}btn-font-size: var(--#{$prefix}fs-5);
     }
   }
 

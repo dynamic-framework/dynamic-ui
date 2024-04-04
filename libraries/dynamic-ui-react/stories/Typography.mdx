@@ -1,6 +1,4 @@
-{/* Typography.mdx */}
-
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Docs } from '@storybook/blocks';
 
 <Meta title="Design System/Typography" />
 
@@ -8,10 +6,51 @@ import { Meta, Canvas } from '@storybook/blocks';
 
 **Source® Sans 3**, Google's open source typeface family. It is a sans serif typeface intended to work well in user interfaces.
 
-To understand in more detail the font usage review the following documentation:
+To understand in more detail the font usage take a look to the following documentation:
 
 + [Bootstrap Typography](https://getbootstrap.com/docs/5.3/content/typography/)
 + [Bootstrap RFS](https://getbootstrap.com/docs/5.3/getting-started/rfs/)
+
+Our fonts configuration works the same as bootstrap, however, the values are in css variables directly in the `:root`
+using `rfs` and media queries instead of being directly in each tag.
+
+Based on this, the following variables are found in the `:root`: `--bs-rfs-display-1`, `--bs-rfs-display-2`,
+`--bs-rfs-display-3`, `--bs-rfs-display-4`, `--bs-rfs-display-5`, `--bs-rfs-display-6`, `--bs-rfs-fs-1`,
+`--bs-rfs-fs-2`, `--bs-rfs-fs-3`, `--bs-rfs-fs-4`, `--bs-rfs-fs-5`, `--bs-rfs-fs-6` and `--bs-rfs-fs-small`.
+
+Which are used in each tag using a reference variable
+
+```css
+--bs-fs-display-1: var(--bs-rfs-display-1);
+--bs-fs-display-2: var(--bs-rfs-display-2);
+--bs-fs-display-3: var(--bs-rfs-display-3);
+--bs-fs-display-4: var(--bs-rfs-display-4);
+--bs-fs-display-5: var(--bs-rfs-display-5);
+--bs-fs-display-6: var(--bs-rfs-display-6);
+--bs-fs-1: var(--bs-rfs-fs-1);
+--bs-fs-2: var(--bs-rfs-fs-2);
+--bs-fs-3: var(--bs-rfs-fs-3);
+--bs-fs-4: var(--bs-rfs-fs-4);
+--bs-fs-5: var(--bs-rfs-fs-5);
+--bs-fs-6: var(--bs-rfs-fs-6);
+--bs-fs-small: var(--bs-rfs-fs-small);
+```
+
+```css
+h1, .h1 {
+  font-size: var(--bs-fs-1);
+}
+
+.fs-3 {
+  font-size: var(--bs-fs-3) !important;
+}
+
+.display-2 {
+  --bs-display-font-size: var(--bs-fs-display-2);
+}
+```
+
+Thanks to this you can define a direct value in the reference variable to not use the bootstrap rfs calculation.
 
 
 ## Heading
@@ -20,7 +59,7 @@ To understand in more detail the font usage review the following documentation:
   <div className="container">
     <div className="row align-items-center mb-4">
       <div className="col">
-        <h3 className="h5">Heading 1</h3>
+        <h3 className="fs-5">Heading 1</h3>
         <div className="small text-gray-500">
           <div>Font size: 64px / 4rem</div>
           <div>Line height: 1.2</div>
@@ -28,15 +67,15 @@ To understand in more detail the font usage review the following documentation:
         </div>
       </div>
       <div className="col">
-        <h1>Text</h1>
+        <h1 className="fw-normal">Text</h1>
       </div>
       <div className="col">
-        <h1 className="fw-bold">Text</h1>
+        <h1>Text</h1>
       </div>
     </div>
     <div className="row align-items-center mb-4">
       <div className="col">
-        <h3 className="h5">Heading 2</h3>
+        <h3 className="fs-5">Heading 2</h3>
         <div className="small text-gray-500">
           <div>Font size: 56px / 3.5rem</div>
           <div>Line height: 1.2</div>
@@ -44,15 +83,15 @@ To understand in more detail the font usage review the following documentation:
         </div>
       </div>
       <div className="col">
-        <h3>Text</h3>
+        <h3 className="fw-normal">Text</h3>
       </div>
       <div className="col">
-        <h3 className="fw-bold">Text</h3>
+        <h3>Text</h3>
       </div>
     </div>
     <div className="row align-items-center mb-4">
       <div className="col">
-        <h3 className="h5">Heading 3</h3>
+        <h3 className="fs-5">Heading 3</h3>
         <div className="small text-gray-500">
           <div>Font size: 48px / 3rem</div>
           <div>Line height: 1.2</div>
@@ -60,15 +99,15 @@ To understand in more detail the font usage review the following documentation:
         </div>
       </div>
       <div className="col">
-        <h3>Text</h3>
+        <h3 className="fw-normal">Text</h3>
       </div>
       <div className="col">
-        <h3 className="fw-bold">Text</h3>
+        <h3>Text</h3>
       </div>
     </div>
     <div className="row align-items-center mb-4">
       <div className="col">
-        <h3 className="h5">Heading 4</h3>
+        <h3 className="fs-5">Heading 4</h3>
         <div className="small text-gray-500">
           <div>Font size: 32px / 2rem</div>
           <div>Line height: 1.2</div>
@@ -76,15 +115,15 @@ To understand in more detail the font usage review the following documentation:
         </div>
       </div>
       <div className="col">
-        <h4>Text</h4>
+        <h4 className="fw-normal">Text</h4>
       </div>
       <div className="col">
-        <h4 className="fw-bold">Text</h4>
+        <h4>Text</h4>
       </div>
     </div>
     <div className="row align-items-center mb-4">
       <div className="col">
-        <h3 className="h5">Heading 5</h3>
+        <h3 className="fs-5">Heading 5</h3>
         <div className="small text-gray-500">
           <div>Font size: 24px / 1.5rem</div>
           <div>Line height: 1.2</div>
@@ -92,15 +131,15 @@ To understand in more detail the font usage review the following documentation:
         </div>
       </div>
       <div className="col">
-        <h5>Text</h5>
+        <h5 className="fw-normal">Text</h5>
       </div>
       <div className="col">
-        <h5 className="fw-bold">Text</h5>
+        <h5>Text</h5>
       </div>
     </div>
     <div className="row align-items-center mb-4">
       <div className="col">
-        <h3 className="h5">Heading 6</h3>
+        <h3 className="fs-5">Heading 6</h3>
         <div className="small text-gray-500">
           <div>Font size: 18px / 1.125rem</div>
           <div>Line height: 1.2</div>
@@ -108,10 +147,10 @@ To understand in more detail the font usage review the following documentation:
         </div>
       </div>
       <div className="col">
-        <h6>Text</h6>
+        <h6 className="fw-normal">Text</h6>
       </div>
       <div className="col">
-        <h6 className="fw-bold">Text</h6>
+        <h6>Text</h6>
       </div>
     </div>
   </div>
@@ -123,7 +162,7 @@ To understand in more detail the font usage review the following documentation:
   <div className="container">
     <div className="row align-items-center mb-4">
       <div className="col">
-        <h3 className="h5">Paragraph</h3>
+        <h3 className="fs-5">Paragraph</h3>
         <div className="small text-gray-500">
           <div>Font size: 16px / 1rem</div>
           <div>Line height: 1.5</div>
@@ -139,23 +178,7 @@ To understand in more detail the font usage review the following documentation:
     </div>
     <div className="row align-items-center mb-4">
       <div className="col">
-        <h3 className="h5">Subparagraph</h3>
-        <div className="small text-gray-500">
-          <div>Font size: 14px / .875rem</div>
-          <div>Line height: 1.5</div>
-          <div>Font weight: Regular | Bold</div>
-        </div>
-      </div>
-      <div className="col">
-        <p className="small text-gray-500">Text</p>
-      </div>
-      <div className="col">
-        <p className="small text-gray-500 fw-bold">Text</p>
-      </div>
-    </div>
-    <div className="row align-items-center mb-4">
-      <div className="col">
-        <h3 className="h5">Small</h3>
+        <h3 className="fs-5">Small</h3>
         <div className="small text-gray-500">
           <div>Font size: 14px / .875rem</div>
           <div>Line height: 1.5</div>
@@ -167,6 +190,109 @@ To understand in more detail the font usage review the following documentation:
       </div>
       <div className="col">
         <small className="fw-bold">Text</small>
+      </div>
+    </div>
+  </div>
+</Canvas>
+
+## Display
+
+<Canvas>
+  <div className="container">
+    <div className="row align-items-center mb-4">
+      <div className="col">
+        <h3 className="fs-5">Display 1</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 120px / 7.5rem</div>
+          <div>Line height: 1.2</div>
+          <div>Font weight: Regular | Bold</div>
+        </div>
+      </div>
+      <div className="col">
+        <span className="display-1">Text</span>
+      </div>
+      <div className="col">
+        <span className="display-1 fw-bold">Text</span>
+      </div>
+    </div>
+    <div className="row align-items-center mb-4">
+      <div className="col">
+        <h3 className="fs-5">Display 2</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 72px / 4.5rem</div>
+          <div>Line height: 1.2</div>
+          <div>Font weight: Regular | Bold</div>
+        </div>
+      </div>
+      <div className="col">
+        <span className="display-2">Text</span>
+      </div>
+      <div className="col">
+        <span className="display-2 fw-bold">Text</span>
+      </div>
+    </div>
+    <div className="row align-items-center mb-4">
+      <div className="col">
+        <h3 className="fs-5">Display 3</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 64px / 4rem</div>
+          <div>Line height: 1.2</div>
+          <div>Font weight: Regular | Bold</div>
+        </div>
+      </div>
+      <div className="col">
+        <span className="display-3">Text</span>
+      </div>
+      <div className="col">
+        <span className="display-3 fw-bold">Text</span>
+      </div>
+    </div>
+    <div className="row align-items-center mb-4">
+      <div className="col">
+        <h3 className="fs-5">Display 4</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 56px / 3.5rem</div>
+          <div>Line height: 1.2</div>
+          <div>Font weight: Regular | Bold</div>
+        </div>
+      </div>
+      <div className="col">
+        <span className="display-4">Text</span>
+      </div>
+      <div className="col">
+        <span className="display-4 fw-bold">Text</span>
+      </div>
+    </div>
+    <div className="row align-items-center mb-4">
+      <div className="col">
+        <h3 className="fs-5">Display 5</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 48px / 3.5rem</div>
+          <div>Line height: 1.2</div>
+          <div>Font weight: Regular | Bold</div>
+        </div>
+      </div>
+      <div className="col">
+        <span className="display-5">Text</span>
+      </div>
+      <div className="col">
+        <span className="display-5 fw-bold">Text</span>
+      </div>
+    </div>
+    <div className="row align-items-center mb-4">
+      <div className="col">
+        <h3 className="fs-5">Display 6</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 40px / 3.5rem</div>
+          <div>Line height: 1.2</div>
+          <div>Font weight: Regular | Bold</div>
+        </div>
+      </div>
+      <div className="col">
+        <span className="display-6">Text</span>
+      </div>
+      <div className="col">
+        <span className="display-6 fw-bold">Text</span>
       </div>
     </div>
   </div>

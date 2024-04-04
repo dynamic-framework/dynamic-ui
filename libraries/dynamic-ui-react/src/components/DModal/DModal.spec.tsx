@@ -28,7 +28,7 @@ it('should render my component with header, body, and footer slot', () => {
     <div
       aria-hidden="false"
       aria-labelledby="myModalLabel"
-      class="modal fade show"
+      class="modal portal fade show"
       id="myModal"
       tabindex="-1"
     >

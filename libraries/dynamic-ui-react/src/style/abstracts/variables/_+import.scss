@@ -57,6 +57,7 @@ $input-btn-border-width: var(--#{$prefix}border-width) !default;
 
 @import "buttons";
 @import "forms";
+@import "z-index";
 @import "navs";
 @import "navbar";
 @import "dropdowns";
@@ -64,6 +65,7 @@ $input-btn-border-width: var(--#{$prefix}border-width) !default;
 
 @import "cards";
 @import "accordion";
+@import "tooltip";
 @import "badges";
 @import "modals";
 @import "alerts";

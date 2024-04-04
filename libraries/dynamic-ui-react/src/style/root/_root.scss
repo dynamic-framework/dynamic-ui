@@ -31,10 +31,6 @@
     }
   }
 
-  --#{$prefix}btn-border-radius: #{$btn-border-radius};
-  --#{$prefix}btn-lg-border-radius: #{$btn-border-radius-lg};
-  --#{$prefix}btn-sm-border-radius: #{$btn-border-radius-sm};
-
   @each $color, $value in $colors {
     // custom
     --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
@@ -173,32 +169,113 @@
   --#{$prefix}form-invalid-border-color: #{$form-invalid-border-color};
   // scss-docs-end root-form-validation-variables
 
-  // only reference root variables
+  --#{$prefix}heading-line-height: #{$headings-line-height-value};
 
-  @each $level, $value in $spacers {
-    --#{$prefix}ref-spacer-#{$level}: #{$value};
+  @each $level, $value in $display-font-size-values {
+    @include rfs($value, --#{$prefix}rfs-display-#{$level});
+    --#{$prefix}fs-display-#{$level}: var(--#{$prefix}rfs-display-#{$level});
   }
 
-  @each $level, $value in $display-font-sizes {
-    --#{$prefix}ref-display-#{$level}: #{$value};
+  @each $level, $value in $font-size-values {
+    @include rfs($value, --#{$prefix}rfs-fs-#{$level});
+    --#{$prefix}fs-#{$level}: var(--#{$prefix}rfs-fs-#{$level});
   }
-  @each $level, $value in $font-sizes {
-    --#{$prefix}ref-fs-#{$level}: #{$value};
-  }
-  --#{$prefix}ref-fs-small: #{$small-font-size};
+  @include rfs($small-font-size-value, --#{$prefix}rfs-fs-small);
+  --#{$prefix}fs-small: var(--#{$prefix}rfs-fs-small);
 
-  --#{$prefix}ref-fw-lighter: #{$font-weight-lighter};
-  --#{$prefix}ref-fw-light: #{$font-weight-light};
-  --#{$prefix}ref-fw-normal: #{$font-weight-normal};
-  --#{$prefix}ref-fw-semibold: #{$font-weight-semibold};
-  --#{$prefix}ref-fw-bold: #{$font-weight-bold};
-  --#{$prefix}ref-fw-bolder: #{$font-weight-bolder};
+  --#{$prefix}fw-lighter: #{$font-weight-lighter-value};
+  --#{$prefix}fw-light: #{$font-weight-light-value};
+  --#{$prefix}fw-normal: #{$font-weight-normal-value};
+  --#{$prefix}fw-semibold: #{$font-weight-semibold-value};
+  --#{$prefix}fw-bold: #{$font-weight-bold-value};
+  --#{$prefix}fw-bolder: #{$font-weight-bolder-value};
 
   --#{$prefix}label-padding-y: var(--#{$prefix}ref-spacer-0);
   --#{$prefix}label-padding-x: var(--#{$prefix}ref-spacer-2);
-  --#{$prefix}label-font-size: var(--#{$prefix}ref-fs-small);
-  --#{$prefix}label-font-weight: var(--#{$prefix}ref-fw-bold);
+  --#{$prefix}label-font-size: var(--#{$prefix}fs-small);
+  --#{$prefix}label-font-weight: var(--#{$prefix}fw-bold);
   --#{$prefix}label-color: var(--#{$prefix}gray);
+
+  --#{$prefix}btn-border-radius: #{$btn-border-radius};
+  --#{$prefix}btn-lg-border-radius: #{$btn-border-radius-lg};
+  --#{$prefix}btn-sm-border-radius: #{$btn-border-radius-sm};
+
+  @each $color, $value in $theme-colors {
+    @if $color == "light" {
+      @include df-button-variant-variables(
+        "light",
+        $default-color: var(--#{$prefix}light),
+        $hover-color: var(--#{$prefix}gray-200),
+        $focus-color: var(--#{$prefix}light),
+        $active-color: var(--#{$prefix}gray-300),
+        $default-text-color: color-contrast-var(map-get($all-colors, light)),
+        $hover-text-color: color-contrast-var(map-get($all-colors, gray-200)),
+        $focus-text-color: color-contrast-var(map-get($all-colors, gray-200)),
+        $active-text-color: color-contrast-var(map-get($all-colors, gray-300)),
+        $disabled-opacity: .5
+      );
+      @include df-button-outline-variant-variables(
+        "light",
+        $default-color: var(--#{$prefix}light),
+        $hover-bg-color: var(--#{$prefix}light),
+        $hover-text-color: color-contrast-var(map-get($all-colors, light)),
+        $focus-text-color: var(--#{$prefix}light),
+        $active-text-color: color-contrast-var(map-get($all-colors, light)),
+        $active-bg-color: var(--#{$prefix}gray-300),
+        $active-border-color: var(--#{$prefix}gray-300)
+      );
+      @include df-button-link-variant-variables(
+        "light",
+        $default-color: var(--#{$prefix}light),
+        $hover-bg-color: var(--#{$prefix}light),
+        $hover-text-color: color-contrast-var(map-get($all-colors, light)),
+        $focus-text-color: var(--#{$prefix}light),
+        $active-text-color: color-contrast-var(map-get($all-colors, light)),
+        $active-bg-color: var(--#{$prefix}gray-300)
+      );
+    } @else if $color == "dark" {
+      @include df-button-variant-variables(
+        "dark",
+        $default-color: var(--#{$prefix}dark),
+        $hover-color: var(--#{$prefix}gray-800),
+        $focus-color: var(--#{$prefix}dark),
+        $active-color: var(--#{$prefix}gray-700),
+        $default-text-color: color-contrast-var(map-get($all-colors, dark)),
+        $hover-text-color: color-contrast-var(map-get($all-colors, gray-800)),
+        $focus-text-color: color-contrast-var(map-get($all-colors, gray-800)),
+        $active-text-color: color-contrast-var(map-get($all-colors, gray-700)),
+        $disabled-opacity: .5
+      );
+      @include df-button-outline-variant-variables(
+        "dark",
+        $default-color: var(--#{$prefix}dark),
+        $hover-bg-color: var(--#{$prefix}dark),
+        $hover-text-color: color-contrast-var(map-get($all-colors, dark)),
+        $focus-text-color: var(--#{$prefix}dark),
+        $active-text-color: color-contrast-var(map-get($all-colors, dark)),
+        $active-bg-color: var(--#{$prefix}gray-700),
+        $active-border-color: var(--#{$prefix}gray-700)
+      );
+      @include df-button-link-variant-variables(
+        "dark",
+        $default-color: var(--#{$prefix}dark),
+        $hover-bg-color: var(--#{$prefix}dark),
+        $hover-text-color: color-contrast-var(map-get($all-colors, dark)),
+        $focus-text-color: var(--#{$prefix}dark),
+        $active-text-color: color-contrast-var(map-get($all-colors, dark)),
+        $active-bg-color: var(--#{$prefix}gray-700)
+      );
+    } @else {
+      @include df-button-variant-variables($color);
+      @include df-button-outline-variant-variables($color);
+      @include df-button-link-variant-variables($color);
+    }
+  }
+
+  // only reference root variables
+  @each $level, $value in $spacers {
+    --#{$prefix}ref-spacer-#{$level}: #{$value};
+  }
 }
 
 @if $enable-dark-mode {

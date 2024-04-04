@@ -2,9 +2,6 @@ import type { Preview } from '@storybook/react';
 
 export default {
   parameters: {
-    docs: {
-      toc: true,
-    },
     layout: 'centered',
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
@@ -60,13 +57,14 @@ export default {
               'Box File',
               'Chip',
               'Badge',
+              'Avatar'
             ],
             'Patterns',
             [
               'Toast',
               'AlertBox',
               'Modal',
-              'Offcanvas',
+              'OffCanvas',
               'Carousel',
               'Popover',
               'Tabs',

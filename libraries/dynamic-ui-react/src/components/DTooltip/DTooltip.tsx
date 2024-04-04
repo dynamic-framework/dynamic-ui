@@ -97,9 +97,9 @@ export default function DTooltip(
 
   const generateClasses = useMemo(
     () => ({
-      'd-tooltip': true,
-      [`d-tooltip-${size}`]: !!size,
-      [`d-tooltip-${theme}`]: !!theme,
+      'tooltip show': true,
+      [`tooltip-${size}`]: !!size,
+      [`tooltip-${theme}`]: !!theme,
       ...className && { [className]: true },
     }),
     [size, theme, className],
@@ -133,7 +133,9 @@ export default function DTooltip(
               width={ARROW_WIDTH}
               height={ARROW_HEIGHT}
             />
-            {children}
+            <div className="tooltip-inner">
+              {children}
+            </div>
           </div>
         )}
       </FloatingPortal>

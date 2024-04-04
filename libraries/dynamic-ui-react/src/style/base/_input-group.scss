@@ -1,11 +1,11 @@
 // bootstrap reset layer
+.input-group-text + .form-control {
+  padding-left: 0;
+}
+
 .input-group > .form-select,
 .input-group > .form-control {
   border: 0;
-
-  &:not(:first-child) {
-    padding-left: 0;
-  }
 
   &:focus {
     border: 0;
@@ -18,7 +18,7 @@
   background-position: right 0 center;
 }
 
-.input-group > .form-control:not(:last-child) {
+.form-control:has(~ .input-group-text) {
   padding-right: 0;
 }
 
@@ -61,7 +61,6 @@
   --#{$prefix}input-disabled-border-color: #{$input-disabled-border-color};
   --#{$prefix}input-disabled-bg: #{$input-disabled-bg};
   --#{$prefix}input-disabled-color: #{$input-disabled-color};
-
 
   border: var(--#{$prefix}input-border-width) solid var(--#{$prefix}input-border-color);
   @include border-radius(var(--#{$prefix}input-border-radius), 0);
@@ -110,5 +109,11 @@
 
   button:disabled .d-icon {
     --#{$prefix}icon-color: var(--#{$prefix}input-disabled-color);
+  }
+
+  > .btn {
+    --#{$prefix}btn-border-radius: var(--#{$prefix}input-border-radius);
+
+    margin: -1px;
   }
 }

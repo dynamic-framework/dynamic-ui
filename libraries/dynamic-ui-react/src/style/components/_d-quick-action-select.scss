@@ -18,6 +18,8 @@
 
   display: flex;
   flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
   width: 100%;
   padding: var(--#{$prefix}quick-action-select-padding);
   text-align: left;

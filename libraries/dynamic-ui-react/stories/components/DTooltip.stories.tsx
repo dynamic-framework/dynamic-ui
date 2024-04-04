@@ -18,14 +18,15 @@ To understand in more detail the aspects covered by this component, review the f
 ## CSS Variables
 | Variable                                   | Type             | Description                   |
 |--------------------------------------------|------------------|-------------------------------|
-| --${PREFIX_BS}tooltip-bg               | css color unit   | Background and arrow color    |
-| --${PREFIX_BS}tooltip-border-radius    | css length unit  | Border radius                 |
-| --${PREFIX_BS}tooltip-color            | css color unit   | Text color                    |
-| --${PREFIX_BS}tooltip-font-size        | css length unit  | Text font size                |
-| --${PREFIX_BS}tooltip-sm-font-size     | css length unit  | Small tooltip text font size  |
-| --${PREFIX_BS}tooltip-lg-font-size     | css length unit  | Small tooltip text font size  |
-| --${PREFIX_BS}tooltip-padding          | css length unit  | Padding                       |
-| --${PREFIX_BS}tooltip-max-width        | css length unit  | Max width                     |
+| --${PREFIX_BS}tooltip-bg                   | css color unit   | Background and arrow color    |
+| --${PREFIX_BS}tooltip-border-radius        | css length unit  | Border radius                 |
+| --${PREFIX_BS}tooltip-color                | css color unit   | Text color                    |
+| --${PREFIX_BS}tooltip-font-size            | css length unit  | Text font size                |
+| --${PREFIX_BS}tooltip-sm-font-size         | css length unit  | Small tooltip text font size  |
+| --${PREFIX_BS}tooltip-lg-font-size         | css length unit  | Small tooltip text font size  |
+| --${PREFIX_BS}tooltip-padding-x            | css length unit  | Padding                       |
+| --${PREFIX_BS}tooltip-padding-y            | css length unit  | Padding                       |
+| --${PREFIX_BS}tooltip-max-width            | css length unit  | Max width                     |
         `,
       },
     },
@@ -42,6 +43,11 @@ To understand in more detail the aspects covered by this component, review the f
       defaultValue: true,
     },
     withClick: {
+      type: 'boolean',
+      control: 'boolean',
+      defaultValue: false,
+    },
+    open: {
       type: 'boolean',
       control: 'boolean',
       defaultValue: false,

@@ -1,23 +1,27 @@
-import { DModalContextProvider, useDModalContext } from '../../src';
+import {
+  DContextProvider,
+  useDPortalContext,
+} from '../../src';
 import DModal from '../../src/components/DModal/DModal';
 import DButton from '../../src/components/DButton';
 
-import type { ModalProps } from '../../src';
+import type { PortalProps } from '../../src';
 
-type ModalPayload = {
+type ModalPayloads = {
   example: {
     description: string;
   };
 };
 
-function ExampleModal({ closeModal, payload }: ModalProps<ModalPayload['example']>) {
+function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
+  const { closePortal } = useDPortalContext();
   return (
     <DModal
       name="example"
       centered
       staticBackdrop
     >
-      <DModal.Header onClose={closeModal} showCloseButton>
+      <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
       <DModal.Body className="py-3 px-5">
@@ -31,7 +35,7 @@ function ExampleModal({ closeModal, payload }: ModalProps<ModalPayload['example'
           variant="outline"
           className="d-grid"
           pill
-          onClick={() => closeModal()}
+          onClick={() => closePortal()}
         />
         <DButton text="ok" className="d-grid" pill />
       </DModal.Footer>
@@ -40,24 +44,24 @@ function ExampleModal({ closeModal, payload }: ModalProps<ModalPayload['example'
 }
 
 function ExampleModalUsage() {
-  const { openModal } = useDModalContext<ModalPayload>();
+  const { openPortal } = useDPortalContext<ModalPayloads>();
   return (
     <DButton
       text="Open Modal"
-      onClick={() => openModal('example', { description: 'from modal payload' })}
+      onClick={() => openPortal('example', { description: 'from portal payload' })}
     />
   );
 }
 
 export function ExampleModalRoot() {
   return (
-    <DModalContextProvider<ModalPayload>
+    <DContextProvider<ModalPayloads>
       portalName="examplePortal"
-      availableModals={{
+      availablePortals={{
         example: ExampleModal,
       }}
     >
       <ExampleModalUsage />
-    </DModalContextProvider>
+    </DContextProvider>
   );
 }

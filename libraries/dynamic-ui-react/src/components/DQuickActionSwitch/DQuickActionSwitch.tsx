@@ -49,13 +49,8 @@ export default function DQuickActionSwitch(
           disabled={disabled}
           checked={checked}
           readonly
+          label={label}
         />
-        <label
-          className="d-quick-action-switch-label"
-          htmlFor={id}
-        >
-          {label}
-        </label>
       </div>
       <div className="d-quick-action-switch-hint">
         {hint}

@@ -1,0 +1,13 @@
+.btn-group-vertical {
+  .btn {
+    --#{$prefix}btn-border-radius: var(--#{$prefix}border-radius-sm);
+  }
+
+  &.btn-group-lg .btn {
+    --#{$prefix}btn-border-radius: var(--#{$prefix}border-radius);
+  }
+
+  &.btn-group-sm .btn {
+    --#{$prefix}btn-border-radius: var(--#{$prefix}border-radius-sm);
+  }
+}

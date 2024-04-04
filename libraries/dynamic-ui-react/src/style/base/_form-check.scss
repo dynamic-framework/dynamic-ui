@@ -13,8 +13,9 @@
     border-color: $form-check-input-checked-border-color;
   }
 
-  &:disabled {
+  &:disabled:not(:checked, :indeterminate) {
     background-color: $form-check-input-disabled-bg;
     border-color: $form-check-input-disabled-border-color;
+    opacity: 1;
   }
 }

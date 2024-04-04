@@ -9,8 +9,8 @@ $accordion-bg: var(--#{$prefix}white) !default;
 // custom
 $accordion-body-padding-top: $accordion-padding-x !default;
 $accordion-button-border-color: var(--#{$prefix}gray-100) !default;
-$accordion-button-font-weight: var(--#{$prefix}ref-fw-bold) !default;
-$accordion-button-font-size: var(--#{$prefix}ref-fs-6) !default;
+$accordion-button-font-weight: var(--#{$prefix}fw-bold) !default;
+$accordion-button-font-size: var(--#{$prefix}fs-6) !default;
 // end custom
 
 $accordion-button-active-bg: var(--#{$prefix}secondary-soft) !default;

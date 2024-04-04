@@ -39,7 +39,7 @@
   cursor: if($enable-button-pointers, pointer, null);
   user-select: none;
   border: var(--#{$prefix}btn-border-width) solid var(--#{$prefix}btn-border-color);
-  @include border-radius(var(--#{$prefix}btn-border-radius));
+  border-radius: var(--#{$prefix}btn-border-radius);
   @include gradient-bg(var(--#{$prefix}btn-bg));
   @include box-shadow(var(--#{$prefix}btn-box-shadow));
   @include transition($btn-transition);
@@ -66,14 +66,18 @@
 
   // focus selectors
   .btn-check:focus-visible + &,
-  &:focus-visible,
-  &.focus-visible {
+  &:focus-visible:not(:hover),
+  &.focus-visible:not(:hover) {
     // copy of .btn:focus bootstrap + focus var
     color: var(--#{$prefix}btn-focus-color, var(--#{$prefix}btn-hover-color));
     @include gradient-bg(var(--#{$prefix}btn-focus-bg, var(--#{$prefix}btn-hover-bg)));
     border-color: var(--#{$prefix}btn-focus-border-color, var(--#{$prefix}btn-hover-border-color));
     // end copy
+  }
 
+  .btn-check:focus-visible + &,
+  &:focus-visible,
+  &.focus-visible {
     outline: var(--#{$prefix}btn-focus-border-width, var(--#{$prefix}btn-border-width)) solid var(--#{$prefix}btn-focus-outline-color, var(--#{$prefix}focus-ring-color));
     outline-offset: var(--#{$prefix}btn-focus-outline-offset, var(--#{$prefix}btn-border-width));
   }
@@ -119,57 +123,15 @@
 
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
-    @if $color == "light" { // default bootstrap style
-      @include button-variant(
-        $value,
-        $value,
-        $hover-background: shade-color($value, $btn-hover-bg-shade-amount),
-        $hover-border: shade-color($value, $btn-hover-border-shade-amount),
-        $active-background: shade-color($value, $btn-active-bg-shade-amount),
-        $active-border: shade-color($value, $btn-active-border-shade-amount)
-      );
-    } @else if $color == "dark" { // default bootstrap style
-      @include button-variant(
-        $value,
-        $value,
-        $hover-background: tint-color($value, $btn-hover-bg-tint-amount),
-        $hover-border: tint-color($value, $btn-hover-border-tint-amount),
-        $active-background: tint-color($value, $btn-active-bg-tint-amount),
-        $active-border: tint-color($value, $btn-active-border-tint-amount)
-      );
-    } @else {
-      @include df-button-variant($color);
-    }
+    @include df-button-variant-mapper($color);
   }
 
   .btn-outline-#{$color} {
-    @if $color == "light" or $color == "dark" { // default bootstrap style
-      @include button-outline-variant($value);
-    } @else {
-      @include df-button-outline-variant($color);
-    }
+    @include df-button-variant-mapper($color, "outline");
   }
 
   .btn-link-#{$color} {
-    span {
-      text-decoration: underline;
-    }
-
-    @if $color == "light" {
-      @include df-button-link-variant(
-        "gray",
-        $default-color: $value,
-        $hover-bg-color: var(--#{$prefix}gray-300),
-        $active-bg-color: var(--#{$prefix}gray-500)
-      );
-    } @else if $color == "dark" {
-      @include df-button-link-variant(
-        "gray",
-        $default-color: $value
-      );
-    } @else {
-      @include df-button-link-variant($color);
-    }
+    @include df-button-variant-mapper($color, "link");
   }
 }
 
@@ -193,6 +155,10 @@
 
 [class*="btn-link-"] {
   --#{$prefix}btn-text-decoration: var(--#{$prefix}link-decoration);
+
+  span {
+    text-decoration: underline;
+  }
 
   @if $enable-gradients {
     background-image: none;
