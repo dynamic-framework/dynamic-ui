@@ -53,10 +53,10 @@
     gap: var(--#{$prefix}quick-action-switch-content-gap);
   }
 
-  .d-quick-action-switch-label {
-    font-size: var(--#{$prefix}quick-action-switch-label-font-size);
-    font-weight: var(--#{$prefix}quick-action-switch-label-font-weight);
-    color: var(--#{$prefix}quick-action-switch-label-color);
+  label {
+    --#{$prefix}label-font-size: var(--#{$prefix}quick-action-switch-label-font-size);
+    --#{$prefix}label-font-weight: var(--#{$prefix}quick-action-switch-label-font-weight);
+    --#{$prefix}label-color: var(--#{$prefix}quick-action-switch-label-color);
   }
 
   .d-quick-action-switch-hint {

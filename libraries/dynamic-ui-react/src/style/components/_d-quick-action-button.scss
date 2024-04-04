@@ -25,6 +25,8 @@
 
   --#{$prefix}quick-action-button-action-icon-color: #{$quick-action-button-action-icon-color};
   --#{$prefix}quick-action-button-action-icon-size: #{$quick-action-button-action-icon-size};
+  --#{$prefix}quick-action-button-action-link-padding-x: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}quick-action-button-action-link-padding-y: var(--#{$prefix}ref-spacer-2);
 
   --#{$prefix}quick-action-button-hover-bg: #{$quick-action-button-hover-bg};
   --#{$prefix}quick-action-button-hover-border-color: #{$quick-action-button-hover-border-color};
@@ -83,6 +85,12 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+  }
+
+  .d-quick-action-button-action-link,
+  .d-quick-action-button-secondary-action-link {
+    --#{$prefix}btn-padding-x: var(--#{$prefix}quick-action-button-action-link-padding-x);
+    --#{$prefix}btn-padding-y: var(--#{$prefix}quick-action-button-action-link-padding-y);
   }
 
   .d-quick-action-button-line1 {

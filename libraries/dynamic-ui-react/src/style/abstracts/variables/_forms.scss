@@ -48,9 +48,9 @@ $input-plaintext-color: var(--#{$prefix}body-color) !default;
 $form-check-size-multiplier: 1.5 !default;
 // end custom
 $form-check-input-width: 1em * $form-check-size-multiplier !default;
-$form-check-min-height: $font-size-base * $line-height-base * $form-check-size-multiplier !default;
+$form-check-min-height: $form-check-input-width !default;
 $form-check-padding-start: $form-check-input-width - .5em * $form-check-size-multiplier !default;
-$form-check-margin-bottom: .125rem * $form-check-size-multiplier !default;
+$form-check-margin-bottom: .125rem !default;
 
 // custom
 $form-check-input-border-color: var(--#{$prefix}gray-400) !default;
