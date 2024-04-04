@@ -3,10 +3,10 @@
 // scss-docs-start pagination-variables
 $pagination-padding-y: var(--#{$prefix}ref-spacer-1) !default;
 $pagination-padding-x: var(--#{$prefix}ref-spacer-1) !default;
-$pagination-padding-y-sm: var(--#{$prefix}ref-spacer-1) !default;
-$pagination-padding-x-sm: var(--#{$prefix}ref-spacer-1) !default;
-$pagination-padding-y-lg: var(--#{$prefix}ref-spacer-2) !default;
-$pagination-padding-x-lg: var(--#{$prefix}ref-spacer-2) !default;
+$pagination-padding-y-sm: var(--#{$prefix}ref-spacer-0) !default;
+$pagination-padding-x-sm: var(--#{$prefix}ref-spacer-0) !default;
+$pagination-padding-y-lg: var(--#{$prefix}ref-spacer-1) !default;
+$pagination-padding-x-lg: var(--#{$prefix}ref-spacer-1) !default;
 
 // custom
 $pagination-page-item-size: $spacer-8 !default;
