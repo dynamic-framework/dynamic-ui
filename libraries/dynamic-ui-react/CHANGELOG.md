@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.18.0...@dynamic-framework/ui-react@1.19.0) (2024-04-04)
+
+
+### Features
+
+* add avatar-group example and fix DContext story ([cf5ec68](https://github.com/dynamic-framework/dynamic-ui/commit/cf5ec685f18038a804de5622d03270f2e8c234f1))
+* add breakpoints to fw ([b6d8778](https://github.com/dynamic-framework/dynamic-ui/commit/b6d87782451bb4596d4763b1be9b52d3379decd6))
+* add breakpoints to fw ([3f394b5](https://github.com/dynamic-framework/dynamic-ui/commit/3f394b591009ff20fb2b534c817411f9b824475f))
+* add support to DAvatar title property ([9a7ce93](https://github.com/dynamic-framework/dynamic-ui/commit/9a7ce93a659f02cd1105a7f98496d309e11db6d0))
+* add support to use btn variables with variant and theme from root ([02151ce](https://github.com/dynamic-framework/dynamic-ui/commit/02151ce1c915df732b296d5d68b4c1e1a6394ed4))
+* add support to visual stack modals and offcanvas ([0fa25a4](https://github.com/dynamic-framework/dynamic-ui/commit/0fa25a4fdea22aeff4b1e23df3c601e401c9d1b9))
+* add transition props and example ([6c09022](https://github.com/dynamic-framework/dynamic-ui/commit/6c09022066e5d2c1539ab9e01004699177022473))
+* avatar component ([d4a74a0](https://github.com/dynamic-framework/dynamic-ui/commit/d4a74a010578c2fd22ce08c9b8311f81b129b80e))
+* change tooltip default color to bootstrap colors ([58c162b](https://github.com/dynamic-framework/dynamic-ui/commit/58c162bc1302959aedf3ca571b367da8f84948c2))
+* define reference variables for font-size and use rfs as a value ([a278376](https://github.com/dynamic-framework/dynamic-ui/commit/a27837699110f1980f5b10997ca5e2633912b75f))
+* font weight responsive ([a8f4b93](https://github.com/dynamic-framework/dynamic-ui/commit/a8f4b938ff1b7001b201afff1d72cac42934b4f2))
+* font weight responsive ([63a7f6f](https://github.com/dynamic-framework/dynamic-ui/commit/63a7f6fc54a42e88aecda462901c73a84dc15b47))
+* integrate tooltips with bootstrap tooltips ([4d8fb8b](https://github.com/dynamic-framework/dynamic-ui/commit/4d8fb8be32698b24a4898b5a9efbd48c3b5ca1f6))
+* move the heading-line-height value to a css variable ([8e8f9a4](https://github.com/dynamic-framework/dynamic-ui/commit/8e8f9a454a8246c6f5da909b42063fec832c6164))
+* re-enable rfs with fs in css variables and with support to direct values ([c5af3c2](https://github.com/dynamic-framework/dynamic-ui/commit/c5af3c2139c670289ded0f0c210bdc2900b0eaa6))
+* text-truncate multiple lines ([#611](https://github.com/dynamic-framework/dynamic-ui/issues/611)) ([05f8c7f](https://github.com/dynamic-framework/dynamic-ui/commit/05f8c7fafe761ac951045b5b82264feb0dc76486))
+* use css var to define font-size, font-weight and responsive support in hN, .fs-N, .hN, display-N, fw-V, small and .small ([c688c0d](https://github.com/dynamic-framework/dynamic-ui/commit/c688c0d477b044aa17bf918417b76d4d12f7a691))
+
+
+### Bug Fixes
+
+* adjust .btn-group-vertical .btn border-radius ([5dbb6fc](https://github.com/dynamic-framework/dynamic-ui/commit/5dbb6fc9cabd4f25893d8fdd823120cc889ccc72))
+* adjust checkbox disable and indeterminate style and radio disable style ([2556c89](https://github.com/dynamic-framework/dynamic-ui/commit/2556c891b9a331ea7694c3fe08903f760cce7bc3))
+* adjust form-check margin and use internal label of DInputSwitch on DQuickActionSwitch ([b0a0c44](https://github.com/dynamic-framework/dynamic-ui/commit/b0a0c44763b33ea3b01e0c37f6c35594331fe66f))
+* adjust input padding with input-group-text siblings ([eea8995](https://github.com/dynamic-framework/dynamic-ui/commit/eea8995f6cf8ec17ac0fd5bf1ae3ad0339cd2d84))
+* adjust ref-fw- var to fw- ([e0d3d36](https://github.com/dynamic-framework/dynamic-ui/commit/e0d3d36e85cd632749d35cab4d7b565a83d8ba63))
+* adjust useStackState behavior and DPortalContext backdrop ([5152b59](https://github.com/dynamic-framework/dynamic-ui/commit/5152b597192be9e64bd7c70620b63e106e82cf34))
+* change -fs-fs-small to -fs-small ([1bc73bf](https://github.com/dynamic-framework/dynamic-ui/commit/1bc73bf39e6149e0802b05d4212750336d525a91))
+* change font size sm from rem to em ([763e524](https://github.com/dynamic-framework/dynamic-ui/commit/763e5240e0ad9021e72875e34163ad64b64452f2))
+* DModal and DOffcanvas tests ([c602ee1](https://github.com/dynamic-framework/dynamic-ui/commit/c602ee1c9f9903bd08b63be6696e2f78829e77c8))
+* override label options on DQuickActionSelect ([3546707](https://github.com/dynamic-framework/dynamic-ui/commit/35467070bd0e2c9de793fb044fece2986cbd431e))
+* padding card body ([d8465f8](https://github.com/dynamic-framework/dynamic-ui/commit/d8465f8a03ed5eacf8e9de33d00d26147cd84e2c))
+* pagination padding and tooltip default color ([36f08a6](https://github.com/dynamic-framework/dynamic-ui/commit/36f08a684ac065ef4f367f7f88458f43254a155e))
+* remove ref prefix from fs css var ([36cb3f2](https://github.com/dynamic-framework/dynamic-ui/commit/36cb3f2afc01274335c5aeff14d1232279906d0e))
+* spacing secondary actions on DQuickActionButton ([9d143af](https://github.com/dynamic-framework/dynamic-ui/commit/9d143afb12dba77ff8b6c0d03ce32527ff91c0b2))
+* use display-font-size map key and not display ([53fe021](https://github.com/dynamic-framework/dynamic-ui/commit/53fe0213dffb57f7d4269592cb8607656b983dbe))
+* use reference spacing on DQuickActionButton ([27d4f65](https://github.com/dynamic-framework/dynamic-ui/commit/27d4f65c86b03f7ad13416a3e055d358d75c335e))
+
+
+
 ## [1.18.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.17.1...@dynamic-framework/ui-react@1.18.0) (2024-03-14)
 
 
