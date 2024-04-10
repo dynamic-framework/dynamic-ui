@@ -113,5 +113,11 @@ $utilities: map-merge(
       css-variable-name: display-font-size,
       values: $display-font-sizes
     ),
+    "height": map-merge(
+      map-get($utilities, "height"),
+      (
+        responsive: true,
+      )
+    ),
   )
 );
