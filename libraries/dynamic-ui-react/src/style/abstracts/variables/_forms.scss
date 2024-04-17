@@ -27,9 +27,10 @@ $input-disabled-color: var(--#{$prefix}gray-300) !default;
 $input-disabled-bg: var(--#{$prefix}gray-100) !default;
 $input-disabled-border-color: var(--#{$prefix}gray-300) !default;
 
-$input-color: var(--#{$prefix}gray) !default;
+$input-color: var(--#{$prefix}gray-900) !default;
 $input-box-shadow: 0 0 0 transparent !default; // to avoid the none in the bootstrap box-shadow calculation
 
+$input-border-color: var(--#{$prefix}gray-300) !default;
 $input-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-lg: var(--#{$prefix}border-radius-sm) !default;
