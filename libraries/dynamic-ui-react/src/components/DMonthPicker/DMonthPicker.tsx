@@ -72,7 +72,7 @@ export default function DMonthPicker<
       onChange={onChange}
       {...locale && { locale }}
       customInput={(
-        <p className="fw-bold text-capitalize">
+        <p className="fw-bold text-capitalize mb-0">
           {dateFormatted}
         </p>
       )}
@@ -95,7 +95,7 @@ export default function DMonthPicker<
             iconStartFamilyClass={iconFamilyClass}
             iconStartFamilyPrefix={iconFamilyPrefix}
           />
-          <p className="fs-6 fw-bold">
+          <p className="fs-6 fw-bold mb-0">
             {monthDate.getFullYear()}
           </p>
           <DButton

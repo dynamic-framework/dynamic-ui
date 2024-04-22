@@ -51,6 +51,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 ) {
   const { created } = usePortal(portalName);
   const [stack, { push, pop, isEmpty }] = useStackState<PortalStackItem<string, T[keyof T]>>([]);
+  console.log('Stack outside', stack);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   const openPortal = useCallback<PortalContextType<T>['openPortal']>(
@@ -74,12 +75,16 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   const closePortal = useCallback<PortalContextType<T>['closePortal']>(
     () => {
+      console.log('OnClose stack', stack);
+
       if (isEmpty()) {
+        console.log('OnClose check empty', isEmpty());
         return;
       }
-      pop();
+      const newList = pop();
+      console.log('NEWLIST', newList);
     },
-    [isEmpty, pop],
+    [isEmpty, pop, stack],
   );
 
   const value = useMemo(() => ({
