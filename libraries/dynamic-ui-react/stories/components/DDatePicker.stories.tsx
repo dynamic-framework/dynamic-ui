@@ -267,12 +267,6 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'boolean',
       description: 'Show year dropdown on calendar',
     },
-    withMonthSelector: {
-      type: 'boolean',
-      control: 'boolean',
-      description: 'Show month dropdown on calendar header',
-      defaultValue: false,
-    },
     monthsShown: {
       type: 'number',
       control: 'number',
@@ -333,7 +327,6 @@ export const DefaultWithMonth: Story = {
   ],
   args: {
     inline: false,
-    withMonthSelector: true,
     inputAriaLabel: 'Calendar',
     date: new Date().toISOString(),
     dateFormat: 'dd/MM/yyyy',
@@ -373,30 +366,6 @@ export const WithTime: Story = {
     inline: true,
     showTimeInput: true,
     timeLabel: 'Select time',
-  },
-};
-
-export const WithMonthSelector: Story = {
-  render: function Render({ ...args }) {
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
-  args: {
-    inline: true,
-    withMonthSelector: true,
   },
 };
 
@@ -489,7 +458,6 @@ export const DateRangeWithMonthSelector: Story = {
   args: {
     inline: true,
     selectsRange: true,
-    withMonthSelector: true,
   },
 };
 
@@ -513,7 +481,6 @@ export const OnPortal: Story = {
   },
   args: {
     inline: false,
-    withMonthSelector: true,
     withPortal: true,
     showTimeInput: true,
     timeLabel: 'Select time',
@@ -545,7 +512,6 @@ export const MaterialStyle: Story = {
   },
   args: {
     inline: false,
-    withMonthSelector: true,
     withPortal: true,
     showTimeInput: true,
     timeLabel: 'Select time',
