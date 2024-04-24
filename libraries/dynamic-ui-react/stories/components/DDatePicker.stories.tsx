@@ -427,40 +427,6 @@ export const DateRange: Story = {
   },
 };
 
-export const DateRangeWithMonthSelector: Story = {
-  render: function Render({ ...args }) {
-    const [startDate, setStartDate] = useState<Date>(new Date());
-    const [endDate, setEndDate] = useState<Date>();
-
-    const handleChange = (value: [Date | null, Date | null]) => {
-      const [newStartDate, newEndDate] = value as Array<Date>;
-      setStartDate(newStartDate);
-      setEndDate(newEndDate);
-    };
-
-    return (
-      <DDatePicker<string, boolean>
-        {...args}
-        {...startDate && {
-          selected: new Date(startDate),
-          startDate: new Date(startDate),
-        }}
-        {...endDate && {
-          endDate: new Date(endDate),
-        }}
-        onChange={handleChange}
-        selectsRange
-        dateFormat="dd/MM/yyyy"
-        inline
-      />
-    );
-  },
-  args: {
-    inline: true,
-    selectsRange: true,
-  },
-};
-
 export const OnPortal: Story = {
   render: function Render({ ...args }) {
     const [date, onDate] = useState<string>(new Date().toISOString());
