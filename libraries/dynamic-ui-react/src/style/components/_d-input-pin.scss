@@ -64,5 +64,6 @@
 
   .input-group-text {
     padding-left: var(--#{$prefix}input-pin-form-gap);
+    background-color: transparent;
   }
 }
