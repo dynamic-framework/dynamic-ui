@@ -27,10 +27,14 @@ type Props<
 > =
 & BaseProps
 & FamilyIconProps
-& Omit<ReactDatePickerProps<CustomModifierNames, WithRange>, 'selected' | 'selectsRange' | 'locale'>
+& Omit<ReactDatePickerProps<CustomModifierNames, WithRange>,
+| 'selected'
+| 'selectsRange'
+| 'locale'
+| 'showMonthYearPicker'
+>
 & {
   date?: string | null;
-  withMonthSelector?: boolean;
   selectsRange?: boolean;
   inputLabel?: string;
   inputAriaLabel?: string;
@@ -41,9 +45,9 @@ type Props<
   timeLabel?: string;
   iconHeaderPrevMonth?: string;
   iconHeaderNextMonth?: string;
+  iconHeaderSize?: ComponentSize;
   headerPrevMonthAriaLabel?: string;
   headerNextMonthAriaLabel?: string;
-  headerIconSize?: ComponentSize;
   headerButtonVariant?: ButtonVariant;
   headerButtonTheme?: string;
   locale?: Locale;
@@ -56,7 +60,6 @@ export default function DDatePicker<
   {
     date,
     selectsRange = false,
-    withMonthSelector,
     inputLabel,
     inputAriaLabel,
     inputActionAriaLabel = 'open calendar',
@@ -69,13 +72,14 @@ export default function DDatePicker<
     iconMaterialStyle: iconMaterialStyleProp,
     iconFamilyClass,
     iconFamilyPrefix,
+    iconHeaderSize = 'sm',
     headerPrevMonthAriaLabel = 'decrease month',
     headerNextMonthAriaLabel = 'increase month',
-    headerIconSize = 'sm',
     headerButtonVariant = 'link',
     headerButtonTheme = 'dark',
     locale,
     className,
+    formatWeekDay,
     style,
     ...props
   }: Props<CustomModifierNames, WithRange>,
@@ -107,21 +111,20 @@ export default function DDatePicker<
       iconMaterialStyle={iconMaterialStyleProp}
       prevMonthAriaLabel={headerPrevMonthAriaLabel}
       nextMonthAriaLabel={headerNextMonthAriaLabel}
-      iconSize={headerIconSize}
+      iconSize={iconHeaderSize}
       buttonVariant={headerButtonVariant}
       buttonTheme={headerButtonTheme}
-      withMonthSelector={!!withMonthSelector}
     />
-  ), [locale,
+  ), [
+    locale,
     iconPrevMonth,
     iconNextMonth,
     iconMaterialStyleProp,
     headerPrevMonthAriaLabel,
     headerNextMonthAriaLabel,
-    headerIconSize,
+    iconHeaderSize,
     headerButtonVariant,
     headerButtonTheme,
-    withMonthSelector,
   ]);
 
   return (
@@ -129,6 +132,8 @@ export default function DDatePicker<
       selected={selected}
       calendarClassName="d-date-picker"
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
+      selectsRange={selectsRange}
+      formatWeekDay={(day) => day.substring(0, 1)}
       customInput={(
         <DDatePickerInput
           id={inputId}
@@ -140,8 +145,12 @@ export default function DDatePicker<
           style={style}
         />
       )}
-      customTimeInput={<DDatePickerTime id={timeId} label={timeLabel} />}
-      selectsRange={selectsRange}
+      customTimeInput={(
+        <DDatePickerTime
+          id={timeId}
+          label={timeLabel}
+        />
+      )}
       {...locale && { locale }}
       {...props}
     />
