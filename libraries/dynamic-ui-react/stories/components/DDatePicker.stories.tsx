@@ -4,7 +4,6 @@ import { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 
 import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
-import DMonthPicker from '../../src/components/DMonthPicker';
 import { PREFIX_BS } from '../../src/components/config';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
@@ -69,27 +68,6 @@ To understand in more detail the aspects covered by this component, review the f
 | --${PREFIX_BS}datepicker-time-input-label-weight        | css weight unit    | Datepicker time weight                           |
 | --${PREFIX_BS}datepicker-time-input-label-color         | css color unit     | Datepicker label time color                      |
 | --${PREFIX_BS}datepicker-time-input-label-size          | css length unit    | Datepicker label time size                       |
-| --${PREFIX_BS}monthpicker-header-padding                | css length unit    | Monthpicker header padding                       |
-| --${PREFIX_BS}monthpicker-font-weight                   | css weight unit    | Monthpicker font weight                          |
-| --${PREFIX_BS}monthpicker-header-color                  | css color unit     | Monthpicker header color                         |
-| --${PREFIX_BS}monthpicker-header-bg                     | css color unit     | Monthpicker header background color              |
-| --${PREFIX_BS}monthpicker-month-gap                     | css length unit    | Monthpicker month gap                            |
-| --${PREFIX_BS}monthpicker-month-padding                 | css length unit    | Monthpicker month padding                        |
-| --${PREFIX_BS}monthpicker-month-color                   | css color unit     | Monthpicker month color                          |
-| --${PREFIX_BS}monthpicker-month-bg                      | css color unit     | Monthpicker month background                     |
-| --${PREFIX_BS}monthpicker-month-today-color             | css color unit     | Monthpicker month today color                    |
-| --${PREFIX_BS}monthpicker-month-selected-bg             | css color unit     | Monthpicker month selected bg                    |
-| --${PREFIX_BS}monthpicker-month-selected-box-shadow     | css box shadow     | Monthpicker month selected box shadow            |
-| --${PREFIX_BS}monthpicker-month-hover-bg                | css color unit     | Monthpicker month hover background               |
-| --${PREFIX_BS}monthpicker-month-wrapper-gap             | css length unit    | Monthpicker month wrapper gap                    |
-| --${PREFIX_BS}monthpicker-month-wrapper-font-size       | css length unit    | Monthpicker month wrapper font size              |
-| --${PREFIX_BS}monthpicker-single-month-width            | css length unit    | Monthpicker single month width                   |
-| --${PREFIX_BS}monthpicker-single-month-padding          | css length unit    | Monthpicker single month padding                 |
-| --${PREFIX_BS}monthpicker-single-month-margin           | css length unit    | Monthpicker single month margin                  |
-| --${PREFIX_BS}monthpicker-single-month-text-transform   | css text transform | Monthpicker single month text transform          |
-| --${PREFIX_BS}monthpicker-single-month-radius           | css length unit    | Monthpicker single month border radius           |
-| --${PREFIX_BS}monthpicker-single-month-after-display    | css display unit   | Monthpicker single month after display           |
-| --${PREFIX_BS}monthpicker-single-month-after-content    | css content        | Monthpicker single month content                 |
 | --${PREFIX_BS}datepicker-triangle-color                 | css color unit     | Datepicker triangle color                        |
 | --${PREFIX_BS}datepicker-webkit-time-color              | css color unit     | Datepicker webkit time color                     |
 | --${PREFIX_BS}datepicker-webkit-time-align              | css align unit     | Datepicker webkit time align                     |
@@ -366,30 +344,6 @@ export const WithTime: Story = {
     inline: true,
     showTimeInput: true,
     timeLabel: 'Select time',
-  },
-};
-
-export const MonthPicker: Story = {
-  render: function Render({ ...args }) {
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-    return (
-      <DMonthPicker
-        {...args}
-        date={date}
-        dateFormat="MM/yyyy"
-        onChange={(value) => handleDate(value)}
-        headerPrevYearAriaLabel="decrease year"
-        headerNextYearAriaLabel="increase year"
-      />
-    );
-  },
-  args: {
-    inline: true,
   },
 };
 
