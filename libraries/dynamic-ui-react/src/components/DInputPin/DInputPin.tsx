@@ -1,12 +1,15 @@
+/* eslint-disable no-return-assign */
 import {
   useCallback,
-  useEffect, useMemo,
+  useEffect,
+  useMemo,
   useState,
 } from 'react';
 import classNames from 'classnames';
 
 import type {
   ChangeEvent,
+  ClipboardEvent,
   FocusEvent,
   FormEvent,
   KeyboardEvent,
@@ -66,7 +69,7 @@ export default function DInputPin(
     characters = 4,
     invalidIcon: invalidIconProp,
     validIcon: validIconProp,
-    innerInputMode = 'text',
+    innerInputMode = 'numeric',
     hint,
     invalid = false,
     valid = false,
@@ -76,13 +79,23 @@ export default function DInputPin(
   }: Props,
 ) {
   const [pattern, setPattern] = useState<string>('');
+  const isInputNum = innerInputMode === 'numeric' || innerInputMode === 'tel';
+
+  const [activeInput, setActiveInput] = useState<Array<
+  undefined
+  | number
+  | string
+  >>(Array.from({ length: characters }));
 
   useEffect(() => {
     setPattern(type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$');
   }, [type]);
 
-  const nextInput = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const input = event.target;
+  const nextInput = useCallback((
+    { target }: ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const input = target;
     const regex = new RegExp(pattern);
 
     if (!regex.test(input.value)) {
@@ -90,6 +103,7 @@ export default function DInputPin(
     }
 
     if (input.value !== '') {
+      setActiveInput((prev) => prev.with(index, input.value));
       if (input.nextSibling) {
         (input.nextSibling as HTMLElement)?.focus();
       } else {
@@ -98,33 +112,48 @@ export default function DInputPin(
     }
   }, [pattern]);
 
-  const prevInput = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Backspace') {
-      const { value } = event.currentTarget;
-
-      if (event.currentTarget.previousSibling && value === '') {
-        (event.currentTarget.previousSibling as HTMLElement)?.focus();
+  const prevInput = useCallback((
+    { key, currentTarget }: KeyboardEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    if (key === 'Backspace') {
+      const { value } = currentTarget;
+      setActiveInput((prev) => prev.with(index, undefined));
+      if (currentTarget.previousSibling && value === '') {
+        (currentTarget.previousSibling as HTMLElement)?.focus();
       } else {
-        event.currentTarget.blur();
-        event.currentTarget.focus();
+        currentTarget.blur();
+        currentTarget.focus();
       }
     }
   }, []);
 
-  const focusInput = useCallback((event: FocusEvent<HTMLInputElement>) => {
+  const focusInput = useCallback((
+    { currentTarget }: FocusEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    setActiveInput((prev) => prev.with(index, undefined));
     // eslint-disable-next-line no-param-reassign
-    event.currentTarget.value = '';
+    currentTarget.value = '';
   }, []);
 
   const wheelInput = useCallback((event: WheelEvent<HTMLInputElement>) => {
     event.currentTarget.blur();
   }, []);
 
-  const formChange = useCallback((event: FormEvent<HTMLFormElement>) => {
-    const formData = new FormData(event.currentTarget);
-    const values = Array.from(formData.values()).join('');
-    onChange?.(values);
-  }, [onChange]);
+  const formChange = useCallback(() => {
+    onChange?.(activeInput.join(''));
+  }, [activeInput, onChange]);
+
+  const handlePaste = ({ clipboardData }: ClipboardEvent<HTMLInputElement>) => {
+    const pastedData = clipboardData
+      .getData('text/plain')
+      .slice(0, characters)
+      .split('');
+
+    if (isInputNum && pastedData.some((value) => Number.isNaN(Number(value)))) { /* empty */ }
+    setActiveInput(pastedData);
+  };
 
   const preventDefaultEvent = useCallback((event: MouseEvent | FormEvent) => {
     event.preventDefault();
@@ -163,24 +192,26 @@ export default function DInputPin(
         onInput={formChange}
         onSubmit={preventDefaultEvent}
       >
-        {Array.from({ length: characters }).map((_, index) => (
+        {activeInput.map((value, index) => (
           <input
             className={classNames({
               'form-control': true,
               'is-invalid': invalid,
               'is-valid': valid,
             })}
+            value={value}
             type={secret ? 'password' : type}
             aria-describedby={`${id}State`}
             inputMode={innerInputMode}
             id={`pinIndex${index}`}
             name={`pin-${index}`}
             maxLength={1}
-            onChange={nextInput}
-            onKeyDown={prevInput}
-            onFocus={focusInput}
+            onChange={(event) => nextInput(event, index)}
+            onKeyDown={(event) => prevInput(event, index)}
+            onFocus={(event) => focusInput(event, index)}
             onWheel={wheelInput}
             onClick={preventDefaultEvent}
+            onPaste={(clipboard) => handlePaste(clipboard)}
             autoComplete="off"
             placeholder={placeholder}
             disabled={disabled || loading}
