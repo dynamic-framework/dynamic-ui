@@ -253,7 +253,7 @@
     --#{$prefix}btn-padding-y: var(--#{$prefix}datepicker-header-button-padding);
     --#{$prefix}btn-padding-x: var(--#{$prefix}datepicker-header-button-padding);
     &:hover,
- &:active {
+    &:active {
       color: inherit;
       background-color: inherit;
     }
@@ -263,6 +263,10 @@
   }
 
   .d-select {
+    &:focus-within .input-group {
+      border-color: transparent;
+      box-shadow: none;
+    }
     .input-group {
       --#{$prefix}input-border-width: 0;
     }
