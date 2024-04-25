@@ -92,10 +92,10 @@ export default function DDatePickerHeader(
         onClick={decreaseMonth}
         disabled={prevMonthButtonDisabled}
         ariaLabel={prevMonthAriaLabel}
+        className="header-button"
       />
       <div className="d-flex justify-content-center flex-grow-1">
         <DSelect
-          className="month-select"
           options={months}
           value={defaultMonth}
           defaultValue={defaultMonth}
@@ -103,7 +103,6 @@ export default function DDatePickerHeader(
           searchable={false}
         />
         <DSelect
-          className="year-select"
           options={years}
           value={defaultYear}
           defaultValue={defaultYear}
@@ -122,6 +121,7 @@ export default function DDatePickerHeader(
         onClick={increaseMonth}
         disabled={nextMonthButtonDisabled}
         ariaLabel={nextMonthAriaLabel}
+        className="header-button"
       />
     </div>
   );

@@ -14,6 +14,10 @@
   --#{$prefix}datepicker-header-background-color: var(--#{$prefix}secondary-soft);
   --#{$prefix}datepicker-header-border: 0;
   --#{$prefix}datepicker-header-font-size: var(--#{$prefix}fs-6);
+  --#{$prefix}datepicker-header-button-padding: 0;
+  --#{$prefix}datepicker-header-select-padding: 0 var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}datepicker-header-select-font-weight: var(--#{$prefix}fw-bold);
+  --#{$prefix}datepicker-header-select-menu-width: fit-content;
 
   --#{$prefix}datepicker-day-names-margin: 0;
   --#{$prefix}datepicker-day-names-font-size: var(--#{$prefix}ref-spacer-4);
@@ -21,7 +25,7 @@
   --#{$prefix}datepicker-day-name-weight: var(--#{$prefix}fw-bold);
   --#{$prefix}datepicker-day-name-margin: 0;
   --#{$prefix}datepicker-day-name-padding: 0;
-  --#{$prefix}datepicker-day-name-size: var(--#{$prefix}fs-6);
+  --#{$prefix}datepicker-day-name-size: var(--#{$prefix}ref-spacer-5);
   --#{$prefix}datepicker-day-name-color: var(--#{$prefix}gray-500);
 
   // Calendar variables
@@ -35,7 +39,7 @@
   // Day variables
   --#{$prefix}datepicker-day-margin: 0;
   --#{$prefix}datepicker-day-font-size: var(--#{$prefix}fs-small);
-  --#{$prefix}datepicker-day-size: 18px;
+  --#{$prefix}datepicker-day-size: var(--#{$prefix}ref-spacer-5);
   --#{$prefix}datepicker-day-padding: 0;
   --#{$prefix}datepicker-day-radius: 100%;
   --#{$prefix}datepicker-day-color: var(--#{$prefix}gray-900);
@@ -242,35 +246,41 @@
     }
   }
   .d-datepicker-header {
-    font-size: var(--#{$prefix}fs-6);
+    font-size: var(--#{$prefix}datepicker-header-font-size);
+  }
+
+  .header-button {
+    --#{$prefix}btn-padding-y: var(--#{$prefix}datepicker-header-button-padding);
+    --#{$prefix}btn-padding-x: var(--#{$prefix}datepicker-header-button-padding);
+    &:hover,
+ &:active {
+      color: inherit;
+      background-color: inherit;
+    }
+    &:focus {
+      --#{$prefix}btn-focus-outline-offset: 8px;
+    }
   }
 
   .d-select {
     .input-group {
-      --bs-input-border-width: 0;
-    }
-    &:focus-within .input-group {
-      border-color: transparent;
-      box-shadow: none;
+      --#{$prefix}input-border-width: 0;
     }
     .d-select__indicators {
       display: none;
     }
     .d-select__control {
-      padding: 0 1rem;
+      padding: var(--#{$prefix}datepicker-header-select-padding);
       background-color: transparent;
     }
     .d-select__single-value {
-      font-weight: 700;
+      font-weight: var(--#{$prefix}datepicker-header-select-font-weight);
     }
   }
-  .month-select .d-select__menu {
-    left: -44px;
-    min-width: 150px;
-  }
-  .year-select .d-select__menu {
-    left: -6px;
-    min-width: 80px;
+  .d-select__menu {
+    left: 50%;
+    min-width: var(--#{$prefix}datepicker-header-select-menu-width);
+    translate: -50%;
   }
 }
 
