@@ -81,11 +81,7 @@ export default function DInputPin(
   const [pattern, setPattern] = useState<string>('');
   const isInputNum = innerInputMode === 'numeric' || innerInputMode === 'tel';
 
-  const [activeInput, setActiveInput] = useState<Array<
-  undefined
-  | number
-  | string
-  >>(Array.from({ length: characters }));
+  const [activeInput, setActiveInput] = useState(Array.from<string | number>({ length: characters }).fill(''));
 
   useEffect(() => {
     setPattern(type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$');
@@ -118,7 +114,7 @@ export default function DInputPin(
   ) => {
     if (key === 'Backspace') {
       const { value } = currentTarget;
-      setActiveInput((prev) => prev.with(index, undefined));
+      setActiveInput((prev) => prev.with(index, ''));
       if (currentTarget.previousSibling && value === '') {
         (currentTarget.previousSibling as HTMLElement)?.focus();
       } else {
@@ -132,7 +128,7 @@ export default function DInputPin(
     { currentTarget }: FocusEvent<HTMLInputElement>,
     index: number,
   ) => {
-    setActiveInput((prev) => prev.with(index, undefined));
+    setActiveInput((prev) => prev.with(index, ''));
     // eslint-disable-next-line no-param-reassign
     currentTarget.value = '';
   }, []);
@@ -145,7 +141,8 @@ export default function DInputPin(
     onChange?.(activeInput.join(''));
   }, [activeInput, onChange]);
 
-  const handlePaste = ({ clipboardData }: ClipboardEvent<HTMLInputElement>) => {
+  const handlePaste = ({ clipboardData }: ClipboardEvent<HTMLFormElement>) => {
+    // validate numbers in the input and extract to paste
     const pastedData = clipboardData
       .getData('text/plain')
       .slice(0, characters)
@@ -191,6 +188,7 @@ export default function DInputPin(
         id={id}
         onInput={formChange}
         onSubmit={preventDefaultEvent}
+        onPaste={(clipboard) => handlePaste(clipboard)}
       >
         {activeInput.map((value, index) => (
           <input
@@ -211,7 +209,6 @@ export default function DInputPin(
             onFocus={(event) => focusInput(event, index)}
             onWheel={wheelInput}
             onClick={preventDefaultEvent}
-            onPaste={(clipboard) => handlePaste(clipboard)}
             autoComplete="off"
             placeholder={placeholder}
             disabled={disabled || loading}
