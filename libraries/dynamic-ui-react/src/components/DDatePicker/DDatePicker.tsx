@@ -51,6 +51,8 @@ type Props<
   headerButtonVariant?: ButtonVariant;
   headerButtonTheme?: string;
   locale?: Locale;
+  minYearSelect?: number;
+  maxYearSelect?: number;
 };
 
 export default function DDatePicker<
@@ -72,6 +74,8 @@ export default function DDatePicker<
     iconMaterialStyle: iconMaterialStyleProp,
     iconFamilyClass,
     iconFamilyPrefix,
+    minYearSelect = 1900,
+    maxYearSelect = 2100,
     iconHeaderSize = 'sm',
     headerPrevMonthAriaLabel = 'decrease month',
     headerNextMonthAriaLabel = 'increase month',
@@ -79,7 +83,7 @@ export default function DDatePicker<
     headerButtonTheme = 'dark',
     locale,
     className,
-    formatWeekDay,
+    formatWeekDay: formatWeekDayProp,
     style,
     ...props
   }: Props<CustomModifierNames, WithRange>,
@@ -114,6 +118,8 @@ export default function DDatePicker<
       iconSize={iconHeaderSize}
       buttonVariant={headerButtonVariant}
       buttonTheme={headerButtonTheme}
+      minYearSelect={minYearSelect}
+      maxYearSelect={maxYearSelect}
     />
   ), [
     locale,
@@ -125,6 +131,8 @@ export default function DDatePicker<
     iconHeaderSize,
     headerButtonVariant,
     headerButtonTheme,
+    minYearSelect,
+    maxYearSelect,
   ]);
 
   return (
@@ -133,7 +141,6 @@ export default function DDatePicker<
       calendarClassName="d-date-picker"
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
       selectsRange={selectsRange}
-      formatWeekDay={(day) => day.substring(0, 1)}
       customInput={(
         <DDatePickerInput
           id={inputId}
@@ -151,6 +158,11 @@ export default function DDatePicker<
           label={timeLabel}
         />
       )}
+      {...formatWeekDayProp ? {
+        formatWeekDay: (day) => formatWeekDayProp(day),
+      } : {
+        formatWeekDay: (day) => day.substring(0, 1),
+      }}
       {...locale && { locale }}
       {...props}
     />

@@ -32,6 +32,8 @@ type Props =
   iconSize: ComponentSize;
   buttonVariant: ButtonVariant;
   buttonTheme: string;
+  minYearSelect: number;
+  maxYearSelect: number;
 } & Omit<ComponentProps<typeof DButton>,
 | 'iconStart'
 | 'onClick'
@@ -60,9 +62,14 @@ export default function DDatePickerHeader(
     locale,
     style,
     className,
+    minYearSelect,
+    maxYearSelect,
   }: Props,
 ) {
-  const arrayYears = Array.from({ length: 51 }, (_, index) => 1990 + index);
+  const arrayYears = Array.from(
+    { length: maxYearSelect - minYearSelect + 1 },
+    (_, index) => minYearSelect + index,
+  );
   const years = arrayYears.map((year) => ({ label: year.toString(), value: year }));
   const defaultYear = years.find((year) => year.value === getYear(date));
 
