@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.19.0...@dynamic-framework/ui-react@1.19.1) (2024-04-26)
+
+
+### Bug Fixes
+
+* adjust link hover color ([8098df6](https://github.com/dynamic-framework/dynamic-ui/commit/8098df67ae12b64e82d861d5bb307961472a799c))
+* d input on time, width using available space ([58ee852](https://github.com/dynamic-framework/dynamic-ui/commit/58ee852774babe115ec5f9a9868002c9cd087a98))
+* remove DPortalContextProvider export ([1defeb9](https://github.com/dynamic-framework/dynamic-ui/commit/1defeb9b9f34a489d895e8e68dff0474607e9cbb))
+
+
+
 ## [1.19.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.18.0...@dynamic-framework/ui-react@1.19.0) (2024-04-04)
 
 
