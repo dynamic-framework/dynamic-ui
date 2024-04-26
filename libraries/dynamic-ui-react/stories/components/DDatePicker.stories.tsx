@@ -34,7 +34,11 @@ To understand in more detail the aspects covered by this component, review the f
 | --${PREFIX_BS}datepicker-header-padding                 | css length unit    | Datepicker header padding                        |
 | --${PREFIX_BS}datepicker-header-background-color        | css color unit     | Datepicker header background color               |
 | --${PREFIX_BS}datepicker-header-border                  | css length unit    | Datepicker header border                         |
-| --${PREFIX_BS}datepicker-header-font-size               | css font unit      | Datepicker header font size                      |
+| --${PREFIX_BS}datepicker-header-font-size               | css length unit    | Datepicker header border                         |
+| --${PREFIX_BS}datepicker-header-button-padding          | css length unit    | Datepicker header buttons padding                |
+| --${PREFIX_BS}datepicker-header-select-padding          | css length unit    | Datepicker header selects padding                |
+| --${PREFIX_BS}datepicker-header-select-font-weight      | css weight unit    | Datepicker header select font weight             |
+| --${PREFIX_BS}datepicker-header-select-menu-width       | css length unit    | Datepicker header select width                   |
 | --${PREFIX_BS}datepicker-day-names-margin               | css length unit    | Datepicker header days margin                    |
 | --${PREFIX_BS}datepicker-day-names-font-size            | css length unit    | Datepicker header days font size                 |
 | --${PREFIX_BS}datepicker-day-name-weight                | css weight unit    | Datepicker header days weight                    |
@@ -44,11 +48,14 @@ To understand in more detail the aspects covered by this component, review the f
 | --${PREFIX_BS}datepicker-month-gap                      | css length unit    | Datepicker month gap                             |
 | --${PREFIX_BS}datepicker-month-padding                  | css length unit    | Datepicker month padding                         |
 | --${PREFIX_BS}datepicker-month-margin                   | css length unit    | Datepicker month margin                          |
+| --${PREFIX_BS}datepicker-month-color                    | css color unit     | Datepicker month color                           |
 | --${PREFIX_BS}datepicker-week-gap                       | css length unit    | Datepicker week gap                              |
 | --${PREFIX_BS}datepicker-day-margin                     | css length unit    | Datepicker day margin                            |
 | --${PREFIX_BS}datepicker-day-font-size                  | css font unit      | Datepicker day font size                         |
 | --${PREFIX_BS}datepicker-day-size                       | css length unit    | Datepicker day size                              |
+| --${PREFIX_BS}datepicker-day-padding                    | css length unit    | Datepicker day padding                           |
 | --${PREFIX_BS}datepicker-day-radius                     | css length unit    | Datepicker day border radius                     |
+| --${PREFIX_BS}datepicker-day-color                      | css color unit     | Datepicker day text color                        |
 | --${PREFIX_BS}datepicker-day-bg-hover                   | css color unit     | Datepicker day hover background                  |
 | --${PREFIX_BS}datepicker-day-color-hover                | css color unit     | Datepicker day hover color                       |
 | --${PREFIX_BS}datepicker-day-selected-color             | css color unit     | Datepicker day selected color                    |
