@@ -322,8 +322,9 @@ export const Inline: Story = {
   },
 };
 
-export const WithTime: Story = {
+export const WithLocale: Story = {
   render: function Render({ ...args }) {
+    registerLocale('es', es);
     const [date, onDate] = useState<string>(new Date().toISOString());
     const handleDate = (value: Date | null) => {
       if (value) {
@@ -335,6 +336,32 @@ export const WithTime: Story = {
       <DDatePicker
         {...args}
         date={date}
+        locale={es}
+        dateFormat="dd/MM/yyyy"
+        onChange={(value) => handleDate(value)}
+      />
+    );
+  },
+  args: {
+    inline: true,
+  },
+};
+
+export const WithTime: Story = {
+  render: function Render({ ...args }) {
+    registerLocale('es', es);
+    const [date, onDate] = useState<string>(new Date().toISOString());
+    const handleDate = (value: Date | null) => {
+      if (value) {
+        onDate(new Date(value).toISOString());
+      }
+    };
+
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        locale={es}
         dateFormat="dd/MM/yyyy"
         onChange={(value) => handleDate(value)}
       />
