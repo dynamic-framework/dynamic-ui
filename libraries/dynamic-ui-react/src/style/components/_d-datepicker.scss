@@ -43,6 +43,7 @@
   --#{$prefix}datepicker-day-padding: 0;
   --#{$prefix}datepicker-day-radius: 100%;
   --#{$prefix}datepicker-day-color: var(--#{$prefix}gray-900);
+  --#{$prefix}datepicker-day-disabled-color: var(--#{$prefix}gray-300);
 
   --#{$prefix}datepicker-day-color-hover: var(--#{$prefix}gray-900);
   --#{$prefix}datepicker-day-bg-hover: var(--#{$prefix}info-100);
@@ -158,6 +159,10 @@
       border-radius: var(--#{$prefix}datepicker-day-radius);
       box-shadow: 0 0 0 2px var(--#{$prefix}datepicker-day-bg-hover);
     }
+  }
+
+  .react-datepicker__day--disabled {
+    color: var(--#{$prefix}datepicker-day-disabled-color);
   }
 
   // Selected single item
