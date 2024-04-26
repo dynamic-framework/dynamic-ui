@@ -17,7 +17,7 @@ const config: Meta<typeof DDatePicker> = {
     docs: {
       description: {
         component: `
-Datepicker with range and month support
+Datepicker with month, year and time selector
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
