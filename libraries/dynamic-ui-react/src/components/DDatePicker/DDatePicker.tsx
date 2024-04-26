@@ -27,10 +27,24 @@ type Props<
 > =
 & BaseProps
 & FamilyIconProps
-& Omit<ReactDatePickerProps<CustomModifierNames, WithRange>, 'selected' | 'selectsRange' | 'locale'>
+& Pick<ReactDatePickerProps<CustomModifierNames, WithRange>,
+| 'formatWeekDay'
+| 'onChange'
+| 'autoFocus'
+| 'inline'
+| 'withPortal'
+| 'minDate'
+| 'showTimeInput'
+| 'calendarStartDay'
+| 'dateFormat'
+| 'selectsStart'
+| 'selectsEnd'
+| 'startDate'
+| 'endDate'
+| 'fixedHeight'
+>
 & {
   date?: string | null;
-  withMonthSelector?: boolean;
   selectsRange?: boolean;
   inputLabel?: string;
   inputAriaLabel?: string;
@@ -41,12 +55,14 @@ type Props<
   timeLabel?: string;
   iconHeaderPrevMonth?: string;
   iconHeaderNextMonth?: string;
+  iconHeaderSize?: ComponentSize;
   headerPrevMonthAriaLabel?: string;
   headerNextMonthAriaLabel?: string;
-  headerIconSize?: ComponentSize;
   headerButtonVariant?: ButtonVariant;
   headerButtonTheme?: string;
   locale?: Locale;
+  minYearSelect?: number;
+  maxYearSelect?: number;
 };
 
 export default function DDatePicker<
@@ -56,7 +72,6 @@ export default function DDatePicker<
   {
     date,
     selectsRange = false,
-    withMonthSelector,
     inputLabel,
     inputAriaLabel,
     inputActionAriaLabel = 'open calendar',
@@ -69,13 +84,16 @@ export default function DDatePicker<
     iconMaterialStyle: iconMaterialStyleProp,
     iconFamilyClass,
     iconFamilyPrefix,
+    minYearSelect = 1900,
+    maxYearSelect = 2100,
+    iconHeaderSize = 'sm',
     headerPrevMonthAriaLabel = 'decrease month',
     headerNextMonthAriaLabel = 'increase month',
-    headerIconSize = 'sm',
     headerButtonVariant = 'link',
     headerButtonTheme = 'dark',
     locale,
     className,
+    formatWeekDay: formatWeekDayProp,
     style,
     ...props
   }: Props<CustomModifierNames, WithRange>,
@@ -89,6 +107,13 @@ export default function DDatePicker<
   } = useDContext();
   const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
   const iconInput = useMemo(() => iconInputProp || calendar, [calendar, iconInputProp]);
+
+  const handleFormatWeekDay = useMemo(() => (
+    formatWeekDayProp
+      ? (day: string) => formatWeekDayProp(day)
+      : (day: string) => day.substring(0, 1)
+  ), [formatWeekDayProp]);
+
   const iconPrevMonth = useMemo(
     () => iconHeaderPrevMonthProp || chevronLeft,
     [chevronLeft, iconHeaderPrevMonthProp],
@@ -107,21 +132,24 @@ export default function DDatePicker<
       iconMaterialStyle={iconMaterialStyleProp}
       prevMonthAriaLabel={headerPrevMonthAriaLabel}
       nextMonthAriaLabel={headerNextMonthAriaLabel}
-      iconSize={headerIconSize}
+      iconSize={iconHeaderSize}
       buttonVariant={headerButtonVariant}
       buttonTheme={headerButtonTheme}
-      withMonthSelector={!!withMonthSelector}
+      minYearSelect={minYearSelect}
+      maxYearSelect={maxYearSelect}
     />
-  ), [locale,
+  ), [
+    locale,
     iconPrevMonth,
     iconNextMonth,
     iconMaterialStyleProp,
     headerPrevMonthAriaLabel,
     headerNextMonthAriaLabel,
-    headerIconSize,
+    iconHeaderSize,
     headerButtonVariant,
     headerButtonTheme,
-    withMonthSelector,
+    minYearSelect,
+    maxYearSelect,
   ]);
 
   return (
@@ -129,6 +157,8 @@ export default function DDatePicker<
       selected={selected}
       calendarClassName="d-date-picker"
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
+      selectsRange={selectsRange}
+      formatWeekDay={handleFormatWeekDay}
       customInput={(
         <DDatePickerInput
           id={inputId}
@@ -136,12 +166,17 @@ export default function DDatePicker<
           iconEndAriaLabel={inputActionAriaLabel}
           iconMaterialStyle={iconMaterialStyleProp}
           iconEnd={iconInput}
+          inputLabel={inputLabel}
           className={className}
           style={style}
         />
       )}
-      customTimeInput={<DDatePickerTime id={timeId} label={timeLabel} />}
-      selectsRange={selectsRange}
+      customTimeInput={(
+        <DDatePickerTime
+          id={timeId}
+          label={timeLabel}
+        />
+      )}
       {...locale && { locale }}
       {...props}
     />
