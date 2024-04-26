@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
-import { getMonth, getYear } from 'date-fns';
+import { useMemo } from 'react';
 import classNames from 'classnames';
+import { format, getMonth, getYear } from 'date-fns';
 
 import type { ComponentProps } from 'react';
 
 import DButton from '../DButton';
-import DMonthPicker from '../DMonthPicker';
+import DSelect from '../DSelect';
 
 import type {
   BaseProps,
@@ -19,14 +19,13 @@ type Props =
 & FamilyIconProps
 & {
   locale?: Locale;
-  monthDate: Date;
+  date: Date;
   decreaseMonth: () => void;
   increaseMonth: () => void;
   changeMonth: (monthNumber: number) => void;
   changeYear: (yearNumber: number) => void;
   prevMonthButtonDisabled: boolean;
   nextMonthButtonDisabled: boolean;
-  withMonthSelector: boolean;
   iconPrevMonth: string;
   iconNextMonth: string;
   prevMonthAriaLabel?: string;
@@ -34,22 +33,23 @@ type Props =
   iconSize: ComponentSize;
   buttonVariant: ButtonVariant;
   buttonTheme: string;
+  minYearSelect: number;
+  maxYearSelect: number;
 } & Omit<ComponentProps<typeof DButton>,
 | 'iconStart'
-| 'onMClick'
-| 'isDisabled'
+| 'onClick'
+| 'disabled'
 >;
 
 export default function DDatePickerHeader(
   {
-    monthDate,
-    changeMonth,
+    date,
     changeYear,
+    changeMonth,
     decreaseMonth,
     increaseMonth,
     prevMonthButtonDisabled,
     nextMonthButtonDisabled,
-    withMonthSelector,
     iconPrevMonth,
     iconNextMonth,
     iconFamilyClass,
@@ -63,19 +63,44 @@ export default function DDatePickerHeader(
     locale,
     style,
     className,
+    minYearSelect,
+    maxYearSelect,
   }: Props,
 ) {
-  const onChangeDate = useCallback((value: Date | null) => {
-    if (value) {
-      changeMonth(getMonth(value));
-      changeYear(getYear(value));
-    }
-  }, [changeMonth, changeYear]);
+  const arrayYears = useMemo(() => Array.from(
+    { length: maxYearSelect - minYearSelect + 1 },
+    (_, index) => minYearSelect + index,
+  ), [maxYearSelect, minYearSelect]);
+
+  const years = useMemo(() => arrayYears.map((year) => ({
+    label: year.toString(),
+    value: year,
+  })), [arrayYears]);
+
+  const defaultYear = useMemo(
+    () => years.find((year) => year.value === getYear(date)),
+    [date, years],
+  );
+
+  const arrayMonths = useMemo(() => Array.from(
+    { length: 12 },
+    (_, i) => format(new Date(2000, i), 'LLLL', { locale }),
+  ), [locale]);
+
+  const months = useMemo(() => arrayMonths.map((month, i) => ({
+    label: month,
+    value: i,
+  })), [arrayMonths]);
+
+  const defaultMonth = useMemo(() => ({
+    label: arrayMonths[getMonth(date)],
+    value: getMonth(date),
+  }), [arrayMonths, date]);
 
   return (
     <div
       className={classNames(
-        'd-flex align-items-center justify-content-between d-datepicker-header',
+        'd-flex align-items-center d-datepicker-header',
         className,
       )}
       style={style}
@@ -91,16 +116,24 @@ export default function DDatePickerHeader(
         onClick={decreaseMonth}
         disabled={prevMonthButtonDisabled}
         ariaLabel={prevMonthAriaLabel}
+        className="header-button"
       />
-      <DMonthPicker
-        {...!withMonthSelector && { readOnly: true }}
-        {...withMonthSelector && { className: 'cursor-pointer' }}
-        date={monthDate.toISOString()}
-        onChange={onChangeDate}
-        iconPrevMonth={iconPrevMonth}
-        iconNextMonth={iconNextMonth}
-        {...locale && { locale }}
-      />
+      <div className="d-flex justify-content-center flex-grow-1">
+        <DSelect
+          options={months}
+          value={defaultMonth}
+          defaultValue={defaultMonth}
+          onChange={(month) => changeMonth(month?.value || 0)}
+          searchable={false}
+        />
+        <DSelect
+          options={years}
+          value={defaultYear}
+          defaultValue={defaultYear}
+          onChange={(year) => changeYear(Number(year?.value))}
+          searchable={false}
+        />
+      </div>
       <DButton
         iconStart={iconNextMonth}
         iconStartFamilyClass={iconFamilyClass}
@@ -112,6 +145,7 @@ export default function DDatePickerHeader(
         onClick={increaseMonth}
         disabled={nextMonthButtonDisabled}
         ariaLabel={nextMonthAriaLabel}
+        className="header-button"
       />
     </div>
   );
