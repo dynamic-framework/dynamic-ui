@@ -27,11 +27,21 @@ type Props<
 > =
 & BaseProps
 & FamilyIconProps
-& Omit<ReactDatePickerProps<CustomModifierNames, WithRange>,
-| 'selected'
-| 'selectsRange'
-| 'locale'
-| 'showMonthYearPicker'
+& Pick<ReactDatePickerProps<CustomModifierNames, WithRange>,
+| 'formatWeekDay'
+| 'onChange'
+| 'autoFocus'
+| 'inline'
+| 'withPortal'
+| 'minDate'
+| 'showTimeInput'
+| 'calendarStartDay'
+| 'dateFormat'
+| 'selectsStart'
+| 'selectsEnd'
+| 'startDate'
+| 'endDate'
+| 'fixedHeight'
 >
 & {
   date?: string | null;
@@ -156,6 +166,7 @@ export default function DDatePicker<
           iconEndAriaLabel={inputActionAriaLabel}
           iconMaterialStyle={iconMaterialStyleProp}
           iconEnd={iconInput}
+          inputLabel={inputLabel}
           className={className}
           style={style}
         />
