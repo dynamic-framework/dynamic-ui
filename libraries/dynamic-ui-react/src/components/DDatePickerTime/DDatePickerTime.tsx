@@ -46,6 +46,7 @@ export default function DDatePickerTime(
         </label>
       )}
       <DInput
+        className="w-100"
         {...onChange && {
           onChange,
         }}

@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useMemo,
+  Fragment,
 } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -100,13 +101,13 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
               payload,
             },
           ) => (
-            <>
+            <Fragment key={name}>
               <div className="backdrop fade show" />
               <Component
                 name={name}
                 payload={payload}
               />
-            </>
+            </Fragment>
           ))}
         </>,
         document.getElementById(portalName) as Element,

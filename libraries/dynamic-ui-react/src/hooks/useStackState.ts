@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 /**
  * useStackState inspired from rooks
@@ -8,7 +8,7 @@ import { useCallback, useState } from 'react';
  * @returns The list and controls to modify the stack
  * @see https://react-hooks.org/docs/useStackState
  */
-export default function useStackState<T>(initialList: T[]): [
+export default function useStackState<T>(initialList: T[] = []): [
   T[],
   {
     clear: () => void;
@@ -20,38 +20,41 @@ export default function useStackState<T>(initialList: T[]): [
   },
 ] {
   const [list, setList] = useState<T[]>(initialList);
-  const { length } = list;
 
-  const push = useCallback(
-    (item: T) => {
-      setList((prevList) => [
-        ...prevList,
-        item,
-      ]);
-    },
-    [],
-  );
+  const push = useCallback((item: T) => (
+    setList((prevList) => [
+      ...prevList,
+      item,
+    ])
+  ), []);
 
-  const pop = useCallback(() => {
+  const pop = useCallback(() => (
     setList((prevList) => (
       prevList.slice(0, prevList.length - 1)
-    ));
-  }, []);
+    ))
+  ), []);
 
   const peek = useCallback(() => list.at(-1), [list]);
 
-  const clear = () => setList([]);
+  const clear = useCallback(() => setList([]), []);
 
-  const isEmpty = useCallback(() => list.length === 0, [list]);
+  const isEmpty = useCallback(() => list.length === 0, [list.length]);
 
-  const controls = {
+  const controls = useMemo(() => ({
     clear,
     isEmpty,
-    length,
+    length: list.length,
     peek,
     pop,
     push,
-  };
+  }), [
+    clear,
+    isEmpty,
+    list.length,
+    peek,
+    pop,
+    push,
+  ]);
 
   return [list, controls];
 }
