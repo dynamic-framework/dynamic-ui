@@ -1,7 +1,7 @@
 .d-icon {
   --#{$prefix}icon-color: var(--#{$prefix}icon-component-color, inherit);
   --#{$prefix}icon-bg-color: var(--#{$prefix}icon-component-bg-color, inherit);
-  --#{$prefix}icon-size: var(--#{$prefix}icon-component-size, $spacer-6);
+  --#{$prefix}icon-size: var(--#{$prefix}icon-component-size, var(--#{$prefix}ref-spacer-6));
   --#{$prefix}icon-padding: var(--#{$prefix}icon-component-padding, 0);
   --#{$prefix}icon-loading-duration: var(--#{$prefix}icon-component-loading-duration, 1.8);
 
