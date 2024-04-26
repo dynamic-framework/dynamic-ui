@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.18.0
+ * dynamic-framework 1.19.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -296,7 +296,7 @@
   --bs-label-padding-y: var(--bs-ref-spacer-0);
   --bs-label-padding-x: var(--bs-ref-spacer-2);
   --bs-label-font-size: var(--bs-fs-small);
-  --bs-label-font-weight: var(--bs-fw-bold);
+  --bs-label-font-weight: var(--bs-fw-normal);
   --bs-label-color: var(--bs-gray);
   --bs-btn-border-radius: var(--bs-border-radius-pill);
   --bs-btn-lg-border-radius: var(--bs-border-radius-pill);

@@ -1,2 +1,2 @@
 export * from './DContext';
-export * from './DPortalContext';
+export { useDPortalContext, PortalProps } from './DPortalContext';
