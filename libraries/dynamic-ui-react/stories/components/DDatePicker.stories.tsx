@@ -17,7 +17,8 @@ const config: Meta<typeof DDatePicker> = {
     docs: {
       description: {
         component: `
-Datepicker with month, year and time selector
+Datepicker with month, year and time selector. This component is a custom wrapper which does
+not cover all the features of the original library.
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
@@ -56,6 +57,7 @@ To understand in more detail the aspects covered by this component, review the f
 | --${PREFIX_BS}datepicker-day-padding                    | css length unit    | Datepicker day padding                           |
 | --${PREFIX_BS}datepicker-day-radius                     | css length unit    | Datepicker day border radius                     |
 | --${PREFIX_BS}datepicker-day-color                      | css color unit     | Datepicker day text color                        |
+| --${PREFIX_BS}datepicker-day-disabled-color             | css color unit     | Datepicker disabled day text color                        |
 | --${PREFIX_BS}datepicker-day-bg-hover                   | css color unit     | Datepicker day hover background                  |
 | --${PREFIX_BS}datepicker-day-color-hover                | css color unit     | Datepicker day hover color                       |
 | --${PREFIX_BS}datepicker-day-selected-color             | css color unit     | Datepicker day selected color                    |
@@ -241,21 +243,6 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'boolean',
       control: 'boolean',
       description: 'Calendar has fixed height',
-    },
-    showMonthDropdown: {
-      type: 'boolean',
-      control: 'boolean',
-      description: 'Show month dropdown on calendar',
-    },
-    showYearDropdown: {
-      type: 'boolean',
-      control: 'boolean',
-      description: 'Show year dropdown on calendar',
-    },
-    monthsShown: {
-      type: 'number',
-      control: 'number',
-      description: 'Number of months showed on calendar',
     },
     onChange: {
       action: 'onChange',
