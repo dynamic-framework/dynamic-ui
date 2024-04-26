@@ -1,7 +1,7 @@
 import { format, getMonth, getYear } from 'date-fns';
 import classNames from 'classnames';
 
-import type { ComponentProps } from 'react';
+import { useMemo, type ComponentProps } from 'react';
 
 import DButton from '../DButton';
 import DSelect from '../DSelect';
@@ -66,19 +66,35 @@ export default function DDatePickerHeader(
     maxYearSelect,
   }: Props,
 ) {
-  const arrayYears = Array.from(
+  const arrayYears = useMemo(() => Array.from(
     { length: maxYearSelect - minYearSelect + 1 },
     (_, index) => minYearSelect + index,
-  );
-  const years = arrayYears.map((year) => ({ label: year.toString(), value: year }));
-  const defaultYear = years.find((year) => year.value === getYear(date));
+  ), [maxYearSelect, minYearSelect]);
 
-  const arrayMonths = Array.from({ length: 12 }, (_, i) => format(new Date(2000, i), 'LLLL', { locale }));
-  const months = arrayMonths.map((month, i) => ({ label: month, value: i }));
-  const defaultMonth = {
+  const years = useMemo(() => arrayYears.map((year) => ({
+    label: year.toString(),
+    value: year,
+  })), [arrayYears]);
+
+  const defaultYear = useMemo(
+    () => years.find((year) => year.value === getYear(date)),
+    [date, years],
+  );
+
+  const arrayMonths = useMemo(() => Array.from(
+    { length: 12 },
+    (_, i) => format(new Date(2000, i), 'LLLL', { locale }),
+  ), [locale]);
+
+  const months = useMemo(() => arrayMonths.map((month, i) => ({
+    label: month,
+    value: i,
+  })), [arrayMonths]);
+
+  const defaultMonth = useMemo(() => ({
     label: arrayMonths[getMonth(date)],
     value: getMonth(date),
-  };
+  }), [arrayMonths, date]);
 
   return (
     <div
