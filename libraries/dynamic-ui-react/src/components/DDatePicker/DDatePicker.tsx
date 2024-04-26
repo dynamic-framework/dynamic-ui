@@ -97,6 +97,13 @@ export default function DDatePicker<
   } = useDContext();
   const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
   const iconInput = useMemo(() => iconInputProp || calendar, [calendar, iconInputProp]);
+
+  const handleFormatWeekDay = useMemo(() => (
+    formatWeekDayProp
+      ? (day: string) => formatWeekDayProp(day)
+      : (day: string) => day.substring(0, 1)
+  ), [formatWeekDayProp]);
+
   const iconPrevMonth = useMemo(
     () => iconHeaderPrevMonthProp || chevronLeft,
     [chevronLeft, iconHeaderPrevMonthProp],
@@ -141,6 +148,7 @@ export default function DDatePicker<
       calendarClassName="d-date-picker"
       renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
       selectsRange={selectsRange}
+      formatWeekDay={handleFormatWeekDay}
       customInput={(
         <DDatePickerInput
           id={inputId}
@@ -158,11 +166,6 @@ export default function DDatePicker<
           label={timeLabel}
         />
       )}
-      {...formatWeekDayProp ? {
-        formatWeekDay: (day) => formatWeekDayProp(day),
-      } : {
-        formatWeekDay: (day) => day.substring(0, 1),
-      }}
       {...locale && { locale }}
       {...props}
     />
