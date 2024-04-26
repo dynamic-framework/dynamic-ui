@@ -1,0 +1,70 @@
+// All-caps `RGBA()` function used because of this Sass bug: https://github.com/sass/node-sass/issues/2251
+@each $color-name, $value in map-remove($theme-colors, "light", "dark") {
+  $color: rgba(var(--#{$prefix}#{$color-name}-500-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+  $text-underline-color: rgba(var(--#{$prefix}#{$color-name}-500-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+  $hover-color: rgba(var(--#{$prefix}#{$color-name}-600-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+  $hover-text-decoration-color: rgba(var(--#{$prefix}#{$color-name}-600-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+
+  .link-#{$color-name} {
+    color: $color;
+    text-decoration-color: $text-underline-color;
+
+    @if $link-shade-percentage != 0 {
+      &:hover,
+      &:focus {
+        color: $hover-color;
+        text-decoration-color: $hover-text-decoration-color;
+      }
+    }
+  }
+}
+
+.link-light {
+  $color: rgba(var(--#{$prefix}light-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+  $text-underline-color: rgba(var(--#{$prefix}light-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+  $hover-color: rgba(var(--#{$prefix}gray-300-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+  $hover-text-decoration-color: rgba(var(--#{$prefix}gray-300-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+
+  color: $color;
+  text-decoration-color: $text-underline-color;
+
+  @if $link-shade-percentage != 0 {
+    &:hover,
+    &:focus {
+      color: $hover-color;
+      text-decoration-color: $hover-text-decoration-color;
+    }
+  }
+}
+
+.link-dark {
+  $color: rgba(var(--#{$prefix}dark-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+  $text-underline-color: rgba(var(--#{$prefix}dark-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+  $hover-color: rgba(var(--#{$prefix}gray-700-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+  $hover-text-decoration-color: rgba(var(--#{$prefix}gray-700-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+
+  color: $color;
+  text-decoration-color: $text-underline-color;
+
+  @if $link-shade-percentage != 0 {
+    &:hover,
+    &:focus {
+      color: $hover-color;
+      text-decoration-color: $hover-text-decoration-color;
+    }
+  }
+}
+
+// One-off special link helper as a bridge until v6
+.link-body-emphasis {
+  color: rgba(var(--#{$prefix}emphasis-color-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
+  text-decoration-color: rgba(var(--#{$prefix}emphasis-color-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);
+
+  @if $link-shade-percentage != 0 {
+    &:hover,
+    &:focus {
+      color: rgba(var(--#{$prefix}emphasis-color-rgb), var(--#{$prefix}link-opacity, .75)) if($enable-important-utilities, !important, null);
+      text-decoration-color: rgba(var(--#{$prefix}emphasis-color-rgb), var(--#{$prefix}link-underline-opacity, .75)) if($enable-important-utilities, !important, null);
+    }
+  }
+}

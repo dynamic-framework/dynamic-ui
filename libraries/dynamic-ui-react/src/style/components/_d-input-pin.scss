@@ -21,6 +21,10 @@
     height: var(--#{$prefix}input-pin-form-control-size);
     text-align: center;
     box-shadow: none;
+
+    &:has(~ .input-group-text) {
+      padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4);
+    }
   }
 
   .form-control::-webkit-inner-spin-button,
@@ -64,5 +68,6 @@
 
   .input-group-text {
     padding-left: var(--#{$prefix}input-pin-form-gap);
+    background-color: transparent;
   }
 }
