@@ -1,7 +1,8 @@
-import { format, getMonth, getYear } from 'date-fns';
+import { useMemo } from 'react';
 import classNames from 'classnames';
+import { format, getMonth, getYear } from 'date-fns';
 
-import { useMemo, type ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 
 import DButton from '../DButton';
 import DSelect from '../DSelect';
