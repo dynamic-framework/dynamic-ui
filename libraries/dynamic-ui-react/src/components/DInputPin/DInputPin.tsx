@@ -8,9 +8,7 @@ import {
 import classNames from 'classnames';
 
 import type {
-  ChangeEvent,
   ClipboardEvent,
-  FocusEvent,
   FormEvent,
   KeyboardEvent,
   MouseEvent,
@@ -79,21 +77,26 @@ export default function DInputPin(
   }: Props,
 ) {
   const [pattern, setPattern] = useState<string>('');
-  const isInputNum = innerInputMode === 'numeric' || innerInputMode === 'tel';
-
-  const [activeInput, setActiveInput] = useState(Array.from<string | number>({ length: characters }).fill(''));
+  const [activeInput, setActiveInput] = useState(Array.from<string>({ length: characters }).fill(''));
+  const isInputNum = useMemo(() => innerInputMode === 'numeric' || innerInputMode === 'tel', [innerInputMode]);
 
   useEffect(() => {
     setPattern(type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$');
   }, [type]);
 
+  const handlePaste = useCallback((event: ClipboardEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const pastedData = event.clipboardData.getData('text/plain');
+    const cleanData = isInputNum ? pastedData.replace(/[^0-9]/gmi, '') : pastedData;
+    setActiveInput((prev) => prev.map((_, index) => cleanData[index] || ''));
+  }, [isInputNum]);
+
   const nextInput = useCallback((
-    { target }: ChangeEvent<HTMLInputElement>,
+    event: FormEvent<HTMLInputElement>,
     index: number,
   ) => {
-    const input = target;
     const regex = new RegExp(pattern);
-
+    const input = event.currentTarget;
     if (!regex.test(input.value)) {
       input.value = '';
     }
@@ -125,12 +128,9 @@ export default function DInputPin(
   }, []);
 
   const focusInput = useCallback((
-    { currentTarget }: FocusEvent<HTMLInputElement>,
     index: number,
   ) => {
     setActiveInput((prev) => prev.with(index, ''));
-    // eslint-disable-next-line no-param-reassign
-    currentTarget.value = '';
   }, []);
 
   const wheelInput = useCallback((event: WheelEvent<HTMLInputElement>) => {
@@ -138,19 +138,9 @@ export default function DInputPin(
   }, []);
 
   const formChange = useCallback(() => {
+    console.log('formChange', activeInput.join(''));
     onChange?.(activeInput.join(''));
   }, [activeInput, onChange]);
-
-  const handlePaste = ({ clipboardData }: ClipboardEvent<HTMLFormElement>) => {
-    // validate numbers in the input and extract to paste
-    const pastedData = clipboardData
-      .getData('text/plain')
-      .slice(0, characters)
-      .split('');
-
-    if (isInputNum && pastedData.some((value) => Number.isNaN(Number(value)))) { /* empty */ }
-    setActiveInput(pastedData);
-  };
 
   const preventDefaultEvent = useCallback((event: MouseEvent | FormEvent) => {
     event.preventDefault();
@@ -188,7 +178,7 @@ export default function DInputPin(
         id={id}
         onInput={formChange}
         onSubmit={preventDefaultEvent}
-        onPaste={(clipboard) => handlePaste(clipboard)}
+        onPaste={(event) => handlePaste(event)}
       >
         {activeInput.map((value, index) => (
           <input
@@ -204,9 +194,9 @@ export default function DInputPin(
             id={`pinIndex${index}`}
             name={`pin-${index}`}
             maxLength={1}
-            onChange={(event) => nextInput(event, index)}
+            onInput={(event) => nextInput(event, index)}
             onKeyDown={(event) => prevInput(event, index)}
-            onFocus={(event) => focusInput(event, index)}
+            onFocus={() => focusInput(index)}
             onWheel={wheelInput}
             onClick={preventDefaultEvent}
             autoComplete="off"
