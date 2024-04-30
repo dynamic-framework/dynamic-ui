@@ -15,7 +15,6 @@ type Props =
 } & Omit<
 ComponentProps<typeof DInput>,
 | 'type'
-| 'isReadOnly'
 | 'onIconEndClick'
 | 'value'
 >;
@@ -29,6 +28,7 @@ function DDatePickerInput(
     className,
     style,
     inputLabel,
+    readOnly: ignored,
     ...props
   }: Props,
   ref: Ref<HTMLInputElement>,
