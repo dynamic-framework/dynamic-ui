@@ -78,18 +78,21 @@ export default function DInputPin(
 ) {
   const [pattern, setPattern] = useState<string>('');
   const [activeInput, setActiveInput] = useState(Array.from<string>({ length: characters }).fill(''));
-  const isInputNum = useMemo(() => innerInputMode === 'numeric' || innerInputMode === 'tel', [innerInputMode]);
+  const isInputNum = useMemo(() => type === 'number' || type === 'tel', [type]);
 
   useEffect(() => {
     setPattern(type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$');
   }, [type]);
 
-  const handlePaste = useCallback((event: ClipboardEvent<HTMLFormElement>) => {
+  const handlePaste = useCallback((event: ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault();
     const pastedData = event.clipboardData.getData('text/plain');
     const cleanData = isInputNum ? pastedData.replace(/[^0-9]/gmi, '') : pastedData;
-    setActiveInput((prev) => prev.map((_, index) => cleanData[index] || ''));
-  }, [isInputNum]);
+    const newInput = Array.from<string>({ length: characters }).map((_, index) => cleanData[index] || '');
+    setActiveInput(newInput);
+    onChange?.(newInput.join(''));
+    event.currentTarget.blur();
+  }, [characters, isInputNum, onChange]);
 
   const nextInput = useCallback((
     event: FormEvent<HTMLInputElement>,
@@ -138,7 +141,6 @@ export default function DInputPin(
   }, []);
 
   const formChange = useCallback(() => {
-    console.log('formChange', activeInput.join(''));
     onChange?.(activeInput.join(''));
   }, [activeInput, onChange]);
 
@@ -176,12 +178,12 @@ export default function DInputPin(
       )}
       <form
         id={id}
-        onInput={formChange}
+        onChange={formChange}
         onSubmit={preventDefaultEvent}
-        onPaste={(event) => handlePaste(event)}
       >
         {activeInput.map((value, index) => (
           <input
+            onPaste={(event) => handlePaste(event)}
             className={classNames({
               'form-control': true,
               'is-invalid': invalid,
