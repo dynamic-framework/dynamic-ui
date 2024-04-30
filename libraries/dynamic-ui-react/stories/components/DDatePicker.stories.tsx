@@ -244,6 +244,16 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'boolean',
       description: 'Calendar has fixed height',
     },
+    invalid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
+    valid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
     onChange: {
       action: 'onChange',
     },

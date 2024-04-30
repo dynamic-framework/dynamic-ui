@@ -63,6 +63,8 @@ type Props<
   locale?: Locale;
   minYearSelect?: number;
   maxYearSelect?: number;
+  invalid?: boolean;
+  valid?: boolean;
 };
 
 export default function DDatePicker<
@@ -91,6 +93,8 @@ export default function DDatePicker<
     headerNextMonthAriaLabel = 'increase month',
     headerButtonVariant = 'link',
     headerButtonTheme = 'dark',
+    invalid = false,
+    valid = false,
     locale,
     className,
     formatWeekDay: formatWeekDayProp,
@@ -169,6 +173,8 @@ export default function DDatePicker<
           inputLabel={inputLabel}
           className={className}
           style={style}
+          invalid={invalid}
+          valid={valid}
         />
       )}
       customTimeInput={(
