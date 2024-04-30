@@ -181,7 +181,7 @@ export default function DInputPin(
         onChange={formChange}
         onSubmit={preventDefaultEvent}
       >
-        {activeInput.map((value, index) => (
+        {Array.from({ length: characters }).map((_, index) => (
           <input
             onPaste={(event) => handlePaste(event)}
             className={classNames({
@@ -189,7 +189,7 @@ export default function DInputPin(
               'is-invalid': invalid,
               'is-valid': valid,
             })}
-            value={value}
+            value={activeInput[index]}
             type={secret ? 'password' : type}
             aria-describedby={`${id}State`}
             inputMode={innerInputMode}
