@@ -47,6 +47,7 @@ type Props<
   date?: string | null;
   selectsRange?: boolean;
   inputLabel?: string;
+  inputHint?: string;
   inputAriaLabel?: string;
   inputActionAriaLabel?: string;
   iconInput?: string;
@@ -75,6 +76,7 @@ export default function DDatePicker<
     date,
     selectsRange = false,
     inputLabel,
+    inputHint,
     inputAriaLabel,
     inputActionAriaLabel = 'open calendar',
     inputId = 'input-calendar',
@@ -175,6 +177,7 @@ export default function DDatePicker<
           style={style}
           invalid={invalid}
           valid={valid}
+          hint={inputHint}
         />
       )}
       customTimeInput={(
