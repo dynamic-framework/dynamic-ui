@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: flex-start;
 
-  form {
+  .pin-group {
     display: flex;
     flex-direction: row;
     gap: var(--#{$prefix}input-pin-form-gap);

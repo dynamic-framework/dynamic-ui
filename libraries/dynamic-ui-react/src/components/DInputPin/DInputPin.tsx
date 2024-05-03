@@ -11,7 +11,6 @@ import type {
   ClipboardEvent,
   FormEvent,
   KeyboardEvent,
-  MouseEvent,
   WheelEvent,
 } from 'react';
 
@@ -84,15 +83,20 @@ export default function DInputPin(
     setPattern(type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$');
   }, [type]);
 
+  const handleOTPChange = useCallback((otp: Array<string>) => {
+    const otpValue = otp.join('');
+    onChange?.(otpValue);
+  }, [onChange]);
+
   const handlePaste = useCallback((event: ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault();
     const pastedData = event.clipboardData.getData('text/plain');
     const cleanData = isInputNum ? pastedData.replace(/[^0-9]/gmi, '') : pastedData;
     const newInput = Array.from<string>({ length: characters }).map((_, index) => cleanData[index] || '');
     setActiveInput(newInput);
-    onChange?.(newInput.join(''));
+    handleOTPChange(newInput);
     event.currentTarget.blur();
-  }, [characters, isInputNum, onChange]);
+  }, [characters, handleOTPChange, isInputNum]);
 
   const nextInput = useCallback((
     event: FormEvent<HTMLInputElement>,
@@ -105,14 +109,18 @@ export default function DInputPin(
     }
 
     if (input.value !== '') {
-      setActiveInput((prev) => prev.with(index, input.value));
+      setActiveInput((prev) => {
+        const newValue = prev.with(index, input.value);
+        handleOTPChange(newValue);
+        return newValue;
+      });
       if (input.nextSibling) {
         (input.nextSibling as HTMLElement)?.focus();
       } else {
         input.blur();
       }
     }
-  }, [pattern]);
+  }, [handleOTPChange, pattern]);
 
   const prevInput = useCallback((
     { key, currentTarget }: KeyboardEvent<HTMLInputElement>,
@@ -120,7 +128,11 @@ export default function DInputPin(
   ) => {
     if (key === 'Backspace') {
       const { value } = currentTarget;
-      setActiveInput((prev) => prev.with(index, ''));
+      setActiveInput((prev) => {
+        const newVal = prev.with(index, '');
+        handleOTPChange(newVal);
+        return newVal;
+      });
       if (currentTarget.previousSibling && value === '') {
         (currentTarget.previousSibling as HTMLElement)?.focus();
       } else {
@@ -128,7 +140,7 @@ export default function DInputPin(
         currentTarget.focus();
       }
     }
-  }, []);
+  }, [handleOTPChange]);
 
   const focusInput = useCallback((
     index: number,
@@ -138,14 +150,6 @@ export default function DInputPin(
 
   const wheelInput = useCallback((event: WheelEvent<HTMLInputElement>) => {
     event.currentTarget.blur();
-  }, []);
-
-  const formChange = useCallback(() => {
-    onChange?.(activeInput.join(''));
-  }, [activeInput, onChange]);
-
-  const preventDefaultEvent = useCallback((event: MouseEvent | FormEvent) => {
-    event.preventDefault();
   }, []);
 
   const { iconMap: { input } } = useDContext();
@@ -176,11 +180,7 @@ export default function DInputPin(
           )}
         </label>
       )}
-      <form
-        id={id}
-        onChange={formChange}
-        onSubmit={preventDefaultEvent}
-      >
+      <div className="pin-group" id={id}>
         {Array.from({ length: characters }).map((_, index) => (
           <input
             onPaste={(event) => handlePaste(event)}
@@ -200,7 +200,7 @@ export default function DInputPin(
             onKeyDown={(event) => prevInput(event, index)}
             onFocus={() => focusInput(index)}
             onWheel={wheelInput}
-            onClick={preventDefaultEvent}
+            onClick={(event) => event.preventDefault()}
             autoComplete="off"
             placeholder={placeholder}
             disabled={disabled || loading}
@@ -236,7 +236,7 @@ export default function DInputPin(
             </span>
           </div>
         )}
-      </form>
+      </div>
       {hint && (
         <div
           className="form-text"
