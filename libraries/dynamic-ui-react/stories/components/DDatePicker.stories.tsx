@@ -416,7 +416,7 @@ export const DateRange: Story = {
   },
 };
 
-export const InvalidState: Story = {
+export const Error: Story = {
   decorators: [
     (Story) => (
       <div style={{ height: '400px' }} className="position-relative">
