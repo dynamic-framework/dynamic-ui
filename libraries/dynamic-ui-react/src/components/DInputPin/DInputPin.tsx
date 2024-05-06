@@ -66,7 +66,7 @@ export default function DInputPin(
     characters = 4,
     invalidIcon: invalidIconProp,
     validIcon: validIconProp,
-    innerInputMode = 'numeric',
+    innerInputMode = 'text',
     hint,
     invalid = false,
     valid = false,
@@ -180,7 +180,7 @@ export default function DInputPin(
           )}
         </label>
       )}
-      <div className="pin-group" id={id}>
+      <div className="d-pin-group" id={id}>
         {Array.from({ length: characters }).map((_, index) => (
           <input
             onPaste={(event) => handlePaste(event)}
