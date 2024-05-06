@@ -85,12 +85,12 @@ $headings-line-height: var(--#{$prefix}heading-line-height) !default;
 
 // scss-docs-start display-headings
 // custom
-$display1-font-size-value: $font-size-base * 6 !default;   // 96px - 48.975
-$display2-font-size-value: $font-size-base * 5.5 !default; // 88px - 45.925
-$display3-font-size-value: $font-size-base * 5 !default;   // 80px - 42.875
-$display4-font-size-value: $font-size-base * 4.5 !default; // 72px - 39.825
-$display5-font-size-value: $font-size-base * 4 !default;   // 64px - 36.775
-$display6-font-size-value: $font-size-base * 3.5 !default; // 56px - 33.725
+$display1-font-size-value: $font-size-base * 6 !default;   // 96px - 48.975px
+$display2-font-size-value: $font-size-base * 5.5 !default; // 88px - 45.925px
+$display3-font-size-value: $font-size-base * 5 !default;   // 80px - 42.875px
+$display4-font-size-value: $font-size-base * 4.5 !default; // 72px - 39.825px
+$display5-font-size-value: $font-size-base * 4 !default;   // 64px - 36.775px
+$display6-font-size-value: $font-size-base * 3.5 !default; // 56px - 33.725px
 
 $display1-font-size: var(--#{$prefix}fs-display-1) !default;
 $display2-font-size: var(--#{$prefix}fs-display-2) !default;
