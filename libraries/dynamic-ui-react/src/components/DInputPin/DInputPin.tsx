@@ -180,10 +180,9 @@ export default function DInputPin(
           )}
         </label>
       )}
-      <div className="d-pin-group" id={id}>
+      <div className="d-input-pin-group" id={id}>
         {Array.from({ length: characters }).map((_, index) => (
           <input
-            onPaste={(event) => handlePaste(event)}
             className={classNames({
               'form-control': true,
               'is-invalid': invalid,
@@ -201,6 +200,7 @@ export default function DInputPin(
             onFocus={() => focusInput(index)}
             onWheel={wheelInput}
             onClick={(event) => event.preventDefault()}
+            onPaste={(event) => handlePaste(event)}
             autoComplete="off"
             placeholder={placeholder}
             disabled={disabled || loading}
