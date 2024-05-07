@@ -16,7 +16,7 @@ it('should render my component', () => {
       class="d-input-pin"
     >
       <div
-        class="d-pin-group"
+        class="d-input-pin-group"
         id="myPin"
       >
         <input
