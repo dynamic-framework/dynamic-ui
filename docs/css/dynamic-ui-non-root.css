@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.19.0
+ * dynamic-framework 1.19.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -8623,7 +8623,7 @@ label .d-icon {
   flex-direction: column;
   align-items: flex-start;
 }
-.d-input-pin form {
+.d-input-pin .d-input-pin-group {
   display: flex;
   flex-direction: row;
   gap: var(--bs-input-pin-form-gap);
@@ -10983,6 +10983,7 @@ label .d-icon {
 }
 .d-select .d-select__menu-list {
   top: calc(var(--bs-input-border-width) * 2);
+  margin: calc(var(--bs-input-border-width) * -1);
   background: var(--bs-white);
   border-radius: var(--bs-input-border-radius);
   box-shadow: var(--bs-select-menu-shadow);

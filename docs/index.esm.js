@@ -477,7 +477,7 @@ function DDatePickerTime(_a) {
 }
 
 function DDatePickerInput(_a, ref) {
-    var { value, onClick, id, iconEnd, className, style, inputLabel } = _a, props = __rest(_a, ["value", "onClick", "id", "iconEnd", "className", "style", "inputLabel"]);
+    var { value, onClick, id, iconEnd, className, style, inputLabel, readOnly: ignored } = _a, props = __rest(_a, ["value", "onClick", "id", "iconEnd", "className", "style", "inputLabel", "readOnly"]);
     return (jsx(DInput$1, Object.assign({ ref: ref, onClick: onClick, readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd, className: className, style: style, label: inputLabel }, props)));
 }
 const ForwardedDDatePickerInput = forwardRef(DDatePickerInput);
@@ -629,7 +629,7 @@ function DDatePickerHeader({ date, changeYear, changeMonth, decreaseMonth, incre
 }
 
 function DDatePicker(_a) {
-    var { date, selectsRange = false, inputLabel, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, iconInput: iconInputProp, iconHeaderPrevMonth: iconHeaderPrevMonthProp, iconHeaderNextMonth: iconHeaderNextMonthProp, iconMaterialStyle: iconMaterialStyleProp, iconFamilyClass, iconFamilyPrefix, minYearSelect = 1900, maxYearSelect = 2100, iconHeaderSize = 'sm', headerPrevMonthAriaLabel = 'decrease month', headerNextMonthAriaLabel = 'increase month', headerButtonVariant = 'link', headerButtonTheme = 'dark', locale, className, formatWeekDay: formatWeekDayProp, style } = _a, props = __rest(_a, ["date", "selectsRange", "inputLabel", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeLabel", "iconInput", "iconHeaderPrevMonth", "iconHeaderNextMonth", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "locale", "className", "formatWeekDay", "style"]);
+    var { date, selectsRange = false, inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, iconInput: iconInputProp, iconHeaderPrevMonth: iconHeaderPrevMonthProp, iconHeaderNextMonth: iconHeaderNextMonthProp, iconMaterialStyle: iconMaterialStyleProp, iconFamilyClass, iconFamilyPrefix, minYearSelect = 1900, maxYearSelect = 2100, iconHeaderSize = 'sm', headerPrevMonthAriaLabel = 'decrease month', headerNextMonthAriaLabel = 'increase month', headerButtonVariant = 'link', headerButtonTheme = 'dark', invalid = false, valid = false, locale, className, formatWeekDay: formatWeekDayProp, style } = _a, props = __rest(_a, ["date", "selectsRange", "inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeLabel", "iconInput", "iconHeaderPrevMonth", "iconHeaderNextMonth", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "locale", "className", "formatWeekDay", "style"]);
     const { iconMap: { calendar, chevronLeft, chevronRight, }, } = useDContext();
     const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
     const iconInput = useMemo(() => iconInputProp || calendar, [calendar, iconInputProp]);
@@ -651,7 +651,7 @@ function DDatePicker(_a) {
         minYearSelect,
         maxYearSelect,
     ]);
-    return (jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: (headerProps) => jsx(DatePickerHeader, Object.assign({}, headerProps)), selectsRange: selectsRange, formatWeekDay: handleFormatWeekDay, customInput: (jsx(DDatePickerInput$1, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyleProp, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style })), customTimeInput: (jsx(DDatePickerTime, { id: timeId, label: timeLabel })) }, locale && { locale }, props)));
+    return (jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: (headerProps) => jsx(DatePickerHeader, Object.assign({}, headerProps)), selectsRange: selectsRange, formatWeekDay: handleFormatWeekDay, customInput: (jsx(DDatePickerInput$1, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyleProp, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsx(DDatePickerTime, { id: timeId, label: timeLabel })) }, locale && { locale }, props)));
 }
 
 function DInputMask(props, ref) {
@@ -822,17 +822,37 @@ var DInputPassword$1 = ForwardedDInputPassword;
 
 function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder, type = 'text', disabled = false, loading = false, secret = false, iconFamilyClass, iconFamilyPrefix, characters = 4, invalidIcon: invalidIconProp, validIcon: validIconProp, innerInputMode = 'text', hint, invalid = false, valid = false, className, style, onChange, }) {
     const [pattern, setPattern] = useState('');
+    const [activeInput, setActiveInput] = useState(Array.from({ length: characters }).fill(''));
+    const isInputNum = useMemo(() => type === 'number' || type === 'tel', [type]);
     useEffect(() => {
         setPattern(type === 'number' ? '[0-9]+' : '^[a-zA-Z0-9]+$');
     }, [type]);
-    const nextInput = useCallback((event) => {
+    const handleOTPChange = useCallback((otp) => {
+        const otpValue = otp.join('');
+        onChange === null || onChange === void 0 ? void 0 : onChange(otpValue);
+    }, [onChange]);
+    const handlePaste = useCallback((event) => {
+        event.preventDefault();
+        const pastedData = event.clipboardData.getData('text/plain');
+        const cleanData = isInputNum ? pastedData.replace(/[^0-9]/gmi, '') : pastedData;
+        const newInput = Array.from({ length: characters }).map((_, index) => cleanData[index] || '');
+        setActiveInput(newInput);
+        handleOTPChange(newInput);
+        event.currentTarget.blur();
+    }, [characters, handleOTPChange, isInputNum]);
+    const nextInput = useCallback((event, index) => {
         var _a;
-        const input = event.target;
         const regex = new RegExp(pattern);
+        const input = event.currentTarget;
         if (!regex.test(input.value)) {
             input.value = '';
         }
         if (input.value !== '') {
+            setActiveInput((prev) => {
+                const newValue = prev.with(index, input.value);
+                handleOTPChange(newValue);
+                return newValue;
+            });
             if (input.nextSibling) {
                 (_a = input.nextSibling) === null || _a === void 0 ? void 0 : _a.focus();
             }
@@ -840,43 +860,39 @@ function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconF
                 input.blur();
             }
         }
-    }, [pattern]);
-    const prevInput = useCallback((event) => {
+    }, [handleOTPChange, pattern]);
+    const prevInput = useCallback(({ key, currentTarget }, index) => {
         var _a;
-        if (event.key === 'Backspace') {
-            const { value } = event.currentTarget;
-            if (event.currentTarget.previousSibling && value === '') {
-                (_a = event.currentTarget.previousSibling) === null || _a === void 0 ? void 0 : _a.focus();
+        if (key === 'Backspace') {
+            const { value } = currentTarget;
+            setActiveInput((prev) => {
+                const newVal = prev.with(index, '');
+                handleOTPChange(newVal);
+                return newVal;
+            });
+            if (currentTarget.previousSibling && value === '') {
+                (_a = currentTarget.previousSibling) === null || _a === void 0 ? void 0 : _a.focus();
             }
             else {
-                event.currentTarget.blur();
-                event.currentTarget.focus();
+                currentTarget.blur();
+                currentTarget.focus();
             }
         }
-    }, []);
-    const focusInput = useCallback((event) => {
-        // eslint-disable-next-line no-param-reassign
-        event.currentTarget.value = '';
+    }, [handleOTPChange]);
+    const focusInput = useCallback((index) => {
+        setActiveInput((prev) => prev.with(index, ''));
     }, []);
     const wheelInput = useCallback((event) => {
         event.currentTarget.blur();
     }, []);
-    const formChange = useCallback((event) => {
-        const formData = new FormData(event.currentTarget);
-        const values = Array.from(formData.values()).join('');
-        onChange === null || onChange === void 0 ? void 0 : onChange(values);
-    }, [onChange]);
-    const preventDefaultEvent = useCallback((event) => {
-        event.preventDefault();
-    }, []);
     const { iconMap: { input } } = useDContext();
     const invalidIcon = useMemo(() => invalidIconProp || input.invalid, [input.invalid, invalidIconProp]);
     const validIcon = useMemo(() => validIconProp || input.valid, [input.valid, validIconProp]);
-    return (jsxs("div", { className: classNames('d-input-pin', className), style: style, children: [label && (jsxs("label", { htmlFor: "pinIndex0", children: [label, labelIcon && (jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}input-label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix }))] })), jsxs("form", { id: id, onInput: formChange, onSubmit: preventDefaultEvent, children: [Array.from({ length: characters }).map((_, index) => (jsx("input", Object.assign({ className: classNames({
+    return (jsxs("div", { className: classNames('d-input-pin', className), style: style, children: [label && (jsxs("label", { htmlFor: "pinIndex0", children: [label, labelIcon && (jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}input-label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix }))] })), jsxs("div", { className: "d-input-pin-group", id: id, children: [Array.from({ length: characters }).map((_, index) => (jsx("input", Object.assign({ className: classNames({
                             'form-control': true,
                             'is-invalid': invalid,
                             'is-valid': valid,
-                        }), type: secret ? 'password' : type, "aria-describedby": `${id}State`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onChange: nextInput, onKeyDown: prevInput, onFocus: focusInput, onWheel: wheelInput, onClick: preventDefaultEvent, autoComplete: "off", placeholder: placeholder, disabled: disabled || loading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), (invalid || valid) && !loading && (jsx("span", { className: "input-group-text", id: `${id}State`, children: jsx(DIcon, { className: "input-group-validation-icon", icon: invalid ? invalidIcon : validIcon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), loading && (jsx("div", { className: "input-group-text", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
+                        }), value: activeInput[index], type: secret ? 'password' : type, "aria-describedby": `${id}State`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onInput: (event) => nextInput(event, index), onKeyDown: (event) => prevInput(event, index), onFocus: () => focusInput(index), onWheel: wheelInput, onClick: (event) => event.preventDefault(), onPaste: (event) => handlePaste(event), autoComplete: "off", placeholder: placeholder, disabled: disabled || loading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), (invalid || valid) && !loading && (jsx("span", { className: "input-group-text", id: `${id}State`, children: jsx(DIcon, { className: "input-group-validation-icon", icon: invalid ? invalidIcon : validIcon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), loading && (jsx("div", { className: "input-group-text", children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
 }
 
 function DInputSelect({ id, name, label = '', className, style, options = [], labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, floatingLabel = false, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
