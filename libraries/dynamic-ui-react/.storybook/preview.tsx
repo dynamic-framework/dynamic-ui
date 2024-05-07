@@ -37,6 +37,7 @@ export default {
               'Input Pin',
               'Input Select',
               'Input Check',
+              'Input Radio',
               'Input Switch',
               'Datepicker',
               'Progress',

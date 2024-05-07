@@ -28,6 +28,7 @@ it('should render datepicker', () => {
             <input
               class="form-control"
               id="datepicker"
+              readonly=""
               type="text"
               value=""
             />
