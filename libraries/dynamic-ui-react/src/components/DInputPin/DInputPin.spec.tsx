@@ -15,7 +15,8 @@ it('should render my component', () => {
     <div
       class="d-input-pin"
     >
-      <form
+      <div
+        class="d-input-pin-group"
         id="myPin"
       >
         <input
@@ -28,6 +29,7 @@ it('should render my component', () => {
           name="pin-0"
           required=""
           type="text"
+          value=""
         />
         <input
           aria-describedby="myPinState"
@@ -39,6 +41,7 @@ it('should render my component', () => {
           name="pin-1"
           required=""
           type="text"
+          value=""
         />
         <input
           aria-describedby="myPinState"
@@ -50,6 +53,7 @@ it('should render my component', () => {
           name="pin-2"
           required=""
           type="text"
+          value=""
         />
         <input
           aria-describedby="myPinState"
@@ -61,8 +65,9 @@ it('should render my component', () => {
           name="pin-3"
           required=""
           type="text"
+          value=""
         />
-      </form>
+      </div>
     </div>
   </div>
   `);

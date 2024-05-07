@@ -101,6 +101,7 @@
   // select menu
   .d-select__menu-list {
     top: calc(var(--#{$prefix}input-border-width) * 2);
+    margin: calc(var(--#{$prefix}input-border-width) * -1);
     background: $input-bg;
     border-radius: var(--#{$prefix}input-border-radius);
     box-shadow: var(--#{$prefix}select-menu-shadow);
