@@ -102,6 +102,10 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'text',
       type: 'string',
     },
+    inputHint: {
+      control: 'text',
+      type: 'string',
+    },
     inputAriaLabel: {
       control: 'text',
       type: 'string',
@@ -243,6 +247,16 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'boolean',
       control: 'boolean',
       description: 'Calendar has fixed height',
+    },
+    invalid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
+    valid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
     },
     onChange: {
       action: 'onChange',
@@ -399,6 +413,43 @@ export const DateRange: Story = {
   args: {
     inline: true,
     selectsRange: true,
+  },
+};
+
+export const Error: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: function Render({ ...args }) {
+    const [date, setDate] = useState(args.date);
+    const handleDate = (value: Date | null) => {
+      if (value) {
+        setDate(new Date(value).toISOString());
+      }
+    };
+    return (
+      <DDatePicker
+        {...args}
+        date={date}
+        dateFormat="dd/MM/yyyy"
+        onChange={(value) => handleDate(value)}
+      />
+    );
+  },
+  args: {
+    inputAriaLabel: 'Calendar',
+    date: new Date().toISOString(),
+    dateFormat: 'dd/MM/yyyy',
+    invalid: true,
+    inputHint: 'This is an invalid date',
+    inline: false,
+    iconInput: 'calendar',
+    iconHeaderPrevMonth: 'chevron-left',
+    iconHeaderNextMonth: 'chevron-right',
   },
 };
 
