@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.19.1...@dynamic-framework/ui-react@1.20.0) (2024-05-07)
+
+
+### Features
+
+* add valid and invalid state to DDatePicker ([#635](https://github.com/dynamic-framework/dynamic-ui/issues/635)) ([bbc2de0](https://github.com/dynamic-framework/dynamic-ui/commit/bbc2de09ead15d33f466b11f08cc793517a09a47))
+
+
+### Bug Fixes
+
+* ignore sent readOnly prop from DatePicker ([#637](https://github.com/dynamic-framework/dynamic-ui/issues/637)) ([1893be4](https://github.com/dynamic-framework/dynamic-ui/commit/1893be4c63c7d2f013fd6c862054309899aba5a5))
+* remove form tag to avoid conflicts with outside forms and emit change function ([3c61eb2](https://github.com/dynamic-framework/dynamic-ui/commit/3c61eb283c1746434d91ef43c5a982b8cec032b1))
+* set negative margin to balance DSelect menu list ([#636](https://github.com/dynamic-framework/dynamic-ui/issues/636)) ([d9cddc0](https://github.com/dynamic-framework/dynamic-ui/commit/d9cddc00f6b785ad257e0788b50bc6baf632ec14))
+
+
+
 ## [1.19.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.19.0...@dynamic-framework/ui-react@1.19.1) (2024-04-26)
 
 
