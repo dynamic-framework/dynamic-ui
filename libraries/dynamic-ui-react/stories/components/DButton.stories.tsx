@@ -73,8 +73,7 @@ we use the established palettes in the variables.
 
 ## CSS Variables
 
-The css variables available by default can be seen in the
-bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
+The Bootstrap documentation provides details on the default [Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
 
 | Variable                                | Type              | Description                       |
 |-----------------------------------------|-------------------|-----------------------------------|
@@ -102,8 +101,6 @@ bootstrap documentation: [Bootstrap Button CSS Variables](https://getbootstrap.c
 | --${PREFIX_BS}btn-sm-padding-y          | css length unit   | Button small padding vertical     |
 | --${PREFIX_BS}btn-sm-font-size          | css length unit   | Button small font size            |
 | --${PREFIX_BS}btn-sm-border-radius      | css length unit   | Button small border radius        |
-
-+ [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/buttons/#variables)
         `,
       },
     },

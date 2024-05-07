@@ -25,6 +25,10 @@ To understand in more detail the aspects covered by this component, review the f
 + [Bootstrap Input Group](https://getbootstrap.com/docs/5.3/forms/input-group/)
 
 ## CSS Variables
+
+The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
+and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/forms/input-group/#css)
+
 | Variable                                         | Type            | Description                   |
 |--------------------------------------------------|-----------------|-------------------------------|
 | --${PREFIX_BS}label-color                        | css color unit  | Label color                   |

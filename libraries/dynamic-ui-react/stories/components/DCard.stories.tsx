@@ -23,6 +23,11 @@ To understand in more detail the aspects and css varibles covered by this compon
 review the following documentation:
 
 + [Bootstrap Cards](https://getbootstrap.com/docs/5.3/components/card/)
+
+## CSS Variables
+
+The Bootstrap documentation provides details on the default [Card CSS Variables](https://getbootstrap.com/docs/5.3/components/card/#css)
+
         `,
       },
     },
