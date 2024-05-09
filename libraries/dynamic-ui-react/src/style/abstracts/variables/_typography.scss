@@ -38,6 +38,41 @@ $font-weight-base: $font-weight-normal !default;
 $line-height-base: 1.5 !default;
 
 // custom
+$body-large-font-size-value: $font-size-base * 1.5 !default;   // 24px - 21.525px
+$body-medium-font-size-value: $font-size-base * 1.25 !default; // 20px - 20px
+$body-normal-font-size-value: $font-size-base * 1 !default;    // 16px - 16px
+$body-small-font-size-value: $font-size-base * .875 !default;  // 14px - 14px
+$body-tiny-font-size-value: $font-size-base * .8125 !default;  // 13px - 13px
+
+$body-large-font-size: var(--#{$prefix}fs-body-large) !default;
+$body-medium-font-size: var(--#{$prefix}fs-body-medium) !default;
+$body-normal-font-size: var(--#{$prefix}fs-body-normal) !default;
+$body-small-font-size: var(--#{$prefix}fs-body-small) !default;
+$body-tiny-font-size: var(--#{$prefix}fs-body-tiny) !default;
+// end custom
+// scss-docs-end font-variables
+
+// scss-docs-start body-font-sizes
+// custom
+$body-font-sizes-value: (
+  large: $body-large-font-size-value,
+  medium: $body-medium-font-size-value,
+  normal: $body-normal-font-size-value,
+  small: $body-small-font-size-value,
+  tiny: $body-tiny-font-size-value,
+) !default;
+
+$body-font-sizes: (
+  large: $body-large-font-size,
+  medium: $body-medium-font-size,
+  normal: $body-normal-font-size,
+  small: $body-small-font-size,
+  tiny: $body-tiny-font-size,
+) !default;
+// end custom
+// scss-docs-end body-font-sizes
+
+// custom
 $h1-font-size-value: $font-size-base * 3 !default;    // 48px - 30.675px
 $h2-font-size-value: $font-size-base * 2.5 !default;  // 40px - 27.625px
 $h3-font-size-value: $font-size-base * 2 !default;    // 32px - 25.575px
