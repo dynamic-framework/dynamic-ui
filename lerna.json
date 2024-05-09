@@ -12,7 +12,20 @@
       "commitHooks": false,
       "yes": true,
       "conventionalCommits": true,
-      "changelogPreset": "conventionalcommits",
+      "changelogPreset": {
+        "name": "conventional-changelog-conventionalcommits",
+        "types": [
+          { "type": "feat", "section": "Features" },
+          { "type": "feat", "scope": "style", "section": "Style Features" },
+          { "type": "fix", "section": "Bug Fixes" },
+          { "type": "fix", "scope": "style", "section": "Style Fixes" },
+          { "type": "docs", "section": "Storybook" },
+          { "type": "chore", "hidden": true },
+          { "type": "style", "hidden": true },
+          { "type": "refactor", "hidden": true },
+          { "type": "test", "hidden": true }
+        ]
+      },
       "createRelease": "github"
     }
   }
