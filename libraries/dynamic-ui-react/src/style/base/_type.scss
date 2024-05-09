@@ -40,6 +40,11 @@
   line-height: $display-line-height;
 }
 
+// Body display classes
+[class*="fs-body-"] {
+  font-size: var(--#{$prefix}fs-body-font-size);
+}
+
 //
 // Emphasis
 //

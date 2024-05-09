@@ -1,4 +1,5 @@
-import { Meta, Canvas, Docs } from '@storybook/blocks';
+import { Meta, Canvas } from '@storybook/blocks';
+import { DAlert } from '../src';
 
 <Meta title="Design System/Typography" />
 
@@ -11,14 +12,20 @@ To understand in more detail the font usage take a look to the following documen
 + [Bootstrap Typography](https://getbootstrap.com/docs/5.3/content/typography/)
 + [Bootstrap RFS](https://getbootstrap.com/docs/5.3/getting-started/rfs/)
 
+<DAlert soft type="warning" className='py-1 mb-8'>
+  It's recommended to use the variables as defined, in order to have the benefits of RFS with responsive designs
+  and avoid definitions for each breakpoint already provided by bootstrap.
+</DAlert>
+
 Our fonts configuration works the same as bootstrap, however, the values are in css variables directly in the `:root`
 using `rfs` and media queries instead of being directly in each tag.
 
 Based on this, the following variables are found in the `:root`: `--bs-rfs-display-1`, `--bs-rfs-display-2`,
 `--bs-rfs-display-3`, `--bs-rfs-display-4`, `--bs-rfs-display-5`, `--bs-rfs-display-6`, `--bs-rfs-fs-1`,
-`--bs-rfs-fs-2`, `--bs-rfs-fs-3`, `--bs-rfs-fs-4`, `--bs-rfs-fs-5`, `--bs-rfs-fs-6` and `--bs-rfs-fs-small`.
+`--bs-rfs-fs-2`, `--bs-rfs-fs-3`, `--bs-rfs-fs-4`, `--bs-rfs-fs-5`, `--bs-rfs-fs-6`, `--bs-rfs-fs-small`,
+`--bs-fs-body-large`, `--bs-fs-body-medium`, `--bs-fs-body-normal`, `--bs-fs-body-small` and `--bs-fs-body-tiny`.
 
-Which are used in each tag using a reference variable
+Which are used in each tag using a reference variable:
 
 ```css
 --bs-fs-display-1: var(--bs-rfs-display-1);
@@ -34,8 +41,14 @@ Which are used in each tag using a reference variable
 --bs-fs-5: var(--bs-rfs-fs-5);
 --bs-fs-6: var(--bs-rfs-fs-6);
 --bs-fs-small: var(--bs-rfs-fs-small);
+--bs-fs-body-large: var(--bs-rfs-fs-body-large);
+--bs-fs-body-medium: var(--bs-rfs-fs-body-medium);
+--bs-fs-body-normal: var(--bs-rfs-fs-body-normal);
+--bs-fs-body-small: var(--bs-rfs-fs-body-small);
+--bs-fs-body-tiny: var(--bs-rfs-fs-body-tiny);
 ```
 
+as:
 ```css
 h1, .h1 {
   font-size: var(--bs-fs-1);
@@ -48,9 +61,11 @@ h1, .h1 {
 .display-2 {
   --bs-display-font-size: var(--bs-fs-display-2);
 }
-```
 
-Thanks to this you can define a direct value in the reference variable to not use the bootstrap rfs calculation.
+.fs-body-small {
+  --bs-fs-body-font-size: var(--bs-fs-body-small);
+}
+```
 
 
 ## Heading
@@ -58,13 +73,15 @@ Thanks to this you can define a direct value in the reference variable to not us
 <Canvas>
   <div className="container">
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Heading 1</h3>
         <div className="small text-gray-500">
           <div>Font size: 48px / 3rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 30.675px</div>
+          <div>Mobile <b>(375px)</b>: 30.675px / 1.9171875rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.h1, .fs-1</div>
+          <div className="text-primary fs-body-normal"><b>Tag: </b>h1</div>
         </div>
       </div>
       <div className="col">
@@ -75,13 +92,15 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Heading 2</h3>
         <div className="small text-gray-500">
           <div>Font size: 40px / 2.5rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 27.625px</div>
+          <div>Mobile <b>(375px)</b>: 27.625px / 1.7265625rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.h2, .fs-2</div>
+          <div className="text-primary fs-body-normal"><b>Tag: </b>h2</div>
         </div>
       </div>
       <div className="col">
@@ -92,13 +111,15 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Heading 3</h3>
         <div className="small text-gray-500">
           <div>Font size: 32px / 2rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 25.575px</div>
+          <div>Mobile <b>(375px)</b>: 25.575px / 1.5984375rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.h3, .fs-3</div>
+          <div className="text-primary fs-body-normal"><b>Tag: </b>h3</div>
         </div>
       </div>
       <div className="col">
@@ -109,13 +130,15 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Heading 4</h3>
         <div className="small text-gray-500">
           <div>Font size: 24px / 1.5rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 21.525px</div>
+          <div>Mobile <b>(375px)</b> 21.525px / 1.3453125rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.h4, .fs-4</div>
+          <div className="text-primary fs-body-normal"><b>Tag</b>h4</div>
         </div>
       </div>
       <div className="col">
@@ -126,13 +149,15 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Heading 5</h3>
         <div className="small text-gray-500">
           <div>Font size: 20px / 1.25rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 20px</div>
+          <div>Mobile <b>(375px)</b>: 20px / 1.25rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.h5, .fs-5</div>
+          <div className="text-primary fs-body-normal"><b>Tag: </b>h5</div>
         </div>
       </div>
       <div className="col">
@@ -143,13 +168,15 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Heading 6</h3>
         <div className="small text-gray-500">
           <div>Font size: 16px / 1rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 16px</div>
+          <div>Mobile <b>(375px)</b>: 16px / 1rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.h6, .fs-6</div>
+          <div className="text-primary fs-body-normal"><b>Tag: </b>h6</div>
         </div>
       </div>
       <div className="col">
@@ -167,7 +194,102 @@ Thanks to this you can define a direct value in the reference variable to not us
 <Canvas>
   <div className="container">
     <div className="row align-items-center mb-4">
+      <div className="col-lg col-12 order-2 order-lg-0">
+        <h3 className="fs-5">Large</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 24px / 1.5rem</div>
+          <div>Line height: 1.5</div>
+          <div>Font weight: Regular | Bold</div>
+          <div>Mobile <b>(375px)</b>: 21.525px / 1.3453125rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.fs-body-large</div>
+        </div>
+      </div>
       <div className="col">
+        <p className="fs-body-large">Text</p>
+      </div>
+      <div className="col">
+        <p className="fs-body-large fw-bold">Text</p>
+      </div>
+    </div>
+     <div className="row align-items-center mb-4">
+       <div className="col-lg col-12 order-2 order-lg-0">
+        <h3 className="fs-5">Medium</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 20px / 1.25rem</div>
+          <div>Line height: 1.5</div>
+          <div>Font weight: Regular | Bold</div>
+          <div>Mobile <b>(375px)</b>: 20px / 1.25rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.fs-body-medium</div>
+        </div>
+      </div>
+      <div className="col">
+        <p className="fs-body-medium">Text</p>
+      </div>
+      <div className="col">
+        <p className="fs-body-medium fw-bold">Text</p>
+      </div>
+    </div>
+     <div className="row align-items-center mb-4">
+       <div className="col-lg col-12 order-2 order-lg-0">
+        <h3 className="fs-5">Normal</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 16px / 1rem</div>
+          <div>Line height: 1.5</div>
+          <div>Font weight: Regular | Bold</div>
+          <div>Mobile <b>(375px)</b>: 16px / 1rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.fs-body-normal</div>
+        </div>
+      </div>
+      <div className="col">
+        <p className="fs-body-normal">Text</p>
+      </div>
+      <div className="col">
+        <p className="fs-body-normal fw-bold">Text</p>
+      </div>
+    </div>
+     <div className="row align-items-center mb-4">
+       <div className="col-lg col-12 order-2 order-lg-0">
+        <h3 className="fs-5">Small</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 14px / 0.875rem</div>
+          <div>Line height: 1.5</div>
+          <div>Font weight: Regular | Bold</div>
+          <div>Mobile <b>(375px)</b>: 14px / 0.875rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.fs-body-small</div>
+        </div>
+      </div>
+      <div className="col">
+        <p className="fs-body-small">Text</p>
+      </div>
+      <div className="col">
+        <p className="fs-body-small fw-bold">Text</p>
+      </div>
+    </div>
+     <div className="row align-items-center mb-4">
+       <div className="col-lg col-12 order-2 order-lg-0">
+        <h3 className="fs-5">Tiny</h3>
+        <div className="small text-gray-500">
+          <div>Font size: 13px / 0.8125rem</div>
+          <div>Line height: 1.5</div>
+          <div>Font weight: Regular | Bold</div>
+          <div>Mobile <b>(375px)</b>: 13px / 0.8125rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.fs-body-tiny</div>
+        </div>
+      </div>
+      <div className="col">
+        <p className="fs-body-tiny">Text</p>
+      </div>
+      <div className="col">
+        <p className="fs-body-tiny fw-bold">Text</p>
+      </div>
+    </div>
+  </div>
+</Canvas>
+
+<Canvas>
+  <div className="container">
+    <div className="row align-items-center mb-4">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Paragraph</h3>
         <div className="small text-gray-500">
           <div>Font size: 16px / 1rem</div>
@@ -183,12 +305,14 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Small</h3>
         <div className="small text-gray-500">
           <div>Font size: 14px / .875rem</div>
           <div>Line height: 1.5</div>
           <div>Font weight: Regular | Bold</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.small</div>
+          <div className="text-primary fs-body-normal"><b>Tag: </b>small</div>
         </div>
       </div>
       <div className="col">
@@ -206,13 +330,14 @@ Thanks to this you can define a direct value in the reference variable to not us
 <Canvas>
   <div className="container">
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Display 1</h3>
         <div className="small text-gray-500">
           <div>Font size: 96px / 6rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 48.975px</div>
+          <div>Mobile <b>(375px)</b>: 48.975px / 3.0609375rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.display-1</div>
         </div>
       </div>
       <div className="col">
@@ -223,13 +348,14 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Display 2</h3>
         <div className="small text-gray-500">
           <div>Font size: 88px / 5.5rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 45.925px</div>
+          <div>Mobile <b>(375px)</b>: 45.925px / 2.8703125rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.display-2</div>
         </div>
       </div>
       <div className="col">
@@ -240,13 +366,14 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Display 3</h3>
         <div className="small text-gray-500">
           <div>Font size: 80px / 5rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 42.875px</div>
+          <div>Mobile <b>(375px)</b>: 42.875px / 2.6796875rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.display-3</div>
         </div>
       </div>
       <div className="col">
@@ -257,13 +384,14 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Display 4</h3>
         <div className="small text-gray-500">
           <div>Font size: 72px / 4.5rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 39.825px</div>
+          <div>Mobile <b>(375px)</b>: 39.825px / 2.4890625rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.display-4</div>
         </div>
       </div>
       <div className="col">
@@ -274,13 +402,14 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Display 5</h3>
         <div className="small text-gray-500">
           <div>Font size: 64px / 4rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 36.775px</div>
+          <div>Mobile <b>(375px)</b>: 36.775px / 2.2984375rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.display-5</div>
         </div>
       </div>
       <div className="col">
@@ -291,13 +420,14 @@ Thanks to this you can define a direct value in the reference variable to not us
       </div>
     </div>
     <div className="row align-items-center mb-4">
-      <div className="col">
+      <div className="col-lg col-12 order-2 order-lg-0">
         <h3 className="fs-5">Display 6</h3>
         <div className="small text-gray-500">
           <div>Font size: 56px / 3.5rem</div>
           <div>Line height: 1.2</div>
           <div>Font weight: Regular | Bold</div>
-          <div>Mobile 375px: 33.725px</div>
+          <div>Mobile <b>(375px)</b>: 33.725px / 2.1078125rem</div>
+          <div className="text-primary fs-body-normal"><b>Classes: </b>.display-6</div>
         </div>
       </div>
       <div className="col">
