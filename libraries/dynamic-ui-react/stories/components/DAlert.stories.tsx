@@ -18,6 +18,9 @@ To understand in more detail the aspects covered by this component, review the f
 + [Bootstrap Alerts](https://getbootstrap.com/docs/5.3/components/alerts/)
 
 ## CSS Variables
+
+The Bootstrap documentation provides details on the default [Alert CSS Variables](https://getbootstrap.com/docs/5.3/components/alerts/#css)
+
 | Variable                                  | Type             | Description              |
 |-------------------------------------------|------------------|--------------------------|
 | --${PREFIX_BS}alert-gap                   | css length unit  | Content separation       |

@@ -15,6 +15,11 @@ List of elements
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
+
+## CSS Variables
+
+The Bootstrap documentation provides details on the default [List Group CSS Variables](https://getbootstrap.com/docs/5.3/components/list-group/#css)
+
         `,
       },
     },
