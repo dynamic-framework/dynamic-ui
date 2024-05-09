@@ -1,0 +1,37 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+  Controls,
+} from '@storybook/blocks';
+
+import * as DOffcanvasStories from './DOffcanvas.stories';
+import { PREFIX_BS } from '../../src/components/config';
+import { DAlert } from '../../src';
+
+<Meta of={DOffcanvasStories} />
+
+# Offcanvas
+
+This section provides guidance specifically for using `DOffcanvas` in **inline** scenarios.
+
+<DAlert soft type="warning" className='py-1 mb-8'>
+  To achieve the behavior of a offcanvas it is necessary to use the **`DContextProvider`** and the **`useDPortalContext`** hook.
+  For detailed guidance on the **correct usage** of offcanvas, please refer to the [Offcanvas pattern section](/docs/design-system-patterns-offcanvas--docs) in our documentation.
+</DAlert>
+
+## CSS Variables
+
+<Markdown>
+  {`
+| Variable                                 | Type              | Description                                 |
+|------------------------------------------|-------------------|---------------------------------------------|
+| --${PREFIX_BS}offcanvas-header-gap       | css length unit   | Space between header items                  |
+| --${PREFIX_BS}offcanvas-footer-gap       | css length unit   | Space between footer actions                |
+  `}
+</Markdown>
+
+<Controls />
+
+<Stories />
