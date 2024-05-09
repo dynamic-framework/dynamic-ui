@@ -125,5 +125,12 @@ $utilities: map-merge(
         responsive: true,
       )
     ),
+    "body-font-size": (
+      class: "fs-body",
+      responsive: true,
+      css-var: true,
+      css-variable-name: fs-body-font-size,
+      values: $body-font-sizes
+    )
   )
 );
