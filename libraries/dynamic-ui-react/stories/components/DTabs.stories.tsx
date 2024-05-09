@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import DTabs from '../../src/components/DTabs';
 import { PREFIX_BS } from '../../src/components/config';
+import { TAB_VARIANTS } from '../config/constants';
 
 const config: Meta<typeof DTabs> = {
   title: 'Design System/Patterns/Tabs',
@@ -47,7 +48,7 @@ To understand in more detail the aspects covered by this component, review the f
     },
     variant: {
       type: 'string',
-      options: ['tabs', 'pills', 'underline'],
+      options: TAB_VARIANTS,
       control: 'select',
       table: { defaultValue: { summary: 'underline' } },
     },
@@ -83,6 +84,7 @@ export const Default: Story = {
   ),
   args: {
     defaultSelected: 'tab1',
+    variant: 'underline',
     options: [
       { label: 'Tab 1', tab: 'tab1' },
       { label: 'Tab 2', tab: 'tab2' },
