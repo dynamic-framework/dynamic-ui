@@ -17,6 +17,11 @@ To understand in more detail the aspects covered by this component, review the f
 
 + [Bootstrap Checks and Radios](https://getbootstrap.com/docs/5.3/forms/overview/)
 + [Bootstrap Radios](https://getbootstrap.com/docs/5.3/forms/checks-radios/#radios)
+
+## CSS Variables
+
+The Bootstrap documentation provides details on the default [Radio CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
+
         `,
       },
     },

@@ -15,7 +15,11 @@ Wrapper around Bootstrap Badge.
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap Badge](https://getbootstrap.com/docs/5.3/components/badge/)
-+ [Bootstrap css variables](https://getbootstrap.com/docs/5.3/components/badge/#css)
+
+## CSS Variables
+
+The Bootstrap documentation provides details on the default [Badge CSS Variables](https://getbootstrap.com/docs/5.3/components/badge/#css)
+
         `,
       },
     },

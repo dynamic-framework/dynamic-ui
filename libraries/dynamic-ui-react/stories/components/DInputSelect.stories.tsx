@@ -21,6 +21,9 @@ To understand in more detail the aspects covered by this component, review the f
 + [Bootstrap Custom Select](https://getbootstrap.com/docs/5.3/forms/input-group/#custom-select)
 
 ## CSS Variables
+
+The Bootstrap documentation provides details on the default [Select CSS Variables](https://getbootstrap.com/docs/5.3/forms/select/#css)
+
 | Variable                                         | Type            | Description                   |
 |--------------------------------------------------|-----------------|-------------------------------|
 | --${PREFIX_BS}label-color                        | css color unit  | Label color                   |

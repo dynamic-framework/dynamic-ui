@@ -19,6 +19,8 @@ To understand in more detail the aspects covered by this component, review the f
 + [Bootstrap Navs & Tabs](https://getbootstrap.com/docs/5.3/components/navs-tabs/)
 
 ## CSS Variables
+The Bootstrap documentation provides details on the default [Tabs CSS Variables](https://getbootstrap.com/docs/5.3/components/navs-tabs/#css)
+
 | Variable                                            | Type              | Description                        |
 |-----------------------------------------------------|-------------------|------------------------------------|
 | --${PREFIX_BS}tabs-nav-gap                          | css length unit   | Space between nav links            |

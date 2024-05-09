@@ -17,6 +17,9 @@ To understand in more detail the aspects covered by this component, review the f
 + [Bootstrap Switch](https://getbootstrap.com/docs/5.3/forms/checks-radios/#switches)
 
 ## CSS Variables
+
+The Bootstrap documentation provides details on the default [Checks CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
+
 | Variable                                        | Type            | Description                   |
 |-------------------------------------------------|-----------------|-------------------------------|
 | --${PREFIX_BS}input-switch-bg                   | css color unit  | Background color              |

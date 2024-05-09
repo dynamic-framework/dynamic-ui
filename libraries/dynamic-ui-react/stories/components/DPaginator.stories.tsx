@@ -17,6 +17,8 @@ To understand in more detail the aspects covered by this component, review the f
 + [React Responsive Pagination](https://react-responsive-pagination.elantha.com/)
 
 ## CSS Variables
+The Bootstrap documentation provides details on the default [Pagination CSS Variables](https://getbootstrap.com/docs/5.3/components/pagination/#css)
+
 | Variable                                                  | Type                    | Description                           |
 |-----------------------------------------------------------|-------------------------|---------------------------------------|
 | --${PREFIX_BS}pagination-page-item-size                   | css length unit         | Size of page item                     |
