@@ -1,0 +1,42 @@
+import {
+  Meta,
+  ArgTypes,
+  Stories,
+  Markdown,
+  Controls,
+} from '@storybook/blocks';
+
+import * as DModalStories from './DModal.stories';
+import { PREFIX_BS } from '../../src/components/config';
+import { DAlert } from '../../src';
+
+<Meta of={DModalStories} />
+
+# Modal
+
+This section provides guidance specifically for using `DModal` in **inline** scenarios.
+
+<DAlert soft type="warning" className='py-1 mb-8'>
+  To achieve the behavior of a modal it is necessary to use the **`DContextProvider`** and the **`useDPortalContext`** hook.
+  For detailed guidance on the **correct usage** of modals, please refer to the [Modal pattern section](/docs/design-system-patterns-modal--docs) in our documentation.
+</DAlert>
+
+## CSS Variables
+
+<Markdown>
+  {`
+| Variable                                 | Type              | Description                                 |
+|------------------------------------------|-------------------|---------------------------------------------|
+| --${PREFIX_BS}modal-header-gap           | css length unit   | Space between header items                  |
+| --${PREFIX_BS}modal-body-padding         | css length unit   | Body padding                                |
+| --${PREFIX_BS}modal-footer-padding       | css length unit   | Footer padding                              |
+| --${PREFIX_BS}modal-separator-margin-x   | css length unit   | Separator horizontal padding                |
+| --${PREFIX_BS}modal-separator-height     | css length unit   | Separator height (size)                     |
+| --${PREFIX_BS}modal-separator-bg         | css color unit    | Separator background (color)                |
+| --${PREFIX_BS}modal-fade-transform       | css transform     | Fade transform animation                    |
+  `}
+</Markdown>
+
+<Controls />
+
+<Stories />
