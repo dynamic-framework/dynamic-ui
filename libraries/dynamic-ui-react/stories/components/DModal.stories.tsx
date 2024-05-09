@@ -3,7 +3,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import DModal from '../../src/components/DModal/DModal';
 import { DContextProvider } from '../../src';
 import DButton from '../../src/components/DButton';
-import { PREFIX_BS } from '../../src/components/config';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DModal> = {
@@ -11,29 +10,6 @@ const config: Meta<typeof DModal> = {
   component: DModal,
   parameters: {
     layout: 'fullscreen',
-    docs: {
-      description: {
-        component: `
-To achieve the behavior of a modal it is necessary to use the \`DContextProvider\` and the \`useDPortalContext\` hook,
-however, it is possible to create an inline modal simply using \`DModal\`
-
-This part of the documentation talks about \`DModal\` directly covering its inline use.
-
-> To achieve the behavior of a modal review the modal topic in patterns
-
-## CSS Variables
-| Variable                                 | Type              | Description                                 |
-|------------------------------------------|-------------------|---------------------------------------------|
-| --${PREFIX_BS}modal-header-gap           | css length unit   | Space between header items                  |
-| --${PREFIX_BS}modal-body-padding         | css length unit   | Body padding                                |
-| --${PREFIX_BS}modal-footer-padding       | css length unit   | Footer padding                              |
-| --${PREFIX_BS}modal-separator-margin-x   | css length unit   | Separator horizontal padding                |
-| --${PREFIX_BS}modal-separator-height     | css length unit   | Separator height (size)                     |
-| --${PREFIX_BS}modal-separator-bg         | css color unit    | Separator background (color)                |
-| --${PREFIX_BS}modal-fade-transform       | css transform     | Fade transform animation                    |
-        `,
-      },
-    },
   },
   argTypes: {
     className: {
@@ -74,7 +50,6 @@ This part of the documentation talks about \`DModal\` directly covering its inli
       options: ['sm', 'lg', 'xl'],
     },
   },
-  tags: ['autodocs'],
 };
 
 export default config;
