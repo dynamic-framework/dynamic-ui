@@ -1,9 +1,9 @@
 import {
   Meta,
-  ArgTypes,
   Stories,
   Markdown,
   Controls,
+  Canvas,
 } from '@storybook/blocks';
 
 import * as DModalStories from './DModal.stories';
@@ -37,6 +37,6 @@ This section provides guidance specifically for using `DModal` in **inline** sce
   `}
 </Markdown>
 
-<Controls />
-
+<Canvas of={DModalStories.Default} />
+<Controls of={DModalStories.Default} />
 <Stories />

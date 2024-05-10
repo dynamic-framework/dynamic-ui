@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import DModal from '../../src/components/DModal/DModal';
 import { DContextProvider } from '../../src';
+import DModal from '../../src/components/DModal/DModal';
 import DButton from '../../src/components/DButton';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
