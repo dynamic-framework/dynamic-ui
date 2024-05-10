@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import { DContextProvider } from '../../src';
 import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
-import { DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DOffcanvas> = {
