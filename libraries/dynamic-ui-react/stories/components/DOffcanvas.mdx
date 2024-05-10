@@ -1,9 +1,9 @@
 import {
   Meta,
-  ArgTypes,
   Stories,
   Markdown,
   Controls,
+  Canvas
 } from '@storybook/blocks';
 
 import * as DOffcanvasStories from './DOffcanvas.stories';
@@ -32,6 +32,6 @@ This section provides guidance specifically for using `DOffcanvas` in **inline**
   `}
 </Markdown>
 
-<Controls />
-
+<Canvas of={DOffcanvasStories.Default} />
+<Controls of={DOffcanvasStories.Default} />
 <Stories />
