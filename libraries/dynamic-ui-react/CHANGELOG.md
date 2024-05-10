@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.20.0...@dynamic-framework/ui-react@1.21.0) (2024-05-10)
+
+
+### Features
+
+* add font sizes body utilities ([#639](https://github.com/dynamic-framework/dynamic-ui/issues/639)) ([c6fcc56](https://github.com/dynamic-framework/dynamic-ui/commit/c6fcc561cf654708f5c3562e66357b5beeb16553))
+* adjust heading and display font sizes values ([#638](https://github.com/dynamic-framework/dynamic-ui/issues/638)) ([b989d4c](https://github.com/dynamic-framework/dynamic-ui/commit/b989d4ca2d8b3c727cc30bad1c2074f85e482f45))
+
+
+### Storybook
+
+* **DModal:** add more descriptive information about usage ([c53d7e7](https://github.com/dynamic-framework/dynamic-ui/commit/c53d7e7aa60cc667fd138f86c9d9d5cb1192e5f6))
+* **DOffcanvas:** add more descriptive information about usage ([09a8db3](https://github.com/dynamic-framework/dynamic-ui/commit/09a8db36d9e1b6004d9ee11c86da37f567de1d3b))
+* fix typo on classnames of DModal DOffcanvas and DToast ([04372b6](https://github.com/dynamic-framework/dynamic-ui/commit/04372b69b929f53075d3ad4f86ae7e3488a3c57c))
+* set default variant as underline in DTabs ([b99098a](https://github.com/dynamic-framework/dynamic-ui/commit/b99098ad68b5c53c41b94a5c26d5b2845a47c8ac))
+* set direct link to CSS variables over each bootstrap component ([#644](https://github.com/dynamic-framework/dynamic-ui/issues/644)) ([3357677](https://github.com/dynamic-framework/dynamic-ui/commit/33576775ce41cf3ec0c50907c525a8592ff26a44))
+
+
+
 ## [1.20.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.19.1...@dynamic-framework/ui-react@1.20.0) (2024-05-07)
 
 
