@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.19.1
+ * dynamic-framework 1.20.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -261,32 +261,42 @@
   --bs-form-invalid-color: var(--bs-danger);
   --bs-form-invalid-border-color: var(--bs-danger);
   --bs-heading-line-height: 1.2;
-  --bs-rfs-display-1: calc(1.875rem + 7.5vw);
+  --bs-rfs-display-1: calc(1.725rem + 5.7vw);
   --bs-fs-display-1: var(--bs-rfs-display-1);
-  --bs-rfs-display-2: calc(1.575rem + 3.9vw);
+  --bs-rfs-display-2: calc(1.675rem + 5.1vw);
   --bs-fs-display-2: var(--bs-rfs-display-2);
-  --bs-rfs-display-3: calc(1.525rem + 3.3vw);
+  --bs-rfs-display-3: calc(1.625rem + 4.5vw);
   --bs-fs-display-3: var(--bs-rfs-display-3);
-  --bs-rfs-display-4: calc(1.475rem + 2.7vw);
+  --bs-rfs-display-4: calc(1.575rem + 3.9vw);
   --bs-fs-display-4: var(--bs-rfs-display-4);
-  --bs-rfs-display-5: calc(1.425rem + 2.1vw);
+  --bs-rfs-display-5: calc(1.525rem + 3.3vw);
   --bs-fs-display-5: var(--bs-rfs-display-5);
-  --bs-rfs-display-6: calc(1.375rem + 1.5vw);
+  --bs-rfs-display-6: calc(1.475rem + 2.7vw);
   --bs-fs-display-6: var(--bs-rfs-display-6);
-  --bs-rfs-fs-1: calc(1.525rem + 3.3vw);
+  --bs-rfs-fs-1: calc(1.425rem + 2.1vw);
   --bs-fs-1: var(--bs-rfs-fs-1);
-  --bs-rfs-fs-2: calc(1.475rem + 2.7vw);
+  --bs-rfs-fs-2: calc(1.375rem + 1.5vw);
   --bs-fs-2: var(--bs-rfs-fs-2);
-  --bs-rfs-fs-3: calc(1.425rem + 2.1vw);
+  --bs-rfs-fs-3: calc(1.325rem + 0.9vw);
   --bs-fs-3: var(--bs-rfs-fs-3);
-  --bs-rfs-fs-4: calc(1.325rem + 0.9vw);
+  --bs-rfs-fs-4: calc(1.275rem + 0.3vw);
   --bs-fs-4: var(--bs-rfs-fs-4);
-  --bs-rfs-fs-5: calc(1.275rem + 0.3vw);
+  --bs-rfs-fs-5: 1.25rem;
   --bs-fs-5: var(--bs-rfs-fs-5);
-  --bs-rfs-fs-6: 1.125rem;
+  --bs-rfs-fs-6: 1rem;
   --bs-fs-6: var(--bs-rfs-fs-6);
   --bs-rfs-fs-small: 0.875em;
   --bs-fs-small: var(--bs-rfs-fs-small);
+  --bs-rfs-fs-body-large: calc(1.275rem + 0.3vw);
+  --bs-fs-body-large: var(--bs-rfs-fs-body-large);
+  --bs-rfs-fs-body-medium: 1.25rem;
+  --bs-fs-body-medium: var(--bs-rfs-fs-body-medium);
+  --bs-rfs-fs-body-normal: 1rem;
+  --bs-fs-body-normal: var(--bs-rfs-fs-body-normal);
+  --bs-rfs-fs-body-small: 0.875rem;
+  --bs-fs-body-small: var(--bs-rfs-fs-body-small);
+  --bs-rfs-fs-body-tiny: 0.8125rem;
+  --bs-fs-body-tiny: var(--bs-rfs-fs-body-tiny);
   --bs-fw-lighter: lighter;
   --bs-fw-light: 200;
   --bs-fw-normal: 400;
@@ -704,66 +714,66 @@
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-display-1: 7.5rem;
+    --bs-rfs-display-1: 6rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-display-2: 4.5rem;
+    --bs-rfs-display-2: 5.5rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-display-3: 4rem;
+    --bs-rfs-display-3: 5rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-display-4: 3.5rem;
+    --bs-rfs-display-4: 4.5rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-display-5: 3rem;
+    --bs-rfs-display-5: 4rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-display-6: 2.5rem;
+    --bs-rfs-display-6: 3.5rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-fs-1: 4rem;
+    --bs-rfs-fs-1: 3rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-fs-2: 3.5rem;
+    --bs-rfs-fs-2: 2.5rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-fs-3: 3rem;
+    --bs-rfs-fs-3: 2rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-fs-4: 2rem;
+    --bs-rfs-fs-4: 1.5rem;
   }
 }
 @media (min-width: 1200px) {
   :root,
   [data-bs-theme=dynamic] {
-    --bs-rfs-fs-5: 1.5rem;
+    --bs-rfs-fs-body-large: 1.5rem;
   }
 }
