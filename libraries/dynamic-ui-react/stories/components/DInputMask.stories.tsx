@@ -11,11 +11,30 @@ const config: Meta<typeof DInputMask> = {
     docs: {
       description: {
         component: `
-Component composition with \`d-input\` to make a mask input component.
+The **\`DInputMask\`** component is designed for creating masked input fields, leveraging
+the capabilities provided by **@react-input/mask**.
+This component is composed with \`DInput\` to offer a masked input functionality.
 
-To understand in more detail the aspects covered by this component, review the following documentation:
+## Usage
+To utilize this component effectively, it's important to understand how it interacts
+with state management, particularly when using \`useState\`.
 
-+ [@react-input/mask](https://www.npmjs.com/package/@react-input/mask)
+### Initial State
+When using \`useState\` to manage the state of the DInputMask component, it's crucial to
+set the initial state to match the mask pattern. This ensures that the component
+behaves as expected throughout the input process.
+
+#### Important Note from \`@react-input/mask\` documentation
+
+> The InputMask component does not change the value passed in the value or defaultValue property
+> of the input element, so set the initialized value to something that can match the masked value
+> at any stage of input. If you make a mistake, you will see a warning about it in the console.
+
+This means that setting the initial state correctly, in alignment with the mask
+pattern, is crucial for seamless functionality. Any discrepancies may result in warnings being displayed in the console.
+
+For further details on the capabilities and usage of @react-input/mask, refer to the [documentation](https://www.npmjs.com/package/@react-input/mask).
+
 
 ## CSS Variables
 | Variable                                         | Type            | Description                   |
