@@ -11,23 +11,23 @@ const config: Meta<typeof DStepperMobile> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                                                   | Type               | Description                        |
-|------------------------------------------------------------|--------------------|------------------------------------|
-| --${PREFIX_BS}step-container-gap                           | css length unit    | Container gap                      |
-| --${PREFIX_BS}step-progress-outter-size                    | css length unit    | Outter circle size                 |
-| --${PREFIX_BS}step-progress-outter-z-index                 | css index unit     | Outter circle z-index              |
-| --${PREFIX_BS}step-progress-outter-fill-background-color   | css color unit     | Fill background color              |
-| --${PREFIX_BS}step-progress-outter-background-color        | css color unit     | Unfilled background color          |
-| --${PREFIX_BS}step-progress-inner-size                     | css length unit    | Inner circle size                  |
-| --${PREFIX_BS}step-progress-inner-z-index                  | css index unit     | Inner circle z-index               |
-| --${PREFIX_BS}step-progress-inner-background-color         | css color unit     | Inner background color             |
-| --${PREFIX_BS}step-current-step-z-index                    | css index unit     | Current step text z-index          |
-| --${PREFIX_BS}step-current-step-font-weight                | css weight unit    | Current step font weight           |
-| --${PREFIX_BS}step-current-step-color                      | css color unit     | Current step text color            |
-| --${PREFIX_BS}step-info-max-width                          | css length unit    | Step info max width                |
-| --${PREFIX_BS}step-info-label-font-size                    | css length unit    | Step label font size               |
-| --${PREFIX_BS}step-info-description-font-size              | css length unit    | Step description font size         |
-| --${PREFIX_BS}step-info-description-color                  | css color unit     | Step description color             |
+| Variable                                                   |Class| Type               | Description                        |
+|------------------------------------------------------------|-|--------------------|------------------------------------|
+| --${PREFIX_BS}step-container-gap                           |.d-stepper| css length unit    | Container gap                      |
+| --${PREFIX_BS}step-progress-outter-size                    |.d-stepper| css length unit    | Outter circle size                 |
+| --${PREFIX_BS}step-progress-outter-z-index                 |.d-stepper| css index unit     | Outter circle z-index              |
+| --${PREFIX_BS}step-progress-outter-fill-background-color   |.d-stepper| css color unit     | Fill background color              |
+| --${PREFIX_BS}step-progress-outter-background-color        |.d-stepper| css color unit     | Unfilled background color          |
+| --${PREFIX_BS}step-progress-inner-size                     |.d-stepper| css length unit    | Inner circle size                  |
+| --${PREFIX_BS}step-progress-inner-z-index                  |.d-stepper| css index unit     | Inner circle z-index               |
+| --${PREFIX_BS}step-progress-inner-background-color         |.d-stepper| css color unit     | Inner background color             |
+| --${PREFIX_BS}step-current-step-z-index                    |.d-stepper| css index unit     | Current step text z-index          |
+| --${PREFIX_BS}step-current-step-font-weight                |.d-stepper| css weight unit    | Current step font weight           |
+| --${PREFIX_BS}step-current-step-color                      |.d-stepper| css color unit     | Current step text color            |
+| --${PREFIX_BS}step-info-max-width                          |.d-stepper| css length unit    | Step info max width                |
+| --${PREFIX_BS}step-info-label-font-size                    |.d-stepper| css length unit    | Step label font size               |
+| --${PREFIX_BS}step-info-description-font-size              |.d-stepper| css length unit    | Step description font size         |
+| --${PREFIX_BS}step-info-description-color                  |.d-stepper| css color unit     | Step description color             |
         `,
       },
     },

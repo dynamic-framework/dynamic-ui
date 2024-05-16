@@ -14,21 +14,21 @@ const config: Meta<typeof DInputPin> = {
 Component with a partial API of \`d-input\` to take a pin/otp code.
 
 ## CSS Variables
-| Variable                                                    | Type             | Description                         |
-|-------------------------------------------------------------|------------------|-------------------------------------|
-| --${PREFIX_BS}label-color                                   | css color unit   | Label color                         |
-| --${PREFIX_BS}label-font-weight                             | css font weight  | Label font weight                   |
-| --${PREFIX_BS}label-font-size                               | css length unit  | Label font size                     |
-| --${PREFIX_BS}label-padding-x                               | css length unit  | Label horizontal padding            |
-| --${PREFIX_BS}label-padding-y                               | css length unit  | Label vertical padding              |
-| --${PREFIX_BS}input-pin-form-gap                            | css length unit  | Space between inputs                |
-| --${PREFIX_BS}input-pin-form-control-size                   | css length unit  | Input width                         |
-| --${PREFIX_BS}input-pin-form-control-focus-border-color     | css color unit   | Input focus border color            |
-| --${PREFIX_BS}input-pin-form-control-focus-box-shadow       | css box shadow   | Input focus box shadow              |
-| --${PREFIX_BS}form-text-padding                             | css length unit  | Hint padding                        |
-| --${PREFIX_BS}form-text-gap                                 | css length unit  | Space between hint elements         |
-| --${PREFIX_BS}form-text-color                               | css color unit   | Hint color                          |
-| --${PREFIX_BS}form-control-text-align                       | css text align   | Input text align                    |
+| Variable                                                | Class         | Type            | Description                 |
+|---------------------------------------------------------|---------------|-----------------|-----------------------------|
+| --${PREFIX_BS}label-color                               | :root         | css color unit  | Label color                 |
+| --${PREFIX_BS}label-font-weight                         | :root         | css font weight | Label font weight           |
+| --${PREFIX_BS}label-font-size                           | :root         | css length unit | Label font size             |
+| --${PREFIX_BS}label-padding-x                           | :root         | css length unit | Label horizontal padding    |
+| --${PREFIX_BS}label-padding-y                           | :root         | css length unit | Label vertical padding      |
+| --${PREFIX_BS}input-pin-form-gap                        | .d-input-pin  | css length unit | Space between inputs        |
+| --${PREFIX_BS}input-pin-form-control-size               | .d-input-pin  | css length unit | Input width                 |
+| --${PREFIX_BS}input-pin-form-control-focus-border-color | .d-input-pin  | css color unit  | Input focus border color    |
+| --${PREFIX_BS}input-pin-form-control-focus-box-shadow   | .d-input-pin  | css box shadow  | Input focus box shadow      |
+| --${PREFIX_BS}form-text-padding                         | .form-text    | css length unit | Hint padding                |
+| --${PREFIX_BS}form-text-gap                             | .form-text    | css length unit | Space between hint elements |
+| --${PREFIX_BS}form-text-color                           | .form-text    | css color unit  | Hint color                  |
+| --${PREFIX_BS}form-control-text-align                   | .form-control | css text align  | Input text align            |
         `,
       },
     },

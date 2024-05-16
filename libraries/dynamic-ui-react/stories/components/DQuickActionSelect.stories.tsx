@@ -13,20 +13,20 @@ const config: Meta<typeof DQuickActionSelect> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                                                      | Type              | Description                           |
-|---------------------------------------------------------------|-------------------|---------------------------------------|
-| --${PREFIX_BS}quick-action-select-padding                     | css length unit   | Content padding                       |
-| --${PREFIX_BS}quick-action-select-bg                          | css color unit    | Content background color              |
-| --${PREFIX_BS}quick-action-select-border-radius               | css length unit   | Quick action border radius            |
-| --${PREFIX_BS}quick-action-select-line1-font-size             | css length unit   | First line font size                  |
-| --${PREFIX_BS}quick-action-select-line1-font-weight           | css font weight   | First line font weight                |
-| --${PREFIX_BS}quick-action-select-line1-color                 | css color unit    | First line color                      |
-| --${PREFIX_BS}quick-action-select-line2-font-size             | css length unit   | Second line font size                 |
-| --${PREFIX_BS}quick-action-select-line2-font-weight           | css length unit   | Second line font weight               |
-| --${PREFIX_BS}quick-action-select-line2-color                 | css color unit    | Second line color                     |
-| --${PREFIX_BS}quick-action-select-hover-bg                    | css color unit    | Content hover background              |
-| --${PREFIX_BS}quick-action-select-checked-bg                  | css color unit    | Content checked background            |
-| --${PREFIX_BS}quick-action-select-checked-color               | css color unit    | Content checked color                 |
+| Variable                                            | Class                  | Type            | Description                |
+|-----------------------------------------------------|------------------------|-----------------|----------------------------|
+| --${PREFIX_BS}quick-action-select-padding           | .d-quick-action-select | css length unit | Content padding            |
+| --${PREFIX_BS}quick-action-select-bg                | .d-quick-action-select | css color unit  | Content background color   |
+| --${PREFIX_BS}quick-action-select-border-radius     | .d-quick-action-select | css length unit | Quick action border radius |
+| --${PREFIX_BS}quick-action-select-line1-font-size   | .d-quick-action-select | css length unit | First line font size       |
+| --${PREFIX_BS}quick-action-select-line1-font-weight | .d-quick-action-select | css font weight | First line font weight     |
+| --${PREFIX_BS}quick-action-select-line1-color       | .d-quick-action-select | css color unit  | First line color           |
+| --${PREFIX_BS}quick-action-select-line2-font-size   | .d-quick-action-select | css length unit | Second line font size      |
+| --${PREFIX_BS}quick-action-select-line2-font-weight | .d-quick-action-select | css length unit | Second line font weight    |
+| --${PREFIX_BS}quick-action-select-line2-color       | .d-quick-action-select | css color unit  | Second line color          |
+| --${PREFIX_BS}quick-action-select-hover-bg          | .d-quick-action-select | css color unit  | Content hover background   |
+| --${PREFIX_BS}quick-action-select-checked-bg        | .d-quick-action-select | css color unit  | Content checked background |
+| --${PREFIX_BS}quick-action-select-checked-color     | .d-quick-action-select | css color unit  | Content checked color      |
         `,
       },
     },

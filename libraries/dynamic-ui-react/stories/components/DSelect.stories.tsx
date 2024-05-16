@@ -20,34 +20,34 @@ To understand in more detail the aspects covered by this component, review the f
 + [React Select](https://react-select.com/home)
 
 ## CSS Variables
-| Variable                                            | Type            | Description                                   |
-|-----------------------------------------------------|-----------------|-----------------------------------------------|
-| --${PREFIX_BS}select-gap                            | css length unit | Space between layout elements                 |
-| --${PREFIX_BS}label-color                           | css color unit  | Label color                                   |
-| --${PREFIX_BS}label-font-weight                     | css font weight | Label font weight                             |
-| --${PREFIX_BS}label-font-size                       | css length unit | Label font size                               |
-| --${PREFIX_BS}label-padding-x                       | css length unit | Label horizontal padding                      |
-| --${PREFIX_BS}label-padding-y                       | css length unit | Label vertical padding                        |
-| --${PREFIX_BS}form-text-padding                     | css length unit | Hint padding                                  |
-| --${PREFIX_BS}form-text-gap                         | css length unit | Space between hint elements                   |
-| --${PREFIX_BS}form-text-color                       | css color unit  | Hint color                                    |
-| --${PREFIX_BS}form-control-text-align               | css text align  | Input text align                              |
-| --${PREFIX_BS}select-menu-shadow                    | css shadow      | Input menu shadow                             |
-| --${PREFIX_BS}select-option-focus-bg                | css color unit  | Input menu option focus background            |
-| --${PREFIX_BS}select-option-selected-color          | css color unit  | Input menu selected option text color         |
-| --${PREFIX_BS}select-option-selected-bg             | css color unit  | Input menu selected option background color   |
-| --${PREFIX_BS}select-option-is-checkbox-font-size   | css length unit | Input menu option checkbox label font size    |
-| --${PREFIX_BS}select-option-is-checkbox-font-weight | css length unit | Input menu option checkbox label font weight  |
-| --${PREFIX_BS}select-option-is-checkbox-color       | css color unit  | Input menu option checkbox text color         |
-| --${PREFIX_BS}select-option-has-icon-icon-size      | css length unit | Input menu option icon size                   |
-| --${PREFIX_BS}select-multi-value-padding-x          | css length unit | Input multi value padding x                   |
-| --${PREFIX_BS}select-multi-value-padding-y          | css length unit | Input multi value padding y                   |
-| --${PREFIX_BS}select-multi-value-margin-right       | css length unit | Input multi value margin right                |
-| --${PREFIX_BS}select-multi-value-background         | css color unit  | Input multi value background color            |
-| --${PREFIX_BS}select-multi-value-border-radius      | css length unit | Input multi value border radius               |
-| --${PREFIX_BS}select-multi-value-label-color        | css color unit  | Input multi value label color                 |
-| --${PREFIX_BS}select-indicator-width                | css length unit | Input indicator width                         |
-| --${PREFIX_BS}select-indicator-height               | css length unit | Input indicator height                        |
+| Variable                                            | Class         | Type            | Description                                  |
+|-----------------------------------------------------|---------------|-----------------|----------------------------------------------|
+| --${PREFIX_BS}select-gap                            | .d-select     | css length unit | Space between layout elements                |
+| --${PREFIX_BS}label-color                           |               | css color unit  | Label color                                  |
+| --${PREFIX_BS}label-font-weight                     |               | css font weight | Label font weight                            |
+| --${PREFIX_BS}label-font-size                       |               | css length unit | Label font size                              |
+| --${PREFIX_BS}label-padding-x                       |               | css length unit | Label horizontal padding                     |
+| --${PREFIX_BS}label-padding-y                       |               | css length unit | Label vertical padding                       |
+| --${PREFIX_BS}form-text-padding                     | .form-text    | css length unit | Hint padding                                 |
+| --${PREFIX_BS}form-text-gap                         | .form-text    | css length unit | Space between hint elements                  |
+| --${PREFIX_BS}form-text-color                       | .form-text    | css color unit  | Hint color                                   |
+| --${PREFIX_BS}form-control-text-align               | .form-control | css text align  | Input text align                             |
+| --${PREFIX_BS}select-menu-shadow                    | .d-select     | css shadow      | Input menu shadow                            |
+| --${PREFIX_BS}select-option-focus-bg                | .d-select     | css color unit  | Input menu option focus background           |
+| --${PREFIX_BS}select-option-selected-color          | .d-select     | css color unit  | Input menu selected option text color        |
+| --${PREFIX_BS}select-option-selected-bg             | .d-select     | css color unit  | Input menu selected option background color  |
+| --${PREFIX_BS}select-option-is-checkbox-font-size   | .d-select     | css length unit | Input menu option checkbox label font size   |
+| --${PREFIX_BS}select-option-is-checkbox-font-weight | .d-select     | css length unit | Input menu option checkbox label font weight |
+| --${PREFIX_BS}select-option-is-checkbox-color       | .d-select     | css color unit  | Input menu option checkbox text color        |
+| --${PREFIX_BS}select-option-has-icon-icon-size      | .d-select     | css length unit | Input menu option icon size                  |
+| --${PREFIX_BS}select-multi-value-padding-x          | .d-select     | css length unit | Input multi value padding x                  |
+| --${PREFIX_BS}select-multi-value-padding-y          | .d-select     | css length unit | Input multi value padding y                  |
+| --${PREFIX_BS}select-multi-value-margin-right       | .d-select     | css length unit | Input multi value margin right               |
+| --${PREFIX_BS}select-multi-value-background         | .d-select     | css color unit  | Input multi value background color           |
+| --${PREFIX_BS}select-multi-value-border-radius      | .d-select     | css length unit | Input multi value border radius              |
+| --${PREFIX_BS}select-multi-value-label-color        | .d-select     | css color unit  | Input multi value label color                |
+| --${PREFIX_BS}select-indicator-width                | .d-select     | css length unit | Input indicator width                        |
+| --${PREFIX_BS}select-indicator-height               | .d-select     | css length unit | Input indicator height                       |
         `,
       },
     },

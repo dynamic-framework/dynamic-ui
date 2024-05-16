@@ -25,67 +25,67 @@ To understand in more detail the aspects covered by this component, review the f
 + [React Datepicker](https://reactdatepicker.com/)
 
 ## CSS Variables
-| Variable                                                | Type               | Description                                      |
-|---------------------------------------------------------|--------------------|--------------------------------------------------|
-| --${PREFIX_BS}datepicker-font-family                    | css font family    | Datepicker font family                           |
-| --${PREFIX_BS}datepicker-border                         | css length unit    | Datepicker border                                |
-| --${PREFIX_BS}datepicker-box-shadow                     | css shadow unit    | Datepicker box shadow                            |
-| --${PREFIX_BS}datepicker-font-size                      | css font unit      | Datepicker font size                             |
-| --${PREFIX_BS}datepicker-header-gap                     | css length unit    | Datepicker header gap                            |
-| --${PREFIX_BS}datepicker-header-padding                 | css length unit    | Datepicker header padding                        |
-| --${PREFIX_BS}datepicker-header-background-color        | css color unit     | Datepicker header background color               |
-| --${PREFIX_BS}datepicker-header-border                  | css length unit    | Datepicker header border                         |
-| --${PREFIX_BS}datepicker-header-font-size               | css length unit    | Datepicker header border                         |
-| --${PREFIX_BS}datepicker-header-button-padding          | css length unit    | Datepicker header buttons padding                |
-| --${PREFIX_BS}datepicker-header-select-padding          | css length unit    | Datepicker header selects padding                |
-| --${PREFIX_BS}datepicker-header-select-font-weight      | css weight unit    | Datepicker header select font weight             |
-| --${PREFIX_BS}datepicker-header-select-menu-width       | css length unit    | Datepicker header select width                   |
-| --${PREFIX_BS}datepicker-day-names-margin               | css length unit    | Datepicker header days margin                    |
-| --${PREFIX_BS}datepicker-day-names-font-size            | css length unit    | Datepicker header days font size                 |
-| --${PREFIX_BS}datepicker-day-name-weight                | css weight unit    | Datepicker header days weight                    |
-| --${PREFIX_BS}datepicker-day-name-margin                | css length unit    | Datepicker header days margin                    |
-| --${PREFIX_BS}datepicker-day-name-size                  | css length unit    | Datepicker header days size                      |
-| --${PREFIX_BS}datepicker-day-name-color                 | css color unit     | Datepicker header days color                     |
-| --${PREFIX_BS}datepicker-month-gap                      | css length unit    | Datepicker month gap                             |
-| --${PREFIX_BS}datepicker-month-padding                  | css length unit    | Datepicker month padding                         |
-| --${PREFIX_BS}datepicker-month-margin                   | css length unit    | Datepicker month margin                          |
-| --${PREFIX_BS}datepicker-month-color                    | css color unit     | Datepicker month color                           |
-| --${PREFIX_BS}datepicker-week-gap                       | css length unit    | Datepicker week gap                              |
-| --${PREFIX_BS}datepicker-day-margin                     | css length unit    | Datepicker day margin                            |
-| --${PREFIX_BS}datepicker-day-font-size                  | css font unit      | Datepicker day font size                         |
-| --${PREFIX_BS}datepicker-day-size                       | css length unit    | Datepicker day size                              |
-| --${PREFIX_BS}datepicker-day-padding                    | css length unit    | Datepicker day padding                           |
-| --${PREFIX_BS}datepicker-day-radius                     | css length unit    | Datepicker day border radius                     |
-| --${PREFIX_BS}datepicker-day-color                      | css color unit     | Datepicker day text color                        |
-| --${PREFIX_BS}datepicker-day-disabled-color             | css color unit     | Datepicker disabled day text color                        |
-| --${PREFIX_BS}datepicker-day-bg-hover                   | css color unit     | Datepicker day hover background                  |
-| --${PREFIX_BS}datepicker-day-color-hover                | css color unit     | Datepicker day hover color                       |
-| --${PREFIX_BS}datepicker-day-selected-color             | css color unit     | Datepicker day selected color                    |
-| --${PREFIX_BS}datepicker-day-selected-bg                | css color unit     | Datepicker day selected background               |
-| --${PREFIX_BS}datepicker-day-in-range-color             | css color unit     | Datepicker date range color                      |
-| --${PREFIX_BS}datepicker-day-in-range-bg                | css color unit     | Datepicker date range background                 |
-| --${PREFIX_BS}datepicker-day-outside-month-color        | css color unit     | Datepicker day outside color                     |
-| --${PREFIX_BS}datepicker-day-today-font-weight          | css weight unit    | Datepicker today weight                          |
-| --${PREFIX_BS}datepicker-day-today-box-shadow           | css shadow unit    | Datepicker today box shadow                      |
-| --${PREFIX_BS}datepicker-time-container-margin          | css length unit    | Datepicker container time margin                 |
-| --${PREFIX_BS}datepicker-time-container-align           | css align unit     | Datepicker container time alignment              |
-| --${PREFIX_BS}datepicker-time-input-width               | css length unit    | Datepicker time width                            |
-| --${PREFIX_BS}datepicker-time-input-margin              | css length unit    | Datepicker time margin                           |
-| --${PREFIX_BS}datepicker-time-input-align               | css align unit     | Datepicker time alignment                        |
-| --${PREFIX_BS}datepicker-time-input-padding             | css length unit    | Datepicker time padding                          |
-| --${PREFIX_BS}datepicker-time-input-gap                 | css length unit    | Datepicker time gap                              |
-| --${PREFIX_BS}datepicker-time-input-label-weight        | css weight unit    | Datepicker time weight                           |
-| --${PREFIX_BS}datepicker-time-input-label-color         | css color unit     | Datepicker label time color                      |
-| --${PREFIX_BS}datepicker-time-input-label-size          | css length unit    | Datepicker label time size                       |
-| --${PREFIX_BS}datepicker-triangle-color                 | css color unit     | Datepicker triangle color                        |
-| --${PREFIX_BS}datepicker-webkit-time-color              | css color unit     | Datepicker webkit time color                     |
-| --${PREFIX_BS}datepicker-webkit-time-align              | css align unit     | Datepicker webkit time align                     |
-| --${PREFIX_BS}datepicker-webkit-edit-text-padding       | css length unit    | Datepicker webkit edit text padding              |
-| --${PREFIX_BS}datepicker-webkit-edit-ampm-padding       | css length unit    | Datepicker webkit edit am/pm padding             |
-| --${PREFIX_BS}datepicker-webkit-edit-ampm-color         | css color unit     | Datepicker webkit edit am/pm color               |
-| --${PREFIX_BS}datepicker-webkit-edit-ampm-bg            | css color unit     | Datepicker webkit edit am/pm background color    |
-| --${PREFIX_BS}datepicker-webkit-edit-ampm-radius        | css length unit    | Datepicker webkit edit am/pm border radius       |
-| --${PREFIX_BS}datepicker-calendar-picker-icon           | css url icon       | Datepicker picker icon                           |
+| Variable                                           | Class             | Type            | Description                                   |
+|----------------------------------------------------|-------------------|-----------------|-----------------------------------------------|
+| --${PREFIX_BS}datepicker-border                    | .react-datepicker | css length unit | Datepicker border                             |
+| --${PREFIX_BS}datepicker-font-family               | .react-datepicker | css font family | Datepicker font family                        |
+| --${PREFIX_BS}datepicker-box-shadow                | .react-datepicker | css shadow unit | Datepicker box shadow                         |
+| --${PREFIX_BS}datepicker-font-size                 | .react-datepicker | css font unit   | Datepicker font size                          |
+| --${PREFIX_BS}datepicker-header-gap                | .react-datepicker | css length unit | Datepicker header gap                         |
+| --${PREFIX_BS}datepicker-header-padding            | .react-datepicker | css length unit | Datepicker header padding                     |
+| --${PREFIX_BS}datepicker-header-background-color   | .react-datepicker | css color unit  | Datepicker header background color            |
+| --${PREFIX_BS}datepicker-header-border             | .react-datepicker | css length unit | Datepicker header border                      |
+| --${PREFIX_BS}datepicker-header-font-size          | .react-datepicker | css length unit | Datepicker header border                      |
+| --${PREFIX_BS}datepicker-header-button-padding     | .react-datepicker | css length unit | Datepicker header buttons padding             |
+| --${PREFIX_BS}datepicker-header-select-padding     | .react-datepicker | css length unit | Datepicker header selects padding             |
+| --${PREFIX_BS}datepicker-header-select-font-weight | .react-datepicker | css weight unit | Datepicker header select font weight          |
+| --${PREFIX_BS}datepicker-header-select-menu-width  | .react-datepicker | css length unit | Datepicker header select width                |
+| --${PREFIX_BS}datepicker-day-names-margin          | .react-datepicker | css length unit | Datepicker header days margin                 |
+| --${PREFIX_BS}datepicker-day-names-font-size       | .react-datepicker | css length unit | Datepicker header days font size              |
+| --${PREFIX_BS}datepicker-day-name-weight           | .react-datepicker | css weight unit | Datepicker header days weight                 |
+| --${PREFIX_BS}datepicker-day-name-margin           | .react-datepicker | css length unit | Datepicker header days margin                 |
+| --${PREFIX_BS}datepicker-day-name-size             | .react-datepicker | css length unit | Datepicker header days size                   |
+| --${PREFIX_BS}datepicker-day-name-color            | .react-datepicker | css color unit  | Datepicker header days color                  |
+| --${PREFIX_BS}datepicker-month-gap                 | .react-datepicker | css length unit | Datepicker month gap                          |
+| --${PREFIX_BS}datepicker-month-padding             | .react-datepicker | css length unit | Datepicker month padding                      |
+| --${PREFIX_BS}datepicker-month-margin              | .react-datepicker | css length unit | Datepicker month margin                       |
+| --${PREFIX_BS}datepicker-month-color               | .react-datepicker | css color unit  | Datepicker month color                        |
+| --${PREFIX_BS}datepicker-week-gap                  | .react-datepicker | css length unit | Datepicker week gap                           |
+| --${PREFIX_BS}datepicker-day-margin                | .react-datepicker | css length unit | Datepicker day margin                         |
+| --${PREFIX_BS}datepicker-day-font-size             | .react-datepicker | css font unit   | Datepicker day font size                      |
+| --${PREFIX_BS}datepicker-day-size                  | .react-datepicker | css length unit | Datepicker day size                           |
+| --${PREFIX_BS}datepicker-day-padding               | .react-datepicker | css length unit | Datepicker day padding                        |
+| --${PREFIX_BS}datepicker-day-radius                | .react-datepicker | css length unit | Datepicker day border radius                  |
+| --${PREFIX_BS}datepicker-day-color                 | .react-datepicker | css color unit  | Datepicker day text color                     |
+| --${PREFIX_BS}datepicker-day-disabled-color        | .react-datepicker | css color unit  | Datepicker disabled day text color            |
+| --${PREFIX_BS}datepicker-day-bg-hover              | .react-datepicker | css color unit  | Datepicker day hover background               |
+| --${PREFIX_BS}datepicker-day-color-hover           | .react-datepicker | css color unit  | Datepicker day hover color                    |
+| --${PREFIX_BS}datepicker-day-selected-color        | .react-datepicker | css color unit  | Datepicker day selected color                 |
+| --${PREFIX_BS}datepicker-day-selected-bg           | .react-datepicker | css color unit  | Datepicker day selected background            |
+| --${PREFIX_BS}datepicker-day-in-range-color        | .react-datepicker | css color unit  | Datepicker date range color                   |
+| --${PREFIX_BS}datepicker-day-in-range-bg           | .react-datepicker | css color unit  | Datepicker date range background              |
+| --${PREFIX_BS}datepicker-day-outside-month-color   | .react-datepicker | css color unit  | Datepicker day outside color                  |
+| --${PREFIX_BS}datepicker-day-today-font-weight     | .react-datepicker | css weight unit | Datepicker today weight                       |
+| --${PREFIX_BS}datepicker-day-today-box-shadow      | .react-datepicker | css shadow unit | Datepicker today box shadow                   |
+| --${PREFIX_BS}datepicker-time-container-margin     | .react-datepicker | css length unit | Datepicker container time margin              |
+| --${PREFIX_BS}datepicker-time-container-align      | .react-datepicker | css align unit  | Datepicker container time alignment           |
+| --${PREFIX_BS}datepicker-time-input-width          | .react-datepicker | css length unit | Datepicker time width                         |
+| --${PREFIX_BS}datepicker-time-input-margin         | .react-datepicker | css length unit | Datepicker time margin                        |
+| --${PREFIX_BS}datepicker-time-input-align          | .react-datepicker | css align unit  | Datepicker time alignment                     |
+| --${PREFIX_BS}datepicker-time-input-padding        | .react-datepicker | css length unit | Datepicker time padding                       |
+| --${PREFIX_BS}datepicker-time-input-gap            | .react-datepicker | css length unit | Datepicker time gap                           |
+| --${PREFIX_BS}datepicker-time-input-label-weight   | .react-datepicker | css weight unit | Datepicker time weight                        |
+| --${PREFIX_BS}datepicker-time-input-label-color    | .react-datepicker | css color unit  | Datepicker label time color                   |
+| --${PREFIX_BS}datepicker-time-input-label-size     | .react-datepicker | css length unit | Datepicker label time size                    |
+| --${PREFIX_BS}datepicker-triangle-color            | .react-datepicker | css color unit  | Datepicker triangle color                     |
+| --${PREFIX_BS}datepicker-webkit-time-color         | .react-datepicker | css color unit  | Datepicker webkit time color                  |
+| --${PREFIX_BS}datepicker-webkit-time-align         | .react-datepicker | css align unit  | Datepicker webkit time align                  |
+| --${PREFIX_BS}datepicker-webkit-edit-text-padding  | .react-datepicker | css length unit | Datepicker webkit edit text padding           |
+| --${PREFIX_BS}datepicker-webkit-edit-ampm-padding  | .react-datepicker | css length unit | Datepicker webkit edit am/pm padding          |
+| --${PREFIX_BS}datepicker-webkit-edit-ampm-color    | .react-datepicker | css color unit  | Datepicker webkit edit am/pm color            |
+| --${PREFIX_BS}datepicker-webkit-edit-ampm-bg       | .react-datepicker | css color unit  | Datepicker webkit edit am/pm background color |
+| --${PREFIX_BS}datepicker-webkit-edit-ampm-radius   | .react-datepicker | css length unit | Datepicker webkit edit am/pm border radius    |
+| --${PREFIX_BS}datepicker-calendar-picker-icon      | .react-datepicker | css url icon    | Datepicker picker icon                        |
         `,
       },
     },

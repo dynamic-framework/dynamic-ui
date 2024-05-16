@@ -21,16 +21,12 @@ To understand in more detail the aspects covered by this component, review the f
 ## CSS Variables
 The Bootstrap documentation provides details on the default [Tabs CSS Variables](https://getbootstrap.com/docs/5.3/components/navs-tabs/#css)
 
-| Variable                                            | Type              | Description                        |
-|-----------------------------------------------------|-------------------|------------------------------------|
-| --${PREFIX_BS}tabs-nav-gap                          | css length unit   | Space between nav links            |
-| --${PREFIX_BS}tabs-nav-padding-x                    | css length unit   | Nav padding horizontal             |
-| --${PREFIX_BS}tabs-nav-padding-y                    | css length unit   | Nav padding vertical               |
-| --${PREFIX_BS}tabs-link-border-height               | css length unit   | Nav link border height             |
-| --${PREFIX_BS}tabs-link-border-border-radius        | css length unit   | Nav link border radius             |
-| --${PREFIX_BS}tabs-link-border-active-color         | css color unit    | Nav link border active color       |
-| --${PREFIX_BS}tabs-link-border-active-font-weight   | css font weight   | Nav link border active font weight |
-| --${PREFIX_BS}tabs-link-border-active-bg            | css color unit    | Nav link border active background  |
+| Variable                                              | Classes                               | Type            | Description                        |
+|-------------------------------------------------------|---------------------------------------|-----------------|------------------------------------|
+| --${PREFIX_BS}nav-tabs-nav-gap                        | .nav-pills, .nav-underline, .nav-tabs | css length unit | Space between nav links            |
+| --${PREFIX_BS}nav-tabs-nav-padding-x                  | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav padding horizontal             |
+| --${PREFIX_BS}nav-tabs-nav-padding-y                  | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav padding vertical               |
+| --${PREFIX_BS}nav-tabs-link-border-active-font-weight | .nav-pills, .nav-underline, .nav-tabs | css font weight | Nav link border active font weight |
         `,
       },
     },
