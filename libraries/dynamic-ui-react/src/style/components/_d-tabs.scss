@@ -1,11 +1,16 @@
 .nav-pills,
+.nav-tabs,
 .nav-underline {
-  --#{$prefix}tabs-nav-gap: #{$nav-nav-gap};
-  --#{$prefix}tabs-nav-padding-x: #{$nav-nav-padding-x};
-  --#{$prefix}tabs-nav-padding-y: #{$nav-nav-padding-y};
+  --#{$prefix}nav-tabs-nav-gap: #{$nav-nav-gap};
+  --#{$prefix}nav-tabs-nav-padding-x: #{$nav-nav-padding-x};
+  --#{$prefix}nav-tabs-nav-padding-y: #{$nav-nav-padding-y};
+  --#{$prefix}nav-tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
+}
 
-  gap: var(--#{$prefix}tabs-nav-gap);
-  padding: var(--#{$prefix}tabs-nav-padding-y) var(--#{$prefix}tabs-nav-padding-x);
+.nav-pills,
+.nav-underline {
+  gap: var(--#{$prefix}nav-tabs-nav-gap);
+  padding: var(--#{$prefix}nav-tabs-nav-padding-y) var(--#{$prefix}nav-tabs-nav-padding-x);
 
   &.flex-column {
     flex: 1 0 auto;
@@ -17,10 +22,9 @@
 }
 
 .nav-tabs {
-  --#{$prefix}tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
   .nav-link {
     &.active {
-      font-weight: var(--#{$prefix}tabs-link-border-active-font-weight);
+      font-weight: var(--#{$prefix}nav-tabs-link-border-active-font-weight);
       border-bottom-color: transparent;
     }
     &:not(.active):is(:hover, :focus) {
