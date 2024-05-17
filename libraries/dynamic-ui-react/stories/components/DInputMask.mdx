@@ -11,7 +11,7 @@ import * as DInputMask from './DInputMask.stories';
 import { ICONS } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 import { DAlert } from '../../src';
-
+import { ExampleMask } from './DInputMaskExamples';
 
 <Meta of={DInputMask} />
 
@@ -46,7 +46,7 @@ For further details on the capabilities and usage of @react-input/mask, refer to
 <Source
   code={
     `
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { DInputMask } from '@dynamic-framework/ui-react';
 
 const BASE_MASK = '_ ____ ____';
@@ -55,15 +55,13 @@ export default function App() {
   const [maskValue, setMaskValue] = useState<string>(BASE_MASK);
 
   return (
-    <>
-      <DInputMask
-        mask={BASE_MASK}
-        showMask
-        value={maskValue}
-        onChange={(value) => setMaskValue(value)}
-        replacement={{ _: /\d/ }}
-      />
-    </>
+    <DInputMask
+      mask={BASE_MASK}
+      showMask
+      value={maskValue}
+      onChange={(value) => setMaskValue(value)}
+      replacement={{ _: /\d/ }}
+    />
   );
 }
     `
@@ -71,6 +69,13 @@ export default function App() {
   language="tsx"
   dark
 />
+
+<Canvas>
+  <div className="d-flex justify-content-center">
+    <ExampleMask />
+  </div>
+</Canvas>
+
 
 ## CSS Variables
 <Markdown>
