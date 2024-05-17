@@ -49,17 +49,18 @@ For further details on the capabilities and usage of @react-input/mask, refer to
 import { useState, useMemo } from 'react';
 import { DInputMask } from '@dynamic-framework/ui-react';
 
+const BASE_MASK = '_ ____ ____';
+
 export default function App() {
-  const baseMask = useMemo(() => '_ ____ ____', []);
-  const [maskValue, setMaskValue] = useState<string>(baseMask);
+  const [maskValue, setMaskValue] = useState<string>(BASE_MASK);
 
   return (
     <>
       <DInputMask
-        mask={baseMask}
+        mask={BASE_MASK}
         showMask
         value={maskValue}
-        onMask={(mask) => setMaskValue(mask.detail.value)}
+        onChange={(value) => setMaskValue(value)}
         replacement={{ _: /\d/ }}
       />
     </>
