@@ -29,7 +29,7 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "background-color"), "values"),
-          map-loop(map-merge-multiple($theme-colors-palletes, $palette-grays, $bg-soft-colors), rgba-css-var, "$key", "bg"),
+          map-loop(map-merge-multiple($theme-colors-palletes, $palette-grays, $bg-surface-colors), rgba-css-var, "$key", "bg"),
         )
       )
     ),
