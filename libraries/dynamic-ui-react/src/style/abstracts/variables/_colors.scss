@@ -31,14 +31,14 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-$blue: #366ddb !default;
-$indigo: #4848b7 !default;
-$purple: #525298 !default;
-$pink: #e60063 !default;
-$red: #d81b60 !default;
-$orange: #d32f2f !default;
-$yellow: #fbc02d !default;
-$green: #028759 !default;
+$blue: #0d6efd !default;
+$indigo: #6610f2 !default;
+$purple: #4848b7 !default;
+$pink: #d81b60 !default;
+$red: #dc3545 !default;
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+$green: #198754 !default;
 $teal: #20c997 !default;
 $cyan: #0dcaf0 !default;
 // scss-docs-end color-variables
@@ -308,8 +308,8 @@ $cyans: (
 // custom
 // theme <- colors mapping.
 $theme-colors-mapping: (
-  "primary": "red",
-  "secondary": "indigo",
+  "primary": "pink",
+  "secondary": "purple",
   "success": "green",
   "info": "blue",
   "warning": "yellow",
@@ -320,8 +320,8 @@ $theme-colors-mapping: (
 // end custom
 
 // scss-docs-start theme-color-variables
-$primary: $red !default;
-$secondary: $indigo !default;
+$primary: $pink !default;
+$secondary: $purple !default;
 $success: $green !default;
 $info: $blue !default;
 $warning: $yellow !default;
@@ -384,25 +384,25 @@ $light-border-subtle: var(--#{$prefix}gray-100) !default;
 $dark-border-subtle: var(--#{$prefix}gray-400) !default;
 // scss-docs-end theme-border-subtle-variables
 
-$primary-100: $red-100 !default;
-$primary-200: $red-200 !default;
-$primary-300: $red-300 !default;
-$primary-400: $red-400 !default;
-$primary-500: $red-500 !default;
-$primary-600: $red-600 !default;
-$primary-700: $red-700 !default;
-$primary-800: $red-800 !default;
-$primary-900: $red-900 !default;
+$primary-100: $pink-100 !default;
+$primary-200: $pink-200 !default;
+$primary-300: $pink-300 !default;
+$primary-400: $pink-400 !default;
+$primary-500: $pink-500 !default;
+$primary-600: $pink-600 !default;
+$primary-700: $pink-700 !default;
+$primary-800: $pink-800 !default;
+$primary-900: $pink-900 !default;
 
-$secondary-100: $indigo-100 !default;
-$secondary-200: $indigo-200 !default;
-$secondary-300: $indigo-300 !default;
-$secondary-400: $indigo-400 !default;
-$secondary-500: $indigo-500 !default;
-$secondary-600: $indigo-600 !default;
-$secondary-700: $indigo-700 !default;
-$secondary-800: $indigo-800 !default;
-$secondary-900: $indigo-900 !default;
+$secondary-100: $purple-100 !default;
+$secondary-200: $purple-200 !default;
+$secondary-300: $purple-300 !default;
+$secondary-400: $purple-400 !default;
+$secondary-500: $purple-500 !default;
+$secondary-600: $purple-600 !default;
+$secondary-700: $purple-700 !default;
+$secondary-800: $purple-800 !default;
+$secondary-900: $purple-900 !default;
 
 $success-100: $green-100 !default;
 $success-200: $green-200 !default;
