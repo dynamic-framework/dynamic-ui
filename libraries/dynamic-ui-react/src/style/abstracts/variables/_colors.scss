@@ -313,7 +313,7 @@ $theme-colors-mapping: (
   "success": "green",
   "info": "blue",
   "warning": "yellow",
-  "danger": "orange",
+  "danger": "red",
   "light": "gray-100",
   "dark": "gray-900"
 ) !default;
@@ -325,7 +325,7 @@ $secondary: $purple !default;
 $success: $green !default;
 $info: $blue !default;
 $warning: $yellow !default;
-$danger: $orange !default;
+$danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-900 !default;
 // scss-docs-end theme-color-variables
@@ -434,15 +434,15 @@ $warning-700: $yellow-700 !default;
 $warning-800: $yellow-800 !default;
 $warning-900: $yellow-900 !default;
 
-$danger-100: $orange-100 !default;
-$danger-200: $orange-200 !default;
-$danger-300: $orange-300 !default;
-$danger-400: $orange-400 !default;
-$danger-500: $orange-500 !default;
-$danger-600: $orange-600 !default;
-$danger-700: $orange-700 !default;
-$danger-800: $orange-800 !default;
-$danger-900: $orange-900 !default;
+$danger-100: $red-100 !default;
+$danger-200: $red-200 !default;
+$danger-300: $red-300 !default;
+$danger-400: $red-400 !default;
+$danger-500: $red-500 !default;
+$danger-600: $red-600 !default;
+$danger-700: $red-700 !default;
+$danger-800: $red-800 !default;
+$danger-900: $red-900 !default;
 
 $theme-colors-palletes: (
   "primary-100": $primary-100,
