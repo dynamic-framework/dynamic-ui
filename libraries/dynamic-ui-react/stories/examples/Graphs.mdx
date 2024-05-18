@@ -1,0 +1,362 @@
+import {
+  Meta,
+  Canvas,
+  Source,
+} from '@storybook/blocks';
+
+import {
+  ExampleBarChart,
+  ExampleLineChart,
+  ExamplePieChart,
+  ExampleProgressiveBarChart,
+} from './GraphsExamples';
+
+<Meta title="Design System/Examples/Graphs" />
+
+# Recharts: The Choice for Graphs
+
+In our project, we've opted to utilize Recharts as our primary graphing library. Here's why:
+
+## Why Recharts?
+
+Recharts is a highly versatile and feature-rich library designed specifically for building charts in React applications. Here are some key reasons why we chose Recharts:
+
+- **Native React Components:** Recharts provides a set of native React components for building various types of charts, making it easy to integrate into our React-based project.
+- **Rich Feature Set:** It offers a comprehensive set of chart types and customization options, allowing us to create visually appealing and interactive charts.
+- **Responsive Design:** Recharts supports responsive design out of the box, ensuring that our charts look great and remain functional across different screen sizes and devices.
+- **Active Community:** Recharts has a large and active community, which means that we can easily find support, resources, and community-contributed plugins and extensions.
+
+## Why No Wrapper Component?
+
+Unlike some other charting libraries, Recharts provides React components that can be directly imported and used in our application without the need for a wrapper component. Here's why we don't need to create a wrapper component for Recharts:
+
+- **Direct Integration:** Recharts components can be directly imported and used like any other React component, simplifying the integration process and reducing unnecessary abstraction layers.
+- **Customization:** Recharts components are highly customizable, allowing us to achieve the desired functionality and appearance without the need for additional wrapper components.
+- **Performance:** By avoiding unnecessary wrapper components, we can improve the performance of our application by reducing the overhead associated with component nesting.
+
+## Examples
+
+Let's dive into some examples of how we can use Recharts to create different types of charts:
+
+### `ExampleLineChart.tsx`
+
+<Canvas>
+  <div style={{ height: '300px' }}>
+    <ExampleLineChart />
+  </div>
+</Canvas>
+
+<Source
+  code={
+    `
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+
+const LINE_CHART_DATA = [
+  { date: 'Mar 23', conservative: 100, tech: 100 },
+  { date: 'Apr 23', conservative: 101, tech: 115 },
+  { date: 'May 23', conservative: 101, tech: 130 },
+  { date: 'Jun 23', conservative: 102, tech: 125 },
+  { date: 'Jul 23', conservative: 102, tech: 140 },
+  { date: 'Aug 23', conservative: 102, tech: 135 },
+  { date: 'Sep 23', conservative: 103, tech: 150 },
+  { date: 'Oct 23', conservative: 103, tech: 145 },
+  { date: 'Nov 23', conservative: 103, tech: 155 },
+  { date: 'Dec 23', conservative: 104, tech: 160 },
+  { date: 'Jan 24', conservative: 104, tech: 165 },
+  { date: 'Feb 24', conservative: 104, tech: 170 },
+  { date: 'Mar 24', conservative: 105, tech: 180 },
+];
+
+export function ExampleLineChart() {
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <LineChart data={LINE_CHART_DATA}>
+        <CartesianGrid strokeDasharray="4 " vertical={false} />
+        <XAxis dataKey="date" />
+        <YAxis domain={[100, 'dataMax + 20']} />
+        <Tooltip />
+        <Legend />
+        <Line
+          type="monotone"
+          dataKey="conservative"
+          stroke="var(--bs-primary)"
+          activeDot={{ r: 8, stroke: 'var(--bs-primary-100)', strokeWidth: 2 }}
+          dot={false}
+          name="Conservative Differentiated Oct24"
+        />
+        <Line
+          type="monotone"
+          dataKey="tech"
+          stroke="var(--bs-secondary)"
+          activeDot={{ r: 8, stroke: 'var(--bs-secondary-100)', strokeWidth: 2 }}
+          dot={false}
+          name="Technological"
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  );
+}
+    `
+  }
+  language="tsx"
+  dark
+/>
+
+### `ExamplePieChart.tsx`
+
+<Canvas>
+  <div style={{ height: '300px' }}>
+    <ExamplePieChart />
+  </div>
+</Canvas>
+
+<Source
+  code={
+    `
+import {
+  ResponsiveContainer,
+  Pie,
+  PieChart,
+  Cell,
+} from 'recharts';
+
+import type { PieLabelRenderProps } from 'recharts';
+
+const PIE_CHART_COLORS = [
+  'var(--bs-primary)',
+  'var(--bs-primary-300)',
+  'var(--bs-primary-100)',
+  'var(--bs-primary-600)',
+];
+const PIE_CHART_DATA = [
+  { id: 1, name: 'Group A', value: 6500 },
+  { id: 2, name: 'Group B', value: 1200 },
+  { id: 3, name: 'Group C', value: 10200 },
+  { id: 4, name: 'Group D', value: 2100 },
+];
+
+const total = PIE_CHART_DATA.reduce(
+  (value, item) => value + item.value,
+  0,
+);
+
+const renderCustomizedLabel = ({ cx, cy }: PieLabelRenderProps) => (
+  <text
+    x={cx}
+    y={cy}
+    fill="var(--bs-gray-900)"
+    textAnchor="middle"
+    dominantBaseline="central"
+    className="fs-3"
+  >
+    {\`$\${total.toLocaleString()}\`}
+  </text>
+);
+
+export function ExamplePieChart() {
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie
+          data={PIE_CHART_DATA}
+          cx="50%"
+          cy="50%"
+          innerRadius={76}
+          dataKey="value"
+          label={renderCustomizedLabel}
+          labelLine={false}
+        >
+          {PIE_CHART_DATA.map((entry, index) => (
+            <Cell key={entry.id} fill={PIE_CHART_COLORS[index % PIE_CHART_COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
+  );
+}
+    `
+  }
+  language="tsx"
+  dark
+/>
+
+### Bar Chart
+
+<Canvas>
+  <div style={{ height: '300px' }}>
+    <ExampleBarChart />
+  </div>
+</Canvas>
+
+<Source
+  code={
+    `
+import {
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  BarChart,
+  Bar,
+} from 'recharts';
+
+const BAR_CHART_DATA = [
+  { name: 'Jan 23', value: 50000 },
+  { name: 'Mar 23', value: 75000 },
+  { name: 'May 23', value: 100000 },
+  { name: 'Jul 23', value: 80000 },
+  { name: 'Sep 23', value: 70000 },
+  { name: 'Nov 23', value: 60000 },
+];
+
+export function ExampleBarChart() {
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={BAR_CHART_DATA} barCategoryGap="25%">
+        <CartesianGrid strokeDasharray="4 " vertical={false} />
+        <XAxis dataKey="name" />
+        <YAxis
+          domain={[0, 'dataMax + 10000']}
+          tickFormatter={(value) => \`$\${(value / 1000).toFixed(0)}K\`}
+        />
+        <Tooltip
+          formatter={(value: number) => \`$\${value.toLocaleString()}\`}
+          cursor={{ fill: 'var(--bs-secondary-100)' }}
+        />
+        <Bar dataKey="value" fill="var(--bs-secondary)" />
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}
+    `
+  }
+  language="tsx"
+  dark
+/>
+
+### Progressive Column Bar Chart
+
+Progressive column charts, also knows as waterfall charts, are like stacked charts with each segment of
+a single stack displaced vertically from the next segment.
+
+Progressive column charts are useful for emphasizing the contribution of the individual segments to the whole.
+
+<Canvas>
+  <div style={{ height: '300px' }}>
+    <ExampleProgressiveBarChart />
+  </div>
+</Canvas>
+
+<Source
+  code={
+  `
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from 'recharts';
+
+const PROGRESSIVE_BAR_CHART_DATA = [
+  {
+    id: 1,
+    name: 'Item A',
+    value: 22500,
+    down: 0,
+    color: 'var(--bs-blue)',
+  },
+  {
+    id: 2,
+    name: 'Item B',
+    value: 1000,
+    down: 21500,
+    color: 'var(--bs-orange)',
+  },
+  {
+    id: 3,
+    name: 'Item C',
+    value: 2000,
+    down: 19500,
+    color: 'var(--bs-orange)',
+  },
+  {
+    id: 4,
+    name: 'Item D',
+    value: 3000,
+    down: 16500,
+    color: 'var(--bs-orange)',
+  },
+  {
+    id: 5,
+    name: 'Item E',
+    value: 16500,
+    down: 0,
+    color: 'var(--bs-green)',
+  },
+  {
+    id: 6,
+    name: 'Item F',
+    value: 1000,
+    down: 16500,
+    color: 'var(--bs-blue)',
+  },
+  {
+    id: 7,
+    name: 'Item G',
+    value: 8000,
+    down: 16500,
+    color: 'var(--bs-blue)',
+  },
+  {
+    id: 8,
+    name: 'Item H',
+    value: 24500,
+    down: 0,
+    color: 'var(--bs-green)',
+  },
+];
+
+export function ExampleProgressiveBarChart() {
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart
+        data={PROGRESSIVE_BAR_CHART_DATA}
+      >
+        <CartesianGrid strokeDasharray="4 " vertical={false} />
+        <XAxis dataKey="name" />
+        <YAxis
+          domain={[0, 'dataMax + 10000']}
+        />
+        <Tooltip
+          formatter={(value: number) => \`$\${value.toLocaleString()}\`}
+          cursor={{ fill: 'var(--bs-gray-100)' }}
+        />
+        <Bar dataKey="down" stackId="a" fill="transparent" />
+        <Bar dataKey="value" stackId="a">
+          {PROGRESSIVE_BAR_CHART_DATA.map((entry) => (
+            <Cell key={entry.id} fill={entry.color} />
+          ))}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
