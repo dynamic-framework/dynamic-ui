@@ -64,19 +64,6 @@ $colors: (
 ) !default;
 // scss-docs-end colors-map
 
-// custom
-// TODO: check this.
-$bg-gray-soft: #fafafa !default;
-$bg-primary-soft: #fff9fa !default;
-$bg-secondary-soft: #fbfaff !default;
-
-$bg-soft-colors: (
-  "gray-soft": $bg-gray-soft,
-  "primary-soft": $bg-primary-soft,
-  "secondary-soft": $bg-secondary-soft,
-) !default;
-// end custom
-
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
 // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
 $min-contrast-ratio: 4.5 !default;
@@ -471,6 +458,30 @@ $danger-600: $red-600 !default;
 $danger-700: $red-700 !default;
 $danger-800: $red-800 !default;
 $danger-900: $red-900 !default;
+
+// custom
+// TODO: check this.
+$bg-surface-gray: $gray-50 !default;
+$bg-surface-primary: $primary-50 !default;
+$bg-surface-secondary: $secondary-50 !default;
+$bg-surface-success: $success-50 !default;
+$bg-surface-info: $info-50 !default;
+$bg-surface-warning: $warning-50 !default;
+$bg-surface-danger: $danger-50 !default;
+
+$bg-surface-colors: (
+  "gray-soft": $bg-surface-gray, // DEPRECATED
+  "primary-soft": $bg-surface-primary, // DEPRECATED
+  "secondary-soft": $bg-surface-secondary, // DEPRECATED
+  "surface-gray": $bg-surface-gray,
+  "surface-primary": $bg-surface-primary,
+  "surface-secondary": $bg-surface-secondary,
+  "surface-success": $bg-surface-success,
+  "surface-info": $bg-surface-info,
+  "surface-warning": $bg-surface-warning,
+  "surface-danger": $bg-surface-danger,
+) !default;
+// end custom
 
 $theme-colors-palletes: (
   "primary-50": $primary-50,
