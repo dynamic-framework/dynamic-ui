@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.21.0...@dynamic-framework/ui-react@1.22.0) (2024-05-20)
+
+
+### Features
+
+* add recharts peer dependency ([9fc73de](https://github.com/dynamic-framework/dynamic-ui/commit/9fc73de4d144f05393fa4df989e23895ac708df9))
+* **style:** add surface colors and adjust soft colors ([69a169e](https://github.com/dynamic-framework/dynamic-ui/commit/69a169e59de2f5dd10f50275a2231ef866e1d4ad))
+* **style:** setup -50 colors and themes ([d46d7e5](https://github.com/dynamic-framework/dynamic-ui/commit/d46d7e5fe3a8287f1899f8c024469339c9f51c01))
+* **style:** setup bootstrap colors and dynamic brand colors in purple and pink ([282fd1f](https://github.com/dynamic-framework/dynamic-ui/commit/282fd1f24d404184f9d44515df205f7afed90c47))
+* **style:** setup bootstrap grays ([91447f8](https://github.com/dynamic-framework/dynamic-ui/commit/91447f8c73557a63088f5977d77e86d4a5dfb474))
+
+
+### Bug Fixes
+
+* **DTabs:** set variables as bootstrap and set available to all classes ([#651](https://github.com/dynamic-framework/dynamic-ui/issues/651)) ([e5ce3b2](https://github.com/dynamic-framework/dynamic-ui/commit/e5ce3b263ab0dd10f527d1f21fd7c7f785e970b4))
+* **style:** change danger from orange to red ([8d71a11](https://github.com/dynamic-framework/dynamic-ui/commit/8d71a11325bfbd06e5ecd85b8ee39702e8b06fb0))
+
+
+### Storybook
+
+* add recharts example ([1ed9ba6](https://github.com/dynamic-framework/dynamic-ui/commit/1ed9ba6a03803babdba5ce31ad428e0b0dac2259))
+* add surface colors and -50 themes and deprecate soft colors ([8ede0dc](https://github.com/dynamic-framework/dynamic-ui/commit/8ede0dc020c13fe4a625e687838098747e5a9ffe))
+* add variable class owner on each component ([#652](https://github.com/dynamic-framework/dynamic-ui/issues/652)) ([9b48971](https://github.com/dynamic-framework/dynamic-ui/commit/9b48971bc78c752183bbb7afc4dd2368cc2cf68b))
+* **DInputMask:** add react-input/mask usage through useState ([#650](https://github.com/dynamic-framework/dynamic-ui/issues/650)) ([8d050b7](https://github.com/dynamic-framework/dynamic-ui/commit/8d050b7e3a8037c775064329354c4845aa7c6b23))
+
+
+
 ## [1.21.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.20.0...@dynamic-framework/ui-react@1.21.0) (2024-05-10)
 
 
