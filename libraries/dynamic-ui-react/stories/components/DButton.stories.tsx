@@ -75,32 +75,32 @@ we use the established palettes in the variables.
 
 The Bootstrap documentation provides details on the default [Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
 
-| Variable                                | Type              | Description                       |
-|-----------------------------------------|-------------------|-----------------------------------|
-| --${PREFIX_BS}btn-padding-x             | css length unit   | Button padding horizontal         |
-| --${PREFIX_BS}btn-padding-y             | css length unit   | Button padding vertical           |
-| --${PREFIX_BS}btn-font-family           | css font family   | Button font family                |
-| --${PREFIX_BS}btn-font-size             | css length unit   | Button font size                  |
-| --${PREFIX_BS}btn-font-weight           | css weight unit   | Button font weight                |
-| --${PREFIX_BS}btn-line-height           | css length unit   | Button line height                |
-| --${PREFIX_BS}btn-color                 | css color unit    | Button text color                 |
-| --${PREFIX_BS}btn-bg                    | css color unit    | Button background color           |
-| --${PREFIX_BS}btn-border-width          | css length unit   | Button border width               |
-| --${PREFIX_BS}btn-border-color          | css color unit    | Button border color               |
-| --${PREFIX_BS}btn-border-radius         | css length unit   | Button border radius              |
-| --${PREFIX_BS}btn-hover-border-color    | css color unit    | Button hover border color         |
-| --${PREFIX_BS}btn-box-shadow            | css box shadow    | Button box shadow                 |
-| --${PREFIX_BS}btn-disabled-opacity      | css length unit   | Button link padding vertical      |
-| --${PREFIX_BS}btn-focus-box-shadow      | css box shadow    | Button focus box shadow           |
-| --${PREFIX_BS}btn–text-decoration       | text decoration   | Button text decoration            |
-| --${PREFIX_BS}btn-lg-padding-x          | css length unit   | Button large padding horizontal   |
-| --${PREFIX_BS}btn-lg-padding-y          | css length unit   | Button large padding vertical     |
-| --${PREFIX_BS}btn-lg-font-size          | css length unit   | Button large font size            |
-| --${PREFIX_BS}btn-lg-border-radius      | css length unit   | Button large border radius        |
-| --${PREFIX_BS}btn-sm-padding-x          | css length unit   | Button small padding horizontal   |
-| --${PREFIX_BS}btn-sm-padding-y          | css length unit   | Button small padding vertical     |
-| --${PREFIX_BS}btn-sm-font-size          | css length unit   | Button small font size            |
-| --${PREFIX_BS}btn-sm-border-radius      | css length unit   | Button small border radius        |
+| Variable                             | Class | Type            | Description                     |
+|--------------------------------------|-------|-----------------|---------------------------------|
+| --${PREFIX_BS}btn-padding-x          | .btn  | css length unit | Button padding horizontal       |
+| --${PREFIX_BS}btn-padding-y          | .btn  | css length unit | Button padding vertical         |
+| --${PREFIX_BS}btn-font-family        | .btn  | css font family | Button font family              |
+| --${PREFIX_BS}btn-font-size          | .btn  | css length unit | Button font size                |
+| --${PREFIX_BS}btn-font-weight        | .btn  | css weight unit | Button font weight              |
+| --${PREFIX_BS}btn-line-height        | .btn  | css length unit | Button line height              |
+| --${PREFIX_BS}btn-color              | .btn  | css color unit  | Button text color               |
+| --${PREFIX_BS}btn-bg                 | .btn  | css color unit  | Button background color         |
+| --${PREFIX_BS}btn-border-width       | .btn  | css length unit | Button border width             |
+| --${PREFIX_BS}btn-border-color       | .btn  | css color unit  | Button border color             |
+| --${PREFIX_BS}btn-hover-border-color | .btn  | css color unit  | Button hover border color       |
+| --${PREFIX_BS}btn-box-shadow         | .btn  | css box shadow  | Button box shadow               |
+| --${PREFIX_BS}btn-disabled-opacity   | .btn  | css length unit | Button link padding vertical    |
+| --${PREFIX_BS}btn-focus-box-shadow   | .btn  | css box shadow  | Button focus box shadow         |
+| --${PREFIX_BS}btn–text-decoration    | .btn  | text decoration | Button text decoration          |
+| --${PREFIX_BS}btn-lg-padding-x       | .btn  | css length unit | Button large padding horizontal |
+| --${PREFIX_BS}btn-lg-padding-y       | .btn  | css length unit | Button large padding vertical   |
+| --${PREFIX_BS}btn-lg-font-size       | .btn  | css length unit | Button large font size          |
+| --${PREFIX_BS}btn-sm-padding-x       | .btn  | css length unit | Button small padding horizontal |
+| --${PREFIX_BS}btn-sm-padding-y       | .btn  | css length unit | Button small padding vertical   |
+| --${PREFIX_BS}btn-sm-font-size       | .btn  | css length unit | Button small font size          |
+| --${PREFIX_BS}btn-border-radius      | :root | css length unit | Button border radius            |
+| --${PREFIX_BS}btn-lg-border-radius   | :root | css length unit | Button large border radius      |
+| --${PREFIX_BS}btn-sm-border-radius   | :root | css length unit | Button small border radius      |
         `,
       },
     },

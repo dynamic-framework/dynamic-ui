@@ -13,13 +13,12 @@ const config: Meta<typeof DAvatar> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                                  | Type             | Description              |
-|-------------------------------------------|------------------|--------------------------|
-| --${PREFIX_BS}alert-gap                   | css length unit  | Content separation       |
-| --${PREFIX_BS}alert-box-shadow            | css box shadow   | Toast box shadow         |
-| --${PREFIX_BS}alert-icon-color            | css color unit   | Toast icon color         |
-| --${PREFIX_BS}alert-separator-opacity     | css length unit  | Toast separator opacity  |
-| --${PREFIX_BS}alert-close-icon-size       | css length unit  | Toast close icon size    |
+| Variable                         | Class   | Type            | Description             |
+| -------------------------------- | ------- | --------------- | ----------------------- |
+| --${PREFIX_BS}avatar-size        | .avatar | css length unit | Content separation      |
+| --${PREFIX_BS}avatar-title-bg    | .avatar | css color unit  | Toast box shadow        |
+| --${PREFIX_BS}avatar-title-color | .avatar | css color unit  | Toast icon color        |
+| --${PREFIX_BS}avatar-radius      | .avatar | css length unit | Toast separator opacity |
         `,
       },
     },

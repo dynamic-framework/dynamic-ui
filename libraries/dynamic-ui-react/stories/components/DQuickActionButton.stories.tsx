@@ -14,38 +14,39 @@ const config: Meta<typeof DQuickActionButton> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                                                                | Type              | Description                           |
-|-------------------------------------------------------------------------|-------------------|---------------------------------------|
-| --${PREFIX_BS}quick-action-button-gap                                   | css length unit   | Content gap                           |
-| --${PREFIX_BS}quick-action-button-padding                               | css length unit   | Content padding                       |
-| --${PREFIX_BS}quick-action-button-bg                                    | css color unit    | Content background color              |
-| --${PREFIX_BS}quick-action-button-border-color                          | css color unit    | Quick action border color             |
-| --${PREFIX_BS}quick-action-button-border-style                          | css border style  | Quick action border style             |
-| --${PREFIX_BS}quick-action-button-border-with                           | css length unit   | Quick action border width             |
-| --${PREFIX_BS}quick-action-button-border-top                            | css border        | Quick action border top               |
-| --${PREFIX_BS}quick-action-button-border-right                          | css border        | Quick action border right             |
-| --${PREFIX_BS}quick-action-button-border-bottom                         | css border        | Quick action border bottom            |
-| --${PREFIX_BS}quick-action-button-border-end                            | css border        | Quick action border left              |
-| --${PREFIX_BS}quick-action-button-border-radius                         | css length unit   | Quick action border radius            |
-| --${PREFIX_BS}quick-action-button-box-shadow                            | css box shadow    | Quick action box shadow               |
-| --${PREFIX_BS}quick-action-button-line1-font-size                       | css length unit   | First line font size                  |
-| --${PREFIX_BS}quick-action-button-line1-font-weight                     | css font weight   | First line font weight                |
-| --${PREFIX_BS}quick-action-button-line1-color                           | css color unit    | First line color                      |
-| --${PREFIX_BS}quick-action-button-line2-font-size                       | css length unit   | Second line font size                 |
-| --${PREFIX_BS}quick-action-button-line2-font-weight                     | css length unit   | Second line font weight               |
-| --${PREFIX_BS}quick-action-button-line2-color                           | css color unit    | Second line color                     |
-| --${PREFIX_BS}quick-action-button-representative-image-size             | css length unit   | Representative image size             |
-| --${PREFIX_BS}quick-action-button-representative-image-border-radius    | css length unit   | Representative image border-radius    |
-| --${PREFIX_BS}quick-action-button-representative-icon-size              | css length unit   | Representative icon size              |
-| --${PREFIX_BS}quick-action-button-action-icon-color                     | css color unit    | Action icon color                     |
-| --${PREFIX_BS}quick-action-button-hover-bg                              | css color unit    | Content hover background              |
-| --${PREFIX_BS}quick-action-button-hover-border-color                    | css color unit    | Content hover border color            |
-| --${PREFIX_BS}quick-action-button-hover-action-icon-color               | css color unit    | Content action icon hover color       |
-| --${PREFIX_BS}quick-action-button-hover-box-shadow                      | css box shadow    | Content hover box shadow              |
-| --${PREFIX_BS}quick-action-button-active-bg                             | css color unit    | Content active background             |
-| --${PREFIX_BS}quick-action-button-active-border-color                   | css color unit    | Content active border color           |
-| --${PREFIX_BS}quick-action-button-active-action-icon-color              | css color unit    | Content action icon active color      |
-| --${PREFIX_BS}quick-action-button-active-box-shadow                     | css box shadow    | Content active color box shadow       |
+| Variable                                                             | Class                  | Type            | Description                        |
+|----------------------------------------------------------------------|------------------------|-----------------|------------------------------------|
+| --${PREFIX_BS}quick-action-button-gap                                | .d-quick-action-button | css length unit | Content gap                        |
+| --${PREFIX_BS}quick-action-button-padding                            | .d-quick-action-button | css length unit | Content padding                    |
+| --${PREFIX_BS}quick-action-button-bg                                 | .d-quick-action-button | css color unit  | Content background color           |
+| --${PREFIX_BS}quick-action-button-border-radius                      | .d-quick-action-button | css length unit | Quick action border radius         |
+| --${PREFIX_BS}quick-action-button-border                             | .d-quick-action-button | css border unit | Quick action border                |
+| --${PREFIX_BS}quick-action-button-box-shadow                         | .d-quick-action-button | css box shadow  | Quick action box shadow            |
+| --${PREFIX_BS}quick-action-button-border-top                         | .d-quick-action-button | css border      | Quick action border top            |
+| --${PREFIX_BS}quick-action-button-border-right                       | .d-quick-action-button | css border      | Quick action border right          |
+| --${PREFIX_BS}quick-action-button-border-bottom                      | .d-quick-action-button | css border      | Quick action border bottom         |
+| --${PREFIX_BS}quick-action-button-border-left                        | .d-quick-action-button | css border      | Quick action border left           |
+| --${PREFIX_BS}quick-action-button-line1-font-size                    | .d-quick-action-button | css length unit | First line font size               |
+| --${PREFIX_BS}quick-action-button-line1-font-weight                  | .d-quick-action-button | css font weight | First line font weight             |
+| --${PREFIX_BS}quick-action-button-line1-color                        | .d-quick-action-button | css color unit  | First line color                   |
+| --${PREFIX_BS}quick-action-button-line2-font-size                    | .d-quick-action-button | css length unit | Second line font size              |
+| --${PREFIX_BS}quick-action-button-line2-font-weight                  | .d-quick-action-button | css length unit | Second line font weight            |
+| --${PREFIX_BS}quick-action-button-line2-color                        | .d-quick-action-button | css color unit  | Second line color                  |
+| --${PREFIX_BS}quick-action-button-representative-image-size          | .d-quick-action-button | css length unit | Representative image size          |
+| --${PREFIX_BS}quick-action-button-representative-image-border-radius | .d-quick-action-button | css length unit | Representative image border-radius |
+| --${PREFIX_BS}quick-action-button-representative-icon-size           | .d-quick-action-button | css length unit | Representative icon size           |
+| --${PREFIX_BS}quick-action-button-action-icon-color                  | .d-quick-action-button | css color unit  | Action icon color                  |
+| --${PREFIX_BS}quick-action-button-action-icon-size                   | .d-quick-action-button | css length unit | Action icon size                   |
+| --${PREFIX_BS}quick-action-button-action-link-padding-x              | .d-quick-action-button | css length unit | Action link padding                |
+| --${PREFIX_BS}quick-action-button-action-link-padding-y              | .d-quick-action-button | css length unit | Action link padding                |
+| --${PREFIX_BS}quick-action-button-hover-bg                           | .d-quick-action-button | css color unit  | Content hover background           |
+| --${PREFIX_BS}quick-action-button-hover-border-color                 | .d-quick-action-button | css color unit  | Content hover border color         |
+| --${PREFIX_BS}quick-action-button-hover-action-icon-color            | .d-quick-action-button | css color unit  | Content action icon hover color    |
+| --${PREFIX_BS}quick-action-button-hover-box-shadow                   | .d-quick-action-button | css box shadow  | Content hover box shadow           |
+| --${PREFIX_BS}quick-action-button-active-bg                          | .d-quick-action-button | css color unit  | Content active background          |
+| --${PREFIX_BS}quick-action-button-active-border-color                | .d-quick-action-button | css color unit  | Content active border color        |
+| --${PREFIX_BS}quick-action-button-active-action-icon-color           | .d-quick-action-button | css color unit  | Content action icon active color   |
+| --${PREFIX_BS}quick-action-button-active-box-shadow                  | .d-quick-action-button | css box shadow  | Content active color box shadow    |
         `,
       },
     },

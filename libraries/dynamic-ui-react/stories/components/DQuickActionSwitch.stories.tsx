@@ -11,23 +11,23 @@ const config: Meta<typeof DQuickActionSwitch> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                                                      | Type              | Description                           |
-|---------------------------------------------------------------|-------------------|---------------------------------------|
-| --${PREFIX_BS}quick-action-switch-gap                         | css length unit   | Space between content                 |
-| --${PREFIX_BS}quick-action-switch-padding                     | css length unit   | Content padding                       |
-| --${PREFIX_BS}quick-action-switch-bg                          | css color unit    | Content background color              |
-| --${PREFIX_BS}quick-action-switch-border-radius               | css length unit   | Quick action border radius            |
-| --${PREFIX_BS}quick-action-switch-content-gap                 | css length unit   | Space between switch content          |
-| --${PREFIX_BS}quick-action-switch-label-font-size             | css length unit   | Label font size                       |
-| --${PREFIX_BS}quick-action-switch-label-font-weight           | css font weight   | Label font weight                     |
-| --${PREFIX_BS}quick-action-switch-label-color                 | css color unit    | Label color                           |
-| --${PREFIX_BS}quick-action-switch-hint-font-size              | css length unit   | Hint font size                        |
-| --${PREFIX_BS}quick-action-switch-hint-font-weight            | css length unit   | Hint font weight                      |
-| --${PREFIX_BS}quick-action-switch-hint-color                  | css color unit    | Hint color                            |
-| --${PREFIX_BS}quick-action-switch-hover-bg                    | css color unit    | Content hover background              |
-| --${PREFIX_BS}quick-action-switch-checked-bg                  | css color unit    | Content checked background            |
-| --${PREFIX_BS}quick-action-switch-checked-label-color         | css color unit    | Content checked label color           |
-| --${PREFIX_BS}quick-action-switch-checked-hint-color          | css color unit    | Content checked hint color            |
+| Variable                                              | Class                  | Type            | Description                  |
+|-------------------------------------------------------|------------------------|-----------------|------------------------------|
+| --${PREFIX_BS}quick-action-switch-gap                 | .d-quick-action-switch | css length unit | Space between content        |
+| --${PREFIX_BS}quick-action-switch-padding             | .d-quick-action-switch | css length unit | Content padding              |
+| --${PREFIX_BS}quick-action-switch-bg                  | .d-quick-action-switch | css color unit  | Content background color     |
+| --${PREFIX_BS}quick-action-switch-border-radius       | .d-quick-action-switch | css length unit | Quick action border radius   |
+| --${PREFIX_BS}quick-action-switch-content-gap         | .d-quick-action-switch | css length unit | Space between switch content |
+| --${PREFIX_BS}quick-action-switch-label-font-size     | .d-quick-action-switch | css length unit | Label font size              |
+| --${PREFIX_BS}quick-action-switch-label-font-weight   | .d-quick-action-switch | css font weight | Label font weight            |
+| --${PREFIX_BS}quick-action-switch-label-color         | .d-quick-action-switch | css color unit  | Label color                  |
+| --${PREFIX_BS}quick-action-switch-hint-font-size      | .d-quick-action-switch | css length unit | Hint font size               |
+| --${PREFIX_BS}quick-action-switch-hint-font-weight    | .d-quick-action-switch | css length unit | Hint font weight             |
+| --${PREFIX_BS}quick-action-switch-hint-color          | .d-quick-action-switch | css color unit  | Hint color                   |
+| --${PREFIX_BS}quick-action-switch-hover-bg            | .d-quick-action-switch | css color unit  | Content hover background     |
+| --${PREFIX_BS}quick-action-switch-checked-bg          | .d-quick-action-switch | css color unit  | Content checked background   |
+| --${PREFIX_BS}quick-action-switch-checked-label-color | .d-quick-action-switch | css color unit  | Content checked label color  |
+| --${PREFIX_BS}quick-action-switch-checked-hint-color  | .d-quick-action-switch | css color unit  | Content checked hint color   |
         `,
       },
     },

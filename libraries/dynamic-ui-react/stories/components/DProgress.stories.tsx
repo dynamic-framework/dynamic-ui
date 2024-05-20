@@ -18,9 +18,9 @@ To understand in more detail the aspects covered by this component, review the f
 ## CSS Variables
 The Bootstrap documentation provides details on the default [Progress CSS Variables](https://getbootstrap.com/docs/5.3/components/progress/#css)
 
-| Variable                                   | Type              | Description                           |
-|--------------------------------------------|-------------------|---------------------------------------|
-| --${PREFIX_BS}progress-bar-font-weight     | css length unit   | Text font weight                      |
+| Variable                               | Class     | Type            | Description      |
+|----------------------------------------|-----------|-----------------|------------------|
+| --${PREFIX_BS}progress-bar-font-weight | .progress | css length unit | Text font weight |
         `,
       },
     },

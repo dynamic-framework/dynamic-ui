@@ -21,13 +21,13 @@ To understand in more detail the aspects covered by this component, review the f
 
 The Bootstrap documentation provides details on the default [Alert CSS Variables](https://getbootstrap.com/docs/5.3/components/alerts/#css)
 
-| Variable                                  | Type             | Description              |
-|-------------------------------------------|------------------|--------------------------|
-| --${PREFIX_BS}alert-gap                   | css length unit  | Content separation       |
-| --${PREFIX_BS}alert-box-shadow            | css box shadow   | Toast box shadow         |
-| --${PREFIX_BS}alert-icon-color            | css color unit   | Toast icon color         |
-| --${PREFIX_BS}alert-separator-opacity     | css length unit  | Toast separator opacity  |
-| --${PREFIX_BS}alert-close-icon-size       | css length unit  | Toast close icon size    |
+| Variable                                  | Class            | Type             | Description              |
+|-------------------------------------------|------------------|------------------|--------------------------|
+| --${PREFIX_BS}alert-gap                   | .alert           | css length unit  | Content separation       |
+| --${PREFIX_BS}alert-box-shadow            | .alert           | css box shadow   | Toast box shadow         |
+| --${PREFIX_BS}alert-icon-color            | .alert           | css color unit   | Toast icon color         |
+| --${PREFIX_BS}alert-separator-opacity     | .alert           | css length unit  | Toast separator opacity  |
+| --${PREFIX_BS}alert-close-icon-size       | .alert           | css length unit  | Toast close icon size    |
         `,
       },
     },

@@ -16,17 +16,17 @@ const config: Meta<typeof DChip> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                            | Type            | Description                        |
-|-------------------------------------|-----------------|------------------------------------|
-| --${PREFIX_BS}chip-bg               | css color unit  | Background color                   |
-| --${PREFIX_BS}chip-gap              | css length unit | Separation between chip elements   |
-| --${PREFIX_BS}chip-color            | css color unit  | Text color                         |
-| --${PREFIX_BS}chip-border-radius    | css length unit | Border radius                      |
-| --${PREFIX_BS}chip-padding-x        | css length unit | Padding horizontal                 |
-| --${PREFIX_BS}chip-padding-y        | css length unit | Padding vertical                   |
-| --${PREFIX_BS}chip-font-size        | css length unit | Font size                          |
-| --${PREFIX_BS}chip-font-weight      | css font weight | Font weight                        |
-| --${PREFIX_BS}chip-line-height      | css length unit | Line height                        |
+| Variable                         | Class   | Type            | Description                      |
+|----------------------------------|---------|-----------------|----------------------------------|
+| --${PREFIX_BS}chip-bg            | .d-chip | css color unit  | Background color                 |
+| --${PREFIX_BS}chip-gap           | .d-chip | css length unit | Separation between chip elements |
+| --${PREFIX_BS}chip-color         | .d-chip | css color unit  | Text color                       |
+| --${PREFIX_BS}chip-border-radius | .d-chip | css length unit | Border radius                    |
+| --${PREFIX_BS}chip-padding-x     | .d-chip | css length unit | Padding horizontal               |
+| --${PREFIX_BS}chip-padding-y     | .d-chip | css length unit | Padding vertical                 |
+| --${PREFIX_BS}chip-font-size     | .d-chip | css length unit | Font size                        |
+| --${PREFIX_BS}chip-font-weight   | .d-chip | css font weight | Font weight                      |
+| --${PREFIX_BS}chip-line-height   | .d-chip | css length unit | Line height                      |
         `,
       },
     },
