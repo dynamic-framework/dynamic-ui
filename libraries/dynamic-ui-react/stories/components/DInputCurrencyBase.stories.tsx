@@ -14,6 +14,10 @@ const config: Meta<typeof DInputCurrencyBase> = {
 Component composition with \`d-input\` to make a currency input component.
 
 ## CSS Variables
+
+The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
+and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/forms/input-group/#css)
+
 | Variable                                  | Class         | Type            | Description                  |
 |-------------------------------------------|---------------|-----------------|------------------------------|
 | --${PREFIX_BS}label-color                 | :root         | css color unit  | Label color                  |

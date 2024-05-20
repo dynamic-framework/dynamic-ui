@@ -14,6 +14,9 @@ const config: Meta<typeof DInputPin> = {
 Component with a partial API of \`d-input\` to take a pin/otp code.
 
 ## CSS Variables
+
+The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
+
 | Variable                                                | Class         | Type            | Description                 |
 |---------------------------------------------------------|---------------|-----------------|-----------------------------|
 | --${PREFIX_BS}label-color                               | :root         | css color unit  | Label color                 |
