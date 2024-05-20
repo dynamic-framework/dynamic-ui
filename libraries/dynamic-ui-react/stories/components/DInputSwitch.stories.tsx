@@ -20,20 +20,20 @@ To understand in more detail the aspects covered by this component, review the f
 
 The Bootstrap documentation provides details on the default [Checks CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
 
-| Variable                                        | Type            | Description                   |
-|-------------------------------------------------|-----------------|-------------------------------|
-| --${PREFIX_BS}input-switch-bg                   | css color unit  | Background color              |
-| --${PREFIX_BS}input-switch-border-color         | css color unit  | Border color                  |
-| --${PREFIX_BS}input-switch-dot                  | data url svg    | Component circle              |
-| --${PREFIX_BS}input-switch-hover-border-color   | css color unit  | Hover border color            |
-| --${PREFIX_BS}input-switch-focus-outline-color  | css color unit  | Focus outline color           |
-| --${PREFIX_BS}input-switch-active-border-color  | css color unit  | Active border color           |
-| --${PREFIX_BS}input-switch-active-bg            | css color unit  | Active background color       |
-| --${PREFIX_BS}input-switch-disabled-border-color| css color unit  | Disabled border color         |
-| --${PREFIX_BS}input-switch-disabled-bg          | css color unit  | Disabled background color     |
-| --${PREFIX_BS}input-switch-disabled-dot         | data url svg    | Disabled component circle     |
-| --${PREFIX_BS}input-switch-label-color          | css color unit  | Label color                   |
-| --${PREFIX_BS}input-switch-active-label-color   | css color unit  | Active label color            |
+| Variable                                         | Class        | Type           | Description               |
+|--------------------------------------------------|--------------|----------------|---------------------------|
+| --${PREFIX_BS}input-switch-bg                    | .form-switch | css color unit | Background color          |
+| --${PREFIX_BS}input-switch-border-color          | .form-switch | css color unit | Border color              |
+| --${PREFIX_BS}input-switch-dot                   | .form-switch | data url svg   | Component circle          |
+| --${PREFIX_BS}input-switch-hover-border-color    | .form-switch | css color unit | Hover border color        |
+| --${PREFIX_BS}input-switch-focus-outline-color   | .form-switch | css color unit | Focus outline color       |
+| --${PREFIX_BS}input-switch-active-border-color   | .form-switch | css color unit | Active border color       |
+| --${PREFIX_BS}input-switch-active-bg             | .form-switch | css color unit | Active background color   |
+| --${PREFIX_BS}input-switch-disabled-border-color | .form-switch | css color unit | Disabled border color     |
+| --${PREFIX_BS}input-switch-disabled-bg           | .form-switch | css color unit | Disabled background color |
+| --${PREFIX_BS}input-switch-disabled-dot          | .form-switch | data url svg   | Disabled component circle |
+| --${PREFIX_BS}input-switch-label-color           | .form-switch | css color unit | Label color               |
+| --${PREFIX_BS}input-switch-active-label-color    | .form-switch | css color unit | Active label color        |
         `,
       },
     },

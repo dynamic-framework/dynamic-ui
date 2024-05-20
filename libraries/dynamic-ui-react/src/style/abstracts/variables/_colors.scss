@@ -2,21 +2,23 @@
 
 // scss-docs-start gray-color-variables
 $white: #fff !default;
-$gray-100: #f7f7ff !default;
-$gray-200: #e6e6f3 !default;
-$gray-300: #d5d4e6 !default;
-$gray-400: #a1a1b5 !default;
-$gray-500: #6d6d82 !default;
-$gray-600: #616173 !default;
-$gray-700: #555564 !default;
-$gray-800: #363744 !default;
-$gray-900: #161723 !default;
+$gray-50: #fcfcfd !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
 $black: #000 !default;
 // scss-docs-end gray-color-variables
 
 // fusv-disable
 // scss-docs-start gray-colors-map
 $grays: (
+  "50": $gray-50,
   "100": $gray-100,
   "200": $gray-200,
   "300": $gray-300,
@@ -31,14 +33,14 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-$blue: #366ddb !default;
-$indigo: #4848b7 !default;
-$purple: #525298 !default;
-$pink: #e60063 !default;
-$red: #d81b60 !default;
-$orange: #d32f2f !default;
-$yellow: #fbc02d !default;
-$green: #028759 !default;
+$blue: #0d6efd !default;
+$indigo: #6610f2 !default;
+$purple: #4848b7 !default;
+$pink: #d81b60 !default;
+$red: #dc3545 !default;
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+$green: #198754 !default;
 $teal: #20c997 !default;
 $cyan: #0dcaf0 !default;
 // scss-docs-end color-variables
@@ -62,19 +64,6 @@ $colors: (
 ) !default;
 // scss-docs-end colors-map
 
-// custom
-// TODO: check this.
-$bg-gray-soft: #fafafa !default;
-$bg-primary-soft: #fff9fa !default;
-$bg-secondary-soft: #fbfaff !default;
-
-$bg-soft-colors: (
-  "gray-soft": $bg-gray-soft,
-  "primary-soft": $bg-primary-soft,
-  "secondary-soft": $bg-secondary-soft,
-) !default;
-// end custom
-
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
 // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
 $min-contrast-ratio: 4.5 !default;
@@ -84,6 +73,7 @@ $color-contrast-dark: $gray-700 !default;
 $color-contrast-light: $white !default;
 
 // fusv-disable
+$blue-50: tint-color($blue, 90%) !default;
 $blue-100: tint-color($blue, 80%) !default;
 $blue-200: tint-color($blue, 60%) !default;
 $blue-300: tint-color($blue, 40%) !default;
@@ -94,6 +84,7 @@ $blue-700: shade-color($blue, 40%) !default;
 $blue-800: shade-color($blue, 60%) !default;
 $blue-900: shade-color($blue, 80%) !default;
 
+$indigo-50: tint-color($indigo, 90%) !default;
 $indigo-100: tint-color($indigo, 80%) !default;
 $indigo-200: tint-color($indigo, 60%) !default;
 $indigo-300: tint-color($indigo, 40%) !default;
@@ -104,6 +95,7 @@ $indigo-700: shade-color($indigo, 40%) !default;
 $indigo-800: shade-color($indigo, 60%) !default;
 $indigo-900: shade-color($indigo, 80%) !default;
 
+$purple-50: tint-color($purple, 90%) !default;
 $purple-100: tint-color($purple, 80%) !default;
 $purple-200: tint-color($purple, 60%) !default;
 $purple-300: tint-color($purple, 40%) !default;
@@ -114,6 +106,7 @@ $purple-700: shade-color($purple, 40%) !default;
 $purple-800: shade-color($purple, 60%) !default;
 $purple-900: shade-color($purple, 80%) !default;
 
+$pink-50: tint-color($pink, 90%) !default;
 $pink-100: tint-color($pink, 80%) !default;
 $pink-200: tint-color($pink, 60%) !default;
 $pink-300: tint-color($pink, 40%) !default;
@@ -124,6 +117,7 @@ $pink-700: shade-color($pink, 40%) !default;
 $pink-800: shade-color($pink, 60%) !default;
 $pink-900: shade-color($pink, 80%) !default;
 
+$red-50: tint-color($red, 90%) !default;
 $red-100: tint-color($red, 80%) !default;
 $red-200: tint-color($red, 60%) !default;
 $red-300: tint-color($red, 40%) !default;
@@ -134,6 +128,7 @@ $red-700: shade-color($red, 40%) !default;
 $red-800: shade-color($red, 60%) !default;
 $red-900: shade-color($red, 80%) !default;
 
+$orange-50: tint-color($orange, 90%) !default;
 $orange-100: tint-color($orange, 80%) !default;
 $orange-200: tint-color($orange, 60%) !default;
 $orange-300: tint-color($orange, 40%) !default;
@@ -144,6 +139,7 @@ $orange-700: shade-color($orange, 40%) !default;
 $orange-800: shade-color($orange, 60%) !default;
 $orange-900: shade-color($orange, 80%) !default;
 
+$yellow-50: tint-color($yellow, 90%) !default;
 $yellow-100: tint-color($yellow, 80%) !default;
 $yellow-200: tint-color($yellow, 60%) !default;
 $yellow-300: tint-color($yellow, 40%) !default;
@@ -154,6 +150,7 @@ $yellow-700: shade-color($yellow, 40%) !default;
 $yellow-800: shade-color($yellow, 60%) !default;
 $yellow-900: shade-color($yellow, 80%) !default;
 
+$green-50: tint-color($green, 90%) !default;
 $green-100: tint-color($green, 80%) !default;
 $green-200: tint-color($green, 60%) !default;
 $green-300: tint-color($green, 40%) !default;
@@ -164,6 +161,7 @@ $green-700: shade-color($green, 40%) !default;
 $green-800: shade-color($green, 60%) !default;
 $green-900: shade-color($green, 80%) !default;
 
+$teal-50: tint-color($teal, 90%) !default;
 $teal-100: tint-color($teal, 80%) !default;
 $teal-200: tint-color($teal, 60%) !default;
 $teal-300: tint-color($teal, 40%) !default;
@@ -174,6 +172,7 @@ $teal-700: shade-color($teal, 40%) !default;
 $teal-800: shade-color($teal, 60%) !default;
 $teal-900: shade-color($teal, 80%) !default;
 
+$cyan-50: tint-color($cyan, 90%) !default;
 $cyan-100: tint-color($cyan, 80%) !default;
 $cyan-200: tint-color($cyan, 60%) !default;
 $cyan-300: tint-color($cyan, 40%) !default;
@@ -185,6 +184,7 @@ $cyan-800: shade-color($cyan, 60%) !default;
 $cyan-900: shade-color($cyan, 80%) !default;
 
 $blues: (
+  "blue-50": $blue-50,
   "blue-100": $blue-100,
   "blue-200": $blue-200,
   "blue-300": $blue-300,
@@ -197,6 +197,7 @@ $blues: (
 ) !default;
 
 $indigos: (
+  "indigo-50": $indigo-50,
   "indigo-100": $indigo-100,
   "indigo-200": $indigo-200,
   "indigo-300": $indigo-300,
@@ -209,6 +210,7 @@ $indigos: (
 ) !default;
 
 $purples: (
+  "purple-50": $purple-50,
   "purple-100": $purple-100,
   "purple-200": $purple-200,
   "purple-300": $purple-300,
@@ -221,6 +223,7 @@ $purples: (
 ) !default;
 
 $pinks: (
+  "pink-50": $pink-50,
   "pink-100": $pink-100,
   "pink-200": $pink-200,
   "pink-300": $pink-300,
@@ -233,6 +236,7 @@ $pinks: (
 ) !default;
 
 $reds: (
+  "red-50": $red-50,
   "red-100": $red-100,
   "red-200": $red-200,
   "red-300": $red-300,
@@ -245,6 +249,7 @@ $reds: (
 ) !default;
 
 $oranges: (
+  "orange-50": $orange-50,
   "orange-100": $orange-100,
   "orange-200": $orange-200,
   "orange-300": $orange-300,
@@ -257,6 +262,7 @@ $oranges: (
 ) !default;
 
 $yellows: (
+  "yellow-50": $yellow-50,
   "yellow-100": $yellow-100,
   "yellow-200": $yellow-200,
   "yellow-300": $yellow-300,
@@ -269,6 +275,7 @@ $yellows: (
 ) !default;
 
 $greens: (
+  "green-50": $green-50,
   "green-100": $green-100,
   "green-200": $green-200,
   "green-300": $green-300,
@@ -281,6 +288,7 @@ $greens: (
 ) !default;
 
 $teals: (
+  "teal-50": $teal-50,
   "teal-100": $teal-100,
   "teal-200": $teal-200,
   "teal-300": $teal-300,
@@ -293,6 +301,7 @@ $teals: (
 ) !default;
 
 $cyans: (
+  "cyan-50": $cyan-50,
   "cyan-100": $cyan-100,
   "cyan-200": $cyan-200,
   "cyan-300": $cyan-300,
@@ -308,24 +317,24 @@ $cyans: (
 // custom
 // theme <- colors mapping.
 $theme-colors-mapping: (
-  "primary": "red",
-  "secondary": "indigo",
+  "primary": "pink",
+  "secondary": "purple",
   "success": "green",
   "info": "blue",
   "warning": "yellow",
-  "danger": "orange",
+  "danger": "red",
   "light": "gray-100",
   "dark": "gray-900"
 ) !default;
 // end custom
 
 // scss-docs-start theme-color-variables
-$primary: $red !default;
-$secondary: $indigo !default;
+$primary: $pink !default;
+$secondary: $purple !default;
 $success: $green !default;
 $info: $blue !default;
 $warning: $yellow !default;
-$danger: $orange !default;
+$danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-900 !default;
 // scss-docs-end theme-color-variables
@@ -384,26 +393,29 @@ $light-border-subtle: var(--#{$prefix}gray-100) !default;
 $dark-border-subtle: var(--#{$prefix}gray-400) !default;
 // scss-docs-end theme-border-subtle-variables
 
-$primary-100: $red-100 !default;
-$primary-200: $red-200 !default;
-$primary-300: $red-300 !default;
-$primary-400: $red-400 !default;
-$primary-500: $red-500 !default;
-$primary-600: $red-600 !default;
-$primary-700: $red-700 !default;
-$primary-800: $red-800 !default;
-$primary-900: $red-900 !default;
+$primary-50: $pink-50 !default;
+$primary-100: $pink-100 !default;
+$primary-200: $pink-200 !default;
+$primary-300: $pink-300 !default;
+$primary-400: $pink-400 !default;
+$primary-500: $pink-500 !default;
+$primary-600: $pink-600 !default;
+$primary-700: $pink-700 !default;
+$primary-800: $pink-800 !default;
+$primary-900: $pink-900 !default;
 
-$secondary-100: $indigo-100 !default;
-$secondary-200: $indigo-200 !default;
-$secondary-300: $indigo-300 !default;
-$secondary-400: $indigo-400 !default;
-$secondary-500: $indigo-500 !default;
-$secondary-600: $indigo-600 !default;
-$secondary-700: $indigo-700 !default;
-$secondary-800: $indigo-800 !default;
-$secondary-900: $indigo-900 !default;
+$secondary-50: $purple-50 !default;
+$secondary-100: $purple-100 !default;
+$secondary-200: $purple-200 !default;
+$secondary-300: $purple-300 !default;
+$secondary-400: $purple-400 !default;
+$secondary-500: $purple-500 !default;
+$secondary-600: $purple-600 !default;
+$secondary-700: $purple-700 !default;
+$secondary-800: $purple-800 !default;
+$secondary-900: $purple-900 !default;
 
+$success-50: $green-50 !default;
 $success-100: $green-100 !default;
 $success-200: $green-200 !default;
 $success-300: $green-300 !default;
@@ -414,6 +426,7 @@ $success-700: $green-700 !default;
 $success-800: $green-800 !default;
 $success-900: $green-900 !default;
 
+$info-50: $blue-50 !default;
 $info-100: $blue-100 !default;
 $info-200: $blue-200 !default;
 $info-300: $blue-300 !default;
@@ -424,6 +437,7 @@ $info-700: $blue-700 !default;
 $info-800: $blue-800 !default;
 $info-900: $blue-900 !default;
 
+$warning-50: $yellow-50 !default;
 $warning-100: $yellow-100 !default;
 $warning-200: $yellow-200 !default;
 $warning-300: $yellow-300 !default;
@@ -434,17 +448,43 @@ $warning-700: $yellow-700 !default;
 $warning-800: $yellow-800 !default;
 $warning-900: $yellow-900 !default;
 
-$danger-100: $orange-100 !default;
-$danger-200: $orange-200 !default;
-$danger-300: $orange-300 !default;
-$danger-400: $orange-400 !default;
-$danger-500: $orange-500 !default;
-$danger-600: $orange-600 !default;
-$danger-700: $orange-700 !default;
-$danger-800: $orange-800 !default;
-$danger-900: $orange-900 !default;
+$danger-50: $red-50 !default;
+$danger-100: $red-100 !default;
+$danger-200: $red-200 !default;
+$danger-300: $red-300 !default;
+$danger-400: $red-400 !default;
+$danger-500: $red-500 !default;
+$danger-600: $red-600 !default;
+$danger-700: $red-700 !default;
+$danger-800: $red-800 !default;
+$danger-900: $red-900 !default;
+
+// custom
+// TODO: check this.
+$bg-surface-gray: $gray-50 !default;
+$bg-surface-primary: $primary-50 !default;
+$bg-surface-secondary: $secondary-50 !default;
+$bg-surface-success: $success-50 !default;
+$bg-surface-info: $info-50 !default;
+$bg-surface-warning: $warning-50 !default;
+$bg-surface-danger: $danger-50 !default;
+
+$bg-surface-colors: (
+  "gray-soft": $bg-surface-gray, // DEPRECATED
+  "primary-soft": $bg-surface-primary, // DEPRECATED
+  "secondary-soft": $bg-surface-secondary, // DEPRECATED
+  "surface-gray": $bg-surface-gray,
+  "surface-primary": $bg-surface-primary,
+  "surface-secondary": $bg-surface-secondary,
+  "surface-success": $bg-surface-success,
+  "surface-info": $bg-surface-info,
+  "surface-warning": $bg-surface-warning,
+  "surface-danger": $bg-surface-danger,
+) !default;
+// end custom
 
 $theme-colors-palletes: (
+  "primary-50": $primary-50,
   "primary-100": $primary-100,
   "primary-200": $primary-200,
   "primary-300": $primary-300,
@@ -454,6 +494,7 @@ $theme-colors-palletes: (
   "primary-700": $primary-700,
   "primary-800": $primary-800,
   "primary-900": $primary-900,
+  "secondary-50": $secondary-50,
   "secondary-100": $secondary-100,
   "secondary-200": $secondary-200,
   "secondary-300": $secondary-300,
@@ -463,6 +504,7 @@ $theme-colors-palletes: (
   "secondary-700": $secondary-700,
   "secondary-800": $secondary-800,
   "secondary-900": $secondary-900,
+  "success-50": $success-50,
   "success-100": $success-100,
   "success-200": $success-200,
   "success-300": $success-300,
@@ -472,6 +514,7 @@ $theme-colors-palletes: (
   "success-700": $success-700,
   "success-800": $success-800,
   "success-900": $success-900,
+  "info-50": $info-50,
   "info-100": $info-100,
   "info-200": $info-200,
   "info-300": $info-300,
@@ -481,6 +524,7 @@ $theme-colors-palletes: (
   "info-700": $info-700,
   "info-800": $info-800,
   "info-900": $info-900,
+  "warning-50": $warning-50,
   "warning-100": $warning-100,
   "warning-200": $warning-200,
   "warning-300": $warning-300,
@@ -490,6 +534,7 @@ $theme-colors-palletes: (
   "warning-700": $warning-700,
   "warning-800": $warning-800,
   "warning-900": $warning-900,
+  "danger-50": $danger-50,
   "danger-100": $danger-100,
   "danger-200": $danger-200,
   "danger-300": $danger-300,

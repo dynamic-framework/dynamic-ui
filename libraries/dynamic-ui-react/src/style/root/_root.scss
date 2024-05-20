@@ -18,7 +18,7 @@
     // end custom
   }
 
-  @each $color, $value in $bg-soft-colors {
+  @each $color, $value in $bg-surface-colors {
     --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
   }
 
@@ -42,7 +42,7 @@
     --#{$prefix}gray-#{$color}: rgb(var(--#{$prefix}gray-#{$color}-rgb));
   }
 
-  @each $color, $value in $bg-soft-colors {
+  @each $color, $value in $bg-surface-colors {
     --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
   }
   // end custom

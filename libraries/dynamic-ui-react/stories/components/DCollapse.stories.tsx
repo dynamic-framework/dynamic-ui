@@ -14,19 +14,19 @@ const config: Meta<typeof DCollapse> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                                  | Type              | Description                                 |
-|-------------------------------------------|-------------------|---------------------------------------------|
-| --${PREFIX_BS}collapse-bg                 | css color unit    | Collapse background                         |
-| --${PREFIX_BS}collapse-border-radius      | css length unit   | Collapse border radius                      |
-| --${PREFIX_BS}collapse-box-shadow         | css box shadow    | Collapse box shadow                         |
-| --${PREFIX_BS}collapse-button-padding-x   | css length unit   | Collapse header button padding horizontal   |
-| --${PREFIX_BS}collapse-button-padding-y   | css length unit   | Collapse header button padding vertical     |
-| --${PREFIX_BS}collapse-button-gap         | css length unit   | Collapse header button gap                  |
-| --${PREFIX_BS}collapse-body-padding-x     | css length unit   | Collapse body padding horizontal            |
-| --${PREFIX_BS}collapse-body-padding-y     | css length unit   | Collapse body padding vertical              |
-| --${PREFIX_BS}collapse-separator-display  | css display       | Collapse separator display                  |
-| --${PREFIX_BS}collapse-separator-height   | css length unit   | Collapse separator size                     |
-| --${PREFIX_BS}collapse-separator-bg       | css color unit    | Collapse separator color                    |
+| Variable                                 | Class               | Type            | Description                               |
+|------------------------------------------|---------------------|-----------------|-------------------------------------------|
+| --${PREFIX_BS}collapse-bg                | .collapse-container | css color unit  | Collapse background                       |
+| --${PREFIX_BS}collapse-border-radius     | .collapse-container | css length unit | Collapse border radius                    |
+| --${PREFIX_BS}collapse-box-shadow        | .collapse-container | css box shadow  | Collapse box shadow                       |
+| --${PREFIX_BS}collapse-button-padding-x  | .collapse-container | css length unit | Collapse header button padding horizontal |
+| --${PREFIX_BS}collapse-button-padding-y  | .collapse-container | css length unit | Collapse header button padding vertical   |
+| --${PREFIX_BS}collapse-button-gap        | .collapse-container | css length unit | Collapse header button gap                |
+| --${PREFIX_BS}collapse-body-padding-x    | .collapse-container | css length unit | Collapse body padding horizontal          |
+| --${PREFIX_BS}collapse-body-padding-y    | .collapse-container | css length unit | Collapse body padding vertical            |
+| --${PREFIX_BS}collapse-separator-display | .collapse-container | css display     | Collapse separator display                |
+| --${PREFIX_BS}collapse-separator-height  | .collapse-container | css length unit | Collapse separator size                   |
+| --${PREFIX_BS}collapse-separator-bg      | .collapse-container | css color unit  | Collapse separator color                  |
         `,
       },
     },

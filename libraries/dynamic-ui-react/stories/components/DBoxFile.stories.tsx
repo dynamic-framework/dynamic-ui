@@ -21,20 +21,20 @@ To understand in more detail the aspects covered by this component, review the f
 + [React Dropzone](https://react-dropzone.js.org/)
 
 ## CSS Variables
-| Variable                                  | Type            | Description               |
-|-------------------------------------------|-----------------|---------------------------|
-| --${PREFIX_BS}box-file-gap                | css length unit | Space between elements    |
-| --${PREFIX_BS}box-file-bg                 | css color unit  | Background                |
-| --${PREFIX_BS}box-file-border             | css border      | Border                    |
-| --${PREFIX_BS}box-file-border-radius      | css length unit | Border radius             |
-| --${PREFIX_BS}box-file-padding            | css length unit | Padding                   |
-| --${PREFIX_BS}box-file-content-max-width  | css length unit | Max width of the content  |
-| --${PREFIX_BS}box-file-icon-size          | css length unit | Icon size                 |
-| --${PREFIX_BS}box-file-icon-color         | css color unit  | Icon color                |
-| --${PREFIX_BS}box-file-hover-border       | css border      | Hover Border              |
-| --${PREFIX_BS}box-file-hover-bg           | css color unit  | Hover background          |
-| --${PREFIX_BS}box-file-selected-border    | css border      | Selected border           |
-| --${PREFIX_BS}box-file-selected-bg        | css color unit  | Selected background       |
+| Variable                                 | Class       | Type            | Description              |
+|------------------------------------------|-------------|-----------------|--------------------------|
+| --${PREFIX_BS}box-file-gap               | .d-box-file | css length unit | Space between elements   |
+| --${PREFIX_BS}box-file-bg                | .d-box-file | css color unit  | Background               |
+| --${PREFIX_BS}box-file-border            | .d-box-file | css border      | Border                   |
+| --${PREFIX_BS}box-file-border-radius     | .d-box-file | css length unit | Border radius            |
+| --${PREFIX_BS}box-file-padding           | .d-box-file | css length unit | Padding                  |
+| --${PREFIX_BS}box-file-content-max-width | .d-box-file | css length unit | Max width of the content |
+| --${PREFIX_BS}box-file-icon-size         | .d-box-file | css length unit | Icon size                |
+| --${PREFIX_BS}box-file-icon-color        | .d-box-file | css color unit  | Icon color               |
+| --${PREFIX_BS}box-file-hover-border      | .d-box-file | css border      | Hover Border             |
+| --${PREFIX_BS}box-file-hover-bg          | .d-box-file | css color unit  | Hover background         |
+| --${PREFIX_BS}box-file-selected-border   | .d-box-file | css border      | Selected border          |
+| --${PREFIX_BS}box-file-selected-bg       | .d-box-file | css color unit  | Selected background      |
         `,
       },
     },

@@ -16,17 +16,12 @@ To understand in more detail the aspects covered by this component, review the f
 + [Floating UI](https://floating-ui.com/docs/react)
 
 ## CSS Variables
-| Variable                                   | Type             | Description                   |
-|--------------------------------------------|------------------|-------------------------------|
-| --${PREFIX_BS}tooltip-bg                   | css color unit   | Background and arrow color    |
-| --${PREFIX_BS}tooltip-border-radius        | css length unit  | Border radius                 |
-| --${PREFIX_BS}tooltip-color                | css color unit   | Text color                    |
-| --${PREFIX_BS}tooltip-font-size            | css length unit  | Text font size                |
-| --${PREFIX_BS}tooltip-sm-font-size         | css length unit  | Small tooltip text font size  |
-| --${PREFIX_BS}tooltip-lg-font-size         | css length unit  | Small tooltip text font size  |
-| --${PREFIX_BS}tooltip-padding-x            | css length unit  | Padding                       |
-| --${PREFIX_BS}tooltip-padding-y            | css length unit  | Padding                       |
-| --${PREFIX_BS}tooltip-max-width            | css length unit  | Max width                     |
+The Bootstrap documentation provides details on the default [Tooltip CSS Variables](https://getbootstrap.com/docs/5.3/components/tooltips/#css)
+
+| Variable                           | Class    | Type            | Description                  |
+|------------------------------------|----------|-----------------|------------------------------|
+| --${PREFIX_BS}tooltip-sm-font-size | .tooltip | css length unit | Small tooltip text font size |
+| --${PREFIX_BS}tooltip-lg-font-size | .tooltip | css length unit | Small tooltip text font size |
         `,
       },
     },

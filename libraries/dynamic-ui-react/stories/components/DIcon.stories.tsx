@@ -28,13 +28,13 @@ To use the DIcon you need to add the icon suite CSS to your site, we recommend a
 
 ## CSS Variables
 
-| Variable                            | Type            | Description                           |
-|-------------------------------------|-----------------|---------------------------------------|
-| --${PREFIX_BS}icon-color            | css color unit  | The icon color                        |
-| --${PREFIX_BS}icon-bg-color         | css color unit  | The icon background color             |
-| --${PREFIX_BS}icon-size             | css length unit | The size of icon                      |
-| --${PREFIX_BS}icon-padding          | css length unit | The padding to make icon circle       |
-| --${PREFIX_BS}icon-loading-duration | number          | The duration of the loading animation |
+| Variable                            | Class   | Type            | Description                           |
+|-------------------------------------|---------|-----------------|---------------------------------------|
+| --${PREFIX_BS}icon-color            | .d-icon | css color unit  | The icon color                        |
+| --${PREFIX_BS}icon-bg-color         | .d-icon | css color unit  | The icon background color             |
+| --${PREFIX_BS}icon-size             | .d-icon | css length unit | The size of icon                      |
+| --${PREFIX_BS}icon-padding          | .d-icon | css length unit | The padding to make icon circle       |
+| --${PREFIX_BS}icon-loading-duration | .d-icon | number          | The duration of the loading animation |
 
 > The colors can ref another css var like a var(--${PREFIX_BS}primary)
 

@@ -17,13 +17,13 @@ To understand in more detail the aspects covered by this component, review the f
 + [Splide React Integration](https://splidejs.com/integration/react-splide/)
 
 ## CSS Variables
-| Variable                                         | Type            | Description                   |
-|--------------------------------------------------|-----------------|-------------------------------|
-| --${PREFIX_BS}carousel-arrow-space               | css length unit | Arrow separation              |
-| --${PREFIX_BS}carousel-pagination-bottom         | css length unit | Pagination bottom separation  |
-| --${PREFIX_BS}carousel-pagination-page-bg        | css color       | Background of dot page        |
-| --${PREFIX_BS}carousel-pagination-active-page-bg | css color       | Background of active dot page |
-| --${PREFIX_BS}carousel-focus-outline-color       | css color       | Color of focus ring           |
+| Variable                                         | Class       | Type            | Description                   |
+|--------------------------------------------------|-------------|-----------------|-------------------------------|
+| --${PREFIX_BS}carousel-arrow-space               | .d-carousel | css length unit | Arrow separation              |
+| --${PREFIX_BS}carousel-pagination-bottom         | .d-carousel | css length unit | Pagination bottom separation  |
+| --${PREFIX_BS}carousel-pagination-page-bg        | .d-carousel | css color       | Background of dot page        |
+| --${PREFIX_BS}carousel-pagination-active-page-bg | .d-carousel | css color       | Background of active dot page |
+| --${PREFIX_BS}carousel-focus-outline-color       | .d-carousel | css color       | Color of focus ring           |
         `,
       },
     },
