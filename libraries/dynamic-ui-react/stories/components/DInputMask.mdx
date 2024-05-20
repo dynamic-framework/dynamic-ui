@@ -1,0 +1,107 @@
+import {
+  Meta,
+  Stories,
+  Markdown,
+  Controls,
+  Canvas,
+  Source
+} from '@storybook/blocks';
+
+import * as DInputMask from './DInputMask.stories';
+import { ICONS } from '../config/constants';
+import { PREFIX_BS } from '../../src/components/config';
+import { DAlert } from '../../src';
+import { ExampleMask } from './DInputMaskExamples';
+
+<Meta of={DInputMask} />
+
+# Input Mask
+
+The **`DInputMask`** component is designed for creating masked input fields, leveraging
+the capabilities provided by **@react-input/mask**.
+This component is composed with `DInput` to offer a masked input functionality.
+
+## Usage
+To utilize this component effectively, it's important to understand how it interacts
+with state management, particularly when using `useState`.
+
+### Initial State
+When using `useState` to manage the state of the DInputMask component, it's crucial to
+set the initial state to match the mask pattern. This ensures that the component
+behaves as expected throughout the input process.
+
+#### Important Note from `@react-input/mask` documentation
+
+<DAlert soft type="warning" className='py-1 mb-8'>
+  The InputMask component does not change the value passed in the value or defaultValue property
+  of the input element, so set the initialized value to something that can match the masked value
+  at any stage of input. If you make a mistake, you will see a warning about it in the console.
+</DAlert>
+
+This means that setting the initial state correctly, in alignment with the mask
+pattern, is crucial for seamless functionality. Any discrepancies may result in warnings being displayed in the console.
+
+For further details on the capabilities and usage of @react-input/mask, refer to the [documentation](https://www.npmjs.com/package/@react-input/mask).
+
+<Source
+  code={
+    `
+import { useState } from 'react';
+import { DInputMask } from '@dynamic-framework/ui-react';
+
+const BASE_MASK = '_ ____ ____';
+
+export default function App() {
+  const [maskValue, setMaskValue] = useState<string>(BASE_MASK);
+
+  return (
+    <DInputMask
+      mask={BASE_MASK}
+      showMask
+      value={maskValue}
+      onChange={(value) => setMaskValue(value)}
+      replacement={{ _: /\d/ }}
+    />
+  );
+}
+    `
+  }
+  language="tsx"
+  dark
+/>
+
+<Canvas>
+  <div className="d-flex justify-content-center">
+    <ExampleMask />
+  </div>
+</Canvas>
+
+
+## CSS Variables
+<Markdown>
+  {`
+| Variable                                         | Type            | Description                   |
+|--------------------------------------------------|-----------------|-------------------------------|
+| --${PREFIX_BS}label-color                        | css color unit  | Label color                   |
+| --${PREFIX_BS}label-font-weight                  | css font weight | Label font weight             |
+| --${PREFIX_BS}label-font-size                    | css length unit | Label font size               |
+| --${PREFIX_BS}label-padding-x                    | css length unit | Label horizontal padding      |
+| --${PREFIX_BS}label-padding-y                    | css length unit | Label vertical padding        |
+| --${PREFIX_BS}input-border-color                 | css color unit  | Input border color            |
+| --${PREFIX_BS}input-border-width                 | css length unit | Input border width            |
+| --${PREFIX_BS}input-border-radius                | css length unit | Input border radius           |
+| --${PREFIX_BS}input-focus-border-color           | css color unit  | Input focus border color      |
+| --${PREFIX_BS}input-focus-box-shadow             | css shadow      | Input focus box shadow        |
+| --${PREFIX_BS}input-disabled-bg                  | css color unit  | Input disable background      |
+| --${PREFIX_BS}input-disabled-color               | css color unit  | Input disable color           |
+| --${PREFIX_BS}input-disabled-border-color        | css color unit  | Input disable border color    |
+| --${PREFIX_BS}form-text-padding                  | css length unit | Hint padding                  |
+| --${PREFIX_BS}form-text-gap                      | css length unit | Space between hint elements   |
+| --${PREFIX_BS}form-text-color                    | css color unit  | Hint color                    |
+| --${PREFIX_BS}form-control-text-align            | css text align  | Input text align              |
+  `}
+</Markdown>
+
+<Canvas of={DInputMask.Default} />
+<Controls of={DInputMask.Default} />
+<Stories />
