@@ -1,4 +1,5 @@
 import {
+  ReactElement,
   useCallback,
 } from 'react';
 
@@ -10,7 +11,11 @@ import {
   toast as reactToast,
 } from 'react-toastify';
 
-import type { ToastPosition } from 'react-toastify';
+import type {
+  ToastContentProps,
+  ToastOptions,
+  ToastPosition,
+} from 'react-toastify';
 
 import DAlert from '../DAlert/DAlert';
 
@@ -36,7 +41,7 @@ const TOAST_TRANSITIONS = {
 };
 
 export default function useDToast() {
-  const toast = useCallback((message: string, {
+  const toastAlert = useCallback((message: string, {
     icon,
     iconClose,
     type = 'info',
@@ -61,7 +66,15 @@ export default function useDToast() {
     });
   }, []);
 
+  const toastChildren = useCallback((
+    children: (toastProps: ToastContentProps) => ReactElement,
+    data: ToastOptions,
+  ) => {
+    reactToast(children, data);
+  }, []);
+
   return {
-    toast,
+    toastAlert,
+    toastChildren,
   };
 }

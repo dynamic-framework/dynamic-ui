@@ -1,3 +1,4 @@
+import { ToastContentProps } from 'react-toastify';
 import useDToast from '../../src/components/DToastContainer/useDToast';
 import DButton from '../../src/components/DButton';
 import DToastContainer from '../../src/components/DToastContainer';
@@ -5,31 +6,33 @@ import { DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 export function UseToastExample() {
-  const { toast } = useDToast();
+  const { toastAlert } = useDToast();
   return (
     <>
       <DButton
         text="Show Toast"
         onClick={() => (
-          toast(
+          toastAlert(
             'Example',
             {
               type: 'info',
               showClose: true,
               autoClose: 500,
+              containerId: 'example1',
             },
           )
         )}
       />
       <DToastContainer
         position="top-right"
+        containerId="example1"
       />
     </>
   );
 }
 
 export function UseToastMaterialExample() {
-  const { toast } = useDToast();
+  const { toastAlert } = useDToast();
   return (
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
@@ -37,7 +40,7 @@ export function UseToastMaterialExample() {
       <DButton
         text="Show Toast"
         onClick={() => (
-          toast(
+          toastAlert(
             'Example',
             {
               type: 'info',
@@ -57,15 +60,56 @@ export function UseToastMaterialExample() {
   );
 }
 
+export function MyComponent({ closeToast }: ToastContentProps) {
+  return (
+    <div className="bg-surface-secondary rounded-2 p-4 text-center">
+      <p className="fw-bold mt-0">Toast!</p>
+      <DButton
+        size="sm"
+        variant="outline"
+        theme="secondary"
+        onClick={closeToast}
+        text="Close toast"
+      />
+    </div>
+  );
+}
+
+export function UseToastCustomContent() {
+  const { toastChildren } = useDToast();
+  return (
+    <>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toastChildren(
+            MyComponent,
+            {
+              autoClose: 4000,
+            },
+          )
+        )}
+      />
+      <DToastContainer
+        position="top-right"
+        style={{
+          '--toastify-toast-width': '200px',
+          color: 'var(--bs-gray-700)',
+        }}
+      />
+    </>
+  );
+}
+
 export function UseToastTransitionExample() {
-  const { toast } = useDToast();
+  const { toastAlert } = useDToast();
 
   return (
     <div className="d-flex gap-4">
       <DButton
         text="Show Toast Slide"
         onClick={() => (
-          toast(
+          toastAlert(
             'Example',
             {
               type: 'info',
@@ -80,7 +124,7 @@ export function UseToastTransitionExample() {
       <DButton
         text="Show Toast Flip"
         onClick={() => (
-          toast(
+          toastAlert(
             'Example',
             {
               type: 'info',
@@ -95,7 +139,7 @@ export function UseToastTransitionExample() {
       <DButton
         text="Show Toast Bounce"
         onClick={() => (
-          toast(
+          toastAlert(
             'Example',
             {
               type: 'info',
@@ -110,7 +154,7 @@ export function UseToastTransitionExample() {
       <DButton
         text="Show Toast Zoom"
         onClick={() => (
-          toast(
+          toastAlert(
             'Example',
             {
               type: 'info',
