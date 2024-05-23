@@ -16,8 +16,8 @@
     $color: color-contrast-var($value);
 
     &.tooltip-#{$theme} {
-      --#{$prefix}tooltip-color: var(--#{$prefix}tooltip-component-color, #{$color});
-      --#{$prefix}tooltip-bg: var(--#{$prefix}tooltip-component-bg, var(--#{$prefix}#{$theme}));
+      --#{$prefix}tooltip-color: #{$color};
+      --#{$prefix}tooltip-bg: var(--#{$prefix}#{$theme});
     }
   }
 }
