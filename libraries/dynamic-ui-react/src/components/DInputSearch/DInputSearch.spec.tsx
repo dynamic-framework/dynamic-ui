@@ -38,6 +38,7 @@ it('should render my component', () => {
           aria-label="search"
           class="input-group-text"
           id="searchIdEnd"
+          tabindex="-1"
           type="button"
         >
           <i
