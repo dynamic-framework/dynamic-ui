@@ -83,7 +83,7 @@ export default function DTooltip(
 
   const hover = useHover(context, { move: false });
   const focus = useFocus(context);
-  const dismiss = useDismiss(context);
+  const dismiss = useDismiss(context, { ancestorScroll: true });
   const click = useClick(context);
   const role = useRole(context, { role: 'tooltip' });
 
