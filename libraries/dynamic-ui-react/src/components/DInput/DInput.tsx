@@ -221,7 +221,7 @@ function DInput(
             onClick={handleOnIconStartClick}
             disabled={disabled || loading || iconStartDisabled}
             aria-label={iconStartAriaLabel}
-            tabIndex={iconStartTabIndex}
+            tabIndex={onIconStartClick ? iconStartTabIndex : -1}
           >
             <DIcon
               icon={iconStart}
@@ -254,7 +254,7 @@ function DInput(
             onClick={handleOnIconEndClick}
             disabled={disabled || loading || iconEndDisabled}
             aria-label={iconEndAriaLabel}
-            tabIndex={iconEndTabIndex}
+            tabIndex={onIconEndClick ? iconEndTabIndex : -1}
           >
             <DIcon
               icon={iconEnd}
