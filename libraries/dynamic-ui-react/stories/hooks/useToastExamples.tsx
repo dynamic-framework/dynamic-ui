@@ -6,13 +6,13 @@ import { DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 export function UseToastExample() {
-  const { toastAlert } = useDToast();
+  const { toast } = useDToast();
   return (
     <>
       <DButton
         text="Show Toast"
         onClick={() => (
-          toastAlert(
+          toast(
             'Example',
             {
               type: 'info',
@@ -32,7 +32,7 @@ export function UseToastExample() {
 }
 
 export function UseToastMaterialExample() {
-  const { toastAlert } = useDToast();
+  const { toast } = useDToast();
   return (
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
@@ -40,7 +40,7 @@ export function UseToastMaterialExample() {
       <DButton
         text="Show Toast"
         onClick={() => (
-          toastAlert(
+          toast(
             'Example',
             {
               type: 'info',
@@ -76,13 +76,13 @@ export function MyComponent({ closeToast }: ToastContentProps) {
 }
 
 export function UseToastCustomContent() {
-  const { toastChildren } = useDToast();
+  const { toast } = useDToast();
   return (
     <>
       <DButton
         text="Show Toast"
         onClick={() => (
-          toastChildren(
+          toast(
             MyComponent,
             {
               autoClose: 4000,
@@ -102,14 +102,14 @@ export function UseToastCustomContent() {
 }
 
 export function UseToastTransitionExample() {
-  const { toastAlert } = useDToast();
+  const { toast } = useDToast();
 
   return (
     <div className="d-flex gap-4">
       <DButton
         text="Show Toast Slide"
         onClick={() => (
-          toastAlert(
+          toast(
             'Example',
             {
               type: 'info',
@@ -124,7 +124,7 @@ export function UseToastTransitionExample() {
       <DButton
         text="Show Toast Flip"
         onClick={() => (
-          toastAlert(
+          toast(
             'Example',
             {
               type: 'info',
@@ -139,7 +139,7 @@ export function UseToastTransitionExample() {
       <DButton
         text="Show Toast Bounce"
         onClick={() => (
-          toastAlert(
+          toast(
             'Example',
             {
               type: 'info',
@@ -154,7 +154,7 @@ export function UseToastTransitionExample() {
       <DButton
         text="Show Toast Zoom"
         onClick={() => (
-          toastAlert(
+          toast(
             'Example',
             {
               type: 'info',

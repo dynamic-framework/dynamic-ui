@@ -41,40 +41,39 @@ const TOAST_TRANSITIONS = {
 };
 
 export default function useDToast() {
-  const toastAlert = useCallback((message: string, {
-    icon,
-    iconClose,
-    type = 'info',
-    showClose = true,
-    transition,
-    ...rest
-  }: ToastConfig) => {
-    reactToast(({ closeToast }) => (
-      <DAlert
-        onClose={closeToast}
-        id="alertID"
-        type={type}
-        icon={icon}
-        iconClose={iconClose}
-        showClose={showClose}
-      >
-        {message}
-      </DAlert>
-    ), {
-      transition: transition && TOAST_TRANSITIONS[transition],
-      ...rest,
-    });
-  }, []);
-
-  const toastChildren = useCallback((
-    children: (toastProps: ToastContentProps) => ReactElement,
-    data: ToastOptions,
+  const toast = useCallback(<T extends string | ((toastProps: ToastContentProps) => ReactElement)>(
+    data: T,
+    config: T extends string ? ToastConfig : ToastOptions,
   ) => {
-    reactToast(children, data);
+    if (typeof data === 'string') {
+      const {
+        icon,
+        iconClose,
+        transition,
+        type = 'info',
+        showClose = true,
+        ...rest
+      } = config as ToastConfig;
+      reactToast(({ closeToast }) => (
+        <DAlert
+          onClose={closeToast}
+          id="alertID"
+          type={type}
+          icon={icon}
+          iconClose={iconClose}
+          showClose={showClose}
+        >
+          {data}
+        </DAlert>
+      ), {
+        transition: transition && TOAST_TRANSITIONS[transition],
+        ...rest,
+      });
+    } else {
+      reactToast(data, config as ToastOptions);
+    }
   }, []);
-
   return {
-    toastAlert,
-    toastChildren,
+    toast,
   };
 }
