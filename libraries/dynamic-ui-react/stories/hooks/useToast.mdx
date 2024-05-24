@@ -45,7 +45,7 @@ import App from './App';
 import '@dynamic-framework/ui-react/dist/css/dynamic-ui.css';
 import './styles/base.scss';
 
-const root = ReactDOM.createRoot(document.getElementById('transfer') as Element);
+const root = ReactDOM.createRoot(document.getElementById('widget') as Element);
 root.render(
   <React.StrictMode>
     <DContextProvider>
@@ -83,13 +83,13 @@ import {
 } from '@dynamic-framework/ui-react';
 
 export function UseToastExample() {
-  const { toastAlert } = useDToast();
+  const { toast } = useDToast();
   return (
     <>
       <DButton
         text="Show Toast"
         onClick={() => (
-          toastAlert(
+          toast(
             'Example',
             {
               type: 'info',
@@ -142,13 +142,13 @@ import {
 import MyComponent from './MyComponent';
 
 export function UseCustomToastExample() {
-  const { toastChildren } = useDToast();
+  const { toast } = useDToast();
   return (
     <>
       <DButton
         text="Show Toast"
         onClick={() => (
-          toastChildren(
+          toast(
             MyComponent,
             {
               type: 'info',
@@ -162,7 +162,6 @@ export function UseCustomToastExample() {
         position="top-right"
         style={{
           '--toastify-toast-width': '200px',
-          color: 'var(--bs-gray-700)',
         }}
       />
     </>
