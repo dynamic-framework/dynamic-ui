@@ -1,5 +1,4 @@
 import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
-import { DAlert } from '../src';
 
 <Meta title="Design System/Colors"/>
 
@@ -95,6 +94,7 @@ like: <span className="bg-primary-700 text-white">bg-primary-700 text-white</spa
     title="--bs-primary"
     subtitle="--bs-primary-rgb"
     colors={{
+      25: 'var(--bs-primary-25)',
       50: 'var(--bs-primary-50)',
       100: 'var(--bs-primary-100)',
       200: 'var(--bs-primary-200)',
@@ -111,6 +111,7 @@ like: <span className="bg-primary-700 text-white">bg-primary-700 text-white</spa
     title="--bs-secondary"
     subtitle="--bs-secondary-rgb"
     colors={{
+      25: 'var(--bs-secondary-25)',
       50: 'var(--bs-secondary-50)',
       100: 'var(--bs-secondary-100)',
       200: 'var(--bs-secondary-200)',
@@ -127,6 +128,7 @@ like: <span className="bg-primary-700 text-white">bg-primary-700 text-white</spa
     title="--bs-success"
     subtitle="--bs-success-rgb"
     colors={{
+      25: 'var(--bs-success-25)',
       50: 'var(--bs-success-50)',
       100: 'var(--bs-success-100)',
       200: 'var(--bs-success-200)',
@@ -143,6 +145,7 @@ like: <span className="bg-primary-700 text-white">bg-primary-700 text-white</spa
     title="--bs-danger"
     subtitle="--bs-danger-rgb"
     colors={{
+      25: 'var(--bs-danger-25)',
       50: 'var(--bs-danger-50)',
       100: 'var(--bs-danger-100)',
       200: 'var(--bs-danger-200)',
@@ -159,6 +162,7 @@ like: <span className="bg-primary-700 text-white">bg-primary-700 text-white</spa
     title="--bs-warning"
     subtitle="--bs-warning-rgb"
     colors={{
+      25: 'var(--bs-warning-25)',
       50: 'var(--bs-warning-50)',
       100: 'var(--bs-warning-100)',
       200: 'var(--bs-warning-200)',
@@ -175,6 +179,7 @@ like: <span className="bg-primary-700 text-white">bg-primary-700 text-white</spa
     title="--bs-info"
     subtitle="--bs-info-rgb"
     colors={{
+      25: 'var(--bs-info-25)',
       50: 'var(--bs-info-50)',
       100: 'var(--bs-info-100)',
       200: 'var(--bs-info-200)',
@@ -191,6 +196,7 @@ like: <span className="bg-primary-700 text-white">bg-primary-700 text-white</spa
     title="--bs-gray"
     subtitle="--bs-gray-rgb"
     colors={{
+      25: 'var(--bs-gray-25)',
       50: 'var(--bs-gray-50)',
       100: 'var(--bs-gray-100)',
       200: 'var(--bs-gray-200)',
@@ -257,10 +263,6 @@ like: <span className="bg-surface-primary">bg-surface-primary</span>, <span clas
 
 ## Soft colors
 
-<DAlert soft type="warning" className='py-1 mb-8'>
-  These colors are deprecated in favor of surface colors.
-</DAlert>
-
 Colors can be used with bootstrap background [utility classes](https://getbootstrap.com/docs/5.2/utilities/colors/),
 like: <span className="bg-primary-soft">bg-primary-soft</span>, <span className="bg-secondary-soft">bg-secondary-soft</span>
 
@@ -281,6 +283,30 @@ like: <span className="bg-primary-soft">bg-primary-soft</span>, <span className=
     title="--bs-secondary-soft"
     colors={{
       '--bs-secondary-soft': 'var(--bs-secondary-soft)',
+    }}
+  />
+  <ColorItem
+    title="--bs-success-soft"
+    colors={{
+      '--bs-success-soft': 'var(--bs-success-soft)',
+    }}
+  />
+  <ColorItem
+    title="--bs-info-soft"
+    colors={{
+      '--bs-info-soft': 'var(--bs-info-soft)',
+    }}
+  />
+  <ColorItem
+    title="--bs-warning-soft"
+    colors={{
+      '--bs-warning-soft': 'var(--bs-warning-soft)',
+    }}
+  />
+  <ColorItem
+    title="--bs-danger-soft"
+    colors={{
+      '--bs-danger-soft': 'var(--bs-danger-soft)',
     }}
   />
 </ColorPalette>
