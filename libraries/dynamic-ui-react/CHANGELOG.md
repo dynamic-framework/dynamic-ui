@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.22.0...@dynamic-framework/ui-react@1.23.0) (2024-05-24)
+
+
+### Style Features
+
+* **style:** change button disabled opacity from 0.5 to 0.65 ([#660](https://github.com/dynamic-framework/dynamic-ui/issues/660)) ([07a612a](https://github.com/dynamic-framework/dynamic-ui/commit/07a612a89a0879f492016893cc1f3ed28d071c5d))
+
+
+### Style Fixes
+
+* **style:** remove component var from DTooltip style ([6bf5407](https://github.com/dynamic-framework/dynamic-ui/commit/6bf540721cfef4aa84e056d697eb67b632641e0b))
+
+
+### Bug Fixes
+
+* add node_modules/ to scss imports from node_modules and adjust scss build process ([050b187](https://github.com/dynamic-framework/dynamic-ui/commit/050b18704119e80f6e42936d4d9b9463c6f96461))
+* **DInput:** set focus to input icons if icon method ([8e6d702](https://github.com/dynamic-framework/dynamic-ui/commit/8e6d702a42f0ca17b4c50943848129feebd46236))
+* **DTooltip:** avoid tooltip content keep open when scroll ([5de77ba](https://github.com/dynamic-framework/dynamic-ui/commit/5de77baf25d983095131b4307fa13b0ac01fa28e))
+
+
+### Storybook
+
+* **DStepper:** set component usage and description ([09657d0](https://github.com/dynamic-framework/dynamic-ui/commit/09657d0210fcf077382cf2e5928457accb5ee4f9))
+
+
+
 ## [1.22.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.21.0...@dynamic-framework/ui-react@1.22.0) (2024-05-20)
 
 
