@@ -97,7 +97,7 @@ export const Top: Story = {
     withHover: true,
     withClick: false,
     withFocus: false,
-    open: false,
+    open: true,
     theme: 'secondary',
   },
 };

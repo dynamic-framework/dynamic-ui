@@ -217,7 +217,7 @@
         $hover-text-color: color-contrast-var(map-get($all-colors, gray-200)),
         $focus-text-color: color-contrast-var(map-get($all-colors, gray-200)),
         $active-text-color: color-contrast-var(map-get($all-colors, gray-300)),
-        $disabled-opacity: .5
+        $disabled-opacity: .65
       );
       @include df-button-outline-variant-variables(
         "light",
@@ -249,7 +249,7 @@
         $hover-text-color: color-contrast-var(map-get($all-colors, gray-800)),
         $focus-text-color: color-contrast-var(map-get($all-colors, gray-800)),
         $active-text-color: color-contrast-var(map-get($all-colors, gray-700)),
-        $disabled-opacity: .5
+        $disabled-opacity: .65
       );
       @include df-button-outline-variant-variables(
         "dark",

@@ -9,7 +9,7 @@
   $hover-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-600)),
   $focus-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-600)),
   $active-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-700)),
-  $disabled-opacity: .5
+  $disabled-opacity: .65
 ) {
   --#{$prefix}btn-#{$color-name}-color: #{$default-text-color};
   --#{$prefix}btn-#{$color-name}-bg: #{$default-color};
@@ -44,7 +44,7 @@
   $active-text-color: var(--#{$prefix}#{$color-name}-700),
   $active-bg-color: var(--#{$prefix}#{$color-name}-100),
   $active-border-color: var(--#{$prefix}#{$color-name}-700),
-  $disabled-opacity: .5
+  $disabled-opacity: .65
 ) {
   --#{$prefix}btn-outline-#{$color-name}-color: #{$default-color};
   --#{$prefix}btn-outline-#{$color-name}-bg: transparent;
@@ -78,7 +78,7 @@
   $focus-text-color: var(--#{$prefix}#{$color-name}-500),
   $active-text-color: var(--#{$prefix}#{$color-name}-700),
   $active-bg-color: var(--#{$prefix}#{$color-name}-100),
-  $disabled-opacity: .5
+  $disabled-opacity: .65
 ) {
   --#{$prefix}btn-link-#{$color-name}-bg: transparent;
   --#{$prefix}btn-link-#{$color-name}-border-color: transparent;

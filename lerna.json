@@ -15,10 +15,10 @@
       "changelogPreset": {
         "name": "conventional-changelog-conventionalcommits",
         "types": [
-          { "type": "feat", "section": "Features" },
           { "type": "feat", "scope": "style", "section": "Style Features" },
-          { "type": "fix", "section": "Bug Fixes" },
+          { "type": "feat", "section": "Features" },
           { "type": "fix", "scope": "style", "section": "Style Fixes" },
+          { "type": "fix", "section": "Bug Fixes" },
           { "type": "docs", "section": "Storybook" },
           { "type": "chore", "hidden": true },
           { "type": "style", "hidden": true },
