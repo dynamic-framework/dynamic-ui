@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.21.0
+ * dynamic-framework 1.22.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -3000,10 +3000,10 @@ textarea.form-control-lg {
   max-width: 100%;
   padding: var(--bs-ref-spacer-1) var(--bs-ref-spacer-2);
   margin-top: 0.1rem;
-  font-size: var(--bs-tooltip-component-font-size, var(--bs-body-font-size));
+  font-size: var(--bs-body-font-size);
   color: var(--bs-white);
   background-color: var(--bs-success);
-  border-radius: var(--bs-tooltip-component-border-radius, var(--bs-ref-spacer-1));
+  border-radius: var(--bs-ref-spacer-1);
 }
 
 .was-validated :valid ~ .valid-feedback,
@@ -3070,10 +3070,10 @@ textarea.form-control-lg {
   max-width: 100%;
   padding: var(--bs-ref-spacer-1) var(--bs-ref-spacer-2);
   margin-top: 0.1rem;
-  font-size: var(--bs-tooltip-component-font-size, var(--bs-body-font-size));
+  font-size: var(--bs-body-font-size);
   color: var(--bs-white);
   background-color: var(--bs-danger);
-  border-radius: var(--bs-tooltip-component-border-radius, var(--bs-ref-spacer-1));
+  border-radius: var(--bs-ref-spacer-1);
 }
 
 .was-validated :invalid ~ .invalid-feedback,
@@ -5469,14 +5469,14 @@ textarea.form-control-lg {
 }
 .tooltip {
   --bs-tooltip-zindex: 1080;
-  --bs-tooltip-max-width: var(--bs-tooltip-component-max-width, 300px);
+  --bs-tooltip-max-width: 300px;
   --bs-tooltip-padding-x: var(--bs-ref-spacer-2);
   --bs-tooltip-padding-y: var(--bs-ref-spacer-1);
   --bs-tooltip-margin: ;
-  --bs-tooltip-font-size: var(--bs-tooltip-component-font-size, var(--bs-body-font-size));
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-body-bg));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-emphasis-color));
-  --bs-tooltip-border-radius: var(--bs-tooltip-component-border-radius, var(--bs-ref-spacer-1));
+  --bs-tooltip-font-size: var(--bs-body-font-size);
+  --bs-tooltip-color: var(--bs-body-bg);
+  --bs-tooltip-bg: var(--bs-emphasis-color);
+  --bs-tooltip-border-radius: var(--bs-ref-spacer-1);
   --bs-tooltip-opacity: 1;
   --bs-tooltip-arrow-width: 0.8rem;
   --bs-tooltip-arrow-height: 0.4rem;
@@ -7864,36 +7864,36 @@ label .d-icon {
   --bs-tooltip-font-size: var(--bs-tooltip-lg-font-size);
 }
 .tooltip.tooltip-primary {
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-white));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-primary));
+  --bs-tooltip-color: var(--bs-white);
+  --bs-tooltip-bg: var(--bs-primary);
 }
 .tooltip.tooltip-secondary {
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-white));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-secondary));
+  --bs-tooltip-color: var(--bs-white);
+  --bs-tooltip-bg: var(--bs-secondary);
 }
 .tooltip.tooltip-success {
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-white));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-success));
+  --bs-tooltip-color: var(--bs-white);
+  --bs-tooltip-bg: var(--bs-success);
 }
 .tooltip.tooltip-info {
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-white));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-info));
+  --bs-tooltip-color: var(--bs-white);
+  --bs-tooltip-bg: var(--bs-info);
 }
 .tooltip.tooltip-warning {
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-gray-700));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-warning));
+  --bs-tooltip-color: var(--bs-gray-700);
+  --bs-tooltip-bg: var(--bs-warning);
 }
 .tooltip.tooltip-danger {
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-white));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-danger));
+  --bs-tooltip-color: var(--bs-white);
+  --bs-tooltip-bg: var(--bs-danger);
 }
 .tooltip.tooltip-light {
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-gray-700));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-light));
+  --bs-tooltip-color: var(--bs-gray-700);
+  --bs-tooltip-bg: var(--bs-light);
 }
 .tooltip.tooltip-dark {
-  --bs-tooltip-color: var(--bs-tooltip-component-color, var(--bs-white));
-  --bs-tooltip-bg: var(--bs-tooltip-component-bg, var(--bs-dark));
+  --bs-tooltip-color: var(--bs-white);
+  --bs-tooltip-bg: var(--bs-dark);
 }
 
 :root {

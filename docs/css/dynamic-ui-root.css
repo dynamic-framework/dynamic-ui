@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.21.0
+ * dynamic-framework 1.22.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -354,7 +354,7 @@
   --bs-btn-primary-disabled-color: var(--bs-white);
   --bs-btn-primary-disabled-bg: var(--bs-primary-500);
   --bs-btn-primary-disabled-border-color: var(--bs-primary-500);
-  --bs-btn-primary-disabled-opacity: 0.5;
+  --bs-btn-primary-disabled-opacity: 0.65;
   --bs-btn-outline-primary-color: var(--bs-primary-500);
   --bs-btn-outline-primary-bg: transparent;
   --bs-btn-outline-primary-border-color: var(--bs-primary-500);
@@ -370,7 +370,7 @@
   --bs-btn-outline-primary-disabled-color: var(--bs-primary-500);
   --bs-btn-outline-primary-disabled-bg: transparent;
   --bs-btn-outline-primary-disabled-border-color: var(--bs-primary-500);
-  --bs-btn-outline-primary-disabled-opacity: 0.5;
+  --bs-btn-outline-primary-disabled-opacity: 0.65;
   --bs-btn-link-primary-bg: transparent;
   --bs-btn-link-primary-border-color: transparent;
   --bs-btn-link-primary-color: var(--bs-primary-500);
@@ -386,7 +386,7 @@
   --bs-btn-link-primary-disabled-bg: transparent;
   --bs-btn-link-primary-disabled-border-color: transparent;
   --bs-btn-link-primary-disabled-color: var(--bs-primary-500);
-  --bs-btn-link-primary-disabled-opacity: 0.5;
+  --bs-btn-link-primary-disabled-opacity: 0.65;
   --bs-btn-secondary-color: var(--bs-white);
   --bs-btn-secondary-bg: var(--bs-secondary-500);
   --bs-btn-secondary-border-color: var(--bs-secondary-500);
@@ -402,7 +402,7 @@
   --bs-btn-secondary-disabled-color: var(--bs-white);
   --bs-btn-secondary-disabled-bg: var(--bs-secondary-500);
   --bs-btn-secondary-disabled-border-color: var(--bs-secondary-500);
-  --bs-btn-secondary-disabled-opacity: 0.5;
+  --bs-btn-secondary-disabled-opacity: 0.65;
   --bs-btn-outline-secondary-color: var(--bs-secondary-500);
   --bs-btn-outline-secondary-bg: transparent;
   --bs-btn-outline-secondary-border-color: var(--bs-secondary-500);
@@ -418,7 +418,7 @@
   --bs-btn-outline-secondary-disabled-color: var(--bs-secondary-500);
   --bs-btn-outline-secondary-disabled-bg: transparent;
   --bs-btn-outline-secondary-disabled-border-color: var(--bs-secondary-500);
-  --bs-btn-outline-secondary-disabled-opacity: 0.5;
+  --bs-btn-outline-secondary-disabled-opacity: 0.65;
   --bs-btn-link-secondary-bg: transparent;
   --bs-btn-link-secondary-border-color: transparent;
   --bs-btn-link-secondary-color: var(--bs-secondary-500);
@@ -434,7 +434,7 @@
   --bs-btn-link-secondary-disabled-bg: transparent;
   --bs-btn-link-secondary-disabled-border-color: transparent;
   --bs-btn-link-secondary-disabled-color: var(--bs-secondary-500);
-  --bs-btn-link-secondary-disabled-opacity: 0.5;
+  --bs-btn-link-secondary-disabled-opacity: 0.65;
   --bs-btn-success-color: var(--bs-white);
   --bs-btn-success-bg: var(--bs-success-500);
   --bs-btn-success-border-color: var(--bs-success-500);
@@ -450,7 +450,7 @@
   --bs-btn-success-disabled-color: var(--bs-white);
   --bs-btn-success-disabled-bg: var(--bs-success-500);
   --bs-btn-success-disabled-border-color: var(--bs-success-500);
-  --bs-btn-success-disabled-opacity: 0.5;
+  --bs-btn-success-disabled-opacity: 0.65;
   --bs-btn-outline-success-color: var(--bs-success-500);
   --bs-btn-outline-success-bg: transparent;
   --bs-btn-outline-success-border-color: var(--bs-success-500);
@@ -466,7 +466,7 @@
   --bs-btn-outline-success-disabled-color: var(--bs-success-500);
   --bs-btn-outline-success-disabled-bg: transparent;
   --bs-btn-outline-success-disabled-border-color: var(--bs-success-500);
-  --bs-btn-outline-success-disabled-opacity: 0.5;
+  --bs-btn-outline-success-disabled-opacity: 0.65;
   --bs-btn-link-success-bg: transparent;
   --bs-btn-link-success-border-color: transparent;
   --bs-btn-link-success-color: var(--bs-success-500);
@@ -482,7 +482,7 @@
   --bs-btn-link-success-disabled-bg: transparent;
   --bs-btn-link-success-disabled-border-color: transparent;
   --bs-btn-link-success-disabled-color: var(--bs-success-500);
-  --bs-btn-link-success-disabled-opacity: 0.5;
+  --bs-btn-link-success-disabled-opacity: 0.65;
   --bs-btn-info-color: var(--bs-white);
   --bs-btn-info-bg: var(--bs-info-500);
   --bs-btn-info-border-color: var(--bs-info-500);
@@ -498,7 +498,7 @@
   --bs-btn-info-disabled-color: var(--bs-white);
   --bs-btn-info-disabled-bg: var(--bs-info-500);
   --bs-btn-info-disabled-border-color: var(--bs-info-500);
-  --bs-btn-info-disabled-opacity: 0.5;
+  --bs-btn-info-disabled-opacity: 0.65;
   --bs-btn-outline-info-color: var(--bs-info-500);
   --bs-btn-outline-info-bg: transparent;
   --bs-btn-outline-info-border-color: var(--bs-info-500);
@@ -514,7 +514,7 @@
   --bs-btn-outline-info-disabled-color: var(--bs-info-500);
   --bs-btn-outline-info-disabled-bg: transparent;
   --bs-btn-outline-info-disabled-border-color: var(--bs-info-500);
-  --bs-btn-outline-info-disabled-opacity: 0.5;
+  --bs-btn-outline-info-disabled-opacity: 0.65;
   --bs-btn-link-info-bg: transparent;
   --bs-btn-link-info-border-color: transparent;
   --bs-btn-link-info-color: var(--bs-info-500);
@@ -530,7 +530,7 @@
   --bs-btn-link-info-disabled-bg: transparent;
   --bs-btn-link-info-disabled-border-color: transparent;
   --bs-btn-link-info-disabled-color: var(--bs-info-500);
-  --bs-btn-link-info-disabled-opacity: 0.5;
+  --bs-btn-link-info-disabled-opacity: 0.65;
   --bs-btn-warning-color: var(--bs-gray-700);
   --bs-btn-warning-bg: var(--bs-warning-500);
   --bs-btn-warning-border-color: var(--bs-warning-500);
@@ -546,7 +546,7 @@
   --bs-btn-warning-disabled-color: var(--bs-gray-700);
   --bs-btn-warning-disabled-bg: var(--bs-warning-500);
   --bs-btn-warning-disabled-border-color: var(--bs-warning-500);
-  --bs-btn-warning-disabled-opacity: 0.5;
+  --bs-btn-warning-disabled-opacity: 0.65;
   --bs-btn-outline-warning-color: var(--bs-warning-500);
   --bs-btn-outline-warning-bg: transparent;
   --bs-btn-outline-warning-border-color: var(--bs-warning-500);
@@ -562,7 +562,7 @@
   --bs-btn-outline-warning-disabled-color: var(--bs-warning-500);
   --bs-btn-outline-warning-disabled-bg: transparent;
   --bs-btn-outline-warning-disabled-border-color: var(--bs-warning-500);
-  --bs-btn-outline-warning-disabled-opacity: 0.5;
+  --bs-btn-outline-warning-disabled-opacity: 0.65;
   --bs-btn-link-warning-bg: transparent;
   --bs-btn-link-warning-border-color: transparent;
   --bs-btn-link-warning-color: var(--bs-warning-500);
@@ -578,7 +578,7 @@
   --bs-btn-link-warning-disabled-bg: transparent;
   --bs-btn-link-warning-disabled-border-color: transparent;
   --bs-btn-link-warning-disabled-color: var(--bs-warning-500);
-  --bs-btn-link-warning-disabled-opacity: 0.5;
+  --bs-btn-link-warning-disabled-opacity: 0.65;
   --bs-btn-danger-color: var(--bs-white);
   --bs-btn-danger-bg: var(--bs-danger-500);
   --bs-btn-danger-border-color: var(--bs-danger-500);
@@ -594,7 +594,7 @@
   --bs-btn-danger-disabled-color: var(--bs-white);
   --bs-btn-danger-disabled-bg: var(--bs-danger-500);
   --bs-btn-danger-disabled-border-color: var(--bs-danger-500);
-  --bs-btn-danger-disabled-opacity: 0.5;
+  --bs-btn-danger-disabled-opacity: 0.65;
   --bs-btn-outline-danger-color: var(--bs-danger-500);
   --bs-btn-outline-danger-bg: transparent;
   --bs-btn-outline-danger-border-color: var(--bs-danger-500);
@@ -610,7 +610,7 @@
   --bs-btn-outline-danger-disabled-color: var(--bs-danger-500);
   --bs-btn-outline-danger-disabled-bg: transparent;
   --bs-btn-outline-danger-disabled-border-color: var(--bs-danger-500);
-  --bs-btn-outline-danger-disabled-opacity: 0.5;
+  --bs-btn-outline-danger-disabled-opacity: 0.65;
   --bs-btn-link-danger-bg: transparent;
   --bs-btn-link-danger-border-color: transparent;
   --bs-btn-link-danger-color: var(--bs-danger-500);
@@ -626,7 +626,7 @@
   --bs-btn-link-danger-disabled-bg: transparent;
   --bs-btn-link-danger-disabled-border-color: transparent;
   --bs-btn-link-danger-disabled-color: var(--bs-danger-500);
-  --bs-btn-link-danger-disabled-opacity: 0.5;
+  --bs-btn-link-danger-disabled-opacity: 0.65;
   --bs-btn-light-color: var(--bs-gray-700);
   --bs-btn-light-bg: var(--bs-light);
   --bs-btn-light-border-color: var(--bs-light);
@@ -642,7 +642,7 @@
   --bs-btn-light-disabled-color: var(--bs-gray-700);
   --bs-btn-light-disabled-bg: var(--bs-light);
   --bs-btn-light-disabled-border-color: var(--bs-light);
-  --bs-btn-light-disabled-opacity: 0.5;
+  --bs-btn-light-disabled-opacity: 0.65;
   --bs-btn-outline-light-color: var(--bs-light);
   --bs-btn-outline-light-bg: transparent;
   --bs-btn-outline-light-border-color: var(--bs-light);
@@ -658,7 +658,7 @@
   --bs-btn-outline-light-disabled-color: var(--bs-light);
   --bs-btn-outline-light-disabled-bg: transparent;
   --bs-btn-outline-light-disabled-border-color: var(--bs-light);
-  --bs-btn-outline-light-disabled-opacity: 0.5;
+  --bs-btn-outline-light-disabled-opacity: 0.65;
   --bs-btn-link-light-bg: transparent;
   --bs-btn-link-light-border-color: transparent;
   --bs-btn-link-light-color: var(--bs-light);
@@ -674,7 +674,7 @@
   --bs-btn-link-light-disabled-bg: transparent;
   --bs-btn-link-light-disabled-border-color: transparent;
   --bs-btn-link-light-disabled-color: var(--bs-light);
-  --bs-btn-link-light-disabled-opacity: 0.5;
+  --bs-btn-link-light-disabled-opacity: 0.65;
   --bs-btn-dark-color: var(--bs-white);
   --bs-btn-dark-bg: var(--bs-dark);
   --bs-btn-dark-border-color: var(--bs-dark);
@@ -690,7 +690,7 @@
   --bs-btn-dark-disabled-color: var(--bs-white);
   --bs-btn-dark-disabled-bg: var(--bs-dark);
   --bs-btn-dark-disabled-border-color: var(--bs-dark);
-  --bs-btn-dark-disabled-opacity: 0.5;
+  --bs-btn-dark-disabled-opacity: 0.65;
   --bs-btn-outline-dark-color: var(--bs-dark);
   --bs-btn-outline-dark-bg: transparent;
   --bs-btn-outline-dark-border-color: var(--bs-dark);
@@ -706,7 +706,7 @@
   --bs-btn-outline-dark-disabled-color: var(--bs-dark);
   --bs-btn-outline-dark-disabled-bg: transparent;
   --bs-btn-outline-dark-disabled-border-color: var(--bs-dark);
-  --bs-btn-outline-dark-disabled-opacity: 0.5;
+  --bs-btn-outline-dark-disabled-opacity: 0.65;
   --bs-btn-link-dark-bg: transparent;
   --bs-btn-link-dark-border-color: transparent;
   --bs-btn-link-dark-color: var(--bs-dark);
@@ -722,7 +722,7 @@
   --bs-btn-link-dark-disabled-bg: transparent;
   --bs-btn-link-dark-disabled-border-color: transparent;
   --bs-btn-link-dark-disabled-color: var(--bs-dark);
-  --bs-btn-link-dark-disabled-opacity: 0.5;
+  --bs-btn-link-dark-disabled-opacity: 0.65;
   --bs-ref-spacer-0: 0;
   --bs-ref-spacer-1: 0.25rem;
   --bs-ref-spacer-2: 0.5rem;
