@@ -29,7 +29,12 @@ $utilities: map-merge(
       (
         values: map-merge(
           map-get(map-get($utilities, "background-color"), "values"),
-          map-loop(map-merge-multiple($theme-colors-palletes, $palette-grays, $bg-surface-colors), rgba-css-var, "$key", "bg"),
+          map-loop(
+            map-merge-multiple($theme-colors-palletes, $palette-grays, $bg-surface-colors, $bg-soft-colors),
+            rgba-css-var,
+            "$key",
+            "bg"
+          )
         )
       )
     ),
@@ -40,7 +45,7 @@ $utilities: map-merge(
           null: var(--#{$prefix}box-shadow),
           sm: var(--#{$prefix}box-shadow-sm),
           lg: var(--#{$prefix}box-shadow-lg),
-          none: none,
+          none: none
         )
       )
     ),
@@ -50,7 +55,7 @@ $utilities: map-merge(
         values: map-merge(
           map-get(map-get($utilities, "text-opacity"), "values"),
           (
-            40: .4,
+            40: .4
           )
         )
       )
