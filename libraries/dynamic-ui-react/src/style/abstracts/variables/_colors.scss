@@ -525,7 +525,7 @@ $bg-soft-colors: (
 ) !default;
 // end custom
 
-$theme-colors-palletes: (
+$theme-colors-palettes: (
   "primary-25": $primary-25,
   "primary-50": $primary-50,
   "primary-100": $primary-100,
@@ -600,7 +600,7 @@ $all-colors: map-merge-multiple(
   $colors,
   $theme-colors,
   $palette-grays,
-  $theme-colors-palletes,
+  $theme-colors-palettes,
   (
     "black": $black,
     "white": $white,
