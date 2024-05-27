@@ -29,7 +29,7 @@ export default function DBadge(
       badge: true,
       'rounded-circle p-2': dot,
       [`text-bg-${theme}`]: !!theme && !soft,
-      [`text-bg-soft-${theme}`]: !!theme && soft,
+      [`text-${theme}-bg-color`]: !!theme && soft,
     }),
     [dot, soft, theme],
   );
