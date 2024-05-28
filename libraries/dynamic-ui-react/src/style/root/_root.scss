@@ -22,7 +22,11 @@
     --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
   }
 
-  @each $color, $value in $theme-colors-palletes {
+  @each $color, $value in $bg-soft-colors {
+    --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
+  }
+
+  @each $color, $value in $theme-colors-palettes {
     @if str-index($color, "-500") {
       $base-color-name: str-slice($color, 1, str-index($color, "-500") - 1);
       --#{$prefix}#{$color}-rgb: var(--#{$prefix}#{$base-color-name}-rgb);
@@ -45,6 +49,10 @@
   @each $color, $value in $bg-surface-colors {
     --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
   }
+
+  @each $color, $value in $bg-soft-colors {
+    --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
+  }
   // end custom
 
   @each $color, $value in $theme-colors {
@@ -61,7 +69,7 @@
   // end custom
 
   // custom
-  @each $color, $value in $theme-colors-palletes {
+  @each $color, $value in $theme-colors-palettes {
     --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
   }
   // end custom

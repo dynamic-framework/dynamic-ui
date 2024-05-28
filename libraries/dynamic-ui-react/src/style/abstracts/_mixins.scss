@@ -5,10 +5,10 @@
   $hover-color: var(--#{$prefix}#{$color-name}-600),
   $focus-color: var(--#{$prefix}#{$color-name}-500),
   $active-color: var(--#{$prefix}#{$color-name}-700),
-  $default-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-500)),
-  $hover-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-600)),
-  $focus-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-600)),
-  $active-text-color: color-contrast-var(map-get($theme-colors-palletes, #{$color-name}-700)),
+  $default-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-500)),
+  $hover-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-600)),
+  $focus-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-600)),
+  $active-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-700)),
   $disabled-opacity: .65
 ) {
   --#{$prefix}btn-#{$color-name}-color: #{$default-text-color};
