@@ -254,7 +254,7 @@ function DBadge({ text, dot = false, soft = false, theme = 'primary', id, classN
         badge: true,
         'rounded-circle p-2': dot,
         [`text-bg-${theme}`]: !!theme && !soft,
-        [`text-bg-soft-${theme}`]: !!theme && soft,
+        [`text-${theme}-bg-color`]: !!theme && soft,
     }), [dot, soft, theme]);
     return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, { children: jsxRuntime.jsx("span", { children: text }) })));
 }

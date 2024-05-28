@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.22.0
+ * dynamic-framework 1.23.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -19,27 +19,33 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-white-rgb: 255, 255, 255;
   --bs-gray-rgb: 173, 181, 189;
-  --bs-gray-dark-rgb: 52, 58, 64;
-  --bs-gray-50-rgb: 252, 252, 253;
-  --bs-gray-100-rgb: 248, 249, 250;
-  --bs-gray-200-rgb: 233, 236, 239;
-  --bs-gray-300-rgb: 222, 226, 230;
-  --bs-gray-400-rgb: 206, 212, 218;
+  --bs-gray-dark-rgb: 69, 72, 76;
+  --bs-gray-25-rgb: 251, 251, 252;
+  --bs-gray-50-rgb: 247, 248, 248;
+  --bs-gray-100-rgb: 239, 240, 242;
+  --bs-gray-200-rgb: 222, 225, 229;
+  --bs-gray-300-rgb: 206, 211, 215;
+  --bs-gray-400-rgb: 189, 196, 202;
   --bs-gray-500-rgb: 173, 181, 189;
-  --bs-gray-600-rgb: 108, 117, 125;
-  --bs-gray-700-rgb: 73, 80, 87;
-  --bs-gray-800-rgb: 52, 58, 64;
-  --bs-gray-900-rgb: 33, 37, 41;
-  --bs-gray-soft-rgb: 252, 252, 253;
-  --bs-primary-soft-rgb: 251, 232, 239;
-  --bs-secondary-soft-rgb: 237, 237, 248;
-  --bs-surface-gray-rgb: 252, 252, 253;
+  --bs-gray-600-rgb: 138, 145, 151;
+  --bs-gray-700-rgb: 104, 109, 113;
+  --bs-gray-800-rgb: 69, 72, 76;
+  --bs-gray-900-rgb: 35, 36, 38;
+  --bs-surface-gray-rgb: 247, 248, 248;
   --bs-surface-primary-rgb: 251, 232, 239;
   --bs-surface-secondary-rgb: 237, 237, 248;
   --bs-surface-success-rgb: 232, 243, 238;
   --bs-surface-info-rgb: 231, 241, 255;
   --bs-surface-warning-rgb: 255, 249, 230;
   --bs-surface-danger-rgb: 252, 235, 236;
+  --bs-gray-soft-rgb: 251, 251, 252;
+  --bs-primary-soft-rgb: 253, 244, 247;
+  --bs-secondary-soft-rgb: 246, 246, 251;
+  --bs-success-soft-rgb: 244, 249, 246;
+  --bs-info-soft-rgb: 243, 248, 255;
+  --bs-warning-soft-rgb: 255, 252, 243;
+  --bs-danger-soft-rgb: 253, 245, 246;
+  --bs-primary-25-rgb: 253, 244, 247;
   --bs-primary-50-rgb: 251, 232, 239;
   --bs-primary-100-rgb: 247, 209, 223;
   --bs-primary-200-rgb: 239, 164, 191;
@@ -50,6 +56,7 @@
   --bs-primary-700-rgb: 130, 16, 58;
   --bs-primary-800-rgb: 86, 11, 38;
   --bs-primary-900-rgb: 43, 5, 19;
+  --bs-secondary-25-rgb: 246, 246, 251;
   --bs-secondary-50-rgb: 237, 237, 248;
   --bs-secondary-100-rgb: 218, 218, 241;
   --bs-secondary-200-rgb: 182, 182, 226;
@@ -60,6 +67,7 @@
   --bs-secondary-700-rgb: 43, 43, 110;
   --bs-secondary-800-rgb: 29, 29, 73;
   --bs-secondary-900-rgb: 14, 14, 37;
+  --bs-success-25-rgb: 244, 249, 246;
   --bs-success-50-rgb: 232, 243, 238;
   --bs-success-100-rgb: 209, 231, 221;
   --bs-success-200-rgb: 163, 207, 187;
@@ -70,6 +78,7 @@
   --bs-success-700-rgb: 15, 81, 50;
   --bs-success-800-rgb: 10, 54, 34;
   --bs-success-900-rgb: 5, 27, 17;
+  --bs-info-25-rgb: 243, 248, 255;
   --bs-info-50-rgb: 231, 241, 255;
   --bs-info-100-rgb: 207, 226, 255;
   --bs-info-200-rgb: 158, 197, 254;
@@ -80,6 +89,7 @@
   --bs-info-700-rgb: 8, 66, 152;
   --bs-info-800-rgb: 5, 44, 101;
   --bs-info-900-rgb: 3, 22, 51;
+  --bs-warning-25-rgb: 255, 252, 243;
   --bs-warning-50-rgb: 255, 249, 230;
   --bs-warning-100-rgb: 255, 243, 205;
   --bs-warning-200-rgb: 255, 230, 156;
@@ -90,6 +100,7 @@
   --bs-warning-700-rgb: 153, 116, 4;
   --bs-warning-800-rgb: 102, 77, 3;
   --bs-warning-900-rgb: 51, 39, 1;
+  --bs-danger-25-rgb: 253, 245, 246;
   --bs-danger-50-rgb: 252, 235, 236;
   --bs-danger-100-rgb: 248, 215, 218;
   --bs-danger-200-rgb: 241, 174, 181;
@@ -114,6 +125,7 @@
   --bs-white: rgb(var(--bs-white-rgb));
   --bs-gray: rgb(var(--bs-gray-rgb));
   --bs-gray-dark: rgb(var(--bs-gray-dark-rgb));
+  --bs-gray-25: rgb(var(--bs-gray-25-rgb));
   --bs-gray-50: rgb(var(--bs-gray-50-rgb));
   --bs-gray-100: rgb(var(--bs-gray-100-rgb));
   --bs-gray-200: rgb(var(--bs-gray-200-rgb));
@@ -124,9 +136,6 @@
   --bs-gray-700: rgb(var(--bs-gray-700-rgb));
   --bs-gray-800: rgb(var(--bs-gray-800-rgb));
   --bs-gray-900: rgb(var(--bs-gray-900-rgb));
-  --bs-gray-soft: rgb(var(--bs-gray-soft-rgb));
-  --bs-primary-soft: rgb(var(--bs-primary-soft-rgb));
-  --bs-secondary-soft: rgb(var(--bs-secondary-soft-rgb));
   --bs-surface-gray: rgb(var(--bs-surface-gray-rgb));
   --bs-surface-primary: rgb(var(--bs-surface-primary-rgb));
   --bs-surface-secondary: rgb(var(--bs-surface-secondary-rgb));
@@ -134,6 +143,13 @@
   --bs-surface-info: rgb(var(--bs-surface-info-rgb));
   --bs-surface-warning: rgb(var(--bs-surface-warning-rgb));
   --bs-surface-danger: rgb(var(--bs-surface-danger-rgb));
+  --bs-gray-soft: rgb(var(--bs-gray-soft-rgb));
+  --bs-primary-soft: rgb(var(--bs-primary-soft-rgb));
+  --bs-secondary-soft: rgb(var(--bs-secondary-soft-rgb));
+  --bs-success-soft: rgb(var(--bs-success-soft-rgb));
+  --bs-info-soft: rgb(var(--bs-info-soft-rgb));
+  --bs-warning-soft: rgb(var(--bs-warning-soft-rgb));
+  --bs-danger-soft: rgb(var(--bs-danger-soft-rgb));
   --bs-primary: rgb(var(--bs-primary-rgb));
   --bs-secondary: rgb(var(--bs-secondary-rgb));
   --bs-success: rgb(var(--bs-success-rgb));
@@ -150,6 +166,7 @@
   --bs-danger-rgb: var(--bs-red-rgb);
   --bs-light-rgb: var(--bs-gray-100-rgb);
   --bs-dark-rgb: var(--bs-gray-900-rgb);
+  --bs-primary-25: rgb(var(--bs-primary-25-rgb));
   --bs-primary-50: rgb(var(--bs-primary-50-rgb));
   --bs-primary-100: rgb(var(--bs-primary-100-rgb));
   --bs-primary-200: rgb(var(--bs-primary-200-rgb));
@@ -160,6 +177,7 @@
   --bs-primary-700: rgb(var(--bs-primary-700-rgb));
   --bs-primary-800: rgb(var(--bs-primary-800-rgb));
   --bs-primary-900: rgb(var(--bs-primary-900-rgb));
+  --bs-secondary-25: rgb(var(--bs-secondary-25-rgb));
   --bs-secondary-50: rgb(var(--bs-secondary-50-rgb));
   --bs-secondary-100: rgb(var(--bs-secondary-100-rgb));
   --bs-secondary-200: rgb(var(--bs-secondary-200-rgb));
@@ -170,6 +188,7 @@
   --bs-secondary-700: rgb(var(--bs-secondary-700-rgb));
   --bs-secondary-800: rgb(var(--bs-secondary-800-rgb));
   --bs-secondary-900: rgb(var(--bs-secondary-900-rgb));
+  --bs-success-25: rgb(var(--bs-success-25-rgb));
   --bs-success-50: rgb(var(--bs-success-50-rgb));
   --bs-success-100: rgb(var(--bs-success-100-rgb));
   --bs-success-200: rgb(var(--bs-success-200-rgb));
@@ -180,6 +199,7 @@
   --bs-success-700: rgb(var(--bs-success-700-rgb));
   --bs-success-800: rgb(var(--bs-success-800-rgb));
   --bs-success-900: rgb(var(--bs-success-900-rgb));
+  --bs-info-25: rgb(var(--bs-info-25-rgb));
   --bs-info-50: rgb(var(--bs-info-50-rgb));
   --bs-info-100: rgb(var(--bs-info-100-rgb));
   --bs-info-200: rgb(var(--bs-info-200-rgb));
@@ -190,6 +210,7 @@
   --bs-info-700: rgb(var(--bs-info-700-rgb));
   --bs-info-800: rgb(var(--bs-info-800-rgb));
   --bs-info-900: rgb(var(--bs-info-900-rgb));
+  --bs-warning-25: rgb(var(--bs-warning-25-rgb));
   --bs-warning-50: rgb(var(--bs-warning-50-rgb));
   --bs-warning-100: rgb(var(--bs-warning-100-rgb));
   --bs-warning-200: rgb(var(--bs-warning-200-rgb));
@@ -200,6 +221,7 @@
   --bs-warning-700: rgb(var(--bs-warning-700-rgb));
   --bs-warning-800: rgb(var(--bs-warning-800-rgb));
   --bs-warning-900: rgb(var(--bs-warning-900-rgb));
+  --bs-danger-25: rgb(var(--bs-danger-25-rgb));
   --bs-danger-50: rgb(var(--bs-danger-50-rgb));
   --bs-danger-100: rgb(var(--bs-danger-100-rgb));
   --bs-danger-200: rgb(var(--bs-danger-200-rgb));
@@ -277,9 +299,9 @@
   --bs-border-radius-xxl: 2.5rem;
   --bs-border-radius-2xl: var(--bs-border-radius-xxl);
   --bs-border-radius-pill: 50rem;
-  --bs-box-shadow: 0 12px 14px 0 rgba(33, 37, 41, 0.2);
-  --bs-box-shadow-sm: 0 8px 12px 0 rgba(33, 37, 41, 0.05);
-  --bs-box-shadow-lg: 0 20px 22px 0 rgba(33, 37, 41, 0.25);
+  --bs-box-shadow: 0 12px 14px 0 rgba(35, 36, 38, 0.2);
+  --bs-box-shadow-sm: 0 8px 12px 0 rgba(35, 36, 38, 0.05);
+  --bs-box-shadow-lg: 0 20px 22px 0 rgba(35, 36, 38, 0.25);
   --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.75);
   --bs-focus-ring-width: 0.25rem;
   --bs-focus-ring-opacity: 1;
@@ -531,7 +553,7 @@
   --bs-btn-link-info-disabled-border-color: transparent;
   --bs-btn-link-info-disabled-color: var(--bs-info-500);
   --bs-btn-link-info-disabled-opacity: 0.65;
-  --bs-btn-warning-color: var(--bs-gray-700);
+  --bs-btn-warning-color: var(--bs-black);
   --bs-btn-warning-bg: var(--bs-warning-500);
   --bs-btn-warning-border-color: var(--bs-warning-500);
   --bs-btn-warning-hover-color: var(--bs-black);
@@ -543,7 +565,7 @@
   --bs-btn-warning-active-color: var(--bs-black);
   --bs-btn-warning-active-bg: var(--bs-warning-700);
   --bs-btn-warning-active-border-color: var(--bs-warning-700);
-  --bs-btn-warning-disabled-color: var(--bs-gray-700);
+  --bs-btn-warning-disabled-color: var(--bs-black);
   --bs-btn-warning-disabled-bg: var(--bs-warning-500);
   --bs-btn-warning-disabled-border-color: var(--bs-warning-500);
   --bs-btn-warning-disabled-opacity: 0.65;
@@ -630,13 +652,13 @@
   --bs-btn-light-color: var(--bs-gray-700);
   --bs-btn-light-bg: var(--bs-light);
   --bs-btn-light-border-color: var(--bs-light);
-  --bs-btn-light-hover-color: var(--bs-gray-700);
+  --bs-btn-light-hover-color: var(--bs-black);
   --bs-btn-light-hover-bg: var(--bs-gray-200);
   --bs-btn-light-hover-border-color: var(--bs-gray-200);
-  --bs-btn-light-focus-color: var(--bs-gray-700);
+  --bs-btn-light-focus-color: var(--bs-black);
   --bs-btn-light-focus-bg: var(--bs-light);
   --bs-btn-light-focus-border-color: var(--bs-light);
-  --bs-btn-light-active-color: var(--bs-gray-700);
+  --bs-btn-light-active-color: var(--bs-black);
   --bs-btn-light-active-bg: var(--bs-gray-300);
   --bs-btn-light-active-border-color: var(--bs-gray-300);
   --bs-btn-light-disabled-color: var(--bs-gray-700);
