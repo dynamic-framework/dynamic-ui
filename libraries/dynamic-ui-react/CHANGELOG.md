@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.23.0...@dynamic-framework/ui-react@1.24.0) (2024-05-28)
+
+
+### Features
+
+* add support to -25 color and adjust gray palette colors ([b99df6b](https://github.com/dynamic-framework/dynamic-ui/commit/b99df6b9f245dfc764cc691f923b7587057ecc68))
+* add text-bg palette support ([907ae7d](https://github.com/dynamic-framework/dynamic-ui/commit/907ae7dd4cda959771932c0639fac0e9c80924a9))
+
+
+### Bug Fixes
+
+* change badge classname soft to text-color-bg-color ([f0e7464](https://github.com/dynamic-framework/dynamic-ui/commit/f0e7464ec553cf5fd59d33a7a81f94098b71d941))
+
+
+### Storybook
+
+* add -25 colors base documentation ([c3e71ea](https://github.com/dynamic-framework/dynamic-ui/commit/c3e71eadced5d85132b22e1a4623f8a78cc03371))
+* set palette vertically to avoid cluttering and overflow ([2d1f7a8](https://github.com/dynamic-framework/dynamic-ui/commit/2d1f7a84d7c78fb40e88c705f3ef6c0a8c98f674))
+
+
+
 ## [1.23.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.22.0...@dynamic-framework/ui-react@1.23.0) (2024-05-24)
 
 
