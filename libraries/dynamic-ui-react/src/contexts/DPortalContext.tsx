@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
+  Fragment,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
-  Fragment,
 } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { PropsWithChildren, FC } from 'react';
+import type {
+  PropsWithChildren,
+  FC,
+} from 'react';
 
 import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect';
 import usePortal from '../hooks/usePortal';
@@ -36,6 +40,7 @@ export type PortalContextType<T extends Record<string, unknown>> = {
   openPortal: OpenPortalFunction<T[keyof T]>;
   closePortal: ClosePortalFunction;
 };
+
 export type PortalProps<P = unknown> = {
   name: string;
   payload: P;
@@ -89,11 +94,44 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
     closePortal,
   }), [stack, openPortal, closePortal]) as PortalContextType<any>;
 
+  const handleClose = useCallback((target: Element) => {
+    if (target instanceof HTMLDivElement) {
+      if (target.classList.contains('portal')) {
+        if (!('bsBackdrop' in target.dataset)) {
+          closePortal();
+        }
+      }
+    }
+  }, [closePortal]);
+
+  useEffect(() => {
+    const keyEvent = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        const lastModal = document.querySelector(`#${portalName} > div > div:last-child`);
+        if (lastModal) {
+          handleClose(lastModal as HTMLElement);
+        }
+      }
+    };
+    if (stack.length !== 0) {
+      window.addEventListener('keydown', keyEvent);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', keyEvent);
+    };
+  }, [handleClose, portalName, stack.length]);
+
   return (
     <DPortalContext.Provider value={value}>
       {children}
       {created && createPortal(
-        <>
+        // eslint-disable-next-line max-len
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div
+          onClick={({ target }) => handleClose(target as Element)}
+          onKeyDown={() => {}}
+        >
           {stack.map((
             {
               Component,
@@ -109,7 +147,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
               />
             </Fragment>
           ))}
-        </>,
+        </div>,
         document.getElementById(portalName) as Element,
       )}
     </DPortalContext.Provider>
