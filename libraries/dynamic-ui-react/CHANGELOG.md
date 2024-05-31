@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.24.0...@dynamic-framework/ui-react@1.25.0) (2024-05-31)
+
+
+### Features
+
+* **DPortalContext:** set support to close backdrop on modals ([#657](https://github.com/dynamic-framework/dynamic-ui/issues/657)) ([0be58e7](https://github.com/dynamic-framework/dynamic-ui/commit/0be58e7ae18ce9cbb9e6109e9592426365179383))
+
+
+
 ## [1.24.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.23.0...@dynamic-framework/ui-react@1.24.0) (2024-05-28)
 
 
