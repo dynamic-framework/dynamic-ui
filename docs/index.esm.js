@@ -1,5 +1,5 @@
-import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
-import React, { useMemo, useEffect, useState, useCallback, createContext, useContext, Fragment as Fragment$1, forwardRef, useRef } from 'react';
+import { jsx, jsxs, Fragment as Fragment$1 } from 'react/jsx-runtime';
+import React, { useMemo, useEffect, useState, useCallback, createContext, useContext, Fragment, forwardRef, useRef } from 'react';
 import classNames from 'classnames';
 import { __rest } from 'tslib';
 import { createPortal } from 'react-dom';
@@ -156,7 +156,35 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
         openPortal,
         closePortal,
     }), [stack, openPortal, closePortal]);
-    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && createPortal(jsx(Fragment, { children: stack.map(({ Component, name, payload, }) => (jsxs(Fragment$1, { children: [jsx("div", { className: "backdrop fade show" }), jsx(Component, { name: name, payload: payload })] }, name))) }), document.getElementById(portalName))] }));
+    const handleClose = useCallback((target) => {
+        if (target instanceof HTMLDivElement) {
+            if (target.classList.contains('portal')) {
+                if (!('bsBackdrop' in target.dataset)) {
+                    closePortal();
+                }
+            }
+        }
+    }, [closePortal]);
+    useEffect(() => {
+        const keyEvent = (event) => {
+            if (event.key === 'Escape') {
+                const lastModal = document.querySelector(`#${portalName} > div > div:last-child`);
+                if (lastModal) {
+                    handleClose(lastModal);
+                }
+            }
+        };
+        if (stack.length !== 0) {
+            window.addEventListener('keydown', keyEvent);
+        }
+        return () => {
+            window.removeEventListener('keydown', keyEvent);
+        };
+    }, [handleClose, portalName, stack.length]);
+    return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && createPortal(
+            // eslint-disable-next-line max-len
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+            jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: stack.map(({ Component, name, payload, }) => (jsxs(Fragment, { children: [jsx("div", { className: "backdrop fade show" }), jsx(Component, { name: name, payload: payload })] }, name))) }), document.getElementById(portalName))] }));
 }
 function useDPortalContext() {
     const context = useContext(DPortalContext);
@@ -1022,7 +1050,7 @@ function DModalBody({ children, className, style, }) {
 }
 
 function DModalFooter({ className, style, actionPlacement = 'fill', children, }) {
-    return (jsxs(Fragment, { children: [jsx("div", { className: "d-modal-separator" }), jsx("div", { className: classNames(`modal-footer d-modal-action-${actionPlacement}`, className), style: style, children: children })] }));
+    return (jsxs(Fragment$1, { children: [jsx("div", { className: "d-modal-separator" }), jsx("div", { className: classNames(`modal-footer d-modal-action-${actionPlacement}`, className), style: style, children: children })] }));
 }
 
 function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, }) {
@@ -1247,7 +1275,7 @@ function DStepper$1({ options, currentStep, className, style, }) {
       from 180deg,
       var(--${PREFIX_BS}step-progress-outter-fill-background-color) ${currentAngle}deg,
       var(--${PREFIX_BS}step-progress-outter-background-color) 0deg)`, [currentAngle]);
-    return (jsxs("div", { className: classNames('d-stepper', className), style: style, children: [jsx("div", { className: "d-step-bar", style: { background: progressStyle }, children: jsx("p", { className: "d-step-number", children: `${currentStep}/${options.length}` }) }), jsx("div", { className: "d-step-info", children: Object.keys(currentOption).length > 0 && (jsxs(Fragment, { children: [jsx("div", { className: "d-step-label", children: currentOption.label }), jsx("div", { className: "d-step-description", children: currentOption.description || '' })] })) })] }));
+    return (jsxs("div", { className: classNames('d-stepper', className), style: style, children: [jsx("div", { className: "d-step-bar", style: { background: progressStyle }, children: jsx("p", { className: "d-step-number", children: `${currentStep}/${options.length}` }) }), jsx("div", { className: "d-step-info", children: Object.keys(currentOption).length > 0 && (jsxs(Fragment$1, { children: [jsx("div", { className: "d-step-label", children: currentOption.label }), jsx("div", { className: "d-step-description", children: currentOption.description || '' })] })) })] }));
 }
 
 function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, breakpoint = 'lg', className, style, }) {
@@ -1289,7 +1317,7 @@ function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT +
         role,
     ]);
     const generateClasses = useMemo(() => (Object.assign({ 'tooltip show': true, [`tooltip-${size}`]: !!size, [`tooltip-${theme}`]: !!theme }, className && { [className]: true })), [size, theme, className]);
-    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: childrenClassName, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNames(generateClasses), ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), style) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, width: ARROW_WIDTH, height: ARROW_HEIGHT }), jsx("div", { className: "tooltip-inner", children: children })] }))) })] }));
+    return (jsxs(Fragment$1, { children: [jsx("div", Object.assign({ className: childrenClassName, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNames(generateClasses), ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), style) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, width: ARROW_WIDTH, height: ARROW_HEIGHT }), jsx("div", { className: "tooltip-inner", children: children })] }))) })] }));
 }
 
 const TabContext = createContext(undefined);

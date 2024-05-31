@@ -158,7 +158,35 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
         openPortal,
         closePortal,
     }), [stack, openPortal, closePortal]);
-    return (jsxRuntime.jsxs(DPortalContext.Provider, { value: value, children: [children, created && reactDom.createPortal(jsxRuntime.jsx(jsxRuntime.Fragment, { children: stack.map(({ Component, name, payload, }) => (jsxRuntime.jsxs(React.Fragment, { children: [jsxRuntime.jsx("div", { className: "backdrop fade show" }), jsxRuntime.jsx(Component, { name: name, payload: payload })] }, name))) }), document.getElementById(portalName))] }));
+    const handleClose = React.useCallback((target) => {
+        if (target instanceof HTMLDivElement) {
+            if (target.classList.contains('portal')) {
+                if (!('bsBackdrop' in target.dataset)) {
+                    closePortal();
+                }
+            }
+        }
+    }, [closePortal]);
+    React.useEffect(() => {
+        const keyEvent = (event) => {
+            if (event.key === 'Escape') {
+                const lastModal = document.querySelector(`#${portalName} > div > div:last-child`);
+                if (lastModal) {
+                    handleClose(lastModal);
+                }
+            }
+        };
+        if (stack.length !== 0) {
+            window.addEventListener('keydown', keyEvent);
+        }
+        return () => {
+            window.removeEventListener('keydown', keyEvent);
+        };
+    }, [handleClose, portalName, stack.length]);
+    return (jsxRuntime.jsxs(DPortalContext.Provider, { value: value, children: [children, created && reactDom.createPortal(
+            // eslint-disable-next-line max-len
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+            jsxRuntime.jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: stack.map(({ Component, name, payload, }) => (jsxRuntime.jsxs(React.Fragment, { children: [jsxRuntime.jsx("div", { className: "backdrop fade show" }), jsxRuntime.jsx(Component, { name: name, payload: payload })] }, name))) }), document.getElementById(portalName))] }));
 }
 function useDPortalContext() {
     const context = React.useContext(DPortalContext);
