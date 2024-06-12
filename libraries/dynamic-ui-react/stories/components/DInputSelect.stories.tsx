@@ -150,6 +150,16 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
       control: 'number',
       type: 'number',
     },
+    invalid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
+    valid: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
     hint: {
       control: 'text',
       type: 'string',
@@ -241,6 +251,34 @@ export const Disabled: Story = {
     ],
     hint: 'Assistive text',
     disabled: true,
+  },
+};
+
+export const Invalid: Story = {
+  args: {
+    id: 'componentId2',
+    label: 'Label',
+    labelIcon: undefined,
+    options: [
+      { label: 'Option 1', value: '1' },
+      { label: 'Option 2', value: '2' },
+    ],
+    hint: 'Assistive text',
+    invalid: true,
+  },
+};
+
+export const Valid: Story = {
+  args: {
+    id: 'componentId2',
+    label: 'Label',
+    labelIcon: undefined,
+    options: [
+      { label: 'Option 1', value: '1' },
+      { label: 'Option 2', value: '2' },
+    ],
+    hint: 'Assistive text',
+    valid: true,
   },
 };
 
