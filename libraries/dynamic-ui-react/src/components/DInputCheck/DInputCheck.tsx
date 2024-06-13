@@ -1,6 +1,8 @@
 import {
   useCallback,
   useEffect,
+  useId,
+  useMemo,
   useRef,
 } from 'react';
 import classNames from 'classnames';
@@ -12,12 +14,12 @@ import type { BaseProps, InputCheckType } from '../interface';
 type Props =
 & BaseProps
 & {
+  id?: string;
   type: InputCheckType;
   name?: string;
   label?: string;
   ariaLabel?: string;
   checked?: boolean;
-  id: string;
   disabled?: boolean;
   indeterminate?: boolean;
   value?: string;
@@ -26,12 +28,12 @@ type Props =
 
 export default function DInputCheck(
   {
+    id: idProp,
     type,
     name,
     label,
     ariaLabel,
     checked = false,
-    id,
     disabled = false,
     indeterminate,
     value,
@@ -41,6 +43,9 @@ export default function DInputCheck(
   }: Props,
 ) {
   const innerRef = useRef<HTMLInputElement>(null);
+  const innerId = useId();
+  const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onChange?.(event);
   }, [onChange]);
