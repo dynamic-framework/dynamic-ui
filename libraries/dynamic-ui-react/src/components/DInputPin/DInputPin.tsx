@@ -2,6 +2,7 @@
 import {
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useState,
 } from 'react';
@@ -33,7 +34,7 @@ type Props =
 & FamilyIconProps
 & StateIcons
 & {
-  id: string;
+  id?: string;
   label?: string;
   placeholder?: string;
   type?: PinInputType;
@@ -51,7 +52,7 @@ type Props =
 
 export default function DInputPin(
   {
-    id,
+    id: idProp,
     label = '',
     labelIcon,
     labelIconFamilyClass,
@@ -75,6 +76,8 @@ export default function DInputPin(
     onChange,
   }: Props,
 ) {
+  const innerId = useId();
+  const id = useMemo(() => idProp || innerId, [idProp, innerId]);
   const [pattern, setPattern] = useState<string>('');
   const [activeInput, setActiveInput] = useState(Array.from<string>({ length: characters }).fill(''));
   const isInputNum = useMemo(() => type === 'number' || type === 'tel', [type]);
