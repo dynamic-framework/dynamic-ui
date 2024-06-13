@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useId, useMemo } from 'react';
 import classNames from 'classnames';
 
 import type {
@@ -54,7 +54,7 @@ export type Props<T> =
 
 export default function DInputSelect<T extends object = DefaultOption>(
   {
-    id,
+    id: idProp,
     name,
     label = '',
     className,
@@ -91,6 +91,9 @@ export default function DInputSelect<T extends object = DefaultOption>(
     onIconEndClick,
   }: Props<T>,
 ) {
+  const innerId = useId();
+  const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+
   const internalValueExtractor = useCallback((option: T | DefaultOption) => {
     if (valueExtractor) {
       return valueExtractor(option as T);
