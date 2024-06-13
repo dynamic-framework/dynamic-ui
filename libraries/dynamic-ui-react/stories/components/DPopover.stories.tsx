@@ -10,6 +10,8 @@ const config: Meta<typeof DPopover> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 This component only complies with the behavior of a popover, it has no design, other components are used as an example to assemble it.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

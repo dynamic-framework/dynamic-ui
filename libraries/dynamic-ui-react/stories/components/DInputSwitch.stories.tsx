@@ -10,6 +10,8 @@ const config: Meta<typeof DInputSwitch> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Dynamic%20Component-E60063)
+
 Graphical control element that allows the user to choose between two mutually exclusive states.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

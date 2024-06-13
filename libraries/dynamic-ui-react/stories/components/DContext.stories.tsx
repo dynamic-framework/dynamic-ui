@@ -4,6 +4,9 @@ import { DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 /**
+ *
+ * ![Shield Badge](https://img.shields.io/badge/Dynamic%20Component-E60063)
+ *
  * Context Provider to share settings between components
  */
 const config: Meta<typeof DContextProvider> = {

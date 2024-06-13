@@ -9,6 +9,8 @@ const config: Meta<typeof DSkeleton> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 Component to build placeholder experiences.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

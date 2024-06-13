@@ -22,6 +22,8 @@ const meta: Meta<typeof DIcon> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 Wrapper Component around [Bootstrap Icons.](https://icons.getbootstrap.com/)
 
 To use the DIcon you need to add the icon suite CSS to your site, we recommend adding this CSS in the platform but you can add it in the index.html of the widget as well.

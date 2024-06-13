@@ -9,6 +9,8 @@ const config: Meta<typeof DInputCheck> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Bootstrap%20Component-blue)
+
 Create consistent cross-browser and cross-device radios with our completely rewritten checks component.
 
 **Radio:** It is a type of graphical interface widget that allows the user to choose an option from a predefined set of options.

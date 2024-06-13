@@ -12,6 +12,8 @@ const config: Meta<typeof DQuickActionSelect> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Dynamic%20Component-E60063)
+
 ## CSS Variables
 | Variable                                            | Class                  | Type            | Description                |
 |-----------------------------------------------------|------------------------|-----------------|----------------------------|

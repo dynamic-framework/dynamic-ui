@@ -13,6 +13,8 @@ const config: Meta<typeof DInputSelect> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
 Customize the native \`<select>s\` with custom CSS that changes the element’s initial appearance, with a partial API of \`d-input\` over the HTML select component.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

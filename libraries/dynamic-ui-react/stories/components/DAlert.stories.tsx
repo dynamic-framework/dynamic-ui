@@ -13,6 +13,8 @@ const config: Meta<typeof DAlert> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Bootstrap%20Component-blue)
+
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap Alerts](https://getbootstrap.com/docs/5.3/components/alerts/)

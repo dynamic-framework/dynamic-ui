@@ -15,6 +15,8 @@ const config: Meta<typeof DChip> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Bootstrap%20Component-blue)
+
 ## CSS Variables
 | Variable                         | Class   | Type            | Description                      |
 |----------------------------------|---------|-----------------|----------------------------------|

@@ -11,6 +11,8 @@ const config: Meta<typeof DInputPin> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Dynamic%20Component-E60063)
+
 Component with a partial API of \`d-input\` to take a pin/otp code.
 
 ## CSS Variables

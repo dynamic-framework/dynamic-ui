@@ -21,6 +21,8 @@ const config: Meta<typeof DButton> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
 > We work with button variables at two levels, variables in root per variant (default, outline, link)
 >and internal variables in each button that use the previous ones.
 

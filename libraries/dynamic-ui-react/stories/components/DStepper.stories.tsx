@@ -13,6 +13,8 @@ const config: Meta<typeof DStepper> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Dynamic%20Component-E60063)
+
 The Stepper component is designed to provide a responsive step-by-step navigation interface.
 It intelligently switches between a desktop and a mobile layout based on the screen size using media queries.
 This ensures an optimal user experience across different devices.

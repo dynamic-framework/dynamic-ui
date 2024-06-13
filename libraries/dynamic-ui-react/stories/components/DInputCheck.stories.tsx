@@ -9,6 +9,8 @@ const config: Meta<typeof DInputCheck> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 Create consistent cross-browser and cross-device checkboxes with our completely rewritten checks component.
 
 **Checkbox:** Allows the user to make multiple selections from a set of options.

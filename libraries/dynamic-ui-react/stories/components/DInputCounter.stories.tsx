@@ -14,6 +14,8 @@ const config: Meta<typeof DInputCounter> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Dynamic%20Component-E60063)
+
 Component composition with \`d-input\` to make a counter input component.
 
 ## CSS Variables

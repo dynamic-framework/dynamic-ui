@@ -9,6 +9,8 @@ const config: Meta<typeof DProgress> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Bootstrap%20Component-blue)
+
 Wrapper around Bootstrap Progress.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

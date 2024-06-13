@@ -10,6 +10,8 @@ const config: Meta<typeof DList> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
 List of elements
 
 To understand in more detail the aspects covered by this component, review the following documentation:

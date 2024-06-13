@@ -10,6 +10,8 @@ const config: Meta<typeof DCard> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
 Card component
 
 Dynamic framework exports 4 card-related components:

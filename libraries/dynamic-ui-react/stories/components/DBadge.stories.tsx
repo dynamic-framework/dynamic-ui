@@ -10,6 +10,8 @@ const config: Meta<typeof DBadge> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 Wrapper around Bootstrap Badge.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

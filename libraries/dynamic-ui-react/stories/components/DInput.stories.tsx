@@ -14,6 +14,8 @@ const config: Meta<typeof DInput> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 Wrapper around Bootstrap input group elements.
 
 Give textual form controls like \`<input>s\`, \`<textarea>s\` and \`<label>s\` an upgrade with custom styles, sizing, focus states, and more.

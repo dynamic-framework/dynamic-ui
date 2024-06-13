@@ -13,6 +13,8 @@ const config: Meta<typeof DInputCurrency> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Dynamic%20Component-E60063)
+
 Component composition with \`d-input-currency-base\` to make a currency input component that use
 a \`DContextProvider\` to get the currency config.
 

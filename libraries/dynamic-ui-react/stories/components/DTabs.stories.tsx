@@ -12,6 +12,8 @@ const config: Meta<typeof DTabs> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Bootstrap%20Component-blue)
+
 Wrapper around Bootstrap Navs & Tabs.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

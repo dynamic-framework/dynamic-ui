@@ -13,6 +13,8 @@ const config: Meta<typeof DCollapse> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Bootstrap%20Component-blue)
+
 ## CSS Variables
 | Variable                                 | Class               | Type            | Description                               |
 |------------------------------------------|---------------------|-----------------|-------------------------------------------|

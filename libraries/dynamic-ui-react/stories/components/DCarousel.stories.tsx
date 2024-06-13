@@ -9,6 +9,8 @@ const config: Meta<typeof DCarousel> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 Carousel of elements and components
 
 To understand in more detail the aspects covered by this component, review the following documentation:
