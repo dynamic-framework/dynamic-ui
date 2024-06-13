@@ -76,7 +76,7 @@
     $tooltip-bg-color: map-get($data, "tooltip-bg-color");
     $box-shadow: map-get($data, "focus-box-shadow");
 
-    &:has(.form-control.is-#{$state}) {
+    &:has(.form-control.is-#{$state}, .form-select.is-#{$state}) {
       border-color: $border-color;
       box-shadow: $box-shadow;
 

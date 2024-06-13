@@ -13,9 +13,12 @@ import { PREFIX_BS } from '../config';
 import type {
   BaseProps,
   EndIconProps,
+  FamilyIconProps,
   LabelIconProps,
   StartIconProps,
+  StateIcons,
 } from '../interface';
+import { useDContext } from '../../contexts';
 
 export type DefaultOption = {
   value: string | number;
@@ -24,15 +27,19 @@ export type DefaultOption = {
 
 export type Props<T> =
 & BaseProps
+& FamilyIconProps
 & LabelIconProps
 & StartIconProps
 & EndIconProps
+& StateIcons
 & {
   id?: string;
   name?: string;
   label?: string;
   disabled?: boolean;
   loading?: boolean;
+  invalid?: boolean;
+  valid?: boolean;
   hint?: string;
   floatingLabel?: boolean;
   onBlur?: (event: FocusEvent) => void;
@@ -66,9 +73,16 @@ export default function DInputSelect<T extends object = DefaultOption>(
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndAriaLabel,
+    iconFamilyClass,
+    iconFamilyPrefix,
+    iconMaterialStyle,
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     hint,
     value,
     floatingLabel = false,
+    invalid = false,
+    valid = false,
     valueExtractor,
     labelExtractor,
     onChange,
@@ -121,6 +135,16 @@ export default function DInputSelect<T extends object = DefaultOption>(
     onIconEndClick?.(event);
   }, [onIconEndClick]);
 
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
+
   const ariaDescribedby = useMemo(() => (
     [
       iconStart && `${id}Start`,
@@ -138,6 +162,8 @@ export default function DInputSelect<T extends object = DefaultOption>(
       className={classNames({
         'form-select': true,
         'floating-label': floatingLabel,
+        'is-invalid': invalid,
+        'is-valid': valid,
       })}
       aria-label={label}
       disabled={disabled || loading}
@@ -169,6 +195,8 @@ export default function DInputSelect<T extends object = DefaultOption>(
     options,
     value,
     floatingLabel,
+    invalid,
+    valid,
   ]);
 
   const labelComponent = useMemo(() => (
@@ -233,6 +261,20 @@ export default function DInputSelect<T extends object = DefaultOption>(
           </button>
         )}
         {dynamicComponent}
+        {((invalid || valid) && !iconEnd && !loading) && (
+          <span
+            className="input-group-text"
+            id={`${id}State`}
+          >
+            <DIcon
+              className="input-group-validation-icon"
+              icon={invalid ? invalidIcon : validIcon}
+              familyClass={iconFamilyClass}
+              familyPrefix={iconFamilyPrefix}
+              materialStyle={iconMaterialStyle}
+            />
+          </span>
+        )}
         {iconEnd && !loading && (
           <button
             type="button"
