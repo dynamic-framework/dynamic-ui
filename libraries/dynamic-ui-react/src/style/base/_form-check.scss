@@ -1,18 +1,4 @@
 .form-check-input {
-  &:hover {
-    border-color: $form-check-input-hover-border-color;
-  }
-
-  &:focus {
-    border-color: $form-check-input-focus-border-color;
-    outline: $form-check-input-focus-outline;
-    outline-offset: $form-check-input-focus-outline-offset;
-  }
-
-  &:checked {
-    border-color: $form-check-input-checked-border-color;
-  }
-
   &:disabled:not(:checked, :indeterminate) {
     background-color: $form-check-input-disabled-bg;
     border-color: $form-check-input-disabled-border-color;
