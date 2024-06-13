@@ -9,6 +9,8 @@ const config: Meta<typeof DSkeleton> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
 Component to build placeholder experiences.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

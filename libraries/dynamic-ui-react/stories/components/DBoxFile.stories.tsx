@@ -14,6 +14,8 @@ const config: Meta<typeof DBoxFile> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 Drag'n'drop zone component for files.
 
 To understand in more detail the aspects covered by this component, review the following documentation:

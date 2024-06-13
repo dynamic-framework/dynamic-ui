@@ -11,6 +11,8 @@ const config: Meta<typeof DTooltip> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Floating UI](https://floating-ui.com/docs/react)

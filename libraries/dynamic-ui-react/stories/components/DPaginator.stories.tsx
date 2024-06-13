@@ -11,6 +11,8 @@ const meta: Meta<typeof DPaginator> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap Pagination](https://getbootstrap.com/docs/5.3/components/pagination/)
