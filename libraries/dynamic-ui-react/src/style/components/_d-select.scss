@@ -5,6 +5,7 @@
 
   // select
   --#{$prefix}select-menu-shadow: #{$box-shadow-sm};
+  --#{$prefix}select-menu-z-index: #{$zindex-dropdown};
   --#{$prefix}select-option-focus-bg: var(--#{$prefix}gray-100);
   --#{$prefix}select-option-selected-color: var(--#{$prefix}secondary);
   --#{$prefix}select-option-selected-bg: var(--#{$prefix}gray-100);
@@ -101,6 +102,7 @@
   // select menu
   .d-select__menu-list {
     top: calc(var(--#{$prefix}input-border-width) * 2);
+    z-index: var(--#{$prefix}select-menu-z-index);
     margin: calc(var(--#{$prefix}input-border-width) * -1);
     background: $input-bg;
     border-radius: var(--#{$prefix}input-border-radius);
