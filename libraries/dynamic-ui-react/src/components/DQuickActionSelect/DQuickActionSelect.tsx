@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+} from 'react';
 import classNames from 'classnames';
 
 import type { ChangeEvent } from 'react';
@@ -6,7 +12,7 @@ import type { ChangeEvent } from 'react';
 import type { BaseProps } from '../interface';
 
 type Props = BaseProps & {
-  id: string;
+  id?: string;
   name: string;
   value: string;
   line1: string;
@@ -17,7 +23,7 @@ type Props = BaseProps & {
 
 export default function DQuickActionSelect(
   {
-    id,
+    id: idProp,
     name,
     value,
     line1,
@@ -29,6 +35,9 @@ export default function DQuickActionSelect(
   }: Props,
 ) {
   const innerRef = useRef<HTMLInputElement>(null);
+  const innerId = useId();
+  const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+
   const changeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
     onChange?.(event);
