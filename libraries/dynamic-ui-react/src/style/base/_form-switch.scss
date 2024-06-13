@@ -2,10 +2,10 @@
   --#{$prefix}input-switch-bg: var(--#{$prefix}gray-300);
   --#{$prefix}input-switch-border-color: var(--#{$prefix}gray-500);
   --#{$prefix}input-switch-dot: #{escape-svg($form-switch-bg-image)};
-  --#{$prefix}input-switch-hover-border-color: var(--#{$prefix}focus-ring-color);
-  --#{$prefix}input-switch-focus-outline-color: var(--#{$prefix}focus-ring-color);
-  --#{$prefix}input-switch-active-border-color: var(--#{$prefix}focus-ring-color);
-  --#{$prefix}input-switch-active-bg: var(--#{$prefix}focus-ring-color);
+  --#{$prefix}input-switch-hover-border-color: #{$component-active-bg};
+  --#{$prefix}input-switch-focus-outline-color: #{$component-active-bg};
+  --#{$prefix}input-switch-active-border-color: #{$component-active-bg};
+  --#{$prefix}input-switch-active-bg: #{$component-active-bg};
   --#{$prefix}input-switch-disabled-border-color: var(--#{$prefix}gray-300);
   --#{$prefix}input-switch-disabled-bg: var(--#{$prefix}gray-100);
   --#{$prefix}input-switch-disabled-dot: #{escape-svg($form-switch-disabled-bg-image)};

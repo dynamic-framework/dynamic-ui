@@ -16,11 +16,14 @@ $prefix: $variable-prefix !default;
 @import "box-shadow";
 
 // scss-docs-start focus-ring-variables
-$focus-ring-opacity: 1 !default;
+$focus-ring-width: .25rem !default;
+$focus-ring-opacity: .25 !default;
+$focus-ring-blur: 0 !default;
 // custom
 $focus-ring-color-mapping: "secondary-rgb" !default;
 $focus-ring-color: var(--#{$prefix}focus-ring-color) !default;
 // end custom
+$focus-ring-box-shadow: 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color !default;
 // scss-docs-end focus-ring-variables
 
 $component-active-color: var(--#{$prefix}white) !default;
@@ -40,6 +43,11 @@ $transition-fade: opacity .3s linear !default;
 $input-btn-padding-y: $spacer-3 !default;
 $input-btn-padding-x: $spacer-4 !default;
 
+$input-btn-focus-width: $focus-ring-width !default;
+$input-btn-focus-color-opacity: $focus-ring-opacity !default;
+$input-btn-focus-color: $focus-ring-color !default;
+$input-btn-focus-blur: $focus-ring-blur !default;
+$input-btn-focus-box-shadow: $focus-ring-box-shadow !default;
 $input-btn-focus-color-opacity: 1 !default;
 $input-btn-focus-color: rgba(var(--#{$prefix}secondary-rgb), $input-btn-focus-color-opacity) !default;
 $input-btn-focus-blur: 0 !default;

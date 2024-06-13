@@ -108,7 +108,7 @@
   }
 
   --#{$prefix}body-color: rgb(var(--#{$prefix}body-color-rgb));
-  --#{$prefix}body-color-rgb: var(--#{$prefix}#{$body-color-mapping}-rgb);
+  --#{$prefix}body-color-rgb: #{to-rgb($body-color)};
   --#{$prefix}body-bg: rgb(var(--#{$prefix}body-bg-rgb));
   --#{$prefix}body-bg-rgb: var(--#{$prefix}#{$body-bg-mapping}-rgb);
 
@@ -167,7 +167,9 @@
   // scss-docs-start root-focus-variables
   --#{$prefix}focus-ring-width: #{$focus-ring-width};
   --#{$prefix}focus-ring-opacity: #{$focus-ring-opacity};
-  --#{$prefix}focus-ring-color: rgba(var(--#{$prefix}#{$focus-ring-color-mapping}), var(--#{$prefix}focus-ring-opacity));
+  --#{$prefix}focus-ring-base-color-rgb: var(--#{$prefix}#{$focus-ring-color-mapping});
+  --#{$prefix}focus-ring-base-color: rgb(var(--#{$prefix}#{$focus-ring-color-mapping}));
+  --#{$prefix}focus-ring-color: rgba(var(--#{$prefix}focus-ring-base-color-rgb), var(--#{$prefix}focus-ring-opacity));
   // scss-docs-end root-focus-variables
 
   // scss-docs-start root-form-validation-variables
@@ -207,7 +209,7 @@
   --#{$prefix}label-padding-x: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}label-font-size: var(--#{$prefix}fs-small);
   --#{$prefix}label-font-weight: var(--#{$prefix}fw-normal);
-  --#{$prefix}label-color: var(--#{$prefix}gray);
+  --#{$prefix}label-color: var(--#{$prefix}body-color);
 
   --#{$prefix}btn-border-radius: #{$btn-border-radius};
   --#{$prefix}btn-lg-border-radius: #{$btn-border-radius-lg};
