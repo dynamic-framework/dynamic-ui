@@ -24,6 +24,7 @@ type NonHTMLInputElementProps =
 & {
   label?: string;
   ariaLabel?: string;
+  filledValue?: boolean;
 };
 
 type Props = Merge<
@@ -41,6 +42,7 @@ function DInputRange(
     value = '0',
     min = '0',
     max = '100',
+    filledValue = true,
     onChange,
     ...props
   }: Props,
@@ -49,6 +51,14 @@ function DInputRange(
   const innerRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+
+  const generateClasses = useMemo(
+    () => ({
+      'form-range': true,
+      'form-range-filled-value': filledValue,
+    }),
+    [filledValue],
+  );
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => {
     const minNumber = parseFloat(min.toString());
@@ -68,7 +78,7 @@ function DInputRange(
       <input
         id={id}
         ref={innerRef}
-        className={classNames('form-range', className)}
+        className={classNames(generateClasses, className)}
         aria-label={ariaLabel}
         type="range"
         value={value}
@@ -89,7 +99,7 @@ function DInputRange(
       <input
         id={id}
         ref={innerRef}
-        className={classNames('form-range', className)}
+        className={classNames(generateClasses, className)}
         type="range"
         value={value}
         min={min}
