@@ -58,23 +58,26 @@ To understand in more detail the aspects covered by this component, review the f
     id: {
       control: 'text',
       type: 'string',
-      description: 'The id of the input',
+      description: 'The ID of the input',
     },
     name: {
       control: 'text',
       type: 'string',
-      description: 'Name of the input',
+      description: 'The name of the input',
     },
     className: {
       control: 'text',
       type: 'string',
+      description: 'The CSS class for the component',
     },
     style: {
       control: 'object',
+      description: 'The CSS style for the component',
     },
     label: {
       control: 'text',
       type: 'string',
+      description: 'The label text for the component',
     },
     labelIcon: {
       control: {
@@ -85,22 +88,27 @@ To understand in more detail the aspects covered by this component, review the f
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      description: 'The icon for the label of the component',
     },
     labelIconFamilyClass: {
       control: 'text',
       type: 'string',
+      description: 'The icon family class for the label icon',
     },
     labelIconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      description: 'The icon family prefix for the label icon',
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      description: 'The icon family class for the icons',
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      description: 'The icon family prefix for the icons',
     },
     iconStart: {
       control: {
@@ -111,26 +119,32 @@ To understand in more detail the aspects covered by this component, review the f
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      description: 'The icon at the start of the input',
     },
     iconStartDisabled: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the start icon is disabled',
     },
     iconStartAriaLabel: {
       control: 'text',
       type: 'string',
+      description: 'The ARIA label for the start icon',
     },
     iconStartTabIndex: {
       control: 'number',
       type: 'number',
+      description: 'The tabindex for the start icon',
     },
     iconStartFamilyClass: {
       control: 'text',
       type: 'string',
+      description: 'The icon family class for the start icon',
     },
     iconStartFamilyPrefix: {
       control: 'text',
       type: 'string',
+      description: 'The icon family prefix for the start icon',
     },
     iconEnd: {
       control: {
@@ -141,81 +155,287 @@ To understand in more detail the aspects covered by this component, review the f
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      description: 'The icon at the end of the input',
     },
     iconEndDisabled: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the end icon is disabled',
     },
     iconEndAriaLabel: {
       control: 'text',
       type: 'string',
+      description: 'The ARIA label for the end icon',
     },
     iconEndFamilyClass: {
       control: 'text',
       type: 'string',
+      description: 'The icon family class for the end icon',
     },
     iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
+      description: 'The icon family prefix for the end icon',
     },
     iconEndTabIndex: {
       control: 'number',
       type: 'number',
+      description: 'The tabindex for the end icon',
     },
     hint: {
       control: 'text',
       type: 'string',
-      description: 'Hint to display, also used to display validity feedback',
+      description: 'The hint to display, also used for validity feedback',
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
+      description: 'Determines if the input is invalid',
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
       table: { defaultValue: { summary: false } },
+      description: 'Determines if the input is valid',
     },
     menuWithMaxContent: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the menu should have maximum content height',
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the input is disabled',
     },
     clearable: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the input can be cleared',
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the input is in a loading state',
     },
     rtl: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the input is right-to-left',
     },
     searchable: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the input is searchable',
     },
     multi: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Determines if the input is multi-select',
+    },
+    defaultInputValue: {
+      control: 'text',
+      type: 'string',
+      description: 'The default value for the input',
+    },
+    defaultMenuIsOpen: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Determines if the menu should be open by default',
+    },
+    defaultValue: {
+      control: 'object',
+      description: 'The default selected value(s) for the input',
+    },
+    classNamePrefix: {
+      control: 'text',
+      type: 'string',
+      description: 'The prefix for the CSS class names',
+    },
+    options: {
+      control: 'array',
+      description: 'The options for the select input',
+    },
+    value: {
+      control: 'object',
+      description: 'The selected value(s) for the input',
+    },
+    onFocus: {
+      action: 'focused',
+      description: 'Event fired when the input is focused',
+    },
+    onBlur: {
+      action: 'blurred',
+      description: 'Event fired when the input is blurred',
+    },
+    onKeyDown: {
+      action: 'keyDowned',
+      description: 'Event fired when a key is pressed down',
+    },
+    menuIsOpen: {
+      control: 'boolean',
+      description: 'Determines if the menu is open',
+    },
+    hideSelectedOptions: {
+      control: 'boolean',
+      description: 'Determines if selected options should be hidden',
+    },
+    closeMenuOnSelect: {
+      control: 'boolean',
+      description: 'Determines if the menu should close on selection',
+    },
+    blurInputOnSelect: {
+      control: 'boolean',
+      description: 'Determines if the input should be blurred on selection',
+    },
+    isOptionDisabled: {
+      control: 'boolean',
+      description: 'Determines if an option is disabled',
+    },
+    loadingMessage: {
+      control: 'text',
+      description: 'The loading message to display',
+    },
+    noOptionsMessage: {
+      control: 'text',
+      description: 'The message to display when no options are available',
+    },
+    menuPortalTarget: {
+      control: 'text',
+      description: 'The DOM element to append the menu to',
+    },
+    menuPlacement: {
+      control: 'text',
+      description: 'The placement of the menu',
+    },
+    menuPosition: {
+      control: 'text',
+      description: 'The position of the menu',
+    },
+    menuShouldBlockScroll: {
+      control: 'boolean',
+      description: 'Determines if scrolling should be blocked when the menu is open',
+    },
+    menuShouldScrollIntoView: {
+      control: 'boolean',
+      description: 'Determines if the menu should scroll into view when opened',
+    },
+    formatGroupLabel: {
+      control: 'function',
+      description: 'Function to format group labels',
+    },
+    formatOptionLabel: {
+      control: 'function',
+      description: 'Function to format option labels',
+    },
+    getOptionLabel: {
+      control: 'function',
+      description: 'Function to get the label of an option',
+    },
+    getOptionValue: {
+      control: 'function',
+      description: 'Function to get the value of an option',
+    },
+    inputId: {
+      control: 'text',
+      description: 'The ID of the input element',
+    },
+    inputValue: {
+      control: 'text',
+      description: 'The value of the input element',
+    },
+    instanceId: {
+      control: 'text',
+      description: 'The instance ID of the component',
+    },
+    styles: {
+      control: 'object',
+      description: 'Custom styles for the component',
+    },
+    theme: {
+      control: 'object',
+      description: 'Custom theme for the component',
+    },
+    'aria-label': {
+      control: 'text',
+      description: 'ARIA label for the component',
+    },
+    tabIndex: {
+      control: 'number',
+      description: 'The tab index of the component',
+    },
+    autoFocus: {
+      control: 'boolean',
+      description: 'Determines if the component should autofocus',
+    },
+    components: {
+      control: 'object',
+      description: 'Custom components for the input',
+    },
+    placeholder: {
+      control: 'text',
+      description: 'Placeholder text for the input',
+    },
+    escapeClearsValue: {
+      control: 'boolean',
+      description: 'Determines if pressing escape clears the value',
+    },
+    filterOption: {
+      control: 'function',
+      description: 'Function to filter options',
+    },
+    openMenuOnClick: {
+      control: 'boolean',
+      description: 'Determines if the menu should open on click',
+    },
+    closeMenuOnScroll: {
+      control: 'boolean',
+      description: 'Determines if the menu should close on scroll',
+    },
+    onMenuScrollToBottom: {
+      action: 'scrolledToBottom',
+      description: 'Event fired when the menu is scrolled to the bottom',
+    },
+    onMenuScrollToTop: {
+      action: 'scrolledToTop',
+      description: 'Event fired when the menu is scrolled to the top',
+    },
+    tabSelectsValue: {
+      control: 'boolean',
+      description: 'Determines if pressing tab selects the value',
+    },
+    backspaceRemovesValue: {
+      control: 'boolean',
+      description: 'Determines if pressing backspace removes the value',
+    },
+    maxMenuHeight: {
+      control: 'number',
+      description: 'The maximum height of the menu',
+    },
+    minMenuHeight: {
+      control: 'number',
+      description: 'The minimum height of the menu',
+    },
+    openMenuOnFocus: {
+      control: 'boolean',
+      description: 'Determines if the menu should open on focus',
     },
     onIconStartClick: {
       action: 'onIconStartClick',
+      description: 'Event fired when the start icon is clicked',
     },
     onIconEndClick: {
       action: 'onIconEndClick',
+      description: 'Event fired when the end icon is clicked',
     },
     onChange: {
       action: 'onChange',
+      description: 'Event fired when the value changes',
     },
     onInputChange: {
       action: 'onInputChange',
+      description: 'Event fired when the input value changes',
     },
   },
   decorators: [
