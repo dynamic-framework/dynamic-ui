@@ -65,6 +65,7 @@ export {
   DTabOption,
   DTabContent,
 } from './DTabs';
+export { default as DToast } from './DToast';
 export {
   default as DToastContainer,
   useDToast,
