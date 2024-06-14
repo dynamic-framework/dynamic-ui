@@ -24,7 +24,8 @@ $focus-ring-color: var(--#{$prefix}focus-ring-color) !default;
 // scss-docs-end focus-ring-variables
 
 $component-active-color: var(--#{$prefix}white) !default;
-$component-active-bg: $focus-ring-color !default;
+$component-active-bg: var(--#{$prefix}primary) !default;
+$component-focus-shadow: 0 0 0 4px rgba(var(--#{$prefix}primary-rgb), .4) !default;
 
 $transition-fade: opacity .3s linear !default;
 
