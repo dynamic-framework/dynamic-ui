@@ -68,6 +68,11 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'number',
       description: 'The step value for the input',
     },
+    filledValue: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'To determine if the color of the track behind the thumb is changed',
+    },
     disabled: {
       control: 'boolean',
       type: 'boolean',
@@ -101,6 +106,17 @@ export const Default: Story = {
     min: 1,
     max: 100,
     value: 50,
+  },
+};
+
+export const WithoutFilledValue: Story = {
+  args: {
+    id: 'componentId2',
+    label: 'Label',
+    min: 1,
+    max: 100,
+    value: 50,
+    filledValue: false,
   },
 };
 
