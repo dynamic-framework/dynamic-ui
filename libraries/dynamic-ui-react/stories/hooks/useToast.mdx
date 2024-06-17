@@ -1,34 +1,79 @@
 import {
   Meta,
   Canvas,
+  Source
 } from '@storybook/blocks';
 
 import {
-  UseToastExample,
+  UseSimpleToastExample,
+  UseFullToastExample,
+  UseCustomToastExample,
   UseToastMaterialExample,
-  UseToastTransitionExample,
 } from "./useToastExamples";
 
-# Toast
-Toasts use `DToastContainer` and the `useDToast` hook which are an abstraction to configure `react-toastify` in conjunction with a DAlert to generate toasts
-
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [React Toastify](https://fkhadra.github.io/react-toastify/introduction/)
+import DToastContainer from '../../src/components/DToastContainer';
 
 <Meta title="Design System/Patterns/Toast" />
 
+# Toast
 
-## Example of usage
+Toasts use `DToastContainer` and the `useDToast` hook, which are abstractions to configure react-hot-toast in conjunction with
+a `DAlert` to generate toasts. For more detailed information, refer to the official [React Hot Toast Documentation](https://react-hot-toast.com/docs)
+<br />
 
-```tsx
+## Usage DToastContainer
+
+To get started, include the **`<DToastContainer />`** component once in your app, typically near the root of your component tree.
+This ensures that all toasts are rendered correctly. Here you can customize general styles for all toasts and configure a default
+placement for displaying toasts. You can override this position in any single toast if needed.
+
+<Source
+  code={
+  `
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {
+  DToastContainer,
+  DContextProvider,
+} from '@dynamic-framework/ui-react';
+import './config/liquidConfig';
+import './config/i18nConfig';
+import App from './App';
+import '@dynamic-framework/ui-react/dist/css/dynamic-ui.css';
+import './styles/base.scss';
+const root = ReactDOM.createRoot(document.getElementById('widget') as Element);
+root.render(
+  <React.StrictMode>
+    <DContextProvider>
+      <App />
+      <DToastContainer />
+    </DContextProvider>
+  </React.StrictMode>,
+);
+  `
+  }
+  language="tsx"
+  dark
+/>
+
+## Usage useDToast
+
+The `useDToast` hook provides a simple and flexible way to create toast notifications in your application. By **default**, it uses the
+`DAlert` component to display the toast message. However, you can also render a custom component if needed.
+
+Here’s an example of how to use `useDToast` to create both default and custom toasts:
+
+### Default Toast
+
+<Source
+  code={
+  `
 import {
   DButton,
-  DToastContainer,
   useDToast,
+  DToastContainer
 } from '@dynamic-framework/ui-react';
-
-export default function UseDToastExamples() {
+export function UseToastExample() {
   const { toast } = useDToast();
   return (
     <>
@@ -40,22 +85,125 @@ export default function UseDToastExamples() {
             {
               type: 'info',
               showClose: true,
-              autoClose: 500,
+              duration: 5000,
             },
           )
         )}
       />
-      <DToastContainer position="bottom-center" />
+      <DToastContainer
+        position="top-right"
+      />
     </>
   );
 }
-```
+  `
+  }
+  language="tsx"
+  dark
+/>
 
 <Canvas>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <UseToastExample />
+    <UseSimpleToastExample />
   </div>
 </Canvas>
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
+    <UseFullToastExample />
+  </div>
+</Canvas>
+
+<br />
+
+### Custom Toast
+
+<table style={{tableLayout: 'fixed'}}>
+  <thead>
+    <tr>
+      <th>Toast</th>
+      <th>Component</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <Source
+          code={
+            `
+import {
+  DButton,
+  useDToast,
+  DToastContainer
+} from '@dynamic-framework/ui-react';
+import MyComponent from './MyComponent';
+export function UseCustomToastExample() {
+  const { toast } = useDToast();
+  return (
+    <>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
+            MyComponent,
+            {
+              duration: 5000,
+            },
+          )
+        )}
+      />
+      <DToastContainer
+        position="top-right"
+      />
+    </>
+  );
+}
+            `
+          }
+          language="tsx"
+          dark
+        />
+      </td>
+      <td>
+        <Source
+          code={
+          `
+import { ToastContentProps } from 'react-toastify';
+import { DButton } from '@dynamic-framework/ui-react';
+export function MyComponent(
+  {
+    closeToast
+  }: ToastContentProps
+) {
+  return (
+    <div
+      className="bg-surface-secondary p-4 text-center"
+    >
+      <p className="fw-bold">Toast!</p>
+      <DButton
+        size="sm"
+        variant="outline"
+        onClick={closeToast}
+        text="Close toast"
+      />
+    </div>
+  );
+}
+          `
+          }
+          language="tsx"
+          dark
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
+    <UseCustomToastExample />
+  </div>
+</Canvas>
+<br />
 
 ## Example of usage with material symbols
 To use material symbols it is necessary to configure the DContextProvider
@@ -86,14 +234,16 @@ export default function UseToastExamples() {
             {
               type: 'info',
               showClose: true,
-              autoClose: 500,
+              duration: 5000,
               icon: 'info',
               iconClose: 'close',
             },
           )
         )}
       />
-      <DToastContainer position="bottom-center" />
+      <DToastContainer
+        position="bottom-center"
+      />
     </>
   )
 }
@@ -104,42 +254,3 @@ export default function UseToastExamples() {
     <UseToastMaterialExample />
   </div>
 </Canvas>
-
-## Example with available transitions
-
-```tsx
-import {
-  DButton,
-  DToastContainer,
-  useDToast,
-} from '@dynamic-framework/ui-react';
-
-export default function UseDToastExamples() {
-  const { toast } = useDToast();
-  return (
-    <>
-      <DButton
-        text="Show Toast Bounce"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              transition: 'bounce',
-            },
-          )
-        )}
-      />
-      <DToastContainer position="top-right" />
-    </>
-  );
-}
-```
-<Canvas >
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <UseToastTransitionExample />
-  </div>
-</Canvas>
-

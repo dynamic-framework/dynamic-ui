@@ -1,65 +1,111 @@
 import {
+  ReactElement,
   useCallback,
 } from 'react';
+import { toast as reactHotToast, Toast } from 'react-hot-toast';
+import classNames from 'classnames';
+import DToast from '../DToast/DToast';
+import DIcon from '../DIcon';
+import { useDContext } from '../../contexts';
 
-import {
-  Bounce,
-  Flip,
-  Slide,
-  Zoom,
-  toast as reactToast,
-} from 'react-toastify';
-
-import type { ToastPosition } from 'react-toastify';
-
-import DAlert from '../DAlert/DAlert';
-
-import type { AlertType } from '../interface';
-
-export type ToastConfig = {
-  type?: AlertType;
+type ToastData = {
+  title: string;
+  description?: string;
+  timestamp?: string;
   icon?: string;
-  iconClose?: string;
-  showClose?: boolean;
-  position?: ToastPosition;
-  autoClose?: number | false;
-  stacked?: boolean;
-  containerId?: string;
-  transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
+  closeIcon?: string;
+  theme?: string;
+  soft?: boolean;
 };
 
-const TOAST_TRANSITIONS = {
-  bounce: Bounce,
-  flip: Flip,
-  slide: Slide,
-  zoom: Zoom,
-};
+type Props = Partial<Pick<Toast, 'id' | 'duration' | 'position'>>;
 
 export default function useDToast() {
-  const toast = useCallback((message: string, {
-    icon,
-    iconClose,
-    type = 'info',
-    showClose = true,
-    transition,
-    ...rest
-  }: ToastConfig) => {
-    reactToast(({ closeToast }) => (
-      <DAlert
-        onClose={closeToast}
-        id="alertID"
-        type={type}
-        icon={icon}
-        iconClose={iconClose}
-        showClose={showClose}
+  const {
+    iconMap: {
+      xLg,
+    },
+  } = useDContext();
+
+  const toast = useCallback((
+    data: ToastData | (() => ReactElement),
+    toastProps: Props,
+  ) => {
+    if (typeof data === 'function') {
+      return reactHotToast.custom(data, {});
+    }
+
+    const {
+      title,
+      description,
+      icon,
+      closeIcon,
+      timestamp,
+      theme,
+      soft,
+    } = data;
+
+    return reactHotToast.custom((t) => (
+      <DToast className={classNames({
+        [`bg-${theme}-soft`]: !!theme && soft,
+        [`text-bg-${theme}`]: !!theme && !soft,
+        'border-0': !!theme,
+      }, 'show')}
       >
-        {message}
-      </DAlert>
-    ), {
-      transition: transition && TOAST_TRANSITIONS[transition],
-      ...rest,
-    });
-  }, []);
+        {!description && (
+          <DToast.Body className="d-flex justify-content-between align-items-center">
+            <span className="me-auto">
+              {title}
+            </span>
+            <button
+              type="button"
+              className={classNames({
+                [`text-bg-${theme}`]: !!theme && !soft,
+                'd-toast-close': true,
+              })}
+              aria-label="Close"
+              onClick={() => reactHotToast.dismiss(t.id)}
+            >
+              <DIcon icon={closeIcon || xLg} />
+            </button>
+          </DToast.Body>
+        )}
+        {description && (
+          <>
+            <DToast.Header className={classNames({
+              [`bg-${theme}-soft`]: !!theme && soft,
+              [`text-bg-${theme}`]: !!theme && !soft,
+            }, 'show')}
+            >
+              {icon && (
+                <DIcon icon={icon} />
+              )}
+              <p className="mb-0 me-auto">{title}</p>
+              {timestamp && (
+                <small>{timestamp}</small>
+              )}
+              <button
+                type="button"
+                className={classNames({
+                  [`text-bg-${theme}`]: !!theme && !soft,
+                  'd-toast-close': true,
+                })}
+                aria-label="Close"
+                onClick={() => reactHotToast.dismiss(t.id)}
+              >
+                <DIcon icon={closeIcon || xLg} />
+              </button>
+            </DToast.Header>
+            <DToast.Body className="d-flex justify-content-between align-items-center">
+              <span>
+                {description}
+              </span>
+            </DToast.Body>
+          </>
+        )}
+      </DToast>
+    ), toastProps);
+  }, [xLg]);
 
   return {
     toast,
