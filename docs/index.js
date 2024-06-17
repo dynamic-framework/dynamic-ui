@@ -438,8 +438,10 @@ function useProvidedRefOrCreate(providedRef) {
 }
 
 function DInput(_a, ref) {
-    var { id, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, labelIconMaterialStyle, disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconStart, iconStartDisabled, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconStartMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, invalidIcon: invalidIconProp, validIcon: validIconProp, hint, invalid = false, valid = false, floatingLabel = false, inputStart, inputEnd, value, placeholder = '', onChange, onIconStartClick, onIconEndClick } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "labelIconMaterialStyle", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconStart", "iconStartDisabled", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconStartMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "invalidIcon", "validIcon", "hint", "invalid", "valid", "floatingLabel", "inputStart", "inputEnd", "value", "placeholder", "onChange", "onIconStartClick", "onIconEndClick"]);
+    var { id: idProp, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, labelIconMaterialStyle, disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconStart, iconStartDisabled, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconStartMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, invalidIcon: invalidIconProp, validIcon: validIconProp, hint, invalid = false, valid = false, floatingLabel = false, inputStart, inputEnd, value, placeholder = '', onChange, onIconStartClick, onIconEndClick } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "labelIconMaterialStyle", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconStart", "iconStartDisabled", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconStartMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "invalidIcon", "validIcon", "hint", "invalid", "valid", "floatingLabel", "inputStart", "inputEnd", "value", "placeholder", "onChange", "onIconStartClick", "onIconEndClick"]);
     const inputRef = useProvidedRefOrCreate(ref);
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const handleOnChange = React.useCallback((event) => {
         onChange === null || onChange === void 0 ? void 0 : onChange(event.currentTarget.value);
     }, [onChange]);
@@ -450,12 +452,26 @@ function DInput(_a, ref) {
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(value);
     }, [onIconEndClick, value]);
     const ariaDescribedby = React.useMemo(() => ([
-        iconStart && `${id}Start`,
-        hint && `${id}Hint`,
-        iconEnd && `${id}End`,
+        !!inputStart && `${id}InputStart`,
+        !!iconStart && `${id}Start`,
+        (invalid || valid) && !iconEnd && !loading && `${id}State`,
+        (iconEnd && !loading) && `${id}End`,
+        loading && `${id}Loading`,
+        !!inputEnd && `${id}InputEnd`,
+        !!hint && `${id}Hint`,
     ]
         .filter(Boolean)
-        .join(' ')), [id, iconStart, iconEnd, hint]);
+        .join(' ')), [
+        id,
+        inputStart,
+        iconStart,
+        invalid,
+        valid,
+        iconEnd,
+        loading,
+        inputEnd,
+        hint,
+    ]);
     const inputComponent = React.useMemo(() => (jsxRuntime.jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
             'is-invalid': invalid,
             'is-valid': valid,
@@ -493,7 +509,7 @@ function DInput(_a, ref) {
     return (jsxRuntime.jsxs("div", { className: className, style: style, children: [label && !floatingLabel && labelComponent, jsxRuntime.jsxs("div", { className: classNames({
                     'input-group': true,
                     'has-validation': invalid || valid,
-                }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", children: inputStart })), iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel, tabIndex: onIconStartClick ? iconStartTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle }) })), dynamicComponent, ((invalid || valid) && !iconEnd && !loading) && (jsxRuntime.jsx("span", { className: "input-group-text", id: `${id}State`, children: jsxRuntime.jsx(DIcon, { className: "input-group-validation-icon", icon: invalid ? invalidIcon : validIcon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }) })), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
+                }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel, tabIndex: onIconStartClick ? iconStartTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle }) })), dynamicComponent, ((invalid || valid) && !iconEnd && !loading) && (jsxRuntime.jsx("span", { className: "input-group-text", id: `${id}State`, children: jsxRuntime.jsx(DIcon, { className: "input-group-validation-icon", icon: invalid ? invalidIcon : validIcon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }) })), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
 }
 const ForwardedDInput = React.forwardRef(DInput);
 ForwardedDInput.displayName = 'DInput';
@@ -514,8 +530,10 @@ const ForwardedDDatePickerInput = React.forwardRef(DDatePickerInput);
 ForwardedDDatePickerInput.displayName = 'DDatePickerInput';
 var DDatePickerInput$1 = ForwardedDDatePickerInput;
 
-function DInputCheck({ type, name, label, ariaLabel, checked = false, id, disabled = false, indeterminate, value, onChange, className, style, }) {
+function DInputCheck({ id: idProp, type, name, label, ariaLabel, checked = false, disabled = false, indeterminate, value, onChange, className, style, }) {
     const innerRef = React.useRef(null);
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const handleChange = React.useCallback((event) => {
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
     }, [onChange]);
@@ -529,10 +547,21 @@ function DInputCheck({ type, name, label, ariaLabel, checked = false, id, disabl
             innerRef.current.checked = checked;
         }
     }, [checked]);
+    const inputComponent = React.useMemo(() => (jsxRuntime.jsx("input", { ref: innerRef, onChange: handleChange, className: classNames('form-check-input', className), style: style, id: id, disabled: disabled, type: type, name: name, value: value, "aria-label": ariaLabel })), [
+        ariaLabel,
+        className,
+        disabled,
+        handleChange,
+        id,
+        name,
+        style,
+        type,
+        value,
+    ]);
     if (!label) {
-        return (jsxRuntime.jsx("input", { ref: innerRef, onChange: handleChange, className: classNames('form-check-input', className), style: style, id: id, disabled: disabled, type: type, name: name, value: value, "aria-label": ariaLabel }));
+        return inputComponent;
     }
-    return (jsxRuntime.jsxs("div", { className: "form-check", children: [jsxRuntime.jsx("input", { ref: innerRef, onChange: handleChange, className: classNames('form-check-input', className), style: style, id: id, disabled: disabled, type: type, name: name, value: value }), jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label })] }));
+    return (jsxRuntime.jsxs("div", { className: "form-check", children: [inputComponent, jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label })] }));
 }
 
 function DSelectOptionCheck(_a) {
@@ -850,7 +879,9 @@ const ForwardedDInputPassword = React.forwardRef(DInputPassword);
 ForwardedDInputPassword.displayName = 'DInputPassword';
 var DInputPassword$1 = ForwardedDInputPassword;
 
-function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder, type = 'text', disabled = false, loading = false, secret = false, iconFamilyClass, iconFamilyPrefix, characters = 4, invalidIcon: invalidIconProp, validIcon: validIconProp, innerInputMode = 'text', hint, invalid = false, valid = false, className, style, onChange, }) {
+function DInputPin({ id: idProp, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder, type = 'text', disabled = false, loading = false, secret = false, iconFamilyClass, iconFamilyPrefix, characters = 4, invalidIcon: invalidIconProp, validIcon: validIconProp, innerInputMode = 'text', hint, invalid = false, valid = false, className, style, onChange, }) {
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const [pattern, setPattern] = React.useState('');
     const [activeInput, setActiveInput] = React.useState(Array.from({ length: characters }).fill(''));
     const isInputNum = React.useMemo(() => type === 'number' || type === 'tel', [type]);
@@ -925,7 +956,9 @@ function DInputPin({ id, label = '', labelIcon, labelIconFamilyClass, labelIconF
                         }), value: activeInput[index], type: secret ? 'password' : type, "aria-describedby": `${id}State`, inputMode: innerInputMode, id: `pinIndex${index}`, name: `pin-${index}`, maxLength: 1, onInput: (event) => nextInput(event, index), onKeyDown: (event) => prevInput(event, index), onFocus: () => focusInput(index), onWheel: wheelInput, onClick: (event) => event.preventDefault(), onPaste: (event) => handlePaste(event), autoComplete: "off", placeholder: placeholder, disabled: disabled || loading, required: true }, type === 'number' && ({ min: 0, max: 9 })), index))), (invalid || valid) && !loading && (jsxRuntime.jsx("span", { className: "input-group-text", id: `${id}State`, children: jsxRuntime.jsx(DIcon, { className: "input-group-validation-icon", icon: invalid ? invalidIcon : validIcon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
 }
 
-function DInputSelect({ id, name, label = '', className, style, options = [], labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, floatingLabel = false, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
+function DInputSelect({ id: idProp, name, label = '', className, style, options = [], labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled = false, loading = false, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, invalidIcon: invalidIconProp, validIcon: validIconProp, hint, value, floatingLabel = false, invalid = false, valid = false, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }) {
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const internalValueExtractor = React.useCallback((option) => {
         if (valueExtractor) {
             return valueExtractor(option);
@@ -960,6 +993,9 @@ function DInputSelect({ id, name, label = '', className, style, options = [], la
     const iconEndClickHandler = React.useCallback((event) => {
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(event);
     }, [onIconEndClick]);
+    const { iconMap: { input } } = useDContext();
+    const invalidIcon = React.useMemo(() => invalidIconProp || input.invalid, [input.invalid, invalidIconProp]);
+    const validIcon = React.useMemo(() => validIconProp || input.valid, [input.valid, validIconProp]);
     const ariaDescribedby = React.useMemo(() => ([
         iconStart && `${id}Start`,
         hint && `${id}Hint`,
@@ -970,6 +1006,8 @@ function DInputSelect({ id, name, label = '', className, style, options = [], la
     const selectComponent = React.useMemo(() => (jsxRuntime.jsx("select", Object.assign({ id: id, name: name, className: classNames({
             'form-select': true,
             'floating-label': floatingLabel,
+            'is-invalid': invalid,
+            'is-valid': valid,
         }), "aria-label": label, disabled: disabled || loading, onChange: changeHandler, onBlur: blurHandler }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, value && { value }, { children: options.map((option) => (jsxRuntime.jsx("option", { value: internalValueExtractor(option), children: internalLabelExtractor(option) }, internalValueExtractor(option)))) }))), [
         ariaDescribedby,
         blurHandler,
@@ -984,6 +1022,8 @@ function DInputSelect({ id, name, label = '', className, style, options = [], la
         options,
         value,
         floatingLabel,
+        invalid,
+        valid,
     ]);
     const labelComponent = React.useMemo(() => (jsxRuntime.jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsxRuntime.jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}input-label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix }))] })), [
         id,
@@ -1000,10 +1040,12 @@ function DInputSelect({ id, name, label = '', className, style, options = [], la
     }, [floatingLabel, labelComponent, selectComponent]);
     return (jsxRuntime.jsxs("div", { className: className, style: style, children: [label && !floatingLabel && (labelComponent), jsxRuntime.jsxs("div", { className: classNames({
                     'input-group': true,
-                }), children: [iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), dynamicComponent, iconEnd && !loading && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text form-control-icon loading", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
+                }), children: [iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: iconStartClickHandler, disabled: disabled || loading, "aria-label": iconStartAriaLabel, children: iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix })) })), dynamicComponent, ((invalid || valid) && !iconEnd && !loading) && (jsxRuntime.jsx("span", { className: "input-group-text", id: `${id}State`, children: jsxRuntime.jsx(DIcon, { className: "input-group-validation-icon", icon: invalid ? invalidIcon : validIcon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }) })), iconEnd && !loading && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: iconEndClickHandler, disabled: disabled || loading, "aria-label": iconEndAriaLabel, children: iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text form-control-icon loading", children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] }));
 }
 
-function DInputSwitch({ label, ariaLabel, id, name, checked, disabled, readonly, className, style, onChange, }) {
+function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, readonly, className, style, onChange, }) {
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const [internalIsChecked, setInternalIsChecked] = React.useState(checked);
     React.useEffect(() => {
         setInternalIsChecked(checked);
@@ -1015,6 +1057,44 @@ function DInputSwitch({ label, ariaLabel, id, name, checked, disabled, readonly,
     }, [onChange]);
     return (jsxRuntime.jsxs("div", { className: "form-check form-switch", children: [jsxRuntime.jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', className), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] }));
 }
+
+function DInputRange(_a, ref) {
+    var { id: idProp, label, ariaLabel, className, style, value = '0', min = '0', max = '100', filledValue = true, onChange } = _a, props = tslib.__rest(_a, ["id", "label", "ariaLabel", "className", "style", "value", "min", "max", "filledValue", "onChange"]);
+    const innerRef = useProvidedRefOrCreate(ref);
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
+    const generateClasses = React.useMemo(() => ({
+        'form-range': true,
+        'form-range-value-indicator': filledValue,
+    }), [filledValue]);
+    const generateStyleVariables = React.useMemo(() => {
+        const minNumber = parseFloat(min.toString());
+        const maxNumber = parseFloat(max.toString());
+        const valueNumber = parseFloat(value.toString());
+        const percentage = ((valueNumber - minNumber) / (maxNumber - minNumber)) * 100;
+        return Object.assign(Object.assign({}, style), { [`--${PREFIX_BS}form-range-component-value`]: `${percentage}%` });
+    }, [min, max, value, style]);
+    const inputComponent = React.useMemo(() => (jsxRuntime.jsx("input", Object.assign({ id: id, ref: innerRef, className: classNames(generateClasses, className), "aria-label": ariaLabel, type: "range", value: value, min: min, max: max, style: generateStyleVariables, onChange: onChange }, props))), [
+        ariaLabel,
+        className,
+        generateClasses,
+        generateStyleVariables,
+        id,
+        innerRef,
+        max,
+        min,
+        onChange,
+        props,
+        value,
+    ]);
+    if (!label) {
+        return inputComponent;
+    }
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("label", { className: "form-label", htmlFor: id, children: label }), inputComponent] }));
+}
+const ForwardedDInputRange = React.forwardRef(DInputRange);
+ForwardedDInputRange.displayName = 'DInputRange';
+var DInputRange$1 = ForwardedDInputRange;
 
 function DListItem({ children, className, style, active = false, disabled = false, theme, onClick, }) {
     const Tag = React.useMemo(() => (onClick ? 'button' : 'div'), [onClick]);
@@ -1184,7 +1264,9 @@ function DQuickActionButton({ line1, line2, className, actionLinkText, actionLin
                     : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsxRuntime.jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsxRuntime.jsx("div", { className: "d-quick-action-button-content", children: jsxRuntime.jsxs("div", { className: "d-quick-action-button-text", children: [jsxRuntime.jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsxRuntime.jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), secondaryActionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: secondaryActionIcon, ariaLabel: secondaryActionAriaLabel, iconStartFamilyClass: actionIconFamilyClass, iconStartFamilyPrefix: actionIconFamilyPrefix, theme: actionLinkTheme, onClick: secondaryActionLinkClickHandler, stopPropagationEnabled: true })), actionLinkText && !actionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-action-link", type: "button", variant: "link", theme: actionLinkTheme, text: actionLinkText, onClick: actionLinkClickHandler, stopPropagationEnabled: true })), actionIcon && !actionLinkText && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] }));
 }
 
-function DQuickActionCheck({ id, name, value, line1, line2, line3, className, style, checked, onChange, }) {
+function DQuickActionCheck({ id: idProp, name, value, line1, line2, line3, className, style, checked, onChange, }) {
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const changeHandler = React.useCallback((event) => {
         event.stopPropagation();
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
@@ -1192,8 +1274,10 @@ function DQuickActionCheck({ id, name, value, line1, line2, line3, className, st
     return (jsxRuntime.jsxs("label", { className: classNames('d-quick-action-check', className), htmlFor: id, style: style, children: [jsxRuntime.jsx(DInputCheck, { id: id, type: "radio", name: name, value: value, checked: checked, onChange: changeHandler }), jsxRuntime.jsxs("div", { className: "d-quick-action-check-detail", children: [jsxRuntime.jsx("span", { className: "d-quick-action-check-line1", children: line1 }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line2", children: line2 })] }), jsxRuntime.jsx("span", { className: "d-quick-action-check-line3", children: line3 })] }));
 }
 
-function DQuickActionSelect({ id, name, value, line1, line2, className, style, selected = false, onChange, }) {
+function DQuickActionSelect({ id: idProp, name, value, line1, line2, className, style, selected = false, onChange, }) {
     const innerRef = React.useRef(null);
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const changeHandler = React.useCallback((event) => {
         event.stopPropagation();
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
@@ -1206,7 +1290,9 @@ function DQuickActionSelect({ id, name, value, line1, line2, className, style, s
     return (jsxRuntime.jsxs("label", { className: classNames('d-quick-action-select', className), htmlFor: id, style: style, children: [jsxRuntime.jsx("input", { ref: innerRef, id: id, type: "radio", name: name, value: value, onChange: changeHandler }), jsxRuntime.jsx("span", { className: "d-quick-action-select-line1", children: line1 }), jsxRuntime.jsx("span", { className: "d-quick-action-select-line2", children: line2 })] }));
 }
 
-function DQuickActionSwitch({ id, name, label, hint, checked, disabled, className, style, onClick, }) {
+function DQuickActionSwitch({ id: idProp, name, label, hint, checked, disabled, className, style, onClick, }) {
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const clickHandler = React.useCallback((event) => {
         event.stopPropagation();
         onClick === null || onClick === void 0 ? void 0 : onClick(checked);
@@ -1339,7 +1425,7 @@ function DTabContent({ tab, children, className, style, }) {
     return (jsxRuntime.jsx("div", { className: classNames('tab-pane fade show active', className), id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab`, style: style, children: children }));
 }
 
-function DTabs({ children, defaultSelected, onChange, options, className, style, vertical, variant = 'underline', }) {
+function DTabs({ children, defaultSelected, onChange, options, className, classNameTab, style, vertical, variant = 'underline', }) {
     const [selected, setSelected] = React.useState(defaultSelected);
     const onSelect = React.useCallback((option) => {
         if (option.tab) {
@@ -1360,10 +1446,26 @@ function DTabs({ children, defaultSelected, onChange, options, className, style,
                 'flex-column': !vertical || variant === 'tabs',
             }), style: style, children: [jsxRuntime.jsx("nav", { className: classNames(generateClasses), children: options.map((option) => (jsxRuntime.jsx("button", { id: `${option.tab}Tab`, className: classNames('nav-link', {
                             active: option.tab === selected,
-                        }, className), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.disabled, onClick: () => onSelect(option), children: option.label }, option.label))) }), jsxRuntime.jsx("div", { className: "tab-content w-100", children: children })] }) }));
+                        }, classNameTab), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.disabled, onClick: () => onSelect(option), children: option.label }, option.label))) }), jsxRuntime.jsx("div", { className: "tab-content w-100", children: children })] }) }));
 }
 var DTabs$1 = Object.assign(DTabs, {
     Tab: DTabContent,
+});
+
+function DToastHeader({ children, className, style }) {
+    return (jsxRuntime.jsx("div", { className: classNames('toast-header', className), style: style, children: children }));
+}
+
+function DToastBody({ children, className, style }) {
+    return (jsxRuntime.jsx("div", { className: classNames('toast-body', className), style: style, children: children }));
+}
+
+function DToast({ children, className, style }) {
+    return (jsxRuntime.jsx("div", { className: classNames('toast', className), role: "alert", "aria-live": "assertive", "aria-atomic": "true", style: style, children: children }));
+}
+var DToast$1 = Object.assign(DToast, {
+    Header: DToastHeader,
+    Body: DToastBody,
 });
 
 const TOAST_TRANSITIONS$1 = {
@@ -1433,6 +1535,7 @@ exports.DInputCurrencyBase = DInputCurrencyBase$1;
 exports.DInputMask = DInputMask$1;
 exports.DInputPassword = DInputPassword$1;
 exports.DInputPin = DInputPin;
+exports.DInputRange = DInputRange$1;
 exports.DInputSearch = DInputSearch$1;
 exports.DInputSelect = DInputSelect;
 exports.DInputSwitch = DInputSwitch;
@@ -1460,6 +1563,7 @@ exports.DStepperDesktop = DStepper$2;
 exports.DStepperMobile = DStepper$1;
 exports.DTabContent = DTabContent;
 exports.DTabs = DTabs$1;
+exports.DToast = DToast$1;
 exports.DToastContainer = DToastContainer;
 exports.DTooltip = DTooltip;
 exports.configureI18n = configureI8n;

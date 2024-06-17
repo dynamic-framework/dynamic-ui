@@ -1,7 +1,7 @@
 import type { ChangeEvent } from 'react';
 import type { BaseProps } from '../interface';
 type Props = BaseProps & {
-    id: string;
+    id?: string;
     name: string;
     value: string;
     line1: string;
@@ -9,5 +9,5 @@ type Props = BaseProps & {
     selected?: boolean;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
-export default function DQuickActionSelect({ id, name, value, line1, line2, className, style, selected, onChange, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DQuickActionSelect({ id: idProp, name, value, line1, line2, className, style, selected, onChange, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

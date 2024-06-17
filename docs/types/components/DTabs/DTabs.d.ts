@@ -8,13 +8,14 @@ export type DTabOption = {
 };
 export type TabVariant = 'tabs' | 'pills' | 'underline';
 type Props = BaseProps & PropsWithChildren<{
+    classNameTab?: string;
     onChange: (option: DTabOption) => void;
     options: Array<DTabOption>;
     defaultSelected: string;
     vertical?: boolean;
     variant?: TabVariant;
 }>;
-declare function DTabs({ children, defaultSelected, onChange, options, className, style, vertical, variant, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DTabs({ children, defaultSelected, onChange, options, className, classNameTab, style, vertical, variant, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DTabs & {
     Tab: typeof DTabContent;
 };

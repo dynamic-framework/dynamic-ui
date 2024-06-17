@@ -1,6 +1,6 @@
 import type { BaseProps } from '../interface';
 type Props = BaseProps & {
-    id: string;
+    id?: string;
     name?: string;
     label: string;
     hint: string;
@@ -8,5 +8,5 @@ type Props = BaseProps & {
     disabled?: boolean;
     onClick?: (isChecked: boolean | undefined) => void;
 };
-export default function DQuickActionSwitch({ id, name, label, hint, checked, disabled, className, style, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DQuickActionSwitch({ id: idProp, name, label, hint, checked, disabled, className, style, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

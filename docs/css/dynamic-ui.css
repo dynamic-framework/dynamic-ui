@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.24.0
+ * dynamic-framework 1.25.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -3441,8 +3441,8 @@ textarea.form-control-lg {
   box-shadow: none;
 }
 .form-check-input:checked {
-  background-color: var(--bs-focus-ring-color);
-  border-color: var(--bs-focus-ring-color);
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
 }
 .form-check-input:checked[type=checkbox] {
   --bs-form-check-bg-image: url("data:image/svg+xml, %3csvg viewBox='-4 -6 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M14.294 0.594229C14.3863 0.498719 14.4966 0.422536 14.6186 0.370127C14.7406 0.317718 14.8719 0.290132 15.0046 0.288978C15.1374 0.287824 15.2691 0.313126 15.392 0.363407C15.5149 0.413688 15.6265 0.487941 15.7204 0.581833C15.8143 0.675726 15.8886 0.787378 15.9389 0.910275C15.9891 1.03317 16.0144 1.16485 16.0133 1.29763C16.0121 1.43041 15.9846 1.56163 15.9321 1.68363C15.8797 1.80564 15.8036 1.91598 15.708 2.00823L6.70804 11.0082C6.52051 11.1957 6.26621 11.301 6.00104 11.301C5.73588 11.301 5.48157 11.1957 5.29404 11.0082L0.293041 6.00723C0.110883 5.81863 0.0100885 5.56602 0.0123669 5.30383C0.0146453 5.04163 0.119815 4.79082 0.305223 4.60541C0.490631 4.42 0.741443 4.31483 1.00364 4.31255C1.26584 4.31028 1.51844 4.41107 1.70704 4.59323L6.00104 8.88723L14.294 0.594229V0.594229Z' fill='%23fff'/%3e%3c/svg%3e");
@@ -3451,8 +3451,8 @@ textarea.form-control-lg {
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
 }
 .form-check-input[type=checkbox]:indeterminate {
-  background-color: var(--bs-focus-ring-color);
-  border-color: var(--bs-focus-ring-color);
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
 }
 .form-check-input:disabled {
@@ -3527,10 +3527,10 @@ textarea.form-control-lg {
   outline: 0;
 }
 .form-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px var(--bs-body-bg), 0 0 0 1px rgba(var(--bs-secondary-rgb));
+  box-shadow: 0 0 0 4px rgba(var(--bs-primary-rgb), 0.4);
 }
 .form-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px var(--bs-body-bg), 0 0 0 1px rgba(var(--bs-secondary-rgb));
+  box-shadow: 0 0 0 4px rgba(var(--bs-primary-rgb), 0.4);
 }
 .form-range::-moz-focus-outer {
   border: 0;
@@ -3538,10 +3538,10 @@ textarea.form-control-lg {
 .form-range::-webkit-slider-thumb {
   width: 1rem;
   height: 1rem;
-  margin-top: -0.25rem;
+  margin-top: -0.375rem;
   -webkit-appearance: none;
           appearance: none;
-  background-color: var(--bs-focus-ring-color);
+  background-color: var(--bs-primary);
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.25rem rgba(var(--bs-black-rgb), 0.1);
@@ -3555,24 +3555,24 @@ textarea.form-control-lg {
   }
 }
 .form-range::-webkit-slider-thumb:active {
-  background-color: var(--bs-focus-ring-color);
+  background-color: var(--bs-primary);
 }
 .form-range::-webkit-slider-runnable-track {
   width: 100%;
-  height: 0.5rem;
+  height: 0.25rem;
   color: transparent;
   cursor: pointer;
   background-color: var(--bs-gray-300);
   border-color: transparent;
-  border-radius: 1rem;
-  box-shadow: var(--bs-box-shadow-inset);
+  border-radius: var(--bs-ref-spacer-6);
+  box-shadow: none;
 }
 .form-range::-moz-range-thumb {
   width: 1rem;
   height: 1rem;
   -moz-appearance: none;
        appearance: none;
-  background-color: var(--bs-focus-ring-color);
+  background-color: var(--bs-primary);
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.25rem rgba(var(--bs-black-rgb), 0.1);
@@ -3586,17 +3586,17 @@ textarea.form-control-lg {
   }
 }
 .form-range::-moz-range-thumb:active {
-  background-color: var(--bs-focus-ring-color);
+  background-color: var(--bs-primary);
 }
 .form-range::-moz-range-track {
   width: 100%;
-  height: 0.5rem;
+  height: 0.25rem;
   color: transparent;
   cursor: pointer;
   background-color: var(--bs-gray-300);
   border-color: transparent;
-  border-radius: 1rem;
-  box-shadow: var(--bs-box-shadow-inset);
+  border-radius: var(--bs-ref-spacer-6);
+  box-shadow: none;
 }
 .form-range:disabled {
   pointer-events: none;
@@ -3994,7 +3994,7 @@ textarea.form-control-lg {
   --bs-dropdown-link-hover-color: rgb(var(--bs-gray-500-rgb));
   --bs-dropdown-link-hover-bg: rgb(var(--bs-gray-100-rgb));
   --bs-dropdown-link-active-color: var(--bs-white);
-  --bs-dropdown-link-active-bg: var(--bs-focus-ring-color);
+  --bs-dropdown-link-active-bg: var(--bs-primary);
   --bs-dropdown-link-disabled-color: var(--bs-tertiary-color);
   --bs-dropdown-item-padding-x: var(--bs-ref-spacer-4);
   --bs-dropdown-item-padding-y: var(--bs-ref-spacer-2);
@@ -4261,7 +4261,7 @@ textarea.form-control-lg {
   --bs-dropdown-divider-bg: var(--bs-border-color-translucent);
   --bs-dropdown-link-hover-bg: rgba(var(--bs-white-rgb), 0.15);
   --bs-dropdown-link-active-color: var(--bs-white);
-  --bs-dropdown-link-active-bg: var(--bs-focus-ring-color);
+  --bs-dropdown-link-active-bg: var(--bs-primary);
   --bs-dropdown-link-disabled-color: var(--bs-gray-500);
   --bs-dropdown-header-color: var(--bs-gray-500);
 }
@@ -5311,8 +5311,8 @@ textarea.form-control-lg {
   --bs-pagination-focus-bg: var(--bs-secondary-100);
   --bs-pagination-focus-box-shadow: 0;
   --bs-pagination-active-color: var(--bs-white);
-  --bs-pagination-active-bg: var(--bs-focus-ring-color);
-  --bs-pagination-active-border-color: var(--bs-focus-ring-color);
+  --bs-pagination-active-bg: var(--bs-primary);
+  --bs-pagination-active-border-color: var(--bs-primary);
   --bs-pagination-disabled-color: var(--bs-gray-400);
   --bs-pagination-disabled-bg: var(--bs-transparent);
   --bs-pagination-disabled-border-color: var(--bs-border-color);
@@ -5563,8 +5563,8 @@ textarea.form-control-lg {
   --bs-list-group-disabled-color: var(--bs-gray-600);
   --bs-list-group-disabled-bg: transparent;
   --bs-list-group-active-color: var(--bs-white);
-  --bs-list-group-active-bg: var(--bs-focus-ring-color);
-  --bs-list-group-active-border-color: var(--bs-focus-ring-color);
+  --bs-list-group-active-bg: var(--bs-primary);
+  --bs-list-group-active-border-color: var(--bs-primary);
   display: flex;
   flex-direction: column;
   padding-left: 0;
@@ -7516,7 +7516,7 @@ body {
   outline-offset: 2px;
 }
 .form-check-input:checked {
-  border-color: var(--bs-focus-ring-color);
+  border-color: var(--bs-primary);
 }
 .form-check-input:disabled:not(:checked, :indeterminate) {
   background-color: var(--bs-gray-100);
@@ -7532,6 +7532,19 @@ body {
   margin: 0;
   -webkit-appearance: none;
           appearance: none;
+}
+
+.form-range.form-range-value-indicator::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, var(--bs-primary) 0%, var(--bs-primary) var(--bs-form-range-component-value), var(--bs-gray-300) var(--bs-form-range-component-value), var(--bs-gray-300) 100%);
+}
+.form-range.form-range-value-indicator::-moz-range-track {
+  background: linear-gradient(to right, var(--bs-primary) 0%, var(--bs-primary) var(--bs-form-range-component-value), var(--bs-gray-300) var(--bs-form-range-component-value), var(--bs-gray-300) 100%);
+}
+.form-range:disabled.form-range-value-indicator::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, var(--bs-gray-500) 0%, var(--bs-gray-500) var(--bs-form-range-component-value), var(--bs-gray-300) var(--bs-form-range-component-value), var(--bs-gray-300) 100%);
+}
+.form-range:disabled.form-range-value-indicator::-moz-range-track {
+  background: linear-gradient(to right, var(--bs-gray-500) 0%, var(--bs-gray-500) var(--bs-form-range-component-value), var(--bs-gray-300) var(--bs-form-range-component-value), var(--bs-gray-300) 100%);
 }
 
 .form-text {
@@ -7609,24 +7622,24 @@ body {
   border-color: var(--bs-input-focus-border-color);
   box-shadow: var(--bs-input-focus-box-shadow);
 }
-.input-group:has(.form-control.is-valid) {
+.input-group:has(.form-control.is-valid, .form-select.is-valid) {
   border-color: var(--bs-form-valid-border-color);
   box-shadow: 0 0 0 1px rgba(var(--bs-success-rgb), 1);
 }
-.input-group:has(.form-control.is-valid) ~ .form-text {
+.input-group:has(.form-control.is-valid, .form-select.is-valid) ~ .form-text {
   color: var(--bs-form-valid-border-color);
 }
-.input-group:has(.form-control.is-valid) .input-group-validation-icon {
+.input-group:has(.form-control.is-valid, .form-select.is-valid) .input-group-validation-icon {
   --bs-icon-color: var(--bs-success);
 }
-.input-group:has(.form-control.is-invalid) {
+.input-group:has(.form-control.is-invalid, .form-select.is-invalid) {
   border-color: var(--bs-form-invalid-border-color);
   box-shadow: 0 0 0 1px rgba(var(--bs-danger-rgb), 1);
 }
-.input-group:has(.form-control.is-invalid) ~ .form-text {
+.input-group:has(.form-control.is-invalid, .form-select.is-invalid) ~ .form-text {
   color: var(--bs-form-invalid-border-color);
 }
-.input-group:has(.form-control.is-invalid) .input-group-validation-icon {
+.input-group:has(.form-control.is-invalid, .form-select.is-invalid) .input-group-validation-icon {
   --bs-icon-color: var(--bs-danger);
 }
 .input-group:has(.form-select:disabled), .input-group:has(.form-control:disabled) {
@@ -11731,6 +11744,7 @@ label .d-icon {
 .d-select {
   --bs-select-gap: 0.5rem;
   --bs-select-menu-shadow: 0 8px 12px 0 rgba(35, 36, 38, 0.05);
+  --bs-select-menu-z-index: 1000;
   --bs-select-option-focus-bg: var(--bs-gray-100);
   --bs-select-option-selected-color: var(--bs-secondary);
   --bs-select-option-selected-bg: var(--bs-gray-100);
@@ -11814,6 +11828,7 @@ label .d-icon {
 }
 .d-select .d-select__menu-list {
   top: calc(var(--bs-input-border-width) * 2);
+  z-index: var(--bs-select-menu-z-index);
   margin: calc(var(--bs-input-border-width) * -1);
   background: var(--bs-white);
   border-radius: var(--bs-input-border-radius);

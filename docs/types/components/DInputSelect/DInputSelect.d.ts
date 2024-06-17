@@ -1,15 +1,17 @@
 import type { FocusEvent, MouseEvent } from 'react';
-import type { BaseProps, EndIconProps, LabelIconProps, StartIconProps } from '../interface';
+import type { BaseProps, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps, StateIcons } from '../interface';
 export type DefaultOption = {
     value: string | number;
     label: string;
 };
-export type Props<T> = BaseProps & LabelIconProps & StartIconProps & EndIconProps & {
+export type Props<T> = BaseProps & FamilyIconProps & LabelIconProps & StartIconProps & EndIconProps & StateIcons & {
     id?: string;
     name?: string;
     label?: string;
     disabled?: boolean;
     loading?: boolean;
+    invalid?: boolean;
+    valid?: boolean;
     hint?: string;
     floatingLabel?: boolean;
     onBlur?: (event: FocusEvent) => void;
@@ -21,4 +23,4 @@ export type Props<T> = BaseProps & LabelIconProps & StartIconProps & EndIconProp
     valueExtractor?: (item: T) => string | number;
     labelExtractor?: (item: T) => string;
 };
-export default function DInputSelect<T extends object = DefaultOption>({ id, name, label, className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled, loading, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, floatingLabel, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }: Props<T>): import("react/jsx-runtime").JSX.Element;
+export default function DInputSelect<T extends object = DefaultOption>({ id: idProp, name, label, className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled, loading, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, invalidIcon: invalidIconProp, validIcon: validIconProp, hint, value, floatingLabel, invalid, valid, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }: Props<T>): import("react/jsx-runtime").JSX.Element;
