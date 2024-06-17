@@ -4,7 +4,7 @@ import DToastContainer from '../../src/components/DToastContainer';
 import { DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
-export function UseToastExample() {
+export function UseSimpleToastExample() {
   const { toast } = useDToast();
   return (
     <>
@@ -12,11 +12,70 @@ export function UseToastExample() {
         text="Show Toast"
         onClick={() => (
           toast(
-            'Example',
+            { title: 'Example', theme: 'primary', soft: true },
+            { duration: 40000 },
+          )
+        )}
+      />
+      <DToastContainer
+        position="top-right"
+      />
+    </>
+  );
+}
+
+export function UseFullToastExample() {
+  const { toast } = useDToast();
+  return (
+    <>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
             {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
+              title: 'Example',
+              description: 'This is a description',
+              icon: 'check',
+              theme: 'warning',
+              soft: true,
+            },
+            { duration: 40000 },
+          )
+        )}
+      />
+      <DToastContainer
+        position="top-right"
+      />
+    </>
+  );
+}
+
+export function MyComponent() {
+  return (
+    <div className="bg-surface-secondary rounded-2 p-4 text-center">
+      <p className="fw-bold mt-0">Toast!</p>
+      <DButton
+        size="sm"
+        variant="outline"
+        theme="secondary"
+        // onClick={closeToast}
+        text="Close toast"
+      />
+    </div>
+  );
+}
+
+export function UseCustomToastExample() {
+  const { toast } = useDToast();
+  return (
+    <>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
+            MyComponent,
+            {
+              duration: 3000,
             },
           )
         )}
@@ -38,94 +97,14 @@ export function UseToastMaterialExample() {
         text="Show Toast"
         onClick={() => (
           toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example2',
-            },
+            { title: 'Example' },
+            { duration: 5000 },
           )
         )}
       />
       <DToastContainer
         position="top-right"
-        containerId="example2"
-        transition="flip"
       />
     </DContextProvider>
-  );
-}
-
-export function UseToastTransitionExample() {
-  const { toast } = useDToast();
-
-  return (
-    <div className="d-flex gap-4">
-      <DButton
-        text="Show Toast Slide"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example3',
-              transition: 'slide',
-            },
-          )
-        )}
-      />
-      <DButton
-        text="Show Toast Flip"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example3',
-              transition: 'flip',
-            },
-          )
-        )}
-      />
-      <DButton
-        text="Show Toast Bounce"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example3',
-              transition: 'bounce',
-            },
-          )
-        )}
-      />
-      <DButton
-        text="Show Toast Zoom"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example3',
-            },
-          )
-        )}
-      />
-      <DToastContainer
-        containerId="example3"
-        position="top-right"
-        transition="zoom"
-      />
-    </div>
   );
 }
