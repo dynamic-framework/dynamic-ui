@@ -55,7 +55,7 @@ function DInputRange(
   const generateClasses = useMemo(
     () => ({
       'form-range': true,
-      'form-range-filled-value': filledValue,
+      'form-range-value-indicator': filledValue,
     }),
     [filledValue],
   );
