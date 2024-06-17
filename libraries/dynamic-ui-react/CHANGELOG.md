@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.25.0...@dynamic-framework/ui-react@1.26.0) (2024-06-17)
+
+
+### Style Features
+
+* **style:** adjust DInputRange style ([2724ed6](https://github.com/dynamic-framework/dynamic-ui/commit/2724ed67df1ecc05dad1448bf7dc6f95c24d82e4))
+* **style:** move style to change the color of form-range track to the class form-range-filled-value ([cbbff75](https://github.com/dynamic-framework/dynamic-ui/commit/cbbff75556f82bc9afd3ef0deea83a5997c27ca8))
+
+
+### Features
+
+* **DInputRange:** add component ([4d24ed5](https://github.com/dynamic-framework/dynamic-ui/commit/4d24ed563ea0a3ad6195dd819ef5decdef780aa5))
+* **DInputRange:** add optional filled value to change the color of range track ([98b11d5](https://github.com/dynamic-framework/dynamic-ui/commit/98b11d556bb1df808100ebddecb9bf910f35cfc7))
+* **DToast:** create component, test and stories ([8cb1e33](https://github.com/dynamic-framework/dynamic-ui/commit/8cb1e33559e697feb24fab3ada3532b21bf135e9))
+
+
+### Style Fixes
+
+* **style:** select menu z-index ([38a38db](https://github.com/dynamic-framework/dynamic-ui/commit/38a38dbcf0c17cc66bf762c9d5c29cbae925f9e6))
+
+
+### Bug Fixes
+
+* **DInput:** adjust id usage ([0a0e3cf](https://github.com/dynamic-framework/dynamic-ui/commit/0a0e3cf92f904680a476e313ac04313ee65647a7))
+* **DInputCheck:** adjust id usage ([58dce4e](https://github.com/dynamic-framework/dynamic-ui/commit/58dce4e5fde3dbc8dfe2cf49b0a69cc0fdacf708))
+* **DInputPin:** adjust id usage ([587da8e](https://github.com/dynamic-framework/dynamic-ui/commit/587da8e0978db7efc4f761f2f145f3d0ffa7e285))
+* **DInputSelect:** adjust id usage ([f4426ce](https://github.com/dynamic-framework/dynamic-ui/commit/f4426ce720fa322e066af698117c0b6ab521458d))
+* **DInputSelect:** set invalid and valid states on form ([#668](https://github.com/dynamic-framework/dynamic-ui/issues/668)) ([49682ea](https://github.com/dynamic-framework/dynamic-ui/commit/49682ea0b3199fc0af2d376fb6e4976e5a2c790f))
+* **DInputSwitch:** adjust id usage ([af8393a](https://github.com/dynamic-framework/dynamic-ui/commit/af8393a2030b568383aaec56cca5c009b7394f21))
+* **DQuickActionCheck:** adjust id usage ([aaac4e3](https://github.com/dynamic-framework/dynamic-ui/commit/aaac4e3e149db21488b369b1a461fb3786eadfce))
+* **DQuickActionSelect:** adjust id usage ([ee913a7](https://github.com/dynamic-framework/dynamic-ui/commit/ee913a7eab8a127a22033ab674d26d6de7153669))
+* **DQuickActionSwitch:** adjust id usage ([39e32cc](https://github.com/dynamic-framework/dynamic-ui/commit/39e32cc3eb4833513a812bc8aa97b265c77c093c))
+* **DTabs:** remove classname modifier from buttons in nav ([#667](https://github.com/dynamic-framework/dynamic-ui/issues/667)) ([88a95ff](https://github.com/dynamic-framework/dynamic-ui/commit/88a95ff8e6e86a19116d16e733e89bf44fedd177))
+
+
+### Storybook
+
+* **DInputRange:** add filledValue story and arg type ([0e2efab](https://github.com/dynamic-framework/dynamic-ui/commit/0e2efab15105d2a49b8dc1eafefeb6a1ec23a173))
+* **DInputRange:** add storybook documentation ([444dcc5](https://github.com/dynamic-framework/dynamic-ui/commit/444dcc5e01a22afe06beb3cf0c3509248e6dd286))
+* **DSelect:** add more documentation to each react-select property ([f1d51fe](https://github.com/dynamic-framework/dynamic-ui/commit/f1d51fe1b5946382b74833d55ece2dd4c143a06d))
+* set abstraction and wrapper badges on components ([5ab5efb](https://github.com/dynamic-framework/dynamic-ui/commit/5ab5efb1066a0f7c033b3c9817b4caf5abc068ed))
+
+
+
 ## [1.25.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.24.0...@dynamic-framework/ui-react@1.25.0) (2024-05-31)
 
 
