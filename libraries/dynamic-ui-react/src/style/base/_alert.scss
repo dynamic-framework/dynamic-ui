@@ -47,7 +47,7 @@
 
   &.alert-soft {
     --#{$prefix}alert-color: var(--#{$prefix}gray-900);
-    border-width: 0 0 0 5px;
+    --#{$prefix}alert-border: 0;
 
     @each $theme, $value in map-remove($theme-colors, "light", "dark") {
       &.alert-#{$theme} {
