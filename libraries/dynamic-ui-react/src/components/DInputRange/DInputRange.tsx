@@ -73,22 +73,36 @@ function DInputRange(
     };
   }, [min, max, value, style]);
 
+  const inputComponent = useMemo(() => (
+    <input
+      id={id}
+      ref={innerRef}
+      className={classNames(generateClasses, className)}
+      aria-label={ariaLabel}
+      type="range"
+      value={value}
+      min={min}
+      max={max}
+      style={generateStyleVariables}
+      onChange={onChange}
+      {...props}
+    />
+  ), [
+    ariaLabel,
+    className,
+    generateClasses,
+    generateStyleVariables,
+    id,
+    innerRef,
+    max,
+    min,
+    onChange,
+    props,
+    value,
+  ]);
+
   if (!label) {
-    return (
-      <input
-        id={id}
-        ref={innerRef}
-        className={classNames(generateClasses, className)}
-        aria-label={ariaLabel}
-        type="range"
-        value={value}
-        min={min}
-        max={max}
-        style={generateStyleVariables}
-        onChange={onChange}
-        {...props}
-      />
-    );
+    return inputComponent;
   }
 
   return (
@@ -96,18 +110,7 @@ function DInputRange(
       <label className="form-label" htmlFor={id}>
         {label}
       </label>
-      <input
-        id={id}
-        ref={innerRef}
-        className={classNames(generateClasses, className)}
-        type="range"
-        value={value}
-        min={min}
-        max={max}
-        style={generateStyleVariables}
-        onChange={onChange}
-        {...props}
-      />
+      {inputComponent}
     </>
   );
 }
