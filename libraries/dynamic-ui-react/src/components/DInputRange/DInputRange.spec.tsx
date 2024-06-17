@@ -28,7 +28,7 @@ it('should render base range', () => {
         Range
       </label>
       <input
-        class="form-range form-range-filled-value"
+        class="form-range form-range-value-indicator"
         id="range"
         max="10"
         min="0"

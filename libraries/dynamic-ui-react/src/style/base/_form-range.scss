@@ -1,6 +1,6 @@
 .form-range {
 
-  &.form-range-filled-value {
+  &.form-range-value-indicator {
     &::-webkit-slider-runnable-track {
       background:
         linear-gradient(
@@ -25,7 +25,7 @@
   }
 
   &:disabled {
-    &.form-range-filled-value {
+    &.form-range-value-indicator {
       &::-webkit-slider-runnable-track {
         background:
           linear-gradient(
