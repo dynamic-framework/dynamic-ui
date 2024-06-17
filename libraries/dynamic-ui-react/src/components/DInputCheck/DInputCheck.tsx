@@ -62,36 +62,38 @@ export default function DInputCheck(
     }
   }, [checked]);
 
+  const inputComponent = useMemo(() => (
+    <input
+      ref={innerRef}
+      onChange={handleChange}
+      className={classNames('form-check-input', className)}
+      style={style}
+      id={id}
+      disabled={disabled}
+      type={type}
+      name={name}
+      value={value}
+      aria-label={ariaLabel}
+    />
+  ), [
+    ariaLabel,
+    className,
+    disabled,
+    handleChange,
+    id,
+    name,
+    style,
+    type,
+    value,
+  ]);
+
   if (!label) {
-    return (
-      <input
-        ref={innerRef}
-        onChange={handleChange}
-        className={classNames('form-check-input', className)}
-        style={style}
-        id={id}
-        disabled={disabled}
-        type={type}
-        name={name}
-        value={value}
-        aria-label={ariaLabel}
-      />
-    );
+    return inputComponent;
   }
 
   return (
     <div className="form-check">
-      <input
-        ref={innerRef}
-        onChange={handleChange}
-        className={classNames('form-check-input', className)}
-        style={style}
-        id={id}
-        disabled={disabled}
-        type={type}
-        name={name}
-        value={value}
-      />
+      {inputComponent}
       <label className="form-check-label" htmlFor={id}>
         {label}
       </label>
