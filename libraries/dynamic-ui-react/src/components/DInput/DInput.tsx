@@ -2,6 +2,7 @@ import {
   forwardRef,
   useCallback,
   useMemo,
+  useId,
 } from 'react';
 import classNames from 'classnames';
 
@@ -16,6 +17,7 @@ import type {
 import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
+import { useDContext } from '../../contexts';
 
 import type {
   BaseProps,
@@ -26,7 +28,6 @@ import type {
   StateIcons,
 } from '../interface';
 import type { Merge } from '../../types';
-import { useDContext } from '../../contexts';
 
 type NonHTMLInputElementProps =
 & BaseProps
@@ -50,11 +51,14 @@ type NonHTMLInputElementProps =
   onIconEndClick?: (value?: string) => void;
 };
 
-type Props = Merge<Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>, NonHTMLInputElementProps>;
+type Props = Merge<
+Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>,
+NonHTMLInputElementProps
+>;
 
 function DInput(
   {
-    id,
+    id: idProp,
     style,
     className,
     label = '',
@@ -99,6 +103,8 @@ function DInput(
   ref: ForwardedRef<HTMLInputElement>,
 ) {
   const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
+  const innerId = useId();
+  const id = useMemo(() => idProp || innerId, [idProp, innerId]);
 
   const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onChange?.(event.currentTarget.value);
@@ -114,13 +120,27 @@ function DInput(
 
   const ariaDescribedby = useMemo(() => (
     [
-      iconStart && `${id}Start`,
-      hint && `${id}Hint`,
-      iconEnd && `${id}End`,
+      !!inputStart && `${id}InputStart`,
+      !!iconStart && `${id}Start`,
+      (invalid || valid) && !iconEnd && !loading && `${id}State`,
+      (iconEnd && !loading) && `${id}End`,
+      loading && `${id}Loading`,
+      !!inputEnd && `${id}InputEnd`,
+      !!hint && `${id}Hint`,
     ]
       .filter(Boolean)
       .join(' ')
-  ), [id, iconStart, iconEnd, hint]);
+  ), [
+    id,
+    inputStart,
+    iconStart,
+    invalid,
+    valid,
+    iconEnd,
+    loading,
+    inputEnd,
+    hint,
+  ]);
 
   const inputComponent = useMemo(() => (
     <input
@@ -209,7 +229,7 @@ function DInput(
         })}
       >
         {!!inputStart && (
-          <div className="input-group-text">
+          <div className="input-group-text" id={`${id}InputStart`}>
             {inputStart}
           </div>
         )}
@@ -265,7 +285,7 @@ function DInput(
           </button>
         )}
         {loading && (
-          <div className="input-group-text">
+          <div className="input-group-text" id={`${id}Loading`}>
             <span
               className="spinner-border spinner-border-sm"
               role="status"
@@ -276,7 +296,7 @@ function DInput(
           </div>
         )}
         {!!inputEnd && (
-          <div className="input-group-text">
+          <div className="input-group-text" id={`${id}InputEnd`}>
             {inputEnd}
           </div>
         )}

@@ -39,6 +39,7 @@ export default {
               'Input Check',
               'Input Radio',
               'Input Switch',
+              'Input Range',
               'Datepicker',
               'Progress',
               'Tooltip',
@@ -58,7 +59,8 @@ export default {
               'Box File',
               'Chip',
               'Badge',
-              'Avatar'
+              'Avatar',
+              'Toast'
             ],
             'Patterns',
             [

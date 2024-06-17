@@ -2,18 +2,20 @@ import {
   useState,
   useEffect,
   useCallback,
+  useId,
+  useMemo,
 } from 'react';
 import classNames from 'classnames';
-
 import type { ChangeEvent } from 'react';
+
 import type { BaseProps } from '../interface';
 
 type Props =
 & BaseProps
 & {
+  id?: string;
   label?: string;
   ariaLabel?: string;
-  id: string;
   name?: string;
   checked?: boolean;
   disabled?: boolean;
@@ -23,9 +25,9 @@ type Props =
 
 export default function DInputSwitch(
   {
+    id: idProp,
     label,
     ariaLabel,
-    id,
     name,
     checked,
     disabled,
@@ -35,6 +37,8 @@ export default function DInputSwitch(
     onChange,
   }: Props,
 ) {
+  const innerId = useId();
+  const id = useMemo(() => idProp || innerId, [idProp, innerId]);
   const [internalIsChecked, setInternalIsChecked] = useState<boolean | undefined>(checked);
 
   useEffect(() => {

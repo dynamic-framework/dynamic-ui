@@ -17,6 +17,8 @@ const config: Meta<typeof DDatePicker> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
 Datepicker with month, year and time selector. This component is a custom wrapper which does
 not cover all the features of the original library.
 

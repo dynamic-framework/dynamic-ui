@@ -29,6 +29,7 @@ export { default as DInputCheck } from './DInputCheck';
 export { default as DInputPin } from './DInputPin';
 export { default as DInputSelect, DInputSelectDefaultOption, DInputSelectProps } from './DInputSelect';
 export { default as DInputSwitch } from './DInputSwitch';
+export { default as DInputRange } from './DInputRange';
 export { default as DSelect } from './DSelect';
 export {
   default as DList,
@@ -64,6 +65,7 @@ export {
   DTabOption,
   DTabContent,
 } from './DTabs';
+export { default as DToast } from './DToast';
 export {
   default as DToastContainer,
   useDToast,

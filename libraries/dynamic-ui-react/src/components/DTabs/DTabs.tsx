@@ -22,6 +22,7 @@ export type DTabOption = {
 export type TabVariant = 'tabs' | 'pills' | 'underline';
 
 type Props = BaseProps & PropsWithChildren<{
+  classNameTab?: string;
   onChange: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
@@ -36,6 +37,7 @@ function DTabs(
     onChange,
     options,
     className,
+    classNameTab,
     style,
     vertical,
     variant = 'underline',
@@ -92,7 +94,7 @@ function DTabs(
                   {
                     active: option.tab === selected,
                   },
-                  className,
+                  classNameTab,
                 )
               }
               type="button"

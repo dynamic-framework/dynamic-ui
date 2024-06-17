@@ -1,0 +1,52 @@
+.form-range {
+
+  &.form-range-value-indicator {
+    &::-webkit-slider-runnable-track {
+      background:
+        linear-gradient(
+          to right,
+          $component-active-bg 0%,
+          $component-active-bg var(--#{$prefix}form-range-component-value),
+          $form-range-track-bg var(--#{$prefix}form-range-component-value),
+          $form-range-track-bg 100%
+        );
+    }
+
+    &::-moz-range-track {
+      background:
+        linear-gradient(
+          to right,
+          $component-active-bg 0%,
+          $component-active-bg var(--#{$prefix}form-range-component-value),
+          $form-range-track-bg var(--#{$prefix}form-range-component-value),
+          $form-range-track-bg 100%
+        );
+    }
+  }
+
+  &:disabled {
+    &.form-range-value-indicator {
+      &::-webkit-slider-runnable-track {
+        background:
+          linear-gradient(
+            to right,
+            $form-range-thumb-disabled-bg 0%,
+            $form-range-thumb-disabled-bg var(--#{$prefix}form-range-component-value),
+            $form-range-track-bg var(--#{$prefix}form-range-component-value),
+            $form-range-track-bg 100%
+          );
+      }
+
+      &::-moz-range-track {
+        background:
+          linear-gradient(
+            to right,
+            $form-range-thumb-disabled-bg 0%,
+            $form-range-thumb-disabled-bg var(--#{$prefix}form-range-component-value),
+            $form-range-track-bg var(--#{$prefix}form-range-component-value),
+            $form-range-track-bg 100%
+          );
+      }
+    }
+  }
+}

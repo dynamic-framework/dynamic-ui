@@ -33,6 +33,7 @@ it('should render base currency', () => {
       >
         <div
           class="input-group-text"
+          id="currencyTestInputStart"
         >
           <span
             slot="input-start"
@@ -41,6 +42,7 @@ it('should render base currency', () => {
           </span>
         </div>
         <input
+          aria-describedby="currencyTestInputStart"
           class="form-control"
           id="currencyTest"
           inputmode="decimal"
