@@ -631,6 +631,30 @@ export const Disabled: Story = {
   },
 };
 
+export const Invalid: Story = {
+  args: {
+    id: 'componentId11',
+    defaultValue: OPTIONS[0],
+    options: OPTIONS,
+    style: {
+      minWidth: '200px',
+    },
+    invalid: true,
+  },
+};
+
+export const Valid: Story = {
+  args: {
+    id: 'componentId12',
+    defaultValue: OPTIONS[0],
+    options: OPTIONS,
+    style: {
+      minWidth: '200px',
+    },
+    valid: true,
+  },
+};
+
 /**
  * To use material symbols or any other material symbols style icon suite you can
  * use a `DContextProvider` to achieve global configuration
@@ -651,7 +675,7 @@ export const MaterialStyleIcons: Story = {
     </DContextProvider>
   ),
   args: {
-    id: 'componentId3',
+    id: 'componentId13',
     defaultValue: [OPTIONS[0]],
     options: OPTIONS,
     defaultMenuIsOpen: true,
