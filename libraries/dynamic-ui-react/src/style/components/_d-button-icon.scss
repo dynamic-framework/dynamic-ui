@@ -1,0 +1,25 @@
+.d-button-icon {
+  --#{$prefix}btn-padding-x: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}btn-padding-y: var(--#{$prefix}ref-spacer-3);
+  --#{$prefix}btn-lg-padding-y: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}btn-lg-padding-x: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}btn-sm-padding-y: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}btn-sm-padding-x: var(--#{$prefix}ref-spacer-2);
+}
+.btn-lg {
+  @include button-size(
+    var(--#{$prefix}btn-lg-padding-y),
+    var(--#{$prefix}btn-lg-padding-x),
+    var(--#{$prefix}btn-lg-font-size),
+    var(--#{$prefix}btn-lg-border-radius),
+  );
+}
+
+.btn-sm {
+  @include button-size(
+    var(--#{$prefix}btn-sm-padding-y),
+    var(--#{$prefix}btn-sm-padding-x),
+    var(--#{$prefix}btn-sm-font-size),
+    var(--#{$prefix}btn-sm-border-radius),
+  );
+}

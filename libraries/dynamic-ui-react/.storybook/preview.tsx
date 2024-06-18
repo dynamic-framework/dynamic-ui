@@ -60,7 +60,8 @@ export default {
               'Chip',
               'Badge',
               'Avatar',
-              'Toast'
+              'Toast',
+              'Button Icon',
             ],
             'Patterns',
             [
