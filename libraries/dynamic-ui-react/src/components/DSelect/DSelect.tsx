@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 
 import type { Props as SelectProps, GroupBase } from 'react-select';
@@ -23,7 +23,9 @@ import type {
   FamilyIconProps,
   LabelIconProps,
   StartIconProps,
+  StateIcons,
 } from '../interface';
+import { useDContext } from '../../contexts';
 
 type Props<Option, IsMulti extends boolean, Group extends GroupBase<Option>> =
 & BaseProps
@@ -31,6 +33,7 @@ type Props<Option, IsMulti extends boolean, Group extends GroupBase<Option>> =
 & LabelIconProps
 & StartIconProps
 & EndIconProps
+& StateIcons
 & Omit<
 SelectProps<Option, IsMulti, Group>,
 | 'isDisabled'
@@ -83,6 +86,8 @@ function DSelect<
     iconEndTabIndex,
     invalid,
     valid,
+    invalidIcon: invalidIconProp,
+    validIcon: validIconProp,
     menuWithMaxContent = false,
     disabled,
     clearable,
@@ -103,6 +108,16 @@ function DSelect<
   const handleOnIconEndClick = useCallback(() => {
     onIconEndClick?.(defaultValue);
   }, [onIconEndClick, defaultValue]);
+  const { iconMap: { input } } = useDContext();
+  const invalidIcon = useMemo(
+    () => invalidIconProp || input.invalid,
+    [input.invalid, invalidIconProp],
+  );
+  const validIcon = useMemo(
+    () => validIconProp || input.valid,
+    [input.valid, validIconProp],
+  );
+
   return (
     <div
       className={classNames(
@@ -195,7 +210,7 @@ function DSelect<
           >
             <DIcon
               className="input-group-validation-icon"
-              icon={invalid ? 'exclamation-circle' : 'check'}
+              icon={invalid ? invalidIcon : validIcon}
               familyClass={iconFamilyClass}
               familyPrefix={iconFamilyPrefix}
             />
