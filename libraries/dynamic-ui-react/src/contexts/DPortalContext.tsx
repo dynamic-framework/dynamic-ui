@@ -113,9 +113,9 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   useEffect(() => {
     const keyEvent = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        const lastModal = document.querySelector(`#${portalName} > div > div:last-child`);
-        if (lastModal) {
-          handleClose(lastModal as HTMLElement);
+        const lastPortal = document.querySelector(`#${portalName} > div > div:last-child`);
+        if (lastPortal) {
+          handleClose(lastPortal as HTMLElement);
         }
       }
     };
