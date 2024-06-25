@@ -105,14 +105,18 @@ function DSelect<
   const handleOnIconStartClick = useCallback(() => {
     onIconStartClick?.(defaultValue);
   }, [onIconStartClick, defaultValue]);
+
   const handleOnIconEndClick = useCallback(() => {
     onIconEndClick?.(defaultValue);
   }, [onIconEndClick, defaultValue]);
+
   const { iconMap: { input } } = useDContext();
+
   const invalidIcon = useMemo(
     () => invalidIconProp || input.invalid,
     [input.invalid, invalidIconProp],
   );
+
   const validIcon = useMemo(
     () => validIconProp || input.valid,
     [input.valid, validIconProp],
