@@ -6,6 +6,7 @@
   --#{$prefix}btn-sm-padding-y: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}btn-sm-padding-x: var(--#{$prefix}ref-spacer-2);
 }
+
 .btn-lg {
   @include button-size(
     var(--#{$prefix}btn-lg-padding-y),
