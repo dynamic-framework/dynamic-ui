@@ -179,6 +179,7 @@ function DSelect<
             menu: (base) => ({
               ...base,
               width: menuWithMaxContent ? 'max-context' : '100%',
+              zIndex: 1000,
             }),
           }}
           className={classNames('d-select-component', {
