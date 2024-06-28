@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputCheck> = {
   title: 'Design System/Components/Input Radio',
@@ -22,6 +23,10 @@ To understand in more detail the aspects covered by this component, review the f
 
 The Bootstrap documentation provides details on the default [Radio CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
 
+| Variable                                            | Class               | Type            | Description                 |
+|-----------------------------------------------------|---------------------|-----------------|-----------------------------|
+| --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit  | Focus border color          |
+| --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow  | Focus box shadow            |
         `,
       },
     },
@@ -83,7 +88,7 @@ type Story = StoryObj<typeof DInputCheck>;
 
 export const RadioWithoutLabel: Story = {
   args: {
-    id: 'componentId5',
+    id: 'componentId1',
     type: 'radio',
     checked: false,
     disabled: false,
@@ -93,7 +98,7 @@ export const RadioWithoutLabel: Story = {
 
 export const RadioDefault: Story = {
   args: {
-    id: 'componentId6',
+    id: 'componentId2',
     type: 'radio',
     label: 'Label',
     checked: false,
@@ -101,9 +106,31 @@ export const RadioDefault: Story = {
   },
 };
 
+export const RadioValid: Story = {
+  args: {
+    id: 'componentId3',
+    type: 'radio',
+    label: 'Label',
+    checked: false,
+    disabled: false,
+    valid: true,
+  },
+};
+
+export const RadioInvalid: Story = {
+  args: {
+    id: 'componentId4',
+    type: 'radio',
+    label: 'Label',
+    checked: false,
+    disabled: false,
+    invalid: true,
+  },
+};
+
 export const RadioChecked: Story = {
   args: {
-    id: 'componentId7',
+    id: 'componentId5',
     type: 'radio',
     label: 'Label',
     checked: true,
@@ -113,10 +140,20 @@ export const RadioChecked: Story = {
 
 export const RadioDisabled: Story = {
   args: {
-    id: 'componentId8',
+    id: 'componentId6',
     type: 'radio',
     label: 'Label',
     checked: false,
+    disabled: true,
+  },
+};
+
+export const RadioCheckedDisabled: Story = {
+  args: {
+    id: 'componentId7',
+    type: 'radio',
+    label: 'Label',
+    checked: true,
     disabled: true,
   },
 };
