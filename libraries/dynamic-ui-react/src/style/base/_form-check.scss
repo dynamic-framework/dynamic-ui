@@ -1,7 +1,4 @@
 .form-check-input {
-  &:disabled:not(:checked, :indeterminate) {
-    background-color: $form-check-input-disabled-bg;
-    border-color: $form-check-input-disabled-border-color;
-    opacity: 1;
-  }
+  --bs-form-check-input-focus-border-color: #{$component-focus-border-color};
+  --bs-form-check-input-focus-box-shadow: #{$input-btn-focus-box-shadow};
 }
