@@ -12,7 +12,7 @@ export function UseSimpleToastExample() {
         text="Show Toast"
         onClick={() => (
           toast(
-            { title: 'Example', theme: 'primary', soft: true },
+            { title: 'Example' },
             { duration: 40000 },
           )
         )}
@@ -36,8 +36,6 @@ export function UseFullToastExample() {
               title: 'Example',
               description: 'This is a description',
               icon: 'check',
-              theme: 'warning',
-              soft: true,
             },
             { duration: 40000 },
           )
