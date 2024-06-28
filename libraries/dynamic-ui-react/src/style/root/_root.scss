@@ -167,8 +167,10 @@
   // scss-docs-start root-focus-variables
   --#{$prefix}focus-ring-width: #{$focus-ring-width};
   --#{$prefix}focus-ring-opacity: #{$focus-ring-opacity};
+  --#{$prefix}focus-ring-border-color-rgb: #{$focus-ring-border-color};
+  --#{$prefix}focus-ring-border-color: rgb(var(--#{$prefix}focus-ring-border-color-rgb));
   --#{$prefix}focus-ring-base-color-rgb: var(--#{$prefix}#{$focus-ring-color-mapping});
-  --#{$prefix}focus-ring-base-color: rgb(var(--#{$prefix}#{$focus-ring-color-mapping}));
+  --#{$prefix}focus-ring-base-color: rgb(var(--#{$prefix}focus-ring-base-color-rgb));
   --#{$prefix}focus-ring-color: rgba(var(--#{$prefix}focus-ring-base-color-rgb), var(--#{$prefix}focus-ring-opacity));
   // scss-docs-end root-focus-variables
 
