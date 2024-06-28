@@ -108,7 +108,7 @@
   }
 
   --#{$prefix}body-color: rgb(var(--#{$prefix}body-color-rgb));
-  --#{$prefix}body-color-rgb: #{to-rgb($body-color)};
+  --#{$prefix}body-color-rgb: var(--#{$prefix}#{$body-color-mapping}-rgb);
   --#{$prefix}body-bg: rgb(var(--#{$prefix}body-bg-rgb));
   --#{$prefix}body-bg-rgb: var(--#{$prefix}#{$body-bg-mapping}-rgb);
 
