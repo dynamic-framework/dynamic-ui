@@ -19,6 +19,8 @@ type Props =
   name?: string;
   checked?: boolean;
   disabled?: boolean;
+  invalid?: boolean;
+  valid?: boolean;
   readonly?: boolean;
   onChange?: (isChecked: boolean) => void;
 };
@@ -31,6 +33,8 @@ export default function DInputSwitch(
     name,
     checked,
     disabled,
+    invalid = false,
+    valid = false,
     readonly,
     className,
     style,
@@ -57,7 +61,14 @@ export default function DInputSwitch(
         id={id}
         name={name}
         onChange={readonly ? () => false : changeHandler}
-        className={classNames('form-check-input', className)}
+        className={classNames(
+          'form-check-input',
+          {
+            'is-invalid': invalid,
+            'is-valid': valid,
+          },
+          className,
+        )}
         style={style}
         type="checkbox"
         role="switch"
