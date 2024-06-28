@@ -6,13 +6,14 @@ import { toast as reactHotToast, Toast } from 'react-hot-toast';
 import classNames from 'classnames';
 import DToast from '../DToast/DToast';
 import DIcon from '../DIcon';
-import DButtonIcon from '../DButtonIcon';
+import { useDContext } from '../../contexts';
 
 type ToastData = {
   title: string;
   description?: string;
   timestamp?: string;
   icon?: string;
+  closeIcon?: string;
   theme?: string;
   soft?: boolean;
 };
@@ -20,6 +21,12 @@ type ToastData = {
 type Props = Partial<Pick<Toast, 'id' | 'duration' | 'position'>>;
 
 export default function useDToast() {
+  const {
+    iconMap: {
+      xLg,
+    },
+  } = useDContext();
+
   const toast = useCallback((
     data: ToastData | (() => ReactElement),
     toastProps: Props,
@@ -27,14 +34,17 @@ export default function useDToast() {
     if (typeof data === 'function') {
       return reactHotToast.custom(data, {});
     }
+
     const {
       title,
       description,
       icon,
+      closeIcon,
       timestamp,
       theme,
       soft,
     } = data;
+
     return reactHotToast.custom((t) => (
       <DToast className={classNames({
         [`bg-${theme}-soft`]: !!theme && soft,
@@ -47,13 +57,17 @@ export default function useDToast() {
             <span className="me-auto">
               {title}
             </span>
-            <DButtonIcon
-              icon="x"
-              variant="link"
-              size="sm"
-              {...!soft && { theme: 'light' }}
+            <button
+              type="button"
+              className={classNames({
+                [`text-bg-${theme}`]: !!theme && !soft,
+                'd-toast-close': true,
+              })}
+              aria-label="Close"
               onClick={() => reactHotToast.dismiss(t.id)}
-            />
+            >
+              <DIcon icon={closeIcon || xLg} />
+            </button>
           </DToast.Body>
         )}
         {description && (
@@ -64,19 +78,23 @@ export default function useDToast() {
             }, 'show')}
             >
               {icon && (
-              <DIcon icon={icon} />
+                <DIcon icon={icon} />
               )}
               <p className="mb-0 me-auto">{title}</p>
               {timestamp && (
-              <small>{timestamp}</small>
+                <small>{timestamp}</small>
               )}
-              <DButtonIcon
-                icon="x"
-                size="sm"
-                {...(!soft && !theme) && { theme: 'light' }}
-                {...(!soft && theme) && { theme }}
+              <button
+                type="button"
+                className={classNames({
+                  [`text-bg-${theme}`]: !!theme && !soft,
+                  'd-toast-close': true,
+                })}
+                aria-label="Close"
                 onClick={() => reactHotToast.dismiss(t.id)}
-              />
+              >
+                <DIcon icon={closeIcon || xLg} />
+              </button>
             </DToast.Header>
             <DToast.Body className="d-flex justify-content-between align-items-center">
               <span>
@@ -87,7 +105,7 @@ export default function useDToast() {
         )}
       </DToast>
     ), toastProps);
-  }, []);
+  }, [xLg]);
 
   return {
     toast,
