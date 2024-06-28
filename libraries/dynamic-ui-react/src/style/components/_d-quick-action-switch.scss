@@ -8,7 +8,6 @@
 
   --#{$prefix}quick-action-switch-label-font-size: #{$quick-action-switch-label-font-size};
   --#{$prefix}quick-action-switch-label-font-weight: #{$quick-action-switch-label-font-weight};
-  --#{$prefix}quick-action-switch-label-color: #{$quick-action-switch-label-color};
 
   --#{$prefix}quick-action-switch-hint-font-size: #{$quick-action-switch-hint-font-size};
   --#{$prefix}quick-action-switch-hint-font-weight: #{$quick-action-switch-hint-font-weight};
@@ -17,7 +16,6 @@
   --#{$prefix}quick-action-switch-hover-bg: #{$quick-action-switch-hover-bg};
 
   --#{$prefix}quick-action-switch-checked-bg: #{$quick-action-switch-checked-bg};
-  --#{$prefix}quick-action-switch-checked-label-color: #{$quick-action-switch-checked-label-color};
   --#{$prefix}quick-action-switch-checked-hint-color: #{$quick-action-switch-checked-hint-color};
 
   display: flex;
@@ -38,10 +36,6 @@
   &:has(input:checked) {
     background: var(--#{$prefix}quick-action-switch-checked-bg);
 
-    .d-quick-action-switch-label {
-      color: var(--#{$prefix}quick-action-switch-checked-label-color);
-    }
-
     .d-quick-action-switch-hint {
       color: var(--#{$prefix}quick-action-switch-checked-hint-color);
     }
@@ -56,7 +50,6 @@
   label {
     --#{$prefix}label-font-size: var(--#{$prefix}quick-action-switch-label-font-size);
     --#{$prefix}label-font-weight: var(--#{$prefix}quick-action-switch-label-font-weight);
-    --#{$prefix}label-color: var(--#{$prefix}quick-action-switch-label-color);
   }
 
   .d-quick-action-switch-hint {
