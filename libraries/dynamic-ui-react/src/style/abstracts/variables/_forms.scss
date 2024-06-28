@@ -30,15 +30,15 @@ $input-disabled-border-color: var(--#{$prefix}gray-300) !default;
 $input-color: var(--#{$prefix}body-color) !default;
 $input-box-shadow: 0 0 0 transparent !default; // to avoid the none in the bootstrap box-shadow calculation
 
-$input-border-color: var(--#{$prefix}gray-500) !default;
+$input-border-color: var(--#{$prefix}border-color) !default;
 $input-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-lg: var(--#{$prefix}border-radius-sm) !default;
 
-$input-focus-border-color: var(--#{$prefix}focus-ring-base-color) !default; // unused
+$input-focus-border-color: $component-focus-border-color !default; // unused
 $input-focus-width: $input-btn-focus-width !default;
 
-$input-placeholder-color: var(--#{$prefix}gray-500) !default;
+$input-placeholder-color: var(--#{$prefix}border-color) !default;
 
 $input-plaintext-color: var(--#{$prefix}body-color) !default;
 // scss-docs-end form-input-variables
@@ -137,7 +137,7 @@ $form-feedback-icon-invalid: null !default;
 // scss-docs-end form-feedback-variables
 
 // scss-docs-start form-validation-colors
-$form-valid-color: $form-label-color !default;
+$form-valid-color: $form-feedback-icon-valid-color !default;
 $form-valid-border-color: $form-feedback-valid-color !default;
 $form-invalid-color: $form-feedback-invalid-color !default;
 $form-invalid-border-color: $form-feedback-invalid-color !default;
