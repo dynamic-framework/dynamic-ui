@@ -1,70 +1,23 @@
-import { useMemo } from 'react';
-import type { CSSProperties } from 'react';
-
-import {
-  ToastContainer,
-  Slide,
-  Zoom,
-  Flip,
-  Bounce,
-} from 'react-toastify';
-import type { ToastContainerProps } from 'react-toastify';
-
-import classNames from 'classnames';
-
-import { BaseProps } from '../interface';
-
-type Props = BaseProps
-& Pick<ToastContainerProps,
-| 'autoClose'
-| 'closeOnClick'
-| 'position'
-> & {
-  containerId?: string;
-  stacked?: boolean;
-  style?: CSSProperties & {
-    '--toastify-toast-width': string | number;
-    [index: string]: string | number;
-  },
-  transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
-};
-
-const TOAST_TRANSITIONS = {
-  bounce: Bounce,
-  flip: Flip,
-  slide: Slide,
-  zoom: Zoom,
-};
+import { Toaster, ToasterProps } from 'react-hot-toast';
 
 export default function DToastContainer(
   {
-    style,
-    className,
-    closeOnClick,
+    containerClassName,
     position = 'bottom-center',
-    autoClose = false,
-    stacked = false,
-    transition = 'slide',
-    containerId,
-  }: Props,
+    reverseOrder = false,
+    containerStyle,
+    toastOptions,
+    gutter,
+  }: ToasterProps,
 ) {
-  const selectedTransition = useMemo(
-    () => TOAST_TRANSITIONS[transition],
-    [transition],
-  );
-
   return (
-    <ToastContainer
-      toastClassName={() => classNames('shadow-none p-0 cursor-default', className)}
+    <Toaster
+      containerClassName={containerClassName}
       position={position}
-      autoClose={autoClose}
-      closeOnClick={closeOnClick}
-      transition={selectedTransition}
-      closeButton={false}
-      style={style}
-      hideProgressBar
-      stacked={stacked}
-      containerId={containerId}
+      reverseOrder={reverseOrder}
+      containerStyle={containerStyle}
+      gutter={gutter}
+      toastOptions={toastOptions}
     />
   );
 }

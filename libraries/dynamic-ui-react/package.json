@@ -81,9 +81,9 @@
     "react-content-loader": "^6.2.1",
     "react-datepicker": "^4.21.0",
     "react-dropzone": "^14.2.3",
+    "react-hot-toast": "^2.4.1",
     "react-responsive-pagination": "^2.4.1",
-    "react-select": "^5.8.0",
-    "react-toastify": "^10.0.0"
+    "react-select": "^5.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
