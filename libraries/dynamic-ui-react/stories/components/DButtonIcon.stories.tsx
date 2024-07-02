@@ -15,7 +15,7 @@ import { PREFIX_BS } from '../../src/components/config';
 import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DButtonIcon> = {
-  title: 'Design System/Components/ButtonIcon',
+  title: 'Design System/Components/Button Icon',
   component: DButtonIcon,
   parameters: {
     docs: {
