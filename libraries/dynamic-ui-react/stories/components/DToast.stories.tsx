@@ -18,6 +18,7 @@ const config: Meta<typeof DToast> = {
       control: 'object',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
