@@ -23,7 +23,7 @@ Type to define the payload of all the modals, its structure is an object literal
 where the key is used for the name of the modal and value for the payload.
 
 ```typescript
-type ModalPayloads = {
+export type ModalPayloads = {
   example: {
     description: string;
   };
@@ -44,7 +44,7 @@ import type {
 
 import type { ModalPayloads } from './types';
 
-function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
+export function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
   const { closePortal } = useDPortalContext();
   return (
     <DModal
@@ -90,7 +90,7 @@ import ExampleModalUsage from './ExampleModalUsage';
 
 import type { ModalPayloads } from './types';
 
-function App() {
+export function App() {
   return (
     <DContextProvider<ModalPayloads>
       portalName="examplePortal"
@@ -113,7 +113,7 @@ import {
 
 import type { ModalPayloads } from './types';
 
-function ExampleModalUsage() {
+export function ExampleModalUsage() {
   const { openPortal } = useDPortalContext<ModalPayloads>();
   return (
     <DButton
