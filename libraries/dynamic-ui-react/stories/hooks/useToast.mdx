@@ -1,25 +1,30 @@
 import {
   Meta,
   Canvas,
-  Source
+  Source,
 } from '@storybook/blocks';
 
 import {
-  UseSimpleToastExample,
-  UseFullToastExample,
-  UseCustomToastExample,
-  UseToastMaterialExample,
+  ExampleSimpleToastRoot,
+  ExampleFullToastRoot,
+  ExampleCustomToastRoot,
+  ExampleMaterialIconToastRoot,
 } from "./useToastExamples";
 
-import DToastContainer from '../../src/components/DToastContainer';
+import DAlert from '../../src/components/DAlert/DAlert';
 
 <Meta title="Design System/Patterns/Toast" />
 
 # Toast
 
 Toasts use `DToastContainer` and the `useDToast` hook, which are abstractions to configure react-hot-toast in conjunction with
-a `DAlert` to generate toasts. For more detailed information, refer to the official [React Hot Toast Documentation](https://react-hot-toast.com/docs)
+a `DToast` to generate toasts. For more detailed information, refer to the official [React Hot Toast Documentation](https://react-hot-toast.com/docs).
 <br />
+
+<DAlert soft type="warning" className='py-1 mb-8'>
+  toast appears in all containers because of the way react-hot-toast is programmed, however,
+  if you want to see the correct toast make it show up from the correct container.
+</DAlert>
 
 ## Usage DToastContainer
 
@@ -27,76 +32,70 @@ To get started, include the **`<DToastContainer />`** component once in your app
 This ensures that all toasts are rendered correctly. Here you can customize general styles for all toasts and configure a default
 placement for displaying toasts. You can override this position in any single toast if needed.
 
-<Source
-  code={
-  `
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {
-  DToastContainer,
-  DContextProvider,
-} from '@dynamic-framework/ui-react';
-import './config/liquidConfig';
-import './config/i18nConfig';
-import App from './App';
-import '@dynamic-framework/ui-react/dist/css/dynamic-ui.css';
-import './styles/base.scss';
-const root = ReactDOM.createRoot(document.getElementById('widget') as Element);
-root.render(
-  <React.StrictMode>
-    <DContextProvider>
-      <App />
-      <DToastContainer />
-    </DContextProvider>
-  </React.StrictMode>,
-);
-  `
-  }
-  language="tsx"
-  dark
-/>
-
 ## Usage useDToast
 
 The `useDToast` hook provides a simple and flexible way to create toast notifications in your application. By **default**, it uses the
-`DAlert` component to display the toast message. However, you can also render a custom component if needed.
+`DToast` component to display the toast message. However, you can also render a custom component if needed.
 
-Here’s an example of how to use `useDToast` to create both default and custom toasts:
+Below you will see examples of the use of toast in a simple way, with a custom component and with Material Icons.
 
-### Default Toast
+## Simple example
+
+### Simple example `App.tsx`
 
 <Source
   code={
   `
 import {
-  DButton,
-  useDToast,
-  DToastContainer
+  DContextProvider,
+  DToastContainer,
 } from '@dynamic-framework/ui-react';
-export function UseToastExample() {
-  const { toast } = useDToast();
+
+import { ExampleSimpleToastUsage } from './ExampleSimpleToastUsage';
+
+export function App() {
   return (
-    <>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              duration: 5000,
-            },
-          )
-        )}
-      />
+    <DContextProvider>
+      <ExampleSimpleToastUsage />
       <DToastContainer
         position="top-right"
       />
-    </>
+    </DContextProvider>
   );
 }
-  `
+`
+  }
+  language="tsx"
+  dark
+/>
+
+### Simple example `ExampleSimpleToastUsage.tsx`
+
+Here’s an example of how to use `useDToast` to create a simple default toast:
+
+<Source
+  code={
+    `
+import {
+  useDToast,
+  DButton,
+} from '@dynamic-framework/ui-react';
+
+export function ExampleSimpleToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          { title: 'Example' },
+          { duration: 40000 },
+        )
+      )}
+    />
+  );
+}
+`
   }
   language="tsx"
   dark
@@ -104,153 +103,255 @@ export function UseToastExample() {
 
 <Canvas>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <UseSimpleToastExample />
-  </div>
-</Canvas>
-<Canvas>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <UseFullToastExample />
+    <ExampleSimpleToastRoot />
   </div>
 </Canvas>
 
-<br />
+## Full example
 
-### Custom Toast
+### Full example `App.tsx`
 
-<table style={{tableLayout: 'fixed'}}>
-  <thead>
-    <tr>
-      <th>Toast</th>
-      <th>Component</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <Source
-          code={
-            `
+<Source
+  code={
+    `
 import {
-  DButton,
-  useDToast,
-  DToastContainer
+  DContextProvider,
+  DToastContainer,
 } from '@dynamic-framework/ui-react';
-import MyComponent from './MyComponent';
-export function UseCustomToastExample() {
-  const { toast } = useDToast();
+
+import { ExampleFullToastUsage } from './ExampleFullToastUsage';
+
+export function App() {
   return (
-    <>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            MyComponent,
-            {
-              duration: 5000,
-            },
-          )
-        )}
-      />
+    <DContextProvider>
+      <ExampleFullToastUsage />
       <DToastContainer
         position="top-right"
       />
-    </>
+    </DContextProvider>
   );
 }
-            `
-          }
-          language="tsx"
-          dark
-        />
-      </td>
-      <td>
-        <Source
-          code={
-          `
-import { ToastContentProps } from 'react-toastify';
-import { DButton } from '@dynamic-framework/ui-react';
-export function MyComponent(
-  {
-    closeToast
-  }: ToastContentProps
-) {
+`
+  }
+  language="tsx"
+  dark
+/>
+
+### Custom example `ExampleFullToastUsage.tsx`
+
+Here’s an example of how to use `useDToast` to create a full toast:
+
+<Source
+  code={
+    `
+import {
+  useDToast,
+  DButton,
+} from '@dynamic-framework/ui-react';
+
+export function ExampleSimpleToastUsage() {
+  const { toast } = useDToast();
   return (
-    <div
-      className="bg-surface-secondary p-4 text-center"
-    >
-      <p className="fw-bold">Toast!</p>
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            description: 'This is a description',
+            icon: 'check',
+          },
+          { duration: 40000 },
+        )
+      )}
+    />
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
+    <ExampleFullToastRoot />
+  </div>
+</Canvas>
+
+## Custom example
+
+### Custom example `App.tsx`
+
+<Source
+  code={
+    `
+import {
+  DContextProvider,
+  DToastContainer,
+} from '@dynamic-framework/ui-react';
+
+import { ExampleCustomToastUsage } from './ExampleCustomToastUsage';
+
+export function App() {
+  return (
+    <DContextProvider>
+      <ExampleCustomToastUsage />
+      <DToastContainer
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+    }
+`
+  }
+  language="tsx"
+  dark
+/>
+
+### Custom example `CustomToastExample.tsx`
+
+Here's an custom toast component
+
+<Source
+  code={
+    `
+import {
+  DButton,
+} from '@dynamic-framework/ui-react';
+
+export function CustomToastExample() {
+  return (
+    <div className="bg-surface-secondary rounded-2 p-4 text-center">
+      <p className="fw-bold mt-0">Toast!</p>
       <DButton
         size="sm"
         variant="outline"
-        onClick={closeToast}
+        theme="secondary"
         text="Close toast"
       />
     </div>
   );
 }
-          `
-          }
-          language="tsx"
-          dark
-        />
-      </td>
-    </tr>
-  </tbody>
-</table>
+`
+  }
+  language="tsx"
+  dark
+/>
 
-<Canvas>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <UseCustomToastExample />
-  </div>
-</Canvas>
-<br />
+### Custom example `ExampleCustomToastUsage.tsx`
 
-## Example of usage with material symbols
-To use material symbols it is necessary to configure the DContextProvider
+Here’s an example of how to use `useDToast` to create a custom toast:
 
-```tsx
+<Source
+  code={
+    `
 import {
-  DButton,
-  DToastContainer,
-  DContextProvider,
   useDToast,
+  DButton,
 } from '@dynamic-framework/ui-react';
 
-export default function UseToastExamples() {
+  import { CustomToastExample } from './CustomToastExample';
+
+export function ExampleSimpleToastUsage() {
   const { toast } = useDToast();
   return (
-    <DContextProvider
-      icon={{
-        materialStyle: true,
-        familyClass: 'material-symbols-outlined',
-        familyPrefix: '',
-      }}
-    >
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              duration: 5000,
-              icon: 'info',
-              iconClose: 'close',
-            },
-          )
-        )}
-      />
-      <DToastContainer
-        position="bottom-center"
-      />
-    </>
-  )
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          CustomToastExample,
+          {
+            duration: 3000,
+          },
+        )
+      )}
+    />
+  );
 }
-```
+`
+  }
+  language="tsx"
+  dark
+/>
 
 <Canvas>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <UseToastMaterialExample />
+    <ExampleCustomToastRoot />
+  </div>
+</Canvas>
+
+
+## Material Icon example
+
+### Material icon example `App.tsx`
+
+To use material symbols it is necessary to configure the DContextProvider
+
+<Source
+  code={
+    `
+import {
+  DContextProvider,
+  DToastContainer,
+} from '@dynamic-framework/ui-react';
+
+import { ExampleMaterialIconToastUsage } from './ExampleMaterialIconToastUsage';
+import CONTEXT_PROVIDER_CONFIG_MATERIAL from './config';
+
+export function App() {
+  return (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <ExampleMaterialIconToastUsage />
+      <DToastContainer
+        key="material-icon-toast-container"
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+### Material Icon example `ExampleMaterialIconToastUsage.tsx`
+
+Here’s an example of how to use `useDToast` to create a toast using Material Icons:
+
+<Source
+  code={
+    `
+import {
+  useDToast,
+  DButton,
+} from '@dynamic-framework/ui-react';
+
+export function ExampleSimpleToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          { title: 'Example' },
+          { duration: 5000 },
+        )
+      )}
+    />
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
+    <ExampleMaterialIconToastRoot />
   </div>
 </Canvas>

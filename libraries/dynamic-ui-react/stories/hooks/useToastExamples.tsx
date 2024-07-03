@@ -4,51 +4,63 @@ import DToastContainer from '../../src/components/DToastContainer';
 import { DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
-export function UseSimpleToastExample() {
+export function ExampleSimpleToastUsage() {
   const { toast } = useDToast();
   return (
-    <>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            { title: 'Example' },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </>
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          { title: 'Example' },
+          { duration: 40000 },
+        )
+      )}
+    />
   );
 }
 
-export function UseFullToastExample() {
-  const { toast } = useDToast();
+export function ExampleSimpleToastRoot() {
   return (
-    <>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              description: 'This is a description',
-              icon: 'check',
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
+    <DContextProvider>
+      <ExampleSimpleToastUsage />
       <DToastContainer
         position="top-right"
       />
-    </>
+    </DContextProvider>
   );
 }
 
-export function MyComponent() {
+export function ExampleFullToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            description: 'This is a description',
+            icon: 'check',
+          },
+          { duration: 40000 },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleFullToastRoot() {
+  return (
+    <DContextProvider>
+      <ExampleFullToastUsage />
+      <DToastContainer
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+}
+
+export function CustomToastExample() {
   return (
     <div className="bg-surface-secondary rounded-2 p-4 text-center">
       <p className="fw-bold mt-0">Toast!</p>
@@ -56,51 +68,63 @@ export function MyComponent() {
         size="sm"
         variant="outline"
         theme="secondary"
-        // onClick={closeToast}
         text="Close toast"
       />
     </div>
   );
 }
 
-export function UseCustomToastExample() {
+export function ExampleCustomToastUsage() {
   const { toast } = useDToast();
   return (
-    <>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            MyComponent,
-            {
-              duration: 3000,
-            },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </>
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          CustomToastExample,
+          {
+            duration: 3000,
+          },
+        )
+      )}
+    />
   );
 }
 
-export function UseToastMaterialExample() {
+export function ExampleCustomToastRoot() {
+  return (
+    <DContextProvider>
+      <ExampleCustomToastUsage />
+      <DToastContainer
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+}
+
+export function ExampleMaterialIconToastUsage() {
   const { toast } = useDToast();
+  return (
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          { title: 'Example' },
+          { duration: 5000 },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleMaterialIconToastRoot() {
   return (
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            { title: 'Example' },
-            { duration: 5000 },
-          )
-        )}
-      />
+      <ExampleMaterialIconToastUsage />
       <DToastContainer
+        key="material-icon-toast-container"
         position="top-right"
       />
     </DContextProvider>
