@@ -219,8 +219,12 @@ Here's an custom toast component
 import {
   DButton,
 } from '@dynamic-framework/ui-react';
+import { toast as reactToast, Toast } from 'react-hot-toast';
 
-export function CustomToastExample() {
+export function CustomToastExample({ id, visible }: Toast) {
+  if (!visible) {
+    return null;
+  }
   return (
     <div className="bg-surface-secondary rounded-2 p-4 text-center">
       <p className="fw-bold mt-0">Toast!</p>
@@ -229,6 +233,7 @@ export function CustomToastExample() {
         variant="outline"
         theme="secondary"
         text="Close toast"
+        onClick={() => reactToast.dismiss(id)}
       />
     </div>
   );
@@ -251,7 +256,7 @@ import {
   DButton,
 } from '@dynamic-framework/ui-react';
 
-  import { CustomToastExample } from './CustomToastExample';
+import { CustomToastExample } from './CustomToastExample';
 
 export function ExampleSimpleToastUsage() {
   const { toast } = useDToast();

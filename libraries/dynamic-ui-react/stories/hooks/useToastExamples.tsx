@@ -1,3 +1,5 @@
+import { toast as reactToast, Toast } from 'react-hot-toast';
+
 import useDToast from '../../src/components/DToastContainer/useDToast';
 import DButton from '../../src/components/DButton';
 import DToastContainer from '../../src/components/DToastContainer';
@@ -42,7 +44,7 @@ export function ExampleFullToastUsage() {
             description: 'This is a description',
             icon: 'check',
           },
-          { duration: 40000 },
+          { duration: 1000 },
         )
       )}
     />
@@ -60,7 +62,10 @@ export function ExampleFullToastRoot() {
   );
 }
 
-export function CustomToastExample() {
+export function CustomToastExample({ id, visible }: Toast) {
+  if (!visible) {
+    return null;
+  }
   return (
     <div className="bg-surface-secondary rounded-2 p-4 text-center">
       <p className="fw-bold mt-0">Toast!</p>
@@ -69,6 +74,7 @@ export function CustomToastExample() {
         variant="outline"
         theme="secondary"
         text="Close toast"
+        onClick={() => reactToast.dismiss(id)}
       />
     </div>
   );
@@ -83,7 +89,7 @@ export function ExampleCustomToastUsage() {
         toast(
           CustomToastExample,
           {
-            duration: 3000,
+            duration: 1000,
           },
         )
       )}
