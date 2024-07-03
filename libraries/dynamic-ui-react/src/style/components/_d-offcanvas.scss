@@ -23,17 +23,6 @@
     padding: var(--#{$prefix}offcanvas-padding-y) var(--#{$prefix}offcanvas-padding-x);
   }
 
-  .d-offcanvas-close {
-    align-self: flex-start;
-    padding: 0;
-    background: transparent;
-    border: 0;
-
-    .d-icon {
-      --#{$prefix}icon-size: var(--#{$prefix}ref-spacer-4);
-    }
-  }
-
   .d-offcanvas-action-fill > * {
     flex: 1;
   }
