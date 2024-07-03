@@ -61,7 +61,7 @@ export default function useDToast() {
               type="button"
               className={classNames({
                 [`text-bg-${theme}`]: !!theme && !soft,
-                'd-toast-close': true,
+                'd-close': true,
               })}
               aria-label="Close"
               onClick={() => reactHotToast.dismiss(t.id)}
@@ -88,7 +88,7 @@ export default function useDToast() {
                 type="button"
                 className={classNames({
                   [`text-bg-${theme}`]: !!theme && !soft,
-                  'd-toast-close': true,
+                  'd-close': true,
                 })}
                 aria-label="Close"
                 onClick={() => reactHotToast.dismiss(t.id)}
