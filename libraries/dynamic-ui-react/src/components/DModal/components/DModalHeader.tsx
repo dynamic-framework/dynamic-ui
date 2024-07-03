@@ -46,7 +46,7 @@ export default function DModalHeader(
       {showCloseButton && (
         <button
           type="button"
-          className="d-modal-close"
+          className="d-close"
           aria-label="Close"
           onClick={onClose}
         >
