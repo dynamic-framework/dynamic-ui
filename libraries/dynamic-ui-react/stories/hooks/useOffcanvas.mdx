@@ -23,7 +23,7 @@ Type to define the payload of all the offcanvas, its structure is an object lite
 where the key is used for the name of the offcanvas and value for the payload.
 
 ```typescript
-type PortalPayloads = {
+export type PortalPayloads = {
   example: {
     description: string;
   };
@@ -44,7 +44,7 @@ import type {
 
 import type { OffcanvasPayloads } from './types';
 
-function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>) {
+export function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>) {
   const { closePortal } = useDPortalContext();
   return (
     <DOffcanvas
@@ -91,7 +91,7 @@ import ExampleOffcanvasUsage from './ExampleOffcanvasUsage';
 
 import type { OffcanvasPayloads } from './types';
 
-function App() {
+export function App() {
   return (
     <DContextProvider<OffcanvasPayloads>
       portalName="examplePortal"
@@ -114,7 +114,7 @@ import {
 
 import type { OffcanvasPayloads } from './types';
 
-function ExampleOffcanvasUsage() {
+export function ExampleOffcanvasUsage() {
   const { openOffcanvas } = useDPortalContext<OffcanvasPayloads>();
   return (
     <DButton
