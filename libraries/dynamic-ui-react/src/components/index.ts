@@ -2,6 +2,7 @@ export { default as DAlert } from './DAlert';
 export { default as DBadge } from './DBadge';
 export { default as DBoxFile } from './DBoxFile';
 export { default as DButton } from './DButton';
+export { default as DButtonIcon } from './DButtonIcon';
 export {
   default as DCard,
   DCardHeader,
