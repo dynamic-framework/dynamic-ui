@@ -70,3 +70,4 @@ export {
   default as DToastContainer,
   useDToast,
 } from './DToastContainer';
+export { default as DTableHead } from './DTableHead';
