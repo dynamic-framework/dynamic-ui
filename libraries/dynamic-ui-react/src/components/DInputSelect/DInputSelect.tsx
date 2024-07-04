@@ -12,6 +12,7 @@ import { PREFIX_BS } from '../config';
 
 import type {
   BaseProps,
+  ComponentSize,
   EndIconProps,
   FamilyIconProps,
   LabelIconProps,
@@ -47,6 +48,7 @@ export type Props<T> =
   onIconEndClick?: (event: MouseEvent) => void;
   options: Array<T>;
   value?: string | number;
+  size?: ComponentSize;
   onChange?: (selectedOption: T) => void;
   valueExtractor?: (item: T) => string | number;
   labelExtractor?: (item: T) => string;
@@ -80,6 +82,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     validIcon: validIconProp,
     hint,
     value,
+    size,
     floatingLabel = false,
     invalid = false,
     valid = false,
@@ -164,6 +167,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
       name={name}
       className={classNames({
         'form-select': true,
+        [`form-select-${size}`]: !!size,
         'floating-label': floatingLabel,
         'is-invalid': invalid,
         'is-valid': valid,
@@ -200,6 +204,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     floatingLabel,
     invalid,
     valid,
+    size,
   ]);
 
   const labelComponent = useMemo(() => (
