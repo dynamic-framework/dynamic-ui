@@ -21,6 +21,7 @@ import { useDContext } from '../../contexts';
 
 import type {
   BaseProps,
+  ComponentSize,
   EndIconProps,
   FamilyIconProps,
   LabelIconProps,
@@ -41,6 +42,7 @@ type NonHTMLInputElementProps =
   label?: string;
   loading?: boolean;
   hint?: string;
+  size?: ComponentSize;
   invalid?: boolean;
   valid?: boolean;
   floatingLabel?: boolean;
@@ -88,6 +90,7 @@ function DInput(
     invalidIcon: invalidIconProp,
     validIcon: validIconProp,
     hint,
+    size,
     invalid = false,
     valid = false,
     floatingLabel = false,
@@ -147,6 +150,7 @@ function DInput(
       ref={inputRef}
       id={id}
       className={classNames('form-control', {
+        [`form-control-${size}`]: !!size,
         'is-invalid': invalid,
         'is-valid': valid,
       })}
@@ -170,6 +174,7 @@ function DInput(
     floatingLabel,
     valid,
     value,
+    size,
   ]);
 
   const labelComponent = useMemo(() => (

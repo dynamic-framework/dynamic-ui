@@ -68,6 +68,16 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
       control: 'text',
       type: 'string',
     },
+    size: {
+      control: {
+        type: 'radio',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, 'sm', 'lg'],
+    },
     label: {
       control: 'text',
       type: 'string',

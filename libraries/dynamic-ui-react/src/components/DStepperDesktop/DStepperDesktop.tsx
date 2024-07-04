@@ -19,6 +19,7 @@ type Props = BaseProps & {
   iconSuccessFamilyPrefix?: string;
   iconSuccessMaterialStyle?: boolean;
   vertical?: boolean;
+  completed?: boolean;
 };
 
 export default function DStepper(
@@ -30,6 +31,7 @@ export default function DStepper(
     iconSuccessFamilyPrefix,
     iconSuccessMaterialStyle = false,
     vertical = false,
+    completed,
     className,
     style,
   } : Props,
@@ -66,11 +68,11 @@ export default function DStepper(
             <div
               className={classNames({
                 'd-step-icon-container': true,
-                'd-step-check': value < currentStep,
-                'd-step-current': value === currentStep,
+                'd-step-check': value < currentStep || completed,
+                'd-step-current': value === currentStep && !completed,
               })}
             >
-              {value < currentStep
+              {value < currentStep || completed
                 ? (
                   <DIcon
                     icon={icon}

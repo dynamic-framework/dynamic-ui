@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.26.0...@dynamic-framework/ui-react@1.27.0) (2024-07-04)
+
+
+### Style Features
+
+* **style:** add d-close class and use instead of btn-close class on modal, offcanvas and toast ([8e68ce0](https://github.com/dynamic-framework/dynamic-ui/commit/8e68ce0488424f0015db14b5617eae3754243bba))
+* **style:** adjust button colors and focus style ([9cb4d8a](https://github.com/dynamic-framework/dynamic-ui/commit/9cb4d8ac18368baa59a157dbe794be489a8db5fc))
+* **style:** adjust DInput and compositions design ([cceb4ff](https://github.com/dynamic-framework/dynamic-ui/commit/cceb4ff79929323eb9249e815dcb4fa4c4bcad7b))
+* **style:** adjust DInputCheck design ([33576b5](https://github.com/dynamic-framework/dynamic-ui/commit/33576b562ec92f42aea9df6fcdef9b5799ff515e))
+* **style:** adjust DInputSwitch design and compositions ([dd1006b](https://github.com/dynamic-framework/dynamic-ui/commit/dd1006bfe01e0dad2a39f35f4e5d4389f9783cf9))
+* **style:** adjust input focus and feedback state ([3c6f206](https://github.com/dynamic-framework/dynamic-ui/commit/3c6f2068879ae7105f409e3ecb4459356d5bd322))
+
+
+### Features
+
+* add d-close class and use instead of btn-close class on modal, offcanvas and toast ([03a5213](https://github.com/dynamic-framework/dynamic-ui/commit/03a5213ead74ee3769955953a4a829d62eede7b1))
+* change toast element type to native toast type ([8da2181](https://github.com/dynamic-framework/dynamic-ui/commit/8da2181d1af354436ed887380bd9d67713839300))
+* **DIconButton:** create component, test and stories ([#532](https://github.com/dynamic-framework/dynamic-ui/issues/532)) ([c61389c](https://github.com/dynamic-framework/dynamic-ui/commit/c61389c93c7339b695f5dcdf5c144e065cf19865))
+* **DInput:** add size support ([1c5fcac](https://github.com/dynamic-framework/dynamic-ui/commit/1c5fcac6854fb6d5cce25ac700ea60f72f36a4eb))
+* **DInputCheck:** add invalid and valid props ([6a9a0c8](https://github.com/dynamic-framework/dynamic-ui/commit/6a9a0c82f50e119e47f26bf90086cc58a67f9af5))
+* **DInputSelect:** add size support ([6d4abfb](https://github.com/dynamic-framework/dynamic-ui/commit/6d4abfbdaf790b1cd0af6415fa649b9602cd99d1))
+* **DInputSwitch:** add invalid and valid props ([4b7e5e6](https://github.com/dynamic-framework/dynamic-ui/commit/4b7e5e6c32ad74505b93899ea2d04f291b046a8a))
+* **DStepper:** set completed steps flag ([#686](https://github.com/dynamic-framework/dynamic-ui/issues/686)) ([9175d50](https://github.com/dynamic-framework/dynamic-ui/commit/9175d50f14fe3d5677ce019f18a19f0430ec5918))
+* **DTableHead:** add table head component with sort functionality ([616e7e0](https://github.com/dynamic-framework/dynamic-ui/commit/616e7e0540731094e03f1ebf06e42944b39b2b59))
+* replace react-toastify for react-hot-toast ([b9225a0](https://github.com/dynamic-framework/dynamic-ui/commit/b9225a0dfb39d73790510561ad83699c4e83475d))
+* support multiple format style to currency format ([#684](https://github.com/dynamic-framework/dynamic-ui/issues/684)) ([c79b9ad](https://github.com/dynamic-framework/dynamic-ui/commit/c79b9ad6bcc63a39fc0c4074086117472bdaf74c))
+
+
+### Style Fixes
+
+* **style:** change label color to gray-700 ([cc7708f](https://github.com/dynamic-framework/dynamic-ui/commit/cc7708fbda58cea9820da8d1ec0c3298c4292624))
+* **style:** rollback body color to gray-900 ([9a8abca](https://github.com/dynamic-framework/dynamic-ui/commit/9a8abca025a93a1f46ee60f1521e2dec30de3aa1))
+* **style:** rollback gray colors ([2cf9ae5](https://github.com/dynamic-framework/dynamic-ui/commit/2cf9ae5022a979afed13d511e0f2b5c40b52421e))
+
+
+### Bug Fixes
+
+* **DButtonIcon:** add export of component ([81ee659](https://github.com/dynamic-framework/dynamic-ui/commit/81ee659dfb93b3b3a696a858c569c1ddba0de4cc))
+* **DPortalContext:** close offcanvas portal ([53233ac](https://github.com/dynamic-framework/dynamic-ui/commit/53233ac600d2eb76d8327dae16b260a4e4603e06))
+* **DSelect:** add invalid and valid icon support ([6b54f14](https://github.com/dynamic-framework/dynamic-ui/commit/6b54f141657281935d3f7f2807820c3ef5bfafc0))
+* **DSelect:** set zindex as bootstrap dropdown ([10ac153](https://github.com/dynamic-framework/dynamic-ui/commit/10ac153bfac4a75a2e7ebddf05db8b43a1492211))
+* **DSelect:** take icon state from DContext icon map ([4ff338d](https://github.com/dynamic-framework/dynamic-ui/commit/4ff338da6c20d3aeaa06a3453a5e97fe940ddce8))
+
+
+### Storybook
+
+* add size argType to DInput and compositions ([46ddc06](https://github.com/dynamic-framework/dynamic-ui/commit/46ddc062a858cbaaee740b17e5e6f2e4f51dd55b))
+* add tables example ([84a666d](https://github.com/dynamic-framework/dynamic-ui/commit/84a666d3ecc47ddd4a15617f50343532eae18786))
+* change code example to dark mode ([8c90483](https://github.com/dynamic-framework/dynamic-ui/commit/8c90483efde95ba8ddbbc5c4618b6fde2828ca3e))
+* **DButtonIcon:** rename story ([94d419a](https://github.com/dynamic-framework/dynamic-ui/commit/94d419a0040c51ecefaae2f0b2bd0e7d67fe9129))
+* **DInputCheck:** add valid and invalid story ([908ded8](https://github.com/dynamic-framework/dynamic-ui/commit/908ded8d8f4fe543bad7b5913f4d1a12669d49fa))
+* **DInputRadio:** add valid and invalid story ([de7d042](https://github.com/dynamic-framework/dynamic-ui/commit/de7d042b059dcb05081c19fe42e893bc12cb2ac9))
+* **DInputSwitch:** add valid and invalid story ([c52fe90](https://github.com/dynamic-framework/dynamic-ui/commit/c52fe90262e2f74e18bb6e7aa1e26189d00ff45c))
+* **DSelect:** add invalid and valid story ([7fc3f1c](https://github.com/dynamic-framework/dynamic-ui/commit/7fc3f1c433223328b30e4c8003ebe8f5464f5c7d))
+* **DToast:** add to autodocs ([2a90c1d](https://github.com/dynamic-framework/dynamic-ui/commit/2a90c1d6050e146f1b5bc4646db27fbe8d30ea88))
+* set export on code example of useModal and useOffcanvas ([c8fd894](https://github.com/dynamic-framework/dynamic-ui/commit/c8fd89495d2dcb1a575358ceb77bc5df78d171b2))
+* update default toast story ([f4c45a0](https://github.com/dynamic-framework/dynamic-ui/commit/f4c45a0eb04b444aee3342269c068c8beb220985))
+* update toast story with different examples ([872d237](https://github.com/dynamic-framework/dynamic-ui/commit/872d237c2b1152dfc28b26eef0e4c17d336c671a))
+* **useDToast:** update toast story with visible prop and dismiss on custom ([a27a5a2](https://github.com/dynamic-framework/dynamic-ui/commit/a27a5a258f1296760069718ad46ee309ff4aeb4e))
+
+
+
 ## [1.26.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.25.0...@dynamic-framework/ui-react@1.26.0) (2024-06-17)
 
 
