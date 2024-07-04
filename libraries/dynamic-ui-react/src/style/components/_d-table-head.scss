@@ -1,0 +1,18 @@
+.d-table-head {
+  button {
+    display: inline-flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    background: transparent;
+    border: unset;
+
+    .d-icon {
+      --#{$prefix}icon-size: var(--#{$prefix}fs-small);
+    }
+  }
+}
