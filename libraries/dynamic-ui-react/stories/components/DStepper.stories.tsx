@@ -74,6 +74,11 @@ provides a simpler alternative for scenarios where responsive behavior is not ne
       type: 'boolean',
       description: 'Display vertical stepper',
     },
+    completed: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Display all steps as completed',
+    },
     breakpoint: {
       control: {
         type: 'radio',

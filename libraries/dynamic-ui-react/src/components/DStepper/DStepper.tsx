@@ -17,6 +17,7 @@ type Props = BaseProps & {
   iconSuccessFamilyPrefix?: string;
   iconSuccessMaterialStyle?: boolean;
   vertical?: boolean;
+  completed?: boolean;
   breakpoint?: BreakpointSize;
 };
 
@@ -31,6 +32,7 @@ export default function DStepper(
     vertical = false,
     breakpoint = 'lg',
     className,
+    completed = false,
     style,
   } : Props,
 ) {
@@ -54,6 +56,7 @@ export default function DStepper(
           iconSuccessFamilyClass={iconSuccessFamilyClass}
           iconSuccessFamilyPrefix={iconSuccessFamilyPrefix}
           iconSuccessMaterialStyle={iconSuccessMaterialStyle}
+          completed={completed}
         />
       </div>
     </div>
