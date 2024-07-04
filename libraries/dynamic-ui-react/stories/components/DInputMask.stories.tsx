@@ -53,6 +53,16 @@ const config: Meta<typeof DInputMask> = {
       type: 'string',
       description: 'The value of the input',
     },
+    size: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, 'sm', 'lg'],
+    },
     inputMode: {
       control: 'text',
       type: 'string',

@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DToast from '../../src/components/DToast/DToast';
-import DButton from '../../src/components/DButton';
 import { DIcon } from '../../src';
 
 const config: Meta<typeof DToast> = {
@@ -19,6 +18,7 @@ const config: Meta<typeof DToast> = {
       control: 'object',
     },
   },
+  tags: ['autodocs'],
 };
 
 export default config;
@@ -38,16 +38,16 @@ export const Default: Story = {
         <DIcon icon="square-fill" theme="secondary" className="me-2" />
         <strong className="me-auto">Bootstrap</strong>
         <small className="me-2">11 mins ago</small>
-        <DButton
+        <button
           type="button"
-          iconStart="x"
-          variant="outline"
-          theme="secondary"
-          size="sm"
-        />
+          className="d-close"
+          aria-label="Close"
+        >
+          <DIcon icon="x" />
+        </button>
       </DToast.Header>
       <DToast.Body>
-        <p>Modal body</p>
+        Toast body
       </DToast.Body>
     </DToast>
   ),

@@ -1,131 +1,138 @@
+import { toast as reactToast, Toast } from 'react-hot-toast';
+
 import useDToast from '../../src/components/DToastContainer/useDToast';
 import DButton from '../../src/components/DButton';
 import DToastContainer from '../../src/components/DToastContainer';
 import { DContextProvider } from '../../src';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
-export function UseToastExample() {
+export function ExampleSimpleToastUsage() {
   const { toast } = useDToast();
   return (
-    <>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-            },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </>
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          { title: 'Example' },
+          { duration: 40000 },
+        )
+      )}
+    />
   );
 }
 
-export function UseToastMaterialExample() {
-  const { toast } = useDToast();
+export function ExampleSimpleToastRoot() {
   return (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example2',
-            },
-          )
-        )}
-      />
+    <DContextProvider>
+      <ExampleSimpleToastUsage />
       <DToastContainer
         position="top-right"
-        containerId="example2"
-        transition="flip"
       />
     </DContextProvider>
   );
 }
 
-export function UseToastTransitionExample() {
+export function ExampleFullToastUsage() {
   const { toast } = useDToast();
-
   return (
-    <div className="d-flex gap-4">
-      <DButton
-        text="Show Toast Slide"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example3',
-              transition: 'slide',
-            },
-          )
-        )}
-      />
-      <DButton
-        text="Show Toast Flip"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example3',
-              transition: 'flip',
-            },
-          )
-        )}
-      />
-      <DButton
-        text="Show Toast Bounce"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example3',
-              transition: 'bounce',
-            },
-          )
-        )}
-      />
-      <DButton
-        text="Show Toast Zoom"
-        onClick={() => (
-          toast(
-            'Example',
-            {
-              type: 'info',
-              showClose: true,
-              autoClose: 500,
-              containerId: 'example3',
-            },
-          )
-        )}
-      />
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            description: 'This is a description',
+            icon: 'check',
+          },
+          { duration: 1000 },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleFullToastRoot() {
+  return (
+    <DContextProvider>
+      <ExampleFullToastUsage />
       <DToastContainer
-        containerId="example3"
         position="top-right"
-        transition="zoom"
+      />
+    </DContextProvider>
+  );
+}
+
+export function CustomToastExample({ id, visible }: Toast) {
+  if (!visible) {
+    return null;
+  }
+  return (
+    <div className="bg-surface-secondary rounded-2 p-4 text-center">
+      <p className="fw-bold mt-0">Toast!</p>
+      <DButton
+        size="sm"
+        variant="outline"
+        theme="secondary"
+        text="Close toast"
+        onClick={() => reactToast.dismiss(id)}
       />
     </div>
+  );
+}
+
+export function ExampleCustomToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          CustomToastExample,
+          {
+            duration: 1000,
+          },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleCustomToastRoot() {
+  return (
+    <DContextProvider>
+      <ExampleCustomToastUsage />
+      <DToastContainer
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+}
+
+export function ExampleMaterialIconToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Show Toast"
+      onClick={() => (
+        toast(
+          { title: 'Example' },
+          { duration: 5000 },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleMaterialIconToastRoot() {
+  return (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <ExampleMaterialIconToastUsage />
+      <DToastContainer
+        key="material-icon-toast-container"
+        position="top-right"
+      />
+    </DContextProvider>
   );
 }

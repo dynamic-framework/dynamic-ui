@@ -20,20 +20,22 @@ To understand in more detail the aspects covered by this component, review the f
 
 The Bootstrap documentation provides details on the default [Checks CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
 
-| Variable                                         | Class        | Type           | Description               |
-|--------------------------------------------------|--------------|----------------|---------------------------|
-| --${PREFIX_BS}input-switch-bg                    | .form-switch | css color unit | Background color          |
-| --${PREFIX_BS}input-switch-border-color          | .form-switch | css color unit | Border color              |
-| --${PREFIX_BS}input-switch-dot                   | .form-switch | data url svg   | Component circle          |
-| --${PREFIX_BS}input-switch-hover-border-color    | .form-switch | css color unit | Hover border color        |
-| --${PREFIX_BS}input-switch-focus-outline-color   | .form-switch | css color unit | Focus outline color       |
-| --${PREFIX_BS}input-switch-active-border-color   | .form-switch | css color unit | Active border color       |
-| --${PREFIX_BS}input-switch-active-bg             | .form-switch | css color unit | Active background color   |
-| --${PREFIX_BS}input-switch-disabled-border-color | .form-switch | css color unit | Disabled border color     |
-| --${PREFIX_BS}input-switch-disabled-bg           | .form-switch | css color unit | Disabled background color |
-| --${PREFIX_BS}input-switch-disabled-dot          | .form-switch | data url svg   | Disabled component circle |
-| --${PREFIX_BS}input-switch-label-color           | .form-switch | css color unit | Label color               |
-| --${PREFIX_BS}input-switch-active-label-color    | .form-switch | css color unit | Active label color        |
+| Variable                                            | Class               | Type            | Description               |
+|-----------------------------------------------------|---------------------|-----------------|---------------------------|
+| --${PREFIX_BS}input-switch-bg                       | .form-switch        | css color unit  | Background color          |
+| --${PREFIX_BS}input-switch-border-color             | .form-switch        | css color unit  | Border color              |
+| --${PREFIX_BS}input-switch-dot                      | .form-switch        | data url svg    | Component circle          |
+| --${PREFIX_BS}input-switch-hover-border-color       | .form-switch        | css color unit  | Hover border color        |
+| --${PREFIX_BS}input-switch-focus-outline-color      | .form-switch        | css color unit  | Focus outline color       |
+| --${PREFIX_BS}input-switch-active-border-color      | .form-switch        | css color unit  | Active border color       |
+| --${PREFIX_BS}input-switch-active-bg                | .form-switch        | css color unit  | Active background color   |
+| --${PREFIX_BS}input-switch-disabled-border-color    | .form-switch        | css color unit  | Disabled border color     |
+| --${PREFIX_BS}input-switch-disabled-bg              | .form-switch        | css color unit  | Disabled background color |
+| --${PREFIX_BS}input-switch-disabled-dot             | .form-switch        | data url svg    | Disabled component circle |
+| --${PREFIX_BS}input-switch-label-color              | .form-switch        | css color unit  | Label color               |
+| --${PREFIX_BS}input-switch-active-label-color       | .form-switch        | css color unit  | Active label color        |
+| --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit  | Focus border color        |
+| --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow  | Focus box shadow          |
         `,
       },
     },
@@ -100,9 +102,29 @@ export const Default: Story = {
   },
 };
 
-export const Checked: Story = {
+export const DefaultValid: Story = {
   args: {
     id: 'componentId3',
+    label: 'Label',
+    checked: false,
+    disabled: false,
+    valid: true,
+  },
+};
+
+export const DefaultInvalid: Story = {
+  args: {
+    id: 'componentId4',
+    label: 'Label',
+    checked: false,
+    disabled: false,
+    invalid: true,
+  },
+};
+
+export const Checked: Story = {
+  args: {
+    id: 'componentId5',
     label: 'Label',
     checked: true,
     disabled: false,
@@ -111,7 +133,7 @@ export const Checked: Story = {
 
 export const Readonly: Story = {
   args: {
-    id: 'componentId4',
+    id: 'componentId6',
     label: 'Label',
     checked: false,
     readonly: true,
@@ -120,7 +142,7 @@ export const Readonly: Story = {
 
 export const Disabled: Story = {
   args: {
-    id: 'componentId5',
+    id: 'componentId7',
     label: 'Label',
     checked: false,
     disabled: true,
@@ -129,7 +151,7 @@ export const Disabled: Story = {
 
 export const CheckedDisabled: Story = {
   args: {
-    id: 'componentId6',
+    id: 'componentId8',
     label: 'Label',
     checked: true,
     disabled: true,

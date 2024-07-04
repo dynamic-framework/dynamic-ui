@@ -7,7 +7,6 @@ $quick-action-switch-content-gap: var(--#{$prefix}ref-spacer-1) !default;
 
 $quick-action-switch-label-font-size: $font-size-base !default;
 $quick-action-switch-label-font-weight: $form-label-font-weight !default;
-$quick-action-switch-label-color: $form-switch-label-color !default;
 
 $quick-action-switch-hint-font-size: var(--#{$prefix}fs-small) !default;
 $quick-action-switch-hint-font-weight: var(--#{$prefix}fw-normal) !default;
@@ -16,6 +15,5 @@ $quick-action-switch-hint-color: var(--#{$prefix}gray-400) !default;
 $quick-action-switch-hover-bg: var(--#{$prefix}secondary-soft) !default;
 
 $quick-action-switch-checked-bg: var(--#{$prefix}white) !default;
-$quick-action-switch-checked-label-color: $form-switch-active-label-color !default;
 $quick-action-switch-checked-hint-color: var(--#{$prefix}gray-500) !default;
 

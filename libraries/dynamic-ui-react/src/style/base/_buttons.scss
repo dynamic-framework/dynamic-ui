@@ -13,7 +13,7 @@
   --#{$prefix}btn-box-shadow: #{$btn-box-shadow};
   --#{$prefix}btn-disabled-opacity: #{$btn-disabled-opacity};
   --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), .5);
-  --#{$prefix}btn–text-decoration: if($link-decoration == none, null, none);
+  --#{$prefix}btn–text-decoration: #{if($link-decoration == none, null, none)};
   --#{$prefix}btn-lg-padding-y: #{$btn-padding-y-lg};
   --#{$prefix}btn-lg-padding-x: #{$btn-padding-x-lg};
   --#{$prefix}btn-lg-font-size: #{$btn-font-size-lg};
@@ -49,14 +49,15 @@
   }
 
   // hover selectors
-  &:hover,
-  &.hover {
+  &.hover,
+  &:hover {
     color: var(--#{$prefix}btn-hover-color);
     text-decoration: none;
     background-color: var(--#{$prefix}btn-hover-bg);
     border-color: var(--#{$prefix}btn-hover-border-color);
   }
 
+  .btn-check + &.hover,
   .btn-check + &:hover {
     // override for the checkbox/radio buttons
     color: var(--#{$prefix}btn-color);
@@ -65,21 +66,30 @@
   }
 
   // focus selectors
-  .btn-check:focus-visible + &,
-  &:focus-visible:not(:hover),
-  &.focus-visible:not(:hover) {
-    // copy of .btn:focus bootstrap + focus var
+  &.focus-visible,
+  &:focus-visible {
     color: var(--#{$prefix}btn-focus-color, var(--#{$prefix}btn-hover-color));
     @include gradient-bg(var(--#{$prefix}btn-focus-bg, var(--#{$prefix}btn-hover-bg)));
     border-color: var(--#{$prefix}btn-focus-border-color, var(--#{$prefix}btn-hover-border-color));
-    // end copy
+    outline: 0;
+    // Avoid using mixin so we can pass custom focus shadow properly
+    @if $enable-shadows {
+      box-shadow: var(--#{$prefix}btn-box-shadow), var(--#{$prefix}btn-focus-box-shadow);
+    } @else {
+      box-shadow: var(--#{$prefix}btn-focus-box-shadow);
+    }
   }
 
-  .btn-check:focus-visible + &,
-  &:focus-visible,
-  &.focus-visible {
-    outline: var(--#{$prefix}btn-focus-border-width, var(--#{$prefix}btn-border-width)) solid var(--#{$prefix}btn-focus-outline-color, var(--#{$prefix}focus-ring-color));
-    outline-offset: var(--#{$prefix}btn-focus-outline-offset, var(--#{$prefix}btn-border-width));
+  .btn-check.focus-visible + &,
+  .btn-check:focus-visible + & {
+    border-color: var(--#{$prefix}btn-hover-border-color);
+    outline: 0;
+
+    @if $enable-shadows {
+      box-shadow: var(--#{$prefix}btn-box-shadow), var(--#{$prefix}btn-focus-box-shadow);
+    } @else {
+      box-shadow: var(--#{$prefix}btn-focus-box-shadow);
+    }
   }
 
   .btn-check:checked + &,
@@ -92,20 +102,31 @@
     // Remove CSS gradients if they're enabled
     background-image: if($enable-gradients, none, null);
     border-color: var(--#{$prefix}btn-active-border-color);
-    @include box-shadow(var(--#{$prefix}btn-active-shadow));
+    @include box-shadow(var(--#{$prefix}btn-active-box-shadow));
 
+    &.focus-visible,
     &:focus-visible {
       // Avoid using mixin so we can pass custom focus shadow properly
       @if $enable-shadows {
-        box-shadow: var(--#{$prefix}btn-active-shadow), var(--#{$prefix}btn-focus-box-shadow);
+        box-shadow: var(--#{$prefix}btn-active-box-shadow), var(--#{$prefix}btn-focus-box-shadow);
       } @else {
         box-shadow: var(--#{$prefix}btn-focus-box-shadow);
       }
     }
   }
 
-  &:disabled,
+  .btn-check:checked.focus-visible + &,
+  .btn-check:checked:focus-visible + & {
+    // Avoid using mixin so we can pass custom focus shadow properly
+    @if $enable-shadows {
+      box-shadow: var(--#{$prefix}btn-active-box-shadow), var(--#{$prefix}btn-focus-box-shadow);
+    } @else {
+      box-shadow: var(--#{$prefix}btn-focus-box-shadow);
+    }
+  }
+
   &.disabled,
+  &:disabled,
   fieldset:disabled & {
     color: var(--#{$prefix}btn-disabled-color);
     pointer-events: none;
@@ -189,15 +210,19 @@
     background-image: none;
   }
 
+  &.hover,
   &:hover,
+  &.focus-visible,
   &:focus-visible {
     text-decoration: $link-hover-decoration;
   }
 
+  &.focus-visible,
   &:focus-visible {
     color: var(--#{$prefix}btn-color);
   }
 
+  &.hover,
   &:hover {
     color: var(--#{$prefix}btn-hover-color);
   }

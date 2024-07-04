@@ -2,18 +2,22 @@
 @mixin df-button-variant-variables(
   $color-name,
   $default-color: var(--#{$prefix}#{$color-name}-500),
-  $hover-color: var(--#{$prefix}#{$color-name}-600),
-  $focus-color: var(--#{$prefix}#{$color-name}-500),
-  $active-color: var(--#{$prefix}#{$color-name}-700),
   $default-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-500)),
+  $hover-color: var(--#{$prefix}#{$color-name}-600),
   $hover-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-600)),
+  $focus-color: var(--#{$prefix}#{$color-name}-600),
   $focus-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-600)),
+  $active-color: var(--#{$prefix}#{$color-name}-700),
   $active-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-700)),
-  $disabled-opacity: .65
+  $disabled-opacity: $btn-disabled-opacity,
+  $box-shadow: $btn-box-shadow,
+  $focus-shadow-rgb: var(--#{$prefix}#{$color-name}-500-rgb),
+  $active-box-shadow: $btn-active-box-shadow,
 ) {
   --#{$prefix}btn-#{$color-name}-color: #{$default-text-color};
   --#{$prefix}btn-#{$color-name}-bg: #{$default-color};
   --#{$prefix}btn-#{$color-name}-border-color: #{$default-color};
+  --#{$prefix}btn-#{$color-name}-box-shadow: #{$box-shadow};
 
   --#{$prefix}btn-#{$color-name}-hover-color: #{$hover-text-color};
   --#{$prefix}btn-#{$color-name}-hover-bg: #{$hover-color};
@@ -22,10 +26,12 @@
   --#{$prefix}btn-#{$color-name}-focus-color: #{$focus-text-color};
   --#{$prefix}btn-#{$color-name}-focus-bg: #{$focus-color};
   --#{$prefix}btn-#{$color-name}-focus-border-color: #{$focus-color};
+  --#{$prefix}btn-#{$color-name}-focus-shadow-rgb: #{$focus-shadow-rgb};
 
   --#{$prefix}btn-#{$color-name}-active-color: #{$active-text-color};
   --#{$prefix}btn-#{$color-name}-active-bg: #{$active-color};
   --#{$prefix}btn-#{$color-name}-active-border-color: #{$active-color};
+  --#{$prefix}btn-#{$color-name}-active-box-shadow: #{$active-box-shadow};
 
   --#{$prefix}btn-#{$color-name}-disabled-color: #{$default-text-color};
   --#{$prefix}btn-#{$color-name}-disabled-bg: #{$default-color};
@@ -38,29 +44,35 @@
 @mixin df-button-outline-variant-variables(
   $color-name,
   $default-color: var(--#{$prefix}#{$color-name}-500),
-  $hover-bg-color: var(--#{$prefix}#{$color-name}-100),
-  $hover-text-color: var(--#{$prefix}#{$color-name}-500),
-  $focus-text-color: var(--#{$prefix}#{$color-name}-500),
-  $active-text-color: var(--#{$prefix}#{$color-name}-700),
-  $active-bg-color: var(--#{$prefix}#{$color-name}-100),
-  $active-border-color: var(--#{$prefix}#{$color-name}-700),
-  $disabled-opacity: .65
+  $hover-bg-color: var(--#{$prefix}#{$color-name}-600),
+  $hover-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-600)),
+  $focus-bg-color: var(--#{$prefix}#{$color-name}-600),
+  $focus-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-600)),
+  $active-bg-color: var(--#{$prefix}#{$color-name}-700),
+  $active-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-700)),
+  $disabled-opacity: $btn-disabled-opacity,
+  $box-shadow: $btn-box-shadow,
+  $focus-shadow-rgb: var(--#{$prefix}#{$color-name}-500-rgb),
+  $active-box-shadow: $btn-active-box-shadow,
 ) {
   --#{$prefix}btn-outline-#{$color-name}-color: #{$default-color};
   --#{$prefix}btn-outline-#{$color-name}-bg: transparent;
   --#{$prefix}btn-outline-#{$color-name}-border-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-box-shadow: #{$box-shadow};
 
   --#{$prefix}btn-outline-#{$color-name}-hover-color: #{$hover-text-color};
   --#{$prefix}btn-outline-#{$color-name}-hover-bg: #{$hover-bg-color};
-  --#{$prefix}btn-outline-#{$color-name}-hover-border-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-hover-border-color: #{$hover-bg-color};
 
   --#{$prefix}btn-outline-#{$color-name}-focus-color: #{$focus-text-color};
-  --#{$prefix}btn-outline-#{$color-name}-focus-bg: transparent;
-  --#{$prefix}btn-outline-#{$color-name}-focus-border-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-focus-bg: #{$focus-bg-color};
+  --#{$prefix}btn-outline-#{$color-name}-focus-border-color: #{$focus-bg-color};
+  --#{$prefix}btn-outline-#{$color-name}-focus-shadow-rgb: #{$focus-shadow-rgb};
 
   --#{$prefix}btn-outline-#{$color-name}-active-color: #{$active-text-color};
   --#{$prefix}btn-outline-#{$color-name}-active-bg: #{$active-bg-color};
-  --#{$prefix}btn-outline-#{$color-name}-active-border-color: #{$active-border-color};
+  --#{$prefix}btn-outline-#{$color-name}-active-border-color: #{$active-bg-color};
+  --#{$prefix}btn-outline-#{$color-name}-active-box-shadow: #{$active-box-shadow};
 
   --#{$prefix}btn-outline-#{$color-name}-disabled-color: #{$default-color};
   --#{$prefix}btn-outline-#{$color-name}-disabled-bg: transparent;
@@ -73,28 +85,33 @@
 @mixin df-button-link-variant-variables(
   $color-name,
   $default-color: var(--#{$prefix}#{$color-name}-500),
-  $hover-bg-color: var(--#{$prefix}#{$color-name}-100),
-  $hover-text-color: var(--#{$prefix}#{$color-name}-500),
-  $focus-text-color: var(--#{$prefix}#{$color-name}-500),
+  $hover-text-color: var(--#{$prefix}#{$color-name}-600),
+  $focus-text-color: var(--#{$prefix}#{$color-name}-600),
   $active-text-color: var(--#{$prefix}#{$color-name}-700),
-  $active-bg-color: var(--#{$prefix}#{$color-name}-100),
-  $disabled-opacity: .65
+  $active-bg-color: var(--#{$prefix}#{$color-name}-200),
+  $disabled-opacity: $btn-disabled-opacity,
+  $box-shadow: $btn-box-shadow,
+  $active-box-shadow: $btn-active-box-shadow,
+  $focus-shadow-rgb: var(--#{$prefix}#{$color-name}-500-rgb),
 ) {
   --#{$prefix}btn-link-#{$color-name}-bg: transparent;
   --#{$prefix}btn-link-#{$color-name}-border-color: transparent;
   --#{$prefix}btn-link-#{$color-name}-color: #{$default-color};
+  --#{$prefix}btn-link-#{$color-name}-box-shadow: #{$box-shadow};
 
-  --#{$prefix}btn-link-#{$color-name}-hover-bg: #{$hover-bg-color};
+  --#{$prefix}btn-link-#{$color-name}-hover-bg: transparent;
   --#{$prefix}btn-link-#{$color-name}-hover-border-color: transparent;
   --#{$prefix}btn-link-#{$color-name}-hover-color: #{$hover-text-color};
 
   --#{$prefix}btn-link-#{$color-name}-focus-bg: transparent;
   --#{$prefix}btn-link-#{$color-name}-focus-border-color: transparent;
   --#{$prefix}btn-link-#{$color-name}-focus-color: #{$focus-text-color};
+  --#{$prefix}btn-link-#{$color-name}-focus-shadow-rgb: #{$focus-shadow-rgb};
 
   --#{$prefix}btn-link-#{$color-name}-active-bg: #{$active-bg-color};
   --#{$prefix}btn-link-#{$color-name}-active-border-color: transparent;
   --#{$prefix}btn-link-#{$color-name}-active-color: #{$active-text-color};
+  --#{$prefix}btn-link-#{$color-name}-active-box-shadow: #{$active-box-shadow};
 
   --#{$prefix}btn-link-#{$color-name}-disabled-bg: transparent;
   --#{$prefix}btn-link-#{$color-name}-disabled-border-color: transparent;
@@ -112,6 +129,7 @@
   --#{$prefix}btn-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-color);
   --#{$prefix}btn-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-bg);
   --#{$prefix}btn-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-border-color);
+  --#{$prefix}btn-box-shadow: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-box-shadow);
 
   --#{$prefix}btn-hover-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-hover-color);
   --#{$prefix}btn-hover-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-hover-bg);
@@ -120,10 +138,12 @@
   --#{$prefix}btn-focus-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-focus-color);
   --#{$prefix}btn-focus-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-focus-bg);
   --#{$prefix}btn-focus-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-focus-border-color);
+  --#{$prefix}btn-focus-shadow-rgb: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-focus-shadow-rgb);
 
   --#{$prefix}btn-active-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-color);
   --#{$prefix}btn-active-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-bg);
   --#{$prefix}btn-active-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-border-color);
+  --#{$prefix}btn-active-box-shadow: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-box-shadow);
 
   --#{$prefix}btn-disabled-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-color);
   --#{$prefix}btn-disabled-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-bg);

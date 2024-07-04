@@ -95,11 +95,17 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   }), [stack, openPortal, closePortal]) as PortalContextType<any>;
 
   const handleClose = useCallback((target: Element) => {
-    if (target instanceof HTMLDivElement) {
-      if (target.classList.contains('portal')) {
-        if (!('bsBackdrop' in target.dataset)) {
-          closePortal();
-        }
+    if (!(target instanceof HTMLDivElement)) {
+      return;
+    }
+    if (target.classList.contains('portal') && !('bsBackdrop' in target.dataset)) {
+      closePortal();
+      return;
+    }
+    if (target.classList.contains('backdrop')) {
+      const lastPortal = target.nextElementSibling as HTMLElement;
+      if (lastPortal && lastPortal.classList.contains('portal') && !('bsBackdrop' in lastPortal.dataset)) {
+        closePortal();
       }
     }
   }, [closePortal]);
@@ -107,9 +113,9 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   useEffect(() => {
     const keyEvent = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        const lastModal = document.querySelector(`#${portalName} > div > div:last-child`);
-        if (lastModal) {
-          handleClose(lastModal as HTMLElement);
+        const lastPortal = document.querySelector(`#${portalName} > div > div:last-child`);
+        if (lastPortal) {
+          handleClose(lastPortal as HTMLElement);
         }
       }
     };

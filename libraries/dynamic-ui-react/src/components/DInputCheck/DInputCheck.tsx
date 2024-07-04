@@ -21,6 +21,8 @@ type Props =
   ariaLabel?: string;
   checked?: boolean;
   disabled?: boolean;
+  invalid?: boolean;
+  valid?: boolean;
   indeterminate?: boolean;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -35,6 +37,8 @@ export default function DInputCheck(
     ariaLabel,
     checked = false,
     disabled = false,
+    invalid = false,
+    valid = false,
     indeterminate,
     value,
     onChange,
@@ -66,7 +70,14 @@ export default function DInputCheck(
     <input
       ref={innerRef}
       onChange={handleChange}
-      className={classNames('form-check-input', className)}
+      className={classNames(
+        'form-check-input',
+        {
+          'is-invalid': invalid,
+          'is-valid': valid,
+        },
+        className,
+      )}
       style={style}
       id={id}
       disabled={disabled}
@@ -79,6 +90,8 @@ export default function DInputCheck(
     ariaLabel,
     className,
     disabled,
+    valid,
+    invalid,
     handleChange,
     id,
     name,

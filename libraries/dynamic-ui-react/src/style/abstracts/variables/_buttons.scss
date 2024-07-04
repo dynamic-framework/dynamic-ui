@@ -18,11 +18,9 @@ $btn-font-size-lg: $h6-font-size !default;
 
 $btn-border-width: $input-btn-border-width !default;
 
-$btn-box-shadow: none !default;
-$btn-focus-width: 0 !default;
-$btn-focus-box-shadow: none !default;
-$btn-disabled-opacity: 1 !default;
-$btn-active-box-shadow: none !default;
+$btn-box-shadow: 0 0 0 transparent !default; // to avoid the none in the bootstrap box-shadow calculation
+$btn-disabled-opacity: .65 !default;
+$btn-active-box-shadow: 0 0 0 transparent !default; // to avoid the none in the bootstrap box-shadow calculation
 
 $btn-border-radius: var(--#{$prefix}border-radius-pill) !default;
 $btn-border-radius-sm: var(--#{$prefix}border-radius-pill) !default;

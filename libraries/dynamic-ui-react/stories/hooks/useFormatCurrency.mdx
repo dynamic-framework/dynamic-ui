@@ -1,6 +1,7 @@
 import {
   Meta,
   Canvas,
+  Source,
 } from '@storybook/blocks';
 import { ExampleRoot } from "./useFormatCurrencyExamples";
 
@@ -10,8 +11,12 @@ import { ExampleRoot } from "./useFormatCurrencyExamples";
 Currency formatting hook
 
 ## Setup `App.tsx`
+
 It is necessary to use the hook inside a DContextProvider, because the hook takes the formatting configuration from that context
-```tsx
+
+<Source
+  code={
+    `
 import {
   DContextProvider,
 } from '@design-system/ui-react';
@@ -25,12 +30,19 @@ export function App() {
     </DContextProvider>
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 ## Example of use `ExampleUsage.tsx`
+
 Component that uses the hook
 
-```tsx
+<Source
+  code={
+    `
 import {
   useFormatCurrency,
 } from '@design-system/ui-react';
@@ -45,11 +57,19 @@ export function ExampleOfUse() {
     </div>
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 ## Setup with other settings `App.tsx`
+
 Formatting settings can be changed by changing the values of the currency property of the DContextProvider
-```tsx
+
+<Source
+  code={
+    `
 import {
   DContextProvider,
 } from '@design-system/ui-react';
@@ -70,7 +90,11 @@ export function App() {
     </DContextProvider>
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 ## Example Render
 <Canvas>

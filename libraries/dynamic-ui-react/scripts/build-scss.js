@@ -37,8 +37,8 @@ files.forEach((file) => {
   const rawFilePath = path.join(dirPath, `${filename}.css`);
   const minFilePath = path.join(dirPath, `${filename}.min.css`);
 
-  execSync(`sass --load-path=./ --no-source-map ${file} > ${rawFilePath}`);
-  execSync(`sass --load-path=./ --no-source-map --style=compressed ${file} > ${minFilePath}`);
+  execSync(`sass --trace --color --load-path=./ --no-source-map ${file} > ${rawFilePath}`);
+  execSync(`sass --trace --color --load-path=./ --no-source-map --style=compressed ${file} > ${minFilePath}`);
 
   const rawContent = fs.readFileSync(rawFilePath, 'utf8');
   const minContent = fs.readFileSync(minFilePath, 'utf8');

@@ -1,6 +1,7 @@
 import {
   Meta,
   Canvas,
+  Source,
 } from '@storybook/blocks';
 
 import {
@@ -22,17 +23,25 @@ This part of the documentation talks about `DOffcanvas` and directly covers its 
 Type to define the payload of all the offcanvas, its structure is an object literal
 where the key is used for the name of the offcanvas and value for the payload.
 
-```typescript
-type PortalPayloads = {
+<Source
+  code={
+    `
+export type PortalPayloads = {
   example: {
     description: string;
   };
 };
-```
-
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 ## Offcanvas Definition `ExampleOffcanvas.tsx`
-```tsx
+
+<Source
+  code={
+    `
 import {
   DOffcanvas,
   DButton,
@@ -44,7 +53,7 @@ import type {
 
 import type { OffcanvasPayloads } from './types';
 
-function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>) {
+export function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>) {
   const { closePortal } = useDPortalContext();
   return (
     <DOffcanvas
@@ -74,14 +83,20 @@ function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>
     </DOffcanvas>
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 ## Offcanvas Setting on the main file `App.tsx`
 The available offcanvas are configured on the `DOffcanvasContextProvider` so that they can
 then be opened with the `useDOffcanvasContext` hook. The payload type of the offcanvas
 is only necessary if payload will be used.
 
-```tsx
+<Source
+  code={
+    `
 import {
   DContextProvider,
 } from '@dynamic-framework/ui-react';
@@ -91,7 +106,7 @@ import ExampleOffcanvasUsage from './ExampleOffcanvasUsage';
 
 import type { OffcanvasPayloads } from './types';
 
-function App() {
+export function App() {
   return (
     <DContextProvider<OffcanvasPayloads>
       portalName="examplePortal"
@@ -103,10 +118,17 @@ function App() {
     </DContextProvider>
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 ## Offcanvas Usage `ExampleOffcanvasUsage.tsx`
-```tsx
+
+<Source
+  code={
+    `
 import {
   DButton,
   useDPortalContext,
@@ -114,7 +136,7 @@ import {
 
 import type { OffcanvasPayloads } from './types';
 
-function ExampleOffcanvasUsage() {
+export function ExampleOffcanvasUsage() {
   const { openOffcanvas } = useDPortalContext<OffcanvasPayloads>();
   return (
     <DButton
@@ -123,7 +145,11 @@ function ExampleOffcanvasUsage() {
     />
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 <Canvas>
   <div className="d-flex flex-column justify-content-end align-items-end">

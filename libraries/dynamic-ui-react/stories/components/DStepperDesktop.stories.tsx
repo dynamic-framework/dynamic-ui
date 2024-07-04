@@ -66,6 +66,11 @@ const config: Meta<typeof DStepperDesktop> = {
       type: 'boolean',
       description: 'Display vertical stepper',
     },
+    completed: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Display all steps as completed',
+    },
   },
   tags: ['autodocs'],
 };

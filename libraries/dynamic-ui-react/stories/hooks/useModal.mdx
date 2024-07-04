@@ -1,6 +1,7 @@
 import {
   Meta,
   Canvas,
+  Source,
 } from '@storybook/blocks';
 
 import {
@@ -19,20 +20,29 @@ This part of the documentation talks about `DModal` and directly covers its beha
 <Meta title="Design System/Patterns/Modal" />
 
 ## Modal Types `types.ts`
+
 Type to define the payload of all the modals, its structure is an object literal
 where the key is used for the name of the modal and value for the payload.
 
-```typescript
-type ModalPayloads = {
+<Source
+  code={
+    `
+export type ModalPayloads = {
   example: {
     description: string;
   };
 };
-```
-
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 ## Modal Definition `ExampleModal.tsx`
-```tsx
+
+<Source
+  code={
+    `
 import {
   DModal,
   DButton,
@@ -44,7 +54,7 @@ import type {
 
 import type { ModalPayloads } from './types';
 
-function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
+export function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
   const { closePortal } = useDPortalContext();
   return (
     <DModal
@@ -73,14 +83,21 @@ function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
     </DModal>
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 ## Modal Setting on the main file `App.tsx`
+
 The available modals are configured on the `DContextProvider` so that they can
 then be opened with the `useDModalContext` hook. The payload type of the modals
 is only necessary if payload will be used.
 
-```tsx
+<Source
+  code={
+    `
 import {
   DContextProvider,
 } from '@dynamic-framework/ui-react';
@@ -90,7 +107,7 @@ import ExampleModalUsage from './ExampleModalUsage';
 
 import type { ModalPayloads } from './types';
 
-function App() {
+export function App() {
   return (
     <DContextProvider<ModalPayloads>
       portalName="examplePortal"
@@ -102,10 +119,18 @@ function App() {
     </DContextProvider>
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
+
 
 ## Modal Usage `ExampleModalUsage.tsx`
-```tsx
+
+<Source
+  code={
+    `
 import {
   DButton,
   useDPortalContext,
@@ -113,7 +138,7 @@ import {
 
 import type { ModalPayloads } from './types';
 
-function ExampleModalUsage() {
+export function ExampleModalUsage() {
   const { openPortal } = useDPortalContext<ModalPayloads>();
   return (
     <DButton
@@ -122,7 +147,11 @@ function ExampleModalUsage() {
     />
   );
 }
-```
+    `
+  }
+  language="tsx"
+  dark
+/>
 
 <Canvas>
   <div className="d-flex flex-column justify-content-end align-items-end">
