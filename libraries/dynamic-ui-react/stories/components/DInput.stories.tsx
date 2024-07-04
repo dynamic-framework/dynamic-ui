@@ -123,6 +123,16 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       type: 'string',
       description: 'The value of the input',
     },
+    size: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      type: 'string',
+      options: [undefined, 'sm', 'lg'],
+    },
     inputMode: {
       control: 'text',
       type: 'string',
