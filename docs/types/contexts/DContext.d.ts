@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { PortalContextProps } from './DPortalContext';
 import type { AlertTypeIconMap } from '../components/interface';
-type CurrencyProps = {
+export type CurrencyProps = {
     symbol: string;
     precision: number;
     separator: string;

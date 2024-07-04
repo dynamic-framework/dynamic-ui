@@ -12,7 +12,8 @@ type Props = BaseProps & {
     iconSuccessFamilyPrefix?: string;
     iconSuccessMaterialStyle?: boolean;
     vertical?: boolean;
+    completed?: boolean;
     breakpoint?: BreakpointSize;
 };
-export default function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical, breakpoint, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle, vertical, breakpoint, className, completed, style, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

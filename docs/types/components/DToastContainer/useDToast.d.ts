@@ -1,16 +1,15 @@
-import type { ToastPosition } from 'react-toastify';
-import type { AlertType } from '../interface';
-export type ToastConfig = {
-    type?: AlertType;
+import { Renderable, Toast, ValueFunction } from 'react-hot-toast';
+type ToastData = {
+    title: string;
+    description?: string;
+    timestamp?: string;
     icon?: string;
-    iconClose?: string;
-    showClose?: boolean;
-    position?: ToastPosition;
-    autoClose?: number | false;
-    stacked?: boolean;
-    containerId?: string;
-    transition?: 'slide' | 'flip' | 'bounce' | 'zoom';
+    closeIcon?: string;
+    theme?: string;
+    soft?: boolean;
 };
+type Props = Partial<Pick<Toast, 'id' | 'duration' | 'position'>>;
 export default function useDToast(): {
-    toast: (message: string, { icon, iconClose, type, showClose, transition, ...rest }: ToastConfig) => void;
+    toast: (data: ToastData | ValueFunction<Renderable, Toast>, toastProps: Props) => string;
 };
+export {};

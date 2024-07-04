@@ -1,5 +1,5 @@
 import type { FocusEvent, MouseEvent } from 'react';
-import type { BaseProps, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps, StateIcons } from '../interface';
+import type { BaseProps, ComponentSize, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps, StateIcons } from '../interface';
 export type DefaultOption = {
     value: string | number;
     label: string;
@@ -19,8 +19,9 @@ export type Props<T> = BaseProps & FamilyIconProps & LabelIconProps & StartIconP
     onIconEndClick?: (event: MouseEvent) => void;
     options: Array<T>;
     value?: string | number;
+    size?: ComponentSize;
     onChange?: (selectedOption: T) => void;
     valueExtractor?: (item: T) => string | number;
     labelExtractor?: (item: T) => string;
 };
-export default function DInputSelect<T extends object = DefaultOption>({ id: idProp, name, label, className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled, loading, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, invalidIcon: invalidIconProp, validIcon: validIconProp, hint, value, floatingLabel, invalid, valid, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }: Props<T>): import("react/jsx-runtime").JSX.Element;
+export default function DInputSelect<T extends object = DefaultOption>({ id: idProp, name, label, className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled, loading, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, invalidIcon: invalidIconProp, validIcon: validIconProp, hint, value, size, floatingLabel, invalid, valid, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }: Props<T>): import("react/jsx-runtime").JSX.Element;
