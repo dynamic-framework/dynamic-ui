@@ -183,7 +183,7 @@ function DInput(
       {labelIcon && (
         <DIcon
           icon={labelIcon}
-          size={`var(--${PREFIX_BS}input-label-font-size)`}
+          size={`var(--${PREFIX_BS}label-font-size)`}
           familyClass={labelIconFamilyClass}
           familyPrefix={labelIconFamilyPrefix}
           materialStyle={labelIconMaterialStyle}
