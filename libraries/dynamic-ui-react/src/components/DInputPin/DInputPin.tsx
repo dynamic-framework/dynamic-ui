@@ -91,15 +91,18 @@ export default function DInputPin(
     onChange?.(otpValue);
   }, [onChange]);
 
+  useEffect(() => {
+    handleOTPChange(activeInput);
+  }, [activeInput, handleOTPChange]);
+
   const handlePaste = useCallback((event: ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault();
     const pastedData = event.clipboardData.getData('text/plain');
     const cleanData = isInputNum ? pastedData.replace(/[^0-9]/gmi, '') : pastedData;
     const newInput = Array.from<string>({ length: characters }).map((_, index) => cleanData[index] || '');
     setActiveInput(newInput);
-    handleOTPChange(newInput);
     event.currentTarget.blur();
-  }, [characters, handleOTPChange, isInputNum]);
+  }, [characters, isInputNum]);
 
   const nextInput = useCallback((
     event: FormEvent<HTMLInputElement>,
@@ -114,7 +117,6 @@ export default function DInputPin(
     if (input.value !== '') {
       setActiveInput((prev) => {
         const newValue = prev.with(index, input.value);
-        handleOTPChange(newValue);
         return newValue;
       });
       if (input.nextSibling) {
@@ -123,7 +125,7 @@ export default function DInputPin(
         input.blur();
       }
     }
-  }, [handleOTPChange, pattern]);
+  }, [pattern]);
 
   const prevInput = useCallback((
     { key, currentTarget }: KeyboardEvent<HTMLInputElement>,
@@ -133,7 +135,6 @@ export default function DInputPin(
       const { value } = currentTarget;
       setActiveInput((prev) => {
         const newVal = prev.with(index, '');
-        handleOTPChange(newVal);
         return newVal;
       });
       if (currentTarget.previousSibling && value === '') {
@@ -143,7 +144,7 @@ export default function DInputPin(
         currentTarget.focus();
       }
     }
-  }, [handleOTPChange]);
+  }, []);
 
   const focusInput = useCallback((
     index: number,
