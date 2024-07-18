@@ -14,7 +14,10 @@ export function ExampleSimpleToastUsage() {
       onClick={() => (
         toast(
           { title: 'Example' },
-          { duration: 40000 },
+          {
+            duration: 4000,
+            position: 'top-left',
+          },
         )
       )}
     />

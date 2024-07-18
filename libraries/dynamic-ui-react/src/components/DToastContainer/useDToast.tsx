@@ -33,7 +33,7 @@ export default function useDToast() {
 
   const toast = useCallback((
     data: ToastData | ValueFunction<Renderable, Toast>,
-    toastProps: Props,
+    toastProps?: Props,
   ) => {
     if (typeof data === 'function') {
       return reactHotToast.custom(data, toastProps);
