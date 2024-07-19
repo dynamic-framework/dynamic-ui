@@ -42,6 +42,7 @@ type Props<
 | 'startDate'
 | 'endDate'
 | 'fixedHeight'
+| 'renderCustomHeader'
 >
 & {
   date?: string | null;
@@ -97,6 +98,7 @@ export default function DDatePicker<
     headerButtonTheme = 'dark',
     invalid = false,
     valid = false,
+    renderCustomHeader: renderCustomHeaderProp,
     locale,
     className,
     formatWeekDay: formatWeekDayProp,
@@ -158,11 +160,20 @@ export default function DDatePicker<
     maxYearSelect,
   ]);
 
+  const defaultRenderCustomHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
+    <DatePickerHeader {...headerProps} />
+  ), [DatePickerHeader]);
+
+  const renderCustomHeader = useMemo(
+    () => (renderCustomHeaderProp || defaultRenderCustomHeader),
+    [defaultRenderCustomHeader, renderCustomHeaderProp],
+  );
+
   return (
     <DatePicker<string, boolean>
       selected={selected}
       calendarClassName="d-date-picker"
-      renderCustomHeader={(headerProps) => <DatePickerHeader {...headerProps} />}
+      renderCustomHeader={renderCustomHeader}
       selectsRange={selectsRange}
       formatWeekDay={handleFormatWeekDay}
       customInput={(
