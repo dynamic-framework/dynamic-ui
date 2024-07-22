@@ -1,0 +1,56 @@
+.toast {
+  --#{$prefix}toast-header-gap: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}toast-color: var(--#{$prefix}gray-900);
+  --#{$prefix}toast-close-color: var(--#{$prefix}gray-900);
+  --#{$prefix}toast-header-color: var(--#{$prefix}gray-900);
+
+  .toast-title {
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+
+  .toast-header {
+    gap: var(--#{$prefix}toast-header-gap);
+  }
+
+  .toast-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .toast-icon.d-icon {
+    --#{$prefix}icon-color: var(--#{$prefix}toast-icon-color);
+  }
+
+  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
+    $color: color-contrast-var($value);
+    &.toast-#{$theme} {
+      --#{$prefix}toast-border-color: var(--#{$prefix}#{$theme});
+      --#{$prefix}toast-color: #{$color};
+      --#{$prefix}toast-close-color: #{$color};
+      --#{$prefix}toast-header-color: #{$color};
+      --#{$prefix}toast-bg: var(--#{$prefix}#{$theme});
+      --#{$prefix}toast-header-bg: var(--#{$prefix}#{$theme});
+
+      .d-close {
+        color: var(--#{$prefix}toast-close-color);
+      }
+    }
+  }
+
+  &.toast-soft {
+    --#{$prefix}toast-color: var(--#{$prefix}gray-900);
+    --#{$prefix}toast-close-color: var(--#{$prefix}gray-900);
+    --#{$prefix}toast-header-color: var(--#{$prefix}gray-900);
+
+    @each $theme, $value in map-remove($theme-colors, "light", "dark") {
+      &.toast-#{$theme} {
+        --#{$prefix}toast-icon-color: var(--#{$prefix}#{$theme}-500);
+        --#{$prefix}toast-border-color: var(--#{$prefix}#{$theme}-100);
+        --#{$prefix}toast-bg: var(--#{$prefix}#{$theme}-100);
+        --#{$prefix}toast-header-bg: var(--#{$prefix}#{$theme}-100);
+      }
+    }
+  }
+}

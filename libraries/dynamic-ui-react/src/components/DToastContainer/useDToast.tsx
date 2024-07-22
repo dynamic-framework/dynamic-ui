@@ -60,7 +60,7 @@ export default function useDToast() {
             'toast-soft': soft,
           }, 'show')}
           >
-            <DToast.Body className="toast-body">
+            <DToast.Body>
               {icon && (
                 <DIcon className="toast-icon" icon={icon} />
               )}
@@ -104,7 +104,7 @@ export default function useDToast() {
               <DIcon icon={closeIcon || xLg} />
             </button>
           </DToast.Header>
-          <DToast.Body className="toast-body">
+          <DToast.Body>
             <span>
               {description}
             </span>
