@@ -53,64 +53,62 @@ export default function useDToast() {
       if (!visible) {
         return null;
       }
-      return (
-        <DToast className={classNames({
-          [`bg-${theme}-soft`]: !!theme && soft,
-          [`text-bg-${theme}`]: !!theme && !soft,
-          'border-0': !!theme,
-        }, 'show')}
-        >
-          {!description && (
-            <DToast.Body className="d-flex justify-content-between align-items-center">
-              <span className="me-auto">
+      if (!description) {
+        return (
+          <DToast className={classNames({
+            [`toast-${theme}`]: !!theme,
+            'toast-soft': soft,
+          }, 'show')}
+          >
+            <DToast.Body className="toast-body">
+              {icon && (
+                <DIcon className="toast-icon" icon={icon} />
+              )}
+              <p className="toast-title">
                 {title}
-              </span>
+              </p>
               <button
                 type="button"
-                className={classNames({
-                  [`text-bg-${theme}`]: !!theme && !soft,
-                  'd-close': true,
-                })}
+                className="d-close"
                 aria-label="Close"
                 onClick={() => reactHotToast.dismiss(id)}
               >
                 <DIcon icon={closeIcon || xLg} />
               </button>
             </DToast.Body>
-          )}
-          {description && (
-            <>
-              <DToast.Header className={classNames({
-                [`bg-${theme}-soft`]: !!theme && soft,
-                [`text-bg-${theme}`]: !!theme && !soft,
-              }, 'show')}
-              >
-                {icon && (
-                  <DIcon icon={icon} />
-                )}
-                <p className="mb-0 me-auto">{title}</p>
-                {timestamp && (
-                  <small>{timestamp}</small>
-                )}
-                <button
-                  type="button"
-                  className={classNames({
-                    [`text-bg-${theme}`]: !!theme && !soft,
-                    'd-close': true,
-                  })}
-                  aria-label="Close"
-                  onClick={() => reactHotToast.dismiss(id)}
-                >
-                  <DIcon icon={closeIcon || xLg} />
-                </button>
-              </DToast.Header>
-              <DToast.Body className="d-flex justify-content-between align-items-center">
-                <span>
-                  {description}
-                </span>
-              </DToast.Body>
-            </>
-          )}
+          </DToast>
+        );
+      }
+      return (
+        <DToast className={classNames({
+          [`toast-${theme}`]: !!theme,
+          'toast-soft': soft,
+        }, 'show')}
+        >
+          <DToast.Header>
+            {icon && (
+              <DIcon className="toast-icon" icon={icon} />
+            )}
+            <p className="toast-title">
+              {title}
+            </p>
+            {timestamp && (
+              <small className="toast-timestamp">{timestamp}</small>
+            )}
+            <button
+              type="button"
+              className="d-close"
+              aria-label="Close"
+              onClick={() => reactHotToast.dismiss(id)}
+            >
+              <DIcon icon={closeIcon || xLg} />
+            </button>
+          </DToast.Header>
+          <DToast.Body className="toast-body">
+            <span>
+              {description}
+            </span>
+          </DToast.Body>
         </DToast>
       );
     }, toastProps);
