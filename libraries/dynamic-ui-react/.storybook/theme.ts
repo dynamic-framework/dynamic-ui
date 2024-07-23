@@ -6,7 +6,7 @@ export default create({
 
   brandTitle: 'Dynamic',
   brandUrl: 'https://react.dynamicframework.dev',
-  brandImage: 'https://cloud.modyocdn.com/uploads/77647270-2c05-40b4-9fa1-2e57fba27f80/original/dynamic_framework.svg',
+  brandImage: 'https://cdn.modyo.cloud/uploads/8c051a86-0d5b-4064-b5fd-76fb346e0fb0/original/Dynamic_Framework_UI.svg',
   brandTarget: '_self',
 
   colorPrimary: '#d81b60',
