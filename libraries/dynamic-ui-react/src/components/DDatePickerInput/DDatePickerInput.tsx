@@ -12,6 +12,8 @@ type Props =
   value?: string;
   onClick?: () => void;
   inputLabel?: string;
+  validIcon?: string;
+  invalidIcon?: string;
 } & Omit<
 ComponentProps<typeof DInput>,
 | 'type'
@@ -28,6 +30,8 @@ function DDatePickerInput(
     className,
     style,
     inputLabel,
+    validIcon,
+    invalidIcon,
     readOnly: ignored,
     ...props
   }: Props,
@@ -46,6 +50,8 @@ function DDatePickerInput(
       className={className}
       style={style}
       label={inputLabel}
+      invalidIcon={invalidIcon}
+      validIcon={validIcon}
       {...props}
     />
   );
