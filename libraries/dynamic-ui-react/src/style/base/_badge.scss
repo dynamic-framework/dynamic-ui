@@ -1,0 +1,11 @@
+.badge {
+  --#{$prefix}badge-gap: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}badge-icon-size: #{$badge-font-size};
+
+  display: flex;
+  gap: var(--#{$prefix}badge-gap);
+
+  .d-icon {
+    --#{$prefix}icon-size: var(--#{$prefix}badge-icon-size);
+  }
+}

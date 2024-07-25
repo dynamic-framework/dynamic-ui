@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DBadge from '../../src/components/DBadge/DBadge';
-import { THEMES } from '../config/constants';
+import { ICONS, THEMES } from '../config/constants';
 
 const config: Meta<typeof DBadge> = {
   title: 'Design System/Components/Badge',
@@ -57,6 +57,24 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
       control: 'boolean',
       type: 'boolean',
     },
+    iconStart: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
+    iconEnd: {
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, ...ICONS],
+    },
   },
   tags: ['autodocs'],
 };
@@ -68,6 +86,8 @@ export const Default: Story = {
   args: {
     theme: 'primary',
     text: 'Default',
+    iconStart: 'bookmarks',
+    iconEnd: 'bookmarks',
   },
 };
 

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useMemo } from 'react';
 
 import type { BaseProps } from '../interface';
+import DIcon from '../DIcon';
 
 type Props =
 & BaseProps
@@ -11,6 +12,11 @@ type Props =
   soft?: boolean;
   theme?: string;
   id?: string;
+  iconStart?: string;
+  iconEnd?: string;
+  iconMaterialStyle?: boolean;
+  iconFamilyClass?: string;
+  iconFamilyPrefix?: string;
 };
 
 export default function DBadge(
@@ -22,6 +28,11 @@ export default function DBadge(
     id,
     className,
     style,
+    iconStart,
+    iconEnd,
+    iconMaterialStyle,
+    iconFamilyClass,
+    iconFamilyPrefix,
   }: Props,
 ) {
   const generateClasses = useMemo(
@@ -29,7 +40,7 @@ export default function DBadge(
       badge: true,
       'rounded-circle p-2': dot,
       [`text-bg-${theme}`]: !!theme && !soft,
-      [`text-${theme}-bg-color`]: !!theme && soft,
+      [`bg-surface-${theme}`]: !!theme && soft,
     }),
     [dot, soft, theme],
   );
@@ -40,7 +51,23 @@ export default function DBadge(
       style={style}
       {...id && { id }}
     >
+      {iconStart && (
+        <DIcon
+          icon={iconStart}
+          familyClass={iconFamilyClass}
+          familyPrefix={iconFamilyPrefix}
+          materialStyle={iconMaterialStyle}
+        />
+      )}
       <span>{text}</span>
+      {iconEnd && (
+        <DIcon
+          icon={iconEnd}
+          familyClass={iconFamilyClass}
+          familyPrefix={iconFamilyPrefix}
+          materialStyle={iconMaterialStyle}
+        />
+      )}
     </span>
   );
 }
