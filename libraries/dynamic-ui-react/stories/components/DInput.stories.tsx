@@ -357,7 +357,7 @@ export const Text: Story = {
     id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
+    labelIcon: 'info-circle',
     type: 'text',
     value: undefined,
     iconStart: undefined,
