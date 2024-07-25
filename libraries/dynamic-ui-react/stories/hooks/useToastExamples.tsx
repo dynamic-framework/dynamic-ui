@@ -9,15 +9,53 @@ import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 export function ExampleSimpleToastUsage() {
   const { toast } = useDToast();
   return (
-    <DButton
-      text="Show Toast"
-      onClick={() => (
-        toast(
-          { title: 'Example' },
-          { duration: 40000 },
-        )
-      )}
-    />
+    <div className="d-flex flex-wrap gap-2">
+      <DButton
+        text="Toast - No theme"
+        theme="light"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              timestamp: 'just now',
+              icon: 'check',
+            },
+            { duration: 40000 },
+          )
+        )}
+      />
+      <DButton
+        text="Toast secondary"
+        theme="light"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              timestamp: 'just now',
+              icon: 'check',
+              theme: 'secondary',
+            },
+            { duration: 40000 },
+          )
+        )}
+      />
+      <DButton
+        text="Toast soft secondary"
+        theme="light"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              timestamp: 'just now',
+              icon: 'check',
+              theme: 'secondary',
+              soft: true,
+            },
+            { duration: 40000 },
+          )
+        )}
+      />
+    </div>
   );
 }
 
@@ -35,19 +73,56 @@ export function ExampleSimpleToastRoot() {
 export function ExampleFullToastUsage() {
   const { toast } = useDToast();
   return (
-    <DButton
-      text="Show Toast"
-      onClick={() => (
-        toast(
-          {
-            title: 'Example',
-            description: 'This is a description',
-            icon: 'check',
-          },
-          { duration: 1000 },
-        )
-      )}
-    />
+    <div className="d-flex flex-wrap gap-2">
+      <DButton
+        text="Toast full - No theme"
+        theme="light"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              description: 'This is a description',
+              timestamp: 'just now',
+              icon: 'check',
+            },
+            { duration: 4000 },
+          )
+        )}
+      />
+      <DButton
+        text="Toast full secondary"
+        theme="light"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              description: 'This is a description',
+              timestamp: 'just now',
+              theme: 'secondary',
+              icon: 'check',
+            },
+            { duration: 4000 },
+          )
+        )}
+      />
+      <DButton
+        text="Toast soft full secondary"
+        theme="light"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              description: 'This is a description',
+              timestamp: 'just now',
+              theme: 'secondary',
+              soft: true,
+              icon: 'check',
+            },
+            { duration: 4000 },
+          )
+        )}
+      />
+    </div>
   );
 }
 
