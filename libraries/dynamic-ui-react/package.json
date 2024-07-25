@@ -65,7 +65,8 @@
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist/",
-    "src/style"
+    "src/style",
+    "setupJest.js"
   ],
   "dependencies": {
     "@floating-ui/react": "^0.26.1",
