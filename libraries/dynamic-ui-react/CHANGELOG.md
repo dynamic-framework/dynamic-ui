@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.27.0...@dynamic-framework/ui-react@1.28.0) (2024-07-25)
+
+
+### Style Features
+
+* **style:** enable bootstrap css grid ([f85273c](https://github.com/dynamic-framework/dynamic-ui/commit/f85273c8635d110374f70d0fcdc6b19ae7f903e4))
+
+
+### Features
+
+* add external setupJest.js ([96f3045](https://github.com/dynamic-framework/dynamic-ui/commit/96f30451d395990d127abc13257a8c1102fdbec5))
+* **DDatePicker:** add icon state support ([7d83c87](https://github.com/dynamic-framework/dynamic-ui/commit/7d83c87bb34081dc95d9ebcfb89ec89f0e94a379))
+* **DDatePicker:** add render custom header prop ([88fa31a](https://github.com/dynamic-framework/dynamic-ui/commit/88fa31a004f7d68f82625d65b6f702e402d328ee))
+* **useDToast:** add theme colors variant ([5917549](https://github.com/dynamic-framework/dynamic-ui/commit/59175490f747da6a03e93f5c540907fae00084c4))
+
+
+### Bug Fixes
+
+* **DInput:** adjust label icon size value ([097f2a4](https://github.com/dynamic-framework/dynamic-ui/commit/097f2a4573f4940382c3ad5f370da0dfb42b8ca0))
+* **DInputPin:** avoid run onChange inside setState ([109a2eb](https://github.com/dynamic-framework/dynamic-ui/commit/109a2eba83a7e6060b4f9dcb3995728ac56956d6))
+* set badge on toast pattern and add toast as peer deps ([#690](https://github.com/dynamic-framework/dynamic-ui/issues/690)) ([90f0be9](https://github.com/dynamic-framework/dynamic-ui/commit/90f0be974f06b4024636e3eadd61987963941c00))
+* **useDToast:** avoid required toast props and set example ([ffae7d5](https://github.com/dynamic-framework/dynamic-ui/commit/ffae7d5534dbe5c359c703b6ee28ccef8dd88b1c))
+
+
+### Storybook
+
+* add dynamic framework ui logo ([#698](https://github.com/dynamic-framework/dynamic-ui/issues/698)) ([9df00f1](https://github.com/dynamic-framework/dynamic-ui/commit/9df00f13e88332d4291aba3dc882441110c3b0bb))
+* **useDToast:** add detailed examples ([9bd738c](https://github.com/dynamic-framework/dynamic-ui/commit/9bd738c7271b07000e045aed21e9915a745db09c))
+
+
+
 ## [1.27.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.26.0...@dynamic-framework/ui-react@1.27.0) (2024-07-04)
 
 
