@@ -517,7 +517,7 @@ function DInput(_a, ref) {
         value,
         size,
     ]);
-    const labelComponent = useMemo(() => (jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}input-label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix, materialStyle: labelIconMaterialStyle }))] })), [
+    const labelComponent = useMemo(() => (jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix, materialStyle: labelIconMaterialStyle }))] })), [
         id,
         label,
         labelIcon,
@@ -551,8 +551,8 @@ function DDatePickerTime(_a) {
 }
 
 function DDatePickerInput(_a, ref) {
-    var { value, onClick, id, iconEnd, className, style, inputLabel, readOnly: ignored } = _a, props = __rest(_a, ["value", "onClick", "id", "iconEnd", "className", "style", "inputLabel", "readOnly"]);
-    return (jsx(DInput$1, Object.assign({ ref: ref, onClick: onClick, readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd, className: className, style: style, label: inputLabel }, props)));
+    var { value, onClick, id, iconEnd, className, style, inputLabel, validIcon, invalidIcon, readOnly: ignored } = _a, props = __rest(_a, ["value", "onClick", "id", "iconEnd", "className", "style", "inputLabel", "validIcon", "invalidIcon", "readOnly"]);
+    return (jsx(DInput$1, Object.assign({ ref: ref, onClick: onClick, readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd, className: className, style: style, label: inputLabel, invalidIcon: invalidIcon, validIcon: validIcon }, props)));
 }
 const ForwardedDDatePickerInput = forwardRef(DDatePickerInput);
 ForwardedDDatePickerInput.displayName = 'DDatePickerInput';
@@ -724,7 +724,7 @@ function DDatePickerHeader({ date, changeYear, changeMonth, decreaseMonth, incre
 }
 
 function DDatePicker(_a) {
-    var { date, selectsRange = false, inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, iconInput: iconInputProp, iconHeaderPrevMonth: iconHeaderPrevMonthProp, iconHeaderNextMonth: iconHeaderNextMonthProp, iconMaterialStyle: iconMaterialStyleProp, iconFamilyClass, iconFamilyPrefix, minYearSelect = 1900, maxYearSelect = 2100, iconHeaderSize = 'sm', headerPrevMonthAriaLabel = 'decrease month', headerNextMonthAriaLabel = 'increase month', headerButtonVariant = 'link', headerButtonTheme = 'dark', invalid = false, valid = false, locale, className, formatWeekDay: formatWeekDayProp, style } = _a, props = __rest(_a, ["date", "selectsRange", "inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeLabel", "iconInput", "iconHeaderPrevMonth", "iconHeaderNextMonth", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "locale", "className", "formatWeekDay", "style"]);
+    var { date, selectsRange = false, inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, iconInput: iconInputProp, iconHeaderPrevMonth: iconHeaderPrevMonthProp, iconHeaderNextMonth: iconHeaderNextMonthProp, iconMaterialStyle: iconMaterialStyleProp, iconFamilyClass, iconFamilyPrefix, minYearSelect = 1900, maxYearSelect = 2100, iconHeaderSize = 'sm', headerPrevMonthAriaLabel = 'decrease month', headerNextMonthAriaLabel = 'increase month', headerButtonVariant = 'link', headerButtonTheme = 'dark', invalid = false, valid = false, renderCustomHeader: renderCustomHeaderProp, validIcon, invalidIcon, locale, className, formatWeekDay: formatWeekDayProp, style } = _a, props = __rest(_a, ["date", "selectsRange", "inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeLabel", "iconInput", "iconHeaderPrevMonth", "iconHeaderNextMonth", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "renderCustomHeader", "validIcon", "invalidIcon", "locale", "className", "formatWeekDay", "style"]);
     const { iconMap: { calendar, chevronLeft, chevronRight, }, } = useDContext();
     const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
     const iconInput = useMemo(() => iconInputProp || calendar, [calendar, iconInputProp]);
@@ -746,7 +746,13 @@ function DDatePicker(_a) {
         minYearSelect,
         maxYearSelect,
     ]);
-    return (jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: (headerProps) => jsx(DatePickerHeader, Object.assign({}, headerProps)), selectsRange: selectsRange, formatWeekDay: handleFormatWeekDay, customInput: (jsx(DDatePickerInput$1, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyleProp, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsx(DDatePickerTime, { id: timeId, label: timeLabel })) }, locale && { locale }, props)));
+    const defaultRenderCustomHeader = useCallback((headerProps) => (jsx(DatePickerHeader, Object.assign({}, headerProps))), [DatePickerHeader]);
+    const renderCustomHeader = useMemo(() => (renderCustomHeaderProp || defaultRenderCustomHeader), [defaultRenderCustomHeader, renderCustomHeaderProp]);
+    return (jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, selectsRange: selectsRange, formatWeekDay: handleFormatWeekDay, customInput: (jsx(DDatePickerInput$1, Object.assign({ id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyleProp }, ((!valid && !invalid)
+            || (valid && !validIcon)
+            || (invalid && !invalidIcon)) && {
+            iconEnd: iconInput,
+        }, { inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, validIcon: validIcon, invalidIcon: invalidIcon, hint: inputHint }))), customTimeInput: (jsx(DDatePickerTime, { id: timeId, label: timeLabel })) }, locale && { locale }, props)));
 }
 
 function DInputMask(props, ref) {
@@ -928,15 +934,17 @@ function DInputPin({ id: idProp, label = '', labelIcon, labelIconFamilyClass, la
         const otpValue = otp.join('');
         onChange === null || onChange === void 0 ? void 0 : onChange(otpValue);
     }, [onChange]);
+    useEffect(() => {
+        handleOTPChange(activeInput);
+    }, [activeInput, handleOTPChange]);
     const handlePaste = useCallback((event) => {
         event.preventDefault();
         const pastedData = event.clipboardData.getData('text/plain');
         const cleanData = isInputNum ? pastedData.replace(/[^0-9]/gmi, '') : pastedData;
         const newInput = Array.from({ length: characters }).map((_, index) => cleanData[index] || '');
         setActiveInput(newInput);
-        handleOTPChange(newInput);
         event.currentTarget.blur();
-    }, [characters, handleOTPChange, isInputNum]);
+    }, [characters, isInputNum]);
     const nextInput = useCallback((event, index) => {
         var _a;
         const regex = new RegExp(pattern);
@@ -947,7 +955,6 @@ function DInputPin({ id: idProp, label = '', labelIcon, labelIconFamilyClass, la
         if (input.value !== '') {
             setActiveInput((prev) => {
                 const newValue = prev.with(index, input.value);
-                handleOTPChange(newValue);
                 return newValue;
             });
             if (input.nextSibling) {
@@ -957,14 +964,13 @@ function DInputPin({ id: idProp, label = '', labelIcon, labelIconFamilyClass, la
                 input.blur();
             }
         }
-    }, [handleOTPChange, pattern]);
+    }, [pattern]);
     const prevInput = useCallback(({ key, currentTarget }, index) => {
         var _a;
         if (key === 'Backspace') {
             const { value } = currentTarget;
             setActiveInput((prev) => {
                 const newVal = prev.with(index, '');
-                handleOTPChange(newVal);
                 return newVal;
             });
             if (currentTarget.previousSibling && value === '') {
@@ -975,7 +981,7 @@ function DInputPin({ id: idProp, label = '', labelIcon, labelIconFamilyClass, la
                 currentTarget.focus();
             }
         }
-    }, [handleOTPChange]);
+    }, []);
     const focusInput = useCallback((index) => {
         setActiveInput((prev) => prev.with(index, ''));
     }, []);
@@ -1524,20 +1530,16 @@ function useDToast() {
             if (!visible) {
                 return null;
             }
+            if (!description) {
+                return (jsx(DToast$1, { className: classNames({
+                        [`toast-${theme}`]: !!theme,
+                        'toast-soft': soft,
+                    }, 'show'), children: jsxs(DToast$1.Body, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
+            }
             return (jsxs(DToast$1, { className: classNames({
-                    [`bg-${theme}-soft`]: !!theme && soft,
-                    [`text-bg-${theme}`]: !!theme && !soft,
-                    'border-0': !!theme,
-                }, 'show'), children: [!description && (jsxs(DToast$1.Body, { className: "d-flex justify-content-between align-items-center", children: [jsx("span", { className: "me-auto", children: title }), jsx("button", { type: "button", className: classNames({
-                                    [`text-bg-${theme}`]: !!theme && !soft,
-                                    'd-close': true,
-                                }), "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] })), description && (jsxs(Fragment$1, { children: [jsxs(DToast$1.Header, { className: classNames({
-                                    [`bg-${theme}-soft`]: !!theme && soft,
-                                    [`text-bg-${theme}`]: !!theme && !soft,
-                                }, 'show'), children: [icon && (jsx(DIcon, { icon: icon })), jsx("p", { className: "mb-0 me-auto", children: title }), timestamp && (jsx("small", { children: timestamp })), jsx("button", { type: "button", className: classNames({
-                                            [`text-bg-${theme}`]: !!theme && !soft,
-                                            'd-close': true,
-                                        }), "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsx(DToast$1.Body, { className: "d-flex justify-content-between align-items-center", children: jsx("span", { children: description }) })] }))] }));
+                    [`toast-${theme}`]: !!theme,
+                    'toast-soft': soft,
+                }, 'show'), children: [jsxs(DToast$1.Header, { children: [icon && (jsx(DIcon, { className: "toast-icon", icon: icon })), jsx("p", { className: "toast-title", children: title }), timestamp && (jsx("small", { className: "toast-timestamp", children: timestamp })), jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: () => toast.dismiss(id), children: jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsx(DToast$1.Body, { children: jsx("span", { children: description }) })] }));
         }, toastProps);
     }, [xLg]);
     return {

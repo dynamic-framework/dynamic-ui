@@ -1,7 +1,7 @@
 import type { Locale } from 'date-fns';
 import type { ReactDatePickerProps } from 'react-datepicker';
-import type { BaseProps, ButtonVariant, ComponentSize, FamilyIconProps } from '../interface';
-type Props<CustomModifierNames extends string = never, WithRange extends boolean | undefined = undefined> = BaseProps & FamilyIconProps & Pick<ReactDatePickerProps<CustomModifierNames, WithRange>, 'formatWeekDay' | 'onChange' | 'autoFocus' | 'inline' | 'withPortal' | 'minDate' | 'showTimeInput' | 'calendarStartDay' | 'dateFormat' | 'selectsStart' | 'selectsEnd' | 'startDate' | 'endDate' | 'fixedHeight'> & {
+import type { BaseProps, ButtonVariant, ComponentSize, FamilyIconProps, StateIcons } from '../interface';
+type Props<CustomModifierNames extends string = never, WithRange extends boolean | undefined = undefined> = BaseProps & FamilyIconProps & StateIcons & Pick<ReactDatePickerProps<CustomModifierNames, WithRange>, 'formatWeekDay' | 'onChange' | 'autoFocus' | 'inline' | 'withPortal' | 'minDate' | 'showTimeInput' | 'calendarStartDay' | 'dateFormat' | 'selectsStart' | 'selectsEnd' | 'startDate' | 'endDate' | 'fixedHeight' | 'renderCustomHeader'> & {
     date?: string | null;
     selectsRange?: boolean;
     inputLabel?: string;
@@ -25,5 +25,5 @@ type Props<CustomModifierNames extends string = never, WithRange extends boolean
     invalid?: boolean;
     valid?: boolean;
 };
-export default function DDatePicker<CustomModifierNames extends string = never, WithRange extends boolean | undefined = undefined>({ date, selectsRange, inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel, inputId, timeId, timeLabel, iconInput: iconInputProp, iconHeaderPrevMonth: iconHeaderPrevMonthProp, iconHeaderNextMonth: iconHeaderNextMonthProp, iconMaterialStyle: iconMaterialStyleProp, iconFamilyClass, iconFamilyPrefix, minYearSelect, maxYearSelect, iconHeaderSize, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerButtonVariant, headerButtonTheme, invalid, valid, locale, className, formatWeekDay: formatWeekDayProp, style, ...props }: Props<CustomModifierNames, WithRange>): import("react/jsx-runtime").JSX.Element;
+export default function DDatePicker<CustomModifierNames extends string = never, WithRange extends boolean | undefined = undefined>({ date, selectsRange, inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel, inputId, timeId, timeLabel, iconInput: iconInputProp, iconHeaderPrevMonth: iconHeaderPrevMonthProp, iconHeaderNextMonth: iconHeaderNextMonthProp, iconMaterialStyle: iconMaterialStyleProp, iconFamilyClass, iconFamilyPrefix, minYearSelect, maxYearSelect, iconHeaderSize, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerButtonVariant, headerButtonTheme, invalid, valid, renderCustomHeader: renderCustomHeaderProp, validIcon, invalidIcon, locale, className, formatWeekDay: formatWeekDayProp, style, ...props }: Props<CustomModifierNames, WithRange>): import("react/jsx-runtime").JSX.Element;
 export {};

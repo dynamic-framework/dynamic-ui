@@ -10,6 +10,6 @@ type ToastData = {
 };
 type Props = Partial<Pick<Toast, 'id' | 'duration' | 'position'>>;
 export default function useDToast(): {
-    toast: (data: ToastData | ValueFunction<Renderable, Toast>, toastProps: Props) => string;
+    toast: (data: ToastData | ValueFunction<Renderable, Toast>, toastProps?: Props) => string;
 };
 export {};
