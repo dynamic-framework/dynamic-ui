@@ -66,7 +66,7 @@
   "files": [
     "dist/",
     "src/style",
-    "setupJest.js"
+    "jest/"
   ],
   "dependencies": {
     "@floating-ui/react": "^0.26.1",
@@ -106,7 +106,7 @@
     "@storybook/theming": "^7.5.1",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
-    "@types/jest": "^29.5.6",
+    "@types/jest": "^29.5.12",
     "@types/node": "^18.15.3",
     "@types/react": "^18.2.31",
     "@types/react-datepicker": "^4.19.1",
@@ -141,7 +141,7 @@
     "storybook": "^7.5.1",
     "stylelint": "^15.11.0",
     "stylelint-config-twbs-bootstrap": "^11.0.1",
-    "ts-jest": "^29.1.1",
+    "ts-jest": "^29.2.3",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
   },

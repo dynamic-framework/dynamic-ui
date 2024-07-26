@@ -22,7 +22,7 @@
       }
     },
     {
-      "files": ["setupJest.js"],
+      "files": ["test/**/*.ts", "jest/**/*.js"],
       "env": {
         "jest": true
       },
