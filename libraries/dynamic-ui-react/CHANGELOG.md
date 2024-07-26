@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.28.0...@dynamic-framework/ui-react@1.28.1) (2024-07-26)
+
+
+### Bug Fixes
+
+* external jest setup and internal preset ([708d938](https://github.com/dynamic-framework/dynamic-ui/commit/708d938d61b4cead2706b77758fc842572b074ae))
+
+
+
 ## [1.28.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.27.0...@dynamic-framework/ui-react@1.28.0) (2024-07-25)
 
 
