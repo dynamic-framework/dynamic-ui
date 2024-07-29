@@ -11,7 +11,7 @@ import type { PropsWithChildren } from 'react';
 
 import { DPortalContextProvider, PortalContextProps } from './DPortalContext';
 
-import type { AlertTypeIconMap } from '../components/interface';
+import type { AlertThemeIconMap } from '../components/interface';
 
 export type CurrencyProps = {
   symbol: string;
@@ -33,7 +33,7 @@ type IconMapProps = {
   chevronUp: string;
   chevronLeft: string;
   chevronRight: string;
-  alert: AlertTypeIconMap;
+  alert: AlertThemeIconMap;
   upload: string;
   calendar: string;
   check: string;
