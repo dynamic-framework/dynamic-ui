@@ -1,66 +1,47 @@
 .alert {
   --#{$prefix}alert-gap: #{$alert-gap};
-  --#{$prefix}alert-box-shadow: #{$alert-box-shadow};
-  --#{$prefix}alert-icon-color: var(--#{$prefix}alert-color);
-  --#{$prefix}alert-separator-opacity: var(--#{$prefix}alert-component-separator-opacity);
   --#{$prefix}alert-close-icon-size: #{$alert-close-icon-size};
+  --#{$prefix}alert-icon-color: var(--#{$prefix}alert-color);
+
+  // Here icon color?
+  // --#{$prefix}alert-icon-color: var(--#{$prefix}success);
+  --#{$prefix}alert-icon-size: var(--#{$prefix}ref-spacer-5);
 
   display: flex;
   flex-direction: row;
   gap: var(--#{$prefix}alert-gap);
-  align-items: center;
-  box-shadow: var(--#{$prefix}alert-box-shadow);
+  align-items: flex-start;
 
   .alert-text {
     flex-grow: 1;
-  }
-
-  .alert-separator {
-    align-self: stretch;
-    width: 1px;
-    background-color: var(--#{$prefix}alert-icon-color);
-    opacity: var(--#{$prefix}alert-separator-opacity);
   }
 
   .btn-close {
     --#{$prefix}btn-close-bg: transparent;
   }
 
-  .alert-icon.d-icon {
+  // .d-close {
+  //   color: var(--#{$prefix}toast-close-color);
+  // }
+
+  .alert-icon {
+    --#{$prefix}icon-size: var(--#{$prefix}alert-icon-size);
     --#{$prefix}icon-color: var(--#{$prefix}alert-icon-color);
   }
 
   .alert-close-icon {
-    --#{$prefix}icon-color: var(--#{$prefix}alert-icon-color);
     --#{$prefix}icon-size: var(--#{$prefix}alert-close-icon-size);
   }
 
-  @each $theme, $value in $theme-colors {
+  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
     $color: color-contrast-var($value);
     &.alert-#{$theme} {
-      --#{$prefix}alert-color: #{$color};
-      --#{$prefix}alert-bg: var(--#{$prefix}#{$theme});
-      --#{$prefix}alert-border-color: var(--#{$prefix}#{$theme});
+      --#{$prefix}alert-icon-color: var(--#{$prefix}#{$theme}-500);
+      --#{$prefix}alert-color: var(--#{$prefix}body-color);
+
+      --#{$prefix}alert-bg: var(--#{$prefix}surface-#{$theme});
+      --#{$prefix}alert-border-color: var(--#{$prefix}surface-#{$theme});
       --#{$prefix}alert-link-color: #{$color};
-    }
-  }
-
-  &.alert-soft {
-    --#{$prefix}alert-color: var(--#{$prefix}gray-900);
-    --#{$prefix}alert-border: 0;
-
-    @each $theme, $value in map-remove($theme-colors, "light", "dark") {
-      &.alert-#{$theme} {
-        --#{$prefix}alert-icon-color: var(--#{$prefix}#{$theme}-500);
-
-        --#{$prefix}alert-bg: var(--#{$prefix}#{$theme}-100);
-      }
-    }
-
-    &.alert-light {
-      --#{$prefix}alert-icon-color: var(--#{$prefix}secondary-500);
-      --#{$prefix}alert-border-color: var(--#{$prefix}secondary-500);
-      --#{$prefix}alert-bg: var(--#{$prefix}white);
     }
   }
 }

@@ -1,9 +1,5 @@
 // Alerts
-//
-// Define alert colors, border radius, and padding.
-
 // scss-docs-start alert-variables
-$alert-padding-x: $spacer-6 !default;
 $alert-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $alert-link-font-weight: var(--#{$prefix}fw-bold) !default;
 // scss-docs-end alert-variables
@@ -16,7 +12,6 @@ $alert-color-scale: 100% !default;
 
 // custom
 $alert-gap: var(--#{$prefix}ref-spacer-4) !default;
-$alert-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
-$alert-close-icon-size: var(--#{$prefix}ref-spacer-3) !default;
+$alert-close-icon-size: var(--#{$prefix}ref-spacer-4) !default;
 // end custom
 // scss-docs-end alert-variables
