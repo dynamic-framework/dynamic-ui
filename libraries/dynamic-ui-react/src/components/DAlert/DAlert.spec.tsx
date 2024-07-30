@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import DAlert from './DAlert';
 
-import { AlertType } from '../interface';
+import { AlertTheme } from '../interface';
 
 it('should render info alert', () => {
   const props = {
@@ -13,7 +13,7 @@ it('should render info alert', () => {
   const { container } = render(
     <DAlert
       id={props.id}
-      type={props.theme as AlertType}
+      theme={props.theme as AlertTheme}
     >
       {props.text}
     </DAlert>,
@@ -25,7 +25,6 @@ it('should render info alert', () => {
         class="alert alert-info"
         id="alertID"
         role="alert"
-        style="--bs-alert-component-separator-opacity: 0.3;"
       >
         <i
           class="d-icon bi bi-info-circle alert-icon"
