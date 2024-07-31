@@ -25,7 +25,6 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
 | Variable                                  | Class            | Type             | Description              |
 |-------------------------------------------|------------------|------------------|--------------------------|
 | --${PREFIX_BS}alert-gap                   | .alert           | css length unit  | Content separation       |
-| --${PREFIX_BS}alert-box-shadow            | .alert           | css box shadow   | Toast box shadow         |
 | --${PREFIX_BS}alert-icon-color            | .alert           | css color unit   | Toast icon color         |
 | --${PREFIX_BS}alert-close-icon-size       | .alert           | css length unit  | Toast close icon size    |
         `,
@@ -69,7 +68,7 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
       control: 'boolean',
       type: 'boolean',
     },
-    hideClose: {
+    showClose: {
       control: 'boolean',
       type: 'boolean',
       description: 'Show close button',
@@ -96,19 +95,18 @@ export const Success: Story = {
       <div>
         <h5 className="mb-2">Heading</h5>
         <p className="m-0">
-          Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de
-          Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas
-          atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere
-          nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a
-          13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios
-          en línea
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
         </p>
         <a href="#" className="text-primary">Link</a>
       </div>
     </DAlert>
   ),
   args: {
-    hideClose: true,
+    showClose: true,
   },
 };
 
@@ -118,12 +116,11 @@ export const Danger: Story = {
       <div>
         <h5 className="mb-2">Heading</h5>
         <p className="m-0">
-          Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de
-          Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas
-          atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere
-          nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a
-          13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios
-          en línea
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
         </p>
         <a href="#" className="text-primary">Link</a>
       </div>
@@ -140,12 +137,11 @@ export const Info: Story = {
       <div>
         <h5 className="mb-2">Heading</h5>
         <p className="m-0">
-          Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de
-          Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas
-          atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere
-          nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a
-          13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios
-          en línea
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
         </p>
         <a href="#" className="text-primary">Link</a>
       </div>
@@ -162,12 +158,11 @@ export const Warning: Story = {
       <div>
         <h5 className="mb-2">Heading</h5>
         <p className="m-0">
-          Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de
-          Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas
-          atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere
-          nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a
-          13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios
-          en línea
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
         </p>
         <a href="#" className="text-primary">Link</a>
       </div>
@@ -184,12 +179,11 @@ export const SuccessIcon: Story = {
       <div>
         <h5 className="mb-2">Heading</h5>
         <p className="m-0">
-          Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de
-          Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas
-          atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere
-          nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a
-          13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios
-          en línea
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
         </p>
         <a href="#" className="text-primary">Link</a>
       </div>
@@ -206,12 +200,11 @@ export const DangerIcon: Story = {
       <div>
         <h5 className="mb-2">Heading</h5>
         <p className="m-0">
-          Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de
-          Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas
-          atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere
-          nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a
-          13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios
-          en línea
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
         </p>
         <a href="#" className="text-primary">Link</a>
       </div>
@@ -228,12 +221,11 @@ export const InfoIcon: Story = {
       <div>
         <h5 className="mb-2">Heading</h5>
         <p className="m-0">
-          Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de
-          Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas
-          atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere
-          nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a
-          13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios
-          en línea
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
         </p>
         <a href="#" className="text-primary">Link</a>
       </div>
@@ -250,12 +242,11 @@ export const WarningIcon: Story = {
       <div>
         <h5 className="mb-2">Heading</h5>
         <p className="m-0">
-          Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de
-          Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas
-          atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere
-          nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a
-          13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios
-          en línea
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
         </p>
         <a href="#" className="text-primary">Link</a>
       </div>
@@ -286,7 +277,7 @@ export const MaterialStyle: Story = {
     </DContextProvider>
   ),
   args: {
-    hideClose: true,
+    showClose: true,
     theme: 'secondary',
   },
   parameters: {
