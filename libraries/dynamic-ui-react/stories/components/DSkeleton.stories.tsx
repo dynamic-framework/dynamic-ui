@@ -6,20 +6,7 @@ const config: Meta<typeof DSkeleton> = {
   title: 'Design System/Components/Skeleton',
   component: DSkeleton,
   parameters: {
-    docs: {
-      description: {
-        component: `
-![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
-
-Component to build placeholder experiences.
-
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [React Content Loader](https://github.com/danilowoz/react-content-loader)
-+ [Skeleton React](https://skeletonreact.com/)
-        `,
-      },
-    },
+    layout: 'fullscreen',
   },
   argTypes: {
     speed: {
@@ -39,7 +26,6 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
     },
   },
-  tags: ['autodocs'],
 };
 
 export default config;

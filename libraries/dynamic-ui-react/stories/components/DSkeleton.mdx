@@ -1,0 +1,31 @@
+import {
+  Meta,
+  Stories,
+  Controls,
+  Canvas,
+} from '@storybook/blocks';
+
+import * as DSkeletonStories from './DSkeleton.stories';
+import { DAlert } from '../../src';
+
+<Meta of={DSkeletonStories} />
+
+# Skeleton
+
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
+<DAlert soft type="danger" className='py-1 mb-8'>
+   This component is deprecated and will be removed in a future release.
+   Please avoid using it and instead use the [Bootstrap 5.3 Placeholder component](https://getbootstrap.com/docs/5.3/components/placeholders/#about)
+</DAlert>
+
+Component to build placeholder experiences.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [React Content Loader](https://github.com/danilowoz/react-content-loader)
++ [Skeleton React](https://skeletonreact.com/)
+
+<Canvas of={DSkeletonStories.Default} />
+<Controls of={DSkeletonStories.Default} />
+<Stories />
