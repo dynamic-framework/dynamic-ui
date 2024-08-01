@@ -85,12 +85,11 @@ export default function DAlert(
       {showClose && (
         <button
           type="button"
-          className="btn-close"
+          className="d-close"
           aria-label="Close"
           onClick={onClose}
         >
           <DIcon
-            className="alert-close-icon"
             icon={iconClose}
             familyClass={iconCloseFamilyClass}
             familyPrefix={iconCloseFamilyPrefix}
