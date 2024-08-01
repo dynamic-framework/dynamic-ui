@@ -22,7 +22,7 @@
       }
     },
     {
-      "files": ["test/**/*.ts", "jest/**/*.js"],
+      "files": ["jest.config.js", "test/**/*.ts", "jest/**/*.js"],
       "env": {
         "jest": true
       },

@@ -20,6 +20,22 @@ $spacer-11: $spacer * 2.75 !default;  // 44px
 $spacer-12: $spacer * 3 !default;     // 48px
 $spacer-13: $spacer * 3.25 !default;  // 52px
 $spacer-14: $spacer * 3.5 !default;   // 56px
+$spacer-15: $spacer * 3.75 !default;  // 60px
+$spacer-16: $spacer * 4 !default;     // 64px
+$spacer-17: $spacer * 4.25 !default;  // 68px
+$spacer-18: $spacer * 4.5 !default;   // 72px
+$spacer-19: $spacer * 4.75 !default;  // 76px
+$spacer-20: $spacer * 5 !default;     // 80px
+$spacer-21: $spacer * 5.25 !default;  // 84px
+$spacer-22: $spacer * 5.5 !default;   // 88px
+$spacer-23: $spacer * 5.75 !default;  // 92px
+$spacer-24: $spacer * 6 !default;     // 96px
+$spacer-25: $spacer * 6.25 !default;  // 100px
+$spacer-26: $spacer * 6.5 !default;   // 104px
+$spacer-27: $spacer * 6.75 !default;  // 108px
+$spacer-28: $spacer * 7 !default;     // 112px
+$spacer-29: $spacer * 7.25 !default;  // 116px
+$spacer-30: $spacer * 7.5 !default;   // 120px
 $spacers: (
   0: 0,
   1: $spacer-1,
@@ -36,5 +52,21 @@ $spacers: (
   12: $spacer-12,
   13: $spacer-13,
   14: $spacer-14,
+  15: $spacer-15,
+  16: $spacer-16,
+  17: $spacer-17,
+  18: $spacer-18,
+  19: $spacer-19,
+  20: $spacer-20,
+  21: $spacer-21,
+  22: $spacer-22,
+  23: $spacer-23,
+  24: $spacer-24,
+  25: $spacer-25,
+  26: $spacer-26,
+  27: $spacer-27,
+  28: $spacer-28,
+  29: $spacer-29,
+  30: $spacer-30,
 ) !default;
 // scss-docs-end spacer-variables-maps
