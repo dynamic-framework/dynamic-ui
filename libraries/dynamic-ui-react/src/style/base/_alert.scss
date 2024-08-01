@@ -1,10 +1,6 @@
 .alert {
   --#{$prefix}alert-gap: #{$alert-gap};
   --#{$prefix}alert-close-icon-size: #{$alert-close-icon-size};
-  --#{$prefix}alert-icon-color: var(--#{$prefix}alert-color);
-
-  // Here icon color?
-  // --#{$prefix}alert-icon-color: var(--#{$prefix}success);
   --#{$prefix}alert-icon-size: var(--#{$prefix}ref-spacer-5);
 
   display: flex;
