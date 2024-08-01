@@ -12,21 +12,9 @@
     flex-grow: 1;
   }
 
-  .btn-close {
-    --#{$prefix}btn-close-bg: transparent;
-  }
-
-  // .d-close {
-  //   color: var(--#{$prefix}toast-close-color);
-  // }
-
   .alert-icon {
     --#{$prefix}icon-size: var(--#{$prefix}alert-icon-size);
     --#{$prefix}icon-color: var(--#{$prefix}alert-icon-color);
-  }
-
-  .alert-close-icon {
-    --#{$prefix}icon-size: var(--#{$prefix}alert-close-icon-size);
   }
 
   @each $theme, $value in map-remove($theme-colors, "light", "dark") {
