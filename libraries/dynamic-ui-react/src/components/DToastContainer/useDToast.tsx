@@ -69,7 +69,7 @@ export default function useDToast() {
               </p>
               <button
                 type="button"
-                className="d-close"
+                className="d-close align-self-center"
                 aria-label="Close"
                 onClick={() => reactHotToast.dismiss(id)}
               >
@@ -97,7 +97,7 @@ export default function useDToast() {
             )}
             <button
               type="button"
-              className="d-close"
+              className="d-close align-self-center"
               aria-label="Close"
               onClick={() => reactHotToast.dismiss(id)}
             >

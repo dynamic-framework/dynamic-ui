@@ -46,7 +46,7 @@ export default function DModalHeader(
       {showCloseButton && (
         <button
           type="button"
-          className="d-close"
+          className="d-close align-self-center"
           aria-label="Close"
           onClick={onClose}
         >
