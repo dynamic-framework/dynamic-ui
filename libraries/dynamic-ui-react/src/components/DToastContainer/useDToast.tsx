@@ -56,8 +56,8 @@ export default function useDToast() {
       if (!description) {
         return (
           <DToast className={classNames({
-            [`toast-${theme}`]: !!theme,
-            'toast-soft': soft,
+            [`toast-${theme}`]: !!theme && !soft,
+            [`toast-soft-${theme}`]: !!theme && !!soft,
           }, 'show')}
           >
             <DToast.Body>
@@ -81,8 +81,8 @@ export default function useDToast() {
       }
       return (
         <DToast className={classNames({
-          [`toast-${theme}`]: !!theme,
-          'toast-soft': soft,
+          [`toast-${theme}`]: !!theme && !soft,
+          [`toast-soft-${theme}`]: !!theme && !!soft,
         }, 'show')}
         >
           <DToast.Header>
