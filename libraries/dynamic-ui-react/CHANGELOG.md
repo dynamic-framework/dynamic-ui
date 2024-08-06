@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.28.1...@dynamic-framework/ui-react@1.29.0) (2024-08-06)
+
+
+### Style Features
+
+* **style:** add extra spacers up to 120px ([d894f95](https://github.com/dynamic-framework/dynamic-ui/commit/d894f959a690655783573191af2f9c3018685678))
+* **style:** change border-color to gray-100 ([f5d36f3](https://github.com/dynamic-framework/dynamic-ui/commit/f5d36f3ffd482e6ddc012f3102ff5b7d5c0c117c))
+
+
+### Features
+
+* **DAlert:** remove support to showIcon prop, alert separator, soft style ([d433a91](https://github.com/dynamic-framework/dynamic-ui/commit/d433a91d3c803f057f86d9e72e7e3a5d9c0cc3fd))
+* **DAlert:** rename alert types as theme types ([601c4fd](https://github.com/dynamic-framework/dynamic-ui/commit/601c4fd945aa298447534ace710cd53d39540cbb))
+* **DBadge:** add icon support ([4cf513e](https://github.com/dynamic-framework/dynamic-ui/commit/4cf513edc711079645ac433edb6f4708ab84fe22))
+* **DBadge:** set new color variants ([aca27a3](https://github.com/dynamic-framework/dynamic-ui/commit/aca27a3843f9558de7cd8fec48851c6625d254fb))
+* **DSkeleton:** deprecate component ([a422469](https://github.com/dynamic-framework/dynamic-ui/commit/a4224696c92b17eb9241614d0d7756a807d22413))
+
+
+### Bug Fixes
+
+* **DToast:** set soft style as bootstrap way ([20ea57a](https://github.com/dynamic-framework/dynamic-ui/commit/20ea57a334a75047b57d42c620feaf8b96b7b4bb))
+* **styles:** remove align property on d-close class ([78f7b30](https://github.com/dynamic-framework/dynamic-ui/commit/78f7b30fe2ee5ca2a8d2e6c3919b815b23d858ca))
+
+
+### Storybook
+
+* **DAlert:** set message in english ([d7c05a1](https://github.com/dynamic-framework/dynamic-ui/commit/d7c05a100292ba46ad977e7675bc23ca8747c2fb))
+* remove unnecessary documentation in favor of ui documentation ([#707](https://github.com/dynamic-framework/dynamic-ui/issues/707)) ([128c6db](https://github.com/dynamic-framework/dynamic-ui/commit/128c6dbc2b5f390b914e1b5bc8ac1976fd9e4256))
+
+
+
 ## [1.28.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.28.0...@dynamic-framework/ui-react@1.28.1) (2024-07-26)
 
 
