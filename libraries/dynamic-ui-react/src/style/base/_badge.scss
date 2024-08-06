@@ -1,11 +1,49 @@
 .badge {
-  --#{$prefix}badge-gap: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}badge-gap: #{$badge-gap};
   --#{$prefix}badge-icon-size: #{$badge-font-size};
+  --#{$prefix}badge-bg: #{$badge-bg};
+  --#{$prefix}badge-color: #{$badge-color};
 
   display: flex;
   gap: var(--#{$prefix}badge-gap);
+  color: var(--#{$prefix}badge-color);
+
+  background-color: var(--#{$prefix}badge-bg);
 
   .d-icon {
     --#{$prefix}icon-size: var(--#{$prefix}badge-icon-size);
+  }
+
+  @each $theme, $value in map-remove($theme-colors, "light") {
+    $color: color-contrast-var($value);
+
+    &.badge-#{$theme} {
+      --#{$prefix}badge-bg: var(--#{$prefix}#{$theme});
+      --#{$prefix}badge-color: #{$color};
+    }
+  }
+
+  &.badge-light {
+    --#{$prefix}badge-bg: var(--#{$prefix}gray-200);
+    --#{$prefix}badge-color: var(--#{$prefix}gray-900);
+  }
+
+  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
+    $color: color-contrast-var($value);
+
+    &.badge-soft-#{$theme} {
+      --#{$prefix}badge-bg: var(--#{$prefix}surface-#{$theme});
+      --#{$prefix}badge-color: var(--#{$prefix}body-color);
+    }
+  }
+
+  &.badge-soft-light {
+    --#{$prefix}badge-bg: var(--#{$prefix}gray-700);
+    --#{$prefix}badge-color: var(--#{$prefix}white);
+  }
+
+  &.badge-soft-dark {
+    --#{$prefix}badge-bg: var(--#{$prefix}gray-100);
+    --#{$prefix}badge-color: var(--#{$prefix}body-color);
   }
 }

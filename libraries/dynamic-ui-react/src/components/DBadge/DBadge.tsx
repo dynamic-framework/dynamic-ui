@@ -8,8 +8,8 @@ type Props =
 & BaseProps
 & {
   text?: string;
-  dot?: boolean;
   soft?: boolean;
+  rounded?: boolean;
   theme?: string;
   id?: string;
   iconStart?: string;
@@ -22,10 +22,10 @@ type Props =
 export default function DBadge(
   {
     text,
-    dot = false,
     soft = false,
     theme = 'primary',
     id,
+    rounded,
     className,
     style,
     iconStart,
@@ -38,13 +38,12 @@ export default function DBadge(
   const generateClasses = useMemo(
     () => ({
       badge: true,
-      'rounded-circle p-2': dot,
-      [`text-bg-${theme}`]: !!theme && !soft,
-      [`bg-surface-${theme}`]: !!theme && soft,
+      [`badge-${theme}`]: !!theme && !soft,
+      [`badge-soft-${theme}`]: !!theme && soft,
+      'rounded-pill': !!rounded,
     }),
-    [dot, soft, theme],
+    [rounded, soft, theme],
   );
-
   return (
     <span
       className={classNames(generateClasses, className)}
