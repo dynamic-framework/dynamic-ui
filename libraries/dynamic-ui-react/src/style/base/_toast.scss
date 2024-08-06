@@ -37,20 +37,15 @@
         color: var(--#{$prefix}toast-close-color);
       }
     }
-  }
 
-  &.toast-soft {
-    --#{$prefix}toast-color: var(--#{$prefix}gray-900);
-    --#{$prefix}toast-close-color: var(--#{$prefix}gray-900);
-    --#{$prefix}toast-header-color: var(--#{$prefix}gray-900);
-
-    @each $theme, $value in map-remove($theme-colors, "light", "dark") {
-      &.toast-#{$theme} {
-        --#{$prefix}toast-icon-color: var(--#{$prefix}#{$theme}-500);
-        --#{$prefix}toast-border-color: var(--#{$prefix}#{$theme}-100);
-        --#{$prefix}toast-bg: var(--#{$prefix}#{$theme}-100);
-        --#{$prefix}toast-header-bg: var(--#{$prefix}#{$theme}-100);
-      }
+    &.toast-soft-#{$theme} {
+      --#{$prefix}toast-color: var(--#{$prefix}gray-900);
+      --#{$prefix}toast-close-color: var(--#{$prefix}gray-900);
+      --#{$prefix}toast-header-color: var(--#{$prefix}gray-900);
+      --#{$prefix}toast-icon-color: var(--#{$prefix}#{$theme}-500);
+      --#{$prefix}toast-border-color: var(--#{$prefix}#{$theme}-100);
+      --#{$prefix}toast-bg: var(--#{$prefix}#{$theme}-100);
+      --#{$prefix}toast-header-bg: var(--#{$prefix}#{$theme}-100);
     }
   }
 }

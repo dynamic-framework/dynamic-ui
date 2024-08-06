@@ -17,12 +17,6 @@ export default {
           'Design System',
           [
             'Quick Start',
-            'Typography',
-            'Colors',
-            'Spacing',
-            'Border',
-            'Shadow',
-            'Layout',
             'Components',
             [
               '*',

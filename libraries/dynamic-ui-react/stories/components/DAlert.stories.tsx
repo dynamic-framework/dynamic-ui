@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Meta, StoryObj } from '@storybook/react';
 
 import { ComponentProps } from 'react';
 import DAlert from '../../src/components/DAlert/DAlert';
-import { THEMES, ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
+import { COLOR_THEMES, ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
@@ -24,9 +25,7 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
 | Variable                                  | Class            | Type             | Description              |
 |-------------------------------------------|------------------|------------------|--------------------------|
 | --${PREFIX_BS}alert-gap                   | .alert           | css length unit  | Content separation       |
-| --${PREFIX_BS}alert-box-shadow            | .alert           | css box shadow   | Toast box shadow         |
 | --${PREFIX_BS}alert-icon-color            | .alert           | css color unit   | Toast icon color         |
-| --${PREFIX_BS}alert-separator-opacity     | .alert           | css length unit  | Toast separator opacity  |
 | --${PREFIX_BS}alert-close-icon-size       | .alert           | css length unit  | Toast close icon size    |
         `,
       },
@@ -44,10 +43,10 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
     style: {
       control: 'object',
     },
-    type: {
+    theme: {
       control: 'select',
       type: 'string',
-      options: THEMES,
+      options: COLOR_THEMES,
       table: { defaultValue: { summary: 'success' } },
       description: 'Toast type',
     },
@@ -74,21 +73,11 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
       type: 'boolean',
       description: 'Show close button',
     },
-    showIcon: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Show toast icon',
-    },
     iconClose: {
       control: 'select',
       type: 'string',
       options: ICONS,
       description: 'Name of icon to use (in kebab-case)',
-    },
-    soft: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Soft style',
     },
     onClose: {
       action: 'onClose',
@@ -101,128 +90,170 @@ export default config;
 type Story = StoryObj<typeof DAlert>;
 
 export const Success: Story = {
+  render: (args) => (
+    <DAlert {...args}>
+      <div>
+        <h5 className="mb-2">Heading</h5>
+        <p className="m-0">
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
+        </p>
+        <a href="#" className="text-primary">Link</a>
+      </div>
+    </DAlert>
+  ),
   args: {
-    showIcon: false,
-    children: 'Default toast',
+    showClose: true,
   },
 };
 
 export const Danger: Story = {
+  render: (args) => (
+    <DAlert {...args}>
+      <div>
+        <h5 className="mb-2">Heading</h5>
+        <p className="m-0">
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
+        </p>
+        <a href="#" className="text-primary">Link</a>
+      </div>
+    </DAlert>
+  ),
   args: {
-    showIcon: false,
-    children: 'Default toast',
-    type: 'danger',
+    theme: 'danger',
   },
 };
 
 export const Info: Story = {
+  render: (args) => (
+    <DAlert {...args}>
+      <div>
+        <h5 className="mb-2">Heading</h5>
+        <p className="m-0">
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
+        </p>
+        <a href="#" className="text-primary">Link</a>
+      </div>
+    </DAlert>
+  ),
   args: {
-    showIcon: false,
-    children: 'Default toast',
-    type: 'info',
+    theme: 'info',
   },
 };
 
 export const Warning: Story = {
+  render: (args) => (
+    <DAlert {...args}>
+      <div>
+        <h5 className="mb-2">Heading</h5>
+        <p className="m-0">
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
+        </p>
+        <a href="#" className="text-primary">Link</a>
+      </div>
+    </DAlert>
+  ),
   args: {
-    showIcon: false,
-    children: 'Default toast',
-    type: 'warning',
+    theme: 'warning',
   },
 };
 
 export const SuccessIcon: Story = {
+  render: (args) => (
+    <DAlert {...args}>
+      <div>
+        <h5 className="mb-2">Heading</h5>
+        <p className="m-0">
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
+        </p>
+        <a href="#" className="text-primary">Link</a>
+      </div>
+    </DAlert>
+  ),
   args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'success',
+    theme: 'success',
   },
 };
 
 export const DangerIcon: Story = {
+  render: (args) => (
+    <DAlert {...args}>
+      <div>
+        <h5 className="mb-2">Heading</h5>
+        <p className="m-0">
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
+        </p>
+        <a href="#" className="text-primary">Link</a>
+      </div>
+    </DAlert>
+  ),
   args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'danger',
+    theme: 'danger',
   },
 };
 
 export const InfoIcon: Story = {
+  render: (args) => (
+    <DAlert {...args}>
+      <div>
+        <h5 className="mb-2">Heading</h5>
+        <p className="m-0">
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
+        </p>
+        <a href="#" className="text-primary">Link</a>
+      </div>
+    </DAlert>
+  ),
   args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'info',
+    theme: 'info',
   },
 };
 
 export const WarningIcon: Story = {
+  render: (args) => (
+    <DAlert {...args}>
+      <div>
+        <h5 className="mb-2">Heading</h5>
+        <p className="m-0">
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services Our offices are open from 9:00 AM
+          to 1:00 PM this Monday, December 1st. Please consider using our online services
+          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
+          Please consider using our online services
+        </p>
+        <a href="#" className="text-primary">Link</a>
+      </div>
+    </DAlert>
+  ),
   args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'warning',
-  },
-};
-
-export const SuccessSoft: Story = {
-  args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'success',
-    soft: true,
-  },
-};
-
-export const DangerSoft: Story = {
-  args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'danger',
-    soft: true,
-  },
-};
-
-export const InfoSoft: Story = {
-  args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'info',
-    soft: true,
-  },
-};
-
-export const WarningSoft: Story = {
-  args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'warning',
-    soft: true,
-  },
-};
-
-export const PrimarySoft: Story = {
-  args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'primary',
-    soft: true,
-  },
-};
-
-export const SecondarySoft: Story = {
-  args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'secondary',
-    soft: true,
-  },
-};
-
-export const LightSoft: Story = {
-  args: {
-    showIcon: true,
-    children: 'Default toast',
-    type: 'light',
-    soft: true,
+    theme: 'warning',
   },
 };
 
@@ -236,13 +267,18 @@ export const MaterialStyle: Story = {
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
     >
-      <DAlert {...args} />
+      <DAlert {...args}>
+        <div>
+          <h5 className="mb-2">Heading</h5>
+          <p className="m-0">Nuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en líneaNuestras oficinas atienden de 9:00 a 13:00 horas éste Lunes 1 de Diciembre. Prefiere nuestros Servicios en línea</p>
+          <a href="#" className="text-primary">Link</a>
+        </div>
+      </DAlert>
     </DContextProvider>
   ),
   args: {
     showClose: true,
-    children: 'Default toast',
-    type: 'secondary',
+    theme: 'secondary',
   },
   parameters: {
     docs: {

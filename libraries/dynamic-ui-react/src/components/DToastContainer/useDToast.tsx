@@ -56,8 +56,8 @@ export default function useDToast() {
       if (!description) {
         return (
           <DToast className={classNames({
-            [`toast-${theme}`]: !!theme,
-            'toast-soft': soft,
+            [`toast-${theme}`]: !!theme && !soft,
+            [`toast-soft-${theme}`]: !!theme && !!soft,
           }, 'show')}
           >
             <DToast.Body>
@@ -69,7 +69,7 @@ export default function useDToast() {
               </p>
               <button
                 type="button"
-                className="d-close"
+                className="d-close align-self-center"
                 aria-label="Close"
                 onClick={() => reactHotToast.dismiss(id)}
               >
@@ -81,8 +81,8 @@ export default function useDToast() {
       }
       return (
         <DToast className={classNames({
-          [`toast-${theme}`]: !!theme,
-          'toast-soft': soft,
+          [`toast-${theme}`]: !!theme && !soft,
+          [`toast-soft-${theme}`]: !!theme && !!soft,
         }, 'show')}
         >
           <DToast.Header>
@@ -97,7 +97,7 @@ export default function useDToast() {
             )}
             <button
               type="button"
-              className="d-close"
+              className="d-close align-self-center"
               aria-label="Close"
               onClick={() => reactHotToast.dismiss(id)}
             >

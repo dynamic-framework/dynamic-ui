@@ -10,6 +10,6 @@ $badge-border-radius: var(--#{$prefix}border-radius-sm) !default;
 
 // custom
 $badge-bg: var(--#{$prefix}white) !default;
-$badge-dot-height: var(--#{$prefix}ref-spacer-4) !default;
+$badge-gap: var(--#{$prefix}ref-spacer-2) !default;
 // end custom
 // scss-docs-end badge-variables
