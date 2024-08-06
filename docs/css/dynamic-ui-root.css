@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.28.0
+ * dynamic-framework 1.28.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -290,7 +290,7 @@
   --bs-highlight-bg: var(--bs-warning-100);
   --bs-border-width: 1px;
   --bs-border-style: solid;
-  --bs-border-color: var(--bs-gray-300);
+  --bs-border-color: var(--bs-gray-100);
   --bs-border-color-translucent: rgba(var(--bs-black-rgb), 0.175);
   --bs-border-radius: 1rem;
   --bs-border-radius-sm: 0.5rem;
@@ -836,6 +836,22 @@
   --bs-ref-spacer-12: 3rem;
   --bs-ref-spacer-13: 3.25rem;
   --bs-ref-spacer-14: 3.5rem;
+  --bs-ref-spacer-15: 3.75rem;
+  --bs-ref-spacer-16: 4rem;
+  --bs-ref-spacer-17: 4.25rem;
+  --bs-ref-spacer-18: 4.5rem;
+  --bs-ref-spacer-19: 4.75rem;
+  --bs-ref-spacer-20: 5rem;
+  --bs-ref-spacer-21: 5.25rem;
+  --bs-ref-spacer-22: 5.5rem;
+  --bs-ref-spacer-23: 5.75rem;
+  --bs-ref-spacer-24: 6rem;
+  --bs-ref-spacer-25: 6.25rem;
+  --bs-ref-spacer-26: 6.5rem;
+  --bs-ref-spacer-27: 6.75rem;
+  --bs-ref-spacer-28: 7rem;
+  --bs-ref-spacer-29: 7.25rem;
+  --bs-ref-spacer-30: 7.5rem;
 }
 @media (min-width: 1200px) {
   :root,

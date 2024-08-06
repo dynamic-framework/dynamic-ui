@@ -50,9 +50,9 @@ export type StateIcons = {
     invalidIcon?: string;
     validIcon?: string;
 };
-export type AlertType = 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | 'primary' | 'secondary';
-export type AlertTypeIconMap = {
-    [state in AlertType]: string;
+export type AlertTheme = 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary';
+export type AlertThemeIconMap = {
+    [state in AlertTheme]: string;
 };
 export type ButtonVariant = 'outline' | 'link';
 export type ButtonType = 'submit' | 'reset' | 'button';
