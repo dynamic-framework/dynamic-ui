@@ -7,11 +7,12 @@ import {
 } from 'react';
 import classNames from 'classnames';
 
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
 
 import type { BaseProps, InputCheckType } from '../interface';
 
 type Props =
+& Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>
 & BaseProps
 & {
   id?: string;
@@ -44,6 +45,7 @@ export default function DInputCheck(
     onChange,
     className,
     style,
+    ...props
   }: Props,
 ) {
   const innerRef = useRef<HTMLInputElement>(null);
@@ -85,12 +87,14 @@ export default function DInputCheck(
       name={name}
       value={value}
       aria-label={ariaLabel}
+      {...props}
     />
   ), [
     ariaLabel,
     className,
     disabled,
     valid,
+    props,
     invalid,
     handleChange,
     id,
