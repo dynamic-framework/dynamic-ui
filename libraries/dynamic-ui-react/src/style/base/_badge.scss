@@ -4,7 +4,7 @@
   --#{$prefix}badge-bg: #{$badge-bg};
   --#{$prefix}badge-color: #{$badge-color};
 
-  display: flex;
+  display: inline-flex;
   gap: var(--#{$prefix}badge-gap);
   color: var(--#{$prefix}badge-color);
 
