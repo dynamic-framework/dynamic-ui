@@ -295,6 +295,33 @@
   @each $level, $value in $spacers {
     --#{$prefix}ref-spacer-#{$level}: #{$value};
   }
+
+  --#{$prefix}default-accordion-padding-x: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}default-accordion-padding-y: var(--#{$prefix}ref-spacer-6);
+  --#{$prefix}default-accordion-color: var(--#{$prefix}gray-700);
+  --#{$prefix}default-accordion-bg: var(--#{$prefix}white);
+  --#{$prefix}default-accordion-transition: #{$btn-transition}, border-radius .15s ease;
+  --#{$prefix}default-accordion-border-color: var(--#{$prefix}border-color);
+  --#{$prefix}default-accordion-border-width: var(--#{$prefix}border-width);
+  --#{$prefix}default-accordion-border-radius: var(--#{$prefix}border-radius);
+  --#{$prefix}default-accordion-inner-border-radius: calc(var(--#{$prefix}default-accordion-border-radius) - var(--#{$prefix}default-accordion-border-width));
+  --#{$prefix}default-accordion-btn-padding-x: var(--#{$prefix}default-accordion-padding-x);
+  --#{$prefix}default-accordion-btn-padding-y: var(--#{$prefix}default-accordion-padding-y);
+  --#{$prefix}default-accordion-btn-color: var(--#{$prefix}body-color);
+  --#{$prefix}default-accordion-btn-bg: var(--#{$prefix}default-accordion-bg);
+  --#{$prefix}default-accordion-btn-icon: #{escape-svg($accordion-button-icon-url)};
+  --#{$prefix}default-accordion-btn-icon-width: var(--#{$prefix}ref-spacer-5);
+  --#{$prefix}default-accordion-btn-icon-transform: rotate(-180deg);
+  --#{$prefix}default-accordion-btn-icon-transition: transform .2s ease-in-out;
+  --#{$prefix}default-accordion-btn-active-icon: #{escape-svg($accordion-button-active-icon-url)};
+  --#{$prefix}default-accordion-btn-focus-box-shadow: #{$input-btn-focus-box-shadow};
+  --#{$prefix}default-accordion-btn-font-weight: var(--#{$prefix}fw-bold);
+  --#{$prefix}default-accordion-btn-font-size: var(--#{$prefix}fs-6);
+  --#{$prefix}default-accordion-body-padding-top: var(--#{$prefix}default-accordion-padding-y);
+  --#{$prefix}default-accordion-body-padding-x: var(--#{$prefix}default-accordion-padding-x);
+  --#{$prefix}default-accordion-body-padding-y: var(--#{$prefix}default-accordion-padding-y);
+  --#{$prefix}default-accordion-active-color: var(--#{$prefix}body-color);
+  --#{$prefix}default-accordion-active-bg: var(--#{$prefix}secondary-soft);
 }
 
 @if $enable-dark-mode {
