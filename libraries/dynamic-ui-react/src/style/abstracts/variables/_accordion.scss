@@ -1,23 +1,44 @@
 // Accordion
 
 // scss-docs-start accordion-variables
-$accordion-padding-y: var(--#{$prefix}ref-spacer-6) !default;
-$accordion-padding-x: var(--#{$prefix}ref-spacer-4) !default;
-$accordion-color: var(--#{$prefix}gray-700) !default;
-$accordion-bg: var(--#{$prefix}white) !default;
+$accordion-padding-y: var(--#{$prefix}default-accordion-padding-y) !default;
+$accordion-padding-x: var(--#{$prefix}default-accordion-padding-x) !default;
+$accordion-color: var(--#{$prefix}default-accordion-color) !default;
+$accordion-bg: var(--#{$prefix}default-accordion-bg) !default;
+$accordion-border-width: var(--#{$prefix}default-accordion-border-width) !default;
+$accordion-border-color: var(--#{$prefix}default-accordion-border-color) !default;
+$accordion-border-radius: var(--#{$prefix}default-accordion-border-radius) !default;
+$accordion-inner-border-radius: var(--#{$prefix}default-accordion-inner-border-radius) !default;
+
+$accordion-body-padding-y: var(--#{$prefix}default-accordion-body-padding-y) !default;
+$accordion-body-padding-x: var(--#{$prefix}default-accordion-body-padding-x) !default;
 
 // custom
-$accordion-body-padding-top: $accordion-padding-x !default;
-$accordion-button-border-color: var(--#{$prefix}gray-100) !default;
-$accordion-button-font-weight: var(--#{$prefix}fw-bold) !default;
-$accordion-button-font-size: var(--#{$prefix}fs-6) !default;
+$accordion-body-padding-top: var(--#{$prefix}default-accordion-body-padding-top) !default;
+$accordion-button-font-weight: var(--#{$prefix}default-accordion-btn-font-weight) !default;
+$accordion-button-font-size: var(--#{$prefix}default-accordion-btn-font-size) !default;
 // end custom
 
-$accordion-button-active-bg: var(--#{$prefix}secondary-soft) !default;
-$accordion-button-active-color: var(--#{$prefix}body-color) !default;
+$accordion-button-padding-y: var(--#{$prefix}default-accordion-btn-padding-y) !default;
+$accordion-button-padding-x: var(--#{$prefix}default-accordion-btn-padding-x) !default;
+$accordion-button-color: var(--#{$prefix}default-accordion-btn-color) !default;
+$accordion-button-bg: var(--#{$prefix}default-accordion-btn-bg) !default;
+$accordion-transition: var(--#{$prefix}default-accordion-transition) !default;
+$accordion-button-active-bg: var(--#{$prefix}default-accordion-active-bg) !default;
+$accordion-button-active-color: var(--#{$prefix}default-accordion-active-color) !default;
 
+$accordion-button-focus-box-shadow: var(--#{$prefix}default-accordion-btn-focus-box-shadow) !default;
+
+$accordion-icon-width: var(--#{$prefix}default-accordion-btn-icon-width) !default;
 $accordion-icon-color: $body-color !default;
 $accordion-icon-active-color: $primary-text-emphasis !default;
-$accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !default;
-$accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-active-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !default;
+$accordion-icon-transition: var(--#{$prefix}default-accordion-btn-icon-transition) !default;
+$accordion-icon-transform: var(--#{$prefix}default-accordion-btn-icon-transform) !default;
+
+// custom
+$accordion-button-icon: var(--#{$prefix}default-accordion-btn-icon) !default;
+$accordion-button-icon-url: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !default;
+$accordion-button-active-icon: var(--#{$prefix}default-accordion-btn-active-icon) !default;
+$accordion-button-active-icon-url: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-active-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !default;
+// end custom
 // scss-docs-end accordion-variables
