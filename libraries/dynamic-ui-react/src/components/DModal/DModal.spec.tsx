@@ -46,6 +46,9 @@ it('should render my component with header, body, and footer slot', () => {
             </div>
           </div>
           <div
+            class="d-modal-separator"
+          />
+          <div
             class="modal-body"
           >
             Test Body
