@@ -16,11 +16,14 @@ export default function DOffcanvasFooter(
   }: Props,
 ) {
   return (
-    <div
-      className={classNames(`d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className)}
-      style={style}
-    >
-      {children}
-    </div>
+    <>
+      <div className="d-offcanvas-separator" />
+      <div
+        className={classNames(`d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className)}
+        style={style}
+      >
+        {children}
+      </div>
+    </>
   );
 }

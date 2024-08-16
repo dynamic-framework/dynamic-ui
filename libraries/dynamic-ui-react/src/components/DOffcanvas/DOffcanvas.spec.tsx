@@ -38,10 +38,16 @@ it('should render my component with header, body, and footer slot', () => {
         </div>
       </div>
       <div
+        class="d-offcanvas-separator"
+      />
+      <div
         class="offcanvas-body"
       >
         Test Body
       </div>
+      <div
+        class="d-offcanvas-separator"
+      />
       <div
         class="d-offcanvas-footer d-offcanvas-action-fill"
       >

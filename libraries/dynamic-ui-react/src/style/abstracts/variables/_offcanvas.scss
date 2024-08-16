@@ -1,12 +1,15 @@
 // Offcanvas
 
 // scss-docs-start offcanvas-variables
-$offcanvas-padding-y: var(--#{$prefix}ref-spacer-6) !default;
-$offcanvas-padding-x: var(--#{$prefix}ref-spacer-6) !default;
+$offcanvas-padding-y: var(--#{$prefix}ref-spacer-4) !default;
+$offcanvas-padding-x: var(--#{$prefix}ref-spacer-4) !default;
 
 // custom
-$offcanvas-header-gap: var(--#{$prefix}ref-spacer-6) !default;
-$offcanvas-footer-gap: var(--#{$prefix}ref-spacer-6) !default;
+$offcanvas-header-gap: var(--#{$prefix}ref-spacer-4) !default;
+$offcanvas-footer-gap: var(--#{$prefix}ref-spacer-4) !default;
+$offcanvas-separator-bg: var(--#{$prefix}gray-100) !default;
+$offcanvas-separator-height: 1px !default;
+$offcanvas-separator-margin-x: var(--#{$prefix}ref-spacer-4) !default;
 // end custom
 
 $offcanvas-bg-color: var(--#{$prefix}white) !default;
