@@ -1,6 +1,9 @@
 .offcanvas {
   --#{$prefix}offcanvas-header-gap: #{$offcanvas-header-gap};
   --#{$prefix}offcanvas-footer-gap: #{$offcanvas-footer-gap};
+  --#{$prefix}offcanvas-separator-margin-x: #{$offcanvas-separator-margin-x};
+  --#{$prefix}offcanvas-separator-height: #{$offcanvas-separator-height};
+  --#{$prefix}offcanvas-separator-bg: #{$offcanvas-separator-bg};
 
   .offcanvas-header {
     flex-direction: row;
@@ -13,8 +16,14 @@
     }
   }
 
+  .d-offcanvas-separator {
+    height: var(--#{$prefix}offcanvas-separator-height);
+    margin: 0 var(--#{$prefix}offcanvas-separator-margin-x);
+    background: var(--#{$prefix}offcanvas-separator-bg);
+  }
+
   .offcanvas-body {
-    padding: 0 var(--#{$prefix}offcanvas-padding-x);
+    padding: var(--#{$prefix}offcanvas-padding-y) var(--#{$prefix}offcanvas-padding-x);
   }
 
   .d-offcanvas-footer {
