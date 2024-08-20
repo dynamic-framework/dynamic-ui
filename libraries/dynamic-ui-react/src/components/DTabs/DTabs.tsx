@@ -41,6 +41,7 @@ function DTabs(
     style,
     vertical,
     variant = 'underline',
+    dataAttributes,
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -82,6 +83,7 @@ function DTabs(
           'flex-column': !vertical || variant === 'tabs',
         })}
         style={style}
+        {...dataAttributes}
       >
         <nav className={classNames(generateClasses)}>
           {options.map((option) => (

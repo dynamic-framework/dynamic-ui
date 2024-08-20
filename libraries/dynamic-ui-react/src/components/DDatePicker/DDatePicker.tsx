@@ -107,6 +107,7 @@ export default function DDatePicker<
     className,
     formatWeekDay: formatWeekDayProp,
     style,
+    dataAttributes,
     ...props
   }: Props<CustomModifierNames, WithRange>,
 ) {
@@ -209,6 +210,7 @@ export default function DDatePicker<
         />
       )}
       {...locale && { locale }}
+      {...dataAttributes}
       {...props}
     />
   );

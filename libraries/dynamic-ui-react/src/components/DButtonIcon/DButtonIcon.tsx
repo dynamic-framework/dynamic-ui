@@ -54,6 +54,7 @@ export default function DButtonIcon(
     style,
     iconFamilyClass,
     iconFamilyPrefix,
+    dataAttributes,
     onClick,
   }: Props,
 ) {
@@ -97,6 +98,7 @@ export default function DButtonIcon(
       onClick={clickHandler}
       aria-label={newAriaLabel}
       id={id}
+      {...dataAttributes}
     >
       {loading
         ? (

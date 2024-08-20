@@ -73,6 +73,7 @@ export default function DInputPin(
     valid = false,
     className,
     style,
+    dataAttributes,
     onChange,
   }: Props,
 ) {
@@ -170,6 +171,7 @@ export default function DInputPin(
     <div
       className={classNames('d-input-pin', className)}
       style={style}
+      {...dataAttributes}
     >
       {label && (
         <label htmlFor="pinIndex0">

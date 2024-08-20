@@ -38,6 +38,7 @@ export default function DChip(
     closeAriaLabel = 'close',
     className,
     style,
+    dataAttributes,
     onClose,
   }: Props,
 ) {
@@ -58,6 +59,7 @@ export default function DChip(
     <span
       className={classNames(generateClasses, className)}
       style={style}
+      {...dataAttributes}
     >
       {icon && (
         <div className="d-chip-icon-container">

@@ -15,6 +15,7 @@ function DCard(
     className,
     style,
     children,
+    dataAttributes,
   }: Props,
 ) {
   return (
@@ -24,6 +25,7 @@ function DCard(
         'card',
         className,
       )}
+      {...dataAttributes}
     >
       {children}
     </div>

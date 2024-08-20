@@ -41,6 +41,7 @@ export default function DPopover(
     adjustContentToRender = false,
     className,
     style,
+    dataAttributes,
   }: Props,
 ) {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,6 +95,7 @@ export default function DPopover(
     <div
       className={classNames('d-popover', className)}
       style={generateStyleVariables}
+      {...dataAttributes}
     >
       <div
         ref={refs.setReference}

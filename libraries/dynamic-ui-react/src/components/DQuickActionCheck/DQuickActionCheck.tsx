@@ -29,6 +29,7 @@ export default function DQuickActionCheck(
     className,
     style,
     checked,
+    dataAttributes,
     onChange,
   }: Props,
 ) {
@@ -45,6 +46,7 @@ export default function DQuickActionCheck(
       className={classNames('d-quick-action-check', className)}
       htmlFor={id}
       style={style}
+      {...dataAttributes}
     >
       <DInputCheck
         id={id}

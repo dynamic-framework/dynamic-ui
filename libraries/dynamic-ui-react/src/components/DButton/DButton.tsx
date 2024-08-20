@@ -65,6 +65,7 @@ export default function DButton(
     className,
     style,
     form,
+    dataAttributes,
     onClick,
   }: Props,
 ) {
@@ -108,6 +109,7 @@ export default function DButton(
       onClick={clickHandler}
       aria-label={newAriaLabel}
       form={form}
+      {...dataAttributes}
       {...value && { value }}
     >
       {iconStart && (
