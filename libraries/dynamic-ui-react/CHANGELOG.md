@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.30.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.29.0...@dynamic-framework/ui-react@1.30.0) (2024-08-20)
+
+
+### Style Features
+
+* **style:** move .accordion variables values to :root variables ([286d271](https://github.com/dynamic-framework/dynamic-ui/commit/286d271ee69524fcdb7b4bf5fce5b46c4921ae32))
+
+
+### Features
+
+* add data attributes prop to components ([a45def1](https://github.com/dynamic-framework/dynamic-ui/commit/a45def13dc3bb8c1c1345b3bcd1e7917cd68d783))
+
+
+### Bug Fixes
+
+* **DBadge:** set display as inline-flex ([9bc5a61](https://github.com/dynamic-framework/dynamic-ui/commit/9bc5a618827a72e2b59901e054200ddf0b84dfde))
+
+
+
 ## [1.29.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.28.1...@dynamic-framework/ui-react@1.29.0) (2024-08-06)
 
 
