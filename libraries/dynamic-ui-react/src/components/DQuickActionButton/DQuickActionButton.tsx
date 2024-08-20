@@ -48,6 +48,7 @@ export default function DQuickActionButton(
     onClick,
     onClickSecondary,
     style,
+    dataAttributes,
   }: Props,
 ) {
   const globalClickHandler = useCallback(() => {
@@ -78,6 +79,7 @@ export default function DQuickActionButton(
       className={classNames('d-quick-action-button', className)}
       onClick={!actionLinkText ? globalClickHandler : undefined}
       style={style}
+      {...dataAttributes}
     >
       {representativeIcon && (
         <DIcon

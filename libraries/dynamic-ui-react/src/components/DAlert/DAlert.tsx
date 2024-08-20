@@ -42,6 +42,7 @@ export default function DAlert(
     id,
     className,
     style,
+    dataAttributes,
   }: Props,
 ) {
   const {
@@ -69,6 +70,7 @@ export default function DAlert(
       style={style}
       role="alert"
       id={id}
+      {...dataAttributes}
     >
       {icon && (
         <DIcon

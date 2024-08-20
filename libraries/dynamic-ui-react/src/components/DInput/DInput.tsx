@@ -98,6 +98,7 @@ function DInput(
     inputEnd,
     value,
     placeholder = '',
+    dataAttributes,
     onChange,
     onIconStartClick,
     onIconEndClick,
@@ -225,6 +226,7 @@ function DInput(
     <div
       className={className}
       style={style}
+      {...dataAttributes}
     >
       {label && !floatingLabel && labelComponent}
       <div

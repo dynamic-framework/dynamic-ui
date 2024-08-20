@@ -34,12 +34,14 @@ export default function DStepper(
     className,
     completed = false,
     style,
+    dataAttributes,
   } : Props,
 ) {
   return (
     <div
       className={className}
       style={style}
+      {...dataAttributes}
     >
       <div className={`d-block d-${breakpoint}-none`}>
         <DStepperMobile

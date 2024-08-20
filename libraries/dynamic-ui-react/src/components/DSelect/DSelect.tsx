@@ -99,6 +99,7 @@ function DSelect<
     defaultValue,
     onIconStartClick,
     onIconEndClick,
+    dataAttributes,
     ...props
   }: Props<Option, IsMulti, Group>,
 ) {
@@ -132,6 +133,7 @@ function DSelect<
         },
       )}
       style={style}
+      {...dataAttributes}
     >
       {label && (
         <label htmlFor={id}>

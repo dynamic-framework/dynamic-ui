@@ -1,6 +1,7 @@
 import ResponsivePagination from 'react-responsive-pagination';
 
 import type { ResponsivePaginationProps } from 'react-responsive-pagination';
+import { DataAttributes } from '../interface';
 
 export type Props = {
   className?: ResponsivePaginationProps['extraClassName'];
@@ -11,6 +12,7 @@ export type Props = {
   nextLabel?: ResponsivePaginationProps['nextLabel'];
   showArrows?: ResponsivePaginationProps['renderNav'];
   maxWidth?: ResponsivePaginationProps['maxWidth'];
+  dataAttributes?: DataAttributes;
 };
 export default function DPaginator(
   {

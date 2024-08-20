@@ -22,6 +22,7 @@ function DCarousel(
     className,
     style,
     options,
+    dataAttributes,
     ...props
   }: Props,
   ref: ForwardedRef<Splide>,
@@ -44,6 +45,7 @@ function DCarousel(
           page: 'splide__pagination__page d-carousel-pagination-page',
         },
       }}
+      {...dataAttributes}
       {...props}
     >
       {children}

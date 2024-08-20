@@ -7,11 +7,12 @@ import {
 } from 'react';
 import classNames from 'classnames';
 
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
 
 import type { BaseProps, InputCheckType } from '../interface';
 
 type Props =
+& ComponentPropsWithoutRef<'input'>
 & BaseProps
 & {
   id?: string;
@@ -44,6 +45,8 @@ export default function DInputCheck(
     onChange,
     className,
     style,
+    dataAttributes,
+    ...props
   }: Props,
 ) {
   const innerRef = useRef<HTMLInputElement>(null);
@@ -85,12 +88,14 @@ export default function DInputCheck(
       name={name}
       value={value}
       aria-label={ariaLabel}
+      {...props}
     />
   ), [
     ariaLabel,
     className,
     disabled,
     valid,
+    props,
     invalid,
     handleChange,
     id,
@@ -105,7 +110,10 @@ export default function DInputCheck(
   }
 
   return (
-    <div className="form-check">
+    <div
+      className="form-check"
+      {...dataAttributes}
+    >
       {inputComponent}
       <label className="form-check-label" htmlFor={id}>
         {label}

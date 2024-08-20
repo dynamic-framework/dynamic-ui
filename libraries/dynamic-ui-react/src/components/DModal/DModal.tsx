@@ -33,6 +33,7 @@ function DModal(
     fullScreenFrom,
     size,
     children,
+    dataAttributes,
   }: Props,
 ) {
   const fullScreenClass = useMemo(() => {
@@ -70,6 +71,7 @@ function DModal(
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
       })}
+      {...dataAttributes}
     >
       <div className={classNames(generateModalDialogClasses)}>
         <div className="modal-content">

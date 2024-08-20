@@ -11,11 +11,16 @@ export default function DCurrencyText(
     value,
     className,
     style,
+    dataAttributes,
   }: Props,
 ) {
   const { values: [valueFormatted] } = useFormatCurrency(value);
   return (
-    <span className={className} style={style}>
+    <span
+      className={className}
+      style={style}
+      {...dataAttributes}
+    >
       {valueFormatted}
     </span>
   );

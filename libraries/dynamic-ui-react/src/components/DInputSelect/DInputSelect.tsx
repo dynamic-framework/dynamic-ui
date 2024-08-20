@@ -86,6 +86,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     floatingLabel = false,
     invalid = false,
     valid = false,
+    dataAttributes,
     valueExtractor,
     labelExtractor,
     onChange,
@@ -242,6 +243,7 @@ export default function DInputSelect<T extends object = DefaultOption>(
     <div
       className={className}
       style={style}
+      {...dataAttributes}
     >
       {label && !floatingLabel && (
         labelComponent

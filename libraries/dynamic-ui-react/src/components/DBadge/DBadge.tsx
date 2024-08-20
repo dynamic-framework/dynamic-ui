@@ -33,6 +33,7 @@ export default function DBadge(
     iconMaterialStyle,
     iconFamilyClass,
     iconFamilyPrefix,
+    dataAttributes,
   }: Props,
 ) {
   const generateClasses = useMemo(
@@ -49,6 +50,7 @@ export default function DBadge(
       className={classNames(generateClasses, className)}
       style={style}
       {...id && { id }}
+      {...dataAttributes}
     >
       {iconStart && (
         <DIcon
