@@ -3,7 +3,7 @@
   "sideEffects": [
     "*.css"
   ],
-  "version": "1.29.0",
+  "version": "1.29.1",
   "description": "React Dynamic Framework",
   "license": "https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md",
   "repository": {
@@ -57,8 +57,9 @@
     "eslint:stories": "eslint stories/**/*.stories.tsx",
     "eslint:test": "eslint src/**/*.spec.tsx",
     "stylelint": "stylelint \"**/*.{css,scss}\" --rd",
-    "lint-staged": "lint-staged",
-    "postversion": "pnpm build:scss"
+    "postversion": "pnpm build:scss",
+    "publish:cdn": "node scripts/publish-cdn.js",
+    "lint-staged": "lint-staged"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
