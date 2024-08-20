@@ -11,5 +11,5 @@ type Props = BaseProps & FamilyIconProps & {
     closeAriaLabel?: string;
     onClose?: () => void;
 };
-export default function DChip({ theme, text, icon, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, closeAriaLabel, className, style, onClose, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DChip({ theme, text, icon, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, closeAriaLabel, className, style, dataAttributes, onClose, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

@@ -12,7 +12,7 @@ type Props = BaseProps & PropsWithChildren<{
     fullScreenFrom?: ModalFullScreenFrom;
     size?: ModalSize;
 }>;
-declare function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DModal & {
     Header: typeof DModalHeader;
     Body: typeof DModalBody;

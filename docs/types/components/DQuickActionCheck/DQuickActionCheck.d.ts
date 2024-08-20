@@ -10,5 +10,5 @@ type Props = BaseProps & {
     checked?: boolean;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
-export default function DQuickActionCheck({ id: idProp, name, value, line1, line2, line3, className, style, checked, onChange, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DQuickActionCheck({ id: idProp, name, value, line1, line2, line3, className, style, checked, dataAttributes, onChange, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

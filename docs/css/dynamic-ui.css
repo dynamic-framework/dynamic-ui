@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.28.1
+ * dynamic-framework 1.29.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -853,6 +853,32 @@
   --bs-ref-spacer-28: 7rem;
   --bs-ref-spacer-29: 7.25rem;
   --bs-ref-spacer-30: 7.5rem;
+  --bs-default-accordion-padding-x: var(--bs-ref-spacer-4);
+  --bs-default-accordion-padding-y: var(--bs-ref-spacer-6);
+  --bs-default-accordion-color: var(--bs-gray-700);
+  --bs-default-accordion-bg: var(--bs-white);
+  --bs-default-accordion-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius .15s ease;
+  --bs-default-accordion-border-color: var(--bs-border-color);
+  --bs-default-accordion-border-width: var(--bs-border-width);
+  --bs-default-accordion-border-radius: var(--bs-border-radius);
+  --bs-default-accordion-inner-border-radius: calc(var(--bs-default-accordion-border-radius) - var(--bs-default-accordion-border-width));
+  --bs-default-accordion-btn-padding-x: var(--bs-default-accordion-padding-x);
+  --bs-default-accordion-btn-padding-y: var(--bs-default-accordion-padding-y);
+  --bs-default-accordion-btn-color: var(--bs-body-color);
+  --bs-default-accordion-btn-bg: var(--bs-default-accordion-bg);
+  --bs-default-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2315151a'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --bs-default-accordion-btn-icon-width: var(--bs-ref-spacer-5);
+  --bs-default-accordion-btn-icon-transform: rotate(-180deg);
+  --bs-default-accordion-btn-icon-transition: transform .2s ease-in-out;
+  --bs-default-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='var%28--bs-primary-600%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --bs-default-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
+  --bs-default-accordion-btn-font-weight: var(--bs-fw-bold);
+  --bs-default-accordion-btn-font-size: var(--bs-fs-6);
+  --bs-default-accordion-body-padding-top: var(--bs-default-accordion-padding-y);
+  --bs-default-accordion-body-padding-x: var(--bs-default-accordion-padding-x);
+  --bs-default-accordion-body-padding-y: var(--bs-default-accordion-padding-y);
+  --bs-default-accordion-active-color: var(--bs-body-color);
+  --bs-default-accordion-active-bg: var(--bs-secondary-soft);
 }
 @media (min-width: 1200px) {
   :root,
@@ -6454,27 +6480,27 @@ textarea.form-control-lg {
 }
 
 .accordion {
-  --bs-accordion-color: var(--bs-gray-700);
-  --bs-accordion-bg: var(--bs-white);
-  --bs-accordion-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
-  --bs-accordion-border-color: var(--bs-border-color);
-  --bs-accordion-border-width: var(--bs-border-width);
-  --bs-accordion-border-radius: var(--bs-border-radius);
-  --bs-accordion-inner-border-radius: calc(var(--bs-border-radius) - (var(--bs-border-width)));
-  --bs-accordion-btn-padding-x: var(--bs-ref-spacer-4);
-  --bs-accordion-btn-padding-y: var(--bs-ref-spacer-6);
-  --bs-accordion-btn-color: var(--bs-body-color);
-  --bs-accordion-btn-bg: var(--bs-accordion-bg);
-  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2315151a'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-  --bs-accordion-btn-icon-width: 1.25rem;
-  --bs-accordion-btn-icon-transform: rotate(-180deg);
-  --bs-accordion-btn-icon-transition: transform 0.2s ease-in-out;
-  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='var%28--bs-primary-600%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-  --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
-  --bs-accordion-body-padding-x: var(--bs-ref-spacer-4);
-  --bs-accordion-body-padding-y: var(--bs-ref-spacer-6);
-  --bs-accordion-active-color: var(--bs-body-color);
-  --bs-accordion-active-bg: var(--bs-secondary-soft);
+  --bs-accordion-color: var(--bs-default-accordion-color);
+  --bs-accordion-bg: var(--bs-default-accordion-bg);
+  --bs-accordion-transition: var(--bs-default-accordion-transition);
+  --bs-accordion-border-color: var(--bs-default-accordion-border-color);
+  --bs-accordion-border-width: var(--bs-default-accordion-border-width);
+  --bs-accordion-border-radius: var(--bs-default-accordion-border-radius);
+  --bs-accordion-inner-border-radius: var(--bs-default-accordion-inner-border-radius);
+  --bs-accordion-btn-padding-x: var(--bs-default-accordion-btn-padding-x);
+  --bs-accordion-btn-padding-y: var(--bs-default-accordion-btn-padding-y);
+  --bs-accordion-btn-color: var(--bs-default-accordion-btn-color);
+  --bs-accordion-btn-bg: var(--bs-default-accordion-btn-bg);
+  --bs-accordion-btn-icon: var(--bs-default-accordion-btn-icon);
+  --bs-accordion-btn-icon-width: var(--bs-default-accordion-btn-icon-width);
+  --bs-accordion-btn-icon-transform: var(--bs-default-accordion-btn-icon-transform);
+  --bs-accordion-btn-icon-transition: var(--bs-default-accordion-btn-icon-transition);
+  --bs-accordion-btn-active-icon: var(--bs-default-accordion-btn-active-icon);
+  --bs-accordion-btn-focus-box-shadow: var(--bs-default-accordion-btn-focus-box-shadow);
+  --bs-accordion-body-padding-x: var(--bs-default-accordion-body-padding-x);
+  --bs-accordion-body-padding-y: var(--bs-default-accordion-body-padding-y);
+  --bs-accordion-active-color: var(--bs-default-accordion-active-color);
+  --bs-accordion-active-bg: var(--bs-default-accordion-active-bg);
 }
 
 .accordion-button {
@@ -8775,7 +8801,7 @@ body {
   --bs-badge-icon-size: var(--bs-body-font-size);
   --bs-badge-bg: var(--bs-white);
   --bs-badge-color: var(--bs-gray-900);
-  display: flex;
+  display: inline-flex;
   gap: var(--bs-badge-gap);
   color: var(--bs-badge-color);
   background-color: var(--bs-badge-bg);
@@ -8849,9 +8875,9 @@ body {
 }
 
 .accordion {
-  --bs-accordion-btn-font-weight: var(--bs-fw-bold);
-  --bs-accordion-btn-font-size: var(--bs-fs-6);
-  --bs-accordion-body-padding-top: var(--bs-ref-spacer-4);
+  --bs-accordion-btn-font-weight: var(--bs-default-accordion-btn-font-weight);
+  --bs-accordion-btn-font-size: var(--bs-default-accordion-btn-font-size);
+  --bs-accordion-body-padding-top: var(--bs-default-accordion-body-padding-top);
 }
 .accordion .accordion-button {
   font-weight: var(--bs-accordion-btn-font-weight);

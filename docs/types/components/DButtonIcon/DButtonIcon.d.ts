@@ -15,5 +15,5 @@ type Props = BaseProps & FamilyIconProps & {
     disabled?: boolean;
     onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
-export default function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, theme, type, loading, disabled, stopPropagationEnabled, style, iconFamilyClass, iconFamilyPrefix, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, theme, type, loading, disabled, stopPropagationEnabled, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

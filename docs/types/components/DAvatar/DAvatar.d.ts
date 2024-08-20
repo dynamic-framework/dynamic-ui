@@ -5,5 +5,5 @@ type Props = BaseProps & {
     image?: string;
     title?: string;
 };
-export default function DAvatar({ id, size, image, title, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DAvatar({ id, size, image, title, className, style, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

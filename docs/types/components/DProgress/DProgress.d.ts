@@ -6,5 +6,5 @@ type Props = BaseProps & {
     hideCurrentValue?: boolean;
     enableStripedAnimation?: boolean;
 };
-export default function DProgress({ className, style, currentValue, minValue, maxValue, hideCurrentValue, enableStripedAnimation, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DProgress({ className, style, currentValue, minValue, maxValue, hideCurrentValue, enableStripedAnimation, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

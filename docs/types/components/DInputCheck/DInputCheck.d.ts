@@ -1,6 +1,6 @@
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
 import type { BaseProps, InputCheckType } from '../interface';
-type Props = BaseProps & {
+type Props = ComponentPropsWithoutRef<'input'> & BaseProps & {
     id?: string;
     type: InputCheckType;
     name?: string;
@@ -14,5 +14,5 @@ type Props = BaseProps & {
     value?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
-export default function DInputCheck({ id: idProp, type, name, label, ariaLabel, checked, disabled, invalid, valid, indeterminate, value, onChange, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DInputCheck({ id: idProp, type, name, label, ariaLabel, checked, disabled, invalid, valid, indeterminate, value, onChange, className, style, dataAttributes, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

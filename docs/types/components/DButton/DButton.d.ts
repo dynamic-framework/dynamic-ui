@@ -18,5 +18,5 @@ type Props = BaseProps & StartIconProps & EndIconProps & {
     form?: string;
     onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
-export default function DButton({ theme, size, variant, state, text, ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, value, type, loading, loadingAriaLabel, disabled, stopPropagationEnabled, className, style, form, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DButton({ theme, size, variant, state, text, ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, value, type, loading, loadingAriaLabel, disabled, stopPropagationEnabled, className, style, form, dataAttributes, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

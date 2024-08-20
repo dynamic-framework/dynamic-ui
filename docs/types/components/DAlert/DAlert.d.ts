@@ -14,5 +14,5 @@ type Props = BaseProps & PropsWithChildren<{
     iconCloseMaterialStyle?: boolean;
     onClose?: () => void;
 }>;
-export default function DAlert({ theme, icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, onClose, children, id, className, style, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DAlert({ theme, icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, onClose, children, id, className, style, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
