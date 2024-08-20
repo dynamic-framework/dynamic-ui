@@ -40,6 +40,7 @@ export default function DBoxFile(
     children,
     className,
     style,
+    dataAttributes,
     ...dropzoneOptions
   }: Props,
 ) {
@@ -67,6 +68,7 @@ export default function DBoxFile(
         className,
       )}
       style={style}
+      {...dataAttributes}
     >
       <div
         {...getRootProps({

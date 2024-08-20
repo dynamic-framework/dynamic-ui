@@ -45,6 +45,7 @@ export default function DCollapse(
     iconFamilyClass,
     iconFamilyPrefix,
     iconMaterialStyle = false,
+    dataAttributes,
   }: Props,
 ) {
   const [toggle, setToggle] = useState(defaultCollapsed);
@@ -79,6 +80,7 @@ export default function DCollapse(
       id={id}
       className={classNames('collapse-container', className)}
       style={style}
+      {...dataAttributes}
     >
       <button
         className="collapse-button"

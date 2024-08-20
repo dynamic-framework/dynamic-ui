@@ -26,6 +26,7 @@ function DOffcanvas(
     scrollable,
     openFrom = 'end',
     children,
+    dataAttributes,
   }: Props,
 ) {
   return (
@@ -50,6 +51,7 @@ function DOffcanvas(
         [`data-${PREFIX_BS}scroll`]: 'true',
         [`data-${PREFIX_BS}keyboard`]: 'false',
       })}
+      {...dataAttributes}
     >
       {children}
     </div>

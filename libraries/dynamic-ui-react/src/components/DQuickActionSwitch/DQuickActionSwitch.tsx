@@ -27,6 +27,7 @@ export default function DQuickActionSwitch(
     disabled,
     className,
     style,
+    dataAttributes,
     onClick,
   }: Props,
 ) {
@@ -44,6 +45,7 @@ export default function DQuickActionSwitch(
       type="button"
       onClick={clickHandler}
       style={style}
+      {...dataAttributes}
     >
       <div className="d-quick-action-switch-content">
         <DInputSwitch

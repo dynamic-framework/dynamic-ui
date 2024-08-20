@@ -20,6 +20,7 @@ export default function DProgress(
     maxValue = 100,
     hideCurrentValue = false,
     enableStripedAnimation = false,
+    dataAttributes,
   }: Props,
 ) {
   const percentage = useMemo(() => (
@@ -37,7 +38,10 @@ export default function DProgress(
   }), [enableStripedAnimation]);
 
   return (
-    <div className={classNames('progress', className)}>
+    <div
+      className={classNames('progress', className)}
+      {...dataAttributes}
+    >
       <div
         className={classNames(generateClasses)}
         role="progressbar"

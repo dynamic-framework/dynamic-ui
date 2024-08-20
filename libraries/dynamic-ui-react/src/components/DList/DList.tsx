@@ -22,6 +22,7 @@ function DList(
     numbered = false,
     horizontal = false,
     horizontalBreakpoint,
+    dataAttributes,
   }: Props,
 ) {
   if (flush && horizontal) {
@@ -41,6 +42,7 @@ function DList(
         className,
       )}
       style={style}
+      {...dataAttributes}
     >
       {children}
     </div>

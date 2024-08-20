@@ -18,6 +18,7 @@ export default function DAvatar(
     title,
     className,
     style,
+    dataAttributes,
   }: Props,
 ) {
   return (
@@ -28,6 +29,7 @@ export default function DAvatar(
       }, className)}
       style={style}
       id={id}
+      {...dataAttributes}
     >
       {image && <img src={image} alt="avatar" className="avatar-img" />}
       {title && <span className="avatar-title">{title}</span>}

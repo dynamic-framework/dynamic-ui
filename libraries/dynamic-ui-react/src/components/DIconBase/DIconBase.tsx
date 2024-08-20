@@ -40,6 +40,7 @@ export default function DIconBase(
     materialStyle = false,
     familyClass = 'bi',
     familyPrefix = 'bi-',
+    dataAttributes,
   }: Props,
 ) {
   const colorStyle = useMemo(() => {
@@ -103,6 +104,7 @@ export default function DIconBase(
     <i
       className={classNames(generateClasses)}
       style={generateStyleVariables}
+      {...dataAttributes}
     >
       {materialStyle && icon}
     </i>

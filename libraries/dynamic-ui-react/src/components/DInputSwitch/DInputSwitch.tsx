@@ -38,6 +38,7 @@ export default function DInputSwitch(
     readonly,
     className,
     style,
+    dataAttributes,
     onChange,
   }: Props,
 ) {
@@ -56,7 +57,10 @@ export default function DInputSwitch(
   }, [onChange]);
 
   return (
-    <div className="form-check form-switch">
+    <div
+      className="form-check form-switch"
+      {...dataAttributes}
+    >
       <input
         id={id}
         name={name}

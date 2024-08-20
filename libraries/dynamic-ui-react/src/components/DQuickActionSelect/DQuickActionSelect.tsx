@@ -31,6 +31,7 @@ export default function DQuickActionSelect(
     className,
     style,
     selected = false,
+    dataAttributes,
     onChange,
   }: Props,
 ) {
@@ -54,6 +55,7 @@ export default function DQuickActionSelect(
       className={classNames('d-quick-action-select', className)}
       htmlFor={id}
       style={style}
+      {...dataAttributes}
     >
       <input
         ref={innerRef}
