@@ -21,10 +21,12 @@ To understand in more detail the aspects covered by this component, review the f
 ## CSS Variables
 The Bootstrap documentation provides details on the default [Pagination CSS Variables](https://getbootstrap.com/docs/5.3/components/pagination/#css)
 
-| Variable                                    | Class       | Type                   | Description       |
-|---------------------------------------------|-------------|------------------------|-------------------|
-| --${PREFIX_BS}pagination-page-item-size     | .pagination | css length unit        | Size of page item |
-| --${PREFIX_BS}pagination-page-border-radius | .pagination | css border radius unit | Radius page item  |
+| Variable                                             | Class       | Type                   | Description                  |
+|------------------------------------------------------|-------------|------------------------|------------------------------|
+| --${PREFIX_BS}pagination-page-item-size              | .pagination | css length unit        | Size of page item            |
+| --${PREFIX_BS}pagination-page-border-radius          | .pagination | css border radius unit | Radius page item             |
+| --${PREFIX_BS}pagination-page-control-color          | .pagination | css color unit         | Page control color           |
+| --${PREFIX_BS}pagination-page-control-disabled-color | .pagination | css color unit         | Page control disabled color  |
        `,
       },
     },
