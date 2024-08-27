@@ -1,4 +1,5 @@
 export { default as DAlert } from './DAlert';
+export { default as DAvatar } from './DAvatar';
 export { default as DBadge } from './DBadge';
 export { default as DBoxFile } from './DBoxFile';
 export { default as DButton } from './DButton';
