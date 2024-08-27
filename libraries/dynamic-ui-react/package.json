@@ -3,7 +3,7 @@
   "sideEffects": [
     "*.css"
   ],
-  "version": "1.29.1",
+  "version": "1.29.0",
   "description": "React Dynamic Framework",
   "license": "https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md",
   "repository": {
@@ -43,11 +43,13 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:storybook": "test-storybook",
-    "build": "pnpm clean && pnpm build:react && pnpm build:scss && pnpm cp:bootstrap",
+    "build": "pnpm clean && pnpm build:react && pnpm build:scss && pnpm cp",
     "build:react": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:react:watch": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:scss": "node scripts/build-scss.js",
+    "cp": "pnpm cp:bootstrap && pnpm cp:popper",
     "cp:bootstrap": "scripts/cp-boostrap.sh",
+    "cp:popper": "scripts/cp-popper.sh",
     "clean": "rimraf dist-transpiled && rimraf dist",
     "compile": "tsc -p . && rollup -c rollup.config.mjs",
     "storybook": "storybook dev -p 6006",
@@ -92,6 +94,7 @@
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.2",
     "@mdx-js/react": "^2.3.0",
+    "@popperjs/core": "^2.11.8",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@storybook/addon-a11y": "^7.5.3",
     "@storybook/addon-actions": "^7.5.1",
