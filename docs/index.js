@@ -282,6 +282,13 @@ function DAlert({ theme = 'success', icon: iconProp, iconFamilyClass, iconFamily
     return (jsxRuntime.jsxs("div", Object.assign({ className: classNames(generateClasses), style: style, role: "alert", id: id }, dataAttributes, { children: [icon && (jsxRuntime.jsx(DIcon, { className: "alert-icon", icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsxRuntime.jsx("div", { className: "alert-text", children: children }), showClose && (jsxRuntime.jsx("button", { type: "button", className: "d-close", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: iconClose, familyClass: iconCloseFamilyClass, familyPrefix: iconCloseFamilyPrefix, materialStyle: iconCloseMaterialStyle }) }))] })));
 }
 
+function DAvatar({ id, size, image, title, className, style, dataAttributes, }) {
+    return (jsxRuntime.jsxs("div", Object.assign({ className: classNames({
+            avatar: true,
+            [`avatar-${size}`]: !!size,
+        }, className), style: style, id: id }, dataAttributes, { children: [image && jsxRuntime.jsx("img", { src: image, alt: "avatar", className: "avatar-img" }), title && jsxRuntime.jsx("span", { className: "avatar-title", children: title })] })));
+}
+
 function DBadge({ text, soft = false, theme = 'primary', id, rounded, className, style, iconStart, iconEnd, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, dataAttributes, }) {
     const generateClasses = React.useMemo(() => ({
         badge: true,
@@ -1174,7 +1181,7 @@ var DList$1 = Object.assign(DList, {
 function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
     const { iconMap: { xLg, }, } = useDContext();
     const icon = React.useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxRuntime.jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }));
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-modal-separator" })] }));
 }
 
 function DModalBody({ children, className, style, }) {
@@ -1211,7 +1218,7 @@ var DModal$1 = Object.assign(DModal, {
 function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
     const { iconMap: { xLg, }, } = useDContext();
     const icon = React.useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxRuntime.jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }));
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsxRuntime.jsx("div", { children: children }), showCloseButton && (jsxRuntime.jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsxRuntime.jsx("div", { className: "d-offcanvas-separator" })] }));
 }
 
 function DOffcanvasBody({ children, className, style, }) {
@@ -1219,7 +1226,7 @@ function DOffcanvasBody({ children, className, style, }) {
 }
 
 function DOffcanvasFooter({ footerActionPlacement = 'fill', children, className, style, }) {
-    return (jsxRuntime.jsx("div", { className: classNames(`d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className), style: style, children: children }));
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", { className: "d-offcanvas-separator" }), jsxRuntime.jsx("div", { className: classNames(`d-offcanvas-footer d-offcanvas-action-${footerActionPlacement}`, className), style: style, children: children })] }));
 }
 
 function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', children, dataAttributes, }) {
@@ -1350,6 +1357,9 @@ function DQuickActionSwitch({ id: idProp, name, label, hint, checked, disabled, 
     return (jsxRuntime.jsxs("button", Object.assign({ className: classNames('d-quick-action-switch', className), type: "button", onClick: clickHandler, style: style }, dataAttributes, { children: [jsxRuntime.jsx("div", { className: "d-quick-action-switch-content", children: jsxRuntime.jsx(DInputSwitch, { id: id, name: name, disabled: disabled, checked: checked, readonly: true, label: label }) }), jsxRuntime.jsx("div", { className: "d-quick-action-switch-hint", children: hint })] })));
 }
 
+/**
+ * @deprecated Please use https://getbootstrap.com/docs/5.3/components/placeholders/ instead
+ */
 function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, children, }) {
     const innerBackgroundColor = React.useMemo(() => {
         if (backgroundColor) {
@@ -1578,6 +1588,7 @@ async function configureI8n(resources, _a = {}) {
 }
 
 exports.DAlert = DAlert;
+exports.DAvatar = DAvatar;
 exports.DBadge = DBadge;
 exports.DBoxFile = DBoxFile;
 exports.DButton = DButton;

@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.29.0
+ * dynamic-framework 1.30.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -6618,9 +6618,9 @@ textarea.form-control-lg {
   --bs-breadcrumb-margin-bottom: 1rem;
   --bs-breadcrumb-bg: ;
   --bs-breadcrumb-border-radius: ;
-  --bs-breadcrumb-divider-color: var(--bs-secondary-color);
+  --bs-breadcrumb-divider-color: var(--bs-body-color);
   --bs-breadcrumb-item-padding-x: 0.5rem;
-  --bs-breadcrumb-item-active-color: var(--bs-secondary-color);
+  --bs-breadcrumb-item-active-color: var(--bs-body-color);
   display: flex;
   flex-wrap: wrap;
   padding: var(--bs-breadcrumb-padding-y) var(--bs-breadcrumb-padding-x);
@@ -6648,21 +6648,21 @@ textarea.form-control-lg {
   --bs-pagination-padding-x: var(--bs-ref-spacer-1);
   --bs-pagination-padding-y: var(--bs-ref-spacer-1);
   --bs-pagination-font-size: 1rem;
-  --bs-pagination-color: var(--bs-gray);
+  --bs-pagination-color: var(--bs-body-color);
   --bs-pagination-bg: transparent;
   --bs-pagination-border-width: 0;
   --bs-pagination-border-color: var(--bs-border-color);
   --bs-pagination-border-radius: var(--bs-border-radius);
-  --bs-pagination-hover-color: var(--bs-secondary);
-  --bs-pagination-hover-bg: var(--bs-secondary-100);
+  --bs-pagination-hover-color: var(--bs-body-color);
+  --bs-pagination-hover-bg: var(--bs-primary-50);
   --bs-pagination-hover-border-color: 0;
-  --bs-pagination-focus-color: var(--bs-secondary);
-  --bs-pagination-focus-bg: var(--bs-secondary-100);
+  --bs-pagination-focus-color: var(--bs-body-color);
+  --bs-pagination-focus-bg: var(--bs-primary-50);
   --bs-pagination-focus-box-shadow: 0;
   --bs-pagination-active-color: var(--bs-white);
   --bs-pagination-active-bg: var(--bs-primary);
   --bs-pagination-active-border-color: var(--bs-primary);
-  --bs-pagination-disabled-color: var(--bs-gray-400);
+  --bs-pagination-disabled-color: var(--bs-body-color);
   --bs-pagination-disabled-bg: var(--bs-transparent);
   --bs-pagination-disabled-border-color: var(--bs-border-color);
   display: flex;
@@ -6842,11 +6842,11 @@ textarea.form-control-lg {
 .progress-stacked {
   --bs-progress-height: 1rem;
   --bs-progress-font-size: var(--bs-fs-small);
-  --bs-progress-bg: var(--bs-secondary-100);
+  --bs-progress-bg: var(--bs-gray-200);
   --bs-progress-border-radius: var(--bs-border-radius-pill);
   --bs-progress-box-shadow: none;
   --bs-progress-bar-color: var(--bs-white);
-  --bs-progress-bar-bg: var(--bs-secondary);
+  --bs-progress-bar-bg: var(--bs-primary);
   --bs-progress-bar-transition: width 0.6s ease;
   display: flex;
   height: var(--bs-progress-height);
@@ -7351,7 +7351,7 @@ textarea.form-control-lg {
 .modal {
   --bs-modal-zindex: 1055;
   --bs-modal-width: 500px;
-  --bs-modal-padding: var(--bs-ref-spacer-6);
+  --bs-modal-padding: var(--bs-ref-spacer-4);
   --bs-modal-margin: 0.5rem;
   --bs-modal-color: ;
   --bs-modal-bg: var(--bs-white);
@@ -7360,9 +7360,9 @@ textarea.form-control-lg {
   --bs-modal-border-radius: var(--bs-border-radius);
   --bs-modal-box-shadow: var(--bs-box-shadow-sm);
   --bs-modal-inner-border-radius: calc(var(--bs-border-radius) - (var(--bs-border-width)));
-  --bs-modal-header-padding-x: var(--bs-ref-spacer-6);
+  --bs-modal-header-padding-x: var(--bs-ref-spacer-4);
   --bs-modal-header-padding-y: var(--bs-ref-spacer-4);
-  --bs-modal-header-padding: var(--bs-ref-spacer-8) var(--bs-ref-spacer-6) var(--bs-ref-spacer-4);
+  --bs-modal-header-padding: var(--bs-ref-spacer-4);
   --bs-modal-header-border-color: transparent;
   --bs-modal-header-border-width: var(--bs-border-width);
   --bs-modal-title-line-height: 1.5;
@@ -8161,8 +8161,8 @@ textarea.form-control-lg {
   --bs-offcanvas-zindex: 1055;
   --bs-offcanvas-width: 400px;
   --bs-offcanvas-height: 30vh;
-  --bs-offcanvas-padding-x: var(--bs-ref-spacer-6);
-  --bs-offcanvas-padding-y: var(--bs-ref-spacer-6);
+  --bs-offcanvas-padding-x: var(--bs-ref-spacer-4);
+  --bs-offcanvas-padding-y: var(--bs-ref-spacer-4);
   --bs-offcanvas-color: var(--bs-body-color);
   --bs-offcanvas-bg: var(--bs-white);
   --bs-offcanvas-border-width: var(--bs-border-width);
@@ -9846,7 +9846,7 @@ body {
 }
 
 .progress {
-  --bs-progress-bar-font-weight: var(--bs-fw-bold);
+  --bs-progress-bar-font-weight: var(--bs-fw-normal);
   font-weight: var(--bs-progress-bar-font-weight);
 }
 .progress .progress-bar:not(:empty) {
@@ -9874,42 +9874,36 @@ body {
   --bs-alert-color: var(--bs-body-color);
   --bs-alert-bg: var(--bs-surface-primary);
   --bs-alert-border-color: var(--bs-surface-primary);
-  --bs-alert-link-color: var(--bs-white);
 }
 .alert.alert-secondary {
   --bs-alert-icon-color: var(--bs-secondary-500);
   --bs-alert-color: var(--bs-body-color);
   --bs-alert-bg: var(--bs-surface-secondary);
   --bs-alert-border-color: var(--bs-surface-secondary);
-  --bs-alert-link-color: var(--bs-white);
 }
 .alert.alert-success {
   --bs-alert-icon-color: var(--bs-success-500);
   --bs-alert-color: var(--bs-body-color);
   --bs-alert-bg: var(--bs-surface-success);
   --bs-alert-border-color: var(--bs-surface-success);
-  --bs-alert-link-color: var(--bs-white);
 }
 .alert.alert-info {
   --bs-alert-icon-color: var(--bs-info-500);
   --bs-alert-color: var(--bs-body-color);
   --bs-alert-bg: var(--bs-surface-info);
   --bs-alert-border-color: var(--bs-surface-info);
-  --bs-alert-link-color: var(--bs-white);
 }
 .alert.alert-warning {
   --bs-alert-icon-color: var(--bs-warning-500);
   --bs-alert-color: var(--bs-body-color);
   --bs-alert-bg: var(--bs-surface-warning);
   --bs-alert-border-color: var(--bs-surface-warning);
-  --bs-alert-link-color: var(--bs-gray-700);
 }
 .alert.alert-danger {
   --bs-alert-icon-color: var(--bs-danger-500);
   --bs-alert-color: var(--bs-body-color);
   --bs-alert-bg: var(--bs-surface-danger);
   --bs-alert-border-color: var(--bs-surface-danger);
-  --bs-alert-link-color: var(--bs-white);
 }
 
 .collapse-container {
@@ -9962,11 +9956,19 @@ body {
 .pagination {
   --bs-pagination-page-item-size: 2rem;
   --bs-pagination-border-radius: 2rem;
+  --bs-pagination-page-control-color: var(--bs-primary);
+  --bs-pagination-page-control-disabled-color: var(--bs-primary-200);
   margin: 0;
 }
 .pagination .page-item {
   min-width: var(--bs-pagination-page-item-size);
   min-height: var(--bs-pagination-page-item-size);
+}
+.pagination :is(.page-item:first-child, .page-item:last-child):not(.disabled) .page-link {
+  color: var(--bs-pagination-page-control-color);
+}
+.pagination :is(.page-item:first-child, .page-item:last-child).disabled .page-link {
+  color: var(--bs-pagination-page-control-disabled-color);
 }
 .pagination .page-link {
   display: flex;
@@ -10721,11 +10723,11 @@ label .d-icon {
 }
 
 .modal {
-  --bs-modal-header-gap: var(--bs-ref-spacer-6);
-  --bs-modal-footer-padding: var(--bs-ref-spacer-6);
-  --bs-modal-separator-margin-x: var(--bs-ref-spacer-6);
+  --bs-modal-header-gap: var(--bs-ref-spacer-4);
+  --bs-modal-footer-padding: var(--bs-ref-spacer-4);
+  --bs-modal-separator-margin-x: var(--bs-ref-spacer-4);
   --bs-modal-separator-height: 1px;
-  --bs-modal-separator-bg: var(--bs-gray-200);
+  --bs-modal-separator-bg: var(--bs-gray-100);
 }
 .modal .modal-header {
   flex-direction: row;
@@ -10763,8 +10765,11 @@ label .d-icon {
 }
 
 .offcanvas {
-  --bs-offcanvas-header-gap: var(--bs-ref-spacer-6);
-  --bs-offcanvas-footer-gap: var(--bs-ref-spacer-6);
+  --bs-offcanvas-header-gap: var(--bs-ref-spacer-4);
+  --bs-offcanvas-footer-gap: var(--bs-ref-spacer-4);
+  --bs-offcanvas-separator-margin-x: var(--bs-ref-spacer-4);
+  --bs-offcanvas-separator-height: 1px;
+  --bs-offcanvas-separator-bg: var(--bs-gray-100);
 }
 .offcanvas .offcanvas-header {
   flex-direction: row;
@@ -10775,8 +10780,13 @@ label .d-icon {
 .offcanvas .offcanvas-header:has(.d-offcanvas-close:only-child) {
   justify-content: flex-end;
 }
+.offcanvas .d-offcanvas-separator {
+  height: var(--bs-offcanvas-separator-height);
+  margin: 0 var(--bs-offcanvas-separator-margin-x);
+  background: var(--bs-offcanvas-separator-bg);
+}
 .offcanvas .offcanvas-body {
-  padding: 0 var(--bs-offcanvas-padding-x);
+  padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
 }
 .offcanvas .d-offcanvas-footer {
   display: flex;
@@ -12399,12 +12409,12 @@ label .d-icon {
   --bs-step-icon-container-border-width: 1px;
   --bs-step-icon-container-border-color: var(--bs-secondary);
   --bs-step-icon-container-border-radius: 100%;
-  --bs-step-icon-container-z-index: 3;
+  --bs-step-icon-container-z-index: 1;
   /* Base step */
   --bs-step-label-height: var(--bs-ref-spacer-12);
   --bs-step-icon-size: var(--bs-ref-spacer-6);
   --bs-step-gap: var(--bs-ref-spacer-2);
-  --bs-step-z-index: 2;
+  --bs-step-z-index: 0;
   /* Checked step */
   --bs-step-check-text-color: var(--bs-white);
   --bs-step-check-background-color: var(--bs-success);

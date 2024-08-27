@@ -5,4 +5,7 @@ export type Props = PropsWithChildren<{
     backgroundColor?: string;
     foregroundColor?: string;
 }>;
+/**
+ * @deprecated Please use https://getbootstrap.com/docs/5.3/components/placeholders/ instead
+ */
 export default function DSkeleton({ speed, viewBox, backgroundColor, foregroundColor, children, }: Props): import("react/jsx-runtime").JSX.Element;
