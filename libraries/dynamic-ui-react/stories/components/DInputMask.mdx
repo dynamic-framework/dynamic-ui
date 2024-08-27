@@ -4,7 +4,8 @@ import {
   Markdown,
   Controls,
   Canvas,
-  Source
+  Source,
+  Unstyled,
 } from '@storybook/blocks';
 
 import * as DInputMask from './DInputMask.stories';
@@ -33,11 +34,13 @@ behaves as expected throughout the input process.
 
 #### Important Note from `@react-input/mask` documentation
 
-<DAlert soft type="warning" className='py-1 mb-8'>
-  The InputMask component does not change the value passed in the value or defaultValue property
-  of the input element, so set the initialized value to something that can match the masked value
-  at any stage of input. If you make a mistake, you will see a warning about it in the console.
-</DAlert>
+<Unstyled>
+  <DAlert theme="warning">
+    The InputMask component does not change the value passed in the value or defaultValue property
+    of the input element, so set the initialized value to something that can match the masked value
+    at any stage of input. If you make a mistake, you will see a warning about it in the console.
+  </DAlert>
+</Unstyled>
 
 This means that setting the initial state correctly, in alignment with the mask
 pattern, is crucial for seamless functionality. Any discrepancies may result in warnings being displayed in the console.
