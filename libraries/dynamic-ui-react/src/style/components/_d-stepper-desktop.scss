@@ -7,13 +7,13 @@
   --#{$prefix}step-icon-container-border-width: 1px;
   --#{$prefix}step-icon-container-border-color: var(--#{$prefix}secondary);
   --#{$prefix}step-icon-container-border-radius: 100%;
-  --#{$prefix}step-icon-container-z-index: 3;
+  --#{$prefix}step-icon-container-z-index: 1;
 
   /* Base step */
   --#{$prefix}step-label-height: var(--#{$prefix}ref-spacer-12);
   --#{$prefix}step-icon-size: var(--#{$prefix}ref-spacer-6);
   --#{$prefix}step-gap: var(--#{$prefix}ref-spacer-2);
-  --#{$prefix}step-z-index: 2;
+  --#{$prefix}step-z-index: 0;
 
   /* Checked step */
   --#{$prefix}step-check-text-color: var(--#{$prefix}white);
