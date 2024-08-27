@@ -1,0 +1,5 @@
+// Breadcrumb
+// scss-docs-start breadcrumb-variables
+$breadcrumb-divider-color: var(--#{$prefix}body-color) !default;
+$breadcrumb-active-color: var(--#{$prefix}body-color) !default;
+// scss-docs-end breadcrumb-variables
