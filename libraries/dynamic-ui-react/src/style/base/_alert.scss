@@ -18,14 +18,12 @@
   }
 
   @each $theme, $value in map-remove($theme-colors, "light", "dark") {
-    $color: color-contrast-var($value);
     &.alert-#{$theme} {
       --#{$prefix}alert-icon-color: var(--#{$prefix}#{$theme}-500);
       --#{$prefix}alert-color: var(--#{$prefix}body-color);
 
       --#{$prefix}alert-bg: var(--#{$prefix}surface-#{$theme});
       --#{$prefix}alert-border-color: var(--#{$prefix}surface-#{$theme});
-      --#{$prefix}alert-link-color: #{$color};
     }
   }
 }
