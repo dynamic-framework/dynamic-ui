@@ -2,6 +2,7 @@ import {
   Meta,
   Canvas,
   Source,
+  Unstyled,
 } from '@storybook/blocks';
 
 import {
@@ -23,10 +24,12 @@ Toasts use `DToastContainer` and the `useDToast` hook, which are abstractions to
 a `DToast` to generate toasts. For more detailed information, refer to the official [React Hot Toast Documentation](https://react-hot-toast.com/docs).
 <br />
 
-<DAlert soft type="warning" className='py-1 mb-8'>
-  toast appears in all containers because of the way react-hot-toast is programmed, however,
-  if you want to see the correct toast make it show up from the correct container.
-</DAlert>
+<Unstyled>
+  <DAlert theme="warning">
+    toast appears in all containers because of the way react-hot-toast is programmed, however,
+    if you want to see the correct toast make it show up from the correct container.
+  </DAlert>
+</Unstyled>
 
 ## Usage DToastContainer
 
