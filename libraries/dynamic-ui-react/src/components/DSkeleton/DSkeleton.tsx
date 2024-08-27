@@ -12,6 +12,9 @@ export type Props = PropsWithChildren<{
   foregroundColor?: string;
 }>;
 
+/**
+ * @deprecated Please use https://getbootstrap.com/docs/5.3/components/placeholders/ instead
+ */
 export default function DSkeleton(
   {
     speed = 2,

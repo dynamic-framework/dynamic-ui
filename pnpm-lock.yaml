@@ -93,6 +93,9 @@ importers:
       '@mdx-js/react':
         specifier: ^2.3.0
         version: 2.3.0(react@18.2.0)
+      '@popperjs/core':
+        specifier: ^2.11.8
+        version: 2.11.8
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.3
         version: 15.2.3(rollup@4.1.4)

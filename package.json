@@ -25,6 +25,7 @@
     "test:storybook": "lerna run test:storybook --no-private",
     "version": "lerna version --no-private --loglevel verbose",
     "publish": "lerna publish from-git --no-private --loglevel verbose",
+    "publish:cdn": "lerna run publish:cdn --no-private",
     "commitlint": "commitlint --edit"
   },
   "engines": {

@@ -1,12 +1,21 @@
 .pagination {
   --#{$prefix}pagination-page-item-size: #{$pagination-page-item-size};
   --#{$prefix}pagination-border-radius: #{$pagination-page-border-radius};
-
+  --#{$prefix}pagination-page-control-color: #{$pagination-page-control-color};
+  --#{$prefix}pagination-page-control-disabled-color: #{$pagination-page-control-disabled-color};
   margin: 0;
 
   .page-item {
     min-width: var(--#{$prefix}pagination-page-item-size);
     min-height: var(--#{$prefix}pagination-page-item-size);
+  }
+
+  :is(.page-item:first-child, .page-item:last-child):not(.disabled) .page-link {
+    color: var(--#{$prefix}pagination-page-control-color);
+  }
+
+  :is(.page-item:first-child, .page-item:last-child).disabled .page-link {
+    color: var(--#{$prefix}pagination-page-control-disabled-color);
   }
 
   .page-link {
@@ -17,6 +26,7 @@
     height: 100%;
     border-radius: var(--#{$prefix}pagination-border-radius);
   }
+
 }
 
 .pagination-lg {

@@ -37,28 +37,31 @@ export default function DOffcanvasHeader(
   const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
 
   return (
-    <div
-      className={classNames('offcanvas-header', className)}
-      style={style}
-    >
-      <div>
-        {children}
+    <>
+      <div
+        className={classNames('offcanvas-header', className)}
+        style={style}
+      >
+        <div>
+          {children}
+        </div>
+        {showCloseButton && (
+          <button
+            type="button"
+            className="d-close align-self-center"
+            aria-label="Close"
+            onClick={onClose}
+          >
+            <DIcon
+              icon={icon}
+              familyClass={iconFamilyClass}
+              familyPrefix={iconFamilyPrefix}
+              materialStyle={materialStyle}
+            />
+          </button>
+        )}
       </div>
-      {showCloseButton && (
-        <button
-          type="button"
-          className="d-close align-self-center"
-          aria-label="Close"
-          onClick={onClose}
-        >
-          <DIcon
-            icon={icon}
-            familyClass={iconFamilyClass}
-            familyPrefix={iconFamilyPrefix}
-            materialStyle={materialStyle}
-          />
-        </button>
-      )}
-    </div>
+      <div className="d-offcanvas-separator" />
+    </>
   );
 }
