@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source_dir="./node_modules/bootstrap/dist/js"
+source_dir="./node_modules/@popperjs/core/dist"
 target_dir="./dist/js"
 
 mkdir -p "$target_dir"
