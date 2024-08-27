@@ -1,0 +1,36 @@
+name: Sync CDN
+on:
+  push:
+    tags:
+      - '@dynamic-framework/*'
+
+jobs:
+  build:
+    name: Build and Sync
+    runs-on: ubuntu-latest
+    outputs:
+      build-artifact: ${{ steps.upload-artifact.outputs.artifact-path }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4.0.0
+        with:
+          version: 9
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Install and Build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Publish to CDN
+        run: pnpm publish:cdn
