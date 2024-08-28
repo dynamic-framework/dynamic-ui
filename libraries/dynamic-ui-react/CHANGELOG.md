@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.30.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.30.0...@dynamic-framework/ui-react@1.30.1) (2024-08-27)
+
+
+### Style Fixes
+
+* **style:** modal and offcanvas spacing and separator ([31b85fd](https://github.com/dynamic-framework/dynamic-ui/commit/31b85fd7149bf5966fecde452a9fb8b5a2504f0c))
+* **style:** on DProgress font-weight to normal, fill color to primary, background to gray-200 ([#715](https://github.com/dynamic-framework/dynamic-ui/issues/715)) ([8a2db41](https://github.com/dynamic-framework/dynamic-ui/commit/8a2db419edd612fde48771a46683248270d0cc82))
+* **style:** restore bootstrap alert link variable ([2c1b328](https://github.com/dynamic-framework/dynamic-ui/commit/2c1b32844231c5139ecf30efcd405b49eed83672))
+* **style:** set breadcrumb active color and separator ([#718](https://github.com/dynamic-framework/dynamic-ui/issues/718)) ([55c25cc](https://github.com/dynamic-framework/dynamic-ui/commit/55c25ccdd6ee5361301da45c4b1cf3c53f514123))
+* **style:** set state color on DPaginator ([95c126a](https://github.com/dynamic-framework/dynamic-ui/commit/95c126ae41580e922d09ca4032bbd01943d4c3a3))
+
+
+### Bug Fixes
+
+* **DAvatar:** export component ([e08aac8](https://github.com/dynamic-framework/dynamic-ui/commit/e08aac85696a38a2c52d28e7b6dd71ed9e98c850))
+* **DStepperDesktop:** adjust icon container and line z-index ([ca2dba1](https://github.com/dynamic-framework/dynamic-ui/commit/ca2dba136de842c9f88317f18baef97f4d4655af))
+
+
+### Storybook
+
+* adjust DAlert usage ([f4cdc51](https://github.com/dynamic-framework/dynamic-ui/commit/f4cdc5133673de9f769cad5cc5b45dc96a2e971e))
+* **DPaginator:** add page-control-color css variables ([05dd9ea](https://github.com/dynamic-framework/dynamic-ui/commit/05dd9eaa691bdfa6c6291c94cd1a6077ac87229c))
+* on DSkeleton use theme for deprecation alert and add [@deprecated](https://github.com/deprecated) annotation to the component ([337cd50](https://github.com/dynamic-framework/dynamic-ui/commit/337cd501b4578e255df35a2c2d132df41717733b))
+
+
+
 ## [1.30.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.29.0...@dynamic-framework/ui-react@1.30.0) (2024-08-20)
 
 
