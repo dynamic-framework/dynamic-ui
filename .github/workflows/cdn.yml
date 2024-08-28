@@ -2,14 +2,12 @@ name: Sync CDN
 on:
   push:
     tags:
-      - '@dynamic-framework/*'
+      - '@dynamic-framework/ui-react@*'
 
 jobs:
   build:
     name: Build and Sync
     runs-on: ubuntu-latest
-    outputs:
-      build-artifact: ${{ steps.upload-artifact.outputs.artifact-path }}
     steps:
       - uses: actions/checkout@v4
         with:
