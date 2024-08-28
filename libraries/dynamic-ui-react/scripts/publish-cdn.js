@@ -11,7 +11,7 @@ const version = packageJson.version;
 const bucketPath = `s3://dynamicframework-cdn/assets/${version}/ui-react`;
 
 try {
-  execSync(`aws s3 sync ./dist/ ${bucketPath} --delete`, { stdio: 'inherit' });
+  execSync(`aws s3 sync ./dist/ ${bucketPath} --delete --acl public-read`, { stdio: 'inherit' });
   console.log(`Sync completed successfully. Version: ${version}`);
 } catch (error) {
   console.error('Error during sync:', error);
