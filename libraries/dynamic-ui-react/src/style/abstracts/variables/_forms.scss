@@ -23,7 +23,7 @@ $input-padding-y-lg: $spacer-4 !default;
 $input-font-size-lg: var(--#{$prefix}ref-spacer-5) !default;
 
 $input-bg: var(--#{$prefix}white) !default;
-$input-disabled-color: var(--#{$prefix}gray-300) !default;
+$input-disabled-color: var(--#{$prefix}body-color) !default;
 $input-disabled-bg: var(--#{$prefix}gray-100) !default;
 $input-disabled-border-color: var(--#{$prefix}gray-300) !default;
 
