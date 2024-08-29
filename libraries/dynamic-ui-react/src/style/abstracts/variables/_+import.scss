@@ -13,7 +13,6 @@ $prefix: $variable-prefix !default;
 @import "spacers";
 @import "body";
 @import "border";
-@import "box-shadow";
 
 // scss-docs-start focus-ring-variables
 $focus-ring-width: .25rem !default;
