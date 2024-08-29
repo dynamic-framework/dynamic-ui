@@ -5,12 +5,12 @@ $tooltip-color:  var(--#{$prefix}body-bg) !default;
 $tooltip-bg: var(--#{$prefix}emphasis-color) !default;
 $tooltip-border-radius: var(--#{$prefix}ref-spacer-1) !default;
 $tooltip-opacity: 1 !default;
-$tooltip-padding-y: var(--#{$prefix}ref-spacer-1) !default;
-$tooltip-padding-x: var(--#{$prefix}ref-spacer-2) !default;
+$tooltip-padding-y: var(--#{$prefix}ref-spacer-2) !default;
+$tooltip-padding-x: var(--#{$prefix}ref-spacer-1) !default;
 
 // custom
-$tooltip-font-size-sm: var(--#{$prefix}fs-small) !default;
-$tooltip-font-size-lg: var(--#{$prefix}fs-6) !default;
+$tooltip-font-size-sm: var(--#{$prefix}fs-body-small) !default;
+$tooltip-font-size-lg: var(--#{$prefix}fs-body-medium) !default;
 // end custom
 
 // scss-docs-end tooltip-variables
