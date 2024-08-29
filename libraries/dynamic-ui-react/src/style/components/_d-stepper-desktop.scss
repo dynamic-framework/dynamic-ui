@@ -29,8 +29,10 @@
   --#{$prefix}step-line-color: var(--#{$prefix}secondary);
 
   /* Step label */
-  --#{$prefix}step-label-padding: var(--#{$prefix}ref-spacer-6);
+  --#{$prefix}step-label-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}step-vertical-label-padding: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}step-label-font-size: var(--#{$prefix}fs-body-large);
+  --#{$prefix}step-description-font-size: var(--#{$prefix}fs-body-tiny);
 
 
   position: relative;
@@ -97,10 +99,23 @@
       width: 50%;
     }
 
-    .d-step-label {
+    .d-step-text-container {
       padding-right: var(--#{$prefix}step-label-padding);
       padding-left: var(--#{$prefix}step-label-padding);
       text-align: center;
+
+      &.d-step-text-container-start {
+        text-align: left;
+        transform: translateX(calc(50% - (var(--#{$prefix}step-icon-container-size) / 2) - var(--#{$prefix}step-label-padding)));
+      }
+
+      .d-step-label {
+        font-size: var(--#{$prefix}step-label-font-size);
+      }
+
+      .d-step-description {
+        font-size: var(--#{$prefix}step-description-font-size);
+      }
     }
   }
 
@@ -116,12 +131,16 @@
         height: 100%;
       }
 
-      .d-step-label {
+      .d-step-text-container {
         display: flex;
+        flex-direction: column;
         flex-grow: 1;
-        align-items: center;
+        align-items: flex-start;
         min-height: var(--#{$prefix}step-label-height);
         padding: var(--#{$prefix}step-vertical-label-padding);
+      }
+
+      .d-step-label {
         text-align: left;
       }
 
