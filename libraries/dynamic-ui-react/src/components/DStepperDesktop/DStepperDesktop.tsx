@@ -8,6 +8,7 @@ import { useDContext } from '../../contexts';
 
 type Step = {
   label: string;
+  description?: string;
   value: number;
 };
 
@@ -20,6 +21,7 @@ type Props = BaseProps & {
   iconSuccessMaterialStyle?: boolean;
   vertical?: boolean;
   completed?: boolean;
+  alignStart?: boolean;
 };
 
 export default function DStepper(
@@ -32,6 +34,7 @@ export default function DStepper(
     iconSuccessMaterialStyle = false,
     vertical = false,
     completed,
+    alignStart = false,
     className,
     style,
   } : Props,
@@ -54,12 +57,13 @@ export default function DStepper(
         {
           'd-stepper-desktop': true,
           'is-vertical': vertical,
+          'is-align-start': alignStart && !vertical,
         },
         className,
       )}
       style={style}
     >
-      {options.map(({ label, value }) => (
+      {options.map(({ label, value, description }) => (
         <div
           className="d-step"
           key={value}
@@ -85,7 +89,12 @@ export default function DStepper(
                 : value}
             </div>
           </div>
-          <div className="d-step-label">{label}</div>
+          <div className="d-step-text-container">
+            <div className="d-step-label">{label}</div>
+            {description && (
+              <div className="d-step-description">{description}</div>
+            )}
+          </div>
         </div>
       ))}
     </div>
