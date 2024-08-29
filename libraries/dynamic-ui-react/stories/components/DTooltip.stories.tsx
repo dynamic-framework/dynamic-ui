@@ -100,7 +100,7 @@ export const Top: Story = {
     withClick: false,
     withFocus: false,
     open: true,
-    theme: 'secondary',
+    theme: 'dark',
   },
 };
 
