@@ -26,6 +26,7 @@ const config: Meta<typeof DStepperMobile> = {
 | --${PREFIX_BS}step-current-step-color                      |.d-stepper| css color unit     | Current step text color            |
 | --${PREFIX_BS}step-info-max-width                          |.d-stepper| css length unit    | Step info max width                |
 | --${PREFIX_BS}step-info-label-font-size                    |.d-stepper| css length unit    | Step label font size               |
+| --${PREFIX_BS}step-info-label-color                        |.d-stepper| css color unit     | Step label color                   |
 | --${PREFIX_BS}step-info-description-font-size              |.d-stepper| css length unit    | Step description font size         |
 | --${PREFIX_BS}step-info-description-color                  |.d-stepper| css color unit     | Step description color             |
         `,
