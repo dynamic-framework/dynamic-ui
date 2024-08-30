@@ -60,7 +60,10 @@
     "eslint:test": "eslint src/**/*.spec.tsx",
     "stylelint": "stylelint \"**/*.{css,scss}\" --rd",
     "postversion": "pnpm build:scss",
-    "publish:cdn": "node scripts/publish-cdn.js",
+    "publish:cdn": "pnpm publish:cdn-version && pnpm publish:cdn-latest",
+    "publish:cdn-version": "node scripts/publish-cdn.js",
+    "publish:cdn-latest": "aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/latest/ui-react --delete --acl public-read",
+    "publish:cdn-rc": "aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/rc/ui-react --delete --acl public-read",
     "lint-staged": "lint-staged"
   },
   "main": "./dist/index.js",
