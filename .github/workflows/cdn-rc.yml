@@ -1,8 +1,8 @@
-name: Sync CDN version / latest
+name: Sync CDN rc
 on:
   push:
-    tags:
-      - '@dynamic-framework/ui-react@*'
+    branches:
+      - develop
 
 jobs:
   build:
@@ -31,4 +31,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Publish to CDN
-        run: pnpm publish:cdn
+        run: pnpm publish:cdn-rc
