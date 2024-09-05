@@ -57,6 +57,7 @@ export default function DStepper(
         {
           'd-stepper-desktop': true,
           'is-vertical': vertical,
+          'is-align-start': alignStart && !vertical,
         },
         className,
       )}
@@ -88,12 +89,7 @@ export default function DStepper(
                 : value}
             </div>
           </div>
-          <div
-            className={classNames(
-              'd-step-text-container',
-              { 'd-step-text-container-start': alignStart },
-            )}
-          >
+          <div className="d-step-text-container">
             <div className="d-step-label">{label}</div>
             {description && (
               <div className="d-step-description">{description}</div>
