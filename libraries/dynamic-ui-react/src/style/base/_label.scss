@@ -5,6 +5,7 @@ label {
   gap: var(--#{$prefix}ref-spacer-1);
   align-items: center;
   padding: var(--#{$prefix}label-padding-y) var(--#{$prefix}label-padding-x);
+  margin-bottom: var(--#{$prefix}label-margin-bottom);
   font-size: var(--#{$prefix}label-font-size);
   font-weight: var(--#{$prefix}label-font-weight);
   color: var(--#{$prefix}label-color);

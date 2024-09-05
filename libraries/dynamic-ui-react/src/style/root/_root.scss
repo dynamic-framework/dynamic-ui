@@ -208,7 +208,8 @@
   --#{$prefix}fw-bolder: #{$font-weight-bolder-value};
 
   --#{$prefix}label-padding-y: var(--#{$prefix}ref-spacer-0);
-  --#{$prefix}label-padding-x: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}label-padding-x: var(--#{$prefix}ref-spacer-0);
+  --#{$prefix}label-margin-bottom: var(--#{$prefix}ref-spacer-1);
   --#{$prefix}label-font-size: var(--#{$prefix}fs-small);
   --#{$prefix}label-font-weight: var(--#{$prefix}fw-normal);
   --#{$prefix}label-color: var(--#{$prefix}gray-700);
