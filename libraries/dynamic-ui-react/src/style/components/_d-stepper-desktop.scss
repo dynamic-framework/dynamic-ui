@@ -34,7 +34,6 @@
   --#{$prefix}step-label-font-size: var(--#{$prefix}body-font-size);
   --#{$prefix}step-description-font-size: var(--#{$prefix}fs-body-tiny);
 
-
   position: relative;
   display: flex;
 
@@ -104,11 +103,6 @@
       padding-left: var(--#{$prefix}step-label-padding);
       text-align: center;
 
-      &.d-step-text-container-start {
-        text-align: left;
-        transform: translateX(calc(50% - (var(--#{$prefix}step-icon-container-size) / 2) - var(--#{$prefix}step-label-padding)));
-      }
-
       .d-step-label {
         font-size: var(--#{$prefix}step-label-font-size);
       }
@@ -116,6 +110,13 @@
       .d-step-description {
         font-size: var(--#{$prefix}step-description-font-size);
       }
+    }
+  }
+
+  &.is-align-start {
+    .d-step-text-container {
+      text-align: left;
+      transform: translateX(calc(50% - (var(--#{$prefix}step-icon-container-size) / 2) - var(--#{$prefix}step-label-padding)));
     }
   }
 
