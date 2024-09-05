@@ -1,6 +1,5 @@
 import {
   Meta,
-  Canvas,
   Source,
   Unstyled,
 } from '@storybook/blocks';
@@ -91,11 +90,11 @@ export function App() {
 
 ## Basic toast secondary theme
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleSimpleToastRoot type='secondary'/>
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -233,11 +232,11 @@ export function App() {
 
 ## Full toast secondary theme
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleFullToastRoot type='secondary' />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -412,6 +411,12 @@ export function CustomToastExample({ id, visible }: Toast) {
   dark
 />
 
+<Unstyled>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
+    <ExampleCustomToastRoot />
+  </div>
+</Unstyled>
+
 
 ## Material Icon example
 
@@ -465,4 +470,8 @@ export function App() {
   dark
 />
 
-
+<Unstyled>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
+    <ExampleMaterialIconToastRoot />
+  </div>
+</Unstyled>
