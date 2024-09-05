@@ -34,6 +34,7 @@ const config: Meta<typeof DStepperDesktop> = {
 | --${PREFIX_BS}step-line-stroke                     | .d-stepper-desktop | css length unit | Step line size                  |
 | --${PREFIX_BS}step-line-color                      | .d-stepper-desktop | css color unit  | Step line color                 |
 | --${PREFIX_BS}step-label-padding                   | .d-stepper-desktop | css length unit | Step label padding              |
+| --${PREFIX_BS}step-label-padding                   | .d-stepper-desktop | css length unit | Step label padding              |
 | --${PREFIX_BS}step-vertical-label-padding          | .d-stepper-desktop | css length unit | Step vertical label padding     |
         `,
       },
@@ -71,6 +72,11 @@ const config: Meta<typeof DStepperDesktop> = {
       type: 'boolean',
       description: 'Display all steps as completed',
     },
+    alignStart: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Change text alignment',
+    },
   },
   tags: ['autodocs'],
 };
@@ -95,9 +101,78 @@ export const Default: Story = {
   args: {
     currentStep: 1,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      {
+        label: 'First step',
+        description: 'Lorem ipsum dolor sit amet',
+        value: 1,
+      },
+      {
+        label: 'Second step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        value: 2,
+      },
+      {
+        label: 'Third step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 3,
+      },
+      {
+        label: 'Fourth step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 4,
+      },
+      {
+        label: 'Fifth step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 5,
+      },
+    ],
+  },
+};
+
+export const TextAlignStart: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '768px', height: '420px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DStepperDesktop {...args} />
+  ),
+  args: {
+    currentStep: 1,
+    alignStart: true,
+    options: [
+      {
+        label: 'First step',
+        description: 'Lorem ipsum dolor sit amet',
+        value: 1,
+      },
+      {
+        label: 'Second step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        value: 2,
+      },
+      {
+        label: 'Third step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 3,
+      },
+      {
+        label: 'Fourth step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 4,
+      },
+      {
+        label: 'Fifth step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 5,
+      },
     ],
   },
 };
@@ -119,9 +194,31 @@ export const Vertical: Story = {
   args: {
     currentStep: 1,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      {
+        label: 'First step',
+        description: 'Lorem ipsum dolor sit amet',
+        value: 1,
+      },
+      {
+        label: 'Second step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        value: 2,
+      },
+      {
+        label: 'Third step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 3,
+      },
+      {
+        label: 'Fourth step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 4,
+      },
+      {
+        label: 'Fifth step',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        value: 5,
+      },
     ],
     vertical: true,
   },

@@ -57,7 +57,7 @@ export default function DStepper(
 
   const progressStyle = useMemo(
     () => `conic-gradient(
-      from 180deg,
+      from 0deg,
       var(--${PREFIX_BS}step-progress-outter-fill-background-color) ${currentAngle}deg,
       var(--${PREFIX_BS}step-progress-outter-background-color) 0deg)`,
     [currentAngle],

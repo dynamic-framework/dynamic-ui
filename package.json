@@ -26,6 +26,7 @@
     "version": "lerna version --no-private --loglevel verbose",
     "publish": "lerna publish from-git --no-private --loglevel verbose",
     "publish:cdn": "lerna run publish:cdn --no-private",
+    "publish:cdn-rc": "lerna run publish:cdn-rc --no-private",
     "commitlint": "commitlint --edit"
   },
   "engines": {

@@ -51,7 +51,7 @@ export default function DTooltip(
     withClick = false,
     withHover = true,
     open = false,
-    theme = 'primary',
+    theme = 'dark',
     placement = 'top',
     size,
     Component,
