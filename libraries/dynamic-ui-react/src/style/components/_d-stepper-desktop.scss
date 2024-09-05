@@ -31,7 +31,7 @@
   /* Step label */
   --#{$prefix}step-label-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}step-vertical-label-padding: var(--#{$prefix}ref-spacer-4);
-  --#{$prefix}step-label-font-size: var(--#{$prefix}fs-body-large);
+  --#{$prefix}step-label-font-size: var(--#{$prefix}body-font-size);
   --#{$prefix}step-description-font-size: var(--#{$prefix}fs-body-tiny);
 
   position: relative;
