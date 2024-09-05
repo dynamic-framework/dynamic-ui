@@ -100,7 +100,6 @@
     "@mdx-js/react": "^2.3.0",
     "@popperjs/core": "^2.11.8",
     "@rollup/plugin-node-resolve": "^15.2.3",
-
     "@storybook/addon-a11y": "^8.2.9",
     "@storybook/addon-actions": "^8.2.9",
     "@storybook/addon-essentials": "^8.2.9",
