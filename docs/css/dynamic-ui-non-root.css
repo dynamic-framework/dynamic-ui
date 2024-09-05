@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.30.0
+ * dynamic-framework 1.30.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -3528,7 +3528,7 @@ progress {
 }
 
 .form-text {
-  margin-top: 0.5rem;
+  margin-top: var(--bs-ref-spacer-1);
   font-size: var(--bs-fs-small);
   color: var(--bs-body-color);
 }
@@ -3587,7 +3587,7 @@ progress {
   opacity: 1;
 }
 .form-control:disabled {
-  color: var(--bs-gray-300);
+  color: var(--bs-body-color);
   background-color: var(--bs-gray-100);
   border-color: var(--bs-gray-300);
   opacity: 1;
@@ -3766,7 +3766,7 @@ textarea.form-control-lg {
   background-image: none;
 }
 .form-select:disabled {
-  color: var(--bs-gray-300);
+  color: var(--bs-body-color);
   background-color: var(--bs-gray-100);
   border-color: var(--bs-gray-300);
 }
@@ -4218,7 +4218,7 @@ textarea.form-control-lg {
 .valid-feedback {
   display: none;
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: var(--bs-ref-spacer-1);
   font-size: var(--bs-fs-small);
   color: var(--bs-form-valid-color);
 }
@@ -4229,7 +4229,7 @@ textarea.form-control-lg {
   z-index: 5;
   display: none;
   max-width: 100%;
-  padding: var(--bs-ref-spacer-1) var(--bs-ref-spacer-2);
+  padding: var(--bs-ref-spacer-2) var(--bs-ref-spacer-1);
   margin-top: 0.1rem;
   font-size: var(--bs-body-font-size);
   color: var(--bs-white);
@@ -4288,7 +4288,7 @@ textarea.form-control-lg {
 .invalid-feedback {
   display: none;
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: var(--bs-ref-spacer-1);
   font-size: var(--bs-fs-small);
   color: var(--bs-form-invalid-color);
 }
@@ -4299,7 +4299,7 @@ textarea.form-control-lg {
   z-index: 5;
   display: none;
   max-width: 100%;
-  padding: var(--bs-ref-spacer-1) var(--bs-ref-spacer-2);
+  padding: var(--bs-ref-spacer-2) var(--bs-ref-spacer-1);
   margin-top: 0.1rem;
   font-size: var(--bs-body-font-size);
   color: var(--bs-white);
@@ -6701,8 +6701,8 @@ textarea.form-control-lg {
 .tooltip {
   --bs-tooltip-zindex: 1080;
   --bs-tooltip-max-width: 300px;
-  --bs-tooltip-padding-x: var(--bs-ref-spacer-2);
-  --bs-tooltip-padding-y: var(--bs-ref-spacer-1);
+  --bs-tooltip-padding-x: var(--bs-ref-spacer-1);
+  --bs-tooltip-padding-y: var(--bs-ref-spacer-2);
   --bs-tooltip-margin: ;
   --bs-tooltip-font-size: var(--bs-body-font-size);
   --bs-tooltip-color: var(--bs-body-bg);
@@ -7956,6 +7956,10 @@ body {
   --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23dc3545'/%3e%3c/svg%3e");
 }
 
+.form-check-label {
+  --bs-label-padding-x: var(--bs-ref-spacer-2);
+}
+
 .form-check-input {
   --bs-form-check-input-focus-border-color: var(--bs-focus-ring-border-color);
   --bs-form-check-input-focus-box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
@@ -7985,7 +7989,7 @@ body {
 }
 
 .form-text {
-  --bs-form-text-padding: 0 0.5rem;
+  --bs-form-text-padding: 0 0;
   --bs-form-text-gap: var(--bs-ref-spacer-1);
   --bs-form-text-color: var(--bs-body-color);
   display: inline-flex;
@@ -8051,7 +8055,7 @@ body {
   --bs-input-focus-box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
   --bs-input-disabled-border-color: var(--bs-gray-300);
   --bs-input-disabled-bg: var(--bs-gray-100);
-  --bs-input-disabled-color: var(--bs-gray-300);
+  --bs-input-disabled-color: var(--bs-body-color);
   border: var(--bs-input-border-width) solid var(--bs-input-border-color);
   border-radius: var(--bs-input-border-radius);
 }
@@ -9067,6 +9071,7 @@ label {
   gap: var(--bs-ref-spacer-1);
   align-items: center;
   padding: var(--bs-label-padding-y) var(--bs-label-padding-x);
+  margin-bottom: var(--bs-label-margin-bottom);
   font-size: var(--bs-label-font-size);
   font-weight: var(--bs-label-font-weight);
   color: var(--bs-label-color);
@@ -9295,8 +9300,8 @@ label .d-icon {
 }
 
 .tooltip {
-  --bs-tooltip-sm-font-size: var(--bs-fs-small);
-  --bs-tooltip-lg-font-size: var(--bs-fs-6);
+  --bs-tooltip-sm-font-size: var(--bs-fs-body-small);
+  --bs-tooltip-lg-font-size: var(--bs-fs-body-medium);
   fill: var(--bs-tooltip-bg);
 }
 .tooltip.tooltip-sm {
@@ -11484,8 +11489,10 @@ label .d-icon {
   --bs-step-line-stroke: 1px;
   --bs-step-line-color: var(--bs-secondary);
   /* Step label */
-  --bs-step-label-padding: var(--bs-ref-spacer-6);
+  --bs-step-label-padding: var(--bs-ref-spacer-4);
   --bs-step-vertical-label-padding: var(--bs-ref-spacer-4);
+  --bs-step-label-font-size: var(--bs-body-font-size);
+  --bs-step-description-font-size: var(--bs-fs-body-tiny);
   position: relative;
   display: flex;
 }
@@ -11543,10 +11550,20 @@ label .d-icon {
   z-index: var(--bs-step-z-index);
   width: 50%;
 }
-.d-stepper-desktop .d-step .d-step-label {
+.d-stepper-desktop .d-step .d-step-text-container {
   padding-right: var(--bs-step-label-padding);
   padding-left: var(--bs-step-label-padding);
   text-align: center;
+}
+.d-stepper-desktop .d-step .d-step-text-container .d-step-label {
+  font-size: var(--bs-step-label-font-size);
+}
+.d-stepper-desktop .d-step .d-step-text-container .d-step-description {
+  font-size: var(--bs-step-description-font-size);
+}
+.d-stepper-desktop.is-align-start .d-step-text-container {
+  text-align: left;
+  transform: translateX(calc(50% - var(--bs-step-icon-container-size) / 2 - var(--bs-step-label-padding)));
 }
 .d-stepper-desktop.is-vertical {
   flex-direction: column;
@@ -11559,12 +11576,15 @@ label .d-icon {
   align-items: center;
   height: 100%;
 }
-.d-stepper-desktop.is-vertical .d-step .d-step-label {
+.d-stepper-desktop.is-vertical .d-step .d-step-text-container {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  align-items: center;
+  align-items: flex-start;
   min-height: var(--bs-step-label-height);
   padding: var(--bs-step-vertical-label-padding);
+}
+.d-stepper-desktop.is-vertical .d-step .d-step-label {
   text-align: left;
 }
 .d-stepper-desktop.is-vertical .d-step .d-step-value::after {
@@ -11601,20 +11621,20 @@ label .d-icon {
   --bs-step-progress-outter-size: 62px;
   --bs-step-progress-outter-z-index: 1;
   --bs-step-progress-outter-fill-background-color: var(--bs-secondary-500);
-  --bs-step-progress-outter-background-color: var(--bs-gray-300);
+  --bs-step-progress-outter-background-color: var(--bs-secondary-100);
   /* Inner circle */
   --bs-step-progress-inner-size: 50px;
   --bs-step-progress-inner-z-index: 2;
   --bs-step-progress-inner-background-color: var(--bs-white);
   /* Current step */
   --bs-step-current-step-z-index: 3;
-  --bs-step-current-step-font-weight: var(--bs-fw-bold);
-  --bs-step-current-step-color: var(--bs-gray-700);
+  --bs-step-current-step-font-weight: var(--bs-fw-normal);
+  --bs-step-current-step-color: var(--bs-secondary-500);
   /* Info circle */
   --bs-step-info-max-width: 12rem;
-  --bs-step-info-label-font-size: var(--bs-fs-6);
-  --bs-step-info-description-font-size: var(--bs-fs-small);
-  --bs-step-info-description-color: var(--bs-gray-500);
+  --bs-step-info-label-font-size: var(--bs-body-font-size);
+  --bs-step-info-description-font-size: var(--bs-fs-body-tiny);
+  --bs-step-info-description-color: var(--bs-body-color);
   display: flex;
   gap: var(--bs-step-container-gap);
   align-items: center;
@@ -11673,7 +11693,7 @@ label .d-icon {
 
 .d-select {
   --bs-select-gap: 0.5rem;
-  --bs-select-menu-shadow: 0 8px 12px 0 rgba(21, 21, 26, 0.05);
+  --bs-select-menu-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   --bs-select-menu-z-index: 1000;
   --bs-select-option-focus-bg: var(--bs-gray-100);
   --bs-select-option-selected-color: var(--bs-secondary);

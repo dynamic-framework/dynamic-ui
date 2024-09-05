@@ -1378,7 +1378,7 @@ function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, child
     return (jsxRuntime.jsx(ContentLoader, { speed: speed, viewBox: viewBox, backgroundColor: innerBackgroundColor, foregroundColor: innerForegroundColor, children: children }));
 }
 
-function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, completed, className, style, }) {
+function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, completed, alignStart = false, className, style, }) {
     const { iconMap: { check, }, } = useDContext();
     const icon = React.useMemo(() => iconSuccessProp || check, [check, iconSuccessProp]);
     if (currentStep < 1 || currentStep > options.length) {
@@ -1387,13 +1387,14 @@ function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSu
     return (jsxRuntime.jsx("div", { className: classNames({
             'd-stepper-desktop': true,
             'is-vertical': vertical,
-        }, className), style: style, children: options.map(({ label, value }) => (jsxRuntime.jsxs("div", { className: "d-step", children: [jsxRuntime.jsx("div", { className: "d-step-value", children: jsxRuntime.jsx("div", { className: classNames({
+            'is-align-start': alignStart && !vertical,
+        }, className), style: style, children: options.map(({ label, value, description }) => (jsxRuntime.jsxs("div", { className: "d-step", children: [jsxRuntime.jsx("div", { className: "d-step-value", children: jsxRuntime.jsx("div", { className: classNames({
                             'd-step-icon-container': true,
                             'd-step-check': value < currentStep || completed,
                             'd-step-current': value === currentStep && !completed,
                         }), children: value < currentStep || completed
                             ? (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconSuccessFamilyClass, familyPrefix: iconSuccessFamilyPrefix, materialStyle: iconSuccessMaterialStyle, className: "d-step-icon" }))
-                            : value }) }), jsxRuntime.jsx("div", { className: "d-step-label", children: label })] }, value))) }));
+                            : value }) }), jsxRuntime.jsxs("div", { className: "d-step-text-container", children: [jsxRuntime.jsx("div", { className: "d-step-label", children: label }), description && (jsxRuntime.jsx("div", { className: "d-step-description", children: description }))] })] }, value))) }));
 }
 
 function DStepper$1({ options, currentStep, className, style, }) {
@@ -1420,7 +1421,7 @@ function DStepper$1({ options, currentStep, className, style, }) {
         };
     }, [currentAngle, currentStep, options.length]);
     const progressStyle = React.useMemo(() => `conic-gradient(
-      from 180deg,
+      from 0deg,
       var(--${PREFIX_BS}step-progress-outter-fill-background-color) ${currentAngle}deg,
       var(--${PREFIX_BS}step-progress-outter-background-color) 0deg)`, [currentAngle]);
     return (jsxRuntime.jsxs("div", { className: classNames('d-stepper', className), style: style, children: [jsxRuntime.jsx("div", { className: "d-step-bar", style: { background: progressStyle }, children: jsxRuntime.jsx("p", { className: "d-step-number", children: `${currentStep}/${options.length}` }) }), jsxRuntime.jsx("div", { className: "d-step-info", children: Object.keys(currentOption).length > 0 && (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", { className: "d-step-label", children: currentOption.label }), jsxRuntime.jsx("div", { className: "d-step-description", children: currentOption.description || '' })] })) })] }));
@@ -1433,7 +1434,7 @@ function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, i
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
 const GAP = 2;
-function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, theme = 'primary', placement = 'top', size, Component, children, }) {
+function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, theme = 'dark', placement = 'top', size, Component, children, }) {
     const [isOpen, setIsOpen] = React.useState(open);
     const arrowRef = React.useRef(null);
     const { refs, context, floatingStyles, } = react.useFloating({

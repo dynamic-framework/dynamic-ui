@@ -1376,7 +1376,7 @@ function DSkeleton({ speed = 2, viewBox, backgroundColor, foregroundColor, child
     return (jsx(ContentLoader, { speed: speed, viewBox: viewBox, backgroundColor: innerBackgroundColor, foregroundColor: innerForegroundColor, children: children }));
 }
 
-function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, completed, className, style, }) {
+function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, completed, alignStart = false, className, style, }) {
     const { iconMap: { check, }, } = useDContext();
     const icon = useMemo(() => iconSuccessProp || check, [check, iconSuccessProp]);
     if (currentStep < 1 || currentStep > options.length) {
@@ -1385,13 +1385,14 @@ function DStepper$2({ options, currentStep, iconSuccess: iconSuccessProp, iconSu
     return (jsx("div", { className: classNames({
             'd-stepper-desktop': true,
             'is-vertical': vertical,
-        }, className), style: style, children: options.map(({ label, value }) => (jsxs("div", { className: "d-step", children: [jsx("div", { className: "d-step-value", children: jsx("div", { className: classNames({
+            'is-align-start': alignStart && !vertical,
+        }, className), style: style, children: options.map(({ label, value, description }) => (jsxs("div", { className: "d-step", children: [jsx("div", { className: "d-step-value", children: jsx("div", { className: classNames({
                             'd-step-icon-container': true,
                             'd-step-check': value < currentStep || completed,
                             'd-step-current': value === currentStep && !completed,
                         }), children: value < currentStep || completed
                             ? (jsx(DIcon, { icon: icon, familyClass: iconSuccessFamilyClass, familyPrefix: iconSuccessFamilyPrefix, materialStyle: iconSuccessMaterialStyle, className: "d-step-icon" }))
-                            : value }) }), jsx("div", { className: "d-step-label", children: label })] }, value))) }));
+                            : value }) }), jsxs("div", { className: "d-step-text-container", children: [jsx("div", { className: "d-step-label", children: label }), description && (jsx("div", { className: "d-step-description", children: description }))] })] }, value))) }));
 }
 
 function DStepper$1({ options, currentStep, className, style, }) {
@@ -1418,7 +1419,7 @@ function DStepper$1({ options, currentStep, className, style, }) {
         };
     }, [currentAngle, currentStep, options.length]);
     const progressStyle = useMemo(() => `conic-gradient(
-      from 180deg,
+      from 0deg,
       var(--${PREFIX_BS}step-progress-outter-fill-background-color) ${currentAngle}deg,
       var(--${PREFIX_BS}step-progress-outter-background-color) 0deg)`, [currentAngle]);
     return (jsxs("div", { className: classNames('d-stepper', className), style: style, children: [jsx("div", { className: "d-step-bar", style: { background: progressStyle }, children: jsx("p", { className: "d-step-number", children: `${currentStep}/${options.length}` }) }), jsx("div", { className: "d-step-info", children: Object.keys(currentOption).length > 0 && (jsxs(Fragment$1, { children: [jsx("div", { className: "d-step-label", children: currentOption.label }), jsx("div", { className: "d-step-description", children: currentOption.description || '' })] })) })] }));
@@ -1431,7 +1432,7 @@ function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, i
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 4;
 const GAP = 2;
-function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, theme = 'primary', placement = 'top', size, Component, children, }) {
+function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT + GAP, padding, withFocus = false, withClick = false, withHover = true, open = false, theme = 'dark', placement = 'top', size, Component, children, }) {
     const [isOpen, setIsOpen] = useState(open);
     const arrowRef = useRef(null);
     const { refs, context, floatingStyles, } = useFloating({

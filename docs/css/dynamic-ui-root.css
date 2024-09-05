@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.30.0
+ * dynamic-framework 1.30.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -299,10 +299,10 @@
   --bs-border-radius-xxl: 2.5rem;
   --bs-border-radius-2xl: var(--bs-border-radius-xxl);
   --bs-border-radius-pill: 50rem;
-  --bs-box-shadow: 0 12px 14px 0 rgba(21, 21, 26, 0.2);
-  --bs-box-shadow-sm: 0 8px 12px 0 rgba(21, 21, 26, 0.05);
-  --bs-box-shadow-lg: 0 20px 22px 0 rgba(21, 21, 26, 0.25);
-  --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.75);
+  --bs-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+  --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.075);
   --bs-focus-ring-width: 0.25rem;
   --bs-focus-ring-opacity: 0.25;
   --bs-focus-ring-border-color-rgb: var(--bs-secondary-300-rgb);
@@ -358,7 +358,8 @@
   --bs-fw-bold: 700;
   --bs-fw-bolder: 800;
   --bs-label-padding-y: var(--bs-ref-spacer-0);
-  --bs-label-padding-x: var(--bs-ref-spacer-2);
+  --bs-label-padding-x: var(--bs-ref-spacer-0);
+  --bs-label-margin-bottom: var(--bs-ref-spacer-1);
   --bs-label-font-size: var(--bs-fs-small);
   --bs-label-font-weight: var(--bs-fw-normal);
   --bs-label-color: var(--bs-gray-700);
