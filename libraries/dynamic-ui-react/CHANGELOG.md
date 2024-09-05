@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.31.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.30.1...@dynamic-framework/ui-react@1.31.0) (2024-09-05)
+
+
+### Style Features
+
+* **style:** use default bootstrap values for shadows ([17f4452](https://github.com/dynamic-framework/dynamic-ui/commit/17f445268c5ff62ca5ada0505af34ad6386988c0))
+
+
+### Features
+
+* deploy to cdn https://cdn.dynamicframework.dev ([b18dbd9](https://github.com/dynamic-framework/dynamic-ui/commit/b18dbd939715cdb32fd5afd8d75d9adfa377f4cb))
+* **DStepperDesktop:** add description and add support for left text alignment ([aa76764](https://github.com/dynamic-framework/dynamic-ui/commit/aa767643daca93557285745641e0fa1ad6a46a50))
+
+
+### Style Fixes
+
+* **style:** adjust step label font-size ([a9e6181](https://github.com/dynamic-framework/dynamic-ui/commit/a9e61818a3e8d4911500892d3735d6c0a32c2aae))
+* **style:** all input and select disable color ([c88f705](https://github.com/dynamic-framework/dynamic-ui/commit/c88f7059530af2b4f167de60cfd81d58003dc892))
+* **style:** change padding and font-size on tooltip ([f3be3ef](https://github.com/dynamic-framework/dynamic-ui/commit/f3be3ef132c3ff26940e733692d0819503d52de3))
+* **style:** input spacing (input, radio, checkbox, select) ([29a9d69](https://github.com/dynamic-framework/dynamic-ui/commit/29a9d69e7bd22e8176b3598bdaae978b44aa2ab5))
+
+
+### Bug Fixes
+
+* add acl to s3 sync and adjust on tag regex on action ([e925867](https://github.com/dynamic-framework/dynamic-ui/commit/e9258679065633fb63a06b6d1060fc9e415df05d))
+* **DStepperMobile:** adjust start point, value and text color ([09e9317](https://github.com/dynamic-framework/dynamic-ui/commit/09e93173d35e01c00e317b44881ccfac3de25c07))
+* **DTooltip:** default theme typo ([aa449a1](https://github.com/dynamic-framework/dynamic-ui/commit/aa449a16364f59be3e92a96f402e29cfaa2e732b))
+* **DTooltip:** set default theme to dark ([7a60306](https://github.com/dynamic-framework/dynamic-ui/commit/7a60306f4f612375ac12b5bb0d7f032babed537e))
+
+
+
 ## [1.30.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.30.0...@dynamic-framework/ui-react@1.30.1) (2024-08-27)
 
 
