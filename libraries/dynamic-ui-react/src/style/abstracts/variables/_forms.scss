@@ -1,5 +1,5 @@
 // scss-docs-start form-text-variables
-$form-text-margin-top: $spacer-2 !default;
+$form-text-margin-top: var(--#{$prefix}ref-spacer-1) !default;
 $form-text-color: var(--#{$prefix}body-color) !default;
 // scss-docs-end form-text-variables
 
@@ -79,7 +79,7 @@ $input-group-addon-border-color: transparent !default;
 
 // custom
 $form-text-padding-y: 0 !default;
-$form-text-padding-x: $spacer-2 !default;
+$form-text-padding-x: 0 !default;
 // end custom
 
 // scss-docs-start form-select-variables
