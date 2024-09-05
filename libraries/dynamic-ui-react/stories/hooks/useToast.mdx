@@ -10,6 +10,7 @@ import {
   ExampleFullToastRoot,
   ExampleCustomToastRoot,
   ExampleMaterialIconToastRoot,
+
 } from "./useToastExamples";
 
 import DAlert from '../../src/components/DAlert/DAlert';
@@ -26,8 +27,8 @@ a `DToast` to generate toasts. For more detailed information, refer to the offic
 
 <Unstyled>
   <DAlert theme="warning">
-    toast appears in all containers because of the way react-hot-toast is programmed, however,
-    if you want to see the correct toast make it show up from the correct container.
+    <span>Toast appears in all containers because of the way react-hot-toast is programmed, however,
+    if you want to see the correct toast make it show up from the correct container.</span>
   </DAlert>
 </Unstyled>
 
@@ -44,9 +45,13 @@ The `useDToast` hook provides a simple and flexible way to create toast notifica
 
 Below you will see examples of the use of toast in a simple way, with a custom component and with Material Icons.
 
-## Basic Toast
+## Basic toast no theme
 
-### `App.tsx`
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+    <ExampleSimpleToastRoot />
+  </div>
+</Canvas>
 
 <Source
   code={
@@ -83,15 +88,107 @@ export function App() {
   dark
 />
 
+## Basic toast secondary theme
+
 <Canvas>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <ExampleSimpleToastRoot />
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+    <ExampleSimpleToastRoot type='secondary'/>
   </div>
 </Canvas>
 
-## Full Toast
+<Source
+  code={
+  `
+import {
+  DContextProvider,
+  DToastContainer,
+  useDToast,
+} from '@dynamic-framework/ui-react';
 
-### `App.tsx`
+export function App() {
+  const { toast } = useDToast();
+
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              theme: 'secondary',
+            },
+            { duration: 40000 },
+          )
+        )}
+      />
+      <DToastContainer
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Basic toast secondary soft
+
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+    <ExampleSimpleToastRoot type='soft' />
+  </div>
+</Canvas>
+
+<Source
+  code={
+  `
+import {
+  DContextProvider,
+  DToastContainer,
+  useDToast,
+} from '@dynamic-framework/ui-react';
+
+export function App() {
+  const { toast } = useDToast();
+
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              theme: 'secondary',
+              soft: true,
+            },
+            { duration: 40000 },
+          )
+        )}
+      />
+      <DToastContainer
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+
+## Full toast no theme
+
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+    <ExampleFullToastRoot type='base' />
+  </div>
+</Canvas>
 
 <Source
   code={
@@ -114,6 +211,7 @@ export function App() {
             {
               title: 'Example',
               description: 'This is a description',
+              timestamp: 'just now',
               icon: 'check',
             },
             { duration: 40000 },
@@ -132,13 +230,113 @@ export function App() {
   dark
 />
 
+## Full toast secondary theme
+
 <Canvas>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <ExampleFullToastRoot />
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+    <ExampleFullToastRoot type='secondary' />
   </div>
 </Canvas>
 
+<Source
+  code={
+    `
+import {
+  DContextProvider,
+  DToastContainer,
+  useDToast,
+} from '@dynamic-framework/ui-react';
+
+export function App() {
+  const { toast } = useDToast();
+
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              description: 'This is a description',
+              timestamp: 'just now',
+              theme: 'secondary',
+              icon: 'check',
+            },
+            { duration: 40000 },
+          )
+        )}
+      />
+      <DToastContainer
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Full toast secondary soft
+
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+    <ExampleFullToastRoot type='soft' />
+  </div>
+</Canvas>
+
+<Source
+  code={
+    `
+import {
+  DContextProvider,
+  DToastContainer,
+  useDToast,
+} from '@dynamic-framework/ui-react';
+
+export function App() {
+  const { toast } = useDToast();
+
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() => (
+          toast(
+            {
+              title: 'Example',
+              description: 'This is a description',
+              timestamp: 'just now',
+              theme: 'secondary',
+              soft: true,
+              icon: 'check',
+            },
+            { duration: 40000 },
+          )
+        )}
+      />
+      <DToastContainer
+        position="top-right"
+      />
+    </DContextProvider>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+
 ## Custom example
+
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+    <ExampleCustomToastRoot />
+  </div>
+</Canvas>
 
 ### `App.tsx`
 
@@ -213,16 +411,16 @@ export function CustomToastExample({ id, visible }: Toast) {
   dark
 />
 
-<Canvas>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <ExampleCustomToastRoot />
-  </div>
-</Canvas>
-
 
 ## Material Icon example
 
 To use material symbols it is necessary to configure the DContextProvider
+
+<Canvas>
+  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+    <ExampleMaterialIconToastRoot />
+  </div>
+</Canvas>
 
 ### `App.tsx`
 
@@ -266,8 +464,4 @@ export function App() {
   dark
 />
 
-<Canvas>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <ExampleMaterialIconToastRoot />
-  </div>
-</Canvas>
+
