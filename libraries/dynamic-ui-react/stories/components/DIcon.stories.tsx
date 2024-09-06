@@ -90,7 +90,7 @@ To work with libraries that use this style, there is the materialStyle flag. By 
     },
     loading: {
       control: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       type: 'boolean',
       description: 'Enable loading animation',
     },
@@ -98,19 +98,19 @@ To work with libraries that use this style, there is the materialStyle flag. By 
       type: 'number',
       control: 'number',
       description: 'Loading animation duration, in seconds',
-      table: { defaultValue: { summary: 1.8 } },
+      table: { defaultValue: { summary: '1.8' } },
     },
     hasCircle: {
       type: 'boolean',
       control: 'boolean',
       description: 'Add circle around the icon',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     materialStyle: {
       type: 'boolean',
       control: 'boolean',
       description: 'To use material style icons',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     circleSize: {
       type: 'string',
