@@ -10,12 +10,14 @@
     min-height: var(--#{$prefix}pagination-page-item-size);
   }
 
-  :is(.page-item:first-child, .page-item:last-child):not(.disabled) .page-link {
-    color: var(--#{$prefix}pagination-page-control-color);
-  }
+  &.d-show-arrows {
+    :is(.page-item:first-child, .page-item:last-child):not(.disabled) .page-link {
+      color: var(--#{$prefix}pagination-page-control-color);
+    }
 
-  :is(.page-item:first-child, .page-item:last-child).disabled .page-link {
-    color: var(--#{$prefix}pagination-page-control-disabled-color);
+    :is(.page-item:first-child, .page-item:last-child).disabled .page-link {
+      color: var(--#{$prefix}pagination-page-control-disabled-color);
+    }
   }
 
   .page-link {
