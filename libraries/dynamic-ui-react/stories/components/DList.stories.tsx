@@ -62,7 +62,6 @@ export const Default: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
@@ -77,7 +76,6 @@ export const Flush: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
@@ -95,7 +93,6 @@ export const Numbered: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
@@ -113,7 +110,6 @@ export const Horizontal: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
@@ -138,7 +134,6 @@ export const HorizontalWithBreakpoint: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
