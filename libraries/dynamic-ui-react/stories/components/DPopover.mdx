@@ -1,0 +1,32 @@
+import {
+  Meta,
+  Stories,
+  Controls,
+  Canvas,
+  Unstyled,
+} from '@storybook/blocks';
+
+import * as DPopoverStories from './DPopover.stories';
+import { DAlert } from '../../src';
+
+<Meta of={DPopoverStories} />
+
+# Popover
+
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
+<Unstyled>
+  <DAlert theme="danger">
+    <span>This component is deprecated and will be removed in the next major release, we are working on a replacement.</span>
+  </DAlert>
+</Unstyled>
+
+This component only complies with the behavior of a popover, it has no design, other components are used as an example to assemble it.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Floating UI](https://floating-ui.com/docs/react)
+
+<Canvas of={DPopoverStories.Default} />
+<Controls of={DPopoverStories.Default} />
+<Stories />
