@@ -6,21 +6,6 @@ import DButton from '../../src/components/DButton';
 
 const config: Meta<typeof DPopover> = {
   title: 'Design System/Patterns/Popover',
-  parameters: {
-    docs: {
-      description: {
-        component: `
-![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
-
-This component only complies with the behavior of a popover, it has no design, other components are used as an example to assemble it.
-
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Floating UI](https://floating-ui.com/docs/react)
-        `,
-      },
-    },
-  },
   component: DPopover,
   argTypes: {
     className: {
@@ -35,7 +20,6 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'boolean',
     },
   },
-  tags: ['autodocs'],
 };
 
 export default config;
