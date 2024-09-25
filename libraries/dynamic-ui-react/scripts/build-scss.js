@@ -17,18 +17,12 @@ const {
   dependencies: {
     bootstrap: BOOTSTRAP_VERSION,
   },
-  devDependencies: {
-    '@popperjs/core': POPPER_VERSION,
-    'bootstrap-icons': BOOTSTRAP_ICONS_VERSION,
-  },
   license: LICENSE,
 } = require('../package.json');
 
 const HEADER_COMMENT = `/*!
  * dynamic-framework ${VERSION}
  * bootstrap ${BOOTSTRAP_VERSION}
- * @popperjs/core ${POPPER_VERSION}
- * bootstrap-icons ${BOOTSTRAP_ICONS_VERSION}
  * license ${LICENSE}
  */
 `;
