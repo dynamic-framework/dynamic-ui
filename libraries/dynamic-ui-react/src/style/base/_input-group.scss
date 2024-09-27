@@ -78,7 +78,10 @@
 
     &:has(.form-control.is-#{$state}, .form-select.is-#{$state}) {
       border-color: $border-color;
-      box-shadow: $box-shadow;
+
+      &:focus-within {
+        box-shadow: $box-shadow;
+      }
 
       ~ .form-text {
         color: $border-color;

@@ -56,7 +56,10 @@
 
     .input-group:has(.d-select-component.is-#{$state}) {
       border-color: $border-color;
-      box-shadow: $box-shadow;
+
+      &:focus-within {
+        box-shadow: $box-shadow;
+      }
 
       ~ .form-text {
         color: $border-color;
