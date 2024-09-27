@@ -297,6 +297,8 @@
     --#{$prefix}ref-spacer-#{$level}: #{$value};
   }
 
+  --#{$prefix}default-placeholder-bg: var(--#{$prefix}secondary-200);
+
   --#{$prefix}default-accordion-padding-x: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}default-accordion-padding-y: var(--#{$prefix}ref-spacer-6);
   --#{$prefix}default-accordion-color: var(--#{$prefix}gray-700);
