@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
@@ -13,7 +14,12 @@ import {
   ICON_FAMILY_PREFIX,
   PREFIX_BS,
 } from '../../src/components/config';
-import { DContextProvider, DInput } from '../../src';
+import {
+  DContextProvider,
+  DInput,
+  DToastContainer,
+} from '../../src';
+import { ExampleMaterialIconToastUsage } from '../hooks/useToastExamples';
 
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
@@ -245,6 +251,35 @@ export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
     iconStart: 'alternate_email',
     iconEnd: 'cached',
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const ToastWithMaterialIcons: StoryObj<typeof DInput> = {
+  decorators: [
+    (Story) => (
+      <div className="d-flex flex-column justify-content-end" style={{ width: '320px', height: '210px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  render: (_args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <ExampleMaterialIconToastUsage />
+      <DToastContainer
+        key="material-icon-toast-container"
+        position="top-right"
+      />
+    </DContextProvider>
+  ),
+  args: {},
   parameters: {
     docs: {
       canvas: {

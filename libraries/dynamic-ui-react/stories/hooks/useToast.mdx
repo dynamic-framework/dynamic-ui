@@ -8,7 +8,6 @@ import {
   ExampleSimpleToastRoot,
   ExampleFullToastRoot,
   ExampleCustomToastRoot,
-  ExampleMaterialIconToastRoot,
 } from "./useToastExamples";
 
 import DAlert from '../../src/components/DAlert/DAlert';
@@ -414,64 +413,5 @@ export function CustomToastExample({ id, visible }: Toast) {
 <Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
     <ExampleCustomToastRoot />
-  </div>
-</Unstyled>
-
-
-## Material Icon example
-
-To use material symbols it is necessary to configure the DContextProvider
-
-<Canvas>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
-    <ExampleMaterialIconToastRoot />
-  </div>
-</Canvas>
-
-### `App.tsx`
-
-<Source
-  code={
-    `
-import {
-  DContextProvider,
-  DToastContainer,
-  useDToast,
-} from '@dynamic-framework/ui-react';
-
-import CONTEXT_PROVIDER_CONFIG_MATERIAL from './config';
-
-export function App() {
-  const { toast } = useDToast();
-
-  return (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            { title: 'Example' },
-            { duration: 5000 },
-          )
-        )}
-      />
-      <DToastContainer
-        key="material-icon-toast-container"
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
-
-<Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <ExampleMaterialIconToastRoot />
   </div>
 </Unstyled>
