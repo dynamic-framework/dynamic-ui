@@ -1,6 +1,6 @@
 import {
   Meta,
-  Canvas,
+  Unstyled,
   Source,
 } from '@storybook/blocks';
 
@@ -40,11 +40,11 @@ Let's dive into some examples of how we can use Recharts to create different typ
 
 ### `ExampleLineChart.tsx`
 
-<Canvas>
+<Unstyled>
   <div style={{ height: '300px' }}>
     <ExampleLineChart />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -113,11 +113,11 @@ export function ExampleLineChart() {
 
 ### `ExamplePieChart.tsx`
 
-<Canvas>
+<Unstyled>
   <div style={{ height: '300px' }}>
     <ExamplePieChart />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -191,11 +191,11 @@ export function ExamplePieChart() {
 
 ### Bar Chart
 
-<Canvas>
+<Unstyled>
   <div style={{ height: '300px' }}>
     <ExampleBarChart />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -251,11 +251,11 @@ a single stack displaced vertically from the next segment.
 
 Progressive column charts are useful for emphasizing the contribution of the individual segments to the whole.
 
-<Canvas>
+<Unstyled>
   <div style={{ height: '300px' }}>
     <ExampleProgressiveBarChart />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={

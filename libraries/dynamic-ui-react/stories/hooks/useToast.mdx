@@ -24,10 +24,8 @@ a `DToast` to generate toasts. For more detailed information, refer to the offic
 
 <Unstyled>
   <DAlert theme="warning">
-    <span>
-      Toast appears in all containers because of the way react-hot-toast is programmed, however,
-      if you want to see the correct toast make it show up from the correct container.
-    </span>
+    <span>Toast appears in all containers because of the way react-hot-toast is programmed, however,
+    if you want to see the correct toast make it show up from the correct container.</span>
   </DAlert>
 </Unstyled>
 
@@ -46,11 +44,11 @@ Below you will see examples of the use of toast in a simple way, with a custom c
 
 ## Basic toast no theme
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleSimpleToastRoot />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -135,11 +133,11 @@ export function App() {
 
 ## Basic toast secondary soft
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleSimpleToastRoot type='soft' />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -183,11 +181,11 @@ export function App() {
 
 ## Full toast no theme
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleFullToastRoot type='base' />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -280,11 +278,11 @@ export function App() {
 
 ## Full toast secondary soft
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleFullToastRoot type='soft' />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -331,11 +329,11 @@ export function App() {
 
 ## Custom example
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleCustomToastRoot />
   </div>
-</Canvas>
+</Unstyled>
 
 ### `App.tsx`
 
@@ -409,9 +407,3 @@ export function CustomToastExample({ id, visible }: Toast) {
   language="tsx"
   dark
 />
-
-<Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '300px' }}>
-    <ExampleCustomToastRoot />
-  </div>
-</Unstyled>
