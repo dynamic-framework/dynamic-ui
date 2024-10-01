@@ -11,11 +11,11 @@ it('should render info alert', () => {
   expect(container).toMatchInlineSnapshot(`
   <div>
     <div
-      class="avatar"
+      class="d-avatar d-avatar-secondary"
     >
       <img
-        alt="avatar"
-        class="avatar-img"
+        alt=""
+        class="d-avatar-img"
         src="https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png"
       />
     </div>
