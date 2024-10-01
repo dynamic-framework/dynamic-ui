@@ -190,13 +190,13 @@ To understand in more detail the aspects covered by this component, review the f
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       description: 'Determines if the input is invalid',
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       description: 'Determines if the input is valid',
     },
     menuWithMaxContent: {
@@ -254,7 +254,7 @@ To understand in more detail the aspects covered by this component, review the f
       description: 'The prefix for the CSS class names',
     },
     options: {
-      control: 'array',
+      control: 'object',
       description: 'The options for the select input',
     },
     value: {
@@ -322,19 +322,19 @@ To understand in more detail the aspects covered by this component, review the f
       description: 'Determines if the menu should scroll into view when opened',
     },
     formatGroupLabel: {
-      control: 'function',
+      type: 'function',
       description: 'Function to format group labels',
     },
     formatOptionLabel: {
-      control: 'function',
+      type: 'function',
       description: 'Function to format option labels',
     },
     getOptionLabel: {
-      control: 'function',
+      type: 'function',
       description: 'Function to get the label of an option',
     },
     getOptionValue: {
-      control: 'function',
+      type: 'function',
       description: 'Function to get the value of an option',
     },
     inputId: {
@@ -382,7 +382,7 @@ To understand in more detail the aspects covered by this component, review the f
       description: 'Determines if pressing escape clears the value',
     },
     filterOption: {
-      control: 'function',
+      type: 'function',
       description: 'Function to filter options',
     },
     openMenuOnClick: {

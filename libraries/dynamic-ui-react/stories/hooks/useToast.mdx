@@ -1,6 +1,5 @@
 import {
   Meta,
-  Canvas,
   Source,
   Unstyled,
 } from '@storybook/blocks';
@@ -9,7 +8,6 @@ import {
   ExampleSimpleToastRoot,
   ExampleFullToastRoot,
   ExampleCustomToastRoot,
-  ExampleMaterialIconToastRoot,
 } from "./useToastExamples";
 
 import DAlert from '../../src/components/DAlert/DAlert';
@@ -26,10 +24,8 @@ a `DToast` to generate toasts. For more detailed information, refer to the offic
 
 <Unstyled>
   <DAlert theme="warning">
-    <span>
-      Toast appears in all containers because of the way react-hot-toast is programmed, however,
-      if you want to see the correct toast make it show up from the correct container.
-    </span>
+    <span>Toast appears in all containers because of the way react-hot-toast is programmed, however,
+    if you want to see the correct toast make it show up from the correct container.</span>
   </DAlert>
 </Unstyled>
 
@@ -48,11 +44,11 @@ Below you will see examples of the use of toast in a simple way, with a custom c
 
 ## Basic toast no theme
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleSimpleToastRoot />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -91,11 +87,11 @@ export function App() {
 
 ## Basic toast secondary theme
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleSimpleToastRoot type='secondary'/>
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -137,11 +133,11 @@ export function App() {
 
 ## Basic toast secondary soft
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleSimpleToastRoot type='soft' />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -185,11 +181,11 @@ export function App() {
 
 ## Full toast no theme
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleFullToastRoot type='base' />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -233,11 +229,11 @@ export function App() {
 
 ## Full toast secondary theme
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleFullToastRoot type='secondary' />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -282,11 +278,11 @@ export function App() {
 
 ## Full toast secondary soft
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleFullToastRoot type='soft' />
   </div>
-</Canvas>
+</Unstyled>
 
 <Source
   code={
@@ -333,11 +329,11 @@ export function App() {
 
 ## Custom example
 
-<Canvas>
+<Unstyled>
   <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
     <ExampleCustomToastRoot />
   </div>
-</Canvas>
+</Unstyled>
 
 ### `App.tsx`
 
@@ -411,58 +407,3 @@ export function CustomToastExample({ id, visible }: Toast) {
   language="tsx"
   dark
 />
-
-
-## Material Icon example
-
-To use material symbols it is necessary to configure the DContextProvider
-
-<Canvas>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
-    <ExampleMaterialIconToastRoot />
-  </div>
-</Canvas>
-
-### `App.tsx`
-
-<Source
-  code={
-    `
-import {
-  DContextProvider,
-  DToastContainer,
-  useDToast,
-} from '@dynamic-framework/ui-react';
-
-import CONTEXT_PROVIDER_CONFIG_MATERIAL from './config';
-
-export function App() {
-  const { toast } = useDToast();
-
-  return (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            { title: 'Example' },
-            { duration: 5000 },
-          )
-        )}
-      />
-      <DToastContainer
-        key="material-icon-toast-container"
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
-
-
