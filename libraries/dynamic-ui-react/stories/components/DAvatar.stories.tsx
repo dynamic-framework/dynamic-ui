@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import type { ComponentProps } from 'react';
 import DAvatar from '../../src/components/DAvatar/DAvatar';
-import { AVATAR_SIZE } from '../config/constants';
+import { AVATAR_SIZE, COLOR_THEMES } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DAvatar> = {
@@ -13,12 +13,14 @@ const config: Meta<typeof DAvatar> = {
       description: {
         component: `
 ## CSS Variables
-| Variable                         | Class   | Type            | Description             |
-| -------------------------------- | ------- | --------------- | ----------------------- |
-| --${PREFIX_BS}avatar-size        | .avatar | css length unit | Content separation      |
-| --${PREFIX_BS}avatar-title-bg    | .avatar | css color unit  | Toast box shadow        |
-| --${PREFIX_BS}avatar-title-color | .avatar | css color unit  | Toast icon color        |
-| --${PREFIX_BS}avatar-radius      | .avatar | css length unit | Toast separator opacity |
+| Variable                               | Class   | Type            | Description             |
+| -------------------------------------- | ------- | --------------- | ----------------------- |
+| --${PREFIX_BS}avatar-border            | .avatar | css border      | Border box              |
+| --${PREFIX_BS}avatar-size              | .avatar | css length unit | Size                    |
+| --${PREFIX_BS}avatar-bg                | .avatar | css color unit  | Text background         |
+| --${PREFIX_BS}avatar-color             | .avatar | css color unit  | Text color              |
+| --${PREFIX_BS}avatar-font-weight       | .avatar | css font weight | Text font weight        |
+| --${PREFIX_BS}avatar-border-radius     | .avatar | css length unit | Border radius           |
         `,
       },
     },
@@ -36,15 +38,43 @@ const config: Meta<typeof DAvatar> = {
       control: 'object',
     },
     size: {
-      control: 'select',
+      control: {
+        type: 'select',
+        labels: {
+          undefined: 'empty',
+        },
+      },
       type: 'string',
-      options: AVATAR_SIZE,
-      description: 'Avatar size',
+      options: [undefined, ...AVATAR_SIZE],
+      description: 'Size',
     },
     image: {
       control: 'text',
       type: 'string',
       description: 'URL of the avatar image',
+    },
+    text: {
+      control: 'text',
+      type: 'string',
+      description: 'The text to display',
+    },
+    theme: {
+      control: 'select',
+      type: 'string',
+      options: COLOR_THEMES,
+      table: { defaultValue: { summary: 'secondary' } },
+      description: 'Theme',
+    },
+    variant: {
+      control: {
+        type: 'radio',
+        labels: {
+          undefined: 'default',
+        },
+      },
+      type: 'string',
+      options: [undefined, 'light', 'dark'],
+      description: 'Variant',
     },
   },
   tags: ['autodocs'],
@@ -55,34 +85,34 @@ type Story = StoryObj<typeof DAvatar>;
 
 export const Default: Story = {
   args: {
-    image: 'https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png',
+    text: 'AB',
   },
 };
 
 export const Small: Story = {
   args: {
     size: 'sm',
-    image: 'https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png',
+    text: 'AB',
   },
 };
 
 export const Medium: Story = {
   args: {
     size: 'lg',
-    image: 'https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png',
+    text: 'AB',
   },
 };
 
 export const Large: Story = {
   args: {
     size: 'xxl',
-    image: 'https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png',
+    text: 'AB',
   },
 };
 
 export const Group: Story = {
   render: (args: ComponentProps<typeof DAvatar>) => (
-    <div className="avatar-group">
+    <div className="d-avatar-group">
       <DAvatar {...args} />
       <DAvatar {...args} />
       <DAvatar {...args} />
@@ -90,7 +120,7 @@ export const Group: Story = {
     </div>
   ),
   args: {
-    image: 'https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png',
+    text: 'AB',
   },
   parameters: {
     docs: {
@@ -101,8 +131,8 @@ export const Group: Story = {
   },
 };
 
-export const Title: Story = {
+export const Image: Story = {
   args: {
-    title: 'AB',
+    image: 'https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png',
   },
 };

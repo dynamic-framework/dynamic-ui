@@ -1,5 +1,6 @@
+import { useMemo } from 'react';
 import classNames from 'classnames';
-import type { AvatarSize, BaseProps } from '../interface';
+import type { AvatarSize, BaseProps, ClassMap } from '../interface';
 
 type Props =
 & BaseProps
@@ -7,7 +8,9 @@ type Props =
   id?: string;
   size?: AvatarSize;
   image?: string;
-  title?: string;
+  text?: string;
+  theme?: string;
+  variant?: 'light' | 'dark';
 };
 
 export default function DAvatar(
@@ -15,24 +18,35 @@ export default function DAvatar(
     id,
     size,
     image,
-    title,
+    text,
+    theme = 'secondary',
+    variant,
     className,
     style,
     dataAttributes,
   }: Props,
 ) {
+  const generateClasses = useMemo<ClassMap>(() => {
+    const variantClass = variant
+      ? `d-avatar-${variant}-${theme}`
+      : `d-avatar-${theme}`;
+
+    return {
+      'd-avatar': true,
+      [variantClass]: true,
+      [`d-avatar-${size}`]: !!size,
+    };
+  }, [variant, theme, size]);
+
   return (
     <div
-      className={classNames({
-        avatar: true,
-        [`avatar-${size}`]: !!size,
-      }, className)}
+      className={classNames(generateClasses, className)}
       style={style}
       id={id}
       {...dataAttributes}
     >
-      {image && <img src={image} alt="avatar" className="avatar-img" />}
-      {title && <span className="avatar-title">{title}</span>}
+      {image && <img src={image} alt="" className="d-avatar-img" />}
+      {(text && !image) && <span className="d-avatar-text">{text}</span>}
     </div>
   );
 }
