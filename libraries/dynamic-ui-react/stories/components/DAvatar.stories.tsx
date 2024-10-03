@@ -61,7 +61,7 @@ const config: Meta<typeof DAvatar> = {
     useNameAsInitials: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       description: 'Take the name as name initials',
     },
     theme: {
@@ -144,5 +144,6 @@ export const Group: Story = {
 export const Image: Story = {
   args: {
     image: 'https://cdn.modyo.cloud/uploads/03a6970d-e917-4597-8c9f-bae052a214ab/original/Avatars_1_.png',
+    name: 'John Doe',
   },
 };

@@ -59,7 +59,7 @@ export default function DAvatar(
       id={id}
       {...dataAttributes}
     >
-      {image && <img src={image} alt="" className="d-avatar-img" />}
+      {image && <img src={image} alt={nameProp} className="d-avatar-img" />}
       {(name && !image) && <span className="d-avatar-name">{name}</span>}
     </div>
   );
