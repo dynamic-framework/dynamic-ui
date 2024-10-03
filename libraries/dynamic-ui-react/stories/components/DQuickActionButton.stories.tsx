@@ -158,7 +158,7 @@ const config: Meta<typeof DQuickActionButton> = {
       type: 'boolean',
       control: 'boolean',
       description: 'Add circle around the representative icon',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     onClick: {
       action: 'onClick',

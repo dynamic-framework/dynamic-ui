@@ -163,12 +163,12 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     hint: {
       control: 'text',
@@ -178,12 +178,12 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     labelExtractor: {
       table: {
@@ -214,7 +214,7 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
   },
   tags: ['autodocs'],
