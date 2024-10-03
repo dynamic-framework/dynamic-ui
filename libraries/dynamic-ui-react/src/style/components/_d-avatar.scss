@@ -21,7 +21,7 @@
     border-radius: var(--#{$prefix}avatar-border-radius);
   }
 
-  .d-avatar-text {
+  .d-avatar-name {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,7 +75,7 @@
 
 .d-avatar-group {
   .d-avatar-img,
-  .d-avatar-text {
+  .d-avatar-name {
     box-shadow: -2px 0 2px rgba(0, 0, 0, .1);
   }
 

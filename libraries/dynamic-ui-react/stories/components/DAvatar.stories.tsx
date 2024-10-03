@@ -53,10 +53,16 @@ const config: Meta<typeof DAvatar> = {
       type: 'string',
       description: 'URL of the avatar image',
     },
-    text: {
+    name: {
       control: 'text',
       type: 'string',
       description: 'The text to display',
+    },
+    useNameAsInitials: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+      description: 'Take the name as name initials',
     },
     theme: {
       control: 'select',
@@ -85,28 +91,31 @@ type Story = StoryObj<typeof DAvatar>;
 
 export const Default: Story = {
   args: {
-    text: 'AB',
+    name: 'John Doe',
   },
 };
 
 export const Small: Story = {
   args: {
     size: 'sm',
-    text: 'AB',
+    name: 'AB',
+    useNameAsInitials: true,
   },
 };
 
 export const Medium: Story = {
   args: {
     size: 'lg',
-    text: 'AB',
+    name: 'AB',
+    useNameAsInitials: true,
   },
 };
 
 export const Large: Story = {
   args: {
     size: 'xxl',
-    text: 'AB',
+    name: 'AB',
+    useNameAsInitials: true,
   },
 };
 
@@ -120,7 +129,8 @@ export const Group: Story = {
     </div>
   ),
   args: {
-    text: 'AB',
+    name: 'AB',
+    useNameAsInitials: true,
   },
   parameters: {
     docs: {

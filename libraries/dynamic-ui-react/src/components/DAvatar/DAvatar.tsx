@@ -8,7 +8,8 @@ type Props =
   id?: string;
   size?: AvatarSize;
   image?: string;
-  text?: string;
+  name?: string;
+  useNameAsInitials?: boolean;
   theme?: string;
   variant?: 'light' | 'dark';
 };
@@ -18,7 +19,8 @@ export default function DAvatar(
     id,
     size,
     image,
-    text,
+    name: nameProp,
+    useNameAsInitials = false,
     theme = 'secondary',
     variant,
     className,
@@ -38,6 +40,18 @@ export default function DAvatar(
     };
   }, [variant, theme, size]);
 
+  const name = useMemo(() => {
+    if (!nameProp) {
+      return undefined;
+    }
+
+    if (useNameAsInitials) {
+      return nameProp;
+    }
+
+    return nameProp.split(/\s+/).map((word) => word.charAt(0)).join('').toUpperCase();
+  }, [nameProp, useNameAsInitials]);
+
   return (
     <div
       className={classNames(generateClasses, className)}
@@ -46,7 +60,7 @@ export default function DAvatar(
       {...dataAttributes}
     >
       {image && <img src={image} alt="" className="d-avatar-img" />}
-      {(text && !image) && <span className="d-avatar-text">{text}</span>}
+      {(name && !image) && <span className="d-avatar-name">{name}</span>}
     </div>
   );
 }
