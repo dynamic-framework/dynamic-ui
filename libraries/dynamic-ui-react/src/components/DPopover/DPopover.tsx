@@ -32,6 +32,9 @@ type Props = BaseProps & PropsWithChildren<{
   adjustContentToRender?: boolean;
 }>;
 
+/**
+ * @deprecated
+ */
 export default function DPopover(
   {
     children,
