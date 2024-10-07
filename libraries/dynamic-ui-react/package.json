@@ -86,7 +86,6 @@
     "currency.js": "^2.0.4",
     "date-fns": "^2.30.0",
     "i18next": "^23.6.0",
-    "react-content-loader": "^6.2.1",
     "react-datepicker": "^4.21.0",
     "react-dropzone": "^14.2.3",
     "react-responsive-pagination": "^2.4.1",

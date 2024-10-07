@@ -57,7 +57,6 @@ export { default as DQuickActionButton } from './DQuickActionButton';
 export { default as DQuickActionCheck } from './DQuickActionCheck';
 export { default as DQuickActionSelect } from './DQuickActionSelect';
 export { default as DQuickActionSwitch } from './DQuickActionSwitch';
-export { default as DSkeleton } from './DSkeleton';
 export { default as DStepper } from './DStepper';
 export { default as DStepperDesktop } from './DStepperDesktop';
 export { default as DStepperMobile } from './DStepperMobile';
