@@ -198,3 +198,37 @@ export const Default: Story = {
     showMask: true,
   },
 };
+
+export const Invalid: Story = {
+  args: {
+    id: 'componentId2',
+    label: 'Label',
+    labelIcon: undefined,
+    type: 'text',
+    iconStart: 'phone',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
+    hint: 'Write your phone number',
+    mask: '(+56)_ ____ ____',
+    replacement: { _: /\d/ },
+    showMask: true,
+    invalid: true,
+  },
+};
+
+export const Valid: Story = {
+  args: {
+    id: 'componentId3',
+    label: 'Label',
+    labelIcon: undefined,
+    type: 'text',
+    iconStart: 'phone',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
+    hint: 'Write your phone number',
+    mask: '(+56)_ ____ ____',
+    replacement: { _: /\d/ },
+    showMask: true,
+    valid: true,
+  },
+};

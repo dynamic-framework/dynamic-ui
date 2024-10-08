@@ -198,7 +198,7 @@ export const Default: Story = {
   },
 };
 
-export const Error: Story = {
+export const Invalid: Story = {
   render: (args: ComponentProps<typeof DInputCurrency>) => (
     <DContextProvider>
       <DInputCurrency {...args} />
@@ -216,7 +216,7 @@ export const Error: Story = {
   },
 };
 
-export const Confirm: Story = {
+export const Valid: Story = {
   render: (args: ComponentProps<typeof DInputCurrency>) => (
     <DContextProvider>
       <DInputCurrency {...args} />
