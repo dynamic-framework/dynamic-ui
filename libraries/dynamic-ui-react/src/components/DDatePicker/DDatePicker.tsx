@@ -18,7 +18,6 @@ import type {
   ButtonVariant,
   ComponentSize,
   FamilyIconProps,
-  StateIcons,
 } from '../interface';
 import { useDContext } from '../../contexts';
 
@@ -28,7 +27,6 @@ type Props<
 > =
 & BaseProps
 & FamilyIconProps
-& StateIcons
 & Pick<ReactDatePickerProps<CustomModifierNames, WithRange>,
 | 'formatWeekDay'
 | 'onChange'
@@ -101,8 +99,6 @@ export default function DDatePicker<
     invalid = false,
     valid = false,
     renderCustomHeader: renderCustomHeaderProp,
-    validIcon,
-    invalidIcon,
     locale,
     className,
     formatWeekDay: formatWeekDayProp,
@@ -187,19 +183,12 @@ export default function DDatePicker<
           aria-label={inputAriaLabel}
           iconEndAriaLabel={inputActionAriaLabel}
           iconMaterialStyle={iconMaterialStyleProp}
-          {...(
-            (!valid && !invalid)
-            || (valid && !validIcon)
-            || (invalid && !invalidIcon)) && {
-            iconEnd: iconInput,
-          }}
+          iconEnd={iconInput}
           inputLabel={inputLabel}
           className={className}
           style={style}
           invalid={invalid}
           valid={valid}
-          validIcon={validIcon}
-          invalidIcon={invalidIcon}
           hint={inputHint}
         />
       )}
