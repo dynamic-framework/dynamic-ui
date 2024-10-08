@@ -48,14 +48,24 @@
     border-radius: var(--#{$prefix}input-border-radius);
   }
 
-  // validation states
   @each $state, $data in $form-validation-states {
     $border-color: map-get($data, "border-color");
     $tooltip-bg-color: map-get($data, "tooltip-bg-color");
     $box-shadow: map-get($data, "focus-box-shadow");
+    $icon: map-get($data, "icon");
 
     .input-group:has(.d-select-component.is-#{$state}) {
       border-color: $border-color;
+
+      .d-select__value-container {
+        @if $enable-validation-icons {
+          padding-right: $input-height-inner;
+          background-image: $icon;
+          background-repeat: no-repeat;
+          background-position: right $input-height-inner-quarter center;
+          background-size: $input-height-inner-half $input-height-inner-half;
+        }
+      }
 
       &:focus-within {
         box-shadow: $box-shadow;
@@ -63,10 +73,6 @@
 
       ~ .form-text {
         color: $border-color;
-      }
-
-      .input-group-validation-icon {
-        --#{$prefix}icon-color: #{$tooltip-bg-color};
       }
     }
   }

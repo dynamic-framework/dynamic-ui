@@ -202,26 +202,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    validIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    invalidIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
     iconEndDisabled: {
       control: 'boolean',
       type: 'boolean',
