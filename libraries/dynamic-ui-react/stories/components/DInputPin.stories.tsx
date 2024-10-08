@@ -158,7 +158,7 @@ export const WithoutLabel: Story = {
   },
 };
 
-export const Error: Story = {
+export const Invalid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
@@ -173,7 +173,7 @@ export const Error: Story = {
   },
 };
 
-export const Confirm: Story = {
+export const Valid: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',
