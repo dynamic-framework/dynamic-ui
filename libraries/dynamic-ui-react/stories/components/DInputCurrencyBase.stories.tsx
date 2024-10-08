@@ -136,26 +136,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       control: 'text',
       type: 'string',
     },
-    validIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    invalidIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
     hint: {
       control: 'text',
       type: 'string',
