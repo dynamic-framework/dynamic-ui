@@ -17,7 +17,6 @@ import type {
 import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
-import { useDContext } from '../../contexts';
 
 import type {
   BaseProps,
@@ -26,7 +25,6 @@ import type {
   FamilyIconProps,
   LabelIconProps,
   StartIconProps,
-  StateIcons,
 } from '../interface';
 import type { Merge } from '../../types';
 
@@ -36,7 +34,6 @@ type NonHTMLInputElementProps =
 & LabelIconProps
 & StartIconProps
 & EndIconProps
-& StateIcons
 & {
   value?: string;
   label?: string;
@@ -87,8 +84,6 @@ function DInput(
     iconEndAriaLabel,
     iconEndTabIndex,
     iconEndMaterialStyle,
-    invalidIcon: invalidIconProp,
-    validIcon: validIconProp,
     hint,
     size,
     invalid = false,
@@ -212,16 +207,6 @@ function DInput(
     return inputComponent;
   }, [floatingLabel, inputComponent, labelComponent]);
 
-  const { iconMap: { input } } = useDContext();
-  const invalidIcon = useMemo(
-    () => invalidIconProp || input.invalid,
-    [input.invalid, invalidIconProp],
-  );
-  const validIcon = useMemo(
-    () => validIconProp || input.valid,
-    [input.valid, validIconProp],
-  );
-
   return (
     <div
       className={className}
@@ -259,20 +244,6 @@ function DInput(
           </button>
         )}
         {dynamicComponent}
-        {((invalid || valid) && !iconEnd && !loading) && (
-          <span
-            className="input-group-text"
-            id={`${id}State`}
-          >
-            <DIcon
-              className="input-group-validation-icon"
-              icon={invalid ? invalidIcon : validIcon}
-              familyClass={iconFamilyClass}
-              familyPrefix={iconFamilyPrefix}
-              materialStyle={iconMaterialStyle}
-            />
-          </span>
-        )}
         {(iconEnd && !loading) && (
           <button
             type="button"
