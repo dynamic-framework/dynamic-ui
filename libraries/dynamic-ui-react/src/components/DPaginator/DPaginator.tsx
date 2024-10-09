@@ -1,6 +1,8 @@
 import ResponsivePagination from 'react-responsive-pagination';
 
 import type { ResponsivePaginationProps } from 'react-responsive-pagination';
+import { useMemo } from 'react';
+import classNames from 'classnames';
 import { DataAttributes } from '../interface';
 
 export type Props = {
@@ -25,9 +27,17 @@ export default function DPaginator(
     ...props
   }: Props,
 ) {
+  const generateClasses = useMemo(
+    () => ({
+      'd-show-arrows': !!showArrows,
+      ...className && { [className]: true },
+    }),
+    [showArrows, className],
+  );
+
   return (
     <ResponsivePagination
-      extraClassName={className}
+      extraClassName={classNames(generateClasses)}
       nextLabel={nextLabel}
       previousLabel={previousLabel}
       renderNav={showArrows}
