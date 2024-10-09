@@ -14,14 +14,14 @@ $list-group-item-bg-scale: 0% !default;
 $list-group-item-color-scale: 40% !default;
 // fusv-enable
 
-$list-group-hover-bg: var(--#{$prefix}gray-100) !default;
+$list-group-hover-bg: var(--#{$prefix}surface-primary) !default;
 
 $list-group-disabled-color: var(--#{$prefix}gray-600) !default;
 
-$list-group-action-color: var(--#{$prefix}gray-700) !default;
+$list-group-action-color: var(--#{$prefix}gray-900) !default;
 $list-group-action-hover-color: $list-group-action-color !default;
 
-$list-group-action-active-bg: var(--#{$prefix}gray-200) !default;
+$list-group-action-active-bg: var(--#{$prefix}primary-100) !default;
 
 // custom
 $list-group-item-border-radius: 0 !default;
