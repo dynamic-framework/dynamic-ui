@@ -10,12 +10,12 @@
     min-height: var(--#{$prefix}pagination-page-item-size);
   }
 
-  &.d-show-arrows {
-    :is(.page-item:first-child, .page-item:last-child):not(.disabled) .page-link {
+  .page-item-arrow {
+    &:is(.page-item:first-child, .page-item:last-child):not(.disabled) .page-link {
       color: var(--#{$prefix}pagination-page-control-color);
     }
 
-    :is(.page-item:first-child, .page-item:last-child).disabled .page-link {
+    &:is(.page-item:first-child, .page-item:last-child).disabled .page-link {
       color: var(--#{$prefix}pagination-page-control-disabled-color);
     }
   }
