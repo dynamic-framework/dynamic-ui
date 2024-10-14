@@ -320,7 +320,9 @@ import {
   DInputCheck,
   DBadge,
   DTableHead,
-  DInput,
+  useItemSelection,
+  getQueryString,
+  changeQueryString,
 } from '@dynamic-framework/ui-react';
 
 const HEADER_ENTRIES = [
@@ -396,32 +398,11 @@ type Props = {
 
 export function ExampleCompositionTable({ total, queryString, onQueryStringChange }: Props) {
   const {
-    pageParam,
-    perPageParam,
-    sortParam,
-  } = useMemo(() => {
-    const params = new URLSearchParams(queryString);
-    return {
-      pageParam: parseInt(params.get('page') || '1', 10),
-      perPageParam: parseInt(params.get('per_page') || '1', 10),
-      sortParam: params.get('sort') || '',
-    };
-  }, [queryString]);
-
-  const [page, setPage] = useState(pageParam);
-  const [perPage, setPerPage] = useState(perPageParam);
-  const [sort, setSort] = useState(sortParam);
-
-  useEffect(() => {
-    const params = new URLSearchParams({
-      ...page && { page: page.toString() },
-      ...perPage && { per_page: perPage.toString() },
-      ...total && { total: total.toString() },
-      ...sort && { sort },
-    });
-
-    onQueryStringChange(params.toString());
-  }, [onQueryStringChange, page, perPage, sort, total]);
+    isSelectedItem,
+    toggleSelectedItem,
+    selectedItems,
+    setSelectedItems,
+  } = useItemSelection<typeof ROWS[0]>();
 
   return (
     <>
@@ -479,6 +460,10 @@ export function ExampleCompositionTable({ total, queryString, onQueryStringChang
 
 export function ExampleComposition() {
   const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useState(Number(getQueryString('page', { default: '1', useSearch: false })));
+  const [rows, setRows] = useState(Number(getQueryString('rows', { default: '3', useSearch: false })));
+  const [sort, setSort] = useState(getQueryString('sort', { default: 'id', useSearch: false })!);
   const [queryString, setQueryString] = useState('');
 
   useEffect(() => {
@@ -490,6 +475,13 @@ export function ExampleComposition() {
       clearTimeout(timer);
     };
   }, []);
+
+  useEffect(() => {
+    setQueryString(changeQueryString(
+      { page, rows, sort },
+      { useSearch: false },
+    ));
+  }, [setQueryString, page, rows, sort]);
 
   return (
     <>
