@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { CurrencyProps, useDContext } from '../contexts';
-import formatCurrency from '../utils/format-currency';
+import formatCurrency from '../utils/formatCurrency';
 
 export default function useFormatCurrency(...args: Array<number>) {
   const { currency } = useDContext();
