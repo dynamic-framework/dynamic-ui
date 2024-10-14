@@ -11,22 +11,16 @@ $nav-link-hover-bg: var(--#{$prefix}surface-primary) !default;
 $nav-link-disabled-color: var(--#{$prefix}gray-300) !default;
 
 // custom
-$nav-link-line-height: var(--#{$prefix}ref-spacer-6) !default;
-$nav-link-border-border-radius: $border-radius-pill !default;
-$nav-link-border-active-color: var(--#{$prefix}secondary) !default;
 $nav-link-border-active-font-weight: var(--#{$prefix}fw-bold) !default;
-$nav-link-border-active-bg: var(--#{$prefix}secondary) !default;
 // end custom
 
 $nav-tabs-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $nav-tabs-link-active-color: var(--#{$prefix}primary) !default;
-$nav-tabs-link-active-bg: var(--#{$prefix}body-bg) !default;
+$nav-tabs-link-active-bg: var(--#{$prefix}white) !default;
 $nav-tabs-link-active-border-color: var(--#{$prefix}gray-300) !default;
 $nav-tabs-border-color: var(--#{$prefix}gray-300) !default;
 
 // custom
-$nav-nav-padding-x: var(--#{$prefix}ref-spacer-4) !default;
-$nav-nav-padding-y: var(--#{$prefix}ref-spacer-2) !default;
 $nav-nav-gap: var(--#{$prefix}ref-spacer-0) !default;
 // end custom
 
