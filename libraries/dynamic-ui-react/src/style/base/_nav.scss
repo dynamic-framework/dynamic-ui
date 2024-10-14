@@ -58,7 +58,6 @@
 .nav-tabs {
   .nav-link {
     &.active {
-      font-weight: var(--#{$prefix}nav-tabs-link-border-active-font-weight);
       border-bottom-color: transparent;
     }
     &:not(.active):is(:hover, :focus) {
