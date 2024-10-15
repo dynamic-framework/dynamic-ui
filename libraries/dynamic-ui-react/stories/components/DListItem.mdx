@@ -1,0 +1,33 @@
+import {
+  Meta,
+  Stories,
+  Controls,
+  Canvas,
+  Unstyled,
+} from '@storybook/blocks';
+
+import * as DListItem from './DListItem.stories';
+import { DAlert } from '../../src';
+
+<Meta of={DListItem} />
+
+# Skeleton
+
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
+<Unstyled>
+  <DAlert theme="danger">
+    <span>This component is deprecated and will be removed in a future release.
+    Please avoid using it and instead use the [DListGroup](/docs/design-system-components-listgroup--docs)</span>
+  </DAlert>
+</Unstyled>
+
+List item for use within a [List](/docs/design-system-components-list--docs) component.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
+
+<Canvas of={DListItem.Default} />
+<Controls of={DListItem.Default} />
+<Stories />
