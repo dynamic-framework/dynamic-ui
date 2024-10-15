@@ -39,6 +39,10 @@ export {
   DListItem,
 } from './DList';
 export {
+  default as DListGroup,
+  DListGroupItem,
+} from './DListGroup';
+export {
   default as DModal,
   DModalHeader,
   DModalBody,
