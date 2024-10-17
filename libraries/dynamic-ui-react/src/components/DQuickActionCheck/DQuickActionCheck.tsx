@@ -18,6 +18,9 @@ type Props = BaseProps & {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
+/**
+ * @deprecated
+ */
 export default function DQuickActionCheck(
   {
     id: idProp,

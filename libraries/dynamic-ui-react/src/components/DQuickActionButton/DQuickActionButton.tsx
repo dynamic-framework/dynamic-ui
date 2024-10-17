@@ -27,6 +27,9 @@ type Props = BaseProps & {
   onClickSecondary?: () => void;
 };
 
+/**
+ * @deprecated
+ */
 export default function DQuickActionButton(
   {
     line1,
