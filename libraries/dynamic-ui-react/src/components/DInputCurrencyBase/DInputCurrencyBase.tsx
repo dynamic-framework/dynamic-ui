@@ -23,6 +23,9 @@ type NonDInputProps = {
 
 type Props = Merge<Omit<ComponentPropsWithoutRef<typeof DInput>, 'value' | 'type' | 'onChange'>, NonDInputProps>;
 
+/**
+ * @deprecated
+ */
 function DInputCurrencyBase(
   {
     value,
