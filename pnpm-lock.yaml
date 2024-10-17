@@ -62,9 +62,6 @@ importers:
       i18next:
         specifier: ^23.6.0
         version: 23.6.0
-      react-content-loader:
-        specifier: ^6.2.1
-        version: 6.2.1(react@18.2.0)
       react-datepicker:
         specifier: ^4.21.0
         version: 4.21.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -5902,12 +5899,6 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
-
-  react-content-loader@6.2.1:
-    resolution: {integrity: sha512-6ONbFX+Hi3SHuP66JB8CPvJn372pj+qwltJV0J8z/8MFrq98I1cbFdZuhDWeQXu3CFxiiDTXJn7DFxx2ZvrO7g==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=16.0.0'
 
   react-datepicker@4.21.0:
     resolution: {integrity: sha512-z0DtuRrKMz9i7dcTusW29VacbM9pn08g1yw0cG+Y5GpodJDxSWv7zUMxl3IwKN9Ap/AMphiepvmT5P+iNCgEiA==}
@@ -13932,10 +13923,6 @@ snapshots:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-
-  react-content-loader@6.2.1(react@18.2.0):
-    dependencies:
-      react: 18.2.0
 
   react-datepicker@4.21.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
