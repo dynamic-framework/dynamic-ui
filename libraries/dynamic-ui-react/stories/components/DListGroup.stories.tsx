@@ -211,6 +211,9 @@ export const ActionVariants: Story = {
       ))}
     </DListGroup>
   ),
+  args: {
+    as: 'div',
+  },
 };
 
 export const CustomContent: Story = {
