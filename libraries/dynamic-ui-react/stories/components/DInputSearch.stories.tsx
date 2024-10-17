@@ -141,7 +141,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       action: 'onChange',
     },
   },
-  tags: ['autodocs'],
 };
 
 export default config;
