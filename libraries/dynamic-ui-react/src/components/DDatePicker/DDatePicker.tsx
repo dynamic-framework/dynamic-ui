@@ -70,6 +70,9 @@ type Props<
   placeholder?: string;
 };
 
+/**
+ * @deprecated
+ */
 export default function DDatePicker<
   CustomModifierNames extends string = never,
   WithRange extends boolean | undefined = undefined,
