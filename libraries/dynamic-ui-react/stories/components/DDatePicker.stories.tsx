@@ -260,25 +260,9 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'boolean',
       table: { defaultValue: { summary: 'false' } },
     },
-    validIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
+    placeholder: {
       type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    invalidIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
+      control: 'text',
     },
     onChange: {
       action: 'onChange',

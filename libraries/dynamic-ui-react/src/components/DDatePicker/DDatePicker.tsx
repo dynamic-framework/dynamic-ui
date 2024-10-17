@@ -67,6 +67,7 @@ type Props<
   maxYearSelect?: number;
   invalid?: boolean;
   valid?: boolean;
+  placeholder?: string;
 };
 
 export default function DDatePicker<
@@ -104,6 +105,7 @@ export default function DDatePicker<
     formatWeekDay: formatWeekDayProp,
     style,
     dataAttributes,
+    placeholder,
     ...props
   }: Props<CustomModifierNames, WithRange>,
 ) {
@@ -198,6 +200,7 @@ export default function DDatePicker<
           label={timeLabel}
         />
       )}
+      placeholderText={placeholder}
       {...locale && { locale }}
       {...dataAttributes}
       {...props}
