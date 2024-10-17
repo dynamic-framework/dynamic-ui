@@ -36,8 +36,13 @@ export default function DListGroupItem(
     if (href) {
       return 'a';
     }
+
+    if (actionProp) {
+      return 'button';
+    }
+
     return as;
-  }, [href, as]);
+  }, [href, as, actionProp]);
 
   const action = useMemo(() => {
     if (Tag === 'a' || Tag === 'button') {
