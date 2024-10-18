@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 
 import DCollapse from '../../src/components/DCollapse/DCollapse';
 import DIcon from '../../src/components/DIcon';
@@ -30,6 +31,9 @@ const config: Meta<typeof DCollapse> = {
         `,
       },
     },
+  },
+  args: {
+    onChange: fn(),
   },
   argTypes: {
     className: {

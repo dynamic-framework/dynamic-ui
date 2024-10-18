@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import { PropsWithChildren, useMemo } from 'react';
 import classNames from 'classnames';
 
 import type { BaseProps } from '../../interface';
@@ -11,15 +11,20 @@ export default function DModalFooter(
   {
     className,
     style,
-    actionPlacement = 'fill',
+    actionPlacement,
     children,
   }: Props,
 ) {
+  const generateClasses = useMemo(() => ({
+    'modal-footer': true,
+    [`d-modal-action-${actionPlacement}`]: !!actionPlacement,
+  }), [actionPlacement]);
+
   return (
     <>
       <div className="d-modal-separator" />
       <div
-        className={classNames(`modal-footer d-modal-action-${actionPlacement}`, className)}
+        className={classNames(generateClasses, className)}
         style={style}
       >
         {children}

@@ -13,6 +13,9 @@ type Props = BaseProps & PropsWithChildren<{
   horizontalBreakpoint?: BreakpointSize;
 }>;
 
+/**
+ * @deprecated Please use DListGroup instead
+ */
 function DList(
   {
     children,

@@ -7,12 +7,14 @@ import { BaseProps } from '../interface';
 
 type Props = PropsWithChildren<BaseProps>;
 
-function DToast({
-  children,
-  className,
-  style,
-  dataAttributes,
-}: Props) {
+function DToast(
+  {
+    children,
+    className,
+    style,
+    dataAttributes,
+  }: Props,
+) {
   return (
     <div
       className={classNames('toast', className)}

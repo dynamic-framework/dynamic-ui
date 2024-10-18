@@ -29,7 +29,8 @@ export { default as DInputSearch } from './DInputSearch';
 export { default as DInputPassword } from './DInputPassword';
 export { default as DInputCheck } from './DInputCheck';
 export { default as DInputPin } from './DInputPin';
-export { default as DInputSelect, DInputSelectDefaultOption, DInputSelectProps } from './DInputSelect';
+export { default as DInputSelect } from './DInputSelect';
+export type { DInputSelectDefaultOption, DInputSelectProps } from './DInputSelect';
 export { default as DInputSwitch } from './DInputSwitch';
 export { default as DInputRange } from './DInputRange';
 export { default as DSelect } from './DSelect';
@@ -37,6 +38,10 @@ export {
   default as DList,
   DListItem,
 } from './DList';
+export {
+  default as DListGroup,
+  DListGroupItem,
+} from './DListGroup';
 export {
   default as DModal,
   DModalHeader,
@@ -61,12 +66,8 @@ export { default as DStepper } from './DStepper';
 export { default as DStepperDesktop } from './DStepperDesktop';
 export { default as DStepperMobile } from './DStepperMobile';
 export { default as DTooltip } from './DTooltip';
-export {
-  default as DTabs,
-  useTabContext,
-  DTabOption,
-  DTabContent,
-} from './DTabs';
+export { default as DTabs, useTabContext } from './DTabs';
+export type { DTabOption, DTabContent } from './DTabs';
 export { default as DToast } from './DToast';
 export {
   default as DToastContainer,

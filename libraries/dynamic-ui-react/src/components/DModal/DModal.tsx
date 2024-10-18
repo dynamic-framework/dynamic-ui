@@ -46,11 +46,6 @@ function DModal(
     return '';
   }, [fullScreenFrom, fullScreen]);
 
-  const generateClasses = useMemo(() => ({
-    'modal portal fade show': true,
-    ...className && { [className]: true },
-  }), [className]);
-
   const generateModalDialogClasses = useMemo(() => ({
     'modal-dialog': true,
     'modal-dialog-centered': !!centered,
@@ -61,7 +56,7 @@ function DModal(
 
   return (
     <div
-      className={classNames(generateClasses)}
+      className={classNames('modal portal fade show', className)}
       id={name}
       tabIndex={-1}
       aria-labelledby={`${name}Label`}

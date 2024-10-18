@@ -95,7 +95,7 @@ const config: Meta<typeof DChip> = {
     },
     showClose: {
       control: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       type: 'boolean',
     },
     closeAriaLabel: {

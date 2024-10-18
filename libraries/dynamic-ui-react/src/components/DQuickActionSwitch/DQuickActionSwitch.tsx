@@ -17,6 +17,9 @@ type Props = BaseProps & {
   onClick?: (isChecked: boolean | undefined) => void;
 };
 
+/**
+ * @deprecated
+ */
 export default function DQuickActionSwitch(
   {
     id: idProp,

@@ -165,12 +165,12 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
     loading: {
       control: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       type: 'boolean',
     },
     disabled: {
       control: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       type: 'boolean',
     },
     loadingAriaLabel: {
@@ -190,7 +190,7 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
     stopPropagationEnabled: {
       control: 'boolean',
-      table: { defaultValue: { summary: true } },
+      table: { defaultValue: { summary: 'true' } },
       type: 'boolean',
     },
     onClick: {

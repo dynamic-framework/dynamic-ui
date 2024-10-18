@@ -1,2 +1,3 @@
 export * from './DContext';
-export { useDPortalContext, PortalProps } from './DPortalContext';
+export { useDPortalContext } from './DPortalContext';
+export type { PortalProps } from './DPortalContext';

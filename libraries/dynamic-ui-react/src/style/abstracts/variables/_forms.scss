@@ -120,9 +120,10 @@ $form-feedback-valid-color: var(--#{$prefix}success) !default;
 $form-feedback-invalid-color: var(--#{$prefix}danger) !default;
 
 $form-feedback-icon-valid-color: $form-feedback-valid-color !default;
-$form-feedback-icon-valid: null !default;
+$form-feedback-icon-valid: var(--#{$prefix}form-feedback-icon-valid) !default;
+
 $form-feedback-icon-invalid-color: $form-feedback-invalid-color !default;
-$form-feedback-icon-invalid: null !default;
+$form-feedback-icon-invalid: var(--#{$prefix}form-feedback-icon-invalid) !default;
 // scss-docs-end form-feedback-variables
 
 // scss-docs-start form-validation-colors

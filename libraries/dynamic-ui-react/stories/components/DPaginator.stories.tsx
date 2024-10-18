@@ -11,7 +11,7 @@ const meta: Meta<typeof DPaginator> = {
     docs: {
       description: {
         component: `
-![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
@@ -39,7 +39,42 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
       control: 'number',
     },
     onPageChange: {
-      type: 'function',
+      action: 'onPageChange',
+      type: { name: 'function' },
+    },
+    maxWidth: {
+      control: 'number',
+    },
+    className: {
+      control: 'text',
+    },
+    extraClassName: {
+      control: 'text',
+    },
+    pageItemClassName: {
+      control: 'text',
+    },
+    pageLinkClassName: {
+      control: 'text',
+    },
+    activeItemClassName: {
+      control: 'text',
+    },
+    disabledItemClassName: {
+      control: 'text',
+    },
+    disabledLinkClassName: {
+      control: 'text',
+    },
+    navClassName: {
+      control: 'text',
+    },
+    previousClassName: {
+      control: 'text',
+    },
+    nextClassName: {
+      control: 'text',
+      type: 'string',
     },
     previousLabel: {
       control: 'text',
@@ -47,17 +82,31 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
     nextLabel: {
       control: 'text',
     },
+    ariaPreviousLabel: {
+      control: 'text',
+    },
+    ariaNextLabel: {
+      control: 'text',
+    },
+    renderNav: {
+      control: 'boolean',
+    },
+    ariaCurrentAttr: {
+      control: 'boolean',
+    },
+    linkHref: {
+      control: {
+        type: 'radio',
+        labels: {
+          undefined: 'empty',
+        },
+      },
+      options: [undefined, 'hash', 'omit'],
+    },
     showArrows: {
       control: 'boolean',
-      type: 'boolean',
     },
-    maxWidth: {
-      control: 'number',
-    },
-    className: {
-      control: 'text',
-      type: 'string',
-    },
+
   },
   tags: ['autodocs'],
 };

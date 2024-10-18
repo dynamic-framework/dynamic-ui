@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
 
@@ -13,7 +14,12 @@ import {
   ICON_FAMILY_PREFIX,
   PREFIX_BS,
 } from '../../src/components/config';
-import { DContextProvider, DInput } from '../../src';
+import {
+  DContextProvider,
+  DInput,
+  DToastContainer,
+} from '../../src';
+import { ExampleMaterialIconToastUsage } from '../hooks/useToastExamples';
 
 const meta: Meta<typeof DIcon> = {
   title: 'Design System/Components/Icon',
@@ -90,7 +96,7 @@ To work with libraries that use this style, there is the materialStyle flag. By 
     },
     loading: {
       control: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       type: 'boolean',
       description: 'Enable loading animation',
     },
@@ -98,19 +104,19 @@ To work with libraries that use this style, there is the materialStyle flag. By 
       type: 'number',
       control: 'number',
       description: 'Loading animation duration, in seconds',
-      table: { defaultValue: { summary: 1.8 } },
+      table: { defaultValue: { summary: '1.8' } },
     },
     hasCircle: {
       type: 'boolean',
       control: 'boolean',
       description: 'Add circle around the icon',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     materialStyle: {
       type: 'boolean',
       control: 'boolean',
       description: 'To use material style icons',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     circleSize: {
       type: 'string',
@@ -245,6 +251,35 @@ export const InputWithMaterialIcons: StoryObj<typeof DInput> = {
     iconStart: 'alternate_email',
     iconEnd: 'cached',
   },
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+export const ToastWithMaterialIcons: StoryObj<typeof DInput> = {
+  decorators: [
+    (Story) => (
+      <div className="d-flex flex-column justify-content-end" style={{ width: '320px', height: '210px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  render: (_args: ComponentProps<typeof DInput>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <ExampleMaterialIconToastUsage />
+      <DToastContainer
+        key="material-icon-toast-container"
+        position="top-right"
+      />
+    </DContextProvider>
+  ),
+  args: {},
   parameters: {
     docs: {
       canvas: {

@@ -2,39 +2,11 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import type { ComponentProps } from 'react';
 
-import { PREFIX_BS } from '../../src/components/config';
 import DQuickActionCheck from '../../src/components/DQuickActionCheck/DQuickActionCheck';
 
 const config: Meta<typeof DQuickActionCheck> = {
   title: 'Design System/Components/Quick Action Check',
   component: DQuickActionCheck,
-  parameters: {
-    docs: {
-      description: {
-        component: `
-## CSS Variables
-| Variable                                           | Class                 | Type            | Description                    |
-|----------------------------------------------------|-----------------------|-----------------|--------------------------------|
-| --${PREFIX_BS}quick-action-check-gap               | .d-quick-action-check | css length unit | Space between content elements |
-| --${PREFIX_BS}quick-action-check-padding           | .d-quick-action-check | css length unit | Content padding                |
-| --${PREFIX_BS}quick-action-check-bg                | .d-quick-action-check | css color unit  | Content background color       |
-| --${PREFIX_BS}quick-action-check-border-radius     | .d-quick-action-check | css length unit | Quick action border radius     |
-| --${PREFIX_BS}quick-action-check-line1-font-size   | .d-quick-action-check | css length unit | First line font size           |
-| --${PREFIX_BS}quick-action-check-line1-font-weight | .d-quick-action-check | css font weight | First line font weight         |
-| --${PREFIX_BS}quick-action-check-line1-color       | .d-quick-action-check | css color unit  | First line color               |
-| --${PREFIX_BS}quick-action-check-line2-font-size   | .d-quick-action-check | css length unit | Second line font size          |
-| --${PREFIX_BS}quick-action-check-line2-font-weight | .d-quick-action-check | css length unit | Second line font weight        |
-| --${PREFIX_BS}quick-action-check-line2-color       | .d-quick-action-check | css color unit  | Second line color              |
-| --${PREFIX_BS}quick-action-check-line3-font-size   | .d-quick-action-check | css length unit | Third line font size           |
-| --${PREFIX_BS}quick-action-check-line3-font-weight | .d-quick-action-check | css length unit | Third line font weight         |
-| --${PREFIX_BS}quick-action-check-line3-color       | .d-quick-action-check | css color unit  | Third line color               |
-| --${PREFIX_BS}quick-action-check-hover-bg          | .d-quick-action-check | css color unit  | Content hover background       |
-| --${PREFIX_BS}quick-action-check-checked-bg        | .d-quick-action-check | css color unit  | Content checked background     |
-| --${PREFIX_BS}quick-action-check-checked-color     | .d-quick-action-check | css color unit  | Content checked color          |
-        `,
-      },
-    },
-  },
   argTypes: {
     id: {
       control: 'text',
@@ -78,7 +50,6 @@ const config: Meta<typeof DQuickActionCheck> = {
       action: 'onChange',
     },
   },
-  tags: ['autodocs'],
 };
 
 export default config;

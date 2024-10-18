@@ -128,7 +128,7 @@ export const ActionsPlacementStart: Story = {
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
       </DOffcanvas.Body>
-      <DOffcanvas.Footer footerActionPlacement="start">
+      <DOffcanvas.Footer actionPlacement="start">
         <DButton
           text="cancel"
           theme="secondary"
@@ -164,7 +164,7 @@ export const ActionsPlacementEnd: Story = {
       <DOffcanvas.Body>
         <p>Offcanvas body</p>
       </DOffcanvas.Body>
-      <DOffcanvas.Footer footerActionPlacement="end">
+      <DOffcanvas.Footer actionPlacement="end">
         <DButton
           text="cancel"
           theme="secondary"

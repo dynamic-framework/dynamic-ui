@@ -12,6 +12,9 @@ type Props = BaseProps & PropsWithChildren<{
   onClick?: () => void;
 }>;
 
+/**
+ * @deprecated Please use DListGroup.Item or DListGroupItem instead
+ */
 export default function DListItem(
   {
     children,

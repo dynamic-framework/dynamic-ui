@@ -48,7 +48,6 @@ To understand in more detail the aspects covered by this component, review the f
       action: 'onClick',
     },
   },
-  tags: ['autodocs'],
 };
 
 export default config;

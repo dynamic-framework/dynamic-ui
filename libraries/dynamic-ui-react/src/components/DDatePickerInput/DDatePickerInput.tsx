@@ -30,8 +30,6 @@ function DDatePickerInput(
     className,
     style,
     inputLabel,
-    validIcon,
-    invalidIcon,
     readOnly: ignored,
     ...props
   }: Props,
@@ -50,8 +48,6 @@ function DDatePickerInput(
       className={className}
       style={style}
       label={inputLabel}
-      invalidIcon={invalidIcon}
-      validIcon={validIcon}
       {...props}
     />
   );

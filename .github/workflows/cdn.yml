@@ -1,8 +1,7 @@
 name: Sync CDN version / latest
 on:
-  push:
-    tags:
-      - '@dynamic-framework/ui-react@*'
+  release:
+    types: [published]
 
 jobs:
   build:

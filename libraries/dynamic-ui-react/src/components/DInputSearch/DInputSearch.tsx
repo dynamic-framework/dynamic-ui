@@ -7,6 +7,9 @@ import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
 type Props = ComponentPropsWithoutRef<typeof DInput>;
 
+/**
+ * @deprecated
+ */
 function DInputSearch(
   {
     type,

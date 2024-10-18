@@ -1,0 +1,85 @@
+.d-avatar {
+  --#{$prefix}avatar-border: 1px solid var(--#{$prefix}avatar-bg);
+  --#{$prefix}avatar-size: var(--#{$prefix}ref-spacer-12);
+  --#{$prefix}avatar-bg: var(--#{$prefix}secondary-100);
+  --#{$prefix}avatar-color: var(--#{$prefix}secondary-500);
+  --#{$prefix}avatar-font-weight: var(--#{$prefix}fw-bold);
+  --#{$prefix}avatar-border-radius: var(--#{$prefix}border-radius-pill);
+
+  position: relative;
+  display: inline-block;
+  width: var(--#{$prefix}avatar-size);
+  height: var(--#{$prefix}avatar-size);
+  font-size: calc(var(--#{$prefix}avatar-size) / 3);
+  border: var(--#{$prefix}avatar-border);
+  border-radius: var(--#{$prefix}avatar-border-radius);
+
+  .d-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--#{$prefix}avatar-border-radius);
+  }
+
+  .d-avatar-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-weight: var(--#{$prefix}avatar-font-weight);
+    color: var(--#{$prefix}avatar-color);
+    white-space: pre-wrap;
+    background-color: var(--#{$prefix}avatar-bg);
+    border-radius: var(--#{$prefix}avatar-border-radius);
+  }
+
+  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
+    $color: color-contrast($value);
+    &.d-avatar-#{$theme} {
+      --#{$prefix}avatar-color: var(--#{$prefix}#{$theme}-500);
+      --#{$prefix}avatar-bg: var(--#{$prefix}#{$theme}-100);
+    }
+
+    &.d-avatar-dark-#{$theme} {
+      --#{$prefix}avatar-color: var(--#{$prefix}white);
+      --#{$prefix}avatar-bg: var(--#{$prefix}#{$theme}-500);
+    }
+
+    &.d-avatar-light-#{$theme} {
+      --#{$prefix}avatar-color: var(--#{$prefix}#{$theme}-500);
+      --#{$prefix}avatar-bg: var(--#{$prefix}white);
+    }
+  }
+}
+
+.d-avatar-xs {
+  --#{$prefix}avatar-size: var(--#{$prefix}ref-spacer-8);
+}
+
+.d-avatar-sm {
+  --#{$prefix}avatar-size: var(--#{$prefix}ref-spacer-10);
+}
+
+.d-avatar-lg {
+  --#{$prefix}avatar-size: var(--#{$prefix}ref-spacer-14);
+}
+
+.d-avatar-xl {
+  --#{$prefix}avatar-size: var(--#{$prefix}ref-spacer-16);
+}
+
+.d-avatar-xxl {
+  --#{$prefix}avatar-size: var(--#{$prefix}ref-spacer-18);
+}
+
+.d-avatar-group {
+  .d-avatar-img,
+  .d-avatar-name {
+    box-shadow: -2px 0 2px rgba(0, 0, 0, .1);
+  }
+
+  .d-avatar + .d-avatar {
+    margin-left: calc(var(--#{$prefix}avatar-size) * -.25);
+  }
+}
