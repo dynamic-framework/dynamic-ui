@@ -48,10 +48,6 @@ export type EndIconProps = {
     iconEndTabIndex?: number;
     iconEndMaterialStyle?: boolean;
 };
-export type StateIcons = {
-    invalidIcon?: string;
-    validIcon?: string;
-};
 export type AlertTheme = 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary';
 export type AlertThemeIconMap = {
     [state in AlertTheme]: string;

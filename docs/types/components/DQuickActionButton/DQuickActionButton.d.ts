@@ -18,5 +18,8 @@ type Props = BaseProps & {
     onClick?: () => void;
     onClickSecondary?: () => void;
 };
+/**
+ * @deprecated
+ */
 export default function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme, actionIcon, secondaryActionIcon, secondaryActionAriaLabel, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme, representativeIconHasCircle, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

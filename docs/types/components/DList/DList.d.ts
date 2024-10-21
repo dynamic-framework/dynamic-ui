@@ -7,6 +7,9 @@ type Props = BaseProps & PropsWithChildren<{
     horizontal?: boolean;
     horizontalBreakpoint?: BreakpointSize;
 }>;
+/**
+ * @deprecated Please use DListGroup instead
+ */
 declare function DList({ children, className, style, flush, numbered, horizontal, horizontalBreakpoint, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DList & {
     Item: typeof DListItem;

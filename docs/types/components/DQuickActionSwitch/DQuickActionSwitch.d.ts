@@ -8,5 +8,8 @@ type Props = BaseProps & {
     disabled?: boolean;
     onClick?: (isChecked: boolean | undefined) => void;
 };
+/**
+ * @deprecated
+ */
 export default function DQuickActionSwitch({ id: idProp, name, label, hint, checked, disabled, className, style, dataAttributes, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

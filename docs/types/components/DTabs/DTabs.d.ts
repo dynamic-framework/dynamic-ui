@@ -9,7 +9,7 @@ export type DTabOption = {
 export type TabVariant = 'tabs' | 'pills' | 'underline';
 type Props = BaseProps & PropsWithChildren<{
     classNameTab?: string;
-    onChange: (option: DTabOption) => void;
+    onChange?: (option: DTabOption) => void;
     options: Array<DTabOption>;
     defaultSelected: string;
     vertical?: boolean;

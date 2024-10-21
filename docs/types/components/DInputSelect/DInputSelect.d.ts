@@ -1,10 +1,10 @@
 import type { FocusEvent, MouseEvent } from 'react';
-import type { BaseProps, ComponentSize, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps, StateIcons } from '../interface';
+import type { BaseProps, ComponentSize, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps } from '../interface';
 export type DefaultOption = {
     value: string | number;
     label: string;
 };
-export type Props<T> = BaseProps & FamilyIconProps & LabelIconProps & StartIconProps & EndIconProps & StateIcons & {
+export type Props<T> = BaseProps & FamilyIconProps & LabelIconProps & StartIconProps & EndIconProps & {
     id?: string;
     name?: string;
     label?: string;
@@ -24,4 +24,4 @@ export type Props<T> = BaseProps & FamilyIconProps & LabelIconProps & StartIconP
     valueExtractor?: (item: T) => string | number;
     labelExtractor?: (item: T) => string;
 };
-export default function DInputSelect<T extends object = DefaultOption>({ id: idProp, name, label, className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled, loading, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, invalidIcon: invalidIconProp, validIcon: validIconProp, hint, value, size, floatingLabel, invalid, valid, dataAttributes, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }: Props<T>): import("react/jsx-runtime").JSX.Element;
+export default function DInputSelect<T extends object = DefaultOption>({ id: idProp, name, label, className, style, options, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, disabled, loading, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, hint, value, size, floatingLabel, invalid, valid, dataAttributes, valueExtractor, labelExtractor, onChange, onBlur, onIconStartClick, onIconEndClick, }: Props<T>): import("react/jsx-runtime").JSX.Element;

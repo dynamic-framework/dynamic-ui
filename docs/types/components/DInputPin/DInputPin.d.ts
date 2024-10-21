@@ -1,5 +1,5 @@
-import type { BaseProps, FamilyIconProps, LabelIconProps, PinInputMode, PinInputType, StateIcons } from '../interface';
-type Props = BaseProps & LabelIconProps & FamilyIconProps & StateIcons & {
+import type { BaseProps, FamilyIconProps, LabelIconProps, PinInputMode, PinInputType } from '../interface';
+type Props = BaseProps & LabelIconProps & FamilyIconProps & {
     id?: string;
     label?: string;
     placeholder?: string;
@@ -15,5 +15,5 @@ type Props = BaseProps & LabelIconProps & FamilyIconProps & StateIcons & {
     valid?: boolean;
     onChange?: (value: string) => void;
 };
-export default function DInputPin({ id: idProp, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder, type, disabled, loading, secret, iconFamilyClass, iconFamilyPrefix, characters, invalidIcon: invalidIconProp, validIcon: validIconProp, innerInputMode, hint, invalid, valid, className, style, dataAttributes, onChange, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DInputPin({ id: idProp, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder, type, disabled, loading, secret, characters, innerInputMode, hint, invalid, valid, className, style, dataAttributes, onChange, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
