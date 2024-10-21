@@ -23,7 +23,7 @@ export type TabVariant = 'tabs' | 'pills' | 'underline';
 
 type Props = BaseProps & PropsWithChildren<{
   classNameTab?: string;
-  onChange: (option: DTabOption) => void;
+  onChange?: (option: DTabOption) => void;
   options: Array<DTabOption>;
   defaultSelected: string;
   vertical?: boolean;
@@ -50,7 +50,7 @@ function DTabs(
     if (option.tab) {
       setSelected(option.tab);
     }
-    onChange(option);
+    onChange?.(option);
   }, [onChange]);
 
   useEffect(() => {
