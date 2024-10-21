@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.32.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.31.0...@dynamic-framework/ui-react@1.32.0) (2024-10-21)
+
+
+### Style Features
+
+* **style:** add support to default placeholder color css variable ([#743](https://github.com/dynamic-framework/dynamic-ui/issues/743)) ([892b184](https://github.com/dynamic-framework/dynamic-ui/commit/892b184ac72f351d23e0526a20b2a2273b108fe3))
+
+
+### Features
+
+* add query string utilities ([c722ed5](https://github.com/dynamic-framework/dynamic-ui/commit/c722ed5d57b1edd202103e3e7d125e7782f636fe))
+* **DAvatar:** re-style and new API ([#745](https://github.com/dynamic-framework/dynamic-ui/issues/745)) ([27d68fe](https://github.com/dynamic-framework/dynamic-ui/commit/27d68fee8f9ef042a9dec94a2fdca891bb0a87fb))
+* **DListGroup.Item:** set the tag to button with the prop action ([a205980](https://github.com/dynamic-framework/dynamic-ui/commit/a205980b82e9bd92475bdbabe3fb82db0e4e311c))
+* **DListGroup:** add new component, use this instead of DList ([cb0c6e2](https://github.com/dynamic-framework/dynamic-ui/commit/cb0c6e20fd5337fca82126f117c4c6457f3e7aa0))
+* **DModal:** remove optionPlacement default value ([5d16ec0](https://github.com/dynamic-framework/dynamic-ui/commit/5d16ec014193cc4e0b99c51070a8a351a40ac645))
+* **docs:** add some toast examples ([#735](https://github.com/dynamic-framework/dynamic-ui/issues/735)) ([a8c89db](https://github.com/dynamic-framework/dynamic-ui/commit/a8c89db4ea993107f07e9cb0a5133c64230c921b))
+* **DOffcanvas:** remove optionPlacement default value ([2693222](https://github.com/dynamic-framework/dynamic-ui/commit/2693222bcffe8b363e1e83101bf97d1e36bf585f))
+* **DPaginator:** change from abstraction to a wrapper component with backward compatibility ([16410bd](https://github.com/dynamic-framework/dynamic-ui/commit/16410bd8315f4c60a50576f4a80f4303d0772b40))
+* use bootstrap validation feedback for inputs ([2975a77](https://github.com/dynamic-framework/dynamic-ui/commit/2975a77a56f5db5ae0fc1b81cf051596051ffce9))
+* **useItemSelection:** add hook with storybook example for item selection ([077eff2](https://github.com/dynamic-framework/dynamic-ui/commit/077eff2b2f48547ab298576922372d23670c08e2))
+
+
+### Style Fixes
+
+* **style:** adjust alert light and dark colors ([a032b01](https://github.com/dynamic-framework/dynamic-ui/commit/a032b017eac0a597bce88bd28d44f7a8038cc8a6))
+* **style:** adjust tabs style ([47601f0](https://github.com/dynamic-framework/dynamic-ui/commit/47601f082f0d9a881ddc2e26731149a601278cea))
+* **style:** remove shadow of input feedback ([84b41ce](https://github.com/dynamic-framework/dynamic-ui/commit/84b41cedcaf68442dca03a5a771002d5e39d8ccc))
+
+
+### Bug Fixes
+
+* **DDatePicker:** expose placeholder prop ([e33b54e](https://github.com/dynamic-framework/dynamic-ui/commit/e33b54ea917299ca08c3fb1bd6e8cdb0a1210481))
+* **DList:** set states with primary theme ([81edc4a](https://github.com/dynamic-framework/dynamic-ui/commit/81edc4aedc2b20ee28ebf6f703f5af9e27d6281a))
+* **DPaginator:** allow use page or current ([15e899e](https://github.com/dynamic-framework/dynamic-ui/commit/15e899e1e8de5fa5396cf3121e9ce93c167d9666))
+* **DPaginator:** show disabled color when showArrows is active ([623cc41](https://github.com/dynamic-framework/dynamic-ui/commit/623cc41b4dfe74b17bcbbf77561c24e873597f99))
+* **DTabs:** remove required onChange prop ([82f5f12](https://github.com/dynamic-framework/dynamic-ui/commit/82f5f12738a6110f0b2c203d44f4c5b05b876aa2))
+* **DTabs:** set primary state colors ([2bfee69](https://github.com/dynamic-framework/dynamic-ui/commit/2bfee69319de34c917b6ebb8ba2a30f8377c9aba))
+
+
+### Storybook
+
+* add beta badge to DListGroup ([93b0969](https://github.com/dynamic-framework/dynamic-ui/commit/93b0969be9232d17ef006c5a0ec933fc90256d7f))
+* adjust pagination and add item selection on table examples ([f2298fd](https://github.com/dynamic-framework/dynamic-ui/commit/f2298fdd4dc85f7c8c8b20901504090a85c7a8c6))
+* deprecate DDatePicker component ([3ad08a0](https://github.com/dynamic-framework/dynamic-ui/commit/3ad08a0d0929f48a1758a4ab29e4be3cab668fa3))
+* deprecate DInputCurrencyBase component ([2948774](https://github.com/dynamic-framework/dynamic-ui/commit/2948774dd9e33f26c0d0a40d1c8f667f6a7ddf2d))
+* deprecate DInputSearch component ([c657d9a](https://github.com/dynamic-framework/dynamic-ui/commit/c657d9a1dd8c0f51e9f460e4c21cf7cbaea5e2d1))
+* deprecate DList and DListItem components ([44cc961](https://github.com/dynamic-framework/dynamic-ui/commit/44cc96135bbd931d03640567d95f68b2b4f21ecb))
+* deprecate DPopover component ([76a0648](https://github.com/dynamic-framework/dynamic-ui/commit/76a0648f9fec1b1246056d5f7a8ca2f585ad2def))
+* deprecate DQuickActionButton component ([f41ad7f](https://github.com/dynamic-framework/dynamic-ui/commit/f41ad7f41e0d27b33f7cfef3bd725cda37e2ad17))
+* deprecate DQuickActionCheck component ([f7df7d7](https://github.com/dynamic-framework/dynamic-ui/commit/f7df7d71c28f967161c44d22036e745b8a940497))
+* deprecate DQuickActionSwitch component ([1d1e7aa](https://github.com/dynamic-framework/dynamic-ui/commit/1d1e7aa088887a417a525bafb74bf134fb15963b))
+* on inputs rename error and confirm stories to invalid and valid state ([d050031](https://github.com/dynamic-framework/dynamic-ui/commit/d050031db36b53c4ebc2253bde48e4e149dc9dba))
+* remove abstraction badge from DList and DListItem ([caeb07d](https://github.com/dynamic-framework/dynamic-ui/commit/caeb07d08ae87854e7a2ce7026adfe7eeffdd737))
+
+
+
 ## [1.31.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.30.1...@dynamic-framework/ui-react@1.31.0) (2024-09-05)
 
 
