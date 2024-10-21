@@ -6,24 +6,6 @@ import DListItem from '../../src/components/DList/components/DListItem';
 const config: Meta<typeof DList> = {
   title: 'Design System/Components/List',
   component: DList,
-  parameters: {
-    docs: {
-      description: {
-        component: `
-List of elements
-
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
-
-## CSS Variables
-
-The Bootstrap documentation provides details on the default [List Group CSS Variables](https://getbootstrap.com/docs/5.3/components/list-group/#css)
-
-        `,
-      },
-    },
-  },
   argTypes: {
     style: {
       control: 'object',
@@ -50,7 +32,6 @@ The Bootstrap documentation provides details on the default [List Group CSS Vari
       options: [undefined, 'sm', 'md', 'lg', 'xl', 'xxl'],
     },
   },
-  tags: ['autodocs'],
 };
 
 export default config;
@@ -62,7 +43,6 @@ export const Default: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
@@ -77,7 +57,6 @@ export const Flush: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
@@ -95,7 +74,6 @@ export const Numbered: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
@@ -113,7 +91,6 @@ export const Horizontal: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>
@@ -138,7 +115,6 @@ export const HorizontalWithBreakpoint: Story = {
       {[1, 2, 3].map((item) => (
         <DListItem
           key={item}
-          className="py-2 px-4"
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListItem>

@@ -18,7 +18,6 @@ import type {
   ButtonVariant,
   ComponentSize,
   FamilyIconProps,
-  StateIcons,
 } from '../interface';
 import { useDContext } from '../../contexts';
 
@@ -28,7 +27,6 @@ type Props<
 > =
 & BaseProps
 & FamilyIconProps
-& StateIcons
 & Pick<ReactDatePickerProps<CustomModifierNames, WithRange>,
 | 'formatWeekDay'
 | 'onChange'
@@ -69,8 +67,12 @@ type Props<
   maxYearSelect?: number;
   invalid?: boolean;
   valid?: boolean;
+  placeholder?: string;
 };
 
+/**
+ * @deprecated
+ */
 export default function DDatePicker<
   CustomModifierNames extends string = never,
   WithRange extends boolean | undefined = undefined,
@@ -101,13 +103,12 @@ export default function DDatePicker<
     invalid = false,
     valid = false,
     renderCustomHeader: renderCustomHeaderProp,
-    validIcon,
-    invalidIcon,
     locale,
     className,
     formatWeekDay: formatWeekDayProp,
     style,
     dataAttributes,
+    placeholder,
     ...props
   }: Props<CustomModifierNames, WithRange>,
 ) {
@@ -187,19 +188,12 @@ export default function DDatePicker<
           aria-label={inputAriaLabel}
           iconEndAriaLabel={inputActionAriaLabel}
           iconMaterialStyle={iconMaterialStyleProp}
-          {...(
-            (!valid && !invalid)
-            || (valid && !validIcon)
-            || (invalid && !invalidIcon)) && {
-            iconEnd: iconInput,
-          }}
+          iconEnd={iconInput}
           inputLabel={inputLabel}
           className={className}
           style={style}
           invalid={invalid}
           valid={valid}
-          validIcon={validIcon}
-          invalidIcon={invalidIcon}
           hint={inputHint}
         />
       )}
@@ -209,6 +203,7 @@ export default function DDatePicker<
           label={timeLabel}
         />
       )}
+      placeholderText={placeholder}
       {...locale && { locale }}
       {...dataAttributes}
       {...props}

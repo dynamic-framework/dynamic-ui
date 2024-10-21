@@ -76,22 +76,22 @@ The Bootstrap documentation provides details on the default [Input Form CSS Vari
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     secret: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
       description: 'Hide the characters',
     },
     characters: {
@@ -108,37 +108,17 @@ The Bootstrap documentation provides details on the default [Input Form CSS Vari
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
-    },
-    validIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    invalidIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
     },
     onChange: {
       action: 'onChange',
@@ -178,7 +158,7 @@ export const WithoutLabel: Story = {
   },
 };
 
-export const Error: Story = {
+export const Invalid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
@@ -193,7 +173,7 @@ export const Error: Story = {
   },
 };
 
-export const Confirm: Story = {
+export const Valid: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',

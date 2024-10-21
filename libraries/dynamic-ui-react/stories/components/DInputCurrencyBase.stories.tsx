@@ -2,46 +2,10 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import DInputCurrencyBase from '../../src/components/DInputCurrencyBase/DInputCurrencyBase';
 import { ICONS } from '../config/constants';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputCurrencyBase> = {
   title: 'Design System/Components/Input Currency Base',
   component: DInputCurrencyBase,
-  parameters: {
-    docs: {
-      description: {
-        component: `
-Component composition with \`d-input\` to make a currency input component.
-
-## CSS Variables
-
-The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
-and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/forms/input-group/#css)
-
-| Variable                                  | Class         | Type            | Description                  |
-|-------------------------------------------|---------------|-----------------|------------------------------|
-| --${PREFIX_BS}label-color                 | :root         | css color unit  | Label color                  |
-| --${PREFIX_BS}label-font-weight           | :root         | css font weight | Label font weight            |
-| --${PREFIX_BS}label-font-size             | :root         | css length unit | Label font size              |
-| --${PREFIX_BS}label-padding-x             | :root         | css length unit | Label horizontal padding     |
-| --${PREFIX_BS}label-padding-y             | :root         | css length unit | Label vertical padding       |
-| --${PREFIX_BS}input-border-color          | .input-group  | css color unit  | Input border color           |
-| --${PREFIX_BS}input-border-width          | .input-group  | css length unit | Input border width           |
-| --${PREFIX_BS}input-border-radius         | .input-group  | css length unit | Input border radius          |
-| --${PREFIX_BS}input-focus-border-color    | .input-group  | css color unit  | Input focus border color     |
-| --${PREFIX_BS}input-focus-box-shadow      | .input-group  | css shadow      | Input focus box shadow       |
-| --${PREFIX_BS}input-disabled-bg           | .input-group  | css color unit  | Input disable background     |
-| --${PREFIX_BS}input-disabled-color        | .input-group  | css color unit  | Input disable color          |
-| --${PREFIX_BS}input-disabled-border-color | .input-group  | css color unit  | Input disable border color   |
-| --${PREFIX_BS}form-text-padding           | .form-text    | css length unit | Hint padding                 |
-| --${PREFIX_BS}form-text-gap               | .form-text    | css length unit | Space between hint elements  |
-| --${PREFIX_BS}form-text-color             | .form-text    | css color unit  | Hint color                   |
-| --${PREFIX_BS}form-control-text-align     | .form-control | css text align  | Input text align             |
-| --${PREFIX_BS}input-currency-symbol-color | .input-group  | css color unit  | Color of the currency symbol |
-        `,
-      },
-    },
-  },
   argTypes: {
     id: {
       control: 'text',
@@ -96,17 +60,17 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     iconStart: {
       control: {
@@ -136,26 +100,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       control: 'text',
       type: 'string',
     },
-    validIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    invalidIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
     hint: {
       control: 'text',
       type: 'string',
@@ -168,12 +112,12 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     minValue: {
       control: 'number',
@@ -186,13 +130,12 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     onChange: {
       action: 'onChange',
     },
   },
-  tags: ['autodocs'],
 };
 
 export default config;
@@ -216,7 +159,7 @@ export const Default: Story = {
   },
 };
 
-export const Error: Story = {
+export const Invalid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
@@ -235,7 +178,7 @@ export const Error: Story = {
   },
 };
 
-export const Confirm: Story = {
+export const Valid: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',

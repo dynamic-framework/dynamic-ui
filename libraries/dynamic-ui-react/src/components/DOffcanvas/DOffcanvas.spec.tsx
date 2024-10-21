@@ -49,7 +49,7 @@ it('should render my component with header, body, and footer slot', () => {
         class="d-offcanvas-separator"
       />
       <div
-        class="d-offcanvas-footer d-offcanvas-action-fill"
+        class="d-offcanvas-footer"
       >
         Test Footer
       </div>

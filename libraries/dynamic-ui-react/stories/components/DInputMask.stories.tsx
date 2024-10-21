@@ -76,17 +76,17 @@ const config: Meta<typeof DInputMask> = {
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     iconStart: {
       control: {
@@ -116,26 +116,6 @@ const config: Meta<typeof DInputMask> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    validIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    invalidIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
     hint: {
       control: 'text',
       type: 'string',
@@ -144,17 +124,17 @@ const config: Meta<typeof DInputMask> = {
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     onIconStartClick: {
       action: 'onIconStartClicked',
@@ -216,5 +196,39 @@ export const Default: Story = {
     mask: '(+56)_ ____ ____',
     replacement: { _: /\d/ },
     showMask: true,
+  },
+};
+
+export const Invalid: Story = {
+  args: {
+    id: 'componentId2',
+    label: 'Label',
+    labelIcon: undefined,
+    type: 'text',
+    iconStart: 'phone',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
+    hint: 'Write your phone number',
+    mask: '(+56)_ ____ ____',
+    replacement: { _: /\d/ },
+    showMask: true,
+    invalid: true,
+  },
+};
+
+export const Valid: Story = {
+  args: {
+    id: 'componentId3',
+    label: 'Label',
+    labelIcon: undefined,
+    type: 'text',
+    iconStart: 'phone',
+    iconStartAriaLabel: 'start action',
+    iconEndAriaLabel: 'end action',
+    hint: 'Write your phone number',
+    mask: '(+56)_ ____ ____',
+    replacement: { _: /\d/ },
+    showMask: true,
+    valid: true,
   },
 };

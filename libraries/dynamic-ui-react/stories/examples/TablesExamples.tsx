@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import {
@@ -8,6 +8,9 @@ import {
   DBadge,
   DInput,
   DTableHead,
+  useItemSelection,
+  getQueryString,
+  changeQueryString,
 } from '../../src';
 
 const HEADER_ENTRIES = [
@@ -204,39 +207,32 @@ export function ExampleCompositionTableLoading() {
 }
 
 type Props = {
-  queryString: string;
-  onQueryStringChange: (queryString: string) => void;
-  total: number;
+  page: number;
+  rows: number;
+  totalPages: number;
+  sort: string;
+  setPage(page: number): void;
+  setRows(rows: number): void;
+  setSort(sort: string): void;
 };
 
-export function ExampleCompositionTable({ total, queryString, onQueryStringChange }: Props) {
+export function ExampleCompositionTable(
+  {
+    page,
+    rows,
+    totalPages,
+    sort,
+    setPage,
+    setRows,
+    setSort,
+  }: Props,
+) {
   const {
-    pageParam,
-    perPageParam,
-    sortParam,
-  } = useMemo(() => {
-    const params = new URLSearchParams(queryString);
-    return {
-      pageParam: parseInt(params.get('page') || '1', 10),
-      perPageParam: parseInt(params.get('per_page') || '1', 10),
-      sortParam: params.get('sort') || '',
-    };
-  }, [queryString]);
-
-  const [page, setPage] = useState(pageParam);
-  const [perPage, setPerPage] = useState(perPageParam);
-  const [sort, setSort] = useState(sortParam);
-
-  useEffect(() => {
-    const params = new URLSearchParams({
-      ...page && { page: page.toString() },
-      ...perPage && { per_page: perPage.toString() },
-      ...total && { total: total.toString() },
-      ...sort && { sort },
-    });
-
-    onQueryStringChange(params.toString());
-  }, [onQueryStringChange, page, perPage, sort, total]);
+    isSelectedItem,
+    toggleSelectedItem,
+    selectedItems,
+    setSelectedItems,
+  } = useItemSelection<typeof ROWS[0]>();
 
   return (
     <>
@@ -244,6 +240,15 @@ export function ExampleCompositionTable({ total, queryString, onQueryStringChang
         <caption>List of users</caption>
         <thead>
           <tr>
+            <th>
+              <DInputCheck
+                type="checkbox"
+                checked={selectedItems.length === ROWS.length}
+                onChange={(event) => {
+                  setSelectedItems(event.target.checked ? ROWS : []);
+                }}
+              />
+            </th>
             {HEADER_ENTRIES.map(([key, value]) => (
               <DTableHead
                 style={{ width: '25%' }}
@@ -259,6 +264,13 @@ export function ExampleCompositionTable({ total, queryString, onQueryStringChang
         <tbody>
           {ROWS.map((row) => (
             <tr key={row.id}>
+              <td>
+                <DInputCheck
+                  type="checkbox"
+                  onChange={() => toggleSelectedItem(row)}
+                  checked={isSelectedItem(row)}
+                />
+              </td>
               {HEADER_ENTRIES.map(([key]) => (
                 <td key={`${row.id}-${key}`}>
                   {row[key as keyof typeof ROWS[0]]}
@@ -276,15 +288,15 @@ export function ExampleCompositionTable({ total, queryString, onQueryStringChang
             style={{ width: '36px' }}
             size="sm"
             type="number"
-            value={perPage.toString()}
-            onChange={(value) => setPerPage(parseInt(value, 10))}
+            value={rows.toString()}
+            onChange={(value) => setRows(parseInt(value, 10))}
           />
         </div>
         <div className="col-8">
           <DPaginator
-            page={page}
+            current={page}
             onPageChange={setPage}
-            total={total}
+            total={totalPages}
           />
         </div>
       </div>
@@ -293,18 +305,19 @@ export function ExampleCompositionTable({ total, queryString, onQueryStringChang
 }
 
 export function ExampleComposition() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const [page, setPage] = useState(Number(getQueryString('page', { default: '1', useSearch: false })));
+  const [rows, setRows] = useState(Number(getQueryString('rows', { default: '3', useSearch: false })));
+  const [sort, setSort] = useState(getQueryString('sort', { default: 'id', useSearch: false })!);
   const [queryString, setQueryString] = useState('');
 
   useEffect(() => {
-    const timer = setTimeout(
-      () => setLoading(false),
-      1000,
-    );
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    setQueryString(changeQueryString(
+      { page, rows, sort },
+      { useSearch: false },
+    ));
+  }, [setQueryString, page, rows, sort]);
 
   return (
     <>
@@ -323,9 +336,13 @@ export function ExampleComposition() {
       {loading && <ExampleCompositionTableLoading />}
       {!loading && (
         <ExampleCompositionTable
-          total={3}
-          queryString={queryString}
-          onQueryStringChange={setQueryString}
+          page={page}
+          rows={rows}
+          totalPages={3}
+          sort={sort}
+          setPage={setPage}
+          setRows={setRows}
+          setSort={setSort}
         />
       )}
     </>

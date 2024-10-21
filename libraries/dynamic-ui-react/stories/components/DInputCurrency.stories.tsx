@@ -99,17 +99,17 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     iconStart: {
       control: {
@@ -139,44 +139,24 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       control: 'text',
       type: 'string',
     },
-    validIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    invalidIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
     },
     currencyCode: {
-      control: 'string',
+      control: 'text',
       type: 'string',
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     minValue: {
       control: 'number',
@@ -189,7 +169,7 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     onChange: {
       action: 'onChange',
@@ -218,7 +198,7 @@ export const Default: Story = {
   },
 };
 
-export const Error: Story = {
+export const Invalid: Story = {
   render: (args: ComponentProps<typeof DInputCurrency>) => (
     <DContextProvider>
       <DInputCurrency {...args} />
@@ -236,7 +216,7 @@ export const Error: Story = {
   },
 };
 
-export const Confirm: Story = {
+export const Valid: Story = {
   render: (args: ComponentProps<typeof DInputCurrency>) => (
     <DContextProvider>
       <DInputCurrency {...args} />

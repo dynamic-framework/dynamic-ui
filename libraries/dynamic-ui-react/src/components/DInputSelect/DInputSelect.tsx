@@ -17,9 +17,7 @@ import type {
   FamilyIconProps,
   LabelIconProps,
   StartIconProps,
-  StateIcons,
 } from '../interface';
-import { useDContext } from '../../contexts';
 
 export type DefaultOption = {
   value: string | number;
@@ -32,7 +30,6 @@ export type Props<T> =
 & LabelIconProps
 & StartIconProps
 & EndIconProps
-& StateIcons
 & {
   id?: string;
   name?: string;
@@ -75,11 +72,6 @@ export default function DInputSelect<T extends object = DefaultOption>(
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndAriaLabel,
-    iconFamilyClass,
-    iconFamilyPrefix,
-    iconMaterialStyle,
-    invalidIcon: invalidIconProp,
-    validIcon: validIconProp,
     hint,
     value,
     size,
@@ -141,16 +133,6 @@ export default function DInputSelect<T extends object = DefaultOption>(
   const iconEndClickHandler = useCallback((event: MouseEvent) => {
     onIconEndClick?.(event);
   }, [onIconEndClick]);
-
-  const { iconMap: { input } } = useDContext();
-  const invalidIcon = useMemo(
-    () => invalidIconProp || input.invalid,
-    [input.invalid, invalidIconProp],
-  );
-  const validIcon = useMemo(
-    () => validIconProp || input.valid,
-    [input.valid, validIconProp],
-  );
 
   const ariaDescribedby = useMemo(() => (
     [
@@ -271,20 +253,6 @@ export default function DInputSelect<T extends object = DefaultOption>(
           </button>
         )}
         {dynamicComponent}
-        {((invalid || valid) && !iconEnd && !loading) && (
-          <span
-            className="input-group-text"
-            id={`${id}State`}
-          >
-            <DIcon
-              className="input-group-validation-icon"
-              icon={invalid ? invalidIcon : validIcon}
-              familyClass={iconFamilyClass}
-              familyPrefix={iconFamilyPrefix}
-              materialStyle={iconMaterialStyle}
-            />
-          </span>
-        )}
         {iconEnd && !loading && (
           <button
             type="button"

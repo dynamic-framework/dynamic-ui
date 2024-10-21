@@ -42,7 +42,7 @@ The Bootstrap documentation provides details on the default [Tabs CSS Variables]
     vertical: {
       type: 'boolean',
       control: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     variant: {
       type: 'string',

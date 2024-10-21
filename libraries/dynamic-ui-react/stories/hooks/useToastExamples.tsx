@@ -9,60 +9,72 @@ import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 export function ExampleSimpleToastUsage() {
   const { toast } = useDToast();
   return (
-    <div className="d-flex flex-wrap gap-2">
-      <DButton
-        text="Toast - No theme"
-        theme="light"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              timestamp: 'just now',
-              icon: 'check',
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DButton
-        text="Toast secondary"
-        theme="light"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              timestamp: 'just now',
-              icon: 'check',
-              theme: 'secondary',
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DButton
-        text="Toast soft secondary"
-        theme="light"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              timestamp: 'just now',
-              icon: 'check',
-              theme: 'secondary',
-              soft: true,
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
-    </div>
+    <DButton
+      text="Toast - No theme"
+      theme="light"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            timestamp: 'just now',
+            icon: 'check',
+          },
+          { duration: 40000 },
+        )
+      )}
+    />
   );
 }
 
-export function ExampleSimpleToastRoot() {
+export function ExampleSimpleSecondaryToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Toast secondary"
+      theme="light"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            timestamp: 'just now',
+            icon: 'check',
+            theme: 'secondary',
+          },
+          { duration: 40000 },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleSimpleSecondarySoftToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Toast soft secondary"
+      theme="light"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            timestamp: 'just now',
+            icon: 'check',
+            theme: 'secondary',
+            soft: true,
+          },
+          { duration: 40000 },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleSimpleToastRoot({ type = 'base' }: { type: string }) {
   return (
     <DContextProvider>
-      <ExampleSimpleToastUsage />
+      {type === 'base' && <ExampleSimpleToastUsage />}
+      {type === 'secondary' && <ExampleSimpleSecondaryToastUsage />}
+      {type === 'soft' && <ExampleSimpleSecondarySoftToastUsage />}
       <DToastContainer
         position="top-right"
       />
@@ -73,63 +85,75 @@ export function ExampleSimpleToastRoot() {
 export function ExampleFullToastUsage() {
   const { toast } = useDToast();
   return (
-    <div className="d-flex flex-wrap gap-2">
-      <DButton
-        text="Toast full - No theme"
-        theme="light"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              description: 'This is a description',
-              timestamp: 'just now',
-              icon: 'check',
-            },
-            { duration: 4000 },
-          )
-        )}
-      />
-      <DButton
-        text="Toast full secondary"
-        theme="light"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              description: 'This is a description',
-              timestamp: 'just now',
-              theme: 'secondary',
-              icon: 'check',
-            },
-            { duration: 4000 },
-          )
-        )}
-      />
-      <DButton
-        text="Toast soft full secondary"
-        theme="light"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              description: 'This is a description',
-              timestamp: 'just now',
-              theme: 'secondary',
-              soft: true,
-              icon: 'check',
-            },
-            { duration: 4000 },
-          )
-        )}
-      />
-    </div>
+    <DButton
+      text="Toast full - No theme"
+      theme="light"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            description: 'This is a description',
+            timestamp: 'just now',
+            icon: 'check',
+          },
+          { duration: 4000 },
+        )
+      )}
+    />
   );
 }
 
-export function ExampleFullToastRoot() {
+export function ExampleFullSecondaryToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Toast full secondary"
+      theme="light"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            description: 'This is a description',
+            timestamp: 'just now',
+            theme: 'secondary',
+            icon: 'check',
+          },
+          { duration: 4000 },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleFullSecondarySoftToastUsage() {
+  const { toast } = useDToast();
+  return (
+    <DButton
+      text="Toast soft full secondary"
+      theme="light"
+      onClick={() => (
+        toast(
+          {
+            title: 'Example',
+            description: 'This is a description',
+            timestamp: 'just now',
+            theme: 'secondary',
+            soft: true,
+            icon: 'check',
+          },
+          { duration: 4000 },
+        )
+      )}
+    />
+  );
+}
+
+export function ExampleFullToastRoot({ type = 'base' }: { type: string }) {
   return (
     <DContextProvider>
-      <ExampleFullToastUsage />
+      {type === 'base' && <ExampleFullToastUsage />}
+      {type === 'secondary' && <ExampleFullSecondaryToastUsage />}
+      {type === 'soft' && <ExampleFullSecondarySoftToastUsage />}
       <DToastContainer
         position="top-right"
       />

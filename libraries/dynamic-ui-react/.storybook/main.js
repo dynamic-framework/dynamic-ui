@@ -11,13 +11,8 @@ module.exports = {
     getAbsolutePath('@storybook/addon-a11y'),
   ],
   framework: {
-    name: getAbsolutePath('@storybook/react-webpack5'),
-    options: {
-      builder: {
-        fsCache: true,
-        lazyCompilation: false,
-      },
-    },
+    name: getAbsolutePath('@storybook/react-vite'),
+    options: {},
   },
   typescript: {
     check: false,

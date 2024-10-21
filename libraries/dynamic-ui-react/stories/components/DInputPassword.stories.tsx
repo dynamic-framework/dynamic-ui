@@ -98,17 +98,17 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     hint: {
       control: 'text',
@@ -122,17 +122,17 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: false } },
+      table: { defaultValue: { summary: 'false' } },
     },
     onChange: {
       action: 'onChange',
@@ -155,7 +155,7 @@ export const Default: Story = {
   },
 };
 
-export const Error: Story = {
+export const Invalid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
@@ -167,7 +167,7 @@ export const Error: Story = {
   },
 };
 
-export const Confirm: Story = {
+export const Valid: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',
