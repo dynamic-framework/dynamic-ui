@@ -61,6 +61,7 @@
       }
 
       .form-control {
+        padding: $input-padding-y $input-padding-x;
         background: $input-bg;
         border-color: $tooltip-bg-color;
         box-shadow: $box-shadow;
