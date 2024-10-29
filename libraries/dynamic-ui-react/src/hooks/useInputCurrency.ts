@@ -64,31 +64,26 @@ export default function useInputCurrency(
   }), []);
 
   const handleOnChange = useCallback((newValue?: string) => {
-    const newNumber = (newValue === undefined || newValue === '')
-      ? undefined
-      : Number(newValue);
-    setInnerNumber(newNumber);
-    setInnerString(formatValue(newNumber, currencyOptions));
-  }, [currencyOptions]);
+    const newNumber = (newValue === undefined || newValue === '') ? undefined : Number(newValue);
 
-  useEffect(() => {
-    onChange?.(innerNumber);
-  }, [onChange, innerNumber]);
-
-  useEffect(() => {
-    setInnerNumber(value);
-  }, [value]);
-
-  const innerValue = useMemo<string>(() => {
-    if (value === undefined || value.toString() === '') {
-      return '';
+    if (newNumber !== innerNumber) {
+      setInnerNumber(newNumber);
+      setInnerString(formatValue(newNumber, currencyOptions));
+      onChange?.(newNumber);
     }
-    const valueToUse = innerType === 'number'
-      ? innerNumber?.toString()
-      : innerString;
+  }, [currencyOptions, onChange, innerNumber]);
 
-    return valueToUse ?? '';
-  }, [value, innerType, innerNumber, innerString]);
+  useEffect(() => {
+    if (value !== innerNumber) {
+      setInnerNumber(value);
+      setInnerString(formatValue(value, currencyOptions));
+    }
+  }, [value, currencyOptions, innerNumber]);
+
+  const innerValue = useMemo<string>(
+    () => (innerType === 'number' ? innerNumber?.toString() ?? '' : innerString ?? ''),
+    [innerType, innerNumber, innerString],
+  );
 
   return {
     inputRef,
