@@ -23,7 +23,7 @@
   }
 
   @each $color, $value in $bg-soft-colors {
-    --#{$prefix}#{$color}-rgb: #{to-rgb($value)};
+    --#{$prefix}#{$color}-rgb: #{$value};
   }
 
   @each $color, $value in $theme-colors-palettes {
