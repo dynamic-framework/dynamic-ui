@@ -488,13 +488,13 @@ $danger-800: $red-800 !default;
 $danger-900: $red-900 !default;
 
 // custom
-$bg-surface-gray: $gray-50 !default;
-$bg-surface-primary: $primary-50 !default;
-$bg-surface-secondary: $secondary-50 !default;
-$bg-surface-success: $success-50 !default;
-$bg-surface-info: $info-50 !default;
-$bg-surface-warning: $warning-50 !default;
-$bg-surface-danger: $danger-50 !default;
+$bg-surface-gray: var(--#{$prefix}gray-50-rgb) !default;
+$bg-surface-primary: var(--#{$prefix}primary-50-rgb) !default;
+$bg-surface-secondary: var(--#{$prefix}secondary-50-rgb) !default;
+$bg-surface-success: var(--#{$prefix}success-50-rgb) !default;
+$bg-surface-info: var(--#{$prefix}info-50-rgb) !default;
+$bg-surface-warning: var(--#{$prefix}warning-50-rgb) !default;
+$bg-surface-danger: var(--#{$prefix}danger-50-rgb) !default;
 
 $bg-surface-colors: (
   "surface-gray": $bg-surface-gray,
@@ -506,13 +506,13 @@ $bg-surface-colors: (
   "surface-danger": $bg-surface-danger,
 ) !default;
 
-$bg-gray-soft: $gray-25 !default;
-$bg-primary-soft: $primary-25 !default;
-$bg-secondary-soft: $secondary-25 !default;
-$bg-success-soft: $success-25 !default;
-$bg-info-soft: $info-25 !default;
-$bg-warning-soft: $warning-25 !default;
-$bg-danger-soft: $danger-25 !default;
+$bg-gray-soft: var(--#{$prefix}gray-25-rgb) !default;
+$bg-primary-soft: var(--#{$prefix}primary-25-rgb) !default;
+$bg-secondary-soft: var(--#{$prefix}secondary-25-rgb) !default;
+$bg-success-soft: var(--#{$prefix}success-25-rgb) !default;
+$bg-info-soft: var(--#{$prefix}info-25-rgb) !default;
+$bg-warning-soft: var(--#{$prefix}warning-25-rgb) !default;
+$bg-danger-soft: var(--#{$prefix}danger-25-rgb) !default;
 
 $bg-soft-colors: (
   "gray-soft": $bg-gray-soft,
