@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.32.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.32.0...@dynamic-framework/ui-react@1.32.1) (2024-11-06)
+
+
+### Style Fixes
+
+* **style:** adjust d-input-pin validation padding ([6764508](https://github.com/dynamic-framework/dynamic-ui/commit/67645086340d13ce712a7806b7eaaca10744461a))
+* **style:** root mapping of soft variables to theme variables ([a1416f9](https://github.com/dynamic-framework/dynamic-ui/commit/a1416f91f148589949a381bebc7de853a4b0ae72))
+* **style:** root mapping of surface variables to theme variables ([b7b9df2](https://github.com/dynamic-framework/dynamic-ui/commit/b7b9df2595f8a949cc215bb2c8701ad01992eed6))
+
+
+### Bug Fixes
+
+* **useInputCurrency:** adjust infinite re-rendering behavior when used with formik ([90ead97](https://github.com/dynamic-framework/dynamic-ui/commit/90ead97160aea78c5113863444cf98c79098b3d7))
+
+
+
 ## [1.32.0](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.31.0...@dynamic-framework/ui-react@1.32.0) (2024-10-21)
 
 
