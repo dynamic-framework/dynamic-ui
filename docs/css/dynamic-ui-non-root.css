@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.31.0
+ * dynamic-framework 1.32.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -9619,6 +9619,7 @@ label .d-icon {
   background-size: calc(0.75em + 0.75rem) calc(0.75em + 0.75rem);
 }
 .d-input-pin:has(.form-control.is-valid) .form-control {
+  padding: 0.75rem 1rem;
   background: var(--bs-white);
   border-color: var(--bs-success);
   box-shadow: 0 0 0 0.25rem rgba(var(--bs-success-rgb), 0.25);
@@ -9634,6 +9635,7 @@ label .d-icon {
   background-size: calc(0.75em + 0.75rem) calc(0.75em + 0.75rem);
 }
 .d-input-pin:has(.form-control.is-invalid) .form-control {
+  padding: 0.75rem 1rem;
   background: var(--bs-white);
   border-color: var(--bs-danger);
   box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);

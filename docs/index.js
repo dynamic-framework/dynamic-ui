@@ -810,27 +810,20 @@ function useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref
         color: `var(--${PREFIX_BS}input-currency-symbol-color)`,
     }), []);
     const handleOnChange = React.useCallback((newValue) => {
-        const newNumber = (newValue === undefined || newValue === '')
-            ? undefined
-            : Number(newValue);
-        setInnerNumber(newNumber);
-        setInnerString(formatValue(newNumber, currencyOptions));
-    }, [currencyOptions]);
-    React.useEffect(() => {
-        onChange === null || onChange === void 0 ? void 0 : onChange(innerNumber);
-    }, [onChange, innerNumber]);
-    React.useEffect(() => {
-        setInnerNumber(value);
-    }, [value]);
-    const innerValue = React.useMemo(() => {
-        if (value === undefined || value.toString() === '') {
-            return '';
+        const newNumber = (newValue === undefined || newValue === '') ? undefined : Number(newValue);
+        if (newNumber !== innerNumber) {
+            setInnerNumber(newNumber);
+            setInnerString(formatValue(newNumber, currencyOptions));
+            onChange === null || onChange === void 0 ? void 0 : onChange(newNumber);
         }
-        const valueToUse = innerType === 'number'
-            ? innerNumber === null || innerNumber === void 0 ? void 0 : innerNumber.toString()
-            : innerString;
-        return valueToUse !== null && valueToUse !== void 0 ? valueToUse : '';
-    }, [value, innerType, innerNumber, innerString]);
+    }, [currencyOptions, onChange, innerNumber]);
+    React.useEffect(() => {
+        if (value !== innerNumber) {
+            setInnerNumber(value);
+            setInnerString(formatValue(value, currencyOptions));
+        }
+    }, [value, currencyOptions, innerNumber]);
+    const innerValue = React.useMemo(() => { var _a; return (innerType === 'number' ? (_a = innerNumber === null || innerNumber === void 0 ? void 0 : innerNumber.toString()) !== null && _a !== void 0 ? _a : '' : innerString !== null && innerString !== void 0 ? innerString : ''); }, [innerType, innerNumber, innerString]);
     return {
         inputRef,
         innerValue,

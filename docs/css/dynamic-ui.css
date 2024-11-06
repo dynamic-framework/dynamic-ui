@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.31.0
+ * dynamic-framework 1.32.0
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -32,20 +32,20 @@
   --bs-gray-700-rgb: 65, 65, 78;
   --bs-gray-800-rgb: 43, 43, 52;
   --bs-gray-900-rgb: 21, 21, 26;
-  --bs-surface-gray-rgb: 240, 240, 242;
-  --bs-surface-primary-rgb: 251, 232, 239;
-  --bs-surface-secondary-rgb: 237, 237, 248;
-  --bs-surface-success-rgb: 232, 243, 238;
-  --bs-surface-info-rgb: 231, 241, 255;
-  --bs-surface-warning-rgb: 255, 249, 230;
-  --bs-surface-danger-rgb: 252, 235, 236;
-  --bs-gray-soft-rgb: 251, 251, 252;
-  --bs-primary-soft-rgb: 253, 244, 247;
-  --bs-secondary-soft-rgb: 246, 246, 251;
-  --bs-success-soft-rgb: 244, 249, 246;
-  --bs-info-soft-rgb: 243, 248, 255;
-  --bs-warning-soft-rgb: 255, 252, 243;
-  --bs-danger-soft-rgb: 253, 245, 246;
+  --bs-surface-gray-rgb: var(--bs-gray-50-rgb);
+  --bs-surface-primary-rgb: var(--bs-primary-50-rgb);
+  --bs-surface-secondary-rgb: var(--bs-secondary-50-rgb);
+  --bs-surface-success-rgb: var(--bs-success-50-rgb);
+  --bs-surface-info-rgb: var(--bs-info-50-rgb);
+  --bs-surface-warning-rgb: var(--bs-warning-50-rgb);
+  --bs-surface-danger-rgb: var(--bs-danger-50-rgb);
+  --bs-gray-soft-rgb: var(--bs-gray-25-rgb);
+  --bs-primary-soft-rgb: var(--bs-primary-25-rgb);
+  --bs-secondary-soft-rgb: var(--bs-secondary-25-rgb);
+  --bs-success-soft-rgb: var(--bs-success-25-rgb);
+  --bs-info-soft-rgb: var(--bs-info-25-rgb);
+  --bs-warning-soft-rgb: var(--bs-warning-25-rgb);
+  --bs-danger-soft-rgb: var(--bs-danger-25-rgb);
   --bs-primary-25-rgb: 253, 244, 247;
   --bs-primary-50-rgb: 251, 232, 239;
   --bs-primary-100-rgb: 247, 209, 223;
@@ -10565,6 +10565,7 @@ label .d-icon {
   background-size: calc(0.75em + 0.75rem) calc(0.75em + 0.75rem);
 }
 .d-input-pin:has(.form-control.is-valid) .form-control {
+  padding: 0.75rem 1rem;
   background: var(--bs-white);
   border-color: var(--bs-success);
   box-shadow: 0 0 0 0.25rem rgba(var(--bs-success-rgb), 0.25);
@@ -10580,6 +10581,7 @@ label .d-icon {
   background-size: calc(0.75em + 0.75rem) calc(0.75em + 0.75rem);
 }
 .d-input-pin:has(.form-control.is-invalid) .form-control {
+  padding: 0.75rem 1rem;
   background: var(--bs-white);
   border-color: var(--bs-danger);
   box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
