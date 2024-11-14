@@ -177,8 +177,8 @@
 [class*="btn-link-"] {
   --#{$prefix}btn-text-decoration: var(--#{$prefix}link-decoration);
 
-  span {
-    text-decoration: underline;
+  &:hover {
+    --#{$prefix}btn-text-decoration: underline;
   }
 
   @if $enable-gradients {
