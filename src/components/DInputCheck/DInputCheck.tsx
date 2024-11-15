@@ -24,6 +24,7 @@ type Props =
   disabled?: boolean;
   invalid?: boolean;
   valid?: boolean;
+  hint?: string;
   indeterminate?: boolean;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -42,6 +43,7 @@ export default function DInputCheck(
     valid = false,
     indeterminate,
     value,
+    hint,
     onChange,
     className,
     style,
@@ -56,6 +58,17 @@ export default function DInputCheck(
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     onChange?.(event);
   }, [onChange]);
+
+  const ariaDescribedby = useMemo(() => (
+    [
+      !!hint && `${id}Hint`,
+    ]
+      .filter(Boolean)
+      .join(' ')
+  ), [
+    id,
+    hint,
+  ]);
 
   useEffect(() => {
     if (innerRef.current) {
@@ -88,21 +101,23 @@ export default function DInputCheck(
       name={name}
       value={value}
       aria-label={ariaLabel}
+      {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       {...props}
     />
   ), [
-    ariaLabel,
-    className,
-    disabled,
-    valid,
-    props,
-    invalid,
     handleChange,
-    id,
-    name,
+    invalid,
+    valid,
+    className,
     style,
+    id,
+    disabled,
     type,
+    name,
     value,
+    ariaLabel,
+    ariaDescribedby,
+    props,
   ]);
 
   if (!label) {
@@ -118,6 +133,14 @@ export default function DInputCheck(
       <label className="form-check-label" htmlFor={id}>
         {label}
       </label>
+      {hint && (
+        <div
+          className="form-text"
+          id={`${id}Hint`}
+        >
+          {hint}
+        </div>
+      )}
     </div>
   );
 }
