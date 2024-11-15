@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.32.0
+ * dynamic-framework 1.32.1
  * bootstrap ^5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -9858,8 +9858,8 @@ body {
 [class*=btn-link-] {
   --bs-btn-text-decoration: var(--bs-link-decoration);
 }
-[class*=btn-link-] span {
-  text-decoration: underline;
+[class*=btn-link-]:hover {
+  --bs-btn-text-decoration: underline;
 }
 
 .btn-link {
