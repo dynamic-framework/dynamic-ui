@@ -105,6 +105,17 @@ export const CheckboxDefault: Story = {
   },
 };
 
+export const CheckboxHint: Story = {
+  args: {
+    id: 'componentId2',
+    type: 'checkbox',
+    label: 'Label',
+    hint: 'Assistive text',
+    checked: false,
+    disabled: false,
+  },
+};
+
 export const CheckboxValid: Story = {
   args: {
     id: 'componentId3',
