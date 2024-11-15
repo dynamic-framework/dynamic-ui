@@ -44,11 +44,13 @@
       border-right: 1px solid var(--#{$prefix}nav-tabs-border-color);
       border-bottom-color: transparent;
     }
-    .nav-link.active{
+
+    .nav-link.active {
       background-color: var(--#{$prefix}nav-link-hover-bg);
       border-right: 1px solid currentcolor;
     }
   }
+
   .nav-link {
     padding: var(--#{$prefix}nav-link-padding-y) var(--#{$prefix}nav-link-padding-x);
     border-bottom: 1px solid var(--#{$prefix}gray-300);
