@@ -46,7 +46,6 @@ it('should render base currency', () => {
           class="form-control"
           id="currencyTest"
           inputmode="decimal"
-          pattern="^[0-9]"
           type="text"
           value="0.00"
         />

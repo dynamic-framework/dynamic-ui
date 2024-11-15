@@ -68,7 +68,6 @@ function DInputCurrencyBase(
       onChange={handleOnChange}
       style={generateStyleVariables}
       inputMode="decimal"
-      pattern="^[0-9]"
       type={innerType}
       onFocus={handleOnFocus}
       onBlur={handleOnBlur}
