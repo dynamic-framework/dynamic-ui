@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.32.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.32.1...@dynamic-framework/ui-react@1.32.2) (2024-11-15)
+
+
+### Bug Fixes
+
+* **DInputCurrency:** formik submit validation ([d3ee70b](https://github.com/dynamic-framework/dynamic-ui/commit/d3ee70bbe2c375407202df863509397fa5fdbe86))
+
+
+
 ## [1.32.1](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.32.0...@dynamic-framework/ui-react@1.32.1) (2024-11-06)
 
 
