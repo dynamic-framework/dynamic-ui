@@ -2,6 +2,11 @@
 
 // stylelint-disable selector-class-pattern
 
+.react-datepicker-wrapper {
+  width: 100%;
+  margin-inline: auto;
+}
+
 .react-datepicker {
   --#{$prefix}datepicker-font-family: var(--#{$prefix}font-sans-serif);
   --#{$prefix}datepicker-border: 0px;
