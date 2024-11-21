@@ -3,6 +3,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react';
@@ -71,7 +72,7 @@ type Context<T extends Record<string, unknown>> = Props<T> & {
   setContext: (value: Partial<Props<T>>) => void;
 };
 
-const defaultState = {
+const DEFAULT_STATE = {
   language: 'en',
   currency: {
     symbol: '$',
@@ -115,27 +116,26 @@ const defaultState = {
     },
   },
   breakpoints: {
-    xs: getCssVariable(`--${PREFIX_BS}breakpoint-xs`),
-    sm: getCssVariable(`--${PREFIX_BS}breakpoint-sm`),
-    md: getCssVariable(`--${PREFIX_BS}breakpoint-md`),
-    lg: getCssVariable(`--${PREFIX_BS}breakpoint-lg`),
-    xl: getCssVariable(`--${PREFIX_BS}breakpoint-xl`),
-    xxl: getCssVariable(`--${PREFIX_BS}breakpoint-xxl`),
+    xs: '',
+    sm: '',
+    md: '',
+    lg: '',
+    xl: '',
+    xxl: '',
   },
   setContext: () => {},
   portalName: 'd-portal',
 };
 
-export const DContext = createContext<Partial<Context<any>>>(defaultState);
+export const DContext = createContext<Partial<Context<any>>>(DEFAULT_STATE);
 
 export function DContextProvider<T extends Record<string, unknown>>(
   {
-    language = defaultState.language,
-    currency = defaultState.currency,
-    icon = defaultState.icon,
-    iconMap = defaultState.iconMap,
-    portalName = defaultState.portalName,
-    breakpoints = defaultState.breakpoints,
+    language = DEFAULT_STATE.language,
+    currency = DEFAULT_STATE.currency,
+    icon = DEFAULT_STATE.icon,
+    iconMap = DEFAULT_STATE.iconMap,
+    portalName = DEFAULT_STATE.portalName,
     availablePortals,
     children,
   }: PropsWithChildren<Partial<Props<T>>>,
@@ -148,7 +148,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
     currency,
     icon,
     iconMap,
-    breakpoints,
+    breakpoints: DEFAULT_STATE.breakpoints,
   });
 
   const setContext = useCallback((newValue: Partial<Props<T>>) => (
@@ -157,6 +157,20 @@ export function DContextProvider<T extends Record<string, unknown>>(
       ...newValue,
     }))
   ), []);
+
+  useLayoutEffect(() => {
+    console.log('context');
+    setContext({
+      breakpoints: {
+        xs: getCssVariable(`--${PREFIX_BS}breakpoint-xs`),
+        sm: getCssVariable(`--${PREFIX_BS}breakpoint-sm`),
+        md: getCssVariable(`--${PREFIX_BS}breakpoint-md`),
+        lg: getCssVariable(`--${PREFIX_BS}breakpoint-lg`),
+        xl: getCssVariable(`--${PREFIX_BS}breakpoint-xl`),
+        xxl: getCssVariable(`--${PREFIX_BS}breakpoint-xxl`),
+      },
+    });
+  }, [setContext]);
 
   const value = useMemo(() => ({
     ...internalContext,

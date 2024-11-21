@@ -5,7 +5,7 @@ import { useDContext } from '../contexts/DContext';
 import type { BreakpointProps } from '../contexts/DContext';
 import useMediaQuery from './useMediaQuery';
 
-export default function useMediaBreakpointUp(
+function useMediaBreakpointUp(
   breakpoint: keyof BreakpointProps,
   useListener: boolean = false,
 ) {

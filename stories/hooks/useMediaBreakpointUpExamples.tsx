@@ -8,13 +8,13 @@ import {
 export function ExampleOfUse() {
   const inXs = useMediaBreakpointUpXs(true);
   const inSm = useMediaBreakpointUpSm(true);
-  const inXl = useMediaBreakpointUpLg(true);
+  const inLg = useMediaBreakpointUpLg(true);
 
   return (
     <>
       {inXs && <p>min-width to XS breakpoint</p>}
       {inSm && <p>min-width to SM breakpoint</p>}
-      {inXl && <p>min-width to LG breakpoint</p>}
+      {inLg && <p>min-width to LG breakpoint</p>}
     </>
   );
 }

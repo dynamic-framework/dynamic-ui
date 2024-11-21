@@ -8,7 +8,6 @@ export { default as usePortal } from './usePortal';
 export { default as useItemSelection } from './useItemSelection';
 export { default as useMediaQuery } from './useMediaQuery';
 export {
-  default as useMediaBreakpointUp,
   useMediaBreakpointUpXs,
   useMediaBreakpointUpSm,
   useMediaBreakpointUpMd,

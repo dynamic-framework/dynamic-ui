@@ -26,14 +26,14 @@ import {
 
 export function ExampleOfUse() {
   const inXs = useMediaBreakpointUpXs(true);
-  const inLg = useMediaBreakpointUpLg(true);
+  const inSm = useMediaBreakpointUpSm(true);
   const inLg = useMediaBreakpointUpLg(true);
 
   return (
     <>
-      {inXs && <p>we are in XS breakpoint</p>}
-      {inSm && <p>we are in SM breakpoint</p>}
-      {inLg && <p>we are in LG breakpoint</p>}
+      {inXs && <p>min-width to XS breakpoint</p>}
+      {inSm && <p>min-width to SM breakpoint</p>}
+      {inLg && <p>min-width to LG breakpoint</p>}
     </>
   );
 }
@@ -43,38 +43,6 @@ export function ExampleOfUse() {
   dark
 />
 
-## Setup with other settings `App.tsx`
-
-Formatting settings can be changed by changing the values of the currency property of the DContextProvider
-
-<Source
-  code={
-    `
-import {
-  DContextProvider,
-} from '@dynamic-framework/ui-react';
-
-import ExampleOfUse from './ExampleOfUse';
-
-export function App() {
-  return (
-    <DContextProvider
-      currency={{
-        symbol: '$',
-        precision: 2,
-        separator: ',',
-        decimal: '.',
-      }}
-    >
-      <ExampleOfUse />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
 ## Example Render
 
 <Unstyled>
