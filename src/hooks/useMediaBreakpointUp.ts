@@ -38,6 +38,6 @@ export function useMediaBreakpointUpXl(useListener: boolean = false) {
   return useMediaBreakpointUp('xl', useListener);
 }
 
-export function useMediaBreakpointUpByXxl(useListener: boolean = false) {
+export function useMediaBreakpointUpXxl(useListener: boolean = false) {
   return useMediaBreakpointUp('xxl', useListener);
 }

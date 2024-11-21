@@ -14,5 +14,5 @@ export {
   useMediaBreakpointUpMd,
   useMediaBreakpointUpLg,
   useMediaBreakpointUpXl,
-  useMediaBreakpointUpByXxl,
+  useMediaBreakpointUpXxl,
 } from './useMediaBreakpointUp';
