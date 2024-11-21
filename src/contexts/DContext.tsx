@@ -12,6 +12,8 @@ import type { PropsWithChildren } from 'react';
 import { DPortalContextProvider, PortalContextProps } from './DPortalContext';
 
 import type { AlertThemeIconMap } from '../components/interface';
+import { PREFIX_BS } from '../components/config';
+import getCssVariable from '../utils/getCssVariable';
 
 export type CurrencyProps = {
   symbol: string;
@@ -48,11 +50,21 @@ type IconMapProps = {
   };
 };
 
+export type BreakpointProps = {
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  xxl: string;
+};
+
 type Props<T extends Record<string, unknown>> = {
   language: string;
   currency: CurrencyProps,
   icon: IconProps;
   iconMap: IconMapProps;
+  breakpoints: BreakpointProps;
 } & PortalContextProps<T>;
 
 type Context<T extends Record<string, unknown>> = Props<T> & {
@@ -102,6 +114,14 @@ const defaultState = {
       decrease: 'dash-square',
     },
   },
+  breakpoints: {
+    xs: getCssVariable(`--${PREFIX_BS}breakpoint-xs`),
+    sm: getCssVariable(`--${PREFIX_BS}breakpoint-sm`),
+    md: getCssVariable(`--${PREFIX_BS}breakpoint-md`),
+    lg: getCssVariable(`--${PREFIX_BS}breakpoint-lg`),
+    xl: getCssVariable(`--${PREFIX_BS}breakpoint-xl`),
+    xxl: getCssVariable(`--${PREFIX_BS}breakpoint-xxl`),
+  },
   setContext: () => {},
   portalName: 'd-portal',
 };
@@ -115,6 +135,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
     icon = defaultState.icon,
     iconMap = defaultState.iconMap,
     portalName = defaultState.portalName,
+    breakpoints = defaultState.breakpoints,
     availablePortals,
     children,
   }: PropsWithChildren<Partial<Props<T>>>,
@@ -127,6 +148,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
     currency,
     icon,
     iconMap,
+    breakpoints,
   });
 
   const setContext = useCallback((newValue: Partial<Props<T>>) => (

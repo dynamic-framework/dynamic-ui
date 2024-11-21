@@ -3,61 +3,41 @@ import {
   Unstyled,
   Source,
 } from '@storybook/blocks';
-import { ExampleRoot } from './useFormatCurrencyExamples';
+import { ExampleRoot } from './useMediaBreakpointUpExamples';
 
-<Meta title="Design System/Utils/Hooks/useFormatCurrency" />
+<Meta title="Design System/Utils/Hooks/useMediaBreakpointUp" />
 
-# useFormatCurrency
-Currency formatting hook
+# useMediaBreakpointUp
+Responsive utility
 
 ## Setup `App.tsx`
 
-It is necessary to use the hook inside a DContextProvider, because the hook takes the formatting configuration from that context
+It is necessary to use the hook inside a DContextProvider, because the hook takes the breakpoints configuration from that context
 
 <Source
   code={
     `
 import {
   DContextProvider,
-} from '@dynamic-framework/ui-react';
-
-import ExampleOfUse from './ExampleOfUse';
-
-export function App() {
-  return (
-    <DContextProvider>
-      <ExampleOfUse />
-    </DContextProvider>
-  );
-}
-    `
-  }
-  language="tsx"
-  dark
-/>
-
-## Example of use `ExampleOfUse.tsx`
-
-Component that uses the hook
-
-<Source
-  code={
-    `
-import {
-  useFormatCurrency,
+  useMediaBreakpointUpXs,
+  useMediaBreakpointUpSm,
+  useMediaBreakpointUpLg,
 } from '@dynamic-framework/ui-react';
 
 export function ExampleOfUse() {
-  const { values } = useFormatCurrency(100, 234.12, -233);
+  const inXs = useMediaBreakpointUpXs(true);
+  const inLg = useMediaBreakpointUpLg(true);
+  const inLg = useMediaBreakpointUpLg(true);
+
   return (
-    <div className="p-3">
-      {values.map((value) => (
-        <pre key={value}>{value}</pre>
-      ))}
-    </div>
+    <>
+      {inXs && <p>we are in XS breakpoint</p>}
+      {inSm && <p>we are in SM breakpoint</p>}
+      {inLg && <p>we are in LG breakpoint</p>}
+    </>
   );
 }
-    `
+`
   }
   language="tsx"
   dark
@@ -90,13 +70,13 @@ export function App() {
     </DContextProvider>
   );
 }
-    `
+`
   }
   language="tsx"
   dark
 />
-
 ## Example Render
+
 <Unstyled>
   <ExampleRoot />
 </Unstyled>
