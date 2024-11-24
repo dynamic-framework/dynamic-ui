@@ -1,8 +1,7 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import classNames from 'classnames';
 
 import DIcon from '../DIcon';
-import DButton from '../DButton';
 import { PREFIX_BS } from '../config';
 
 import type { BaseProps } from '../interface';
@@ -10,11 +9,8 @@ import type { BaseProps } from '../interface';
 type Props = BaseProps & {
   line1: string;
   line2: string;
-  actionLinkText?: string;
-  actionLinkTheme?: string;
   actionIcon?: string;
-  secondaryActionIcon?: string;
-  secondaryActionAriaLabel?: string;
+  actionIconTheme?: string;
   actionIconFamilyClass?: string;
   actionIconFamilyPrefix?: string;
   representativeImage?: string;
@@ -23,25 +19,20 @@ type Props = BaseProps & {
   representativeIconHasCircle?: boolean;
   representativeIconFamilyClass?: string;
   representativeIconFamilyPrefix?: string;
+  href?: string;
+  hrefTarget?: string;
   onClick?: () => void;
-  onClickSecondary?: () => void;
 };
 
-/**
- * @deprecated
- */
 export default function DQuickActionButton(
   {
     line1,
     line2,
     className,
-    actionLinkText,
-    actionLinkTheme = 'secondary',
     actionIcon,
-    secondaryActionIcon,
-    secondaryActionAriaLabel,
     actionIconFamilyClass,
     actionIconFamilyPrefix,
+    actionIconTheme,
     representativeImage,
     representativeIcon,
     representativeIconTheme = 'secondary',
@@ -49,39 +40,62 @@ export default function DQuickActionButton(
     representativeIconFamilyClass,
     representativeIconFamilyPrefix,
     onClick,
-    onClickSecondary,
+    href,
+    hrefTarget,
     style,
     dataAttributes,
   }: Props,
 ) {
-  const globalClickHandler = useCallback(() => {
-    if (actionLinkText) {
-      return;
+  const Tag = useMemo(() => {
+    if (href) {
+      return 'a';
     }
-    onClick?.();
-  }, [actionLinkText, onClick]);
 
-  const actionLinkClickHandler = useCallback(() => {
-    if (!actionLinkText) {
-      return;
+    if (onClick) {
+      return 'button';
     }
-    onClick?.();
-  }, [actionLinkText, onClick]);
 
-  const secondaryActionLinkClickHandler = useCallback(() => {
-    onClickSecondary?.();
-  }, [onClickSecondary]);
+    return 'div';
+  }, [href, onClick]);
 
-  const Tag = useMemo(
-    () => (actionLinkText ? 'div' : 'button'),
-    [actionLinkText],
-  );
+  const tagProps = useMemo(() => {
+    if (href) {
+      return {
+        className: classNames(
+          'd-quick-action-button',
+          'd-quick-action-button-feedback',
+          className,
+        ),
+        href,
+        target: hrefTarget,
+      };
+    }
+
+    if (onClick) {
+      return {
+        className: classNames(
+          'd-quick-action-button',
+          'd-quick-action-button-feedback',
+          className,
+        ),
+        onClick,
+      };
+    }
+
+    return {
+      className: classNames('d-quick-action-button', className),
+    };
+  }, [
+    className,
+    href,
+    hrefTarget,
+    onClick,
+  ]);
 
   return (
     <Tag
-      className={classNames('d-quick-action-button', className)}
-      onClick={!actionLinkText ? globalClickHandler : undefined}
       style={style}
+      {...tagProps}
       {...dataAttributes}
     >
       {representativeIcon && (
@@ -112,36 +126,12 @@ export default function DQuickActionButton(
           <small className="d-quick-action-button-line2">{line2}</small>
         </div>
       </div>
-      {secondaryActionIcon && (
-        <DButton
-          className="d-quick-action-button-secondary-action-link"
-          type="button"
-          variant="link"
-          iconStart={secondaryActionIcon}
-          ariaLabel={secondaryActionAriaLabel}
-          iconStartFamilyClass={actionIconFamilyClass}
-          iconStartFamilyPrefix={actionIconFamilyPrefix}
-          theme={actionLinkTheme}
-          onClick={secondaryActionLinkClickHandler}
-          stopPropagationEnabled
-        />
-      )}
-      {actionLinkText && !actionIcon && (
-        <DButton
-          className="d-quick-action-button-action-link"
-          type="button"
-          variant="link"
-          theme={actionLinkTheme}
-          text={actionLinkText}
-          onClick={actionLinkClickHandler}
-          stopPropagationEnabled
-        />
-      )}
-      {actionIcon && !actionLinkText && (
+      {actionIcon && (
         <DIcon
           className="d-quick-action-button-action-icon"
           icon={actionIcon}
           size={`var(--${PREFIX_BS}quick-action-button-action-icon-size)`}
+          theme={actionIconTheme}
           familyClass={actionIconFamilyClass}
           familyPrefix={actionIconFamilyPrefix}
         />

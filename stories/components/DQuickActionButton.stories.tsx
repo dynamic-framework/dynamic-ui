@@ -27,34 +27,6 @@ const config: Meta<typeof DQuickActionButton> = {
     style: {
       control: 'object',
     },
-    secondaryActionIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      options: [undefined, ...ICONS],
-      description: 'The second action icon',
-      table: { defaultValue: { summary: 'chevron-left' } },
-    },
-    secondaryActionAriaLabel: {
-      control: 'text',
-      type: 'string',
-    },
-    actionIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    actionIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
-    actionLinkText: {
-      control: 'text',
-      type: 'string',
-      description: 'The action link text',
-    },
     actionIcon: {
       control: {
         type: 'select',
@@ -66,7 +38,7 @@ const config: Meta<typeof DQuickActionButton> = {
       description: 'The action icon',
       table: { defaultValue: { summary: 'chevron-right' } },
     },
-    actionLinkTheme: {
+    actionIconTheme: {
       control: {
         type: 'select',
         labels: {
@@ -75,8 +47,16 @@ const config: Meta<typeof DQuickActionButton> = {
       },
       options: THEMES_WITH_EMPTY,
       type: 'string',
-      description: 'Theme of the action link',
+      description: 'Theme of the action icon',
       table: { defaultValue: { summary: 'secondary' } },
+    },
+    actionIconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    actionIconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
     },
     representativeImage: {
       control: 'text',
@@ -91,14 +71,6 @@ const config: Meta<typeof DQuickActionButton> = {
       },
       options: [undefined, ...ICONS],
       description: 'The representative icon',
-    },
-    representativeIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    representativeIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
     },
     representativeIconTheme: {
       control: {
@@ -118,17 +90,127 @@ const config: Meta<typeof DQuickActionButton> = {
       description: 'Add circle around the representative icon',
       table: { defaultValue: { summary: 'false' } },
     },
+    representativeIconFamilyClass: {
+      control: 'text',
+      type: 'string',
+    },
+    representativeIconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+    },
+    href: {
+      control: 'text',
+      type: 'string',
+    },
+    hrefTarget: {
+      control: 'text',
+      type: 'string',
+    },
     onClick: {
       action: 'onClick',
-    },
-    onClickSecondary: {
-      action: 'onClickSecondary',
     },
   },
 };
 
 export default config;
 type Story = StoryObj<typeof DQuickActionButton>;
+
+export const Div: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DQuickActionButton {...args} />
+  ),
+  args: {
+    line1: 'Jessica Rabit',
+    line2: 'Toon Bank **** 721',
+    representativeImage: 'https://i.pravatar.cc/150?img=2',
+    actionIcon: 'chevron-right',
+    onClick: undefined, // storybook thinks
+  },
+};
+
+export const Button: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DQuickActionButton {...args} />
+  ),
+  args: {
+    line1: 'Jessica Rabit',
+    line2: 'Toon Bank **** 721',
+    representativeImage: 'https://i.pravatar.cc/150?img=2',
+    actionIcon: 'chevron-right',
+    onClick: () => {
+      console.log('onClick');
+    },
+  },
+};
+
+export const Href: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DQuickActionButton {...args} />
+  ),
+  args: {
+    line1: 'Jessica Rabit',
+    line2: 'Toon Bank **** 721',
+    representativeImage: 'https://i.pravatar.cc/150?img=2',
+    actionIcon: 'chevron-right',
+    href: 'https://www.google.com',
+    onClick: undefined, // storybook thinks
+  },
+};
+
+export const HrefTarget: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DQuickActionButton {...args} />
+  ),
+  args: {
+    line1: 'Jessica Rabit',
+    line2: 'Toon Bank **** 721',
+    representativeImage: 'https://i.pravatar.cc/150?img=2',
+    actionIcon: 'chevron-right',
+    href: 'https://www.google.com',
+    hrefTarget: '_blank',
+    onClick: undefined, // storybook thinks
+  },
+};
 
 export const PersonalInfo: Story = {
   decorators: [
@@ -165,9 +247,8 @@ export const ButtonDoubleAction: Story = {
   args: {
     line1: 'Jessica Rabit',
     line2: 'Toon Bank **** 721',
-    secondaryActionIcon: 'star',
-    secondaryActionAriaLabel: 'fav',
     representativeImage: 'https://i.pravatar.cc/150?img=2',
+    actionIcon: 'chevron-right',
   },
 };
 
@@ -191,7 +272,7 @@ export const AccountBox: Story = {
     representativeIcon: 'piggy-bank',
     representativeIconTheme: 'info',
     representativeIconHasCircle: true,
-    actionLinkText: 'Change',
+    actionIcon: 'chevron-right',
   },
 };
 

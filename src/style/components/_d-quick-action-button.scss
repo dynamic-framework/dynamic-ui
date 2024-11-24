@@ -53,13 +53,15 @@
   border-radius: var(--#{$prefix}quick-action-button-border-radius);
   box-shadow: var(--#{$prefix}quick-action-button-box-shadow);
 
-  &:hover {
+  &.d-quick-action-button-feedback:hover {
+    text-decoration: none;
     background: var(--#{$prefix}quick-action-button-hover-bg);
     border-color: var(--#{$prefix}quick-action-button-hover-border-color);
     box-shadow: var(--#{$prefix}quick-action-button-hover-box-shadow);
   }
 
-  &:active {
+  &.d-quick-action-button-feedback:active {
+    text-decoration: none;
     background: var(--#{$prefix}quick-action-button-active-bg);
     border-color: var(--#{$prefix}quick-action-button-active-border-color);
     box-shadow: var(--#{$prefix}quick-action-button-active-box-shadow);

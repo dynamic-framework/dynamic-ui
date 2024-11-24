@@ -16,7 +16,7 @@ it('should render my component', () => {
 
   expect(container).toMatchInlineSnapshot(`
     <div>
-      <button
+      <div
         class="d-quick-action-button"
       >
         <img
@@ -42,7 +42,7 @@ it('should render my component', () => {
             </small>
           </div>
         </div>
-      </button>
+      </div>
     </div>
   `);
 });
