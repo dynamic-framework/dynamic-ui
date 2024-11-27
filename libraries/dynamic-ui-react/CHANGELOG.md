@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.32.3](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.32.2...@dynamic-framework/ui-react@1.32.3) (2024-11-27)
+
+
+### Style Fixes
+
+* **style:** adjust with of react-datepicker-wrapper ([de9085d](https://github.com/dynamic-framework/dynamic-ui/commit/de9085dd7955ed843b420763f6e3cc02205e9a70))
+* **style:** label font-size ([621d222](https://github.com/dynamic-framework/dynamic-ui/commit/621d222ae225a005de1008501c8fe6c265a01091))
+
+
+### Bug Fixes
+
+* **DTabContent:** export, however, the use of DTabs.Tab is recommended ([e621955](https://github.com/dynamic-framework/dynamic-ui/commit/e621955a4d50aca3cbac609e66440e4d86abd284))
+
+
+
 ## [1.32.2](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.32.1...@dynamic-framework/ui-react@1.32.2) (2024-11-15)
 
 
