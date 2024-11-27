@@ -46,7 +46,7 @@ it('should render my component', () => {
             class="d-select__control css-1ulfhu6-control"
           >
             <div
-              class="d-select__value-container css-1qpkzkj-ValueContainer"
+              class="d-select__value-container css-14oxtc6"
             >
               <div
                 class="d-select__placeholder css-1vlsb4t-placeholder"
@@ -55,7 +55,7 @@ it('should render my component', () => {
                 Select...
               </div>
               <div
-                class="d-select__input-container css-1q5atpo-Input"
+                class="d-select__input-container css-n9qnu9"
                 data-value=""
               >
                 <input
@@ -79,7 +79,7 @@ it('should render my component', () => {
               </div>
             </div>
             <div
-              class="d-select__indicators css-1hb7zxy-IndicatorsContainer"
+              class="d-select__indicators css-1wy0on6"
             >
               <span
                 class="d-select__indicator-separator css-j4w2j1-indicatorSeparator"

@@ -184,22 +184,22 @@ export function ExampleCompositionTableLoading() {
       </thead>
       <tbody>
         <tr>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
         </tr>
         <tr>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
         </tr>
         <tr>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
+          <td aria-hidden="true"><div className="placeholder w-100 bg-secondary" /></td>
         </tr>
       </tbody>
     </table>
