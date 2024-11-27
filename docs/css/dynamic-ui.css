@@ -1,6 +1,6 @@
 /*!
- * dynamic-framework 1.32.1
- * bootstrap ^5.3.3
+ * dynamic-framework 1.32.2
+ * bootstrap ~5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
 @charset "UTF-8";
@@ -361,7 +361,7 @@
   --bs-label-padding-y: var(--bs-ref-spacer-0);
   --bs-label-padding-x: var(--bs-ref-spacer-0);
   --bs-label-margin-bottom: var(--bs-ref-spacer-1);
-  --bs-label-font-size: var(--bs-fs-small);
+  --bs-label-font-size: var(--bs-body-font-size);
   --bs-label-font-weight: var(--bs-fw-normal);
   --bs-label-color: var(--bs-gray-700);
   --bs-btn-border-radius: var(--bs-border-radius-pill);
@@ -11834,6 +11834,11 @@ label .d-icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.125em;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+  margin-inline: auto;
 }
 
 .react-datepicker {

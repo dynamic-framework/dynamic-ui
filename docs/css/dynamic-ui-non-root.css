@@ -1,6 +1,6 @@
 /*!
- * dynamic-framework 1.32.1
- * bootstrap ^5.3.3
+ * dynamic-framework 1.32.2
+ * bootstrap ~5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
 @charset "UTF-8";
@@ -10888,6 +10888,11 @@ label .d-icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.125em;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+  margin-inline: auto;
 }
 
 .react-datepicker {
