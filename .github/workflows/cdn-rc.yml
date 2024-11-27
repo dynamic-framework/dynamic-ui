@@ -2,7 +2,7 @@ name: Sync CDN rc
 on:
   push:
     branches:
-      - develop
+      - chore/npm
 
 jobs:
   build:
