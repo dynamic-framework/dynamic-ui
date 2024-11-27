@@ -18,7 +18,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v4
         id: release
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           release-type: node
       - uses: actions/checkout@v4
         # these if statements ensure that a publication only occurs when
