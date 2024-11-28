@@ -1,0 +1,50 @@
+import {
+  Meta,
+  Unstyled,
+  Source,
+} from '@storybook/blocks';
+import { ExampleRoot } from './useMediaBreakpointUpExamples';
+
+<Meta title="Design System/Utils/Hooks/useMediaBreakpointUp" />
+
+# useMediaBreakpointUp
+Responsive utility
+
+## Setup `App.tsx`
+
+It is necessary to use the hook inside a DContextProvider, because the hook takes the breakpoints configuration from that context
+
+<Source
+  code={
+    `
+import {
+  DContextProvider,
+  useMediaBreakpointUpXs,
+  useMediaBreakpointUpSm,
+  useMediaBreakpointUpLg,
+} from '@dynamic-framework/ui-react';
+
+export function ExampleOfUse() {
+  const inXs = useMediaBreakpointUpXs(true);
+  const inSm = useMediaBreakpointUpSm(true);
+  const inLg = useMediaBreakpointUpLg(true);
+
+  return (
+    <>
+      {inXs && <p>min-width to XS breakpoint</p>}
+      {inSm && <p>min-width to SM breakpoint</p>}
+      {inLg && <p>min-width to LG breakpoint</p>}
+    </>
+  );
+}
+`
+  }
+  language="tsx"
+  dark
+/>
+
+## Example Render
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>
