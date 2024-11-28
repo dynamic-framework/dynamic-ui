@@ -9,6 +9,7 @@ import DSelectLoadingIndicator from './components/DSelectLoadingIndicator';
 import DSelectOptionEmoji from './components/DSelectOptionEmoji';
 import DSelectSingleValueEmoji from './components/DSelectSingleValueEmoji';
 import DSelectSingleValueEmojiText from './components/DSelectSingleValueEmojiText';
+import DSelectPlaceholder from './components/DSelectPlaceholder';
 import type { BaseProps, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps } from '../interface';
 type Props<Option, IsMulti extends boolean, Group extends GroupBase<Option>> = BaseProps & FamilyIconProps & LabelIconProps & StartIconProps & EndIconProps & Omit<SelectProps<Option, IsMulti, Group>, 'isDisabled' | 'isClearable' | 'isLoading' | 'isRtl' | 'isSearchable' | 'isMulti'> & {
     label?: string;
@@ -25,7 +26,7 @@ type Props<Option, IsMulti extends boolean, Group extends GroupBase<Option>> = B
     searchable?: SelectProps<Option, IsMulti, Group>['isSearchable'];
     multi?: SelectProps<Option, IsMulti, Group>['isMulti'];
 };
-declare function DSelect<Option = unknown, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>({ id, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent, disabled, clearable, loading, rtl, searchable, multi, components, defaultValue, onIconStartClick, onIconEndClick, dataAttributes, ...props }: Props<Option, IsMulti, Group>): import("react/jsx-runtime").JSX.Element;
+declare function DSelect<Option = unknown, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>({ id: idProp, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent, disabled, clearable, loading, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes, ...props }: Props<Option, IsMulti, Group>): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DSelect & {
     OptionCheck: typeof DSelectOptionCheck;
     OptionIcon: typeof DSelectOptionIcon;
@@ -37,5 +38,6 @@ declare const _default: typeof DSelect & {
     OptionEmoji: typeof DSelectOptionEmoji;
     SingleValueEmoji: typeof DSelectSingleValueEmoji;
     SingleValueEmojiText: typeof DSelectSingleValueEmojiText;
+    Placeholder: typeof DSelectPlaceholder;
 };
 export default _default;

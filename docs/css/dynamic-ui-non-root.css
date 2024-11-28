@@ -1,6 +1,6 @@
 /*!
- * dynamic-framework 1.32.2
- * bootstrap ^5.3.3
+ * dynamic-framework 1.32.3
+ * bootstrap ~5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
 @charset "UTF-8";
@@ -3794,22 +3794,22 @@ textarea.form-control-lg {
 .form-check {
   display: block;
   min-height: 1em;
-  padding-left: 0.5em;
+  padding-left: 1em;
   margin-bottom: 0.125rem;
 }
 .form-check .form-check-input {
   float: left;
-  margin-left: -0.5em;
+  margin-left: -1em;
 }
 
 .form-check-reverse {
-  padding-right: 0.5em;
+  padding-right: 1em;
   padding-left: 0;
   text-align: right;
 }
 .form-check-reverse .form-check-input {
   float: right;
-  margin-right: -0.5em;
+  margin-right: -1em;
   margin-left: 0;
 }
 
@@ -8003,6 +8003,17 @@ body {
 .form-check-input {
   --bs-form-check-input-focus-border-color: var(--bs-focus-ring-border-color);
   --bs-form-check-input-focus-box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
+}
+
+.form-check .form-text {
+  --bs-form-text-padding: 0 var(--bs-ref-spacer-2);
+  display: flex;
+}
+.form-check:has(.form-check-input.is-valid) .form-text {
+  color: var(--bs-form-valid-border-color);
+}
+.form-check:has(.form-check-input.is-invalid) .form-text {
+  color: var(--bs-form-invalid-border-color);
 }
 
 .form-control {

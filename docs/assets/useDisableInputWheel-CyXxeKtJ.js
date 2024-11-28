@@ -1,1 +1,0 @@
-import{r as o}from"./index-CBqU2yxZ.js";import{u as a}from"./useProvidedRefOrCreate-B_Nl4lOm.js";function p(t){const e=a(t);return{handleOnWheel:o.useCallback(n=>{var r;n.stopPropagation(),(r=e.current)==null||r.blur()},[e])}}export{p as u};

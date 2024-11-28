@@ -562,31 +562,37 @@ function DInput(_a, ref) {
 }
 const ForwardedDInput = React.forwardRef(DInput);
 ForwardedDInput.displayName = 'DInput';
-var DInput$1 = ForwardedDInput;
 
 function DDatePickerTime(_a) {
     var { value, onChange, id, label, className, style } = _a, props = tslib.__rest(_a, ["value", "onChange", "id", "label", "className", "style"]);
-    return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center gap-2 flex-column d-datepicker-time', className), style: style, children: [label && (jsxRuntime.jsx("label", { htmlFor: id, className: "d-datepicker-time-label", children: label })), jsxRuntime.jsx(DInput$1, Object.assign({ className: "w-100" }, onChange && {
+    return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center gap-2 flex-column d-datepicker-time', className), style: style, children: [label && (jsxRuntime.jsx("label", { htmlFor: id, className: "d-datepicker-time-label", children: label })), jsxRuntime.jsx(ForwardedDInput, Object.assign({ className: "w-100" }, onChange && {
                 onChange,
             }, { type: "time", id: id, value: value }, props))] }));
 }
 
 function DDatePickerInput(_a, ref) {
     var { value, onClick, id, iconEnd, className, style, inputLabel, readOnly: ignored } = _a, props = tslib.__rest(_a, ["value", "onClick", "id", "iconEnd", "className", "style", "inputLabel", "readOnly"]);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: ref, onClick: onClick, readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd, className: className, style: style, label: inputLabel }, props)));
+    return (jsxRuntime.jsx(ForwardedDInput, Object.assign({ ref: ref, onClick: onClick, readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd, className: className, style: style, label: inputLabel }, props)));
 }
 const ForwardedDDatePickerInput = React.forwardRef(DDatePickerInput);
 ForwardedDDatePickerInput.displayName = 'DDatePickerInput';
-var DDatePickerInput$1 = ForwardedDDatePickerInput;
 
 function DInputCheck(_a) {
-    var { id: idProp, type, name, label, ariaLabel, checked = false, disabled = false, invalid = false, valid = false, indeterminate, value, onChange, className, style, dataAttributes } = _a, props = tslib.__rest(_a, ["id", "type", "name", "label", "ariaLabel", "checked", "disabled", "invalid", "valid", "indeterminate", "value", "onChange", "className", "style", "dataAttributes"]);
+    var { id: idProp, type, name, label, ariaLabel, checked = false, disabled = false, invalid = false, valid = false, indeterminate, value, hint, onChange, className, style, dataAttributes } = _a, props = tslib.__rest(_a, ["id", "type", "name", "label", "ariaLabel", "checked", "disabled", "invalid", "valid", "indeterminate", "value", "hint", "onChange", "className", "style", "dataAttributes"]);
     const innerRef = React.useRef(null);
     const innerId = React.useId();
     const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const handleChange = React.useCallback((event) => {
         onChange === null || onChange === void 0 ? void 0 : onChange(event);
     }, [onChange]);
+    const ariaDescribedby = React.useMemo(() => ([
+        !!hint && `${id}Hint`,
+    ]
+        .filter(Boolean)
+        .join(' ')), [
+        id,
+        hint,
+    ]);
     React.useEffect(() => {
         if (innerRef.current) {
             innerRef.current.indeterminate = Boolean(indeterminate);
@@ -600,24 +606,25 @@ function DInputCheck(_a) {
     const inputComponent = React.useMemo(() => (jsxRuntime.jsx("input", Object.assign({ ref: innerRef, onChange: handleChange, className: classNames('form-check-input', {
             'is-invalid': invalid,
             'is-valid': valid,
-        }, className), style: style, id: id, disabled: disabled, type: type, name: name, value: value, "aria-label": ariaLabel }, props))), [
-        ariaLabel,
-        className,
-        disabled,
-        valid,
-        props,
-        invalid,
+        }, className), style: style, id: id, disabled: disabled, type: type, name: name, value: value, "aria-label": ariaLabel }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, props))), [
         handleChange,
-        id,
-        name,
+        invalid,
+        valid,
+        className,
         style,
+        id,
+        disabled,
         type,
+        name,
         value,
+        ariaLabel,
+        ariaDescribedby,
+        props,
     ]);
     if (!label) {
         return inputComponent;
     }
-    return (jsxRuntime.jsxs("div", Object.assign({ className: "form-check" }, dataAttributes, { children: [inputComponent, jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label })] })));
+    return (jsxRuntime.jsxs("div", Object.assign({ className: "form-check" }, dataAttributes, { children: [inputComponent, jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 
 function DSelectOptionCheck(_a) {
@@ -688,8 +695,17 @@ function DSelectSingleValueEmojiText(_a) {
         }), getValue: getValue }, props, { children: [jsxRuntime.jsx("span", { children: value.emoji }), jsxRuntime.jsx("span", { children: children })] })));
 }
 
+function DSelectPlaceholder(_a) {
+    var { selectProps, innerProps: innerPropsProp, children } = _a, props = tslib.__rest(_a, ["selectProps", "innerProps", "children"]);
+    const id = React.useMemo(() => `${selectProps.inputId}Placeholder`, [selectProps.inputId]);
+    const innerProps = React.useMemo(() => (Object.assign(Object.assign({}, innerPropsProp), { id })), [innerPropsProp, id]);
+    return (jsxRuntime.jsx(Select.components.Placeholder, Object.assign({ innerProps: innerProps, selectProps: selectProps }, props, { children: children })));
+}
+
 function DSelect(_a) {
-    var { id, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, rtl, searchable, multi, components, defaultValue, onIconStartClick, onIconEndClick, dataAttributes } = _a, props = tslib.__rest(_a, ["id", "className", "style", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "rtl", "searchable", "multi", "components", "defaultValue", "onIconStartClick", "onIconEndClick", "dataAttributes"]);
+    var { id: idProp, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes } = _a, props = tslib.__rest(_a, ["id", "className", "style", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "rtl", "searchable", "multi", "components", "defaultValue", "placeholder", "onIconStartClick", "onIconEndClick", "dataAttributes"]);
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const handleOnIconStartClick = React.useCallback(() => {
         onIconStartClick === null || onIconStartClick === void 0 ? void 0 : onIconStartClick(defaultValue);
     }, [onIconStartClick, defaultValue]);
@@ -702,14 +718,14 @@ function DSelect(_a) {
                     'input-group': true,
                     'has-validation': invalid,
                     disabled: disabled || loading,
-                }), children: [iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading, "aria-label": iconStartAriaLabel, tabIndex: iconStartTabIndex, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix }) })), jsxRuntime.jsx(Select, Object.assign({ styles: {
+                }), children: [iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading, "aria-label": iconStartAriaLabel, tabIndex: iconStartTabIndex, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix }) })), jsxRuntime.jsx(Select, Object.assign({ id: `${id}Container`, inputId: id, styles: {
                             control: (base) => (Object.assign(Object.assign({}, base), { minHeight: 'unset' })),
                             container: (base) => (Object.assign(Object.assign({}, base), { flex: 1 })),
                             menu: (base) => (Object.assign(Object.assign({}, base), { width: menuWithMaxContent ? 'max-context' : '100%', zIndex: 1000 })),
                         }, className: classNames('d-select-component', {
                             'is-invalid': invalid,
                             'is-valid': valid,
-                        }), classNamePrefix: "d-select", isDisabled: disabled || loading, isClearable: clearable, isLoading: loading, isRtl: rtl, isSearchable: searchable, isMulti: multi, defaultValue: defaultValue, unstyled: true, components: Object.assign({ DropdownIndicator: DSelectDropdownIndicator, ClearIndicator: DSelectClearIndicator, MultiValueRemove: DSelectMultiValueRemove, LoadingIndicator: DSelectLoadingIndicator }, components) }, props)), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, "aria-label": iconEndAriaLabel, tabIndex: iconEndTabIndex, children: iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+                        }), classNamePrefix: "d-select", isDisabled: disabled || loading, isClearable: clearable, isLoading: loading, isRtl: rtl, isSearchable: searchable, isMulti: multi, defaultValue: defaultValue, placeholder: placeholder, unstyled: true, components: Object.assign({ Placeholder: DSelectPlaceholder, DropdownIndicator: DSelectDropdownIndicator, ClearIndicator: DSelectClearIndicator, MultiValueRemove: DSelectMultiValueRemove, LoadingIndicator: DSelectLoadingIndicator }, components) }, props)), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, "aria-label": iconEndAriaLabel, tabIndex: iconEndTabIndex, children: iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 var DSelect$1 = Object.assign(DSelect, {
     OptionCheck: DSelectOptionCheck,
@@ -722,6 +738,7 @@ var DSelect$1 = Object.assign(DSelect, {
     OptionEmoji: DSelectOptionEmoji,
     SingleValueEmoji: DSelectSingleValueEmoji,
     SingleValueEmojiText: DSelectSingleValueEmojiText,
+    Placeholder: DSelectPlaceholder,
 });
 
 function DDatePickerHeader({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, iconPrevMonth, iconNextMonth, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', iconSize, buttonVariant, buttonTheme, locale, style, className, minYearSelect, maxYearSelect, }) {
@@ -771,15 +788,14 @@ function DDatePicker(_a) {
     ]);
     const defaultRenderCustomHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DatePickerHeader, Object.assign({}, headerProps))), [DatePickerHeader]);
     const renderCustomHeader = React.useMemo(() => (renderCustomHeaderProp || defaultRenderCustomHeader), [defaultRenderCustomHeader, renderCustomHeaderProp]);
-    return (jsxRuntime.jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, selectsRange: selectsRange, formatWeekDay: handleFormatWeekDay, customInput: (jsxRuntime.jsx(DDatePickerInput$1, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyleProp, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsxRuntime.jsx(DDatePickerTime, { id: timeId, label: timeLabel })), placeholderText: placeholder }, locale && { locale }, dataAttributes, props)));
+    return (jsxRuntime.jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, selectsRange: selectsRange, formatWeekDay: handleFormatWeekDay, customInput: (jsxRuntime.jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyleProp, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsxRuntime.jsx(DDatePickerTime, { id: timeId, label: timeLabel })), placeholderText: placeholder }, locale && { locale }, dataAttributes, props)));
 }
 
 function DInputMask(props, ref) {
-    return (jsxRuntime.jsx(mask.InputMask, Object.assign({ ref: ref, component: DInput$1 }, props)));
+    return (jsxRuntime.jsx(mask.InputMask, Object.assign({ ref: ref, component: ForwardedDInput }, props)));
 }
 const ForwardedDInputMask = React.forwardRef(DInputMask);
 ForwardedDInputMask.displayName = 'DInputMask';
-var DInputMask$1 = ForwardedDInputMask;
 
 function formatValue(value, currencyOptions) {
     if (value === undefined) {
@@ -908,7 +924,7 @@ function DInputCounter(_a, ref) {
     const { iconMap: { input } } = useDContext();
     const iconEnd = React.useMemo(() => iconEndProp || input.increase, [iconEndProp, input.increase]);
     const iconStart = React.useMemo(() => iconStartProp || input.decrease, [iconStartProp, input.decrease]);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, value: valueString, style: generateStyleVariables, iconStart: iconStart, iconEnd: iconEnd, invalid: internalIsInvalid || invalid, type: "number", onChange: handleOnChange, onWheel: handleOnWheel, onIconStartClick: handleOnIconStartClick, onIconEndClick: handleOnIconEndClick, iconStartAriaLabel: iconStartAriaLabel, iconEndAriaLabel: iconEndAriaLabel }, internalValue === minValue && {
+    return (jsxRuntime.jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: valueString, style: generateStyleVariables, iconStart: iconStart, iconEnd: iconEnd, invalid: internalIsInvalid || invalid, type: "number", onChange: handleOnChange, onWheel: handleOnWheel, onIconStartClick: handleOnIconStartClick, onIconEndClick: handleOnIconEndClick, iconStartAriaLabel: iconStartAriaLabel, iconEndAriaLabel: iconEndAriaLabel }, internalValue === minValue && {
         iconStartDisabled: true,
     }, internalValue === maxValue && {
         iconEndDisabled: true,
@@ -916,7 +932,6 @@ function DInputCounter(_a, ref) {
 }
 const ForwardedDInputCounter = React.forwardRef(DInputCounter);
 ForwardedDInputCounter.displayName = 'DInputCounter';
-var DInputCounter$1 = ForwardedDInputCounter;
 
 /**
  * @deprecated
@@ -925,22 +940,20 @@ function DInputCurrencyBase(_a, ref) {
     var { value, minValue, maxValue, currencyOptions, currencyCode, onFocus, onBlur, onChange } = _a, inputProps = tslib.__rest(_a, ["value", "minValue", "maxValue", "currencyOptions", "currencyCode", "onFocus", "onBlur", "onChange"]);
     const { handleOnWheel, } = useDisableInputWheel(ref);
     const { inputRef, innerValue, innerType, handleOnFocus, handleOnChange, handleOnBlur, generateStyleVariables, generateSymbolStyleVariables, } = useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, value: innerValue, onChange: handleOnChange, style: generateStyleVariables, inputMode: "decimal", type: innerType, onFocus: handleOnFocus, onBlur: handleOnBlur, onWheel: handleOnWheel, inputStart: (jsxRuntime.jsx("span", { slot: "input-start", style: generateSymbolStyleVariables, children: currencyCode || currencyOptions.symbol })) }, inputProps)));
+    return (jsxRuntime.jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: innerValue, onChange: handleOnChange, style: generateStyleVariables, inputMode: "decimal", type: innerType, onFocus: handleOnFocus, onBlur: handleOnBlur, onWheel: handleOnWheel, inputStart: (jsxRuntime.jsx("span", { slot: "input-start", style: generateSymbolStyleVariables, children: currencyCode || currencyOptions.symbol })) }, inputProps)));
 }
 const ForwardedDInputCurrencyBase$1 = React.forwardRef(DInputCurrencyBase);
 ForwardedDInputCurrencyBase$1.displayName = 'DInputCurrencyBase';
-var DInputCurrencyBase$1 = ForwardedDInputCurrencyBase$1;
 
 function DInputCurrency(_a, ref) {
     var { value, minValue, maxValue, currencyCode, onFocus, onBlur, onChange } = _a, props = tslib.__rest(_a, ["value", "minValue", "maxValue", "currencyCode", "onFocus", "onBlur", "onChange"]);
     const { currency: currencyOptions } = useDContext();
     const { handleOnWheel, } = useDisableInputWheel(ref);
     const { inputRef, innerValue, innerType, handleOnFocus, handleOnChange, handleOnBlur, generateStyleVariables, generateSymbolStyleVariables, } = useInputCurrency(currencyOptions, value, onFocus, onChange, onBlur, ref);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, value: innerValue, onChange: handleOnChange, style: generateStyleVariables, inputMode: "decimal", type: innerType, onFocus: handleOnFocus, onBlur: handleOnBlur, onWheel: handleOnWheel, inputStart: (jsxRuntime.jsx("span", { slot: "input-start", style: generateSymbolStyleVariables, children: currencyCode || currencyOptions.symbol })) }, props)));
+    return (jsxRuntime.jsx(ForwardedDInput, Object.assign({ ref: inputRef, value: innerValue, onChange: handleOnChange, style: generateStyleVariables, inputMode: "decimal", type: innerType, onFocus: handleOnFocus, onBlur: handleOnBlur, onWheel: handleOnWheel, inputStart: (jsxRuntime.jsx("span", { slot: "input-start", style: generateSymbolStyleVariables, children: currencyCode || currencyOptions.symbol })) }, props)));
 }
 const ForwardedDInputCurrencyBase = React.forwardRef(DInputCurrency);
 ForwardedDInputCurrencyBase.displayName = 'DInputCurrency';
-var DInputCurrency$1 = ForwardedDInputCurrencyBase;
 
 /**
  * @deprecated
@@ -948,11 +961,10 @@ var DInputCurrency$1 = ForwardedDInputCurrencyBase;
 function DInputSearch(_a, ref) {
     var { type, iconEnd: iconEndProp, iconEndAriaLabel = 'search' } = _a, props = tslib.__rest(_a, ["type", "iconEnd", "iconEndAriaLabel"]);
     const inputRef = useProvidedRefOrCreate(ref);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, type: "text", iconEnd: "search", iconEndAriaLabel: iconEndAriaLabel }, props)));
+    return (jsxRuntime.jsx(ForwardedDInput, Object.assign({ ref: inputRef, type: "text", iconEnd: "search", iconEndAriaLabel: iconEndAriaLabel }, props)));
 }
 const ForwardedDInputSearch = React.forwardRef(DInputSearch);
 ForwardedDInputSearch.displayName = 'DInputSearch';
-var DInputSearch$1 = ForwardedDInputSearch;
 
 function DInputPassword(_a, ref) {
     var { onIconEndClick, iconEndAriaLabel = 'show/hide password' } = _a, props = tslib.__rest(_a, ["onIconEndClick", "iconEndAriaLabel"]);
@@ -964,11 +976,10 @@ function DInputPassword(_a, ref) {
     }, [onIconEndClick]);
     const { iconMap: { input } } = useDContext();
     const iconEnd = React.useMemo(() => (!visible ? input.hide : input.show), [input.hide, input.show, visible]);
-    return (jsxRuntime.jsx(DInput$1, Object.assign({ ref: inputRef, iconEnd: iconEnd, type: !visible ? 'password' : 'text', onIconEndClick: handleOnIconEndClick, iconEndAriaLabel: iconEndAriaLabel }, props)));
+    return (jsxRuntime.jsx(ForwardedDInput, Object.assign({ ref: inputRef, iconEnd: iconEnd, type: !visible ? 'password' : 'text', onIconEndClick: handleOnIconEndClick, iconEndAriaLabel: iconEndAriaLabel }, props)));
 }
 const ForwardedDInputPassword = React.forwardRef(DInputPassword);
 ForwardedDInputPassword.displayName = 'DInputPassword';
-var DInputPassword$1 = ForwardedDInputPassword;
 
 function DInputPin({ id: idProp, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, placeholder, type = 'text', disabled = false, loading = false, secret = false, characters = 4, innerInputMode = 'text', hint, invalid = false, valid = false, className, style, dataAttributes, onChange, }) {
     const innerId = React.useId();
@@ -1184,7 +1195,6 @@ function DInputRange(_a, ref) {
 }
 const ForwardedDInputRange = React.forwardRef(DInputRange);
 ForwardedDInputRange.displayName = 'DInputRange';
-var DInputRange$1 = ForwardedDInputRange;
 
 /**
  * @deprecated Please use DListGroup.Item or DListGroupItem instead
@@ -1749,16 +1759,16 @@ exports.DCurrencyText = DCurrencyText;
 exports.DDatePicker = DDatePicker;
 exports.DIcon = DIcon;
 exports.DIconBase = DIconBase;
-exports.DInput = DInput$1;
+exports.DInput = ForwardedDInput;
 exports.DInputCheck = DInputCheck;
-exports.DInputCounter = DInputCounter$1;
-exports.DInputCurrency = DInputCurrency$1;
-exports.DInputCurrencyBase = DInputCurrencyBase$1;
-exports.DInputMask = DInputMask$1;
-exports.DInputPassword = DInputPassword$1;
+exports.DInputCounter = ForwardedDInputCounter;
+exports.DInputCurrency = ForwardedDInputCurrencyBase;
+exports.DInputCurrencyBase = ForwardedDInputCurrencyBase$1;
+exports.DInputMask = ForwardedDInputMask;
+exports.DInputPassword = ForwardedDInputPassword;
 exports.DInputPin = DInputPin;
-exports.DInputRange = DInputRange$1;
-exports.DInputSearch = DInputSearch$1;
+exports.DInputRange = ForwardedDInputRange;
+exports.DInputSearch = ForwardedDInputSearch;
 exports.DInputSelect = DInputSelect;
 exports.DInputSwitch = DInputSwitch;
 exports.DList = DList$1;
