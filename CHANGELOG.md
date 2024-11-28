@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.32.4](https://github.com/dynamic-framework/dynamic-ui/compare/v1.32.3...v1.32.4) (2024-11-28)
+
+
+### Bug Fixes
+
+* **DSelect:** adjust id support ([c1d902e](https://github.com/dynamic-framework/dynamic-ui/commit/c1d902e92dd9cd9e4efe6a6baacc845c9e76d645))
+
 ## [1.32.3](https://github.com/dynamic-framework/dynamic-ui/compare/@dynamic-framework/ui-react@1.32.2...@dynamic-framework/ui-react@1.32.3) (2024-11-27)
 
 
