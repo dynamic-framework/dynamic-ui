@@ -1,8 +1,0 @@
-.form-check-label {
-  --#{$prefix}label-padding-x: var(--#{$prefix}ref-spacer-2);
-}
-
-.form-check-input {
-  --#{$prefix}form-check-input-focus-border-color: #{$component-focus-border-color};
-  --#{$prefix}form-check-input-focus-box-shadow: #{$input-btn-focus-box-shadow};
-}

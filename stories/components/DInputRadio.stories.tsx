@@ -106,6 +106,17 @@ export const RadioDefault: Story = {
   },
 };
 
+export const RadioHint: Story = {
+  args: {
+    id: 'componentId2',
+    type: 'radio',
+    label: 'Label',
+    hint: 'Assistive text',
+    checked: false,
+    disabled: false,
+  },
+};
+
 export const RadioValid: Story = {
   args: {
     id: 'componentId3',

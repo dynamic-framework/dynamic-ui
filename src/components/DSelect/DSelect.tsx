@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import { useCallback } from 'react';
+import { useCallback, useId, useMemo } from 'react';
 import classNames from 'classnames';
 
 import type { Props as SelectProps, GroupBase } from 'react-select';
@@ -16,6 +16,7 @@ import DSelectLoadingIndicator from './components/DSelectLoadingIndicator';
 import DSelectOptionEmoji from './components/DSelectOptionEmoji';
 import DSelectSingleValueEmoji from './components/DSelectSingleValueEmoji';
 import DSelectSingleValueEmojiText from './components/DSelectSingleValueEmojiText';
+import DSelectPlaceholder from './components/DSelectPlaceholder';
 
 import type {
   BaseProps,
@@ -61,7 +62,7 @@ function DSelect<
   Group extends GroupBase<Option> = GroupBase<Option>,
 >(
   {
-    id,
+    id: idProp,
     className,
     style,
     label,
@@ -92,12 +93,16 @@ function DSelect<
     multi,
     components,
     defaultValue,
+    placeholder,
     onIconStartClick,
     onIconEndClick,
     dataAttributes,
     ...props
   }: Props<Option, IsMulti, Group>,
 ) {
+  const innerId = useId();
+  const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+
   const handleOnIconStartClick = useCallback(() => {
     onIconStartClick?.(defaultValue);
   }, [onIconStartClick, defaultValue]);
@@ -156,6 +161,8 @@ function DSelect<
           </button>
         )}
         <Select<Option, IsMulti, Group>
+          id={`${id}Container`}
+          inputId={id}
           styles={{
             control: (base) => ({
               ...base,
@@ -183,8 +190,10 @@ function DSelect<
           isSearchable={searchable}
           isMulti={multi}
           defaultValue={defaultValue}
+          placeholder={placeholder}
           unstyled
           components={{
+            Placeholder: DSelectPlaceholder,
             DropdownIndicator: DSelectDropdownIndicator,
             ClearIndicator: DSelectClearIndicator,
             MultiValueRemove: DSelectMultiValueRemove,
@@ -236,4 +245,5 @@ export default Object.assign(DSelect, {
   OptionEmoji: DSelectOptionEmoji,
   SingleValueEmoji: DSelectSingleValueEmoji,
   SingleValueEmojiText: DSelectSingleValueEmojiText,
+  Placeholder: DSelectPlaceholder,
 });

@@ -30,6 +30,7 @@ it('should render my component', () => {
       >
         <div
           class="d-select-component css-khl8b7-container"
+          id="componentId1Container"
         >
           <span
             class="css-1f43avz-a11yText-A11yText"
@@ -46,16 +47,16 @@ it('should render my component', () => {
             class="d-select__control css-1ulfhu6-control"
           >
             <div
-              class="d-select__value-container css-1qpkzkj-ValueContainer"
+              class="d-select__value-container css-14oxtc6"
             >
               <div
                 class="d-select__placeholder css-1vlsb4t-placeholder"
-                id="react-select-2-placeholder"
+                id="componentId1Placeholder"
               >
                 Select...
               </div>
               <div
-                class="d-select__input-container css-1q5atpo-Input"
+                class="d-select__input-container css-n9qnu9"
                 data-value=""
               >
                 <input
@@ -68,7 +69,7 @@ it('should render my component', () => {
                   autocomplete="off"
                   autocorrect="off"
                   class="d-select__input"
-                  id="react-select-2-input"
+                  id="componentId1"
                   role="combobox"
                   spellcheck="false"
                   style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
@@ -79,7 +80,7 @@ it('should render my component', () => {
               </div>
             </div>
             <div
-              class="d-select__indicators css-1hb7zxy-IndicatorsContainer"
+              class="d-select__indicators css-1wy0on6"
             >
               <span
                 class="d-select__indicator-separator css-j4w2j1-indicatorSeparator"

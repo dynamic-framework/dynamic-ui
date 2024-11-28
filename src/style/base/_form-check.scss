@@ -1,0 +1,26 @@
+.form-check-label {
+  --#{$prefix}label-padding-x: var(--#{$prefix}ref-spacer-2);
+}
+
+.form-check-input {
+  --#{$prefix}form-check-input-focus-border-color: #{$component-focus-border-color};
+  --#{$prefix}form-check-input-focus-box-shadow: #{$input-btn-focus-box-shadow};
+}
+
+.form-check {
+  .form-text {
+    --#{$prefix}form-text-padding: 0 var(--#{$prefix}ref-spacer-2);
+
+    display: flex;
+  }
+
+  @each $state, $data in $form-validation-states {
+    $border-color: map-get($data, "border-color");
+
+    &:has(.form-check-input.is-#{$state}) {
+      .form-text {
+        color: $border-color;
+      }
+    }
+  }
+}
