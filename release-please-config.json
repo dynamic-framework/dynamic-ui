@@ -1,5 +1,6 @@
 {
   "release-type": "node",
+  "target-branch": "master",
   "changelog-sections": [
     { "type": "feat", "scope": "style", "section": "Style Features" },
     { "type": "feat", "section": "Features" },
