@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.34.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.33.0...v1.34.0) (2024-11-29)
+
+
+### Features
+
+* **DQuickActionButton:** enable a temporal API ([994d93c](https://github.com/dynamic-framework/dynamic-ui/commit/994d93c54f2e7960c11672f2dfad02b7c0b61140))
+* **useMediaBreakpointUp:** add utilities to handle media-query ([#770](https://github.com/dynamic-framework/dynamic-ui/issues/770)) ([7d8449d](https://github.com/dynamic-framework/dynamic-ui/commit/7d8449d1858f1783b91eaa7e455d498ea26c48ad))
+
 ## [1.33.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.32.3...v1.33.0) (2024-11-28)
 
 
