@@ -1,5 +1,5 @@
 import { jsx, jsxs, Fragment as Fragment$1 } from 'react/jsx-runtime';
-import React, { useMemo, useEffect, useState, useCallback, createContext, useContext, Fragment, forwardRef, useId, useRef } from 'react';
+import React, { useMemo, useEffect, useState, useCallback, createContext, useContext, Fragment, useLayoutEffect, forwardRef, useId, useRef, useSyncExternalStore } from 'react';
 import classNames from 'classnames';
 import { __rest } from 'tslib';
 import { createPortal } from 'react-dom';
@@ -200,7 +200,12 @@ function useDPortalContext() {
     return context;
 }
 
-const defaultState = {
+function getCssVariable(variable) {
+    const computedStyle = getComputedStyle(document.documentElement);
+    return computedStyle.getPropertyValue(variable).trim();
+}
+
+const DEFAULT_STATE = {
     language: 'en',
     currency: {
         symbol: '$',
@@ -243,18 +248,40 @@ const defaultState = {
             decrease: 'dash-square',
         },
     },
+    breakpoints: {
+        xs: '',
+        sm: '',
+        md: '',
+        lg: '',
+        xl: '',
+        xxl: '',
+    },
     setContext: () => { },
     portalName: 'd-portal',
 };
-const DContext = createContext(defaultState);
-function DContextProvider({ language = defaultState.language, currency = defaultState.currency, icon = defaultState.icon, iconMap = defaultState.iconMap, portalName = defaultState.portalName, availablePortals, children, }) {
+const DContext = createContext(DEFAULT_STATE);
+function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAULT_STATE.currency, icon = DEFAULT_STATE.icon, iconMap = DEFAULT_STATE.iconMap, portalName = DEFAULT_STATE.portalName, availablePortals, children, }) {
     const [internalContext, setInternalContext,] = useState({
         language,
         currency,
         icon,
         iconMap,
+        breakpoints: DEFAULT_STATE.breakpoints,
     });
     const setContext = useCallback((newValue) => (setInternalContext((prevInternalContext) => (Object.assign(Object.assign({}, prevInternalContext), newValue)))), []);
+    useLayoutEffect(() => {
+        console.log('context');
+        setContext({
+            breakpoints: {
+                xs: getCssVariable(`--${PREFIX_BS}breakpoint-xs`),
+                sm: getCssVariable(`--${PREFIX_BS}breakpoint-sm`),
+                md: getCssVariable(`--${PREFIX_BS}breakpoint-md`),
+                lg: getCssVariable(`--${PREFIX_BS}breakpoint-lg`),
+                xl: getCssVariable(`--${PREFIX_BS}breakpoint-xl`),
+                xxl: getCssVariable(`--${PREFIX_BS}breakpoint-xxl`),
+            },
+        });
+    }, [setContext]);
     const value = useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext })), [internalContext, setContext]);
     return (jsx(DContext.Provider, { value: value, children: jsx(DPortalContextProvider, { portalName: portalName, availablePortals: availablePortals, children: children }) }));
 }
@@ -893,6 +920,47 @@ function useItemSelection({ getItemIdentifier: getItemIdentifierProp, previousSe
     };
 }
 
+function subscribeToMediaQuery(query, callback) {
+    const mediaQueryList = window.matchMedia(query);
+    mediaQueryList.addEventListener('change', callback);
+    return () => {
+        mediaQueryList.removeEventListener('change', callback);
+    };
+}
+function checkMediaQuery(query) {
+    return window.matchMedia(query).matches;
+}
+
+function useMediaQuery(mediaQuery, useListener = false) {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const noop = (_) => () => { };
+    return useSyncExternalStore(useListener ? (cb) => subscribeToMediaQuery(mediaQuery, cb) : noop, () => (mediaQuery ? checkMediaQuery(mediaQuery) : true), () => false);
+}
+
+function useMediaBreakpointUp(breakpoint, useListener = false) {
+    const { breakpoints } = useDContext();
+    const mediaQuery = useMemo(() => (`(min-width: ${breakpoints[breakpoint]})`), [breakpoint, breakpoints]);
+    return useMediaQuery(mediaQuery, useListener);
+}
+function useMediaBreakpointUpXs(useListener = false) {
+    return useMediaBreakpointUp('xs', useListener);
+}
+function useMediaBreakpointUpSm(useListener = false) {
+    return useMediaBreakpointUp('sm', useListener);
+}
+function useMediaBreakpointUpMd(useListener = false) {
+    return useMediaBreakpointUp('md', useListener);
+}
+function useMediaBreakpointUpLg(useListener = false) {
+    return useMediaBreakpointUp('lg', useListener);
+}
+function useMediaBreakpointUpXl(useListener = false) {
+    return useMediaBreakpointUp('xl', useListener);
+}
+function useMediaBreakpointUpXxl(useListener = false) {
+    return useMediaBreakpointUp('xxl', useListener);
+}
+
 function DInputCounter(_a, ref) {
     var { minValue, maxValue, value = minValue, invalid, iconStart: iconStartProp, iconEnd: iconEndProp, iconStartAriaLabel = 'decrease action', iconEndAriaLabel = 'increase action', style, onChange } = _a, props = __rest(_a, ["minValue", "maxValue", "value", "invalid", "iconStart", "iconEnd", "iconStartAriaLabel", "iconEndAriaLabel", "style", "onChange"]);
     const { handleOnWheel, } = useDisableInputWheel(ref);
@@ -1415,29 +1483,42 @@ function DProgress({ className, style, currentValue, minValue = 0, maxValue = 10
     return (jsx("div", Object.assign({ className: classNames('progress', className) }, dataAttributes, { children: jsx("div", { className: classNames(generateClasses), role: "progressbar", "aria-label": "Progress bar", style: Object.assign({ width: formatProgress }, style), "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) })));
 }
 
-/**
- * @deprecated
- */
-function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme = 'secondary', actionIcon, secondaryActionIcon, secondaryActionAriaLabel, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, dataAttributes, }) {
-    const globalClickHandler = useCallback(() => {
-        if (actionLinkText) {
-            return;
+function DQuickActionButton({ line1, line2, className, actionIcon, actionIconFamilyClass, actionIconFamilyPrefix, actionIconTheme, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, href, hrefTarget, style, dataAttributes, }) {
+    const Tag = useMemo(() => {
+        if (href) {
+            return 'a';
         }
-        onClick === null || onClick === void 0 ? void 0 : onClick();
-    }, [actionLinkText, onClick]);
-    const actionLinkClickHandler = useCallback(() => {
-        if (!actionLinkText) {
-            return;
+        if (onClick) {
+            return 'button';
         }
-        onClick === null || onClick === void 0 ? void 0 : onClick();
-    }, [actionLinkText, onClick]);
-    const secondaryActionLinkClickHandler = useCallback(() => {
-        onClickSecondary === null || onClickSecondary === void 0 ? void 0 : onClickSecondary();
-    }, [onClickSecondary]);
-    const Tag = useMemo(() => (actionLinkText ? 'div' : 'button'), [actionLinkText]);
-    return (jsxs(Tag, Object.assign({ className: classNames('d-quick-action-button', className), onClick: !actionLinkText ? globalClickHandler : undefined, style: style }, dataAttributes, { children: [representativeIcon && (jsx(DIcon, { className: "d-quick-action-button-representative-icon", size: representativeIconHasCircle
+        return 'div';
+    }, [href, onClick]);
+    const tagProps = useMemo(() => {
+        if (href) {
+            return {
+                className: classNames('d-quick-action-button', 'd-quick-action-button-feedback', className),
+                href,
+                target: hrefTarget,
+            };
+        }
+        if (onClick) {
+            return {
+                className: classNames('d-quick-action-button', 'd-quick-action-button-feedback', className),
+                onClick,
+            };
+        }
+        return {
+            className: classNames('d-quick-action-button', className),
+        };
+    }, [
+        className,
+        href,
+        hrefTarget,
+        onClick,
+    ]);
+    return (jsxs(Tag, Object.assign({ style: style }, tagProps, dataAttributes, { children: [representativeIcon && (jsx(DIcon, { className: "d-quick-action-button-representative-icon", size: representativeIconHasCircle
                     ? `var(--${PREFIX_BS}quick-action-button-representative-icon-size)`
-                    : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsx("div", { className: "d-quick-action-button-content", children: jsxs("div", { className: "d-quick-action-button-text", children: [jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), secondaryActionIcon && (jsx(DButton, { className: "d-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: secondaryActionIcon, ariaLabel: secondaryActionAriaLabel, iconStartFamilyClass: actionIconFamilyClass, iconStartFamilyPrefix: actionIconFamilyPrefix, theme: actionLinkTheme, onClick: secondaryActionLinkClickHandler, stopPropagationEnabled: true })), actionLinkText && !actionIcon && (jsx(DButton, { className: "d-quick-action-button-action-link", type: "button", variant: "link", theme: actionLinkTheme, text: actionLinkText, onClick: actionLinkClickHandler, stopPropagationEnabled: true })), actionIcon && !actionLinkText && (jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] })));
+                    : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsx("div", { className: "d-quick-action-button-content", children: jsxs("div", { className: "d-quick-action-button-text", children: [jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), actionIcon && (jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, theme: actionIconTheme, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] })));
 }
 
 /**
@@ -1737,5 +1818,5 @@ function changeQueryString(values, { useSearch = true, pushState = false, } = {}
     return searchParams.toString();
 }
 
-export { DAlert, DAvatar, DBadge, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrencyBase as DInputCurrency, ForwardedDInputCurrencyBase$1 as DInputCurrencyBase, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListGroup$1 as DListGroup, DListGroupItem, DListItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSelect$1 as DSelect, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTableHead, DTabs$1 as DTabs, DToast$1 as DToast, DToastContainer, DTooltip, changeQueryString, configureI8n as configureI18n, formatCurrency, getQueryString, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, usePortal, useProvidedRefOrCreate, useStackState, useTabContext };
+export { DAlert, DAvatar, DBadge, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrencyBase as DInputCurrency, ForwardedDInputCurrencyBase$1 as DInputCurrencyBase, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListGroup$1 as DListGroup, DListGroupItem, DListItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSelect$1 as DSelect, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTableHead, DTabs$1 as DTabs, DToast$1 as DToast, DToastContainer, DTooltip, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext };
 //# sourceMappingURL=index.esm.js.map

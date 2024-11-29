@@ -33,11 +33,20 @@ type IconMapProps = {
         increase: string;
     };
 };
+export type BreakpointProps = {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+    xxl: string;
+};
 type Props<T extends Record<string, unknown>> = {
     language: string;
     currency: CurrencyProps;
     icon: IconProps;
     iconMap: IconMapProps;
+    breakpoints: BreakpointProps;
 } & PortalContextProps<T>;
 type Context<T extends Record<string, unknown>> = Props<T> & {
     setContext: (value: Partial<Props<T>>) => void;

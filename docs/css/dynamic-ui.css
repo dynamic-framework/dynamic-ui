@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.33.0
+ * dynamic-framework 1.34.0
  * bootstrap ~5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -10675,12 +10675,14 @@ label .d-icon {
   border-radius: var(--bs-quick-action-button-border-radius);
   box-shadow: var(--bs-quick-action-button-box-shadow);
 }
-.d-quick-action-button:hover {
+.d-quick-action-button.d-quick-action-button-feedback:hover {
+  text-decoration: none;
   background: var(--bs-quick-action-button-hover-bg);
   border-color: var(--bs-quick-action-button-hover-border-color);
   box-shadow: var(--bs-quick-action-button-hover-box-shadow);
 }
-.d-quick-action-button:active {
+.d-quick-action-button.d-quick-action-button-feedback:active {
+  text-decoration: none;
   background: var(--bs-quick-action-button-active-bg);
   border-color: var(--bs-quick-action-button-active-border-color);
   box-shadow: var(--bs-quick-action-button-active-box-shadow);

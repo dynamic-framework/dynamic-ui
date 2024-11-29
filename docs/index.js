@@ -202,7 +202,12 @@ function useDPortalContext() {
     return context;
 }
 
-const defaultState = {
+function getCssVariable(variable) {
+    const computedStyle = getComputedStyle(document.documentElement);
+    return computedStyle.getPropertyValue(variable).trim();
+}
+
+const DEFAULT_STATE = {
     language: 'en',
     currency: {
         symbol: '$',
@@ -245,18 +250,40 @@ const defaultState = {
             decrease: 'dash-square',
         },
     },
+    breakpoints: {
+        xs: '',
+        sm: '',
+        md: '',
+        lg: '',
+        xl: '',
+        xxl: '',
+    },
     setContext: () => { },
     portalName: 'd-portal',
 };
-const DContext = React.createContext(defaultState);
-function DContextProvider({ language = defaultState.language, currency = defaultState.currency, icon = defaultState.icon, iconMap = defaultState.iconMap, portalName = defaultState.portalName, availablePortals, children, }) {
+const DContext = React.createContext(DEFAULT_STATE);
+function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAULT_STATE.currency, icon = DEFAULT_STATE.icon, iconMap = DEFAULT_STATE.iconMap, portalName = DEFAULT_STATE.portalName, availablePortals, children, }) {
     const [internalContext, setInternalContext,] = React.useState({
         language,
         currency,
         icon,
         iconMap,
+        breakpoints: DEFAULT_STATE.breakpoints,
     });
     const setContext = React.useCallback((newValue) => (setInternalContext((prevInternalContext) => (Object.assign(Object.assign({}, prevInternalContext), newValue)))), []);
+    React.useLayoutEffect(() => {
+        console.log('context');
+        setContext({
+            breakpoints: {
+                xs: getCssVariable(`--${PREFIX_BS}breakpoint-xs`),
+                sm: getCssVariable(`--${PREFIX_BS}breakpoint-sm`),
+                md: getCssVariable(`--${PREFIX_BS}breakpoint-md`),
+                lg: getCssVariable(`--${PREFIX_BS}breakpoint-lg`),
+                xl: getCssVariable(`--${PREFIX_BS}breakpoint-xl`),
+                xxl: getCssVariable(`--${PREFIX_BS}breakpoint-xxl`),
+            },
+        });
+    }, [setContext]);
     const value = React.useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext })), [internalContext, setContext]);
     return (jsxRuntime.jsx(DContext.Provider, { value: value, children: jsxRuntime.jsx(DPortalContextProvider, { portalName: portalName, availablePortals: availablePortals, children: children }) }));
 }
@@ -895,6 +922,47 @@ function useItemSelection({ getItemIdentifier: getItemIdentifierProp, previousSe
     };
 }
 
+function subscribeToMediaQuery(query, callback) {
+    const mediaQueryList = window.matchMedia(query);
+    mediaQueryList.addEventListener('change', callback);
+    return () => {
+        mediaQueryList.removeEventListener('change', callback);
+    };
+}
+function checkMediaQuery(query) {
+    return window.matchMedia(query).matches;
+}
+
+function useMediaQuery(mediaQuery, useListener = false) {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const noop = (_) => () => { };
+    return React.useSyncExternalStore(useListener ? (cb) => subscribeToMediaQuery(mediaQuery, cb) : noop, () => (mediaQuery ? checkMediaQuery(mediaQuery) : true), () => false);
+}
+
+function useMediaBreakpointUp(breakpoint, useListener = false) {
+    const { breakpoints } = useDContext();
+    const mediaQuery = React.useMemo(() => (`(min-width: ${breakpoints[breakpoint]})`), [breakpoint, breakpoints]);
+    return useMediaQuery(mediaQuery, useListener);
+}
+function useMediaBreakpointUpXs(useListener = false) {
+    return useMediaBreakpointUp('xs', useListener);
+}
+function useMediaBreakpointUpSm(useListener = false) {
+    return useMediaBreakpointUp('sm', useListener);
+}
+function useMediaBreakpointUpMd(useListener = false) {
+    return useMediaBreakpointUp('md', useListener);
+}
+function useMediaBreakpointUpLg(useListener = false) {
+    return useMediaBreakpointUp('lg', useListener);
+}
+function useMediaBreakpointUpXl(useListener = false) {
+    return useMediaBreakpointUp('xl', useListener);
+}
+function useMediaBreakpointUpXxl(useListener = false) {
+    return useMediaBreakpointUp('xxl', useListener);
+}
+
 function DInputCounter(_a, ref) {
     var { minValue, maxValue, value = minValue, invalid, iconStart: iconStartProp, iconEnd: iconEndProp, iconStartAriaLabel = 'decrease action', iconEndAriaLabel = 'increase action', style, onChange } = _a, props = tslib.__rest(_a, ["minValue", "maxValue", "value", "invalid", "iconStart", "iconEnd", "iconStartAriaLabel", "iconEndAriaLabel", "style", "onChange"]);
     const { handleOnWheel, } = useDisableInputWheel(ref);
@@ -1417,29 +1485,42 @@ function DProgress({ className, style, currentValue, minValue = 0, maxValue = 10
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames('progress', className) }, dataAttributes, { children: jsxRuntime.jsx("div", { className: classNames(generateClasses), role: "progressbar", "aria-label": "Progress bar", style: Object.assign({ width: formatProgress }, style), "aria-valuenow": currentValue, "aria-valuemin": minValue, "aria-valuemax": maxValue, children: !hideCurrentValue && formatProgress }) })));
 }
 
-/**
- * @deprecated
- */
-function DQuickActionButton({ line1, line2, className, actionLinkText, actionLinkTheme = 'secondary', actionIcon, secondaryActionIcon, secondaryActionAriaLabel, actionIconFamilyClass, actionIconFamilyPrefix, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, onClickSecondary, style, dataAttributes, }) {
-    const globalClickHandler = React.useCallback(() => {
-        if (actionLinkText) {
-            return;
+function DQuickActionButton({ line1, line2, className, actionIcon, actionIconFamilyClass, actionIconFamilyPrefix, actionIconTheme, representativeImage, representativeIcon, representativeIconTheme = 'secondary', representativeIconHasCircle = false, representativeIconFamilyClass, representativeIconFamilyPrefix, onClick, href, hrefTarget, style, dataAttributes, }) {
+    const Tag = React.useMemo(() => {
+        if (href) {
+            return 'a';
         }
-        onClick === null || onClick === void 0 ? void 0 : onClick();
-    }, [actionLinkText, onClick]);
-    const actionLinkClickHandler = React.useCallback(() => {
-        if (!actionLinkText) {
-            return;
+        if (onClick) {
+            return 'button';
         }
-        onClick === null || onClick === void 0 ? void 0 : onClick();
-    }, [actionLinkText, onClick]);
-    const secondaryActionLinkClickHandler = React.useCallback(() => {
-        onClickSecondary === null || onClickSecondary === void 0 ? void 0 : onClickSecondary();
-    }, [onClickSecondary]);
-    const Tag = React.useMemo(() => (actionLinkText ? 'div' : 'button'), [actionLinkText]);
-    return (jsxRuntime.jsxs(Tag, Object.assign({ className: classNames('d-quick-action-button', className), onClick: !actionLinkText ? globalClickHandler : undefined, style: style }, dataAttributes, { children: [representativeIcon && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-representative-icon", size: representativeIconHasCircle
+        return 'div';
+    }, [href, onClick]);
+    const tagProps = React.useMemo(() => {
+        if (href) {
+            return {
+                className: classNames('d-quick-action-button', 'd-quick-action-button-feedback', className),
+                href,
+                target: hrefTarget,
+            };
+        }
+        if (onClick) {
+            return {
+                className: classNames('d-quick-action-button', 'd-quick-action-button-feedback', className),
+                onClick,
+            };
+        }
+        return {
+            className: classNames('d-quick-action-button', className),
+        };
+    }, [
+        className,
+        href,
+        hrefTarget,
+        onClick,
+    ]);
+    return (jsxRuntime.jsxs(Tag, Object.assign({ style: style }, tagProps, dataAttributes, { children: [representativeIcon && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-representative-icon", size: representativeIconHasCircle
                     ? `var(--${PREFIX_BS}quick-action-button-representative-icon-size)`
-                    : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsxRuntime.jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsxRuntime.jsx("div", { className: "d-quick-action-button-content", children: jsxRuntime.jsxs("div", { className: "d-quick-action-button-text", children: [jsxRuntime.jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsxRuntime.jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), secondaryActionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-secondary-action-link", type: "button", variant: "link", iconStart: secondaryActionIcon, ariaLabel: secondaryActionAriaLabel, iconStartFamilyClass: actionIconFamilyClass, iconStartFamilyPrefix: actionIconFamilyPrefix, theme: actionLinkTheme, onClick: secondaryActionLinkClickHandler, stopPropagationEnabled: true })), actionLinkText && !actionIcon && (jsxRuntime.jsx(DButton, { className: "d-quick-action-button-action-link", type: "button", variant: "link", theme: actionLinkTheme, text: actionLinkText, onClick: actionLinkClickHandler, stopPropagationEnabled: true })), actionIcon && !actionLinkText && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] })));
+                    : `var(--${PREFIX_BS}quick-action-button-representative-image-size)`, icon: representativeIcon, hasCircle: representativeIconHasCircle, theme: representativeIconTheme, familyClass: representativeIconFamilyClass, familyPrefix: representativeIconFamilyPrefix })), representativeImage && (jsxRuntime.jsx("img", { className: "d-quick-action-button-representative-image", src: representativeImage, alt: "" })), jsxRuntime.jsx("div", { className: "d-quick-action-button-content", children: jsxRuntime.jsxs("div", { className: "d-quick-action-button-text", children: [jsxRuntime.jsx("span", { className: "d-quick-action-button-line1", children: line1 }), jsxRuntime.jsx("small", { className: "d-quick-action-button-line2", children: line2 })] }) }), actionIcon && (jsxRuntime.jsx(DIcon, { className: "d-quick-action-button-action-icon", icon: actionIcon, size: `var(--${PREFIX_BS}quick-action-button-action-icon-size)`, theme: actionIconTheme, familyClass: actionIconFamilyClass, familyPrefix: actionIconFamilyPrefix }))] })));
 }
 
 /**
@@ -1802,9 +1883,12 @@ exports.DToast = DToast$1;
 exports.DToastContainer = DToastContainer;
 exports.DTooltip = DTooltip;
 exports.changeQueryString = changeQueryString;
+exports.checkMediaQuery = checkMediaQuery;
 exports.configureI18n = configureI8n;
 exports.formatCurrency = formatCurrency;
+exports.getCssVariable = getCssVariable;
 exports.getQueryString = getQueryString;
+exports.subscribeToMediaQuery = subscribeToMediaQuery;
 exports.useDContext = useDContext;
 exports.useDPortalContext = useDPortalContext;
 exports.useDToast = useDToast;
@@ -1813,6 +1897,13 @@ exports.useDisableInputWheel = useDisableInputWheel;
 exports.useFormatCurrency = useFormatCurrency;
 exports.useInputCurrency = useInputCurrency;
 exports.useItemSelection = useItemSelection;
+exports.useMediaBreakpointUpLg = useMediaBreakpointUpLg;
+exports.useMediaBreakpointUpMd = useMediaBreakpointUpMd;
+exports.useMediaBreakpointUpSm = useMediaBreakpointUpSm;
+exports.useMediaBreakpointUpXl = useMediaBreakpointUpXl;
+exports.useMediaBreakpointUpXs = useMediaBreakpointUpXs;
+exports.useMediaBreakpointUpXxl = useMediaBreakpointUpXxl;
+exports.useMediaQuery = useMediaQuery;
 exports.usePortal = usePortal;
 exports.useProvidedRefOrCreate = useProvidedRefOrCreate;
 exports.useStackState = useStackState;
