@@ -9,7 +9,7 @@
   --#{$prefix}nav-link-hover-bg: #{$nav-link-hover-bg};
   --#{$prefix}nav-link-hover-color: #{$nav-link-hover-color};
 
-  .nav-link {
+  .nav-link:not(.active) {
     &:hover {
       background-color: var(--#{$prefix}nav-link-hover-bg);
     }
@@ -25,14 +25,6 @@
 
     .nav-link {
       width: 100%;
-    }
-  }
-}
-
-.nav-pills {
-  .nav-link.active {
-    &:hover {
-      color: var(--#{$prefix}nav-link-hover-color);
     }
   }
 }
