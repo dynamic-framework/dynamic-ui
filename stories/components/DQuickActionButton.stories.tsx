@@ -157,9 +157,7 @@ export const Button: Story = {
     line2: 'Toon Bank **** 721',
     representativeImage: 'https://i.pravatar.cc/150?img=2',
     actionIcon: 'chevron-right',
-    onClick: () => {
-      console.log('onClick');
-    },
+    onClick: () => { },
   },
 };
 
