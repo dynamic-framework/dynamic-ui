@@ -1,5 +1,8 @@
 import {
-  useCallback, useEffect, useMemo, useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
 } from 'react';
 import classNames from 'classnames';
 import {
@@ -32,9 +35,6 @@ type Props = BaseProps & PropsWithChildren<{
   adjustContentToRender?: boolean;
 }>;
 
-/**
- * @deprecated
- */
 export default function DPopover(
   {
     children,

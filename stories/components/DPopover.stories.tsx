@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import DPopover from '../../src/components/DPopover/DPopover';
-import DQuickActionButton from '../../src/components/DQuickActionButton';
 import DButton from '../../src/components/DButton';
+import { DCard } from '../../src';
 
 const config: Meta<typeof DPopover> = {
   title: 'Design System/Patterns/Popover',
@@ -20,42 +20,67 @@ const config: Meta<typeof DPopover> = {
       type: 'boolean',
     },
   },
-};
-
-export default config;
-type Story = StoryObj<typeof DPopover>;
-
-export const Default: Story = {
   decorators: [
     (Story) => (
       <div
-        style={{ width: '320px', height: '320px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+        style={{ height: '250px' }}
+        className="d-flex justify-content-center align-items-center"
       >
         <Story />
       </div>
     ),
   ],
+};
+
+export default config;
+type Story = StoryObj<typeof DPopover>;
+
+function ButtonRenderComponent(toggle: boolean) {
+  return (
+    <DButton
+      className="w-100"
+      text="Popover on bottom"
+      iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
+      stopPropagationEnabled={false}
+    />
+  );
+}
+
+function CodeComponent(position: string, adjustContentToRender?: boolean) {
+  return `
+<DPopover renderComponent={(toggle: boolean) => (
+  <DButton
+    text="Popover on ${position}"
+    iconEnd={\`\${toggle ? 'chevron-up' : 'chevron-down'}\`}
+    stopPropagationEnabled={false}
+    ${adjustContentToRender ? 'adjustContentToRender' : ''}
+  />
+)}>
+  <DCard>
+    <DCard.Body>${position} popover</DCard.Body>
+  </DCard>
+</DPopover>
+  `;
+}
+
+export const Default: Story = {
   render: (args) => (
-    <DPopover {...args}>
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+    <DPopover
+      {...args}
+    >
+      <DCard>
+        <DCard.Body>Bottom popover</DCard.Body>
+      </DCard>
     </DPopover>
   ),
   args: {
-    renderComponent: (toggle) => (
-      <div className="d-grid">
-        <DButton
-          text="Dropdown Component"
-          iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-          stopPropagationEnabled={false}
-        />
-      </div>
-    ),
+    renderComponent: ButtonRenderComponent,
   },
   parameters: {
     docs: {
+      source: {
+        code: CodeComponent('Bottom'),
+      },
       canvas: {
         sourceState: 'shown',
       },
@@ -64,77 +89,24 @@ export const Default: Story = {
 };
 
 export const AdjustToContent: Story = {
-  decorators: [
-    (Story) => (
-      <div
-        style={{ width: '320px', height: '320px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
-      >
-        <Story />
-      </div>
-    ),
-  ],
   render: (args) => (
-    <DPopover {...args}>
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
+    <DPopover
+      {...args}
+    >
+      <DCard>
+        <DCard.Body>Full size</DCard.Body>
+      </DCard>
     </DPopover>
   ),
   args: {
     adjustContentToRender: true,
-    renderComponent: (toggle) => (
-      <div className="d-grid">
-        <DButton
-          text="Dropdown Component"
-          iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-          stopPropagationEnabled={false}
-        />
-      </div>
-    ),
+    renderComponent: ButtonRenderComponent,
   },
   parameters: {
     docs: {
-      canvas: {
-        sourceState: 'shown',
+      source: {
+        code: CodeComponent('Bottom'),
       },
-    },
-  },
-};
-
-export const Open: Story = {
-  decorators: [
-    (Story) => (
-      <div
-        style={{ width: '320px', height: '320px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
-      >
-        <Story />
-      </div>
-    ),
-  ],
-  render: (args) => (
-    <DPopover {...args}>
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-      <DQuickActionButton line1="Lorem Ipsum" line2="Lorem Ipsum" />
-    </DPopover>
-  ),
-  args: {
-    adjustContentToRender: true,
-    renderComponent: (toggle) => (
-      <div className="d-grid">
-        <DButton
-          text="Dropdown Component"
-          iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
-          stopPropagationEnabled={false}
-        />
-      </div>
-    ),
-    open: true,
-  },
-  parameters: {
-    docs: {
       canvas: {
         sourceState: 'shown',
       },
@@ -143,28 +115,30 @@ export const Open: Story = {
 };
 
 export const Plain: Story = {
-  decorators: [
-    (Story) => (
-      <div
-        style={{ width: '320px', height: '320px' }}
-        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
-      >
-        <Story />
-      </div>
-    ),
-  ],
-  render: (args) => (
-    <DPopover {...args}>
-      Ipsum
+  render: () => (
+    <DPopover
+      open={false}
+      renderComponent={() => (
+        <h4>Click me</h4>
+      )}
+    >
+      Plain popover
     </DPopover>
   ),
-  args: {
-    renderComponent: () => (
-      <div>Lorem</div>
-    ),
-  },
   parameters: {
     docs: {
+      source: {
+        code: `
+<DPopover
+  open={false}
+  renderComponent={() => (
+    <h4>Click me</h4>
+  )}
+>
+  Plain popover
+</DPopover>
+        `,
+      },
       canvas: {
         sourceState: 'shown',
       },
