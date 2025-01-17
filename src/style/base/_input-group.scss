@@ -73,6 +73,7 @@
   // validation states
   @each $state, $data in $form-validation-states {
     $border-color: map-get($data, "border-color");
+    $color: map-get($data, "color");
     $tooltip-bg-color: map-get($data, "tooltip-bg-color");
     $box-shadow: map-get($data, "focus-box-shadow");
 
@@ -84,7 +85,7 @@
       }
 
       ~ .form-text {
-        color: $border-color;
+        color: $color;
       }
 
       .input-group-validation-icon {
