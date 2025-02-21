@@ -14,3 +14,17 @@ jest.mock('react-i18next', () => ({
     },
   }),
 }));
+
+global.window = {};
+Object.defineProperty(global.window, 'matchMedia', {
+  writable: true,
+  value: jest.fn(() => ({
+    matches: false,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
