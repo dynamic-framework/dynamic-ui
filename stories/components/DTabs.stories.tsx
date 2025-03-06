@@ -24,9 +24,12 @@ The Bootstrap documentation provides details on the default [Tabs CSS Variables]
 | Variable                                              | Classes                               | Type            | Description                        |
 |-------------------------------------------------------|---------------------------------------|-----------------|------------------------------------|
 | --${PREFIX_BS}nav-tabs-nav-gap                        | .nav-pills, .nav-underline, .nav-tabs | css length unit | Space between nav links            |
-| --${PREFIX_BS}nav-tabs-nav-padding-x                  | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav padding horizontal             |
-| --${PREFIX_BS}nav-tabs-nav-padding-y                  | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav padding vertical               |
 | --${PREFIX_BS}nav-tabs-link-border-active-font-weight | .nav-pills, .nav-underline, .nav-tabs | css font weight | Nav link border active font weight |
+| --${PREFIX_BS}nav-tabs-border-color                   | .nav-pills, .nav-underline, .nav-tabs | css color       | Nav border color                   |
+| --${PREFIX_BS}nav-link-padding-x                      | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav link padding horizontal        |
+| --${PREFIX_BS}nav-link-padding-y                      | .nav-pills, .nav-underline, .nav-tabs | css length unit | Nav link padding vertical          |
+| --${PREFIX_BS}nav-link-hover-bg                       | .nav-pills, .nav-underline, .nav-tabs | css color       | Nav link hover background          |
+| --${PREFIX_BS}nav-link-hover-color                    | .nav-pills, .nav-underline, .nav-tabs | css color       | Nav link hover color               |
         `,
       },
     },
@@ -88,6 +91,7 @@ export const Default: Story = {
       { label: 'Tab 2', tab: 'tab2' },
       { label: 'Tab w/o Content', tab: 'empty' },
     ],
+    className: 'mb-3',
     vertical: false,
   },
 };
@@ -117,6 +121,7 @@ export const Vertical: Story = {
   ),
   args: {
     defaultSelected: 'tab2',
+    className: 'me-3',
     options: [
       { label: 'Tab 1', tab: 'tab1' },
       { label: 'Tab 2', tab: 'tab2' },
@@ -158,6 +163,7 @@ export const Pills: Story = {
     ],
     vertical: false,
     variant: 'pills',
+    className: 'mb-3',
   },
 };
 
@@ -193,6 +199,7 @@ export const VerticalPills: Story = {
     ],
     vertical: true,
     variant: 'pills',
+    className: 'me-3',
   },
 };
 
@@ -228,5 +235,6 @@ export const Tabs: Story = {
     ],
     vertical: false,
     variant: 'tabs',
+    className: 'mb-3',
   },
 };
