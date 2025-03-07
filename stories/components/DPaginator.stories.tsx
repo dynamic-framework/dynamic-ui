@@ -128,7 +128,7 @@ export const Default: Story = {
       ...args
     }: ComponentProps<typeof DPaginator>,
   ) {
-    const [page, setPage] = useState<number>(initialPage);
+    const [page, setPage] = useState<number | undefined>(initialPage);
     return (
       <DPaginator
         {...args}
@@ -158,7 +158,7 @@ export const LabelArrows: Story = {
       ...args
     }: ComponentProps<typeof DPaginator>,
   ) {
-    const [page, setPage] = useState<number>(initialPage);
+    const [page, setPage] = useState<number | undefined>(initialPage);
     return (
       <DPaginator
         {...args}
@@ -190,7 +190,7 @@ export const NoArrows: Story = {
       ...args
     }: ComponentProps<typeof DPaginator>,
   ) {
-    const [page, setPage] = useState<number>(initialPage);
+    const [page, setPage] = useState<number | undefined>(initialPage);
     return (
       <DPaginator
         {...args}
@@ -221,7 +221,7 @@ export const CustomCurrentPage: Story = {
       ...args
     }: ComponentProps<typeof DPaginator>,
   ) {
-    const [page, setPage] = useState<number>(initialPage);
+    const [page, setPage] = useState<number | undefined>(initialPage);
     return (
       <DPaginator
         {...args}
@@ -252,7 +252,7 @@ export const CustomMaxWidth: Story = {
       ...args
     }: ComponentProps<typeof DPaginator>,
   ) {
-    const [page, setPage] = useState<number>(initialPage);
+    const [page, setPage] = useState<number | undefined>(initialPage);
     return (
       <DPaginator
         {...args}
