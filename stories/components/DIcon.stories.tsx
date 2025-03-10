@@ -44,21 +44,7 @@ To use the DIcon you need to add the icon suite CSS to your site, we recommend a
 
 > The colors can ref another css var like a var(--${PREFIX_BS}primary)
 
-## Fonts with material symbols style configuration
-
-By default the DIcon is configured to use icon fonts that define the icon from a class, icon fonts that work in the material symbols style define the name of the icon in the content of the tag.
-
-To work with libraries that use this style, there is the materialStyle flag. By setting it to true, the icon is selected by placing its name in the content of the tag, and not, using the name and the familyClass to generate a class.
-
-### Normal icon font render:
-\`\`\`
-<i class="bi bi-123" />
-\`\`\`
-
-### Material Symbols icon font render:
-\`\`\`
-<i class="material-symbols-outlined">rebase</i>
-\`\`\`
+To see how to use this component with another family of icons, see [icon examples](/docs/design-system-examples-icons--docs)
         `,
       },
     },
