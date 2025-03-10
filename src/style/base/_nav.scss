@@ -19,7 +19,6 @@
 .nav-pills,
 .nav-underline {
   gap: var(--#{$prefix}nav-tabs-nav-gap);
-  padding: var(--#{$prefix}nav-link-padding-y) var(--#{$prefix}nav-link-padding-x);
 
   &.flex-column {
     flex: 1 0 auto;
