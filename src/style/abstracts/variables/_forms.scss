@@ -61,12 +61,13 @@ $form-switch-width: 2em !default;
 $form-switch-padding-start: $form-switch-width !default;
 $form-switch-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$gray-300}'/></svg>") !default;
 $form-switch-focus-color: $component-focus-border-color !default;
+$form-switch-border-radius: $form-switch-width !default;
 $form-switch-focus-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$secondary-300}'/></svg>") !default;
 
-// custom
+// custom form-switch-variables
 $form-switch-valid-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$success}'/></svg>") !default;
 $form-switch-invalid-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$danger}'/></svg>") !default;
-// end custom
+// end custom form-switch-variables
 
 $form-switch-checked-color: var(--#{$prefix}white) !default;
 $form-switch-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$white}'/></svg>") !default;
