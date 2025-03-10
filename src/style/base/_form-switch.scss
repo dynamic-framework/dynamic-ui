@@ -1,9 +1,30 @@
 .form-switch {
+  --#{$prefix}form-switch-width: #{$form-switch-width};
+  --#{$prefix}form-switch-padding-start: #{$form-switch-padding-start} * -1;
+  --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image)};
+  --#{$prefix}form-switch-border-radius: #{$form-switch-border-radius};
+  --#{$prefix}form-switch-focus-bg-image: #{escape-svg($form-switch-focus-bg-image)};
+  --#{$prefix}form-switch-checked-bg-image: #{escape-svg($form-switch-checked-bg-image)};
+
+  .form-check-input {
+    width: var(--#{$prefix}form-switch-width);
+    margin-left: var(--#{$prefix}form-switch-padding-start);
+    border-radius: var(--#{$prefix}form-switch-border-radius);
+
+    &:focus {
+      --#{$prefix}form-switch-bg: var(--#{$prefix}form-switch-focus-bg-image);
+    }
+
+    &:checked {
+      --#{$prefix}form-switch-bg: var(--#{$prefix}form-switch-checked-bg-image);
+    }
+  }
+
   .form-check-input.is-valid:not(:checked) {
-    --bs-form-switch-bg: #{escape-svg($form-switch-valid-bg-image)};
+    --#{$prefix}form-switch-bg: #{escape-svg($form-switch-valid-bg-image)};
   }
 
   .form-check-input.is-invalid:not(:checked) {
-    --bs-form-switch-bg: #{escape-svg($form-switch-invalid-bg-image)};
+    --#{$prefix}form-switch-bg: #{escape-svg($form-switch-invalid-bg-image)};
   }
 }

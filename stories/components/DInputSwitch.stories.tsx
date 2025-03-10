@@ -20,22 +20,16 @@ To understand in more detail the aspects covered by this component, review the f
 
 The Bootstrap documentation provides details on the default [Checks CSS Variables](https://getbootstrap.com/docs/5.3/forms/checks-radios/#css)
 
-| Variable                                            | Class               | Type            | Description               |
-|-----------------------------------------------------|---------------------|-----------------|---------------------------|
-| --${PREFIX_BS}input-switch-bg                       | .form-switch        | css color unit  | Background color          |
-| --${PREFIX_BS}input-switch-border-color             | .form-switch        | css color unit  | Border color              |
-| --${PREFIX_BS}input-switch-dot                      | .form-switch        | data url svg    | Component circle          |
-| --${PREFIX_BS}input-switch-hover-border-color       | .form-switch        | css color unit  | Hover border color        |
-| --${PREFIX_BS}input-switch-focus-outline-color      | .form-switch        | css color unit  | Focus outline color       |
-| --${PREFIX_BS}input-switch-active-border-color      | .form-switch        | css color unit  | Active border color       |
-| --${PREFIX_BS}input-switch-active-bg                | .form-switch        | css color unit  | Active background color   |
-| --${PREFIX_BS}input-switch-disabled-border-color    | .form-switch        | css color unit  | Disabled border color     |
-| --${PREFIX_BS}input-switch-disabled-bg              | .form-switch        | css color unit  | Disabled background color |
-| --${PREFIX_BS}input-switch-disabled-dot             | .form-switch        | data url svg    | Disabled component circle |
-| --${PREFIX_BS}input-switch-label-color              | .form-switch        | css color unit  | Label color               |
-| --${PREFIX_BS}input-switch-active-label-color       | .form-switch        | css color unit  | Active label color        |
-| --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit  | Focus border color        |
-| --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow  | Focus box shadow          |
+| Variable                                            | Class               | Type              | Description                |
+|-----------------------------------------------------|---------------------|-------------------|----------------------------|
+| --${PREFIX_BS}form-switch-width                     | .form-switch        | css length unit   | Switch width               |
+| --${PREFIX_BS}form-switch-padding-start             | .form-switch        | css length unit   | Padding start              |
+| --${PREFIX_BS}form-switch-border-radius             | .form-switch        | css length unit   | Border radius              |
+| --${PREFIX_BS}form-switch-bg                        | .form-switch        | data url svg      | Regular image background   |
+| --${PREFIX_BS}form-switch-focus-bg-image            | .form-switch        | data url svg      | Focus image background     |
+| --${PREFIX_BS}form-switch-checked-bg-image          | .form-switch        | data url svg      | Checked image backgound    |
+| --${PREFIX_BS}form-check-input-focus-border-color   | .form-check-input   | css color unit    | Focus border color         |
+| --${PREFIX_BS}form-check-input-focus-box-shadow     | .form-check-input   | css box shadow    | Focus box shadow           |
         `,
       },
     },
@@ -71,6 +65,14 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
       type: 'boolean',
     },
     disabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    invalid: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    valid: {
       control: 'boolean',
       type: 'boolean',
     },
