@@ -1,5 +1,6 @@
 .toast {
   --#{$prefix}toast-header-gap: var(--#{$prefix}ref-spacer-2);
+  --#{$prefix}toast-body-gap: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}toast-color: var(--#{$prefix}gray-900);
   --#{$prefix}toast-close-color: var(--#{$prefix}gray-900);
   --#{$prefix}toast-header-color: var(--#{$prefix}gray-900);
@@ -15,6 +16,7 @@
 
   .toast-body {
     display: flex;
+    gap: var(--#{$prefix}toast-body-gap);
     align-items: center;
     justify-content: space-between;
   }
