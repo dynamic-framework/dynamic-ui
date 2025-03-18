@@ -16,7 +16,7 @@ it('should render base icon button', () => {
       >
         <i
           class="d-icon bi bi-x-lg"
-          style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
+          style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
         />
       </button>
     </div>
