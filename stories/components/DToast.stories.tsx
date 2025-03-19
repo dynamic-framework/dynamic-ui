@@ -2,12 +2,33 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import DToast from '../../src/components/DToast/DToast';
 import { DIcon } from '../../src';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DToast> = {
   title: 'Design System/Components/Toast',
   component: DToast,
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      description: {
+        component: `
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap Toast](https://getbootstrap.com/docs/5.3/components/toasts/)
+
+## CSS Variables
+The Bootstrap documentation provides details on the default [Toast CSS Variables](https://getbootstrap.com/docs/5.3/components/toasts/#css)
+
+| Variable                                | Classes    | Type              | Description                        |
+|-----------------------------------------|------------|-------------------|------------------------------------|
+| --${PREFIX_BS}toast-header-gap          | .toast     | css length unit   | Space between content              |
+| --${PREFIX_BS}toast-body-gap            | .toast     | css font weight   | Space between content              |
+| --${PREFIX_BS}toast-color               | .toast     | css color         | Toast body text color              |
+| --${PREFIX_BS}toast-close-color         | .toast     | css length unit   | Close icon color                   |
+| --${PREFIX_BS}toast-header-color        | .toast     | css length unit   | Toast header text color            |
+        `,
+      },
+    },
   },
   argTypes: {
     className: {
