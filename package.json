@@ -156,8 +156,8 @@
     "rollup": "^4.27.4",
     "sass": "~1.69.4",
     "storybook": "~8.2.9",
-    "stylelint": "~15.11.0",
-    "stylelint-config-twbs-bootstrap": "~11.0.1",
+    "stylelint": "^16.16.0",
+    "stylelint-config-twbs-bootstrap": "^16.0.0",
     "ts-jest": "~29.2.3",
     "tslib": "~2.6.2",
     "typescript": "~5.2.2"
