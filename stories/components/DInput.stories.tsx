@@ -278,7 +278,7 @@ export const Default: Story = {
     placeholder: 'Placeholder',
     labelIcon: undefined,
     type: 'text',
-    value: '',
+    value: undefined,
     hint: 'Assistive text',
   },
 };

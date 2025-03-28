@@ -30,11 +30,11 @@ export default function DIconBase(
     theme,
     style,
     className,
-    size = '1.5rem',
+    size,
     loading = false,
     loadingDuration = 1.8,
     hasCircle = false,
-    circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`,
+    circleSize = `calc(var(--${PREFIX_BS}icon-size) * 1)`,
     color,
     backgroundColor,
     materialStyle = false,
@@ -75,8 +75,8 @@ export default function DIconBase(
   }, [circleSize, hasCircle]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
-    [`--${PREFIX_BS}icon-component-size`]: size,
     [`--${PREFIX_BS}icon-component-loading-duration`]: `${loadingDuration}s`,
+    ...size && { [`--${PREFIX_BS}icon-component-size`]: size },
     ...colorStyle,
     ...backgroundStyle,
     ...circleSizeStyle,
