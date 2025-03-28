@@ -62,6 +62,18 @@
   --#{$prefix}input-disabled-bg: #{$input-disabled-bg};
   --#{$prefix}input-disabled-color: #{$input-disabled-color};
 
+  // input group icon sizes
+  --#{$prefix}input-group-sm-icon-size: #{$input-group-sm-icon-size};
+  --#{$prefix}input-group-lg-icon-size: #{$input-group-lg-icon-size};
+
+  &.input-group-sm .d-icon {
+    --#{$prefix}icon-component-size: var(--#{$prefix}input-group-sm-icon-size);
+  }
+
+  &.input-group-lg .d-icon {
+    --#{$prefix}icon-component-size: var(--#{$prefix}input-group-lg-icon-size);
+  }
+
   border: var(--#{$prefix}input-border-width) solid var(--#{$prefix}input-border-color);
   @include border-radius(var(--#{$prefix}input-border-radius), 0);
 
