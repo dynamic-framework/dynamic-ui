@@ -19,6 +19,9 @@
   --#{$prefix}select-multi-value-background: var(--#{$prefix}gray-100);
   --#{$prefix}select-multi-value-border-radius: #{$spacer-1};
   --#{$prefix}select-multi-value-label-color: var(--#{$prefix}secondary);
+  --#{$prefix}select-indicator-separator-width: 1px;
+  --#{$prefix}select-indicator-separator-margin: var(--#{$prefix}ref-spacer-0) var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}select-indicator-separator-color: var(--#{$prefix}transparent);
 
   --#{$prefix}select-indicator-width: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}select-indicator-height: var(--#{$prefix}ref-spacer-4);
@@ -188,11 +191,24 @@
     justify-content: center;
     width: var(--#{$prefix}select-indicator-width);
     height: var(--#{$prefix}select-indicator-height);
+
+    .d-icon {
+      --bs-icon-component-size: var(--#{$prefix}select-indicator-width);
+    }
   }
 
-  .d-select__indicator-separator {
-    width: var(--#{$prefix}select-gap);
+  .d-select__indicators {
+    .d-select__indicator-separator {
+      width: var(--#{$prefix}select-indicator-separator-width);
+      margin: var(--#{$prefix}select-indicator-separator-margin);
+      background-color: var(--#{$prefix}select-indicator-separator-color);
+
+      &:not(:first-child) {
+        --#{$prefix}select-indicator-separator-color: var(--#{$prefix}gray-100);
+      }
+    }
   }
+
 
   &.disabled .d-select__control {
     background: var(--#{$prefix}input-disabled-bg);
