@@ -163,7 +163,7 @@ export default function useDBoxFile(props: DBoxFileProps) {
     onDrop,
   ]);
 
-  const handleDragEnter = useCallback(async (event: DragEvent<HTMLDivElement>) => {
+  const handleDragEnter = useCallback((event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
     if (disabled || noDrag) return;
@@ -172,24 +172,28 @@ export default function useDBoxFile(props: DBoxFileProps) {
       dragTargetsRef.current = [...dragTargetsRef.current, event.target];
     }
 
-    const eventFiles = await fromEvent(event);
-    const fileCount = eventFiles.length;
+    fromEvent(event).then((eventFiles) => {
+      const fileCount = eventFiles.length;
 
-    if (fileCount === 0) {
-      setIsDragValid(false);
-      setIsDragInvalid(true);
-      return;
-    }
+      if (fileCount === 0) {
+        setIsDragValid(false);
+        setIsDragInvalid(true);
+        return;
+      }
 
-    const isDragAccepted = eventFiles.every((file) => {
-      const [typeValid] = fileAccepted(file as File, acceptAttr);
-      const [sizeValid] = fileMatchSize(file as File, minSize, maxSize);
-      return typeValid && sizeValid;
+      const isDragAccepted = eventFiles.every((file) => {
+        const [typeValid] = fileAccepted(file as File, acceptAttr);
+        const [sizeValid] = fileMatchSize(file as File, minSize, maxSize);
+        return typeValid && sizeValid;
+      });
+
+      setIsDragValid(isDragAccepted);
+      setIsDragInvalid(!isDragAccepted);
+      onDragEnter?.(event);
+    }).catch(() => {
+      // eslint-disable-next-line no-console
+      console.error('Error reading files from drag event');
     });
-
-    setIsDragValid(isDragAccepted);
-    setIsDragInvalid(!isDragAccepted);
-    onDragEnter?.(event);
   }, [
     acceptAttr,
     disabled,
