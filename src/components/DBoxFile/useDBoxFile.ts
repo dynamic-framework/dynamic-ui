@@ -11,11 +11,13 @@ import {
 import type {
   KeyboardEvent,
 } from 'react';
+import { fromEvent } from 'file-selector';
 import {
+  acceptPropAsAcceptAttr,
   AcceptType,
   DEFAULT_PROPS,
   ErrorCodes,
-  fileAcceptedType,
+  fileAccepted,
   fileMatchSize,
   isIeOrEdge,
   RejectedFile,
@@ -68,6 +70,9 @@ export default function useDBoxFile(props: DBoxFileProps) {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const rootRef = useRef<HTMLInputElement>(null);
+  const dragTargetsRef = useRef<HTMLElement[]>([]);
+
+  const acceptAttr = useMemo(() => acceptPropAsAcceptAttr(accept), [accept]);
 
   const [files, setFiles] = useState<File[]>([]);
   const [isFocused, setIsFocused] = useState(false);
@@ -75,7 +80,13 @@ export default function useDBoxFile(props: DBoxFileProps) {
   const [isDragInvalid, setIsDragInvalid] = useState(false);
 
   const preventDropOnDocument = useCallback((event: globalThis.DragEvent) => {
-    event.preventDefault(); // Avoid default behavior (open file on drop)
+    if (rootRef.current && rootRef.current.contains(event.target as Node)) {
+      // If we intercepted an event for our instance
+      // let it propagate down to the instance's onDrop handler
+      return;
+    }
+    event.preventDefault();
+    dragTargetsRef.current = [];
   }, []);
 
   useEffect(() => {
@@ -102,7 +113,7 @@ export default function useDBoxFile(props: DBoxFileProps) {
 
     // Handle size and type validation
     inputFiles.forEach((file) => {
-      const [isTypeValid, acceptError] = fileAcceptedType(file, accept);
+      const [isTypeValid, acceptError] = fileAccepted(file, acceptAttr);
       const [isSizeValid, sizeError] = fileMatchSize(file, minSize, maxSize);
 
       const errors = [acceptError, sizeError].filter((e): e is RejectionError => Boolean(e));
@@ -143,7 +154,7 @@ export default function useDBoxFile(props: DBoxFileProps) {
       onDrop(acceptedFiles, rejectedFiles, event);
     }
   }, [
-    accept,
+    acceptAttr,
     files.length,
     maxFiles,
     maxSize,
@@ -152,34 +163,35 @@ export default function useDBoxFile(props: DBoxFileProps) {
     onDrop,
   ]);
 
-  const handleDragEnter = useCallback((event: DragEvent<HTMLDivElement>) => {
+  const handleDragEnter = useCallback(async (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
     if (disabled || noDrag) return;
 
-    const draggedFiles = Array.from(event.dataTransfer.items)
-      .filter((item) => item.kind === 'file')
-      .map((item) => item.getAsFile())
-      .filter((f): f is File => !!f && !!f.name && typeof f.size === 'number');
+    if (event.target instanceof HTMLElement) {
+      dragTargetsRef.current = [...dragTargetsRef.current, event.target];
+    }
 
-    if (!draggedFiles.length) {
-      // No hay archivos válidos para analizar, no mostrar valid/invalid
+    const eventFiles = await fromEvent(event);
+    const fileCount = eventFiles.length;
+
+    if (fileCount === 0) {
       setIsDragValid(false);
-      setIsDragInvalid(false);
+      setIsDragInvalid(true);
       return;
     }
 
-    const someInvalid = draggedFiles.some((file) => {
-      const [isTypeValid] = fileAcceptedType(file, accept);
-      const [isSizeValid] = fileMatchSize(file, minSize, maxSize);
-      return !(isTypeValid && isSizeValid);
+    const isDragAccepted = eventFiles.every((file) => {
+      const [typeValid] = fileAccepted(file as File, acceptAttr);
+      const [sizeValid] = fileMatchSize(file as File, minSize, maxSize);
+      return typeValid && sizeValid;
     });
 
-    setIsDragValid(!someInvalid);
-    setIsDragInvalid(someInvalid);
+    setIsDragValid(isDragAccepted);
+    setIsDragInvalid(!isDragAccepted);
     onDragEnter?.(event);
   }, [
-    accept,
+    acceptAttr,
     disabled,
     maxSize,
     minSize,
@@ -189,7 +201,10 @@ export default function useDBoxFile(props: DBoxFileProps) {
 
   const handleDrop = useCallback((event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    event.persist();
     event.stopPropagation();
+
+    dragTargetsRef.current = [];
     setIsDragValid(false);
     setIsDragInvalid(false);
 
@@ -207,9 +222,26 @@ export default function useDBoxFile(props: DBoxFileProps) {
     event.preventDefault();
     event.stopPropagation();
     if (disabled || noDrag) return;
-    setIsDragValid(false);
-    setIsDragInvalid(false);
-    onDragLeave?.(event);
+
+    // Only deactivate once the dropzone and all children have been left
+    const targets = dragTargetsRef.current.filter(
+      (target) => rootRef.current && rootRef.current.contains(target),
+    );
+    // Make sure to remove a target present multiple times only once
+    // (Firefox may fire dragenter/dragleave multiple times on the same element)
+    if (event.target instanceof HTMLElement) {
+      const targetIdx = targets.indexOf(event.target);
+      if (targetIdx !== -1) {
+        targets.splice(targetIdx, 1);
+      }
+      dragTargetsRef.current = targets;
+    }
+
+    if (targets.length === 0) {
+      setIsDragValid(false);
+      setIsDragInvalid(false);
+      onDragLeave?.(event);
+    }
   }, [disabled, noDrag, onDragLeave]);
 
   const handleFileSelect = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -254,13 +286,6 @@ export default function useDBoxFile(props: DBoxFileProps) {
   const handleBlur = useCallback(() => {
     setIsFocused(false);
   }, []);
-
-  const acceptAttr = useMemo(() => {
-    if (!accept) return undefined;
-    return Object.entries(accept)
-      .flatMap(([type, extensions]) => [type, ...extensions])
-      .join(', ');
-  }, [accept]);
 
   return {
     inputRef,
