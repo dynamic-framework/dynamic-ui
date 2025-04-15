@@ -27,7 +27,7 @@ it('should render base boxfile', () => {
           tabindex="0"
         >
           <input
-            accept="image/*, .png, .jpg, .jpeg, .svg"
+            accept="image/*,.png,.jpg,.jpeg,.svg"
             style="display: none;"
             tabindex="-1"
             type="file"
