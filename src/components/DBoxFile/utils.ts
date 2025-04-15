@@ -1,3 +1,5 @@
+import attrAccept from '../../utils/attr-accept';
+
 export const isIeOrEdge = (userAgent = window.navigator.userAgent) => (
   (userAgent.indexOf('MSIE') !== -1 || userAgent.indexOf('Trident/') !== -1)
     || userAgent.indexOf('Edge/') !== -1
@@ -24,63 +26,75 @@ export type RejectedFile = {
   errors: RejectionError[];
 };
 
+// Check if v is a MIME type string.
+export function isMIMEType(v: string) {
+  return (
+    v === 'audio/*'
+    || v === 'video/*'
+    || v === 'image/*'
+    || v === 'text/*'
+    || v === 'application/*'
+    || /\w+\/[-+.\w]+/g.test(v)
+  );
+}
+
+// Check if v is a file extension.
+export function isExt(v:string) {
+  return /^.*\.[\w]+$/.test(v);
+}
+
+function isDefined(value: unknown) {
+  return value !== undefined && value !== null;
+}
+
+// Convert the `{accept}` dropzone prop to an array of MIME types/extensions.
+export function acceptPropAsAcceptAttr(accept: AcceptType) {
+  return (
+    Object.entries(accept)
+      .reduce<string[]>((a, [mimeType, ext]) => [...a, mimeType, ...ext], [])
+      .filter((v) => isMIMEType(v) || isExt(v))
+      .join(',')
+  );
+}
+
+export function fileAccepted(file: File, accept: string) {
+  const isAcceptable = file.type === 'application/x-moz-file' || attrAccept(file, accept);
+  if (!isAcceptable) {
+    return [
+      false,
+      {
+        code: ErrorCodes.FileInvalidType,
+        message: 'File has an unsupported file type',
+      },
+    ];
+  }
+  return [true, null];
+}
+
 export const fileMatchSize = (
   file: File,
   minSize: number,
   maxSize: number,
 ): [boolean, RejectionError | null] => {
-  const { size } = file;
-
-  if (typeof minSize === 'number' && size < minSize) {
-    return [
-      false,
-      {
-        code: ErrorCodes.FileTooSmall,
-        message: `File "${file.name}" is too small. Minimum size is ${minSize} bytes.`,
-      },
-    ];
+  if (isDefined(file.size)) {
+    if (isDefined(minSize) && file.size < minSize) {
+      return [
+        false,
+        {
+          code: ErrorCodes.FileTooSmall,
+          message: `File "${file.name}" is too small. Minimum size is ${minSize} bytes.`,
+        },
+      ];
+    }
+    if (isDefined(maxSize) && file.size > maxSize) {
+      return [
+        false, {
+          code: ErrorCodes.FileTooLarge,
+          message: `File "${file.name}" is too large. Maximum size is ${maxSize} bytes.`,
+        },
+      ];
+    }
   }
-
-  if (typeof maxSize === 'number' && size > maxSize) {
-    return [
-      false, {
-        code: ErrorCodes.FileTooLarge,
-        message: `File "${file.name}" is too large. Maximum size is ${maxSize} bytes.`,
-      },
-    ];
-  }
-
-  return [true, null];
-};
-
-export const fileAcceptedType = (
-  file: File,
-  accept: AcceptType,
-): [boolean, RejectionError | null] => {
-  const {
-    type: mimeType,
-    name: fileName,
-  } = file;
-
-  const isAccepted = Object.entries(accept).some(([
-    acceptedType,
-    extensions,
-  ]) => {
-    const matchesType = acceptedType === mimeType;
-    const matchesExtension = extensions.some((ext) => fileName.endsWith(ext.toLowerCase()));
-    return matchesType || matchesExtension;
-  });
-
-  if (!isAccepted) {
-    return [
-      false,
-      {
-        code: ErrorCodes.FileInvalidType,
-        message: `File "${file.name}" has an unsupported file type.`,
-      },
-    ];
-  }
-
   return [true, null];
 };
 
