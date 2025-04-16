@@ -38,7 +38,6 @@ export default function DBoxFile(
   const {
     inputRef,
     rootRef,
-    isFocused,
     isDragValid,
     isDragInvalid,
     acceptAttr,
@@ -63,7 +62,6 @@ export default function DBoxFile(
             'd-box-file-disabled': props.disabled,
             'd-box-file-valid': isDragValid,
             'd-box-file-invalid': isDragInvalid,
-            'd-box-file-focus': isFocused,
           },
           className,
         )}
