@@ -22,6 +22,7 @@ import {
   isIeOrEdge,
   RejectedFile,
   RejectionError,
+  urlsToFiles,
 } from './utils';
 
 export type DBoxFileProps = {
@@ -32,6 +33,7 @@ export type DBoxFileProps = {
   maxSize?: number;
   maxFiles?: number;
   disabled?: boolean;
+  preloadUrls?: Array<string>;
   // Behavior flags
   noClick?: boolean;
   noKeyboard?: boolean;
@@ -46,6 +48,7 @@ export type DBoxFileProps = {
   onDragEnter?: (event: DragEvent<HTMLDivElement>) => void;
   onDragLeave?: (event: DragEvent<HTMLDivElement>) => void;
   onFileDialogCancel?: () => void;
+  onError?: (error: Error) => void;
 };
 
 export default function useDBoxFile(props: DBoxFileProps) {
@@ -57,9 +60,11 @@ export default function useDBoxFile(props: DBoxFileProps) {
     minSize,
     multiple,
     maxFiles,
+    preloadUrls,
     onDragEnter,
     onDragLeave,
     onDrop,
+    onError,
     noClick,
     noKeyboard,
     noDrag,
@@ -75,7 +80,6 @@ export default function useDBoxFile(props: DBoxFileProps) {
   const acceptAttr = useMemo(() => acceptPropAsAcceptAttr(accept), [accept]);
 
   const [files, setFiles] = useState<File[]>([]);
-  const [isFocused, setIsFocused] = useState(false);
   const [isDragValid, setIsDragValid] = useState(false);
   const [isDragInvalid, setIsDragInvalid] = useState(false);
 
@@ -106,6 +110,20 @@ export default function useDBoxFile(props: DBoxFileProps) {
       rootRef.current.focus();
     }
   }, [rootRef, autoFocus, disabled]);
+
+  useEffect(() => {
+    if (!preloadUrls || !preloadUrls.length) return;
+    // eslint-disable-next-line no-void
+    void (async () => {
+      const [accepted, errors] = await urlsToFiles(preloadUrls);
+      if (accepted.length) {
+        setFiles(accepted);
+      }
+      if (errors.length) {
+        onError?.(new Error(errors.map((e) => e.message).join(', ')));
+      }
+    })();
+  }, [preloadUrls, onError]);
 
   const processFiles = useCallback((inputFiles: File[], event?: Event) => {
     let acceptedFiles: File[] = [];
@@ -190,9 +208,8 @@ export default function useDBoxFile(props: DBoxFileProps) {
       setIsDragValid(isDragAccepted);
       setIsDragInvalid(!isDragAccepted);
       onDragEnter?.(event);
-    }).catch(() => {
-      // eslint-disable-next-line no-console
-      console.error('Error reading files from drag event');
+    }).catch((error: Error) => {
+      onError?.(error);
     });
   }, [
     acceptAttr,
@@ -201,6 +218,7 @@ export default function useDBoxFile(props: DBoxFileProps) {
     minSize,
     noDrag,
     onDragEnter,
+    onError,
   ]);
 
   const handleDrop = useCallback((event: DragEvent<HTMLDivElement>) => {
@@ -283,19 +301,10 @@ export default function useDBoxFile(props: DBoxFileProps) {
     }
   }, [noKeyboard, openFileDialog]);
 
-  const handleFocus = useCallback(() => {
-    setIsFocused(true);
-  }, []);
-
-  const handleBlur = useCallback(() => {
-    setIsFocused(false);
-  }, []);
-
   return {
     inputRef,
     rootRef,
     files,
-    isFocused,
     isDragValid,
     isDragInvalid,
     acceptAttr,
@@ -307,7 +316,5 @@ export default function useDBoxFile(props: DBoxFileProps) {
     handleRemoveFile,
     handleClick,
     handleKeyDown,
-    handleFocus,
-    handleBlur,
   };
 }
