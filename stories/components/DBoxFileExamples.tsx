@@ -8,16 +8,27 @@ import {
   useDToast,
 } from '../../src';
 import { RejectedFile } from '../../src/components/DBoxFile/utils';
+import { DBoxFileProps } from '../../src/components/DBoxFile/useDBoxFile';
 
-type Props = {
-  maxSize?: number;
-  multiple?: boolean;
-  disabled?: boolean;
+type Props = Pick<DBoxFileProps,
+| 'maxSize'
+| 'multiple'
+| 'disabled'
+| 'preloadUrls'
+> & {
   className?: string;
 };
 
 function ExampleDBoxFile(props: Props) {
   const { toast } = useDToast();
+  const onError = useCallback((error: unknown) => {
+    toast({
+      title: 'Error',
+      description: error instanceof Error ? error.message : 'Unknown error',
+      theme: 'danger',
+    });
+  }, [toast]);
+
   const handleDrop = useCallback((accepted: File[], rejected: RejectedFile[]) => {
     if (accepted.length > 0) {
       toast({
@@ -41,6 +52,7 @@ function ExampleDBoxFile(props: Props) {
       }}
       onDrop={handleDrop}
       maxSize={1024 * 1024}
+      onError={onError}
       {...props}
     >
       {(openFileDialog) => (
@@ -100,6 +112,27 @@ export function ExampleDBoxFileSelected() {
         className="d-flex flex-column justify-content-center gap-3"
       >
         <ExampleDBoxFile className="d-box-file-selected" />
+      </div>
+      <DToastContainer position="top-right" />
+    </DContextProvider>
+  );
+}
+
+export function ExampleDBoxFileUrlFiles() {
+  return (
+    <DContextProvider>
+      <div
+        style={{ width: '320px' }}
+        className="d-flex flex-column justify-content-center gap-3"
+      >
+        <ExampleDBoxFile
+          preloadUrls={[
+            'https://placehold.co/600x400',
+            '/../assets/1.png',
+            '/../assets/2.png',
+            '/../assets/3.png',
+          ]}
+        />
       </div>
       <DToastContainer position="top-right" />
     </DContextProvider>

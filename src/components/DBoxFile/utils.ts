@@ -12,6 +12,7 @@ export const ErrorCodes = {
   FileTooLarge: 'file-too-large',
   FileTooSmall: 'file-too-small',
   TooManyFiles: 'too-many-files',
+  FailedFetch: 'failed-fetch-file',
 } as const;
 
 export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];
@@ -71,11 +72,11 @@ export function fileAccepted(file: File, accept: string) {
   return [true, null];
 }
 
-export const fileMatchSize = (
+export function fileMatchSize(
   file: File,
   minSize: number,
   maxSize: number,
-): [boolean, RejectionError | null] => {
+): [boolean, RejectionError | null] {
   if (isDefined(file.size)) {
     if (isDefined(minSize) && file.size < minSize) {
       return [
@@ -96,7 +97,54 @@ export const fileMatchSize = (
     }
   }
   return [true, null];
-};
+}
+
+export async function urlToFile(
+  url: string,
+): Promise<[File | null, RejectionError | null]> {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      return [
+        null,
+        {
+          code: ErrorCodes.FailedFetch,
+          message: `Failed to fetch file from ${url}`,
+        },
+      ];
+    }
+    const blob = await res.blob();
+    const filename = url.split('/').pop()?.split('?')[0] || 'file';
+    const file = new File([blob], filename, { type: blob.type });
+    return [file, null];
+  } catch (error) {
+    return [
+      null,
+      {
+        code: ErrorCodes.FailedFetch,
+        message: `Failed to fetch file from ${url}}`,
+      },
+    ];
+  }
+}
+
+export async function urlsToFiles(
+  urls: string[],
+): Promise<[File[], RejectionError[]]> {
+  const results = await Promise.all(urls.map(urlToFile));
+
+  let acceptedFiles: File[] = [];
+  let errors: RejectionError[] = [];
+  results.forEach(([file, error]) => {
+    if (file) {
+      acceptedFiles = [...acceptedFiles, file];
+    }
+    if (error) {
+      errors = [...errors, error];
+    }
+  });
+  return [acceptedFiles, errors];
+}
 
 export const DEFAULT_PROPS = {
   disabled: false,
