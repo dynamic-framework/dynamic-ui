@@ -19,6 +19,8 @@
   --#{$prefix}select-multi-value-border-radius: #{$spacer-1};
   --#{$prefix}select-multi-value-label-color: var(--#{$prefix}secondary);
   --#{$prefix}select-multi-value-remove-color: var(--#{$prefix}secondary);
+  --#{$prefix}select-multi-value-remove-hover-color: var(--#{$prefix}white);
+  --#{$prefix}select-multi-value-remove-hover-background: var(--#{$prefix}primary);
   --#{$prefix}select-indicator-separator-width: 1px;
   --#{$prefix}select-indicator-separator-margin: var(--#{$prefix}ref-spacer-0) var(--#{$prefix}ref-spacer-1);
   --#{$prefix}select-indicator-separator-color: var(--#{$prefix}transparent);
@@ -174,6 +176,13 @@
 
   .d-select__multi-value__remove {
     color: var(--#{$prefix}select-multi-value-remove-color);
+
+    &:hover {
+      color: var(--#{$prefix}select-multi-value-remove-hover-color);
+      background-color: var(--#{$prefix}select-multi-value-remove-hover-background);
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
   }
 
   .d-select__control--has-icon,
