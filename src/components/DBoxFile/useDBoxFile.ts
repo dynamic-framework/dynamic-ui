@@ -8,9 +8,7 @@ import {
   useEffect,
   useMemo,
 } from 'react';
-import type {
-  KeyboardEvent,
-} from 'react';
+import type { KeyboardEvent } from 'react';
 import { fromEvent } from 'file-selector';
 import {
   acceptPropAsAcceptAttr,
@@ -143,10 +141,9 @@ export default function useDBoxFile(props: DBoxFileProps) {
       }
     });
 
-    // Handle maxFiles overflow
+    // Handle maxFiles overflow by trimming
     const total = files.length + acceptedFiles.length;
     if (total > maxFiles) {
-      // Rechazar los excedentes
       const allowed = Math.max(0, maxFiles - files.length);
       const accepted = acceptedFiles.slice(0, allowed);
       const rejected = acceptedFiles.slice(allowed).map((file) => ({
