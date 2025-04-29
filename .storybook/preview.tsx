@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react';
 
-export default {
+const preview: Preview = {
   parameters: {
     layout: 'centered',
     actions: { argTypesRegex: '^on[A-Z].*' },
@@ -34,4 +34,6 @@ export default {
       },
     },
   },
-} as Preview;
+} 
+
+export default preview;
