@@ -5,7 +5,6 @@ import {
   useId,
 } from 'react';
 import classNames from 'classnames';
-import { PhoneNumberUtil } from 'google-libphonenumber';
 
 import type {
   ReactNode,
@@ -32,6 +31,7 @@ import type {
 } from '../interface';
 import type { Merge } from '../../types';
 import { useProvidedRefOrCreate } from '../../hooks';
+import { validatePhoneNumber } from '../../utils';
 
 type OnChangeType = {
   phone: string;
@@ -63,16 +63,6 @@ type Props = Merge<
 Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'onWheel' | 'value' | 'type'>,
 NonHTMLInputElementProps
 >;
-
-const phoneUtil = PhoneNumberUtil.getInstance();
-
-const validatePhone = (phone: string) => {
-  try {
-    return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
-  } catch (error) {
-    return false;
-  }
-};
 
 function DInputPhone(
   {
@@ -153,7 +143,7 @@ function DInputPhone(
       value,
       countries: defaultCountries,
       onChange: (data) => {
-        onChange?.({ ...data, isValid: validatePhone(data.phone) });
+        onChange?.({ ...data, isValid: validatePhoneNumber(data.phone) });
       },
     },
   );
