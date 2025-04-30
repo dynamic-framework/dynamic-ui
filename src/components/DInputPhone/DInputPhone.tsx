@@ -17,6 +17,7 @@ import type {
 import {
   CountrySelector,
   defaultCountries,
+  ParsedCountry,
   usePhoneInput,
 } from 'react-international-phone';
 import { PREFIX_BS } from '../config';
@@ -31,6 +32,13 @@ import type {
 } from '../interface';
 import type { Merge } from '../../types';
 import { useProvidedRefOrCreate } from '../../hooks';
+
+type OnChangeType = {
+  phone: string;
+  inputValue: string;
+  country: ParsedCountry;
+  isValid: boolean;
+};
 
 type NonHTMLInputElementProps =
 & BaseProps
@@ -47,7 +55,7 @@ type NonHTMLInputElementProps =
   valid?: boolean;
   floatingLabel?: boolean;
   inputEnd?: ReactNode;
-  onChange?: (value: Record<string, unknown>) => void;
+  onChange?: (value: OnChangeType) => void;
   onIconEndClick?: (value?: string) => void;
 };
 
