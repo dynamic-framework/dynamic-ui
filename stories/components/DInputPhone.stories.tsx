@@ -1,10 +1,23 @@
-import { Meta, StoryObj } from '@storybook/react';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable no-alert */
 
+import { Meta, StoryObj } from '@storybook/react';
 import type { ComponentProps } from 'react';
+import * as Yup from 'yup';
+import {
+  Formik,
+  Form,
+} from 'formik';
 
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
-import { DBadge, DContextProvider } from '../../src';
+import {
+  DBadge,
+  DButton,
+  DContextProvider,
+  validatePhoneNumber,
+} from '../../src';
 import DInputPhone from '../../src/components/DInputPhone';
+import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputPhone> = {
   title: 'Design System/Components/Input Phone',
@@ -13,7 +26,45 @@ const config: Meta<typeof DInputPhone> = {
     docs: {
       description: {
         component: `
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
 Wrapper around Bootstrap input group elements.
+
+**DInputPhone** is a custom wrapper component designed to handle international phone number inputs. 
+It leverages the capabilities of **react-international-phone** 
+to provide formatting, validation, and country code selection with flag icons.
+
+To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [Bootstrap Forms](https://getbootstrap.com/docs/5.3/forms/overview/)
++ [Bootstrap Form Control](https://getbootstrap.com/docs/5.3/forms/forcontrol/)
++ [Bootstrap Input Group](https://getbootstrap.com/docs/5.3/forms/input-group/)
++ [react-international-phone](https://react-international-phone.vercel.app/)
+
+## CSS Variables
+
+The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
+and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/forms/input-group/#css)
+
+| Variable                                  | Class         | Type            | Description                 |
+|-------------------------------------------|---------------|-----------------|-----------------------------|
+| --${PREFIX_BS}label-color                 | :root         | css color unit  | Label color                 |
+| --${PREFIX_BS}label-font-weight           | :root         | css font weight | Label font weight           |
+| --${PREFIX_BS}label-font-size             | :root         | css length unit | Label font size             |
+| --${PREFIX_BS}label-padding-x             | :root         | css length unit | Label horizontal padding    |
+| --${PREFIX_BS}label-padding-y             | :root         | css length unit | Label vertical padding      |
+| --${PREFIX_BS}input-border-color          | .input-group  | css color unit  | Input border color          |
+| --${PREFIX_BS}input-border-width          | .input-group  | css length unit | Input border width          |
+| --${PREFIX_BS}input-border-radius         | .input-group  | css length unit | Input border radius         |
+| --${PREFIX_BS}input-focus-border-color    | .input-group  | css color unit  | Input focus border color    |
+| --${PREFIX_BS}input-focus-box-shadow      | .input-group  | css shadow      | Input focus box shadow      |
+| --${PREFIX_BS}input-disabled-bg           | .input-group  | css color unit  | Input disable background    |
+| --${PREFIX_BS}input-disabled-color        | .input-group  | css color unit  | Input disable color         |
+| --${PREFIX_BS}input-disabled-border-color | .input-group  | css color unit  | Input disable border color  |
+| --${PREFIX_BS}form-text-padding           | .form-text    | css length unit | Hint padding                |
+| --${PREFIX_BS}form-text-gap               | .form-text    | css length unit | Space between hint elements |
+| --${PREFIX_BS}form-text-color             | .form-text    | css color unit  | Hint color                  |
+| --${PREFIX_BS}form-control-text-align     | .form-control | css text align  | Input text align            |
         `,
       },
     },
@@ -363,5 +414,131 @@ export const MaterialIconConfirm: Story = {
     label: 'Label',
     placeholder: 'Placeholder',
     valid: true,
+  },
+};
+
+const validationSchema = Yup.object().shape({
+  phone: Yup.string()
+    .required()
+    .test(
+      'phone',
+      'Phone number is invalid',
+      (value) => validatePhoneNumber(value ?? ''),
+    ),
+});
+
+const FormikExample = {
+  JSX: (
+    {
+      value,
+      hint,
+      invalid,
+      onChange,
+      onBlur,
+      ...args
+    }: ComponentProps<typeof DInputPhone>,
+  ) => (
+    <Formik
+      initialValues={{ phone: value }}
+      onSubmit={(values) => alert(`${values.phone} is a valid number`)}
+      validateOnChange
+      validateOnMount
+      validationSchema={validationSchema}
+    >
+      {({
+        errors,
+        touched,
+        setFieldValue,
+        handleBlur,
+        values,
+      }) => (
+        <Form className="d-flex flex-column gap-4">
+          <DInputPhone
+            value={values.phone}
+            onChange={({ phone }) => setFieldValue('phone', phone)}
+            onBlur={handleBlur}
+            hint={touched.phone && errors.phone ? errors.phone : ' '}
+            invalid={!!(touched.phone && errors.phone)}
+            valid={!(touched.phone && errors.phone)}
+            {...args}
+          />
+          <DButton
+            text="Validate"
+            type="submit"
+          />
+        </Form>
+      )}
+    </Formik>
+  ),
+  code: `
+
+const validationSchema = Yup.object().shape({
+  phone: Yup.string()
+    .required()
+    .test(
+      'phone',
+      'Phone number is invalid',
+      (value) => validatePhoneNumber(value ?? ''),
+    ),
+});
+
+<Formik
+initialValues={{ phone: '+1' }}
+onSubmit={(values) => alert(\`\${values.phone} is a valid number\`)}
+validateOnChange
+validateOnMount
+validationSchema={validationSchema}
+>
+  {({
+    errors,
+    touched,
+    setFieldValue,
+    handleBlur,
+    values,
+  }) => (
+    <Form className="d-flex flex-column gap-4">
+      <DInputPhone
+        id="phone"
+        name="phone"
+        label="Phone number"
+        placeholder="Digit your phone number"
+        value={values.phone}
+        onChange={({ phone }) => setFieldValue('phone', phone)}
+        onBlur={handleBlur}
+        hint={touched.phone && errors.phone ? errors.phone : ' '}
+        invalid={!!(touched.phone && errors.phone)}
+        valid={!(touched.phone && errors.phone)}
+      />
+      <DButton
+        text="Validate"
+        type="submit"
+      />
+    </Form>
+  )}
+</Formik>`,
+};
+
+export const UsingWithFormik: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '300px', width: '300px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => <FormikExample.JSX {...args} />,
+  args: {
+    id: 'phone',
+    name: 'phone',
+    label: 'Phone number',
+    placeholder: 'Digit your phone number',
+    value: '+573202058097',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: FormikExample.code,
+      },
+    },
   },
 };
