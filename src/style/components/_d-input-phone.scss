@@ -1,0 +1,45 @@
+// stylelint-disable selector-class-pattern
+
+.d-input-phone {
+  .react-international-phone-country-selector {
+    --react-international-phone-dropdown-top: calc(100% + var(--bs-ref-spacer-2));
+    --react-international-phone-country-selector-background-color-hover: transparent;
+    --react-international-phone-country-selector-border-color: transparent;
+    --react-international-phone-flag-width: 24px; // px because is an image
+    --react-international-phone-flag-height: 24px; // px because is an image
+  }
+  .react-international-phone-country-selector-button {
+    height: auto;
+    padding: 0;
+
+    .react-international-phone-flag-emoji {
+      margin-left: 0;
+    }
+
+    &.react-international-phone-country-selector-button--disabled {
+      background-color: var(--bs-gray-100);
+    }
+  }
+
+  .react-international-phone-country-selector-dropdown {
+    &:focus {
+      outline: 0;
+    }
+
+    > * {
+      padding: var(--bs-ref-spacer-2) var(--bs-ref-spacer-4);
+    }
+
+    .dropdown-item {
+      --bs-dropdown-item-border-radius: 0;
+    }
+  }
+
+  .react-international-phone-country-selector-button__button-content {
+    border: 0;
+  }
+
+  .react-international-phone-country-selector-button__dropdown-arrow {
+    margin-right: 0;
+  }
+}

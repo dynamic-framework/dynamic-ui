@@ -11,12 +11,9 @@ if (fs.existsSync(dirPath)) {
 
 fs.mkdirSync(dirPath, { recursive: true });
 
-// Get the version from package.json
 const {
   version: VERSION,
-  dependencies: {
-    bootstrap: BOOTSTRAP_VERSION,
-  },
+  dependencies: { bootstrap: BOOTSTRAP_VERSION },
   license: LICENSE,
 } = require('../package.json');
 
@@ -26,6 +23,16 @@ const HEADER_COMMENT = `/*!
  * license ${LICENSE}
  */
 `;
+
+const vendorCssImports = [
+  require.resolve('react-international-phone/style.css'),
+];
+
+let vendorCss = '';
+vendorCssImports.forEach((cssPath) => {
+  const content = fs.readFileSync(cssPath, 'utf8');
+  vendorCss += `${content}\n`;
+});
 
 const files = glob.sync('./src/style/*.scss');
 
@@ -47,6 +54,7 @@ files.forEach((file) => {
     rawFilePath,
     Buffer.concat([
       Buffer.from(HEADER_COMMENT, 'utf8'),
+      Buffer.from(vendorCss, 'utf8'),
       Buffer.from(rawContent, 'utf8'),
     ]),
     'utf8',
@@ -55,6 +63,7 @@ files.forEach((file) => {
     minFilePath,
     Buffer.concat([
       Buffer.from(HEADER_COMMENT, 'utf8'),
+      Buffer.from(vendorCss, 'utf8'),
       Buffer.from(minContent.replace(/\uFEFF/g, ''), 'utf8'),
     ]),
     'utf8',
