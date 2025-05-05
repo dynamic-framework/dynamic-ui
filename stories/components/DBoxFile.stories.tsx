@@ -12,6 +12,46 @@ const config: Meta<typeof DBoxFile> = {
       control: 'boolean',
       type: 'boolean',
     },
+    accept: {
+      control: 'object',
+    },
+    multiple: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    minSize: {
+      control: 'number',
+      type: 'number',
+    },
+    maxSize: {
+      control: 'number',
+      type: 'number',
+    },
+    maxFiles: {
+      control: 'number',
+      type: 'number',
+    },
+    value: {
+      control: 'text',
+      type: 'string',
+      description: 'Array of file URLs to preload',
+    },
+    noClick: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    noKeyboard: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    noDrag: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    autoFocus: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     className: {
       control: 'text',
       type: 'string',
@@ -41,20 +81,20 @@ const config: Meta<typeof DBoxFile> = {
       control: 'boolean',
       type: 'boolean',
     },
-    minSize: {
-      control: 'number',
-      type: 'number',
-    },
-    maxSize: {
-      control: 'number',
-      type: 'number',
-    },
-    maxFiles: {
-      control: 'number',
-      type: 'number',
-    },
     onDrop: {
       action: 'onDrop',
+    },
+    onDragEnter: {
+      action: 'onDragEnter',
+    },
+    onDragLeave: {
+      action: 'onDragLeave',
+    },
+    onFileDialogCancel: {
+      action: 'onFileDialogCancel',
+    },
+    onError: {
+      action: 'onError',
     },
   },
 };

@@ -14,7 +14,7 @@ type Props = Pick<DBoxFileProps,
 | 'maxSize'
 | 'multiple'
 | 'disabled'
-| 'preloadUrls'
+| 'value'
 > & {
   className?: string;
 };
@@ -126,7 +126,7 @@ export function ExampleDBoxFileUrlFiles() {
         className="d-flex flex-column justify-content-center gap-3"
       >
         <ExampleDBoxFile
-          preloadUrls={[
+          value={[
             'https://placehold.co/600x400',
             '/../assets/1.png',
             '/../assets/2.png',

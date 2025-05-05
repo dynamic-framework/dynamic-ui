@@ -31,7 +31,7 @@ export type DBoxFileProps = {
   maxSize?: number;
   maxFiles?: number;
   disabled?: boolean;
-  preloadUrls?: Array<string>;
+  value?: Array<string>;
   // Behavior flags
   noClick?: boolean;
   noKeyboard?: boolean;
@@ -58,7 +58,7 @@ export default function useDBoxFile(props: DBoxFileProps) {
     minSize,
     multiple,
     maxFiles,
-    preloadUrls,
+    value: preloadUrls,
     onDragEnter,
     onDragLeave,
     onDrop,
