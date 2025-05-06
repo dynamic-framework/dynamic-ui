@@ -3,6 +3,9 @@
   "include": [
     "src"
   ],
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
   "exclude": [
     "src/**/*.spec.tsx"
   ]

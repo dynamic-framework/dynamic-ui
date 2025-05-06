@@ -1,10 +1,9 @@
 import { forwardRef } from 'react';
 
 import type { ComponentProps, Ref } from 'react';
-
-import DInput from '../DInput';
-
-import type { BaseProps } from '../interface';
+import { BaseProps } from '../../interface';
+import DInput from '../../DInput';
+import { useDContext } from '../../../contexts';
 
 type Props =
 & BaseProps
@@ -21,6 +20,7 @@ ComponentProps<typeof DInput>,
 | 'value'
 >;
 
+// TODO: Get format from props and format value
 function DDatePickerInput(
   {
     value,
@@ -35,16 +35,17 @@ function DDatePickerInput(
   }: Props,
   ref: Ref<HTMLInputElement>,
 ) {
+  const { iconMap: { calendar } } = useDContext();
+
   return (
     <DInput
       ref={ref}
       onClick={onClick}
-      readOnly
       type="text"
       id={id}
       value={value}
       onIconEndClick={onClick}
-      iconEnd={iconEnd}
+      iconEnd={iconEnd || calendar}
       className={className}
       style={style}
       label={inputLabel}

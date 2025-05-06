@@ -1,17 +1,18 @@
-import { useCallback, useMemo } from 'react';
+/* eslint-disable max-len */
+import {
+  useCallback,
+  useMemo,
+} from 'react';
 import DatePicker from 'react-datepicker';
-import { parseISO } from 'date-fns';
-
-import type { Locale } from 'date-fns';
 
 import type {
+  DatePickerProps,
   ReactDatePickerCustomHeaderProps,
-  ReactDatePickerProps,
 } from 'react-datepicker';
 
-import DDatePickerTime from '../DDatePickerTime';
-import DDatePickerInput from '../DDatePickerInput';
-import DDatePickerHeader from '../DDatePickerHeader';
+import DDatePickerTime from './components/DDatePickerTime';
+import DDatePickerInput from './components/DDatePickerInput';
+import DDatePickerHeaderSelector, { PickerType } from './components/DDatePickerHeaderSelector';
 
 import type {
   BaseProps,
@@ -19,34 +20,21 @@ import type {
   ComponentSize,
   FamilyIconProps,
 } from '../interface';
-import { useDContext } from '../../contexts';
 
-type Props<
-  CustomModifierNames extends string = never,
-  WithRange extends boolean | undefined = undefined,
-> =
+type Props =
 & BaseProps
 & FamilyIconProps
-& Pick<ReactDatePickerProps<CustomModifierNames, WithRange>,
-| 'formatWeekDay'
-| 'onChange'
-| 'autoFocus'
-| 'inline'
-| 'withPortal'
-| 'minDate'
-| 'showTimeInput'
-| 'calendarStartDay'
-| 'dateFormat'
-| 'selectsStart'
-| 'selectsEnd'
-| 'startDate'
-| 'endDate'
-| 'fixedHeight'
-| 'renderCustomHeader'
+& Omit<DatePickerProps,
+| 'showMonthDropdown'
+| 'showMonthYearDropdown'
+| 'showYearDropdown'
+| 'useShortMonthInDropdown'
+| 'yearDropdownItemNumber'
+| 'scrollableYearDropdown'
+| 'dropdownMode'
+| 'yearItemNumber'
 >
 & {
-  date?: string | null;
-  selectsRange?: boolean;
   inputLabel?: string;
   inputHint?: string;
   inputAriaLabel?: string;
@@ -55,14 +43,13 @@ type Props<
   inputId?: string;
   timeId?: string;
   timeLabel?: string;
-  iconHeaderPrevMonth?: string;
-  iconHeaderNextMonth?: string;
+  iconHeaderPrev?: string;
+  iconHeaderNext?: string;
   iconHeaderSize?: ComponentSize;
   headerPrevMonthAriaLabel?: string;
   headerNextMonthAriaLabel?: string;
   headerButtonVariant?: ButtonVariant;
   headerButtonTheme?: string;
-  locale?: Locale;
   minYearSelect?: number;
   maxYearSelect?: number;
   invalid?: boolean;
@@ -70,16 +57,8 @@ type Props<
   placeholder?: string;
 };
 
-/**
- * @deprecated
- */
-export default function DDatePicker<
-  CustomModifierNames extends string = never,
-  WithRange extends boolean | undefined = undefined,
->(
+export default function DDatePicker(
   {
-    date,
-    selectsRange = false,
     inputLabel,
     inputHint,
     inputAriaLabel,
@@ -87,63 +66,43 @@ export default function DDatePicker<
     inputId = 'input-calendar',
     timeId = 'input-time',
     timeLabel,
-    iconInput: iconInputProp,
-    iconHeaderPrevMonth: iconHeaderPrevMonthProp,
-    iconHeaderNextMonth: iconHeaderNextMonthProp,
-    iconMaterialStyle: iconMaterialStyleProp,
+    iconInput,
+    iconHeaderPrev,
+    iconHeaderNext,
+    iconMaterialStyle,
     iconFamilyClass,
     iconFamilyPrefix,
-    minYearSelect = 1900,
-    maxYearSelect = 2100,
-    iconHeaderSize = 'sm',
-    headerPrevMonthAriaLabel = 'decrease month',
-    headerNextMonthAriaLabel = 'increase month',
-    headerButtonVariant = 'link',
-    headerButtonTheme = 'dark',
+    minYearSelect,
+    maxYearSelect,
+    iconHeaderSize,
+    headerPrevMonthAriaLabel,
+    headerNextMonthAriaLabel,
+    headerButtonVariant,
+    headerButtonTheme,
     invalid = false,
     valid = false,
     renderCustomHeader: renderCustomHeaderProp,
-    locale,
     className,
-    formatWeekDay: formatWeekDayProp,
+    dateFormatCalendar: dateFormatCalendarProp,
     style,
     dataAttributes,
     placeholder,
     ...props
-  }: Props<CustomModifierNames, WithRange>,
+  }: Props,
 ) {
-  const {
-    iconMap: {
-      calendar,
-      chevronLeft,
-      chevronRight,
-    },
-  } = useDContext();
-  const selected = useMemo(() => (date ? parseISO(date) : null), [date]);
-  const iconInput = useMemo(() => iconInputProp || calendar, [calendar, iconInputProp]);
-
-  const handleFormatWeekDay = useMemo(() => (
-    formatWeekDayProp
-      ? (day: string) => formatWeekDayProp(day)
-      : (day: string) => day.substring(0, 1)
-  ), [formatWeekDayProp]);
-
-  const iconPrevMonth = useMemo(
-    () => iconHeaderPrevMonthProp || chevronLeft,
-    [chevronLeft, iconHeaderPrevMonthProp],
-  );
-  const iconNextMonth = useMemo(
-    () => iconHeaderNextMonthProp || chevronRight,
-    [chevronRight, iconHeaderNextMonthProp],
-  );
+  const pickerType = useMemo(() => {
+    if (props.showQuarterYearPicker) return PickerType.Quarter;
+    if (props.showMonthYearPicker) return PickerType.Month;
+    if (props.showYearPicker) return PickerType.Year;
+    return PickerType.Default;
+  }, [props.showQuarterYearPicker, props.showMonthYearPicker, props.showYearPicker]);
 
   const DatePickerHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
-    <DDatePickerHeader
+    <DDatePickerHeaderSelector
       {...headerProps}
-      {...locale && { locale }}
-      iconPrevMonth={iconPrevMonth}
-      iconNextMonth={iconNextMonth}
-      iconMaterialStyle={iconMaterialStyleProp}
+      iconPrev={iconHeaderPrev}
+      iconNext={iconHeaderNext}
+      iconMaterialStyle={iconMaterialStyle}
       prevMonthAriaLabel={headerPrevMonthAriaLabel}
       nextMonthAriaLabel={headerNextMonthAriaLabel}
       iconSize={iconHeaderSize}
@@ -151,12 +110,12 @@ export default function DDatePicker<
       buttonTheme={headerButtonTheme}
       minYearSelect={minYearSelect}
       maxYearSelect={maxYearSelect}
+      pickerType={pickerType}
     />
   ), [
-    locale,
-    iconPrevMonth,
-    iconNextMonth,
-    iconMaterialStyleProp,
+    iconHeaderNext,
+    iconHeaderPrev,
+    iconMaterialStyle,
     headerPrevMonthAriaLabel,
     headerNextMonthAriaLabel,
     iconHeaderSize,
@@ -164,6 +123,7 @@ export default function DDatePicker<
     headerButtonTheme,
     minYearSelect,
     maxYearSelect,
+    pickerType,
   ]);
 
   const defaultRenderCustomHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
@@ -176,18 +136,15 @@ export default function DDatePicker<
   );
 
   return (
-    <DatePicker<string, boolean>
-      selected={selected}
+    <DatePicker
       calendarClassName="d-date-picker"
       renderCustomHeader={renderCustomHeader}
-      selectsRange={selectsRange}
-      formatWeekDay={handleFormatWeekDay}
       customInput={(
         <DDatePickerInput
           id={inputId}
           aria-label={inputAriaLabel}
           iconEndAriaLabel={inputActionAriaLabel}
-          iconMaterialStyle={iconMaterialStyleProp}
+          iconMaterialStyle={iconMaterialStyle}
           iconEnd={iconInput}
           inputLabel={inputLabel}
           className={className}
@@ -204,9 +161,8 @@ export default function DDatePicker<
         />
       )}
       placeholderText={placeholder}
-      {...locale && { locale }}
       {...dataAttributes}
-      {...props}
+      {...props as DatePickerProps}
     />
   );
 }
