@@ -14,14 +14,14 @@ export default function DSelectClearIndicator<
 ) {
   const {
     iconMap: {
-      xLg,
+      x,
     },
   } = useDContext();
   return (
     <components.ClearIndicator<Option, IsMulti, Group>
       {...props}
     >
-      <DIcon icon={xLg} />
+      <DIcon icon={x} />
     </components.ClearIndicator>
   );
 }
