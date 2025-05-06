@@ -87,7 +87,7 @@ $form-text-padding-x: 0 !default;
 
 // scss-docs-start form-select-variables
 $form-select-disabled-color: $input-disabled-color !default;
-$form-select-bg-size: 24px !default; // In pixels because image dimensions
+$form-select-bg-size: 16px !default; // In pixels because image dimensions
 $form-select-bg-opacity: 0 !default;
 $form-select-indicator-color: var(--#{$prefix}gray-500) !default;
 $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$gray-500}' stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='m2 5 6 6 6-6'/></svg>") !default;
