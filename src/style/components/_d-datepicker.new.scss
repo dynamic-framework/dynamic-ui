@@ -79,8 +79,6 @@
   border-radius: var(--#{$prefix}datepicker-border-radius);
   display: inline-block;
   position: relative;
-
-  // Reverting value set in .react-datepicker-popper
   line-height: initial;
 }
 
@@ -97,9 +95,10 @@
 }
 
 .react-datepicker-popper {
-  z-index: 1;
+  --#{$prefix}datepicker-border-color: var(--#{$prefix}gray-400);
+  --#{$prefix}datepicker-header-background-color: var(--#{$prefix}gray-100);
 
-  // Eliminating extra space at the bottom of the container
+  z-index: 1;
   line-height: 0;
 
   .react-datepicker__triangle {
@@ -108,15 +107,15 @@
 
   &[data-placement^="bottom"] {
     .react-datepicker__triangle {
-      fill: var(--#{$prefix}datepicker-background-color);
-      color: var(--#{$prefix}datepicker-background-color);
+      fill: var(--#{$prefix}datepicker-header-background-color);
+      color: var(--#{$prefix}datepicker-header-background-color);
     }
   }
 
   &[data-placement^="top"] {
     .react-datepicker__triangle {
-      fill: var(--#{$prefix}datepicker-background-color);
-      color: var(--#{$prefix}datepicker-background-color);
+      fill: var(--#{$prefix}datepicker-header-background-color);
+      color: var(--#{$prefix}datepicker-header-background-color);
     }
   }
 }
@@ -158,18 +157,6 @@
   &:not(&--has-time-select) {
     border-top-right-radius: var(--#{$prefix}datepicker-border-radius);
   }
-}
-
-
-// TODO: Check this is not used
-.react-datepicker__year-dropdown-container--select,
-.react-datepicker__month-dropdown-container--select,
-.react-datepicker__month-year-dropdown-container--select,
-.react-datepicker__year-dropdown-container--scroll,
-.react-datepicker__month-dropdown-container--scroll,
-.react-datepicker__month-year-dropdown-container--scroll {
-  display: inline-block;
-  margin: 0 15px;
 }
 
 .react-datepicker__current-month,
@@ -268,7 +255,7 @@ h2.react-datepicker__current-month {
   }
 }
 
-.react-datepicker__month {
+.react-datepicker__month, .react-datepicker__quarter {
   margin: var(--#{$prefix}datepicker-body-margin);
   text-align: center;
   display: flex;
@@ -281,11 +268,15 @@ h2.react-datepicker__current-month {
     gap: var(--#{$prefix}datepicker-body-gap);
   }
 
-  .react-datepicker__month-text,
-  .react-datepicker__quarter-text {
+  .react-datepicker__month-text {
     display: inline-block;
     width: 10ch;
     flex: 1;
+  }
+
+  .react-datepicker__quarter-text {
+    display: inline-block;
+    width: 6ch;
   }
 }
 
@@ -466,7 +457,6 @@ h2.react-datepicker__current-month {
       color: var(--#{$prefix}datepicker-text-color);
     }
 
-    // DONE
     &--today {
       font-weight: bold;
     }
@@ -513,7 +503,6 @@ h2.react-datepicker__current-month {
         opacity: 1;
       }
     }
-    // DONE
 
     // Selected day
     &--selected {
@@ -540,22 +529,22 @@ h2.react-datepicker__current-month {
       // Days between start and end (excluding start and end)
       border-radius: var(--#{$prefix}datepicker-day-border-radius);
 
-      &:not(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end) {
-        background-color: var(--#{$prefix}datepicker-in-range-background-color);
-        &[aria-disabled="true"] {
-          background-color: var(--#{$prefix}datepicker-in-range-disabled-background-color);
-          color: var(--#{$prefix}datepicker-in-range-disabled-color);
-        }
-      }
-      // Hover state on any day in range
-      &:not(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end):hover {
-        background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
-      }
+      // &:not(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end) {
+      //   background-color: var(--#{$prefix}datepicker-in-range-background-color);
+      //   &[aria-disabled="true"] {
+      //     background-color: var(--#{$prefix}datepicker-in-range-disabled-background-color);
+      //     color: var(--#{$prefix}datepicker-in-range-disabled-color);
+      //   }
+      // }
+      // // Hover state on any day in range
+      // &:not(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end):hover {
+      //   background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
+      // }
 
-      // Hover state on any day in range
-      &:hover {
-        background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
-      }
+      // // Hover state on any day in range
+      // &:hover {
+      //   background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
+      // }
     }
     // Check this if we need to add this
     // &--in-selecting-range:not(&--in-range) {

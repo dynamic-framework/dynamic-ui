@@ -291,6 +291,16 @@ export const MonthSelector: Story = {
   },
 };
 
+export const QuarterSelector: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'MM/yyyy',
+    showQuarterYearPicker: true,
+  },
+};
+
 export const YearSelector: Story = {
   render: ControlledDatePicker,
   args: {
