@@ -142,16 +142,51 @@
   &-selector {
     display: flex;
     align-items: center;
-    gap: var(--#{$prefix}datepicker-body-gap);
+    gap: var(--#{$prefix}ref-spacer-1);
+
     .d-select {
       .d-select__control {
-        padding: 0.25rem 0.5rem;
+        padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
       }
+
+      .d-select__menu-list {
+        border: var(--#{$prefix}datepicker-border);
+        line-height: var(--#{$prefix}ref-spacer-8);
+        max-height: 7lh;
+      }
+
+      .d-select__option {
+        padding: 0px;
+        line-height: var(--#{$prefix}ref-spacer-8);
+      }
+
+      &.custom-year-selector .d-select__single-value {
+        width: 4ch;
+      }
+    }
+
+    .header-button:first-child {
+      padding: var(--#{$prefix}ref-spacer-1);
+      margin-left: var(--#{$prefix}ref-spacer-1);
+      margin-right: auto;
+    }
+
+    .header-button:last-child {
+      padding: var(--#{$prefix}ref-spacer-1);
+      margin-right: var(--#{$prefix}ref-spacer-1);
+      margin-left: auto;
     }
   }
 
-  &-day-selector{
+  &-day-selector {
     margin-bottom: var(--#{$prefix}ref-spacer-4);
+
+    .custom-month-selector {
+      .d-select__single-value {
+        text-align: start;
+        min-width: 10ch;
+      }
+    }
   }
 
   &:not(&--has-time-select) {
@@ -255,7 +290,8 @@ h2.react-datepicker__current-month {
   }
 }
 
-.react-datepicker__month, .react-datepicker__quarter {
+.react-datepicker__month,
+.react-datepicker__quarter {
   margin: var(--#{$prefix}datepicker-body-margin);
   text-align: center;
   display: flex;
@@ -421,13 +457,13 @@ h2.react-datepicker__current-month {
   white-space: nowrap;
   display: inline-flex;
   gap: var(--#{$prefix}datepicker-body-gap);
-  margin: var(--#{$prefix}datepicker-day-names-margin);
 }
 
 .react-datepicker__week {
   white-space: nowrap;
   display: inline-flex;
   gap: var(--#{$prefix}datepicker-body-gap);
+  align-self: center;
 }
 
 .react-datepicker__day-name,
@@ -546,6 +582,7 @@ h2.react-datepicker__current-month {
       //   background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
       // }
     }
+
     // Check this if we need to add this
     // &--in-selecting-range:not(&--in-range) {
     //   background-color: $datepicker__selected-color--disabled;
@@ -628,7 +665,9 @@ close-icon
     line-height: 3rem;
   }
 
-  @media (max-width: 400px), (max-height: 550px) {
+  @media (max-width: 400px),
+  (max-height: 550px) {
+
     .react-datepicker__day-name,
     .react-datepicker__day,
     .react-datepicker__time-name {

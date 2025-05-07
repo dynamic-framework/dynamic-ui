@@ -401,6 +401,7 @@ export const OnPortal: Story = {
   args: {
     inline: false,
     withPortal: true,
+    portalId: 'story-datepicker-portal',
     showTimeInput: true,
     timeLabel: 'Select time',
     inputAriaLabel: 'Calendar',
@@ -421,6 +422,7 @@ export const MaterialStyle: Story = {
   args: {
     inline: false,
     withPortal: true,
+    portalId: 'story-datepicker-portal',
     showTimeInput: true,
     timeLabel: 'Select time',
     inputAriaLabel: 'Calendar',
