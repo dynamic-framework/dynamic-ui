@@ -652,6 +652,8 @@ close-icon
 // }
 
 .react-datepicker__portal {
+  --#{$prefix}datepicker-portal-background: rgba(var(--#{$prefix}black-rgb), 0.3);
+
   position: fixed;
   width: 100vw;
   height: 100vh;
