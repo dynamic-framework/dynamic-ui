@@ -237,6 +237,7 @@ function ControlledDatePicker(props: ComponentProps<typeof DDatePicker>) {
       key={JSON.stringify(props, null, 0)}
       selected={date}
       onChange={(newDate: Date | null) => setDate(newDate)}
+      showHeaderSelectors
       {...rest}
     />
   );
@@ -276,6 +277,33 @@ export const Default: Story = {
     iconInput: 'calendar',
     iconHeaderPrev: 'chevron-left',
     iconHeaderNext: 'chevron-right',
+    showHeaderSelectors: false,
+  },
+};
+
+export const WithSelector: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'dd/MM/yyyy',
+    inline: false,
+    iconInput: 'calendar',
+    iconHeaderPrev: 'chevron-left',
+    iconHeaderNext: 'chevron-right',
+  },
+};
+
+export const Weeks: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'dd/MM/yyyy',
+    inline: true,
+    iconInput: 'calendar',
+    iconHeaderPrev: 'chevron-left',
+    iconHeaderNext: 'chevron-right',
+    showWeekNumbers: true,
+    showWeekPicker: true,
   },
 };
 
@@ -350,6 +378,18 @@ export const InputInvalidState: Story = {
   },
 };
 
+export const TwoMonths: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'dd/MM/yyyy',
+    headerPrevMonthAriaLabel: 'decrease month',
+    headerNextMonthAriaLabel: 'increase month',
+    monthsShown: 2,
+  },
+};
+
 export const WithLocale: Story = {
   render: ControlledDatePicker,
   args: {
@@ -382,7 +422,8 @@ export const DateRangeMonths: Story = {
   args: {
     inline: true,
     selectsRange: true,
-    monthsShown: 2,
+    dateFormat: 'MM/yyyy',
+    showMonthYearPicker: true,
   },
 };
 

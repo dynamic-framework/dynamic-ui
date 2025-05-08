@@ -51,6 +51,7 @@ type Props =
   buttonTheme?: string;
   minYearSelect?: number;
   maxYearSelect?: number;
+  showHeaderSelectors?: boolean;
 } & Omit<ComponentProps<typeof DButton>,
 | 'iconStart'
 | 'onClick'
@@ -66,9 +67,11 @@ export default function DDatePickerHeaderSelector(
     increaseMonth,
     decreaseYear,
     increaseYear,
+    monthDate,
     pickerType,
     prevMonthButtonDisabled,
     nextMonthButtonDisabled,
+    customHeaderCount,
     iconPrev,
     iconNext,
     prevYearButtonDisabled,
@@ -87,6 +90,7 @@ export default function DDatePickerHeaderSelector(
     className,
     minYearSelect = 1900,
     maxYearSelect = 2100,
+    showHeaderSelectors = false,
   }: Props,
 ) {
   const {
@@ -107,8 +111,8 @@ export default function DDatePickerHeaderSelector(
   })), [arrayYears]);
 
   const defaultYear = useMemo(
-    () => years.find((year) => year.value === getYear(date)),
-    [date, years],
+    () => years.find((year) => year.value === getYear(monthDate)),
+    [monthDate, years],
   );
 
   const arrayMonths = useMemo(() => Array.from(
@@ -122,9 +126,9 @@ export default function DDatePickerHeaderSelector(
   })), [arrayMonths]);
 
   const defaultMonth = useMemo(() => ({
-    label: arrayMonths[getMonth(date)],
-    value: getMonth(date),
-  }), [arrayMonths, date]);
+    label: arrayMonths[getMonth(monthDate)],
+    value: getMonth(monthDate),
+  }), [arrayMonths, monthDate]);
 
   const getYearRange = useCallback(() => {
     const blockIndex = Math.floor((date.getFullYear() - 1) / 12);
@@ -157,9 +161,7 @@ export default function DDatePickerHeaderSelector(
           ariaLabel={prevYearAriaLabel}
           className="header-button"
         />
-        <div className="d-flex justify-content-center flex-grow-1">
-          {`${startYear} - ${endYear}`}
-        </div>
+        <p>{`${startYear} - ${endYear}`}</p>
         <DButton
           iconStart={iconNext || chevronRight}
           iconStartFamilyClass={iconFamilyClass}
@@ -200,13 +202,17 @@ export default function DDatePickerHeaderSelector(
           className="header-button"
         />
         <div className="d-flex justify-content-center flex-grow-1">
-          <DSelect
-            options={years}
-            value={defaultYear}
-            defaultValue={defaultYear}
-            onChange={(year) => changeYear(Number(year?.value))}
-            searchable={false}
-          />
+          {showHeaderSelectors ? (
+            <DSelect
+              options={years}
+              value={defaultYear}
+              defaultValue={defaultYear}
+              onChange={(year) => changeYear(Number(year?.value))}
+              searchable={false}
+            />
+          ) : (
+            <p>{defaultYear?.label}</p>
+          )}
         </div>
         <DButton
           iconStart={iconNext || chevronRight}
@@ -245,23 +251,30 @@ export default function DDatePickerHeaderSelector(
         disabled={prevMonthButtonDisabled}
         ariaLabel={prevMonthAriaLabel}
         className="header-button"
+        style={{ visibility: customHeaderCount === 1 ? 'hidden' : 'visible' }}
       />
-      <DSelect
-        options={months}
-        value={defaultMonth}
-        defaultValue={defaultMonth}
-        onChange={(month) => changeMonth(month?.value || 0)}
-        searchable={false}
-        className="custom-month-selector"
-      />
-      <DSelect
-        options={years}
-        value={defaultYear}
-        defaultValue={defaultYear}
-        onChange={(year) => changeYear(Number(year?.value))}
-        searchable={false}
-        className="custom-year-selector"
-      />
+      {showHeaderSelectors ? (
+        <>
+          <DSelect
+            options={months}
+            value={defaultMonth}
+            defaultValue={defaultMonth}
+            onChange={(month) => changeMonth(month?.value || 0)}
+            searchable={false}
+            className="custom-month-selector"
+          />
+          <DSelect
+            options={years}
+            value={defaultYear}
+            defaultValue={defaultYear}
+            onChange={(year) => changeYear(Number(year?.value))}
+            searchable={false}
+            className="custom-year-selector"
+          />
+        </>
+      ) : (
+        <p>{`${defaultMonth.label} ${defaultYear?.label}`}</p>
+      )}
       <DButton
         iconStart={iconNext || chevronRight}
         iconStartFamilyClass={iconFamilyClass}
@@ -274,6 +287,7 @@ export default function DDatePickerHeaderSelector(
         disabled={nextMonthButtonDisabled}
         ariaLabel={nextMonthAriaLabel}
         className="header-button"
+        style={{ visibility: customHeaderCount === 0 ? 'hidden' : 'visible' }}
       />
     </div>
   );

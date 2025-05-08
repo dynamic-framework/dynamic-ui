@@ -138,6 +138,7 @@
       border-top-left-radius: 0;
     }
   }
+  // TODO: add Style header multiple months
 
   &-selector {
     display: flex;
@@ -163,6 +164,10 @@
       &.custom-year-selector .d-select__single-value {
         width: 4ch;
       }
+    }
+    p {
+      margin: 0;
+      font-weight: bold;
     }
 
     .header-button:first-child {

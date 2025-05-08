@@ -55,6 +55,7 @@ type Props =
   invalid?: boolean;
   valid?: boolean;
   placeholder?: string;
+  showHeaderSelectors?: boolean;
 };
 
 export default function DDatePicker(
@@ -87,6 +88,7 @@ export default function DDatePicker(
     style,
     dataAttributes,
     placeholder,
+    showHeaderSelectors,
     ...props
   }: Props,
 ) {
@@ -111,6 +113,7 @@ export default function DDatePicker(
       minYearSelect={minYearSelect}
       maxYearSelect={maxYearSelect}
       pickerType={pickerType}
+      showHeaderSelectors={showHeaderSelectors}
     />
   ), [
     iconHeaderNext,
@@ -124,6 +127,7 @@ export default function DDatePicker(
     minYearSelect,
     maxYearSelect,
     pickerType,
+    showHeaderSelectors,
   ]);
 
   const defaultRenderCustomHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
