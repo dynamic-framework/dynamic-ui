@@ -102,6 +102,7 @@ export default function DDatePicker(
   const DatePickerHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
     <DDatePickerHeaderSelector
       {...headerProps}
+      monthsShown={props.monthsShown}
       iconPrev={iconHeaderPrev}
       iconNext={iconHeaderNext}
       iconMaterialStyle={iconMaterialStyle}
@@ -128,6 +129,7 @@ export default function DDatePicker(
     maxYearSelect,
     pickerType,
     showHeaderSelectors,
+    props.monthsShown,
   ]);
 
   const defaultRenderCustomHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (

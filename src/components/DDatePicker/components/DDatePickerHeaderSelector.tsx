@@ -52,6 +52,7 @@ type Props =
   minYearSelect?: number;
   maxYearSelect?: number;
   showHeaderSelectors?: boolean;
+  monthsShown?: number;
 } & Omit<ComponentProps<typeof DButton>,
 | 'iconStart'
 | 'onClick'
@@ -71,7 +72,7 @@ export default function DDatePickerHeaderSelector(
     pickerType,
     prevMonthButtonDisabled,
     nextMonthButtonDisabled,
-    customHeaderCount,
+    monthsShown = 1,
     iconPrev,
     iconNext,
     prevYearButtonDisabled,
@@ -91,6 +92,7 @@ export default function DDatePickerHeaderSelector(
     minYearSelect = 1900,
     maxYearSelect = 2100,
     showHeaderSelectors = false,
+    customHeaderCount,
   }: Props,
 ) {
   const {
@@ -251,7 +253,7 @@ export default function DDatePickerHeaderSelector(
         disabled={prevMonthButtonDisabled}
         ariaLabel={prevMonthAriaLabel}
         className="header-button"
-        style={{ visibility: customHeaderCount === 1 ? 'hidden' : 'visible' }}
+        style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
       />
       {showHeaderSelectors ? (
         <>
@@ -287,7 +289,7 @@ export default function DDatePickerHeaderSelector(
         disabled={nextMonthButtonDisabled}
         ariaLabel={nextMonthAriaLabel}
         className="header-button"
-        style={{ visibility: customHeaderCount === 0 ? 'hidden' : 'visible' }}
+        style={{ visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' }}
       />
     </div>
   );
