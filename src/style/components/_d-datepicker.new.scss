@@ -50,13 +50,17 @@
   --#{$prefix}datepicker-day-selected-background-color: var(--#{$prefix}secondary);
 
   // Day Disabled
-  --#{$prefix}datepicker-day-disabled-color: var(--#{$prefix}gray-500);
+  --#{$prefix}datepicker-day-disabled-color: var(--#{$prefix}gray-400);
 
   // Week
-  --#{$prefix}datepicker-week-number-color: var(--#{$prefix}gray-500);
+  --#{$prefix}datepicker-week-number-color: var(--#{$prefix}datepicker-day-disabled-color);
   --#{$prefix}datepicker-week-number-background-color: var(--#{$prefix}white);
-  --#{$prefix}datepicker-week-number-selected-background-color: var(--#{$prefix}white);
-  --#{$prefix}datepicker-week-number-border-radius: var(--#{$prefix}border-radius-xs);
+  --#{$prefix}datepicker-week-number-selected-color: var(--#{$prefix}datepicker-day-selected-color);
+  --#{$prefix}datepicker-week-number-selected-background-color: var(--#{$prefix}datepicker-day-selected-background-color);
+  --#{$prefix}datepicker-week-number-hover-background-color: var(--#{$prefix}datepicker-day-hover-background-color);
+  --#{$prefix}datepicker-week-number-hover-color: var(--#{$prefix}body-color);
+  --#{$prefix}datepicker-week-number-border-radius: 0.25rem;
+
 
   // Range
   --#{$prefix}datepicker-range-start-color: var(--#{$prefix}white);
@@ -443,28 +447,29 @@ h2.react-datepicker__current-month {
 // }
 // END TODO: Revisar con Mati diseño del time
 
-// TODO: Revisar opcion showWeekNumbers
 .react-datepicker__week-number {
   color: var(--#{$prefix}datepicker-week-number-color);
   display: inline-block;
   width: var(--#{$prefix}datepicker-day-width);
   line-height: var(--#{$prefix}datepicker-day-width);
   text-align: center;
-  // margin: $datepicker__day-margin;
+  font-size: var(--#{$prefix}datepicker-day-names-font-size);
 
   &.react-datepicker__week-number--clickable {
     cursor: pointer;
+    color: var(--#{$prefix}body-color);
 
-    &:not(.react-datepicker__week-number--selected):hover {
-      // border-radius: $datepicker__border-radius;
-      // background-color: $datepicker__background-color;
+    &.react-datepicker__week-number--selected {
+      border-radius: var(--#{$prefix}datepicker-week-number-border-radius);
+      background-color: var(--#{$prefix}datepicker-week-number-selected-background-color);
+      color: var(--#{$prefix}datepicker-week-number-selected-color);
     }
-  }
 
-  &--selected {
-    border-radius: var(--#{$prefix}datepicker-week-number-border-radius);
-    background-color: var(--#{$prefix}datepicker-week-number-selected-background-color);
-    color: var(--#{$prefix}datepicker-week-number-color);
+    &:hover {
+      border-radius: var(--#{$prefix}datepicker-week-number-border-radius);
+      background-color: var(--#{$prefix}datepicker-week-number-hover-background-color);
+      color: var(--#{$prefix}datepicker-week-number-hover-color);
+    }
   }
 }
 
