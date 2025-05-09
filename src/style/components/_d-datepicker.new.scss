@@ -485,6 +485,7 @@ h2.react-datepicker__current-month {
   display: inline-flex;
   gap: var(--#{$prefix}datepicker-body-gap);
   align-self: center;
+  align-items: center;
 }
 
 .react-datepicker__day-name,
