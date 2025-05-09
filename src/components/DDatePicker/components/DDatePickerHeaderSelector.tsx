@@ -162,6 +162,7 @@ export default function DDatePickerHeaderSelector(
           disabled={prevYearButtonDisabled}
           ariaLabel={prevYearAriaLabel}
           className="header-button"
+          style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
         />
         <p>{`${startYear} - ${endYear}`}</p>
         <DButton
@@ -176,6 +177,7 @@ export default function DDatePickerHeaderSelector(
           disabled={nextYearButtonDisabled}
           ariaLabel={nextYearAriaLabel}
           className="header-button"
+          style={{ visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' }}
         />
       </div>
     );
@@ -202,6 +204,7 @@ export default function DDatePickerHeaderSelector(
           disabled={prevMonthButtonDisabled}
           ariaLabel={prevMonthAriaLabel}
           className="header-button"
+          style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
         />
         <div className="d-flex justify-content-center flex-grow-1">
           {showHeaderSelectors ? (
@@ -228,6 +231,7 @@ export default function DDatePickerHeaderSelector(
           disabled={nextMonthButtonDisabled}
           ariaLabel={nextMonthAriaLabel}
           className="header-button"
+          style={{ visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' }}
         />
       </div>
     );
