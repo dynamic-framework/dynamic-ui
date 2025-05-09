@@ -99,18 +99,18 @@
 }
 
 .react-datepicker-popper {
-  --#{$prefix}datepicker-border-color: var(--#{$prefix}gray-400);
-  --#{$prefix}datepicker-header-background-color: var(--#{$prefix}gray-100);
 
   z-index: 1;
   line-height: 0;
 
   .react-datepicker__triangle {
+    --#{$prefix}datepicker-border-color: var(--#{$prefix}gray-400);
     stroke: var(--#{$prefix}datepicker-border-color);
   }
 
   &[data-placement^="bottom"] {
     .react-datepicker__triangle {
+      --#{$prefix}datepicker-header-background-color: var(--#{$prefix}gray-100);
       fill: var(--#{$prefix}datepicker-header-background-color);
       color: var(--#{$prefix}datepicker-header-background-color);
     }
@@ -118,6 +118,7 @@
 
   &[data-placement^="top"] {
     .react-datepicker__triangle {
+      --#{$prefix}datepicker-header-background-color: var(--#{$prefix}white);
       fill: var(--#{$prefix}datepicker-header-background-color);
       color: var(--#{$prefix}datepicker-header-background-color);
     }
