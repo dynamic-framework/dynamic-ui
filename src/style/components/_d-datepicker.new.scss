@@ -146,6 +146,9 @@
     gap: var(--#{$prefix}ref-spacer-1);
 
     .d-select {
+      --#{$prefix}select-option-selected-bg: var(--#{$prefix}datepicker-background-color);
+      --#{$prefix}select-option-selected-color: var(--#{$prefix}datepicker-text-color);
+
       .d-select__control {
         padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
       }
@@ -159,6 +162,13 @@
       .d-select__option {
         padding: 0px;
         line-height: var(--#{$prefix}ref-spacer-8);
+
+        &--is-selected {
+          font-weight: bold;
+          &:hover {
+            background-color: var(--#{$prefix}datepicker-day-hover-background-color);
+          }
+        }
       }
 
       &.custom-year-selector .d-select__single-value {
