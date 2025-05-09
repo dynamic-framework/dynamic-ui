@@ -160,9 +160,9 @@
       }
 
       .d-select__option {
-        padding: 0px;
+        padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
         line-height: var(--#{$prefix}ref-spacer-8);
-
+        text-align: start;
         &--is-selected {
           font-weight: bold;
           &:hover {
