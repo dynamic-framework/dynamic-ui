@@ -414,6 +414,10 @@ export const DateRange: Story = {
   args: {
     inline: true,
     selectsRange: true,
+    excludeDates: [
+      addDays(new Date(), 2),
+    ],
+    selectsDisabledDaysInRange: true,
   },
 };
 

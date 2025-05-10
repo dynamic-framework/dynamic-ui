@@ -101,7 +101,6 @@
 }
 
 .react-datepicker-popper {
-
   z-index: 1;
   line-height: 0;
 
@@ -127,7 +126,6 @@
   }
 }
 
-// TODO: Check this with our design system dropdown
 .react-datepicker__header {
   text-align: center;
   background-color: var(--#{$prefix}datepicker-header-background-color);
@@ -145,8 +143,6 @@
       border-top-left-radius: 0;
     }
   }
-
-  // TODO: add Style header multiple months
 
   &-selector {
     display: flex;
@@ -229,12 +225,6 @@
   font-size: var(--#{$prefix}datepicker-font-size);
 }
 
-// TODO: Remove if not used by custom header
-h2.react-datepicker__current-month {
-  padding: 0;
-  margin: 0;
-}
-
 .react-datepicker-time__header {
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -294,7 +284,6 @@ h2.react-datepicker__current-month {
 //   }
 // }
 
-// TODO: Check this works
 .react-datepicker__month-container {
   float: left;
 }
@@ -574,6 +563,32 @@ h2.react-datepicker__current-month {
       border-radius: var(--#{$prefix}datepicker-day-border-radius);
     }
 
+    // Days within the selected or selecting range
+    &--in-range,
+    &--in-selecting-range {
+      // Days between start and end
+      border-radius: var(--#{$prefix}datepicker-day-border-radius);
+      background-color: var(--#{$prefix}datepicker-in-range-background-color);
+      color: var(--#{$prefix}datepicker-range-color);
+
+      &[aria-disabled="true"] {
+        background-color: var(--#{$prefix}datepicker-in-range-disabled-background-color);
+        color: var(--#{$prefix}datepicker-in-range-disabled-color);
+      }
+
+      // Hover state on any day in range
+      &:not(.react-datepicker__#{$type}--range-start,
+        .react-datepicker__#{$type}--range-end,
+        .react-datepicker__#{$type}--disabled):hover {
+        background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
+      }
+
+      // Hover state on start and end range
+      &:is(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end):hover {
+        background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
+      }
+    }
+
     &--range-start:not(&--disabled) {
       color: var(--#{$prefix}datepicker-range-start-color);
       background-color: var(--#{$prefix}datepicker-range-start-background-color);
@@ -584,51 +599,6 @@ h2.react-datepicker__current-month {
       color: var(--#{$prefix}datepicker-range-end-color);
       background-color: var(--#{$prefix}datepicker-range-end-background-color);
     }
-
-    // Days within the selected or selecting range
-    &--in-range,
-    &--in-selecting-range,
-    &--keyboard-selected {
-      // Days between start and end
-      border-radius: var(--#{$prefix}datepicker-day-border-radius);
-
-      &:not(.react-datepicker__#{$type}--range-start,
-        .react-datepicker__#{$type}--range-end) {
-        background-color: var(--#{$prefix}datepicker-in-range-background-color);
-        color: var(--#{$prefix}datepicker-range-color);
-
-        &[aria-disabled="true"] {
-          background-color: var(--#{$prefix}datepicker-in-range-disabled-background-color);
-          color: var(--#{$prefix}datepicker-in-range-disabled-color);
-        }
-      }
-
-      // Hover state on any day in range - Done
-      &:not(.react-datepicker__#{$type}--range-start,
-        .react-datepicker__#{$type}--range-end,
-        .react-datepicker__#{$type}--disabled):hover {
-        background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
-      }
-
-      // Hover state on start and end range - Done
-      &:is(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end):hover {
-        background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
-      }
-    }
-
-    // Check this if we need to add this - Validated and Done
-    &--in-selecting-range:not(&--in-range, &--selected) {
-      background-color: var(--#{$prefix}datepicker-in-range-background-color);
-    }
-
-    // Check this if we need to add this - Validated and No relevant changes
-    // &--in-range:not(&--in-selecting-range) {
-    //   .react-datepicker__month--selecting-range &,
-    //   .react-datepicker__year--selecting-range & {
-    //     background-color: $datepicker__background-color;
-    //     color: $datepicker__text-color;
-    //   }
-    // }
 
     &--disabled {
       cursor: default;
