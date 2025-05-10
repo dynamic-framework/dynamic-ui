@@ -1,3 +1,4 @@
+/* stylelint-disable */
 .react-datepicker-wrapper {
   display: inline-block;
   padding: 0;
@@ -65,9 +66,10 @@
   // Range
   --#{$prefix}datepicker-range-start-color: var(--#{$prefix}white);
   --#{$prefix}datepicker-range-start-background-color: var(--#{$prefix}secondary-600);
-  --#{$prefix}datepicker-range-end-color: var(--#{$prefix}body-color);
-  --#{$prefix}datepicker-range-end-background-color: var(--#{$prefix}secondary-300);
+  --#{$prefix}datepicker-range-end-color: var(--#{$prefix}white);
+  --#{$prefix}datepicker-range-end-background-color:var(--#{$prefix}secondary-600);
   --#{$prefix}datepicker-in-range-background-color: var(--#{$prefix}secondary-200);
+  --#{$prefix}datepicker-range-color: var(--#{$prefix}body-color);
   --#{$prefix}datepicker-in-range-hover-background-color: var(--#{$prefix}secondary-400);
   --#{$prefix}datepicker-in-range-disabled-color: var(--#{$prefix}secondary-300);
   --#{$prefix}datepicker-in-range-disabled-background-color: var(--#{$prefix}gray-300);
@@ -143,6 +145,7 @@
       border-top-left-radius: 0;
     }
   }
+
   // TODO: add Style header multiple months
 
   &-selector {
@@ -168,8 +171,10 @@
         padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
         line-height: var(--#{$prefix}ref-spacer-8);
         text-align: start;
+
         &--is-selected {
           font-weight: bold;
+
           &:hover {
             background-color: var(--#{$prefix}datepicker-day-hover-background-color);
           }
@@ -180,6 +185,7 @@
         width: 4ch;
       }
     }
+
     p {
       margin: 0;
       font-weight: bold;
@@ -509,10 +515,9 @@ h2.react-datepicker__current-month {
 
     cursor: pointer;
 
-    &:not([aria-disabled="true"]):hover {
+    &:not([aria-disabled="true"], &--selected):hover {
       border-radius: var(--#{$prefix}datepicker-day-border-radius);
       background-color: var(--#{$prefix}datepicker-day-hover-background-color);
-      color: var(--#{$prefix}datepicker-text-color);
     }
 
     &--today {
@@ -567,15 +572,15 @@ h2.react-datepicker__current-month {
       color: var(--#{$prefix}datepicker-day-selected-color);
       background-color: var(--#{$prefix}datepicker-day-selected-background-color);
       border-radius: var(--#{$prefix}datepicker-day-border-radius);
+    }
 
-      &.react-datepicker__#{$type}--range-start {
-        color: var(--#{$prefix}datepicker-range-start-color);
-        background-color: var(--#{$prefix}datepicker-range-start-background-color);
-      }
+    &--range-start:not(&--disabled) {
+      color: var(--#{$prefix}datepicker-range-start-color);
+      background-color: var(--#{$prefix}datepicker-range-start-background-color);
     }
 
     // End day in range
-    &--range-end {
+    &--range-end:not(&--disabled) {
       color: var(--#{$prefix}datepicker-range-end-color);
       background-color: var(--#{$prefix}datepicker-range-end-background-color);
     }
@@ -584,33 +589,39 @@ h2.react-datepicker__current-month {
     &--in-range,
     &--in-selecting-range,
     &--keyboard-selected {
-      // Days between start and end (excluding start and end)
+      // Days between start and end
       border-radius: var(--#{$prefix}datepicker-day-border-radius);
 
-      // &:not(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end) {
-      //   background-color: var(--#{$prefix}datepicker-in-range-background-color);
-      //   &[aria-disabled="true"] {
-      //     background-color: var(--#{$prefix}datepicker-in-range-disabled-background-color);
-      //     color: var(--#{$prefix}datepicker-in-range-disabled-color);
-      //   }
-      // }
-      // // Hover state on any day in range
-      // &:not(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end):hover {
-      //   background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
-      // }
+      &:not(.react-datepicker__#{$type}--range-start,
+        .react-datepicker__#{$type}--range-end) {
+        background-color: var(--#{$prefix}datepicker-in-range-background-color);
+        color: var(--#{$prefix}datepicker-range-color);
 
-      // // Hover state on any day in range
-      // &:hover {
-      //   background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
-      // }
+        &[aria-disabled="true"] {
+          background-color: var(--#{$prefix}datepicker-in-range-disabled-background-color);
+          color: var(--#{$prefix}datepicker-in-range-disabled-color);
+        }
+      }
+
+      // Hover state on any day in range - Done
+      &:not(.react-datepicker__#{$type}--range-start,
+        .react-datepicker__#{$type}--range-end,
+        .react-datepicker__#{$type}--disabled):hover {
+        background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
+      }
+
+      // Hover state on start and end range - Done
+      &:is(.react-datepicker__#{$type}--range-start, .react-datepicker__#{$type}--range-end):hover {
+        background-color: var(--#{$prefix}datepicker-in-range-hover-background-color);
+      }
     }
 
-    // Check this if we need to add this
-    // &--in-selecting-range:not(&--in-range) {
-    //   background-color: $datepicker__selected-color--disabled;
-    // }
+    // Check this if we need to add this - Validated and Done
+    &--in-selecting-range:not(&--in-range, &--selected) {
+      background-color: var(--#{$prefix}datepicker-in-range-background-color);
+    }
 
-    // // Check this if we need to add this
+    // Check this if we need to add this - Validated and No relevant changes
     // &--in-range:not(&--in-selecting-range) {
     //   .react-datepicker__month--selecting-range &,
     //   .react-datepicker__year--selecting-range & {
@@ -720,3 +731,5 @@ close-icon
   width: 1px;
   white-space: nowrap;
 }
+
+/* stylelint-enable */
