@@ -20,7 +20,6 @@ ComponentProps<typeof DInput>,
 | 'value'
 >;
 
-// TODO: Get format from props and format value
 function DDatePickerInput(
   {
     value,
