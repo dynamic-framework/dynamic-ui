@@ -86,6 +86,7 @@
   display: inline-block;
   position: relative;
   line-height: initial;
+  overflow: hidden;
 }
 
 .react-datepicker--time-only {
@@ -130,7 +131,6 @@
   text-align: center;
   background-color: var(--#{$prefix}datepicker-header-background-color);
   border-bottom: var(--#{$prefix}datepicker-header-border-bottom);
-  border-top-left-radius: var(--#{$prefix}datepicker-border-radius);
   padding: var(--#{$prefix}datepicker-header-padding);
   position: relative;
 
@@ -210,10 +210,6 @@
       }
     }
   }
-
-  &:not(&--has-time-select) {
-    border-top-right-radius: var(--#{$prefix}datepicker-border-radius);
-  }
 }
 
 .react-datepicker__current-month,
@@ -230,59 +226,6 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
-// TODO: Adjust when using custom header
-// .react-datepicker__navigation {
-//   align-items: center;
-//   background: none;
-//   display: flex;
-//   justify-content: center;
-//   text-align: center;
-//   cursor: pointer;
-//   position: absolute;
-//   top: 2px;
-//   padding: 0;
-//   border: none;
-//   z-index: 1;
-//   height: $datepicker__navigation-button-size;
-//   width: $datepicker__navigation-button-size;
-//   text-indent: -999em;
-//   overflow: hidden;
-
-//   &--previous {
-//     left: 2px;
-//   }
-
-//   &--next {
-//     right: 2px;
-
-//     &--with-time:not(&--with-today-button) {
-//       right: 85px;
-//     }
-//   }
-
-//   &--years {
-//     position: relative;
-//     top: 0;
-//     display: block;
-//     margin-left: auto;
-//     margin-right: auto;
-
-//     &-previous {
-//       top: 4px;
-//     }
-
-//     &-upcoming {
-//       top: -4px;
-//     }
-//   }
-
-//   &:hover {
-//     *::before {
-//       border-color: color.adjust($datepicker__muted-color, $lightness: -15%);
-//     }
-//   }
-// }
 
 .react-datepicker__month-container {
   float: left;
@@ -331,12 +274,11 @@
   }
 }
 
-// TODO: Revisar con Mati diseño del time
 // .react-datepicker__input-time-container {
 //   clear: both;
 //   width: 100%;
 //   float: left;
-//   margin: 5px 0 10px 15px;
+//   margin: var(--#{$prefix}ref-spacer-2);
 //   text-align: left;
 
 //   .react-datepicker-time__caption {
@@ -348,7 +290,7 @@
 
 //     .react-datepicker-time__input {
 //       display: inline-block;
-//       margin-left: 10px;
+//       margin-left: var(--#{$prefix}ref-spacer-2);
 
 //       input {
 //         width: auto;
@@ -363,11 +305,6 @@
 //       input[type="time"] {
 //         -moz-appearance: textfield;
 //       }
-//     }
-
-//     .react-datepicker-time__delimiter {
-//       margin-left: 5px;
-//       display: inline-block;
 //     }
 //   }
 // }
@@ -637,6 +574,7 @@ year-option,
 month-option,
 month-year-option
 close-icon
+react-datepicker__navigation
 */
 
 // .react-datepicker__today-button {
