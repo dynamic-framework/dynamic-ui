@@ -47,7 +47,7 @@
     "build:react": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:react:watch": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
     "build:scss": "node scripts/build-scss.js",
-    "watch:scss": "npx nodemon --watch src --ext scss --exec \"npm run build:scss\"",
+    "build:scss:watch": "npx nodemon --watch src --ext scss --exec \"npm run build:scss\"",
     "cp": "npm run cp:bootstrap && npm run cp:popper && npm run cp:bootstrap-icons",
     "cp:bootstrap": "scripts/cp-boostrap.sh",
     "cp:bootstrap-icons": "scripts/cp-boostrap-icons.sh",
