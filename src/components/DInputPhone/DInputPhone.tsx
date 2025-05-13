@@ -11,11 +11,14 @@ import type {
   ComponentPropsWithoutRef,
   ForwardedRef,
   RefObject,
+  ComponentProps,
 } from 'react';
 
 import {
+  CountryIso2,
   CountrySelector,
   defaultCountries,
+  parseCountry,
   ParsedCountry,
   usePhoneInput,
 } from 'react-international-phone';
@@ -57,6 +60,9 @@ type NonHTMLInputElementProps =
   inputEnd?: ReactNode;
   onChange?: (value: OnChangeType) => void;
   onIconEndClick?: (value?: string) => void;
+  countrySelectorProps?: ComponentProps<typeof CountrySelector>;
+  filteredCountries?: CountryIso2[];
+  defaultCountry?: CountryIso2;
 };
 
 type Props = Merge<
@@ -97,6 +103,9 @@ function DInputPhone(
     dataAttributes,
     onChange,
     onIconEndClick,
+    countrySelectorProps,
+    filteredCountries,
+    defaultCountry = 'cl',
     ...inputProps
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
@@ -130,6 +139,17 @@ function DInputPhone(
     hint,
   ]);
 
+  const countries = useMemo(() => {
+    if (filteredCountries === undefined) {
+      return defaultCountries;
+    }
+
+    return defaultCountries.filter((country) => {
+      const { iso2 } = parseCountry(country);
+      return filteredCountries.includes(iso2);
+    });
+  }, [filteredCountries]);
+
   const {
     inputValue,
     handlePhoneValueChange,
@@ -139,9 +159,9 @@ function DInputPhone(
   } = usePhoneInput(
     {
       inputRef: innerRef,
-      defaultCountry: 'cl',
+      defaultCountry,
       value,
-      countries: defaultCountries,
+      countries,
       onChange: (data) => {
         onChange?.({ ...data, isValid: validatePhoneNumber(data.phone) });
       },
@@ -164,8 +184,20 @@ function DInputPhone(
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       {...inputProps}
     />
-  ), [ariaDescribedby, disabled, floatingLabel, handlePhoneValueChange,
-    id, inputProps, inputRef, inputValue, invalid, loading, placeholder, valid]);
+  ), [
+    ariaDescribedby,
+    disabled,
+    floatingLabel,
+    handlePhoneValueChange,
+    id,
+    inputProps,
+    inputRef,
+    inputValue,
+    invalid,
+    loading,
+    placeholder,
+    valid,
+  ]);
 
   const labelComponent = useMemo(() => (
     <label htmlFor={id}>
@@ -199,7 +231,11 @@ function DInputPhone(
       );
     }
     return inputComponent;
-  }, [floatingLabel, inputComponent, labelComponent]);
+  }, [
+    floatingLabel,
+    inputComponent,
+    labelComponent,
+  ]);
 
   return (
     <div
@@ -218,6 +254,7 @@ function DInputPhone(
         <CountrySelector
           selectedCountry={country.iso2}
           onSelect={({ iso2 }) => setCountry(iso2)}
+          countries={countries}
           className="input-group-text dropdown"
           disabled={disabled || loading}
           dropdownStyleProps={{
