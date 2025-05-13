@@ -1,0 +1,90 @@
+import {
+  Meta,
+  Source,
+  Unstyled,
+  Canvas,
+  Controls,
+  Markdown,
+} from '@storybook/blocks';
+
+import * as DBoxFileStories from './DBoxFile.stories';
+import {
+  ExampleDBoxFileRoot,
+  ExampleDBoxFileDisabled,
+  ExampleDBoxFileSelected,
+  ExampleDBoxFileUrlFiles,
+} from './DBoxFileExamples';
+import { DBoxFile } from '../../src';
+import { PREFIX_BS } from '../../src/components/config';
+
+<Meta of={DBoxFileStories} />
+
+# DBoxFile
+
+![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+
+Drag'n'drop zone component for files. To understand in more detail the aspects covered by this component, review the following documentation:
+
++ [React Dropzone](https://react-dropzone.js.org/)
+
+<br/>
+## CSS Variables
+
+<Markdown>
+  {`
+| Variable                                 | Class       | Type            | Description              |
+|------------------------------------------|-------------|-----------------|--------------------------|
+| --${PREFIX_BS}box-file-gap               | .d-box-file | css length unit | Space between elements   |
+| --${PREFIX_BS}box-file-bg                | .d-box-file | css color unit  | Background               |
+| --${PREFIX_BS}box-file-border            | .d-box-file | css border      | Border                   |
+| --${PREFIX_BS}box-file-border-radius     | .d-box-file | css length unit | Border radius            |
+| --${PREFIX_BS}box-file-padding           | .d-box-file | css length unit | Padding                  |
+| --${PREFIX_BS}box-file-content-max-width | .d-box-file | css length unit | Max width of the content |
+| --${PREFIX_BS}box-file-icon-size         | .d-box-file | css length unit | Icon size                |
+| --${PREFIX_BS}box-file-icon-color        | .d-box-file | css color unit  | Icon color               |
+| --${PREFIX_BS}box-file-hover-border      | .d-box-file | css border      | Hover Border             |
+| --${PREFIX_BS}box-file-hover-bg          | .d-box-file | css color unit  | Hover background         |
+| --${PREFIX_BS}box-file-selected-border   | .d-box-file | css border      | Selected border          |
+| --${PREFIX_BS}box-file-selected-bg       | .d-box-file | css color unit  | Selected background      |
+  `}
+</Markdown>
+
+<Canvas of={DBoxFileStories.Default} />
+<Controls of={DBoxFileStories.Default} />
+
+### Default
+
+<Unstyled>
+  <div className="d-flex justify-content-center">
+    <ExampleDBoxFileRoot />
+  </div>
+</Unstyled>
+
+<hr/>
+
+### Disabled
+<Unstyled>
+  <div className="d-flex justify-content-center">
+    <ExampleDBoxFileDisabled />
+  </div>
+</Unstyled>
+
+<hr/>
+
+### Selected
+<Unstyled>
+  <div className="d-flex justify-content-center">
+    <ExampleDBoxFileSelected />
+  </div>
+</Unstyled>
+
+<hr/>
+
+### With values
+<Unstyled>
+  <div className="d-flex justify-content-center">
+    <ExampleDBoxFileUrlFiles />
+  </div>
+</Unstyled>
+
+<hr/>
