@@ -289,6 +289,18 @@ export const FloatingLabel: Story = {
   },
 };
 
+export const CustomCountries: Story = {
+  args: {
+    id: 'componentId5',
+    label: 'Label',
+    placeholder: 'Placeholder',
+    hint: 'Assistive text',
+    floatingLabel: true,
+    defaultCountry: 'cl',
+    filteredCountries: ['cl', 'co', 'us'],
+  },
+};
+
 export const CustomInputEnd: Story = {
   args: {
     id: 'componentId6',
