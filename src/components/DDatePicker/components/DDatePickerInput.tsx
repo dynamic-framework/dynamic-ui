@@ -40,6 +40,7 @@ function DDatePickerInput(
     <DInput
       ref={ref}
       onClick={onClick}
+      readOnly
       type="text"
       id={id}
       value={value}
