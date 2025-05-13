@@ -60,7 +60,7 @@ type NonHTMLInputElementProps =
 };
 
 type Props = Merge<
-Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'onWheel' | 'value' | 'type'>,
+Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'onWheel' | 'value' | 'type' | 'inputMode' | 'pattern'>,
 NonHTMLInputElementProps
 >;
 
@@ -159,6 +159,7 @@ function DInputPhone(
       disabled={disabled || loading}
       value={inputValue}
       onChange={handlePhoneValueChange}
+      inputMode="tel"
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
       {...ariaDescribedby && { 'aria-describedby': ariaDescribedby }}
       {...inputProps}
@@ -220,7 +221,7 @@ function DInputPhone(
           className="input-group-text dropdown"
           disabled={disabled || loading}
           dropdownStyleProps={{
-            className: 'dropdown-menu border',
+            className: 'dropdown-menu',
             listItemClassName: 'dropdown-item',
             listItemDialCodeClassName: 'fw-bold',
           }}
