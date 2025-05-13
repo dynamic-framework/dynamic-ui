@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable no-alert */
 
@@ -144,16 +145,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       type: 'string',
       options: [undefined, 'sm', 'lg'],
     },
-    inputMode: {
-      control: 'text',
-      type: 'string',
-      description: 'Input mode',
-    },
-    pattern: {
-      control: 'text',
-      type: 'string',
-      description: 'Pattern to validate',
-    },
     disabled: {
       control: 'boolean',
       type: 'boolean',
@@ -237,12 +228,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     },
   },
   tags: ['autodocs'],
-};
-
-export default config;
-type Story = StoryObj<typeof DInputPhone>;
-
-export const Default: Story = {
   decorators: [
     (Story) => (
       <div style={{ height: '300px', width: '300px' }}>
@@ -250,6 +235,12 @@ export const Default: Story = {
       </div>
     ),
   ],
+};
+
+export default config;
+type Story = StoryObj<typeof DInputPhone>;
+
+export const Default: Story = {
   args: {
     id: 'componentId1',
     label: 'Label',
@@ -259,13 +250,6 @@ export const Default: Story = {
 };
 
 export const Invalid: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '300px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     id: 'componentId2',
     label: 'Label',
@@ -276,13 +260,6 @@ export const Invalid: Story = {
 };
 
 export const Valid: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '300px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     id: 'componentId3',
     label: 'Label',
@@ -293,13 +270,6 @@ export const Valid: Story = {
 };
 
 export const Disabled: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '120px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     id: 'componentId4',
     label: 'Label',
@@ -310,13 +280,6 @@ export const Disabled: Story = {
 };
 
 export const FloatingLabel: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '300px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     id: 'componentId5',
     label: 'Label',
@@ -327,13 +290,6 @@ export const FloatingLabel: Story = {
 };
 
 export const CustomInputEnd: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '300px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     id: 'componentId6',
     label: 'Label',
@@ -348,13 +304,6 @@ export const CustomInputEnd: Story = {
 };
 
 export const MaterialIcon: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '300px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
   render: (args: ComponentProps<typeof DInputPhone>) => (
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
@@ -372,13 +321,6 @@ export const MaterialIcon: Story = {
 };
 
 export const MaterialIconError: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '300px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
   render: (args: ComponentProps<typeof DInputPhone>) => (
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
@@ -395,13 +337,7 @@ export const MaterialIconError: Story = {
 };
 
 export const MaterialIconConfirm: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '300px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
+
   render: (args: ComponentProps<typeof DInputPhone>) => (
     <DContextProvider
       {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
@@ -519,13 +455,7 @@ validationSchema={validationSchema}
 };
 
 export const UsingWithFormik: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '300px', width: '300px' }}>
-        <Story />
-      </div>
-    ),
-  ],
+
   render: (args) => <FormikExample.JSX {...args} />,
   args: {
     id: 'phone',
