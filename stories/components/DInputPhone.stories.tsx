@@ -291,7 +291,7 @@ export const FloatingLabel: Story = {
 
 export const CustomCountries: Story = {
   args: {
-    id: 'componentId5',
+    id: 'componentId10',
     label: 'Label',
     placeholder: 'Placeholder',
     hint: 'Assistive text',
