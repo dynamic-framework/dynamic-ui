@@ -14,9 +14,12 @@
   --#{$prefix}box-file-selected-border: #{$box-file-selected-border};
   --#{$prefix}box-file-selected-bg: #{$box-file-selected-background};
 
-  display: flex;
-  flex-direction: column;
-  gap: var(--#{$prefix}box-file-gap);
+  --#{$prefix}box-file-disabled-border: #{$box-file-disabled-border};
+  --#{$prefix}box-file-disabled-bg: #{$box-file-disabled-background};
+
+  --#{$prefix}box-file-valid-border: #{$box-file-valid-border};
+  --#{$prefix}box-file-invalid-border: #{$box-file-invalid-border};
+
   width: 100%;
   cursor: pointer;
   background: var(--#{$prefix}box-file-bg);
@@ -33,6 +36,20 @@
     border: var(--#{$prefix}box-file-selected-border);
   }
 
+  &.d-box-file-valid {
+    border: var(--#{$prefix}box-file-valid-border);
+  }
+
+  &.d-box-file-invalid {
+    border: var(--#{$prefix}box-file-invalid-border);
+  }
+
+  &.d-box-file-disabled {
+    cursor: default;
+    background: var(--#{$prefix}box-file-disabled-bg);
+    border: var(--#{$prefix}box-file-disabled-border);
+  }
+
   .d-icon {
     --#{$prefix}icon-size: var(--#{$prefix}box-file-icon-size);
     --#{$prefix}icon-color: var(--#{$prefix}box-file-icon-color);
@@ -45,24 +62,23 @@
     align-items: center;
     width: 100%;
     padding: var(--#{$prefix}box-file-padding);
-
-    &:not(:last-child) {
-      padding-bottom: 0;
-    }
   }
 
   .d-box-content {
     max-width: var(--#{$prefix}box-file-content-max-width);
   }
+}
 
-  .d-box-files {
-    display: flex;
-    flex-direction: column;
-    gap: var(--#{$prefix}box-file-gap);
-    padding: 0 var(--#{$prefix}box-file-padding) var(--#{$prefix}box-file-padding);
-  }
+.d-box-files {
+  --#{$prefix}box-file-list-gap: #{$box-file-list-gap};
+  --#{$prefix}box-file-list-padding: #{$box-file-list-padding};
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}box-file-list-gap);
+  padding: var(--#{$prefix}box-file-list-padding);
 
-  .d-box-files-text {
-    word-break: break-word;
+  .input-group:focus-within {
+    --#{$prefix}input-focus-border-color: var(--#{$prefix}gray-100);
+    --#{$prefix}input-focus-box-shadow: none;
   }
 }
