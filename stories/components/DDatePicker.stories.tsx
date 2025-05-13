@@ -36,6 +36,7 @@ const config: Meta<typeof DDatePicker> = {
     },
     style: {
       control: 'object',
+      type: 'string',
     },
     inputLabel: {
       control: 'text',
@@ -209,6 +210,55 @@ const config: Meta<typeof DDatePicker> = {
       type: 'string',
       control: 'date',
     },
+    monthsShown: {
+      control: {
+        type: 'select',
+      },
+      type: 'number',
+      options: [1, 2, 3],
+      defaultValue: 1,
+      table: { defaultValue: { summary: '1' } },
+    },
+    showPopperArrow: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showWeekPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showYearPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showFullMonthYearPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showMonthYearPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showPreviousMonths: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showDateSelect: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showDisabledMonthNavigation: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showQuarterYearPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    disabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
   },
 };
 
@@ -278,6 +328,22 @@ export const Default: Story = {
     iconHeaderPrev: 'chevron-left',
     iconHeaderNext: 'chevron-right',
     showHeaderSelectors: false,
+    monthsShown: 1,
+    style: {},
+    showWeekPicker: false,
+    showYearPicker: false,
+    showFullMonthYearPicker: false,
+    showMonthYearPicker: false,
+    showPopperArrow: true,
+    showPreviousMonths: false,
+    showDateSelect: true,
+    showDisabledMonthNavigation: false,
+    showQuarterYearPicker: false,
+    className: '',
+    dataAttributes: {},
+    iconFamilyClass: '',
+    id: '',
+    disabled: false,
   },
 };
 
