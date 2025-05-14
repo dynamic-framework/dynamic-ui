@@ -159,7 +159,6 @@ export function DContextProvider<T extends Record<string, unknown>>(
   ), []);
 
   useLayoutEffect(() => {
-    console.log('context');
     setContext({
       breakpoints: {
         xs: getCssVariable(`--${PREFIX_BS}breakpoint-xs`),

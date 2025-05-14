@@ -83,6 +83,7 @@ export default function DListGroupItem(
       {...onClick && { onClick }}
       {...ariaAttributes}
       {...dataAttributes}
+      {...Tag === 'button' && { type: 'button' }}
     >
       {children}
     </Tag>

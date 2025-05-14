@@ -13,12 +13,17 @@
   --#{$prefix}select-option-is-checkbox-font-weight: var(--#{$prefix}fw-normal);
   --#{$prefix}select-option-is-checkbox-color: var(--#{$prefix}gray-900);
   --#{$prefix}select-option-has-icon-icon-size: var(--#{$prefix}ref-spacer-4);
-  --#{$prefix}select-multi-value-padding-x: var(--#{$prefix}select-gap);
-  --#{$prefix}select-multi-value-padding-y: 0;
+  --#{$prefix}select-multi-value-padding: 0 var(--#{$prefix}ref-spacer-1) 0 var(--#{$prefix}select-gap);
   --#{$prefix}select-multi-value-margin-right: var(--#{$prefix}select-gap);
-  --#{$prefix}select-multi-value-background: var(--#{$prefix}gray-100);
+  --#{$prefix}select-multi-value-background: var(--#{$prefix}secondary-100);
   --#{$prefix}select-multi-value-border-radius: #{$spacer-1};
   --#{$prefix}select-multi-value-label-color: var(--#{$prefix}secondary);
+  --#{$prefix}select-multi-value-remove-color: var(--#{$prefix}secondary);
+  --#{$prefix}select-multi-value-remove-hover-color: var(--#{$prefix}white);
+  --#{$prefix}select-multi-value-remove-hover-background: var(--#{$prefix}primary);
+  --#{$prefix}select-indicator-separator-width: 1px;
+  --#{$prefix}select-indicator-separator-margin: var(--#{$prefix}ref-spacer-0) var(--#{$prefix}ref-spacer-1);
+  --#{$prefix}select-indicator-separator-color: var(--#{$prefix}transparent);
 
   --#{$prefix}select-indicator-width: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}select-indicator-height: var(--#{$prefix}ref-spacer-4);
@@ -159,14 +164,25 @@
 
   // select multi control
   .d-select__multi-value {
-    padding: var(--#{$prefix}select-multi-value-padding-y) var(--#{$prefix}select-multi-value-padding-x);
     margin-right: var(--#{$prefix}select-multi-value-margin-right);
     background: var(--#{$prefix}select-multi-value-background);
     border-radius: var(--#{$prefix}select-multi-value-border-radius);
   }
 
   .d-select__multi-value__label {
+    padding: var(--#{$prefix}select-multi-value-padding);
     color: var(--#{$prefix}select-multi-value-label-color);
+  }
+
+  .d-select__multi-value__remove {
+    color: var(--#{$prefix}select-multi-value-remove-color);
+
+    &:hover {
+      color: var(--#{$prefix}select-multi-value-remove-hover-color);
+      background-color: var(--#{$prefix}select-multi-value-remove-hover-background);
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
   }
 
   .d-select__control--has-icon,
@@ -188,11 +204,24 @@
     justify-content: center;
     width: var(--#{$prefix}select-indicator-width);
     height: var(--#{$prefix}select-indicator-height);
+
+    .d-icon {
+      --bs-icon-component-size: var(--#{$prefix}select-indicator-width);
+    }
   }
 
-  .d-select__indicator-separator {
-    width: var(--#{$prefix}select-gap);
+  .d-select__indicators {
+    .d-select__indicator-separator {
+      width: var(--#{$prefix}select-indicator-separator-width);
+      margin: var(--#{$prefix}select-indicator-separator-margin);
+      background-color: var(--#{$prefix}select-indicator-separator-color);
+
+      &:not(:first-child) {
+        --#{$prefix}select-indicator-separator-color: var(--#{$prefix}gray-100);
+      }
+    }
   }
+
 
   &.disabled .d-select__control {
     background: var(--#{$prefix}input-disabled-bg);

@@ -35,7 +35,7 @@ it('should render base counter', () => {
         >
           <i
             class="d-icon bi bi-dash-square"
-            style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
+            style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
           />
         </button>
         <input
@@ -53,7 +53,7 @@ it('should render base counter', () => {
         >
           <i
             class="d-icon bi bi-plus-square"
-            style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
+            style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
           />
         </button>
       </div>

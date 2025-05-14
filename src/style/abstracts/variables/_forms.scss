@@ -61,12 +61,13 @@ $form-switch-width: 2em !default;
 $form-switch-padding-start: $form-switch-width !default;
 $form-switch-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$gray-300}'/></svg>") !default;
 $form-switch-focus-color: $component-focus-border-color !default;
+$form-switch-border-radius: $form-switch-width !default;
 $form-switch-focus-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$secondary-300}'/></svg>") !default;
 
-// custom
+// custom form-switch-variables
 $form-switch-valid-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$success}'/></svg>") !default;
 $form-switch-invalid-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$danger}'/></svg>") !default;
-// end custom
+// end custom form-switch-variables
 
 $form-switch-checked-color: var(--#{$prefix}white) !default;
 $form-switch-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$white}'/></svg>") !default;
@@ -78,13 +79,15 @@ $input-group-addon-border-color: transparent !default;
 // scss-docs-end input-group-variables
 
 // custom
+$input-group-sm-icon-size: $spacer-4 !default;
+$input-group-lg-icon-size: $spacer-7 !default;
 $form-text-padding-y: 0 !default;
 $form-text-padding-x: 0 !default;
 // end custom
 
 // scss-docs-start form-select-variables
 $form-select-disabled-color: $input-disabled-color !default;
-$form-select-bg-size: 24px !default; // In pixels because image dimensions
+$form-select-bg-size: 16px !default; // In pixels because image dimensions
 $form-select-bg-opacity: 0 !default;
 $form-select-indicator-color: var(--#{$prefix}gray-500) !default;
 $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$gray-500}' stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='m2 5 6 6 6-6'/></svg>") !default;

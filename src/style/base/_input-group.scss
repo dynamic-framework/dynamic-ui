@@ -35,6 +35,10 @@
 .input-group > .form-floating:not(:first-child) .form-select,
 .input-group > .form-floating:not(:first-child) .form-control {
   padding-left: 0;
+
+  ~label {
+    padding-left: 0;
+  }
 }
 
 .input-group > .form-floating:not(:last-child) .form-select {
@@ -62,6 +66,18 @@
   --#{$prefix}input-disabled-bg: #{$input-disabled-bg};
   --#{$prefix}input-disabled-color: #{$input-disabled-color};
 
+  // input group icon sizes
+  --#{$prefix}input-group-sm-icon-size: #{$input-group-sm-icon-size};
+  --#{$prefix}input-group-lg-icon-size: #{$input-group-lg-icon-size};
+
+  &.input-group-sm .d-icon {
+    --#{$prefix}icon-component-size: var(--#{$prefix}input-group-sm-icon-size);
+  }
+
+  &.input-group-lg .d-icon {
+    --#{$prefix}icon-component-size: var(--#{$prefix}input-group-lg-icon-size);
+  }
+
   border: var(--#{$prefix}input-border-width) solid var(--#{$prefix}input-border-color);
   @include border-radius(var(--#{$prefix}input-border-radius), 0);
 
@@ -73,6 +89,7 @@
   // validation states
   @each $state, $data in $form-validation-states {
     $border-color: map-get($data, "border-color");
+    $color: map-get($data, "color");
     $tooltip-bg-color: map-get($data, "tooltip-bg-color");
     $box-shadow: map-get($data, "focus-box-shadow");
 
@@ -84,7 +101,7 @@
       }
 
       ~ .form-text {
-        color: $border-color;
+        color: $color;
       }
 
       .input-group-validation-icon {

@@ -1,9 +1,10 @@
 .d-input-pin {
   --#{$prefix}input-pin-form-gap: var(--#{$prefix}ref-spacer-1);
-
-  --#{$prefix}input-pin-form-control-size: 4rem;
   --#{$prefix}input-pin-form-control-focus-border-color: #{$input-focus-border-color};
   --#{$prefix}input-pin-form-control-focus-box-shadow: #{$input-focus-box-shadow};
+  --#{$prefix}input-pin-form-control-min-width: 2rem;
+  --#{$prefix}input-pin-form-control-max-width: 4rem;
+
 
   display: flex;
   flex-direction: column;
@@ -17,14 +18,16 @@
   }
 
   .form-control {
-    width: var(--#{$prefix}input-pin-form-control-size);
-    height: var(--#{$prefix}input-pin-form-control-size);
+    min-width: var(--#{$prefix}input-pin-form-control-min-width);
+    max-width: var(--#{$prefix}input-pin-form-control-max-width);
+    aspect-ratio: 1;
     text-align: center;
     box-shadow: none;
 
     &:has(~ .input-group-text) {
-      padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-4);
+      padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-3);
     }
+
   }
 
   .form-control::-webkit-inner-spin-button,

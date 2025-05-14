@@ -1,10 +1,8 @@
 import classNames from 'classnames';
 
 import type { ComponentProps } from 'react';
-
-import DInput from '../DInput';
-
-import type { BaseProps } from '../interface';
+import { BaseProps } from '../../interface';
+import DInput from '../../DInput';
 
 type Props =
 & BaseProps
