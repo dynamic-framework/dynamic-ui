@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.35.0
+ * dynamic-framework 1.35.1
  * bootstrap ~5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -10209,7 +10209,6 @@ label .d-icon {
   display: inline-block;
   position: relative;
   line-height: initial;
-  overflow: hidden;
 }
 
 .react-datepicker--time-only .react-datepicker__time-container {
@@ -10244,6 +10243,7 @@ label .d-icon {
   text-align: center;
   background-color: var(--bs-datepicker-header-bg);
   border-bottom: var(--bs-datepicker-header-border-bottom);
+  border-top-left-radius: var(--bs-datepicker-border-radius);
   padding: var(--bs-datepicker-header-padding);
   position: relative;
 }
@@ -10254,6 +10254,9 @@ label .d-icon {
 }
 .react-datepicker__header--time:not(.react-datepicker__header--time--only) {
   border-top-left-radius: 0;
+}
+.react-datepicker__header:not(.react-datepicker__header--has-time-select) {
+  border-top-right-radius: var(--bs-datepicker-border-radius);
 }
 .react-datepicker__header-selector {
   display: flex;
