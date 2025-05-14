@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   useCallback,
   useMemo,
@@ -97,7 +96,11 @@ export default function DDatePicker(
     if (props.showMonthYearPicker) return PickerType.Month;
     if (props.showYearPicker) return PickerType.Year;
     return PickerType.Default;
-  }, [props.showQuarterYearPicker, props.showMonthYearPicker, props.showYearPicker]);
+  }, [
+    props.showQuarterYearPicker,
+    props.showMonthYearPicker,
+    props.showYearPicker,
+  ]);
 
   const DatePickerHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (
     <DDatePickerHeaderSelector

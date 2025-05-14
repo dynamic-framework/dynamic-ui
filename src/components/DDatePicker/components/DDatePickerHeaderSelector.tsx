@@ -1,14 +1,16 @@
 import { useCallback, useMemo } from 'react';
 import classNames from 'classnames';
-import { format, getMonth, getYear } from 'date-fns';
-
+import {
+  format,
+  getMonth,
+  getYear,
+} from 'date-fns';
 import type { ComponentProps } from 'react';
-
 import type { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
 import { enUS } from 'date-fns/locale';
+
 import DButton from '../../DButton';
 import DSelect from '../../DSelect';
-
 import type {
   BaseProps,
   ButtonVariant,
@@ -162,7 +164,6 @@ export default function DDatePickerHeaderSelector(
           disabled={prevYearButtonDisabled}
           ariaLabel={prevYearAriaLabel}
           className="header-button"
-          style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
         />
         <p>{`${startYear} - ${endYear}`}</p>
         <DButton
@@ -177,7 +178,6 @@ export default function DDatePickerHeaderSelector(
           disabled={nextYearButtonDisabled}
           ariaLabel={nextYearAriaLabel}
           className="header-button"
-          style={{ visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' }}
         />
       </div>
     );
