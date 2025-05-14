@@ -25,7 +25,7 @@ const HEADER_COMMENT = `/*!
 `;
 
 const vendorCssImports = [
-  require.resolve('react-international-phone/style.css'),
+  // require.resolve('react-international-phone/style.css'),
 ];
 
 let vendorCss = '';

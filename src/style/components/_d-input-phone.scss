@@ -1,4 +1,6 @@
 // stylelint-disable selector-class-pattern
+// stylelint-disable scss/selector-no-union-class-name
+
 .d-input-phone {
   --#{$prefix}phone-height: #{$input-phone-height};
   --#{$prefix}phone-border-color: #{$input-phone-border-color};
@@ -15,6 +17,8 @@
   --#{$prefix}phone-flag-height: #{$input-phone-flag-height};
   --#{$prefix}phone-dropdown-top: #{$input-phone-dropdown-top};
   --#{$prefix}phone-dropdown-left: #{$input-phone-dropdown-left};
+  --#{$prefix}phone-dropdown-border-radius: #{$input-phone-dropdown-border-radius};
+  --#{$prefix}phone-dropdown-border: #{$input-phone-dropdown-border};
   --#{$prefix}phone-dropdown-item-background-color: #{$input-phone-dropdown-item-background-color};
   --#{$prefix}phone-dropdown-shadow: #{$input-phone-dropdown-shadow};
   --#{$prefix}phone-text-color: #{$input-phone-text-color};
@@ -22,9 +26,13 @@
   --#{$prefix}phone-dropdown-preferred-list-divider-margin: #{$input-phone-dropdown-preferred-list-divider-margin};
   --#{$prefix}phone-dropdown-preferred-list-divider-color: #{$input-phone-dropdown-preferred-list-divider-color};
   --#{$prefix}phone-dropdown-item-height: #{$input-phone-dropdown-item-height};
+  --#{$prefix}phone-dropdown-item-padding-x: #{$input-phone-dropdown-item-padding-x};
+  --#{$prefix}phone-dropdown-item-padding-y: #{$input-phone-dropdown-item-padding-y};
   --#{$prefix}phone-dropdown-item-font-size: #{$input-phone-dropdown-item-font-size};
+  --#{$prefix}phone-dropdown-item-font-weight: #{$input-phone-dropdown-item-font-weight};
   --#{$prefix}phone-dropdown-item-dial-code-color: #{$input-phone-dropdown-item-dial-code-color};
   --#{$prefix}phone-selected-dropdown-item-background-color: #{$input-phone-selected-dropdown-item-background-color};
+  --#{$prefix}phone-hover-dropdown-item-background-color: #{$input-phone-hover-dropdown-item-background-color};
   --#{$prefix}phone-selected-dropdown-item-text-color: #{$input-phone-selected-dropdown-item-text-color};
   --#{$prefix}phone-selected-dropdown-item-dial-code-color: #{$input-phone-selected-dropdown-item-dial-code-color};
   --#{$prefix}phone-dial-code-preview-border-color: #{$input-phone-dial-code-preview-border-color};
@@ -37,83 +45,215 @@
   --#{$prefix}phone-disabled-text-color: #{$input-phone-disabled-text-color};
   --#{$prefix}phone-border-radius: #{$input-phone-border-radius};
 
+  :has(:disabled, .disabled) {
+    --#{$prefix}phone-background-color: var(--#{$prefix}phone-disabled-background-color);
+  }
+
   .react-international-phone-country-selector {
-    --react-international-phone-height: var(--#{$prefix}phone-height);
-    --react-international-phone-border-color: var(--#{$prefix}phone-border-color);
-    --react-international-phone-country-selector-border-color: var(--#{$prefix}phone-country-selector-border-color);
-    --react-international-phone-background-color: var(--#{$prefix}phone-background-color);
-    --react-international-phone-country-selector-background-color: var(--#{$prefix}phone-country-selector-background-color);
-    --react-international-phone-country-selector-background-color-hover: var(--#{$prefix}phone-country-selector-background-color-hover);
-    --react-international-phone-country-selector-arrow-size: var(--#{$prefix}phone-country-selector-arrow-size);
-    --react-international-phone-country-selector-arrow-color: var(--#{$prefix}phone-country-selector-arrow-color);
-    --react-international-phone-disabled-country-selector-arrow-color: var(--#{$prefix}phone-disabled-country-selector-arrow-color);
-    --react-international-phone-disabled-background-color: var(--#{$prefix}phone-disabled-background-color);
-    --react-international-phone-disabled-country-selector-background-color: var(--#{$prefix}phone-disabled-country-selector-background-color);
-    --react-international-phone-flag-width: var(--#{$prefix}phone-flag-width);
-    --react-international-phone-flag-height: var(--#{$prefix}phone-flag-height);
-    --react-international-phone-dropdown-top: var(--#{$prefix}phone-dropdown-top);
-    --react-international-phone-dropdown-left: var(--#{$prefix}phone-dropdown-left);
-    --react-international-phone-dropdown-item-background-color: var(--#{$prefix}phone-dropdown-item-background-color);
-    --react-international-phone-dropdown-shadow: var(--#{$prefix}phone-dropdown-shadow);
-    --react-international-phone-text-color: var(--#{$prefix}phone-text-color);
-    --react-international-phone-dropdown-item-text-color: var(--#{$prefix}phone-dropdown-item-text-color);
-    --react-international-phone-dropdown-preferred-list-divider-margin: var(--#{$prefix}phone-dropdown-preferred-list-divider-margin);
-    --react-international-phone-dropdown-preferred-list-divider-color: var(--#{$prefix}phone-dropdown-preferred-list-divider-color);
-    --react-international-phone-dropdown-item-height: var(--#{$prefix}phone-dropdown-item-height);
-    --react-international-phone-dropdown-item-font-size: var(--#{$prefix}phone-dropdown-item-font-size);
-    --react-international-phone-dropdown-item-dial-code-color: var(--#{$prefix}phone-dropdown-item-dial-code-color);
-    --react-international-phone-selected-dropdown-item-background-color: var(--#{$prefix}phone-selected-dropdown-item-background-color);
-    --react-international-phone-selected-dropdown-item-text-color: var(--#{$prefix}phone-selected-dropdown-item-text-color);
-    --react-international-phone-selected-dropdown-item-dial-code-color: var(--#{$prefix}phone-selected-dropdown-item-dial-code-color);
-    --react-international-phone-dial-code-preview-border-color: var(--#{$prefix}phone-dial-code-preview-border-color);
-    --react-international-phone-dial-code-preview-background-color: var(--#{$prefix}phone-dial-code-preview-background-color);
-    --react-international-phone-dial-code-preview-text-color: var(--#{$prefix}phone-dial-code-preview-text-color);
-    --react-international-phone-font-size: var(--#{$prefix}phone-font-size);
-    --react-international-phone-dial-code-preview-font-size: var(--#{$prefix}phone-dial-code-preview-font-size);
-    --react-international-phone-dial-code-preview-disabled-background-color: var(--#{$prefix}phone-dial-code-preview-disabled-background-color);
-    --react-international-phone-dial-code-preview-disabled-text-color: var(--#{$prefix}phone-dial-code-preview-disabled-text-color);
-    --react-international-phone-disabled-text-color: var(--#{$prefix}phone-disabled-text-color);
-    --react-international-phone-border-radius: var(--#{$prefix}phone-border-radius);
+    position: relative;
 
-    .dropdown-menu {
-      --#{$prefix}dropdown-link-active-bg: var(--#{$prefix}secondary-200);
-      --#{$prefix}dropdown-link-hover-bg: var(--#{$prefix}secondary-100);
-      --#{$prefix}dropdown-link-active-color: var(--#{$prefix}body-color);
-      --#{$prefix}dropdown-border-width: var(--#{$prefix}border-width);
-      --#{$prefix}dropdown-border-color: var(--#{$prefix}gray-100);
-    }
-
-    .dropdown-item {
-      --#{$prefix}dropdown-item-border-radius: 0;
+    &.input-group-text {
+      padding-block: 0;
     }
   }
 
   .react-international-phone-country-selector-button {
-    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--#{$prefix}phone-height);
     padding: 0;
+    margin: 0;
+    text-transform: none;
+    appearance: button;
+    appearance: button;
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--#{$prefix}phone-country-selector-background-color, var(--#{$prefix}phone-background-color));
+    border: 0;
 
-    .react-international-phone-flag-emoji {
-      margin-left: 0;
+    &:hover {
+      background-color: var(--#{$prefix}phone-country-selector-background-color-hover);
     }
+
+    &--hide-dropdown {
+      cursor: auto;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    &__button-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__flag-emoji {
+      margin: 0 4px;
+
+      &--disabled {
+        opacity: .75;
+      }
+    }
+
+    &__dropdown-arrow {
+      margin-right: 4px;
+      border-top: var(--#{$prefix}phone-country-selector-arrow-size) solid var(--#{$prefix}phone-country-selector-arrow-color);
+      border-right: var(--#{$prefix}phone-country-selector-arrow-size) solid transparent;
+      border-left: var(--#{$prefix}phone-country-selector-arrow-size) solid transparent;
+      transition: all .1s ease-out;
+
+      &--active {
+        transform: rotateX(180deg);
+      }
+
+      &--disabled {
+        border-top-color: var(--#{$prefix}phone-disabled-country-selector-arrow-color);
+      }
+    }
+
+    &--disabled {
+      cursor: auto;
+      background-color: var(--#{$prefix}phone-disabled-country-selector-background-color, var(--#{$prefix}phone-disabled-background-color));
+
+      &:hover {
+        background-color: var(--#{$prefix}phone-disabled-country-selector-background-color, var(--#{$prefix}phone-disabled-background-color));
+      }
+    }
+  }
+
+  .react-international-phone-flag-emoji {
+    box-sizing: border-box;
+    width: var(--#{$prefix}phone-flag-width);
+    height: var(--#{$prefix}phone-flag-height);
   }
 
   .react-international-phone-country-selector-dropdown {
-    width: auto; //TODO: See more detail with fewer elements
-
-    &:focus {
-      outline: 0;
-    }
-
-    >* {
-      padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-4);
-    }
+    position: absolute;
+    top: var(--#{$prefix}phone-dropdown-top);
+    left: var(--#{$prefix}phone-dropdown-left);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    max-height: 200px;
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll;
+    color: var(--#{$prefix}phone-dropdown-item-text-color, var(--#{$prefix}phone-text-color));
+    list-style: none;
+    background-color: var(--#{$prefix}phone-dropdown-item-background-color, var(--#{$prefix}phone-background-color));
+    border: var(--#{$prefix}phone-dropdown-border);
+    border-radius: var(--#{$prefix}phone-dropdown-border-radius);
+    outline: 0;
+    box-shadow: var(--#{$prefix}phone-dropdown-shadow);
   }
 
-  .react-international-phone-country-selector-button__button-content {
+  .react-international-phone-country-selector-dropdown__preferred-list-divider {
+    height: 1px;
+    margin: var(--#{$prefix}phone-dropdown-preferred-list-divider-margin);
+    background: var(--#{$prefix}phone-dropdown-preferred-list-divider-color, var(--#{$prefix}phone-border-color));
     border: 0;
   }
 
-  .react-international-phone-country-selector-button__dropdown-arrow {
-    margin-right: 0;
+  .react-international-phone-country-selector-dropdown__list-item {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    min-height: var(--#{$prefix}phone-dropdown-item-height);
+    padding: var(--#{$prefix}phone-dropdown-item-padding-y) var(--#{$prefix}phone-dropdown-item-padding-x);
+    cursor: pointer;
+
+    &:not(&--selected, &--focused):hover {
+      background-color: var(--#{$prefix}phone-hover-dropdown-item-background-color);
+    }
+
+    &-flag-emoji {
+      margin-right: 8px;
+    }
+
+    &-country-name {
+      margin-right: 8px;
+      overflow: hidden;
+      font-size: var(--#{$prefix}phone-dropdown-item-font-size);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-dial-code {
+      font-size: var(--#{$prefix}phone-dropdown-item-font-size);
+      font-weight: var(--#{$prefix}phone-dropdown-item-font-weight);
+      color: var(--#{$prefix}phone-dropdown-item-dial-code-color);
+    }
+
+    &--selected,
+    &--focused {
+      color: var(--#{$prefix}phone-selected-dropdown-item-text-color, var(--#{$prefix}phone-text-color));
+      background-color: var(--#{$prefix}phone-selected-dropdown-item-background-color);
+
+      .react-international-phone-country-selector-dropdown__list-item-dial-code {
+        color: var(--#{$prefix}phone-selected-dropdown-item-dial-code-color, var(--#{$prefix}phone-dropdown-item-dial-code-color));
+      }
+    }
+
+    &--focused {
+      background-color: var(--#{$prefix}phone-selected-dropdown-item-background-color);
+    }
+  }
+
+  .react-international-phone-dial-code-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    margin-right: -1px;
+    font-size: var(--#{$prefix}phone-dial-code-preview-font-size, var(--#{$prefix}phone-font-size));
+    color: var(--#{$prefix}phone-dial-code-preview-text-color, var(--#{$prefix}phone-text-color));
+    background-color: var(--#{$prefix}phone-dial-code-preview-background-color, var(--#{$prefix}phone-background-color));
+    border: 1px solid var(--#{$prefix}phone-dial-code-preview-border-color, var(--#{$prefix}phone-border-color));
+
+    &--disabled {
+      color: var(--#{$prefix}phone-dial-code-preview-disabled-text-color, var(--#{$prefix}phone-disabled-text-color));
+      background-color: var(--#{$prefix}phone-dial-code-preview-disabled-background-color, var(--#{$prefix}phone-disabled-background-color));
+    }
+  }
+
+  .react-international-phone-input-container {
+    display: flex;
+
+    .react-international-phone-country-selector-button {
+      margin-right: -1px;
+      border-radius: var(--#{$prefix}phone-border-radius);
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .react-international-phone-input {
+      box-sizing: border-box;
+      height: var(--#{$prefix}phone-height);
+      padding: 0 8px;
+      margin: 0;
+      overflow: visible;
+      font-family: inherit;
+      font-size: var(--#{$prefix}phone-font-size);
+      color: var(--#{$prefix}phone-text-color);
+      background-color: var(--#{$prefix}phone-background-color);
+      border: 1px solid var(--#{$prefix}phone-border-color);
+      border-radius: var(--#{$prefix}phone-border-radius);
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      &:focus {
+        outline: 0;
+      }
+
+      .react-international-phone-input--disabled {
+        color: var(--#{$prefix}phone-disabled-text-color);
+        background-color: var(--#{$prefix}phone-disabled-background-color);
+      }
+    }
   }
 }

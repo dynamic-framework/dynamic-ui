@@ -255,13 +255,8 @@ function DInputPhone(
           selectedCountry={country.iso2}
           onSelect={({ iso2 }) => setCountry(iso2)}
           countries={countries}
-          className="input-group-text dropdown"
           disabled={disabled || loading}
-          dropdownStyleProps={{
-            className: 'dropdown-menu',
-            listItemClassName: 'dropdown-item',
-            listItemDialCodeClassName: 'fw-bold',
-          }}
+          className="input-group-text"
         />
         {dynamicComponent}
         {(iconEnd && !loading) && (
