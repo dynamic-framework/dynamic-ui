@@ -123,7 +123,7 @@ const DEFAULT_STATE = {
     xl: '',
     xxl: '',
   },
-  setContext: () => { },
+  setContext: () => {},
   portalName: 'd-portal',
 };
 

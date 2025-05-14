@@ -21,11 +21,16 @@ import { PREFIX_BS } from '../../src/components/config';
 
 # DBoxFile
 
-![Shield Badge](https://img.shields.io/badge/Wrapper%20Component-red)
+The `DBoxFile` component is a drag-and-drop solution for file uploads. It supports preloading images from URLs and allows users to delete uploaded files.
+The component's behavior is inspired by the [React Dropzone](https://react-dropzone.js.org/) library.
 
-Drag'n'drop zone component for files. To understand in more detail the aspects covered by this component, review the following documentation:
+## Features
 
-+ [React Dropzone](https://react-dropzone.js.org/)
+- **Drag-and-drop support**: Easily upload files by dragging them into the component.
+- **Preloaded files**: Initialize the component with files from URLs.
+- **File deletion**: Users can remove uploaded files directly from the interface.
+- **Multiple file uploads**: Configurable to accept one or multiple files.
+- **File validation**: Supports MIME type and file size validation.
 
 <br/>
 ## CSS Variables
@@ -46,6 +51,10 @@ Drag'n'drop zone component for files. To understand in more detail the aspects c
 | --${PREFIX_BS}box-file-hover-bg          | .d-box-file | css color unit  | Hover background         |
 | --${PREFIX_BS}box-file-selected-border   | .d-box-file | css border      | Selected border          |
 | --${PREFIX_BS}box-file-selected-bg       | .d-box-file | css color unit  | Selected background      |
+| --${PREFIX_BS}box-file-disabled-border   | .d-box-file | css border      | Disabled Border          |
+| --${PREFIX_BS}box-file-disabled-bg       | .d-box-file | css color unit  | Disabled background      |
+| --${PREFIX_BS}box-file-valid-border      | .d-box-file | css border      | Valid border             |
+| --${PREFIX_BS}box-file-invalid-border    | .d-box-file | css color unit  | Valid background         |
   `}
 </Markdown>
 

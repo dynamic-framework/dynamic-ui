@@ -35,6 +35,10 @@
 .input-group > .form-floating:not(:first-child) .form-select,
 .input-group > .form-floating:not(:first-child) .form-control {
   padding-left: 0;
+
+  ~label {
+    padding-left: 0;
+  }
 }
 
 .input-group > .form-floating:not(:last-child) .form-select {
