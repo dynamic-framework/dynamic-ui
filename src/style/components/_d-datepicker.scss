@@ -79,7 +79,6 @@
   display: inline-block;
   position: relative;
   line-height: initial;
-  overflow: hidden;
 }
 
 .react-datepicker--time-only {
@@ -124,6 +123,7 @@
   text-align: center;
   background-color: var(--#{$prefix}datepicker-header-bg);
   border-bottom: var(--#{$prefix}datepicker-header-border-bottom);
+  border-top-left-radius: var(--#{$prefix}datepicker-border-radius);
   padding: var(--#{$prefix}datepicker-header-padding);
   position: relative;
 
@@ -135,6 +135,10 @@
     &:not(&--only) {
       border-top-left-radius: 0;
     }
+  }
+
+  &:not(&--has-time-select) {
+    border-top-right-radius: var(--#{$prefix}datepicker-border-radius);
   }
 
   &-selector {
