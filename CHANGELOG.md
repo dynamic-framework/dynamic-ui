@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.35.1](https://github.com/dynamic-framework/dynamic-ui/compare/v1.35.0...v1.35.1) (2025-05-14)
+
+
+### Bug Fixes
+
+* **style:** remove overflow on DDatepicker ([#828](https://github.com/dynamic-framework/dynamic-ui/issues/828)) ([1e2e302](https://github.com/dynamic-framework/dynamic-ui/commit/1e2e302dd28ff784a0383186558705467f0153f4))
+
 ## [1.35.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.34.0...v1.35.0) (2025-05-14)
 
 
