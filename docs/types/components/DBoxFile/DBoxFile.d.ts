@@ -1,8 +1,9 @@
-import { type PropsWithChildren } from 'react';
-import type { DropzoneOptions } from 'react-dropzone';
+import type { ReactNode } from 'react';
 import type { BaseProps, FamilyIconProps } from '../interface';
-type Props = BaseProps & FamilyIconProps & PropsWithChildren<Pick<DropzoneOptions, 'accept' | 'minSize' | 'maxSize' | 'maxFiles' | 'onDrop' | 'onDropAccepted' | 'onDropRejected' | 'onFileDialogCancel' | 'onFileDialogOpen' | 'disabled'> & {
+import { DBoxFileProps } from './useDBoxFile';
+type Props = BaseProps & FamilyIconProps & DBoxFileProps & {
     icon?: string;
-}>;
-export default function DBoxFile({ icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, disabled, children, className, style, dataAttributes, ...dropzoneOptions }: Props): import("react/jsx-runtime").JSX.Element;
+    children?: ReactNode | ((openFileDialog: () => void) => ReactNode);
+};
+export default function DBoxFile({ icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, children, className, style, dataAttributes, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

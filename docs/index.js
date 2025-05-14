@@ -5,11 +5,12 @@ var React = require('react');
 var classNames = require('classnames');
 var tslib = require('tslib');
 var reactDom = require('react-dom');
-var reactDropzone = require('react-dropzone');
+var fileSelector = require('file-selector');
 var reactSplide = require('@splidejs/react-splide');
 var currency = require('currency.js');
 var DatePicker = require('react-datepicker');
 var dateFns = require('date-fns');
+var locale = require('date-fns/locale');
 var Select = require('react-select');
 var mask = require('@react-input/mask');
 var ResponsivePagination = require('react-responsive-pagination');
@@ -21,7 +22,7 @@ var reactI18next = require('react-i18next');
 
 const PREFIX_BS = 'bs-';
 
-function DIconBase({ icon, theme, style, className, size = '1.5rem', loading = false, loadingDuration = 1.8, hasCircle = false, circleSize = `calc(var(--${PREFIX_BS}icon-component-size) * 1)`, color, backgroundColor, materialStyle = false, familyClass = 'bi', familyPrefix = 'bi-', dataAttributes, }) {
+function DIconBase({ icon, theme, style, className, size, loading = false, loadingDuration = 1.8, hasCircle = false, circleSize = `calc(var(--${PREFIX_BS}icon-size) * 1)`, color, backgroundColor, materialStyle = false, familyClass = 'bi', familyPrefix = 'bi-', dataAttributes, }) {
     const colorStyle = React.useMemo(() => {
         if (color) {
             return { [`--${PREFIX_BS}icon-component-color`]: color };
@@ -49,7 +50,7 @@ function DIconBase({ icon, theme, style, className, size = '1.5rem', loading = f
         }
         return { [`--${PREFIX_BS}icon-component-padding`]: '0' };
     }, [circleSize, hasCircle]);
-    const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign(Object.assign(Object.assign({ [`--${PREFIX_BS}icon-component-size`]: size, [`--${PREFIX_BS}icon-component-loading-duration`]: `${loadingDuration}s` }, colorStyle), backgroundStyle), circleSizeStyle), style)), [size, loadingDuration, colorStyle, backgroundStyle, circleSizeStyle, style]);
+    const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({ [`--${PREFIX_BS}icon-component-loading-duration`]: `${loadingDuration}s` }, size && { [`--${PREFIX_BS}icon-component-size`]: size }), colorStyle), backgroundStyle), circleSizeStyle), style)), [size, loadingDuration, colorStyle, backgroundStyle, circleSizeStyle, style]);
     const generateClasses = React.useMemo(() => (Object.assign(Object.assign({ 'd-icon': true, [familyClass]: true, 'd-icon-loading': loading }, !materialStyle && {
         [`${familyPrefix}${icon}`]: true,
     }), className && { [className]: true })), [
@@ -128,12 +129,22 @@ function useStackState(initialList = []) {
     return [list, controls];
 }
 
+function getKeyboardFocusableElements(container) {
+    if (!container) {
+        return [];
+    }
+    return [
+        ...container.querySelectorAll('a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'),
+    ].filter((element) => !element.hasAttribute('disabled'));
+}
+
 const DPortalContext = React.createContext(undefined);
 function DPortalContextProvider({ portalName, children, availablePortals, }) {
     const { created } = usePortal(portalName);
     const [stack, { push, pop, isEmpty }] = useStackState([]);
     useDisableBodyScrollEffect(Boolean(stack.length));
     const openPortal = React.useCallback((name, payload) => {
+        var _a;
         if (!availablePortals) {
             throw new Error(`there is no component for portal ${name.toString()}`);
         }
@@ -146,6 +157,7 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
             Component,
             payload,
         });
+        (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.blur();
     }, [availablePortals, push]);
     const closePortal = React.useCallback(() => {
         if (isEmpty()) {
@@ -175,10 +187,26 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
     }, [closePortal]);
     React.useEffect(() => {
         const keyEvent = (event) => {
+            const lastPortal = document.querySelector(`#${portalName} > div > div:last-child`);
             if (event.key === 'Escape') {
-                const lastPortal = document.querySelector(`#${portalName} > div > div:last-child`);
                 if (lastPortal) {
                     handleClose(lastPortal);
+                    return;
+                }
+            }
+            if (event.key === 'Tab') {
+                const focusableElements = getKeyboardFocusableElements(lastPortal);
+                if (focusableElements.length === 0)
+                    return;
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                if (event.shiftKey && document.activeElement === firstElement) {
+                    event.preventDefault();
+                    lastElement.focus();
+                }
+                else if (!event.shiftKey && document.activeElement === lastElement) {
+                    event.preventDefault();
+                    firstElement.focus();
                 }
             }
         };
@@ -272,7 +300,6 @@ function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAUL
     });
     const setContext = React.useCallback((newValue) => (setInternalContext((prevInternalContext) => (Object.assign(Object.assign({}, prevInternalContext), newValue)))), []);
     React.useLayoutEffect(() => {
-        console.log('context');
         setContext({
             breakpoints: {
                 xs: getCssVariable(`--${PREFIX_BS}breakpoint-xs`),
@@ -342,18 +369,494 @@ function DBadge({ text, soft = false, theme = 'primary', id, rounded, className,
     return (jsxRuntime.jsxs("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, dataAttributes, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsxRuntime.jsx("span", { children: text }), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }))] })));
 }
 
+/* eslint-disable */
+/**
+ * This file is originally from `@primer/react`
+ * The original source for this lived in the URL below.
+ *
+ * @see https://github.com/primer/react/blob/216d2a9f57b8acb0701ab4e04a23e057fc325c90/src/hooks/useProvidedRefOrCreate.ts
+ */
+/**
+ * There are some situations where we only want to create a new ref if one is not provided to a component
+ * or hook as a prop. However, due to the `rules-of-hooks`, we cannot conditionally make a call to `React.useRef`
+ * only in the situations where the ref is not provided as a prop.
+ * This hook aims to encapsulate that logic, so the consumer doesn't need to be concerned with violating `rules-of-hooks`.
+ * @param providedRef The ref to use - if undefined, will use the ref from a call to React.useRef
+ * @type TRef The type of the RefObject which should be created.
+ */
+function useProvidedRefOrCreate(providedRef) {
+    const createdRef = React.useRef(null);
+    return providedRef !== null && providedRef !== void 0 ? providedRef : createdRef;
+}
+
+function DInput(_a, ref) {
+    var { id: idProp, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, labelIconMaterialStyle, disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconStart, iconStartDisabled, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconStartMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, hint, size, invalid = false, valid = false, floatingLabel = false, inputStart, inputEnd, value, placeholder = '', dataAttributes, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "labelIconMaterialStyle", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconStart", "iconStartDisabled", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconStartMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "hint", "size", "invalid", "valid", "floatingLabel", "inputStart", "inputEnd", "value", "placeholder", "dataAttributes", "onChange", "onIconStartClick", "onIconEndClick"]);
+    const inputRef = useProvidedRefOrCreate(ref);
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
+    const handleOnChange = React.useCallback((event) => {
+        onChange === null || onChange === void 0 ? void 0 : onChange(event.currentTarget.value);
+    }, [onChange]);
+    const handleOnIconStartClick = React.useCallback(() => {
+        onIconStartClick === null || onIconStartClick === void 0 ? void 0 : onIconStartClick(value);
+    }, [onIconStartClick, value]);
+    const handleOnIconEndClick = React.useCallback(() => {
+        onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(value);
+    }, [onIconEndClick, value]);
+    const ariaDescribedby = React.useMemo(() => ([
+        !!inputStart && `${id}InputStart`,
+        !!iconStart && `${id}Start`,
+        (invalid || valid) && !iconEnd && !loading && `${id}State`,
+        (iconEnd && !loading) && `${id}End`,
+        loading && `${id}Loading`,
+        !!inputEnd && `${id}InputEnd`,
+        !!hint && `${id}Hint`,
+    ]
+        .filter(Boolean)
+        .join(' ')), [
+        id,
+        inputStart,
+        iconStart,
+        invalid,
+        valid,
+        iconEnd,
+        loading,
+        inputEnd,
+        hint,
+    ]);
+    const inputComponent = React.useMemo(() => (jsxRuntime.jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
+            'is-invalid': invalid,
+            'is-valid': valid,
+        }), disabled: disabled || loading, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
+        ariaDescribedby,
+        disabled,
+        handleOnChange,
+        id,
+        inputProps,
+        inputRef,
+        invalid,
+        loading,
+        placeholder,
+        floatingLabel,
+        valid,
+        value,
+    ]);
+    const labelComponent = React.useMemo(() => (jsxRuntime.jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsxRuntime.jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix, materialStyle: labelIconMaterialStyle }))] })), [
+        id,
+        label,
+        labelIcon,
+        labelIconFamilyClass,
+        labelIconFamilyPrefix,
+        labelIconMaterialStyle,
+    ]);
+    const dynamicComponent = React.useMemo(() => {
+        if (floatingLabel) {
+            return (jsxRuntime.jsxs("div", { className: "form-floating", children: [inputComponent, labelComponent] }));
+        }
+        return inputComponent;
+    }, [floatingLabel, inputComponent, labelComponent]);
+    return (jsxRuntime.jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [label && !floatingLabel && labelComponent, jsxRuntime.jsxs("div", { className: classNames({
+                    [`input-group-${size}`]: !!size,
+                    'input-group': true,
+                    'has-validation': invalid || valid,
+                }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel, tabIndex: onIconStartClick ? iconStartTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle }) })), dynamicComponent, (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+}
+const ForwardedDInput = React.forwardRef(DInput);
+ForwardedDInput.displayName = 'DInput';
+
+/**
+ * Check if the provided file type should be accepted by the input with accept attribute.
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input#attr-accept
+ *
+ * Inspired by https://github.com/enyo/dropzone
+ *
+ * @param file {File} https://developer.mozilla.org/en-US/docs/Web/API/File
+ * @param acceptedFiles {string|string[]}
+ * @returns {boolean}
+ */
+function attrAccept(file, acceptedFiles) {
+    if (file && acceptedFiles) {
+        const acceptedFilesArray = Array.isArray(acceptedFiles)
+            ? acceptedFiles
+            : acceptedFiles.split(',');
+        if (acceptedFilesArray.length === 0) {
+            return true;
+        }
+        const fileName = file.name || '';
+        const mimeType = (file.type || '').toLowerCase();
+        const baseMimeType = mimeType.replace(/\/.*$/, '');
+        return acceptedFilesArray.some((type) => {
+            const validType = type.trim().toLowerCase();
+            if (validType.charAt(0) === '.') {
+                return fileName.toLowerCase().endsWith(validType);
+            }
+            if (validType.endsWith('/*')) {
+                // This is something like a image/* mime type
+                return baseMimeType === validType.replace(/\/.*$/, '');
+            }
+            return mimeType === validType;
+        });
+    }
+    return true;
+}
+
+const isIeOrEdge = (userAgent = window.navigator.userAgent) => ((userAgent.indexOf('MSIE') !== -1 || userAgent.indexOf('Trident/') !== -1)
+    || userAgent.indexOf('Edge/') !== -1);
+const ErrorCodes = {
+    FileInvalidType: 'file-invalid-type',
+    FileTooLarge: 'file-too-large',
+    FileTooSmall: 'file-too-small',
+    TooManyFiles: 'too-many-files',
+    FailedFetch: 'failed-fetch-file',
+};
+// Check if v is a MIME type string.
+function isMIMEType(v) {
+    return (v === 'audio/*'
+        || v === 'video/*'
+        || v === 'image/*'
+        || v === 'text/*'
+        || v === 'application/*'
+        || /\w+\/[-+.\w]+/g.test(v));
+}
+// Check if v is a file extension.
+function isExt(v) {
+    return /^.*\.[\w]+$/.test(v);
+}
+function isDefined(value) {
+    return value !== undefined && value !== null;
+}
+// Convert the `{accept}` dropzone prop to an array of MIME types/extensions.
+function acceptPropAsAcceptAttr(accept) {
+    return (Object.entries(accept)
+        .reduce((a, [mimeType, ext]) => [...a, mimeType, ...ext], [])
+        .filter((v) => isMIMEType(v) || isExt(v))
+        .join(','));
+}
+function fileAccepted(file, accept) {
+    const isAcceptable = file.type === 'application/x-moz-file' || attrAccept(file, accept);
+    if (!isAcceptable) {
+        return [
+            false,
+            {
+                code: ErrorCodes.FileInvalidType,
+                message: 'File has an unsupported file type',
+            },
+        ];
+    }
+    return [true, null];
+}
+function fileMatchSize(file, minSize, maxSize) {
+    if (isDefined(file.size)) {
+        if (isDefined(minSize) && file.size < minSize) {
+            return [
+                false,
+                {
+                    code: ErrorCodes.FileTooSmall,
+                    message: `File "${file.name}" is too small. Minimum size is ${minSize} bytes.`,
+                },
+            ];
+        }
+        if (isDefined(maxSize) && file.size > maxSize) {
+            return [
+                false, {
+                    code: ErrorCodes.FileTooLarge,
+                    message: `File "${file.name}" is too large. Maximum size is ${maxSize} bytes.`,
+                },
+            ];
+        }
+    }
+    return [true, null];
+}
+async function urlToFile(url) {
+    var _a;
+    try {
+        const res = await fetch(url);
+        if (!res.ok) {
+            return [
+                null,
+                {
+                    code: ErrorCodes.FailedFetch,
+                    message: `Failed to fetch file from ${url}`,
+                },
+            ];
+        }
+        const blob = await res.blob();
+        const filename = ((_a = url.split('/').pop()) === null || _a === void 0 ? void 0 : _a.split('?')[0]) || 'file';
+        const file = new File([blob], filename, { type: blob.type });
+        return [file, null];
+    }
+    catch (error) {
+        return [
+            null,
+            {
+                code: ErrorCodes.FailedFetch,
+                message: `Failed to fetch file from ${url}}`,
+            },
+        ];
+    }
+}
+async function urlsToFiles(urls) {
+    const results = await Promise.all(urls.map(urlToFile));
+    let acceptedFiles = [];
+    let errors = [];
+    results.forEach(([file, error]) => {
+        if (file) {
+            acceptedFiles = [...acceptedFiles, file];
+        }
+        if (error) {
+            errors = [...errors, error];
+        }
+    });
+    return [acceptedFiles, errors];
+}
+const DEFAULT_PROPS = {
+    disabled: false,
+    maxSize: Infinity,
+    minSize: 0,
+    multiple: false,
+    maxFiles: Infinity,
+    noClick: false,
+    noKeyboard: false,
+    noDrag: false,
+    autoFocus: false,
+};
+
+/* eslint-disable no-param-reassign */
+function useDBoxFile(props) {
+    const { accept, autoFocus, disabled, maxSize, minSize, multiple, maxFiles, value: preloadUrls, onDragEnter, onDragLeave, onDrop, onError, noClick, noKeyboard, noDrag, } = Object.assign(Object.assign({}, DEFAULT_PROPS), props);
+    const inputRef = React.useRef(null);
+    const rootRef = React.useRef(null);
+    const dragTargetsRef = React.useRef([]);
+    const acceptAttr = React.useMemo(() => acceptPropAsAcceptAttr(accept), [accept]);
+    const [files, setFiles] = React.useState([]);
+    const [isDragValid, setIsDragValid] = React.useState(false);
+    const [isDragInvalid, setIsDragInvalid] = React.useState(false);
+    const preventDropOnDocument = React.useCallback((event) => {
+        if (rootRef.current && rootRef.current.contains(event.target)) {
+            // If we intercepted an event for our instance
+            // let it propagate down to the instance's onDrop handler
+            return;
+        }
+        event.preventDefault();
+        dragTargetsRef.current = [];
+    }, []);
+    React.useEffect(() => {
+        // Prevent drop over anywhere in the document
+        document.addEventListener('dragover', preventDropOnDocument, false);
+        document.addEventListener('drop', preventDropOnDocument, false);
+        return () => {
+            document.removeEventListener('dragover', preventDropOnDocument);
+            document.removeEventListener('drop', preventDropOnDocument);
+        };
+    }, [preventDropOnDocument]);
+    // Auto focus the root when autoFocus is true
+    React.useEffect(() => {
+        if (!disabled && autoFocus && rootRef.current) {
+            rootRef.current.focus();
+        }
+    }, [rootRef, autoFocus, disabled]);
+    React.useEffect(() => {
+        if (!preloadUrls || !preloadUrls.length)
+            return;
+        // eslint-disable-next-line no-void
+        void (async () => {
+            const [accepted, errors] = await urlsToFiles(preloadUrls);
+            if (accepted.length) {
+                setFiles(accepted);
+            }
+            if (errors.length) {
+                onError === null || onError === void 0 ? void 0 : onError(new Error(errors.map((e) => e.message).join(', ')));
+            }
+        })();
+    }, [preloadUrls, onError]);
+    const processFiles = React.useCallback((inputFiles, event) => {
+        let acceptedFiles = [];
+        let rejectedFiles = [];
+        // Handle size and type validation
+        inputFiles.forEach((file) => {
+            const [isTypeValid, acceptError] = fileAccepted(file, acceptAttr);
+            const [isSizeValid, sizeError] = fileMatchSize(file, minSize, maxSize);
+            const errors = [acceptError, sizeError].filter((e) => Boolean(e));
+            if (isTypeValid && isSizeValid) {
+                acceptedFiles = [...acceptedFiles, file];
+            }
+            else {
+                rejectedFiles = [...rejectedFiles, { file, errors }];
+            }
+        });
+        // Handle maxFiles overflow by trimming
+        const total = files.length + acceptedFiles.length;
+        if (total > maxFiles) {
+            const allowed = Math.max(0, maxFiles - files.length);
+            const accepted = acceptedFiles.slice(0, allowed);
+            const rejected = acceptedFiles.slice(allowed).map((file) => ({
+                file,
+                errors: [
+                    {
+                        code: ErrorCodes.TooManyFiles,
+                        message: `Exceeds maximum number of files (${maxFiles})`,
+                    },
+                ],
+            }));
+            acceptedFiles = [...accepted];
+            rejectedFiles = [...rejectedFiles, ...rejected];
+        }
+        if (multiple) {
+            setFiles((prev) => [...prev, ...acceptedFiles]);
+        }
+        else {
+            setFiles(acceptedFiles.slice(0, 1));
+        }
+        if (onDrop) {
+            onDrop(acceptedFiles, rejectedFiles, event);
+        }
+    }, [
+        acceptAttr,
+        files.length,
+        maxFiles,
+        maxSize,
+        minSize,
+        multiple,
+        onDrop,
+    ]);
+    const handleDragEnter = React.useCallback((event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (disabled || noDrag)
+            return;
+        if (event.target instanceof HTMLElement) {
+            dragTargetsRef.current = [...dragTargetsRef.current, event.target];
+        }
+        fileSelector.fromEvent(event).then((eventFiles) => {
+            const fileCount = eventFiles.length;
+            if (fileCount === 0) {
+                setIsDragValid(false);
+                setIsDragInvalid(true);
+                return;
+            }
+            const isDragAccepted = eventFiles.every((file) => {
+                const [typeValid] = fileAccepted(file, acceptAttr);
+                const [sizeValid] = fileMatchSize(file, minSize, maxSize);
+                return typeValid && sizeValid;
+            });
+            setIsDragValid(isDragAccepted);
+            setIsDragInvalid(!isDragAccepted);
+            onDragEnter === null || onDragEnter === void 0 ? void 0 : onDragEnter(event);
+        }).catch((error) => {
+            onError === null || onError === void 0 ? void 0 : onError(error);
+        });
+    }, [
+        acceptAttr,
+        disabled,
+        maxSize,
+        minSize,
+        noDrag,
+        onDragEnter,
+        onError,
+    ]);
+    const handleDrop = React.useCallback((event) => {
+        event.preventDefault();
+        event.persist();
+        event.stopPropagation();
+        dragTargetsRef.current = [];
+        setIsDragValid(false);
+        setIsDragInvalid(false);
+        if (disabled || noDrag)
+            return;
+        const droppedArray = Array.from(event.dataTransfer.files);
+        processFiles(droppedArray, event.nativeEvent);
+    }, [
+        disabled,
+        noDrag,
+        processFiles,
+    ]);
+    const handleDragLeave = React.useCallback((event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (disabled || noDrag)
+            return;
+        // Only deactivate once the dropzone and all children have been left
+        const targets = dragTargetsRef.current.filter((target) => rootRef.current && rootRef.current.contains(target));
+        // Make sure to remove a target present multiple times only once
+        // (Firefox may fire dragenter/dragleave multiple times on the same element)
+        if (event.target instanceof HTMLElement) {
+            const targetIdx = targets.indexOf(event.target);
+            if (targetIdx !== -1) {
+                targets.splice(targetIdx, 1);
+            }
+            dragTargetsRef.current = targets;
+        }
+        if (targets.length === 0) {
+            setIsDragValid(false);
+            setIsDragInvalid(false);
+            onDragLeave === null || onDragLeave === void 0 ? void 0 : onDragLeave(event);
+        }
+    }, [disabled, noDrag, onDragLeave]);
+    const handleFileSelect = React.useCallback((event) => {
+        const targetFiles = event.target.files;
+        if (!targetFiles)
+            return;
+        const selectedFiles = Array.from(targetFiles);
+        processFiles(selectedFiles, event.nativeEvent);
+        event.target.value = '';
+    }, [processFiles]);
+    const handleRemoveFile = React.useCallback((index) => {
+        setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    }, []);
+    const openFileDialog = React.useCallback(() => {
+        var _a;
+        if (disabled)
+            return;
+        (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.click();
+    }, [disabled]);
+    const handleClick = React.useCallback(() => {
+        if (noClick) {
+            return;
+        }
+        if (isIeOrEdge()) {
+            setTimeout(openFileDialog, 0);
+        }
+        else {
+            openFileDialog();
+        }
+    }, [noClick, openFileDialog]);
+    const handleKeyDown = React.useCallback((event) => {
+        if (!noKeyboard && (event.key === ' ' || event.key === 'Enter')) {
+            event.preventDefault();
+            openFileDialog();
+        }
+    }, [noKeyboard, openFileDialog]);
+    return {
+        inputRef,
+        rootRef,
+        files,
+        isDragValid,
+        isDragInvalid,
+        acceptAttr,
+        openFileDialog,
+        handleFileSelect,
+        handleDrop,
+        handleDragEnter,
+        handleDragLeave,
+        handleRemoveFile,
+        handleClick,
+        handleKeyDown,
+    };
+}
+
 function DBoxFile(_a) {
-    var { icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, disabled = false, children, className, style, dataAttributes } = _a, dropzoneOptions = tslib.__rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "disabled", "children", "className", "style", "dataAttributes"]);
-    const { acceptedFiles, getRootProps, getInputProps, } = reactDropzone.useDropzone(Object.assign({ disabled }, dropzoneOptions));
-    const { iconMap: { upload, }, } = useDContext();
+    var { icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, children, className, style, dataAttributes } = _a, props = tslib.__rest(_a, ["icon", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "children", "className", "style", "dataAttributes"]);
+    const { iconMap: { upload } } = useDContext();
     const icon = React.useMemo(() => iconProp || upload, [iconProp, upload]);
-    return (jsxRuntime.jsxs("section", Object.assign({ className: classNames('d-box-file', {
-            'd-box-file-selected': !!acceptedFiles.length,
-        }, className), style: style }, dataAttributes, { children: [jsxRuntime.jsxs("div", Object.assign({}, getRootProps({
-                className: classNames('d-box-file-dropzone', {
-                    disabled,
-                }),
-            }), { children: [jsxRuntime.jsx("input", Object.assign({}, getInputProps())), jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }), jsxRuntime.jsx("div", { className: "d-box-content", children: children })] })), !!acceptedFiles.length && (jsxRuntime.jsx("aside", { className: "d-box-files", children: acceptedFiles.map((file) => (jsxRuntime.jsx("div", { className: "d-box-files-text", children: `${file.name} - ${file.size} bytes` }, file.name))) }))] })));
+    const { inputRef, rootRef, isDragValid, isDragInvalid, acceptAttr, files, handleFileSelect, handleDrop, handleDragEnter, handleDragLeave, handleClick, handleKeyDown, handleRemoveFile, openFileDialog, } = useDBoxFile(props);
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("section", Object.assign({ className: classNames('d-box-file', {
+                    'd-box-file-selected': files.length > 0,
+                    'd-box-file-disabled': props.disabled,
+                    'd-box-file-valid': isDragValid,
+                    'd-box-file-invalid': isDragInvalid,
+                }, className), style: style }, dataAttributes, { children: jsxRuntime.jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsxRuntime.jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }), jsxRuntime.jsx("div", { className: "d-box-content", children: typeof children === 'function'
+                                ? children(openFileDialog)
+                                : children })] })) })), !!files.length && (jsxRuntime.jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsxRuntime.jsx(ForwardedDInput, { value: file.name, iconStart: "paperclip", iconEnd: "trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, file.name))) }))] }));
 }
 
 function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, value, type = 'button', loading = false, loadingAriaLabel, disabled = false, stopPropagationEnabled = true, className, style, form, dataAttributes, onClick, }) {
@@ -494,102 +997,6 @@ function DCurrencyText({ value, className, style, dataAttributes, }) {
     return (jsxRuntime.jsx("span", Object.assign({ className: className, style: style }, dataAttributes, { children: valueFormatted })));
 }
 
-/* eslint-disable */
-/**
- * This file is originally from `@primer/react`
- * The original source for this lived in the URL below.
- *
- * @see https://github.com/primer/react/blob/216d2a9f57b8acb0701ab4e04a23e057fc325c90/src/hooks/useProvidedRefOrCreate.ts
- */
-/**
- * There are some situations where we only want to create a new ref if one is not provided to a component
- * or hook as a prop. However, due to the `rules-of-hooks`, we cannot conditionally make a call to `React.useRef`
- * only in the situations where the ref is not provided as a prop.
- * This hook aims to encapsulate that logic, so the consumer doesn't need to be concerned with violating `rules-of-hooks`.
- * @param providedRef The ref to use - if undefined, will use the ref from a call to React.useRef
- * @type TRef The type of the RefObject which should be created.
- */
-function useProvidedRefOrCreate(providedRef) {
-    const createdRef = React.useRef(null);
-    return providedRef !== null && providedRef !== void 0 ? providedRef : createdRef;
-}
-
-function DInput(_a, ref) {
-    var { id: idProp, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, labelIconMaterialStyle, disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconStart, iconStartDisabled, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconStartMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, hint, size, invalid = false, valid = false, floatingLabel = false, inputStart, inputEnd, value, placeholder = '', dataAttributes, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "labelIconMaterialStyle", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconStart", "iconStartDisabled", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconStartMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "hint", "size", "invalid", "valid", "floatingLabel", "inputStart", "inputEnd", "value", "placeholder", "dataAttributes", "onChange", "onIconStartClick", "onIconEndClick"]);
-    const inputRef = useProvidedRefOrCreate(ref);
-    const innerId = React.useId();
-    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
-    const handleOnChange = React.useCallback((event) => {
-        onChange === null || onChange === void 0 ? void 0 : onChange(event.currentTarget.value);
-    }, [onChange]);
-    const handleOnIconStartClick = React.useCallback(() => {
-        onIconStartClick === null || onIconStartClick === void 0 ? void 0 : onIconStartClick(value);
-    }, [onIconStartClick, value]);
-    const handleOnIconEndClick = React.useCallback(() => {
-        onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(value);
-    }, [onIconEndClick, value]);
-    const ariaDescribedby = React.useMemo(() => ([
-        !!inputStart && `${id}InputStart`,
-        !!iconStart && `${id}Start`,
-        (invalid || valid) && !iconEnd && !loading && `${id}State`,
-        (iconEnd && !loading) && `${id}End`,
-        loading && `${id}Loading`,
-        !!inputEnd && `${id}InputEnd`,
-        !!hint && `${id}Hint`,
-    ]
-        .filter(Boolean)
-        .join(' ')), [
-        id,
-        inputStart,
-        iconStart,
-        invalid,
-        valid,
-        iconEnd,
-        loading,
-        inputEnd,
-        hint,
-    ]);
-    const inputComponent = React.useMemo(() => (jsxRuntime.jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
-            [`form-control-${size}`]: !!size,
-            'is-invalid': invalid,
-            'is-valid': valid,
-        }), disabled: disabled || loading, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
-        ariaDescribedby,
-        disabled,
-        handleOnChange,
-        id,
-        inputProps,
-        inputRef,
-        invalid,
-        loading,
-        placeholder,
-        floatingLabel,
-        valid,
-        value,
-        size,
-    ]);
-    const labelComponent = React.useMemo(() => (jsxRuntime.jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsxRuntime.jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix, materialStyle: labelIconMaterialStyle }))] })), [
-        id,
-        label,
-        labelIcon,
-        labelIconFamilyClass,
-        labelIconFamilyPrefix,
-        labelIconMaterialStyle,
-    ]);
-    const dynamicComponent = React.useMemo(() => {
-        if (floatingLabel) {
-            return (jsxRuntime.jsxs("div", { className: "form-floating", children: [inputComponent, labelComponent] }));
-        }
-        return inputComponent;
-    }, [floatingLabel, inputComponent, labelComponent]);
-    return (jsxRuntime.jsxs("div", Object.assign({ className: className, style: style }, dataAttributes, { children: [label && !floatingLabel && labelComponent, jsxRuntime.jsxs("div", { className: classNames({
-                    'input-group': true,
-                    'has-validation': invalid || valid,
-                }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel, tabIndex: onIconStartClick ? iconStartTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle }) })), dynamicComponent, (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
-}
-const ForwardedDInput = React.forwardRef(DInput);
-ForwardedDInput.displayName = 'DInput';
-
 function DDatePickerTime(_a) {
     var { value, onChange, id, label, className, style } = _a, props = tslib.__rest(_a, ["value", "onChange", "id", "label", "className", "style"]);
     return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center gap-2 flex-column d-datepicker-time', className), style: style, children: [label && (jsxRuntime.jsx("label", { htmlFor: id, className: "d-datepicker-time-label", children: label })), jsxRuntime.jsx(ForwardedDInput, Object.assign({ className: "w-100" }, onChange && {
@@ -599,7 +1006,8 @@ function DDatePickerTime(_a) {
 
 function DDatePickerInput(_a, ref) {
     var { value, onClick, id, iconEnd, className, style, inputLabel, readOnly: ignored } = _a, props = tslib.__rest(_a, ["value", "onClick", "id", "iconEnd", "className", "style", "inputLabel", "readOnly"]);
-    return (jsxRuntime.jsx(ForwardedDInput, Object.assign({ ref: ref, onClick: onClick, readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd, className: className, style: style, label: inputLabel }, props)));
+    const { iconMap: { calendar } } = useDContext();
+    return (jsxRuntime.jsx(ForwardedDInput, Object.assign({ ref: ref, onClick: onClick, readOnly: true, type: "text", id: id, value: value, onIconEndClick: onClick, iconEnd: iconEnd || calendar, className: className, style: style, label: inputLabel }, props)));
 }
 const ForwardedDDatePickerInput = React.forwardRef(DDatePickerInput);
 ForwardedDDatePickerInput.displayName = 'DDatePickerInput';
@@ -683,8 +1091,8 @@ function DSelectDropdownIndicator(props) {
 }
 
 function DSelectClearIndicator(props) {
-    const { iconMap: { xLg, }, } = useDContext();
-    return (jsxRuntime.jsx(Select.components.ClearIndicator, Object.assign({}, props, { children: jsxRuntime.jsx(DIcon, { icon: xLg }) })));
+    const { iconMap: { x, }, } = useDContext();
+    return (jsxRuntime.jsx(Select.components.ClearIndicator, Object.assign({}, props, { children: jsxRuntime.jsx(DIcon, { icon: x }) })));
 }
 
 function DSelectMultiValueRemove(props) {
@@ -768,43 +1176,65 @@ var DSelect$1 = Object.assign(DSelect, {
     Placeholder: DSelectPlaceholder,
 });
 
-function DDatePickerHeader({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled, iconPrevMonth, iconNextMonth, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', iconSize, buttonVariant, buttonTheme, locale, style, className, minYearSelect, maxYearSelect, }) {
+var PickerType;
+(function (PickerType) {
+    PickerType["Default"] = "default";
+    PickerType["Quarter"] = "quarter";
+    PickerType["Month"] = "month";
+    PickerType["Year"] = "year";
+})(PickerType || (PickerType = {}));
+function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown = 1, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', prevYearAriaLabel = 'decrease year', nextYearAriaLabel = 'increase year', iconSize = 'sm', buttonVariant = 'link', buttonTheme = 'dark', style, className, minYearSelect = 1900, maxYearSelect = 2100, showHeaderSelectors = false, customHeaderCount, }) {
+    const { iconMap: { chevronLeft, chevronRight, }, } = useDContext();
     const arrayYears = React.useMemo(() => Array.from({ length: maxYearSelect - minYearSelect + 1 }, (_, index) => minYearSelect + index), [maxYearSelect, minYearSelect]);
     const years = React.useMemo(() => arrayYears.map((year) => ({
         label: year.toString(),
         value: year,
     })), [arrayYears]);
-    const defaultYear = React.useMemo(() => years.find((year) => year.value === dateFns.getYear(date)), [date, years]);
-    const arrayMonths = React.useMemo(() => Array.from({ length: 12 }, (_, i) => dateFns.format(new Date(2000, i), 'LLLL', { locale })), [locale]);
+    const defaultYear = React.useMemo(() => years.find((year) => year.value === dateFns.getYear(monthDate)), [monthDate, years]);
+    const arrayMonths = React.useMemo(() => Array.from({ length: 12 }, (_, i) => dateFns.format(new Date(2000, i), 'LLLL', { locale: locale.enUS })), []);
     const months = React.useMemo(() => arrayMonths.map((month, i) => ({
         label: month,
         value: i,
     })), [arrayMonths]);
     const defaultMonth = React.useMemo(() => ({
-        label: arrayMonths[dateFns.getMonth(date)],
-        value: dateFns.getMonth(date),
-    }), [arrayMonths, date]);
-    return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center d-datepicker-header', className), style: style, children: [jsxRuntime.jsx(DButton, { iconStart: iconPrevMonth, iconStartFamilyClass: iconFamilyClass, iconStartFamilyPrefix: iconFamilyPrefix, iconStartMaterialStyle: iconMaterialStyle, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button" }), jsxRuntime.jsxs("div", { className: "d-flex justify-content-center flex-grow-1", children: [jsxRuntime.jsx(DSelect$1, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false }), jsxRuntime.jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false })] }), jsxRuntime.jsx(DButton, { iconStart: iconNextMonth, iconStartFamilyClass: iconFamilyClass, iconStartFamilyPrefix: iconFamilyPrefix, iconStartMaterialStyle: iconMaterialStyle, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button" })] }));
+        label: arrayMonths[dateFns.getMonth(monthDate)],
+        value: dateFns.getMonth(monthDate),
+    }), [arrayMonths, monthDate]);
+    const getYearRange = React.useCallback(() => {
+        const blockIndex = Math.floor((date.getFullYear() - 1) / 12);
+        const startYear = blockIndex * 12 + 1;
+        const endYear = startYear + 11;
+        return [startYear, endYear];
+    }, [date]);
+    const [startYear, endYear] = getYearRange();
+    if (pickerType === PickerType.Year) {
+        return (jsxRuntime.jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-year-selector', className), style: style, children: [jsxRuntime.jsx(DButton, { iconStart: iconPrev || chevronLeft, iconStartFamilyClass: iconFamilyClass, iconStartFamilyPrefix: iconFamilyPrefix, iconStartMaterialStyle: iconMaterialStyle, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: decreaseYear, disabled: prevYearButtonDisabled, ariaLabel: prevYearAriaLabel, className: "header-button" }), jsxRuntime.jsx("p", { children: `${startYear} - ${endYear}` }), jsxRuntime.jsx(DButton, { iconStart: iconNext || chevronRight, iconStartFamilyClass: iconFamilyClass, iconStartFamilyPrefix: iconFamilyPrefix, iconStartMaterialStyle: iconMaterialStyle, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: increaseYear, disabled: nextYearButtonDisabled, ariaLabel: nextYearAriaLabel, className: "header-button" })] }));
+    }
+    if (pickerType === PickerType.Quarter || pickerType === PickerType.Month) {
+        return (jsxRuntime.jsxs("div", { className: classNames(`react-datepicker__header-selector react-datepicker__header-${pickerType}-selector`, className), style: style, children: [jsxRuntime.jsx(DButton, { iconStart: iconPrev || chevronLeft, iconStartFamilyClass: iconFamilyClass, iconStartFamilyPrefix: iconFamilyPrefix, iconStartMaterialStyle: iconMaterialStyle, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: decreaseYear, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), jsxRuntime.jsx("div", { className: "d-flex justify-content-center flex-grow-1", children: showHeaderSelectors ? (jsxRuntime.jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false })) : (jsxRuntime.jsx("p", { children: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label })) }), jsxRuntime.jsx(DButton, { iconStart: iconNext || chevronRight, iconStartFamilyClass: iconFamilyClass, iconStartFamilyPrefix: iconFamilyPrefix, iconStartMaterialStyle: iconMaterialStyle, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: increaseYear, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] }));
+    }
+    return (jsxRuntime.jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsxRuntime.jsx(DButton, { iconStart: iconPrev || chevronLeft, iconStartFamilyClass: iconFamilyClass, iconStartFamilyPrefix: iconFamilyPrefix, iconStartMaterialStyle: iconMaterialStyle, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx(DSelect$1, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" }), jsxRuntime.jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false, className: "custom-year-selector" })] })) : (jsxRuntime.jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsxRuntime.jsx(DButton, { iconStart: iconNext || chevronRight, iconStartFamilyClass: iconFamilyClass, iconStartFamilyPrefix: iconFamilyPrefix, iconStartMaterialStyle: iconMaterialStyle, size: iconSize, variant: buttonVariant, theme: buttonTheme, onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] }));
 }
 
-/**
- * @deprecated
- */
 function DDatePicker(_a) {
-    var { date, selectsRange = false, inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, iconInput: iconInputProp, iconHeaderPrevMonth: iconHeaderPrevMonthProp, iconHeaderNextMonth: iconHeaderNextMonthProp, iconMaterialStyle: iconMaterialStyleProp, iconFamilyClass, iconFamilyPrefix, minYearSelect = 1900, maxYearSelect = 2100, iconHeaderSize = 'sm', headerPrevMonthAriaLabel = 'decrease month', headerNextMonthAriaLabel = 'increase month', headerButtonVariant = 'link', headerButtonTheme = 'dark', invalid = false, valid = false, renderCustomHeader: renderCustomHeaderProp, locale, className, formatWeekDay: formatWeekDayProp, style, dataAttributes, placeholder } = _a, props = tslib.__rest(_a, ["date", "selectsRange", "inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeLabel", "iconInput", "iconHeaderPrevMonth", "iconHeaderNextMonth", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "renderCustomHeader", "locale", "className", "formatWeekDay", "style", "dataAttributes", "placeholder"]);
-    const { iconMap: { calendar, chevronLeft, chevronRight, }, } = useDContext();
-    const selected = React.useMemo(() => (date ? dateFns.parseISO(date) : null), [date]);
-    const iconInput = React.useMemo(() => iconInputProp || calendar, [calendar, iconInputProp]);
-    const handleFormatWeekDay = React.useMemo(() => (formatWeekDayProp
-        ? (day) => formatWeekDayProp(day)
-        : (day) => day.substring(0, 1)), [formatWeekDayProp]);
-    const iconPrevMonth = React.useMemo(() => iconHeaderPrevMonthProp || chevronLeft, [chevronLeft, iconHeaderPrevMonthProp]);
-    const iconNextMonth = React.useMemo(() => iconHeaderNextMonthProp || chevronRight, [chevronRight, iconHeaderNextMonthProp]);
-    const DatePickerHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DDatePickerHeader, Object.assign({}, headerProps, locale && { locale }, { iconPrevMonth: iconPrevMonth, iconNextMonth: iconNextMonth, iconMaterialStyle: iconMaterialStyleProp, prevMonthAriaLabel: headerPrevMonthAriaLabel, nextMonthAriaLabel: headerNextMonthAriaLabel, iconSize: iconHeaderSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, minYearSelect: minYearSelect, maxYearSelect: maxYearSelect }))), [
-        locale,
-        iconPrevMonth,
-        iconNextMonth,
-        iconMaterialStyleProp,
+    var { inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, iconInput, iconHeaderPrev, iconHeaderNext, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, minYearSelect, maxYearSelect, iconHeaderSize, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerButtonVariant, headerButtonTheme, invalid = false, valid = false, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar: dateFormatCalendarProp, style, dataAttributes, placeholder, showHeaderSelectors } = _a, props = tslib.__rest(_a, ["inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeLabel", "iconInput", "iconHeaderPrev", "iconHeaderNext", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "renderCustomHeader", "className", "dateFormatCalendar", "style", "dataAttributes", "placeholder", "showHeaderSelectors"]);
+    const pickerType = React.useMemo(() => {
+        if (props.showQuarterYearPicker)
+            return PickerType.Quarter;
+        if (props.showMonthYearPicker)
+            return PickerType.Month;
+        if (props.showYearPicker)
+            return PickerType.Year;
+        return PickerType.Default;
+    }, [
+        props.showQuarterYearPicker,
+        props.showMonthYearPicker,
+        props.showYearPicker,
+    ]);
+    const DatePickerHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DDatePickerHeaderSelector, Object.assign({}, headerProps, { monthsShown: props.monthsShown, iconPrev: iconHeaderPrev, iconNext: iconHeaderNext, iconMaterialStyle: iconMaterialStyle, prevMonthAriaLabel: headerPrevMonthAriaLabel, nextMonthAriaLabel: headerNextMonthAriaLabel, iconSize: iconHeaderSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, minYearSelect: minYearSelect, maxYearSelect: maxYearSelect, pickerType: pickerType, showHeaderSelectors: showHeaderSelectors }))), [
+        iconHeaderNext,
+        iconHeaderPrev,
+        iconMaterialStyle,
         headerPrevMonthAriaLabel,
         headerNextMonthAriaLabel,
         iconHeaderSize,
@@ -812,10 +1242,13 @@ function DDatePicker(_a) {
         headerButtonTheme,
         minYearSelect,
         maxYearSelect,
+        pickerType,
+        showHeaderSelectors,
+        props.monthsShown,
     ]);
     const defaultRenderCustomHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DatePickerHeader, Object.assign({}, headerProps))), [DatePickerHeader]);
     const renderCustomHeader = React.useMemo(() => (renderCustomHeaderProp || defaultRenderCustomHeader), [defaultRenderCustomHeader, renderCustomHeaderProp]);
-    return (jsxRuntime.jsx(DatePicker, Object.assign({ selected: selected, calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, selectsRange: selectsRange, formatWeekDay: handleFormatWeekDay, customInput: (jsxRuntime.jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyleProp, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsxRuntime.jsx(DDatePickerTime, { id: timeId, label: timeLabel })), placeholderText: placeholder }, locale && { locale }, dataAttributes, props)));
+    return (jsxRuntime.jsx(DatePicker, Object.assign({ calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, customInput: (jsxRuntime.jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyle, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsxRuntime.jsx(DDatePickerTime, { id: timeId, label: timeLabel })), placeholderText: placeholder }, dataAttributes, props)));
 }
 
 function DInputMask(props, ref) {
@@ -1324,7 +1757,7 @@ function DListGroupItem({ as = 'li', action: actionProp, active, disabled, href,
         }
         return Object.assign(Object.assign({}, active && { 'aria-current': true }), disabled && { 'aria-disabled': true });
     }, [Tag, active, disabled]);
-    return (jsxRuntime.jsx(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, Tag === 'a' && href && { href }, onClick && { onClick }, ariaAttributes, dataAttributes, { children: children })));
+    return (jsxRuntime.jsx(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, Tag === 'a' && href && { href }, onClick && { onClick }, ariaAttributes, dataAttributes, Tag === 'button' && { type: 'button' }, { children: children })));
 }
 
 function DListGroup({ as = 'ul', numbered, flush, horizontal, children, className, style, dataAttributes, }) {
@@ -1434,9 +1867,6 @@ function DPaginator(_a) {
     return (jsxRuntime.jsx(ResponsivePagination, Object.assign({ navClassName: classNames('page-item-arrow', navClassName) }, backwardCompatibilityProps)));
 }
 
-/**
- * @deprecated
- */
 function DPopover({ children, renderComponent, open, setOpen, adjustContentToRender = false, className, style, dataAttributes, }) {
     const [isOpen, setIsOpen] = React.useState(false);
     React.useEffect(() => {

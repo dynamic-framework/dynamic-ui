@@ -1,0 +1,37 @@
+import { DragEvent, ChangeEvent } from 'react';
+import type { KeyboardEvent } from 'react';
+import { AcceptType, RejectedFile } from './utils';
+export type DBoxFileProps = {
+    accept: AcceptType;
+    multiple?: boolean;
+    minSize?: number;
+    maxSize?: number;
+    maxFiles?: number;
+    disabled?: boolean;
+    value?: Array<string>;
+    noClick?: boolean;
+    noKeyboard?: boolean;
+    noDrag?: boolean;
+    autoFocus?: boolean;
+    onDrop?: (acceptedFiles: File[], rejectedFiles: RejectedFile[], event?: Event) => void;
+    onDragEnter?: (event: DragEvent<HTMLDivElement>) => void;
+    onDragLeave?: (event: DragEvent<HTMLDivElement>) => void;
+    onFileDialogCancel?: () => void;
+    onError?: (error: Error) => void;
+};
+export default function useDBoxFile(props: DBoxFileProps): {
+    inputRef: import("react").RefObject<HTMLInputElement>;
+    rootRef: import("react").RefObject<HTMLInputElement>;
+    files: File[];
+    isDragValid: boolean;
+    isDragInvalid: boolean;
+    acceptAttr: string;
+    openFileDialog: () => void;
+    handleFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
+    handleDrop: (event: DragEvent<HTMLDivElement>) => void;
+    handleDragEnter: (event: DragEvent<HTMLDivElement>) => void;
+    handleDragLeave: (event: DragEvent<HTMLDivElement>) => void;
+    handleRemoveFile: (index: number) => void;
+    handleClick: () => void;
+    handleKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
+};
