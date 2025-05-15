@@ -38,21 +38,24 @@
 }
 
 .nav-underline {
+  --#{$prefix}nav-underline-border-width: #{$nav-underline-border-width};
+  --#{$prefix}nav-underline-border-color: #{$nav-underline-border-color};
+
   &.flex-column {
     .nav-link {
-      border-right: 1px solid var(--#{$prefix}nav-tabs-border-color);
-      border-bottom-color: transparent;
+      border-right: var(--#{$prefix}nav-underline-border-width) solid var(--#{$prefix}nav-underline-border-color);
+      border-bottom-width: 0;
     }
 
     .nav-link.active {
       background-color: var(--#{$prefix}nav-link-hover-bg);
-      border-right: 1px solid currentcolor;
+      border-right: var(--#{$prefix}nav-underline-border-width) solid currentcolor;
     }
   }
 
   .nav-link {
     padding: var(--#{$prefix}nav-link-padding-y) var(--#{$prefix}nav-link-padding-x);
-    border-bottom: 1px solid var(--#{$prefix}gray-300);
+    border-bottom: var(--#{$prefix}nav-underline-border-width) solid var(--#{$prefix}nav-underline-border-color);
   }
 }
 

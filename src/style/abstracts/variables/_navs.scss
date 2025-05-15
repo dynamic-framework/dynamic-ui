@@ -7,7 +7,7 @@ $nav-link-font-size: var(--#{$prefix}body-font-size) !default;
 $nav-link-font-weight: var(--#{$prefix}fw-normal) !default;
 $nav-link-color: var(--#{$prefix}gray-900) !default;
 $nav-link-hover-color: var(--#{$prefix}primary-600) !default;
-$nav-link-hover-bg: var(--#{$prefix}surface-primary) !default;
+$nav-link-hover-bg: var(--#{$prefix}surface-primary) !default; // Custom
 $nav-link-disabled-color: var(--#{$prefix}gray-300) !default;
 
 // custom
@@ -30,3 +30,5 @@ $nav-pills-link-active-bg: var(--#{$prefix}primary) !default;
 // scss-docs-end nav-variables
 
 $nav-underline-link-active-color: var(--#{$prefix}primary) !default;
+$nav-underline-border-width: 2px !default;
+$nav-underline-border-color: transparent !default;
