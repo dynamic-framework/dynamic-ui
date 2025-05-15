@@ -32,6 +32,10 @@ type Props =
 | 'scrollableYearDropdown'
 | 'dropdownMode'
 | 'yearItemNumber'
+| 'portalId'
+| 'withPortal'
+| 'onPortalKeyDown'
+| 'portalHost'
 >
 & {
   inputLabel?: string;
@@ -146,6 +150,8 @@ export default function DDatePicker(
 
   return (
     <DatePicker
+      {...dataAttributes}
+      {...props as DatePickerProps}
       calendarClassName="d-date-picker"
       renderCustomHeader={renderCustomHeader}
       customInput={(
@@ -170,8 +176,6 @@ export default function DDatePicker(
         />
       )}
       placeholderText={placeholder}
-      {...dataAttributes}
-      {...props as DatePickerProps}
     />
   );
 }
