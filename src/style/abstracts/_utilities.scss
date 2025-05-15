@@ -136,6 +136,16 @@ $utilities: map-merge(
       css-var: true,
       css-variable-name: fs-body-font-size,
       values: $body-font-sizes
-    )
+    ),
+    "line-height": (
+      property: line-height,
+      class: lh,
+      values: (
+        1: 1,
+        sm: var(--#{$prefix}lh-sm),
+        base: var(--#{$prefix}lh-base),
+        lg: var(--#{$prefix}lh-lg),
+      )
+    ),
   )
 );
