@@ -36,6 +36,8 @@ $font-weight-bolder: var(--#{$prefix}fw-bolder) !default;
 $font-weight-base: $font-weight-normal !default;
 
 $line-height-base: 1.5 !default;
+$line-height-sm: 1.25 !default;
+$line-height-lg: 2 !default;
 
 // custom
 $body-large-font-size-value: $font-size-base * 1.5 !default;   // 24px - 21.525px
