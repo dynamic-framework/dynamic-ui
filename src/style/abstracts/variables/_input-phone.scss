@@ -1,0 +1,62 @@
+// General styles
+$input-phone-height: 36px !default;
+$input-phone-font-size: var(--#{$prefix}fs-sm) !default;
+$input-phone-border-radius: var(--#{$prefix}ref-spacer-1) !default;
+$input-phone-border-color: var(--#{$prefix}gray-100) !default;
+$input-phone-background-color: var(--#{$prefix}white) !default;
+$input-phone-text-color: var(--#{$prefix}body-color) !default;
+$input-phone-disabled-background-color: var(--#{$prefix}gray-100) !default;
+$input-phone-disabled-text-color: var(--#{$prefix}gray-600) !default;
+
+// Country selector
+$input-phone-country-selector-border-color: transparent !default;
+$input-phone-country-selector-background-color: $input-phone-background-color !default;
+$input-phone-country-selector-background-color-hover: transparent !default;
+$input-phone-disabled-country-selector-background-color: $input-phone-disabled-background-color !default;
+
+// Country selector arrow
+$input-phone-country-selector-arrow-size: 4px !default;
+$input-phone-country-selector-arrow-color: var(--#{$prefix}gray-700) !default;
+$input-phone-disabled-country-selector-arrow-color: var(--#{$prefix}gray-500) !default;
+
+// Flag
+$input-phone-flag-width: 24px !default;
+$input-phone-flag-height: 24px !default;
+
+// Dropdown (country list)
+$input-phone-dropdown-top: calc(100% + var(--#{$prefix}ref-spacer-2)) !default;
+$input-phone-dropdown-left: 0 !default;
+$input-phone-dropdown-border-radius: var(--#{$prefix}border-radius-sm) !default;
+$input-phone-dropdown-border: 1px solid var(--#{$prefix}gray-200) !default;
+$input-phone-dropdown-shadow: 0 !default;
+
+// Dropdown items
+$input-phone-dropdown-item-background-color: $input-phone-background-color !default;
+$input-phone-dropdown-item-text-color: $input-phone-text-color !default;
+$input-phone-dropdown-item-dial-code-color: var(--#{$prefix}gray-500) !default;
+$input-phone-dropdown-item-height: 28px !default;
+$input-phone-dropdown-item-padding-x: var(--#{$prefix}ref-spacer-3) !default;
+$input-phone-dropdown-item-padding-y: var(--#{$prefix}ref-spacer-3) !default;
+$input-phone-dropdown-item-font-size: var(--#{$prefix}fs-body-small) !default;
+$input-phone-dropdown-item-font-weight: var(--#{$prefix}fw-bold) !default;
+
+// Selected / hover items
+$input-phone-hover-dropdown-item-background-color: var(--#{$prefix}secondary-25) !default;
+$input-phone-selected-dropdown-item-background-color: var(--#{$prefix}secondary-100) !default;
+$input-phone-selected-dropdown-item-text-color: $input-phone-text-color !default;
+$input-phone-selected-dropdown-item-dial-code-color: $input-phone-dropdown-item-dial-code-color !default;
+
+// Preferred list
+$input-phone-dropdown-preferred-list-item-background-color: var(--#{$prefix}gray-25) !default;
+
+// Preferred list separator
+$input-phone-dropdown-preferred-list-divider-margin: 0 !default;
+$input-phone-dropdown-preferred-list-divider-color: $input-phone-border-color !default;
+
+// Country code preview
+$input-phone-dial-code-preview-border-color: $input-phone-border-color !default;
+$input-phone-dial-code-preview-background-color: $input-phone-background-color !default;
+$input-phone-dial-code-preview-text-color: $input-phone-text-color !default;
+$input-phone-dial-code-preview-font-size: $input-phone-font-size !default;
+$input-phone-dial-code-preview-disabled-background-color: $input-phone-disabled-background-color !default;
+$input-phone-dial-code-preview-disabled-text-color: $input-phone-disabled-text-color !default;
