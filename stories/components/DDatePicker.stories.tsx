@@ -133,11 +133,6 @@ const config: Meta<typeof DDatePicker> = {
       defaultValue: false,
       table: { defaultValue: { summary: 'false' } },
     },
-    withPortal: {
-      type: 'boolean',
-      control: 'boolean',
-      description: 'Open calendar in portal',
-    },
     minDate: {
       type: 'string',
       control: 'text',
@@ -507,19 +502,6 @@ export const DateRangeYear: Story = {
   },
 };
 
-export const OnPortal: Story = {
-  render: ControlledDatePicker,
-  args: {
-    inline: false,
-    withPortal: true,
-    portalId: 'story-datepicker-portal',
-    showTimeInput: true,
-    timeLabel: 'Select time',
-    inputAriaLabel: 'Calendar',
-    dateFormat: 'dd/MM/yyyy',
-  },
-};
-
 export const MaterialStyle: Story = {
   render: function Render({ ...args }) {
     return (
@@ -532,8 +514,6 @@ export const MaterialStyle: Story = {
   },
   args: {
     inline: false,
-    withPortal: true,
-    portalId: 'story-datepicker-portal',
     showTimeInput: true,
     timeLabel: 'Select time',
     inputAriaLabel: 'Calendar',

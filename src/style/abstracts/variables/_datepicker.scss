@@ -44,7 +44,3 @@ $datepicker-range-color: var(--#{$prefix}body-color) !default;
 $datepicker-in-range-hover-bg: var(--#{$prefix}secondary-400) !default;
 $datepicker-in-range-disabled-color: var(--#{$prefix}secondary-300) !default;
 $datepicker-in-range-disabled-bg: var(--#{$prefix}gray-300) !default;
-
-// Portal
-$datepicker-portal-bg: rgba(var(--#{$prefix}black-rgb), .3) !default;
-// scss-docs-start breadcrumb-variables
