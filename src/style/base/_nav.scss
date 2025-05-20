@@ -8,7 +8,10 @@
   --#{$prefix}nav-tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
   --#{$prefix}nav-link-hover-bg: #{$nav-link-hover-bg};
   --#{$prefix}nav-link-hover-color: #{$nav-link-hover-color};
+}
 
+.nav-pills,
+.nav-tabs {
   .nav-link {
     &:hover {
       background-color: var(--#{$prefix}nav-link-hover-bg);
@@ -64,6 +67,7 @@
     &.active {
       border-bottom-color: transparent;
     }
+
     &:not(.active):is(:hover, :focus) {
       border-color: transparent;
     }
