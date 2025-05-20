@@ -47,25 +47,68 @@ To understand in more detail the aspects covered by this component, review the f
 The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
 and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/forms/input-group/#css)
 
-| Variable                                  | Class         | Type            | Description                 |
-|-------------------------------------------|---------------|-----------------|-----------------------------|
-| --${PREFIX_BS}label-color                 | :root         | css color unit  | Label color                 |
-| --${PREFIX_BS}label-font-weight           | :root         | css font weight | Label font weight           |
-| --${PREFIX_BS}label-font-size             | :root         | css length unit | Label font size             |
-| --${PREFIX_BS}label-padding-x             | :root         | css length unit | Label horizontal padding    |
-| --${PREFIX_BS}label-padding-y             | :root         | css length unit | Label vertical padding      |
-| --${PREFIX_BS}input-border-color          | .input-group  | css color unit  | Input border color          |
-| --${PREFIX_BS}input-border-width          | .input-group  | css length unit | Input border width          |
-| --${PREFIX_BS}input-border-radius         | .input-group  | css length unit | Input border radius         |
-| --${PREFIX_BS}input-focus-border-color    | .input-group  | css color unit  | Input focus border color    |
-| --${PREFIX_BS}input-focus-box-shadow      | .input-group  | css shadow      | Input focus box shadow      |
-| --${PREFIX_BS}input-disabled-bg           | .input-group  | css color unit  | Input disable background    |
-| --${PREFIX_BS}input-disabled-color        | .input-group  | css color unit  | Input disable color         |
-| --${PREFIX_BS}input-disabled-border-color | .input-group  | css color unit  | Input disable border color  |
-| --${PREFIX_BS}form-text-padding           | .form-text    | css length unit | Hint padding                |
-| --${PREFIX_BS}form-text-gap               | .form-text    | css length unit | Space between hint elements |
-| --${PREFIX_BS}form-text-color             | .form-text    | css color unit  | Hint color                  |
-| --${PREFIX_BS}form-control-text-align     | .form-control | css text align  | Input text align            |
+| Variable                                                               | Class             | Type              | Description                                        |
+|------------------------------------------------------------------------|-------------------|-------------------|----------------------------------------------------|
+| --${PREFIX_BS}label-color                                              | :root             | css color unit    | Label color                                        |
+| --${PREFIX_BS}label-font-weight                                        | :root             | css font weight   | Label font weight                                  |
+| --${PREFIX_BS}label-font-size                                          | :root             | css length unit   | Label font size                                    |
+| --${PREFIX_BS}label-padding-x                                          | :root             | css length unit   | Label horizontal padding                           |
+| --${PREFIX_BS}label-padding-y                                          | :root             | css length unit   | Label vertical padding                             |
+| --${PREFIX_BS}input-border-color                                       | .input-group      | css color unit    | Input border color                                 |
+| --${PREFIX_BS}input-border-width                                       | .input-group      | css length unit   | Input border width                                 |
+| --${PREFIX_BS}input-border-radius                                      | .input-group      | css length unit   | Input border radius                                |
+| --${PREFIX_BS}input-focus-border-color                                 | .input-group      | css color unit    | Input focus border color                           |
+| --${PREFIX_BS}input-focus-box-shadow                                   | .input-group      | css shadow        | Input focus box shadow                             |
+| --${PREFIX_BS}input-disabled-bg                                        | .input-group      | css color unit    | Input disable background                           |
+| --${PREFIX_BS}input-disabled-color                                     | .input-group      | css color unit    | Input disable color                                |
+| --${PREFIX_BS}input-disabled-border-color                              | .input-group      | css color unit    | Input disable border color                         |
+| --${PREFIX_BS}form-text-padding                                        | .form-text        | css length unit   | Hint padding                                       |
+| --${PREFIX_BS}form-text-gap                                            | .form-text        | css length unit   | Space between hint elements                        |
+| --${PREFIX_BS}form-text-color                                          | .form-text        | css color unit    | Hint color                                         |
+| --${PREFIX_BS}form-control-text-align                                  | .form-control     | css text align    | Input text align                                   |
+| --${PREFIX_BS}input-phone-height                                       | .d-input-phone    | css length unit   | General height of the input                        |
+| --${PREFIX_BS}input-phone-font-size                                    | .d-input-phone    | css length unit   | Font size of the input                             |
+| --${PREFIX_BS}input-phone-border-radius                                | .d-input-phone    | css length unit   | Border radius of the input                         |
+| --${PREFIX_BS}input-phone-border-color                                 | .d-input-phone    | css color unit    | Border color of the input                          |
+| --${PREFIX_BS}input-phone-background-color                             | .d-input-phone    | css color unit    | Background color of the input                      |
+| --${PREFIX_BS}input-phone-text-color                                   | .d-input-phone    | css color unit    | Text color of the input                            |
+| --${PREFIX_BS}input-phone-disabled-background-color                    | .d-input-phone    | css color unit    | Background color when input is disabled            |
+| --${PREFIX_BS}input-phone-disabled-text-color                          | .d-input-phone    | css color unit    | Text color when input is disabled                  |
+| --${PREFIX_BS}input-phone-country-selector-border-color                | .d-input-phone    | css color unit    | Border color of the country selector               |
+| --${PREFIX_BS}input-phone-country-selector-background-color            | .d-input-phone    | css color unit    | Background color of the country selector           |
+| --${PREFIX_BS}input-phone-country-selector-background-color-hover      | .d-input-phone    | css color unit    | Background color of the country selector on hover  |
+| --${PREFIX_BS}input-phone-disabled-country-selector-background-color   | .d-input-phone    | css color unit    | Background color when country selector is disabled |
+| --${PREFIX_BS}input-phone-country-selector-arrow-size                  | .d-input-phone    | css length unit   | Size of the country selector arrow                 |
+| --${PREFIX_BS}input-phone-country-selector-arrow-color                 | .d-input-phone    | css color unit    | Color of the country selector arrow                |
+| --${PREFIX_BS}input-phone-disabled-country-selector-arrow-color        | .d-input-phone    | css color unit    | Color of the arrow when selector is disabled       |
+| --${PREFIX_BS}input-phone-flag-width                                   | .d-input-phone    | css length unit   | Width of the flag                                  |
+| --${PREFIX_BS}input-phone-flag-height                                  | .d-input-phone    | css length unit   | Height of the flag                                 |
+| --${PREFIX_BS}input-phone-dropdown-top                                 | .d-input-phone    | css length unit   | Top position of the dropdown                       |
+| --${PREFIX_BS}input-phone-dropdown-left                                | .d-input-phone    | css length unit   | Left position of the dropdown                      |
+| --${PREFIX_BS}input-phone-dropdown-border-radius                       | .d-input-phone    | css length unit   | Border radius of the dropdown                      |
+| --${PREFIX_BS}input-phone-dropdown-border                              | .d-input-phone    | css border        | Border of the dropdown                             |
+| --${PREFIX_BS}input-phone-dropdown-shadow                              | .d-input-phone    | css shadow        | Shadow of the dropdown                             |
+| --${PREFIX_BS}input-phone-dropdown-item-height                         | .d-input-phone    | css length unit   | Height of each dropdown item                       |
+| --${PREFIX_BS}input-phone-dropdown-item-padding                        | .d-input-phone    | css length unit   | Padding of each dropdown item                      |
+| --${PREFIX_BS}input-phone-dropdown-item-font-size                      | .d-input-phone    | css length unit   | Font size of each dropdown item                    |
+| --${PREFIX_BS}input-phone-dropdown-item-font-weight                    | .d-input-phone    | css font weight   | Font weight of each dropdown item                  |
+| --${PREFIX_BS}input-phone-dropdown-item-background-color               | .d-input-phone    | css color unit    | Background color of each dropdown item             |
+| --${PREFIX_BS}input-phone-dropdown-item-text-color                     | .d-input-phone    | css color unit    | Text color of each dropdown item                   |
+| --${PREFIX_BS}input-phone-dropdown-item-dial-code-color                | .d-input-phone    | css color unit    | Color of the dial code in dropdown item            |
+| --${PREFIX_BS}input-phone-hover-dropdown-item-background-color         | .d-input-phone    | css color unit    | Background color when hovering over dropdown item  |
+| --${PREFIX_BS}input-phone-selected-dropdown-item-background-color      | .d-input-phone    | css color unit    | Background color of the selected dropdown item     |
+| --${PREFIX_BS}input-phone-selected-dropdown-item-color                 | .d-input-phone    | css color unit    | Text color of the selected dropdown item           |
+| --${PREFIX_BS}input-phone-selected-dropdown-item-font-weight           | .d-input-phone    | css font weight   | Font weight of the selected dropdown item          |
+| --${PREFIX_BS}input-phone-selected-dropdown-item-dial-code-color       | .d-input-phone    | css color unit    | Dial code color of the selected dropdown item      |
+| --${PREFIX_BS}input-phone-dropdown-preferred-list-item-background-color| .d-input-phone    | css color unit    | Background color of preferred list items           |
+| --${PREFIX_BS}input-phone-dropdown-preferred-list-divider-margin       | .d-input-phone    | css length unit   | Margin of the preferred list divider               |
+| --${PREFIX_BS}input-phone-dropdown-preferred-list-divider-color        | .d-input-phone    | css color unit    | Color of the preferred list divider                |
+| --${PREFIX_BS}input-phone-dial-code-preview-border-color               | .d-input-phone    | css color unit    | Border color of the dial code preview              |
+| --${PREFIX_BS}input-phone-dial-code-preview-background-color           | .d-input-phone    | css color unit    | Background color of the dial code preview          |
+| --${PREFIX_BS}input-phone-dial-code-preview-text-color                 | .d-input-phone    | css color unit    | Text color of the dial code preview                |
+| --${PREFIX_BS}input-phone-dial-code-preview-font-size                  | .d-input-phone    | css length unit   | Font size of the dial code preview                 |
+| --${PREFIX_BS}input-phone-dial-code-preview-disabled-background-color  | .d-input-phone    | css color unit    | Background color when dial code preview is disabled|
+| --${PREFIX_BS}input-phone-dial-code-preview-disabled-text-color        | .d-input-phone    | css color unit    | Text color when dial code preview is disabled      |
         `,
       },
     },

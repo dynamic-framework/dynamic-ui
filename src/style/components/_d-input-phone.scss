@@ -38,8 +38,7 @@
 
   // Dropdown items
   --#{$prefix}input-phone-dropdown-item-height: #{$input-phone-dropdown-item-height};
-  --#{$prefix}input-phone-dropdown-item-padding-x: #{$input-phone-dropdown-item-padding-x};
-  --#{$prefix}input-phone-dropdown-item-padding-y: #{$input-phone-dropdown-item-padding-y};
+  --#{$prefix}input-phone-dropdown-item-padding: #{$input-phone-dropdown-item-padding};
   --#{$prefix}input-phone-dropdown-item-font-size: #{$input-phone-dropdown-item-font-size};
   --#{$prefix}input-phone-dropdown-item-font-weight: #{$input-phone-dropdown-item-font-weight};
   --#{$prefix}input-phone-dropdown-item-background-color: #{$input-phone-dropdown-item-background-color};
@@ -49,7 +48,8 @@
   // Selected / hover items
   --#{$prefix}input-phone-hover-dropdown-item-background-color: #{$input-phone-hover-dropdown-item-background-color};
   --#{$prefix}input-phone-selected-dropdown-item-background-color: #{$input-phone-selected-dropdown-item-background-color};
-  --#{$prefix}input-phone-selected-dropdown-item-text-color: #{$input-phone-selected-dropdown-item-text-color};
+  --#{$prefix}input-phone-selected-dropdown-item-color: #{$input-phone-selected-dropdown-item-color};
+  --#{$prefix}input-phone-selected-dropdown-item-font-weight: #{$input-phone-selected-dropdown-item-font-weight};
   --#{$prefix}input-phone-selected-dropdown-item-dial-code-color: #{$input-phone-selected-dropdown-item-dial-code-color};
 
   // Preferred list
@@ -189,10 +189,10 @@
     display: flex;
     align-items: center;
     min-height: var(--#{$prefix}input-phone-dropdown-item-height);
-    padding: var(--#{$prefix}input-phone-dropdown-item-padding-y) var(--#{$prefix}input-phone-dropdown-item-padding-x);
+    padding: var(--#{$prefix}input-phone-dropdown-item-padding);
     cursor: pointer;
 
-    &:not(&--selected, &--focused):hover {
+    &:hover {
       background-color: var(--#{$prefix}input-phone-hover-dropdown-item-background-color);
     }
 
@@ -216,11 +216,13 @@
 
     &--selected,
     &--focused {
-      color: var(--#{$prefix}input-phone-selected-dropdown-item-text-color, var(--#{$prefix}input-phone-text-color));
+      font-weight: var(--#{$prefix}input-phone-selected-dropdown-item-font-weight);
+      color: var(--#{$prefix}input-phone-selected-dropdown-item-color, var(--#{$prefix}input-phone-text-color));
       background-color: var(--#{$prefix}input-phone-selected-dropdown-item-background-color);
 
       .react-international-phone-country-selector-dropdown__list-item-dial-code {
-        color: var(--#{$prefix}input-phone-selected-dropdown-item-dial-code-color, var(--#{$prefix}input-phone-dropdown-item-dial-code-color));
+        --#{$prefix}input-phone-dropdown-item-font-weight: var(--#{$prefix}input-phone-selected-dropdown-item-font-weight);
+        --#{$prefix}input-phone-dropdown-item-dial-code-color: var(--#{$prefix}input-phone-selected-dropdown-item-dial-code-color);
       }
     }
 
