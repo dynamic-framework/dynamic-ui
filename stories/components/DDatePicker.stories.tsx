@@ -6,15 +6,12 @@ import {
   useState,
 } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { registerLocale } from 'react-datepicker';
 import { addDays } from 'date-fns';
-import es from 'date-fns/locale/es';
+import { es } from 'date-fns/locale';
 
 import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
-
-registerLocale('es', es);
 
 const config: Meta<typeof DDatePicker> = {
   title: 'Design System/Components/Datepicker',
@@ -279,11 +276,11 @@ function ControlledDatePicker(props: ComponentProps<typeof DDatePicker>) {
 
   return (
     <DDatePicker
+      {...rest}
       key={JSON.stringify(props, null, 0)}
       selected={date}
       onChange={(newDate: Date | null) => setDate(newDate)}
       showHeaderSelectors
-      {...rest}
     />
   );
 }
