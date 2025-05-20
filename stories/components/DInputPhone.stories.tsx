@@ -47,6 +47,10 @@ To understand in more detail the aspects covered by this component, review the f
 The Bootstrap documentation provides details on the default [Input Form CSS Variables](https://getbootstrap.com/docs/5.3/forms/form-control/#css)
 and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/forms/input-group/#css)
 
+The original CSS variables for \`react-international-phone\` use the prefix \`--react-international-phone\`.
+However, in this component, the prefix has been changed to \`--bs-input-phone\`, 
+and all variables are scoped under the \`.d-input-phone\` class.
+
 | Variable                                                               | Class             | Type              | Description                                        |
 |------------------------------------------------------------------------|-------------------|-------------------|----------------------------------------------------|
 | --${PREFIX_BS}label-color                                              | :root             | css color unit    | Label color                                        |
