@@ -5,6 +5,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   transform: {
     ...createDefaultPreset().transform,
+    '^.+\\.[jt]sx?$': 'babel-jest',
   },
   maxWorkers: 4,
   cacheDirectory: '<rootDir>/.jest-cache',
@@ -12,7 +13,7 @@ module.exports = {
     '<rootDir>/tests/setup.ts',
   ],
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/',
+    '<rootDir>/node_modules/(?!(react-responsive-pagination)/)',
     '<rootDir>/dist/',
     '<rootDir>/dist-transpiled/',
   ],
