@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import DChip from './DChip';
 
-it('should render badge', () => {
+it('should render a chip', () => {
   const props = {
     theme: 'primary',
     text: 'Test',
