@@ -8,7 +8,8 @@
   --#{$prefix}select-menu-z-index: #{$zindex-dropdown};
   --#{$prefix}select-option-focus-bg: var(--#{$prefix}gray-100);
   --#{$prefix}select-option-selected-color: var(--#{$prefix}secondary);
-  --#{$prefix}select-option-selected-bg: var(--#{$prefix}gray-100);
+  --#{$prefix}select-option-selected-bg: unset;
+  --#{$prefix}select-option-selected-font-weight: var(--#{$prefix}fw-bold);
   --#{$prefix}select-option-is-checkbox-font-size: var(--#{$prefix}body-font-size);
   --#{$prefix}select-option-is-checkbox-font-weight: var(--#{$prefix}fw-normal);
   --#{$prefix}select-option-is-checkbox-color: var(--#{$prefix}gray-900);
@@ -86,7 +87,7 @@
     width: 100%;
     padding: $input-padding-y $input-padding-x;
     font-family: $input-font-family;
-    @include rfs($input-font-size, $input-font-size);
+    @include rfs($input-font-size);
     font-weight: $input-font-weight;
     line-height: $input-line-height;
     color: $input-color;
@@ -138,8 +139,13 @@
   }
 
   .d-select__option--is-selected {
+    font-weight: var(--#{$prefix}select-option-selected-font-weight);
     color: var(--#{$prefix}select-option-selected-color);
     background: var(--#{$prefix}select-option-selected-bg);
+
+    &:hover {
+      --#{$prefix}select-option-selected-bg: var(--#{$prefix}gray-100);
+    }
   }
 
   // select option with checkbox
