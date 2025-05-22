@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import DBoxFile from './DBoxFile';
 
-it('should render base boxfile', () => {
+it('should render base box file', () => {
   const props = {
     text: 'Upload your file here',
   };
