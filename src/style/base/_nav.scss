@@ -29,14 +29,6 @@
   }
 }
 
-.nav-pills {
-  .nav-link.active {
-    &:hover {
-      color: var(--#{$prefix}nav-link-hover-color);
-    }
-  }
-}
-
 .nav-underline {
   --#{$prefix}nav-underline-border-width: #{$nav-underline-border-width};
   --#{$prefix}nav-underline-border-color: #{$nav-underline-border-color};
