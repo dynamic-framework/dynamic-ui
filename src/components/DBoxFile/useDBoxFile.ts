@@ -45,7 +45,7 @@ export type DBoxFileProps = {
   ) => void;
   onDragEnter?: (event: DragEvent<HTMLDivElement>) => void;
   onDragLeave?: (event: DragEvent<HTMLDivElement>) => void;
-  onFileDialogCancel?: () => void;
+  onLoad?: (acceptedFiles: File[]) => void;
   onError?: (error: Error) => void;
 };
 
@@ -63,6 +63,7 @@ export default function useDBoxFile(props: DBoxFileProps) {
     onDragLeave,
     onDrop,
     onError,
+    onLoad,
     noClick,
     noKeyboard,
     noDrag,
@@ -116,12 +117,17 @@ export default function useDBoxFile(props: DBoxFileProps) {
       const [accepted, errors] = await urlsToFiles(preloadUrls);
       if (accepted.length) {
         setFiles(accepted);
+        onLoad?.(accepted);
       }
       if (errors.length) {
         onError?.(new Error(errors.map((e) => e.message).join(', ')));
       }
     })();
-  }, [preloadUrls, onError]);
+  }, [
+    preloadUrls,
+    onError,
+    onLoad,
+  ]);
 
   const processFiles = useCallback((inputFiles: File[], event?: Event) => {
     let acceptedFiles: File[] = [];
@@ -170,7 +176,7 @@ export default function useDBoxFile(props: DBoxFileProps) {
     }
   }, [
     acceptAttr,
-    files.length,
+    files,
     maxFiles,
     maxSize,
     minSize,
@@ -273,7 +279,9 @@ export default function useDBoxFile(props: DBoxFileProps) {
 
   const handleRemoveFile = useCallback((index: number) => {
     setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-  }, []);
+    // Done twice to avoid mismatch between files and setFiles value
+    onLoad?.(files.filter((_, i) => i !== index));
+  }, [files, onLoad]);
 
   const openFileDialog = useCallback(() => {
     if (disabled) return;
