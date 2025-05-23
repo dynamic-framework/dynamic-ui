@@ -9,6 +9,7 @@ import type {
   ReactDatePickerCustomHeaderProps,
 } from 'react-datepicker';
 
+import { Locale } from 'date-fns';
 import DDatePickerTime from './components/DDatePickerTime';
 import DDatePickerInput from './components/DDatePickerInput';
 import DDatePickerHeaderSelector, { PickerType } from './components/DDatePickerHeaderSelector';
@@ -36,6 +37,7 @@ type Props =
 | 'withPortal'
 | 'onPortalKeyDown'
 | 'portalHost'
+| 'locale'
 >
 & {
   inputLabel?: string;
@@ -59,6 +61,7 @@ type Props =
   valid?: boolean;
   placeholder?: string;
   showHeaderSelectors?: boolean;
+  locale?: Locale,
 };
 
 export default function DDatePicker(
@@ -122,6 +125,7 @@ export default function DDatePicker(
       maxYearSelect={maxYearSelect}
       pickerType={pickerType}
       showHeaderSelectors={showHeaderSelectors}
+      locale={props.locale}
     />
   ), [
     iconHeaderNext,
@@ -137,6 +141,7 @@ export default function DDatePicker(
     pickerType,
     showHeaderSelectors,
     props.monthsShown,
+    props.locale,
   ]);
 
   const defaultRenderCustomHeader = useCallback((headerProps: ReactDatePickerCustomHeaderProps) => (

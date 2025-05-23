@@ -4,10 +4,10 @@ import {
   format,
   getMonth,
   getYear,
+  Locale,
 } from 'date-fns';
 import type { ComponentProps } from 'react';
 import type { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
-import { enUS } from 'date-fns/locale';
 
 import DButton from '../../DButton';
 import DSelect from '../../DSelect';
@@ -55,6 +55,7 @@ type Props =
   maxYearSelect?: number;
   showHeaderSelectors?: boolean;
   monthsShown?: number;
+  locale?: Locale;
 } & Omit<ComponentProps<typeof DButton>,
 | 'iconStart'
 | 'onClick'
@@ -95,6 +96,7 @@ export default function DDatePickerHeaderSelector(
     maxYearSelect = 2100,
     showHeaderSelectors = false,
     customHeaderCount,
+    locale,
   }: Props,
 ) {
   const {
@@ -121,8 +123,8 @@ export default function DDatePickerHeaderSelector(
 
   const arrayMonths = useMemo(() => Array.from(
     { length: 12 },
-    (_, i) => format(new Date(2000, i), 'LLLL', { locale: enUS }),
-  ), []);
+    (_, i) => format(new Date(2000, i), 'LLLL', { locale }),
+  ), [locale]);
 
   const months = useMemo(() => arrayMonths.map((month, i) => ({
     label: month,
