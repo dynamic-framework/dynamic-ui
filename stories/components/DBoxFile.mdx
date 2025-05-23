@@ -13,6 +13,7 @@ import {
   ExampleDBoxFileDisabled,
   ExampleDBoxFileSelected,
   ExampleDBoxFileUrlFiles,
+  ExampleDBoxPreviewFile,
 } from './DBoxFileExamples';
 import { DBoxFile } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
@@ -96,4 +97,78 @@ The component's behavior is inspired by the [React Dropzone](https://react-dropz
   </div>
 </Unstyled>
 
+<hr/>
+
+### Preview files type image
+
+Preview can be easily achieved as follows:
+- `onLoad` prop, which is called when `value` are set and returns the files.
+- `onDrop` prop, which is called when files are dropped into the component, and returns the accepted and rejected files.
+
+Here is an example of how to use the `onLoad` and `onDrop` props to set the preview of the files
+
+<Unstyled>
+  <div className="d-flex justify-content-center mt-8">
+    <ExampleDBoxPreviewFile />
+  </div>
+</Unstyled>
+
+<Source
+  language="tsx"
+  dark
+  code={
+    `
+function YourComponent() {
+  const [previews, setPreviews] = useState<(File & { preview: string })[]>([]);
+
+  const setImagePreview = useCallback((files: File[]) => {
+    setPreviews(files.map((file) => Object.assign(file, {
+      preview: URL.createObjectURL(file),
+    })));
+  }, []);
+
+  const handleDrop = useCallback((accepted: File[], rejected: RejectedFile[]) => {
+    if (accepted.length > 0) {
+      setImagePreview([...previews, ...accepted]);
+    }
+  }, [previews, setImagePreview]);
+
+  return (
+    <>
+      <DBoxFile
+        accept={{
+          'image/*': ['.png', '.jpg', '.jpeg', '.svg'],
+        }}
+        onDrop={handleDrop}
+        onLoad={setImagePreview}
+        multiple
+      >
+        <div className="d-flex flex-column gap-4 align-items-center">
+          <p className="m-0">
+            Drag and drop it here or
+          </p>
+          <p className="text-gray m-0 small">
+            Allowed formats: svg, png, jpg
+          </p>
+        </div>
+      </DBoxFile>
+      <aside className="d-flex flex-wrap gap-4">
+        {previews.map(({ name, preview }) => (
+          <img
+            className="img-thumbnail"
+            src={preview}
+            alt={name}
+            onLoad={() => URL.revokeObjectURL(preview)}
+            style={{
+              width: '120px',
+            }}
+          />
+        ))}
+      </aside>
+    </>
+  );
+}
+    `
+  }
+/>
 <hr/>
