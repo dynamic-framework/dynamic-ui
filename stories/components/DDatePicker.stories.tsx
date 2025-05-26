@@ -109,10 +109,6 @@ const config: Meta<typeof DDatePicker> = {
       control: 'text',
       type: 'string',
     },
-    timeLabel: {
-      control: 'text',
-      type: 'string',
-    },
     autoFocus: {
       type: 'boolean',
       control: 'boolean',
@@ -462,8 +458,8 @@ export const WithTime: Story = {
   args: {
     inline: true,
     showTimeInput: true,
-    timeLabel: 'Select time',
-    dateFormat: 'dd/MM/yyyy',
+    timeInputLabel: 'Select time',
+    dateFormat: 'dd/MM/yyyy h:mm aa',
   },
 };
 
@@ -512,7 +508,7 @@ export const MaterialStyle: Story = {
   args: {
     inline: false,
     showTimeInput: true,
-    timeLabel: 'Select time',
+    timeInputLabel: 'Select time',
     inputAriaLabel: 'Calendar',
     dateFormat: 'dd/MM/yyyy',
   },

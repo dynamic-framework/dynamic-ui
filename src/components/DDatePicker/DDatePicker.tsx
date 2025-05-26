@@ -47,7 +47,6 @@ type Props =
   iconInput?: string;
   inputId?: string;
   timeId?: string;
-  timeLabel?: string;
   iconHeaderPrev?: string;
   iconHeaderNext?: string;
   iconHeaderSize?: ComponentSize;
@@ -72,7 +71,7 @@ export default function DDatePicker(
     inputActionAriaLabel = 'open calendar',
     inputId = 'input-calendar',
     timeId = 'input-time',
-    timeLabel,
+    timeInputLabel,
     iconInput,
     iconHeaderPrev,
     iconHeaderNext,
@@ -159,6 +158,7 @@ export default function DDatePicker(
       {...props as DatePickerProps}
       calendarClassName="d-date-picker"
       renderCustomHeader={renderCustomHeader}
+      placeholderText={placeholder}
       customInput={(
         <DDatePickerInput
           id={inputId}
@@ -175,12 +175,8 @@ export default function DDatePicker(
         />
       )}
       customTimeInput={(
-        <DDatePickerTime
-          id={timeId}
-          label={timeLabel}
-        />
+        <DDatePickerTime id={timeId} />
       )}
-      placeholderText={placeholder}
     />
   );
 }

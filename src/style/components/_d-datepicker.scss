@@ -271,41 +271,6 @@
   }
 }
 
-// .react-datepicker__input-time-container {
-//   clear: both;
-//   width: 100%;
-//   float: left;
-//   margin: var(--#{$prefix}ref-spacer-2);
-//   text-align: left;
-
-//   .react-datepicker-time__caption {
-//     display: inline-block;
-//   }
-
-//   .react-datepicker-time__input-container {
-//     display: inline-block;
-
-//     .react-datepicker-time__input {
-//       display: inline-block;
-//       margin-left: var(--#{$prefix}ref-spacer-2);
-
-//       input {
-//         width: auto;
-//       }
-
-//       input[type="time"]::-webkit-inner-spin-button,
-//       input[type="time"]::-webkit-outer-spin-button {
-//         -webkit-appearance: none;
-//         margin: 0;
-//       }
-
-//       input[type="time"] {
-//         -moz-appearance: textfield;
-//       }
-//     }
-//   }
-// }
-
 // .react-datepicker__time-container {
 //   float: right;
 //   border-left: $datepicker__border;
