@@ -1,7 +1,5 @@
 jest.mock('react-content-loader', () => jest.fn());
 
-jest.mock('react-responsive-pagination', () => jest.fn());
-
 jest.mock('@react-input/mask', () => ({
   InputMask: jest.fn(),
 }));
@@ -28,3 +26,18 @@ Object.defineProperty(global.window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
+
+// eslint-disable-next-line no-undef
+globalThis.ResizeObserver = class {
+  observe() {
+    return this;
+  }
+
+  unobserve() {
+    return this;
+  }
+
+  disconnect() {
+    return this;
+  }
+};
