@@ -149,7 +149,6 @@
 
     .d-select {
       --#{$prefix}select-option-selected-bg: var(--#{$prefix}datepicker-bg);
-      --#{$prefix}select-option-selected-color: var(--#{$prefix}datepicker-text-color);
 
       .d-select__control {
         padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
