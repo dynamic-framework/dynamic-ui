@@ -99,13 +99,13 @@
   line-height: 0;
 
   .react-datepicker__triangle {
-    --#{$prefix}datepicker-border-color: var(--#{$prefix}gray-400);
+    --#{$prefix}datepicker-border-color: var(--#{$prefix}gray-100);
     stroke: var(--#{$prefix}datepicker-border-color);
   }
 
   &[data-placement^="bottom"] {
     .react-datepicker__triangle {
-      --#{$prefix}datepicker-header-bg: var(--#{$prefix}gray-100);
+      --#{$prefix}datepicker-header-bg: var(--#{$prefix}secondary-soft);
       fill: var(--#{$prefix}datepicker-header-bg);
       color: var(--#{$prefix}datepicker-header-bg);
     }
