@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import {
   DBoxFile,
   DButton,
@@ -17,10 +17,26 @@ type Props = Pick<DBoxFileProps,
 | 'value'
 > & {
   className?: string;
+  showPreview?: boolean;
 };
 
-function ExampleDBoxFile(props: Props) {
+function Thumbnail({ name, filePreview }: { name: string, filePreview: string }) {
+  return (
+    <img
+      className="img-thumbnail"
+      src={filePreview}
+      alt={name}
+      onLoad={() => URL.revokeObjectURL(filePreview)}
+      style={{
+        width: '120px',
+      }}
+    />
+  );
+}
+
+function ExampleDBoxFile({ showPreview, ...props }: Props) {
   const { toast } = useDToast();
+  const [previews, setPreviews] = useState<(File & { preview: string })[]>([]);
   const onError = useCallback((error: unknown) => {
     toast({
       title: 'Error',
@@ -29,12 +45,19 @@ function ExampleDBoxFile(props: Props) {
     });
   }, [toast]);
 
+  const setImagePreview = useCallback((files: File[]) => {
+    setPreviews(files.map((file) => Object.assign(file, {
+      preview: URL.createObjectURL(file),
+    })));
+  }, []);
+
   const handleDrop = useCallback((accepted: File[], rejected: RejectedFile[]) => {
     if (accepted.length > 0) {
       toast({
         title: 'Accepted file',
         theme: 'success',
       });
+      setImagePreview([...previews, ...accepted]);
     }
     rejected.forEach(({ file, errors }) => {
       toast({
@@ -43,36 +66,50 @@ function ExampleDBoxFile(props: Props) {
         theme: 'danger',
       });
     });
-  }, [toast]);
+  }, [previews, setImagePreview, toast]);
 
   return (
-    <DBoxFile
-      accept={{
-        'image/*': ['.png', '.jpg', '.jpeg', '.svg'],
-      }}
-      onDrop={handleDrop}
-      maxSize={1024 * 1024}
-      onError={onError}
-      {...props}
-    >
-      {(openFileDialog) => (
-        <div className="d-flex flex-column gap-4 align-items-center">
-          <p className="m-0">
-            Drag and drop it here or
-          </p>
-          <DButton
-            theme="primary"
-            variant="outline"
-            text="Select the file"
-            onClick={openFileDialog}
-            {...props.disabled && { disabled: true }}
-          />
-          <p className="text-gray m-0 small">
-            Allowed formats: svg, png, jpg
-          </p>
-        </div>
+    <>
+      <DBoxFile
+        accept={{
+          'image/*': ['.png', '.jpg', '.jpeg', '.svg'],
+        }}
+        onDrop={handleDrop}
+        maxSize={1024 * 1024}
+        onError={onError}
+        onLoad={setImagePreview}
+        {...props}
+      >
+        {(openFileDialog) => (
+          <div className="d-flex flex-column gap-4 align-items-center">
+            <p className="m-0">
+              Drag and drop it here or
+            </p>
+            <DButton
+              theme="primary"
+              variant="outline"
+              text="Select the file"
+              onClick={openFileDialog}
+              {...props.disabled && { disabled: true }}
+            />
+            <p className="text-gray m-0 small">
+              Allowed formats: svg, png, jpg
+            </p>
+          </div>
+        )}
+      </DBoxFile>
+      {showPreview && (
+        <aside className="d-flex flex-wrap gap-4">
+          {previews.map(({ name, preview }) => (
+            <Thumbnail
+              key={name}
+              name={name}
+              filePreview={preview}
+            />
+          ))}
+        </aside>
       )}
-    </DBoxFile>
+    </>
   );
 }
 
@@ -127,11 +164,29 @@ export function ExampleDBoxFileUrlFiles() {
       >
         <ExampleDBoxFile
           value={[
-            'https://placehold.co/600x400',
-            '/../assets/1.png',
-            '/../assets/2.png',
-            '/../assets/3.png',
+            'https://cdn.modyo.cloud/uploads/8c051a86-0d5b-4064-b5fd-76fb346e0fb0/original/dynamic_logo.svg',
           ]}
+        />
+      </div>
+      <DToastContainer position="top-right" />
+    </DContextProvider>
+  );
+}
+
+export function ExampleDBoxPreviewFile() {
+  return (
+    <DContextProvider>
+      <div
+        style={{ width: '320px' }}
+        className="d-flex flex-column justify-content-center gap-3"
+      >
+        <ExampleDBoxFile
+          value={[
+            'https://placehold.co/600x400',
+            'https://cdn.modyo.cloud/uploads/8c051a86-0d5b-4064-b5fd-76fb346e0fb0/original/dynamic_logo.svg',
+          ]}
+          showPreview
+          multiple
         />
       </div>
       <DToastContainer position="top-right" />
