@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import classnames from 'classnames';
 
 import { useMemo } from 'react';
@@ -108,7 +109,7 @@ export default function DBoxFile(
         <ul className="d-box-files">
           {files.map((file, index) => (
             <DInput
-              key={file.name}
+              key={`${file.name} ${index}`}
               value={file.name}
               iconStart="paperclip"
               iconEnd="trash"
