@@ -35,15 +35,15 @@ $input-phone-dropdown-item-background-color: $input-phone-background-color !defa
 $input-phone-dropdown-item-text-color: $input-phone-text-color !default;
 $input-phone-dropdown-item-dial-code-color: var(--#{$prefix}gray-500) !default;
 $input-phone-dropdown-item-height: 28px !default;
-$input-phone-dropdown-item-padding-x: var(--#{$prefix}ref-spacer-3) !default;
-$input-phone-dropdown-item-padding-y: var(--#{$prefix}ref-spacer-3) !default;
+$input-phone-dropdown-item-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-3) !default;
 $input-phone-dropdown-item-font-size: var(--#{$prefix}fs-body-small) !default;
-$input-phone-dropdown-item-font-weight: var(--#{$prefix}fw-bold) !default;
+$input-phone-dropdown-item-font-weight: var(--#{$prefix}fw-normal) !default;
 
 // Selected / hover items
-$input-phone-hover-dropdown-item-background-color: var(--#{$prefix}secondary-25) !default;
-$input-phone-selected-dropdown-item-background-color: var(--#{$prefix}secondary-100) !default;
-$input-phone-selected-dropdown-item-text-color: $input-phone-text-color !default;
+$input-phone-hover-dropdown-item-background-color: var(--#{$prefix}gray-100) !default;
+$input-phone-selected-dropdown-item-background-color: unset !default;
+$input-phone-selected-dropdown-item-color: $input-phone-text-color !default;
+$input-phone-selected-dropdown-item-font-weight: var(--#{$prefix}fw-bold) !default;
 $input-phone-selected-dropdown-item-dial-code-color: $input-phone-dropdown-item-dial-code-color !default;
 
 // Preferred list
