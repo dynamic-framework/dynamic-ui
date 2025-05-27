@@ -157,6 +157,7 @@
 
       .d-select__control {
         padding: var(--#{$prefix}ref-spacer-1) var(--#{$prefix}ref-spacer-2);
+        flex-wrap: nowrap;
       }
 
       .d-select__menu-list {
