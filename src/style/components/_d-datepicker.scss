@@ -73,6 +73,11 @@
   --#{$prefix}datepicker-in-range-disabled-color: #{$datepicker-in-range-disabled-color};
   --#{$prefix}datepicker-in-range-disabled-bg: #{$datepicker-in-range-disabled-bg};
 
+  // Time
+  --#{$prefix}datepicker-time-list-item-width: 85px;
+  --#{$prefix}datepicker-time-list-item-padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-1);
+
+
   background-color: var(--#{$prefix}datepicker-bg);
   border: var(--#{$prefix}datepicker-border);
   border-radius: var(--#{$prefix}datepicker-border-radius);
@@ -222,6 +227,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  color: var(--#{$prefix}datepicker-day-names-color);
 }
 
 .react-datepicker__month-container {
@@ -270,76 +276,59 @@
     width: 6ch;
   }
 }
+// START TODO: Revisar con Mati diseño del time
+.react-datepicker__time-container {
+  float: right;
+  border-left: 1px solid var(--#{$prefix}gray-100);
+  width: var(--#{$prefix}datepicker-time-list-item-width);
 
-// .react-datepicker__time-container {
-//   float: right;
-//   border-left: $datepicker__border;
-//   width: 85px;
+  .react-datepicker__time {
+    position: relative;
+    background: var(--#{$prefix}datepicker-bg);
+    border-bottom-right-radius: var(--#{$prefix}datepicker-border-radius);
 
-//   &--with-today-button {
-//     display: inline;
-//     border: 1px solid #aeaeae;
-//     border-radius: 0.3rem;
-//     position: absolute;
-//     right: -87px;
-//     top: 0;
-//   }
+    .react-datepicker__time-box {
+      width: var(--#{$prefix}datepicker-time-list-item-width);
+      overflow-x: hidden;
+      margin: 0 auto;
+      text-align: center;
+      border-bottom-right-radius: var(--#{$prefix}datepicker-border-radius);
 
-//   .react-datepicker__time {
-//     position: relative;
-//     background: white;
-//     border-bottom-right-radius: 0.3rem;
+      ul.react-datepicker__time-list {
+        list-style: none;
+        margin: 0;
+        height: calc(195px + (32px / 2));
+        overflow-y: scroll;
+        padding-right: 0;
+        padding-left: 0;
+        width: 100%;
+        box-sizing: border-box;
 
-//     .react-datepicker__time-box {
-//       width: 85px;
-//       overflow-x: hidden;
-//       margin: 0 auto;
-//       text-align: center;
-//       border-bottom-right-radius: 0.3rem;
+        li.react-datepicker__time-list-item {
+          padding: var(--#{$prefix}datepicker-time-list-item-padding);
+          white-space: nowrap;
+          display: block;
 
-//       ul.react-datepicker__time-list {
-//         list-style: none;
-//         margin: 0;
-//         height: calc(195px + (#{$datepicker__item-size} / 2));
-//         overflow-y: scroll;
-//         padding-right: 0;
-//         padding-left: 0;
-//         width: 100%;
-//         box-sizing: content-box;
+          &:hover {
+            cursor: pointer;
+            background-color: var(--#{$prefix}datepicker-day-hover-bg);
+          }
 
-//         li.react-datepicker__time-list-item {
-//           height: 30px;
-//           padding: 5px 10px;
-//           white-space: nowrap;
+          &--selected, &--selected:hover {
+            background-color: var(--#{$prefix}datepicker-day-selected-bg);
+            color: var(--#{$prefix}datepicker-day-selected-color);
+          }
 
-//           &:hover {
-//             cursor: pointer;
-//             background-color: $datepicker__background-color;
-//           }
-
-//           &--selected {
-//             background-color: $datepicker__selected-color;
-//             color: white;
-//             font-weight: bold;
-
-//             &:hover {
-//               background-color: $datepicker__selected-color;
-//             }
-//           }
-
-//           &--disabled {
-//             color: $datepicker__muted-color;
-
-//             &:hover {
-//               cursor: default;
-//               background-color: transparent;
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
+          &--disabled, &--disabled:hover {
+            cursor: default;
+            color: var(--#{$prefix}datepicker-day-disabled-color);
+            background-color: unset;
+          }
+        }
+      }
+    }
+  }
+}
 // END TODO: Revisar con Mati diseño del time
 
 .react-datepicker__week-number {
