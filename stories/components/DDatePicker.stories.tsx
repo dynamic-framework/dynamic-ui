@@ -6,7 +6,11 @@ import {
   useState,
 } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { addDays } from 'date-fns';
+import {
+  addDays,
+  setHours,
+  setMinutes,
+} from 'date-fns';
 import { es } from 'date-fns/locale';
 
 import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
@@ -453,13 +457,24 @@ export const WithLocale: Story = {
   },
 };
 
-export const WithTime: Story = {
+export const WithTimeInput: Story = {
   render: ControlledDatePicker,
   args: {
     inline: true,
     showTimeInput: true,
     timeInputLabel: 'Select time',
     dateFormat: 'dd/MM/yyyy h:mm aa',
+  },
+};
+
+export const WithTimeSelect: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    showTimeSelect: true,
+    dateFormat: 'dd/MM/yyyy h:mm aa',
+    minTime: setHours(setMinutes(new Date(), 0), 8),
+    maxTime: setHours(setMinutes(new Date(), 0), 17),
   },
 };
 
