@@ -87,7 +87,7 @@ export default function DDatePickerHeaderSelector(
     nextMonthAriaLabel = 'increase month',
     prevYearAriaLabel = 'decrease year',
     nextYearAriaLabel = 'increase year',
-    iconSize = 'sm',
+    iconSize,
     buttonVariant = 'link',
     buttonTheme = 'dark',
     style,
