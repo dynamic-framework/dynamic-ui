@@ -1,6 +1,6 @@
 .form-switch {
   --#{$prefix}form-switch-width: #{$form-switch-width};
-  --#{$prefix}form-switch-padding-start: #{$form-switch-padding-start} * -1;
+  --#{$prefix}form-switch-padding-start: calc(#{$form-switch-padding-start} * -1);
   --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image)};
   --#{$prefix}form-switch-border-radius: #{$form-switch-border-radius};
   --#{$prefix}form-switch-focus-bg-image: #{escape-svg($form-switch-focus-bg-image)};
