@@ -1,5 +1,7 @@
 jest.mock('react-content-loader', () => jest.fn());
 
+jest.mock('react-responsive-pagination', () => jest.fn());
+
 jest.mock('@react-input/mask', () => ({
   InputMask: jest.fn(),
 }));
