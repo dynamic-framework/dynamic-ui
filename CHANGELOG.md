@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.35.1...v1.36.0) (2025-05-29)
+
+
+### Features
+
+* **DInputPhone:** add new input component using react-international-phone ([#830](https://github.com/dynamic-framework/dynamic-ui/issues/830)) ([d29074c](https://github.com/dynamic-framework/dynamic-ui/commit/d29074c88c73a9719c016143f09503c39f405358))
+* **DSelect:** add floating label prop ([#843](https://github.com/dynamic-framework/dynamic-ui/issues/843)) ([6658185](https://github.com/dynamic-framework/dynamic-ui/commit/6658185ae3c4860c1d769769d94c1a1757b681da))
+* **style:** add line heights in root variables ([#833](https://github.com/dynamic-framework/dynamic-ui/issues/833)) ([dcc82f8](https://github.com/dynamic-framework/dynamic-ui/commit/dcc82f8c147f88cb89ee671156643c0a216b85cd))
+
+
+### Bug Fixes
+
+* **DBoxFile:** set onLoad method and docs to preview images ([#840](https://github.com/dynamic-framework/dynamic-ui/issues/840)) ([1c0f7ff](https://github.com/dynamic-framework/dynamic-ui/commit/1c0f7ffa1646c870e6ea8e830d7952084849a092))
+* **DDatepicker:** locale prop as Locale type of date-fns ([#837](https://github.com/dynamic-framework/dynamic-ui/issues/837)) ([a596225](https://github.com/dynamic-framework/dynamic-ui/commit/a596225c68b7da65f03c3f3a77351c5f5cd98751))
+* **style:** change base color on DDatepicker ([#835](https://github.com/dynamic-framework/dynamic-ui/issues/835)) ([90d18f3](https://github.com/dynamic-framework/dynamic-ui/commit/90d18f31843a58b657ea9d729de52bb5632f798b))
+* **style:** change DDatepicker time input view ([eed942f](https://github.com/dynamic-framework/dynamic-ui/commit/eed942f3e099446b52cf5b1589a9099296e7f0aa))
+* **style:** clean hover color on DSelect ([#834](https://github.com/dynamic-framework/dynamic-ui/issues/834)) ([079cdc8](https://github.com/dynamic-framework/dynamic-ui/commit/079cdc85cef7e1c160d97cc3b9b61c1864b1a84c))
+* **style:** hover in nav variants and underline border width ([#832](https://github.com/dynamic-framework/dynamic-ui/issues/832)) ([7e7763b](https://github.com/dynamic-framework/dynamic-ui/commit/7e7763b9fdc2b8c103f689dd3c707e7a919f7c98))
+* **style:** set calc on switch variable ([3e4c8c5](https://github.com/dynamic-framework/dynamic-ui/commit/3e4c8c58c7b097f467d8d2b394b12d37a9a94079))
+* **style:** set time styles on DDatepicker time selector ([2247a1f](https://github.com/dynamic-framework/dynamic-ui/commit/2247a1ffd5106a926aed9dd14c686fa4f7e73411))
+
 ## [1.35.1](https://github.com/dynamic-framework/dynamic-ui/compare/v1.35.0...v1.35.1) (2025-05-14)
 
 
