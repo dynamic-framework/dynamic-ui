@@ -43,6 +43,20 @@
     gap: var(--#{$prefix}select-gap);
   }
 
+  &.d-select-floating {
+    label {
+      position: absolute;
+      top: 8px;
+      left: 16px;
+      z-index: 10;
+      font-size: calc(var(--#{$prefix}body-font-size) * .85);
+      color: rgba(var(--#{$prefix}body-color-rgb), .65);
+    }
+    .d-select__value-container {
+      padding-top: 1rem;
+    }
+  }
+
   // input with elements
   .input-group {
     border: var(--#{$prefix}input-border-width) solid var(--#{$prefix}input-border-color);

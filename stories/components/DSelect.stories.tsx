@@ -90,6 +90,11 @@ To understand in more detail the aspects covered by this component, review the f
       options: [undefined, ...ICONS],
       description: 'The icon for the label of the component',
     },
+    floatingLabel: {
+      control: 'boolean',
+      type: 'boolean',
+      description: 'Determines if the label should float above the input',
+    },
     labelIconFamilyClass: {
       control: 'text',
       type: 'string',
@@ -490,6 +495,19 @@ export const Selected: Story = {
   },
 };
 
+export const Floating: Story = {
+  args: {
+    id: 'componentId14',
+    defaultValue: OPTIONS[0],
+    options: OPTIONS,
+    floatingLabel: true,
+    label: 'Floating Label',
+    style: {
+      minWidth: '200px',
+    },
+  },
+};
+
 export const SelectedWithMenuOpen: Story = {
   args: {
     id: 'componentId3',
@@ -569,7 +587,7 @@ export const EmojiOption: StoryObj<typeof DSelect<OptionEmoji>> = {
     />
   ),
   args: {
-    id: 'componentId7',
+    id: 'componentId15',
     defaultValue: OPTIONS_WITH_EMOJI[2],
     options: OPTIONS_WITH_EMOJI,
     defaultMenuIsOpen: true,
