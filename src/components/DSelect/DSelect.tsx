@@ -46,6 +46,7 @@ SelectProps<Option, IsMulti, Group>,
   invalid?: boolean;
   valid?: boolean;
   menuWithMaxContent?: boolean;
+  floatingLabel?: boolean;
   onIconStartClick?: (value?: SelectProps<Option, IsMulti, Group>['defaultValue']) => void;
   onIconEndClick?: (value?: SelectProps<Option, IsMulti, Group>['defaultValue']) => void;
   disabled?: SelectProps<Option, IsMulti, Group>['isDisabled'];
@@ -88,6 +89,7 @@ function DSelect<
     disabled,
     clearable,
     loading,
+    floatingLabel = false,
     rtl,
     searchable,
     multi,
@@ -117,6 +119,7 @@ function DSelect<
         'd-select',
         className,
         {
+          'd-select-floating': floatingLabel,
           disabled: disabled || loading,
         },
       )}
@@ -190,7 +193,7 @@ function DSelect<
           isSearchable={searchable}
           isMulti={multi}
           defaultValue={defaultValue}
-          placeholder={placeholder}
+          placeholder={floatingLabel ? '' : placeholder}
           unstyled
           components={{
             Placeholder: DSelectPlaceholder,
