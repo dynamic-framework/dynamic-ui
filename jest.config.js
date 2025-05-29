@@ -6,6 +6,12 @@ module.exports = {
   transform: {
     ...createDefaultPreset().transform,
     '^.+\\.[jt]sx?$': 'babel-jest',
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+      },
+    ],
   },
   maxWorkers: 4,
   cacheDirectory: '<rootDir>/.jest-cache',
