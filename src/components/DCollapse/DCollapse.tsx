@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import {
   useState,
-  useEffect,
   useMemo,
 } from 'react';
 
@@ -50,7 +49,16 @@ export default function DCollapse(
 ) {
   const [toggle, setToggle] = useState(defaultCollapsed);
 
-  const onChangeCollapse = () => setToggle((prev) => !prev);
+  const onChangeCollapse = () => {
+    setToggle((prev) => {
+      const next = !prev;
+      if (onChange) {
+        onChange(next);
+      }
+      return next;
+    });
+  };
+
   const {
     iconMap: {
       chevronDown,
@@ -60,16 +68,6 @@ export default function DCollapse(
 
   const iconOpen = useMemo(() => iconOpenProp || chevronUp, [chevronUp, iconOpenProp]);
   const iconClose = useMemo(() => iconCloseProp || chevronDown, [chevronDown, iconCloseProp]);
-
-  useEffect(() => {
-    if (onChange) {
-      onChange(toggle);
-    }
-  }, [toggle, onChange]);
-
-  useEffect(() => {
-    setToggle(defaultCollapsed);
-  }, [defaultCollapsed]);
 
   const generateStyles = useMemo<CustomStyles>(() => ({
     [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
