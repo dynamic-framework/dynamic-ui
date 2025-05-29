@@ -47,3 +47,4 @@ export type { DTabOption } from './DTabs';
 export { default as DToast } from './DToast';
 export { default as DToastContainer, useDToast, } from './DToastContainer';
 export { default as DTableHead } from './DTableHead';
+export { default as DInputPhone } from './DInputPhone';

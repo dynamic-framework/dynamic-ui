@@ -16,7 +16,7 @@ export type DBoxFileProps = {
     onDrop?: (acceptedFiles: File[], rejectedFiles: RejectedFile[], event?: Event) => void;
     onDragEnter?: (event: DragEvent<HTMLDivElement>) => void;
     onDragLeave?: (event: DragEvent<HTMLDivElement>) => void;
-    onFileDialogCancel?: () => void;
+    onLoad?: (acceptedFiles: File[]) => void;
     onError?: (error: Error) => void;
 };
 export default function useDBoxFile(props: DBoxFileProps): {

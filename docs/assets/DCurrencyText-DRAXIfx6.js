@@ -1,0 +1,6 @@
+import{j as t}from"./jsx-runtime-Yb_4y5hn.js";import{useMDXComponents as i}from"./index-DlpNa54Y.js";import{ae as s,af as m,ag as p}from"./index-DX98tbGi.js";import{D as e}from"./DCurrencyText.stories-D6kOW9iE.js";import"./index-BwDkhjyp.js";import"./_commonjsHelpers-BosuxZz1.js";import"./iframe-BoHj2F7R.js";import"../sb-preview/runtime.js";import"./index-Jr15HXM4.js";import"./index-Cu4lwwaE.js";import"./isNativeReflectConstruct-DULPOR7A.js";import"./index-C8cAHwr1.js";import"./_commonjs-dynamic-modules-TDtrdbi3.js";import"./index-DrFu-skq.js";import"./useFormatCurrency-DVKu3N0D.js";import"./currency.es-9OAR_aOO.js";import"./DContext-K5yUkfPZ.js";import"./config-BV4l-vIF.js";function n(o){const r={code:"code",h1:"h1",h2:"h2",p:"p",...i(),...o.components};return t.jsxs(t.Fragment,{children:[t.jsx(r.h1,{id:"currency-text",children:"Currency Text"}),`
+`,t.jsxs(r.p,{children:["Component to format and display a currency value using a ",t.jsx(r.code,{children:"DContextProvider"})," to get the config."]}),`
+`,t.jsx(r.h2,{id:"args",children:"Args"}),`
+`,t.jsx(s,{of:e}),`
+`,t.jsx(m,{of:e,sort:"requiredFirst"}),`
+`,t.jsx(p,{})]})}function F(o={}){const{wrapper:r}={...i(),...o.components};return r?t.jsx(r,{...o,children:t.jsx(n,{...o})}):n(o)}export{F as default};

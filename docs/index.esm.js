@@ -8,13 +8,14 @@ import { SplideSlide, Splide } from '@splidejs/react-splide';
 import currency from 'currency.js';
 import DatePicker from 'react-datepicker';
 import { getYear, format, getMonth } from 'date-fns';
-import { enUS } from 'date-fns/locale';
 import Select, { components } from 'react-select';
 import { InputMask } from '@react-input/mask';
 import ResponsivePagination from 'react-responsive-pagination';
 import { useFloating, autoUpdate, offset, flip, shift, useClick, useDismiss, useRole, useInteractions, useId as useId$1, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
 import ContentLoader from 'react-content-loader';
 import { Toaster, toast } from 'react-hot-toast';
+import { defaultCountries, parseCountry, usePhoneInput, CountrySelector } from 'react-international-phone';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -621,7 +622,7 @@ const DEFAULT_PROPS = {
 
 /* eslint-disable no-param-reassign */
 function useDBoxFile(props) {
-    const { accept, autoFocus, disabled, maxSize, minSize, multiple, maxFiles, value: preloadUrls, onDragEnter, onDragLeave, onDrop, onError, noClick, noKeyboard, noDrag, } = Object.assign(Object.assign({}, DEFAULT_PROPS), props);
+    const { accept, autoFocus, disabled, maxSize, minSize, multiple, maxFiles, value: preloadUrls, onDragEnter, onDragLeave, onDrop, onError, onLoad, noClick, noKeyboard, noDrag, } = Object.assign(Object.assign({}, DEFAULT_PROPS), props);
     const inputRef = useRef(null);
     const rootRef = useRef(null);
     const dragTargetsRef = useRef([]);
@@ -661,12 +662,17 @@ function useDBoxFile(props) {
             const [accepted, errors] = await urlsToFiles(preloadUrls);
             if (accepted.length) {
                 setFiles(accepted);
+                onLoad === null || onLoad === void 0 ? void 0 : onLoad(accepted);
             }
             if (errors.length) {
                 onError === null || onError === void 0 ? void 0 : onError(new Error(errors.map((e) => e.message).join(', ')));
             }
         })();
-    }, [preloadUrls, onError]);
+    }, [
+        preloadUrls,
+        onError,
+        onLoad,
+    ]);
     const processFiles = useCallback((inputFiles, event) => {
         let acceptedFiles = [];
         let rejectedFiles = [];
@@ -710,7 +716,7 @@ function useDBoxFile(props) {
         }
     }, [
         acceptAttr,
-        files.length,
+        files,
         maxFiles,
         maxSize,
         minSize,
@@ -800,7 +806,9 @@ function useDBoxFile(props) {
     }, [processFiles]);
     const handleRemoveFile = useCallback((index) => {
         setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    }, []);
+        // Done twice to avoid mismatch between files and setFiles value
+        onLoad === null || onLoad === void 0 ? void 0 : onLoad(files.filter((_, i) => i !== index));
+    }, [files, onLoad]);
     const openFileDialog = useCallback(() => {
         var _a;
         if (disabled)
@@ -854,7 +862,7 @@ function DBoxFile(_a) {
                     'd-box-file-invalid': isDragInvalid,
                 }, className), style: style }, dataAttributes, { children: jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }), jsx("div", { className: "d-box-content", children: typeof children === 'function'
                                 ? children(openFileDialog)
-                                : children })] })) })), !!files.length && (jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsx(ForwardedDInput, { value: file.name, iconStart: "paperclip", iconEnd: "trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, file.name))) }))] }));
+                                : children })] })) })), !!files.length && (jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsx(ForwardedDInput, { value: file.name, iconStart: "paperclip", iconEnd: "trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
 }
 
 function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, value, type = 'button', loading = false, loadingAriaLabel, disabled = false, stopPropagationEnabled = true, className, style, form, dataAttributes, onClick, }) {
@@ -995,11 +1003,10 @@ function DCurrencyText({ value, className, style, dataAttributes, }) {
     return (jsx("span", Object.assign({ className: className, style: style }, dataAttributes, { children: valueFormatted })));
 }
 
-function DDatePickerTime(_a) {
-    var { value, onChange, id, label, className, style } = _a, props = __rest(_a, ["value", "onChange", "id", "label", "className", "style"]);
-    return (jsxs("div", { className: classNames('d-flex align-items-center gap-2 flex-column d-datepicker-time', className), style: style, children: [label && (jsx("label", { htmlFor: id, className: "d-datepicker-time-label", children: label })), jsx(ForwardedDInput, Object.assign({ className: "w-100" }, onChange && {
-                onChange,
-            }, { type: "time", id: id, value: value }, props))] }));
+function DDatePickerTime({ value, onChange, id, }) {
+    return (jsx(ForwardedDInput, { className: "d-datepicker-time", type: "time", value: value, id: id, onChange: (time) => {
+            onChange === null || onChange === void 0 ? void 0 : onChange(time);
+        } }));
 }
 
 function DDatePickerInput(_a, ref) {
@@ -1136,7 +1143,7 @@ function DSelectPlaceholder(_a) {
 }
 
 function DSelect(_a) {
-    var { id: idProp, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes } = _a, props = __rest(_a, ["id", "className", "style", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "rtl", "searchable", "multi", "components", "defaultValue", "placeholder", "onIconStartClick", "onIconEndClick", "dataAttributes"]);
+    var { id: idProp, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, floatingLabel = false, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes } = _a, props = __rest(_a, ["id", "className", "style", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "floatingLabel", "rtl", "searchable", "multi", "components", "defaultValue", "placeholder", "onIconStartClick", "onIconEndClick", "dataAttributes"]);
     const innerId = useId();
     const id = useMemo(() => idProp || innerId, [idProp, innerId]);
     const handleOnIconStartClick = useCallback(() => {
@@ -1146,6 +1153,7 @@ function DSelect(_a) {
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(defaultValue);
     }, [onIconEndClick, defaultValue]);
     return (jsxs("div", Object.assign({ className: classNames('d-select', className, {
+            'd-select-floating': floatingLabel,
             disabled: disabled || loading,
         }), style: style }, dataAttributes, { children: [label && (jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}input-label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix }))] })), jsxs("div", { className: classNames({
                     'input-group': true,
@@ -1158,7 +1166,7 @@ function DSelect(_a) {
                         }, className: classNames('d-select-component', {
                             'is-invalid': invalid,
                             'is-valid': valid,
-                        }), classNamePrefix: "d-select", isDisabled: disabled || loading, isClearable: clearable, isLoading: loading, isRtl: rtl, isSearchable: searchable, isMulti: multi, defaultValue: defaultValue, placeholder: placeholder, unstyled: true, components: Object.assign({ Placeholder: DSelectPlaceholder, DropdownIndicator: DSelectDropdownIndicator, ClearIndicator: DSelectClearIndicator, MultiValueRemove: DSelectMultiValueRemove, LoadingIndicator: DSelectLoadingIndicator }, components) }, props)), (iconEnd && !loading) && (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, "aria-label": iconEndAriaLabel, tabIndex: iconEndTabIndex, children: iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+                        }), classNamePrefix: "d-select", isDisabled: disabled || loading, isClearable: clearable, isLoading: loading, isRtl: rtl, isSearchable: searchable, isMulti: multi, defaultValue: defaultValue, placeholder: floatingLabel ? '' : placeholder, unstyled: true, components: Object.assign({ Placeholder: DSelectPlaceholder, DropdownIndicator: DSelectDropdownIndicator, ClearIndicator: DSelectClearIndicator, MultiValueRemove: DSelectMultiValueRemove, LoadingIndicator: DSelectLoadingIndicator }, components) }, props)), (iconEnd && !loading) && (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, "aria-label": iconEndAriaLabel, tabIndex: iconEndTabIndex, children: iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 var DSelect$1 = Object.assign(DSelect, {
     OptionCheck: DSelectOptionCheck,
@@ -1181,7 +1189,7 @@ var PickerType;
     PickerType["Month"] = "month";
     PickerType["Year"] = "year";
 })(PickerType || (PickerType = {}));
-function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown = 1, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', prevYearAriaLabel = 'decrease year', nextYearAriaLabel = 'increase year', iconSize = 'sm', buttonVariant = 'link', buttonTheme = 'dark', style, className, minYearSelect = 1900, maxYearSelect = 2100, showHeaderSelectors = false, customHeaderCount, }) {
+function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown = 1, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', prevYearAriaLabel = 'decrease year', nextYearAriaLabel = 'increase year', iconSize, buttonVariant = 'link', buttonTheme = 'dark', style, className, minYearSelect = 1900, maxYearSelect = 2100, showHeaderSelectors = false, customHeaderCount, locale, }) {
     const { iconMap: { chevronLeft, chevronRight, }, } = useDContext();
     const arrayYears = useMemo(() => Array.from({ length: maxYearSelect - minYearSelect + 1 }, (_, index) => minYearSelect + index), [maxYearSelect, minYearSelect]);
     const years = useMemo(() => arrayYears.map((year) => ({
@@ -1189,7 +1197,7 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
         value: year,
     })), [arrayYears]);
     const defaultYear = useMemo(() => years.find((year) => year.value === getYear(monthDate)), [monthDate, years]);
-    const arrayMonths = useMemo(() => Array.from({ length: 12 }, (_, i) => format(new Date(2000, i), 'LLLL', { locale: enUS })), []);
+    const arrayMonths = useMemo(() => Array.from({ length: 12 }, (_, i) => format(new Date(2000, i), 'LLLL', { locale })), [locale]);
     const months = useMemo(() => arrayMonths.map((month, i) => ({
         label: month,
         value: i,
@@ -1215,7 +1223,7 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
 }
 
 function DDatePicker(_a) {
-    var { inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, iconInput, iconHeaderPrev, iconHeaderNext, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, minYearSelect, maxYearSelect, iconHeaderSize, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerButtonVariant, headerButtonTheme, invalid = false, valid = false, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar: dateFormatCalendarProp, style, dataAttributes, placeholder, showHeaderSelectors } = _a, props = __rest(_a, ["inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeLabel", "iconInput", "iconHeaderPrev", "iconHeaderNext", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "renderCustomHeader", "className", "dateFormatCalendar", "style", "dataAttributes", "placeholder", "showHeaderSelectors"]);
+    var { inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeInputLabel, iconInput, iconHeaderPrev, iconHeaderNext, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, minYearSelect, maxYearSelect, iconHeaderSize, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerButtonVariant, headerButtonTheme, invalid = false, valid = false, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar: dateFormatCalendarProp, style, dataAttributes, placeholder, showHeaderSelectors } = _a, props = __rest(_a, ["inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeInputLabel", "iconInput", "iconHeaderPrev", "iconHeaderNext", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "renderCustomHeader", "className", "dateFormatCalendar", "style", "dataAttributes", "placeholder", "showHeaderSelectors"]);
     const pickerType = useMemo(() => {
         if (props.showQuarterYearPicker)
             return PickerType.Quarter;
@@ -1229,7 +1237,7 @@ function DDatePicker(_a) {
         props.showMonthYearPicker,
         props.showYearPicker,
     ]);
-    const DatePickerHeader = useCallback((headerProps) => (jsx(DDatePickerHeaderSelector, Object.assign({}, headerProps, { monthsShown: props.monthsShown, iconPrev: iconHeaderPrev, iconNext: iconHeaderNext, iconMaterialStyle: iconMaterialStyle, prevMonthAriaLabel: headerPrevMonthAriaLabel, nextMonthAriaLabel: headerNextMonthAriaLabel, iconSize: iconHeaderSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, minYearSelect: minYearSelect, maxYearSelect: maxYearSelect, pickerType: pickerType, showHeaderSelectors: showHeaderSelectors }))), [
+    const DatePickerHeader = useCallback((headerProps) => (jsx(DDatePickerHeaderSelector, Object.assign({}, headerProps, { monthsShown: props.monthsShown, iconPrev: iconHeaderPrev, iconNext: iconHeaderNext, iconMaterialStyle: iconMaterialStyle, prevMonthAriaLabel: headerPrevMonthAriaLabel, nextMonthAriaLabel: headerNextMonthAriaLabel, iconSize: iconHeaderSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, minYearSelect: minYearSelect, maxYearSelect: maxYearSelect, pickerType: pickerType, showHeaderSelectors: showHeaderSelectors, locale: props.locale }))), [
         iconHeaderNext,
         iconHeaderPrev,
         iconMaterialStyle,
@@ -1243,10 +1251,11 @@ function DDatePicker(_a) {
         pickerType,
         showHeaderSelectors,
         props.monthsShown,
+        props.locale,
     ]);
     const defaultRenderCustomHeader = useCallback((headerProps) => (jsx(DatePickerHeader, Object.assign({}, headerProps))), [DatePickerHeader]);
     const renderCustomHeader = useMemo(() => (renderCustomHeaderProp || defaultRenderCustomHeader), [defaultRenderCustomHeader, renderCustomHeaderProp]);
-    return (jsx(DatePicker, Object.assign({ calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, customInput: (jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyle, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsx(DDatePickerTime, { id: timeId, label: timeLabel })), placeholderText: placeholder }, dataAttributes, props)));
+    return (jsx(DatePicker, Object.assign({}, dataAttributes, props, { calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, placeholderText: placeholder, customInput: (jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyle, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsx(DDatePickerTime, { id: timeId })) })));
 }
 
 function DInputMask(props, ref) {
@@ -2248,5 +2257,102 @@ function changeQueryString(values, { useSearch = true, pushState = false, } = {}
     return searchParams.toString();
 }
 
-export { DAlert, DAvatar, DBadge, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrencyBase as DInputCurrency, ForwardedDInputCurrencyBase$1 as DInputCurrencyBase, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListGroup$1 as DListGroup, DListGroupItem, DListItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSelect$1 as DSelect, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTableHead, DTabs$1 as DTabs, DToast$1 as DToast, DToastContainer, DTooltip, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext };
+const phoneUtil = PhoneNumberUtil.getInstance();
+function validatePhoneNumber(phone) {
+    try {
+        return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
+    }
+    catch (error) {
+        return false;
+    }
+}
+
+function DInputPhone(_a, ref) {
+    var { id: idProp, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, labelIconMaterialStyle, disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, hint, size, invalid = false, valid = false, floatingLabel = false, inputEnd, value, placeholder = '', dataAttributes, onChange, onIconEndClick, countrySelectorProps, filteredCountries, defaultCountry = 'cl' } = _a, inputProps = __rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "labelIconMaterialStyle", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "hint", "size", "invalid", "valid", "floatingLabel", "inputEnd", "value", "placeholder", "dataAttributes", "onChange", "onIconEndClick", "countrySelectorProps", "filteredCountries", "defaultCountry"]);
+    const innerRef = useProvidedRefOrCreate(ref);
+    const innerId = useId();
+    const id = useMemo(() => idProp || innerId, [idProp, innerId]);
+    const handleOnIconEndClick = useCallback(() => {
+        onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(value);
+    }, [onIconEndClick, value]);
+    const ariaDescribedby = useMemo(() => ([
+        (invalid || valid) && !iconEnd && !loading && `${id}State`,
+        (iconEnd && !loading) && `${id}End`,
+        loading && `${id}Loading`,
+        !!inputEnd && `${id}InputEnd`,
+        !!hint && `${id}Hint`,
+    ]
+        .filter(Boolean)
+        .join(' ')), [
+        id,
+        invalid,
+        valid,
+        iconEnd,
+        loading,
+        inputEnd,
+        hint,
+    ]);
+    const countries = useMemo(() => {
+        if (filteredCountries === undefined) {
+            return defaultCountries;
+        }
+        return defaultCountries.filter((country) => {
+            const { iso2 } = parseCountry(country);
+            return filteredCountries.includes(iso2);
+        });
+    }, [filteredCountries]);
+    const { inputValue, handlePhoneValueChange, inputRef, country, setCountry, } = usePhoneInput({
+        inputRef: innerRef,
+        defaultCountry,
+        value,
+        countries,
+        onChange: (data) => {
+            onChange === null || onChange === void 0 ? void 0 : onChange(Object.assign(Object.assign({}, data), { isValid: validatePhoneNumber(data.phone) }));
+        },
+    });
+    const inputComponent = useMemo(() => (jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
+            'is-invalid': invalid,
+            'is-valid': valid,
+        }), disabled: disabled || loading, value: inputValue, onChange: handlePhoneValueChange, inputMode: "tel" }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
+        ariaDescribedby,
+        disabled,
+        floatingLabel,
+        handlePhoneValueChange,
+        id,
+        inputProps,
+        inputRef,
+        inputValue,
+        invalid,
+        loading,
+        placeholder,
+        valid,
+    ]);
+    const labelComponent = useMemo(() => (jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix, materialStyle: labelIconMaterialStyle }))] })), [
+        id,
+        label,
+        labelIcon,
+        labelIconFamilyClass,
+        labelIconFamilyPrefix,
+        labelIconMaterialStyle,
+    ]);
+    const dynamicComponent = useMemo(() => {
+        if (floatingLabel) {
+            return (jsxs("div", { className: "form-floating", children: [inputComponent, labelComponent] }));
+        }
+        return inputComponent;
+    }, [
+        floatingLabel,
+        inputComponent,
+        labelComponent,
+    ]);
+    return (jsxs("div", Object.assign({ className: classNames('d-input-phone', className), style: style }, dataAttributes, { children: [label && !floatingLabel && labelComponent, jsxs("div", { className: classNames({
+                    [`input-group-${size}`]: !!size,
+                    'input-group': true,
+                    'has-validation': invalid || valid,
+                }), children: [jsx(CountrySelector, Object.assign({}, countrySelectorProps, { selectedCountry: country.iso2, onSelect: ({ iso2 }) => setCountry(iso2), countries: countries, disabled: disabled || loading, className: classNames('input-group-text', countrySelectorProps === null || countrySelectorProps === void 0 ? void 0 : countrySelectorProps.className) })), dynamicComponent, (iconEnd && !loading) && (jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+}
+const ForwardedDInputPhone = forwardRef(DInputPhone);
+ForwardedDInputPhone.displayName = 'DInputPhone';
+
+export { DAlert, DAvatar, DBadge, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCurrencyText, DDatePicker, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrencyBase as DInputCurrency, ForwardedDInputCurrencyBase$1 as DInputCurrencyBase, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, ForwardedDInputSearch as DInputSearch, DInputSelect, DInputSwitch, DList$1 as DList, DListGroup$1 as DListGroup, DListGroupItem, DListItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPopover, DProgress, DQuickActionButton, DQuickActionCheck, DQuickActionSelect, DQuickActionSwitch, DSelect$1 as DSelect, DSkeleton, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTableHead, DTabs$1 as DTabs, DToast$1 as DToast, DToastContainer, DTooltip, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
 //# sourceMappingURL=index.esm.js.map

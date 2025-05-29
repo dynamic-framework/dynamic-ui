@@ -10,13 +10,14 @@ var reactSplide = require('@splidejs/react-splide');
 var currency = require('currency.js');
 var DatePicker = require('react-datepicker');
 var dateFns = require('date-fns');
-var locale = require('date-fns/locale');
 var Select = require('react-select');
 var mask = require('@react-input/mask');
 var ResponsivePagination = require('react-responsive-pagination');
 var react = require('@floating-ui/react');
 var ContentLoader = require('react-content-loader');
 var reactHotToast = require('react-hot-toast');
+var reactInternationalPhone = require('react-international-phone');
+var googleLibphonenumber = require('google-libphonenumber');
 var i18n = require('i18next');
 var reactI18next = require('react-i18next');
 
@@ -623,7 +624,7 @@ const DEFAULT_PROPS = {
 
 /* eslint-disable no-param-reassign */
 function useDBoxFile(props) {
-    const { accept, autoFocus, disabled, maxSize, minSize, multiple, maxFiles, value: preloadUrls, onDragEnter, onDragLeave, onDrop, onError, noClick, noKeyboard, noDrag, } = Object.assign(Object.assign({}, DEFAULT_PROPS), props);
+    const { accept, autoFocus, disabled, maxSize, minSize, multiple, maxFiles, value: preloadUrls, onDragEnter, onDragLeave, onDrop, onError, onLoad, noClick, noKeyboard, noDrag, } = Object.assign(Object.assign({}, DEFAULT_PROPS), props);
     const inputRef = React.useRef(null);
     const rootRef = React.useRef(null);
     const dragTargetsRef = React.useRef([]);
@@ -663,12 +664,17 @@ function useDBoxFile(props) {
             const [accepted, errors] = await urlsToFiles(preloadUrls);
             if (accepted.length) {
                 setFiles(accepted);
+                onLoad === null || onLoad === void 0 ? void 0 : onLoad(accepted);
             }
             if (errors.length) {
                 onError === null || onError === void 0 ? void 0 : onError(new Error(errors.map((e) => e.message).join(', ')));
             }
         })();
-    }, [preloadUrls, onError]);
+    }, [
+        preloadUrls,
+        onError,
+        onLoad,
+    ]);
     const processFiles = React.useCallback((inputFiles, event) => {
         let acceptedFiles = [];
         let rejectedFiles = [];
@@ -712,7 +718,7 @@ function useDBoxFile(props) {
         }
     }, [
         acceptAttr,
-        files.length,
+        files,
         maxFiles,
         maxSize,
         minSize,
@@ -802,7 +808,9 @@ function useDBoxFile(props) {
     }, [processFiles]);
     const handleRemoveFile = React.useCallback((index) => {
         setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    }, []);
+        // Done twice to avoid mismatch between files and setFiles value
+        onLoad === null || onLoad === void 0 ? void 0 : onLoad(files.filter((_, i) => i !== index));
+    }, [files, onLoad]);
     const openFileDialog = React.useCallback(() => {
         var _a;
         if (disabled)
@@ -856,7 +864,7 @@ function DBoxFile(_a) {
                     'd-box-file-invalid': isDragInvalid,
                 }, className), style: style }, dataAttributes, { children: jsxRuntime.jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsxRuntime.jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }), jsxRuntime.jsx("div", { className: "d-box-content", children: typeof children === 'function'
                                 ? children(openFileDialog)
-                                : children })] })) })), !!files.length && (jsxRuntime.jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsxRuntime.jsx(ForwardedDInput, { value: file.name, iconStart: "paperclip", iconEnd: "trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, file.name))) }))] }));
+                                : children })] })) })), !!files.length && (jsxRuntime.jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsxRuntime.jsx(ForwardedDInput, { value: file.name, iconStart: "paperclip", iconEnd: "trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
 }
 
 function DButton({ theme = 'primary', size, variant, state, text = '', ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, value, type = 'button', loading = false, loadingAriaLabel, disabled = false, stopPropagationEnabled = true, className, style, form, dataAttributes, onClick, }) {
@@ -997,11 +1005,10 @@ function DCurrencyText({ value, className, style, dataAttributes, }) {
     return (jsxRuntime.jsx("span", Object.assign({ className: className, style: style }, dataAttributes, { children: valueFormatted })));
 }
 
-function DDatePickerTime(_a) {
-    var { value, onChange, id, label, className, style } = _a, props = tslib.__rest(_a, ["value", "onChange", "id", "label", "className", "style"]);
-    return (jsxRuntime.jsxs("div", { className: classNames('d-flex align-items-center gap-2 flex-column d-datepicker-time', className), style: style, children: [label && (jsxRuntime.jsx("label", { htmlFor: id, className: "d-datepicker-time-label", children: label })), jsxRuntime.jsx(ForwardedDInput, Object.assign({ className: "w-100" }, onChange && {
-                onChange,
-            }, { type: "time", id: id, value: value }, props))] }));
+function DDatePickerTime({ value, onChange, id, }) {
+    return (jsxRuntime.jsx(ForwardedDInput, { className: "d-datepicker-time", type: "time", value: value, id: id, onChange: (time) => {
+            onChange === null || onChange === void 0 ? void 0 : onChange(time);
+        } }));
 }
 
 function DDatePickerInput(_a, ref) {
@@ -1138,7 +1145,7 @@ function DSelectPlaceholder(_a) {
 }
 
 function DSelect(_a) {
-    var { id: idProp, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes } = _a, props = tslib.__rest(_a, ["id", "className", "style", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "rtl", "searchable", "multi", "components", "defaultValue", "placeholder", "onIconStartClick", "onIconEndClick", "dataAttributes"]);
+    var { id: idProp, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, floatingLabel = false, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes } = _a, props = tslib.__rest(_a, ["id", "className", "style", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "floatingLabel", "rtl", "searchable", "multi", "components", "defaultValue", "placeholder", "onIconStartClick", "onIconEndClick", "dataAttributes"]);
     const innerId = React.useId();
     const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
     const handleOnIconStartClick = React.useCallback(() => {
@@ -1148,6 +1155,7 @@ function DSelect(_a) {
         onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(defaultValue);
     }, [onIconEndClick, defaultValue]);
     return (jsxRuntime.jsxs("div", Object.assign({ className: classNames('d-select', className, {
+            'd-select-floating': floatingLabel,
             disabled: disabled || loading,
         }), style: style }, dataAttributes, { children: [label && (jsxRuntime.jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsxRuntime.jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}input-label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix }))] })), jsxRuntime.jsxs("div", { className: classNames({
                     'input-group': true,
@@ -1160,7 +1168,7 @@ function DSelect(_a) {
                         }, className: classNames('d-select-component', {
                             'is-invalid': invalid,
                             'is-valid': valid,
-                        }), classNamePrefix: "d-select", isDisabled: disabled || loading, isClearable: clearable, isLoading: loading, isRtl: rtl, isSearchable: searchable, isMulti: multi, defaultValue: defaultValue, placeholder: placeholder, unstyled: true, components: Object.assign({ Placeholder: DSelectPlaceholder, DropdownIndicator: DSelectDropdownIndicator, ClearIndicator: DSelectClearIndicator, MultiValueRemove: DSelectMultiValueRemove, LoadingIndicator: DSelectLoadingIndicator }, components) }, props)), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, "aria-label": iconEndAriaLabel, tabIndex: iconEndTabIndex, children: iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+                        }), classNamePrefix: "d-select", isDisabled: disabled || loading, isClearable: clearable, isLoading: loading, isRtl: rtl, isSearchable: searchable, isMulti: multi, defaultValue: defaultValue, placeholder: floatingLabel ? '' : placeholder, unstyled: true, components: Object.assign({ Placeholder: DSelectPlaceholder, DropdownIndicator: DSelectDropdownIndicator, ClearIndicator: DSelectClearIndicator, MultiValueRemove: DSelectMultiValueRemove, LoadingIndicator: DSelectLoadingIndicator }, components) }, props)), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, "aria-label": iconEndAriaLabel, tabIndex: iconEndTabIndex, children: iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 var DSelect$1 = Object.assign(DSelect, {
     OptionCheck: DSelectOptionCheck,
@@ -1183,7 +1191,7 @@ var PickerType;
     PickerType["Month"] = "month";
     PickerType["Year"] = "year";
 })(PickerType || (PickerType = {}));
-function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown = 1, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', prevYearAriaLabel = 'decrease year', nextYearAriaLabel = 'increase year', iconSize = 'sm', buttonVariant = 'link', buttonTheme = 'dark', style, className, minYearSelect = 1900, maxYearSelect = 2100, showHeaderSelectors = false, customHeaderCount, }) {
+function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown = 1, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, prevMonthAriaLabel = 'decrease month', nextMonthAriaLabel = 'increase month', prevYearAriaLabel = 'decrease year', nextYearAriaLabel = 'increase year', iconSize, buttonVariant = 'link', buttonTheme = 'dark', style, className, minYearSelect = 1900, maxYearSelect = 2100, showHeaderSelectors = false, customHeaderCount, locale, }) {
     const { iconMap: { chevronLeft, chevronRight, }, } = useDContext();
     const arrayYears = React.useMemo(() => Array.from({ length: maxYearSelect - minYearSelect + 1 }, (_, index) => minYearSelect + index), [maxYearSelect, minYearSelect]);
     const years = React.useMemo(() => arrayYears.map((year) => ({
@@ -1191,7 +1199,7 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
         value: year,
     })), [arrayYears]);
     const defaultYear = React.useMemo(() => years.find((year) => year.value === dateFns.getYear(monthDate)), [monthDate, years]);
-    const arrayMonths = React.useMemo(() => Array.from({ length: 12 }, (_, i) => dateFns.format(new Date(2000, i), 'LLLL', { locale: locale.enUS })), []);
+    const arrayMonths = React.useMemo(() => Array.from({ length: 12 }, (_, i) => dateFns.format(new Date(2000, i), 'LLLL', { locale })), [locale]);
     const months = React.useMemo(() => arrayMonths.map((month, i) => ({
         label: month,
         value: i,
@@ -1217,7 +1225,7 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
 }
 
 function DDatePicker(_a) {
-    var { inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeLabel, iconInput, iconHeaderPrev, iconHeaderNext, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, minYearSelect, maxYearSelect, iconHeaderSize, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerButtonVariant, headerButtonTheme, invalid = false, valid = false, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar: dateFormatCalendarProp, style, dataAttributes, placeholder, showHeaderSelectors } = _a, props = tslib.__rest(_a, ["inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeLabel", "iconInput", "iconHeaderPrev", "iconHeaderNext", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "renderCustomHeader", "className", "dateFormatCalendar", "style", "dataAttributes", "placeholder", "showHeaderSelectors"]);
+    var { inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel = 'open calendar', inputId = 'input-calendar', timeId = 'input-time', timeInputLabel, iconInput, iconHeaderPrev, iconHeaderNext, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, minYearSelect, maxYearSelect, iconHeaderSize, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerButtonVariant, headerButtonTheme, invalid = false, valid = false, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar: dateFormatCalendarProp, style, dataAttributes, placeholder, showHeaderSelectors } = _a, props = tslib.__rest(_a, ["inputLabel", "inputHint", "inputAriaLabel", "inputActionAriaLabel", "inputId", "timeId", "timeInputLabel", "iconInput", "iconHeaderPrev", "iconHeaderNext", "iconMaterialStyle", "iconFamilyClass", "iconFamilyPrefix", "minYearSelect", "maxYearSelect", "iconHeaderSize", "headerPrevMonthAriaLabel", "headerNextMonthAriaLabel", "headerButtonVariant", "headerButtonTheme", "invalid", "valid", "renderCustomHeader", "className", "dateFormatCalendar", "style", "dataAttributes", "placeholder", "showHeaderSelectors"]);
     const pickerType = React.useMemo(() => {
         if (props.showQuarterYearPicker)
             return PickerType.Quarter;
@@ -1231,7 +1239,7 @@ function DDatePicker(_a) {
         props.showMonthYearPicker,
         props.showYearPicker,
     ]);
-    const DatePickerHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DDatePickerHeaderSelector, Object.assign({}, headerProps, { monthsShown: props.monthsShown, iconPrev: iconHeaderPrev, iconNext: iconHeaderNext, iconMaterialStyle: iconMaterialStyle, prevMonthAriaLabel: headerPrevMonthAriaLabel, nextMonthAriaLabel: headerNextMonthAriaLabel, iconSize: iconHeaderSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, minYearSelect: minYearSelect, maxYearSelect: maxYearSelect, pickerType: pickerType, showHeaderSelectors: showHeaderSelectors }))), [
+    const DatePickerHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DDatePickerHeaderSelector, Object.assign({}, headerProps, { monthsShown: props.monthsShown, iconPrev: iconHeaderPrev, iconNext: iconHeaderNext, iconMaterialStyle: iconMaterialStyle, prevMonthAriaLabel: headerPrevMonthAriaLabel, nextMonthAriaLabel: headerNextMonthAriaLabel, iconSize: iconHeaderSize, buttonVariant: headerButtonVariant, buttonTheme: headerButtonTheme, minYearSelect: minYearSelect, maxYearSelect: maxYearSelect, pickerType: pickerType, showHeaderSelectors: showHeaderSelectors, locale: props.locale }))), [
         iconHeaderNext,
         iconHeaderPrev,
         iconMaterialStyle,
@@ -1245,10 +1253,11 @@ function DDatePicker(_a) {
         pickerType,
         showHeaderSelectors,
         props.monthsShown,
+        props.locale,
     ]);
     const defaultRenderCustomHeader = React.useCallback((headerProps) => (jsxRuntime.jsx(DatePickerHeader, Object.assign({}, headerProps))), [DatePickerHeader]);
     const renderCustomHeader = React.useMemo(() => (renderCustomHeaderProp || defaultRenderCustomHeader), [defaultRenderCustomHeader, renderCustomHeaderProp]);
-    return (jsxRuntime.jsx(DatePicker, Object.assign({ calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, customInput: (jsxRuntime.jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyle, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsxRuntime.jsx(DDatePickerTime, { id: timeId, label: timeLabel })), placeholderText: placeholder }, dataAttributes, props)));
+    return (jsxRuntime.jsx(DatePicker, Object.assign({}, dataAttributes, props, { calendarClassName: "d-date-picker", renderCustomHeader: renderCustomHeader, placeholderText: placeholder, customInput: (jsxRuntime.jsx(ForwardedDDatePickerInput, { id: inputId, "aria-label": inputAriaLabel, iconEndAriaLabel: inputActionAriaLabel, iconMaterialStyle: iconMaterialStyle, iconEnd: iconInput, inputLabel: inputLabel, className: className, style: style, invalid: invalid, valid: valid, hint: inputHint })), customTimeInput: (jsxRuntime.jsx(DDatePickerTime, { id: timeId })) })));
 }
 
 function DInputMask(props, ref) {
@@ -2250,6 +2259,103 @@ function changeQueryString(values, { useSearch = true, pushState = false, } = {}
     return searchParams.toString();
 }
 
+const phoneUtil = googleLibphonenumber.PhoneNumberUtil.getInstance();
+function validatePhoneNumber(phone) {
+    try {
+        return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
+    }
+    catch (error) {
+        return false;
+    }
+}
+
+function DInputPhone(_a, ref) {
+    var { id: idProp, style, className, label = '', labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, labelIconMaterialStyle, disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, hint, size, invalid = false, valid = false, floatingLabel = false, inputEnd, value, placeholder = '', dataAttributes, onChange, onIconEndClick, countrySelectorProps, filteredCountries, defaultCountry = 'cl' } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "labelIcon", "labelIconFamilyClass", "labelIconFamilyPrefix", "labelIconMaterialStyle", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "hint", "size", "invalid", "valid", "floatingLabel", "inputEnd", "value", "placeholder", "dataAttributes", "onChange", "onIconEndClick", "countrySelectorProps", "filteredCountries", "defaultCountry"]);
+    const innerRef = useProvidedRefOrCreate(ref);
+    const innerId = React.useId();
+    const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
+    const handleOnIconEndClick = React.useCallback(() => {
+        onIconEndClick === null || onIconEndClick === void 0 ? void 0 : onIconEndClick(value);
+    }, [onIconEndClick, value]);
+    const ariaDescribedby = React.useMemo(() => ([
+        (invalid || valid) && !iconEnd && !loading && `${id}State`,
+        (iconEnd && !loading) && `${id}End`,
+        loading && `${id}Loading`,
+        !!inputEnd && `${id}InputEnd`,
+        !!hint && `${id}Hint`,
+    ]
+        .filter(Boolean)
+        .join(' ')), [
+        id,
+        invalid,
+        valid,
+        iconEnd,
+        loading,
+        inputEnd,
+        hint,
+    ]);
+    const countries = React.useMemo(() => {
+        if (filteredCountries === undefined) {
+            return reactInternationalPhone.defaultCountries;
+        }
+        return reactInternationalPhone.defaultCountries.filter((country) => {
+            const { iso2 } = reactInternationalPhone.parseCountry(country);
+            return filteredCountries.includes(iso2);
+        });
+    }, [filteredCountries]);
+    const { inputValue, handlePhoneValueChange, inputRef, country, setCountry, } = reactInternationalPhone.usePhoneInput({
+        inputRef: innerRef,
+        defaultCountry,
+        value,
+        countries,
+        onChange: (data) => {
+            onChange === null || onChange === void 0 ? void 0 : onChange(Object.assign(Object.assign({}, data), { isValid: validatePhoneNumber(data.phone) }));
+        },
+    });
+    const inputComponent = React.useMemo(() => (jsxRuntime.jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
+            'is-invalid': invalid,
+            'is-valid': valid,
+        }), disabled: disabled || loading, value: inputValue, onChange: handlePhoneValueChange, inputMode: "tel" }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
+        ariaDescribedby,
+        disabled,
+        floatingLabel,
+        handlePhoneValueChange,
+        id,
+        inputProps,
+        inputRef,
+        inputValue,
+        invalid,
+        loading,
+        placeholder,
+        valid,
+    ]);
+    const labelComponent = React.useMemo(() => (jsxRuntime.jsxs("label", { htmlFor: id, children: [label, labelIcon && (jsxRuntime.jsx(DIcon, { icon: labelIcon, size: `var(--${PREFIX_BS}label-font-size)`, familyClass: labelIconFamilyClass, familyPrefix: labelIconFamilyPrefix, materialStyle: labelIconMaterialStyle }))] })), [
+        id,
+        label,
+        labelIcon,
+        labelIconFamilyClass,
+        labelIconFamilyPrefix,
+        labelIconMaterialStyle,
+    ]);
+    const dynamicComponent = React.useMemo(() => {
+        if (floatingLabel) {
+            return (jsxRuntime.jsxs("div", { className: "form-floating", children: [inputComponent, labelComponent] }));
+        }
+        return inputComponent;
+    }, [
+        floatingLabel,
+        inputComponent,
+        labelComponent,
+    ]);
+    return (jsxRuntime.jsxs("div", Object.assign({ className: classNames('d-input-phone', className), style: style }, dataAttributes, { children: [label && !floatingLabel && labelComponent, jsxRuntime.jsxs("div", { className: classNames({
+                    [`input-group-${size}`]: !!size,
+                    'input-group': true,
+                    'has-validation': invalid || valid,
+                }), children: [jsxRuntime.jsx(reactInternationalPhone.CountrySelector, Object.assign({}, countrySelectorProps, { selectedCountry: country.iso2, onSelect: ({ iso2 }) => setCountry(iso2), countries: countries, disabled: disabled || loading, className: classNames('input-group-text', countrySelectorProps === null || countrySelectorProps === void 0 ? void 0 : countrySelectorProps.className) })), dynamicComponent, (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+}
+const ForwardedDInputPhone = React.forwardRef(DInputPhone);
+ForwardedDInputPhone.displayName = 'DInputPhone';
+
 exports.DAlert = DAlert;
 exports.DAvatar = DAvatar;
 exports.DBadge = DBadge;
@@ -2277,6 +2383,7 @@ exports.DInputCurrency = ForwardedDInputCurrencyBase;
 exports.DInputCurrencyBase = ForwardedDInputCurrencyBase$1;
 exports.DInputMask = ForwardedDInputMask;
 exports.DInputPassword = ForwardedDInputPassword;
+exports.DInputPhone = ForwardedDInputPhone;
 exports.DInputPin = DInputPin;
 exports.DInputRange = ForwardedDInputRange;
 exports.DInputSearch = ForwardedDInputSearch;
@@ -2338,4 +2445,5 @@ exports.usePortal = usePortal;
 exports.useProvidedRefOrCreate = useProvidedRefOrCreate;
 exports.useStackState = useStackState;
 exports.useTabContext = useTabContext;
+exports.validatePhoneNumber = validatePhoneNumber;
 //# sourceMappingURL=index.js.map

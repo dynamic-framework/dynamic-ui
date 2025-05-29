@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 1.35.1
+ * dynamic-framework 1.36.0
  * bootstrap ~5.3.3
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -357,6 +357,9 @@
   --bs-fw-semibold: 600;
   --bs-fw-bold: 700;
   --bs-fw-bolder: 800;
+  --bs-lh-base: 1.5;
+  --bs-lh-sm: 1.25;
+  --bs-lh-lg: 2;
   --bs-label-padding-y: var(--bs-ref-spacer-0);
   --bs-label-padding-x: var(--bs-ref-spacer-0);
   --bs-label-margin-bottom: var(--bs-ref-spacer-1);

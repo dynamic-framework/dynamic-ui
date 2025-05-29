@@ -17,6 +17,7 @@ type Props<Option, IsMulti extends boolean, Group extends GroupBase<Option>> = B
     invalid?: boolean;
     valid?: boolean;
     menuWithMaxContent?: boolean;
+    floatingLabel?: boolean;
     onIconStartClick?: (value?: SelectProps<Option, IsMulti, Group>['defaultValue']) => void;
     onIconEndClick?: (value?: SelectProps<Option, IsMulti, Group>['defaultValue']) => void;
     disabled?: SelectProps<Option, IsMulti, Group>['isDisabled'];
@@ -26,7 +27,7 @@ type Props<Option, IsMulti extends boolean, Group extends GroupBase<Option>> = B
     searchable?: SelectProps<Option, IsMulti, Group>['isSearchable'];
     multi?: SelectProps<Option, IsMulti, Group>['isMulti'];
 };
-declare function DSelect<Option = unknown, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>({ id: idProp, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent, disabled, clearable, loading, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes, ...props }: Props<Option, IsMulti, Group>): import("react/jsx-runtime").JSX.Element;
+declare function DSelect<Option = unknown, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>({ id: idProp, className, style, label, labelIcon, labelIconFamilyClass, labelIconFamilyPrefix, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent, disabled, clearable, loading, floatingLabel, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes, ...props }: Props<Option, IsMulti, Group>): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DSelect & {
     OptionCheck: typeof DSelectOptionCheck;
     OptionIcon: typeof DSelectOptionIcon;
