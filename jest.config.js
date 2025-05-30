@@ -1,7 +1,7 @@
 const { createDefaultPreset } = require('ts-jest');
 
 module.exports = {
-  verbose: false,
+  verbose: true,
   testEnvironment: 'jsdom',
   transform: {
     ...createDefaultPreset().transform,
