@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.1](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.0...v1.36.1) (2025-05-29)
+
+
+### Bug Fixes
+
+* restore mock for react-responsive-pagination ([#847](https://github.com/dynamic-framework/dynamic-ui/issues/847)) ([569794d](https://github.com/dynamic-framework/dynamic-ui/commit/569794d4eda8958d6ef7e09b18cd345bde238b43))
+
 ## [1.36.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.35.1...v1.36.0) (2025-05-29)
 
 
