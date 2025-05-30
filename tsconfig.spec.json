@@ -4,11 +4,12 @@
     "jsx": "react-jsx",
     "types": [
       "node",
-      "jest"
+      "jest",
+      "@testing-library/jest-dom"
     ]
   },
   "include": [
-    "src"
+    "src",
   ],
   "exclude": [
     "stories"
