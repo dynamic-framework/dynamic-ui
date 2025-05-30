@@ -42,6 +42,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "test:storybook": "test-storybook",
     "build": "npm run clean && npm run build:react && npm run build:scss && npm run cp",
     "build:react": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.mjs",
