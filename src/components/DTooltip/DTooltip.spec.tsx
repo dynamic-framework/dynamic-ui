@@ -76,7 +76,10 @@ describe('<DTooltip />', () => {
 
   it('Not show tooltip if open=false and not interacted', () => {
     render(
-      <DTooltip open={false} Component={<span>No tooltip yet</span>}>
+      <DTooltip
+        open={false}
+        Component={<span>No tooltip yet</span>}
+      >
         {tooltipText}
       </DTooltip>,
     );
