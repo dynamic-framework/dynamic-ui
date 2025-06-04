@@ -1,4 +1,3 @@
-// DTabContent.test.tsx
 import React, { useMemo } from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -36,7 +35,7 @@ describe('DTabContent component', () => {
     expect(screen.getByRole('tabpanel')).toHaveClass('tab-pane', 'fade', 'show', 'active');
   });
 
-  it('does not render anything when tab is not selected', () => {
+  it('Does not render anything when tab is not selected', () => {
     const Wrapper = mockContext(() => false);
 
     const { container } = render(
@@ -48,20 +47,20 @@ describe('DTabContent component', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('DTabContent se renderiza si el tab está seleccionado (cubre isSelected)', () => {
+  it('Render children when tab is active', () => {
     render(
       <DTabs
         options={[{ label: 'A', tab: 'a' }]}
         defaultSelected="a"
       >
-        <DTabs.Tab tab="a">active content</DTabs.Tab>
+        <DTabs.Tab tab="a">Active content</DTabs.Tab>
       </DTabs>,
     );
 
-    expect(screen.getByText('Contenido activo')).toBeInTheDocument();
+    expect(screen.getByText('Active content')).toBeInTheDocument();
   });
 
-  it('applies custom className and style', () => {
+  it('Applies custom className and style', () => {
     const Wrapper = mockContext((tab) => tab === 'tab1');
 
     render(
