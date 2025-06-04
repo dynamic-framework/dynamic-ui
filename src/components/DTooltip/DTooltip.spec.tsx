@@ -8,9 +8,9 @@ import {
   within,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import DTooltip from './DTooltip'; // Ajusta la ruta si es necesario
+import DTooltip from './DTooltip';
 
-describe('DTooltip', () => {
+describe('<DTooltip />', () => {
   const tooltipText = 'Tooltip text';
 
   it('Render component', () => {
@@ -24,7 +24,10 @@ describe('DTooltip', () => {
 
   it('Default tooltip should show on hover', async () => {
     render(
-      <DTooltip withHover Component={<span>Hover me</span>}>
+      <DTooltip
+        withHover
+        Component={<span>Hover me</span>}
+      >
         {tooltipText}
       </DTooltip>,
     );
@@ -42,7 +45,10 @@ describe('DTooltip', () => {
 
   it('Show tooltip on Click event', async () => {
     render(
-      <DTooltip withClick Component={<button type="button">Click me</button>}>
+      <DTooltip
+        withClick
+        Component={<button type="button">Click me</button>}
+      >
         {tooltipText}
       </DTooltip>,
     );
@@ -57,7 +63,10 @@ describe('DTooltip', () => {
 
   it('Show tooltip inmediatly if open=true', () => {
     render(
-      <DTooltip open Component={<span>Tooltip target</span>}>
+      <DTooltip
+        open
+        Component={<span>Tooltip target</span>}
+      >
         {tooltipText}
       </DTooltip>,
     );
@@ -110,7 +119,10 @@ describe('DTooltip', () => {
 
   it('Text withFocus should show tooltip', async () => {
     render(
-      <DTooltip withFocus Component={<button type="button">Focus me</button>}>
+      <DTooltip
+        withFocus
+        Component={<button type="button">Focus me</button>}
+      >
         {tooltipText}
       </DTooltip>,
     );
