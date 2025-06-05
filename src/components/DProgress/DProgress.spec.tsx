@@ -1,32 +1,105 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import DProgress from './DProgress';
 
-it('should render my component', () => {
-  const progress = { currentValue: 33 };
+describe('<DProgress />', () => {
+  it('should render my component', () => {
+    const progress = { currentValue: 33 };
+    const { container } = render(
+      <DProgress {...progress} />,
+    );
 
-  const { container } = render(
-    <DProgress
-      {...progress}
-    />,
-  );
-
-  expect(container).toMatchInlineSnapshot(`
-    <div>
-      <div
-        class="progress"
-      >
+    expect(container).toMatchInlineSnapshot(`
+      <div>
         <div
-          aria-label="Progress bar"
-          aria-valuemax="100"
-          aria-valuemin="0"
-          aria-valuenow="33"
-          class="progress-bar"
-          role="progressbar"
-          style="width: 33%;"
+          class="progress"
         >
-          33%
+          <div
+            aria-label="Progress bar"
+            aria-valuemax="100"
+            aria-valuemin="0"
+            aria-valuenow="33"
+            class="progress-bar"
+            role="progressbar"
+            style="width: 33%;"
+          >
+            33%
+          </div>
         </div>
       </div>
-    </div>
-  `);
+    `);
+  });
+
+  it('renders with default minValue and maxValue (0 to 100)', () => {
+    render(
+      <DProgress currentValue={50} />,
+    );
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).toHaveAttribute('aria-valuemin', '0');
+    expect(progressBar).toHaveAttribute('aria-valuemax', '100');
+    expect(progressBar).toHaveAttribute('aria-valuenow', '50');
+    expect(progressBar).toHaveStyle('width: 50%');
+    expect(progressBar).toHaveTextContent('50%');
+  });
+
+  it('renders with custom minValue and maxValue', () => {
+    render(
+      <DProgress
+        currentValue={25}
+        minValue={0}
+        maxValue={50}
+      />,
+    );
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).toHaveAttribute('aria-valuemin', '0');
+    expect(progressBar).toHaveAttribute('aria-valuemax', '50');
+    expect(progressBar).toHaveAttribute('aria-valuenow', '25');
+    expect(progressBar).toHaveStyle('width: 50%');
+    expect(progressBar).toHaveTextContent('50%');
+  });
+
+  it('hides current value text when hideCurrentValue is true', () => {
+    render(<DProgress currentValue={80} hideCurrentValue />);
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).not.toHaveTextContent('80%');
+  });
+
+  it('adds striped animation classes when enabled', () => {
+    render(
+      <DProgress
+        currentValue={30}
+        enableStripedAnimation
+      />,
+    );
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).toHaveClass('progress-bar-striped');
+    expect(progressBar).toHaveClass('progress-bar-animated');
+  });
+
+  it('supports custom className on outer container', () => {
+    render(
+      <DProgress
+        currentValue={10}
+        className="my-progress"
+      />,
+    );
+    expect(screen.getByRole('progressbar').parentElement).toHaveClass('progress', 'my-progress');
+  });
+
+  it('applies custom inline styles to inner bar', () => {
+    render(
+      <DProgress
+        currentValue={40}
+        style={{ backgroundColor: 'blue' }}
+      />,
+    );
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).toHaveStyle('background-color: blue');
+    expect(progressBar).toHaveStyle('width: 40%');
+  });
+
+  it('renders with data attributes when provided', () => {
+    render(<DProgress currentValue={60} dataAttributes={{ 'data-testid': 'progress-bar' }} />);
+    expect(screen.getByTestId('progress-bar')).toBeInTheDocument();
+  });
 });
