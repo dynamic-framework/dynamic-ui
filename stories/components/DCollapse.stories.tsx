@@ -117,7 +117,7 @@ export const HeaderText: Story = {
   ),
   args: {
     Component: (
-      <p>Text</p>
+      <span>Text</span>
     ),
     defaultCollapsed: false,
     hasSeparator: true,
@@ -172,7 +172,7 @@ export const Collapsed: Story = {
   ),
   args: {
     Component: (
-      <p>Text</p>
+      <span>Text</span>
     ),
     defaultCollapsed: true,
     hasSeparator: true,
@@ -202,7 +202,7 @@ export const MaterialIcon: Story = {
   ),
   args: {
     Component: (
-      <p>Text</p>
+      <span>Text</span>
     ),
     defaultCollapsed: true,
     hasSeparator: true,
