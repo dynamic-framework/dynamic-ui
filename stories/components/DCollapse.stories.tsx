@@ -119,7 +119,6 @@ export const HeaderText: Story = {
     Component: (
       <span>Text</span>
     ),
-    defaultCollapsed: false,
     hasSeparator: true,
   },
 };
@@ -148,12 +147,11 @@ export const HeaderComponent: Story = {
         <h1 className="h4 m-0">Custom component</h1>
       </div>
     ),
-    defaultCollapsed: false,
     hasSeparator: true,
   },
 };
 
-export const Collapsed: Story = {
+export const Expanded: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: '320px', height: '320px' }}>
@@ -174,7 +172,7 @@ export const Collapsed: Story = {
     Component: (
       <span>Text</span>
     ),
-    defaultCollapsed: true,
+    defaultCollapsed: false,
     hasSeparator: true,
   },
 };
@@ -204,7 +202,6 @@ export const MaterialIcon: Story = {
     Component: (
       <span>Text</span>
     ),
-    defaultCollapsed: true,
     hasSeparator: true,
     iconClose: 'unfold_more',
     iconOpen: 'unfold_less',
