@@ -123,6 +123,7 @@
     "@storybook/theming": "~8.2.9",
     "@testing-library/jest-dom": "~6.1.4",
     "@testing-library/react": "~14.0.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/google-libphonenumber": "^7.4.30",
     "@types/jest": "~29.5.12",
     "@types/node": "~18.15.3",
