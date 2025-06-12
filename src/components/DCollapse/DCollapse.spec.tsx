@@ -12,11 +12,10 @@ describe('<DCollapse />', () => {
   const HeaderMock = <>Header Content</>;
   const BodyMock = <>Collapsible Body</>;
 
-  it('should render a collapse and show its content', () => {
+  it('should render a collapse and hide its content', () => {
     const props: ComponentProps<typeof DCollapse> = {
       Component: HeaderMock,
       children: BodyMock,
-      defaultCollapsed: true,
     };
 
     const { container } = render(
@@ -38,16 +37,10 @@ describe('<DCollapse />', () => {
               Header Content
             </div>
             <i
-              class="d-icon bi bi-chevron-up"
+              class="d-icon bi bi-chevron-down"
               style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-size: var(--bs-fs-small); --bs-icon-component-color: var(--bs-gray); --bs-icon-component-padding: 0;"
             />
           </button>
-          <div
-            class="collapse-body"
-            style="--bs-collapse-separator-display: none;"
-          >
-            Collapsible Body
-          </div>
         </div>
       </div>
     `);
@@ -66,11 +59,11 @@ describe('<DCollapse />', () => {
     expect(screen.queryByText('Collapsible Body')).not.toBeInTheDocument();
   });
 
-  it('shows the body when defaultCollapsed is true', () => {
+  it('shows the body when defaultCollapsed is false', () => {
     render(
       <DCollapse
         Component={HeaderMock}
-        defaultCollapsed
+        defaultCollapsed={false}
       >
         {BodyMock}
       </DCollapse>,
@@ -150,7 +143,7 @@ describe('<DCollapse />', () => {
     render(
       <DCollapse
         Component={HeaderMock}
-        defaultCollapsed
+        defaultCollapsed={false}
         hasSeparator
       >
         {BodyMock}

@@ -36,7 +36,7 @@ export default function DCollapse(
     style,
     Component,
     hasSeparator = false,
-    defaultCollapsed = false,
+    defaultCollapsed = true,
     onChange,
     children,
     iconOpen: iconOpenProp,
@@ -47,10 +47,10 @@ export default function DCollapse(
     dataAttributes,
   }: Props,
 ) {
-  const [toggle, setToggle] = useState(defaultCollapsed);
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
 
   const onChangeCollapse = () => {
-    setToggle((prev) => {
+    setCollapsed((prev) => {
       const next = !prev;
       if (onChange) {
         onChange(next);
@@ -66,8 +66,8 @@ export default function DCollapse(
     },
   } = useDContext();
 
-  const iconOpen = useMemo(() => iconOpenProp || chevronUp, [chevronUp, iconOpenProp]);
-  const iconClose = useMemo(() => iconCloseProp || chevronDown, [chevronDown, iconCloseProp]);
+  const iconOpen = useMemo(() => iconOpenProp || chevronDown, [chevronDown, iconOpenProp]);
+  const iconClose = useMemo(() => iconCloseProp || chevronUp, [chevronUp, iconCloseProp]);
 
   const generateStyles = useMemo<CustomStyles>(() => ({
     [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
@@ -91,13 +91,13 @@ export default function DCollapse(
         <DIcon
           color={`var(--${PREFIX_BS}gray)`}
           size={`var(--${PREFIX_BS}fs-small)`}
-          icon={toggle ? iconOpen : iconClose}
+          icon={collapsed ? iconOpen : iconClose}
           familyClass={iconFamilyClass}
           familyPrefix={iconFamilyPrefix}
           materialStyle={iconMaterialStyle}
         />
       </button>
-      {toggle && (
+      {!collapsed && (
         <div
           className={classNames({
             'collapse-body': true,
