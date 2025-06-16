@@ -1,42 +1,46 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import DToast from './DToast';
 
-it('should render my component with header and body slot', () => {
-  const toast = { name: 'mytoast' };
+describe('<DToast />', () => {
+  it('Render component', () => {
+    render(<DToast>Mensaje de prueba</DToast>);
+    expect(screen.getByText('Mensaje de prueba')).toBeInTheDocument();
+  });
 
-  const { container } = render(
-    <DToast
-      {...toast}
-    >
-      <DToast.Header>
-        Test Header
-      </DToast.Header>
-      <DToast.Body>
-        Test Body
-      </DToast.Body>
-    </DToast>,
-  );
+  it('toast className', () => {
+    render(<DToast>Contenido</DToast>);
+    const toast = screen.getByRole('alert');
+    expect(toast).toHaveClass('toast');
+  });
 
-  expect(container).toMatchInlineSnapshot(`
-    <div>
-      <div
-        aria-atomic="true"
-        aria-live="assertive"
-        class="toast"
-        role="alert"
-      >
-        <div
-          class="toast-header"
-        >
-          Test Header
-        </div>
-        <div
-          class="toast-body"
-        >
-          Test Body
-        </div>
-      </div>
-    </div>
-  `);
+  it('Add custom className', () => {
+    render(<DToast className="extra-clase">Contenido</DToast>);
+    const toast = screen.getByRole('alert');
+    expect(toast).toHaveClass('toast', 'extra-clase');
+  });
+
+  it('Add custom styles', () => {
+    const style = { backgroundColor: 'red' };
+    render(<DToast style={style}>Contenido</DToast>);
+    const toast = screen.getByRole('alert');
+    expect(toast).toHaveStyle('background-color: red');
+  });
+
+  it('Add data-testId', () => {
+    render(
+      <DToast dataAttributes={{ 'data-testid': 'mi-toast' }}>
+        Contenido
+      </DToast>,
+    );
+    expect(screen.getByTestId('mi-toast')).toBeInTheDocument();
+  });
+
+  it('Verify area attribute', () => {
+    render(<DToast>Contenido</DToast>);
+    const toast = screen.getByRole('alert');
+    expect(toast).toHaveAttribute('aria-live', 'assertive');
+    expect(toast).toHaveAttribute('aria-atomic', 'true');
+  });
 });

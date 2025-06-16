@@ -146,7 +146,6 @@ function DInput(
       ref={inputRef}
       id={id}
       className={classNames('form-control', {
-        [`form-control-${size}`]: !!size,
         'is-invalid': invalid,
         'is-valid': valid,
       })}
@@ -170,7 +169,6 @@ function DInput(
     floatingLabel,
     valid,
     value,
-    size,
   ]);
 
   const labelComponent = useMemo(() => (
@@ -216,6 +214,7 @@ function DInput(
       {label && !floatingLabel && labelComponent}
       <div
         className={classNames({
+          [`input-group-${size}`]: !!size,
           'input-group': true,
           'has-validation': invalid || valid,
         })}
@@ -268,6 +267,7 @@ function DInput(
               className="spinner-border spinner-border-sm"
               role="status"
               aria-hidden="true"
+              data-testid="loading-spinner"
             >
               <span className="visually-hidden">Loading...</span>
             </span>

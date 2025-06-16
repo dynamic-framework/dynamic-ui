@@ -17,6 +17,7 @@ import type {
 import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect';
 import usePortal from '../hooks/usePortal';
 import useStackState from '../hooks/useStackState';
+import getKeyboardFocusableElements from '../utils/getKeyboardFocusableElements';
 
 type PortalComponent<P = any> = FC<PortalProps<P>>;
 
@@ -74,6 +75,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
         Component,
         payload,
       });
+      (document.activeElement as HTMLElement)?.blur();
     },
     [availablePortals, push],
   );
@@ -112,10 +114,24 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   useEffect(() => {
     const keyEvent = (event: KeyboardEvent) => {
+      const lastPortal = document.querySelector(`#${portalName} > div > div:last-child`);
       if (event.key === 'Escape') {
-        const lastPortal = document.querySelector(`#${portalName} > div > div:last-child`);
         if (lastPortal) {
           handleClose(lastPortal as HTMLElement);
+          return;
+        }
+      }
+      if (event.key === 'Tab') {
+        const focusableElements = getKeyboardFocusableElements(lastPortal as HTMLElement);
+        if (focusableElements.length === 0) return;
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        if (event.shiftKey && document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        } else if (!event.shiftKey && document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
         }
       }
     };

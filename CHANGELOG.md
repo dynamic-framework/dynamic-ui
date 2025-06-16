@@ -3,6 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.1](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.0...v1.36.1) (2025-05-29)
+
+
+### Bug Fixes
+
+* restore mock for react-responsive-pagination ([#847](https://github.com/dynamic-framework/dynamic-ui/issues/847)) ([569794d](https://github.com/dynamic-framework/dynamic-ui/commit/569794d4eda8958d6ef7e09b18cd345bde238b43))
+
+## [1.36.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.35.1...v1.36.0) (2025-05-29)
+
+
+### Features
+
+* **DInputPhone:** add new input component using react-international-phone ([#830](https://github.com/dynamic-framework/dynamic-ui/issues/830)) ([d29074c](https://github.com/dynamic-framework/dynamic-ui/commit/d29074c88c73a9719c016143f09503c39f405358))
+* **DSelect:** add floating label prop ([#843](https://github.com/dynamic-framework/dynamic-ui/issues/843)) ([6658185](https://github.com/dynamic-framework/dynamic-ui/commit/6658185ae3c4860c1d769769d94c1a1757b681da))
+* **style:** add line heights in root variables ([#833](https://github.com/dynamic-framework/dynamic-ui/issues/833)) ([dcc82f8](https://github.com/dynamic-framework/dynamic-ui/commit/dcc82f8c147f88cb89ee671156643c0a216b85cd))
+
+
+### Bug Fixes
+
+* **DBoxFile:** set onLoad method and docs to preview images ([#840](https://github.com/dynamic-framework/dynamic-ui/issues/840)) ([1c0f7ff](https://github.com/dynamic-framework/dynamic-ui/commit/1c0f7ffa1646c870e6ea8e830d7952084849a092))
+* **DDatepicker:** locale prop as Locale type of date-fns ([#837](https://github.com/dynamic-framework/dynamic-ui/issues/837)) ([a596225](https://github.com/dynamic-framework/dynamic-ui/commit/a596225c68b7da65f03c3f3a77351c5f5cd98751))
+* **style:** change base color on DDatepicker ([#835](https://github.com/dynamic-framework/dynamic-ui/issues/835)) ([90d18f3](https://github.com/dynamic-framework/dynamic-ui/commit/90d18f31843a58b657ea9d729de52bb5632f798b))
+* **style:** change DDatepicker time input view ([eed942f](https://github.com/dynamic-framework/dynamic-ui/commit/eed942f3e099446b52cf5b1589a9099296e7f0aa))
+* **style:** clean hover color on DSelect ([#834](https://github.com/dynamic-framework/dynamic-ui/issues/834)) ([079cdc8](https://github.com/dynamic-framework/dynamic-ui/commit/079cdc85cef7e1c160d97cc3b9b61c1864b1a84c))
+* **style:** hover in nav variants and underline border width ([#832](https://github.com/dynamic-framework/dynamic-ui/issues/832)) ([7e7763b](https://github.com/dynamic-framework/dynamic-ui/commit/7e7763b9fdc2b8c103f689dd3c707e7a919f7c98))
+* **style:** set calc on switch variable ([3e4c8c5](https://github.com/dynamic-framework/dynamic-ui/commit/3e4c8c58c7b097f467d8d2b394b12d37a9a94079))
+* **style:** set time styles on DDatepicker time selector ([2247a1f](https://github.com/dynamic-framework/dynamic-ui/commit/2247a1ffd5106a926aed9dd14c686fa4f7e73411))
+
+## [1.35.1](https://github.com/dynamic-framework/dynamic-ui/compare/v1.35.0...v1.35.1) (2025-05-14)
+
+
+### Bug Fixes
+
+* **style:** remove overflow on DDatepicker ([#828](https://github.com/dynamic-framework/dynamic-ui/issues/828)) ([1e2e302](https://github.com/dynamic-framework/dynamic-ui/commit/1e2e302dd28ff784a0383186558705467f0153f4))
+
+## [1.35.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.34.0...v1.35.0) (2025-05-14)
+
+
+### Features
+
+* **DBoxFile:** set custom behavior and new examples ([#813](https://github.com/dynamic-framework/dynamic-ui/issues/813)) ([80d74cb](https://github.com/dynamic-framework/dynamic-ui/commit/80d74cb8c313f4544223f55d5eb38445ec3c494e))
+* **DDatepicker:** all API support on react-datepicker v8 ([#818](https://github.com/dynamic-framework/dynamic-ui/issues/818)) ([da0a064](https://github.com/dynamic-framework/dynamic-ui/commit/da0a064bbdee0a376dfc0c89775f608429f296a1))
+* **DPopover:** remove deprecated state and update docs ([#792](https://github.com/dynamic-framework/dynamic-ui/issues/792)) ([b5f42a3](https://github.com/dynamic-framework/dynamic-ui/commit/b5f42a391fed95e323ed03360ec936453200a3a9))
+* update react version and peer deps ([#799](https://github.com/dynamic-framework/dynamic-ui/issues/799)) ([244d3e9](https://github.com/dynamic-framework/dynamic-ui/commit/244d3e94d1bcabf4f411ad1b3f171e2585efab75))
+
+
+### Bug Fixes
+
+* add matchMedia property as global in jest ([#801](https://github.com/dynamic-framework/dynamic-ui/issues/801)) ([e6b2ed8](https://github.com/dynamic-framework/dynamic-ui/commit/e6b2ed8875fb8e21889948b40396d02b515e53d0))
+* **DInput:** set icon size variables on sm and lg ([#807](https://github.com/dynamic-framework/dynamic-ui/issues/807)) ([f89effb](https://github.com/dynamic-framework/dynamic-ui/commit/f89effb90c80f13b0e4ce0ecf7d0a330176968ed))
+* **DListGroupItem:** set button type as button ([#805](https://github.com/dynamic-framework/dynamic-ui/issues/805)) ([4fc27b8](https://github.com/dynamic-framework/dynamic-ui/commit/4fc27b89ae5efd9b47f2fa64cd20a79c71951305))
+* **DPortalContext:** keep tab navigation inside active portal ([#811](https://github.com/dynamic-framework/dynamic-ui/issues/811)) ([64ab54d](https://github.com/dynamic-framework/dynamic-ui/commit/64ab54dcc5a1dd5cd75b0e49037478dc0507d1ac))
+* **DToast:** add toast gap variable and set all variables in docs ([#806](https://github.com/dynamic-framework/dynamic-ui/issues/806)) ([c529e42](https://github.com/dynamic-framework/dynamic-ui/commit/c529e422fa8c37f202061dcd32544e543014356b))
+* remove duplicated properties by scoping icon button ([#796](https://github.com/dynamic-framework/dynamic-ui/issues/796)) ([9b67890](https://github.com/dynamic-framework/dynamic-ui/commit/9b67890837383196543994bf1957e5971d731b2e))
+* **style:** expose DInputSwitch css variables ([#803](https://github.com/dynamic-framework/dynamic-ui/issues/803)) ([4aa746a](https://github.com/dynamic-framework/dynamic-ui/commit/4aa746af1862b44184b491097dc1ebe678fd0307))
+* **style:** remove fixed size and use min and max ([#798](https://github.com/dynamic-framework/dynamic-ui/issues/798)) ([4430932](https://github.com/dynamic-framework/dynamic-ui/commit/44309321d30385c3a43c67d6fe632c6630a0f630))
+* **style:** remove padding from nav pills and underline ([#804](https://github.com/dynamic-framework/dynamic-ui/issues/804)) ([d8ce6b5](https://github.com/dynamic-framework/dynamic-ui/commit/d8ce6b5d8f6eb7de7774f37a0257f4c4abd23306))
+* update hot toast version to 2.5.2 ([#808](https://github.com/dynamic-framework/dynamic-ui/issues/808)) ([decf2fa](https://github.com/dynamic-framework/dynamic-ui/commit/decf2fa94b4ca8b85a5dae3c8d79b67345f3fa45))
+* update README.md ([#817](https://github.com/dynamic-framework/dynamic-ui/issues/817)) ([6bce4d2](https://github.com/dynamic-framework/dynamic-ui/commit/6bce4d228d2ddba5fa90970016b81fd93d9f5219))
+* use input group color on validation ([#795](https://github.com/dynamic-framework/dynamic-ui/issues/795)) ([5efd629](https://github.com/dynamic-framework/dynamic-ui/commit/5efd62919b28b58d2993e0a12c49625c1b88cf1b))
+
 ## [1.34.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.33.0...v1.34.0) (2024-11-29)
 
 

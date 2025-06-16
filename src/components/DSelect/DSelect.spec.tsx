@@ -91,7 +91,7 @@ it('should render my component', () => {
               >
                 <i
                   class="d-icon bi bi-chevron-down"
-                  style="--bs-icon-component-size: 1.5rem; --bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
+                  style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
                 />
               </div>
             </div>

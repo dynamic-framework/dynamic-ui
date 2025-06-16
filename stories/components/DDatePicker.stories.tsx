@@ -1,17 +1,35 @@
-import { useState } from 'react';
+import {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { registerLocale } from 'react-datepicker';
-import es from 'date-fns/locale/es';
+import {
+  addDays,
+  setHours,
+  setMinutes,
+} from 'date-fns';
+import { es } from 'date-fns/locale';
 
 import DDatePicker from '../../src/components/DDatePicker/DDatePicker';
 import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 
-registerLocale('es', es);
-
 const config: Meta<typeof DDatePicker> = {
   title: 'Design System/Components/Datepicker',
   component: DDatePicker,
+  decorators: [
+    (Story) => (
+      <div
+        style={{ height: '400px' }}
+        className="position-relative"
+      >
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     className: {
       control: 'text',
@@ -19,6 +37,7 @@ const config: Meta<typeof DDatePicker> = {
     },
     style: {
       control: 'object',
+      type: 'string',
     },
     inputLabel: {
       control: 'text',
@@ -46,7 +65,7 @@ const config: Meta<typeof DDatePicker> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    iconHeaderPrevMonth: {
+    iconHeaderPrev: {
       control: {
         type: 'select',
         labels: {
@@ -56,7 +75,7 @@ const config: Meta<typeof DDatePicker> = {
       type: 'string',
       options: [undefined, ...ICONS],
     },
-    iconHeaderNextMonth: {
+    iconHeaderNext: {
       control: {
         type: 'select',
         labels: {
@@ -94,10 +113,6 @@ const config: Meta<typeof DDatePicker> = {
       control: 'text',
       type: 'string',
     },
-    timeLabel: {
-      control: 'text',
-      type: 'string',
-    },
     autoFocus: {
       type: 'boolean',
       control: 'boolean',
@@ -113,11 +128,7 @@ const config: Meta<typeof DDatePicker> = {
       control: 'boolean',
       description: 'Show button inline',
       defaultValue: false,
-    },
-    withPortal: {
-      type: 'boolean',
-      control: 'boolean',
-      description: 'Open calendar in portal',
+      table: { defaultValue: { summary: 'false' } },
     },
     minDate: {
       type: 'string',
@@ -138,7 +149,7 @@ const config: Meta<typeof DDatePicker> = {
       type: 'string',
       control: 'text',
       description: 'Format to display date',
-      defaultValue: 'dd/MM/yyyy',
+      table: { defaultValue: { summary: 'dd/MM/yyyy' } },
     },
     selectsRange: {
       type: 'boolean',
@@ -187,251 +198,356 @@ const config: Meta<typeof DDatePicker> = {
     onChange: {
       action: 'onChange',
     },
+    value: {
+      type: 'string',
+      control: 'date',
+    },
+    monthsShown: {
+      control: {
+        type: 'select',
+      },
+      type: 'number',
+      options: [1, 2, 3],
+      defaultValue: 1,
+      table: { defaultValue: { summary: '1' } },
+    },
+    showPopperArrow: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showWeekPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showYearPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showFullMonthYearPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showMonthYearPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showPreviousMonths: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showDateSelect: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showDisabledMonthNavigation: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    showQuarterYearPicker: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    disabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
   },
 };
+
+function ControlledDatePicker(props: ComponentProps<typeof DDatePicker>) {
+  const {
+    value,
+    onChange,
+    selected,
+    ...rest
+  } = useMemo(() => props, [props]);
+
+  const [date, setDate] = useState<Date | null>(value ? new Date(value) : new Date());
+
+  const handleDate = useCallback((newDate: Date | null) => {
+    setDate(newDate);
+  }, []);
+
+  useEffect(() => {
+    if (value) {
+      handleDate(new Date(value));
+    }
+  }, [value, handleDate]);
+
+  return (
+    <DDatePicker
+      {...rest}
+      key={JSON.stringify(props, null, 0)}
+      selected={date}
+      onChange={(newDate: Date | null) => setDate(newDate)}
+      showHeaderSelectors
+    />
+  );
+}
+
+function ControlledDateRangePicker(props: ComponentProps<typeof DDatePicker>) {
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>(addDays(new Date(), 6));
+
+  const handleChange = (dates: [Date | null, Date | null]) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  return (
+    <DDatePicker
+      {...props}
+      selected={startDate}
+      startDate={startDate}
+      endDate={endDate}
+      onChange={handleChange}
+      selectsRange
+    />
+  );
+}
 
 export default config;
 type Story = StoryObj<typeof DDatePicker>;
 
 export const Default: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
-        <Story />
-      </div>
-    ),
-  ],
-  render: function Render({ ...args }) {
-    const [date, setDate] = useState(args.date);
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        setDate(new Date(value).toISOString());
-      }
-    };
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
+  render: ControlledDatePicker,
   args: {
     inputAriaLabel: 'Calendar',
-    date: new Date().toISOString(),
     dateFormat: 'dd/MM/yyyy',
     inline: false,
     iconInput: 'calendar',
-    iconHeaderPrevMonth: 'chevron-left',
-    iconHeaderNextMonth: 'chevron-right',
+    iconHeaderPrev: 'chevron-left',
+    iconHeaderNext: 'chevron-right',
+    showHeaderSelectors: false,
+    monthsShown: 1,
+    style: {},
+    showWeekPicker: false,
+    showYearPicker: false,
+    showFullMonthYearPicker: false,
+    showMonthYearPicker: false,
+    showPopperArrow: true,
+    showPreviousMonths: false,
+    showDateSelect: true,
+    showDisabledMonthNavigation: false,
+    showQuarterYearPicker: false,
+    className: '',
+    dataAttributes: {},
+    iconFamilyClass: '',
+    id: '',
+    disabled: false,
   },
 };
 
-export const DefaultWithMonth: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
-        <Story />
-      </div>
-    ),
-  ],
+export const WithSelector: Story = {
+  render: ControlledDatePicker,
   args: {
-    inline: false,
     inputAriaLabel: 'Calendar',
-    date: new Date().toISOString(),
     dateFormat: 'dd/MM/yyyy',
+    inline: false,
+    iconInput: 'calendar',
+    iconHeaderPrev: 'chevron-left',
+    iconHeaderNext: 'chevron-right',
+  },
+};
+
+export const Weeks: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'dd/MM/yyyy',
+    inline: true,
+    iconInput: 'calendar',
+    iconHeaderPrev: 'chevron-left',
+    iconHeaderNext: 'chevron-right',
+    showWeekNumbers: true,
+    showWeekPicker: true,
+  },
+};
+
+export const MonthSelector: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'MM/yyyy',
+    showMonthYearPicker: true,
+    showTwoColumnMonthYearPicker: true,
+    showFullMonthYearPicker: true,
+  },
+};
+
+export const QuarterSelector: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'MM/yyyy',
+    showQuarterYearPicker: true,
+  },
+};
+
+export const YearSelector: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'yyyy',
+    showYearPicker: true,
   },
 };
 
 export const Inline: Story = {
+  render: ControlledDatePicker,
   args: {
     inline: true,
     inputAriaLabel: 'Calendar',
-    date: new Date().toISOString(),
     dateFormat: 'dd/MM/yyyy',
     headerPrevMonthAriaLabel: 'decrease month',
     headerNextMonthAriaLabel: 'increase month',
   },
 };
 
-export const WithLocale: Story = {
-  render: function Render({ ...args }) {
-    registerLocale('es', es);
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        locale={es}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
-  args: {
-    inline: true,
-  },
-};
-
-export const WithTime: Story = {
-  render: function Render({ ...args }) {
-    registerLocale('es', es);
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        locale={es}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
-  args: {
-    inline: true,
-    showTimeInput: true,
-    timeLabel: 'Select time',
-  },
-};
-
-export const DateRange: Story = {
-  render: function Render({ ...args }) {
-    const [startDate, setStartDate] = useState<Date>(new Date());
-    const [endDate, setEndDate] = useState<Date>();
-
-    const handleChange = (value: [Date | null, Date | null]) => {
-      const [newStartDate, newEndDate] = value as Array<Date>;
-      setStartDate(newStartDate);
-      setEndDate(newEndDate);
-    };
-
-    return (
-      <DDatePicker<string, boolean>
-        {...args}
-        {...startDate && {
-          selected: new Date(startDate),
-          startDate: new Date(startDate),
-        }}
-        {...endDate && {
-          endDate: new Date(endDate),
-        }}
-        onChange={handleChange}
-        selectsRange
-        dateFormat="dd/MM/yyyy"
-        inline
-      />
-    );
-  },
-  args: {
-    inline: true,
-    selectsRange: true,
-  },
-};
-
-export const Error: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
-        <Story />
-      </div>
-    ),
-  ],
-  render: function Render({ ...args }) {
-    const [date, setDate] = useState(args.date);
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        setDate(new Date(value).toISOString());
-      }
-    };
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
+export const InputValidState: Story = {
+  render: ControlledDatePicker,
   args: {
     inputAriaLabel: 'Calendar',
-    date: new Date().toISOString(),
+    dateFormat: 'dd/MM/yyyy',
+    valid: true,
+    inputHint: 'This is a valid date',
+    inline: false,
+    iconInput: 'calendar',
+    iconHeaderPrev: 'chevron-left',
+    iconHeaderNext: 'chevron-right',
+  },
+};
+
+export const InputInvalidState: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inputAriaLabel: 'Calendar',
     dateFormat: 'dd/MM/yyyy',
     invalid: true,
     inputHint: 'This is an invalid date',
     inline: false,
     iconInput: 'calendar',
-    iconHeaderPrevMonth: 'chevron-left',
-    iconHeaderNextMonth: 'chevron-right',
+    iconHeaderPrev: 'chevron-left',
+    iconHeaderNext: 'chevron-right',
   },
 };
 
-export const OnPortal: Story = {
-  render: function Render({ ...args }) {
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-
-    return (
-      <DDatePicker
-        {...args}
-        date={date}
-        dateFormat="dd/MM/yyyy"
-        onChange={(value) => handleDate(value)}
-      />
-    );
-  },
+export const TwoMonths: Story = {
+  render: ControlledDatePicker,
   args: {
-    inline: false,
-    withPortal: true,
-    showTimeInput: true,
-    timeLabel: 'Select time',
+    inline: true,
     inputAriaLabel: 'Calendar',
+    dateFormat: 'dd/MM/yyyy',
+    headerPrevMonthAriaLabel: 'decrease month',
+    headerNextMonthAriaLabel: 'increase month',
+    monthsShown: 2,
+  },
+};
+
+export const WithLocale: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    locale: es,
+    dateFormat: 'dd/MM/yyyy',
+  },
+};
+
+export const WithTimeInput: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    showTimeInput: true,
+    timeInputLabel: 'Select time',
+    dateFormat: 'dd/MM/yyyy h:mm aa',
+  },
+};
+
+export const WithTimeSelect: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    showTimeSelect: true,
+    dateFormat: 'dd/MM/yyyy h:mm aa',
+    minTime: setHours(setMinutes(new Date(), 0), 8),
+    maxTime: setHours(setMinutes(new Date(), 0), 17),
+  },
+};
+
+export const DateRange: Story = {
+  render: ControlledDateRangePicker,
+  args: {
+    inline: true,
+    selectsRange: true,
+    excludeDates: [
+      addDays(new Date(), 2),
+    ],
+    selectsDisabledDaysInRange: true,
+  },
+};
+
+export const DateRangeMonths: Story = {
+  render: ControlledDateRangePicker,
+  args: {
+    inline: true,
+    selectsRange: true,
+    dateFormat: 'MM/yyyy',
+    showMonthYearPicker: true,
+  },
+};
+
+export const DateRangeYear: Story = {
+  render: ControlledDateRangePicker,
+  args: {
+    inline: true,
+    selectsRange: true,
+    dateFormat: 'yyyy',
+    showYearPicker: true,
   },
 };
 
 export const MaterialStyle: Story = {
   render: function Render({ ...args }) {
-    const [date, onDate] = useState<string>(new Date().toISOString());
-    const handleDate = (value: Date | null) => {
-      if (value) {
-        onDate(new Date(value).toISOString());
-      }
-    };
-
     return (
       <DContextProvider
         {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
       >
-        <DDatePicker
-          {...args}
-          date={date}
-          dateFormat="dd/MM/yyyy"
-          onChange={(value) => handleDate(value)}
-        />
+        <ControlledDatePicker {...args} />
       </DContextProvider>
     );
   },
   args: {
     inline: false,
-    withPortal: true,
     showTimeInput: true,
-    timeLabel: 'Select time',
+    timeInputLabel: 'Select time',
     inputAriaLabel: 'Calendar',
+    dateFormat: 'dd/MM/yyyy',
+  },
+};
+
+export const WithSpecialDates: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inputAriaLabel: 'Calendar',
+    dateFormat: 'dd/MM/yyyy',
+    inline: true,
+    headerPrevMonthAriaLabel: 'decrease month',
+    headerNextMonthAriaLabel: 'increase month',
+    excludeDates: [
+      addDays(new Date(), 1),
+      addDays(new Date(), 5),
+    ],
+    highlightDates: [
+      addDays(new Date(), 2),
+      addDays(new Date(), 3),
+    ],
+    holidays: [
+      { date: addDays(new Date(), 4).toISOString(), holidayName: 'Holiday one' },
+      { date: addDays(new Date(), 5).toISOString(), holidayName: 'Holiday two' },
+    ],
   },
 };
