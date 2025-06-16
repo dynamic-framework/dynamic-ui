@@ -460,7 +460,7 @@ function DInput(_a, ref) {
                     [`input-group-${size}`]: !!size,
                     'input-group': true,
                     'has-validation': invalid || valid,
-                }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel, tabIndex: onIconStartClick ? iconStartTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle }) })), dynamicComponent, (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
+                }), children: [!!inputStart && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputStart`, children: inputStart })), iconStart && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}Start`, onClick: handleOnIconStartClick, disabled: disabled || loading || iconStartDisabled, "aria-label": iconStartAriaLabel, tabIndex: onIconStartClick ? iconStartTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle }) })), dynamicComponent, (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading || iconEndDisabled, "aria-label": iconEndAriaLabel, tabIndex: onIconEndClick ? iconEndTabIndex : -1, children: jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }) })), loading && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}Loading`, children: jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", "data-testid": "loading-spinner", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }) })), !!inputEnd && (jsxRuntime.jsx("div", { className: "input-group-text", id: `${id}InputEnd`, children: inputEnd }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
 const ForwardedDInput = React.forwardRef(DInput);
 ForwardedDInput.displayName = 'DInput';
@@ -964,24 +964,24 @@ function DChip({ theme = 'primary', text, icon, iconFamilyClass, iconFamilyPrefi
     return (jsxRuntime.jsxs("span", Object.assign({ className: classNames(generateClasses, className), style: style }, dataAttributes, { children: [icon && (jsxRuntime.jsx("div", { className: "d-chip-icon-container", children: jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }) })), jsxRuntime.jsx("span", { children: text }), showClose && (jsxRuntime.jsx("button", { type: "button", className: "d-chip-icon-container", onClick: onClose, "aria-label": closeAriaLabel, children: jsxRuntime.jsx(DIcon, { icon: iconClose, familyClass: iconCloseFamilyClass, familyPrefix: iconCloseFamilyPrefix, materialStyle: iconCloseMaterialStyle }) }))] })));
 }
 
-function DCollapse({ id, className, style, Component, hasSeparator = false, defaultCollapsed = false, onChange, children, iconOpen: iconOpenProp, iconClose: iconCloseProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, dataAttributes, }) {
-    const [toggle, setToggle] = React.useState(defaultCollapsed);
-    const onChangeCollapse = () => setToggle((prev) => !prev);
+function DCollapse({ id, className, style, Component, hasSeparator = false, defaultCollapsed = true, onChange, children, iconOpen: iconOpenProp, iconClose: iconCloseProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle = false, dataAttributes, }) {
+    const [collapsed, setCollapsed] = React.useState(defaultCollapsed);
+    const onChangeCollapse = () => {
+        setCollapsed((prev) => {
+            const next = !prev;
+            if (onChange) {
+                onChange(next);
+            }
+            return next;
+        });
+    };
     const { iconMap: { chevronDown, chevronUp, }, } = useDContext();
-    const iconOpen = React.useMemo(() => iconOpenProp || chevronUp, [chevronUp, iconOpenProp]);
-    const iconClose = React.useMemo(() => iconCloseProp || chevronDown, [chevronDown, iconCloseProp]);
-    React.useEffect(() => {
-        if (onChange) {
-            onChange(toggle);
-        }
-    }, [toggle, onChange]);
-    React.useEffect(() => {
-        setToggle(defaultCollapsed);
-    }, [defaultCollapsed]);
+    const iconOpen = React.useMemo(() => iconOpenProp || chevronDown, [chevronDown, iconOpenProp]);
+    const iconClose = React.useMemo(() => iconCloseProp || chevronUp, [chevronUp, iconCloseProp]);
     const generateStyles = React.useMemo(() => ({
         [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
     }), [hasSeparator]);
-    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classNames('collapse-container', className), style: style }, dataAttributes, { children: [jsxRuntime.jsxs("button", { className: "collapse-button", type: "button", onClick: onChangeCollapse, children: [jsxRuntime.jsx("div", { className: "flex-grow-1", children: Component }), jsxRuntime.jsx(DIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}fs-small)`, icon: toggle ? iconOpen : iconClose, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })] }), toggle && (jsxRuntime.jsx("div", { className: classNames({
+    return (jsxRuntime.jsxs("div", Object.assign({ id: id, className: classNames('collapse-container', className), style: style }, dataAttributes, { children: [jsxRuntime.jsxs("button", { className: "collapse-button", type: "button", onClick: onChangeCollapse, children: [jsxRuntime.jsx("div", { className: "flex-grow-1", children: Component }), jsxRuntime.jsx(DIcon, { color: `var(--${PREFIX_BS}gray)`, size: `var(--${PREFIX_BS}fs-small)`, icon: collapsed ? iconOpen : iconClose, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })] }), !collapsed && (jsxRuntime.jsx("div", { className: classNames({
                     'collapse-body': true,
                 }), style: generateStyles, children: children }))] })));
 }
