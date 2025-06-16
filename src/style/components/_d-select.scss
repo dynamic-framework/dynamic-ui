@@ -13,7 +13,7 @@
   --#{$prefix}select-option-is-checkbox-font-size: var(--#{$prefix}body-font-size);
   --#{$prefix}select-option-is-checkbox-font-weight: var(--#{$prefix}fw-normal);
   --#{$prefix}select-option-is-checkbox-color: var(--#{$prefix}gray-900);
-  --#{$prefix}select-option-has-icon-icon-size: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}select-option-has-icon-icon-size: var(--#{$prefix}ref-spacer-5);
   --#{$prefix}select-multi-value-padding: 0 var(--#{$prefix}ref-spacer-1) 0 var(--#{$prefix}select-gap);
   --#{$prefix}select-multi-value-margin-right: var(--#{$prefix}select-gap);
   --#{$prefix}select-multi-value-background: var(--#{$prefix}secondary-100);
@@ -26,8 +26,8 @@
   --#{$prefix}select-indicator-separator-margin: var(--#{$prefix}ref-spacer-0) var(--#{$prefix}ref-spacer-1);
   --#{$prefix}select-indicator-separator-color: var(--#{$prefix}transparent);
 
-  --#{$prefix}select-indicator-width: var(--#{$prefix}ref-spacer-4);
-  --#{$prefix}select-indicator-height: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}select-indicator-width: var(--#{$prefix}ref-spacer-5);
+  --#{$prefix}select-indicator-height: var(--#{$prefix}ref-spacer-5);
 
   // focus
   &:focus-within {
