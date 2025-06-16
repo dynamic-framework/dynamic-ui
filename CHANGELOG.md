@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.2](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.1...v1.36.2) (2025-06-16)
+
+
+### Bug Fixes
+
+* **DCollapse:** ensure content is hidden when defaultCollapsed is true ([#858](https://github.com/dynamic-framework/dynamic-ui/issues/858)) ([c349d24](https://github.com/dynamic-framework/dynamic-ui/commit/c349d24b86efad4f9df431ddd6de927d9e3f6ea7))
+* **style:** extend z-index levels ([#857](https://github.com/dynamic-framework/dynamic-ui/issues/857)) ([0805736](https://github.com/dynamic-framework/dynamic-ui/commit/0805736c92f85a7556c0a2730048032c424d7c6c))
+* **style:** set icon size on 20px ([#859](https://github.com/dynamic-framework/dynamic-ui/issues/859)) ([98b24c6](https://github.com/dynamic-framework/dynamic-ui/commit/98b24c6b4c83d55334bde7f20e6a7e4ca42caeb6))
+
 ## [1.36.1](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.0...v1.36.1) (2025-05-29)
 
 
