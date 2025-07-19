@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputSwitch from '../../src/components/DInputSwitch/DInputSwitch';
 import { PREFIX_BS } from '../../src/components/config';

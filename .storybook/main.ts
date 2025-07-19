@@ -14,10 +14,7 @@ const config: StorybookConfig = {
 
   addons: [
     getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/addon-essentials'),
-    getAbsolutePath('@storybook/addon-interactions'),
     getAbsolutePath('@storybook/addon-a11y'),
-    getAbsolutePath('@chromatic-com/storybook'),
     {
       name: '@storybook/addon-docs',
       options: {
@@ -27,7 +24,7 @@ const config: StorybookConfig = {
           },
         },
       },
-    },
+    }
   ],
 
   framework: {
@@ -51,11 +48,7 @@ const config: StorybookConfig = {
   staticDirs: [
     './public',
     '../dist',
-  ],
-  
-  docs: {
-    autodocs: true
-  }
+  ]
 };
 
 export default config;
