@@ -5,7 +5,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import {
   addDays,
   setHours,

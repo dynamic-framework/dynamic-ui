@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputCurrencyBase from '../../src/components/DInputCurrencyBase/DInputCurrencyBase';
 import { ICONS } from '../config/constants';

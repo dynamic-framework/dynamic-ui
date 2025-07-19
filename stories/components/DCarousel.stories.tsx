@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import DCarousel from '../../src/components/DCarousel/DCarousel';
 import { PREFIX_BS } from '../../src/components/config';
 

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputMask from '../../src/components/DInputMask';
 import { ICONS } from '../config/constants';

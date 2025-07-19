@@ -1,14 +1,16 @@
-import type { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/react-vite';
 
-export default {
+const config: Preview = {
   parameters: {
     layout: 'centered',
-    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/,
       },
+    },
+    a11y: {
+      disable: process.env.NODE_ENV === 'development',
     },
     options: {
       storySort: {
@@ -34,4 +36,7 @@ export default {
       },
     },
   },
-} as Preview;
+  tags: ['autodocs']
+};
+
+export default config;

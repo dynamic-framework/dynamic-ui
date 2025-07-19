@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputSelect from '../../src/components/DInputSelect';
 import { ICONS } from '../config/constants';

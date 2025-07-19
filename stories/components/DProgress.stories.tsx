@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DProgress from '../../src/components/DProgress/DProgress';
 import { PREFIX_BS } from '../../src/components/config';

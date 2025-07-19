@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
 
 import DIcon from '../../src/components/DIcon/DIcon';

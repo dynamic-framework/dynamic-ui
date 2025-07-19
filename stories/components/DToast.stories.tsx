@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DToast from '../../src/components/DToast/DToast';
 import { DIcon } from '../../src';

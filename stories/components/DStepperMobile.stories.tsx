@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DStepperMobile from '../../src/components/DStepperMobile/DStepperMobile';
 import { PREFIX_BS } from '../../src/components/config';

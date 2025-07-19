@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DBoxFile from '../../src/components/DBoxFile/DBoxFile';
 import { ICONS } from '../config/constants';

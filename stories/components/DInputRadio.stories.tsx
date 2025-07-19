@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
 import { PREFIX_BS } from '../../src/components/config';
