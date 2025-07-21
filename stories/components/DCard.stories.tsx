@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DCard from '../../src/components/DCard/DCard';
 import DButton from '../../src/components/DButton';

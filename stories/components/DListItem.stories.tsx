@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DListItem from '../../src/components/DList/components/DListItem';
 import DList from '../../src/components/DList/DList';

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DList from '../../src/components/DList/DList';
 import DListItem from '../../src/components/DList/components/DListItem';
