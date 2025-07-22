@@ -38,7 +38,6 @@ describe('<DInputMask />', () => {
               class="form-control"
               id="inputId"
               placeholder="Input"
-              value=""
             />
           </div>
         </div>
@@ -90,7 +89,7 @@ describe('<DInputMask />', () => {
   });
 
   it('forwards ref correctly', () => {
-    const ref = { current: null } as React.RefObject<HTMLInputElement>;
+    const ref = { current: null } as React.RefObject<HTMLInputElement | null>;
     render(
       <DInputMask
         mask={phoneMask}

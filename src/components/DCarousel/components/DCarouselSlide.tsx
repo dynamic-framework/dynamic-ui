@@ -8,7 +8,7 @@ export default function DCarouselSlide({ className, ...props }: Props) {
     <SplideSlide
       className={classNames(
         'd-carousel-slide',
-        className,
+        className as string,
       )}
       {...props}
     />

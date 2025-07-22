@@ -19,7 +19,7 @@ function DInputSearch(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
 
   return (
     <DInput

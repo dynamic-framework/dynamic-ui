@@ -101,7 +101,7 @@ function DInput(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
 

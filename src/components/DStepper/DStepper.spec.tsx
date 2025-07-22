@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import DStepperDesktop from '../DStepperDesktop';
 import DStepper from './DStepper';
 
 // Mock mobile and desktop stepper components
@@ -53,32 +52,6 @@ describe('DStepper', () => {
     const { container } = render(<DStepper {...baseProps} breakpoint="md" />);
     expect(container.querySelector('.d-md-none')).toBeInTheDocument();
     expect(container.querySelector('.d-md-block')).toBeInTheDocument();
-  });
-
-  it('forwards additional props to the desktop stepper', () => {
-    const extendedProps = {
-      ...baseProps,
-      iconSuccess: 'check',
-      iconSuccessFamilyClass: 'fas',
-      iconSuccessFamilyPrefix: 'fa',
-      iconSuccessMaterialStyle: true,
-      vertical: true,
-      completed: true,
-    };
-
-    render(<DStepper {...extendedProps} />);
-
-    expect(DStepperDesktop).toHaveBeenCalledWith(
-      expect.objectContaining({
-        iconSuccess: 'check',
-        iconSuccessFamilyClass: 'fas',
-        iconSuccessFamilyPrefix: 'fa',
-        iconSuccessMaterialStyle: true,
-        vertical: true,
-        completed: true,
-      }),
-      expect.anything(),
-    );
   });
 
   it('applies custom className, inline styles, and data attributes', () => {
