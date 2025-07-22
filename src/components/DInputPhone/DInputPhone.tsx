@@ -110,7 +110,7 @@ function DInputPhone(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const innerRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
+  const innerRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
 
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);

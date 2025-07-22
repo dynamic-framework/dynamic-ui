@@ -21,7 +21,7 @@ type Props =
 & FamilyIconProps
 & PropsWithChildren<{
   id?: string;
-  Component: ReactElement | ReactNode;
+  Component: ReactElement<unknown> | ReactNode;
   hasSeparator?: boolean;
   defaultCollapsed?: boolean;
   onChange?: (value: boolean) => void;

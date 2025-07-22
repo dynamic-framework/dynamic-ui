@@ -16,6 +16,7 @@ describe('<DInputCheck />', () => {
       <DInputCheck
         id={props.id}
         type={props.type as InputCheckType}
+        value=""
       />,
     );
 
@@ -41,6 +42,7 @@ describe('<DInputCheck />', () => {
       <DInputCheck
         id={props.id}
         type={props.type as InputCheckType}
+        value=""
       />,
     );
 

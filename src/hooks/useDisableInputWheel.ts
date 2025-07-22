@@ -9,7 +9,7 @@ import type {
 import useProvidedRefOrCreate from './useProvidedRefOrCreate';
 
 export default function useDisableInputWheel(ref?: ForwardedRef<HTMLInputElement>) {
-  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
 
   const handleOnWheel = useCallback((event: WheelEvent<HTMLInputElement>) => {
     event.stopPropagation();
