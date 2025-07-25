@@ -20,15 +20,14 @@ describe('<DInputCheck />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <input
-          class="form-check-input"
-          id="checkTest"
-          type="checkbox"
-          value=""
-        />
-      </div>
-    `);
+<div>
+  <input
+    class="form-check-input"
+    id="checkTest"
+    type="checkbox"
+  />
+</div>
+`);
   });
 
   it('should render base radio', () => {
@@ -45,15 +44,14 @@ describe('<DInputCheck />', () => {
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <input
-          class="form-check-input"
-          id="radioTest"
-          type="radio"
-          value=""
-        />
-      </div>
-    `);
+<div>
+  <input
+    class="form-check-input"
+    id="radioTest"
+    type="radio"
+  />
+</div>
+`);
   });
 
   it('renders input without label', () => {

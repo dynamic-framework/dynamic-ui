@@ -6,11 +6,11 @@ type Props = React.ComponentProps<typeof SplideSlide>;
 export default function DCarouselSlide({ className, ...props }: Props) {
   return (
     <SplideSlide
+      {...props}
       className={classNames(
         'd-carousel-slide',
-        className,
+        className as string,
       )}
-      {...props}
     />
   );
 }

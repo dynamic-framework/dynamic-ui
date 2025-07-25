@@ -5,15 +5,15 @@ import useDToast from './useDToast';
 import { DContextProvider } from '../../contexts';
 
 // Mock react-hot-toast
-const mockCustom = jest.fn();
-const mockDismiss = jest.fn();
-
 jest.mock('react-hot-toast', () => ({
   toast: {
-    custom: mockCustom,
+    custom: jest.fn(),
   },
-  dismiss: mockDismiss,
+  dismiss: jest.fn(),
 }));
+
+const mockCustom = jest.fn();
+const mockDismiss = jest.fn();
 
 const renderWithContext = (hook: () => any) => renderHook(hook, {
   wrapper: ({ children }) => (

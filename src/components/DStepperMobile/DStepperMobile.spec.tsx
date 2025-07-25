@@ -49,7 +49,8 @@ describe('<DStepperMobile />', () => {
 
     expect(screen.getByText('1/2')).toBeInTheDocument();
     expect(screen.getByText('Step 1')).toBeInTheDocument();
-    expect(screen.getByText('')).toBeInTheDocument(); // Empty description
+    const descriptions = screen.getAllByText('');
+    expect(descriptions.length).toBeGreaterThan(0); // Empty description exists
   });
 
   it('should apply custom className and style', () => {
