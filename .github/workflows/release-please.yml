@@ -33,10 +33,16 @@ jobs:
           registry-url: https://registry.npmjs.org/
           scope: '@dynamic-framework'
         if: ${{ steps.release.outputs.release_created }}
-      - name: Clean install
+      - name: Install dependencies
+        run: npm ci
+        if: ${{ steps.release.outputs.release_created }}
+      - name: Ensure Rollup binary
         run: |
-          rm -rf node_modules package-lock.json
-          npm install
+          # Workaround for Rollup optional dependencies issue in CI
+          if [ ! -d "node_modules/@rollup/rollup-linux-x64-gnu" ]; then
+            echo "Installing missing Rollup Linux binary..."
+            npm install @rollup/rollup-linux-x64-gnu --no-save --no-package-lock
+          fi
         if: ${{ steps.release.outputs.release_created }}
       - name: Build packages
         run: npm run build

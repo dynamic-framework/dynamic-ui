@@ -11,7 +11,7 @@ export default function DCarouselSlide({ className, ...props }: Props) {
       {...props}
       className={classNames(
         'd-carousel-slide',
-        className as string,
+        className,
       )}
     />
   );
