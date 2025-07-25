@@ -110,7 +110,7 @@ describe('<DStepperDesktop />', () => {
     );
 
     const iconElement = container.querySelector('.d-step-check .d-step-icon');
-    expect(iconElement).toHaveClass('fa-star', 'fas');
+    expect(iconElement).toHaveClass('d-icon', 'fas', 'd-step-icon');
   });
 
   it('should throw error when currentStep is less than 1', () => {
