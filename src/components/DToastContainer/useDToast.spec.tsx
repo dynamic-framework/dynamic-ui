@@ -1,29 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/unbound-method, max-len, @typescript-eslint/no-unused-vars */
 import { renderHook, act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { toast as reactHotToast } from 'react-hot-toast';
 import useDToast from './useDToast';
 import { DContextProvider } from '../../contexts';
 
 // Mock react-hot-toast
+const mockCustom = jest.fn();
+const mockDismiss = jest.fn();
+
 jest.mock('react-hot-toast', () => ({
   toast: {
-    custom: jest.fn(),
+    custom: mockCustom,
   },
-  dismiss: jest.fn(),
+  dismiss: mockDismiss,
 }));
 
-const mockCustom = reactHotToast.custom as jest.MockedFunction<typeof reactHotToast.custom>;
-const mockDismiss = reactHotToast.dismiss as jest.MockedFunction<typeof reactHotToast.dismiss>;
-
-const renderWithContext = (hook: () => any) => {
-  return renderHook(hook, {
-    wrapper: ({ children }) => (
-      <DContextProvider>
-        {children}
-      </DContextProvider>
-    ),
-  });
-};
+const renderWithContext = (hook: () => any) => renderHook(hook, {
+  wrapper: ({ children }) => (
+    <DContextProvider>
+      {children}
+    </DContextProvider>
+  ),
+});
 
 describe('useDToast', () => {
   beforeEach(() => {
@@ -32,7 +30,7 @@ describe('useDToast', () => {
 
   it('should return toast function', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     expect(result.current).toHaveProperty('toast');
     expect(typeof result.current.toast).toBe('function');
   });
@@ -51,7 +49,7 @@ describe('useDToast', () => {
 
   it('should create toast without description', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -61,17 +59,17 @@ describe('useDToast', () => {
     });
 
     expect(mockCustom).toHaveBeenCalledWith(expect.any(Function), undefined);
-    
+
     // Test the render function
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const toastElement = renderFunction({ id: 'test-id', visible: true } as any);
-    
+
     expect(toastElement).toBeTruthy();
   });
 
   it('should create toast with description', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -87,7 +85,7 @@ describe('useDToast', () => {
 
   it('should create soft themed toast', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -106,7 +104,7 @@ describe('useDToast', () => {
       duration: 3000,
       position: 'top-right' as const,
     };
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -118,22 +116,22 @@ describe('useDToast', () => {
 
   it('should return null when toast is not visible', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const toastElement = renderFunction({ id: 'test-id', visible: false } as any);
-    
+
     expect(toastElement).toBeNull();
   });
 
   it('should use custom close icon', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -141,11 +139,11 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
-      </DContextProvider>
+      </DContextProvider>,
     );
 
     const closeButton = container.querySelector('.d-close');
@@ -155,32 +153,32 @@ describe('useDToast', () => {
   it('should handle close button click for toast without description', async () => {
     const user = userEvent.setup();
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
-      </DContextProvider>
+      </DContextProvider>,
     );
 
     const closeButton = container.querySelector('.d-close') as HTMLButtonElement;
     expect(closeButton).toBeInTheDocument();
-    
+
     await user.click(closeButton);
-    
+
     expect(mockDismiss).toHaveBeenCalledWith('test-id');
   });
 
   it('should handle close button click for toast with description', async () => {
     const user = userEvent.setup();
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -188,24 +186,24 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
-      </DContextProvider>
+      </DContextProvider>,
     );
 
     const closeButton = container.querySelector('.d-close') as HTMLButtonElement;
     expect(closeButton).toBeInTheDocument();
-    
+
     await user.click(closeButton);
-    
+
     expect(mockDismiss).toHaveBeenCalledWith('test-id');
   });
 
   it('should render toast with all elements when description is provided', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -216,11 +214,11 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
-      </DContextProvider>
+      </DContextProvider>,
     );
 
     expect(container.querySelector('.toast-title')).toHaveTextContent('Test Title');
@@ -231,7 +229,7 @@ describe('useDToast', () => {
 
   it('should render toast without timestamp when not provided', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -239,11 +237,11 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
-      </DContextProvider>
+      </DContextProvider>,
     );
 
     expect(container.querySelector('.toast-timestamp')).not.toBeInTheDocument();
@@ -251,18 +249,18 @@ describe('useDToast', () => {
 
   it('should render toast without icon when not provided', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
-      </DContextProvider>
+      </DContextProvider>,
     );
 
     expect(container.querySelector('.toast-icon')).not.toBeInTheDocument();
@@ -270,7 +268,7 @@ describe('useDToast', () => {
 
   it('should apply correct theme classes', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -278,11 +276,11 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
-      </DContextProvider>
+      </DContextProvider>,
     );
 
     expect(container.querySelector('.toast-danger')).toBeInTheDocument();
@@ -291,7 +289,7 @@ describe('useDToast', () => {
 
   it('should apply correct soft theme classes', () => {
     const { result } = renderWithContext(() => useDToast());
-    
+
     act(() => {
       result.current.toast({
         title: 'Test Title',
@@ -300,11 +298,11 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0] as any;
+    const renderFunction = mockCustom.mock.calls[0][0];
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
-      </DContextProvider>
+      </DContextProvider>,
     );
 
     expect(container.querySelector('.toast-soft-info')).toBeInTheDocument();

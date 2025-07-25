@@ -8,18 +8,16 @@ const mockSteps = [
   { label: 'Step 3', value: 3 },
 ];
 
-const renderWithContext = (ui: React.ReactElement) => {
-  return render(
-    <DContextProvider>
-      {ui}
-    </DContextProvider>
-  );
-};
+const renderWithContext = (ui: React.ReactElement) => render(
+  <DContextProvider>
+    {ui}
+  </DContextProvider>,
+);
 
 describe('<DStepperDesktop />', () => {
   it('should render stepper with steps', () => {
     renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={1} />
+      <DStepperDesktop options={mockSteps} currentStep={1} />,
     );
 
     expect(screen.getByText('Step 1')).toBeInTheDocument();
@@ -31,7 +29,7 @@ describe('<DStepperDesktop />', () => {
 
   it('should show current step correctly', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={2} />
+      <DStepperDesktop options={mockSteps} currentStep={2} />,
     );
 
     const currentStepIcon = container.querySelector('.d-step-current');
@@ -41,19 +39,19 @@ describe('<DStepperDesktop />', () => {
 
   it('should show completed steps with check icons', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={3} />
+      <DStepperDesktop options={mockSteps} currentStep={3} />,
     );
 
     const checkIcons = container.querySelectorAll('.d-step-check');
     expect(checkIcons).toHaveLength(2); // Step 1 and 2 should be completed
-    
+
     const iconElements = container.querySelectorAll('.d-step-check .d-step-icon');
     expect(iconElements).toHaveLength(2);
   });
 
   it('should show all steps as completed when completed prop is true', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={3} completed />
+      <DStepperDesktop options={mockSteps} currentStep={3} completed />,
     );
 
     const checkIcons = container.querySelectorAll('.d-step-check');
@@ -62,7 +60,7 @@ describe('<DStepperDesktop />', () => {
 
   it('should render vertical stepper', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={1} vertical />
+      <DStepperDesktop options={mockSteps} currentStep={1} vertical />,
     );
 
     expect(container.firstChild).toHaveClass('is-vertical');
@@ -70,7 +68,7 @@ describe('<DStepperDesktop />', () => {
 
   it('should render with align start', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={1} alignStart />
+      <DStepperDesktop options={mockSteps} currentStep={1} alignStart />,
     );
 
     expect(container.firstChild).toHaveClass('is-align-start');
@@ -78,7 +76,7 @@ describe('<DStepperDesktop />', () => {
 
   it('should not apply align start class when vertical is true', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={1} alignStart vertical />
+      <DStepperDesktop options={mockSteps} currentStep={1} alignStart vertical />,
     );
 
     expect(container.firstChild).not.toHaveClass('is-align-start');
@@ -87,12 +85,12 @@ describe('<DStepperDesktop />', () => {
 
   it('should apply custom className and style', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop 
-        options={mockSteps} 
-        currentStep={1} 
-        className="custom-stepper" 
-        style={{ margin: '10px' }} 
-      />
+      <DStepperDesktop
+        options={mockSteps}
+        currentStep={1}
+        className="custom-stepper"
+        style={{ margin: '10px' }}
+      />,
     );
 
     expect(container.firstChild).toHaveClass('custom-stepper');
@@ -101,14 +99,14 @@ describe('<DStepperDesktop />', () => {
 
   it('should use custom success icon', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop 
-        options={mockSteps} 
-        currentStep={2} 
+      <DStepperDesktop
+        options={mockSteps}
+        currentStep={2}
         iconSuccess="star"
         iconSuccessFamilyClass="fas"
         iconSuccessFamilyPrefix="fa"
-        iconSuccessMaterialStyle={true}
-      />
+        iconSuccessMaterialStyle
+      />,
     );
 
     const iconElement = container.querySelector('.d-step-check .d-step-icon');
@@ -118,7 +116,7 @@ describe('<DStepperDesktop />', () => {
   it('should throw error when currentStep is less than 1', () => {
     expect(() => {
       renderWithContext(
-        <DStepperDesktop options={mockSteps} currentStep={0} />
+        <DStepperDesktop options={mockSteps} currentStep={0} />,
       );
     }).toThrow('Current step should be in the range from 1 to options length');
   });
@@ -126,7 +124,7 @@ describe('<DStepperDesktop />', () => {
   it('should throw error when currentStep is greater than options length', () => {
     expect(() => {
       renderWithContext(
-        <DStepperDesktop options={mockSteps} currentStep={4} />
+        <DStepperDesktop options={mockSteps} currentStep={4} />,
       );
     }).toThrow('Current step should be in the range from 1 to options length');
   });
@@ -138,7 +136,7 @@ describe('<DStepperDesktop />', () => {
     ];
 
     const { container } = renderWithContext(
-      <DStepperDesktop options={stepsWithoutDescription} currentStep={1} />
+      <DStepperDesktop options={stepsWithoutDescription} currentStep={1} />,
     );
 
     expect(screen.getByText('Step 1')).toBeInTheDocument();
@@ -148,27 +146,27 @@ describe('<DStepperDesktop />', () => {
 
   it('should have correct base classes', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={1} />
+      <DStepperDesktop options={mockSteps} currentStep={1} />,
     );
 
     expect(container.firstChild).toHaveClass('d-stepper-desktop');
-    
+
     const steps = container.querySelectorAll('.d-step');
     expect(steps).toHaveLength(3);
-    
+
     const stepValues = container.querySelectorAll('.d-step-value');
     expect(stepValues).toHaveLength(3);
-    
+
     const stepTexts = container.querySelectorAll('.d-step-text-container');
     expect(stepTexts).toHaveLength(3);
-    
+
     const stepLabels = container.querySelectorAll('.d-step-label');
     expect(stepLabels).toHaveLength(3);
   });
 
   it('should show step number for future steps', () => {
     const { container } = renderWithContext(
-      <DStepperDesktop options={mockSteps} currentStep={1} />
+      <DStepperDesktop options={mockSteps} currentStep={1} />,
     );
 
     const stepIcons = container.querySelectorAll('.d-step-icon-container');

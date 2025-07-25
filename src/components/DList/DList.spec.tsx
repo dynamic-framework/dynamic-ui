@@ -8,7 +8,7 @@ describe('<DList />', () => {
       <DList>
         <DList.Item>Item 1</DList.Item>
         <DList.Item>Item 2</DList.Item>
-      </DList>
+      </DList>,
     );
 
     expect(container.firstChild).toHaveClass('list-group');
@@ -20,7 +20,7 @@ describe('<DList />', () => {
     const { container } = render(
       <DList flush>
         <DList.Item>Item 1</DList.Item>
-      </DList>
+      </DList>,
     );
 
     expect(container.firstChild).toHaveClass('list-group-flush');
@@ -30,7 +30,7 @@ describe('<DList />', () => {
     const { container } = render(
       <DList numbered>
         <DList.Item>Item 1</DList.Item>
-      </DList>
+      </DList>,
     );
 
     expect(container.firstChild).toHaveClass('list-group-numbered');
@@ -40,7 +40,7 @@ describe('<DList />', () => {
     const { container } = render(
       <DList horizontal>
         <DList.Item>Item 1</DList.Item>
-      </DList>
+      </DList>,
     );
 
     expect(container.firstChild).toHaveClass('list-group-horizontal');
@@ -50,7 +50,7 @@ describe('<DList />', () => {
     const { container } = render(
       <DList horizontal horizontalBreakpoint="md">
         <DList.Item>Item 1</DList.Item>
-      </DList>
+      </DList>,
     );
 
     expect(container.firstChild).toHaveClass('list-group-horizontal-md');
@@ -61,7 +61,7 @@ describe('<DList />', () => {
     const { container } = render(
       <DList className="custom-class" style={{ color: 'red' }}>
         <DList.Item>Item 1</DList.Item>
-      </DList>
+      </DList>,
     );
 
     expect(container.firstChild).toHaveClass('custom-class');
@@ -72,7 +72,7 @@ describe('<DList />', () => {
     const { container } = render(
       <DList dataAttributes={{ 'data-testid': 'list' }}>
         <DList.Item>Item 1</DList.Item>
-      </DList>
+      </DList>,
     );
 
     expect(container.firstChild).toHaveAttribute('data-testid', 'list');
@@ -83,18 +83,18 @@ describe('<DList />', () => {
       render(
         <DList flush horizontal>
           <DList.Item>Item 1</DList.Item>
-        </DList>
+        </DList>,
       );
     }).toThrow("Horizontal and Flush props don't work together");
   });
 
   it('should render list item as button when onClick is provided', () => {
     const handleClick = jest.fn();
-    
+
     render(
       <DList>
         <DList.Item onClick={handleClick}>Clickable Item</DList.Item>
-      </DList>
+      </DList>,
     );
 
     const item = screen.getByRole('button', { name: 'Clickable Item' });
@@ -106,7 +106,7 @@ describe('<DList />', () => {
     const { container } = render(
       <DList>
         <DList.Item>Static Item</DList.Item>
-      </DList>
+      </DList>,
     );
 
     const item = container.querySelector('.list-group-item');
@@ -116,16 +116,16 @@ describe('<DList />', () => {
   it('should handle list item click', async () => {
     const user = userEvent.setup();
     const handleClick = jest.fn();
-    
+
     render(
       <DList>
         <DList.Item onClick={handleClick}>Clickable Item</DList.Item>
-      </DList>
+      </DList>,
     );
 
     const item = screen.getByRole('button', { name: 'Clickable Item' });
     await user.click(item);
-    
+
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
@@ -133,7 +133,7 @@ describe('<DList />', () => {
     render(
       <DList>
         <DList.Item active>Active Item</DList.Item>
-      </DList>
+      </DList>,
     );
 
     const item = screen.getByText('Active Item');
@@ -145,7 +145,7 @@ describe('<DList />', () => {
     render(
       <DList>
         <DList.Item disabled>Disabled Item</DList.Item>
-      </DList>
+      </DList>,
     );
 
     const item = screen.getByText('Disabled Item');
@@ -156,7 +156,7 @@ describe('<DList />', () => {
     render(
       <DList>
         <DList.Item theme="danger">Danger Item</DList.Item>
-      </DList>
+      </DList>,
     );
 
     const item = screen.getByText('Danger Item');
@@ -169,7 +169,7 @@ describe('<DList />', () => {
         <DList.Item className="custom-item" style={{ fontSize: '14px' }}>
           Custom Item
         </DList.Item>
-      </DList>
+      </DList>,
     );
 
     const item = screen.getByText('Custom Item');
@@ -181,7 +181,7 @@ describe('<DList />', () => {
     render(
       <DList>
         <DList.Item>Item</DList.Item>
-      </DList>
+      </DList>,
     );
 
     const item = screen.getByText('Item');

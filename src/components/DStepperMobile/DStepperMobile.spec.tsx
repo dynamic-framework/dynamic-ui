@@ -54,12 +54,12 @@ describe('<DStepperMobile />', () => {
 
   it('should apply custom className and style', () => {
     const { container } = render(
-      <DStepperMobile 
-        options={mockSteps} 
-        currentStep={1} 
-        className="custom-stepper" 
-        style={{ margin: '10px' }} 
-      />
+      <DStepperMobile
+        options={mockSteps}
+        currentStep={1}
+        className="custom-stepper"
+        style={{ margin: '10px' }}
+      />,
     );
 
     expect(container.firstChild).toHaveClass('d-stepper', 'custom-stepper');
@@ -89,25 +89,25 @@ describe('<DStepperMobile />', () => {
     }).toThrow('Current step should be in the range from 1 to options length');
   });
 
-  it('should animate progress bar angle', async () => {
+  it('should animate progress bar angle', () => {
     const { container } = render(<DStepperMobile options={mockSteps} currentStep={2} />);
-    
+
     const stepBar = container.querySelector('.d-step-bar') as HTMLElement;
     expect(stepBar).toBeInTheDocument();
-    
+
     // Initially should have background style
     expect(stepBar.style.background).toContain('conic-gradient');
-    
+
     // Fast-forward the animation
     jest.advanceTimersByTime(1000);
-    
+
     // Should still have the gradient background
     expect(stepBar.style.background).toContain('conic-gradient');
   });
 
   it('should update progress when currentStep changes', () => {
     const { rerender } = render(
-      <DStepperMobile options={mockSteps} currentStep={1} />
+      <DStepperMobile options={mockSteps} currentStep={1} />,
     );
 
     expect(screen.getByText('1/3')).toBeInTheDocument();
@@ -120,7 +120,7 @@ describe('<DStepperMobile />', () => {
 
   it('should handle single step options', () => {
     const singleStep = [{ label: 'Only Step', value: 1, description: 'Only description' }];
-    
+
     render(<DStepperMobile options={singleStep} currentStep={1} />);
 
     expect(screen.getByText('1/1')).toBeInTheDocument();
@@ -130,10 +130,10 @@ describe('<DStepperMobile />', () => {
 
   it('should calculate correct progress style', () => {
     const { container } = render(<DStepperMobile options={mockSteps} currentStep={2} />);
-    
+
     const stepBar = container.querySelector('.d-step-bar') as HTMLElement;
     const backgroundStyle = stepBar.style.background;
-    
+
     expect(backgroundStyle).toMatch(/conic-gradient/);
     expect(backgroundStyle).toMatch(/--bs-step-progress-outter-fill-background-color/);
     expect(backgroundStyle).toMatch(/--bs-step-progress-outter-background-color/);
@@ -141,8 +141,8 @@ describe('<DStepperMobile />', () => {
 
   it('should not render step info when currentOption is empty', () => {
     // This shouldn't happen with valid props, but testing edge case
-    const emptyOptions: any[] = [];
-    
+    const emptyOptions: never[] = [];
+
     expect(() => {
       render(<DStepperMobile options={emptyOptions} currentStep={1} />);
     }).toThrow('Current step should be in the range from 1 to options length');
@@ -150,16 +150,16 @@ describe('<DStepperMobile />', () => {
 
   it('should handle animation cleanup on unmount', () => {
     const { unmount } = render(<DStepperMobile options={mockSteps} currentStep={1} />);
-    
+
     // Start the animation
     jest.advanceTimersByTime(16);
-    
+
     // Unmount component
     unmount();
-    
+
     // Advance time further - should not cause any issues
     jest.advanceTimersByTime(1000);
-    
+
     // No assertions needed - just ensuring no errors occur
   });
 });
