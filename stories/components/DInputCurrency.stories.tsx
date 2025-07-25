@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import type { ComponentProps } from 'react';
+import { useState, type ComponentProps } from 'react';
 
 import DInputCurrency from '../../src/components/DInputCurrency/DInputCurrency';
 import { ICONS } from '../config/constants';
@@ -176,17 +176,30 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     },
   },
   tags: ['autodocs'],
+  render: function Render(args: ComponentProps<typeof DInputCurrency>) {
+    const [innerValue, setInnerValue] = useState<number | undefined>(args.value);
+
+    return (
+      <DContextProvider>
+        <DInputCurrency
+          {...args}
+          value={innerValue}
+          onChange={(newValue) => {
+            setInnerValue(newValue);
+            if (args.onChange) {
+              args.onChange(newValue);
+            }
+          }}
+        />
+      </DContextProvider>
+    );
+  },
 };
 
 export default config;
 type Story = StoryObj<typeof DInputCurrency>;
 
 export const Default: Story = {
-  render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <DContextProvider>
-      <DInputCurrency {...args} />
-    </DContextProvider>
-  ),
   args: {
     id: 'componentId1',
     label: 'Label',
@@ -199,11 +212,6 @@ export const Default: Story = {
 };
 
 export const Invalid: Story = {
-  render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <DContextProvider>
-      <DInputCurrency {...args} />
-    </DContextProvider>
-  ),
   args: {
     id: 'componentId3',
     label: 'Label',
@@ -217,11 +225,6 @@ export const Invalid: Story = {
 };
 
 export const Valid: Story = {
-  render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <DContextProvider>
-      <DInputCurrency {...args} />
-    </DContextProvider>
-  ),
   args: {
     id: 'componentId4',
     label: 'Label',
@@ -235,11 +238,6 @@ export const Valid: Story = {
 };
 
 export const Disabled: Story = {
-  render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <DContextProvider>
-      <DInputCurrency {...args} />
-    </DContextProvider>
-  ),
   args: {
     id: 'componentId5',
     label: 'Label',
@@ -253,11 +251,6 @@ export const Disabled: Story = {
 };
 
 export const WithCurrencyCode: Story = {
-  render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <DContextProvider>
-      <DInputCurrency {...args} />
-    </DContextProvider>
-  ),
   args: {
     id: 'componentId6',
     label: 'Label',
@@ -271,11 +264,6 @@ export const WithCurrencyCode: Story = {
 };
 
 export const Floating: Story = {
-  render: (args: ComponentProps<typeof DInputCurrency>) => (
-    <DContextProvider>
-      <DInputCurrency {...args} />
-    </DContextProvider>
-  ),
   args: {
     id: 'componentId6',
     label: 'Label',
