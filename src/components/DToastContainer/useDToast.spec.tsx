@@ -1,20 +1,32 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/unbound-method, max-len, @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/unbound-method, max-len, @typescript-eslint/no-unused-vars, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
 import { renderHook, act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { toast as reactHotToast, Toast } from 'react-hot-toast';
 import { DContextProvider } from '../../contexts';
 import useDToast from './useDToast';
 
-// Mock react-hot-toast
-const mockCustom = jest.fn();
-const mockDismiss = jest.fn();
+// Type for the toast render function
+type ToastRenderFunction = (toast: Pick<Toast, 'id' | 'visible'>) => React.ReactElement | null;
 
-jest.mock('react-hot-toast', () => ({
-  toast: {
-    custom: mockCustom,
-    dismiss: mockDismiss,
-  },
-  dismiss: mockDismiss,
-}));
+// Mock react-hot-toast
+jest.mock('react-hot-toast', () => {
+  const actualModule = jest.requireActual('react-hot-toast');
+  const mockCustom = jest.fn();
+  const mockDismiss = jest.fn();
+
+  return {
+    ...actualModule,
+    toast: {
+      ...actualModule.toast,
+      custom: mockCustom,
+      dismiss: mockDismiss,
+    },
+  };
+});
+
+// Get references to the mocked functions after the module is mocked
+const mockCustom = (reactHotToast.custom as jest.MockedFunction<typeof reactHotToast.custom>);
+const mockDismiss = (reactHotToast.dismiss as jest.MockedFunction<typeof reactHotToast.dismiss>);
 
 const renderWithContext = (hook: () => any) => renderHook(hook, {
   wrapper: ({ children }) => (
@@ -62,7 +74,7 @@ describe('useDToast', () => {
     expect(mockCustom).toHaveBeenCalledWith(expect.any(Function), undefined);
 
     // Test the render function
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const toastElement = renderFunction({ id: 'test-id', visible: true } as any);
 
     expect(toastElement).toBeTruthy();
@@ -124,7 +136,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const toastElement = renderFunction({ id: 'test-id', visible: false } as any);
 
     expect(toastElement).toBeNull();
@@ -140,7 +152,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
@@ -161,7 +173,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
@@ -187,7 +199,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
@@ -215,7 +227,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
@@ -238,7 +250,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
@@ -257,7 +269,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
@@ -277,7 +289,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
@@ -299,7 +311,7 @@ describe('useDToast', () => {
       });
     });
 
-    const renderFunction = mockCustom.mock.calls[0][0];
+    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
     const { container } = render(
       <DContextProvider>
         {renderFunction({ id: 'test-id', visible: true } as any)}
