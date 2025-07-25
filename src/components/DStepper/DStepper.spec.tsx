@@ -14,9 +14,9 @@ jest.mock('../DStepperMobile', () => ({
 
 jest.mock('../DStepperDesktop', () => ({
   __esModule: true,
-  default: jest.fn(({ currentStep }) => (
+  default: jest.fn((props: { currentStep: number }) => (
     <div data-testid="desktop-stepper">
-      {`Desktop Step: ${currentStep}`}
+      {`Desktop Step: ${props.currentStep}`}
     </div>
   )),
 }));
@@ -29,6 +29,10 @@ describe('DStepper', () => {
     ],
     currentStep: 1,
   };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('renders both mobile and desktop components', () => {
     render(<DStepper {...baseProps} />);

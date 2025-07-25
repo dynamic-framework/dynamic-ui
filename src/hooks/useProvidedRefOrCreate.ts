@@ -17,6 +17,6 @@ import React from 'react'
  * @type TRef The type of the RefObject which should be created.
  */
 export default function useProvidedRefOrCreate<TRef>(providedRef?: React.RefObject<TRef | null>): React.RefObject<TRef | null> {
-  const createdRef = React.useRef<TRef>(null)
+  const createdRef = React.useRef<TRef | null>(null)
   return providedRef ?? createdRef
 }
