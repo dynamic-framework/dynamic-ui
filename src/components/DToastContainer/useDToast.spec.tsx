@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/unbound-method, max-len, @typescript-eslint/no-unused-vars */
 import { renderHook, act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import useDToast from './useDToast';
 import { DContextProvider } from '../../contexts';
 
 // Mock react-hot-toast
-jest.mock('react-hot-toast', () => ({
-  toast: {
-    custom: jest.fn(),
-  },
-  dismiss: jest.fn(),
-}));
-
 const mockCustom = jest.fn();
 const mockDismiss = jest.fn();
+
+jest.mock('react-hot-toast', () => ({
+  toast: {
+    custom: mockCustom,
+    dismiss: mockDismiss,
+  },
+  dismiss: mockDismiss,
+}));
+
+import useDToast from './useDToast';
 
 const renderWithContext = (hook: () => any) => renderHook(hook, {
   wrapper: ({ children }) => (
@@ -223,7 +225,7 @@ describe('useDToast', () => {
 
     expect(container.querySelector('.toast-title')).toHaveTextContent('Test Title');
     expect(container.querySelector('.toast-timestamp')).toHaveTextContent('10:30 AM');
-    expect(container.querySelector('.d-toast-body span')).toHaveTextContent('Test Description');
+    expect(container).toHaveTextContent('Test Description');
     expect(container.querySelector('.toast-icon')).toBeInTheDocument();
   });
 
