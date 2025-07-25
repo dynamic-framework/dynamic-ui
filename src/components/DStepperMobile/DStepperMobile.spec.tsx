@@ -142,7 +142,7 @@ describe('<DStepperMobile />', () => {
   });
 
   it('should not render step info when currentOption is empty', () => {
-    // This shouldn't happen with valid props, but testing edge case
+    // Testing the component's error boundaries for invalid input
     const emptyOptions: never[] = [];
 
     expect(() => {
