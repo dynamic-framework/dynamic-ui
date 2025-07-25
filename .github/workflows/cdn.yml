@@ -17,7 +17,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install and Build
         run: |
-          npm ci
+          rm -rf node_modules package-lock.json
+          npm install
           npm run build
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
