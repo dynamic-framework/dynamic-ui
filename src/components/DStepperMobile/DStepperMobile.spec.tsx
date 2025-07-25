@@ -143,7 +143,7 @@ describe('<DStepperMobile />', () => {
 
   it('should not render step info when currentOption is empty', () => {
     // Testing the component's error boundaries for invalid input
-    const emptyOptions: Step[] = [];
+    const emptyOptions: Array<{ label: string; description?: string; value: number }> = [];
 
     expect(() => {
       render(<DStepperMobile options={emptyOptions} currentStep={1} />);
