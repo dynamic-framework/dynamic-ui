@@ -2,6 +2,11 @@
   "extends": [
     "stylelint-config-twbs-bootstrap"
   ],
+  "ignoreFiles": [
+    "coverage/**/*",
+    "dist/**/*",
+    "node_modules/**/*"
+  ],
   "reportInvalidScopeDisables": true,
   "reportNeedlessDisables": true,
   "overrides": [

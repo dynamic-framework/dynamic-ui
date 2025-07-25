@@ -2,6 +2,7 @@
 import { renderHook, act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DContextProvider } from '../../contexts';
+import useDToast from './useDToast';
 
 // Mock react-hot-toast
 const mockCustom = jest.fn();
@@ -14,8 +15,6 @@ jest.mock('react-hot-toast', () => ({
   },
   dismiss: mockDismiss,
 }));
-
-import useDToast from './useDToast';
 
 const renderWithContext = (hook: () => any) => renderHook(hook, {
   wrapper: ({ children }) => (
