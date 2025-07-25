@@ -8,11 +8,11 @@ type Props = Omit<React.ComponentProps<typeof SplideSlide>, 'className'> & {
 export default function DCarouselSlide({ className, ...props }: Props) {
   return (
     <SplideSlide
-      {...props}
       className={classNames(
         'd-carousel-slide',
         className,
       )}
+      {...props}
     />
   );
 }
