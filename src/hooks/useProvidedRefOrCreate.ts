@@ -18,5 +18,5 @@ import React from 'react'
  */
 export default function useProvidedRefOrCreate<TRef>(providedRef?: React.RefObject<TRef>): React.RefObject<TRef> {
   const createdRef = React.useRef<TRef>(null)
-  return providedRef ?? createdRef
+  return providedRef ?? (createdRef as React.RefObject<TRef>)
 }
