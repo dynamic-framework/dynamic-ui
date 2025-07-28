@@ -391,39 +391,6 @@ export const MaterialIcon: Story = {
   },
 };
 
-export const MaterialIconError: Story = {
-  render: (args: ComponentProps<typeof DInputPhone>) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DInputPhone {...args} />
-    </DContextProvider>
-  ),
-  args: {
-    id: 'componentId10',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    invalid: true,
-  },
-};
-
-export const MaterialIconConfirm: Story = {
-
-  render: (args: ComponentProps<typeof DInputPhone>) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DInputPhone {...args} />
-    </DContextProvider>
-  ),
-  args: {
-    id: 'componentId11',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    valid: true,
-  },
-};
-
 const validationSchema = Yup.object().shape({
   phone: Yup.string()
     .required()
