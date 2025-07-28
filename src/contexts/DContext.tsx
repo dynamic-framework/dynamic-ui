@@ -41,8 +41,6 @@ type IconMapProps = {
   calendar: string;
   check: string;
   input: {
-    invalid: string;
-    valid: string;
     search: string;
     show: string;
     hide: string;
@@ -106,8 +104,6 @@ const DEFAULT_STATE = {
       secondary: 'info-circle',
     },
     input: {
-      invalid: 'exclamation-circle',
-      valid: 'check',
       search: 'search',
       show: 'eye',
       hide: 'eye-slash',
