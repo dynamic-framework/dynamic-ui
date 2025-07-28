@@ -9,9 +9,6 @@ const config: Preview = {
         date: /Date$/,
       },
     },
-    a11y: {
-      disable: process.env.NODE_ENV === 'development',
-    },
     options: {
       storySort: {
         method: 'alphabetical',
