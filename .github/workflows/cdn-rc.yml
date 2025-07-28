@@ -16,10 +16,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-      - name: Install and Build
+      - name: Install dependencies
+        run: npm ci
+      - name: Ensure Rollup binary
         run: |
-          npm ci
-          npm run build
+          # Workaround for Rollup optional dependencies issue in CI
+          if [ ! -d "node_modules/@rollup/rollup-linux-x64-gnu" ]; then
+            echo "Installing missing Rollup Linux binary..."
+            npm install @rollup/rollup-linux-x64-gnu --no-save --no-package-lock
+          fi
+      - name: Build packages
+        run: npm run build
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:

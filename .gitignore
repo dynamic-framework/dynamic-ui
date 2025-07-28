@@ -65,6 +65,8 @@ typings/
 
 .vscode
 .idea
+CLAUDE.md
+.claude/
 
 dist
 dist-transpiled

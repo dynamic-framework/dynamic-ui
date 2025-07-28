@@ -1,1 +1,1 @@
-npm run lint-staged --concurrency 1
+npx lint-staged
