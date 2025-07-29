@@ -54,6 +54,9 @@ To understand in more detail the aspects covered by this component, review the f
       },
     },
   },
+  args: {
+    menuPlacement: 'bottom',
+  },
   argTypes: {
     id: {
       control: 'text',
@@ -311,8 +314,13 @@ To understand in more detail the aspects covered by this component, review the f
       description: 'The DOM element to append the menu to',
     },
     menuPlacement: {
-      control: 'text',
-      description: 'The placement of the menu',
+      control: { type: 'select' },
+      options: ['auto', 'top', 'bottom'],
+      description: 'Placement of the menu in relation to the control',
+      table: {
+        type: { summary: '"bottom" | "auto" | "top"' },
+        defaultValue: { summary: 'bottom' },
+      },
     },
     menuPosition: {
       control: 'text',
@@ -445,8 +453,10 @@ To understand in more detail the aspects covered by this component, review the f
   },
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
-        <Story />
+      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
+        <div className="position-relative">
+          <Story />
+        </div>
       </div>
     ),
   ],
