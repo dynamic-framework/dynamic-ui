@@ -1,13 +1,29 @@
-import { render } from '@testing-library/react';
+/// <reference types="@testing-library/jest-dom" />
+
+import {
+  fireEvent,
+  render,
+  screen,
+} from '@testing-library/react';
 import DInputPhone from '.';
+import { DContextProvider } from '../../contexts';
+
+type PhoneDataObject = {
+  phone: string;
+  country: {
+    iso2: string;
+  };
+};
 
 it('should render an input phone', () => {
   const { container } = render(
-    <DInputPhone
-      id="ComponentId1"
-      defaultCountry="cl"
-      filteredCountries={['cl', 'co', 'us']}
-    />,
+    <DContextProvider>
+      <DInputPhone
+        id="ComponentId1"
+        defaultCountry="cl"
+        filteredCountries={['cl', 'co', 'us']}
+      />
+    </DContextProvider>,
   );
 
   expect(container).toMatchInlineSnapshot(`
@@ -154,4 +170,151 @@ it('should render an input phone', () => {
       </div>
     </div>
   `);
+});
+
+it('handles onChange event when typing', () => {
+  const handleChange = jest.fn() as jest.Mock<void, [PhoneDataObject]>;
+  render(
+    <DContextProvider>
+      <DInputPhone
+        defaultCountry="cl"
+        onChange={handleChange}
+      />
+    </DContextProvider>,
+  );
+
+  const input = screen.getByRole('textbox');
+  fireEvent.change(input, { target: { value: '+56 9 8765 4321' } });
+
+  expect(handleChange).toHaveBeenLastCalledWith(
+    expect.objectContaining({
+      phone: '+56987654321',
+      isValid: true,
+    }),
+  );
+});
+
+it('changes country and updates value', async () => {
+  const handleChange = jest.fn() as jest.Mock<void, [PhoneDataObject]>;
+  render(
+    <DContextProvider>
+      <DInputPhone
+        defaultCountry="cl"
+        filteredCountries={['cl', 'us']}
+        onChange={handleChange}
+      />
+    </DContextProvider>,
+  );
+
+  const countrySelector = screen.getByRole('combobox', { name: /Country selector/i });
+  fireEvent.click(countrySelector);
+
+  const usaOption = await screen.findByRole('option', { name: /United States \+1/i });
+  fireEvent.click(usaOption);
+
+  const input = screen.getByRole('textbox');
+  expect(input).toHaveValue('+1 ');
+
+  const lastCallArgs = handleChange.mock.calls[handleChange.mock.calls.length - 1][0];
+  expect(lastCallArgs.country.iso2).toBe('us');
+  expect(lastCallArgs.phone).toBe('+1');
+});
+
+it('renders with a label', () => {
+  render(
+    <DContextProvider>
+      <DInputPhone
+        label="Phone Number"
+        defaultCountry="cl"
+      />
+    </DContextProvider>,
+  );
+  expect(screen.getByLabelText('Phone Number')).toBeInTheDocument();
+});
+
+it('is disabled when disabled prop is true', () => {
+  render(
+    <DContextProvider>
+      <DInputPhone
+        disabled
+        defaultCountry="cl"
+      />
+    </DContextProvider>,
+  );
+
+  const input = screen.getByRole('textbox');
+  const countrySelector = screen.getByRole('combobox', { name: /Country selector/i });
+
+  expect(input).toBeDisabled();
+  expect(countrySelector).toBeDisabled();
+});
+
+it('shows invalid state', () => {
+  render(
+    <DContextProvider>
+      <DInputPhone
+        invalid
+        defaultCountry="cl"
+      />
+    </DContextProvider>,
+  );
+
+  const input = screen.getByRole('textbox');
+  expect(input).toHaveClass('is-invalid');
+});
+
+it('shows valid state', () => {
+  render(
+    <DContextProvider>
+      <DInputPhone
+        valid
+        defaultCountry="cl"
+      />
+    </DContextProvider>,
+  );
+
+  const input = screen.getByRole('textbox');
+  expect(input).toHaveClass('is-valid');
+});
+
+it('displays a controlled value', () => {
+  render(
+    <DContextProvider>
+      <DInputPhone
+        value="+15551234567"
+        defaultCountry="cl"
+      />
+    </DContextProvider>,
+  );
+
+  const input = screen.getByRole('textbox');
+  expect(input).toHaveValue('+1 (555) 123-4567');
+
+  const countrySelector = screen.getByRole('combobox');
+  expect(countrySelector).toHaveAttribute('data-country', 'us');
+});
+
+it('calls onFocus and onBlur and formats value', () => {
+  const handleFocus = jest.fn();
+  const handleBlur = jest.fn();
+
+  render(
+    <DContextProvider>
+      <DInputPhone
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        value="+15551234567"
+      />
+    </DContextProvider>,
+  );
+
+  const input = screen.getByRole('textbox');
+
+  fireEvent.focus(input);
+  expect(handleFocus).toHaveBeenCalled();
+
+  fireEvent.blur(input);
+  expect(handleBlur).toHaveBeenCalled();
+
+  expect(input).toHaveValue('+1 (555) 123-4567');
 });
