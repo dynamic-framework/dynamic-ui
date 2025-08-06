@@ -5,7 +5,8 @@ import {
   render,
   screen,
 } from '@testing-library/react';
-import DInputPhone from '.';
+import userEvent from '@testing-library/user-event';
+import DInputPhone from './DInputPhone';
 import { DContextProvider } from '../../contexts';
 
 type PhoneDataObject = {
@@ -173,7 +174,8 @@ describe('<DInputPhone />', () => {
     `);
   });
 
-  it('handles onChange event when typing', () => {
+  it('handles onChange event when typing', async () => {
+    const user = userEvent.setup();
     const handleChange = jest.fn() as jest.Mock<void, [PhoneDataObject]>;
     render(
       <DContextProvider>
@@ -185,7 +187,7 @@ describe('<DInputPhone />', () => {
     );
 
     const input = screen.getByRole('textbox');
-    fireEvent.change(input, { target: { value: '+56 9 8765 4321' } });
+    await user.type(input, '987654321');
 
     expect(handleChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
@@ -193,6 +195,20 @@ describe('<DInputPhone />', () => {
         isValid: true,
       }),
     );
+  });
+
+  it('does not crash when typing if onChange prop is not provided', async () => {
+    const user = userEvent.setup();
+    render(
+      <DContextProvider>
+        <DInputPhone defaultCountry="cl" />
+      </DContextProvider>,
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, '912345678');
+
+    expect(input).toHaveValue('+56 912345678');
   });
 
   it('changes country and updates value', async () => {
@@ -248,6 +264,27 @@ describe('<DInputPhone />', () => {
 
     expect(input).toBeDisabled();
     expect(countrySelector).toBeDisabled();
+  });
+
+  it('calls onIconEndClick when the end icon is clicked', async () => {
+    const user = userEvent.setup();
+    const handleIconClick = jest.fn();
+    render(
+      <DContextProvider>
+        <DInputPhone
+          value="+56987654321"
+          iconEnd="search"
+          iconEndAriaLabel="Search Icon"
+          onIconEndClick={handleIconClick}
+        />
+      </DContextProvider>,
+    );
+
+    const iconButton = screen.getByRole('button', { name: /Search Icon/i });
+    await user.click(iconButton);
+
+    expect(handleIconClick).toHaveBeenCalledTimes(1);
+    expect(handleIconClick).toHaveBeenCalledWith('+56987654321');
   });
 
   it('shows invalid state', () => {
@@ -318,5 +355,130 @@ describe('<DInputPhone />', () => {
     expect(handleBlur).toHaveBeenCalled();
 
     expect(input).toHaveValue('+1 (555) 123-4567');
+  });
+
+  it('renders with a floating label', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone label="Phone" floatingLabel />
+      </DContextProvider>,
+    );
+    const input = screen.getByLabelText('Phone');
+    expect(input.closest('.form-floating')).toBeInTheDocument();
+  });
+
+  it('renders with hint text', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone label="Phone" hint="Please enter a valid number." />
+      </DContextProvider>,
+    );
+    expect(screen.getByText('Please enter a valid number.')).toBeInTheDocument();
+  });
+
+  it('renders with loading state', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone label="Phone" loading />
+      </DContextProvider>,
+    );
+    expect(screen.getByRole('status', { hidden: true })).toBeInTheDocument();
+    expect(screen.getByLabelText('Phone')).toBeDisabled();
+  });
+
+  it('renders with inputEnd content', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone label="Phone" inputEnd={<span>Verified</span>} />
+      </DContextProvider>,
+    );
+    expect(screen.getByText('Verified')).toBeInTheDocument();
+  });
+
+  it('renders with a placeholder when floatingLabel is false', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone placeholder="Enter phone..." />
+      </DContextProvider>,
+    );
+    expect(screen.getByPlaceholderText('Enter phone...')).toBeInTheDocument();
+  });
+
+  it('renders with a size class', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone size="lg" />
+      </DContextProvider>,
+    );
+    const inputGroup = screen.getByRole('textbox').closest('.input-group');
+    expect(inputGroup).toHaveClass('input-group-lg');
+  });
+
+  it('uses default countries when filteredCountries is undefined', () => {
+    const { container } = render(
+      <DContextProvider>
+        <DInputPhone />
+      </DContextProvider>,
+    );
+    expect(container.querySelector('.react-international-phone-country-selector')).toBeInTheDocument();
+  });
+
+  it('does not call onIconEndClick if not provided', async () => {
+    const user = userEvent.setup();
+    render(
+      <DContextProvider>
+        <DInputPhone iconEnd="search" iconEndAriaLabel="Search Icon" />
+      </DContextProvider>,
+    );
+    const iconButton = screen.getByRole('button', { name: /Search Icon/i });
+    await expect(user.click(iconButton)).resolves.not.toThrow();
+  });
+
+  it('renders an empty placeholder when floatingLabel is true', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone label="Phone" floatingLabel placeholder="This should be ignored" />
+      </DContextProvider>,
+    );
+    const input = screen.getByLabelText('Phone');
+    expect(input).toHaveAttribute('placeholder', '');
+  });
+
+  it('renders icon with default tabIndex of -1 when onIconEndClick is not provided', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone iconEnd="search" iconEndAriaLabel="Search Icon" />
+      </DContextProvider>,
+    );
+    const iconButton = screen.getByRole('button', { name: /Search Icon/i });
+    expect(iconButton).toHaveAttribute('tabIndex', '-1');
+  });
+
+  it('renders a label with a material style icon', () => {
+    const { container } = render(
+      <DContextProvider>
+        <DInputPhone
+          label="Phone"
+          labelIcon="person"
+          iconMaterialStyle
+        />
+      </DContextProvider>,
+    );
+    const iconElement = container.querySelector('.d-icon');
+
+    expect(iconElement).toBeInTheDocument();
+    expect(iconElement).toHaveClass('bi-person');
+  });
+
+  it('applies custom className to CountrySelector', () => {
+    render(
+      <DContextProvider>
+        <DInputPhone
+          countrySelectorProps={{ className: 'my-custom-selector' }}
+        />
+      </DContextProvider>,
+    );
+    const countrySelector = screen.getByRole('combobox', { name: /Country selector/i });
+    expect(countrySelector.parentElement).toHaveClass('my-custom-selector');
   });
 });
