@@ -9,112 +9,169 @@ import DInputSwitch from '.';
 import { DContextProvider } from '../../contexts';
 
 describe('<DInputSwitch />', () => {
-  it('should render base switch', () => {
-    const props = {
-      id: 'switchTest',
-      label: 'toggle',
-    };
-    const { container } = render(
-      <DContextProvider>
-        <DInputSwitch {...props} />
-      </DContextProvider>,
-    );
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="form-check form-switch"
-        >
-          <input
-            class="form-check-input"
-            id="switchTest"
-            role="switch"
-            type="checkbox"
-          />
-          <label
-            class="form-check-label"
-            for="switchTest"
+  describe('Rendering and Props', () => {
+    it('should render a base switch', () => {
+      const props = {
+        id: 'switchTest',
+        label: 'toggle',
+      };
+      const { container } = render(
+        <DContextProvider>
+          <DInputSwitch {...props} />
+        </DContextProvider>,
+      );
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          <div
+            class="form-check form-switch"
           >
-            toggle
-          </label>
+            <input
+              class="form-check-input"
+              id="switchTest"
+              role="switch"
+              type="checkbox"
+            />
+            <label
+              class="form-check-label"
+              for="switchTest"
+            >
+              toggle
+            </label>
+          </div>
         </div>
-      </div>
-    `);
+      `);
+    });
+
+    it('should be checked when the checked prop is true', () => {
+      render(
+        <DContextProvider>
+          <DInputSwitch label="My Switch" checked />
+        </DContextProvider>,
+      );
+
+      const switchControl = screen.getByLabelText('My Switch');
+      expect(switchControl).toBeChecked();
+    });
+
+    it('should be disabled when the disabled prop is true', () => {
+      render(
+        <DContextProvider>
+          <DInputSwitch label="My Switch" disabled />
+        </DContextProvider>,
+      );
+
+      const switchControl = screen.getByLabelText('My Switch');
+      expect(switchControl).toBeDisabled();
+    });
+
+    it('should show an invalid state', () => {
+      render(
+        <DContextProvider>
+          <DInputSwitch label="My Switch" invalid />
+        </DContextProvider>,
+      );
+
+      const switchControl = screen.getByLabelText('My Switch');
+      expect(switchControl).toHaveClass('is-invalid');
+    });
+
+    it('should show a valid state', () => {
+      render(
+        <DContextProvider>
+          <DInputSwitch label="My Switch" valid />
+        </DContextProvider>,
+      );
+
+      const switchControl = screen.getByLabelText('My Switch');
+      expect(switchControl).toHaveClass('is-valid');
+    });
   });
 
-  it('calls onChange with the correct boolean value when clicked', async () => {
-    const user = userEvent.setup();
-    const handleChange = jest.fn();
-    render(
-      <DContextProvider>
-        <DInputSwitch label="My Switch" onChange={handleChange} />
-      </DContextProvider>,
-    );
+  describe('User Interaction and Events', () => {
+    it('should call onChange with the correct boolean value when clicked', async () => {
+      const user = userEvent.setup();
+      const handleChange = jest.fn();
+      render(
+        <DContextProvider>
+          <DInputSwitch label="My Switch" onChange={handleChange} />
+        </DContextProvider>,
+      );
 
-    const switchControl = screen.getByLabelText('My Switch');
+      const switchControl = screen.getByLabelText('My Switch');
 
-    await user.click(switchControl);
-    expect(handleChange).toHaveBeenLastCalledWith(true);
+      await user.click(switchControl);
+      expect(handleChange).toHaveBeenLastCalledWith(true);
 
-    await user.click(switchControl);
-    expect(handleChange).toHaveBeenLastCalledWith(false);
-  });
+      await user.click(switchControl);
+      expect(handleChange).toHaveBeenLastCalledWith(false);
+    });
 
-  it('is checked when the checked prop is true', () => {
-    render(
-      <DContextProvider>
-        <DInputSwitch label="My Switch" checked />
-      </DContextProvider>,
-    );
+    it('should not call onChange when it is read-only', async () => {
+      const user = userEvent.setup();
+      const handleChange = jest.fn();
+      render(
+        <DContextProvider>
+          <DInputSwitch label="My Switch" readonly onChange={handleChange} />
+        </DContextProvider>,
+      );
 
-    const switchControl = screen.getByLabelText('My Switch');
-    expect(switchControl).toBeChecked();
-  });
+      const switchControl = screen.getByLabelText('My Switch');
+      await user.click(switchControl);
 
-  it('is disabled when the disabled prop is true', () => {
-    render(
-      <DContextProvider>
-        <DInputSwitch label="My Switch" disabled />
-      </DContextProvider>,
-    );
+      expect(handleChange).not.toHaveBeenCalled();
+    });
 
-    const switchControl = screen.getByLabelText('My Switch');
-    expect(switchControl).toBeDisabled();
-  });
+    it('should function as a controlled component', async () => {
+      const user = userEvent.setup();
+      let isChecked = false;
+      const handleChange = (newValue: boolean) => {
+        isChecked = newValue;
+      };
 
-  it('is read-only and does not call onChange', async () => {
-    const user = userEvent.setup();
-    const handleChange = jest.fn();
-    render(
-      <DContextProvider>
-        <DInputSwitch label="My Switch" readonly onChange={handleChange} />
-      </DContextProvider>,
-    );
+      const { rerender } = render(
+        <DContextProvider>
+          <DInputSwitch label="Controlled Switch" checked={isChecked} onChange={handleChange} />
+        </DContextProvider>,
+      );
 
-    const switchControl = screen.getByLabelText('My Switch');
-    await user.click(switchControl);
+      const switchControl = screen.getByLabelText('Controlled Switch');
+      expect(switchControl).not.toBeChecked();
 
-    expect(handleChange).not.toHaveBeenCalled();
-  });
+      await user.click(switchControl);
 
-  it('shows an invalid state', () => {
-    render(
-      <DContextProvider>
-        <DInputSwitch label="My Switch" invalid />
-      </DContextProvider>,
-    );
+      rerender(
+        <DContextProvider>
+          <DInputSwitch label="Controlled Switch" checked={isChecked} onChange={handleChange} />
+        </DContextProvider>,
+      );
 
-    const switchControl = screen.getByLabelText('My Switch');
-    expect(switchControl).toHaveClass('is-invalid');
-  });
+      expect(switchControl).toBeChecked();
+    });
 
-  it('shows a valid state', () => {
-    render(
-      <DContextProvider>
-        <DInputSwitch label="My Switch" valid />
-      </DContextProvider>,
-    );
+    it('should cover the internal state update by re-rendering with a new callback', async () => {
+      const user = userEvent.setup();
+      const handleChange1 = jest.fn();
+      const handleChange2 = jest.fn();
 
-    const switchControl = screen.getByLabelText('My Switch');
-    expect(switchControl).toHaveClass('is-valid');
+      const { rerender } = render(
+        <DContextProvider>
+          <DInputSwitch label="Test Switch" onChange={handleChange1} />
+        </DContextProvider>,
+      );
+
+      const switchControl = screen.getByLabelText('Test Switch');
+
+      await user.click(switchControl);
+      expect(handleChange1).toHaveBeenCalledTimes(1);
+
+      rerender(
+        <DContextProvider>
+          <DInputSwitch label="Test Switch" onChange={handleChange2} />
+        </DContextProvider>,
+      );
+
+      await user.click(switchControl);
+      expect(handleChange2).toHaveBeenCalledTimes(1);
+    });
   });
 });
