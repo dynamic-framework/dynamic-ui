@@ -20,79 +20,93 @@ jest.mock('../../contexts', () => ({
 }));
 
 describe('<DModal />', () => {
-  it('should render my component with header, body, and footer', () => {
-    const { container } = render(
-      <DModal name="myModal">
-        <DModal.Header>Test Header</DModal.Header>
-        <DModal.Body>Test Body</DModal.Body>
-        <DModal.Footer>Test Footer</DModal.Footer>
-      </DModal>,
-    );
+  describe('Rendering and Props', () => {
+    it('should render with header, body, and footer', () => {
+      const { container } = render(
+        <DModal name="myModal">
+          <DModal.Header>Test Header</DModal.Header>
+          <DModal.Body>Test Body</DModal.Body>
+          <DModal.Footer>Test Footer</DModal.Footer>
+        </DModal>,
+      );
 
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          aria-hidden="false"
-          aria-labelledby="myModalLabel"
-          class="modal portal fade show"
-          id="myModal"
-          tabindex="-1"
-        >
+      expect(container).toMatchInlineSnapshot(`
+        <div>
           <div
-            class="modal-dialog"
+            aria-hidden="false"
+            aria-labelledby="myModalLabel"
+            class="modal portal fade show"
+            id="myModal"
+            tabindex="-1"
           >
             <div
-              class="modal-content"
+              class="modal-dialog"
             >
               <div
-                class="modal-header"
+                class="modal-content"
               >
-                <div>
-                  Test Header
+                <div
+                  class="modal-header"
+                >
+                  <div>
+                    Test Header
+                  </div>
                 </div>
-              </div>
-              <div
-                class="d-modal-separator"
-              />
-              <div
-                class="modal-body"
-              >
-                Test Body
-              </div>
-              <div
-                class="d-modal-separator"
-              />
-              <div
-                class="modal-footer"
-              >
-                Test Footer
+                <div
+                  class="d-modal-separator"
+                />
+                <div
+                  class="modal-body"
+                >
+                  Test Body
+                </div>
+                <div
+                  class="d-modal-separator"
+                />
+                <div
+                  class="modal-footer"
+                >
+                  Test Footer
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    `);
-  });
+      `);
+    });
 
-  it('renders a centered and large modal', () => {
-    // CORRECCIÓN 2: Usamos querySelector porque el rol "dialog" falta en el componente.
-    const { container } = render(<DModal name="test" centered size="lg" />);
+    it('should render a centered and large modal', () => {
+      const { container } = render(<DModal name="test" centered size="lg" />);
 
-    const dialog = container.querySelector('.modal-dialog');
-    expect(dialog).toHaveClass('modal-dialog-centered');
-    expect(dialog).toHaveClass('modal-lg');
-  });
+      const dialog = container.querySelector('.modal-dialog');
+      expect(dialog).toHaveClass('modal-dialog-centered');
+      expect(dialog).toHaveClass('modal-lg');
+    });
 
-  it('renders with a static backdrop', () => {
-    // CORRECCIÓN 2: Usamos querySelector aquí también.
-    const { container } = render(<DModal name="test" staticBackdrop />);
+    it('should render with a static backdrop', () => {
+      const { container } = render(<DModal name="test" staticBackdrop />);
 
-    const modal = container.querySelector('.modal');
-    expect(modal).toHaveAttribute('data-bs-backdrop', 'static');
+      const modal = container.querySelector('.modal');
+      expect(modal).toHaveAttribute('data-bs-backdrop', 'static');
+    });
+
+    it('should render a fullscreen modal', () => {
+      const { container } = render(<DModal name="test" fullScreen />);
+
+      const dialog = container.querySelector('.modal-dialog');
+      expect(dialog).toHaveClass('modal-fullscreen');
+    });
+
+    it('should render a fullscreen modal from a specific breakpoint', () => {
+      const { container } = render(<DModal name="test" fullScreen fullScreenFrom="md" />);
+
+      const dialog = container.querySelector('.modal-dialog');
+      expect(dialog).toHaveClass('modal-fullscreen-md-down');
+    });
   });
 
   describe('<DModal.Header />', () => {
-    it('renders a close button and calls onClose when clicked', async () => {
+    it('should render a close button and call onClose when clicked', async () => {
       const user = userEvent.setup();
       const handleClose = jest.fn();
       render(
@@ -110,14 +124,14 @@ describe('<DModal />', () => {
   });
 
   describe('<DModal.Body />', () => {
-    it('renders children correctly', () => {
+    it('should render children correctly', () => {
       render(<DModal.Body>Modal Body Content</DModal.Body>);
       expect(screen.getByText('Modal Body Content')).toBeInTheDocument();
     });
   });
 
   describe('<DModal.Footer />', () => {
-    it('applies action placement class', () => {
+    it('should apply an action placement class', () => {
       const { container } = render(
         <DModal.Footer actionPlacement="end">
           Footer Content
