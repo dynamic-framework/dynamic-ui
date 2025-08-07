@@ -9,116 +9,120 @@ import userEvent from '@testing-library/user-event';
 import DPopover from '.';
 
 describe('<DPopover />', () => {
-  it('should render my component', () => {
-    const props: ComponentProps<typeof DPopover> = {
-      open: false,
-      renderComponent: () => <>Item 1</>,
-      children: <>Content of item 1</>,
-    };
+  describe('Rendering and Props', () => {
+    it('should render the component wrapper', () => {
+      const props: ComponentProps<typeof DPopover> = {
+        open: false,
+        renderComponent: () => <>Item 1</>,
+        children: <>Content of item 1</>,
+      };
 
-    const { container } = render(<DPopover {...props} />);
+      const { container } = render(<DPopover {...props} />);
 
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="d-popover"
-        >
+      expect(container).toMatchInlineSnapshot(`
+        <div>
           <div
-            aria-expanded="false"
-            aria-haspopup="dialog"
+            class="d-popover"
           >
-            Item 1
+            <div
+              aria-expanded="false"
+              aria-haspopup="dialog"
+            >
+              Item 1
+            </div>
           </div>
         </div>
-      </div>
-    `);
+      `);
+    });
+
+    it('should apply correct classes when adjustContentToRender is true', () => {
+      render(
+        <DPopover
+          open
+          adjustContentToRender
+          renderComponent={() => <button type="button">Trigger</button>}
+        >
+          Content
+        </DPopover>,
+      );
+
+      const popoverContent = screen.getByText('Content');
+      expect(popoverContent).toHaveClass('d-popover-content', 'w-100');
+    });
   });
 
-  it('opens and shows content when the trigger is clicked', async () => {
-    const user = userEvent.setup();
-    render(
-      <DPopover
-        renderComponent={() => <button type="button">Open Popover</button>}
-        open={false}
-      >
-        Popover Content
-      </DPopover>,
-    );
+  describe('Interaction and State Management', () => {
+    it('should open and show content when the trigger is clicked', async () => {
+      const user = userEvent.setup();
+      render(
+        <DPopover
+          renderComponent={() => <button type="button">Open Popover</button>}
+          open={false}
+        >
+          Popover Content
+        </DPopover>,
+      );
 
-    const triggerButton = screen.getByRole('button', { name: /Open Popover/i });
-    const triggerWrapper = triggerButton.parentElement;
+      const triggerButton = screen.getByRole('button', { name: /Open Popover/i });
+      const triggerWrapper = triggerButton.parentElement;
 
-    expect(screen.queryByText('Popover Content')).not.toBeInTheDocument();
+      expect(screen.queryByText('Popover Content')).not.toBeInTheDocument();
 
-    await user.click(triggerButton);
+      await user.click(triggerButton);
 
-    expect(screen.getByText('Popover Content')).toBeInTheDocument();
-    expect(triggerWrapper).toHaveAttribute('aria-expanded', 'true');
-  });
+      expect(screen.getByText('Popover Content')).toBeInTheDocument();
+      expect(triggerWrapper).toHaveAttribute('aria-expanded', 'true');
+    });
 
-  it('closes when clicking outside the popover', async () => {
-    const user = userEvent.setup();
-    render(
-      <DPopover
-        renderComponent={() => <button type="button">Open Popover</button>}
-        open={false}
-      >
-        Popover Content
-      </DPopover>,
-    );
+    it('should close when clicking outside the popover', async () => {
+      const user = userEvent.setup();
+      render(
+        <DPopover
+          renderComponent={() => <button type="button">Open Popover</button>}
+          open={false}
+        >
+          Popover Content
+        </DPopover>,
+      );
 
-    await user.click(screen.getByRole('button', { name: /Open Popover/i }));
-    expect(screen.getByText('Popover Content')).toBeInTheDocument();
+      await user.click(screen.getByRole('button', { name: /Open Popover/i }));
+      expect(screen.getByText('Popover Content')).toBeInTheDocument();
 
-    await user.click(document.body);
-    expect(screen.queryByText('Popover Content')).not.toBeInTheDocument();
-  });
+      await user.click(document.body);
+      expect(screen.queryByText('Popover Content')).not.toBeInTheDocument();
+    });
 
-  it('acts as a controlled component with open and setOpen props', async () => {
-    const user = userEvent.setup();
-    const handleSetOpen = jest.fn();
+    it('should act as a controlled component with open and setOpen props', async () => {
+      const user = userEvent.setup();
+      const handleSetOpen = jest.fn();
 
-    const { rerender } = render(
-      <DPopover
-        open={false}
-        setOpen={handleSetOpen}
-        renderComponent={() => <button type="button">Trigger</button>}
-      >
-        Controlled Content
-      </DPopover>,
-    );
+      const { rerender } = render(
+        <DPopover
+          open={false}
+          setOpen={handleSetOpen}
+          renderComponent={() => <button type="button">Trigger</button>}
+        >
+          Controlled Content
+        </DPopover>,
+      );
 
-    const trigger = screen.getByRole('button', { name: /Trigger/i });
-    expect(screen.queryByText('Controlled Content')).not.toBeInTheDocument();
+      const trigger = screen.getByRole('button', { name: /Trigger/i });
+      expect(screen.queryByText('Controlled Content')).not.toBeInTheDocument();
 
-    await user.click(trigger);
-    expect(handleSetOpen).toHaveBeenCalledWith(true);
+      await user.click(trigger);
+      expect(handleSetOpen).toHaveBeenCalledWith(true);
 
-    rerender(
-      <DPopover
-        open
-        setOpen={handleSetOpen}
-        renderComponent={() => <button type="button">Trigger</button>}
-      >
-        Controlled Content
-      </DPopover>,
-    );
+      rerender(
+        <DPopover
+          open
+          setOpen={handleSetOpen}
+          renderComponent={() => <button type="button">Trigger</button>}
+        >
+          Controlled Content
+        </DPopover>,
+      );
 
-    expect(screen.getByText('Controlled Content')).toBeInTheDocument();
-  });
-
-  it('applies correct classes when adjustContentToRender is true', () => {
-    render(
-      <DPopover
-        open
-        adjustContentToRender
-        renderComponent={() => <button type="button">Trigger</button>}
-      >
-        Content
-      </DPopover>,
-    );
-
-    const popoverContent = screen.getByText('Content');
-    expect(popoverContent).toHaveClass('d-popover-content', 'w-100');
+      expect(screen.getByText('Controlled Content')).toBeInTheDocument();
+    });
   });
 });
