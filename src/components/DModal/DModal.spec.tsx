@@ -10,7 +10,7 @@ import DModal from '.';
 jest.mock('../../contexts', () => ({
   useDContext: () => ({
     iconMap: {
-      xLg: { name: 'x-lg-icon', familyClass: 'bi', familyPrefix: 'bi' },
+      xLg: 'x-lg-icon',
     },
     icon: {
       familyClass: 'bi',
