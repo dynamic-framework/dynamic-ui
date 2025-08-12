@@ -218,7 +218,7 @@ describe('<DInputPin />', () => {
         expect(handleChange).toHaveBeenLastCalledWith('5678');
       });
 
-      it('should clean non-numeric characters if type is "number"', () => {
+      it('should filter out non-numeric characters if type is "number"', () => {
         const handleChange = jest.fn();
         render(
           <DContextProvider>
@@ -234,7 +234,7 @@ describe('<DInputPin />', () => {
         expect(handleChange).toHaveBeenLastCalledWith('123');
       });
 
-      it('should not clean characters if type is "text"', () => {
+      it('should not filter characters if type is "text"', () => {
         const handleChange = jest.fn();
         render(
           <DContextProvider>
