@@ -64,7 +64,7 @@ describe('<DInputRange />', () => {
     it('should not show the value indicator if filledValue is false', () => {
       render(
         <DContextProvider>
-          <DInputRange label="No Fill Range" filledValue={false} onChange={() => { }} />
+          <DInputRange label="No Fill Range" filledValue={false} onChange={jest.fn()} />
         </DContextProvider>,
       );
 
@@ -75,7 +75,7 @@ describe('<DInputRange />', () => {
     it('should render correctly without a label', () => {
       const { container } = render(
         <DContextProvider>
-          <DInputRange onChange={() => { }} />
+          <DInputRange onChange={jest.fn()} />
         </DContextProvider>,
       );
 
@@ -101,7 +101,7 @@ describe('<DInputRange />', () => {
     it('should update its value when the value prop changes', () => {
       const { rerender } = render(
         <DContextProvider>
-          <DInputRange label="My Range" value={0} onChange={() => { }} />
+          <DInputRange label="My Range" value={0} onChange={jest.fn()} />
         </DContextProvider>,
       );
 
@@ -110,7 +110,7 @@ describe('<DInputRange />', () => {
 
       rerender(
         <DContextProvider>
-          <DInputRange label="My Range" value={75} onChange={() => { }} />
+          <DInputRange label="My Range" value={75} onChange={jest.fn()} />
         </DContextProvider>,
       );
 

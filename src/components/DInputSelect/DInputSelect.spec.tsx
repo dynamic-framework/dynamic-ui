@@ -114,7 +114,7 @@ describe('<DInputSelect />', () => {
             label="Sized Select"
             size={size as 'sm' | 'lg'}
             options={[]}
-            onChange={() => { }}
+            onChange={jest.fn()}
           />
         </DContextProvider>,
       );
