@@ -41,8 +41,6 @@ export const CONTEXT_PROVIDER_CONFIG_MATERIAL = {
       secondary: 'info',
     },
     input: {
-      invalid: 'priority_high',
-      valid: 'done',
       search: 'search',
       show: 'visibility',
       hide: 'visibility_off',
