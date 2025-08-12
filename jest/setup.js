@@ -12,11 +12,14 @@ jest.mock('react-responsive-pagination', () => {
       className = '',
     } = props;
 
-    const handleClick = (page) => {
+    const handleClick = React.useCallback(
+      (page) => {
       if (page !== current && page >= 1 && page <= total) {
         onPageChange(page);
       }
-    };
+      },
+      [current, total, onPageChange],
+    );
 
     return React.createElement('div', {
       className,
