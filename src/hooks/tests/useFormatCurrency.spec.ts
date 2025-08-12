@@ -67,7 +67,7 @@ describe('useFormatCurrency', () => {
     expect(result.current.values).toEqual(['$0.00']);
   });
 
-  it('should no have values formatted', () => {
+  it('should not have values formatted', () => {
     const { result } = renderHook(() => useFormatCurrency());
     expect(result.current.values.length).toEqual(0);
   });
