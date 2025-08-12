@@ -14,9 +14,9 @@ jest.mock('react-responsive-pagination', () => {
 
     const handleClick = React.useCallback(
       (page) => {
-      if (page !== current && page >= 1 && page <= total) {
-        onPageChange(page);
-      }
+        if (page !== current && page >= 1 && page <= total) {
+          onPageChange(page);
+        }
       },
       [current, total, onPageChange],
     );
@@ -33,14 +33,52 @@ jest.mock('react-responsive-pagination', () => {
         'data-testid': 'pagination-previous',
       }, 'Previous'),
 
-      ...Array.from({ length: total }, (_, i) => i + 1).map((page) => React.createElement('button', {
-        key: page,
-        type: 'button',
-        onClick: () => handleClick(page),
-        'data-testid': `pagination-page-${page}`,
-        'aria-current': page === current ? 'page' : undefined,
-        style: { fontWeight: page === current ? 'bold' : 'normal' },
-      }, page)),
+      ...(function getPageButtons() {
+        const pageButtons = [];
+        const windowSize = 2; // Show current ±2
+        const startPage = Math.max(1, current - windowSize);
+        const endPage = Math.min(total, current + windowSize);
+        // Always show first page
+        if (startPage > 1) {
+          pageButtons.push(React.createElement('button', {
+            key: 1,
+            type: 'button',
+            onClick: () => handleClick(1),
+            'data-testid': 'pagination-page-1',
+            'aria-current': current === 1 ? 'page' : undefined,
+            style: { fontWeight: current === 1 ? 'bold' : 'normal' },
+          }, 1));
+          if (startPage > 2) {
+            pageButtons.push(React.createElement('span', { key: 'start-ellipsis', style: { margin: '0 4px' } }, '...'));
+          }
+        }
+        // Window of page buttons
+        for (let page = startPage; page <= endPage; page += 1) {
+          pageButtons.push(React.createElement('button', {
+            key: page,
+            type: 'button',
+            onClick: () => handleClick(page),
+            'data-testid': `pagination-page-${page}`,
+            'aria-current': page === current ? 'page' : undefined,
+            style: { fontWeight: page === current ? 'bold' : 'normal' },
+          }, page));
+        }
+        // Always show last page
+        if (endPage < total) {
+          if (endPage < total - 1) {
+            pageButtons.push(React.createElement('span', { key: 'end-ellipsis', style: { margin: '0 4px' } }, '...'));
+          }
+          pageButtons.push(React.createElement('button', {
+            key: total,
+            type: 'button',
+            onClick: () => handleClick(total),
+            'data-testid': `pagination-page-${total}`,
+            'aria-current': total === current ? 'page' : undefined,
+            style: { fontWeight: total === current ? 'bold' : 'normal' },
+          }, total));
+        }
+        return pageButtons;
+      }()),
 
       React.createElement('button', {
         key: 'next',
