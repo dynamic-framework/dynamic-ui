@@ -54,14 +54,16 @@ jest.mock('react-responsive-pagination', () => {
         }
         // Window of page buttons
         for (let page = startPage; page <= endPage; page += 1) {
-          pageButtons.push(React.createElement('button', {
-            key: page,
-            type: 'button',
-            onClick: () => handleClick(page),
-            'data-testid': `pagination-page-${page}`,
-            'aria-current': page === current ? 'page' : undefined,
-            style: { fontWeight: page === current ? 'bold' : 'normal' },
-          }, page));
+          if (!(page === 1 && startPage > 1)) {
+            pageButtons.push(React.createElement('button', {
+              key: page,
+              type: 'button',
+              onClick: () => handleClick(page),
+              'data-testid': `pagination-page-${page}`,
+              'aria-current': page === current ? 'page' : undefined,
+              style: { fontWeight: page === current ? 'bold' : 'normal' },
+            }, page));
+          }
         }
         // Always show last page
         if (endPage < total) {
