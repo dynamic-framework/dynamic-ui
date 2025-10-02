@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - master
+      - releases/1.36-stable
 
 permissions:
   contents: write
@@ -20,7 +20,7 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           release-type: node
-          target-branch: master
+          target-branch: releases/1.36-stable
           config-file: release-please-config.json
       - uses: actions/checkout@v4
         # these if statements ensure that a publication only occurs when
@@ -40,7 +40,7 @@ jobs:
         run: npm run build
         if: ${{ steps.release.outputs.release_created }}
       - name: Publish
-        run: npm publish --access public
+        run: npm publish --access public --tag 1.36-stable
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
