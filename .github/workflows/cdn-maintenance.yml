@@ -1,12 +1,12 @@
-name: Sync CDN version / latest
+name: Sync CDN version / 1.36-stable
 on:
   release:
     types: [published]
 
 jobs:
   build:
-    if: startsWith(github.event.release.tag_name, 'v2')
-    name: Build and Sync
+    if: startsWith(github.event.release.tag_name, 'v1.36')
+    name: Build and Sync Maintenance Version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,4 +27,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Publish to CDN
-        run: npm run publish:cdn
+        run: aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/ui-react/1.36-stable/ --delete --acl public-read
