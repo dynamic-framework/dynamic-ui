@@ -63,6 +63,17 @@
     --#{$prefix}#{$color}-text-emphasis: #{$value};
   }
 
+  $theme-colors-bg-subtle: (
+    "primary": $primary-bg-subtle,
+    "secondary": $secondary-bg-subtle,
+    "success": $green-25,
+    "info": $blue-25,
+    "warning": $yellow-25,
+    "danger": $red-25,
+    "light": $light-bg-subtle,
+    "dark": $dark-bg-subtle,
+  );
+
   @each $color, $value in $theme-colors-bg-subtle {
     --#{$prefix}#{$color}-bg-subtle: #{$value};
   }
