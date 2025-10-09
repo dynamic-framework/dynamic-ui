@@ -20,7 +20,7 @@
   --#{$prefix}btn-sm-padding-y: #{$btn-padding-y-sm};
   --#{$prefix}btn-sm-padding-x: #{$btn-padding-x-sm};
   --#{$prefix}btn-sm-font-size: #{$btn-font-size-sm};
-  --#{$prefix}btn-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .1);
+  --#{$prefix}btn-box-shadow: #{btn-box-shadow};
 
   display: inline-flex;
   flex-direction: row;
