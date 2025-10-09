@@ -20,6 +20,7 @@
   --#{$prefix}btn-sm-padding-y: #{$btn-padding-y-sm};
   --#{$prefix}btn-sm-padding-x: #{$btn-padding-x-sm};
   --#{$prefix}btn-sm-font-size: #{$btn-font-size-sm};
+  --#{$prefix}btn-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .1);
 
   display: inline-flex;
   flex-direction: row;
@@ -28,7 +29,6 @@
   justify-content: center;
   padding: var(--#{$prefix}btn-padding-y) var(--#{$prefix}btn-padding-x);
   font-family: var(--#{$prefix}btn-font-family);
-  @include font-size(var(--#{$prefix}btn-font-size));
   font-weight: var(--#{$prefix}btn-font-weight);
   line-height: var(--#{$prefix}btn-line-height);
   color: var(--#{$prefix}btn-color);
@@ -40,6 +40,8 @@
   user-select: none;
   border: var(--#{$prefix}btn-border-width) solid var(--#{$prefix}btn-border-color);
   border-radius: var(--#{$prefix}btn-border-radius);
+  box-shadow: var(--#{$prefix}btn-box-shadow);
+  @include font-size(var(--#{$prefix}btn-font-size));
   @include gradient-bg(var(--#{$prefix}btn-bg));
   @include box-shadow(var(--#{$prefix}btn-box-shadow));
   @include transition($btn-transition);
@@ -143,8 +145,10 @@
 }
 
 @each $color, $value in $theme-colors {
-  .btn-#{$color} {
-    @include df-button-variant-mapper($color);
+  @if $color != "secondary" {
+    .btn-#{$color} {
+      @include df-button-variant-mapper($color);
+    }
   }
 
   .btn-outline-#{$color} {
@@ -192,7 +196,6 @@
 
 // Make a button look and behave like a link
 .btn-link {
-  --#{$prefix}btn-font-weight: #{$font-weight-normal};
   --#{$prefix}btn-color: #{$btn-link-color};
   --#{$prefix}btn-bg: transparent;
   --#{$prefix}btn-border-color: transparent;
@@ -204,6 +207,7 @@
   --#{$prefix}btn-disabled-border-color: transparent;
   --#{$prefix}btn-box-shadow: 0 0 0 #000; // Can't use `none` as keyword negates all values when used with multiple shadows
   --#{$prefix}btn-focus-shadow-rgb: #{$btn-link-focus-shadow-rgb};
+  --#{$prefix}btn-box-shadow: none;
 
   text-decoration: $link-decoration;
   @if $enable-gradients {
@@ -228,4 +232,16 @@
   }
 
   // No need for an active state here
+}
+
+.btn-secondary {
+  --#{$prefix}btn-color: #{$secondary-500};
+  --#{$prefix}btn-hover-color: #{$secondary-500};
+  --#{$prefix}btn-active-color: #{$secondary-600};
+  --#{$prefix}btn-disabled-color: #{$secondary-300};
+
+  --#{$prefix}btn-bg: #{$secondary-50};
+  --#{$prefix}btn-hover-bg: #{$secondary-100};
+  --#{$prefix}btn-active-bg: #{$secondary-200};
+  --#{$prefix}btn-disabled-bg: #{$secondary-50};
 }

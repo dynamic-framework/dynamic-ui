@@ -2,7 +2,7 @@ import { create } from 'storybook/theming/create';
 
 export default create({
   base: 'light',
-  fontBase: '"Source Sans 3", sans-serif',
+  fontBase: '"Jost", sans-serif',
 
   brandTitle: 'Dynamic',
   brandUrl: 'https://react.dynamicframework.dev',

@@ -166,7 +166,7 @@ export function CustomToastExample({ id, visible }: Toast) {
     return null;
   }
   return (
-    <div className="bg-surface-secondary rounded-2 p-4 text-center">
+    <div className="bg-subtle-secondary rounded-2 p-4 text-center">
       <p className="fw-bold mt-0">Toast!</p>
       <DButton
         size="sm"

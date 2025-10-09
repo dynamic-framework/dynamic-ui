@@ -35,7 +35,7 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-$blue: #0d6efd !default;
+$blue: #2068d5 !default;
 $indigo: #6610f2 !default;
 $purple: #4848b7 !default;
 $pink: #d81b60 !default;
@@ -339,8 +339,8 @@ $cyans: (
 // custom
 // theme <- colors mapping.
 $theme-colors-mapping: (
-  "primary": "pink",
-  "secondary": "purple",
+  "primary": "blue",
+  "secondary": "gray-800",
   "success": "green",
   "info": "blue",
   "warning": "yellow",
@@ -351,8 +351,8 @@ $theme-colors-mapping: (
 // end custom
 
 // scss-docs-start theme-color-variables
-$primary: $pink !default;
-$secondary: $purple !default;
+$primary: $blue !default;
+$secondary: $gray-400 !default;
 $success: $green !default;
 $info: $blue !default;
 $warning: $yellow !default;
@@ -415,29 +415,29 @@ $light-border-subtle: var(--#{$prefix}gray-100) !default;
 $dark-border-subtle: var(--#{$prefix}gray-400) !default;
 // scss-docs-end theme-border-subtle-variables
 
-$primary-25: $pink-25 !default;
-$primary-50: $pink-50 !default;
-$primary-100: $pink-100 !default;
-$primary-200: $pink-200 !default;
-$primary-300: $pink-300 !default;
-$primary-400: $pink-400 !default;
-$primary-500: $pink-500 !default;
-$primary-600: $pink-600 !default;
-$primary-700: $pink-700 !default;
-$primary-800: $pink-800 !default;
-$primary-900: $pink-900 !default;
+$primary-25: $blue-25 !default;
+$primary-50: $blue-50 !default;
+$primary-100: $blue-100 !default;
+$primary-200: $blue-200 !default;
+$primary-300: $blue-300 !default;
+$primary-400: $blue-400 !default;
+$primary-500: $blue-500 !default;
+$primary-600: $blue-600 !default;
+$primary-700: $blue-700 !default;
+$primary-800: $blue-800 !default;
+$primary-900: $blue-900 !default;
 
-$secondary-25: $purple-25 !default;
-$secondary-50: $purple-50 !default;
-$secondary-100: $purple-100 !default;
-$secondary-200: $purple-200 !default;
-$secondary-300: $purple-300 !default;
-$secondary-400: $purple-400 !default;
-$secondary-500: $purple-500 !default;
-$secondary-600: $purple-600 !default;
-$secondary-700: $purple-700 !default;
-$secondary-800: $purple-800 !default;
-$secondary-900: $purple-900 !default;
+$secondary-25: $gray-25 !default;
+$secondary-50: $gray-50 !default;
+$secondary-100: $gray-100 !default;
+$secondary-200: $gray-200 !default;
+$secondary-300: $gray-300 !default;
+$secondary-400: $gray-400 !default;
+$secondary-500: $gray-500 !default;
+$secondary-600: $gray-600 !default;
+$secondary-700: $gray-700 !default;
+$secondary-800: $gray-800 !default;
+$secondary-900: $gray-900 !default;
 
 $success-25: $green-25 !default;
 $success-50: $green-50 !default;
@@ -487,43 +487,6 @@ $danger-700: $red-700 !default;
 $danger-800: $red-800 !default;
 $danger-900: $red-900 !default;
 
-// custom
-$bg-surface-gray: var(--#{$prefix}gray-50-rgb) !default;
-$bg-surface-primary: var(--#{$prefix}primary-50-rgb) !default;
-$bg-surface-secondary: var(--#{$prefix}secondary-50-rgb) !default;
-$bg-surface-success: var(--#{$prefix}success-50-rgb) !default;
-$bg-surface-info: var(--#{$prefix}info-50-rgb) !default;
-$bg-surface-warning: var(--#{$prefix}warning-50-rgb) !default;
-$bg-surface-danger: var(--#{$prefix}danger-50-rgb) !default;
-
-$bg-surface-colors: (
-  "surface-gray": $bg-surface-gray,
-  "surface-primary": $bg-surface-primary,
-  "surface-secondary": $bg-surface-secondary,
-  "surface-success": $bg-surface-success,
-  "surface-info": $bg-surface-info,
-  "surface-warning": $bg-surface-warning,
-  "surface-danger": $bg-surface-danger,
-) !default;
-
-$bg-gray-soft: var(--#{$prefix}gray-25-rgb) !default;
-$bg-primary-soft: var(--#{$prefix}primary-25-rgb) !default;
-$bg-secondary-soft: var(--#{$prefix}secondary-25-rgb) !default;
-$bg-success-soft: var(--#{$prefix}success-25-rgb) !default;
-$bg-info-soft: var(--#{$prefix}info-25-rgb) !default;
-$bg-warning-soft: var(--#{$prefix}warning-25-rgb) !default;
-$bg-danger-soft: var(--#{$prefix}danger-25-rgb) !default;
-
-$bg-soft-colors: (
-  "gray-soft": $bg-gray-soft,
-  "primary-soft": $bg-primary-soft,
-  "secondary-soft": $bg-secondary-soft,
-  "success-soft": $bg-success-soft,
-  "info-soft": $bg-info-soft,
-  "warning-soft": $bg-warning-soft,
-  "danger-soft": $bg-danger-soft,
-) !default;
-// end custom
 
 $theme-colors-palettes: (
   "primary-25": $primary-25,

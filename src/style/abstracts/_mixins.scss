@@ -170,7 +170,7 @@
     --#{$prefix}table-striped-color: #{$color};
     --#{$prefix}table-active-bg: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{(100% - $table-bg-scale) * $table-active-bg-factor})")};
     --#{$prefix}table-active-color: #{$color};
-    --#{$prefix}table-hover-bg: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{(100% - $table-bg-scale) * $table-hover-bg-factor})")};
+    --#{$prefix}table-hover-bg: var(--#{$prefix}gray-25);
     --#{$prefix}table-hover-color: #{$color};
 
     color: var(--#{$prefix}table-color);

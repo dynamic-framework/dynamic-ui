@@ -236,7 +236,7 @@ export function ExampleCompositionTable(
 
   return (
     <>
-      <table className="table">
+      <table className="table table-hover">
         <caption>List of users</caption>
         <thead>
           <tr>

@@ -19,19 +19,20 @@ $modal-backdrop-bg: var(--#{$prefix}black) !default;
 $modal-backdrop-opacity: .3 !default;
 
 $modal-header-border-color: transparent !default;
-$modal-header-padding-y: var(--#{$prefix}ref-spacer-4) !default;
+$modal-header-padding-y: var(--#{$prefix}ref-spacer-6) !default;
 $modal-header-padding-x: var(--#{$prefix}ref-spacer-4) !default;
 $modal-header-padding: var(--#{$prefix}ref-spacer-4) !default; // Keep this for backwards compatibility
+$modal-body-padding: var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-6) !default;
 
 $modal-footer-border-color: transparent !default;
 
 // custom
 $modal-separator-bg: var(--#{$prefix}gray-100) !default;
 $modal-separator-height: 1px !default;
-$modal-separator-margin-x: var(--#{$prefix}ref-spacer-4) !default;
+$modal-separator-margin-x: 0 !default;
 // end custom
 
 // custom
-$modal-footer-padding: var(--#{$prefix}ref-spacer-4) !default;
+$modal-footer-padding: var(--#{$prefix}ref-spacer-4) var(--#{$prefix}ref-spacer-6) !default;
 // end custom
 // scss-docs-end modal-variables
