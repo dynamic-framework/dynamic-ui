@@ -20,30 +20,4 @@
       color: var(--#{$prefix}icon-color);
     }
   }
-
-  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
-    &.alert-#{$theme} {
-      --#{$prefix}alert-icon-color: var(--#{$prefix}#{$theme}-500);
-      --#{$prefix}alert-color: var(--#{$prefix}body-color);
-
-      --#{$prefix}alert-bg: var(--#{$prefix}surface-#{$theme});
-      --#{$prefix}alert-border-color: var(--#{$prefix}surface-#{$theme});
-    }
-  }
-
-  &.alert-light {
-    --#{$prefix}alert-icon-color: var(--#{$prefix}gray-500);
-    --#{$prefix}alert-color: var(--#{$prefix}body-color);
-
-    --#{$prefix}alert-bg: var(--#{$prefix}surface-gray);
-    --#{$prefix}alert-border-color: var(--#{$prefix}surface-gray);
-  }
-
-  &.alert-dark {
-    --#{$prefix}alert-icon-color: var(--#{$prefix}light);
-    --#{$prefix}alert-color: var(--#{$prefix}white);
-
-    --#{$prefix}alert-bg: var(--#{$prefix}gray-500);
-    --#{$prefix}alert-border-color: var(--#{$prefix}gray-500);
-  }
 }

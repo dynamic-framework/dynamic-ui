@@ -18,14 +18,6 @@
     // end custom
   }
 
-  @each $color, $value in $bg-surface-colors {
-    --#{$prefix}#{$color}-rgb: #{$value};
-  }
-
-  @each $color, $value in $bg-soft-colors {
-    --#{$prefix}#{$color}-rgb: #{$value};
-  }
-
   @each $color, $value in $theme-colors-palettes {
     @if str-index($color, "-500") {
       $base-color-name: str-slice($color, 1, str-index($color, "-500") - 1);
@@ -46,13 +38,6 @@
     --#{$prefix}gray-#{$color}: rgb(var(--#{$prefix}gray-#{$color}-rgb));
   }
 
-  @each $color, $value in $bg-surface-colors {
-    --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
-  }
-
-  @each $color, $value in $bg-soft-colors {
-    --#{$prefix}#{$color}: rgb(var(--#{$prefix}#{$color}-rgb));
-  }
   // end custom
 
   @each $color, $value in $theme-colors {
@@ -110,7 +95,7 @@
   --#{$prefix}body-color: rgb(var(--#{$prefix}body-color-rgb));
   --#{$prefix}body-color-rgb: var(--#{$prefix}#{$body-color-mapping}-rgb);
   --#{$prefix}body-bg: rgb(var(--#{$prefix}body-bg-rgb));
-  --#{$prefix}body-bg-rgb: var(--#{$prefix}#{$body-bg-mapping}-rgb);
+  // --#{$prefix}body-bg-rgb: var(--#{$prefix}#{$body-bg-mapping}-rgb);
 
   --#{$prefix}emphasis-color: rgb(var(--#{$prefix}emphasis-color-rgb));
   --#{$prefix}emphasis-color-rgb: #{$body-emphasis-color};

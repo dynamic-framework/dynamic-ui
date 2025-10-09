@@ -68,7 +68,7 @@ export default function DStepper(
           className="d-step"
           key={value}
         >
-          <div className="d-step-value">
+          <div className="d-step-value EDUARD">
             <div
               className={classNames({
                 'd-step-icon-container': true,

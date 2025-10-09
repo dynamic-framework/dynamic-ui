@@ -2,8 +2,10 @@
 
 // scss-docs-start card-variables
 $card-border-width: 0px !default;
-$card-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
+$card-box-shadow: var(--#{$prefix}box-shadow-lg) !default;
 $card-bg: var(--#{$prefix}white) !default;
 $card-spacer-y: $spacer-6 !default;
 $card-spacer-x: $spacer-6 !default;
+$card-cap-bg: transparent !default;
+
 // scss-docs-end card-variables

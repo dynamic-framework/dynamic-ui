@@ -32,7 +32,7 @@
     $color: color-contrast-var($value);
 
     &.badge-soft-#{$theme} {
-      --#{$prefix}badge-bg: var(--#{$prefix}surface-#{$theme});
+      --#{$prefix}badge-bg: var(--#{$prefix}subtle-#{$theme});
       --#{$prefix}badge-color: var(--#{$prefix}body-color);
     }
   }

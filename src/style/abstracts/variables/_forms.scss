@@ -11,8 +11,8 @@ $form-label-color: var(--#{$prefix}label-color) !default;
 // scss-docs-end form-label-variables
 
 // scss-docs-start form-input-variables
-$input-padding-y: $spacer-3 !default;
-$input-padding-x: $spacer-4 !default;
+$input-padding-y: $spacer-2 !default;
+$input-padding-x: $spacer-3 !default;
 
 $input-padding-x-sm: $spacer-2 !default;
 $input-padding-y-sm: $spacer-1 !default;
