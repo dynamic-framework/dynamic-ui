@@ -1,3 +1,13 @@
+// .dropdown-item {
+//   --#{$prefix}dropdown-item-border-radius: #{$dropdown-item-border-radius};
+// }
+
 .dropdown-item {
   --#{$prefix}dropdown-item-border-radius: #{$dropdown-item-border-radius};
+  &.dropdown-item-danger {
+    color: var(--#{$prefix}danger-500);
+    &:hover {
+      background-color: var(--#{$prefix}danger-25);
+    }
+  }
 }

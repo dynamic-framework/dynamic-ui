@@ -1,7 +1,7 @@
 .alert {
   --#{$prefix}alert-gap: #{$alert-gap};
   --#{$prefix}alert-close-icon-size: #{$alert-close-icon-size};
-  --#{$prefix}alert-icon-size: var(--#{$prefix}ref-spacer-5);
+  --#{$prefix}alert-icon-size: var(--#{$prefix}ref-spacer-6);
 
   display: flex;
   flex-direction: row;
@@ -15,6 +15,9 @@
   .alert-icon {
     --#{$prefix}icon-size: var(--#{$prefix}alert-icon-size);
     --#{$prefix}icon-color: var(--#{$prefix}alert-icon-color);
+    padding: var(--#{$prefix}ref-spacer-5);
+    background: rgba(var(--#{$prefix}black-rgb), .04);
+    border-radius: var(--#{$prefix}border-radius);
 
     &:not(.d-icon) {
       color: var(--#{$prefix}icon-color);

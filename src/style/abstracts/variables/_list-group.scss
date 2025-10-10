@@ -3,7 +3,7 @@
 // scss-docs-start list-group-variables
 $list-group-color: var(--#{$prefix}dark) !default;
 $list-group-bg: transparent !default;
-$list-group-border-color: var(--#{$prefix}gray-300) !default;
+$list-group-border-color: var(--#{$prefix}gray-100) !default;
 $list-group-border-radius: var(--#{$prefix}border-radius-sm) !default;
 
 $list-group-item-padding-y: var(--#{$prefix}ref-spacer-3) !default;
