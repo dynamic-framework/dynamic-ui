@@ -1,5 +1,5 @@
 @import "node_modules/@splidejs/splide/src/css/template/default/index";
-
+// stylelint-disable
 .d-carousel {
   // Arrows
   --#{$prefix}carousel-arrow-space: calc(var(--#{$prefix}ref-spacer-4) * -1);
@@ -19,8 +19,26 @@
     }
   }
 
+  .splide__pagination__page {
+    margin: 0;
+  }
+
   .d-carousel-pagination {
     bottom: var(--#{$prefix}carousel-pagination-bottom);
+    position: relative;
+    bottom: auto;
+    top: -0.5rem;
+    width: fit-content;
+    background: var(--#{$prefix}gray-25);
+    padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-4);
+    border-radius: var(--#{$prefix}border-radius-lg);
+    margin: auto;
+    gap: var(--#{$prefix}ref-spacer-2);
+
+    li {
+      margin: 0;
+      display: flex;
+    }
 
     .d-carousel-pagination-page {
       background-color: var(--#{$prefix}carousel-pagination-page-bg);

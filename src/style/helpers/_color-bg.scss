@@ -4,6 +4,9 @@
     color: color-contrast-var($value) if($enable-important-utilities, !important, null);
     background-color: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}bg-opacity, 1)) if($enable-important-utilities, !important, null);
   }
+  .hover-bg-#{$color}:hover {
+    background-color: var(--#{$prefix}#{$color}) if($enable-important-utilities, !important, null);
+  }
 }
 
 @each $color, $value in $theme-colors {

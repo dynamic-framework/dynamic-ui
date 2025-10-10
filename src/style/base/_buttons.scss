@@ -200,9 +200,9 @@
   --#{$prefix}btn-color: #{$btn-link-color};
   --#{$prefix}btn-bg: transparent;
   --#{$prefix}btn-border-color: transparent;
-  --#{$prefix}btn-hover-color: #{$btn-link-hover-color};
+  --#{$prefix}btn-hover-color: #{$btn-link-color};
   --#{$prefix}btn-hover-border-color: transparent;
-  --#{$prefix}btn-active-color: #{$btn-link-hover-color};
+  --#{$prefix}btn-active-color: #{$btn-link-color};
   --#{$prefix}btn-active-border-color: transparent;
   --#{$prefix}btn-disabled-color: #{$btn-link-disabled-color};
   --#{$prefix}btn-disabled-border-color: transparent;
@@ -220,17 +220,17 @@
     color: var(--#{$prefix}btn-color);
   }
 
-  &.hover,
-  &:hover {
-    color: var(--#{$prefix}btn-hover-color);
-  }
+  // &.hover,
+  // &:hover {
+  //   color: var(--#{$prefix}btn-hover-color);
+  // }
 
   // No need for an active state here
 }
 
 .btn-secondary {
-  --#{$prefix}btn-color: #{$secondary-500};
-  --#{$prefix}btn-hover-color: #{$secondary-500};
+  --#{$prefix}btn-color: #{$secondary-700};
+  --#{$prefix}btn-hover-color: #{$secondary-700};
   --#{$prefix}btn-active-color: #{$secondary-600};
   --#{$prefix}btn-disabled-color: #{$secondary-300};
 
@@ -238,4 +238,10 @@
   --#{$prefix}btn-hover-bg: #{$secondary-100};
   --#{$prefix}btn-active-bg: #{$secondary-200};
   --#{$prefix}btn-disabled-bg: #{$secondary-50};
+}
+
+.btn-outline-secondary {
+  --bs-btn-outline-secondary-border-color: var(--#{$prefix}secondary-200);
+  --bs-btn-outline-secondary-hover-bg: var(--#{$prefix}secondary-50);
+  --bs-btn-outline-secondary-hover-color: var(--#{$prefix}secondary-700);
 }
