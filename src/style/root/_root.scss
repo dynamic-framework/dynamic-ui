@@ -106,7 +106,9 @@
   --#{$prefix}body-color: rgb(var(--#{$prefix}body-color-rgb));
   --#{$prefix}body-color-rgb: var(--#{$prefix}#{$body-color-mapping}-rgb);
   --#{$prefix}body-bg: rgb(var(--#{$prefix}body-bg-rgb));
-  // --#{$prefix}body-bg-rgb: var(--#{$prefix}#{$body-bg-mapping}-rgb);
+
+  // WIP: se convierte el hex a rgb
+  --#{$prefix}body-bg-rgb: #{to-rgb($body-bg)};
 
   --#{$prefix}emphasis-color: rgb(var(--#{$prefix}emphasis-color-rgb));
   --#{$prefix}emphasis-color-rgb: #{$body-emphasis-color};
