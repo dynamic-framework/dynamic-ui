@@ -4,9 +4,17 @@
 
 .dropdown-item {
   --#{$prefix}dropdown-item-border-radius: #{$dropdown-item-border-radius};
+  --#{$prefix}dropdown-item-active-bg: var(--#{$prefix}gray-25);
+  --#{$prefix}dropdown-item-active-color: inherit;
+  &:active {
+    color: var(--#{$prefix}dropdown-item-active-color);
+    background-color: var(--#{$prefix}dropdown-item-active-bg);
+  }
   &.dropdown-item-danger {
     color: var(--#{$prefix}danger-500);
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
       background-color: var(--#{$prefix}danger-25);
     }
   }
