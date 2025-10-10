@@ -181,8 +181,9 @@
 [class*="btn-link-"] {
   --#{$prefix}btn-text-decoration: var(--#{$prefix}link-decoration);
 
+  &.hover,
   &:hover {
-    --#{$prefix}btn-text-decoration: underline;
+    background: rgba(0, 0, 0, .03);
   }
 
   @if $enable-gradients {
@@ -212,13 +213,6 @@
   text-decoration: $link-decoration;
   @if $enable-gradients {
     background-image: none;
-  }
-
-  &.hover,
-  &:hover,
-  &.focus-visible,
-  &:focus-visible {
-    text-decoration: $link-hover-decoration;
   }
 
   &.focus-visible,

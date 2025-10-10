@@ -3,6 +3,7 @@
 // scss-docs-start offcanvas-variables
 $offcanvas-padding-y: var(--#{$prefix}ref-spacer-4) !default;
 $offcanvas-padding-x: var(--#{$prefix}ref-spacer-4) !default;
+$offcanvas-box-shadow: var(--#{$prefix}box-shadow-lg) !default;
 
 // custom
 $offcanvas-header-gap: var(--#{$prefix}ref-spacer-4) !default;
