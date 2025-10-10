@@ -28,13 +28,24 @@
     --#{$prefix}badge-color: var(--#{$prefix}gray-900);
   }
 
-  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
-    $color: color-contrast-var($value);
+  &.badge-soft-success {
+    --#{$prefix}badge-bg: var(--#{$prefix}success-50);
+    --#{$prefix}badge-color: var(--#{$prefix}success-700);
+  }
 
-    &.badge-soft-#{$theme} {
-      --#{$prefix}badge-bg: var(--#{$prefix}subtle-#{$theme});
-      --#{$prefix}badge-color: var(--#{$prefix}body-color);
-    }
+  &.badge-soft-warning {
+    --#{$prefix}badge-bg: var(--#{$prefix}warning-50);
+    --#{$prefix}badge-color: var(--#{$prefix}warning-800);
+  }
+
+  &.badge-soft-info {
+    --#{$prefix}badge-bg: var(--#{$prefix}info-50);
+    --#{$prefix}badge-color: var(--#{$prefix}info-700);
+  }
+
+  &.badge-soft-danger {
+    --#{$prefix}badge-bg: var(--#{$prefix}danger-50);
+    --#{$prefix}badge-color: var(--#{$prefix}danger-700);
   }
 
   &.badge-soft-light {
