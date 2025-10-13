@@ -65,6 +65,7 @@
   --#{$prefix}input-disabled-border-color: #{$input-disabled-border-color};
   --#{$prefix}input-disabled-bg: #{$input-disabled-bg};
   --#{$prefix}input-disabled-color: #{$input-disabled-color};
+  --#{$prefix}btn-group-text-color: #{$gray-400};
 
   // input group icon sizes
   --#{$prefix}input-group-sm-icon-size: #{$input-group-sm-icon-size};
@@ -136,4 +137,8 @@
 
     margin: -1px;
   }
+}
+
+.input-group-text {
+  color: var(--#{$prefix}btn-group-text-color);
 }

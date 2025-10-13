@@ -5,7 +5,7 @@ $datepicker-border-color: var(--#{$prefix}gray-400) !default;
 $datepicker-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $datepicker-day-border-radius: .25rem !default;
 // Header
-$datepicker-header-bg: var(--#{$prefix}secondary-soft) !default;
+$datepicker-header-bg: var(--#{$prefix}gray-50) !default;
 $datepicker-header-padding: var(--#{$prefix}ref-spacer-2) 0 !default;
 $datepicker-header-font-weight: var(--#{$prefix}fw-bold) !default;
 $datepicker-day-names-color: var(--#{$prefix}gray) !default;
