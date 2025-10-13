@@ -109,7 +109,7 @@ export async function urlToFile(
         null,
         {
           code: ErrorCodes.FailedFetch,
-          message: `Failed to fetch file from ${url}`,
+          message: `Failed to fetch file from ${url} (HTTP ${res.status})`,
         },
       ];
     }
@@ -118,11 +118,13 @@ export async function urlToFile(
     const file = new File([blob], filename, { type: blob.type });
     return [file, null];
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const isCorsError = errorMessage.includes('CORS') || errorMessage.includes('Failed to fetch');
     return [
       null,
       {
         code: ErrorCodes.FailedFetch,
-        message: `Failed to fetch file from ${url}}`,
+        message: `Failed to fetch file from ${url}${isCorsError ? ' (CORS error - file may not be accessible from this domain)' : ` (${errorMessage})`}`,
       },
     ];
   }
