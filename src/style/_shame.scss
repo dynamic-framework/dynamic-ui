@@ -1,5 +1,44 @@
-// keep empty.
+/* stylelint-disable declaration-no-important */
 
 .flex-1 {
   flex: 1;
+}
+
+.text-muted {
+  --#{$prefix}text-muted: var(--#{$prefix}gray-400);
+  color: var(--#{$prefix}text-muted) !important;
+}
+
+th {
+  font-weight: 500;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.v-align-baseline {
+  vertical-align: baseline !important;
+}
+
+.v-align-center {
+  vertical-align: center !important;
+}
+
+.v-align-top {
+  vertical-align: top !important;
+}
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+) !default;
+
+@each $size, $width in $container-max-widths {
+  .max-w-#{$size} {
+    max-width: $width;
+  }
 }
