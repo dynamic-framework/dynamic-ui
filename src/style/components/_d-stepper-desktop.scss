@@ -1,32 +1,30 @@
 .d-stepper-desktop {
   /* Icon container */
-  --#{$prefix}step-icon-container-color: var(--#{$prefix}secondary);
-  --#{$prefix}step-icon-container-background-color: var(--#{$prefix}white);
+  --#{$prefix}step-icon-container-color: var(--#{$prefix}gray-400);
+  --#{$prefix}step-icon-container-background-color: transparent;
   --#{$prefix}step-icon-container-size: var(--#{$prefix}ref-spacer-9);
   --#{$prefix}step-icon-container-font-size: var(--#{$prefix}ref-spacer-4);
-  --#{$prefix}step-icon-container-border-width: 1px;
-  --#{$prefix}step-icon-container-border-color: var(--#{$prefix}secondary);
+  --#{$prefix}step-icon-container-border-width: 2px;
+  --#{$prefix}step-icon-container-border-color: var(--#{$prefix}gray-200);
   --#{$prefix}step-icon-container-border-radius: 100%;
   --#{$prefix}step-icon-container-z-index: 1;
 
   /* Base step */
-  --#{$prefix}step-label-height: var(--#{$prefix}ref-spacer-12);
   --#{$prefix}step-icon-size: var(--#{$prefix}ref-spacer-6);
   --#{$prefix}step-gap: var(--#{$prefix}ref-spacer-2);
   --#{$prefix}step-z-index: 0;
 
   /* Checked step */
-  --#{$prefix}step-check-text-color: var(--#{$prefix}white);
   --#{$prefix}step-check-background-color: var(--#{$prefix}success);
   --#{$prefix}step-check-border-color: var(--#{$prefix}success);
 
   /* Current step */
-  --#{$prefix}step-current-text-color: var(--#{$prefix}white);
-  --#{$prefix}step-current-background-color: var(--#{$prefix}secondary);
+  --#{$prefix}step-current-text-color: var(--#{$prefix}step-icon-container-color);
+  --#{$prefix}step-current-background-color: transparent;
 
   /* Step line */
-  --#{$prefix}step-line-stroke: 1px;
-  --#{$prefix}step-line-color: var(--#{$prefix}secondary);
+  --#{$prefix}step-line-stroke: 2px;
+  --#{$prefix}step-line-color: var(--#{$prefix}gray-200);
 
   /* Step label */
   --#{$prefix}step-label-padding: var(--#{$prefix}ref-spacer-4);
@@ -38,10 +36,29 @@
   display: flex;
 
   .d-step {
+    position: relative;
     display: flex;
     flex: 1 1 0;
     flex-direction: column;
     gap: var(--#{$prefix}step-gap);
+
+    &:last-child {
+      &::after {
+        content: none;
+      }
+    }
+
+    &::after {
+      position: absolute;
+      top: 16px;
+      left: calc(50% + var(--bs-step-icon-container-size));
+      z-index: 1;
+      width: calc(100% - var(--bs-step-icon-container-size) * 2);
+      height: var(--#{$prefix}step-icon-container-border-width);
+      content: "";
+      background: var(--#{$prefix}gray-100);
+      border-radius: 10px;
+    }
 
     .d-step-value {
       position: relative;
@@ -66,37 +83,18 @@
     }
 
     .d-step-check {
-      color: var(--#{$prefix}step-check-text-color);
-      background-color: var(--#{$prefix}step-check-background-color);
-      border-color: var(--#{$prefix}step-check-border-color);
+      color: var(--#{$prefix}step-check-background-color);
+      border-color: var(--#{$prefix}step-check-background-color);
     }
 
-    .d-step-current {
-      color: var(--#{$prefix}step-current-text-color);
-      background-color: var(--#{$prefix}step-current-background-color);
+    &.d-step-current {
+      --#{$prefix}step-icon-container-color: var(--#{$prefix}gray-600);
+      --#{$prefix}step-icon-container-border-color: var(--#{$prefix}gray-600);
+      .d-step-icon-container {
+        font-weight: 500;
+      }
     }
 
-    .d-step-value::after {
-      position: absolute;
-      top: 50%;
-      z-index: var(--#{$prefix}step-z-index);
-      width: 100%;
-      height: var(--#{$prefix}step-line-stroke);
-      content: "";
-      background-color: var(--#{$prefix}step-line-color);
-    }
-
-    &:first-child .d-step-value::after {
-      left: 50%;
-      z-index: var(--#{$prefix}step-z-index);
-      width: 50%;
-    }
-
-    &:last-child .d-step-value::after {
-      right: 50%;
-      z-index: var(--#{$prefix}step-z-index);
-      width: 50%;
-    }
 
     .d-step-text-container {
       padding-right: var(--#{$prefix}step-label-padding);
@@ -109,7 +107,15 @@
 
       .d-step-description {
         font-size: var(--#{$prefix}step-description-font-size);
+        color: var(--#{$prefix}gray-400);
       }
+    }
+  }
+
+  .d-step-current {
+    .d-step-label {
+      --font-weight-active-text: 500;
+      font-weight: var(--font-weight-active-text);
     }
   }
 
@@ -122,14 +128,14 @@
 
   &.is-vertical {
     flex-direction: column;
+    gap: var(--#{$prefix}step-gap);
 
     .d-step {
       flex-direction: row;
-      align-items: center;
+      align-items: start;
 
       .d-step-value {
-        align-items: center;
-        height: 100%;
+        align-items: start;
       }
 
       .d-step-text-container {
@@ -137,36 +143,18 @@
         flex-grow: 1;
         flex-direction: column;
         align-items: flex-start;
-        min-height: var(--#{$prefix}step-label-height);
-        padding: var(--#{$prefix}step-vertical-label-padding);
+        padding-inline: var(--#{$prefix}step-vertical-label-padding);
       }
 
       .d-step-label {
         text-align: left;
       }
 
-      .d-step-value::after {
-        position: absolute;
-        top: 0;
-        left: calc(50% - var(--#{$prefix}step-line-stroke));
-        z-index: var(--#{$prefix}step-z-index);
-        width: 0;
-        height: 100%;
-        content: "";
-        border: var(--#{$prefix}step-line-stroke) solid var(--#{$prefix}step-line-color);
-      }
-
-      &:first-child .d-step-value::after {
-        top: 50%;
-        z-index: var(--#{$prefix}step-z-index);
-        width: 0;
-        height: 50%;
-      }
-
-      &:last-child .d-step-value::after {
-        z-index: var(--#{$prefix}step-z-index);
-        width: 0;
-        height: 50%;
+      &::after {
+        top: calc(var(--bs-step-icon-container-size) + 4px);
+        left: 16px;
+        width: var(--#{$prefix}step-icon-container-border-width);
+        height: calc(100% - var(--bs-step-icon-container-size));
       }
     }
   }
