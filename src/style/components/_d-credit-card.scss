@@ -1,6 +1,5 @@
 .d-credit-card {
-  aspect-ratio: 16/9;
-  background:
+  --#{$prefix}d-credit-card-bg:
     radial-gradient(circle at 25% 10%, rgba(255, 255, 255, .12), transparent 18%), linear-gradient(
       135deg,
       #ff9a8b 0%,
@@ -9,6 +8,14 @@
       #7aa7ff 65%,
       #39e6d6 100%
     );
+  --#{$prefix}d-credit-card-aspect-ratio: 16/9;
+  --#{$prefix}d-credit-card-chip-bg: rgba(255, 255, 255, .12);
+  --#{$prefix}d-credit-card-font-family-number: var(--#{$prefix}font-monospace);
+  --#{$prefix}d-credit-card-padding: var(--#{$prefix}ref-spacer-4);
+  aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
+  padding: var(--#{$prefix}d-credit-card-padding);
+
+  background: var(--#{$prefix}d-credit-card-bg);
 
   > * {
     display: flex;
@@ -24,10 +31,10 @@
     }
   }
 
-  .logo-visa {
-    filter: brightness(100);
-  }
   .chip {
-    background: rgba(255, 255, 255, .12);
+    background: var(--#{$prefix}d-credit-card-chip-bg);
+  }
+  .d-credit-card-number {
+    font-family: var(--#{$prefix}d-credit-card-font-family-number);
   }
 }
