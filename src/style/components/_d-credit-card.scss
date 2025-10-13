@@ -1,0 +1,33 @@
+.d-credit-card {
+  aspect-ratio: 16/9;
+  background:
+    radial-gradient(circle at 25% 10%, rgba(255, 255, 255, .12), transparent 18%), linear-gradient(
+      135deg,
+      #ff9a8b 0%,
+      #ffb199 12%,
+      #caa6ff 40%,
+      #7aa7ff 65%,
+      #39e6d6 100%
+    );
+
+  > * {
+    display: flex;
+    align-items: center;
+  }
+
+  .d-credit-card-details {
+    .name {
+      font-size: var(--#{$prefix}ref-fs-6);
+    }
+    .date {
+      font-size: var(--#{$prefix}ref-fs-6);
+    }
+  }
+
+  .logo-visa {
+    filter: brightness(100);
+  }
+  .chip {
+    background: rgba(255, 255, 255, .12);
+  }
+}
