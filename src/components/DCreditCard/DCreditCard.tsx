@@ -1,50 +1,52 @@
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 type Props = {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
-  type?: 'debit' | 'credit' | 'mastercard';
+  cardBrand?: string;
   isChipVisible?: boolean;
   nameOnCard?: string;
   cardNumber?: string;
   isVertical?: boolean;
+  logoImage?: string;
 };
 
-const TYPE = {
-  debit: '"https://modyo.modyo.me:3000/uploads/ded84d0e-4895-4465-9dcb-06d8b50fdaa9/original/Visa_Logo.png"',
-  credit: '"https://modyo.modyo.me:3000/uploads/ded84d0e-4895-4465-9dcb-06d8b50fdaa9/original/Visa_Logo.png"',
-  mastercard: '"https://modyo.modyo.me:3000/uploads/ded84d0e-4895-4465-9dcb-06d8b50fdaa9/original/Visa_Logo.png"',
+const DEFAULT_IMAGE = 'https://cdn.modyo.cloud/uploads/06b434f7-b943-4f54-9543-84a904e189aa/original/Visa_Logo_1_.png';
+const CHIP_IMAGE = 'https://cdn.modyo.cloud/uploads/4660ad00-e5d8-477e-8919-52b53d0a26fb/original/chip-debit-svgrepo-com_1_.png';
+
+const SIZE = {
+  sm: 'd-card-sm',
+  md: 'd-card-md',
+  lg: 'd-card-lg',
 };
 
 export default function CardBlock(
   {
     size = 'md',
-    type = 'credit',
+    cardBrand = 'visa',
     nameOnCard,
     cardNumber,
+    logoImage,
     isChipVisible = true,
     className,
     isVertical = false,
   }: Props,
 ) {
-  const { t } = useTranslation();
-
   return (
     <div
       className={classNames(
         'd-credit-card overflow-hidden text-white',
         'position-relative rounded-3 flex-column',
         'd-none d-lg-flex',
-        size === 'sm' ? 'p-2 d-card-sm' : 'p-8',
+        SIZE[size],
         isVertical && 'is-vertical flex-row',
         className,
       )}
     >
       <div className="d-credit-card-header justify-content-between">
         <img
-          src={TYPE[type]}
-          alt={type}
+          src={logoImage || DEFAULT_IMAGE}
+          alt={cardBrand}
           className="debit"
           width={100}
           style={{
@@ -54,7 +56,7 @@ export default function CardBlock(
         {isChipVisible && (
           <div className="chip p-2 rounded-2">
             <img
-              src="https://modyo.modyo.me:3000/uploads/f72098b8-750e-46e3-bce5-96464483e74e/original/chip-debit-svgrepo-com.png"
+              src={CHIP_IMAGE}
               alt="chip"
               width={30}
             />
@@ -63,10 +65,10 @@ export default function CardBlock(
       </div>
 
       <div className="d-credit-card-details mt-auto d-none d-sm-block">
-        <div className="d-credit-card-number font-monospace d-none d-sm-block mb-4">
+        <div className="d-credit-card-number d-none d-sm-block mb-4">
           {cardNumber}
         </div>
-        <small className="d-block opacity-50">{t('cardHolder')}</small>
+        <small className="d-block opacity-50">Card Holder</small>
         <span className="name">{nameOnCard}</span>
       </div>
     </div>

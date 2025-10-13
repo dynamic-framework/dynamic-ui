@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import { COLOR_THEMES, ICONS } from '../config/constants';
 import { DCreditCard } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DCreditCard> = {
   title: 'Design System/Components/DCreditCard',
@@ -11,74 +9,31 @@ const config: Meta<typeof DCreditCard> = {
   parameters: {
     docs: {
       description: {
-        component: `
-To understand in more detail the aspects covered by this component, review the following documentation:
-
-+ [Bootstrap Alerts](https://getbootstrap.com/docs/5.3/components/alerts/)
-
-## CSS Variables
-
-The Bootstrap documentation provides details on the default [Alert CSS Variables](https://getbootstrap.com/docs/5.3/components/alerts/#css)
-
-| Variable                                  | Class            | Type             | Description              |
-|-------------------------------------------|------------------|------------------|--------------------------|
-| --${PREFIX_BS}alert-gap                   | .alert           | css length unit  | Content separation       |
-| --${PREFIX_BS}alert-icon-color            | .alert           | css color unit   | Toast icon color         |
-| --${PREFIX_BS}alert-close-icon-size       | .alert           | css length unit  | Toast close icon size    |
-        `,
+        component: '',
       },
     },
   },
   argTypes: {
-    id: {
+    nameOnCard: {
       control: 'text',
       type: 'string',
     },
-    className: {
-      control: 'text',
-      type: 'string',
-    },
-    style: {
-      control: 'object',
-    },
-    theme: {
+    cardBrand: {
       control: 'select',
       type: 'string',
-      options: COLOR_THEMES,
-      table: { defaultValue: { summary: 'success' } },
-      description: 'Toast type',
+      options: ['mastercard', 'visa', 'amex', 'discover'],
     },
-    icon: {
-      control: 'select',
-      type: 'string',
-      options: ICONS,
-      description: 'Name of icon to use (in kebab-case)',
-    },
-    iconFamilyClass: {
+    cardNumber: {
       control: 'text',
       type: 'string',
     },
-    iconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
-    iconMaterialStyle: {
+    isVertical: {
       control: 'boolean',
       type: 'boolean',
     },
-    showClose: {
-      control: 'boolean',
-      type: 'boolean',
-      description: 'Show close button',
-    },
-    iconClose: {
-      control: 'select',
+    logoImage: {
+      control: 'text',
       type: 'string',
-      options: ICONS,
-      description: 'Name of icon to use (in kebab-case)',
-    },
-    onClose: {
-      action: 'onClose',
     },
   },
   tags: ['autodocs'],
@@ -89,7 +44,9 @@ type Story = StoryObj<typeof DCreditCard>;
 
 export const Visa: Story = {
   render: (args) => (
-    <DCreditCard {...args} />
+    <div style={{ width: 360 }}>
+      <DCreditCard {...args} />
+    </div>
   ),
   args: {
     nameOnCard: 'John Doe',
@@ -99,11 +56,14 @@ export const Visa: Story = {
 
 export const Mastercard: Story = {
   render: (args) => (
-    <DCreditCard {...args} />
+    <div style={{ width: 360 }}>
+      <DCreditCard {...args} />
+    </div>
   ),
   args: {
     nameOnCard: 'John Doe',
-    type: 'mastercard',
+    logoImage: 'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
+    cardBrand: 'mastercard',
     cardNumber: '4242 4242 4242 4242',
   },
 };
