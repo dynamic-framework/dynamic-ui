@@ -169,9 +169,9 @@ $small-font-size-value: $font-size-sm-value !default;
 
 $sub-sup-font-size: .75em !default;
 
-// fusv-disable
-$text-muted: var(--#{$prefix}gray) !default;
-// fusv-enable
+// // fusv-disable
+// $text-muted: var(--#{$prefix}gray-400) !default;
+// // fusv-enable
 
 $blockquote-margin-y: var(--#{$prefix}ref-spacer-4) !default;
 $blockquote-footer-color: var(--#{$prefix}gray-600) !default;
