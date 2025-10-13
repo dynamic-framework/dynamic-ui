@@ -1,8 +1,8 @@
 .d-avatar {
   --#{$prefix}avatar-border: 1px solid var(--#{$prefix}avatar-bg);
   --#{$prefix}avatar-size: var(--#{$prefix}ref-spacer-12);
-  --#{$prefix}avatar-bg: var(--#{$prefix}secondary-100);
-  --#{$prefix}avatar-color: var(--#{$prefix}secondary-500);
+  --#{$prefix}avatar-bg: var(--#{$prefix}gray-100);
+  --#{$prefix}avatar-color: var(--#{$prefix}gray-500);
   --#{$prefix}avatar-font-weight: var(--#{$prefix}fw-bold);
   --#{$prefix}avatar-border-radius: var(--#{$prefix}border-radius-pill);
 
@@ -32,24 +32,6 @@
     white-space: pre-wrap;
     background-color: var(--#{$prefix}avatar-bg);
     border-radius: var(--#{$prefix}avatar-border-radius);
-  }
-
-  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
-    $color: color-contrast($value);
-    &.d-avatar-#{$theme} {
-      --#{$prefix}avatar-color: var(--#{$prefix}#{$theme}-500);
-      --#{$prefix}avatar-bg: var(--#{$prefix}#{$theme}-100);
-    }
-
-    &.d-avatar-dark-#{$theme} {
-      --#{$prefix}avatar-color: var(--#{$prefix}white);
-      --#{$prefix}avatar-bg: var(--#{$prefix}#{$theme}-500);
-    }
-
-    &.d-avatar-light-#{$theme} {
-      --#{$prefix}avatar-color: var(--#{$prefix}#{$theme}-500);
-      --#{$prefix}avatar-bg: var(--#{$prefix}white);
-    }
   }
 }
 

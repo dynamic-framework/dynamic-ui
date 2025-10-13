@@ -10,8 +10,6 @@ type Props =
   image?: string;
   name?: string;
   useNameAsInitials?: boolean;
-  theme?: string;
-  variant?: 'light' | 'dark';
 };
 
 export default function DAvatar(
@@ -21,24 +19,15 @@ export default function DAvatar(
     image,
     name: nameProp,
     useNameAsInitials = false,
-    theme = 'secondary',
-    variant,
     className,
     style,
     dataAttributes,
   }: Props,
 ) {
-  const generateClasses = useMemo<ClassMap>(() => {
-    const variantClass = variant
-      ? `d-avatar-${variant}-${theme}`
-      : `d-avatar-${theme}`;
-
-    return {
-      'd-avatar': true,
-      [variantClass]: true,
-      [`d-avatar-${size}`]: !!size,
-    };
-  }, [variant, theme, size]);
+  const generateClasses = useMemo<ClassMap>(() => ({
+    'd-avatar': true,
+    [`d-avatar-${size}`]: !!size,
+  }), [size]);
 
   const name = useMemo(() => {
     if (!nameProp) {

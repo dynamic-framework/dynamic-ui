@@ -65,15 +65,17 @@ export default function DStepper(
     >
       {options.map(({ label, value, description }) => (
         <div
-          className="d-step"
+          className={classNames({
+            'd-step': true,
+            'd-step-current': value === currentStep && !completed,
+          })}
           key={value}
         >
-          <div className="d-step-value EDUARD">
+          <div className="d-step-value">
             <div
               className={classNames({
                 'd-step-icon-container': true,
                 'd-step-check': value < currentStep || completed,
-                'd-step-current': value === currentStep && !completed,
               })}
             >
               {value < currentStep || completed
