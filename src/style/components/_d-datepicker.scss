@@ -85,6 +85,9 @@
   display: inline-block;
   position: relative;
   line-height: initial;
+  p {
+    font-weight: 500;
+  }
 }
 
 .react-datepicker--time-only {
@@ -187,7 +190,7 @@
 
     p {
       margin: 0;
-      font-weight: bold;
+      font-weight: 500;
     }
 
     .header-button:first-child {

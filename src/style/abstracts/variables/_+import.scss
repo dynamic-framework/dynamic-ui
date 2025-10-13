@@ -19,7 +19,7 @@ $focus-ring-width: .25rem !default;
 $focus-ring-opacity: .25 !default;
 $focus-ring-blur: 0 !default;
 // custom
-$focus-ring-border-color: var(--#{$prefix}secondary-300-rgb) !default;
+$focus-ring-border-color: transparent !default;
 $focus-ring-color-mapping: "secondary-rgb" !default;
 $focus-ring-color: var(--#{$prefix}focus-ring-color) !default;
 // end custom
