@@ -12,6 +12,7 @@
   --#{$prefix}d-credit-card-chip-bg: rgba(255, 255, 255, .12);
   --#{$prefix}d-credit-card-font-family-number: var(--#{$prefix}font-monospace);
   --#{$prefix}d-credit-card-padding: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}d-credit-card-number-size: inherit;
   flex-direction: column;
 
   aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
@@ -42,10 +43,12 @@
   }
   .d-credit-card-number {
     font-family: var(--#{$prefix}d-credit-card-font-family-number);
+    font-size: var(--#{$prefix}d-credit-card-number-size);
   }
 
   &.is-vertical {
     --#{$prefix}d-credit-card-aspect-ratio: 9/16;
+    --#{$prefix}d-credit-card-number-size: var(--#{$prefix}ref-spacer-3);
   }
 
 }
