@@ -38,7 +38,7 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'boolean',
       control: 'boolean',
     },
-    theme: {
+    color: {
       control: 'select',
       type: { name: 'string' },
       options: THEMES,
@@ -116,7 +116,7 @@ export const Disabled: Story = {
   },
 };
 
-export const WithTheme: Story = {
+export const WithColor: Story = {
   decorators: [
     (Story) => (
       <div style={{ width: 'calc(375px - 1rem)' }} className="position-relative">
@@ -134,6 +134,6 @@ export const WithTheme: Story = {
     </DListItem>
   ),
   args: {
-    theme: 'secondary',
+    color: 'secondary',
   },
 };

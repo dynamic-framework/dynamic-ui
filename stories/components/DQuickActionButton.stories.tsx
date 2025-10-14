@@ -3,8 +3,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { PREFIX_BS } from '../../src/components/config';
-import { THEMES_WITH_EMPTY, ICONS } from '../config/constants';
 import DQuickActionButton from '../../src/components/DQuickActionButton/DQuickActionButton';
+import { ICONS, THEMES_WITH_EMPTY } from '../config/constants';
 
 const config: Meta<typeof DQuickActionButton> = {
   title: 'Design System/Components/Quick Action Button',
@@ -38,7 +38,7 @@ const config: Meta<typeof DQuickActionButton> = {
       description: 'The action icon',
       table: { defaultValue: { summary: 'chevron-right' } },
     },
-    actionIconTheme: {
+    actionIconColor: {
       control: {
         type: 'select',
         labels: {
@@ -47,7 +47,7 @@ const config: Meta<typeof DQuickActionButton> = {
       },
       options: THEMES_WITH_EMPTY,
       type: 'string',
-      description: 'Theme of the action icon',
+      description: 'Color of the action icon',
       table: { defaultValue: { summary: 'secondary' } },
     },
     actionIconFamilyClass: {
@@ -72,7 +72,7 @@ const config: Meta<typeof DQuickActionButton> = {
       options: [undefined, ...ICONS],
       description: 'The representative icon',
     },
-    representativeIconTheme: {
+    representativeIconColor: {
       control: {
         type: 'select',
         labels: {
@@ -81,7 +81,7 @@ const config: Meta<typeof DQuickActionButton> = {
       },
       options: THEMES_WITH_EMPTY,
       type: 'string',
-      description: 'Theme of the representative icon',
+      description: 'Color of the representative icon',
       table: { defaultValue: { summary: 'secondary' } },
     },
     representativeIconHasCircle: {
@@ -268,7 +268,7 @@ export const AccountBox: Story = {
     line1: 'Checking account',
     line2: 'HISA ··· 665',
     representativeIcon: 'piggy-bank',
-    representativeIconTheme: 'info',
+    representativeIconColor: 'info',
     representativeIconHasCircle: true,
     actionIcon: 'chevron-right',
   },
@@ -292,7 +292,7 @@ export const Info: Story = {
     line1: 'Alternativas de pago',
     line2: 'Si no puedes pagar en este momento',
     representativeIcon: 'shuffle',
-    representativeIconTheme: 'secondary',
+    representativeIconColor: 'secondary',
     actionIcon: 'chevron-right',
   },
 };

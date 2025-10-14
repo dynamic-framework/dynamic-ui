@@ -15,7 +15,7 @@ describe('<DAvatar />', () => {
     expect(container).toMatchInlineSnapshot(`
       <div>
         <div
-          class="d-avatar d-avatar-secondary"
+          class="d-avatar"
         >
           <img
             alt="John Doe"
@@ -48,26 +48,11 @@ describe('<DAvatar />', () => {
     expect(getByText('Jane Doe')).toBeInTheDocument();
   });
 
-  it('Should apply variant, theme and size classes', () => {
-    const { container } = render(
-      <DAvatar
-        name="Jane"
-        variant="dark"
-        theme="info"
-        size="lg"
-      />,
-    );
-
-    const avatar = container.firstChild as HTMLElement;
-    expect(avatar).toHaveClass('d-avatar-dark-info');
-    expect(avatar).toHaveClass('d-avatar-lg');
-  });
-
   it('Should render empty avatar with default classes when no props are provided', () => {
     const { container } = render(<DAvatar />);
 
     const avatar = container.firstChild as HTMLElement;
-    expect(avatar).toHaveClass('d-avatar', 'd-avatar-secondary');
+    expect(avatar).toHaveClass('d-avatar');
     expect(avatar).toHaveTextContent('');
   });
 

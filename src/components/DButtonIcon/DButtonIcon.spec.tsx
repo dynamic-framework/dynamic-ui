@@ -60,11 +60,11 @@ describe('<DButtonIcon />', () => {
     expect(container.querySelector('[aria-label="Loading..."]')).toBeInTheDocument();
   });
 
-  it('Should render theme secondary outline', () => {
+  it('Should render color secondary outline', () => {
     const { container } = render(
       <DButtonIcon
         icon="check"
-        theme="secondary"
+        color="secondary"
         variant="outline"
       />,
     );

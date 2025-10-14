@@ -7,8 +7,8 @@ import {
   DToastContainer,
   useDToast,
 } from '../../src';
-import { RejectedFile } from '../../src/components/DBoxFile/utils';
 import { DBoxFileProps } from '../../src/components/DBoxFile/useDBoxFile';
+import { RejectedFile } from '../../src/components/DBoxFile/utils';
 
 type Props = Pick<DBoxFileProps,
 | 'maxSize'
@@ -41,7 +41,7 @@ function ExampleDBoxFile({ showPreview, ...props }: Props) {
     toast({
       title: 'Error',
       description: error instanceof Error ? error.message : 'Unknown error',
-      theme: 'danger',
+      color: 'danger',
     });
   }, [toast]);
 
@@ -55,7 +55,7 @@ function ExampleDBoxFile({ showPreview, ...props }: Props) {
     if (accepted.length > 0) {
       toast({
         title: 'Accepted file',
-        theme: 'success',
+        color: 'success',
       });
       setImagePreview([...previews, ...accepted]);
     }
@@ -63,7 +63,7 @@ function ExampleDBoxFile({ showPreview, ...props }: Props) {
       toast({
         title: `Error on ${file.name}`,
         description: errors.map(({ message }) => message).join(', '),
-        theme: 'danger',
+        color: 'danger',
       });
     });
   }, [previews, setImagePreview, toast]);
@@ -86,7 +86,7 @@ function ExampleDBoxFile({ showPreview, ...props }: Props) {
               Drag and drop it here or
             </p>
             <DButton
-              theme="primary"
+              color="primary"
               variant="outline"
               text="Select the file"
               onClick={openFileDialog}

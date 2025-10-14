@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DContextProvider } from '../../src';
-import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
+import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DOffcanvas> = {
@@ -56,7 +56,7 @@ export const Default: Story = {
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -95,7 +95,7 @@ export const CloseIcon: Story = {
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -131,7 +131,7 @@ export const ActionsPlacementStart: Story = {
       <DOffcanvas.Footer actionPlacement="start">
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -167,7 +167,7 @@ export const ActionsPlacementEnd: Story = {
       <DOffcanvas.Footer actionPlacement="end">
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -201,7 +201,7 @@ export const WithoutHeader: Story = {
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -287,7 +287,7 @@ export const WithoutCancelX: Story = {
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -341,7 +341,7 @@ export const MaterialStyleCloseIcon: Story = {
         <DOffcanvas.Footer>
           <DButton
             text="cancel"
-            theme="secondary"
+            color="secondary"
             variant="outline"
             className="d-grid"
             pill

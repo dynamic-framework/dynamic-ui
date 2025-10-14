@@ -3,12 +3,12 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import type { BaseProps } from '../../interface';
+import type { BaseProps, ComponentColor } from '../../interface';
 
 type Props = BaseProps & PropsWithChildren<{
   active?: boolean;
   disabled?: boolean;
-  theme?: string;
+  color?: ComponentColor;
   onClick?: () => void;
 }>;
 
@@ -22,7 +22,7 @@ export default function DListItem(
     style,
     active = false,
     disabled = false,
-    theme,
+    color,
     onClick,
   }: Props,
 ) {
@@ -40,7 +40,7 @@ export default function DListItem(
       className={
         classNames(
           'list-group-item list-group-item-action',
-          theme ? `list-group-item-${theme}` : undefined,
+          color ? `list-group-item-${color}` : undefined,
           className,
           {
             active,

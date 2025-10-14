@@ -11,6 +11,7 @@ import type {
   ButtonType,
   ButtonVariant,
   ClassMap,
+  ComponentColor,
   ComponentSize,
   EndIconProps,
   InputState,
@@ -23,7 +24,7 @@ type Props =
 & EndIconProps
 & {
   id?: string;
-  theme?: string;
+  color?: ComponentColor;
   size?: ComponentSize;
   variant?: ButtonVariant;
   state?: InputState;
@@ -42,7 +43,7 @@ type Props =
 
 export default function DButton(
   {
-    theme = 'primary',
+    color = 'primary',
     size,
     variant,
     state,
@@ -71,8 +72,8 @@ export default function DButton(
 ) {
   const generateClasses = useMemo<ClassMap>(() => {
     const variantClass = variant
-      ? `btn-${variant}-${theme}`
-      : `btn-${theme}`;
+      ? `btn-${variant}-${color}`
+      : `btn-${color}`;
 
     return {
       btn: true,
@@ -81,7 +82,7 @@ export default function DButton(
       ...(state && state !== 'disabled') && { [state]: true },
       loading,
     };
-  }, [variant, theme, size, state, loading]);
+  }, [variant, color, size, state, loading]);
 
   const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     if (stopPropagationEnabled) {

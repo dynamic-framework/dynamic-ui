@@ -5,11 +5,11 @@ import {
   Controls,
   Canvas,
   Unstyled,
-} from '@storybook/addon-docs/blocks';
+} from "@storybook/addon-docs/blocks";
 
-import * as DOffcanvasStories from './DOffcanvas.stories';
-import { PREFIX_BS } from '../../src/components/config';
-import { DAlert } from '../../src';
+import * as DOffcanvasStories from "./DOffcanvas.stories";
+import { PREFIX_BS } from "../../src/components/config";
+import { DAlert } from "../../src";
 
 <Meta of={DOffcanvasStories} />
 
@@ -18,9 +18,14 @@ import { DAlert } from '../../src';
 This section provides guidance specifically for using `DOffcanvas` in **inline** scenarios.
 
 <Unstyled>
-  <DAlert theme="warning">
-    <span>To achieve the behavior of a offcanvas it is necessary to use the **`DContextProvider`** and the **`useDPortalContext`** hook.
-    For detailed guidance on the **correct usage** of offcanvas, please refer to the [Offcanvas pattern section](/docs/design-system-patterns-offcanvas--docs) in our documentation.</span>
+  <DAlert color="warning">
+    <span>
+      To achieve the behavior of a offcanvas it is necessary to use the
+      **`DContextProvider`** and the **`useDPortalContext`** hook. For detailed
+      guidance on the **correct usage** of offcanvas, please refer to the
+      [Offcanvas pattern section](/docs/design-system-patterns-offcanvas--docs)
+      in our documentation.
+    </span>
   </DAlert>
 </Unstyled>
 

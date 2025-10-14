@@ -4,18 +4,18 @@ import classNames from 'classnames';
 import DIcon from '../DIcon';
 import { PREFIX_BS } from '../config';
 
-import type { BaseProps } from '../interface';
+import type { BaseProps, ComponentColor } from '../interface';
 
 type Props = BaseProps & {
   line1: string;
   line2: string;
   actionIcon?: string;
-  actionIconTheme?: string;
+  actionIconColor?: ComponentColor;
   actionIconFamilyClass?: string;
   actionIconFamilyPrefix?: string;
   representativeImage?: string;
   representativeIcon?: string;
-  representativeIconTheme?: string;
+  representativeIconColor?: ComponentColor;
   representativeIconHasCircle?: boolean;
   representativeIconFamilyClass?: string;
   representativeIconFamilyPrefix?: string;
@@ -32,10 +32,10 @@ export default function DQuickActionButton(
     actionIcon,
     actionIconFamilyClass,
     actionIconFamilyPrefix,
-    actionIconTheme,
+    actionIconColor,
     representativeImage,
     representativeIcon,
-    representativeIconTheme = 'secondary',
+    representativeIconColor = 'secondary',
     representativeIconHasCircle = false,
     representativeIconFamilyClass,
     representativeIconFamilyPrefix,
@@ -108,7 +108,7 @@ export default function DQuickActionButton(
           }
           icon={representativeIcon}
           hasCircle={representativeIconHasCircle}
-          theme={representativeIconTheme}
+          color={representativeIconColor}
           familyClass={representativeIconFamilyClass}
           familyPrefix={representativeIconFamilyPrefix}
         />
@@ -131,7 +131,7 @@ export default function DQuickActionButton(
           className="d-quick-action-button-action-icon"
           icon={actionIcon}
           size={`var(--${PREFIX_BS}quick-action-button-action-icon-size)`}
-          theme={actionIconTheme}
+          color={actionIconColor}
           familyClass={actionIconFamilyClass}
           familyPrefix={actionIconFamilyPrefix}
         />

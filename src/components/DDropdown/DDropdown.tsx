@@ -1,6 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import {
-  useState, useRef, useEffect,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
 import DButtonIcon from '../DButtonIcon';
 import DIcon from '../DIcon';
@@ -18,6 +20,7 @@ type DropdownAction = {
 type Props = {
   actions: DropdownAction[];
   dropdownToggle?: ((props: { open: boolean, toggle: () => void }) => React.ReactNode);
+  className?: string;
 };
 
 const getItemClass = (action: DropdownAction) => {
@@ -30,6 +33,7 @@ export default function ActionDropdown(
   {
     actions,
     dropdownToggle,
+    className,
   }: Props,
 ) {
   const [open, setOpen] = useState(false);
@@ -76,7 +80,6 @@ export default function ActionDropdown(
     ToggleElement = (
       <DButtonIcon
         variant="link"
-        theme="secondary"
         stopPropagationEnabled={false}
         onClick={() => setOpen(!open)}
         icon="three-dots-vertical"
@@ -86,7 +89,7 @@ export default function ActionDropdown(
 
   return (
     <div
-      className={`dropdown position-relative drop-${position}`}
+      className={`dropdown position-relative drop-${position} ${className}`}
       ref={dropdownRef}
     >
       {ToggleElement}
@@ -129,7 +132,7 @@ export default function ActionDropdown(
                       icon={action.icon}
                       className="me-2"
                       size="1rem"
-                      // style={{ '--bs-icon-size': '1rem' }}
+                    // style={{ '--bs-icon-size': '1rem' }}
                     />
                   )}
                   {action.label}
@@ -151,7 +154,7 @@ export default function ActionDropdown(
                       icon={action.icon}
                       className="me-2"
                       size="1rem"
-                      // style={{ '--bs-icon-size': '1rem' }}
+                    // style={{ '--bs-icon-size': '1rem' }}
                     />
                   )}
                   {action.label}

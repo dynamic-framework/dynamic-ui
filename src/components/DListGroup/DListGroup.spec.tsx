@@ -131,11 +131,11 @@ describe('<DListGroup.Item />', () => {
       expect(item).toHaveAttribute('aria-disabled', 'true');
     });
 
-    it('should apply a theme color', () => {
+    it('should apply a color', () => {
       render(
         <DContextProvider>
           <DListGroup>
-            <DListGroup.Item theme="success">Themed Item</DListGroup.Item>
+            <DListGroup.Item color="success">Themed Item</DListGroup.Item>
           </DListGroup>
         </DContextProvider>,
       );

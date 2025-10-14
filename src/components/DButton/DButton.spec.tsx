@@ -88,11 +88,11 @@ describe('<DButton />', () => {
     expect(container.querySelector('[aria-label="Loading..."]')).toBeInTheDocument();
   });
 
-  it('Should render theme secondary outline', () => {
+  it('Should render color secondary outline', () => {
     const { container } = render(
       <DButton
         text="Button content"
-        theme="secondary"
+        color="secondary"
         variant="outline"
       />,
     );

@@ -101,7 +101,7 @@ const config: Meta<typeof DDatePicker> = {
       control: 'text',
       type: 'string',
     },
-    headerButtonTheme: {
+    headerButtonColor: {
       control: 'text',
       type: 'string',
     },

@@ -4,19 +4,22 @@ import {
   Controls,
   Canvas,
   Unstyled,
-} from '@storybook/addon-docs/blocks';
+} from "@storybook/addon-docs/blocks";
 
-import * as DListStories from './DList.stories';
-import { DAlert } from '../../src';
+import * as DListStories from "./DList.stories";
+import { DAlert } from "../../src";
 
 <Meta of={DListStories} />
 
 # List
 
 <Unstyled>
-  <DAlert theme="danger">
-    <span>This component is deprecated and will be removed in a future release.
-    Please avoid using it and instead use the [DListGroup](/docs/design-system-components-listgroup--docs)</span>
+  <DAlert color="danger">
+    <span>
+      This component is deprecated and will be removed in a future release.
+      Please avoid using it and instead use the
+      [DListGroup](/docs/design-system-components-listgroup--docs)
+    </span>
   </DAlert>
 </Unstyled>
 
@@ -24,12 +27,11 @@ List of elements
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
-+ [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
+- [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
 
 ## CSS Variables
 
 The Bootstrap documentation provides details on the default [List Group CSS Variables](https://getbootstrap.com/docs/5.3/components/list-group/#css)
-
 
 <Canvas of={DListStories.Default} />
 <Controls of={DListStories.Default} />

@@ -6,7 +6,7 @@ import DBadge from './DBadge';
 describe('<DBadge />', () => {
   it('Should render badge', () => {
     const props = {
-      theme: 'primary',
+      color: 'primary',
       text: 'Badge content',
     };
 
@@ -38,11 +38,11 @@ describe('<DBadge />', () => {
     expect(badge).toHaveClass('badge', 'badge-primary');
   });
 
-  it('Renders with soft info theme', () => {
+  it('Renders with soft info color', () => {
     render(
       <DBadge
         text="Badge content"
-        theme="info"
+        color="info"
         soft
       />,
     );

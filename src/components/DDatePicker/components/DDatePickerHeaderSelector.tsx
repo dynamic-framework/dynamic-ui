@@ -14,6 +14,7 @@ import DSelect from '../../DSelect';
 import type {
   BaseProps,
   ButtonVariant,
+  ComponentColor,
   ComponentSize,
   FamilyIconProps,
 } from '../../interface';
@@ -50,7 +51,7 @@ type Props =
   nextYearAriaLabel?: string;
   iconSize?: ComponentSize;
   buttonVariant?: ButtonVariant;
-  buttonTheme?: string;
+  buttonColor?: ComponentColor;
   minYearSelect?: number;
   maxYearSelect?: number;
   showHeaderSelectors?: boolean;
@@ -89,7 +90,7 @@ export default function DDatePickerHeaderSelector(
     nextYearAriaLabel = 'increase year',
     iconSize,
     buttonVariant = 'link',
-    buttonTheme = 'dark',
+    buttonColor = 'dark',
     style,
     className,
     minYearSelect = 1900,
@@ -161,7 +162,7 @@ export default function DDatePickerHeaderSelector(
           iconStartMaterialStyle={iconMaterialStyle}
           size={iconSize}
           variant={buttonVariant}
-          theme={buttonTheme}
+          color={buttonColor}
           onClick={decreaseYear}
           disabled={prevYearButtonDisabled}
           ariaLabel={prevYearAriaLabel}
@@ -175,7 +176,7 @@ export default function DDatePickerHeaderSelector(
           iconStartMaterialStyle={iconMaterialStyle}
           size={iconSize}
           variant={buttonVariant}
-          theme={buttonTheme}
+          color={buttonColor}
           onClick={increaseYear}
           disabled={nextYearButtonDisabled}
           ariaLabel={nextYearAriaLabel}
@@ -201,7 +202,7 @@ export default function DDatePickerHeaderSelector(
           iconStartMaterialStyle={iconMaterialStyle}
           size={iconSize}
           variant={buttonVariant}
-          theme={buttonTheme}
+          color={buttonColor}
           onClick={decreaseYear}
           disabled={prevMonthButtonDisabled}
           ariaLabel={prevMonthAriaLabel}
@@ -228,7 +229,7 @@ export default function DDatePickerHeaderSelector(
           iconStartMaterialStyle={iconMaterialStyle}
           size={iconSize}
           variant={buttonVariant}
-          theme={buttonTheme}
+          color={buttonColor}
           onClick={increaseYear}
           disabled={nextMonthButtonDisabled}
           ariaLabel={nextMonthAriaLabel}
@@ -254,7 +255,7 @@ export default function DDatePickerHeaderSelector(
         iconStartMaterialStyle={iconMaterialStyle}
         size={iconSize}
         variant={buttonVariant}
-        theme={buttonTheme}
+        color={buttonColor}
         onClick={decreaseMonth}
         disabled={prevMonthButtonDisabled}
         ariaLabel={prevMonthAriaLabel}
@@ -290,7 +291,7 @@ export default function DDatePickerHeaderSelector(
         iconStartMaterialStyle={iconMaterialStyle}
         size={iconSize}
         variant={buttonVariant}
-        theme={buttonTheme}
+        color={buttonColor}
         onClick={increaseMonth}
         disabled={nextMonthButtonDisabled}
         ariaLabel={nextMonthAriaLabel}

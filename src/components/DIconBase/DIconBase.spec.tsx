@@ -80,17 +80,17 @@ describe('<DIconBase />', () => {
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveStyle({
       '--bs-icon-component-size': '32px',
-      '--bs-icon-component-color': 'red',
+      '--bs-icon-component-color': 'var(--bs-red)',
       '--bs-icon-component-bg-color': 'blue',
       '--bs-icon-component-padding': '10px',
     });
   });
 
-  it('applies theme-based color and backgroundColor if provided', () => {
+  it('applies color-based color and backgroundColor if provided', () => {
     render(
       <DIconBase
         icon="star"
-        theme="primary"
+        color="primary"
         hasCircle
         dataAttributes={{ 'data-testid': 'icon' }}
       />,

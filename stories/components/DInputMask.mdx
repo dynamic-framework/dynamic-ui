@@ -6,12 +6,12 @@ import {
   Canvas,
   Source,
   Unstyled,
-} from '@storybook/addon-docs/blocks';
+} from "@storybook/addon-docs/blocks";
 
-import * as DInputMask from './DInputMask.stories';
-import { PREFIX_BS } from '../../src/components/config';
-import { DAlert } from '../../src';
-import { ExampleMask } from './DInputMaskExamples';
+import * as DInputMask from "./DInputMask.stories";
+import { PREFIX_BS } from "../../src/components/config";
+import { DAlert } from "../../src";
+import { ExampleMask } from "./DInputMaskExamples";
 
 <Meta of={DInputMask} />
 
@@ -24,10 +24,12 @@ the capabilities provided by **@react-input/mask**.
 This component is composed with `DInput` to offer a masked input functionality.
 
 ## Usage
+
 To utilize this component effectively, it's important to understand how it interacts
 with state management, particularly when using `useState`.
 
 ### Initial State
+
 When using `useState` to manage the state of the DInputMask component, it's crucial to
 set the initial state to match the mask pattern. This ensures that the component
 behaves as expected throughout the input process.
@@ -35,10 +37,13 @@ behaves as expected throughout the input process.
 #### Important Note from `@react-input/mask` documentation
 
 <Unstyled>
-  <DAlert theme="warning">
-    <span>The InputMask component does not change the value passed in the value or defaultValue property
-    of the input element, so set the initialized value to something that can match the masked value
-    at any stage of input. If you make a mistake, you will see a warning about it in the console.</span>
+  <DAlert color="warning">
+    <span>
+      The InputMask component does not change the value passed in the value or
+      defaultValue property of the input element, so set the initialized value
+      to something that can match the masked value at any stage of input. If you
+      make a mistake, you will see a warning about it in the console.
+    </span>
   </DAlert>
 </Unstyled>
 
@@ -53,25 +58,25 @@ For further details on the capabilities and usage of @react-input/mask, refer to
 import { useState } from 'react';
 import { DInputMask } from '@dynamic-framework/ui-react';
 
-const BASE_MASK = '_ ____ ____';
+const BASE*MASK = '* \_**\_ \_\_**';
 
 export default function App() {
   const [maskValue, setMaskValue] = useState<string>(BASE_MASK);
 
-  return (
-    <DInputMask
-      mask={BASE_MASK}
-      showMask
-      value={maskValue}
-      onChange={(value) => setMaskValue(value)}
-      replacement={{ _: /\d/ }}
-    />
-  );
+return (
+<DInputMask
+mask={BASE*MASK}
+showMask
+value={maskValue}
+onChange={(value) => setMaskValue(value)}
+replacement={{ *: /\d/ }}
+/>
+);
 }
-    `
-  }
-  language="tsx"
-  dark
+`
+}
+language="tsx"
+dark
 />
 
 <Canvas>
@@ -79,7 +84,6 @@ export default function App() {
     <ExampleMask />
   </div>
 </Canvas>
-
 
 ## CSS Variables
 

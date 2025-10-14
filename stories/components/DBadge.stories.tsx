@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
+import { PREFIX_BS } from '../../src/components/config';
 import DBadge from '../../src/components/DBadge/DBadge';
 import { ICONS, THEMES } from '../config/constants';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DBadge> = {
   title: 'Design System/Components/Badge',
@@ -46,12 +46,12 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
       type: 'string',
       description: 'Text of badge',
     },
-    theme: {
+    color: {
       control: 'select',
       type: 'string',
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
-      description: 'The theme to use.',
+      description: 'The color to use.',
     },
     soft: {
       control: 'boolean',
@@ -88,7 +88,7 @@ type Story = StoryObj<typeof DBadge>;
 
 export const Primary: Story = {
   args: {
-    theme: 'primary',
+    color: 'primary',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -97,7 +97,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -106,7 +106,7 @@ export const Secondary: Story = {
 
 export const Success: Story = {
   args: {
-    theme: 'success',
+    color: 'success',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -115,7 +115,7 @@ export const Success: Story = {
 
 export const Danger: Story = {
   args: {
-    theme: 'danger',
+    color: 'danger',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -124,7 +124,7 @@ export const Danger: Story = {
 
 export const Info: Story = {
   args: {
-    theme: 'info',
+    color: 'info',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -133,7 +133,7 @@ export const Info: Story = {
 
 export const Warning: Story = {
   args: {
-    theme: 'warning',
+    color: 'warning',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -142,7 +142,7 @@ export const Warning: Story = {
 
 export const Light: Story = {
   args: {
-    theme: 'light',
+    color: 'light',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -151,7 +151,7 @@ export const Light: Story = {
 
 export const Dark: Story = {
   args: {
-    theme: 'dark',
+    color: 'dark',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -161,7 +161,7 @@ export const Dark: Story = {
 export const PrimarySoft: Story = {
   args: {
     soft: true,
-    theme: 'primary',
+    color: 'primary',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -171,7 +171,7 @@ export const PrimarySoft: Story = {
 export const SecondarySoft: Story = {
   args: {
     soft: true,
-    theme: 'secondary',
+    color: 'secondary',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -181,7 +181,7 @@ export const SecondarySoft: Story = {
 export const SuccessSoft: Story = {
   args: {
     soft: true,
-    theme: 'success',
+    color: 'success',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -191,7 +191,7 @@ export const SuccessSoft: Story = {
 export const DangerSoft: Story = {
   args: {
     soft: true,
-    theme: 'danger',
+    color: 'danger',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -201,7 +201,7 @@ export const DangerSoft: Story = {
 export const InfoSoft: Story = {
   args: {
     soft: true,
-    theme: 'info',
+    color: 'info',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -211,7 +211,7 @@ export const InfoSoft: Story = {
 export const WarningSoft: Story = {
   args: {
     soft: true,
-    theme: 'warning',
+    color: 'warning',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -221,7 +221,7 @@ export const WarningSoft: Story = {
 export const LightSoft: Story = {
   args: {
     soft: true,
-    theme: 'light',
+    color: 'light',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',
@@ -231,7 +231,7 @@ export const LightSoft: Story = {
 export const DarkSoft: Story = {
   args: {
     soft: true,
-    theme: 'dark',
+    color: 'dark',
     text: 'Default',
     iconStart: 'bookmarks',
     iconEnd: 'bookmarks',

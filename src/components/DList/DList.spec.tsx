@@ -152,10 +152,10 @@ describe('<DList />', () => {
     expect(item).toHaveClass('disabled');
   });
 
-  it('should render list item with theme', () => {
+  it('should render list item with color', () => {
     render(
       <DList>
-        <DList.Item theme="danger">Danger Item</DList.Item>
+        <DList.Item color="danger">Danger Item</DList.Item>
       </DList>,
     );
 

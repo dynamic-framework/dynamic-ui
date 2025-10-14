@@ -1,17 +1,17 @@
 import { toast as reactToast, Toast } from 'react-hot-toast';
 
-import useDToast from '../../src/components/DToastContainer/useDToast';
+import { DContextProvider } from '../../src';
 import DButton from '../../src/components/DButton';
 import DToastContainer from '../../src/components/DToastContainer';
-import { DContextProvider } from '../../src';
+import useDToast from '../../src/components/DToastContainer/useDToast';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 export function ExampleSimpleToastUsage() {
   const { toast } = useDToast();
   return (
     <DButton
-      text="Toast - No theme"
-      theme="light"
+      text="Toast - No color"
+      color="light"
       onClick={() => (
         toast(
           {
@@ -31,14 +31,14 @@ export function ExampleSimpleSecondaryToastUsage() {
   return (
     <DButton
       text="Toast secondary"
-      theme="light"
+      color="light"
       onClick={() => (
         toast(
           {
             title: 'Example',
             timestamp: 'just now',
             icon: 'check',
-            theme: 'secondary',
+            color: 'secondary',
           },
           { duration: 40000 },
         )
@@ -52,14 +52,14 @@ export function ExampleSimpleSecondarySoftToastUsage() {
   return (
     <DButton
       text="Toast soft secondary"
-      theme="light"
+      color="light"
       onClick={() => (
         toast(
           {
             title: 'Example',
             timestamp: 'just now',
             icon: 'check',
-            theme: 'secondary',
+            color: 'secondary',
             soft: true,
           },
           { duration: 40000 },
@@ -86,8 +86,8 @@ export function ExampleFullToastUsage() {
   const { toast } = useDToast();
   return (
     <DButton
-      text="Toast full - No theme"
-      theme="light"
+      text="Toast full - No color"
+      color="light"
       onClick={() => (
         toast(
           {
@@ -108,14 +108,14 @@ export function ExampleFullSecondaryToastUsage() {
   return (
     <DButton
       text="Toast full secondary"
-      theme="light"
+      color="light"
       onClick={() => (
         toast(
           {
             title: 'Example',
             description: 'This is a description',
             timestamp: 'just now',
-            theme: 'secondary',
+            color: 'secondary',
             icon: 'check',
           },
           { duration: 4000 },
@@ -130,14 +130,14 @@ export function ExampleFullSecondarySoftToastUsage() {
   return (
     <DButton
       text="Toast soft full secondary"
-      theme="light"
+      color="light"
       onClick={() => (
         toast(
           {
             title: 'Example',
             description: 'This is a description',
             timestamp: 'just now',
-            theme: 'secondary',
+            color: 'secondary',
             soft: true,
             icon: 'check',
           },
@@ -171,7 +171,7 @@ export function CustomToastExample({ id, visible }: Toast) {
       <DButton
         size="sm"
         variant="outline"
-        theme="secondary"
+        color="secondary"
         text="Close toast"
         onClick={() => reactToast.dismiss(id)}
       />

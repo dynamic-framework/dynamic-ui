@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { useEffect, useState } from 'react';
 
 import {
-  DSelect,
-  DPaginator,
-  DInputCheck,
+  changeQueryString,
   DBadge,
   DInput,
+  DInputCheck,
+  DPaginator,
+  DSelect,
   DTableHead,
-  useItemSelection,
   getQueryString,
-  changeQueryString,
+  useItemSelection,
 } from '../../src';
 
 const HEADER_ENTRIES = [
@@ -329,7 +329,7 @@ export function ExampleComposition() {
       />
       {'Query String = '}
       {queryString && (
-        <DBadge text={queryString} theme="primary" />
+        <DBadge text={queryString} color="primary" />
       )}
       <br />
       <br />

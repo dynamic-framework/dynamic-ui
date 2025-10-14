@@ -11,7 +11,7 @@ describe('<DChip />', () => {
   it('should render a chip', () => {
     const { container } = render(
       <DChip
-        theme="primary"
+        color="primary"
         text="Chip content"
         showClose
       />,
@@ -50,7 +50,7 @@ describe('<DChip />', () => {
     expect(screen.getByText('Chip content')).toBeInTheDocument();
   });
 
-  it('should apply the default theme', () => {
+  it('should apply the default color', () => {
     const { container } = render(
       <DChip
         text="Chip content"

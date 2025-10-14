@@ -11,6 +11,7 @@ import type {
   ButtonType,
   ButtonVariant,
   ClassMap,
+  ComponentColor,
   ComponentSize,
   FamilyIconProps,
   InputState,
@@ -24,7 +25,7 @@ type Props =
   icon: string;
   size?: ComponentSize;
   variant?: ButtonVariant;
-  theme?: string;
+  color?: ComponentColor;
   state?: InputState;
   type?: ButtonType;
   loading?: boolean;
@@ -46,7 +47,7 @@ export default function DButtonIcon(
     loadingAriaLabel,
     iconMaterialStyle,
     ariaLabel,
-    theme = 'primary',
+    color = 'primary',
     type = 'button',
     loading = false,
     disabled = false,
@@ -60,8 +61,8 @@ export default function DButtonIcon(
 ) {
   const generateClasses = useMemo<ClassMap>(() => {
     const variantClass = variant
-      ? `btn-${variant}-${theme}`
-      : `btn-${theme}`;
+      ? `btn-${variant}-${color}`
+      : `btn-${color}`;
 
     return {
       'btn d-button-icon': true,
@@ -70,7 +71,7 @@ export default function DButtonIcon(
       ...(state && state !== 'disabled') && { [state]: true },
       loading,
     };
-  }, [variant, theme, size, state, loading]);
+  }, [variant, color, size, state, loading]);
 
   const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     if (stopPropagationEnabled) {
