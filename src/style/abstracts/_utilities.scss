@@ -66,6 +66,12 @@ $utilities: map-merge(
         responsive: true
       )
     ),
+    "position": map-merge(
+      map-get($utilities, "position"),
+      (
+        responsive: true
+      )
+    ),
     "border-color": map-merge(
       map-get($utilities, "border-color"),
       (
@@ -128,6 +134,32 @@ $utilities: map-merge(
       map-get($utilities, "width"),
       (
         responsive: true,
+      )
+    ),
+    "v-align": (
+      property: vertical-align,
+      responsive: true,
+      class: "v-align",
+      values: (
+        baseline: baseline,
+        top: top,
+        bottom: bottom,
+        text-top: text-top,
+        text-bottom: text-bottom,
+        sub: sub,
+        super: super,
+        middle: middle,
+      )
+    ),
+    "text-wrap": (
+      property: text-wrap,
+      responsive: true,
+      class: "text-wrap",
+      values: (
+        balance: balance,
+        normal: normal,
+        truncate: truncate,
+        wrap: wrap
       )
     ),
     "body-font-size": (
