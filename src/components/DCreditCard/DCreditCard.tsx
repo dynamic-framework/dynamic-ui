@@ -36,10 +36,10 @@ export default function CardBlock(
     <div
       className={classNames(
         'd-credit-card overflow-hidden text-white',
-        'position-relative rounded-3 flex-column',
+        'position-relative rounded-3',
         'd-none d-lg-flex',
         SIZE[size],
-        isVertical && 'is-vertical flex-row',
+        isVertical && 'is-vertical',
         className,
       )}
     >
@@ -47,11 +47,8 @@ export default function CardBlock(
         <img
           src={logoImage || DEFAULT_IMAGE}
           alt={cardBrand}
-          className="debit"
+          className="d-credit-card-logo"
           width={100}
-          style={{
-            width: '25%',
-          }}
         />
         {isChipVisible && (
           <div className="chip p-2 rounded-2">
@@ -59,6 +56,7 @@ export default function CardBlock(
               src={CHIP_IMAGE}
               alt="chip"
               width={30}
+              className="d-credit-chip"
             />
           </div>
         )}

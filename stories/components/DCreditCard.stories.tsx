@@ -27,6 +27,10 @@ const config: Meta<typeof DCreditCard> = {
       control: 'text',
       type: 'string',
     },
+    isChipVisible: {
+      control: 'boolean',
+      type: 'boolean',
+    },
     isVertical: {
       control: 'boolean',
       type: 'boolean',
@@ -65,5 +69,20 @@ export const Mastercard: Story = {
     logoImage: 'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
     cardBrand: 'mastercard',
     cardNumber: '4242 4242 4242 4242',
+  },
+};
+
+export const Vertical: Story = {
+  render: (args) => (
+    <div style={{ width: 200 }}>
+      <DCreditCard {...args} />
+    </div>
+  ),
+  args: {
+    nameOnCard: 'John Doe',
+    logoImage: 'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
+    cardBrand: 'mastercard',
+    cardNumber: '4242 4242 4242 4242',
+    isVertical: true,
   },
 };
