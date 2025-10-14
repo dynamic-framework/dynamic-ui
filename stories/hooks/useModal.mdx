@@ -1,12 +1,6 @@
-import {
-  Meta,
-  Unstyled,
-  Source,
-} from '@storybook/addon-docs/blocks';
+import { Meta, Unstyled, Source } from "@storybook/addon-docs/blocks";
 
-import {
-  ExampleModalRoot,
-} from './useModalExamples';
+import { ExampleModalRoot } from "./useModalExamples";
 
 # Modal
 
@@ -25,15 +19,13 @@ Type to define the payload of all the modals, its structure is an object literal
 where the key is used for the name of the modal and value for the payload.
 
 <Source
-  code={
-    `
+  code={`
 export type ModalPayloads = {
   example: {
     description: string;
   };
 };
-    `
-  }
+    `}
   language="tsx"
   dark
 />
@@ -72,7 +64,7 @@ export function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>)
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -124,7 +116,6 @@ export function App() {
   language="tsx"
   dark
 />
-
 
 ## Modal Usage `ExampleModalUsage.tsx`
 

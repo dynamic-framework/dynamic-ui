@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DContextProvider } from '../../src';
-import DModal from '../../src/components/DModal/DModal';
 import DButton from '../../src/components/DButton';
+import DModal from '../../src/components/DModal/DModal';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DModal> = {
@@ -74,7 +74,7 @@ export const Default: Story = {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -116,7 +116,7 @@ export const CloseIcon: Story = {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -155,7 +155,7 @@ export const ActionsPlacementStart: Story = {
       <DModal.Footer actionPlacement="start">
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -194,7 +194,7 @@ export const ActionsPlacementEnd: Story = {
       <DModal.Footer actionPlacement="end">
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -230,7 +230,7 @@ export const WithoutHeader: Story = {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -325,7 +325,7 @@ export const WithoutCancelX: Story = {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill
@@ -382,7 +382,7 @@ export const MaterialStyleCloseIcon: Story = {
         <DModal.Footer>
           <DButton
             text="cancel"
-            theme="secondary"
+            color="secondary"
             variant="outline"
             className="d-grid"
             pill

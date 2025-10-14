@@ -7,12 +7,10 @@ import {
 } from '@testing-library/react';
 import DAlert from './DAlert';
 
-import { AlertTheme } from '../interface';
-
 describe('<DAlert />', () => {
   it('should render info alert', () => {
     const props = {
-      theme: 'info',
+      color: 'info',
       text: 'Alert content',
       id: 'alertID',
     };
@@ -20,7 +18,7 @@ describe('<DAlert />', () => {
     const { container } = render(
       <DAlert
         id={props.id}
-        theme={props.theme as AlertTheme}
+        color={props.color}
       >
         {props.text}
       </DAlert>,
@@ -47,7 +45,7 @@ describe('<DAlert />', () => {
   `);
   });
 
-  it('Renders with default theme and icon', () => {
+  it('Renders with default color and icon', () => {
     const message = 'Success message';
 
     render(<DAlert>{message}</DAlert>);

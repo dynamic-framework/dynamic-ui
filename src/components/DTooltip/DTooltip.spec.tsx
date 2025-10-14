@@ -87,12 +87,12 @@ describe('<DTooltip />', () => {
     expect(screen.queryByText(tooltipText)).not.toBeInTheDocument();
   });
 
-  it('Custom classnames should be applied, size and theme', () => {
+  it('Custom classnames should be applied, size and color', () => {
     render(
       <DTooltip
         open
         className="custom-tooltip"
-        theme="light"
+        color="light"
         size="sm"
         Component={<span>Target</span>}
       >
@@ -105,11 +105,11 @@ describe('<DTooltip />', () => {
     expect(tooltip).toHaveClass('custom-tooltip');
   });
 
-  it('Text danger theme should show tooltip with tooltip-danger classname', () => {
+  it('Text danger color should show tooltip with tooltip-danger classname', () => {
     render(
       <DTooltip
         open
-        theme="danger"
+        color="danger"
         Component={<span>Target</span>}
       >
         {tooltipText}

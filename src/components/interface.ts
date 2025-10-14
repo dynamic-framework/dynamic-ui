@@ -51,9 +51,9 @@ export type EndIconProps = {
   iconEndMaterialStyle?: boolean;
 };
 
-export type AlertTheme = 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary';
+export type ComponentColor = string;
 export type AlertThemeIconMap = {
-  [state in AlertTheme]: string;
+  [state in ComponentColor]: string;
 };
 
 export type ButtonVariant = 'outline' | 'link';

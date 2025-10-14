@@ -2,23 +2,23 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
 
-import DIcon from '../../src/components/DIcon/DIcon';
-import {
-  THEMES_WITH_EMPTY,
-  FIRST_ICON,
-  ICONS,
-  CONTEXT_PROVIDER_CONFIG_MATERIAL,
-} from '../config/constants';
-import {
-  ICON_FAMILY_CLASS,
-  ICON_FAMILY_PREFIX,
-  PREFIX_BS,
-} from '../../src/components/config';
 import {
   DContextProvider,
   DInput,
   DToastContainer,
 } from '../../src';
+import {
+  ICON_FAMILY_CLASS,
+  ICON_FAMILY_PREFIX,
+  PREFIX_BS,
+} from '../../src/components/config';
+import DIcon from '../../src/components/DIcon/DIcon';
+import {
+  CONTEXT_PROVIDER_CONFIG_MATERIAL,
+  FIRST_ICON,
+  ICONS,
+  THEMES_WITH_EMPTY,
+} from '../config/constants';
 import { ExampleMaterialIconToastUsage } from '../hooks/useToastExamples';
 
 const meta: Meta<typeof DIcon> = {
@@ -63,7 +63,7 @@ To see how to use this component with another family of icons, see [icon example
       options: ICONS,
       description: 'Name of icon to use (in kebab-case)',
     },
-    theme: {
+    color: {
       control: {
         type: 'select',
         labels: {
@@ -72,7 +72,7 @@ To see how to use this component with another family of icons, see [icon example
       },
       options: THEMES_WITH_EMPTY,
       type: 'string',
-      description: 'Theme of the icon',
+      description: 'Color of the icon',
     },
     size: {
       type: 'string',

@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
+import { DButton } from '../../src';
 import DBoxFile from '../../src/components/DBoxFile/DBoxFile';
 import { ICONS } from '../config/constants';
-import { DButton } from '../../src';
 
 const config: Meta<typeof DBoxFile> = {
   title: 'Design System/Components/Box File',
@@ -90,9 +90,6 @@ const config: Meta<typeof DBoxFile> = {
     onDragLeave: {
       action: 'onDragLeave',
     },
-    onFileDialogCancel: {
-      action: 'onFileDialogCancel',
-    },
     onError: {
       action: 'onError',
     },
@@ -121,7 +118,7 @@ export const Default: Story = {
             Drag and drop it here or
           </p>
           <DButton
-            theme="primary"
+            color="primary"
             variant="outline"
             text="Select the file"
             onClick={openFileDialog}

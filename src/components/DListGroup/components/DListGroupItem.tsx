@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import type { BaseProps } from '../../interface';
+import type { BaseProps, ComponentColor } from '../../interface';
 
 type Props =
 & BaseProps
@@ -14,7 +14,7 @@ type Props =
   disabled?: boolean;
   href?: string;
   onClick?: () => void;
-  theme?: string;
+  color?: ComponentColor;
 }>;
 
 export default function DListGroupItem(
@@ -25,7 +25,7 @@ export default function DListGroupItem(
     disabled,
     href,
     onClick,
-    theme,
+    color,
     children,
     className,
     style,
@@ -55,11 +55,11 @@ export default function DListGroupItem(
     () => ({
       'list-group-item': true,
       'list-group-item-action': action,
-      [`list-group-item-${theme}`]: !!theme,
+      [`list-group-item-${color}`]: !!color,
       active,
       disabled,
     }),
-    [action, active, disabled, theme],
+    [action, active, disabled, color],
   );
 
   const ariaAttributes = useMemo(() => {

@@ -17,6 +17,7 @@ import DDatePickerHeaderSelector, { PickerType } from './components/DDatePickerH
 import type {
   BaseProps,
   ButtonVariant,
+  ComponentColor,
   ComponentSize,
   FamilyIconProps,
 } from '../interface';
@@ -53,7 +54,7 @@ type Props =
   headerPrevMonthAriaLabel?: string;
   headerNextMonthAriaLabel?: string;
   headerButtonVariant?: ButtonVariant;
-  headerButtonTheme?: string;
+  headerButtonColor?: ComponentColor;
   minYearSelect?: number;
   maxYearSelect?: number;
   invalid?: boolean;
@@ -84,7 +85,7 @@ export default function DDatePicker(
     headerPrevMonthAriaLabel,
     headerNextMonthAriaLabel,
     headerButtonVariant,
-    headerButtonTheme,
+    headerButtonColor,
     invalid = false,
     valid = false,
     renderCustomHeader: renderCustomHeaderProp,
@@ -119,7 +120,7 @@ export default function DDatePicker(
       nextMonthAriaLabel={headerNextMonthAriaLabel}
       iconSize={iconHeaderSize}
       buttonVariant={headerButtonVariant}
-      buttonTheme={headerButtonTheme}
+      buttonColor={headerButtonColor}
       minYearSelect={minYearSelect}
       maxYearSelect={maxYearSelect}
       pickerType={pickerType}
@@ -134,7 +135,7 @@ export default function DDatePicker(
     headerNextMonthAriaLabel,
     iconHeaderSize,
     headerButtonVariant,
-    headerButtonTheme,
+    headerButtonColor,
     minYearSelect,
     maxYearSelect,
     pickerType,

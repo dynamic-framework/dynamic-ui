@@ -1,8 +1,4 @@
-import {
-  Meta,
-  Unstyled,
-  Source,
-} from '@storybook/addon-docs/blocks';
+import { Meta, Unstyled, Source } from "@storybook/addon-docs/blocks";
 
 import {
   ExampleAccentedTable,
@@ -35,24 +31,24 @@ const HEADER_ENTRIES = [
 ];
 
 const ROWS = [
-  {
-    id: 1,
-    first: 'Marl',
-    second: 'Otto',
-    last: '@mdo',
-  },
-  {
-    id: 2,
-    first: 'Jacob',
-    second: 'Thornton',
-    last: '@fat',
-  },
-  {
-    id: 3,
-    first: 'Larry the Bird',
-    second: '-',
-    last: '@twitter',
-  },
+{
+id: 1,
+first: 'Marl',
+second: 'Otto',
+last: '@mdo',
+},
+{
+id: 2,
+first: 'Jacob',
+second: 'Thornton',
+last: '@fat',
+},
+{
+id: 3,
+first: 'Larry the Bird',
+second: '-',
+last: '@twitter',
+},
 ];
 
 export function ExampleBasicTable() {
@@ -86,7 +82,7 @@ export function ExampleBasicTable() {
 />
 
 <Unstyled>
-  <div style={{ height: '240px' }}>
+  <div style={{ height: "240px" }}>
     <ExampleBasicTable />
   </div>
 </Unstyled>
@@ -105,55 +101,55 @@ import {
 } from '@dynamic-framework/ui-react';
 
 const HEADER_ENTRIES = [
-  ['id', '#'],
-  ['first', 'First'],
-  ['second', 'Second'],
-  ['last', 'Last'],
+['id', '#'],
+['first', 'First'],
+['second', 'Second'],
+['last', 'Last'],
 ];
 
 const ROWS = [
-  {
-    id: 1,
-    first: 'Marl',
-    second: 'Otto',
-    last: '@mdo',
-  },
-  {
-    id: 2,
-    first: 'Jacob',
-    second: 'Thornton',
-    last: '@fat',
-  },
-  {
-    id: 3,
-    first: 'Larry the Bird',
-    second: '-',
-    last: '@twitter',
-  },
+{
+id: 1,
+first: 'Marl',
+second: 'Otto',
+last: '@mdo',
+},
+{
+id: 2,
+first: 'Jacob',
+second: 'Thornton',
+last: '@fat',
+},
+{
+id: 3,
+first: 'Larry the Bird',
+second: '-',
+last: '@twitter',
+},
 ];
 
 type Option = {
-  label: string;
-  value: string;
+label: string;
+value: string;
 };
 
 const ACCENTED_EXAMPLES = [
-  'table-striped',
-  'table-striped-columns',
-  'table-dark table-striped',
-  'table-dark table-striped-columns',
-  'table-primary table-striped',
-  'table-primary table-striped-columns',
-  'table-secondary table-striped',
-  'table-secondary table-striped-columns',
-  'table-hover',
-  'table-dark table-hover',
-  'table-striped table-hover',
+'table-striped',
+'table-striped-columns',
+'table-dark table-striped',
+'table-dark table-striped-columns',
+'table-primary table-striped',
+'table-primary table-striped-columns',
+'table-secondary table-striped',
+'table-secondary table-striped-columns',
+'table-hover',
+'table-dark table-hover',
+'table-striped table-hover',
 ]
-  .map((option) => ({
-    label: option,
-    value: option,
-  }));
+.map((option) => ({
+label: option,
+value: option,
+}));
 
 export function ExampleAccentedTable() {
   const [option, setOption] = useState<Option | null>(ACCENTED_EXAMPLES[0]);
@@ -195,7 +191,7 @@ export function ExampleAccentedTable() {
 />
 
 <Unstyled>
-  <div style={{ height: '240px' }}>
+  <div style={{ height: "240px" }}>
     <ExampleAccentedTable />
   </div>
 </Unstyled>
@@ -214,49 +210,49 @@ import {
 } from '@dynamic-framework/ui-react';
 
 const HEADER_ENTRIES = [
-  ['id', '#'],
-  ['first', 'First'],
-  ['second', 'Second'],
-  ['last', 'Last'],
+['id', '#'],
+['first', 'First'],
+['second', 'Second'],
+['last', 'Last'],
 ];
 
 const ROWS = [
-  {
-    id: 1,
-    first: 'Marl',
-    second: 'Otto',
-    last: '@mdo',
-  },
-  {
-    id: 2,
-    first: 'Jacob',
-    second: 'Thornton',
-    last: '@fat',
-  },
-  {
-    id: 3,
-    first: 'Larry the Bird',
-    second: '-',
-    last: '@twitter',
-  },
+{
+id: 1,
+first: 'Marl',
+second: 'Otto',
+last: '@mdo',
+},
+{
+id: 2,
+first: 'Jacob',
+second: 'Thornton',
+last: '@fat',
+},
+{
+id: 3,
+first: 'Larry the Bird',
+second: '-',
+last: '@twitter',
+},
 ];
 
 type Option = {
-  label: string;
-  value: string;
+label: string;
+value: string;
 };
 
 const BORDERS_EXAMPLES = [
-  'table-bordered',
-  'table-bordered border-primary',
-  'table-bordered border-secondary',
-  'table-borderless',
-  'table-dark table-borderless',
+'table-bordered',
+'table-bordered border-primary',
+'table-bordered border-secondary',
+'table-borderless',
+'table-dark table-borderless',
 ]
-  .map((option) => ({
-    label: option,
-    value: option,
-  }));
+.map((option) => ({
+label: option,
+value: option,
+}));
 
 export function ExampleBorderTable() {
   const [option, setOption] = useState<Option | null>(BORDERS_EXAMPLES[0]);
@@ -298,7 +294,7 @@ export function ExampleBorderTable() {
 />
 
 <Unstyled>
-  <div style={{ height: '240px' }}>
+  <div style={{ height: "240px" }}>
     <ExampleBorderTable />
   </div>
 </Unstyled>
@@ -326,31 +322,31 @@ import {
 } from '@dynamic-framework/ui-react';
 
 const HEADER_ENTRIES = [
-  ['id', '#'],
-  ['first', 'First'],
-  ['second', 'Second'],
-  ['last', 'Last'],
+['id', '#'],
+['first', 'First'],
+['second', 'Second'],
+['last', 'Last'],
 ];
 
 const ROWS = [
-  {
-    id: 1,
-    first: 'Marl',
-    second: 'Otto',
-    last: '@mdo',
-  },
-  {
-    id: 2,
-    first: 'Jacob',
-    second: 'Thornton',
-    last: '@fat',
-  },
-  {
-    id: 3,
-    first: 'Larry the Bird',
-    second: '-',
-    last: '@twitter',
-  },
+{
+id: 1,
+first: 'Marl',
+second: 'Otto',
+last: '@mdo',
+},
+{
+id: 2,
+first: 'Jacob',
+second: 'Thornton',
+last: '@fat',
+},
+{
+id: 3,
+first: 'Larry the Bird',
+second: '-',
+last: '@twitter',
+},
 ];
 
 export function ExampleCompositionTableLoading() {
@@ -362,28 +358,54 @@ export function ExampleCompositionTableLoading() {
       <thead>
         <tr>
           {HEADER_ENTRIES.map(([key, value]) => (
-            <th key={key} style={{ width: '25%' }}>{value}</th>
+            <th key={key} style={{ width: "25%" }}>
+              {value}
+            </th>
           ))}
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
         </tr>
         <tr>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
         </tr>
         <tr>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
-          <td><div className="placeholder w-100 bg-secondary" /></td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
+          <td>
+            <div className="placeholder w-100 bg-secondary" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -391,13 +413,13 @@ export function ExampleCompositionTableLoading() {
 }
 
 type Props = {
-  page: number;
-  rows: number;
-  totalPages: number;
-  sort: string;
-  setPage(page: number): void;
-  setRows(rows: number): void;
-  setSort(sort: string): void;
+page: number;
+rows: number;
+totalPages: number;
+sort: string;
+setPage(page: number): void;
+setRows(rows: number): void;
+setSort(sort: string): void;
 };
 
 export function ExampleCompositionTable(
@@ -418,108 +440,108 @@ export function ExampleCompositionTable(
     setSelectedItems,
   } = useItemSelection<typeof ROWS[0]>();
 
-  return (
-    <>
-      <table className="table">
-        <caption>List of users</caption>
-        <thead>
-          <tr>
-            <th>
-              <DInputCheck
-                type="checkbox"
-                checked={selectedItems.length === ROWS.length}
-                onChange={(event) => {
-                  setSelectedItems(event.target.checked ? ROWS : []);
-                }}
-              />
-            </th>
-            {HEADER_ENTRIES.map(([key, value]) => (
-              <DTableHead
-                style={{ width: '25%' }}
-                key={key}
-                field={key}
-                label={value}
-                value={sort}
-                onChange={setSort}
-              />
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {ROWS.map((row) => (
-            <tr key={row.id}>
-              <td>
-                <DInputCheck
-                  type="checkbox"
-                  onChange={() => toggleSelectedItem(row)}
-                  checked={isSelectedItem(row)}
-                />
-              </td>
-              {HEADER_ENTRIES.map(([key]) => (
-                <td key={\`\${row.id}-\${key}\`}>
-                  {row[key as keyof typeof ROWS[0]]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="row">
-        <div className="col-2">
-          <small>Per Page </small>
-          <DInput
-            className="d-inline-block"
-            style={{ width: '36px' }}
-            size="sm"
-            type="number"
-            value={rows.toString()}
-            onChange={(value) => setRows(parseInt(value, 10))}
-          />
-        </div>
-        <div className="col-8">
-          <DPaginator
+return (
+<>
+<table className="table">
+<caption>List of users</caption>
+<thead>
+<tr>
+<th>
+<DInputCheck
+type="checkbox"
+checked={selectedItems.length === ROWS.length}
+onChange={(event) => {
+setSelectedItems(event.target.checked ? ROWS : []);
+}}
+/>
+</th>
+{HEADER_ENTRIES.map(([key, value]) => (
+<DTableHead
+style={{ width: '25%' }}
+key={key}
+field={key}
+label={value}
+value={sort}
+onChange={setSort}
+/>
+))}
+</tr>
+</thead>
+<tbody>
+{ROWS.map((row) => (
+<tr key={row.id}>
+<td>
+<DInputCheck
+type="checkbox"
+onChange={() => toggleSelectedItem(row)}
+checked={isSelectedItem(row)}
+/>
+</td>
+{HEADER_ENTRIES.map(([key]) => (
+<td key={\`\${row.id}-\${key}\`}>
+{row[key as keyof typeof ROWS[0]]}
+</td>
+))}
+</tr>
+))}
+</tbody>
+</table>
+<div className="row">
+<div className="col-2">
+<small>Per Page </small>
+<DInput
+className="d-inline-block"
+style={{ width: '36px' }}
+size="sm"
+type="number"
+value={rows.toString()}
+onChange={(value) => setRows(parseInt(value, 10))}
+/>
+</div>
+<div className="col-8">
+<DPaginator
             current={page}
             onPageChange={setPage}
             total={totalPages}
           />
-        </div>
-      </div>
-    </>
-  );
+</div>
+</div>
+</>
+);
 }
 
 export function ExampleComposition() {
   const [loading, setLoading] = useState(false);
 
-  const [page, setPage] = useState(Number(getQueryString('page', { default: '1', useSearch: false })));
-  const [rows, setRows] = useState(Number(getQueryString('rows', { default: '3', useSearch: false })));
-  const [sort, setSort] = useState(getQueryString('sort', { default: 'id', useSearch: false })!);
-  const [queryString, setQueryString] = useState('');
+const [page, setPage] = useState(Number(getQueryString('page', { default: '1', useSearch: false })));
+const [rows, setRows] = useState(Number(getQueryString('rows', { default: '3', useSearch: false })));
+const [sort, setSort] = useState(getQueryString('sort', { default: 'id', useSearch: false })!);
+const [queryString, setQueryString] = useState('');
 
-  useEffect(() => {
-    setQueryString(changeQueryString(
-      { page, rows, sort },
-      { useSearch: false },
-    ));
-  }, [setQueryString, page, rows, sort]);
+useEffect(() => {
+setQueryString(changeQueryString(
+{ page, rows, sort },
+{ useSearch: false },
+));
+}, [setQueryString, page, rows, sort]);
 
-  return (
-    <>
-      <DInputCheck
-        type="checkbox"
-        label="Loading"
-        checked={loading}
-        onChange={(event) => setLoading(event.target.checked)}
-      />
-      {'Query String = '}
-      {queryString && (
-        <DBadge text={queryString} theme="primary" />
-      )}
-      <br />
-      <br />
-      {loading && <ExampleCompositionTableLoading />}
-      {!loading && (
-        <ExampleCompositionTable
+return (
+<>
+<DInputCheck
+type="checkbox"
+label="Loading"
+checked={loading}
+onChange={(event) => setLoading(event.target.checked)}
+/>
+{'Query String = '}
+{queryString && (
+<DBadge text={queryString} color="primary" />
+)}
+<br />
+<br />
+{loading && <ExampleCompositionTableLoading />}
+{!loading && (
+<ExampleCompositionTable
           page={page}
           rows={rows}
           totalPages={3}
@@ -528,19 +550,18 @@ export function ExampleComposition() {
           setRows={setRows}
           setSort={setSort}
         />
-      )}
-    </>
-  );
+)}
+</>
+);
 }
 `
-  }
-  language="tsx"
-  dark
+}
+language="tsx"
+dark
 />
 
 <Unstyled>
-  <div style={{ height: '360px' }}>
+  <div style={{ height: "360px" }}>
     <ExampleComposition />
   </div>
 </Unstyled>
-

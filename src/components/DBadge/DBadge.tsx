@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
 
-import type { BaseProps } from '../interface';
+import type { BaseProps, ComponentColor } from '../interface';
 import DIcon from '../DIcon';
 
 type Props =
@@ -10,7 +10,7 @@ type Props =
   text?: string;
   soft?: boolean;
   rounded?: boolean;
-  theme?: string;
+  color?: ComponentColor;
   id?: string;
   iconStart?: string;
   iconEnd?: string;
@@ -23,7 +23,7 @@ export default function DBadge(
   {
     text,
     soft = false,
-    theme = 'primary',
+    color = 'primary',
     id,
     rounded,
     className,
@@ -39,11 +39,11 @@ export default function DBadge(
   const generateClasses = useMemo(
     () => ({
       badge: true,
-      [`badge-${theme}`]: !!theme && !soft,
-      [`badge-soft-${theme}`]: !!theme && soft,
+      [`badge-${color}`]: !!color && !soft,
+      [`badge-soft-${color}`]: !!color && soft,
       'rounded-pill': !!rounded,
     }),
-    [rounded, soft, theme],
+    [rounded, soft, color],
   );
   return (
     <span

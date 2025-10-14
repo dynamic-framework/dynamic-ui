@@ -56,7 +56,7 @@ export const Default: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="square-fill" theme="secondary" className="me-2" />
+        <DIcon icon="square-fill" color="secondary" className="me-2" />
         <strong className="me-auto">Bootstrap</strong>
         <small className="me-2">11 mins ago</small>
         <button

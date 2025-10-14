@@ -5,7 +5,7 @@ import DSelect from '../../src/components/DSelect';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
-import type { OptionIcon, OptionEmoji } from '../../src/components/DSelect';
+import type { OptionEmoji, OptionIcon } from '../../src/components/DSelect';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS } from '../config/constants';
 
 const config: Meta<typeof DSelect> = {
@@ -366,9 +366,9 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'object',
       description: 'Custom styles for the component',
     },
-    theme: {
+    color: {
       control: 'object',
-      description: 'Custom theme for the component',
+      description: 'Custom color for the component',
     },
     'aria-label': {
       control: 'text',

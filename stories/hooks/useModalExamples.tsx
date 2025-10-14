@@ -2,8 +2,8 @@ import {
   DContextProvider,
   useDPortalContext,
 } from '../../src';
-import DModal from '../../src/components/DModal/DModal';
 import DButton from '../../src/components/DButton';
+import DModal from '../../src/components/DModal/DModal';
 
 import type { PortalProps } from '../../src';
 
@@ -31,7 +31,7 @@ function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
           pill

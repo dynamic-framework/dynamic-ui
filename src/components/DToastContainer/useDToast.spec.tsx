@@ -82,7 +82,7 @@ describe('useDToast', () => {
       result.current.toast({
         title: 'Test Title',
         icon: 'star',
-        theme: 'primary',
+        color: 'primary',
       });
     });
 
@@ -104,7 +104,7 @@ describe('useDToast', () => {
         description: 'Test Description',
         timestamp: '10:30 AM',
         icon: 'info',
-        theme: 'success',
+        color: 'success',
       });
     });
 
@@ -117,7 +117,7 @@ describe('useDToast', () => {
     act(() => {
       result.current.toast({
         title: 'Test Title',
-        theme: 'warning',
+        color: 'warning',
         soft: true,
       });
     });
@@ -238,7 +238,7 @@ describe('useDToast', () => {
         description: 'Test Description',
         timestamp: '10:30 AM',
         icon: 'info',
-        theme: 'primary',
+        color: 'primary',
       });
     });
 
@@ -294,13 +294,13 @@ describe('useDToast', () => {
     expect(container.querySelector('.toast-icon')).not.toBeInTheDocument();
   });
 
-  it('should apply correct theme classes', () => {
+  it('should apply correct color classes', () => {
     const { result } = renderWithContext(() => useDToast());
 
     act(() => {
       result.current.toast({
         title: 'Test Title',
-        theme: 'danger',
+        color: 'danger',
       });
     });
 
@@ -315,13 +315,13 @@ describe('useDToast', () => {
     expect(container.querySelector('.show')).toBeInTheDocument();
   });
 
-  it('should apply correct soft theme classes', () => {
+  it('should apply correct soft color classes', () => {
     const { result } = renderWithContext(() => useDToast());
 
     act(() => {
       result.current.toast({
         title: 'Test Title',
-        theme: 'info',
+        color: 'info',
         soft: true,
       });
     });

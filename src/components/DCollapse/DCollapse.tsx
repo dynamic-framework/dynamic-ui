@@ -1,33 +1,33 @@
 import classNames from 'classnames';
 import {
-  useState,
   useMemo,
+  useState,
 } from 'react';
 
 import type {
   PropsWithChildren,
-  ReactNode,
   ReactElement,
+  ReactNode,
 } from 'react';
 
 import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 
-import type { BaseProps, CustomStyles, FamilyIconProps } from '../interface';
 import { useDContext } from '../../contexts';
+import type { BaseProps, CustomStyles, FamilyIconProps } from '../interface';
 
 type Props =
-& BaseProps
-& FamilyIconProps
-& PropsWithChildren<{
-  id?: string;
-  Component: ReactElement<unknown> | ReactNode;
-  hasSeparator?: boolean;
-  defaultCollapsed?: boolean;
-  onChange?: (value: boolean) => void;
-  iconOpen?: string;
-  iconClose?: string;
-}>;
+  & BaseProps
+  & FamilyIconProps
+  & PropsWithChildren<{
+    id?: string;
+    Component: ReactElement<unknown> | ReactNode;
+    hasSeparator?: boolean;
+    defaultCollapsed?: boolean;
+    onChange?: (value: boolean) => void;
+    iconOpen?: string;
+    iconClose?: string;
+  }>;
 
 export default function DCollapse(
   {
@@ -89,7 +89,7 @@ export default function DCollapse(
           {Component}
         </div>
         <DIcon
-          color={`var(--${PREFIX_BS}gray)`}
+          color="gray"
           size={`var(--${PREFIX_BS}fs-small)`}
           icon={collapsed ? iconOpen : iconClose}
           familyClass={iconFamilyClass}

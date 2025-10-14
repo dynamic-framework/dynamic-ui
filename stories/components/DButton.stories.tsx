@@ -4,6 +4,8 @@ import type { ComponentProps } from 'react';
 
 import DButton from '../../src/components/DButton/DButton';
 
+import { DContextProvider } from '../../src';
+import { PREFIX_BS } from '../../src/components/config';
 import {
   COMPONENT_SIZE,
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
@@ -11,8 +13,6 @@ import {
   INPUT_STATE,
   THEMES,
 } from '../config/constants';
-import { PREFIX_BS } from '../../src/components/config';
-import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',
@@ -24,9 +24,9 @@ const config: Meta<typeof DButton> = {
 > We work with button variables at two levels, variables in root per variant (default, outline, link)
 >and internal variables in each button that use the previous ones.
 
-> - in the root there are variables for theme (\`--bs-primary\`, \`--bs-info\`, ...),
-> - then variables for variant and theme for buttons (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, ...)
-> - and finally for selectors by variant and theme (\`.btn-primary\`, \`.btn-outline-info\`, ...)
+> - in the root there are variables for color (\`--bs-primary\`, \`--bs-info\`, ...),
+> - then variables for variant and color for buttons (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, ...)
+> - and finally for selectors by variant and color (\`.btn-primary\`, \`.btn-outline-info\`, ...)
 >   we define internal variables (\`.btn-color\`, \`.btn-hover- bg\`, ...) that use the previous ones.
 
 
@@ -125,7 +125,7 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
       control: 'text',
       type: 'string',
     },
-    theme: {
+    color: {
       control: 'select',
       type: { name: 'string', required: true },
       options: THEMES,
@@ -277,20 +277,14 @@ type Story = StoryObj<typeof DButton>;
 
 export const Primary: Story = {
   args: {
-    theme: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: false,
-    iconStart: undefined,
-    iconEnd: undefined,
+    color: 'primary',
+    text: 'Primary',
   },
 };
 
 export const PrimaryIconRight: Story = {
   args: {
-    theme: 'primary',
+    color: 'primary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -303,7 +297,7 @@ export const PrimaryIconRight: Story = {
 
 export const Secondary: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -316,7 +310,7 @@ export const Secondary: Story = {
 
 export const SecondaryIconRight: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -329,7 +323,7 @@ export const SecondaryIconRight: Story = {
 
 export const Link: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -342,7 +336,7 @@ export const Link: Story = {
 
 export const LinkIconRight: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     size: undefined,
     text: 'Default',
     type: 'button',
@@ -367,7 +361,7 @@ export const MaterialSecondaryIconRight: Story = {
     </DContextProvider>
   ),
   args: {
-    theme: 'primary',
+    color: 'primary',
     size: undefined,
     text: 'Default',
     type: 'button',

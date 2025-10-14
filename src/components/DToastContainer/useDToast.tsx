@@ -12,13 +12,15 @@ import DToast from '../DToast/DToast';
 import DIcon from '../DIcon';
 import { useDContext } from '../../contexts';
 
+import { ComponentColor } from '../interface';
+
 type ToastData = {
   title: string;
   description?: string;
   timestamp?: string;
   icon?: string;
   closeIcon?: string;
-  theme?: string;
+  color?: ComponentColor;
   soft?: boolean;
 };
 
@@ -45,7 +47,7 @@ export default function useDToast() {
       icon,
       closeIcon,
       timestamp,
-      theme,
+      color,
       soft,
     } = data;
 
@@ -56,8 +58,8 @@ export default function useDToast() {
       if (!description) {
         return (
           <DToast className={classNames({
-            [`toast-${theme}`]: !!theme && !soft,
-            [`toast-soft-${theme}`]: !!theme && !!soft,
+            [`toast-${color}`]: !!color && !soft,
+            [`toast-soft-${color}`]: !!color && !!soft,
           }, 'show')}
           >
             <DToast.Body>
@@ -81,8 +83,8 @@ export default function useDToast() {
       }
       return (
         <DToast className={classNames({
-          [`toast-${theme}`]: !!theme && !soft,
-          [`toast-soft-${theme}`]: !!theme && !!soft,
+          [`toast-${color}`]: !!color && !soft,
+          [`toast-soft-${color}`]: !!color && !!soft,
         }, 'show')}
         >
           <DToast.Header>

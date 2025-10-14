@@ -5,19 +5,22 @@ import {
   Canvas,
   Unstyled,
   Markdown,
-} from '@storybook/addon-docs/blocks';
+} from "@storybook/addon-docs/blocks";
 
-import * as DQuickActionButtonStories from './DQuickActionButton.stories';
-import { DAlert } from '../../src';
-import { PREFIX_BS } from '../../src/components/config';
+import * as DQuickActionButtonStories from "./DQuickActionButton.stories";
+import { DAlert } from "../../src";
+import { PREFIX_BS } from "../../src/components/config";
 
 <Meta of={DQuickActionButtonStories} />
 
 # Quick Action Button
 
 <Unstyled>
-  <DAlert theme="danger">
-    <span>This component is deprecated and will be removed in the next major release, we are working on a replacement.</span>
+  <DAlert color="danger">
+    <span>
+      This component is deprecated and will be removed in the next major
+      release, we are working on a replacement.
+    </span>
   </DAlert>
 </Unstyled>
 

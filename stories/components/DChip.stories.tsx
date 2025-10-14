@@ -2,11 +2,11 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
 
-import DChip from '../../src/components/DChip/DChip';
-import { ICONS, THEMES, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
-import { PREFIX_BS } from '../../src/components/config';
-import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
 import { DContextProvider } from '../../src';
+import { PREFIX_BS } from '../../src/components/config';
+import DChip from '../../src/components/DChip/DChip';
+import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS, THEMES } from '../config/constants';
 
 const config: Meta<typeof DChip> = {
   title: 'Design System/Components/Chip',
@@ -44,12 +44,12 @@ const config: Meta<typeof DChip> = {
       type: 'string',
       description: 'Text of badge',
     },
-    theme: {
+    color: {
       control: 'select',
       type: 'string',
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
-      description: 'The theme to use.',
+      description: 'The color to use.',
     },
     icon: {
       control: {
@@ -114,21 +114,21 @@ type Story = StoryObj<typeof DChip>;
 
 export const Primary: Story = {
   args: {
-    theme: 'primary',
+    color: 'primary',
     text: 'Default',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     text: 'Default',
   },
 };
 
 export const Icon: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     text: 'Default',
     icon: 'fire',
   },
@@ -136,7 +136,7 @@ export const Icon: Story = {
 
 export const Close: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     text: 'Default',
     icon: 'fire',
     showClose: true,
@@ -152,7 +152,7 @@ export const MaterialIcon: Story = {
     </DContextProvider>
   ),
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     text: 'Default',
     icon: 'local_fire_department',
     showClose: true,

@@ -5,11 +5,11 @@ import {
   Controls,
   Canvas,
   Unstyled,
-} from '@storybook/addon-docs/blocks';
+} from "@storybook/addon-docs/blocks";
 
-import * as DModalStories from './DModal.stories';
-import { PREFIX_BS } from '../../src/components/config';
-import { DAlert } from '../../src';
+import * as DModalStories from "./DModal.stories";
+import { PREFIX_BS } from "../../src/components/config";
+import { DAlert } from "../../src";
 
 <Meta of={DModalStories} />
 
@@ -18,9 +18,14 @@ import { DAlert } from '../../src';
 This section provides guidance specifically for using `DModal` in **inline** scenarios.
 
 <Unstyled>
-  <DAlert theme="warning">
-    <span>To achieve the behavior of a modal it is necessary to use the **`DContextProvider`** and the **`useDPortalContext`** hook.
-    For detailed guidance on the **correct usage** of modals, please refer to the [Modal pattern section](/docs/design-system-patterns-modal--docs) in our documentation.</span>
+  <DAlert color="warning">
+    <span>
+      To achieve the behavior of a modal it is necessary to use the
+      **`DContextProvider`** and the **`useDPortalContext`** hook. For detailed
+      guidance on the **correct usage** of modals, please refer to the [Modal
+      pattern section](/docs/design-system-patterns-modal--docs) in our
+      documentation.
+    </span>
   </DAlert>
 </Unstyled>
 

@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DDropdown from '../../src/components/DDropdown/DDropdown';
 import DButtonIcon from '../../src/components/DButtonIcon/DButtonIcon';
+import DDropdown from '../../src/components/DDropdown/DDropdown';
 
 const config: Meta<typeof DDropdown> = {
   title: 'Design System/Components/DDropdown',
@@ -62,7 +63,7 @@ export const LabelIcon: Story = {
         icon="three-dots-vertical"
         onClick={toggle}
         variant="link"
-        theme="secondary"
+        color="secondary"
       />
     ),
     actions: [
@@ -90,7 +91,7 @@ export const Divider: Story = {
         icon="three-dots-vertical"
         onClick={toggle}
         variant="link"
-        theme="secondary"
+        color="secondary"
       />
     ),
     actions: [

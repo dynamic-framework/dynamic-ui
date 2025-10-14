@@ -190,7 +190,7 @@ export const Variants: Story = {
       {['primary', 'secondary', 'success', 'info', 'warning', 'danger'].map((item) => (
         <DListGroup.Item
           key={item}
-          theme={item}
+          color={item}
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListGroup.Item>
@@ -205,7 +205,7 @@ export const ActionVariants: Story = {
       {['primary', 'secondary', 'success', 'info', 'warning', 'danger'].map((item) => (
         <DListGroup.Item
           key={item}
-          theme={item}
+          color={item}
           action
         >
           Lorem ipsum dolor sit amet consectetur.
