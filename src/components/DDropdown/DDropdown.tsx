@@ -10,7 +10,8 @@ type DropdownAction = {
   href?: string;
   disabled?: boolean;
   icon?: string;
-  type?: 'default' | 'danger' | 'success' | 'warning' | 'info' | 'divider';
+  color?: 'default' | 'danger' | 'success' | 'warning' | 'info';
+  isDivider?: boolean;
   label: string;
 };
 
@@ -21,7 +22,7 @@ type Props = {
 
 const getItemClass = (action: DropdownAction) => {
   const base = `dropdown-item d-flex align-items-center 
-  ${action.type ? `dropdown-item-${action.type}` : ''} ${action.disabled ? 'disabled' : ''}`;
+  ${action.color ? `dropdown-item-${action.color}` : ''} ${action.disabled ? 'disabled' : ''}`;
   return base;
 };
 
@@ -101,7 +102,7 @@ export default function ActionDropdown(
         className={`dropdown-menu p-2 ${open ? 'show' : ''}`}
       >
         {actions.map((action, index) => {
-          if (action.type === 'divider') {
+          if (action.isDivider) {
             return (
               <hr
                 key={index}
