@@ -12,9 +12,10 @@
   --#{$prefix}d-credit-card-chip-bg: rgba(255, 255, 255, .12);
   --#{$prefix}d-credit-card-font-family-number: var(--#{$prefix}font-monospace);
   --#{$prefix}d-credit-card-padding: var(--#{$prefix}ref-spacer-4);
+  flex-direction: column;
+
   aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
   padding: var(--#{$prefix}d-credit-card-padding);
-
   background: var(--#{$prefix}d-credit-card-bg);
 
   > * {
@@ -31,10 +32,20 @@
     }
   }
 
-  .chip {
+  .d-credit-card-logo {
+    --#{$prefix}d-credit-card-logo-size: 22%;
+    width: var(--#{$prefix}d-credit-card-logo-size);
+  }
+
+  .d-credit-chip {
     background: var(--#{$prefix}d-credit-card-chip-bg);
   }
   .d-credit-card-number {
     font-family: var(--#{$prefix}d-credit-card-font-family-number);
   }
+
+  &.is-vertical {
+    --#{$prefix}d-credit-card-aspect-ratio: 9/16;
+  }
+
 }
