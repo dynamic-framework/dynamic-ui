@@ -17,6 +17,7 @@ type Props =
   & {
     icon: string;
     color?: ComponentColor;
+    colorText?: string;
     size?: string;
     loading?: boolean;
     loadingDuration?: number;
@@ -32,6 +33,7 @@ export default function DIconBase(
   {
     icon,
     color,
+    colorText,
     style,
     className,
     size,
@@ -47,11 +49,14 @@ export default function DIconBase(
   }: Props,
 ) {
   const colorStyle = useMemo(() => {
+    if (colorText) {
+      return { [`--${PREFIX_BS}icon-component-color`]: colorText };
+    }
     if (color) {
       return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${color})` };
     }
     return {};
-  }, [color]);
+  }, [color, colorText]);
 
   const backgroundStyle = useMemo(() => {
     if (backgroundColor) {

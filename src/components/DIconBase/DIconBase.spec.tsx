@@ -133,6 +133,21 @@ describe('<DIconBase />', () => {
     });
   });
 
+  it('applies literal color via colorText prop', () => {
+    render(
+      <DIconBase
+        icon="star"
+        colorText="blue"
+        dataAttributes={{ 'data-testid': 'icon' }}
+      />,
+    );
+
+    const icon = screen.getByTestId('icon');
+    expect(icon).toHaveStyle({
+      '--bs-icon-component-color': 'blue',
+    });
+  });
+
   it('applies custom className when provided', () => {
     render(
       <DIconBase
