@@ -72,7 +72,12 @@ To see how to use this component with another family of icons, see [icon example
       },
       options: THEMES_WITH_EMPTY,
       type: 'string',
-      description: 'Color of the icon',
+      description: 'Color of the icon (theme-based)',
+    },
+    colorText: {
+      type: 'string',
+      description: 'Icon color in CSS color unit (e.g., hex, rgb, named colors)',
+      control: 'color',
     },
     size: {
       type: 'string',
@@ -109,11 +114,6 @@ To see how to use this component with another family of icons, see [icon example
       control: 'text',
       description: 'Circle size in css length unit',
       table: { defaultValue: { summary: `calc(var(--${PREFIX_BS}icon-component-size) * 2)` } },
-    },
-    color: {
-      type: 'string',
-      description: 'Icon color in css color unit or var',
-      control: 'color',
     },
     backgroundColor: {
       type: 'string',
