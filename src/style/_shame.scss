@@ -9,24 +9,13 @@
   color: var(--#{$prefix}text-muted) !important;
 }
 
+.form-text {
+  --#{$prefix}form-text: var(--#{$prefix}gray-400);
+  color: var(--#{$prefix}form-text) !important;
+}
+
 th {
-  font-weight: 500;
-}
-
-.text-balance {
-  text-wrap: balance;
-}
-
-.v-align-baseline {
-  vertical-align: baseline !important;
-}
-
-.v-align-center {
-  vertical-align: center !important;
-}
-
-.v-align-top {
-  vertical-align: top !important;
+  font-weight: var(--#{$prefix}fw-semibold) !important;
 }
 
 $container-max-widths: (
