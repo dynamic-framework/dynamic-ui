@@ -20,7 +20,7 @@ const SIZE = {
   lg: 'd-card-lg',
 };
 
-export default function CardBlock(
+export default function DCreditCard(
   {
     size = 'md',
     cardBrand = 'visa',
