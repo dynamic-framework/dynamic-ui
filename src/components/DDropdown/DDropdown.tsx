@@ -7,7 +7,7 @@ import {
 import DButtonIcon from '../DButtonIcon';
 import DIcon from '../DIcon';
 
-type DropdownAction = {
+export type DropdownAction = {
   onClick?: () => void;
   href?: string;
   disabled?: boolean;
@@ -29,7 +29,7 @@ const getItemClass = (action: DropdownAction) => {
   return base;
 };
 
-export default function ActionDropdown(
+export default function DDropdown(
   {
     actions,
     dropdownToggle,
@@ -154,7 +154,6 @@ export default function ActionDropdown(
                       icon={action.icon}
                       className="me-2"
                       size="1rem"
-                    // style={{ '--bs-icon-size': '1rem' }}
                     />
                   )}
                   {action.label}
