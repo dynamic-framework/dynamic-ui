@@ -143,6 +143,25 @@ export const Close: Story = {
   },
 };
 
+export const WithColors: Story = {
+  render: (args) => (
+    <div className="d-flex gap-2">
+      <DChip color="primary" text={args.text} />
+      <DChip color="secondary" text={args.text} />
+      <DChip color="success" text={args.text} />
+      <DChip color="danger" text={args.text} />
+      <DChip color="warning" text={args.text} />
+      <DChip color="info" text={args.text} />
+    </div>
+  ),
+  args: {
+    color: 'secondary',
+    text: 'Default',
+    icon: 'fire',
+    showClose: true,
+  },
+};
+
 export const MaterialIcon: Story = {
   render: (args: ComponentProps<typeof DInputPassword>) => (
     <DContextProvider
