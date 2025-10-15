@@ -151,6 +151,24 @@ $utilities: map-merge(
         middle: middle,
       )
     ),
+    "display": (
+      property: display,
+      responsive: true,
+      class: "d",
+      values: (
+        inline: inline,
+        inline-block: inline-block,
+        block: block,
+        table: table,
+        table-row: table-row,
+        table-cell: table-cell,
+        flex: flex,
+        inline-flex: inline-flex,
+        none: none,
+        grid: grid,
+        table-header-group: table-header-group,
+      )
+    ),
     "text-wrap": (
       property: text-wrap,
       responsive: true,

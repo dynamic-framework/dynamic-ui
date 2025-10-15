@@ -16,7 +16,7 @@
   --#{$prefix}btn–text-decoration: #{if($link-decoration == none, null, none)};
   --#{$prefix}btn-lg-padding-y: #{$btn-padding-y-lg};
   --#{$prefix}btn-lg-padding-x: #{$btn-padding-x-lg};
-  --#{$prefix}btn-lg-font-size: #{$btn-font-size-lg};
+  --#{$prefix}btn-lg-font-size: #{$btn-lg-font-size};
   --#{$prefix}btn-sm-padding-y: #{$btn-padding-y-sm};
   --#{$prefix}btn-sm-padding-x: #{$btn-padding-x-sm};
   --#{$prefix}btn-sm-font-size: #{$btn-font-size-sm};
