@@ -51,12 +51,12 @@ export default function CardBlock(
           width={100}
         />
         {isChipVisible && (
-          <div className="chip p-2 rounded-2">
+          <div className="d-credit-card-chip p-2 rounded-2">
             <img
               src={CHIP_IMAGE}
               alt="chip"
               width={30}
-              className="d-credit-chip"
+              className="d-credit-card-chip-image"
             />
           </div>
         )}
