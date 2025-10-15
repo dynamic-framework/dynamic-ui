@@ -6,12 +6,13 @@
 
   display: inline-flex;
   gap: var(--#{$prefix}badge-gap);
+  align-items: center;
   color: var(--#{$prefix}badge-color);
 
   background-color: var(--#{$prefix}badge-bg);
 
   .d-icon {
-    --#{$prefix}icon-size: var(--#{$prefix}badge-icon-size);
+    --#{$prefix}icon-size: .75rem;
   }
 
   @each $theme, $value in map-remove($theme-colors, "light") {
@@ -21,6 +22,11 @@
       --#{$prefix}badge-bg: var(--#{$prefix}#{$theme});
       --#{$prefix}badge-color: #{$color};
     }
+  }
+
+  &.badge-secondary {
+    --#{$prefix}badge-bg: var(--#{$prefix}gray-100);
+    --#{$prefix}badge-color: var(--#{$prefix}gray-900);
   }
 
   &.badge-light {
