@@ -9,7 +9,7 @@ export type NavegableProps = {
   target?: string,
   'aria-current'?: string,
 };
-export type ComponentSize = 'sm' | 'lg' | 'md';
+export type ComponentSize = 'sm' | 'lg';
 export type BreakpointSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 export type AvatarSize = 'xs' | 'sm' | 'lg' | 'xl' | 'xxl';
 

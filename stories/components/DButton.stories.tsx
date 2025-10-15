@@ -212,7 +212,7 @@ export const SizeVariants: Story = {
   render: () => (
     <div className="d-flex flex-wrap gap-2 align-items-center">
       <DButton color="primary" size="sm" text="Small" />
-      <DButton color="primary" size="md" text="Medium" />
+      <DButton color="primary" text="Medium" />
       <DButton color="primary" size="lg" text="Large" />
     </div>
   ),
@@ -225,7 +225,7 @@ export const OutlineSizes: Story = {
   render: () => (
     <div className="d-flex flex-wrap gap-2 align-items-center">
       <DButton color="secondary" size="sm" variant="outline" text="Small" />
-      <DButton color="secondary" size="md" variant="outline" text="Medium" />
+      <DButton color="secondary" variant="outline" text="Medium" />
       <DButton color="secondary" size="lg" variant="outline" text="Large" />
     </div>
   ),
@@ -238,7 +238,7 @@ export const LinkSizes: Story = {
   render: () => (
     <div className="d-flex flex-wrap gap-2 align-items-center">
       <DButton color="primary" size="sm" variant="link" text="Small" />
-      <DButton color="primary" size="md" variant="link" text="Medium" />
+      <DButton color="primary" variant="link" text="Medium" />
       <DButton color="primary" size="lg" variant="link" text="Large" />
     </div>
   ),
@@ -256,7 +256,7 @@ export const MaterialButtons: Story = {
     <DContextProvider {...CONTEXT_PROVIDER_CONFIG_MATERIAL}>
       <div className="d-flex flex-wrap gap-2 align-items-center">
         <DButton color="primary" size="sm" iconEnd="chevron_right" text="Small" />
-        <DButton color="primary" size="md" iconEnd="chevron_right" text="Medium" />
+        <DButton color="primary" iconEnd="chevron_right" text="Medium" />
         <DButton color="primary" size="lg" iconEnd="chevron_right" text="Large" />
       </div>
     </DContextProvider>
