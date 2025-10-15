@@ -1,9 +1,7 @@
+// DButton.stories.tsx
+
 import { Meta, StoryObj } from '@storybook/react-vite';
-
-import type { ComponentProps } from 'react';
-
 import DButton from '../../src/components/DButton/DButton';
-
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 import {
@@ -14,309 +12,177 @@ import {
   THEMES,
 } from '../config/constants';
 
-const config: Meta<typeof DButton> = {
+const meta: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',
   component: DButton,
+  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-> We work with button variables at two levels, variables in root per variant (default, outline, link)
->and internal variables in each button that use the previous ones.
+Our **DButton** component extends Bootstrap's button system with
+design-system–specific theming, palette consistency, and semantic structure.
 
-> - in the root there are variables for color (\`--bs-primary\`, \`--bs-info\`, ...),
-> - then variables for variant and color for buttons (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, ...)
-> - and finally for selectors by variant and color (\`.btn-primary\`, \`.btn-outline-info\`, ...)
->   we define internal variables (\`.btn-color\`, \`.btn-hover- bg\`, ...) that use the previous ones.
+---
 
+## 💡 Overview
 
-The style of our buttons is highly based on bootstrap, however,
-boostrap darkens or lightens the color of a button to generate its different states,
-we use the established palettes in the variables.
+We work with button variables at two levels:
 
-## Differences between bootstrap and our implementation:
+1. **Root variables** for color and theme  
+   (\`--bs-primary\`, \`--bs-info\`, …)
+2. **Variant-level variables**  
+   (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, …)
+3. **Component-level internal variables**  
+   (\`--bs-btn-bg\`, \`--bs-btn-color\`, …)
 
-### For our buttons:
+Our button states use fixed palette shades instead of Bootstrap’s mix-based lightening/darkening system.
 
-#### normal
-* **default** background \`-500\`, text contrast with background
-* **hover** background \`-600\`, text contrast with background
-* **focus** background \`-500\`, text contrast with background
-* **active** background \`-700\`, text contrast with background
-* **disabled** background \`-500\`, text contrast with background
+---
 
-#### outline
-* **default** border-color \`-500\`, background transparent, text color \`-500\`
-* **hover** border-color \`-500\`, background hover \`-100\`, text color \`-500\`
-* **focus** border-color \`-500\`, background focus \`transparent\`, text color \`-500\`
-* **active** border-color \`-700\`, background active \`-100\`, text color \`-700\`
-* **disabled** border-color \`-500\`, background transparent, text color \`-500\`
+### 🎨 State Mapping
 
-### For bootstrap buttons:
+| State | Default | Hover | Focus | Active | Disabled |
+|--------|----------|--------|--------|----------|-----------|
+| **Solid** | -500 | -600 | -500 | -700 | -500 |
+| **Outline** | Border -500, transparent bg | Border -500, bg -100 | Border -500 | Border -700, bg -100 | Border -500, transparent bg |
 
-#### normal
-* **default** background \`-500\`, text contrast with background
+---
 
-> **mix-color**: The other states use the default color of the text to determine which color to mix with, if it is light, \`black\` is used, if it is dark, \`white\` is used.
+### 📏 Sizes
 
-* **hover** background mix between \`mix-color\` and \`-500\` at \`15%\`, text contrast with background color, border-color mix at \`20%\` for dark and \`10%\` for light.
-* **focus** use hover settings with outline
-* **active** background mix between \`mix-color\` and \`-500\` at \`20%\`, text contrast with background color, border-color mix at \`25%\` for dark and \`10%\` for light.
-* **disabled** default style with \`.65\` opacity.
+Buttons support three sizes:
 
-#### outline
-* **default** border-color \`-500\`, text color \`-500\`
-* **hover** border-color \`-500\`, background hover \`-500\`, text contrast with background
-* **focus** use hover settings with outline
-* **active** use hover settings
-* **disabled** default style with \`.65\` opacity.
+| Size | Class | Description |
+|------|--------|-------------|
+| \`sm\` | \`.btn-sm\` | Compact UI |
+| \`md\` | *(default)* | Default medium |
+| \`lg\` | \`.btn-lg\` | Prominent or CTA button |
 
-## CSS Variables
+---
 
-The Bootstrap documentation provides details on the default [Button CSS Variables](https://getbootstrap.com/docs/5.3/components/buttons/#css)
+### 🧩 CSS Variables Reference
 
-| Variable                             | Class | Type            | Description                     |
-|--------------------------------------|-------|-----------------|---------------------------------|
-| --${PREFIX_BS}btn-padding-x          | .btn  | css length unit | Button padding horizontal       |
-| --${PREFIX_BS}btn-padding-y          | .btn  | css length unit | Button padding vertical         |
-| --${PREFIX_BS}btn-font-family        | .btn  | css font family | Button font family              |
-| --${PREFIX_BS}btn-font-size          | .btn  | css length unit | Button font size                |
-| --${PREFIX_BS}btn-font-weight        | .btn  | css weight unit | Button font weight              |
-| --${PREFIX_BS}btn-line-height        | .btn  | css length unit | Button line height              |
-| --${PREFIX_BS}btn-color              | .btn  | css color unit  | Button text color               |
-| --${PREFIX_BS}btn-bg                 | .btn  | css color unit  | Button background color         |
-| --${PREFIX_BS}btn-border-width       | .btn  | css length unit | Button border width             |
-| --${PREFIX_BS}btn-border-color       | .btn  | css color unit  | Button border color             |
-| --${PREFIX_BS}btn-hover-border-color | .btn  | css color unit  | Button hover border color       |
-| --${PREFIX_BS}btn-box-shadow         | .btn  | css box shadow  | Button box shadow               |
-| --${PREFIX_BS}btn-disabled-opacity   | .btn  | css length unit | Button link padding vertical    |
-| --${PREFIX_BS}btn-focus-box-shadow   | .btn  | css box shadow  | Button focus box shadow         |
-| --${PREFIX_BS}btn–text-decoration    | .btn  | text decoration | Button text decoration          |
-| --${PREFIX_BS}btn-lg-padding-x       | .btn  | css length unit | Button large padding horizontal |
-| --${PREFIX_BS}btn-lg-padding-y       | .btn  | css length unit | Button large padding vertical   |
-| --${PREFIX_BS}btn-lg-font-size       | .btn  | css length unit | Button large font size          |
-| --${PREFIX_BS}btn-sm-padding-x       | .btn  | css length unit | Button small padding horizontal |
-| --${PREFIX_BS}btn-sm-padding-y       | .btn  | css length unit | Button small padding vertical   |
-| --${PREFIX_BS}btn-sm-font-size       | .btn  | css length unit | Button small font size          |
-| --${PREFIX_BS}btn-border-radius      | :root | css length unit | Button border radius            |
-| --${PREFIX_BS}btn-lg-border-radius   | :root | css length unit | Button large border radius      |
-| --${PREFIX_BS}btn-sm-border-radius   | :root | css length unit | Button small border radius      |
+For a full reference of default variables, see the [Bootstrap documentation](https://getbootstrap.com/docs/5.3/components/buttons/#css).
+
+| Variable | Scope | Description |
+|-----------|--------|-------------|
+| \`--${PREFIX_BS}btn-padding-x\` | .btn | Horizontal padding |
+| \`--${PREFIX_BS}btn-padding-y\` | .btn | Vertical padding |
+| \`--${PREFIX_BS}btn-font-family\` | .btn | Font family |
+| \`--${PREFIX_BS}btn-font-size\` | .btn | Font size |
+| \`--${PREFIX_BS}btn-border-radius\` | :root | Border radius |
+| \`--${PREFIX_BS}btn-lg-padding-x\` | .btn-lg | Large padding X |
+| \`--${PREFIX_BS}btn-sm-font-size\` | .btn-sm | Small font size |
+
+---
+
+### 🧱 Material Symbols Integration
+
+To use buttons with Material Symbols, wrap them in a \`<DContextProvider>\`
+configured with \`materialStyle: true\`, or use the icon props directly.
         `,
       },
     },
   },
   argTypes: {
-    className: {
-      control: 'text',
-      type: 'string',
-    },
-    style: {
-      control: 'object',
-    },
-    id: {
-      control: 'text',
-      type: 'string',
-    },
-    form: {
-      control: 'text',
-      type: 'string',
-    },
-    ariaLabel: {
-      control: 'text',
-      type: 'string',
-    },
     color: {
       control: 'select',
-      type: { name: 'string', required: true },
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
+      description: 'Button color variant based on the theme palette.',
     },
     size: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'default',
-        },
-      },
-      type: 'string',
+      control: 'select',
       options: COMPONENT_SIZE,
+      description: 'Defines the button size (sm, md, lg).',
+    },
+    variant: {
+      control: 'select',
+      options: [undefined, 'outline', 'link'],
+      description: 'Visual variant of the button.',
     },
     text: {
       control: 'text',
-      type: 'string',
-      description: 'The text to display.',
-    },
-    type: {
-      control: 'select',
-      type: 'string',
-      options: ['submit', 'reset', 'button'],
-      table: { defaultValue: { summary: 'button' } },
-      description: 'The html type of the button.',
-    },
-    variant: {
-      type: 'string',
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      options: [undefined, 'outline', 'link'],
-      description: 'The variant to use.',
+      description: 'The text label displayed inside the button.',
     },
     iconStart: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
+      control: 'select',
       options: [undefined, ...ICONS],
-    },
-    iconStartDisabled: {
-      control: 'boolean',
-      type: 'boolean',
-    },
-    iconStartFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    iconStartFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
-    iconStartMaterialStyle: {
-      control: 'boolean',
-      type: 'boolean',
-    },
-    iconStartAriaLabel: {
-      control: 'text',
-      type: 'string',
-    },
-    iconStartTabIndex: {
-      control: 'number',
-      type: 'number',
+      description: 'Optional icon on the left side.',
     },
     iconEnd: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
+      control: 'select',
       options: [undefined, ...ICONS],
-    },
-    iconEndDisabled: {
-      control: 'boolean',
-      type: 'boolean',
-    },
-    iconEndFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    iconEndFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
-    iconEndMaterialStyle: {
-      control: 'boolean',
-      type: 'boolean',
-    },
-    iconEndAriaLabel: {
-      control: 'text',
-      type: 'string',
-    },
-    iconEndTabIndex: {
-      control: 'number',
-      type: 'number',
-    },
-    value: {
-      control: 'text',
-      type: 'string',
-      description: 'The html value of the button.',
+      description: 'Optional icon on the right side.',
     },
     loading: {
       control: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
-      type: 'boolean',
+      table: { defaultValue: { summary: false } },
+      description: 'Shows a spinner and disables the button.',
     },
     disabled: {
       control: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
-      type: 'boolean',
-    },
-    loadingAriaLabel: {
-      control: 'text',
-      type: 'string',
+      table: { defaultValue: { summary: false } },
+      description: 'Disables the button.',
     },
     state: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
+      control: 'select',
       options: [undefined, ...INPUT_STATE],
-      type: 'string',
-      description: 'Change the state of the button',
-    },
-    stopPropagationEnabled: {
-      control: 'boolean',
-      table: { defaultValue: { summary: 'true' } },
-      type: 'boolean',
+      description: 'Visually reflects the input state (valid, invalid, etc).',
     },
     onClick: {
-      action: 'onClick',
+      action: 'clicked',
     },
   },
-  tags: ['autodocs'],
 };
+export default meta;
 
-export default config;
 type Story = StoryObj<typeof DButton>;
 
+//
+// ─── BASE VARIANTS ───────────────────────────────────────────────
+//
+
 export const Primary: Story = {
+  args: { color: 'primary', text: 'Primary' },
+};
+
+export const WithIcons: Story = {
+  render: () => (
+    <div className="d-flex gap-4">
+      <DButton
+        color="danger"
+        text="Delete"
+        iconStart="trash"
+      />
+      <DButton
+        color="primary"
+        text="Primary"
+        iconEnd="chevron-right"
+      />
+    </div>
+  ),
   args: {
     color: 'primary',
     text: 'Primary',
-  },
-};
-
-export const PrimaryIconRight: Story = {
-  args: {
-    color: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    variant: undefined,
-    loading: false,
-    iconStart: undefined,
     iconEnd: 'chevron-right',
   },
 };
 
-export const Secondary: Story = {
+export const SecondaryOutline: Story = {
   args: {
     color: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
+    text: 'Secondary',
     variant: 'outline',
-    loading: false,
-    iconStart: undefined,
-    iconEnd: undefined,
   },
 };
 
-export const SecondaryIconRight: Story = {
+export const SecondaryOutlineIconRight: Story = {
   args: {
     color: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
+    text: 'Secondary',
     variant: 'outline',
-    loading: false,
-    iconStart: undefined,
     iconEnd: 'chevron-right',
   },
 };
@@ -324,56 +190,78 @@ export const SecondaryIconRight: Story = {
 export const Link: Story = {
   args: {
     color: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
+    text: 'Link',
     variant: 'link',
-    loading: false,
-    iconStart: undefined,
-    iconEnd: undefined,
   },
 };
 
 export const LinkIconRight: Story = {
   args: {
     color: 'secondary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
+    text: 'Link',
     variant: 'link',
-    loading: false,
-    iconStart: undefined,
     iconEnd: 'chevron-right',
   },
 };
 
-/**
- * To use buttons with Material Symbols style use a `DContextProvider` with `familyClass`
- * and the flag `materialStyle=true` or use the flags directly over the
- * `DButton` component as a props
- */
-export const MaterialSecondaryIconRight: Story = {
-  render: (args: ComponentProps<typeof DButton>) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DButton {...args} />
+//
+// ─── SIZE VARIANTS ───────────────────────────────────────────────
+//
+
+export const SizeVariants: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-2 align-items-center">
+      <DButton color="primary" size="sm" text="Small" />
+      <DButton color="primary" size="md" text="Medium" />
+      <DButton color="primary" size="lg" text="Large" />
+    </div>
+  ),
+  parameters: {
+    docs: { description: { story: 'Shows button size variations.' } },
+  },
+};
+
+export const OutlineSizes: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-2 align-items-center">
+      <DButton color="secondary" size="sm" variant="outline" text="Small" />
+      <DButton color="secondary" size="md" variant="outline" text="Medium" />
+      <DButton color="secondary" size="lg" variant="outline" text="Large" />
+    </div>
+  ),
+  parameters: {
+    docs: { description: { story: 'Outline variant with size options.' } },
+  },
+};
+
+export const LinkSizes: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-2 align-items-center">
+      <DButton color="primary" size="sm" variant="link" text="Small" />
+      <DButton color="primary" size="md" variant="link" text="Medium" />
+      <DButton color="primary" size="lg" variant="link" text="Large" />
+    </div>
+  ),
+  parameters: {
+    docs: { description: { story: 'Link variant with different sizes.' } },
+  },
+};
+
+//
+// ─── MATERIAL STYLE VARIANTS ─────────────────────────────────────
+//
+
+export const MaterialButtons: Story = {
+  render: () => (
+    <DContextProvider {...CONTEXT_PROVIDER_CONFIG_MATERIAL}>
+      <div className="d-flex flex-wrap gap-2 align-items-center">
+        <DButton color="primary" size="sm" iconEnd="chevron_right" text="Small" />
+        <DButton color="primary" size="md" iconEnd="chevron_right" text="Medium" />
+        <DButton color="primary" size="lg" iconEnd="chevron_right" text="Large" />
+      </div>
     </DContextProvider>
   ),
-  args: {
-    color: 'primary',
-    size: undefined,
-    text: 'Default',
-    type: 'button',
-    loading: false,
-    iconStart: undefined,
-    iconEnd: 'chevron_right',
-  },
   parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
+    docs: { description: { story: 'Material-style buttons in all sizes.' } },
   },
 };
