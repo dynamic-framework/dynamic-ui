@@ -7,6 +7,7 @@ type Props = {
   isChipVisible?: boolean;
   nameOnCard?: string;
   cardNumber?: string;
+  cardHolderText?: string;
   isVertical?: boolean;
   logoImage?: string;
 };
@@ -26,6 +27,7 @@ export default function DCreditCard(
     cardBrand = 'visa',
     nameOnCard,
     cardNumber,
+    cardHolderText = 'Card Holder',
     logoImage,
     isChipVisible = true,
     className,
@@ -66,7 +68,9 @@ export default function DCreditCard(
         <div className="d-credit-card-number d-none d-sm-block mb-4">
           {cardNumber}
         </div>
-        <small className="d-block opacity-50">Card Holder</small>
+        <small className="d-block opacity-50">
+          {cardHolderText}
+        </small>
         <span className="name">{nameOnCard}</span>
       </div>
     </div>
