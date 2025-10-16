@@ -5,7 +5,6 @@ import DPaginator from './DPaginator';
 it('should render my component', () => {
   const props: ComponentProps<typeof DPaginator> = {
     total: 3,
-    page: 1,
     current: 1,
     onPageChange: () => {},
   };
