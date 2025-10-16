@@ -31,6 +31,7 @@ const TEXT_PROPS = {
   contact: (
     <>
       <span>Problems with your digital token? Contact us</span>
+      {' '}
       <a
         href="https://www.modyo.com"
         className="link-primary text-nowrap"
