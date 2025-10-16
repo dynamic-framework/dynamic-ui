@@ -100,7 +100,6 @@
     "file-selector": "^2.1.2",
     "google-libphonenumber": "^3.2.40",
     "i18next": "~23.6.0",
-    "react-content-loader": "~6.2.1",
     "react-datepicker": "~8.3.0",
     "react-international-phone": "~4.5.0",
     "react-responsive-pagination": "^2.9.0",

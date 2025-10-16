@@ -81,6 +81,6 @@ function DInputCurrency(
   );
 }
 
-const ForwardedDInputCurrencyBase = forwardRef<HTMLInputElement, Props>(DInputCurrency);
-ForwardedDInputCurrencyBase.displayName = 'DInputCurrency';
-export default ForwardedDInputCurrencyBase;
+const ForwardedDInputCurrency = forwardRef<HTMLInputElement, Props>(DInputCurrency);
+ForwardedDInputCurrency.displayName = 'DInputCurrency';
+export default ForwardedDInputCurrency;
