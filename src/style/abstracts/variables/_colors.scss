@@ -345,7 +345,7 @@ $theme-colors-mapping: (
   "info": "blue",
   "warning": "yellow",
   "danger": "red",
-  "light": "gray-100",
+  "light": "gray-25",
   "dark": "gray-900"
 ) !default;
 // end custom
@@ -357,7 +357,7 @@ $success: $green !default;
 $info: $blue !default;
 $warning: $yellow !default;
 $danger: $red !default;
-$light: $gray-100 !default;
+$light: $gray-25 !default;
 $dark: $gray-900 !default;
 // scss-docs-end theme-color-variables
 
