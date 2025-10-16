@@ -151,14 +151,6 @@
     }
   }
 
-  // .btn-outline-#{$color} {
-  //   @include df-button-variant-mapper($color, "outline");
-  //   --bs-btn-hover-color: inherit;
-  //   --bs-btn-hover-bg: transparent;
-  //   --bs-btn-active-bg: transparent;
-  //   --bs-btn-active-color: inherit;
-  // }
-
   .btn-link-#{$color} {
     @include df-button-variant-mapper($color, "link");
   }
@@ -184,6 +176,16 @@
   --#{$prefix}btn-active-color: var(--#{$prefix}gray-700);
   --#{$prefix}btn-hover-color: var(--#{$prefix}gray-700);
   --#{$prefix}btn-focus-color: var(--#{$prefix}gray-700);
+}
+
+.btn-outline-light {
+  --#{$prefix}btn-color: var(--#{$prefix}gray-25);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}gray-25);
+  --#{$prefix}btn-border-color: var(--#{$prefix}gray-25);
+  --#{$prefix}btn-active-border-color: var(--#{$prefix}gray-50);
+  --#{$prefix}btn-active-color: var(--#{$prefix}gray-50);
+  --#{$prefix}btn-hover-color: var(--#{$prefix}gray-50);
+  --#{$prefix}btn-focus-color: var(--#{$prefix}gray-50);
 }
 
 .btn-outline-success {

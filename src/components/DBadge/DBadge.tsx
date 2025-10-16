@@ -9,6 +9,7 @@ type Props =
 & {
   text?: string;
   soft?: boolean;
+  size?: 'sm' | 'lg';
   rounded?: boolean;
   color?: ComponentColor;
   id?: string;
@@ -27,6 +28,7 @@ export default function DBadge(
     id,
     rounded,
     className,
+    size,
     style,
     iconStart,
     iconEnd,
@@ -42,8 +44,9 @@ export default function DBadge(
       [`badge-${color}`]: !!color && !soft,
       [`badge-soft-${color}`]: !!color && soft,
       'rounded-pill': !!rounded,
+      [`badge-${size}`]: !!size,
     }),
-    [rounded, soft, color],
+    [rounded, soft, color, size],
   );
   return (
     <span

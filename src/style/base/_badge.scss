@@ -3,25 +3,25 @@
   --#{$prefix}badge-icon-size: #{$badge-font-size};
   --#{$prefix}badge-bg: #{$badge-bg};
   --#{$prefix}badge-color: #{$badge-color};
+  --#{$prefix}badge-sm-font-size: var(--#{$prefix}fs-small);
+  --#{$prefix}badge-lg-font-size: var(--#{$prefix}fs-lg);
 
   display: inline-flex;
   gap: var(--#{$prefix}badge-gap);
   align-items: center;
   color: var(--#{$prefix}badge-color);
-
   background-color: var(--#{$prefix}badge-bg);
 
   .d-icon {
     --#{$prefix}icon-size: .75rem;
   }
 
-  @each $theme, $value in map-remove($theme-colors, "light") {
-    $color: color-contrast-var($value);
+  &.badge-sm {
+    --#{$prefix}badge-font-size: var(--#{$prefix}badge-sm-font-size);
+  }
 
-    &.badge-#{$theme} {
-      --#{$prefix}badge-bg: var(--#{$prefix}#{$theme});
-      --#{$prefix}badge-color: #{$color};
-    }
+  &.badge-lg {
+    --#{$prefix}badge-font-size: var(--#{$prefix}badge-lg-font-size);
   }
 
   &.badge-secondary {
@@ -30,8 +30,18 @@
   }
 
   &.badge-light {
-    --#{$prefix}badge-bg: var(--#{$prefix}gray-200);
-    --#{$prefix}badge-color: var(--#{$prefix}gray-900);
+    --#{$prefix}badge-bg: var(--#{$prefix}gray-25);
+    --#{$prefix}badge-color: var(--#{$prefix}gray-700);
+  }
+
+  &.badge-soft-primary {
+    --#{$prefix}badge-bg: var(--#{$prefix}primary-50);
+    --#{$prefix}badge-color: var(--#{$prefix}primary-700);
+  }
+
+  &.badge-soft-secondary {
+    --#{$prefix}badge-bg: var(--#{$prefix}gray-50);
+    --#{$prefix}badge-color: var(--#{$prefix}gray-700);
   }
 
   &.badge-soft-success {
