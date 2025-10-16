@@ -16,6 +16,16 @@
     --#{$prefix}icon-size: .75rem;
   }
 
+  @each $theme, $value in map-remove($theme-colors, "light") {
+    $color: color-contrast-var($value);
+
+    &.badge-#{$theme} {
+      --#{$prefix}badge-bg: var(--#{$prefix}#{$theme});
+      --#{$prefix}badge-color: #{$color};
+    }
+  }
+
+
   &.badge-sm {
     --#{$prefix}badge-font-size: var(--#{$prefix}badge-sm-font-size);
   }
@@ -65,8 +75,8 @@
   }
 
   &.badge-soft-light {
-    --#{$prefix}badge-bg: var(--#{$prefix}gray-700);
-    --#{$prefix}badge-color: var(--#{$prefix}white);
+    --#{$prefix}badge-bg: var(--#{$prefix}gray-25);
+    --#{$prefix}badge-color: var(--#{$prefix}gray-500);
   }
 
   &.badge-soft-dark {
@@ -74,3 +84,4 @@
     --#{$prefix}badge-color: var(--#{$prefix}body-color);
   }
 }
+
