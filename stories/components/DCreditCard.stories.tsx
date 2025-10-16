@@ -63,6 +63,12 @@ Supports different sizes and orientations, and can display custom branding logos
       type: 'string',
       table: { defaultValue: { summary: 'visa' } },
     },
+    cardHolderText: {
+      control: 'text',
+      description: 'Card holder text displayed at the bottom of the card',
+      type: 'string',
+      table: { defaultValue: { summary: 'Card Holder' } },
+    },
     isChipVisible: {
       control: 'boolean',
       description: 'Displays or hides the chip icon',
