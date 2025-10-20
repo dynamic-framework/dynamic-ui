@@ -45,7 +45,7 @@ export default function DCreditCard(
         className,
       )}
     >
-      <div className="d-credit-card-header justify-content-between">
+      <div className="d-credit-card-header">
         <img
           src={logoImage || DEFAULT_IMAGE}
           alt={cardBrand}

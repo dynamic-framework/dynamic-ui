@@ -14,6 +14,11 @@
   color: var(--#{$prefix}form-text) !important;
 }
 
+.spinner-border {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 th {
   font-weight: var(--#{$prefix}fw-semibold) !important;
 }
