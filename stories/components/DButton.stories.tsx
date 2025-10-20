@@ -121,6 +121,10 @@ configured with \`materialStyle: true\`, or use the icon props directly.
       table: { defaultValue: { summary: false } },
       description: 'Shows a spinner and disables the button.',
     },
+    loadingText: {
+      control: 'text',
+      description: 'Custom text to display when in loading state.',
+    },
     disabled: {
       control: 'boolean',
       table: { defaultValue: { summary: false } },
@@ -144,8 +148,50 @@ type Story = StoryObj<typeof DButton>;
 // ─── BASE VARIANTS ───────────────────────────────────────────────
 //
 
-export const Primary: Story = {
-  args: { color: 'primary', text: 'Primary' },
+export const ColorVariants: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-4">
+      {THEMES.map((color) => (
+        <DButton key={color} color={color} text={color} />
+      ))}
+    </div>
+  ),
+};
+
+export const LoadingState: Story = {
+  render: () => (
+    <div className="d-flex flex-column gap-4">
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.map((color) => (
+          <DButton key={color} color={color} text={color} loading />
+        ))}
+      </div>
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.map((color) => (
+          <DButton
+            key={color}
+            color={color}
+            text={color}
+            variant="outline"
+            loading
+          />
+        ))}
+      </div>
+    </div>
+  ),
+};
+
+export const LoadingWithCustomText: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-4">
+      <DButton
+        color="primary"
+        text="Primary"
+        loading
+        loadingText="Saving..."
+      />
+    </div>
+  ),
 };
 
 export const WithIcons: Story = {

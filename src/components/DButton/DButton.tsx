@@ -32,6 +32,7 @@ type Props =
   ariaLabel?: string;
   value?: string;
   type?: ButtonType;
+  loadingText?: string;
   pill?: boolean;
   loading?: boolean;
   loadingAriaLabel?: string;
@@ -57,6 +58,7 @@ export default function DButton(
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndMaterialStyle,
+    loadingText,
     value,
     type = 'button',
     loading = false,
@@ -121,9 +123,6 @@ export default function DButton(
           materialStyle={iconStartMaterialStyle}
         />
       )}
-      {(text && !loading) && (
-        <span>{text}</span>
-      )}
       {loading && (
         <span
           className="spinner-border spinner-border-sm"
@@ -133,6 +132,7 @@ export default function DButton(
           <span className="visually-hidden">Loading...</span>
         </span>
       )}
+      <span>{loading && loadingText ? loadingText : text}</span>
       {iconEnd && (
         <DIcon
           icon={iconEnd}

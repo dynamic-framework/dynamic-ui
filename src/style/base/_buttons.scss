@@ -166,6 +166,11 @@
   --#{$prefix}btn-hover-color: var(--#{$prefix}primary-600);
   --#{$prefix}btn-focus-color: var(--#{$prefix}primary-600);
   --#{$prefix}btn-active-color: var(--#{$prefix}primary-600);
+  &:disabled,
+  &.disabled {
+    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}primary-500);
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}primary-500);
+  }
 }
 
 .btn-outline-secondary {
@@ -176,6 +181,11 @@
   --#{$prefix}btn-active-color: var(--#{$prefix}gray-700);
   --#{$prefix}btn-hover-color: var(--#{$prefix}gray-700);
   --#{$prefix}btn-focus-color: var(--#{$prefix}gray-700);
+  &:disabled,
+  &.disabled {
+    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}gray-700);
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}gray-700);
+  }
 }
 
 .btn-outline-light {
@@ -196,6 +206,11 @@
   --#{$prefix}btn-active-color: var(--#{$prefix}success-700);
   --#{$prefix}btn-hover-color: var(--#{$prefix}success-700);
   --#{$prefix}btn-focus-color: var(--#{$prefix}success-700);
+  &:disabled,
+  &.disabled {
+    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}success-500);
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}success-500);
+  }
 }
 
 .btn-outline-danger {
@@ -206,6 +221,11 @@
   --#{$prefix}btn-active-color: var(--#{$prefix}danger-700);
   --#{$prefix}btn-hover-color: var(--#{$prefix}danger-700);
   --#{$prefix}btn-focus-color: var(--#{$prefix}danger-700);
+  &:disabled,
+  &.disabled {
+    --#{$prefix}btn-active-border-color: var(--#{$prefix}danger-500);
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}danger-500);
+  }
 }
 
 .btn-outline-info {
@@ -216,6 +236,11 @@
   --#{$prefix}btn-active-color: var(--#{$prefix}info-700);
   --#{$prefix}btn-hover-color: var(--#{$prefix}info-700);
   --#{$prefix}btn-focus-color: var(--#{$prefix}info-700);
+  &:disabled,
+  &.disabled {
+    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}info-500);
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}info-500);
+  }
 }
 
 .btn-outline-warning {
@@ -226,6 +251,11 @@
   --#{$prefix}btn-active-color: var(--#{$prefix}warning-700);
   --#{$prefix}btn-hover-color: var(--#{$prefix}warning-700);
   --#{$prefix}btn-focus-color: var(--#{$prefix}warning-700);
+  &:disabled,
+  &.disabled {
+    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}warning-500);
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}warning-600);
+  }
 }
 
 .btn-lg {
