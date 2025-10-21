@@ -173,18 +173,29 @@ export const ColorVariants: Story = {
 export const LoadingState: Story = {
   render: () => (
     <div className="d-flex flex-column gap-4">
-      <div className="d-flex flex-wrap gap-4">
+      <div className="d-flex flex-wrap gap-4 mb-8">
         {THEMES.map((color) => (
           <DButton key={color} color={color} text={color} loading />
         ))}
       </div>
-      <div className="d-flex flex-wrap gap-4">
+      <div className="d-flex flex-wrap gap-4 mb-8">
         {THEMES.map((color) => (
           <DButton
             key={color}
             color={color}
             text={color}
             variant="outline"
+            loading
+          />
+        ))}
+      </div>
+      <div className="d-flex flex-wrap gap-4 mb-8">
+        {THEMES.map((color) => (
+          <DButton
+            key={color}
+            color={color}
+            text={color}
+            variant="link"
             loading
           />
         ))}

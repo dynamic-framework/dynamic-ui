@@ -152,8 +152,6 @@
 
   &.loading {
     --#{$prefix}btn-disabled-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-color);
-    --#{$prefix}btn-disabled-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-bg);
-    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-border-color);
   }
 }
 // scss-docs-end df-btn-variant-mixin
