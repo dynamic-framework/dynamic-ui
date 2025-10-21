@@ -145,11 +145,11 @@
 }
 
 @each $color, $value in $theme-colors {
-  @if $color != "secondary" {
-    .btn-#{$color} {
-      @include df-button-variant-mapper($color);
-    }
+  // @if $color != "secondary" {
+  .btn-#{$color} {
+    @include df-button-variant-mapper($color);
   }
+  // }
 
   .btn-link-#{$color} {
     @include df-button-variant-mapper($color, "link");
@@ -350,17 +350,4 @@
   }
 
   // No need for an active state here
-}
-
-.btn-secondary {
-  --#{$prefix}btn-color: #{$secondary-700};
-  --#{$prefix}btn-hover-color: #{$secondary-700};
-  --#{$prefix}btn-active-color: #{$secondary-700};
-  --#{$prefix}btn-disabled-color: #{$secondary-300};
-  --#{$prefix}btn-focus-shadow-rgb: var(--#{$prefix}btn-secondary-focus-shadow-rgb);
-  --#{$prefix}btn-box-shadow: #{$btn-box-shadow};
-  --#{$prefix}btn-bg: #{$secondary-50};
-  --#{$prefix}btn-hover-bg: #{$secondary-100};
-  --#{$prefix}btn-active-bg: #{$secondary-100};
-  --#{$prefix}btn-disabled-bg: #{$secondary-50};
 }

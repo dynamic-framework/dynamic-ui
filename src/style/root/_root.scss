@@ -287,12 +287,31 @@
         $active-bg-color: var(--#{$prefix}gray-700),
         $focus-shadow-rgb: var(--#{$prefix}gray-900-rgb),
       );
+
+    } @else if $color == "secondary" {
+      @include df-button-variant-variables(
+        "secondary",
+        $default-color: var(--#{$prefix}secondary-50),
+        $default-text-color: var(--#{$prefix}secondary-700),
+        $hover-color: var(--#{$prefix}secondary-100),
+        $hover-text-color: var(--#{$prefix}secondary-700),
+        $focus-color: var(--#{$prefix}secondary-100),
+        $focus-text-color: var(--#{$prefix}secondary-700),
+        $active-color: var(--#{$prefix}secondary-100),
+        $active-text-color: var(--#{$prefix}secondary-700),
+        $focus-shadow-rgb: var(--#{$prefix}secondary-100-rgb),
+      );
+      @include df-button-link-variant-variables(
+        "secondary",
+        $active-bg-color: var(--#{$prefix}secondary-100),
+      );
     } @else {
       @include df-button-variant-variables($color);
       @include df-button-outline-variant-variables($color);
       @include df-button-link-variant-variables($color);
     }
   }
+
 
   // only reference root variables
   @each $level, $value in $spacers {
