@@ -56,6 +56,7 @@ export { default as DStepper } from './DStepper';
 export { default as DStepperDesktop } from './DStepperDesktop';
 export { default as DStepperMobile } from './DStepperMobile';
 export { default as DTooltip } from './DTooltip';
+export { default as DTimeline } from './DTimeline';
 export {
   default as DTabs,
   useTabContext,
