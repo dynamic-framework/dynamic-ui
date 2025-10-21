@@ -37,7 +37,7 @@ jobs:
           set -e
           BASE="2.0.0-dev"
           EXISTING=$(npm view @dynamic-framework/ui-react versions --json || echo "[]")
-          NEXT=$(echo "$EXISTING" | node -e 'const fs=require("fs"); const data=JSON.parse(fs.readFileSync(0,"utf8")||"[]"); const devs=data.filter(v=>/^2\.0\.0-dev\.\d+$/.test(v)); const max=devs.map(v=>parseInt(v.split(".").pop())).reduce((a,b)=>Math.max(a,b),0); console.log(max+1);')
+          NEXT=$(echo "$EXISTING" | node scripts/compute-dev-version.js)
           NEW_VERSION="$BASE.$NEXT"
           echo "New dev version: $NEW_VERSION"
           npm version "$NEW_VERSION" --no-git-tag-version
