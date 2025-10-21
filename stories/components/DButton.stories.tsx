@@ -161,6 +161,11 @@ export const ColorVariants: Story = {
           <DButton key={color} variant="outline" color={color} text={color} />
         ))}
       </div>
+      <div className="d-flex flex-wrap gap-4 mt-4">
+        {THEMES.map((color) => (
+          <DButton key={color} variant="link" color={color} text={color} />
+        ))}
+      </div>
     </>
   ),
 };
