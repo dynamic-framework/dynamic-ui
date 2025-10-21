@@ -67,6 +67,7 @@
     "publish:cdn-version": "node scripts/publish-cdn.js",
     "publish:cdn-latest": "aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/latest/ui-react --delete --acl public-read",
     "publish:cdn-rc": "aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/rc/ui-react --delete --acl public-read",
+    "publish:cdn-dev": "aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/dev/ui-react --delete --acl public-read",
     "lint-staged": "lint-staged",
     "prepare": "husky",
     "commitlint": "commitlint --edit"
