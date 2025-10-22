@@ -74,7 +74,7 @@
   --#{$prefix}datepicker-in-range-disabled-bg: #{$datepicker-in-range-disabled-bg};
 
   // Time
-  --#{$prefix}datepicker-time-list-item-width: 85px;
+  --#{$prefix}datepicker-time-list-item-width: #{$datepicker-time-list-item-width};
   --#{$prefix}datepicker-time-list-item-padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-1);
 
 
@@ -85,6 +85,7 @@
   display: inline-block;
   position: relative;
   line-height: initial;
+  overflow: hidden;
   p {
     font-weight: 500;
   }
@@ -105,27 +106,10 @@
 .react-datepicker-popper {
   z-index: 1;
   line-height: 0;
+}
 
-  .react-datepicker__triangle {
-    --#{$prefix}datepicker-border-color: var(--#{$prefix}gray-100);
-    stroke: var(--#{$prefix}datepicker-border-color);
-  }
-
-  &[data-placement^="bottom"] {
-    .react-datepicker__triangle {
-      --#{$prefix}datepicker-header-bg: var(--#{$prefix}secondary-soft);
-      fill: var(--#{$prefix}datepicker-header-bg);
-      color: var(--#{$prefix}datepicker-header-bg);
-    }
-  }
-
-  &[data-placement^="top"] {
-    .react-datepicker__triangle {
-      --#{$prefix}datepicker-header-bg: var(--#{$prefix}white);
-      fill: var(--#{$prefix}datepicker-header-bg);
-      color: var(--#{$prefix}datepicker-header-bg);
-    }
-  }
+.react-datepicker__triangle {
+  display: none;
 }
 
 .react-datepicker__header {
@@ -148,6 +132,13 @@
 
   &:not(&--has-time-select) {
     border-top-right-radius: var(--#{$prefix}datepicker-border-radius);
+  }
+
+  .custom-year-selector {
+    width: 6ch;
+    background: none;
+    color: var(--#{$prefix}white);
+    border: 0;
   }
 
   &-selector {
@@ -181,10 +172,6 @@
             background-color: var(--#{$prefix}datepicker-day-hover-bg);
           }
         }
-      }
-
-      &.custom-year-selector .d-select__single-value {
-        width: 4ch;
       }
     }
 
@@ -253,6 +240,28 @@
     display: inline-block;
     width: 4rem;
   }
+}
+
+.react-datepicker__month {
+  padding: 1rem;
+}
+
+.react-datepicker__header--custom,
+.react-datepicker__header-month-selector {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.react-datepicker__month-text--selected {
+  font-weight: var(--#{$prefix}fw-semibold);
+}
+
+.top-datepicker {
+  background: var(--#{$prefix}primary-500);
+  color: var(--#{$prefix}white);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  margin-top: -.5rem;
 }
 
 .react-datepicker__month,

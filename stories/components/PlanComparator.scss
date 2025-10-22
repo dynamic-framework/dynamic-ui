@@ -1,0 +1,30 @@
+.plan-comparator-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+
+  th, td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--bs-gray-50);
+  }
+
+  .feature-name {
+    text-align: left;
+    font-weight: 500;
+  }
+
+  .featured {
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+  }
+
+  .featured thead th {
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+    border-bottom-color: var(--bs-primary);
+  }
+
+  tfoot td {
+    border: 0;
+  }
+}

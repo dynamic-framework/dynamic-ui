@@ -5,8 +5,8 @@ $datepicker-border-color: var(--#{$prefix}gray-400) !default;
 $datepicker-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $datepicker-day-border-radius: .25rem !default;
 // Header
-$datepicker-header-bg: var(--#{$prefix}gray-50) !default;
-$datepicker-header-padding: var(--#{$prefix}ref-spacer-2) 0 !default;
+$datepicker-header-bg: none !default;
+$datepicker-header-padding: 0 !default;
 $datepicker-header-font-weight: var(--#{$prefix}fw-bold) !default;
 $datepicker-day-names-color: var(--#{$prefix}gray) !default;
 $datepicker-day-names-font-size: var(--#{$prefix}fs-small) !default;
@@ -24,7 +24,7 @@ $datepicker-day-color: var(--#{$prefix}body-color) !default;
 
 // Day selected
 $datepicker-day-selected-color: var(--#{$prefix}white) !default;
-$datepicker-day-selected-bg: var(--#{$prefix}secondary) !default;
+$datepicker-day-selected-bg: var(--#{$prefix}primary-500) !default;
 
 // Day Disabled
 $datepicker-day-disabled-color: var(--#{$prefix}gray-400) !default;
@@ -37,11 +37,12 @@ $datepicker-week-number-border-radius: .25rem !default;
 
 // Range
 $datepicker-range-start-color: var(--#{$prefix}white) !default;
-$datepicker-range-start-bg: var(--#{$prefix}secondary-600) !default;
+$datepicker-range-start-bg: var(--#{$prefix}primary-500) !default;
 $datepicker-range-end-color: var(--#{$prefix}white) !default;
-$datepicker-range-end-bg: var(--#{$prefix}secondary-600) !default;
-$datepicker-in-range-bg: var(--#{$prefix}secondary-200) !default;
+$datepicker-range-end-bg: var(--#{$prefix}primary-500) !default;
+$datepicker-in-range-bg: var(--#{$prefix}primary-200) !default;
 $datepicker-range-color: var(--#{$prefix}body-color) !default;
-$datepicker-in-range-hover-bg: var(--#{$prefix}secondary-400) !default;
-$datepicker-in-range-disabled-color: var(--#{$prefix}secondary-200) !default;
-$datepicker-in-range-disabled-bg: var(--#{$prefix}secondary-50) !default;
+$datepicker-in-range-hover-bg: var(--#{$prefix}primary-400) !default;
+$datepicker-in-range-disabled-color: var(--#{$prefix}primary-200) !default;
+$datepicker-in-range-disabled-bg: var(--#{$prefix}primary-50) !default;
+$datepicker-time-list-item-width: 100px !default;
