@@ -73,19 +73,13 @@ export default function DDatePicker(
     inputId = 'input-calendar',
     timeId = 'input-time',
     timeInputLabel,
-    iconInput,
-    iconHeaderPrev,
-    iconHeaderNext,
-    iconMaterialStyle,
-    iconFamilyClass,
-    iconFamilyPrefix,
     minYearSelect,
     maxYearSelect,
     iconHeaderSize,
+    iconMaterialStyle,
+    iconInput,
     headerPrevMonthAriaLabel,
     headerNextMonthAriaLabel,
-    headerButtonVariant,
-    headerButtonColor,
     invalid = false,
     valid = false,
     renderCustomHeader: renderCustomHeaderProp,
@@ -113,14 +107,9 @@ export default function DDatePicker(
     <DDatePickerHeaderSelector
       {...headerProps}
       monthsShown={props.monthsShown}
-      iconPrev={iconHeaderPrev}
-      iconNext={iconHeaderNext}
-      iconMaterialStyle={iconMaterialStyle}
       prevMonthAriaLabel={headerPrevMonthAriaLabel}
       nextMonthAriaLabel={headerNextMonthAriaLabel}
       iconSize={iconHeaderSize}
-      buttonVariant={headerButtonVariant}
-      buttonColor={headerButtonColor}
       minYearSelect={minYearSelect}
       maxYearSelect={maxYearSelect}
       pickerType={pickerType}
@@ -128,14 +117,9 @@ export default function DDatePicker(
       locale={props.locale}
     />
   ), [
-    iconHeaderNext,
-    iconHeaderPrev,
-    iconMaterialStyle,
     headerPrevMonthAriaLabel,
     headerNextMonthAriaLabel,
     iconHeaderSize,
-    headerButtonVariant,
-    headerButtonColor,
     minYearSelect,
     maxYearSelect,
     pickerType,
