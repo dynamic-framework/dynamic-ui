@@ -77,6 +77,9 @@
   --#{$prefix}datepicker-time-list-item-width: #{$datepicker-time-list-item-width};
   --#{$prefix}datepicker-time-list-item-padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-1);
 
+  // Top
+  --#{$prefix}datepicker-top-header-bg: var(--#{$prefix}primary-500);
+
 
   background-color: var(--#{$prefix}datepicker-bg);
   border: var(--#{$prefix}datepicker-border);
@@ -256,7 +259,7 @@
   font-weight: var(--#{$prefix}fw-semibold);
 }
 
-.top-datepicker {
+.datepicker-top-header {
   background: var(--#{$prefix}primary-500);
   color: var(--#{$prefix}white);
   padding: 1rem;

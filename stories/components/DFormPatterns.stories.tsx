@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Meta, StoryObj } from '@storybook/react-vite';
-import DBox from '../../src/components/DBox';
 import {
-  DButton, DInput, DInputCheck, DInputSwitch, DSelect,
+  DInput, DSelect, DInputCheck, DInputSwitch, DButton,
 } from '../../src';
+import DBox from '../../src/components/DBox';
 
 const meta: Meta<typeof DBox> = {
   title: 'Patterns/Form Patterns',
@@ -103,6 +103,81 @@ export const TwoColumns: Story = {
         <div className="col-12">
           <DButton type="submit" className="me-2" text="Submit" />
           <DButton type="reset" variant="outline" text="Reset" />
+        </div>
+      </form>
+    </DBox>
+  ),
+};
+
+export const FieldsetForm: Story = {
+  render: () => (
+    <DBox className="p-8" style={{ width: '800px' }}>
+      <form>
+        <fieldset className="border p-4 rounded mb-4">
+          <legend className="float-none w-auto px-2">Personal Information</legend>
+          <div className="grid gap-3">
+            <div className="g-col-12 g-col-lg-6">
+              <DInput id="fsFirstName" label="First Name" placeholder="John" />
+            </div>
+            <div className="g-col-12 g-col-lg-6">
+              <DInput id="fsLastName" label="Last Name" placeholder="Doe" />
+            </div>
+            <div className="g-col-12">
+              <DInput id="fsEmail" type="email" label="Email" placeholder="john.doe@example.com" />
+            </div>
+            <div className="g-col-12 g-col-lg-6">
+              <DInput id="fsPhone" type="tel" label="Phone Number" placeholder="(123) 456-7890" />
+            </div>
+            <div className="g-col-12 g-col-lg-6">
+              <DInput id="fsDateOfBirth" type="date" label="Date of Birth" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset className="col-12 border p-4 rounded mb-4">
+          <legend className="float-none w-auto px-2">Address Information</legend>
+          <div className="grid gap-3" style={{ '--bs-columns': '1' }}>
+            <DInput id="fsAddress1" label="Address Line 1" placeholder="123 Main St" />
+            <DInput id="fsAddress2" label="Address Line 2" placeholder="Apartment, suite, unit, etc. (Optional)" />
+            <DInput id="fsCity" label="City" placeholder="Anytown" />
+            <DInput id="fsState" label="State/Province" placeholder="State" />
+            <DInput id="fsZip" label="Zip/Postal Code" placeholder="12345" />
+            <DSelect
+              id="fsCountry"
+              label="Country"
+              options={[
+                { label: 'Select a country', value: '' },
+                { label: 'United States', value: 'us' },
+                { label: 'Canada', value: 'ca' },
+                { label: 'Mexico', value: 'mx' },
+              ]}
+            />
+          </div>
+        </fieldset>
+
+        <fieldset className="border p-4 rounded">
+          <legend className="float-none w-auto px-2">Preferences</legend>
+          <div className="grid gap-3" style={{ '--bs-columns': '1' }}>
+            <div className="g-col-12">
+              <DInputSwitch id="fsEmailNotifications" label="Receive email notifications" />
+            </div>
+            <div className="g-col-12">
+              <label className="form-label">Preferred Contact Method</label>
+              <div>
+                <DInputCheck id="fsContactEmail" type="radio" name="contactMethod" label="Email" inline />
+                <DInputCheck id="fsContactPhone" type="radio" name="contactMethod" label="Phone" inline />
+                <DInputCheck id="fsContactMail" type="radio" name="contactMethod" label="Mail" inline />
+              </div>
+            </div>
+            <div className="g-col-12">
+              <DInputCheck id="fsAgreeToTerms" type="checkbox" label="I agree to the privacy policy" />
+            </div>
+          </div>
+        </fieldset>
+
+        <div className="g-col-12 mt-8">
+          <DButton type="submit" text="Save Information" className="me-2" />
+          <DButton type="reset" variant="outline" text="Clear Form" />
         </div>
       </form>
     </DBox>

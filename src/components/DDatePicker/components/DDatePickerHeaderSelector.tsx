@@ -218,7 +218,7 @@ export default function DDatePickerHeaderSelector(
 
   return (
     <>
-      <div className="top-datepicker">
+      <div className="datepicker-top-header">
         {showHeaderSelectors && (
           <select
             value={defaultYear?.value}
