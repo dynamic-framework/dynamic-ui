@@ -2,7 +2,7 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 import DButton from '../../src/components/DButton/DButton';
 import DIcon from '../../src/components/DIcon/DIcon';
-import './PlanComparator.scss';
+import './custom.scss';
 import DBox from '../../src/components/DBox';
 
 const fourPlanFeatures = [
