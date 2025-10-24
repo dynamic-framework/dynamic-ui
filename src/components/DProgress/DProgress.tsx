@@ -9,6 +9,7 @@ type Props = BaseProps & {
   maxValue?: number;
   hideCurrentValue?: boolean;
   enableStripedAnimation?: boolean;
+  height?: string | number;
 };
 
 export default function DProgress(
@@ -20,6 +21,7 @@ export default function DProgress(
     maxValue = 100,
     hideCurrentValue = false,
     enableStripedAnimation = false,
+    height,
     dataAttributes,
   }: Props,
 ) {
@@ -40,13 +42,14 @@ export default function DProgress(
   return (
     <div
       className={classNames('progress', className)}
+      style={{ height, ...style }}
       {...dataAttributes}
     >
       <div
         className={classNames(generateClasses)}
         role="progressbar"
         aria-label="Progress bar"
-        style={{ width: formatProgress, ...style }}
+        style={{ width: formatProgress }}
         aria-valuenow={currentValue}
         aria-valuemin={minValue}
         aria-valuemax={maxValue}
