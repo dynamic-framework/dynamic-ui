@@ -150,6 +150,39 @@ export const Menu: Story = {
     <div className="p-8">
       <div className="border rounded-2 overflow-hidden grid gap-0">
         <div className="g-col-12 g-col-lg-4 border-end border-opacity-25">
+          <div>
+            <h5 className="fw-semibold p-8">To review</h5>
+            <div className="list-group list-group-white" id="myList" role="tablist">
+              <button className="list-group-item list-group-item-action align-items-center d-flex gap-2 active" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
+                <div>
+                  <div>Home request issue #1</div>
+                  <small className="text-muted fw-normal">Text lorem ipsum</small>
+                </div>
+                <DIcon icon="chevron-right" size="1rem" className="ms-auto" />
+              </button>
+              <button className="list-group-item list-group-item-action align-items-center d-flex gap-2" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
+                <div>
+                  <div>Home request issue #1</div>
+                  <small className="text-muted fw-normal">Text lorem ipsum</small>
+                </div>
+                <DIcon icon="chevron-right" size="1rem" className="ms-auto" />
+              </button>
+              <button className="list-group-item list-group-item-action d-flex gap-2" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
+                <div>
+                  <div>Home request issue #1</div>
+                  <small className="text-muted fw-normal">Text lorem ipsum</small>
+                </div>
+                <DIcon icon="chevron-right" size="1rem" className="ms-auto" />
+              </button>
+              <button className="list-group-item list-group-item-action align-items-center d-flex gap-2" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
+                <div>
+                  <div>Home request issue #1</div>
+                  <small className="text-muted fw-normal">Text lorem ipsum</small>
+                </div>
+                <DIcon icon="chevron-right" size="1rem" className="ms-auto" />
+              </button>
+            </div>
+          </div>
           <div className="p-8">
             <h5 className="fw-semibold mb-4">Details</h5>
             <div className="list-group list-group-flush">
@@ -176,29 +209,6 @@ export const Menu: Story = {
                 </div>
               </div>
             </div>
-          </div>
-          <hr className="m-0" />
-          <div>
-            <h5 className="mb-4 fw-semibold p-8">To review</h5>
-            <div className="list-group list-group-white" id="myList" role="tablist">
-              <button className="list-group-item list-group-item-action active" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
-                <div>Home request issue #1</div>
-                <small>Text lorem ipsum</small>
-              </button>
-              <button className="list-group-item list-group-item-action" data-bs-toggle="list" data-bs-target="#profile" type="button" role="tab">
-                <div>Home request issue #1</div>
-                <small>Text lorem ipsum</small>
-              </button>
-              <button className="list-group-item list-group-item-action" data-bs-toggle="list" data-bs-target="#messages" type="button" role="tab">
-                <div>Home request issue #1</div>
-                <small>Text lorem ipsum</small>
-              </button>
-              <button className="list-group-item list-group-item-action" data-bs-toggle="list" data-bs-target="#settings" type="button" role="tab">
-                <div>Home request issue #1</div>
-                <small>Text lorem ipsum</small>
-              </button>
-            </div>
-
           </div>
         </div>
         <div className="g-col-12 g-col-lg-8 bg-white p-8">
