@@ -28,3 +28,21 @@
     border: 0;
   }
 }
+
+.radio-custom:has(input[type="radio"]:checked) {
+  --bs-border-color: var(--bs-primary-300);
+  background-color: var(--bs-primary-50);
+}
+
+
+.list-group-white {
+  --bs-list-group-bg: var(--bs-white);
+  --bs-list-group-border-radius: 0;
+  // --bs-list-group-border-color: var(--bs-gray-200);
+  --bs-list-group-active-bg: var(--bs-white);
+  --bs-list-group-active-color: var(--bs-primary);
+  --bs-list-group-border-width: 0;
+  .list-group-item {
+    border-bottom: 1px solid var(--bs-gray-50);
+  }
+}

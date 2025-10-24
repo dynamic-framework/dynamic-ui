@@ -35,7 +35,7 @@ $input-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-lg: var(--#{$prefix}border-radius-sm) !default;
 
-$input-focus-border-color: $component-focus-border-color !default; // unused
+$input-focus-border-color: var(--#{$prefix}gray-200) !default;
 $input-focus-width: $input-btn-focus-width !default;
 
 $input-placeholder-color: var(--#{$prefix}border-color) !default;

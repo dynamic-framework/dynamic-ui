@@ -23,6 +23,14 @@ th {
   font-weight: var(--#{$prefix}fw-semibold) !important;
 }
 
+@media (min-width: 1200px) {
+  legend {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+}
+
 $container-max-widths: (
   sm: 540px,
   md: 720px,
