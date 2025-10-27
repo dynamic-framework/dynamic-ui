@@ -1,11 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import type { ComponentProps } from 'react';
-
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 import DChip from '../../src/components/DChip/DChip';
-import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS, THEMES } from '../config/constants';
 
 const config: Meta<typeof DChip> = {
@@ -112,72 +109,105 @@ const config: Meta<typeof DChip> = {
 export default config;
 type Story = StoryObj<typeof DChip>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     color: 'primary',
-    text: 'Default',
+    text: 'Chip',
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    color: 'secondary',
-    text: 'Default',
-  },
-};
-
-export const Icon: Story = {
-  args: {
-    color: 'secondary',
-    text: 'Default',
-    icon: 'fire',
-  },
-};
-
-export const Close: Story = {
-  args: {
-    color: 'secondary',
-    text: 'Default',
-    icon: 'fire',
-    showClose: true,
-  },
-};
-
-export const WithColors: Story = {
-  render: (args) => (
-    <div className="d-flex gap-2">
-      <DChip color="primary" text={args.text} />
-      <DChip color="secondary" text={args.text} />
-      <DChip color="success" text={args.text} />
-      <DChip color="danger" text={args.text} />
-      <DChip color="warning" text={args.text} />
-      <DChip color="info" text={args.text} />
+export const AllColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      {THEMES.map((theme) => (
+        <DChip key={theme} color={theme} text={theme} />
+      ))}
     </div>
   ),
-  args: {
-    color: 'secondary',
-    text: 'Default',
-    icon: 'fire',
-    showClose: true,
+  parameters: {
+    docs: {
+      description: {
+        story: 'All available color variants for chips.',
+      },
+    },
   },
 };
 
-export const MaterialIcon: Story = {
-  render: (args: ComponentProps<typeof DInputPassword>) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DChip {...args} />
-    </DContextProvider>
-  ),
+export const WithIcon: Story = {
   args: {
-    color: 'secondary',
-    text: 'Default',
-    icon: 'local_fire_department',
+    color: 'primary',
+    text: 'Featured',
+    icon: 'star-fill',
+  },
+};
+
+export const WithCloseButton: Story = {
+  args: {
+    color: 'info',
+    text: 'Removable',
     showClose: true,
   },
   parameters: {
     docs: {
+      description: {
+        story: 'Chip with a close button. Click to trigger the onClose event.',
+      },
+    },
+  },
+};
+
+export const IconAndClose: Story = {
+  args: {
+    color: 'success',
+    text: 'Tag',
+    icon: 'tag',
+    showClose: true,
+  },
+};
+
+export const ChipVariants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <DChip color="primary" text="Simple" />
+        <DChip color="success" text="With Icon" icon="check-circle" />
+        <DChip color="warning" text="Closeable" showClose />
+        <DChip color="danger" text="Complete" icon="x-circle" showClose />
+      </div>
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <DChip color="info" text="Category" icon="folder" />
+        <DChip color="secondary" text="Tag" icon="tag" showClose />
+        <DChip color="dark" text="Label" icon="bookmark" showClose />
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different chip configurations showing icons and close buttons.',
+      },
+    },
+  },
+};
+
+export const MaterialIcon: Story = {
+  render: () => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <DChip color="primary" text="Fire" icon="local_fire_department" />
+        <DChip color="success" text="Star" icon="star" showClose />
+        <DChip color="warning" text="Alert" icon="warning" showClose />
+        <DChip color="info" text="Info" icon="info" />
+      </div>
+    </DContextProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Chips using Material Icons instead of Bootstrap Icons.',
+      },
       canvas: {
         sourceState: 'shown',
       },
