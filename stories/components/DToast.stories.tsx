@@ -56,9 +56,9 @@ export const Default: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="square-fill" color="secondary" className="me-2" />
-        <strong className="me-auto">Bootstrap</strong>
-        <small className="me-2">11 mins ago</small>
+        <DIcon icon="circle-fill" color="primary" className="me-2" />
+        <strong className="me-auto">Notification</strong>
+        <small className="me-2">just now</small>
         <button
           type="button"
           className="d-close"
@@ -68,12 +68,201 @@ export const Default: Story = {
         </button>
       </DToast.Header>
       <DToast.Body>
-        Toast body
+        Hello! This is a toast message.
       </DToast.Body>
     </DToast>
   ),
   args: {
     className: 'show position-absolute top-0 end-0',
+  },
+};
+
+export const Success: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DToast {...args}>
+      <DToast.Header>
+        <DIcon icon="check-circle-fill" color="success" className="me-2" />
+        <strong className="me-auto">Success</strong>
+        <small className="me-2">2 mins ago</small>
+        <button
+          type="button"
+          className="d-close"
+          aria-label="Close"
+        >
+          <DIcon icon="x" />
+        </button>
+      </DToast.Header>
+      <DToast.Body>
+        Your changes have been saved successfully!
+      </DToast.Body>
+    </DToast>
+  ),
+  args: {
+    className: 'show position-absolute top-0 end-0',
+  },
+};
+
+export const Warning: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DToast {...args}>
+      <DToast.Header>
+        <DIcon icon="exclamation-triangle-fill" color="warning" className="me-2" />
+        <strong className="me-auto">Warning</strong>
+        <small className="me-2">5 mins ago</small>
+        <button
+          type="button"
+          className="d-close"
+          aria-label="Close"
+        >
+          <DIcon icon="x" />
+        </button>
+      </DToast.Header>
+      <DToast.Body>
+        Please review your input before proceeding.
+      </DToast.Body>
+    </DToast>
+  ),
+  args: {
+    className: 'show position-absolute top-0 end-0',
+  },
+};
+
+export const Danger: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DToast {...args}>
+      <DToast.Header>
+        <DIcon icon="x-circle-fill" color="danger" className="me-2" />
+        <strong className="me-auto">Error</strong>
+        <small className="me-2">1 min ago</small>
+        <button
+          type="button"
+          className="d-close"
+          aria-label="Close"
+        >
+          <DIcon icon="x" />
+        </button>
+      </DToast.Header>
+      <DToast.Body>
+        An error occurred while processing your request.
+      </DToast.Body>
+    </DToast>
+  ),
+  args: {
+    className: 'show position-absolute top-0 end-0',
+  },
+};
+
+export const Info: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DToast {...args}>
+      <DToast.Header>
+        <DIcon icon="info-circle-fill" color="info" className="me-2" />
+        <strong className="me-auto">Information</strong>
+        <small className="me-2">10 mins ago</small>
+        <button
+          type="button"
+          className="d-close"
+          aria-label="Close"
+        >
+          <DIcon icon="x" />
+        </button>
+      </DToast.Header>
+      <DToast.Body>
+        New features are now available in your account.
+      </DToast.Body>
+    </DToast>
+  ),
+  args: {
+    className: 'show position-absolute top-0 end-0',
+  },
+};
+
+export const ColoredBackgrounds: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '600px', padding: '20px' }} className="position-relative d-flex flex-column gap-3">
+        <Story />
+      </div>
+    ),
+  ],
+  render: () => (
+    <>
+      <DToast className="show text-bg-primary">
+        <DToast.Body className="d-flex justify-content-between align-items-center">
+          <span>Primary background toast</span>
+          <button type="button" className="d-close d-close-white" aria-label="Close">
+            <DIcon icon="x" />
+          </button>
+        </DToast.Body>
+      </DToast>
+      <DToast className="show text-bg-success">
+        <DToast.Body className="d-flex justify-content-between align-items-center">
+          <span>Success background toast</span>
+          <button type="button" className="d-close d-close-white" aria-label="Close">
+            <DIcon icon="x" />
+          </button>
+        </DToast.Body>
+      </DToast>
+      <DToast className="show text-bg-warning">
+        <DToast.Body className="d-flex justify-content-between align-items-center">
+          <span>Warning background toast</span>
+          <button type="button" className="d-close d-close-white" aria-label="Close">
+            <DIcon icon="x" />
+          </button>
+        </DToast.Body>
+      </DToast>
+      <DToast className="show text-bg-danger">
+        <DToast.Body className="d-flex justify-content-between align-items-center">
+          <span>Danger background toast</span>
+          <button type="button" className="d-close d-close-white" aria-label="Close">
+            <DIcon icon="x" />
+          </button>
+        </DToast.Body>
+      </DToast>
+      <DToast className="show text-bg-info">
+        <DToast.Body className="d-flex justify-content-between align-items-center">
+          <span>Info background toast</span>
+          <button type="button" className="d-close d-close-white" aria-label="Close">
+            <DIcon icon="x" />
+          </button>
+        </DToast.Body>
+      </DToast>
+    </>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Toasts with colored backgrounds using Bootstrap text-bg utility classes.',
+      },
+    },
   },
 };
 
@@ -87,12 +276,75 @@ export const WithoutHeader: Story = {
   ],
   render: (args) => (
     <DToast {...args}>
-      <DToast.Body>
-        <span>Modal body</span>
+      <DToast.Body className="d-flex justify-content-between align-items-center">
+        <span>Simple toast without header</span>
+        <button type="button" className="d-close d-close-white" aria-label="Close">
+          <DIcon icon="x" />
+        </button>
       </DToast.Body>
     </DToast>
   ),
   args: {
-    className: 'show position-absolute top-0 end-0 text-bg-secondary',
+    className: 'show position-absolute top-0 end-0',
+  },
+};
+
+export const Stacked: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ height: '600px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
+  render: () => (
+    <div className="toast-container position-absolute top-0 end-0 p-3">
+      <DToast className="show mb-2">
+        <DToast.Header>
+          <DIcon icon="circle-fill" color="primary" className="me-2" />
+          <strong className="me-auto">Message 1</strong>
+          <small className="me-2">just now</small>
+          <button type="button" className="d-close" aria-label="Close">
+            <DIcon icon="x" />
+          </button>
+        </DToast.Header>
+        <DToast.Body>
+          First notification message
+        </DToast.Body>
+      </DToast>
+      <DToast className="show mb-2">
+        <DToast.Header>
+          <DIcon icon="check-circle-fill" color="success" className="me-2" />
+          <strong className="me-auto">Message 2</strong>
+          <small className="me-2">2 mins ago</small>
+          <button type="button" className="d-close" aria-label="Close">
+            <DIcon icon="x" />
+          </button>
+        </DToast.Header>
+        <DToast.Body>
+          Second notification message
+        </DToast.Body>
+      </DToast>
+      <DToast className="show">
+        <DToast.Header>
+          <DIcon icon="info-circle-fill" color="info" className="me-2" />
+          <strong className="me-auto">Message 3</strong>
+          <small className="me-2">5 mins ago</small>
+          <button type="button" className="d-close" aria-label="Close">
+            <DIcon icon="x" />
+          </button>
+        </DToast.Header>
+        <DToast.Body>
+          Third notification message
+        </DToast.Body>
+      </DToast>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Multiple toasts stacked together using a toast-container.',
+      },
+    },
   },
 };
