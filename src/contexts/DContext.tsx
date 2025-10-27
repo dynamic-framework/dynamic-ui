@@ -107,8 +107,8 @@ const DEFAULT_STATE = {
       search: 'search',
       show: 'eye',
       hide: 'eye-slash',
-      increase: 'plus-square',
-      decrease: 'dash-square',
+      increase: 'plus',
+      decrease: 'dash',
     },
   },
   breakpoints: {
