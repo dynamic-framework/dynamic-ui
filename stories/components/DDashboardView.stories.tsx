@@ -6,13 +6,14 @@ import {
 } from '@storybook/addon-docs/blocks';
 
 import {
-  DIcon, DButton, DProgress, DAvatar,
+  DIcon, DButton, DProgress, DAvatar, DBadge,
 } from '../../src';
 import DBox from '../../src/components/DBox';
 import DMinimalLineChart from '../../src/components/DMinimalLineChart/DMinimalLineChart';
 import DMultiLineChart from '../../src/components/DMultiLineChart/DMultiLineChart';
-// import DRadialBarChart from '../../src/components/DRadialBarChart/DRadialBarChart';
 import DPieChart from '../../src/components/DPieChart/DPieChart';
+import DBarChart from '../../src/components/DBarChart/DBarChart';
+import DRadialBarChart from '../../src/components/DRadialBarChart/DRadialBarChart';
 
 function CustomDocs(props: DocsContainerProps) {
   return (
@@ -369,32 +370,22 @@ export const Dashboard2: Story = {
         />
       </div>
 
-      <DBox className="grid gap-0 mb-4 p-0">
+      <div className="grid gap-2 mb-4 p-0 bg-transparent shadow-none">
         {SUMMARY.map(({
-          id, title, value, percentage, icon, color,
-        }, index) => (
-          <div
+          id, percentage, value,
+        }) => (
+          <DBox
             key={id}
-            className={`g-col-12 g-col-md-6 g-col-lg-3 p-8 ${
-              SUMMARY.length - 1 !== index ? 'border-end' : ''
-            }`}
+            className="g-col-12 g-col-md-6 g-col-lg-3 p-8 text-center"
           >
-            <div className="d-flex gap-2 align-items-center mb-2">
-              <DIcon className="text-gray-400" icon={icon} size="1rem" />
-              <span className="text-muted">{title}</span>
+            <div style={{ height: 100 }}>
+              <DRadialBarChart value={percentage} color="var(--bs-primary-500)" />
             </div>
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <h4 className="mb-0">{value}</h4>
-              </div>
-              <p className={`${color} mb-0`}>
-                {percentage}
-                %
-              </p>
-            </div>
-          </div>
+            <h4 className="mb-0">{value}</h4>
+            <small className="text-muted m-0">Last 30 days</small>
+          </DBox>
         ))}
-      </DBox>
+      </div>
 
       <div className="grid gap-4 mb-4">
         {/* Main Content - Left (larger) column */}
@@ -575,6 +566,278 @@ export const Dashboard2: Story = {
             />
           </div>
         </DBox>
+      </div>
+    </div>
+  ),
+};
+
+const taskProgressData = [
+  { name: 'Alpha', value: 75 },
+  { name: 'Beta', value: 40 },
+  { name: 'Gamma', value: 90 },
+  { name: 'Delta', value: 60 },
+  { name: 'Gamma', value: 90 },
+  { name: 'Delta', value: 60 },
+];
+
+export const Dashboard3: Story = {
+  render: () => (
+    <div className="p-8">
+      <div className="d-flex justify-content-between align-items-end mb-8">
+        <div>
+          <h2 className="mb-0 fw-normal h4">
+            Good morning,
+            {' '}
+            <strong>John</strong>
+          </h2>
+          <p className="text-muted mb-0">Today is May 12, 2023</p>
+        </div>
+        <DButton
+          text="Refresh Data"
+          iconStart="arrow-clockwise"
+          variant="link"
+        />
+      </div>
+
+      <div className="grid gap-2 mb-4 p-0 bg-transparent shadow-none">
+        {SUMMARY.map(({
+          id, title, value, percentage, icon, color,
+        }) => (
+          <div
+            key={id}
+            className="g-col-12 g-col-md-6 g-col-lg-3 p-8 bg-primary-50 rounded-3"
+          >
+            <div className="d-flex gap-2 align-items-center mb-2">
+              <DIcon className="text-gray-400" icon={icon} size="1rem" />
+              <span className="text-muted">{title}</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <h4 className="mb-0">{value}</h4>
+              </div>
+              <p className={`${color} mb-0`}>
+                {percentage}
+                %
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid gap-4 mb-4">
+        {/* Main Content - Left (larger) column */}
+        <div className="g-col-12 g-col-lg-8">
+          <DBox className="mb-8 h-100">
+            <div className="d-flex justify-content-between gap-8 align-items-center mb-8">
+              <div className="flex-1">
+                <p className="text-muted mb-0">Total portfolio</p>
+                <h3 className="display-6 mb-0">$123,456</h3>
+                <p className="text-muted mb-0">
+                  You gained
+                  <strong>$40.000 last 6 months</strong>
+                  . Thats the best results in last 2 years
+                </p>
+              </div>
+              <ul
+                className="nav nav-pills nav-fill gap-1 p-1 small bg-primary-50 rounded-5"
+                id="pillNav2"
+                role="tablist"
+                style={{ '--bs-nav-link-color': 'var(--bs-gray-500)', '--bs-nav-pills-link-active-color': '#fff', '--bs-nav-pills-link-active-bg': 'var(--bs-primary)' }}
+              >
+                <li className="nav-item" role="presentation">
+                  <button className="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">24h</button>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <button className="nav-link rounded-5" id="profile-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">7d</button>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <button className="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">6m</button>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <button className="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">1y</button>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <button className="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Max</button>
+                </li>
+              </ul>
+            </div>
+            <div style={{ height: '200px' }}>
+              <DMultiLineChart data={salesData} lineConfigs={salesLineConfigs} />
+            </div>
+            <div className="d-flex justify-content-end align-items-center mt-8">
+              <DBadge color="success" text="Increase 10%" iconStart="arrow-up" />
+            </div>
+          </DBox>
+        </div>
+
+        {/* Main Content - Right (smaller) column */}
+        <div className="g-col-12 g-col-lg-4">
+          <DBox className="mb-8 p-8 h-100">
+            <div className="d-flex">
+              <h5 className="mb-4 d-flex align-items-center gap-2">
+                <DIcon hasCircle icon="bar-chart" size=".75rem" />
+                Return on investment
+              </h5>
+              <div className="text-muted ms-auto">Last 6m.</div>
+            </div>
+            <h3 className="display-6 mb-0">$123,456</h3>
+            <p className="text-muted mb-8">Oct 2024 - Apr 2025</p>
+            <div style={{ height: '200px' }}>
+              <DBarChart data={taskProgressData} barColor="#0d6efd" />
+            </div>
+          </DBox>
+        </div>
+      </div>
+
+      {/* content end */}
+
+      <div className="grid gap-4">
+        {/* Main Content - Left (larger) column */}
+        <div className="g-col-12 g-col-lg-6">
+          <DBox className="mb-8 h-100">
+            <h5 className="mb-4 d-flex align-items-center gap-2">
+              <DIcon hasCircle icon="graph-up" size=".75rem" />
+              Top Projects Performance
+            </h5>
+            {/* Placeholder for a chart or more detailed sales data */}
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Progress</th>
+                  <th>Ticket</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Project Alpha</td>
+                  <td className="align-middle">
+                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                  </td>
+                  <td>232</td>
+                </tr>
+                <tr>
+                  <td>Project Alpha</td>
+                  <td className="align-middle">
+                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                  </td>
+                  <td>222</td>
+                </tr>
+                <tr>
+                  <td>Project Alpha</td>
+                  <td className="align-middle">
+                    <DProgress currentValue={75} hideCurrentValue height={5} />
+                  </td>
+                  <td>222</td>
+                </tr>
+              </tbody>
+            </table>
+          </DBox>
+        </div>
+
+        {/* Main Content - Right (smaller) column */}
+        <div className="g-col-12 g-col-lg-6">
+          <DBox className="mb-8 h-100">
+            <div className="d-flex">
+              <h5 className="mb-4 d-flex align-items-center gap-2">
+                <DIcon hasCircle icon="graph-up" size=".75rem" />
+                User Retention Cohorts
+              </h5>
+              <div className="text-muted ms-auto">1 hour.</div>
+            </div>
+            <div className="grid gap-4 p-4">
+              <div className="g-col-12 g-col-lg-6">
+                <div className="d-flex align-items-center gap-2">
+                  <h4 className="display-3 line-height-1">40%</h4>
+                  <DIcon icon="graph-up" hasCircle size="1rem" color="success" />
+                </div>
+                <p>After 30 days</p>
+                <small className="text-muted">Oct - Nov</small>
+              </div>
+              <div className="g-col-12 g-col-lg-6" style={{ height: '100px' }}>
+                <div style={{ height: '200px' }}>
+                  <DPieChart data={[
+                    { name: 'Category A', value: 400, color: '#e35d6a' },
+                    { name: 'Category B', value: 300, color: '#a370f7' },
+                    { name: 'Category C', value: 300, color: '#3dd5f3' },
+                    { name: 'Category D', value: 200, color: '#8c68cd' },
+                  ]}
+                  />
+                </div>
+              </div>
+            </div>
+          </DBox>
+        </div>
+      </div>
+
+      <div className="grid gap-4 mt-4">
+        <div className="g-col-12 g-col-lg-4">
+          <DBox className="h-100">
+            <h5 className="mb-3">Quick Stats</h5>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span>Revenue</span>
+              <span className="fw-bold">+15%</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span>New Customers</span>
+              <span className="fw-bold">+250</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center">
+              <span>Support Tickets</span>
+              <span className="fw-bold">5 Open</span>
+            </div>
+          </DBox>
+        </div>
+        <div className="g-col-12 g-col-lg-4">
+          <DBox className="h-100">
+            <h5 className="mb-3">Recent Notifications</h5>
+            <ul className="list-unstyled mb-0">
+              <li className="d-flex align-items-center mb-2">
+                <DIcon hasCircle color="info" icon="bell-fill" size="1rem" className="me-2" />
+                <span>New feature deployed!</span>
+                <small className="ms-auto text-muted">5 min ago</small>
+              </li>
+              <li className="d-flex align-items-center mb-2">
+                <DIcon hasCircle color="info" size="1rem" icon="exclamation-triangle-fill" className=" me-2" />
+                <span>Server overload warning.</span>
+                <small className="ms-auto text-muted">1 hour ago</small>
+              </li>
+              <li className="d-flex align-items-center">
+                <DIcon hasCircle size="1rem" color="info" icon="check-circle-fill" className="me-2" />
+                <span>Report generated successfully.</span>
+                <small className="ms-auto text-muted">Yesterday</small>
+              </li>
+            </ul>
+          </DBox>
+        </div>
+        <div className="g-col-12 g-col-lg-4">
+          <DBox className="h-100">
+            <h5 className="mb-3">Team Activity</h5>
+            <ul className="list-unstyled mb-0">
+              <li className="d-flex align-items-center mb-2">
+                <DAvatar image="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" name="JS" size="sm" className="me-2" />
+                <div>
+                  <p className="mb-0">John Doe completed task #123.</p>
+                  <small className="text-muted">2 hours ago</small>
+                </div>
+              </li>
+              <li className="d-flex align-items-center mb-2">
+                <DAvatar image="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" name="JS" size="sm" className="me-2" />
+                <div>
+                  <p className="mb-0">John Doe completed task #123.</p>
+                  <small className="text-muted">2 hours ago</small>
+                </div>
+              </li>
+              <li className="d-flex align-items-center mb-2">
+                <DAvatar image="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80" name="JS" size="sm" className="me-2" />
+                <div>
+                  <p className="mb-0">John Doe completed task #123.</p>
+                  <small className="text-muted">2 hours ago</small>
+                </div>
+              </li>
+            </ul>
+          </DBox>
+        </div>
       </div>
     </div>
   ),
