@@ -35,14 +35,7 @@ export default function DRadialBarChart({
           angleAxisId={0}
           tick={false}
         />
-        <RadialBar
-          minAngle={15}
-          label={false}
-          background
-          clockWise
-          dataKey="value"
-          cornerRadius={10}
-        />
+        <RadialBar />
         {/* Display the value in the center */}
         <text
           x="50%"

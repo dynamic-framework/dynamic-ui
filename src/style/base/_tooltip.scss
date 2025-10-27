@@ -13,11 +13,12 @@
   }
 
   @each $theme, $value in $theme-colors {
-    $color: color-contrast-var($value);
-
-    &.tooltip-#{$theme} {
-      --#{$prefix}tooltip-color: #{$color};
-      --#{$prefix}tooltip-bg: var(--#{$prefix}#{$theme});
+    @if $theme != "secondary" {
+      $color: color-contrast-var($value);
+      &.tooltip-#{$theme} {
+        --#{$prefix}tooltip-color: #{$color};
+        --#{$prefix}tooltip-bg: var(--#{$prefix}#{$theme});
+      }
     }
   }
 }
