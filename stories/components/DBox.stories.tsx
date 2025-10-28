@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import DBox from '../../src/components/DBox/DBox';
 
 const config: Meta<typeof DBox> = {
-  title: 'Design System/Components/DBox',
+  title: 'Design System/Components/Box',
   component: DBox,
   parameters: {
     docs: {

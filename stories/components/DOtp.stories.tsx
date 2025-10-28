@@ -7,7 +7,7 @@ import { DCard } from '../../src';
 import { PropsOtp } from '../../src/components/DOtp/DOtp';
 
 const meta: Meta<typeof DOtp> = {
-  title: 'Design System/Components/DOtp',
+  title: 'Design System/Components/Otp',
   component: DOtp,
   parameters: {
     docs: {
