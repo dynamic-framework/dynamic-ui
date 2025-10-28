@@ -35,10 +35,9 @@ function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>
           color="secondary"
           variant="outline"
           className="d-grid"
-          pill
           onClick={() => closePortal()}
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   );
