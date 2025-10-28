@@ -230,6 +230,7 @@
 
 .react-datepicker__year {
   margin: var(--#{$prefix}datepicker-body-margin);
+  padding: 1rem;
   text-align: center;
 
   &-wrapper {
@@ -267,6 +268,12 @@
   margin-top: -.5rem;
 }
 
+.react-datepicker__year,
+.react-datepicker__quarterPicker {
+  --#{$prefix}datepicker-body-gap: 1rem;
+  --#{$prefix}datepicker-body-margin: 1rem;
+}
+
 .react-datepicker__month,
 .react-datepicker__quarter {
   margin: var(--#{$prefix}datepicker-body-margin);
@@ -292,6 +299,22 @@
     width: 6ch;
   }
 }
+
+.react-datepicker__month-text,
+.react-datepicker__quarter-text,
+.react-datepicker__year-text {
+  padding: .25rem;
+  border: 1px solid var(--#{$prefix}gray-50);
+  border-radius: var(--#{$prefix}datepicker-border-radius);
+}
+
+
+.react-datepicker__month-text--today,
+.react-datepicker__year-text--today,
+.react-datepicker__quarter-text--today {
+  font-weight: var(--#{$prefix}fw-semibold) !important;
+}
+
 // START TODO: Revisar con Mati diseño del time
 .react-datepicker__time-container {
   float: right;
