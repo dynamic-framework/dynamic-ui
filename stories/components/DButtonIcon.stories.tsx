@@ -210,7 +210,7 @@ export const Primary: Story = {
     type: 'button',
     variant: undefined,
     loading: false,
-    icon: 'arrow-left',
+    icon: 'ArrowLeft',
   },
 };
 
@@ -221,7 +221,7 @@ export const Secondary: Story = {
     type: 'button',
     variant: 'outline',
     loading: false,
-    icon: 'arrow-left',
+    icon: 'ArrowLeft',
   },
 };
 
@@ -232,7 +232,7 @@ export const Link: Story = {
     type: 'button',
     variant: 'link',
     loading: false,
-    icon: 'arrow-left',
+    icon: 'ArrowLeft',
   },
 };
 
