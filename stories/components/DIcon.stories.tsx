@@ -12,6 +12,7 @@ import {
 import DIcon from '../../src/components/DIcon/DIcon';
 import {
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
+  ICONS,
   THEMES,
 } from '../config/constants';
 
@@ -68,7 +69,8 @@ See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating f
       control: 'object',
     },
     icon: {
-      control: 'text',
+      control: 'select',
+      options: ['Map', ...ICONS],
       type: { name: 'string', required: true },
       description: 'Icon name in PascalCase (e.g., Home, Settings, User)',
     },
