@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
+import * as LucideIcons from 'lucide-react';
 
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ComponentType } from 'react';
 
 import { PREFIX_BS } from '../config';
 
@@ -17,52 +18,48 @@ type Props =
   & {
     icon: string;
     color?: ComponentColor;
-    colorText?: string;
     size?: string;
-    loading?: boolean;
-    loadingDuration?: number;
     hasCircle?: boolean;
-    circleSize?: string;
-    backgroundColor?: string;
     materialStyle?: boolean;
     familyClass?: string;
     familyPrefix?: string;
+    strokeWidth?: number;
   };
 
 export default function DIconBase(
   {
     icon,
     color,
-    colorText,
     style,
     className,
     size,
-    loading = false,
-    loadingDuration = 1.8,
     hasCircle = false,
-    circleSize = `calc(var(--${PREFIX_BS}icon-size) * 1)`,
-    backgroundColor,
     materialStyle = false,
-    familyClass = 'bi',
-    familyPrefix = 'bi-',
+    familyClass = 'material-symbols-outlined',
+    strokeWidth = 2,
     dataAttributes,
   }: Props,
 ) {
+  // If materialStyle is true, use Material Design icons (legacy)
+  const useMaterialIcons = materialStyle;
+
+  // Get Lucide icon component
+  const LucideIcon = useMemo<ComponentType<LucideIcons.LucideProps> | null>(() => {
+    if (useMaterialIcons) return null;
+
+    // Try to find the icon in Lucide (expects PascalCase)
+    const icons = LucideIcons as unknown as Record<string, ComponentType<LucideIcons.LucideProps>>;
+    return icons[icon] || null;
+  }, [icon, useMaterialIcons]);
+
   const colorStyle = useMemo(() => {
-    if (colorText) {
-      return { [`--${PREFIX_BS}icon-component-color`]: colorText };
-    }
     if (color) {
       return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${color})` };
     }
     return {};
-  }, [color, colorText]);
+  }, [color]);
 
   const backgroundStyle = useMemo(() => {
-    if (backgroundColor) {
-      return { [`--${PREFIX_BS}icon-component-bg-color`]: backgroundColor };
-    }
-
     if (hasCircle) {
       if (color) {
         return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}${color}-rgb), 0.1)` };
@@ -70,48 +67,74 @@ export default function DIconBase(
       return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}body-color-rgb), 0.1)` };
     }
     return {};
-  }, [backgroundColor, hasCircle, color]);
-
-  const circleSizeStyle = useMemo(() => {
-    if (hasCircle) {
-      return { [`--${PREFIX_BS}icon-component-padding`]: circleSize };
-    }
-    return { [`--${PREFIX_BS}icon-component-padding`]: '0' };
-  }, [circleSize, hasCircle]);
+  }, [hasCircle, color]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
-    [`--${PREFIX_BS}icon-component-loading-duration`]: `${loadingDuration}s`,
     ...size && { [`--${PREFIX_BS}icon-component-size`]: size },
     ...colorStyle,
     ...backgroundStyle,
-    ...circleSizeStyle,
+    ...hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` },
     ...style,
-  }), [size, loadingDuration, colorStyle, backgroundStyle, circleSizeStyle, style]);
+  }), [size, colorStyle, backgroundStyle, hasCircle, style]);
 
   const generateClasses = useMemo<ClassMap>(() => ({
     'd-icon': true,
-    [familyClass]: true,
-    'd-icon-loading': loading,
-    ...!materialStyle && {
-      [`${familyPrefix}${icon}`]: true,
+    ...useMaterialIcons && {
+      [familyClass]: true,
     },
     ...className && { [className]: true },
   }), [
-    familyClass,
-    loading,
     className,
-    materialStyle,
-    familyPrefix,
-    icon,
+    useMaterialIcons,
+    familyClass,
   ]);
 
+  const iconSize = useMemo(() => {
+    if (size) {
+      const numSize = parseInt(size, 10);
+      return !Number.isNaN(numSize) ? numSize : size;
+    }
+    return undefined;
+  }, [size]);
+
+  // Render Material Design icon (legacy support)
+  if (useMaterialIcons) {
+    return (
+      <i
+        className={classNames(generateClasses)}
+        style={generateStyleVariables}
+        {...dataAttributes}
+      >
+        {icon}
+      </i>
+    );
+  }
+
+  // Render Lucide icon
+  if (!LucideIcon) {
+    // eslint-disable-next-line no-console
+    console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
+    return (
+      <span
+        className={classNames(generateClasses)}
+        style={generateStyleVariables}
+        {...dataAttributes}
+      >
+        ?
+      </span>
+    );
+  }
+
   return (
-    <i
+    <span
       className={classNames(generateClasses)}
       style={generateStyleVariables}
       {...dataAttributes}
     >
-      {materialStyle && icon}
-    </i>
+      <LucideIcon
+        size={iconSize || 24}
+        strokeWidth={strokeWidth}
+      />
+    </span>
   );
 }

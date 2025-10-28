@@ -83,7 +83,7 @@ export const CloseIcon: Story = {
   render: (args) => (
     <DOffcanvas {...args}>
       <DOffcanvas.Header
-        icon="x-circle"
+        icon="XCircle"
         showCloseButton
       >
         <h5 className="fw-bold">Advanced filters</h5>

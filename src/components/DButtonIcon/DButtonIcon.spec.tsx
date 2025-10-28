@@ -32,7 +32,7 @@ describe('<DButtonIcon />', () => {
 
     const { getByRole } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
         onClick={(e) => {
           stopPropagation();
           handleClick(e);
@@ -50,7 +50,7 @@ describe('<DButtonIcon />', () => {
   it('Should render loading state with aria label', () => {
     const { container } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
         loading
         loadingAriaLabel="Loading..."
       />,
@@ -63,7 +63,7 @@ describe('<DButtonIcon />', () => {
   it('Should render color secondary outline', () => {
     const { container } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
         color="secondary"
         variant="outline"
       />,
@@ -77,7 +77,7 @@ describe('<DButtonIcon />', () => {
 
     const { getByRole } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
         state="disabled"
         onClick={(e) => {
           handleClick(e);
@@ -95,7 +95,7 @@ describe('<DButtonIcon />', () => {
   it('Should apply data attributes', () => {
     const { getByRole } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
         dataAttributes={{ 'data-test': 'button' }}
       />,
     );
@@ -106,7 +106,7 @@ describe('<DButtonIcon />', () => {
 
   it('Should apply custom style', () => {
     const { getByRole } = render(
-      <DButtonIcon icon="check" style={{ backgroundColor: 'red' }} />,
+      <DButtonIcon icon="Check" style={{ backgroundColor: 'red' }} />,
     );
 
     expect(getByRole('button')).toHaveStyle({ backgroundColor: 'red' });
@@ -115,7 +115,7 @@ describe('<DButtonIcon />', () => {
   it('Should apply state class when state is not disabled', () => {
     const { getByRole } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
         state="active"
         disabled={false}
       />,
@@ -127,7 +127,7 @@ describe('<DButtonIcon />', () => {
   it('Should not render icon when loading is true', () => {
     const { getByRole } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
         loading
       />,
     );
@@ -139,7 +139,7 @@ describe('<DButtonIcon />', () => {
   it('Should apply size class', () => {
     const { getByRole } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
         size="lg"
       />,
     );
@@ -150,7 +150,7 @@ describe('<DButtonIcon />', () => {
   it('Should not throw if onClick is not provided', () => {
     const { getByRole } = render(
       <DButtonIcon
-        icon="check"
+        icon="Check"
       />,
     );
 

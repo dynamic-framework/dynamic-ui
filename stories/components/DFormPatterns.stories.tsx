@@ -172,7 +172,7 @@ export const FieldsetForm2: Story = {
       <form>
         <fieldset className="mb-8">
           <legend className="d-flex fw-bold">
-            <DIcon icon="person" size="1rem" className="me-2 text-muted" />
+            <DIcon icon="User" size="1rem" className="me-2 text-muted" />
             Personal Information
           </legend>
           <div className="grid gap-3">
@@ -196,7 +196,7 @@ export const FieldsetForm2: Story = {
 
         <fieldset>
           <legend className="d-flex fw-bold">
-            <DIcon icon="map" size="1rem" className="me-2 text-muted" />
+            <DIcon icon="Map" size="1rem" className="me-2 text-muted" />
             Address Information
           </legend>
           <div className="grid gap-3" style={{ '--bs-columns': '1' }}>
@@ -241,7 +241,7 @@ export const FormWithCover: Story = {
       <form className="p-8 g-col-12 g-col-lg-8">
         <fieldset className="mb-8">
           <legend className="d-flex fw-bold">
-            <DIcon icon="person" size="1rem" className="me-2 text-muted" />
+            <DIcon icon="User" size="1rem" className="me-2 text-muted" />
             Personal Information
           </legend>
           <div className="grid gap-3">
@@ -285,7 +285,7 @@ export const FormWithCoverResponsive: Story = {
       <form className="p-8 g-col-12 g-col-lg-8">
         <fieldset className="mb-8">
           <legend className="d-flex fw-bold">
-            <DIcon icon="person" size="1rem" className="me-2 text-muted" />
+            <DIcon icon="User" size="1rem" className="me-2 text-muted" />
             Personal Information
           </legend>
           <div className="grid gap-3">
@@ -335,7 +335,7 @@ export const CustomRadios: Story = {
       <form className="p-8 g-col-12 g-col-lg-8">
         <fieldset className="mb-8">
           <legend className="d-flex fw-bold">
-            <DIcon icon="person" size="1rem" className="me-2 text-muted" />
+            <DIcon icon="User" size="1rem" className="me-2 text-muted" />
             Personal Information
           </legend>
           <div className="grid gap-3">
@@ -358,7 +358,7 @@ export const CustomRadios: Story = {
         </fieldset>
         <fieldset className="mb-8">
           <legend className="d-flex fw-bold">
-            <DIcon icon="map" size="1rem" className="me-2 text-muted" />
+            <DIcon icon="Map" size="1rem" className="me-2 text-muted" />
             Locations
           </legend>
           <div className="grid gap-3">
@@ -367,7 +367,7 @@ export const CustomRadios: Story = {
               <div className="form-check-label">
                 <span className="fw-semibold">Home</span>
                 <small className="d-block mt-1 text-muted d-flex gap-2">
-                  <DIcon size="1rem" icon="map" />
+                  <DIcon size="1rem" icon="Map" />
                   123 Main Street, New York, NY 10001
                 </small>
               </div>
@@ -377,7 +377,7 @@ export const CustomRadios: Story = {
               <div className="form-check-label">
                 <span className="fw-semibold">Work</span>
                 <small className="d-block mt-1 text-muted d-flex gap-2">
-                  <DIcon size="1rem" icon="map" />
+                  <DIcon size="1rem" icon="Map" />
                   123 Main Street, New York, NY 10001
                 </small>
               </div>

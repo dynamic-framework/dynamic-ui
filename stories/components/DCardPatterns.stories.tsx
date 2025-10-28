@@ -30,20 +30,20 @@ export const InsurancePlan: Story = {
     <div className="grid gap-4" style={{ '--bs-columns': 3, width: 800 }}>
       <DCard className="w-100" style={{ maxWidth: '350px' }}>
         <DCard.Body className="text-center">
-          <DIcon icon="shield-check" size="3rem" className="mb-3 text-primary" />
+          <DIcon icon="ShieldCheck" size="3rem" className="mb-3 text-primary" />
           <h5 className="card-title">Basic Plan</h5>
           <p className="h2 my-4">$49/mo</p>
           <ul className="list-unstyled text-start mb-4">
             <li className="mb-2">
-              <DIcon icon="check-circle" className="text-success me-2" />
+              <DIcon icon="CheckCircle" className="text-success me-2" />
               $100,000 Coverage
             </li>
             <li className="mb-2">
-              <DIcon icon="check-circle" className="text-success me-2" />
+              <DIcon icon="CheckCircle" className="text-success me-2" />
               24/7 Support
             </li>
             <li className="mb-2 text-muted">
-              <DIcon icon="x-circle" className="me-2" />
+              <DIcon icon="XCircle" className="me-2" />
               Roadside Assistance
             </li>
           </ul>
@@ -52,20 +52,20 @@ export const InsurancePlan: Story = {
       </DCard>
       <DCard className="w-100 bg-primary text-white" style={{ maxWidth: '350px' }}>
         <DCard.Body className="text-center">
-          <DIcon icon="shield-shaded" size="3rem" className="mb-3 text-white" />
+          <DIcon icon="Shield" size="3rem" className="mb-3 text-white" />
           <h5 className="card-title mb-0">Premium Plan</h5>
           <p className="h2 my-4">$99/mo</p>
           <ul className="list-unstyled text-start mb-4">
             <li className="mb-2">
-              <DIcon icon="check-circle" className="text-white me-2" />
+              <DIcon icon="CheckCircle" className="text-white me-2" />
               $500,000 Coverage
             </li>
             <li className="mb-2">
-              <DIcon icon="check-circle" className="text-white me-2" />
+              <DIcon icon="CheckCircle" className="text-white me-2" />
               24/7 Support
             </li>
             <li className="mb-2">
-              <DIcon icon="check-circle" className="text-white me-2" />
+              <DIcon icon="CheckCircle" className="text-white me-2" />
               Roadside Assistance
             </li>
           </ul>
@@ -81,20 +81,20 @@ export const InsurancePlan: Story = {
         }}
       >
         <DCard.Body className="text-center">
-          <DIcon icon="shield-shaded" size="3rem" className="mb-3 text-white" />
+          <DIcon icon="Shield" size="3rem" className="mb-3 text-white" />
           <h5 className="card-title mb-0">Premium Plan</h5>
           <p className="h2 my-4">$99/mo</p>
           <ul className="list-unstyled text-start mb-4">
             <li className="mb-2">
-              <DIcon icon="check-circle" className="text-white me-2" />
+              <DIcon icon="CheckCircle" className="text-white me-2" />
               $500,000 Coverage
             </li>
             <li className="mb-2">
-              <DIcon icon="check-circle" className="text-white me-2" />
+              <DIcon icon="CheckCircle" className="text-white me-2" />
               24/7 Support
             </li>
             <li className="mb-2">
-              <DIcon icon="check-circle" className="text-white me-2" />
+              <DIcon icon="CheckCircle" className="text-white me-2" />
               Roadside Assistance
             </li>
           </ul>
@@ -111,7 +111,7 @@ export const InvestmentPortfolio: Story = {
       <DCard.Body className="p-8">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h5 className="card-title">My Portfolio</h5>
-          <DIcon hasCircle icon="graph-up-arrow" color="info" size="1rem" />
+          <DIcon hasCircle icon="TrendingUp" color="info" size="1rem" />
         </div>
         <p className="text-muted mb-1">Total Value</p>
         <p className="h3 mb-4">$123,456.78</p>
@@ -161,23 +161,23 @@ export const Plan: Story = {
           <hr />
           <ul className="list-unstyled small">
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               $500,000 Coverage
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               24/7 Support
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Roadside Assistance
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Unlimited Devices
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Unlimited Users
             </li>
           </ul>
@@ -215,23 +215,23 @@ export const Plan: Story = {
           <hr />
           <ul className="list-unstyled small">
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               $500,000 Coverage
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               24/7 Support
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Roadside Assistance
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Unlimited Devices
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Unlimited Users
             </li>
           </ul>
@@ -252,23 +252,23 @@ export const Plan: Story = {
           <hr />
           <ul className="list-unstyled small">
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               $500,000 Coverage
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               24/7 Support
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Roadside Assistance
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Unlimited Devices
             </li>
             <li>
-              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              <DIcon size="1rem" icon="Check" className="text-success me-2" />
               Unlimited Users
             </li>
           </ul>

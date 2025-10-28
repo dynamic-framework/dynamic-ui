@@ -104,7 +104,7 @@ export const CloseIcon: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Header
-        icon="x-circle"
+        icon="XCircle"
         showCloseButton
       >
         <h5 className="fw-bold">Do you want to reject the offer?</h5>

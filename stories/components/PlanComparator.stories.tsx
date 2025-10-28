@@ -65,10 +65,10 @@ export const FourPlans: StoryObj = {
           {fourPlanFeatures.map((feature, index) => (
             <tr key={index}>
               <td className="feature-name">{feature.name}</td>
-              <td>{feature.free ? <DIcon size="1rem" icon="check-circle" className="text-success" /> : <DIcon icon="x" className="text-danger" />}</td>
-              <td>{feature.basic ? <DIcon size="1rem" icon="check-circle" className="text-success" /> : <DIcon icon="x" className="text-danger" />}</td>
-              <td>{feature.pro ? <DIcon size="1rem" icon="check-circle" className="text-success" /> : <DIcon icon="x" className="text-danger" />}</td>
-              <td>{feature.enterprise ? <DIcon size="1rem" icon="check-circle" className="text-success" /> : <DIcon icon="x" className="text-danger" />}</td>
+              <td>{feature.free ? <DIcon size="1rem" icon="CheckCircle" className="text-success" /> : <DIcon icon="X" className="text-danger" />}</td>
+              <td>{feature.basic ? <DIcon size="1rem" icon="CheckCircle" className="text-success" /> : <DIcon icon="X" className="text-danger" />}</td>
+              <td>{feature.pro ? <DIcon size="1rem" icon="CheckCircle" className="text-success" /> : <DIcon icon="X" className="text-danger" />}</td>
+              <td>{feature.enterprise ? <DIcon size="1rem" icon="CheckCircle" className="text-success" /> : <DIcon icon="X" className="text-danger" />}</td>
             </tr>
           ))}
         </tbody>

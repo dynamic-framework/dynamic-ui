@@ -245,16 +245,16 @@ export const CustomContent: Story = {
 export const WithIcons: Story = {
   render: (args) => (
     <DListGroup {...args}>
-      <DListGroup.Item iconStart="house-door" href="#">
+      <DListGroup.Item iconStart="Home" href="#">
         Home
       </DListGroup.Item>
-      <DListGroup.Item iconStart="person" href="#">
+      <DListGroup.Item iconStart="User" href="#">
         Profile
       </DListGroup.Item>
-      <DListGroup.Item iconStart="gear" href="#">
+      <DListGroup.Item iconStart="Settings" href="#">
         Settings
       </DListGroup.Item>
-      <DListGroup.Item iconStart="envelope" href="#">
+      <DListGroup.Item iconStart="Mail" href="#">
         Messages
       </DListGroup.Item>
     </DListGroup>
@@ -274,13 +274,13 @@ export const WithIcons: Story = {
 export const WithIconsEnd: Story = {
   render: (args) => (
     <DListGroup {...args}>
-      <DListGroup.Item iconEnd="chevron-right" href="#">
+      <DListGroup.Item iconEnd="ChevronRight" href="#">
         Dashboard
       </DListGroup.Item>
-      <DListGroup.Item iconEnd="chevron-right" href="#">
+      <DListGroup.Item iconEnd="ChevronRight" href="#">
         Analytics
       </DListGroup.Item>
-      <DListGroup.Item iconEnd="chevron-right" href="#">
+      <DListGroup.Item iconEnd="ChevronRight" href="#">
         Reports
       </DListGroup.Item>
     </DListGroup>
@@ -300,13 +300,13 @@ export const WithIconsEnd: Story = {
 export const WithBothIcons: Story = {
   render: (args) => (
     <DListGroup {...args}>
-      <DListGroup.Item iconStart="check-circle-fill" iconEnd="chevron-right" color="success" action active>
+      <DListGroup.Item iconStart="CircleCheck" iconEnd="ChevronRight" color="success" action active>
         Completed Tasks
       </DListGroup.Item>
-      <DListGroup.Item iconStart="clock" iconEnd="chevron-right" color="warning" action>
+      <DListGroup.Item iconStart="Clock" iconEnd="ChevronRight" color="warning" action>
         Pending Tasks
       </DListGroup.Item>
-      <DListGroup.Item iconStart="x-circle-fill" iconEnd="chevron-right" color="danger" action>
+      <DListGroup.Item iconStart="CircleX" iconEnd="ChevronRight" color="danger" action>
         Cancelled Tasks
       </DListGroup.Item>
     </DListGroup>

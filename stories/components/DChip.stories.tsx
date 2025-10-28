@@ -170,14 +170,14 @@ export const ChipVariants: Story = {
     <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
         <DChip color="primary" text="Simple" />
-        <DChip color="success" text="With Icon" icon="check-circle" />
+        <DChip color="success" text="With Icon" icon="CheckCircle" />
         <DChip color="warning" text="Closeable" showClose />
-        <DChip color="danger" text="Complete" icon="x-circle" showClose />
+        <DChip color="danger" text="Complete" icon="XCircle" showClose />
       </div>
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-        <DChip color="info" text="Category" icon="folder" />
-        <DChip color="secondary" text="Tag" icon="tag" showClose />
-        <DChip color="dark" text="Label" icon="bookmark" showClose />
+        <DChip color="info" text="Category" icon="Folder" />
+        <DChip color="secondary" text="Tag" icon="Tag" showClose />
+        <DChip color="dark" text="Label" icon="Bookmark" showClose />
       </div>
     </div>
   ),
@@ -197,9 +197,9 @@ export const MaterialIcon: Story = {
     >
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
         <DChip color="primary" text="Fire" icon="local_fire_department" />
-        <DChip color="success" text="Star" icon="star" showClose />
-        <DChip color="warning" text="Alert" icon="warning" showClose />
-        <DChip color="info" text="Info" icon="info" />
+        <DChip color="success" text="Star" icon="Star" showClose />
+        <DChip color="warning" text="Alert" icon="AlertTriangle" showClose />
+        <DChip color="info" text="Info" icon="Info" />
       </div>
     </DContextProvider>
   ),

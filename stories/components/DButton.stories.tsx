@@ -223,19 +223,19 @@ export const WithIcons: Story = {
       <DButton
         color="danger"
         text="Delete"
-        iconStart="trash"
+        iconStart="Trash2"
       />
       <DButton
         color="primary"
         text="Primary"
-        iconEnd="chevron-right"
+        iconEnd="ChevronRight"
       />
     </div>
   ),
   args: {
     color: 'primary',
     text: 'Primary',
-    iconEnd: 'chevron-right',
+    iconEnd: 'ChevronRight',
   },
 };
 
@@ -252,7 +252,7 @@ export const SecondaryOutlineIconRight: Story = {
     color: 'secondary',
     text: 'Secondary',
     variant: 'outline',
-    iconEnd: 'chevron-right',
+    iconEnd: 'ChevronRight',
   },
 };
 
@@ -269,7 +269,7 @@ export const LinkIconRight: Story = {
     color: 'secondary',
     text: 'Link',
     variant: 'link',
-    iconEnd: 'chevron-right',
+    iconEnd: 'ChevronRight',
   },
 };
 

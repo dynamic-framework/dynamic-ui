@@ -63,7 +63,7 @@ describe('<DChip />', () => {
   it('should render the icon passed by props', () => {
     const { container } = render(
       <DChip
-        icon="heart"
+        icon="Heart"
         text="Chip content"
       />,
     );

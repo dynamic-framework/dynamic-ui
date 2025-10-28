@@ -102,22 +102,22 @@ export const Basic: Story = {
               <div className="list-group-item px-0">
                 <div className="d-flex justify-content-between">
                   <div>
-                    <DIcon icon="person" size="1rem" className="me-2 text-muted" />
+                    <DIcon icon="User" size="1rem" className="me-2 text-muted" />
                     Personal Information
                   </div>
                   <div>
-                    <DIcon icon="pencil" size="1rem" className="text-muted" />
+                    <DIcon icon="Pencil" size="1rem" className="text-muted" />
                   </div>
                 </div>
               </div>
               <div className="list-group-item px-0">
                 <div className="d-flex justify-content-between">
                   <div>
-                    <DIcon icon="person" size="1rem" className="me-2 text-muted" />
+                    <DIcon icon="User" size="1rem" className="me-2 text-muted" />
                     Personal Information
                   </div>
                   <div>
-                    <DIcon icon="pencil" size="1rem" className="text-muted" />
+                    <DIcon icon="Pencil" size="1rem" className="text-muted" />
                   </div>
                 </div>
               </div>
@@ -136,9 +136,9 @@ export const Basic: Story = {
               <DBadge soft size="sm" color="warning" text="Pending" />
             </div>
             <DBox className="d-flex align-items-center">
-              <DIcon icon="file-earmark" size="1rem" className="me-2 text-muted" />
+              <DIcon icon="FileText" size="1rem" className="me-2 text-muted" />
               <span>Doc-name.pdf</span>
-              <DButtonIcon variant="link" icon="download" size="sm" className="ms-auto" />
+              <DButtonIcon variant="link" icon="Download" size="sm" className="ms-auto" />
             </DBox>
           </div>
         </div>
@@ -154,19 +154,19 @@ export const Menu: Story = {
         <div className="g-col-12 g-col-lg-4 border-end border-opacity-25">
           <div>
             <DListGroup className="list-group-white">
-              <DListGroupItem iconEnd="chevron-right" as="button" active>
+              <DListGroupItem iconEnd="ChevronRight" as="button" active>
                 <div>Home request issue #1</div>
                 <small className="text-muted fw-normal">Text lorem ipsum</small>
               </DListGroupItem>
-              <DListGroupItem iconEnd="chevron-right" as="button">
+              <DListGroupItem iconEnd="ChevronRight" as="button">
                 <div>Home request issue #2</div>
                 <small className="text-muted fw-normal">Text lorem ipsum</small>
               </DListGroupItem>
-              <DListGroupItem iconEnd="chevron-right" as="button">
+              <DListGroupItem iconEnd="ChevronRight" as="button">
                 <div>Home request issue #3</div>
                 <small className="text-muted fw-normal">Text lorem ipsum</small>
               </DListGroupItem>
-              <DListGroupItem iconEnd="chevron-right" as="button">
+              <DListGroupItem iconEnd="ChevronRight" as="button">
                 <div>Home request issue #4</div>
                 <small className="text-muted fw-normal">Text lorem ipsum</small>
               </DListGroupItem>
@@ -178,22 +178,22 @@ export const Menu: Story = {
               <div className="list-group-item px-0">
                 <div className="d-flex justify-content-between">
                   <div>
-                    <DIcon icon="person" size="1rem" className="me-2 text-muted" />
+                    <DIcon icon="User" size="1rem" className="me-2 text-muted" />
                     Personal Information
                   </div>
                   <div>
-                    <DIcon icon="pencil" size="1rem" className="text-muted" />
+                    <DIcon icon="Pencil" size="1rem" className="text-muted" />
                   </div>
                 </div>
               </div>
               <div className="list-group-item px-0">
                 <div className="d-flex justify-content-between">
                   <div>
-                    <DIcon icon="person" size="1rem" className="me-2 text-muted" />
+                    <DIcon icon="User" size="1rem" className="me-2 text-muted" />
                     Personal Information
                   </div>
                   <div>
-                    <DIcon icon="pencil" size="1rem" className="text-muted" />
+                    <DIcon icon="Pencil" size="1rem" className="text-muted" />
                   </div>
                 </div>
               </div>

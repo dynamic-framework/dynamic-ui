@@ -56,7 +56,7 @@ export const Default: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="circle-fill" color="primary" className="me-2" />
+        <DIcon icon="Disc" color="primary" className="me-2" />
         <strong className="me-auto">Notification</strong>
         <small className="me-2">just now</small>
         <button
@@ -64,7 +64,7 @@ export const Default: Story = {
           className="d-close"
           aria-label="Close"
         >
-          <DIcon icon="x" />
+          <DIcon icon="X" />
         </button>
       </DToast.Header>
       <DToast.Body>
@@ -88,7 +88,7 @@ export const Success: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="check-circle-fill" color="success" className="me-2" />
+        <DIcon icon="CircleCheck" color="success" className="me-2" />
         <strong className="me-auto">Success</strong>
         <small className="me-2">2 mins ago</small>
         <button
@@ -96,7 +96,7 @@ export const Success: Story = {
           className="d-close"
           aria-label="Close"
         >
-          <DIcon icon="x" />
+          <DIcon icon="X" />
         </button>
       </DToast.Header>
       <DToast.Body>
@@ -120,7 +120,7 @@ export const Warning: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="exclamation-triangle-fill" color="warning" className="me-2" />
+        <DIcon icon="AlertTriangle" color="warning" className="me-2" />
         <strong className="me-auto">Warning</strong>
         <small className="me-2">5 mins ago</small>
         <button
@@ -128,7 +128,7 @@ export const Warning: Story = {
           className="d-close"
           aria-label="Close"
         >
-          <DIcon icon="x" />
+          <DIcon icon="X" />
         </button>
       </DToast.Header>
       <DToast.Body>
@@ -152,7 +152,7 @@ export const Danger: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="x-circle-fill" color="danger" className="me-2" />
+        <DIcon icon="CircleX" color="danger" className="me-2" />
         <strong className="me-auto">Error</strong>
         <small className="me-2">1 min ago</small>
         <button
@@ -160,7 +160,7 @@ export const Danger: Story = {
           className="d-close"
           aria-label="Close"
         >
-          <DIcon icon="x" />
+          <DIcon icon="X" />
         </button>
       </DToast.Header>
       <DToast.Body>
@@ -184,7 +184,7 @@ export const Info: Story = {
   render: (args) => (
     <DToast {...args}>
       <DToast.Header>
-        <DIcon icon="info-circle-fill" color="info" className="me-2" />
+        <DIcon icon="Info" color="info" className="me-2" />
         <strong className="me-auto">Information</strong>
         <small className="me-2">10 mins ago</small>
         <button
@@ -192,7 +192,7 @@ export const Info: Story = {
           className="d-close"
           aria-label="Close"
         >
-          <DIcon icon="x" />
+          <DIcon icon="X" />
         </button>
       </DToast.Header>
       <DToast.Body>
@@ -219,7 +219,7 @@ export const ColoredBackgrounds: Story = {
         <DToast.Body className="d-flex justify-content-between align-items-center">
           <span>Primary background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
-            <DIcon icon="x" />
+            <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
@@ -227,7 +227,7 @@ export const ColoredBackgrounds: Story = {
         <DToast.Body className="d-flex justify-content-between align-items-center">
           <span>Success background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
-            <DIcon icon="x" />
+            <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
@@ -235,7 +235,7 @@ export const ColoredBackgrounds: Story = {
         <DToast.Body className="d-flex justify-content-between align-items-center">
           <span>Warning background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
-            <DIcon icon="x" />
+            <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
@@ -243,7 +243,7 @@ export const ColoredBackgrounds: Story = {
         <DToast.Body className="d-flex justify-content-between align-items-center">
           <span>Danger background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
-            <DIcon icon="x" />
+            <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
@@ -251,7 +251,7 @@ export const ColoredBackgrounds: Story = {
         <DToast.Body className="d-flex justify-content-between align-items-center">
           <span>Info background toast</span>
           <button type="button" className="d-close d-close-white" aria-label="Close">
-            <DIcon icon="x" />
+            <DIcon icon="X" />
           </button>
         </DToast.Body>
       </DToast>
@@ -279,7 +279,7 @@ export const WithoutHeader: Story = {
       <DToast.Body className="d-flex justify-content-between align-items-center">
         <span>Simple toast without header</span>
         <button type="button" className="d-close d-close-white" aria-label="Close">
-          <DIcon icon="x" />
+          <DIcon icon="X" />
         </button>
       </DToast.Body>
     </DToast>
@@ -301,11 +301,11 @@ export const Stacked: Story = {
     <div className="toast-container position-absolute top-0 end-0 p-3">
       <DToast className="show mb-2">
         <DToast.Header>
-          <DIcon icon="circle-fill" color="primary" className="me-2" />
+          <DIcon icon="Disc" color="primary" className="me-2" />
           <strong className="me-auto">Message 1</strong>
           <small className="me-2">just now</small>
           <button type="button" className="d-close" aria-label="Close">
-            <DIcon icon="x" />
+            <DIcon icon="X" />
           </button>
         </DToast.Header>
         <DToast.Body>
@@ -314,11 +314,11 @@ export const Stacked: Story = {
       </DToast>
       <DToast className="show mb-2">
         <DToast.Header>
-          <DIcon icon="check-circle-fill" color="success" className="me-2" />
+          <DIcon icon="CircleCheck" color="success" className="me-2" />
           <strong className="me-auto">Message 2</strong>
           <small className="me-2">2 mins ago</small>
           <button type="button" className="d-close" aria-label="Close">
-            <DIcon icon="x" />
+            <DIcon icon="X" />
           </button>
         </DToast.Header>
         <DToast.Body>
@@ -327,11 +327,11 @@ export const Stacked: Story = {
       </DToast>
       <DToast className="show">
         <DToast.Header>
-          <DIcon icon="info-circle-fill" color="info" className="me-2" />
+          <DIcon icon="Info" color="info" className="me-2" />
           <strong className="me-auto">Message 3</strong>
           <small className="me-2">5 mins ago</small>
           <button type="button" className="d-close" aria-label="Close">
-            <DIcon icon="x" />
+            <DIcon icon="X" />
           </button>
         </DToast.Header>
         <DToast.Body>
