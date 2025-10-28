@@ -77,9 +77,8 @@ export const Default: Story = {
           color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -119,9 +118,8 @@ export const CloseIcon: Story = {
           color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -158,9 +156,8 @@ export const ActionsPlacementStart: Story = {
           color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -197,9 +194,8 @@ export const ActionsPlacementEnd: Story = {
           color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -233,9 +229,8 @@ export const WithoutHeader: Story = {
           color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -328,9 +323,8 @@ export const WithoutCancelX: Story = {
           color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -385,9 +379,9 @@ export const MaterialStyleCloseIcon: Story = {
             color="secondary"
             variant="outline"
             className="d-grid"
-            pill
+
           />
-          <DButton text="ok" className="d-grid" pill />
+          <DButton text="ok" className="d-grid" />
         </DModal.Footer>
       </DModal>
     </DContextProvider>

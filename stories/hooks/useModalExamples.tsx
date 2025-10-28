@@ -34,10 +34,9 @@ function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
           color="secondary"
           variant="outline"
           className="d-grid"
-          pill
           onClick={() => closePortal()}
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   );
