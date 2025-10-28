@@ -49,7 +49,7 @@ export const Basic: Story = {
         <div className="g-col-12 g-col-lg-8 bg-white p-8">
           <div className="mb-8">
             <h3 className="mb-0">User Details</h3>
-            <p>Please fill out the form below to create your account.</p>
+            <p className="text-muted mb-0">Please fill out the form below to create your account.</p>
           </div>
           <form className="grid gap-4">
             <div className="g-col-12 g-col-lg-6">
@@ -214,7 +214,7 @@ export const Menu: Story = {
         <div className="g-col-12 g-col-lg-8 bg-white p-8">
           <div className="mb-8">
             <h3 className="mb-0">User Details</h3>
-            <p>Please fill out the form below to create your account.</p>
+            <p className="text-muted mb-0">Please fill out the form below to create your account.</p>
           </div>
           <form className="grid gap-4">
             <div className="g-col-12 g-col-lg-6">
