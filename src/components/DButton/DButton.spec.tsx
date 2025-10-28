@@ -29,31 +29,6 @@ describe('<DButton />', () => {
   `);
   });
 
-  it('Should render button pill', () => {
-    const props = {
-      text: 'Test',
-      pill: true,
-    };
-
-    const { container } = render(
-      <DButton {...props} />,
-    );
-
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <button
-          aria-label="Test"
-          class="btn btn-primary"
-          type="button"
-        >
-          <span>
-            ${props.text}
-          </span>
-        </button>
-      </div>
-    `);
-  });
-
   it('Should call onClick when clicked and stopPropagation is true', () => {
     const handleClick = jest.fn();
     const stopPropagation = jest.fn();

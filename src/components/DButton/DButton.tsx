@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
-import { useMemo, useCallback } from 'react';
 import classNames from 'classnames';
+import { useCallback, useMemo } from 'react';
 
 import type { MouseEvent } from 'react';
 
@@ -33,7 +33,6 @@ type Props =
   value?: string;
   type?: ButtonType;
   loadingText?: string;
-  pill?: boolean;
   loading?: boolean;
   loadingAriaLabel?: string;
   disabled?: boolean;
