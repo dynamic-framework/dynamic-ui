@@ -90,10 +90,10 @@ export default config;
 type Story = StoryObj<typeof DDropdown>;
 
 const baseActions: DropdownAction[] = [
-  { label: 'Edit', icon: 'pencil', onClick: () => alert('Edit clicked') },
-  { label: 'Duplicate', icon: 'copy' },
+  { label: 'Edit', icon: 'Pencil', onClick: () => alert('Edit clicked') },
+  { label: 'Duplicate', icon: 'Copy' },
   { isDivider: true, label: '' },
-  { label: 'Delete', icon: 'trash', color: 'danger' },
+  { label: 'Delete', icon: 'Trash2', color: 'danger' },
 ];
 
 export const CustomToggle: Story = {
@@ -106,7 +106,7 @@ export const CustomToggle: Story = {
     actions: baseActions,
     dropdownToggle: ({ open, toggle }) => (
       <DButtonIcon
-        icon={open ? 'chevron-up' : 'chevron-down'}
+        icon={open ? 'ChevronUp' : 'ChevronDown'}
         color="primary"
         variant="link"
         onClick={toggle}
@@ -130,7 +130,7 @@ export const DisabledActions: Story = {
   ),
   args: {
     actions: [
-      { label: 'Active action', icon: 'check' },
+      { label: 'Active action', icon: 'Check' },
       { label: 'Disabled action', disabled: true },
     ],
   },
@@ -139,8 +139,8 @@ export const DisabledActions: Story = {
 export const WithLinks: Story = {
   args: {
     actions: [
-      { label: 'Open Google', href: 'https://google.com', icon: 'globe' },
-      { label: 'Open Storybook Docs', href: 'https://storybook.js.org', icon: 'book' },
+      { label: 'Open Google', href: 'https://google.com', icon: 'Globe' },
+      { label: 'Open Storybook Docs', href: 'https://storybook.js.org', icon: 'Book' },
     ],
   },
 };
@@ -156,11 +156,11 @@ export const WithDividers: Story = {
       <DButton onClick={toggle} text="Button" />
     ),
     actions: [
-      { label: 'First action', icon: 'star' },
+      { label: 'First action', icon: 'Star' },
       { isDivider: true, label: '' },
-      { label: 'Second action', icon: 'check' },
+      { label: 'Second action', icon: 'Check' },
       { isDivider: true, label: '' },
-      { label: 'Third action', icon: 'trash', color: 'danger' },
+      { label: 'Third action', icon: 'Trash2', color: 'danger' },
     ],
   },
 };
