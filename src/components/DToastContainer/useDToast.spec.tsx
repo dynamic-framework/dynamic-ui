@@ -1,4 +1,4 @@
-import { renderHook, act, render } from '@testing-library/react';
+import { act, render, renderHook } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { toast as reactHotToast, Toast } from 'react-hot-toast';
 import { DContextProvider } from '../../contexts';
@@ -82,7 +82,7 @@ describe('useDToast', () => {
       result.current.toast({
         title: 'Test Title',
         icon: 'star',
-        color: 'primary',
+        color: 'success',
       });
     });
 
@@ -105,20 +105,6 @@ describe('useDToast', () => {
         timestamp: '10:30 AM',
         icon: 'info',
         color: 'success',
-      });
-    });
-
-    expect(mockCustom).toHaveBeenCalledWith(expect.any(Function), undefined);
-  });
-
-  it('should create soft themed toast', () => {
-    const { result } = renderWithContext(() => useDToast());
-
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        color: 'warning',
-        soft: true,
       });
     });
 
@@ -238,7 +224,7 @@ describe('useDToast', () => {
         description: 'Test Description',
         timestamp: '10:30 AM',
         icon: 'info',
-        color: 'primary',
+        color: 'info',
       });
     });
 
@@ -313,27 +299,5 @@ describe('useDToast', () => {
 
     expect(container.querySelector('.toast-danger')).toBeInTheDocument();
     expect(container.querySelector('.show')).toBeInTheDocument();
-  });
-
-  it('should apply correct soft color classes', () => {
-    const { result } = renderWithContext(() => useDToast());
-
-    act(() => {
-      result.current.toast({
-        title: 'Test Title',
-        color: 'info',
-        soft: true,
-      });
-    });
-
-    const renderFunction = mockCustom.mock.calls[0][0] as ToastRenderFunction;
-    const { container } = render(
-      <DContextProvider>
-        {renderFunction(createMockToast({ visible: true }))}
-      </DContextProvider>,
-    );
-
-    expect(container.querySelector('.toast-soft-info')).toBeInTheDocument();
-    expect(container.querySelector('.toast-info')).not.toBeInTheDocument();
   });
 });
