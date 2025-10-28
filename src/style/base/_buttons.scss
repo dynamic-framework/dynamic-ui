@@ -145,11 +145,9 @@
 }
 
 @each $color, $value in $theme-colors {
-  // @if $color != "secondary" {
   .btn-#{$color} {
     @include df-button-variant-mapper($color);
   }
-  // }
 
   .btn-link-#{$color} {
     @include df-button-variant-mapper($color, "link");

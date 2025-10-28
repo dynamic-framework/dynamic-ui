@@ -140,138 +140,140 @@ export const InvestmentPortfolio: Story = {
 
 export const Plan: Story = {
   render: () => (
-    <div
-      className="grid gap-4"
-      style={{ '--bs-columns': '3' }}
-    >
-      <DBox>
-        <p>Individuals</p>
-        <div>
-          <small className="text-muted">Start at</small>
-          <div className="d-flex gap-2 align-items-baseline mb-3">
-            <h3>$99</h3>
-            <small className="fw-normal text-muted text-sm">per month/user</small>
-          </div>
-          <p className="text-muted small">
-            Good individuals who are just starting out and simple businesses want the essentials.
-          </p>
-          <DButton color="secondary" className="w-100" variant="outline" text="Get Started" />
-        </div>
-        <hr />
-        <ul className="list-unstyled small">
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            $500,000 Coverage
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            24/7 Support
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Roadside Assistance
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Unlimited Devices
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Unlimited Users
-          </li>
-        </ul>
-      </DBox>
-      <DBox
-        className="position-relative"
-        style={{
-          background: 'linear-gradient(to bottom, #c9d6ff, #FFFFFF)',
-        }}
+    <div className="p-8">
+      <div
+        className="grid gap-4"
+        style={{ '--bs-columns': '3' }}
       >
-        <DChip
-          color="success"
-          className="position-absolute"
+        <DBox>
+          <p>Individuals</p>
+          <div>
+            <small className="text-muted">Start at</small>
+            <div className="d-flex gap-2 align-items-baseline mb-3">
+              <h3>$99</h3>
+              <small className="fw-normal text-muted text-sm">per month/user</small>
+            </div>
+            <p className="text-muted small">
+              Good individuals who are just starting out and simple businesses want the essentials.
+            </p>
+            <DButton color="secondary" className="w-100" variant="outline" text="Get Started" />
+          </div>
+          <hr />
+          <ul className="list-unstyled small">
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              $500,000 Coverage
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              24/7 Support
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Roadside Assistance
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Unlimited Devices
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Unlimited Users
+            </li>
+          </ul>
+        </DBox>
+        <DBox
+          className="position-relative"
           style={{
-            top: -10,
-            right: 0,
-            left: 0,
-            width: 'fit-content',
-            marginInline: 'auto',
+            background: 'linear-gradient(to bottom, #c9d6ff, #FFFFFF)',
           }}
-          text="🥇 Best Value"
-        />
-        <p>Teams</p>
-        <div>
-          <small className="text-muted">Start at</small>
-          <div className="d-flex gap-2 align-items-baseline mb-3">
-            <h3>$99</h3>
-            <small className="fw-normal text-muted text-sm">per month/user</small>
+        >
+          <DChip
+            color="success"
+            className="position-absolute"
+            style={{
+              top: -10,
+              right: 0,
+              left: 0,
+              width: 'fit-content',
+              marginInline: 'auto',
+            }}
+            text="🥇 Best Value"
+          />
+          <p>Teams</p>
+          <div>
+            <small className="text-muted">Start at</small>
+            <div className="d-flex gap-2 align-items-baseline mb-3">
+              <h3>$99</h3>
+              <small className="fw-normal text-muted text-sm">per month/user</small>
+            </div>
+            <p className="text-muted small">
+              Good individuals who are just starting out and simple businesses want the essentials.
+            </p>
+            <DButton color="primary" className="w-100" text="Get Started" />
           </div>
-          <p className="text-muted small">
-            Good individuals who are just starting out and simple businesses want the essentials.
-          </p>
-          <DButton color="primary" className="w-100" text="Get Started" />
-        </div>
-        <hr />
-        <ul className="list-unstyled small">
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            $500,000 Coverage
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            24/7 Support
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Roadside Assistance
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Unlimited Devices
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Unlimited Users
-          </li>
-        </ul>
-      </DBox>
-      <DBox>
-        <p>Enterprise</p>
-        <div>
-          <small className="text-muted">Start at</small>
-          <div className="d-flex gap-2 align-items-baseline mb-3">
-            <h3>$99</h3>
-            <small className="fw-normal text-muted text-sm">per month/user</small>
+          <hr />
+          <ul className="list-unstyled small">
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              $500,000 Coverage
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              24/7 Support
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Roadside Assistance
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Unlimited Devices
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Unlimited Users
+            </li>
+          </ul>
+        </DBox>
+        <DBox>
+          <p>Enterprise</p>
+          <div>
+            <small className="text-muted">Start at</small>
+            <div className="d-flex gap-2 align-items-baseline mb-3">
+              <h3>$99</h3>
+              <small className="fw-normal text-muted text-sm">per month/user</small>
+            </div>
+            <p className="text-muted small">
+              Good individuals who are just starting out and simple businesses want the essentials.
+            </p>
+            <DButton color="secondary" className="w-100" variant="outline" text="Get Started" />
           </div>
-          <p className="text-muted small">
-            Good individuals who are just starting out and simple businesses want the essentials.
-          </p>
-          <DButton color="secondary" className="w-100" variant="outline" text="Get Started" />
-        </div>
-        <hr />
-        <ul className="list-unstyled small">
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            $500,000 Coverage
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            24/7 Support
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Roadside Assistance
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Unlimited Devices
-          </li>
-          <li>
-            <DIcon size="1rem" icon="check" className="text-success me-2" />
-            Unlimited Users
-          </li>
-        </ul>
-      </DBox>
+          <hr />
+          <ul className="list-unstyled small">
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              $500,000 Coverage
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              24/7 Support
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Roadside Assistance
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Unlimited Devices
+            </li>
+            <li>
+              <DIcon size="1rem" icon="check" className="text-success me-2" />
+              Unlimited Users
+            </li>
+          </ul>
+        </DBox>
+      </div>
     </div>
   ),
 };
