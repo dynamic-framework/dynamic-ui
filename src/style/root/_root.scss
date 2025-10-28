@@ -224,9 +224,9 @@
     @if $color == "light" {
       @include df-button-variant-variables(
         "light",
-        $default-color: var(--#{$prefix}gray-100),
+        $default-color: var(--#{$prefix}gray-25),
         $default-text-color: color-contrast-var(map-get($all-colors, gray-100)),
-        $hover-color: var(--#{$prefix}gray-200),
+        $hover-color: var(--#{$prefix}gray-50),
         $hover-text-color: color-contrast-var(map-get($all-colors, gray-200)),
         $focus-color: var(--#{$prefix}gray-200),
         $focus-text-color: color-contrast-var(map-get($all-colors, gray-200)),
