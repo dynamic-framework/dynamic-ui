@@ -1,18 +1,18 @@
-import { useMemo } from 'react';
 import classNames from 'classnames';
+import { useMemo } from 'react';
 
 import type { PropsWithChildren } from 'react';
 
 import DIcon from '../DIcon';
 
-import type { ComponentColor, BaseProps } from '../interface';
 import { useDContext } from '../../contexts';
+import type { BaseProps, ComponentStateColor } from '../interface';
 
 type Props =
 & BaseProps
 & PropsWithChildren<{
   id?: string;
-  color?: ComponentColor;
+  color?: ComponentStateColor;
   icon?: string;
   iconFamilyClass?: string;
   iconFamilyPrefix?: string;

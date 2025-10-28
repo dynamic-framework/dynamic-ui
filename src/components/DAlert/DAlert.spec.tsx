@@ -5,6 +5,7 @@ import {
   render,
   screen,
 } from '@testing-library/react';
+import { ComponentStateColor } from '../interface';
 import DAlert from './DAlert';
 
 describe('<DAlert />', () => {
@@ -18,7 +19,7 @@ describe('<DAlert />', () => {
     const { container } = render(
       <DAlert
         id={props.id}
-        color={props.color}
+        color={props.color as ComponentStateColor}
       >
         {props.text}
       </DAlert>,

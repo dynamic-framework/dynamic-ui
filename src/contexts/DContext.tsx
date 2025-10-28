@@ -12,8 +12,8 @@ import type { PropsWithChildren } from 'react';
 
 import { DPortalContextProvider, PortalContextProps } from './DPortalContext';
 
-import type { AlertThemeIconMap } from '../components/interface';
 import { PREFIX_BS } from '../components/config';
+import type { AlertThemeIconMap } from '../components/interface';
 import getCssVariable from '../utils/getCssVariable';
 
 export type CurrencyProps = {
@@ -98,10 +98,6 @@ const DEFAULT_STATE = {
       danger: 'exclamation-triangle',
       success: 'check-circle',
       info: 'info-circle',
-      dark: 'info-circle',
-      light: 'info-circle',
-      primary: 'info-circle',
-      secondary: 'info-circle',
     },
     input: {
       search: 'search',
