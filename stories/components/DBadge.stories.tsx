@@ -131,7 +131,7 @@ export const WithIconStart: Story = {
   args: {
     color: 'primary',
     text: 'Bookmarks',
-    iconStart: 'bookmarks',
+    iconStart: 'Bookmark',
   },
 };
 
@@ -139,7 +139,7 @@ export const WithIconEnd: Story = {
   args: {
     color: 'success',
     text: 'Check',
-    iconEnd: 'check-circle',
+    iconEnd: 'CheckCircle',
   },
 };
 
@@ -147,8 +147,8 @@ export const WithBothIcons: Story = {
   args: {
     color: 'info',
     text: 'Notifications',
-    iconStart: 'bell',
-    iconEnd: 'chevron-right',
+    iconStart: 'Bell',
+    iconEnd: 'ChevronRight',
   },
 };
 
@@ -156,14 +156,14 @@ export const IconVariants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-        <DBadge color="primary" text="Icon Start" iconStart="star-fill" />
-        <DBadge color="success" text="Icon End" iconEnd="check-circle" />
-        <DBadge color="warning" text="Both Icons" iconStart="exclamation-triangle" iconEnd="arrow-right" />
+        <DBadge color="primary" text="Icon Start" iconStart="Star" />
+        <DBadge color="success" text="Icon End" iconEnd="CheckCircle" />
+        <DBadge color="warning" text="Both Icons" iconStart="AlertTriangle" iconEnd="ArrowRight" />
       </div>
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-        <DBadge color="danger" text="Alert" iconStart="x-circle" soft />
-        <DBadge color="info" text="Info" iconEnd="info-circle" soft />
-        <DBadge color="secondary" text="Tags" iconStart="tag" iconEnd="tag" soft />
+        <DBadge color="danger" text="Alert" iconStart="XCircle" soft />
+        <DBadge color="info" text="Info" iconEnd="Info" soft />
+        <DBadge color="secondary" text="Tags" iconStart="Tag" iconEnd="Tag" soft />
       </div>
     </div>
   ),
@@ -180,7 +180,7 @@ export const Rounded: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
       <DBadge color="primary" text="Rounded" rounded />
-      <DBadge color="success" text="With Icon" iconStart="check" rounded />
+      <DBadge color="success" text="With Icon" iconStart="Check" rounded />
       <DBadge color="danger" text="Soft Rounded" soft rounded />
     </div>
   ),

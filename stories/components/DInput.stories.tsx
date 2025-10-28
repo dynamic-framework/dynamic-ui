@@ -291,7 +291,7 @@ export const Invalid: Story = {
     labelIcon: undefined,
     type: 'text',
     value: undefined,
-    iconStart: 'emoji-smile-upside-down',
+    iconStart: 'Smile',
     iconStartAriaLabel: 'start action',
     iconEnd: undefined,
     hint: 'Assistive text',
@@ -307,7 +307,7 @@ export const Valid: Story = {
     labelIcon: undefined,
     type: 'text',
     value: undefined,
-    iconStart: 'emoji-smile-upside-down',
+    iconStart: 'Smile',
     iconStartAriaLabel: 'start action',
     iconEnd: undefined,
     hint: 'Assistive text',
@@ -370,7 +370,7 @@ export const CustomInputStart: Story = {
     type: 'text',
     inputStart: (
       <DIcon
-        icon="person"
+        icon="User"
       />
     ),
   },
@@ -391,7 +391,7 @@ export const CustomInputEnd: Story = {
     type: 'text',
     inputEnd: (
       <DIcon
-        icon="arrow-right"
+        icon="ArrowRight"
       />
     ),
   },

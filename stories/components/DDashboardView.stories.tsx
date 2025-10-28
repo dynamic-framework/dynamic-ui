@@ -180,7 +180,7 @@ export const Dashboard: Story = {
         </div>
         <DButton
           text="Refresh Data"
-          iconStart="arrow-clockwise"
+          iconStart="RotateCw"
           variant="link"
         />
       </div>
@@ -218,7 +218,7 @@ export const Dashboard: Story = {
           <DBox className="mb-8 h-100">
             <div className="d-flex justify-content-between align-items-center mb-8">
               <div className="mb-0 d-flex align-items-start gap-2 w-100">
-                <DIcon hasCircle icon="graph-up" size=".75rem" />
+                <DIcon hasCircle icon="TrendingUp" size=".75rem" />
                 <div>
                   <h5>Sales Performance</h5>
                   <small className="text-muted">Last 30 days</small>
@@ -243,7 +243,7 @@ export const Dashboard: Story = {
         <div className="g-col-12 g-col-lg-4">
           <DBox className="mb-8 h-100">
             <h5 className="mb-4 d-flex align-items-center gap-2">
-              <DIcon hasCircle icon="graph-up" size=".75rem" />
+              <DIcon hasCircle icon="TrendingUp" size=".75rem" />
               Task Progress
             </h5>
             <div className="list-group list-group-flush">
@@ -274,7 +274,7 @@ export const Dashboard: Story = {
         <div className="g-col-12 g-col-lg-6">
           <DBox className="mb-8 h-100">
             <h5 className="mb-4 d-flex align-items-center gap-2">
-              <DIcon hasCircle icon="graph-up" size=".75rem" />
+              <DIcon hasCircle icon="TrendingUp" size=".75rem" />
               Top Projects Performance
             </h5>
             {/* Placeholder for a chart or more detailed sales data */}
@@ -318,7 +318,7 @@ export const Dashboard: Story = {
           <DBox className="mb-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
-                <DIcon hasCircle icon="graph-up" size=".75rem" />
+                <DIcon hasCircle icon="TrendingUp" size=".75rem" />
                 User Retention Cohorts
               </h5>
               <div className="text-muted ms-auto">1 hour.</div>
@@ -327,7 +327,7 @@ export const Dashboard: Story = {
               <div className="g-col-12 g-col-lg-6">
                 <div className="d-flex align-items-center gap-2">
                   <h4 className="display-3 line-height-1">40%</h4>
-                  <DIcon icon="graph-up" hasCircle size="1rem" color="success" />
+                  <DIcon icon="TrendingUp" hasCircle size="1rem" color="success" />
                 </div>
                 <p>After 30 days</p>
                 <small className="text-muted">Oct - Nov</small>
@@ -365,7 +365,7 @@ export const Dashboard2: Story = {
         </div>
         <DButton
           text="Refresh Data"
-          iconStart="arrow-clockwise"
+          iconStart="RotateCw"
           variant="link"
         />
       </div>
@@ -393,7 +393,7 @@ export const Dashboard2: Story = {
           <DBox className="mb-8 h-100">
             <div className="d-flex justify-content-between align-items-center mb-8">
               <div className="mb-0 d-flex align-items-start gap-2 w-100">
-                <DIcon hasCircle icon="graph-up" size=".75rem" />
+                <DIcon hasCircle icon="TrendingUp" size=".75rem" />
                 <div>
                   <h5>Sales Performance</h5>
                   <small className="text-muted">Last 30 days</small>
@@ -419,7 +419,7 @@ export const Dashboard2: Story = {
           <DBox className="mb-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
-                <DIcon hasCircle icon="people" size=".75rem" />
+                <DIcon hasCircle icon="Users" size=".75rem" />
                 Task Progress
               </h5>
               <div className="text-muted ms-auto">1 hour.</div>
@@ -452,7 +452,7 @@ export const Dashboard2: Story = {
         <div className="g-col-12 g-col-lg-4">
           <DBox className="mb-8 h-100">
             <h5 className="mb-4 d-flex align-items-center gap-2">
-              <DIcon hasCircle icon="graph-up" size=".75rem" />
+              <DIcon hasCircle icon="TrendingUp" size=".75rem" />
               Top Projects Performance
             </h5>
             {/* Placeholder for a chart or more detailed sales data */}
@@ -496,7 +496,7 @@ export const Dashboard2: Story = {
           <DBox className="mb-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
-                <DIcon hasCircle icon="people" size=".75rem" />
+                <DIcon hasCircle icon="Users" size=".75rem" />
                 Teams
               </h5>
             </div>
@@ -594,7 +594,7 @@ export const Dashboard3: Story = {
         </div>
         <DButton
           text="Refresh Data"
-          iconStart="arrow-clockwise"
+          iconStart="RotateCw"
           variant="link"
         />
       </div>
@@ -665,7 +665,7 @@ export const Dashboard3: Story = {
               <DMultiLineChart data={salesData} lineConfigs={salesLineConfigs} />
             </div>
             <div className="d-flex justify-content-end align-items-center mt-8">
-              <DBadge color="success" text="Increase 10%" iconStart="arrow-up" />
+              <DBadge color="success" text="Increase 10%" iconStart="ArrowUp" />
             </div>
           </DBox>
         </div>
@@ -675,7 +675,7 @@ export const Dashboard3: Story = {
           <DBox className="mb-8 p-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
-                <DIcon hasCircle icon="bar-chart" size=".75rem" />
+                <DIcon hasCircle icon="BarChart3" size=".75rem" />
                 Return on investment
               </h5>
               <div className="text-muted ms-auto">Last 6m.</div>
@@ -696,7 +696,7 @@ export const Dashboard3: Story = {
         <div className="g-col-12 g-col-lg-6">
           <DBox className="mb-8 h-100">
             <h5 className="mb-4 d-flex align-items-center gap-2">
-              <DIcon hasCircle icon="graph-up" size=".75rem" />
+              <DIcon hasCircle icon="TrendingUp" size=".75rem" />
               Top Projects Performance
             </h5>
             {/* Placeholder for a chart or more detailed sales data */}
@@ -740,7 +740,7 @@ export const Dashboard3: Story = {
           <DBox className="mb-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
-                <DIcon hasCircle icon="graph-up" size=".75rem" />
+                <DIcon hasCircle icon="TrendingUp" size=".75rem" />
                 User Retention Cohorts
               </h5>
               <div className="text-muted ms-auto">1 hour.</div>
@@ -749,7 +749,7 @@ export const Dashboard3: Story = {
               <div className="g-col-12 g-col-lg-6">
                 <div className="d-flex align-items-center gap-2">
                   <h4 className="display-3 line-height-1">40%</h4>
-                  <DIcon icon="graph-up" hasCircle size="1rem" color="success" />
+                  <DIcon icon="TrendingUp" hasCircle size="1rem" color="success" />
                 </div>
                 <p>After 30 days</p>
                 <small className="text-muted">Oct - Nov</small>
@@ -793,17 +793,17 @@ export const Dashboard3: Story = {
             <h5 className="mb-3">Recent Notifications</h5>
             <ul className="list-unstyled mb-0">
               <li className="d-flex align-items-center mb-2">
-                <DIcon hasCircle color="info" icon="bell-fill" size="1rem" className="me-2" />
+                <DIcon hasCircle color="info" icon="Bell" size="1rem" className="me-2" />
                 <span>New feature deployed!</span>
                 <small className="ms-auto text-muted">5 min ago</small>
               </li>
               <li className="d-flex align-items-center mb-2">
-                <DIcon hasCircle color="info" size="1rem" icon="exclamation-triangle-fill" className=" me-2" />
+                <DIcon hasCircle color="info" size="1rem" icon="AlertTriangle" className=" me-2" />
                 <span>Server overload warning.</span>
                 <small className="ms-auto text-muted">1 hour ago</small>
               </li>
               <li className="d-flex align-items-center">
-                <DIcon hasCircle size="1rem" color="info" icon="check-circle-fill" className="me-2" />
+                <DIcon hasCircle size="1rem" color="info" icon="CircleCheck" className="me-2" />
                 <span>Report generated successfully.</span>
                 <small className="ms-auto text-muted">Yesterday</small>
               </li>

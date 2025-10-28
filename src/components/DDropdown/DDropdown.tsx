@@ -82,7 +82,7 @@ export default function DDropdown(
         variant="link"
         stopPropagationEnabled={false}
         onClick={() => setOpen(!open)}
-        icon="three-dots-vertical"
+        icon="MoreVertical"
       />
     );
   }

@@ -49,7 +49,7 @@ const config: Meta<typeof DCollapse> = {
         Text: 'Simple text',
         Custom: (
           <div className="d-flex align-items-center gap-3">
-            <DIcon icon="fire" hasCircle />
+            <DIcon icon="Flame" hasCircle />
             <h1 className="h4 m-0">Custom component</h1>
           </div>
         ),
@@ -143,7 +143,7 @@ export const HeaderComponent: Story = {
   args: {
     Component: (
       <div className="d-flex align-items-center gap-3">
-        <DIcon icon="fire" hasCircle />
+        <DIcon icon="Flame" hasCircle />
         <h1 className="h4 m-0">Custom component</h1>
       </div>
     ),
