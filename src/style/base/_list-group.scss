@@ -1,0 +1,6 @@
+.list-group-item {
+  --#{$prefix}list-group-item-gap: .75rem;
+  display: flex;
+  gap: var(--#{$prefix}list-group-item-gap);
+  align-items: center;
+}

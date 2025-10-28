@@ -240,3 +240,84 @@ export const CustomContent: Story = {
     as: 'div',
   },
 };
+
+export const WithIcons: Story = {
+  render: (args) => (
+    <DListGroup {...args}>
+      <DListGroup.Item iconStart="house-door" href="#">
+        Home
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="person" href="#">
+        Profile
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="gear" href="#">
+        Settings
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="envelope" href="#">
+        Messages
+      </DListGroup.Item>
+    </DListGroup>
+  ),
+  args: {
+    as: 'div',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'List group items with start icons.',
+      },
+    },
+  },
+};
+
+export const WithIconsEnd: Story = {
+  render: (args) => (
+    <DListGroup {...args}>
+      <DListGroup.Item iconEnd="chevron-right" href="#">
+        Dashboard
+      </DListGroup.Item>
+      <DListGroup.Item iconEnd="chevron-right" href="#">
+        Analytics
+      </DListGroup.Item>
+      <DListGroup.Item iconEnd="chevron-right" href="#">
+        Reports
+      </DListGroup.Item>
+    </DListGroup>
+  ),
+  args: {
+    as: 'div',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'List group items with end icons, useful for navigation menus.',
+      },
+    },
+  },
+};
+
+export const WithBothIcons: Story = {
+  render: (args) => (
+    <DListGroup {...args}>
+      <DListGroup.Item iconStart="check-circle-fill" iconEnd="chevron-right" color="success" action active>
+        Completed Tasks
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="clock" iconEnd="chevron-right" color="warning" action>
+        Pending Tasks
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="x-circle-fill" iconEnd="chevron-right" color="danger" action>
+        Cancelled Tasks
+      </DListGroup.Item>
+    </DListGroup>
+  ),
+  args: {
+    as: 'div',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'List group items with both start and end icons, combined with colors.',
+      },
+    },
+  },
+};

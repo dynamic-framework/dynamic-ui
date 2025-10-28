@@ -4,7 +4,9 @@ import { DocsContainer, DocsContainerProps } from '@storybook/addon-docs/blocks'
 import DBox from '../../src/components/DBox';
 import './custom.scss';
 import {
-  DBadge, DButton, DButtonIcon, DIcon, DInput, DInputCheck, DInputSwitch, DSelect,
+  DBadge, DButton, DButtonIcon, DIcon, DInput,
+  DInputCheck, DInputSwitch, DListGroup, DSelect,
+  DListGroupItem,
 } from '../../src';
 
 // ADD
@@ -151,37 +153,24 @@ export const Menu: Story = {
       <div className="border rounded-2 overflow-hidden grid gap-0">
         <div className="g-col-12 g-col-lg-4 border-end border-opacity-25">
           <div>
-            <h5 className="fw-semibold p-8">To review</h5>
-            <div className="list-group list-group-white" id="myList" role="tablist">
-              <button className="list-group-item list-group-item-action align-items-center d-flex gap-2 active" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
-                <div>
-                  <div>Home request issue #1</div>
-                  <small className="text-muted fw-normal">Text lorem ipsum</small>
-                </div>
-                <DIcon icon="chevron-right" size="1rem" className="ms-auto" />
-              </button>
-              <button className="list-group-item list-group-item-action align-items-center d-flex gap-2" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
-                <div>
-                  <div>Home request issue #1</div>
-                  <small className="text-muted fw-normal">Text lorem ipsum</small>
-                </div>
-                <DIcon icon="chevron-right" size="1rem" className="ms-auto" />
-              </button>
-              <button className="list-group-item list-group-item-action d-flex gap-2" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
-                <div>
-                  <div>Home request issue #1</div>
-                  <small className="text-muted fw-normal">Text lorem ipsum</small>
-                </div>
-                <DIcon icon="chevron-right" size="1rem" className="ms-auto" />
-              </button>
-              <button className="list-group-item list-group-item-action align-items-center d-flex gap-2" data-bs-toggle="list" data-bs-target="#home" type="button" role="tab">
-                <div>
-                  <div>Home request issue #1</div>
-                  <small className="text-muted fw-normal">Text lorem ipsum</small>
-                </div>
-                <DIcon icon="chevron-right" size="1rem" className="ms-auto" />
-              </button>
-            </div>
+            <DListGroup className="list-group-white">
+              <DListGroupItem iconEnd="chevron-right" as="button" active>
+                <div>Home request issue #1</div>
+                <small className="text-muted fw-normal">Text lorem ipsum</small>
+              </DListGroupItem>
+              <DListGroupItem iconEnd="chevron-right" as="button">
+                <div>Home request issue #2</div>
+                <small className="text-muted fw-normal">Text lorem ipsum</small>
+              </DListGroupItem>
+              <DListGroupItem iconEnd="chevron-right" as="button">
+                <div>Home request issue #3</div>
+                <small className="text-muted fw-normal">Text lorem ipsum</small>
+              </DListGroupItem>
+              <DListGroupItem iconEnd="chevron-right" as="button">
+                <div>Home request issue #4</div>
+                <small className="text-muted fw-normal">Text lorem ipsum</small>
+              </DListGroupItem>
+            </DListGroup>
           </div>
           <div className="p-8">
             <h5 className="fw-semibold mb-4">Details</h5>

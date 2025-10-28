@@ -3,10 +3,19 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import type { BaseProps, ComponentColor } from '../../interface';
+import DIcon from '../../DIcon';
+
+import type {
+  BaseProps,
+  ComponentColor,
+  EndIconProps,
+  StartIconProps,
+} from '../../interface';
 
 type Props =
 & BaseProps
+& StartIconProps
+& EndIconProps
 & PropsWithChildren<{
   as?: 'li' | 'a' | 'button';
   action?: boolean;
@@ -26,6 +35,14 @@ export default function DListGroupItem(
     href,
     onClick,
     color,
+    iconStart,
+    iconStartFamilyClass,
+    iconStartFamilyPrefix,
+    iconStartMaterialStyle,
+    iconEnd,
+    iconEndFamilyClass,
+    iconEndFamilyPrefix,
+    iconEndMaterialStyle,
     children,
     className,
     style,
@@ -85,7 +102,26 @@ export default function DListGroupItem(
       {...dataAttributes}
       {...Tag === 'button' && { type: 'button' }}
     >
-      {children}
+      {iconStart && (
+        <DIcon
+          icon={iconStart}
+          familyClass={iconStartFamilyClass}
+          familyPrefix={iconStartFamilyPrefix}
+          materialStyle={iconStartMaterialStyle}
+        />
+      )}
+      <div>
+        {children}
+      </div>
+      {iconEnd && (
+        <DIcon
+          icon={iconEnd}
+          familyClass={iconEndFamilyClass}
+          familyPrefix={iconEndFamilyPrefix}
+          materialStyle={iconEndMaterialStyle}
+          className="ms-auto"
+        />
+      )}
     </Tag>
   );
 }
