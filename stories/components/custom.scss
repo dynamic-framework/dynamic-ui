@@ -38,8 +38,9 @@
 .list-group-white {
   --bs-list-group-bg: rgba(var(--bs-white-rgb), 0.75);
   --bs-list-group-border-radius: 0;
-  // --bs-list-group-border-color: var(--bs-gray-200);
+  --bs-group-action-active-color: var(--bs-gray-400);
   --bs-list-group-active-bg: var(--bs-white);
+  --bs-list-group-action-active-bg: var(--bs-gray-50);
   --bs-list-group-active-color: var(--bs-primary);
   --bs-list-group-border-width: 0;
   .list-group-item {
