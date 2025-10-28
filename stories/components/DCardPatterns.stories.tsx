@@ -6,7 +6,7 @@ import DBox from '../../src/components/DBox';
 import { DChip } from '../../src';
 
 const meta: Meta<typeof DCard> = {
-  title: 'Design System/Patterns/Card Patterns',
+  title: 'Patterns/Card Patterns',
   component: DCard,
   parameters: {
     docs: {
