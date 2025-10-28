@@ -98,30 +98,20 @@ export const Basic: Story = {
         <div className="g-col-12 g-col-lg-4 border-start border-opacity-25">
           <div className="p-8">
             <h5 className="fw-semibold mb-4">Details</h5>
-            <div className="list-group list-group-flush">
-              <div className="list-group-item px-0">
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <DIcon icon="User" size="1rem" className="me-2 text-muted" />
-                    Personal Information
-                  </div>
-                  <div>
-                    <DIcon icon="Pencil" size="1rem" className="text-muted" />
-                  </div>
-                </div>
-              </div>
-              <div className="list-group-item px-0">
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <DIcon icon="User" size="1rem" className="me-2 text-muted" />
-                    Personal Information
-                  </div>
-                  <div>
-                    <DIcon icon="Pencil" size="1rem" className="text-muted" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <DListGroup flush>
+              <DListGroupItem iconStart="User">
+                <span>Name: </span>
+                <strong>John Doe</strong>
+              </DListGroupItem>
+              <DListGroupItem iconStart="Send">
+                <span>Email: </span>
+                <strong>dHg7o@example.com</strong>
+              </DListGroupItem>
+              <DListGroupItem iconStart="Smartphone">
+                <span>Phone: </span>
+                <strong>(123) 456-7890</strong>
+              </DListGroupItem>
+            </DListGroup>
           </div>
           <hr />
           <div className="p-8">
@@ -174,30 +164,20 @@ export const Menu: Story = {
           </div>
           <div className="p-8">
             <h5 className="fw-semibold mb-4">Details</h5>
-            <div className="list-group list-group-flush">
-              <div className="list-group-item px-0">
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <DIcon icon="User" size="1rem" className="me-2 text-muted" />
-                    Personal Information
-                  </div>
-                  <div>
-                    <DIcon icon="Pencil" size="1rem" className="text-muted" />
-                  </div>
-                </div>
-              </div>
-              <div className="list-group-item px-0">
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <DIcon icon="User" size="1rem" className="me-2 text-muted" />
-                    Personal Information
-                  </div>
-                  <div>
-                    <DIcon icon="Pencil" size="1rem" className="text-muted" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <DListGroup flush>
+              <DListGroupItem iconStart="User">
+                <span>Name: </span>
+                <strong>John Doe</strong>
+              </DListGroupItem>
+              <DListGroupItem iconStart="Send">
+                <span>Email: </span>
+                <strong>dHg7o@example.com</strong>
+              </DListGroupItem>
+              <DListGroupItem iconStart="Smartphone">
+                <span>Phone: </span>
+                <strong>(123) 456-7890</strong>
+              </DListGroupItem>
+            </DListGroup>
           </div>
         </div>
         <div className="g-col-12 g-col-lg-8 bg-white p-8">
