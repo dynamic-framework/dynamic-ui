@@ -13,7 +13,7 @@
   line-height: 1;
   color: var(--#{$prefix}icon-color);
   background-color: var(--#{$prefix}icon-bg-color);
-  border-radius: var(--#{$prefix}icon-padding);
+  border-radius: calc(var(--bs-icon-padding) * 4);
 
   // For Lucide icons (SVG)
   svg {
