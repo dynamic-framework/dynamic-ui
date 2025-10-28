@@ -40,7 +40,7 @@ function ButtonRenderComponent(toggle: boolean) {
     <DButton
       className="w-100"
       text="Popover on bottom"
-      iconEnd={`${toggle ? 'chevron-up' : 'chevron-down'}`}
+      iconEnd={`${toggle ? 'ChevronUp' : 'ChevronDown'}`}
       stopPropagationEnabled={false}
     />
   );
@@ -51,7 +51,7 @@ function CodeComponent(position: string, adjustContentToRender?: boolean) {
 <DPopover renderComponent={(toggle: boolean) => (
   <DButton
     text="Popover on ${position}"
-    iconEnd={\`\${toggle ? 'chevron-up' : 'chevron-down'}\`}
+    iconEnd={\`\${toggle ? 'ChevronUp' : 'ChevronDown'}\`}
     stopPropagationEnabled={false}
     ${adjustContentToRender ? 'adjustContentToRender' : ''}
   />
