@@ -1,10 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DListGroup from '../../src/components/DListGroup';
+import DListGroup, { DListGroupItem } from '../../src/components/DListGroup';
 
 const config: Meta<typeof DListGroup> = {
   title: 'Design System/Components/ListGroup',
   component: DListGroup,
+  subcomponents: { DListGroupItem },
   parameters: {
     docs: {
       description: {
