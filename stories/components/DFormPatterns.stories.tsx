@@ -113,9 +113,9 @@ export const TwoColumns: Story = {
 
 export const FieldsetForm: Story = {
   render: () => (
-    <DBox className="p-8">
+    <DBox className="p-8" style={{ width: '800px' }}>
       <form>
-        <fieldset className="border p-4 rounded mb-4">
+        <fieldset className="border p-4 rounded mb-8">
           <legend className="float-none w-auto px-2">Personal Information</legend>
           <div className="grid gap-3">
             <div className="g-col-12 g-col-lg-6">

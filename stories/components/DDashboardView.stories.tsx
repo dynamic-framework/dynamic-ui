@@ -370,7 +370,7 @@ export const Dashboard2: Story = {
         />
       </div>
 
-      <div className="grid gap-2 mb-4 p-0 bg-transparent shadow-none">
+      <div className="grid gap-4 mb-4 p-0 bg-transparent shadow-none">
         {SUMMARY.map(({
           id, percentage, value,
         }) => (
