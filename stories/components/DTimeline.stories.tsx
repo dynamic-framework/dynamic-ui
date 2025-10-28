@@ -5,7 +5,7 @@ import { DCard } from '../../src';
 import DBox from '../../src/components/DBox';
 
 const config: Meta<typeof DTimeline> = {
-  title: 'Design System/Components/DTimeline',
+  title: 'Design System/Components/Timeline',
   component: DTimeline,
   parameters: {
     docs: {

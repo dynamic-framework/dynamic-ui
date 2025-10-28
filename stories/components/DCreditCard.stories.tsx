@@ -4,7 +4,7 @@ import { PREFIX_BS } from '../../src/components/config';
 import DCreditCard from '../../src/components/DCreditCard/DCreditCard';
 
 const config: Meta<typeof DCreditCard> = {
-  title: 'Design System/Components/DCreditCard',
+  title: 'Design System/Components/Credit Card',
   component: DCreditCard,
   parameters: {
     docs: {

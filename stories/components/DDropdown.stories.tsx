@@ -5,7 +5,7 @@ import DDropdown, { DropdownAction } from '../../src/components/DDropdown/DDropd
 import { DButton } from '../../src';
 
 const config: Meta<typeof DDropdown> = {
-  title: 'Design System/Components/DDropdown',
+  title: 'Design System/Components/Dropdown',
   component: DDropdown,
   parameters: {
     docs: {
