@@ -96,6 +96,20 @@ const baseActions: DropdownAction[] = [
   { label: 'Delete', icon: 'Trash2', color: 'danger' },
 ];
 
+export const DisabledActions: Story = {
+  render: (args) => (
+    <div style={{ height: 300 }}>
+      <DDropdown {...args} />
+    </div>
+  ),
+  args: {
+    actions: [
+      { label: 'Active action', icon: 'Check' },
+      { label: 'Disabled action', disabled: true },
+    ],
+  },
+};
+
 export const CustomToggle: Story = {
   render: (args) => (
     <div style={{ height: 300 }}>
@@ -122,17 +136,29 @@ export const CustomToggle: Story = {
   },
 };
 
-export const DisabledActions: Story = {
+export const CustomToggle2: Story = {
   render: (args) => (
     <div style={{ height: 300 }}>
       <DDropdown {...args} />
     </div>
   ),
   args: {
-    actions: [
-      { label: 'Active action', icon: 'Check' },
-      { label: 'Disabled action', disabled: true },
-    ],
+    actions: baseActions,
+    dropdownToggle: ({ open, toggle }) => (
+      <DButton
+        iconEnd={open ? 'ChevronUp' : 'ChevronDown'}
+        color="primary"
+        text="Button"
+        onClick={toggle}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Example using a custom button component as the dropdown toggle.',
+      },
+    },
   },
 };
 
