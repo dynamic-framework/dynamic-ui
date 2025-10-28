@@ -35,7 +35,8 @@ export default function DRadialBarChart({
           angleAxisId={0}
           tick={false}
         />
-        <RadialBar />
+        <RadialBar background dataKey="value" />
+
         {/* Display the value in the center */}
         <text
           x="50%"
