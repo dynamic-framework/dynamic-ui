@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import type { PropsWithChildren, ReactNode } from 'react';
 import type { Placement } from '@floating-ui/react';
 
-import type { BaseProps, ComponentColor, ComponentSize } from '../interface';
+import type { BaseProps, ComponentSize } from '../interface';
 
 export type Props = BaseProps & PropsWithChildren<{
   childrenClassName?: string;
@@ -30,7 +30,6 @@ export type Props = BaseProps & PropsWithChildren<{
   withFocus?: boolean;
   withClick?: boolean;
   open?: boolean;
-  color?: ComponentColor;
   size?: ComponentSize;
   placement?: Placement;
   Component: ReactNode;
@@ -51,7 +50,6 @@ export default function DTooltip(
     withClick = false,
     withHover = true,
     open = false,
-    color = 'dark',
     placement = 'top',
     size,
     Component,
@@ -99,10 +97,9 @@ export default function DTooltip(
     () => ({
       'tooltip show': true,
       [`tooltip-${size}`]: !!size,
-      [`tooltip-${color}`]: !!color,
       ...className && { [className]: true },
     }),
-    [size, color, className],
+    [size, className],
   );
 
   return (
