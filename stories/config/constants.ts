@@ -6,6 +6,8 @@ export const FIRST_ICON = BOOTSTRAP_ICONS[0];
 export const COLOR_THEMES = ['primary', 'secondary', 'success', 'info', 'warning', 'danger'];
 export const THEMES = [...COLOR_THEMES, 'light', 'dark'];
 
+export const COLOR_STATES = ['success', 'info', 'warning', 'danger'];
+
 export const THEMES_WITH_EMPTY = [undefined, ...THEMES];
 export const INPUT_STATE = ['focus-visible', 'hover', 'active', 'disabled'];
 

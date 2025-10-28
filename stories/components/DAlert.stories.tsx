@@ -2,10 +2,14 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { ComponentProps } from 'react';
-import DAlert from '../../src/components/DAlert/DAlert';
-import { COLOR_THEMES, ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
+import DAlert from '../../src/components/DAlert/DAlert';
+import {
+  COLOR_STATES,
+  CONTEXT_PROVIDER_CONFIG_MATERIAL,
+  ICONS,
+} from '../config/constants';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Components/Alert',
@@ -46,9 +50,9 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
     color: {
       control: 'select',
       type: 'string',
-      options: COLOR_THEMES,
+      options: COLOR_STATES,
       table: { defaultValue: { summary: 'success' } },
-      description: 'Toast type',
+      description: 'Alert color',
     },
     icon: {
       control: 'select',
@@ -222,7 +226,7 @@ export const MaterialStyle: Story = {
   ),
   args: {
     showClose: true,
-    color: 'secondary',
+    color: 'info',
   },
   parameters: {
     docs: {

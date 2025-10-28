@@ -52,8 +52,9 @@ export type EndIconProps = {
 };
 
 export type ComponentColor = string;
+export type ComponentStateColor = 'success' | 'danger' | 'warning' | 'info';
 export type AlertThemeIconMap = {
-  [state in ComponentColor]: string;
+  [state in ComponentStateColor]: string;
 };
 
 export type ButtonVariant = 'outline' | 'link';
