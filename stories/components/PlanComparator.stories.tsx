@@ -21,7 +21,7 @@ const fourPlanFeatures = [
 ];
 
 const meta: Meta = {
-  title: 'Design System/Patterns/Plan Comparator',
+  title: 'Patterns/Plan Comparator',
   parameters: {
     docs: {
       description: {
