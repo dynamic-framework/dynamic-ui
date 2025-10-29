@@ -66,16 +66,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       control: 'text',
       type: 'string',
     },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
     value: {
       control: 'number',
       type: 'number',
@@ -176,7 +166,6 @@ export const Default: Story = {
   args: {
     id: 'componentId1',
     label: 'Label',
-    labelIcon: undefined,
     minValue: 0,
     maxValue: 20,
     iconStartAriaLabel: 'decrease action',
@@ -188,7 +177,6 @@ export const Invalid: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    labelIcon: undefined,
     value: 21,
     minValue: 0,
     maxValue: 20,
@@ -202,7 +190,6 @@ export const Valid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
-    labelIcon: undefined,
     value: 2,
     minValue: 0,
     maxValue: 20,
@@ -216,7 +203,6 @@ export const Disabled: Story = {
   args: {
     id: 'componentId4',
     label: 'Label',
-    labelIcon: undefined,
     value: 3,
     minValue: 0,
     maxValue: 20,
@@ -230,7 +216,6 @@ export const Floating: Story = {
   args: {
     id: 'componentId5',
     label: 'Label',
-    labelIcon: undefined,
     value: 3,
     minValue: 0,
     maxValue: 20,
@@ -253,7 +238,6 @@ export const MaterialIcon: Story = {
   args: {
     id: 'componentId6',
     label: 'Label',
-    labelIcon: undefined,
     value: 3,
     minValue: 0,
     maxValue: 20,

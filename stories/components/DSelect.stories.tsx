@@ -82,31 +82,10 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
       description: 'The label text for the component',
     },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-      description: 'The icon for the label of the component',
-    },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
       description: 'Determines if the label should float above the input',
-    },
-    labelIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family class for the label icon',
-    },
-    labelIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family prefix for the label icon',
     },
     iconFamilyClass: {
       control: 'text',

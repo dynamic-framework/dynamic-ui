@@ -26,12 +26,6 @@ export type FamilyIconProps = {
   iconFamilyPrefix?: string;
   iconMaterialStyle?: boolean;
 };
-export type LabelIconProps = {
-  labelIcon?: string;
-  labelIconFamilyClass?: string;
-  labelIconFamilyPrefix?: string;
-  labelIconMaterialStyle?: boolean;
-};
 export type StartIconProps = {
   iconStart?: string;
   iconStartDisabled?: boolean;

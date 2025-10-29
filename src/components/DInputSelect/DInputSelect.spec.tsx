@@ -152,17 +152,6 @@ describe('<DInputSelect />', () => {
   });
 
   describe('Conditional Rendering', () => {
-    it('should render a label with an icon', () => {
-      const { container } = render(
-        <DContextProvider>
-          <DInputSelect label="Select with Label Icon" options={[]} labelIcon="check" />
-        </DContextProvider>,
-      );
-      const label = container.querySelector('label');
-      expect(label).toHaveTextContent('Select with Label Icon');
-      expect(container.querySelector('.d-icon')).toBeInTheDocument();
-    });
-
     it('should render with a hint text and correct aria-describedby', () => {
       render(
         <DContextProvider>

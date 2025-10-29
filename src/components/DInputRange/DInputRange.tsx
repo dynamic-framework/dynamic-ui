@@ -15,12 +15,11 @@ import type {
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 import { PREFIX_BS } from '../config';
 
-import type { BaseProps, CustomStyles, LabelIconProps } from '../interface';
+import type { BaseProps, CustomStyles } from '../interface';
 import type { Merge } from '../../types';
 
 type NonHTMLInputElementProps =
 & BaseProps
-& LabelIconProps
 & {
   label?: string;
   ariaLabel?: string;

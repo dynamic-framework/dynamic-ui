@@ -8,14 +8,12 @@ import type {
 } from 'react';
 
 import DIcon from '../DIcon';
-import { PREFIX_BS } from '../config';
 
 import type {
   BaseProps,
   ComponentSize,
   EndIconProps,
   FamilyIconProps,
-  LabelIconProps,
   StartIconProps,
 } from '../interface';
 
@@ -27,7 +25,6 @@ export type DefaultOption = {
 export type Props<T> =
 & BaseProps
 & FamilyIconProps
-& LabelIconProps
 & StartIconProps
 & EndIconProps
 & {
@@ -59,9 +56,6 @@ export default function DInputSelect<T extends object = DefaultOption>(
     className,
     style,
     options = [],
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
     disabled = false,
     loading = false,
     iconStart,
@@ -193,21 +187,10 @@ export default function DInputSelect<T extends object = DefaultOption>(
   const labelComponent = useMemo(() => (
     <label htmlFor={id}>
       {label}
-      {labelIcon && (
-        <DIcon
-          icon={labelIcon}
-          size={`var(--${PREFIX_BS}input-label-font-size)`}
-          familyClass={labelIconFamilyClass}
-          familyPrefix={labelIconFamilyPrefix}
-        />
-      )}
     </label>
   ), [
     id,
     label,
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
   ]);
 
   const dynamicComponent = useMemo(() => {

@@ -22,7 +22,7 @@ import {
   ParsedCountry,
   usePhoneInput,
 } from 'react-international-phone';
-import { PREFIX_BS } from '../config';
+
 import DIcon from '../DIcon';
 
 import type {
@@ -30,7 +30,6 @@ import type {
   ComponentSize,
   EndIconProps,
   FamilyIconProps,
-  LabelIconProps,
 } from '../interface';
 import type { Merge } from '../../types';
 import { useProvidedRefOrCreate } from '../../hooks';
@@ -46,7 +45,6 @@ type OnChangeType = {
 type NonHTMLInputElementProps =
 & BaseProps
 & FamilyIconProps
-& LabelIconProps
 & EndIconProps
 & {
   value?: string;
@@ -76,10 +74,6 @@ function DInputPhone(
     style,
     className,
     label = '',
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
-    labelIconMaterialStyle,
     disabled = false,
     loading = false,
     iconFamilyClass,
@@ -202,23 +196,10 @@ function DInputPhone(
   const labelComponent = useMemo(() => (
     <label htmlFor={id}>
       {label}
-      {labelIcon && (
-        <DIcon
-          icon={labelIcon}
-          size={`var(--${PREFIX_BS}label-font-size)`}
-          familyClass={labelIconFamilyClass}
-          familyPrefix={labelIconFamilyPrefix}
-          materialStyle={labelIconMaterialStyle}
-        />
-      )}
     </label>
   ), [
     id,
     label,
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
-    labelIconMaterialStyle,
   ]);
 
   const dynamicComponent = useMemo(() => {

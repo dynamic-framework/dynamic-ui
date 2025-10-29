@@ -86,28 +86,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       control: 'text',
       type: 'string',
     },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    labelIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconMaterialStyle: {
-      control: 'boolean',
-      type: 'boolean',
-    },
     placeholder: {
       control: 'text',
       type: 'string',
@@ -276,7 +254,6 @@ export const Default: Story = {
     id: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: undefined,
     hint: 'Assistive text',
@@ -288,7 +265,6 @@ export const Invalid: Story = {
     id: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: undefined,
     iconStart: 'Smile',
@@ -304,7 +280,6 @@ export const Valid: Story = {
     id: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: undefined,
     iconStart: 'Smile',
@@ -320,7 +295,6 @@ export const Disabled: Story = {
     id: 'componentId5',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: undefined,
     iconEnd: 'ArrowRight',
@@ -330,25 +304,11 @@ export const Disabled: Story = {
   },
 };
 
-export const Text: Story = {
-  args: {
-    id: 'componentId6',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    labelIcon: 'Smile',
-    type: 'text',
-    value: undefined,
-    iconStart: undefined,
-    iconEnd: undefined,
-  },
-};
-
 export const Floating: Story = {
   args: {
     id: 'componentId7',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: '',
     iconEnd: 'ArrowRight',

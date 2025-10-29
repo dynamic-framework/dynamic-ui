@@ -252,15 +252,4 @@ describe('', () => {
     fireEvent.click(iconStart);
     expect(handleIconEndClick).toHaveBeenCalledWith('value');
   });
-
-  it('renders the label icon', () => {
-    const { container } = render(
-      <DInput
-        label="Input label"
-        labelIcon="heart"
-      />,
-    );
-
-    expect(container.querySelector('i')).toHaveClass('d-icon', 'bi-heart');
-  });
 });
