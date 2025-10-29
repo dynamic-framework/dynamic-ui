@@ -323,10 +323,8 @@ export const Disabled: Story = {
     labelIcon: undefined,
     type: 'text',
     value: undefined,
-    iconStart: 'Smile',
-    iconEnd: 'Smile',
-    iconStartAriaLabel: 'start action',
-    iconEndAriaLabel: 'end action',
+    iconEnd: 'ArrowRight',
+    iconEndAriaLabel: 'start action',
     hint: 'Assistive text',
     disabled: true,
   },
@@ -353,9 +351,7 @@ export const Floating: Story = {
     labelIcon: undefined,
     type: 'text',
     value: '',
-    iconStart: 'Smile',
-    iconEnd: 'Smile',
-    iconStartAriaLabel: 'start action',
+    iconEnd: 'ArrowRight',
     iconEndAriaLabel: 'end action',
     hint: 'Assistive text',
     floatingLabel: true,
@@ -374,13 +370,6 @@ export const CustomInputStart: Story = {
       />
     ),
   },
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
-  },
 };
 
 export const CustomInputEnd: Story = {
@@ -394,13 +383,6 @@ export const CustomInputEnd: Story = {
         icon="ArrowRight"
       />
     ),
-  },
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
   },
 };
 
@@ -418,15 +400,6 @@ export const MaterialIcon: Story = {
     placeholder: 'Placeholder',
     type: 'text',
     iconStart: 'face_5',
-    iconEnd: 'face_5',
     iconStartAriaLabel: 'start action',
-    iconEndAriaLabel: 'end action',
-  },
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
   },
 };
