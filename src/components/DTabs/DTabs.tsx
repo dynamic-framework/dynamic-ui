@@ -14,7 +14,7 @@ import DTabContent from './components/DTabContent';
 import type { BaseProps } from '../interface';
 
 export type DTabOption = {
-  label: string;
+  label: string | React.ReactNode;
   tab: string;
   disabled?: boolean;
 };
@@ -88,7 +88,7 @@ function DTabs(
         <nav className={classNames(generateClasses)}>
           {options.map((option) => (
             <button
-              key={option.label}
+              key={option.tab}
               id={`${option.tab}Tab`}
               className={
                 classNames(
