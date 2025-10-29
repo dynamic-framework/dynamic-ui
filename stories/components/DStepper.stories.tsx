@@ -109,9 +109,9 @@ export const Default: Story = {
   args: {
     currentStep: 2,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      { label: 'Personal Information', value: 1 },
+      { label: 'Payment Details', value: 2 },
+      { label: 'Confirmation', value: 3 },
     ],
   },
 };
@@ -133,9 +133,9 @@ export const DefaultMobile: Story = {
   args: {
     currentStep: 2,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      { label: 'Select Service', value: 1 },
+      { label: 'Choose Plan', value: 2 },
+      { label: 'Review Order', value: 3 },
     ],
   },
 };
@@ -157,9 +157,9 @@ export const Vertical: Story = {
   args: {
     currentStep: 2,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      { label: 'Upload Documents', value: 1 },
+      { label: 'Verify Information', value: 2 },
+      { label: 'Submit Application', value: 3 },
     ],
     vertical: true,
   },
@@ -268,9 +268,9 @@ export const MaterialStyle: Story = {
   args: {
     currentStep: 2,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      { label: 'Account Setup', value: 1 },
+      { label: 'Security Settings', value: 2 },
+      { label: 'Get Started', value: 3 },
     ],
     iconSuccess: 'verified',
   },

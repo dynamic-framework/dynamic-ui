@@ -83,14 +83,12 @@
     }
 
     .d-step-check {
-      // color: var(--#{$prefix}step-check-background-color);
-      // border-color: var(--#{$prefix}step-check-background-color);
       .d-step-icon {
-        --bs-icon-color: var(--#{$prefix}white);
-        width: 1.25rem;
-        height: 1.25rem;
-        padding: .25rem;
-        background: var(--#{$prefix}step-check-background-color);
+        --#{$prefix}icon-color: var(--#{$prefix}white);
+        --#{$prefix}icon-component-size: .25rem;
+        --#{$prefix}icon-size: 1rem;
+        --#{$prefix}icon-component-padding: calc(var(--#{$prefix}icon-component-size, 24px) * .4);
+        --#{$prefix}icon-component-bg-color: var(--#{$prefix}step-check-background-color);
         border-radius: 2rem;
       }
     }
