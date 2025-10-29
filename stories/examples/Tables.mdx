@@ -1,567 +1,213 @@
-import { Meta, Unstyled, Source } from "@storybook/addon-docs/blocks";
+import { Meta, Unstyled } from "@storybook/addon-docs/blocks";
 
 import {
-  ExampleAccentedTable,
-  ExampleBasicTable,
-  ExampleBorderTable,
-  ExampleComposition,
-} from "./TablesExamples";
+  BasicTable,
+  StripedTable,
+  HoverTable,
+  BorderedTable,
+  SmallTable,
+  SortableTable,
+  PaginatedTable,
+  SelectableTable,
+  LoadingTable,
+  CompleteTable,
+} from './TablesExamples.stories';
 
 <Meta title="Design System/Examples/Tables" />
 
 # Tables
 
-In our framework, we lack a dedicated component for tables. Instead, we utilize HTML tables with
-[Bootstrap](https://getbootstrap.com/docs/5.3/content/tables/) and offer components for headers with sorting
-capabilities and pagination.
+Our framework uses native HTML tables enhanced with [Bootstrap styling](https://getbootstrap.com/docs/5.3/content/tables/) and custom components for advanced features like sorting, pagination, and selection.
 
-## Basic Example
+## Quick Reference
 
-This example demonstrates a basic implementation of a table using HTML and Bootstrap classes within our framework.
-It includes simple table headers and rows populated with sample data.
+| Feature | Component/Class | Use Case |
+|---------|----------------|----------|
+| Basic styling | `.table` | All tables |
+| Striped rows | `.table-striped` | Improve readability |
+| Hover effect | `.table-hover` | Interactive tables |
+| Borders | `.table-bordered` | Emphasize cells |
+| Compact | `.table-sm` | Dense data |
+| Sorting | `<DTableHead>` | Sortable columns |
+| Pagination | `<DPaginator>` | Multi-page data |
+| Selection | `useItemSelection()` | Bulk actions |
+| Loading | `.placeholder-wave` | Skeleton screens |
 
-<Source
-  code={
-    `
-const HEADER_ENTRIES = [
-  ['id', '#'],
-  ['first', 'First'],
-  ['second', 'Second'],
-  ['last', 'Last'],
-];
+---
 
-const ROWS = [
-{
-id: 1,
-first: 'Marl',
-second: 'Otto',
-last: '@mdo',
-},
-{
-id: 2,
-first: 'Jacob',
-second: 'Thornton',
-last: '@fat',
-},
-{
-id: 3,
-first: 'Larry the Bird',
-second: '-',
-last: '@twitter',
-},
-];
+## Basic Table
 
-export function ExampleBasicTable() {
-  return (
-    <table className="table">
-      <thead>
-        <tr>
-          {HEADER_ENTRIES.map(([key, value]) => (
-            <th key={key}>{value}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {ROWS.map((row) => (
-          <tr key={row.id}>
-            {HEADER_ENTRIES.map(([key]) => (
-              <td key={\`\${row.id}-\${key}\`}>
-                {row[key as keyof typeof ROWS[0]]}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
-    `
-  }
-  language="tsx"
-  dark
-/>
+A simple table with Bootstrap's `.table` class - the foundation for all table styling.
 
 <Unstyled>
-  <div style={{ height: "240px" }}>
-    <ExampleBasicTable />
-  </div>
+  <BasicTable />
 </Unstyled>
 
-## Accented Examples
+**Key Points:**
+- Always use semantic HTML (`<thead>`, `<tbody>`)
+- Include `<caption>` for accessibility
+- Add `className="table"` for Bootstrap styling
 
-The Accented Examples showcase variations of the table with different styles applied using Bootstrap's utility classes.
-Users can select different styling options such as striped rows, hover effects, and various color accents to
-customize the table's appearance.
+---
 
-<Source
-  code={
-    `
-import {
-  DSelect,
-} from '@dynamic-framework/ui-react';
+## Striped Rows
 
-const HEADER_ENTRIES = [
-['id', '#'],
-['first', 'First'],
-['second', 'Second'],
-['last', 'Last'],
-];
-
-const ROWS = [
-{
-id: 1,
-first: 'Marl',
-second: 'Otto',
-last: '@mdo',
-},
-{
-id: 2,
-first: 'Jacob',
-second: 'Thornton',
-last: '@fat',
-},
-{
-id: 3,
-first: 'Larry the Bird',
-second: '-',
-last: '@twitter',
-},
-];
-
-type Option = {
-label: string;
-value: string;
-};
-
-const ACCENTED_EXAMPLES = [
-'table-striped',
-'table-striped-columns',
-'table-dark table-striped',
-'table-dark table-striped-columns',
-'table-primary table-striped',
-'table-primary table-striped-columns',
-'table-secondary table-striped',
-'table-secondary table-striped-columns',
-'table-hover',
-'table-dark table-hover',
-'table-striped table-hover',
-]
-.map((option) => ({
-label: option,
-value: option,
-}));
-
-export function ExampleAccentedTable() {
-  const [option, setOption] = useState<Option | null>(ACCENTED_EXAMPLES[0]);
-  return (
-    <>
-      <DSelect<Option>
-        options={ACCENTED_EXAMPLES}
-        value={option}
-        onChange={setOption}
-      />
-      <br />
-      <table className={classNames('table', option?.value)}>
-        <thead>
-          <tr>
-            {HEADER_ENTRIES.map(([key, value]) => (
-              <th key={key}>{value}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {ROWS.map((row) => (
-            <tr key={row.id}>
-              {HEADER_ENTRIES.map(([key]) => (
-                <td key={\`\${row.id}-\${key}\`}>
-                  {row[key as keyof typeof ROWS[0]]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
+Add `.table-striped` for zebra-striping that improves readability.
 
 <Unstyled>
-  <div style={{ height: "240px" }}>
-    <ExampleAccentedTable />
-  </div>
+  <StripedTable />
 </Unstyled>
 
-## Borders Example
+---
 
-In the Borders Example, we illustrate how to add border styles to tables using Bootstrap's border utility classes.
-This allows users to choose between bordered and borderless table styles, with additional options
-for border color customization.
+## Hover Effect
 
-<Source
-  code={
-    `
-import {
-  DSelect,
-} from '@dynamic-framework/ui-react';
-
-const HEADER_ENTRIES = [
-['id', '#'],
-['first', 'First'],
-['second', 'Second'],
-['last', 'Last'],
-];
-
-const ROWS = [
-{
-id: 1,
-first: 'Marl',
-second: 'Otto',
-last: '@mdo',
-},
-{
-id: 2,
-first: 'Jacob',
-second: 'Thornton',
-last: '@fat',
-},
-{
-id: 3,
-first: 'Larry the Bird',
-second: '-',
-last: '@twitter',
-},
-];
-
-type Option = {
-label: string;
-value: string;
-};
-
-const BORDERS_EXAMPLES = [
-'table-bordered',
-'table-bordered border-primary',
-'table-bordered border-secondary',
-'table-borderless',
-'table-dark table-borderless',
-]
-.map((option) => ({
-label: option,
-value: option,
-}));
-
-export function ExampleBorderTable() {
-  const [option, setOption] = useState<Option | null>(BORDERS_EXAMPLES[0]);
-  return (
-    <>
-      <DSelect<Option>
-        options={BORDERS_EXAMPLES}
-        value={option}
-        onChange={setOption}
-      />
-      <br />
-      <table className={classNames('table', option?.value)}>
-        <thead>
-          <tr>
-            {HEADER_ENTRIES.map(([key, value]) => (
-              <th key={key}>{value}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {ROWS.map((row) => (
-            <tr key={row.id}>
-              {HEADER_ENTRIES.map(([key]) => (
-                <td key={\`\${row.id}-\${key}\`}>
-                  {row[key as keyof typeof ROWS[0]]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
+Add `.table-hover` to enable hover states on table rows.
 
 <Unstyled>
-  <div style={{ height: "240px" }}>
-    <ExampleBorderTable />
-  </div>
+  <HoverTable />
 </Unstyled>
 
-## Composition Example
+---
 
-The Composition Example demonstrates our approach to integrating tables with advanced features
-like sorting and pagination directly through services. In this example, the table dynamically generates a query string
-based on user interactions, enabling seamless integration with backend services for efficient data management.
+## Bordered Table
 
-This integration enhances the table component by allowing for sortable columns and pagination controls,
-providing a robust user experience for handling large datasets within our framework.
-
-<Source
-  code={
-    `
-import {
-  DPaginator,
-  DInputCheck,
-  DBadge,
-  DTableHead,
-  useItemSelection,
-  getQueryString,
-  changeQueryString,
-} from '@dynamic-framework/ui-react';
-
-const HEADER_ENTRIES = [
-['id', '#'],
-['first', 'First'],
-['second', 'Second'],
-['last', 'Last'],
-];
-
-const ROWS = [
-{
-id: 1,
-first: 'Marl',
-second: 'Otto',
-last: '@mdo',
-},
-{
-id: 2,
-first: 'Jacob',
-second: 'Thornton',
-last: '@fat',
-},
-{
-id: 3,
-first: 'Larry the Bird',
-second: '-',
-last: '@twitter',
-},
-];
-
-export function ExampleCompositionTableLoading() {
-  return (
-    <table className="table placeholder-wave">
-      <caption>
-        <div className="placeholder w-100 bg-secondary" />
-      </caption>
-      <thead>
-        <tr>
-          {HEADER_ENTRIES.map(([key, value]) => (
-            <th key={key} style={{ width: "25%" }}>
-              {value}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-          <td>
-            <div className="placeholder w-100 bg-secondary" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  );
-}
-
-type Props = {
-page: number;
-rows: number;
-totalPages: number;
-sort: string;
-setPage(page: number): void;
-setRows(rows: number): void;
-setSort(sort: string): void;
-};
-
-export function ExampleCompositionTable(
-  {
-    page,
-    rows,
-    totalPages,
-    sort,
-    setPage,
-    setRows,
-    setSort,
-  }: Props,
-) {
-  const {
-    isSelectedItem,
-    toggleSelectedItem,
-    selectedItems,
-    setSelectedItems,
-  } = useItemSelection<typeof ROWS[0]>();
-
-return (
-<>
-<table className="table">
-<caption>List of users</caption>
-<thead>
-<tr>
-<th>
-<DInputCheck
-type="checkbox"
-checked={selectedItems.length === ROWS.length}
-onChange={(event) => {
-setSelectedItems(event.target.checked ? ROWS : []);
-}}
-/>
-</th>
-{HEADER_ENTRIES.map(([key, value]) => (
-<DTableHead
-style={{ width: '25%' }}
-key={key}
-field={key}
-label={value}
-value={sort}
-onChange={setSort}
-/>
-))}
-</tr>
-</thead>
-<tbody>
-{ROWS.map((row) => (
-<tr key={row.id}>
-<td>
-<DInputCheck
-type="checkbox"
-onChange={() => toggleSelectedItem(row)}
-checked={isSelectedItem(row)}
-/>
-</td>
-{HEADER_ENTRIES.map(([key]) => (
-<td key={\`\${row.id}-\${key}\`}>
-{row[key as keyof typeof ROWS[0]]}
-</td>
-))}
-</tr>
-))}
-</tbody>
-</table>
-<div className="row">
-<div className="col-2">
-<small>Per Page </small>
-<DInput
-className="d-inline-block"
-style={{ width: '36px' }}
-size="sm"
-type="number"
-value={rows.toString()}
-onChange={(value) => setRows(parseInt(value, 10))}
-/>
-</div>
-<div className="col-8">
-<DPaginator
-            current={page}
-            onPageChange={setPage}
-            total={totalPages}
-          />
-</div>
-</div>
-</>
-);
-}
-
-export function ExampleComposition() {
-  const [loading, setLoading] = useState(false);
-
-const [page, setPage] = useState(Number(getQueryString('page', { default: '1', useSearch: false })));
-const [rows, setRows] = useState(Number(getQueryString('rows', { default: '3', useSearch: false })));
-const [sort, setSort] = useState(getQueryString('sort', { default: 'id', useSearch: false })!);
-const [queryString, setQueryString] = useState('');
-
-useEffect(() => {
-setQueryString(changeQueryString(
-{ page, rows, sort },
-{ useSearch: false },
-));
-}, [setQueryString, page, rows, sort]);
-
-return (
-<>
-<DInputCheck
-type="checkbox"
-label="Loading"
-checked={loading}
-onChange={(event) => setLoading(event.target.checked)}
-/>
-{'Query String = '}
-{queryString && (
-<DBadge text={queryString} color="primary" />
-)}
-<br />
-<br />
-{loading && <ExampleCompositionTableLoading />}
-{!loading && (
-<ExampleCompositionTable
-          page={page}
-          rows={rows}
-          totalPages={3}
-          sort={sort}
-          setPage={setPage}
-          setRows={setRows}
-          setSort={setSort}
-        />
-)}
-</>
-);
-}
-`
-}
-language="tsx"
-dark
-/>
+Add `.table-bordered` for borders on all sides of the table and cells.
 
 <Unstyled>
-  <div style={{ height: "360px" }}>
-    <ExampleComposition />
-  </div>
+  <BorderedTable />
 </Unstyled>
+
+---
+
+## Small/Compact Table
+
+Add `.table-sm` to reduce padding and create a more compact table.
+
+<Unstyled>
+  <SmallTable />
+</Unstyled>
+
+---
+
+## More Examples
+
+For advanced examples including sorting, pagination, selection, and loading states, please check the individual stories in Storybook navigation.
+
+---
+
+## Sortable Columns
+
+Use `DTableHead` component to add sorting functionality to column headers.
+
+<Unstyled>
+  <SortableTable />
+</Unstyled>
+
+**Features:**
+- Click headers to toggle sort direction
+- Visual indicators (↑↓)
+- Current sort displayed above table
+
+---
+
+## Pagination
+
+Use `DPaginator` to navigate through large datasets split across multiple pages.
+
+<Unstyled>
+  <PaginatedTable />
+</Unstyled>
+
+**Features:**
+- Page navigation controls
+- Shows current page range
+- Configurable rows per page
+
+---
+
+## Row Selection
+
+Use `useItemSelection` hook to add checkbox selection for bulk actions.
+
+<Unstyled>
+  <SelectableTable />
+</Unstyled>
+
+**Features:**
+- Select all checkbox
+- Individual row selection
+- Selected count displayed
+- Clear selection button
+
+---
+
+## Loading State
+
+Show skeleton placeholders while data is loading for better UX.
+
+<Unstyled>
+  <LoadingTable />
+</Unstyled>
+
+**Features:**
+- Animated wave effect
+- Maintains table structure
+- Visual feedback during load
+
+---
+
+## Complete Example
+
+Full-featured table combining sorting, pagination, selection, and loading states.
+
+<Unstyled>
+  <CompleteTable />
+</Unstyled>
+
+**Features:**
+- ✅ Sortable columns
+- ✅ Pagination controls
+- ✅ Row selection
+- ✅ Loading state toggle
+- ✅ Selected count badge
+- ✅ Configurable rows per page
+
+---
+
+## Best Practices
+
+### ✅ Do
+
+- Use `<caption>` for accessibility
+- Use semantic HTML (`<thead>`, `<tbody>`, `<tfoot>`)
+- Implement pagination for tables with >20 rows
+- Show loading states during data fetching
+- Make tables responsive on mobile
+- Use `DTableHead` for sorting instead of custom solutions
+
+### ❌ Don't
+
+- Nest tables inside tables
+- Use tables for layout (use CSS Grid/Flexbox)
+- Forget to handle empty states
+- Implement sorting without visual indicators
+- Create tables without headers
+
+---
+
+## Related Components
+
+- **DTableHead** - Sortable table headers
+- **DPaginator** - Page navigation
+- **DInputCheck** - Checkbox for selection
+- **DBadge** - Status indicators
+- **DButton** - Action buttons
+
+---
+
+## Further Reading
+
+- [Bootstrap Tables Documentation](https://getbootstrap.com/docs/5.3/content/tables/)
+- [MDN HTML Table Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table)
+- [W3C Table Accessibility](https://www.w3.org/WAI/tutorials/tables/)
