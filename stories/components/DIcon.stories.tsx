@@ -341,6 +341,54 @@ export const MaterialDesignIcons: Story = {
   },
 };
 
+export const MaterialDesignIconsWithCircle: Story = {
+  render: (args: ComponentProps<typeof DIcon>) => (
+    <DContextProvider
+      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
+    >
+      <div style={{
+        display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'center',
+      }}
+      >
+        <div style={{ textAlign: 'center' }}>
+          <DIcon hasCircle icon="home" size="24px" />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>home</div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <DIcon hasCircle icon="settings" size="24px" />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>settings</div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <DIcon hasCircle icon="person" size="24px" />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>person</div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <DIcon hasCircle icon="mail" size="24px" />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>mail</div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <DIcon hasCircle icon="notifications" size="24px" />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>notifications</div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <DIcon hasCircle icon="favorite" size="24px" />
+          <div style={{ fontSize: '12px', marginTop: '8px' }}>favorite</div>
+        </div>
+      </div>
+    </DContextProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Material Design icons are still supported for backward compatibility. Use `materialStyle` prop or configure via DContextProvider.',
+      },
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
 /**
  * Material Design icons can be used with any component that accepts icons
  */
