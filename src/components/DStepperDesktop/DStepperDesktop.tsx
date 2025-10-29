@@ -78,17 +78,16 @@ export default function DStepper(
                 'd-step-check': value < currentStep || completed,
               })}
             >
-              {value < currentStep || completed
-                ? (
-                  <DIcon
-                    icon={icon}
-                    familyClass={iconSuccessFamilyClass}
-                    familyPrefix={iconSuccessFamilyPrefix}
-                    materialStyle={iconSuccessMaterialStyle}
-                    className="d-step-icon"
-                  />
-                )
-                : value}
+              {((value < currentStep) || completed) && (
+                <DIcon
+                  icon={icon}
+                  familyClass={iconSuccessFamilyClass}
+                  familyPrefix={iconSuccessFamilyPrefix}
+                  materialStyle={iconSuccessMaterialStyle}
+                  className="d-step-icon"
+                />
+              )}
+              {value}
             </div>
           </div>
           <div className="d-step-text-container">

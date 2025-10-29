@@ -83,13 +83,21 @@
     }
 
     .d-step-check {
-      color: var(--#{$prefix}step-check-background-color);
-      border-color: var(--#{$prefix}step-check-background-color);
+      // color: var(--#{$prefix}step-check-background-color);
+      // border-color: var(--#{$prefix}step-check-background-color);
+      .d-step-icon {
+        --bs-icon-color: var(--#{$prefix}white);
+        width: 1.25rem;
+        height: 1.25rem;
+        padding: .25rem;
+        background: var(--#{$prefix}step-check-background-color);
+        border-radius: 2rem;
+      }
     }
 
     &.d-step-current {
-      --#{$prefix}step-icon-container-color: var(--#{$prefix}gray-600);
-      --#{$prefix}step-icon-container-border-color: var(--#{$prefix}gray-600);
+      --#{$prefix}step-icon-container-color: var(--#{$prefix}primary-500);
+      --#{$prefix}step-icon-container-border-color: var(--#{$prefix}primary-500);
       .d-step-icon-container {
         font-weight: 500;
       }
@@ -161,7 +169,9 @@
 
   .d-step-icon {
     --#{$prefix}icon-size: var(--#{$prefix}step-icon-size);
-
+    position: absolute;
+    right: -10px;
+    bottom: -4px;
     display: flex;
     font-size: inherit;
   }

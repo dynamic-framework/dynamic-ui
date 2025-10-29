@@ -117,7 +117,7 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
   },
   decorators: [
     (Story) => (
-      <div style={{ width: 'calc(100dvw - 64px)' }}>
+      <div style={{ width: '800' }}>
         <Story />
       </div>
     ),

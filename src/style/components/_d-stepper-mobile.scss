@@ -5,8 +5,8 @@
   /* Outter circle */
   --#{$prefix}step-progress-outter-size: 62px;
   --#{$prefix}step-progress-outter-z-index: 1;
-  --#{$prefix}step-progress-outter-fill-background-color: var(--#{$prefix}secondary-500);
-  --#{$prefix}step-progress-outter-background-color: var(--#{$prefix}secondary-100);
+  --#{$prefix}step-progress-outter-fill-background-color: var(--#{$prefix}primary-500);
+  --#{$prefix}step-progress-outter-background-color: var(--#{$prefix}primary-50);
 
   /* Inner circle */
   --#{$prefix}step-progress-inner-size: 50px;
