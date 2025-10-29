@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
 
 import DInputPassword from '../../src/components/DInputPassword/DInputPassword';
-import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
+import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 import { DContextProvider } from '../../src';
 
@@ -65,16 +65,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     label: {
       control: 'text',
       type: 'string',
-    },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
     },
     placeholder: {
       control: 'text',
@@ -149,7 +139,6 @@ export const Default: Story = {
     id: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     value: undefined,
     iconEndAriaLabel: 'show/hide password',
   },
@@ -160,7 +149,6 @@ export const Invalid: Story = {
     id: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     value: undefined,
     invalid: true,
     iconEndAriaLabel: 'show/hide password',
@@ -172,7 +160,6 @@ export const Valid: Story = {
     id: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     value: undefined,
     valid: true,
     iconEndAriaLabel: 'show/hide password',
@@ -184,7 +171,6 @@ export const Disabled: Story = {
     id: 'componentId5',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     value: undefined,
     disabled: true,
     iconEndAriaLabel: 'show/hide password',
@@ -196,7 +182,6 @@ export const Floating: Story = {
     id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     value: undefined,
     iconEndAriaLabel: 'show/hide password',
     floatingLabel: true,
@@ -215,7 +200,6 @@ export const MaterialIcon: Story = {
     id: 'componentId7',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     value: undefined,
     iconEndAriaLabel: 'show/hide password',
   },

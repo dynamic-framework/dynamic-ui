@@ -82,24 +82,6 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
       control: 'text',
       type: 'string',
     },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    labelIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
     iconStart: {
       control: {
         type: 'select',
@@ -227,7 +209,6 @@ export const Default: Story = {
   args: {
     id: 'componentId1',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -240,7 +221,6 @@ export const Selected: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -254,7 +234,6 @@ export const Disabled: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -268,7 +247,6 @@ export const Invalid: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -282,7 +260,6 @@ export const Valid: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -296,7 +273,6 @@ export const Icon: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -316,7 +292,6 @@ export const Extractors: StoryObj<DInputSelectProps<{ id: string; text: string; 
   args: {
     id: 'componentId4',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { id: '1', text: 'Option 1' },
       { id: '2', text: 'Option 2' },
@@ -331,7 +306,6 @@ export const Floating: Story = {
   args: {
     id: 'componentId5',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },

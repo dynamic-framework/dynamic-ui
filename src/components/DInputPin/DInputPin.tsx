@@ -15,20 +15,15 @@ import type {
   WheelEvent,
 } from 'react';
 
-import DIcon from '../DIcon';
-import { PREFIX_BS } from '../config';
-
 import type {
   BaseProps,
   FamilyIconProps,
-  LabelIconProps,
   PinInputMode,
   PinInputType,
 } from '../interface';
 
 type Props =
 & BaseProps
-& LabelIconProps
 & FamilyIconProps
 & {
   id?: string;
@@ -51,9 +46,6 @@ export default function DInputPin(
   {
     id: idProp,
     label = '',
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
     placeholder,
     type = 'text',
     disabled = false,
@@ -159,14 +151,6 @@ export default function DInputPin(
       {label && (
         <label htmlFor="pinIndex0">
           {label}
-          {labelIcon && (
-            <DIcon
-              icon={labelIcon}
-              size={`var(--${PREFIX_BS}input-label-font-size)`}
-              familyClass={labelIconFamilyClass}
-              familyPrefix={labelIconFamilyPrefix}
-            />
-          )}
         </label>
       )}
       <div className="d-input-pin-group" id={id}>

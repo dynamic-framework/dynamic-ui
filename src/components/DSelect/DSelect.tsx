@@ -1,10 +1,7 @@
 import Select from 'react-select';
 import { useCallback, useId, useMemo } from 'react';
 import classNames from 'classnames';
-
 import type { Props as SelectProps, GroupBase } from 'react-select';
-
-import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 import DSelectOptionCheck from './components/DSelectOptionCheck';
 import DSelectOptionIcon from './components/DSelectOptionIcon';
@@ -22,14 +19,12 @@ import type {
   BaseProps,
   EndIconProps,
   FamilyIconProps,
-  LabelIconProps,
   StartIconProps,
 } from '../interface';
 
 type Props<Option, IsMulti extends boolean, Group extends GroupBase<Option>> =
 & BaseProps
 & FamilyIconProps
-& LabelIconProps
 & StartIconProps
 & EndIconProps
 & Omit<
@@ -67,9 +62,6 @@ function DSelect<
     className,
     style,
     label,
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
     hint,
     iconFamilyClass,
     iconFamilyPrefix,
@@ -129,14 +121,6 @@ function DSelect<
       {label && (
         <label htmlFor={id}>
           {label}
-          {labelIcon && (
-            <DIcon
-              icon={labelIcon}
-              size={`var(--${PREFIX_BS}input-label-font-size)`}
-              familyClass={labelIconFamilyClass}
-              familyPrefix={labelIconFamilyPrefix}
-            />
-          )}
         </label>
       )}
       <div

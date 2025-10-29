@@ -28,16 +28,6 @@ const config: Meta<typeof DInputMask> = {
       control: 'text',
       type: 'string',
     },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
     placeholder: {
       control: 'text',
       type: 'string',
@@ -187,7 +177,6 @@ export const Default: Story = {
   args: {
     id: 'componentId1',
     label: 'Label',
-    labelIcon: undefined,
     type: 'text',
     iconStart: 'Phone',
     iconStartAriaLabel: 'start action',
@@ -203,7 +192,6 @@ export const Invalid: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    labelIcon: undefined,
     type: 'text',
     iconStart: 'Phone',
     iconStartAriaLabel: 'start action',
@@ -220,7 +208,6 @@ export const Valid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
-    labelIcon: undefined,
     type: 'text',
     iconStart: 'Phone',
     iconStartAriaLabel: 'start action',

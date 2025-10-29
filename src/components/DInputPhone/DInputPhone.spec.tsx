@@ -204,24 +204,6 @@ describe('<DInputPhone />', () => {
       expect(screen.getByLabelText('Phone Number')).toBeInTheDocument();
     });
 
-    it('renders a label with a material style icon', () => {
-      const { container } = render(
-        <DContextProvider>
-          <DInputPhone
-            label="Phone"
-            labelIcon="person"
-            labelIconMaterialStyle
-          />
-        </DContextProvider>,
-      );
-
-      const iconElement = container.querySelector('.d-icon');
-
-      expect(iconElement).toBeInTheDocument();
-      expect(iconElement).toHaveTextContent('person');
-      expect(iconElement).not.toHaveClass('bi-person');
-    });
-
     it('renders with a floating label', () => {
       render(
         <DContextProvider>

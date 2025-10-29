@@ -22,7 +22,6 @@ import type {
   ComponentSize,
   EndIconProps,
   FamilyIconProps,
-  LabelIconProps,
   StartIconProps,
 } from '../interface';
 import type { Merge } from '../../types';
@@ -30,7 +29,6 @@ import type { Merge } from '../../types';
 type NonHTMLInputElementProps =
 & BaseProps
 & FamilyIconProps
-& LabelIconProps
 & StartIconProps
 & EndIconProps
 & {
@@ -60,10 +58,6 @@ function DInput(
     style,
     className,
     label = '',
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
-    labelIconMaterialStyle,
     disabled = false,
     loading = false,
     iconFamilyClass,
@@ -173,22 +167,10 @@ function DInput(
   const labelComponent = useMemo(() => (
     <label htmlFor={id}>
       {label}
-      {labelIcon && (
-        <DIcon
-          icon={labelIcon}
-          familyClass={labelIconFamilyClass}
-          familyPrefix={labelIconFamilyPrefix}
-          materialStyle={labelIconMaterialStyle}
-        />
-      )}
     </label>
   ), [
     id,
     label,
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
-    labelIconMaterialStyle,
   ]);
 
   const dynamicComponent = useMemo(() => {

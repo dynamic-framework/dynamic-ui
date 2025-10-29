@@ -151,28 +151,6 @@ and all variables are scoped under the \`.d-input-phone\` class.
       control: 'text',
       type: 'string',
     },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    labelIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconMaterialStyle: {
-      control: 'boolean',
-      type: 'boolean',
-    },
     placeholder: {
       control: 'text',
       type: 'string',
