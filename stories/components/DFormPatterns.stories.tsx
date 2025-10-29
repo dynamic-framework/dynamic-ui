@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import {
   DInput, DSelect, DInputCheck, DInputSwitch, DButton,
   DIcon,
+  DInputPassword,
 } from '../../src';
 import DBox from '../../src/components/DBox';
 import './custom.scss';
@@ -55,6 +56,41 @@ export const OneColumn: Story = {
         <div className="col-12">
           <DButton type="submit" text="Submit" />
         </div>
+      </form>
+    </DBox>
+  ),
+};
+
+export const horizontalForm: Story = {
+  render: () => (
+    <DBox className="p-8" style={{ width: '800px' }}>
+      <form>
+        <div className="grid gap-3 mb-4">
+          <label htmlFor="inputEmail3" className="g-col-sm-2 col-form-label">Email</label>
+          <div className="g-col-sm-10">
+            <DInput type="email" id="inputEmail3" />
+          </div>
+        </div>
+        <div className="grid gap-3 mb-4">
+          <label htmlFor="inputPassword3" className="g-col-sm-2 col-form-label">Password</label>
+          <div className="g-col-sm-10">
+            <DInputPassword />
+          </div>
+        </div>
+        <hr />
+        <div className="grid gap-3 mb-4">
+          <label htmlFor="address" className="g-col-sm-2 col-form-label">Address</label>
+          <div className="g-col-sm-10">
+            <DInput id="address" />
+          </div>
+        </div>
+        <div className="grid gap-3 mb-4">
+          <label htmlFor="address" className="g-col-sm-2 col-form-label">Phone</label>
+          <div className="g-col-sm-10">
+            <DInput id="phone" />
+          </div>
+        </div>
+        <DButton type="submit" text="Sign in" />
       </form>
     </DBox>
   ),
@@ -229,7 +265,7 @@ export const FieldsetForm2: Story = {
 
 export const FormWithCover: Story = {
   render: () => (
-    <DBox className="grid gap-2 p-0 overflow-hidden">
+    <DBox style={{ width: '800px' }} className="grid gap-2 p-0 overflow-hidden">
       <div className="d-none g-col-4 d-lg-block">
         <div className="bg-primary text-white h-100 position-relative">
           <div className="bottom-0 end-0 p-8 text-end position-absolute">
