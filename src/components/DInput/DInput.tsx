@@ -14,7 +14,6 @@ import type {
   ChangeEvent,
 } from 'react';
 
-import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
@@ -177,7 +176,6 @@ function DInput(
       {labelIcon && (
         <DIcon
           icon={labelIcon}
-          size={`var(--${PREFIX_BS}label-font-size)`}
           familyClass={labelIconFamilyClass}
           familyPrefix={labelIconFamilyPrefix}
           materialStyle={labelIconMaterialStyle}
