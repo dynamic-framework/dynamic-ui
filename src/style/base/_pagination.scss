@@ -3,6 +3,7 @@
   --#{$prefix}pagination-border-radius: #{$pagination-page-border-radius};
   --#{$prefix}pagination-page-control-color: #{$pagination-page-control-color};
   --#{$prefix}pagination-page-control-disabled-color: #{$pagination-page-control-disabled-color};
+  gap: var(--#{$prefix}ref-spacer-1);
   margin: 0;
 
   .page-item {
@@ -26,6 +27,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+    padding-inline: .5rem;
     border-radius: var(--#{$prefix}pagination-border-radius);
   }
 
