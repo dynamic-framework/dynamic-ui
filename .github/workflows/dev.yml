@@ -1,0 +1,67 @@
+name: Dev Publish
+on:
+  push:
+    branches:
+      - develop
+
+concurrency:
+  group: dev-publish
+  cancel-in-progress: false
+
+jobs:
+  dev-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: https://registry.npmjs.org/
+          scope: '@dynamic-framework'
+      - name: Install dependencies
+        run: npm ci
+      - name: Ensure Rollup binary
+        run: |
+          if [ ! -d "node_modules/@rollup/rollup-linux-x64-gnu" ]; then
+            echo "Installing missing Rollup Linux binary..."
+            npm install @rollup/rollup-linux-x64-gnu --no-save --no-package-lock
+          fi
+      - name: Build packages
+        run: npm run build
+      - name: Compute next dev version
+        id: dev_version
+        run: |
+          set -e
+          BASE="2.0.0-dev"
+          EXISTING=$(npm view @dynamic-framework/ui-react versions --json || echo "[]")
+          NEXT=$(echo "$EXISTING" | node scripts/compute-dev-version.js)
+          NEW_VERSION="$BASE.$NEXT"
+          echo "New dev version: $NEW_VERSION"
+          npm version "$NEW_VERSION" --no-git-tag-version
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+      - name: Publish to npm (dist-tag dev)
+        run: npm publish --access public --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Publish CDN dev
+        run: npm run publish:cdn-dev
+      - name: Build storybook
+        run: npm run build:storybook
+      - name: Deploy dev storybook 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: docs
+          FOLDER: docs
+          CLEAN: true
+          TARGET_FOLDER: docs/dev
+          COMMIT_MESSAGE: 'doc: update dev storybook'

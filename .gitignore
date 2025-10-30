@@ -71,3 +71,4 @@ CLAUDE.md
 dist
 dist-transpiled
 .jest-cache
+.developers
