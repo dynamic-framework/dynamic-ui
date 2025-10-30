@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import { useCallback, useMemo } from 'react';
 
-import type { MouseEvent } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 
 import DIcon from '../DIcon';
 
@@ -29,6 +29,7 @@ type Props =
   variant?: ButtonVariant;
   state?: InputState;
   text?: string;
+  children?: ReactNode;
   ariaLabel?: string;
   value?: string;
   type?: ButtonType;
@@ -48,6 +49,7 @@ export default function DButton(
     variant,
     state,
     text = '',
+    children,
     ariaLabel,
     iconStart,
     iconStartFamilyClass,
@@ -96,6 +98,8 @@ export default function DButton(
     state === 'disabled' || loading || disabled
   ), [state, loading, disabled]);
 
+  const content = children || text;
+
   const newAriaLabel = useMemo(() => (
     loading
       ? (loadingAriaLabel || ariaLabel || text)
@@ -131,7 +135,7 @@ export default function DButton(
           <span className="visually-hidden">Loading...</span>
         </span>
       )}
-      <span>{loading && loadingText ? loadingText : text}</span>
+      <span>{loading && loadingText ? loadingText : content}</span>
       {iconEnd && (
         <DIcon
           icon={iconEnd}
