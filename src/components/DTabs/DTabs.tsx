@@ -19,7 +19,7 @@ export type DTabOption = {
   disabled?: boolean;
 };
 
-export type TabVariant = 'tabs' | 'pills' | 'underline';
+export type TabVariant = 'tabs' | 'pills' | 'underline' | 'toggle-button-group';
 
 type Props = BaseProps & PropsWithChildren<{
   classNameTab?: string;

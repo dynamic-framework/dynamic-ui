@@ -16,7 +16,7 @@ export const INPUT_STATE = ['focus-visible', 'hover', 'active', 'disabled'];
 export const COMPONENT_SIZE = [undefined, 'sm', 'lg'];
 export const AVATAR_SIZE = [undefined, 'xs', 'sm', 'lg', 'xl', 'xxl'];
 
-export const TAB_VARIANTS = ['underline', 'pills', 'tabs'];
+export const TAB_VARIANTS = ['underline', 'pills', 'tabs', 'toogle-button-group'];
 
 export const CONTEXT_PROVIDER_CONFIG_MATERIAL = {
   icon: {
