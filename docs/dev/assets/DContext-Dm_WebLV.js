@@ -1,0 +1,37 @@
+import{j as h}from"./jsx-runtime-D_zvdyIk.js";import{r as t}from"./iframe-XnRhdyHW.js";import{r as D}from"./index-CQ6hCEsd.js";import{P as x}from"./config-BV4l-vIF.js";function S(e){t.useEffect(()=>{e?(document.body.style.overflow="hidden",document.body.style.paddingRight="0"):(document.body.style.overflow="unset",document.body.style.paddingRight="unset")},[e])}function q(e){const[o,s]=t.useState(!1);return t.useEffect(()=>{const c=document.querySelector(`#${e}`);c&&c.remove();const r=document.createElement("div");r.id=e,r.className="d-portal",document.body.appendChild(r),s(!0)},[e]),{created:o}}function L(e=[]){const[o,s]=t.useState(e),c=t.useCallback(a=>s(v=>[...v,a]),[]),r=t.useCallback(()=>s(a=>a.slice(0,a.length-1)),[]),u=t.useCallback(()=>o.at(-1),[o]),p=t.useCallback(()=>s([]),[]),i=t.useCallback(()=>o.length===0,[o.length]),y=t.useMemo(()=>({clear:p,isEmpty:i,length:o.length,peek:u,pop:r,push:c}),[p,i,o.length,u,r,c]);return[o,y]}function $(e){return e?[...e.querySelectorAll('a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])')].filter(o=>!o.hasAttribute("disabled")):[]}const C=t.createContext(void 0);function P({portalName:e,children:o,availablePortals:s}){const{created:c}=q(e),[r,{push:u,pop:p,isEmpty:i}]=L([]);S(!!r.length);const y=t.useCallback((n,l)=>{var f;if(!s)throw new Error(`there is no component for portal ${n.toString()}`);const d=s[n];if(!d)throw new Error(`there is no component for portal ${n.toString()}`);u({name:n,Component:d,payload:l}),(f=document.activeElement)==null||f.blur()},[s,u]),a=t.useCallback(()=>{i()||p()},[i,p]),v=t.useMemo(()=>({stack:r,openPortal:y,closePortal:a}),[r,y,a]),b=t.useCallback(n=>{if(n instanceof HTMLDivElement){if(n.classList.contains("portal")&&!("bsBackdrop"in n.dataset)){a();return}if(n.classList.contains("backdrop")){const l=n.nextElementSibling;l&&l.classList.contains("portal")&&!("bsBackdrop"in l.dataset)&&a()}}},[a]);return t.useEffect(()=>{const n=l=>{const d=document.querySelector(`#${e} > div > div:last-child`);if(l.key==="Escape"&&d){b(d);return}if(l.key==="Tab"){const f=$(d);if(f.length===0)return;const _=f[0],E=f[f.length-1];l.shiftKey&&document.activeElement===_?(l.preventDefault(),E.focus()):!l.shiftKey&&document.activeElement===E&&(l.preventDefault(),_.focus())}};return r.length!==0&&window.addEventListener("keydown",n),()=>{window.removeEventListener("keydown",n)}},[b,e,r.length]),h.jsxs(C.Provider,{value:v,children:[o,c&&D.createPortal(h.jsx("div",{onClick:({target:n})=>b(n),onKeyDown:()=>{},children:r.map(({Component:n,name:l,payload:d})=>h.jsxs(t.Fragment,{children:[h.jsx("div",{className:"backdrop fade show"}),h.jsx(n,{name:l,payload:d})]},l))}),document.getElementById(e))]})}function M(){const e=t.useContext(C);if(e===void 0)throw new Error("usePortalContext was used outside of PortalContextProvider");return e}try{P.displayName="DPortalContextProvider",P.__docgenInfo={description:"",displayName:"DPortalContextProvider",props:{portalName:{defaultValue:null,description:"",name:"portalName",required:!0,type:{name:"string"}},availablePortals:{defaultValue:null,description:"",name:"availablePortals",required:!1,type:{name:"PortalAvailableList<T> | undefined"}}}}}catch{}try{C.displayName="DPortalContext",C.__docgenInfo={description:"",displayName:"DPortalContext",props:{}}}catch{}function g(e){return getComputedStyle(document.documentElement).getPropertyValue(e).trim()}const m={language:"en",currency:{symbol:"$",precision:2,separator:",",decimal:"."},icon:{familyClass:"bi",familyPrefix:"bi-",materialStyle:!1},iconMap:{x:"x",xLg:"x-lg",chevronUp:"chevron-up",chevronDown:"chevron-down",chevronLeft:"chevron-left",chevronRight:"chevron-right",upload:"cloud-upload",calendar:"calendar",check:"check",alert:{warning:"exclamation-circle",danger:"exclamation-triangle",success:"check-circle",info:"info-circle",dark:"info-circle",light:"info-circle",primary:"info-circle",secondary:"info-circle"},input:{search:"search",show:"eye",hide:"eye-slash",increase:"plus-square",decrease:"dash-square"}},breakpoints:{xs:"",sm:"",md:"",lg:"",xl:"",xxl:""},setContext:()=>{},portalName:"d-portal"},k=t.createContext(m);function w({language:e=m.language,currency:o=m.currency,icon:s=m.icon,iconMap:c=m.iconMap,portalName:r=m.portalName,availablePortals:u,children:p}){const[i,y]=t.useState({language:e,currency:o,icon:s,iconMap:c,breakpoints:m.breakpoints}),a=t.useCallback(b=>y(n=>({...n,...b})),[]);t.useLayoutEffect(()=>{a({breakpoints:{xs:g(`--${x}breakpoint-xs`),sm:g(`--${x}breakpoint-sm`),md:g(`--${x}breakpoint-md`),lg:g(`--${x}breakpoint-lg`),xl:g(`--${x}breakpoint-xl`),xxl:g(`--${x}breakpoint-xxl`)}})},[a]);const v=t.useMemo(()=>({...i,setContext:a}),[i,a]);return h.jsx(k.Provider,{value:v,children:h.jsx(P,{portalName:r,availablePortals:u,children:p})})}function B(){const e=t.useContext(k);if(e===void 0)throw new Error("useDContext was used outside of DContextProvider");return e}try{w.displayName="DContextProvider",w.__docgenInfo={description:"",displayName:"DContextProvider",props:{language:{defaultValue:{value:"en"},description:"",name:"language",required:!1,type:{name:"string | undefined"}},currency:{defaultValue:{value:`{
+    symbol: '$',
+    precision: 2,
+    separator: ',',
+    decimal: '.',
+  }`},description:"",name:"currency",required:!1,type:{name:"CurrencyProps | undefined"}},icon:{defaultValue:{value:`{
+    familyClass: 'bi',
+    familyPrefix: 'bi-',
+    materialStyle: false,
+  }`},description:"",name:"icon",required:!1,type:{name:"IconProps | undefined"}},iconMap:{defaultValue:{value:`{
+    x: 'x',
+    xLg: 'x-lg',
+    chevronUp: 'chevron-up',
+    chevronDown: 'chevron-down',
+    chevronLeft: 'chevron-left',
+    chevronRight: 'chevron-right',
+    upload: 'cloud-upload',
+    calendar: 'calendar',
+    check: 'check',
+    alert: {
+      warning: 'exclamation-circle',
+      danger: 'exclamation-triangle',
+      success: 'check-circle',
+      info: 'info-circle',
+      dark: 'info-circle',
+      light: 'info-circle',
+      primary: 'info-circle',
+      secondary: 'info-circle',
+    },
+    input: {
+      search: 'search',
+      show: 'eye',
+      hide: 'eye-slash',
+      increase: 'plus-square',
+      decrease: 'dash-square',
+    },
+  }`},description:"",name:"iconMap",required:!1,type:{name:"IconMapProps | undefined"}},breakpoints:{defaultValue:null,description:"",name:"breakpoints",required:!1,type:{name:"BreakpointProps | undefined"}},portalName:{defaultValue:{value:"d-portal"},description:"",name:"portalName",required:!1,type:{name:"string | undefined"}},availablePortals:{defaultValue:null,description:"",name:"availablePortals",required:!1,type:{name:"PortalAvailableList<T> | undefined"}}}}}catch{}try{k.displayName="DContext",k.__docgenInfo={description:"",displayName:"DContext",props:{}}}catch{}export{w as D,M as a,B as u};
