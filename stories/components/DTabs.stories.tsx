@@ -297,6 +297,77 @@ export const Pills: Story = {
   },
 };
 
+export const ToggleButtonGroup: Story = {
+  decorators: [
+    (Story) => (
+      <DBox style={{ width: '800px', height: '400px' }}>
+        <Story />
+      </DBox>
+    ),
+  ],
+  render: (args) => (
+    <DTabs {...args}>
+      <DTabs.Tab tab="details">
+        <h4 className="mb-4">Transaction Details</h4>
+        <p>
+          Access detailed information about your most recent transactions,
+          including merchant information, transaction amounts, and processing
+          status.
+        </p>
+        <p className="mb-2">
+          <strong>Latest Transaction:</strong>
+          {' '}
+          Coffee Shop - $4.50 (March 20, 2024)
+        </p>
+        <p className="mb-2">
+          <strong>Pending:</strong>
+          {' '}
+          Online Purchase - $89.99 (Processing)
+        </p>
+        <p>
+          All transactions are processed securely and typically appear in your
+          account within 1-2 business days. You can dispute any unauthorized
+          transactions directly from this section.
+        </p>
+      </DTabs.Tab>
+      <DTabs.Tab tab="history">
+        <h4 className="mb-4">Transaction History</h4>
+        <p>
+          Review your complete transaction history spanning the last 12 months.
+          You can filter by date range, amount, merchant, or transaction type
+          to find specific entries.
+        </p>
+        <p className="mb-2">
+          <strong>Total Transactions (Last 30 days):</strong>
+          {' '}
+          47
+        </p>
+        <p className="mb-2">
+          <strong>Total Spent:</strong>
+          {' '}
+          $2,340.50
+        </p>
+        <p>
+          Export your transaction history to CSV or PDF format for your records.
+          Historical data older than 12 months can be requested through customer
+          support.
+        </p>
+      </DTabs.Tab>
+    </DTabs>
+  ),
+  args: {
+    defaultSelected: 'history',
+    options: [
+      { label: 'Details', tab: 'details' },
+      { label: 'History', tab: 'history' },
+      { label: 'Reports', tab: 'empty' },
+    ],
+    vertical: false,
+    variant: 'toggle-button-group',
+    className: 'mb-8',
+  },
+};
+
 export const PillsWithIcons: Story = {
   decorators: [
     (Story) => (
@@ -472,23 +543,23 @@ export const PillsWithIconsFull: Story = {
             <DIcon icon="FlagTriangleLeft" />
             Reports
           </span>),
-        tab: 'empty',
+        tab: 'reports',
       },
       {
         label: (
           <span className="d-flex flex-column gap-2">
-            <DIcon icon="FlagTriangleLeft" />
+            <DIcon icon="ChartColumn" />
             Activities
           </span>),
-        tab: 'empty',
+        tab: 'activities',
       },
       {
         label: (
           <span className="d-flex flex-column gap-2">
-            <DIcon icon="FlagTriangleLeft" />
+            <DIcon icon="ChartPie" />
             Products
           </span>),
-        tab: 'empty',
+        tab: 'products',
       },
     ],
     vertical: false,
