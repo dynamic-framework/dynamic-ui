@@ -20,6 +20,10 @@ export { default as DCollapse } from './DCollapse';
 export { default as DCurrencyText } from './DCurrencyText';
 export { default as DDatePicker } from './DDatePicker';
 export { default as DIcon } from './DIcon';
+export {
+  default as DLayout,
+  DLayoutPane,
+} from './DLayout';
 export { default as DIconBase } from './DIconBase';
 export { default as DInput } from './DInput';
 export { default as DInputMask } from './DInputMask';
