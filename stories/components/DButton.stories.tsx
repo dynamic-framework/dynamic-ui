@@ -334,3 +334,33 @@ export const MaterialButtons: Story = {
     docs: { description: { story: 'Material-style buttons in all sizes.' } },
   },
 };
+
+//
+// ─── CUSTOM CHILDREN ─────────────────────────────────────────────
+//
+
+export const WithCustomChildren: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-4">
+      <DButton color="primary">
+        <span>Notifications</span>
+        <strong className="ms-2">2</strong>
+      </DButton>
+      <DButton color="success">
+        <span>Messages</span>
+        <strong className="ms-2">5</strong>
+      </DButton>
+      <DButton color="info" variant="outline">
+        <span>Balance</span>
+        <strong className="ms-2">$1,250.00</strong>
+      </DButton>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Buttons can receive custom children elements instead of text prop for more complex content.',
+      },
+    },
+  },
+};
