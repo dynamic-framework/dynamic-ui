@@ -2,6 +2,12 @@ import type { Preview } from '@storybook/react-vite';
 
 const config: Preview = {
   parameters: {
+    docs: {
+      source: {
+        excludeDecorators: true,
+        type: 'dynamic',
+      },
+    },
     layout: 'centered',
     controls: {
       matchers: {
