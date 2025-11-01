@@ -28,6 +28,17 @@ Think of it as a pre-styled <code>div</code> that provides a consistent containe
     },
   },
   tags: ['autodocs'],
+  argTypes: {
+    children: {
+      table: {
+        type: { summary: 'ReactNode' },
+        defaultValue: {
+          summary: 'ReactNode',
+        },
+      },
+      control: false,
+    },
+  },
 };
 
 export default config;
@@ -38,7 +49,7 @@ export const Default: Story = {
     children: (
       <>
         <h4>Hello world</h4>
-        <p>Loren ipsum dolor</p>
+        <p className="m-0">Loren ipsum dolor</p>
       </>
     ),
   },
@@ -57,7 +68,7 @@ export const CustomPadding: Story = {
     children: (
       <>
         <h4>Hello world</h4>
-        <p>Loren ipsum dolor</p>
+        <p className="m-0">Lorem ipsum dolor</p>
       </>
     ),
   },
