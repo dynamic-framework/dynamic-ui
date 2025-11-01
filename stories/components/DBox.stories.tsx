@@ -9,20 +9,20 @@ const config: Meta<typeof DBox> = {
     docs: {
       description: {
         component: `
-        DBox is a semantic and straightforward component designed to frame sections of content.
-        Think of it as a pre-styled <code>div</code> that provides a consistent container for your UI elements.
+DBox is a semantic and straightforward component designed to frame sections of content.
+Think of it as a pre-styled <code>div</code> that provides a consistent container for your UI elements.
 
-        ### Key Features:
+### Key Features:
 
-        - **Semantic Grouping:** Use <code>DBox</code> to logically group related content, improving readability and maintainability.
-        - **Consistent Styling:** It applies a default style (<code>.d-box</code>) that can be easily extended with custom classes.
-        - **Flexible:** You can customize the padding, margins, and other styles using the <code>className</code> prop.
+- **Semantic Grouping:** Use <code>DBox</code> to logically group related content, improving readability and maintainability.
+- **Consistent Styling:** It applies a default style (<code>.d-box</code>) that can be easily extended with custom classes.
+- **Flexible:** You can customize the padding, margins, and other styles using the <code>className</code> prop.
 
-        ### When to Use:
+### When to Use:
 
-        - When you need a simple container for a section of content.
-        - To apply consistent spacing and borders around a group of elements.
-        - As a base for more complex components.
+- When you need a simple container for a section of content.
+- To apply consistent spacing and borders around a group of elements.
+- As a base for more complex components.
         `,
       },
     },
