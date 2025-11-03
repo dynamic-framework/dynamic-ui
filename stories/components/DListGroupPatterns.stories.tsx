@@ -201,45 +201,45 @@ export const PaymentMethods: Story = {
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <div className="me-3">
-                <i className="bi bi-credit-card-2-front fs-2 text-primary" />
+                <DIcon icon="CreditCard" color="success" hasCircle />
               </div>
               <div>
                 <h6 className="mb-1">Visa •••• 4532</h6>
                 <small className="text-body-secondary">Expires 12/25</small>
                 <div className="mt-1">
-                  <DBadge color="primary">Primary</DBadge>
+                  <DBadge color="primary" soft text="Primary" />
                 </div>
               </div>
             </div>
-            <i className="bi bi-chevron-right" />
+            <DIcon icon="ChevronRight" className="text-gray-300" />
           </div>
         </DListGroup.Item>
         <DListGroup.Item action>
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <div className="me-3">
-                <i className="bi bi-credit-card-2-front fs-2 text-dark" />
+                <DIcon icon="CreditCard" color="info" hasCircle />
               </div>
               <div>
                 <h6 className="mb-1">Mastercard •••• 8791</h6>
                 <small className="text-body-secondary">Expires 08/26</small>
               </div>
             </div>
-            <i className="bi bi-chevron-right" />
+            <DIcon icon="ChevronRight" className="text-gray-300" />
           </div>
         </DListGroup.Item>
         <DListGroup.Item action>
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <div className="me-3">
-                <i className="bi bi-bank fs-2 text-success" />
+                <DIcon icon="Landmark" color="warning" hasCircle />
               </div>
               <div>
                 <h6 className="mb-1">Bank Account ****1234</h6>
                 <small className="text-body-secondary">Checking Account</small>
               </div>
             </div>
-            <i className="bi bi-chevron-right" />
+            <DIcon icon="ChevronRight" className="text-gray-300" />
           </div>
         </DListGroup.Item>
         <DListGroup.Item action className="text-center">
