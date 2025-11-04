@@ -2,7 +2,7 @@ import { Locale } from 'date-fns';
 import type { ComponentProps } from 'react';
 import type { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
 import DButton from '../../DButton';
-import type { BaseProps, ButtonVariant, ComponentSize, FamilyIconProps } from '../../interface';
+import type { BaseProps, ComponentSize, FamilyIconProps } from '../../interface';
 export declare enum PickerType {
     Default = "default",
     Quarter = "quarter",
@@ -28,13 +28,11 @@ type Props = BaseProps & FamilyIconProps & ReactDatePickerCustomHeaderProps & {
     prevYearAriaLabel?: string;
     nextYearAriaLabel?: string;
     iconSize?: ComponentSize;
-    buttonVariant?: ButtonVariant;
-    buttonTheme?: string;
     minYearSelect?: number;
     maxYearSelect?: number;
     showHeaderSelectors?: boolean;
     monthsShown?: number;
     locale?: Locale;
 } & Omit<ComponentProps<typeof DButton>, 'iconStart' | 'onClick' | 'disabled'>;
-export default function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, prevMonthAriaLabel, nextMonthAriaLabel, prevYearAriaLabel, nextYearAriaLabel, iconSize, buttonVariant, buttonTheme, style, className, minYearSelect, maxYearSelect, showHeaderSelectors, customHeaderCount, locale, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, prevMonthAriaLabel, nextMonthAriaLabel, prevYearAriaLabel, nextYearAriaLabel, iconSize, style, className, minYearSelect, maxYearSelect, showHeaderSelectors, customHeaderCount, locale, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

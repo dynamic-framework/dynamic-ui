@@ -1,6 +1,6 @@
 import type { DatePickerProps } from 'react-datepicker';
 import { Locale } from 'date-fns';
-import type { BaseProps, ButtonVariant, ComponentSize, FamilyIconProps } from '../interface';
+import type { BaseProps, ButtonVariant, ComponentColor, ComponentSize, FamilyIconProps } from '../interface';
 type Props = BaseProps & FamilyIconProps & Omit<DatePickerProps, 'showMonthDropdown' | 'showMonthYearDropdown' | 'showYearDropdown' | 'useShortMonthInDropdown' | 'yearDropdownItemNumber' | 'scrollableYearDropdown' | 'dropdownMode' | 'yearItemNumber' | 'portalId' | 'withPortal' | 'onPortalKeyDown' | 'portalHost' | 'locale'> & {
     inputLabel?: string;
     inputHint?: string;
@@ -15,7 +15,7 @@ type Props = BaseProps & FamilyIconProps & Omit<DatePickerProps, 'showMonthDropd
     headerPrevMonthAriaLabel?: string;
     headerNextMonthAriaLabel?: string;
     headerButtonVariant?: ButtonVariant;
-    headerButtonTheme?: string;
+    headerButtonColor?: ComponentColor;
     minYearSelect?: number;
     maxYearSelect?: number;
     invalid?: boolean;
@@ -24,5 +24,5 @@ type Props = BaseProps & FamilyIconProps & Omit<DatePickerProps, 'showMonthDropd
     showHeaderSelectors?: boolean;
     locale?: Locale;
 };
-export default function DDatePicker({ inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel, inputId, timeId, timeInputLabel, iconInput, iconHeaderPrev, iconHeaderNext, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, minYearSelect, maxYearSelect, iconHeaderSize, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, headerButtonVariant, headerButtonTheme, invalid, valid, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar, style, dataAttributes, placeholder, showHeaderSelectors, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDatePicker({ inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel, inputId, timeId, timeInputLabel, minYearSelect, maxYearSelect, iconHeaderSize, iconMaterialStyle, iconInput, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, invalid, valid, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar, style, dataAttributes, placeholder, showHeaderSelectors, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

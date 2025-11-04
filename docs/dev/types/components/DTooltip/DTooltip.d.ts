@@ -9,9 +9,8 @@ export type Props = BaseProps & PropsWithChildren<{
     withFocus?: boolean;
     withClick?: boolean;
     open?: boolean;
-    theme?: string;
     size?: ComponentSize;
     placement?: Placement;
     Component: ReactNode;
 }>;
-export default function DTooltip({ className, childrenClassName, style, offSet, padding, withFocus, withClick, withHover, open, theme, placement, size, Component, children, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DTooltip({ className, childrenClassName, style, offSet, padding, withFocus, withClick, withHover, open, placement, size, Component, children, }: Props): import("react/jsx-runtime").JSX.Element;

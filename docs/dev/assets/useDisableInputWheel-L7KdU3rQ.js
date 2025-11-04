@@ -1,0 +1,1 @@
+import{r as o}from"./iframe-CppG1Bu4.js";import{u as a}from"./useProvidedRefOrCreate-_Hf1sPcE.js";function p(t){const e=a(t);return{handleOnWheel:o.useCallback(n=>{var r;n.stopPropagation(),(r=e.current)==null||r.blur()},[e])}}export{p as u};
