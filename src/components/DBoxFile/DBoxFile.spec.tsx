@@ -16,33 +16,16 @@ it('should render base box file', () => {
     </DBoxFile>,
   );
 
-  expect(container).toMatchInlineSnapshot(`
-    <div>
-      <section
-        class="d-box-file"
-      >
-        <div
-          class="d-box-file-dropzone"
-          role="presentation"
-          tabindex="0"
-        >
-          <input
-            accept="image/*,.png,.jpg,.jpeg,.svg"
-            style="display: none;"
-            tabindex="-1"
-            type="file"
-          />
-          <i
-            class="d-icon bi bi-cloud-upload"
-            style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-          />
-          <div
-            class="d-box-content"
-          >
-            Upload your file here
-          </div>
-        </div>
-      </section>
-    </div>
-  `);
+  const boxFile = container.querySelector('.d-box-file');
+  const dropzone = container.querySelector('.d-box-file-dropzone');
+  const input = container.querySelector('input[type="file"]');
+  const icon = container.querySelector('.d-icon');
+  const content = container.querySelector('.d-box-content');
+
+  expect(boxFile).toBeInTheDocument();
+  expect(dropzone).toBeInTheDocument();
+  expect(input).toHaveAttribute('accept', 'image/*,.png,.jpg,.jpeg,.svg');
+  expect(icon).toBeInTheDocument();
+  expect(icon?.querySelector('svg')).toBeInTheDocument();
+  expect(content).toHaveTextContent('Upload your file here');
 });

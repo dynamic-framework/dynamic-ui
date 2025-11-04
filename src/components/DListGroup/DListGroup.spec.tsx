@@ -29,17 +29,29 @@ describe('<DListGroup />', () => {
             <li
               class="list-group-item"
             >
-              Item A
+              <div
+                class="w-100"
+              >
+                Item A
+              </div>
             </li>
             <li
               class="list-group-item"
             >
-              Item B
+              <div
+                class="w-100"
+              >
+                Item B
+              </div>
             </li>
             <li
               class="list-group-item"
             >
-              Item C
+              <div
+                class="w-100"
+              >
+                Item C
+              </div>
             </li>
           </ul>
         </div>
@@ -125,7 +137,8 @@ describe('<DListGroup.Item />', () => {
         </DContextProvider>,
       );
 
-      const item = screen.getByText('Stateful Item');
+      const textElement = screen.getByText('Stateful Item');
+      const item = textElement.closest('.list-group-item');
       expect(item).toHaveClass('active');
       expect(item).toHaveClass('disabled');
       expect(item).toHaveAttribute('aria-disabled', 'true');
@@ -140,7 +153,8 @@ describe('<DListGroup.Item />', () => {
         </DContextProvider>,
       );
 
-      const item = screen.getByText('Themed Item');
+      const textElement = screen.getByText('Themed Item');
+      const item = textElement.closest('.list-group-item');
       expect(item).toHaveClass('list-group-item-success');
     });
 

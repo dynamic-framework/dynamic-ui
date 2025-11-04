@@ -5,25 +5,18 @@ import DButtonIcon from './DButtonIcon';
 
 describe('<DButtonIcon />', () => {
   it('Should render base icon button', () => {
-    const props = { icon: 'x-lg' };
+    const props = { icon: 'X' };
 
     const { container } = render(
       <DButtonIcon {...props} />,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <button
-          class="btn d-button-icon btn-primary"
-          type="button"
-        >
-          <i
-            class="d-icon bi bi-x-lg"
-            style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-          />
-        </button>
-      </div>
-    `);
+    const button = container.querySelector('button');
+    const icon = button?.querySelector('.d-icon');
+
+    expect(button).toHaveClass('btn', 'd-button-icon', 'btn-primary');
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('Should call onClick when clicked and stopPropagation is true', () => {

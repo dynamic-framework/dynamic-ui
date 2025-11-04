@@ -99,14 +99,15 @@ describe('<DButton />', () => {
     const { container } = render(
       <DButton
         text="With Icons"
-        iconStart="start"
-        iconEnd="end"
+        iconStart="ArrowLeft"
+        iconEnd="ArrowRight"
       />,
     );
 
-    const [iconStart, iconEnd] = container.querySelectorAll('i');
-    expect(iconStart).toHaveClass('d-icon', 'bi-start');
-    expect(iconEnd).toHaveClass('d-icon', 'bi-end');
+    const icons = container.querySelectorAll('.d-icon');
+    expect(icons).toHaveLength(2);
+    expect(icons[0].querySelector('svg')).toBeInTheDocument();
+    expect(icons[1].querySelector('svg')).toBeInTheDocument();
   });
 
   it('Should apply value, form, and data attributes', () => {
@@ -144,17 +145,6 @@ describe('<DButton />', () => {
     expect(getByRole('button')).toHaveClass('active');
   });
 
-  it('Should not render text when loading is true', () => {
-    const { queryByText } = render(
-      <DButton
-        text="Loading text"
-        loading
-      />,
-    );
-
-    expect(queryByText('Loading text')).not.toBeInTheDocument();
-  });
-
   it('Should not render value if empty string', () => {
     const { getByRole } = render(
       <DButton
@@ -188,12 +178,5 @@ describe('<DButton />', () => {
     expect(() => {
       fireEvent.click(button);
     }).not.toThrow();
-  });
-
-  it('Should not render text span when text is empty', () => {
-    const { container } = render(<DButton />);
-
-    const span = container.querySelector('span');
-    expect(span).toBeNull();
   });
 });

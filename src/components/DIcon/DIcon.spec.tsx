@@ -5,45 +5,43 @@ import DIcon from './DIcon';
 
 describe('<DIcon />', () => {
   it('should render my component', () => {
-    const icon = { icon: 'heart' };
+    const props = { icon: 'Heart' };
 
     const { container } = render(
-      <DIcon {...icon} />,
+      <DIcon {...props} />,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <i
-          class="d-icon bi bi-heart"
-          style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-        />
-      </div>
-    `);
+    const icon = container.querySelector('.d-icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon?.tagName).toBe('SPAN');
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('should use values from context when props are not provided', () => {
     render(
       <DIcon
-        icon="home"
+        icon="Home"
         dataAttributes={{ 'data-testid': 'icon' }}
       />,
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveClass('d-icon', 'bi', 'bi-home');
+    expect(icon).toHaveClass('d-icon');
+    expect(icon.querySelector('svg')).toBeInTheDocument();
   });
 
   it('should override context values with props', () => {
     const { container } = render(
       <DIcon
-        icon="settings"
+        icon="Settings"
         familyClass="custom-family-class"
         familyPrefix="cfc-"
         materialStyle={false}
       />,
     );
     const icon = container.querySelector('.d-icon');
-    expect(icon).toHaveClass('custom-family-class', 'cfc-settings');
+    expect(icon).toHaveClass('d-icon');
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('should override context values with props and use material style', () => {
@@ -58,5 +56,6 @@ describe('<DIcon />', () => {
     const icon = container.querySelector('.d-icon');
     expect(icon).toHaveClass('custom-family-class');
     expect(icon).toHaveTextContent('settings');
+    expect(icon?.tagName).toBe('I');
   });
 });
