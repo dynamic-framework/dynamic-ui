@@ -7,6 +7,7 @@ import {
 
 import {
   DIcon, DButton, DProgress, DAvatar, DBadge,
+  DLayout,
 } from '../../src';
 import DBox from '../../src/components/DBox';
 import DMinimalLineChart from '../../src/components/DMinimalLineChart/DMinimalLineChart';
@@ -167,8 +168,15 @@ const teams = [
 ];
 
 export const Dashboard: Story = {
+  decorators: [
+    (Story) => (
+      <div className="p-8">
+        <Story />
+      </div>
+    ),
+  ],
   render: () => (
-    <div className="p-8">
+    <>
       <div className="d-flex justify-content-between align-items-end mb-8">
         <div>
           <h2 className="mb-0 fw-normal h4">
@@ -201,7 +209,7 @@ export const Dashboard: Story = {
             </div>
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <h4 className="mb-0">{value}</h4>
+                <div className="fs-4 fw-bold">{value}</div>
               </div>
               <p className={`${color} mb-0`}>
                 {percentage}
@@ -212,9 +220,9 @@ export const Dashboard: Story = {
         ))}
       </DBox>
 
-      <div className="grid gap-4 mb-4">
+      <DLayout className="mb-4" gap={4}>
         {/* Main Content - Left (larger) column */}
-        <div className="g-col-12 g-col-lg-8">
+        <DLayout.Pane cols="12" colsLg={8}>
           <DBox className="mb-8 h-100">
             <div className="d-flex justify-content-between align-items-center mb-8">
               <div className="mb-0 d-flex align-items-start gap-2 w-100">
@@ -237,10 +245,10 @@ export const Dashboard: Story = {
               <DMultiLineChart data={salesData} lineConfigs={salesLineConfigs} />
             </div>
           </DBox>
-        </div>
+        </DLayout.Pane>
 
         {/* Main Content - Right (smaller) column */}
-        <div className="g-col-12 g-col-lg-4">
+        <DLayout.Pane cols="12" colsLg={4}>
           <DBox className="mb-8 h-100">
             <h5 className="mb-4 d-flex align-items-center gap-2">
               <DIcon hasCircle icon="TrendingUp" size=".75rem" />
@@ -264,14 +272,14 @@ export const Dashboard: Story = {
               ))}
             </div>
           </DBox>
-        </div>
-      </div>
+        </DLayout.Pane>
+      </DLayout>
 
       {/* content end */}
 
-      <div className="grid gap-4">
+      <DLayout gap={4}>
         {/* Main Content - Left (larger) column */}
-        <div className="g-col-12 g-col-lg-6">
+        <DLayout.Pane cols="12" colsLg={6}>
           <DBox className="mb-8 h-100">
             <h5 className="mb-4 d-flex align-items-center gap-2">
               <DIcon hasCircle icon="TrendingUp" size=".75rem" />
@@ -311,10 +319,10 @@ export const Dashboard: Story = {
               </tbody>
             </table>
           </DBox>
-        </div>
+        </DLayout.Pane>
 
         {/* Main Content - Right (smaller) column */}
-        <div className="g-col-12 g-col-lg-6">
+        <DLayout.Pane cols="12" colsLg={6}>
           <DBox className="mb-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
@@ -345,15 +353,22 @@ export const Dashboard: Story = {
               </div>
             </div>
           </DBox>
-        </div>
-      </div>
-    </div>
+        </DLayout.Pane>
+      </DLayout>
+    </>
   ),
 };
 
 export const Dashboard2: Story = {
+  decorators: [
+    (Story) => (
+      <div className="p-8">
+        <Story />
+      </div>
+    ),
+  ],
   render: () => (
-    <div className="p-8">
+    <>
       <div className="d-flex justify-content-between align-items-end mb-8">
         <div>
           <h2 className="mb-0 fw-normal h4">
@@ -370,7 +385,7 @@ export const Dashboard2: Story = {
         />
       </div>
 
-      <div className="grid gap-4 mb-4 p-0 bg-transparent shadow-none">
+      <DLayout gap={4} className="mb-4">
         {SUMMARY.map(({
           id, percentage, value,
         }) => (
@@ -381,15 +396,15 @@ export const Dashboard2: Story = {
             <div style={{ height: 100 }}>
               <DRadialBarChart value={percentage} color="var(--bs-primary-500)" />
             </div>
-            <h4 className="mb-0">{value}</h4>
+            <div className="fs-4 fw-bold">{value}</div>
             <small className="text-muted m-0">Last 30 days</small>
           </DBox>
         ))}
-      </div>
+      </DLayout>
 
-      <div className="grid gap-4 mb-4">
+      <DLayout gap={4} className="mb-4">
         {/* Main Content - Left (larger) column */}
-        <div className="g-col-12 g-col-lg-8">
+        <DLayout.Pane cols="8">
           <DBox className="mb-8 h-100">
             <div className="d-flex justify-content-between align-items-center mb-8">
               <div className="mb-0 d-flex align-items-start gap-2 w-100">
@@ -412,10 +427,10 @@ export const Dashboard2: Story = {
               <DMultiLineChart data={salesData} lineConfigs={salesLineConfigs} />
             </div>
           </DBox>
-        </div>
+        </DLayout.Pane>
 
         {/* Main Content - Right (smaller) column */}
-        <div className="g-col-12 g-col-lg-4">
+        <DLayout.Pane cols="4">
           <DBox className="mb-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
@@ -442,14 +457,14 @@ export const Dashboard2: Story = {
               ))}
             </div>
           </DBox>
-        </div>
-      </div>
+        </DLayout.Pane>
+      </DLayout>
 
       {/* content end */}
 
-      <div className="grid gap-4">
+      <DLayout gap={4} className="mb-4">
         {/* Main Content - Left (larger) column */}
-        <div className="g-col-12 g-col-lg-4">
+        <DLayout.Pane cols="4">
           <DBox className="mb-8 h-100">
             <h5 className="mb-4 d-flex align-items-center gap-2">
               <DIcon hasCircle icon="TrendingUp" size=".75rem" />
@@ -489,10 +504,10 @@ export const Dashboard2: Story = {
               </tbody>
             </table>
           </DBox>
-        </div>
+        </DLayout.Pane>
 
         {/* Main Content - Right (smaller) column */}
-        <div className="g-col-12 g-col-lg-4">
+        <DLayout.Pane cols="4">
           <DBox className="mb-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
@@ -539,35 +554,38 @@ export const Dashboard2: Story = {
               ))}
             </div>
           </DBox>
-        </div>
+        </DLayout.Pane>
 
-        <DBox
-          className="p-8 g-col-12 g-col-lg-4 text-white overflow-hidden"
-          style={{
-            background: '#21457f',
-          }}
-        >
-          <small className="text-uppercase">Newspapper</small>
-          <h4 className="mb-4">Gets news on your phone</h4>
-          <p className="">Priceless and optimal sign</p>
-          <DButton text="Subscribe" color="light" />
-          <div>
-            <img
-              alt="placeholder"
-              style={{
-                marginTop: '-3rem',
-                marginBottom: '-2rem',
-                marginRight: '-2rem',
-                float: 'right',
-                width: '100%',
-                display: 'block',
-              }}
-              src="https://img.freepik.com/free-vector/hand-drawn-w-colours-illustration_23-2149852395.jpg?t=st=1761342724~exp=1761346324~hmac=7ae6cc17547356bb03c37c5ff6039be6514e0c8feb50c975486113aa4b40e9ef&w=2000"
-            />
-          </div>
-        </DBox>
-      </div>
-    </div>
+        <DLayout.Pane cols="4">
+          <DBox
+            className="p-8 g-col-12 g-col-lg-4 text-white overflow-hidden"
+            style={{
+              background: '#21457f',
+            }}
+          >
+            <small className="text-uppercase">Newspapper</small>
+            <h4 className="mb-4">Gets news on your phone</h4>
+            <p className="">Priceless and optimal sign</p>
+            <DButton text="Subscribe" color="light" />
+            <div>
+              <img
+                alt="placeholder"
+                style={{
+                  marginTop: '-3rem',
+                  marginBottom: '-2rem',
+                  marginRight: '-2rem',
+                  float: 'right',
+                  width: '100%',
+                  display: 'block',
+                }}
+                src="https://img.freepik.com/free-vector/hand-drawn-w-colours-illustration_23-2149852395.jpg?t=st=1761342724~exp=1761346324~hmac=7ae6cc17547356bb03c37c5ff6039be6514e0c8feb50c975486113aa4b40e9ef&w=2000"
+              />
+            </div>
+          </DBox>
+        </DLayout.Pane>
+
+      </DLayout>
+    </>
   ),
 };
 
@@ -581,8 +599,15 @@ const taskProgressData = [
 ];
 
 export const Dashboard3: Story = {
+  decorators: [
+    (Story) => (
+      <div className="p-8">
+        <Story />
+      </div>
+    ),
+  ],
   render: () => (
-    <div className="p-8">
+    <>
       <div className="d-flex justify-content-between align-items-end mb-8">
         <div>
           <h2 className="mb-0 fw-normal h4">
@@ -599,34 +624,35 @@ export const Dashboard3: Story = {
         />
       </div>
 
-      <div className="grid gap-2 mb-4 p-0 bg-transparent shadow-none">
+      <DLayout gap={4} className="mb-4">
         {SUMMARY.map(({
           id, title, value, percentage, icon, color,
         }) => (
-          <div
+          <DLayout.Pane
             key={id}
-            className="g-col-12 g-col-md-6 g-col-lg-3 p-8 bg-primary-50 rounded-3"
+            cols={12}
+            colsLg={3}
+            colsMd={6}
+            className="p-8 bg-primary-50 rounded-3"
           >
             <div className="d-flex gap-2 align-items-center mb-2">
-              <DIcon className="text-gray-400" icon={icon} size="1rem" />
+              <DIcon hasCircle color="primary" icon={icon} size="1rem" />
               <span className="text-muted">{title}</span>
             </div>
             <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <h4 className="mb-0">{value}</h4>
-              </div>
+              <div className="fs-4 fw-bold">{value}</div>
               <p className={`${color} mb-0`}>
                 {percentage}
                 %
               </p>
             </div>
-          </div>
+          </DLayout.Pane>
         ))}
-      </div>
+      </DLayout>
 
-      <div className="grid gap-4 mb-4">
+      <DLayout gap={4} className="mb-4">
         {/* Main Content - Left (larger) column */}
-        <div className="g-col-12 g-col-lg-8">
+        <DLayout.Pane cols={12} colsLg={8}>
           <DBox className="mb-8 h-100">
             <div className="d-flex justify-content-between gap-8 align-items-center mb-8">
               <div className="flex-1">
@@ -668,10 +694,10 @@ export const Dashboard3: Story = {
               <DBadge color="success" text="Increase 10%" iconStart="ArrowUp" />
             </div>
           </DBox>
-        </div>
+        </DLayout.Pane>
 
         {/* Main Content - Right (smaller) column */}
-        <div className="g-col-12 g-col-lg-4">
+        <DLayout.Pane cols={12} colsLg={4}>
           <DBox className="mb-8 p-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
@@ -686,14 +712,14 @@ export const Dashboard3: Story = {
               <DBarChart data={taskProgressData} barColor="#0d6efd" />
             </div>
           </DBox>
-        </div>
-      </div>
+        </DLayout.Pane>
+      </DLayout>
 
       {/* content end */}
 
-      <div className="grid gap-4">
+      <DLayout gap={4} className="mb-4">
         {/* Main Content - Left (larger) column */}
-        <div className="g-col-12 g-col-lg-6">
+        <DLayout.Pane cols={12} colsLg={6}>
           <DBox className="mb-8 h-100">
             <h5 className="mb-4 d-flex align-items-center gap-2">
               <DIcon hasCircle icon="TrendingUp" size=".75rem" />
@@ -733,10 +759,10 @@ export const Dashboard3: Story = {
               </tbody>
             </table>
           </DBox>
-        </div>
+        </DLayout.Pane>
 
         {/* Main Content - Right (smaller) column */}
-        <div className="g-col-12 g-col-lg-6">
+        <DLayout.Pane cols={12} colsLg={6}>
           <DBox className="mb-8 h-100">
             <div className="d-flex">
               <h5 className="mb-4 d-flex align-items-center gap-2">
@@ -767,11 +793,11 @@ export const Dashboard3: Story = {
               </div>
             </div>
           </DBox>
-        </div>
-      </div>
+        </DLayout.Pane>
+      </DLayout>
 
-      <div className="grid gap-4 mt-4">
-        <div className="g-col-12 g-col-lg-4">
+      <DLayout gap={4}>
+        <DLayout.Pane cols={12} colsLg={4}>
           <DBox className="h-100">
             <h5 className="mb-3">Quick Stats</h5>
             <div className="d-flex justify-content-between align-items-center mb-2">
@@ -787,8 +813,8 @@ export const Dashboard3: Story = {
               <span className="fw-bold">5 Open</span>
             </div>
           </DBox>
-        </div>
-        <div className="g-col-12 g-col-lg-4">
+        </DLayout.Pane>
+        <DLayout.Pane cols={12} colsLg={4}>
           <DBox className="h-100">
             <h5 className="mb-3">Recent Notifications</h5>
             <ul className="list-unstyled mb-0">
@@ -809,8 +835,8 @@ export const Dashboard3: Story = {
               </li>
             </ul>
           </DBox>
-        </div>
-        <div className="g-col-12 g-col-lg-4">
+        </DLayout.Pane>
+        <DLayout.Pane cols={12} colsLg={4}>
           <DBox className="h-100">
             <h5 className="mb-3">Team Activity</h5>
             <ul className="list-unstyled mb-0">
@@ -837,8 +863,8 @@ export const Dashboard3: Story = {
               </li>
             </ul>
           </DBox>
-        </div>
-      </div>
-    </div>
+        </DLayout.Pane>
+      </DLayout>
+    </>
   ),
 };
