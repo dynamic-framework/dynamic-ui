@@ -90,7 +90,7 @@ export default config;
 type Story = StoryObj<typeof DDropdown>;
 
 const baseActions: DropdownAction[] = [
-  { label: 'Edit', icon: 'Pencil', onClick: () => alert('Edit clicked') },
+  { label: 'Edit', icon: 'Pencil', onClick: () => {} },
   { label: 'Duplicate', icon: 'Copy' },
   { isDivider: true, label: '' },
   { label: 'Delete', icon: 'Trash2', color: 'danger' },

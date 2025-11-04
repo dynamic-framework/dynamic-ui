@@ -818,24 +818,24 @@ export const ListWithContextualActions: Story = {
                 {
                   label: 'Make Payment',
                   icon: 'CreditCard',
-                  onClick: () => alert('Make payment'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Edit Details',
                   icon: 'Edit',
-                  onClick: () => alert('Edit details'),
+                  onClick: () => {},
                 },
                 {
                   label: 'View History',
                   icon: 'ClockHistory',
-                  onClick: () => alert('View history'),
+                  onClick: () => {},
                 },
                 { label: '', isDivider: true },
                 {
                   label: 'Remove Payee',
                   icon: 'Trash',
                   color: 'danger',
-                  onClick: () => alert('Remove payee'),
+                  onClick: () => {},
                 },
               ]}
             />
@@ -855,24 +855,24 @@ export const ListWithContextualActions: Story = {
                 {
                   label: 'Make Payment',
                   icon: 'CreditCard',
-                  onClick: () => alert('Make payment'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Edit Details',
                   icon: 'Edit',
-                  onClick: () => alert('Edit details'),
+                  onClick: () => {},
                 },
                 {
                   label: 'View History',
                   icon: 'ClockHistory',
-                  onClick: () => alert('View history'),
+                  onClick: () => {},
                 },
                 { label: '', isDivider: true },
                 {
                   label: 'Remove Payee',
                   icon: 'Trash',
                   color: 'danger',
-                  onClick: () => alert('Remove payee'),
+                  onClick: () => {},
                 },
               ]}
             />
@@ -892,29 +892,29 @@ export const ListWithContextualActions: Story = {
                 {
                   label: 'Make Payment',
                   icon: 'CreditCard',
-                  onClick: () => alert('Make payment'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Enable Auto-pay',
                   icon: 'ToggleOn',
-                  onClick: () => alert('Enable auto-pay'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Edit Details',
                   icon: 'Edit',
-                  onClick: () => alert('Edit details'),
+                  onClick: () => {},
                 },
                 {
                   label: 'View History',
                   icon: 'ClockHistory',
-                  onClick: () => alert('View history'),
+                  onClick: () => {},
                 },
                 { label: '', isDivider: true },
                 {
                   label: 'Remove Payee',
                   icon: 'Trash',
                   color: 'danger',
-                  onClick: () => alert('Remove payee'),
+                  onClick: () => {},
                 },
               ]}
             />
@@ -958,24 +958,24 @@ export const TransactionsWithActions: Story = {
                 {
                   label: 'View Details',
                   icon: 'Eye',
-                  onClick: () => alert('View details'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Add Note',
                   icon: 'Pencil',
-                  onClick: () => alert('Add note'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Change Category',
                   icon: 'Tag',
-                  onClick: () => alert('Change category'),
+                  onClick: () => {},
                 },
                 { label: '', isDivider: true },
                 {
                   label: 'Dispute Transaction',
                   icon: 'ExclamationTriangle',
                   color: 'warning',
-                  onClick: () => alert('Dispute transaction'),
+                  onClick: () => {},
                 },
               ]}
             />
@@ -1002,29 +1002,29 @@ export const TransactionsWithActions: Story = {
                 {
                   label: 'View Details',
                   icon: 'Eye',
-                  onClick: () => alert('View details'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Add Note',
                   icon: 'Pencil',
-                  onClick: () => alert('Add note'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Change Category',
                   icon: 'Tag',
-                  onClick: () => alert('Change category'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Track Package',
                   icon: 'Box',
-                  onClick: () => alert('Track package'),
+                  onClick: () => {},
                 },
                 { label: '', isDivider: true },
                 {
                   label: 'Cancel Transaction',
                   icon: 'XCircle',
                   color: 'danger',
-                  onClick: () => alert('Cancel transaction'),
+                  onClick: () => {},
                 },
               ]}
             />
@@ -1051,17 +1051,17 @@ export const TransactionsWithActions: Story = {
                 {
                   label: 'View Details',
                   icon: 'Eye',
-                  onClick: () => alert('View details'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Add Note',
                   icon: 'Pencil',
-                  onClick: () => alert('Add note'),
+                  onClick: () => {},
                 },
                 {
                   label: 'Download Receipt',
                   icon: 'Download',
-                  onClick: () => alert('Download receipt'),
+                  onClick: () => {},
                 },
               ]}
             />
@@ -1121,17 +1121,17 @@ export const CollapsibleWithList: Story = {
                       {
                         label: 'View Details',
                         icon: 'Eye',
-                        onClick: () => alert('View details'),
+                        onClick: () => {},
                       },
                       {
                         label: 'Add Note',
                         icon: 'Pencil',
-                        onClick: () => alert('Add note'),
+                        onClick: () => {},
                       },
                       {
                         label: 'Change Category',
                         icon: 'Tag',
-                        onClick: () => alert('Change category'),
+                        onClick: () => {},
                       },
                     ]}
                   />
@@ -1180,17 +1180,17 @@ export const CollapsibleWithList: Story = {
                       {
                         label: 'View Details',
                         icon: 'Eye',
-                        onClick: () => alert('View details'),
+                        onClick: () => {},
                       },
                       {
                         label: 'Add Note',
                         icon: 'Pencil',
-                        onClick: () => alert('Add note'),
+                        onClick: () => {},
                       },
                       {
                         label: 'Change Category',
                         icon: 'Tag',
-                        onClick: () => alert('Change category'),
+                        onClick: () => {},
                       },
                     ]}
                   />
@@ -1239,17 +1239,17 @@ export const CollapsibleWithList: Story = {
                       {
                         label: 'View Details',
                         icon: 'Eye',
-                        onClick: () => alert('View details'),
+                        onClick: () => {},
                       },
                       {
                         label: 'Add Note',
                         icon: 'Pencil',
-                        onClick: () => alert('Add note'),
+                        onClick: () => {},
                       },
                       {
                         label: 'Change Category',
                         icon: 'Tag',
-                        onClick: () => alert('Change category'),
+                        onClick: () => {},
                       },
                     ]}
                   />
