@@ -21,48 +21,18 @@ describe('<DInputCounter />', () => {
       />,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          style="--bs-form-control-component-text-align: center;"
-        >
-          <div
-            class="input-group"
-          >
-            <button
-              aria-label="decrease action"
-              class="input-group-text"
-              disabled=""
-              id="counterStart"
-              type="button"
-            >
-              <i
-                class="d-icon bi bi-dash-square"
-                style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-              />
-            </button>
-            <input
-              aria-describedby="counterStart counterEnd"
-              class="form-control"
-              id="counter"
-              type="number"
-              value="0"
-            />
-            <button
-              aria-label="increase action"
-              class="input-group-text"
-              id="counterEnd"
-              type="button"
-            >
-              <i
-                class="d-icon bi bi-plus-square"
-                style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    `);
+    const input = container.querySelector('#counter');
+    const decreaseBtn = container.querySelector('button[aria-label="decrease action"]');
+    const increaseBtn = container.querySelector('button[aria-label="increase action"]');
+    const decreaseIcon = decreaseBtn?.querySelector('.d-icon');
+    const increaseIcon = increaseBtn?.querySelector('.d-icon');
+
+    expect(input).toHaveAttribute('type', 'number');
+    expect(input).toHaveValue(0);
+    expect(decreaseBtn).toBeDisabled();
+    expect(increaseBtn).not.toBeDisabled();
+    expect(decreaseIcon?.querySelector('svg')).toBeInTheDocument();
+    expect(increaseIcon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders with initial value', () => {

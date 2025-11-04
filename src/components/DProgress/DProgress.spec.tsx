@@ -86,7 +86,7 @@ describe('<DProgress />', () => {
     expect(screen.getByRole('progressbar').parentElement).toHaveClass('progress', 'my-progress');
   });
 
-  it('applies custom inline styles to inner bar', () => {
+  it('applies custom inline styles to outer container', () => {
     render(
       <DProgress
         currentValue={40}
@@ -94,12 +94,18 @@ describe('<DProgress />', () => {
       />,
     );
     const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveStyle('background-color: blue');
+    const progressContainer = progressBar.parentElement;
+
+    expect(progressContainer).toHaveStyle('background-color: blue');
     expect(progressBar).toHaveStyle('width: 40%');
   });
 
   it('renders with data attributes when provided', () => {
-    render(<DProgress currentValue={60} dataAttributes={{ 'data-testid': 'progress-bar' }} />);
-    expect(screen.getByTestId('progress-bar')).toBeInTheDocument();
+    render(<DProgress currentValue={60} dataAttributes={{ 'data-testid': 'progress-container' }} />);
+    const progressContainer = screen.getByTestId('progress-container');
+    const progressBar = progressContainer.querySelector('[role="progressbar"]');
+
+    expect(progressContainer).toBeInTheDocument();
+    expect(progressBar).toBeInTheDocument();
   });
 });

@@ -102,7 +102,8 @@ export default function DInputPin(
 
     if (input.value !== '') {
       setActiveInput((prev) => {
-        const newValue = prev.with(index, input.value);
+        const newValue = [...prev];
+        newValue[index] = input.value;
         return newValue;
       });
       if (input.nextSibling) {
@@ -120,7 +121,8 @@ export default function DInputPin(
     if (key === 'Backspace') {
       const { value } = currentTarget;
       setActiveInput((prev) => {
-        const newVal = prev.with(index, '');
+        const newVal = [...prev];
+        newVal[index] = '';
         return newVal;
       });
       if (currentTarget.previousSibling && value === '') {
@@ -135,7 +137,11 @@ export default function DInputPin(
   const focusInput = useCallback((
     index: number,
   ) => {
-    setActiveInput((prev) => prev.with(index, ''));
+    setActiveInput((prev) => {
+      const newVal = [...prev];
+      newVal[index] = '';
+      return newVal;
+    });
   }, []);
 
   const wheelInput = useCallback((event: WheelEvent<HTMLInputElement>) => {

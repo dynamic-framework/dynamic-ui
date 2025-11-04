@@ -133,7 +133,7 @@ describe('', () => {
     render(
       <DInput
         label="Input label"
-        iconStart="search"
+        iconStart="Search"
         onIconStartClick={handleIconClick}
         value="query"
       />,
@@ -149,7 +149,7 @@ describe('', () => {
     render(
       <DInput
         label="Input label"
-        iconEnd="clear"
+        iconEnd="X"
         onIconEndClick={handleIconClick}
         value="query"
       />,
@@ -226,7 +226,7 @@ describe('', () => {
         value="value"
         onIconStartClick={handleIconStartClick}
         iconStartTabIndex={1}
-        iconStart="heart"
+        iconStart="Heart"
       />,
     );
 
@@ -244,12 +244,12 @@ describe('', () => {
         label="Input label"
         value="value"
         onIconEndClick={handleIconEndClick}
-        iconEnd="heart"
+        iconEnd="Heart"
       />,
     );
 
-    const iconStart = await screen.findByRole('button');
-    fireEvent.click(iconStart);
+    const iconEnd = await screen.findByRole('button');
+    fireEvent.click(iconEnd);
     expect(handleIconEndClick).toHaveBeenCalledWith('value');
   });
 });

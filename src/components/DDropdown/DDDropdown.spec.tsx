@@ -7,22 +7,23 @@ import DDropdown from '.';
 describe('<DDropdown />', () => {
   it('should render a DDropdown', () => {
     const props: ComponentProps<typeof DDropdown> = {
-      className: 'custom-card',
-      children: <>Card body</>,
+      className: 'custom-dropdown',
+      actions: [
+        { label: 'Action 1', onClick: () => {} },
+        { label: 'Action 2', onClick: () => {} },
+        { label: 'Action 3', isDivider: true },
+      ],
     };
 
     const { container } = render(
       <DDropdown {...props} />,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="d-credit-card custom-card"
-        >
-          Card body
-        </div>
-      </div>
-    `);
+    const dropdown = container.querySelector('.dropdown');
+    const toggle = container.querySelector('button');
+
+    expect(dropdown).toBeInTheDocument();
+    expect(dropdown).toHaveClass('custom-dropdown');
+    expect(toggle).toBeInTheDocument();
   });
 });

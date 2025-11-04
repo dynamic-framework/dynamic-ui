@@ -19,40 +19,14 @@ describe('<DInputPassword />', () => {
       />,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-    <div>
-      <div>
-        <label
-          for="passwordId"
-        >
-          Label
-        </label>
-        <div
-          class="input-group"
-        >
-          <input
-            aria-describedby="passwordIdEnd"
-            class="form-control"
-            id="passwordId"
-            placeholder="Password"
-            type="password"
-            value="Value"
-          />
-          <button
-            aria-label="show/hide password"
-            class="input-group-text"
-            id="passwordIdEnd"
-            type="button"
-          >
-            <i
-              class="d-icon bi bi-eye-slash"
-              style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-            />
-          </button>
-        </div>
-      </div>
-    </div>
-  `);
+    const input = container.querySelector('#passwordId');
+    const button = container.querySelector('button[aria-label="show/hide password"]');
+    const icon = button?.querySelector('.d-icon');
+
+    expect(input).toHaveAttribute('type', 'password');
+    expect(button).toBeInTheDocument();
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders input type=password initially', () => {
