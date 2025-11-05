@@ -157,12 +157,12 @@
 
 .btn-outline-primary {
   --#{$prefix}btn-color: var(--#{$prefix}primary-500);
-  --#{$prefix}btn-hover-border-color: var(--#{$prefix}primary-600);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}primary-700);
   --#{$prefix}btn-hover-bg: var(--#{$prefix}primary-25);
   --#{$prefix}btn-border-color: var(--#{$prefix}primary-500);
   --#{$prefix}btn-active-color: var(--#{$prefix}primary-500);
   --#{$prefix}btn-active-border-color: var(--#{$prefix}primary-600);
-  --#{$prefix}btn-hover-color: var(--#{$prefix}primary-600);
+  --#{$prefix}btn-hover-color: var(--#{$prefix}primary-700);
   --#{$prefix}btn-focus-color: var(--#{$prefix}primary-600);
   --#{$prefix}btn-active-color: var(--#{$prefix}primary-600);
   --#{$prefix}btn-box-shadow: #{$btn-box-shadow};
@@ -171,6 +171,9 @@
   &.disabled {
     --#{$prefix}btn-disabled-border-color: var(--#{$prefix}primary-500);
     --#{$prefix}btn-disabled-color: var(--#{$prefix}primary-500);
+  }
+  &:hover {
+    color: var(--#{$prefix}btn-hover-color);
   }
 }
 
@@ -190,6 +193,9 @@
     --#{$prefix}btn-disabled-border-color: var(--#{$prefix}secondary-200);
     --#{$prefix}btn-disabled-color: var(--#{$prefix}secondary-600);
   }
+  &:hover {
+    color: var(--#{$prefix}btn-hover-color);
+  }
 }
 
 .btn-outline-light {
@@ -208,12 +214,15 @@
     --#{$prefix}btn-disabled-color: var(--#{$prefix}gray-25);
     opacity: var(--#{$prefix}btn-disabled-opacity);
   }
+  &:hover {
+    color: var(--#{$prefix}btn-hover-color);
+  }
 }
 
 .btn-outline-success {
   --#{$prefix}btn-color: var(--#{$prefix}success-500);
   --#{$prefix}btn-hover-bg: var(--#{$prefix}success-25);
-  --#{$prefix}btn-hover-border-color: var(--#{$prefix}success-600);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}success-700);
   --#{$prefix}btn-border-color: var(--#{$prefix}success-500);
   --#{$prefix}btn-active-border-color: var(--#{$prefix}success-600);
   --#{$prefix}btn-active-color: var(--#{$prefix}success-700);
@@ -226,12 +235,15 @@
     --#{$prefix}btn-disabled-border-color: var(--#{$prefix}success-500);
     --#{$prefix}btn-disabled-color: var(--#{$prefix}success-500);
   }
+  &:hover {
+    color: var(--#{$prefix}btn-hover-color);
+  }
 }
 
 .btn-outline-danger {
   --#{$prefix}btn-color: var(--#{$prefix}danger-500);
   --#{$prefix}btn-hover-bg: var(--#{$prefix}danger-25);
-  --#{$prefix}btn-hover-border-color: var(--#{$prefix}danger-600);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}danger-700);
   --#{$prefix}btn-border-color: var(--#{$prefix}danger-500);
   --#{$prefix}btn-active-border-color: var(--#{$prefix}danger-600);
   --#{$prefix}btn-active-color: var(--#{$prefix}danger-700);
@@ -244,12 +256,15 @@
     --#{$prefix}btn-active-border-color: var(--#{$prefix}danger-500);
     --#{$prefix}btn-disabled-color: var(--#{$prefix}danger-500);
   }
+  &:hover {
+    color: var(--#{$prefix}btn-hover-color);
+  }
 }
 
 .btn-outline-info {
   --#{$prefix}btn-color: var(--#{$prefix}info-500);
   --#{$prefix}btn-hover-bg: var(--#{$prefix}info-25);
-  --#{$prefix}btn-hover-border-color: var(--#{$prefix}info-600);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}info-700);
   --#{$prefix}btn-border-color: var(--#{$prefix}info-500);
   --#{$prefix}btn-active-border-color: var(--#{$prefix}info-600);
   --#{$prefix}btn-active-color: var(--#{$prefix}info-700);
@@ -262,12 +277,15 @@
     --#{$prefix}btn-disabled-border-color: var(--#{$prefix}info-500);
     --#{$prefix}btn-disabled-color: var(--#{$prefix}info-500);
   }
+  &:hover {
+    color: var(--#{$prefix}btn-hover-color);
+  }
 }
 
 .btn-outline-warning {
   --#{$prefix}btn-color: var(--#{$prefix}warning-600);
   --#{$prefix}btn-hover-bg: var(--#{$prefix}warning-25);
-  --#{$prefix}btn-hover-border-color: var(--#{$prefix}warning-600);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}warning-700);
   --#{$prefix}btn-border-color: var(--#{$prefix}warning-500);
   --#{$prefix}btn-active-border-color: var(--#{$prefix}warning-600);
   --#{$prefix}btn-active-color: var(--#{$prefix}warning-700);
@@ -279,6 +297,9 @@
   &.disabled {
     --#{$prefix}btn-disabled-border-color: var(--#{$prefix}warning-500);
     --#{$prefix}btn-disabled-color: var(--#{$prefix}warning-600);
+  }
+  &:hover {
+    color: var(--#{$prefix}btn-hover-color);
   }
 }
 
@@ -297,6 +318,9 @@
   &.disabled {
     --#{$prefix}btn-disabled-border-color: var(--#{$prefix}black);
     --#{$prefix}btn-disabled-color: var(--#{$prefix}black);
+  }
+  &:hover {
+    color: var(--#{$prefix}btn-hover-color);
   }
 }
 
