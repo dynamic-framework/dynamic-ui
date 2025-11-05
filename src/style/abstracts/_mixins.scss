@@ -149,10 +149,6 @@
   --#{$prefix}btn-disabled-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-bg);
   --#{$prefix}btn-disabled-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-border-color);
   --#{$prefix}btn-disabled-opacity: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-opacity);
-
-  &.loading {
-    --#{$prefix}btn-disabled-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-color);
-  }
 }
 // scss-docs-end df-btn-variant-mixin
 
