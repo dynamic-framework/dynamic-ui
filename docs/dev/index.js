@@ -1289,9 +1289,16 @@ function DLayoutPane({ className, style, children, cols, colsXs, colsSm, colsMd,
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames(colsClass, colsXsClass, colsSmClass, colsMdClass, colsLgClass, colsXlClass, colsXxlClass, className), style: style }, dataAttributes, { children: children })));
 }
 
-function DLayout({ className, style, children, gap, dataAttributes, }) {
-    const gapClass = gap !== undefined ? `gap-${gap}` : undefined;
-    return (jsxRuntime.jsx("div", Object.assign({ style: style, className: classNames('grid', gapClass, className) }, dataAttributes, { children: children })));
+function DLayout({ className, style, children, gap, gapSm, gapMd, gapLg, gapXl, gapXxl, dataAttributes, }) {
+    const gapClasses = classNames({
+        [`gap-${gap}`]: gap !== undefined,
+        [`gap-sm-${gapSm}`]: gapSm !== undefined,
+        [`gap-md-${gapMd}`]: gapMd !== undefined,
+        [`gap-lg-${gapLg}`]: gapLg !== undefined,
+        [`gap-xl-${gapXl}`]: gapXl !== undefined,
+        [`gap-xxl-${gapXxl}`]: gapXxl !== undefined,
+    });
+    return (jsxRuntime.jsx("div", Object.assign({ style: style, className: classNames('grid', gapClasses, className) }, dataAttributes, { children: children })));
 }
 var DLayout$1 = Object.assign(DLayout, {
     Pane: DLayoutPane,
