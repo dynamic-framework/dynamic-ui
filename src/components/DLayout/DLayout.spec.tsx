@@ -45,6 +45,43 @@ describe('DLayout', () => {
     expect(container.firstChild).not.toHaveClass('gap-undefined');
   });
 
+  it('should apply responsive gap classes', () => {
+    const { container } = render(
+      <DLayout gap={1} gapSm={2} gapMd={3} gapLg={4}>
+        Hello
+      </DLayout>,
+    );
+    expect(container.firstChild).toHaveClass('grid', 'gap-1', 'gap-sm-2', 'gap-md-3', 'gap-lg-4');
+  });
+
+  it('should apply all responsive gap breakpoint classes', () => {
+    const { container } = render(
+      <DLayout gap={1} gapSm={2} gapMd={3} gapLg={4} gapXl={5} gapXxl={0}>
+        Hello
+      </DLayout>,
+    );
+    expect(container.firstChild).toHaveClass(
+      'grid',
+      'gap-1',
+      'gap-sm-2',
+      'gap-md-3',
+      'gap-lg-4',
+      'gap-xl-5',
+      'gap-xxl-0',
+    );
+  });
+
+  it('should only apply provided responsive gap classes', () => {
+    const { container } = render(
+      <DLayout gap={2} gapLg={4}>
+        Hello
+      </DLayout>,
+    );
+    expect(container.firstChild).toHaveClass('grid', 'gap-2', 'gap-lg-4');
+    expect(container.firstChild).not.toHaveClass('gap-sm-undefined');
+    expect(container.firstChild).not.toHaveClass('gap-md-undefined');
+  });
+
   describe('DLayout.Pane', () => {
     it('should render children', () => {
       const { getByText } = render(<DLayout.Pane>Pane Content</DLayout.Pane>);

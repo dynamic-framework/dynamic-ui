@@ -8,6 +8,11 @@ import type { BaseProps } from '../interface';
 
 type Props = PropsWithChildren<BaseProps & {
   gap?: string | number;
+  gapSm?: string | number;
+  gapMd?: string | number;
+  gapLg?: string | number;
+  gapXl?: string | number;
+  gapXxl?: string | number;
 }>;
 
 function DLayout(
@@ -16,17 +21,29 @@ function DLayout(
     style,
     children,
     gap,
+    gapSm,
+    gapMd,
+    gapLg,
+    gapXl,
+    gapXxl,
     dataAttributes,
   }: Props,
 ) {
-  const gapClass = gap !== undefined ? `gap-${gap}` : undefined;
+  const gapClasses = classNames({
+    [`gap-${gap}`]: gap !== undefined,
+    [`gap-sm-${gapSm}`]: gapSm !== undefined,
+    [`gap-md-${gapMd}`]: gapMd !== undefined,
+    [`gap-lg-${gapLg}`]: gapLg !== undefined,
+    [`gap-xl-${gapXl}`]: gapXl !== undefined,
+    [`gap-xxl-${gapXxl}`]: gapXxl !== undefined,
+  });
 
   return (
     <div
       style={style}
       className={classNames(
         'grid',
-        gapClass,
+        gapClasses,
         className,
       )}
       {...dataAttributes}

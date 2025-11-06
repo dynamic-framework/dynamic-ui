@@ -12,7 +12,42 @@ const config: Meta<typeof DLayout> = {
         type: 'select',
       },
       options: [0, 1, 2, 3, 4, 5],
-      description: 'Gap spacing between columns using Bootstrap gap utilities',
+      description: 'Gap spacing between columns (all breakpoints)',
+    },
+    gapSm: {
+      control: {
+        type: 'select',
+      },
+      options: [0, 1, 2, 3, 4, 5],
+      description: 'Gap spacing for small screens (≥576px)',
+    },
+    gapMd: {
+      control: {
+        type: 'select',
+      },
+      options: [0, 1, 2, 3, 4, 5],
+      description: 'Gap spacing for medium screens (≥768px)',
+    },
+    gapLg: {
+      control: {
+        type: 'select',
+      },
+      options: [0, 1, 2, 3, 4, 5],
+      description: 'Gap spacing for large screens (≥992px)',
+    },
+    gapXl: {
+      control: {
+        type: 'select',
+      },
+      options: [0, 1, 2, 3, 4, 5],
+      description: 'Gap spacing for extra large screens (≥1200px)',
+    },
+    gapXxl: {
+      control: {
+        type: 'select',
+      },
+      options: [0, 1, 2, 3, 4, 5],
+      description: 'Gap spacing for extra extra large screens (≥1400px)',
     },
   },
   parameters: {
@@ -26,6 +61,7 @@ const config: Meta<typeof DLayout> = {
         - **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
         - **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-12).
         - **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0-5).
+        - **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
         - **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
         - **Responsive:** Built on Bootstrap's grid system for responsive designs.
 
@@ -37,14 +73,14 @@ const config: Meta<typeof DLayout> = {
         
         ### Usage:
 
-        <DLayout gap="3">
+        <DLayout gap={3}>
           <DLayout.Pane cols="4">Sidebar</DLayout.Pane>
           <DLayout.Pane cols="8">Main Content</DLayout.Pane>
         </DLayout>
 
         ### Responsive Usage:
 
-        <DLayout gap="3">
+        <DLayout gap={1} gapMd={2} gapLg={4}>
           <DLayout.Pane cols="12" colsMd="6" colsLg="4">Responsive Column</DLayout.Pane>
         </DLayout>
 
@@ -251,6 +287,49 @@ export const Responsive: Story = {
           <DBox>
             <h5>Responsive Column 3</h5>
             <p>12 cols on mobile and tablet, 4 on desktop</p>
+          </DBox>
+        </DLayout.Pane>
+      </>
+    ),
+  },
+};
+
+export const ResponsiveGap: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates responsive gap spacing that changes at different screen sizes. Small gap on mobile (1), medium gap on tablet (2), larger gap on desktop (4).',
+      },
+    },
+  },
+  args: {
+    gap: 1,
+    gapMd: 2,
+    gapLg: 4,
+    children: (
+      <>
+        <DLayout.Pane cols="12" colsMd="6" colsLg="3">
+          <DBox>
+            <h5>Card 1</h5>
+            <p>Gap adjusts with screen size</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="12" colsMd="6" colsLg="3">
+          <DBox>
+            <h5>Card 2</h5>
+            <p>Gap adjusts with screen size</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="12" colsMd="6" colsLg="3">
+          <DBox>
+            <h5>Card 3</h5>
+            <p>Gap adjusts with screen size</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="12" colsMd="6" colsLg="3">
+          <DBox>
+            <h5>Card 4</h5>
+            <p>Gap adjusts with screen size</p>
           </DBox>
         </DLayout.Pane>
       </>
