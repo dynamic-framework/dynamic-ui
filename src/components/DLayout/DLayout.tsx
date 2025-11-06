@@ -6,13 +6,19 @@ import DLayoutPane from './components/DLayoutPane';
 
 import type { BaseProps } from '../interface';
 
+/**
+ * Define the spacing (gap) on a scale from 0 to 30.
+ * @type {number}
+ */
+type Gap = number;
+
 type Props = PropsWithChildren<BaseProps & {
-  gap?: string | number;
-  gapSm?: string | number;
-  gapMd?: string | number;
-  gapLg?: string | number;
-  gapXl?: string | number;
-  gapXxl?: string | number;
+  gap?: Gap;
+  gapSm?: Gap;
+  gapMd?: Gap;
+  gapLg?: Gap;
+  gapXl?: Gap;
+  gapXxl?: Gap;
 }>;
 
 function DLayout(

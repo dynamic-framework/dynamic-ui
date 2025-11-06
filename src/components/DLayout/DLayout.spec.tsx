@@ -29,11 +29,6 @@ describe('DLayout', () => {
     expect(container.firstChild).toHaveAttribute('data-testid', 'custom-layout');
   });
 
-  it('should apply gap class with string value', () => {
-    const { container } = render(<DLayout gap="3">Hello</DLayout>);
-    expect(container.firstChild).toHaveClass('grid', 'gap-3');
-  });
-
   it('should apply gap class with number value', () => {
     const { container } = render(<DLayout gap={4}>Hello</DLayout>);
     expect(container.firstChild).toHaveClass('grid', 'gap-4');
