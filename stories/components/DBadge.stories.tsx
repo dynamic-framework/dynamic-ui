@@ -90,6 +90,10 @@ export const Default: Story = {
   args: {
     color: 'primary',
     text: 'Badge',
+    soft: false,
+    iconEnd: undefined,
+    iconStart: undefined,
+    rounded: false,
   },
 };
 

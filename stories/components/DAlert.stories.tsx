@@ -97,6 +97,12 @@ export const Success: Story = {
   args: {
     color: 'success',
     children: 'This is a success alert',
+    className: undefined,
+    icon: undefined,
+    iconClose: undefined,
+    showClose: false,
+    id: undefined,
+    style: undefined,
   },
 };
 
