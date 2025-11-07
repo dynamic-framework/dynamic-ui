@@ -39,7 +39,17 @@ const config: Preview = {
           'iconEndTabIndex',
           'ariaLabel',
           'loadingAriaLabel',
-          'aria*'
+          'ariaLabelledBy',
+          'ariaDescribedBy',
+          'ariaControls',
+          'ariaExpanded',
+          'ariaPressed',
+          'ariaHidden',
+          'ariaSelected',
+          'ariaDisabled',
+          'ariaChecked',
+          'ariaCurrent',
+          'ariaRole'
         ],
       },
     },
