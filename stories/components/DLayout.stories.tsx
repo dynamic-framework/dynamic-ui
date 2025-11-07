@@ -49,6 +49,12 @@ const config: Meta<typeof DLayout> = {
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing for extra extra large screens (≥1400px)',
     },
+    columns: {
+      control: {
+        type: 'number',
+      },
+      description: 'Number of columns in the grid (default: 12). Use this to create custom column divisions like 5, 7, or 10 columns.',
+    },
   },
   parameters: {
     docs: {
@@ -59,7 +65,8 @@ const config: Meta<typeof DLayout> = {
         ### Key Features:
 
         - **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
-        - **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-12).
+        - **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-12 by default).
+        - **Custom Columns:** Use the <code>columns</code> prop to configure any number of columns (e.g., 5, 7, 10) via CSS variable <code>--bs-columns</code>.
         - **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0-5).
         - **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
         - **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
@@ -70,12 +77,23 @@ const config: Meta<typeof DLayout> = {
         - When you need to create multi-column layouts.
         - To organize content in a grid-based structure.
         - For responsive page layouts using Bootstrap's grid utilities.
+        - When you need custom column divisions (e.g., 5 equal columns instead of 12).
         
         ### Usage:
 
         <DLayout gap={3}>
           <DLayout.Pane cols="4">Sidebar</DLayout.Pane>
           <DLayout.Pane cols="8">Main Content</DLayout.Pane>
+        </DLayout>
+
+        ### Custom Columns Usage:
+
+        <DLayout columns={5} gap={2}>
+          <DLayout.Pane cols="1">Column 1</DLayout.Pane>
+          <DLayout.Pane cols="1">Column 2</DLayout.Pane>
+          <DLayout.Pane cols="1">Column 3</DLayout.Pane>
+          <DLayout.Pane cols="1">Column 4</DLayout.Pane>
+          <DLayout.Pane cols="1">Column 5</DLayout.Pane>
         </DLayout>
 
         ### Responsive Usage:
@@ -330,6 +348,55 @@ export const ResponsiveGap: Story = {
           <DBox>
             <h5>Card 4</h5>
             <p>Gap adjusts with screen size</p>
+          </DBox>
+        </DLayout.Pane>
+      </>
+    ),
+  },
+};
+
+export const FiveColumns: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates a custom 5-column layout using the <code>columns</code> prop. Instead of the default 12-column grid, this creates 5 equal columns.',
+      },
+    },
+  },
+  args: {
+    columns: 5,
+    gap: 2,
+    children: (
+      <>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 1</h5>
+            <p>1 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 2</h5>
+            <p>2 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 3</h5>
+            <p>3 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 4</h5>
+            <p>4 of 5</p>
+
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 5</h5>
+            <p>5 of 5</p>
           </DBox>
         </DLayout.Pane>
       </>

@@ -19,6 +19,20 @@ type Props = PropsWithChildren<BaseProps & {
   gapLg?: Gap;
   gapXl?: Gap;
   gapXxl?: Gap;
+  /**
+   * Number of columns in the grid layout (default: 12)
+   * Uses CSS variable --bs-columns to configure Bootstrap's grid system
+   * @example
+   * // Create a 5-column layout
+   * <DLayout columns={5}>
+   *   <DLayout.Pane cols="1">Col 1</DLayout.Pane>
+   *   <DLayout.Pane cols="1">Col 2</DLayout.Pane>
+   *   <DLayout.Pane cols="1">Col 3</DLayout.Pane>
+   *   <DLayout.Pane cols="1">Col 4</DLayout.Pane>
+   *   <DLayout.Pane cols="1">Col 5</DLayout.Pane>
+   * </DLayout>
+   */
+  columns?: number;
 }>;
 
 function DLayout(
@@ -32,6 +46,7 @@ function DLayout(
     gapLg,
     gapXl,
     gapXxl,
+    columns,
     dataAttributes,
   }: Props,
 ) {
@@ -44,9 +59,14 @@ function DLayout(
     [`gap-xxl-${gapXxl}`]: gapXxl !== undefined,
   });
 
+  const gridStyle = {
+    ...style,
+    ...(columns !== undefined && { '--bs-columns': columns } as React.CSSProperties),
+  };
+
   return (
     <div
-      style={style}
+      style={gridStyle}
       className={classNames(
         'grid',
         gapClasses,
