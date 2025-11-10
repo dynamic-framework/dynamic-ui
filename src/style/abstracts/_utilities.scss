@@ -81,6 +81,25 @@ $utilities: map-merge(
         )
       )
     ),
+    "grid-column": (
+      class: "g-col",
+      property: grid-column,
+      responsive: true,
+      values: (
+        13: auto/span 13,
+        14: auto/span 14,
+        15: auto/span 15,
+        16: auto/span 16,
+        17: auto/span 17,
+        18: auto/span 18,
+        19: auto/span 19,
+        20: auto/span 20,
+        21: auto/span 21,
+        22: auto/span 22,
+        23: auto/span 23,
+        24: auto/span 24
+      )
+    ),
     "overlay": (
       property: opacity,
       class: "overlay",

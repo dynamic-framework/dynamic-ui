@@ -336,3 +336,83 @@ export const ResponsiveGap: Story = {
     ),
   },
 };
+
+export const FiveColumns: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates a custom 5-column layout using the <code>columns</code> prop. Instead of the default 12-column grid, this creates 5 equal columns.',
+      },
+    },
+  },
+  args: {
+    columns: 5,
+    gap: 2,
+    children: (
+      <>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 1</h5>
+            <p>1 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 2</h5>
+            <p>2 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 3</h5>
+            <p>3 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 4</h5>
+            <p>4 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 5</h5>
+            <p>5 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+      </>
+    ),
+  },
+};
+
+export const TwentyFourColumns: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates a custom 24-column layout. This example shows a 2/3 - 1/3 split using 16 columns for the main content and 8 columns for the sidebar.',
+      },
+    },
+  },
+  args: {
+    columns: 24,
+    gap: 3,
+    children: (
+      <>
+        <DLayout.Pane cols="16">
+          <DBox>
+            <h5>Main Content (16/24)</h5>
+            <p>This pane takes 16 columns out of 24, which is 2/3 of the width.</p>
+            <p>Perfect for main content areas that need more space.</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="8">
+          <DBox>
+            <h5>Sidebar (8/24)</h5>
+            <p>This pane takes 8 columns out of 24, which is 1/3 of the width.</p>
+            <p>Ideal for sidebars or secondary content.</p>
+          </DBox>
+        </DLayout.Pane>
+      </>
+    ),
+  },
+};
