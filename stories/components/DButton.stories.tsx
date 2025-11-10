@@ -5,17 +5,14 @@ import DButton from '../../src/components/DButton/DButton';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 import {
-  COMPONENT_SIZE,
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
   ICONS,
-  INPUT_STATE,
   THEMES,
 } from '../config/constants';
 
 const meta: Meta<typeof DButton> = {
   title: 'Design System/Components/Button',
   component: DButton,
-  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
@@ -86,63 +83,132 @@ configured with \`materialStyle: true\`, or use the icon props directly.
     },
   },
   argTypes: {
+    text: {
+      control: 'text',
+      type: 'string',
+    },
     color: {
       control: 'select',
       options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
-      description: 'Button color variant based on the theme palette.',
-    },
-    size: {
-      control: 'select',
-      options: COMPONENT_SIZE,
-      description: 'Defines the button size (sm, md, lg).',
     },
     variant: {
       control: 'select',
       options: [undefined, 'outline', 'link'],
-      description: 'Visual variant of the button.',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
     },
-    text: {
+    className: {
       control: 'text',
-      description: 'The text label displayed inside the button.',
+      type: 'string',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
     },
     iconStart: {
       control: 'select',
       options: [undefined, ...ICONS],
-      description: 'Optional icon on the left side.',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
     },
     iconEnd: {
       control: 'select',
       options: [undefined, ...ICONS],
-      description: 'Optional icon on the right side.',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
     },
     loading: {
       control: 'boolean',
-      table: { defaultValue: { summary: false } },
-      description: 'Shows a spinner and disables the button.',
+      type: 'boolean',
     },
     loadingText: {
       control: 'text',
-      description: 'Custom text to display when in loading state.',
+      type: 'string',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
     },
-    disabled: {
-      control: 'boolean',
-      table: { defaultValue: { summary: false } },
-      description: 'Disables the button.',
+    size: {
+      control: 'select',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
     },
     state: {
       control: 'select',
-      options: [undefined, ...INPUT_STATE],
-      description: 'Visually reflects the input state (valid, invalid, etc).',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
     },
-    onClick: {
-      action: 'clicked',
+    type: {
+      control: 'select',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
+    },
+    stopPropagationEnabled: {
+      control: 'boolean',
+      type: 'boolean',
+    },
+    id: {
+      control: 'text',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
+    },
+    form: {
+      control: 'text',
+      table: {
+        defaultValue: {
+          summary: 'undefined',
+        },
+      },
+    },
+    value: {
+      table: {
+        disable: true,
+      },
     },
   },
 };
 export default meta;
 
 type Story = StoryObj<typeof DButton>;
+
+export const Default: Story = {
+  args: {
+    text: 'Default',
+    color: 'primary',
+    variant: undefined,
+    loading: false,
+    iconEnd: undefined,
+    iconStart: undefined,
+    type: 'button',
+    stopPropagationEnabled: true,
+    size: undefined,
+    state: undefined,
+  },
+};
 
 //
 // ─── BASE VARIANTS ───────────────────────────────────────────────

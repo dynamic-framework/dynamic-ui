@@ -123,16 +123,12 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
     color: {
       control: 'select',
-      type: { name: 'string', required: true },
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
     },
     size: {
       control: {
         type: 'select',
-        labels: {
-          undefined: 'default',
-        },
       },
       type: 'string',
       options: COMPONENT_SIZE,
@@ -195,6 +191,10 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     },
     onClick: {
       action: 'onClick',
+    },
+    variant: {
+      control: 'select',
+      options: [undefined, 'outline', 'link'],
     },
   },
   tags: ['autodocs'],

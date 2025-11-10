@@ -58,6 +58,14 @@ Icon names use **PascalCase** (e.g., \`Home\`, \`Settings\`, \`User\`)
 See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating from Bootstrap Icons.
         `,
       },
+      controls: {
+        exclude: [
+          'familyClass',
+          'familyPrefix',
+          'dataAttributes',
+          'materialStyle',
+        ],
+      },
     },
   },
   argTypes: {
@@ -120,6 +128,9 @@ export const Default: Story = {
   args: {
     icon: 'Map',
     size: '120px',
+    hasCircle: false,
+    className: '',
+    strokeWidth: 2,
   },
 };
 
