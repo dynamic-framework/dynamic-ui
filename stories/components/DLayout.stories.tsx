@@ -49,41 +49,54 @@ const config: Meta<typeof DLayout> = {
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing for extra extra large screens (≥1400px)',
     },
+    children: {
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+      control: false,
+    },
+    className: {
+      type: 'string',
+    },
   },
   parameters: {
     docs: {
       description: {
         component: `
-        DLayout is a grid-based layout component that uses Bootstrap's CSS Grid system to create responsive column layouts.
-        
-        ### Key Features:
+DLayout is a grid-based layout component that uses Bootstrap's CSS Grid system to create responsive column layouts.
 
-        - **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
-        - **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-12).
-        - **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0-5).
-        - **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
-        - **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
-        - **Responsive:** Built on Bootstrap's grid system for responsive designs.
+### Key Features:
 
-        ### When to Use:
+- **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
+- **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-24).
+- **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0-30).
+- **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
+- **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
+- **Responsive:** Built on Bootstrap's grid system for responsive designs.
 
-        - When you need to create multi-column layouts.
-        - To organize content in a grid-based structure.
-        - For responsive page layouts using Bootstrap's grid utilities.
-        
-        ### Usage:
+### When to Use:
 
-        <DLayout gap={3}>
-          <DLayout.Pane cols="4">Sidebar</DLayout.Pane>
-          <DLayout.Pane cols="8">Main Content</DLayout.Pane>
-        </DLayout>
+- When you need to create multi-column layouts.
+- To organize content in a grid-based structure.
+- For responsive page layouts using Bootstrap's grid utilities.
 
-        ### Responsive Usage:
+### Usage:
 
-        <DLayout gap={1} gapMd={2} gapLg={4}>
-          <DLayout.Pane cols="12" colsMd="6" colsLg="4">Responsive Column</DLayout.Pane>
-        </DLayout>
+\`\`\`tsx
+<DLayout gap={3}>
+  <DLayout.Pane cols="4">Sidebar</DLayout.Pane>
+  <DLayout.Pane cols="8">Main Content</DLayout.Pane>
+</DLayout>
+\`\`\`
 
+### Responsive Usage:
+\`\`\`tsx
+<DLayout gap={1} gapMd={2} gapLg={4}>
+  <DLayout.Pane cols="12" colsMd="6" colsLg="4">
+    Responsive Column
+  </DLayout.Pane>
+</DLayout>
+\`\`\`
         `,
       },
     },
@@ -96,6 +109,9 @@ type Story = StoryObj<typeof DLayout>;
 
 export const Default: Story = {
   args: {
+    className: 'bg-gray-100 p-4',
+    gap: 4,
+    columns: 12,
     children: (
       <>
         <DLayout.Pane cols="4">
