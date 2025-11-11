@@ -1,6 +1,6 @@
 /*!
- * dynamic-framework 2.0.0-dev.3
- * bootstrap ~5.3.3
+ * dynamic-framework 2.0.0-dev.4
+ * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
 @charset "UTF-8";
@@ -20872,6 +20872,54 @@ react-datepicker__navigation
   z-index: 100 !important;
 }
 
+.g-col-13 {
+  grid-column: auto/span 13 !important;
+}
+
+.g-col-14 {
+  grid-column: auto/span 14 !important;
+}
+
+.g-col-15 {
+  grid-column: auto/span 15 !important;
+}
+
+.g-col-16 {
+  grid-column: auto/span 16 !important;
+}
+
+.g-col-17 {
+  grid-column: auto/span 17 !important;
+}
+
+.g-col-18 {
+  grid-column: auto/span 18 !important;
+}
+
+.g-col-19 {
+  grid-column: auto/span 19 !important;
+}
+
+.g-col-20 {
+  grid-column: auto/span 20 !important;
+}
+
+.g-col-21 {
+  grid-column: auto/span 21 !important;
+}
+
+.g-col-22 {
+  grid-column: auto/span 22 !important;
+}
+
+.g-col-23 {
+  grid-column: auto/span 23 !important;
+}
+
+.g-col-24 {
+  grid-column: auto/span 24 !important;
+}
+
 .overlay-0 {
   --bs-overlay: 0;
 }
@@ -23181,6 +23229,42 @@ react-datepicker__navigation
   .text-sm-center {
     text-align: center !important;
   }
+  .g-col-sm-13 {
+    grid-column: auto/span 13 !important;
+  }
+  .g-col-sm-14 {
+    grid-column: auto/span 14 !important;
+  }
+  .g-col-sm-15 {
+    grid-column: auto/span 15 !important;
+  }
+  .g-col-sm-16 {
+    grid-column: auto/span 16 !important;
+  }
+  .g-col-sm-17 {
+    grid-column: auto/span 17 !important;
+  }
+  .g-col-sm-18 {
+    grid-column: auto/span 18 !important;
+  }
+  .g-col-sm-19 {
+    grid-column: auto/span 19 !important;
+  }
+  .g-col-sm-20 {
+    grid-column: auto/span 20 !important;
+  }
+  .g-col-sm-21 {
+    grid-column: auto/span 21 !important;
+  }
+  .g-col-sm-22 {
+    grid-column: auto/span 22 !important;
+  }
+  .g-col-sm-23 {
+    grid-column: auto/span 23 !important;
+  }
+  .g-col-sm-24 {
+    grid-column: auto/span 24 !important;
+  }
   .text-truncate-sm-1 {
     --bs-text-truncate: 1;
   }
@@ -25313,6 +25397,42 @@ react-datepicker__navigation
   }
   .text-md-center {
     text-align: center !important;
+  }
+  .g-col-md-13 {
+    grid-column: auto/span 13 !important;
+  }
+  .g-col-md-14 {
+    grid-column: auto/span 14 !important;
+  }
+  .g-col-md-15 {
+    grid-column: auto/span 15 !important;
+  }
+  .g-col-md-16 {
+    grid-column: auto/span 16 !important;
+  }
+  .g-col-md-17 {
+    grid-column: auto/span 17 !important;
+  }
+  .g-col-md-18 {
+    grid-column: auto/span 18 !important;
+  }
+  .g-col-md-19 {
+    grid-column: auto/span 19 !important;
+  }
+  .g-col-md-20 {
+    grid-column: auto/span 20 !important;
+  }
+  .g-col-md-21 {
+    grid-column: auto/span 21 !important;
+  }
+  .g-col-md-22 {
+    grid-column: auto/span 22 !important;
+  }
+  .g-col-md-23 {
+    grid-column: auto/span 23 !important;
+  }
+  .g-col-md-24 {
+    grid-column: auto/span 24 !important;
   }
   .text-truncate-md-1 {
     --bs-text-truncate: 1;
@@ -27447,6 +27567,42 @@ react-datepicker__navigation
   .text-lg-center {
     text-align: center !important;
   }
+  .g-col-lg-13 {
+    grid-column: auto/span 13 !important;
+  }
+  .g-col-lg-14 {
+    grid-column: auto/span 14 !important;
+  }
+  .g-col-lg-15 {
+    grid-column: auto/span 15 !important;
+  }
+  .g-col-lg-16 {
+    grid-column: auto/span 16 !important;
+  }
+  .g-col-lg-17 {
+    grid-column: auto/span 17 !important;
+  }
+  .g-col-lg-18 {
+    grid-column: auto/span 18 !important;
+  }
+  .g-col-lg-19 {
+    grid-column: auto/span 19 !important;
+  }
+  .g-col-lg-20 {
+    grid-column: auto/span 20 !important;
+  }
+  .g-col-lg-21 {
+    grid-column: auto/span 21 !important;
+  }
+  .g-col-lg-22 {
+    grid-column: auto/span 22 !important;
+  }
+  .g-col-lg-23 {
+    grid-column: auto/span 23 !important;
+  }
+  .g-col-lg-24 {
+    grid-column: auto/span 24 !important;
+  }
   .text-truncate-lg-1 {
     --bs-text-truncate: 1;
   }
@@ -29580,6 +29736,42 @@ react-datepicker__navigation
   .text-xl-center {
     text-align: center !important;
   }
+  .g-col-xl-13 {
+    grid-column: auto/span 13 !important;
+  }
+  .g-col-xl-14 {
+    grid-column: auto/span 14 !important;
+  }
+  .g-col-xl-15 {
+    grid-column: auto/span 15 !important;
+  }
+  .g-col-xl-16 {
+    grid-column: auto/span 16 !important;
+  }
+  .g-col-xl-17 {
+    grid-column: auto/span 17 !important;
+  }
+  .g-col-xl-18 {
+    grid-column: auto/span 18 !important;
+  }
+  .g-col-xl-19 {
+    grid-column: auto/span 19 !important;
+  }
+  .g-col-xl-20 {
+    grid-column: auto/span 20 !important;
+  }
+  .g-col-xl-21 {
+    grid-column: auto/span 21 !important;
+  }
+  .g-col-xl-22 {
+    grid-column: auto/span 22 !important;
+  }
+  .g-col-xl-23 {
+    grid-column: auto/span 23 !important;
+  }
+  .g-col-xl-24 {
+    grid-column: auto/span 24 !important;
+  }
   .text-truncate-xl-1 {
     --bs-text-truncate: 1;
   }
@@ -31712,6 +31904,42 @@ react-datepicker__navigation
   }
   .text-xxl-center {
     text-align: center !important;
+  }
+  .g-col-xxl-13 {
+    grid-column: auto/span 13 !important;
+  }
+  .g-col-xxl-14 {
+    grid-column: auto/span 14 !important;
+  }
+  .g-col-xxl-15 {
+    grid-column: auto/span 15 !important;
+  }
+  .g-col-xxl-16 {
+    grid-column: auto/span 16 !important;
+  }
+  .g-col-xxl-17 {
+    grid-column: auto/span 17 !important;
+  }
+  .g-col-xxl-18 {
+    grid-column: auto/span 18 !important;
+  }
+  .g-col-xxl-19 {
+    grid-column: auto/span 19 !important;
+  }
+  .g-col-xxl-20 {
+    grid-column: auto/span 20 !important;
+  }
+  .g-col-xxl-21 {
+    grid-column: auto/span 21 !important;
+  }
+  .g-col-xxl-22 {
+    grid-column: auto/span 22 !important;
+  }
+  .g-col-xxl-23 {
+    grid-column: auto/span 23 !important;
+  }
+  .g-col-xxl-24 {
+    grid-column: auto/span 24 !important;
   }
   .text-truncate-xxl-1 {
     --bs-text-truncate: 1;

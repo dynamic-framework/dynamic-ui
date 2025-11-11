@@ -13,8 +13,9 @@ type Props = PropsWithChildren<BaseProps & {
     gapLg?: Gap;
     gapXl?: Gap;
     gapXxl?: Gap;
+    columns?: number;
 }>;
-declare function DLayout({ className, style, children, gap, gapSm, gapMd, gapLg, gapXl, gapXxl, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DLayout({ className, style, children, gap, columns, gapSm, gapMd, gapLg, gapXl, gapXxl, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DLayout & {
     Pane: typeof DLayoutPane;
 };

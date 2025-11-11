@@ -944,10 +944,10 @@ function DCardFooter({ className, style, children, }) {
     return (jsxRuntime.jsx("div", { className: classNames('card-footer', className), style: style, children: children }));
 }
 
-function DCard({ className, style, children, dataAttributes, }) {
+function DCard$1({ className, style, children, dataAttributes, }) {
     return (jsxRuntime.jsx("div", Object.assign({ style: style, className: classNames('card', className) }, dataAttributes, { children: children })));
 }
-var DCard$1 = Object.assign(DCard, {
+var DCard = Object.assign(DCard$1, {
     Header: DCardHeader,
     Body: DCardBody,
     Footer: DCardFooter,
@@ -958,7 +958,7 @@ function DCarouselSlide(_a) {
     return (jsxRuntime.jsx(reactSplide.SplideSlide, Object.assign({ className: classNames('d-carousel-slide', className) }, props)));
 }
 
-function DCarousel(_a, ref) {
+function DCarousel$1(_a, ref) {
     var { children, className, style, options, dataAttributes } = _a, props = tslib.__rest(_a, ["children", "className", "style", "options", "dataAttributes"]);
     return (jsxRuntime.jsx(reactSplide.Splide, Object.assign({ className: classNames('d-carousel', className), style: style, ref: ref, options: Object.assign(Object.assign({}, options), { classes: {
                 // Arrows
@@ -971,9 +971,9 @@ function DCarousel(_a, ref) {
                 page: 'splide__pagination__page d-carousel-pagination-page',
             } }) }, dataAttributes, props, { children: children })));
 }
-const ForwardedDCarousel = React.forwardRef(DCarousel);
+const ForwardedDCarousel = React.forwardRef(DCarousel$1);
 ForwardedDCarousel.displayName = 'DCarousel';
-var DCarousel$1 = Object.assign(ForwardedDCarousel, {
+var DCarousel = Object.assign(ForwardedDCarousel, {
     Slide: DCarouselSlide,
 });
 
@@ -1167,7 +1167,7 @@ function DSelectPlaceholder(_a) {
     return (jsxRuntime.jsx(Select.components.Placeholder, Object.assign({ innerProps: innerProps, selectProps: selectProps }, props, { children: children })));
 }
 
-function DSelect(_a) {
+function DSelect$1(_a) {
     var { id: idProp, className, style, label, hint, iconFamilyClass, iconFamilyPrefix, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, invalid, valid, menuWithMaxContent = false, disabled, clearable, loading, floatingLabel = false, rtl, searchable, multi, components, defaultValue, placeholder, onIconStartClick, onIconEndClick, dataAttributes } = _a, props = tslib.__rest(_a, ["id", "className", "style", "label", "hint", "iconFamilyClass", "iconFamilyPrefix", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "invalid", "valid", "menuWithMaxContent", "disabled", "clearable", "loading", "floatingLabel", "rtl", "searchable", "multi", "components", "defaultValue", "placeholder", "onIconStartClick", "onIconEndClick", "dataAttributes"]);
     const innerId = React.useId();
     const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
@@ -1193,7 +1193,7 @@ function DSelect(_a) {
                             'is-valid': valid,
                         }), classNamePrefix: "d-select", isDisabled: disabled || loading, isClearable: clearable, isLoading: loading, isRtl: rtl, isSearchable: searchable, isMulti: multi, defaultValue: defaultValue, placeholder: floatingLabel ? '' : placeholder, unstyled: true, components: Object.assign({ Placeholder: DSelectPlaceholder, DropdownIndicator: DSelectDropdownIndicator, ClearIndicator: DSelectClearIndicator, MultiValueRemove: DSelectMultiValueRemove, LoadingIndicator: DSelectLoadingIndicator }, components) }, props)), (iconEnd && !loading) && (jsxRuntime.jsx("button", { type: "button", className: "input-group-text", id: `${id}End`, onClick: handleOnIconEndClick, disabled: disabled || loading, "aria-label": iconEndAriaLabel, tabIndex: iconEndTabIndex, children: iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix })) }))] }), hint && (jsxRuntime.jsx("div", { className: "form-text", id: `${id}Hint`, children: hint }))] })));
 }
-var DSelect$1 = Object.assign(DSelect, {
+var DSelect = Object.assign(DSelect$1, {
     OptionCheck: DSelectOptionCheck,
     OptionIcon: DSelectOptionIcon,
     SingleValueIconText: DSelectSingleValueIconText,
@@ -1242,9 +1242,9 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
         return (jsxRuntime.jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-year-selector', className), style: style, children: [jsxRuntime.jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseYear, disabled: prevYearButtonDisabled, ariaLabel: prevYearAriaLabel, className: "header-button" }), jsxRuntime.jsx("p", { children: `${startYear} - ${endYear}` }), jsxRuntime.jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseYear, disabled: nextYearButtonDisabled, ariaLabel: nextYearAriaLabel, className: "header-button" })] }));
     }
     if (pickerType === PickerType.Quarter || pickerType === PickerType.Month) {
-        return (jsxRuntime.jsxs("div", { className: classNames(`react-datepicker__header-selector react-datepicker__header-${pickerType}-selector`, className), style: style, children: [jsxRuntime.jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseYear, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), jsxRuntime.jsx("div", { className: "d-flex justify-content-center flex-grow-1", children: showHeaderSelectors ? (jsxRuntime.jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false })) : (jsxRuntime.jsx("p", { children: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label })) }), jsxRuntime.jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseYear, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] }));
+        return (jsxRuntime.jsxs("div", { className: classNames(`react-datepicker__header-selector react-datepicker__header-${pickerType}-selector`, className), style: style, children: [jsxRuntime.jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseYear, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), jsxRuntime.jsx("div", { className: "d-flex justify-content-center flex-grow-1", children: showHeaderSelectors ? (jsxRuntime.jsx(DSelect, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false })) : (jsxRuntime.jsx("p", { children: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label })) }), jsxRuntime.jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseYear, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] }));
     }
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: "datepicker-top-header", children: [showHeaderSelectors && (jsxRuntime.jsx("select", { value: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.value, onChange: (e) => changeYear(Number(e.target.value)), className: "custom-year-selector", children: years.map((year) => (jsxRuntime.jsx("option", { value: year.value, children: year.label }, year.value))) })), jsxRuntime.jsx("h4", { className: "mb-0 fw-normal", children: dateFns.format(monthDate, 'LLLL, dd', { locale }) })] }), jsxRuntime.jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsxRuntime.jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsxRuntime.jsx(DSelect$1, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" })) : (jsxRuntime.jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsxRuntime.jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] })] }));
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: "datepicker-top-header", children: [showHeaderSelectors && (jsxRuntime.jsx("select", { value: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.value, onChange: (e) => changeYear(Number(e.target.value)), className: "custom-year-selector", children: years.map((year) => (jsxRuntime.jsx("option", { value: year.value, children: year.label }, year.value))) })), jsxRuntime.jsx("h4", { className: "mb-0 fw-normal", children: dateFns.format(monthDate, 'LLLL, dd', { locale }) })] }), jsxRuntime.jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsxRuntime.jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsxRuntime.jsx(DSelect, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" })) : (jsxRuntime.jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsxRuntime.jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] })] }));
 }
 
 function DDatePicker(_a) {
@@ -1289,7 +1289,7 @@ function DLayoutPane({ className, style, children, cols, colsXs, colsSm, colsMd,
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames(colsClass, colsXsClass, colsSmClass, colsMdClass, colsLgClass, colsXlClass, colsXxlClass, className), style: style }, dataAttributes, { children: children })));
 }
 
-function DLayout({ className, style, children, gap, gapSm, gapMd, gapLg, gapXl, gapXxl, dataAttributes, }) {
+function DLayout$1({ className, style, children, gap, columns, gapSm, gapMd, gapLg, gapXl, gapXxl, dataAttributes, }) {
     const gapClasses = classNames({
         [`gap-${gap}`]: gap !== undefined,
         [`gap-sm-${gapSm}`]: gapSm !== undefined,
@@ -1298,9 +1298,10 @@ function DLayout({ className, style, children, gap, gapSm, gapMd, gapLg, gapXl, 
         [`gap-xl-${gapXl}`]: gapXl !== undefined,
         [`gap-xxl-${gapXxl}`]: gapXxl !== undefined,
     });
-    return (jsxRuntime.jsx("div", Object.assign({ style: style, className: classNames('grid', gapClasses, className) }, dataAttributes, { children: children })));
+    const styleWithColumns = Object.assign(Object.assign({}, style), { '--bs-columns': columns });
+    return (jsxRuntime.jsx("div", Object.assign({ style: styleWithColumns, className: classNames('grid', gapClasses, className) }, dataAttributes, { children: children })));
 }
-var DLayout$1 = Object.assign(DLayout, {
+var DLayout = Object.assign(DLayout$1, {
     Pane: DLayoutPane,
 });
 
@@ -1762,7 +1763,7 @@ function DListGroupItem({ as = 'li', action: actionProp, active, disabled, href,
     return (jsxRuntime.jsxs(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, Tag === 'a' && href && { href }, onClick && { onClick }, ariaAttributes, dataAttributes, Tag === 'button' && { type: 'button' }, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), jsxRuntime.jsx("div", { className: "w-100", children: children }), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle, className: "ms-auto" }))] })));
 }
 
-function DListGroup({ as = 'ul', numbered, flush, horizontal, children, className, style, dataAttributes, }) {
+function DListGroup$1({ as = 'ul', numbered, flush, horizontal, children, className, style, dataAttributes, }) {
     const Tag = React.useMemo(() => {
         if (numbered) {
             return 'ol';
@@ -1782,7 +1783,7 @@ function DListGroup({ as = 'ul', numbered, flush, horizontal, children, classNam
     }, [flush, horizontal, numbered]);
     return (jsxRuntime.jsx(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, dataAttributes, { children: children })));
 }
-var DListGroup$1 = Object.assign(DListGroup, {
+var DListGroup = Object.assign(DListGroup$1, {
     Item: DListGroupItem,
 });
 
@@ -1804,7 +1805,7 @@ function DModalFooter({ className, style, actionPlacement, children, }) {
     return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", { className: "d-modal-separator" }), jsxRuntime.jsx("div", { className: classNames(generateClasses, className), style: style, children: children })] }));
 }
 
-function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, dataAttributes, }) {
+function DModal$1({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, dataAttributes, }) {
     const fullScreenClass = React.useMemo(() => {
         if (fullScreen) {
             if (fullScreenFrom) {
@@ -1820,7 +1821,7 @@ function DModal({ name, className, style, staticBackdrop, scrollable, centered, 
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), dataAttributes, { children: jsxRuntime.jsx("div", { className: classNames(generateModalDialogClasses), children: jsxRuntime.jsx("div", { className: "modal-content", children: children }) }) })));
 }
-var DModal$1 = Object.assign(DModal, {
+var DModal = Object.assign(DModal$1, {
     Header: DModalHeader,
     Body: DModalBody,
     Footer: DModalFooter,
@@ -1844,7 +1845,7 @@ function DOffcanvasFooter({ actionPlacement, children, className, style, }) {
     return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", { className: "d-offcanvas-separator" }), jsxRuntime.jsx("div", { className: classNames(generateClasses, className), style: style, children: children })] }));
 }
 
-function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', children, dataAttributes, }) {
+function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', children, dataAttributes, }) {
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames('offcanvas portal show', {
             [`offcanvas-${openFrom}`]: openFrom,
         }, className), style: style, id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false" }, staticBackdrop && ({
@@ -1855,7 +1856,7 @@ function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFr
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), dataAttributes, { children: children })));
 }
-var DOffcanvas$1 = Object.assign(DOffcanvas, {
+var DOffcanvas = Object.assign(DOffcanvas$1, {
     Header: DOffcanvasHeader,
     Body: DOffcanvasBody,
     Footer: DOffcanvasFooter,
@@ -2028,7 +2029,7 @@ function DTabContent({ tab, children, className, style, }) {
     return (jsxRuntime.jsx("div", { className: classNames('tab-pane fade show active', className), id: `${tab}Pane`, role: "tabpanel", tabIndex: 0, "aria-labelledby": `${tab}Tab`, style: style, children: children }));
 }
 
-function DTabs({ children, defaultSelected, onChange, options, className, classNameTab, style, vertical, variant = 'underline', dataAttributes, }) {
+function DTabs$1({ children, defaultSelected, onChange, options, className, classNameTab, style, vertical, variant = 'underline', dataAttributes, }) {
     const [selected, setSelected] = React.useState(defaultSelected);
     const onSelect = React.useCallback((option) => {
         if (option.tab) {
@@ -2051,7 +2052,7 @@ function DTabs({ children, defaultSelected, onChange, options, className, classN
                             active: option.tab === selected,
                         }, classNameTab), type: "button", role: "tab", "aria-controls": `${option.tab}Pane`, "aria-selected": option.tab === selected, disabled: option.disabled, onClick: () => onSelect(option), children: option.label }, option.tab))) }), jsxRuntime.jsx("div", { className: "tab-content w-100", children: children })] })) }));
 }
-var DTabs$1 = Object.assign(DTabs, {
+var DTabs = Object.assign(DTabs$1, {
     Tab: DTabContent,
 });
 
@@ -2063,10 +2064,10 @@ function DToastBody({ children, className, style }) {
     return (jsxRuntime.jsx("div", { className: classNames('toast-body', className), style: style, children: children }));
 }
 
-function DToast({ children, className, style, dataAttributes, }) {
+function DToast$1({ children, className, style, dataAttributes, }) {
     return (jsxRuntime.jsx("div", Object.assign({ className: classNames('toast', className), role: "alert", "aria-live": "assertive", "aria-atomic": "true", style: style }, dataAttributes, { children: children })));
 }
-var DToast$1 = Object.assign(DToast, {
+var DToast = Object.assign(DToast$1, {
     Header: DToastHeader,
     Body: DToastBody,
 });
@@ -2087,13 +2088,13 @@ function useDToast() {
                 return null;
             }
             if (!description) {
-                return (jsxRuntime.jsx(DToast$1, { className: classNames({
+                return (jsxRuntime.jsx(DToast, { className: classNames({
                         [`toast-${color}`]: !!color,
-                    }, 'show'), children: jsxRuntime.jsxs(DToast$1.Body, { children: [icon && (jsxRuntime.jsx(DIcon, { className: "toast-icon", icon: icon })), jsxRuntime.jsx("p", { className: "toast-title", children: title }), jsxRuntime.jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: () => reactHotToast.toast.dismiss(id), children: jsxRuntime.jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
+                    }, 'show'), children: jsxRuntime.jsxs(DToast.Body, { children: [icon && (jsxRuntime.jsx(DIcon, { className: "toast-icon", icon: icon })), jsxRuntime.jsx("p", { className: "toast-title", children: title }), jsxRuntime.jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: () => reactHotToast.toast.dismiss(id), children: jsxRuntime.jsx(DIcon, { icon: closeIcon || xLg }) })] }) }));
             }
-            return (jsxRuntime.jsxs(DToast$1, { className: classNames({
+            return (jsxRuntime.jsxs(DToast, { className: classNames({
                     [`toast-${color}`]: !!color,
-                }, 'show'), children: [jsxRuntime.jsxs(DToast$1.Header, { children: [icon && (jsxRuntime.jsx(DIcon, { className: "toast-icon", icon: icon })), jsxRuntime.jsx("p", { className: "toast-title", children: title }), timestamp && (jsxRuntime.jsx("small", { className: "toast-timestamp", children: timestamp })), jsxRuntime.jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: () => reactHotToast.toast.dismiss(id), children: jsxRuntime.jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsxRuntime.jsx(DToast$1.Body, { children: jsxRuntime.jsx("span", { children: description }) })] }));
+                }, 'show'), children: [jsxRuntime.jsxs(DToast.Header, { children: [icon && (jsxRuntime.jsx(DIcon, { className: "toast-icon", icon: icon })), jsxRuntime.jsx("p", { className: "toast-title", children: title }), timestamp && (jsxRuntime.jsx("small", { className: "toast-timestamp", children: timestamp })), jsxRuntime.jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: () => reactHotToast.toast.dismiss(id), children: jsxRuntime.jsx(DIcon, { icon: closeIcon || xLg }) })] }), jsxRuntime.jsx(DToast.Body, { children: jsxRuntime.jsx("span", { children: description }) })] }));
         }, toastProps);
     }, [xLg]);
     return {
@@ -2334,11 +2335,11 @@ exports.DBox = DBox;
 exports.DBoxFile = DBoxFile;
 exports.DButton = DButton;
 exports.DButtonIcon = DButtonIcon;
-exports.DCard = DCard$1;
+exports.DCard = DCard;
 exports.DCardBody = DCardBody;
 exports.DCardFooter = DCardFooter;
 exports.DCardHeader = DCardHeader;
-exports.DCarousel = DCarousel$1;
+exports.DCarousel = DCarousel;
 exports.DCarouselSlide = DCarouselSlide;
 exports.DChip = DChip;
 exports.DCollapse = DCollapse;
@@ -2361,30 +2362,30 @@ exports.DInputPin = DInputPin;
 exports.DInputRange = ForwardedDInputRange;
 exports.DInputSelect = DInputSelect;
 exports.DInputSwitch = DInputSwitch;
-exports.DLayout = DLayout$1;
+exports.DLayout = DLayout;
 exports.DLayoutPane = DLayoutPane;
-exports.DListGroup = DListGroup$1;
+exports.DListGroup = DListGroup;
 exports.DListGroupItem = DListGroupItem;
-exports.DModal = DModal$1;
+exports.DModal = DModal;
 exports.DModalBody = DModalBody;
 exports.DModalFooter = DModalFooter;
 exports.DModalHeader = DModalHeader;
-exports.DOffcanvas = DOffcanvas$1;
+exports.DOffcanvas = DOffcanvas;
 exports.DOffcanvasBody = DOffcanvasBody;
 exports.DOffcanvasFooter = DOffcanvasFooter;
 exports.DOffcanvasHeader = DOffcanvasHeader;
 exports.DPaginator = DPaginator;
 exports.DPopover = DPopover;
 exports.DProgress = DProgress;
-exports.DSelect = DSelect$1;
+exports.DSelect = DSelect;
 exports.DStepper = DStepper;
 exports.DStepperDesktop = DStepper$2;
 exports.DStepperMobile = DStepper$1;
 exports.DTabContent = DTabContent;
 exports.DTableHead = DTableHead;
-exports.DTabs = DTabs$1;
+exports.DTabs = DTabs;
 exports.DTimeline = DTimeline;
-exports.DToast = DToast$1;
+exports.DToast = DToast;
 exports.DToastContainer = DToastContainer;
 exports.DTooltip = DTooltip;
 exports.changeQueryString = changeQueryString;
