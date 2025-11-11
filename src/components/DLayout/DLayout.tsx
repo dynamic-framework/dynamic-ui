@@ -19,6 +19,7 @@ type Props = PropsWithChildren<BaseProps & {
   gapLg?: Gap;
   gapXl?: Gap;
   gapXxl?: Gap;
+  columns?: number;
 }>;
 
 function DLayout(
@@ -27,6 +28,7 @@ function DLayout(
     style,
     children,
     gap,
+    columns,
     gapSm,
     gapMd,
     gapLg,
@@ -44,9 +46,14 @@ function DLayout(
     [`gap-xxl-${gapXxl}`]: gapXxl !== undefined,
   });
 
+  const styleWithColumns = {
+    ...style,
+    '--bs-columns': columns,
+  };
+
   return (
     <div
-      style={style}
+      style={styleWithColumns}
       className={classNames(
         'grid',
         gapClasses,
