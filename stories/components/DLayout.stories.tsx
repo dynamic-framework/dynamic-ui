@@ -49,41 +49,54 @@ const config: Meta<typeof DLayout> = {
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing for extra extra large screens (≥1400px)',
     },
+    children: {
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+      control: false,
+    },
+    className: {
+      type: 'string',
+    },
   },
   parameters: {
     docs: {
       description: {
         component: `
-        DLayout is a grid-based layout component that uses Bootstrap's CSS Grid system to create responsive column layouts.
-        
-        ### Key Features:
+DLayout is a grid-based layout component that uses Bootstrap's CSS Grid system to create responsive column layouts.
 
-        - **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
-        - **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-12).
-        - **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0-5).
-        - **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
-        - **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
-        - **Responsive:** Built on Bootstrap's grid system for responsive designs.
+### Key Features:
 
-        ### When to Use:
+- **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
+- **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-24).
+- **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0-30).
+- **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
+- **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
+- **Responsive:** Built on Bootstrap's grid system for responsive designs.
 
-        - When you need to create multi-column layouts.
-        - To organize content in a grid-based structure.
-        - For responsive page layouts using Bootstrap's grid utilities.
-        
-        ### Usage:
+### When to Use:
 
-        <DLayout gap={3}>
-          <DLayout.Pane cols="4">Sidebar</DLayout.Pane>
-          <DLayout.Pane cols="8">Main Content</DLayout.Pane>
-        </DLayout>
+- When you need to create multi-column layouts.
+- To organize content in a grid-based structure.
+- For responsive page layouts using Bootstrap's grid utilities.
 
-        ### Responsive Usage:
+### Usage:
 
-        <DLayout gap={1} gapMd={2} gapLg={4}>
-          <DLayout.Pane cols="12" colsMd="6" colsLg="4">Responsive Column</DLayout.Pane>
-        </DLayout>
+\`\`\`tsx
+<DLayout gap={3}>
+  <DLayout.Pane cols="4">Sidebar</DLayout.Pane>
+  <DLayout.Pane cols="8">Main Content</DLayout.Pane>
+</DLayout>
+\`\`\`
 
+### Responsive Usage:
+\`\`\`tsx
+<DLayout gap={1} gapMd={2} gapLg={4}>
+  <DLayout.Pane cols="12" colsMd="6" colsLg="4">
+    Responsive Column
+  </DLayout.Pane>
+</DLayout>
+\`\`\`
         `,
       },
     },
@@ -96,6 +109,9 @@ type Story = StoryObj<typeof DLayout>;
 
 export const Default: Story = {
   args: {
+    className: 'bg-gray-100 p-4',
+    gap: 4,
+    columns: 12,
     children: (
       <>
         <DLayout.Pane cols="4">
@@ -330,6 +346,86 @@ export const ResponsiveGap: Story = {
           <DBox>
             <h5>Card 4</h5>
             <p>Gap adjusts with screen size</p>
+          </DBox>
+        </DLayout.Pane>
+      </>
+    ),
+  },
+};
+
+export const FiveColumns: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates a custom 5-column layout using the <code>columns</code> prop. Instead of the default 12-column grid, this creates 5 equal columns.',
+      },
+    },
+  },
+  args: {
+    columns: 5,
+    gap: 2,
+    children: (
+      <>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 1</h5>
+            <p>1 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 2</h5>
+            <p>2 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 3</h5>
+            <p>3 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 4</h5>
+            <p>4 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="1">
+          <DBox>
+            <h5>Column 5</h5>
+            <p>5 of 5</p>
+          </DBox>
+        </DLayout.Pane>
+      </>
+    ),
+  },
+};
+
+export const TwentyFourColumns: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates a custom 24-column layout. This example shows a 2/3 - 1/3 split using 16 columns for the main content and 8 columns for the sidebar.',
+      },
+    },
+  },
+  args: {
+    columns: 24,
+    gap: 3,
+    children: (
+      <>
+        <DLayout.Pane cols="16">
+          <DBox>
+            <h5>Main Content (16/24)</h5>
+            <p>This pane takes 16 columns out of 24, which is 2/3 of the width.</p>
+            <p>Perfect for main content areas that need more space.</p>
+          </DBox>
+        </DLayout.Pane>
+        <DLayout.Pane cols="8">
+          <DBox>
+            <h5>Sidebar (8/24)</h5>
+            <p>This pane takes 8 columns out of 24, which is 1/3 of the width.</p>
+            <p>Ideal for sidebars or secondary content.</p>
           </DBox>
         </DLayout.Pane>
       </>
