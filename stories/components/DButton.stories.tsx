@@ -131,15 +131,6 @@ configured with \`materialStyle: true\`, or use the icon props directly.
       control: 'boolean',
       type: 'boolean',
     },
-    loadingText: {
-      control: 'text',
-      type: 'string',
-      table: {
-        defaultValue: {
-          summary: 'undefined',
-        },
-      },
-    },
     size: {
       control: 'select',
       table: {
@@ -164,9 +155,9 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         },
       },
     },
-    stopPropagationEnabled: {
-      control: 'boolean',
+    disabled: {
       type: 'boolean',
+      control: 'boolean',
     },
     id: {
       control: 'text',
@@ -204,9 +195,9 @@ export const Default: Story = {
     iconEnd: undefined,
     iconStart: undefined,
     type: 'button',
-    stopPropagationEnabled: true,
     size: undefined,
     state: undefined,
+    disabled: false,
   },
 };
 
@@ -266,19 +257,6 @@ export const LoadingState: Story = {
           />
         ))}
       </div>
-    </div>
-  ),
-};
-
-export const LoadingWithCustomText: Story = {
-  render: () => (
-    <div className="d-flex flex-wrap gap-4">
-      <DButton
-        color="primary"
-        text="Primary"
-        loading
-        loadingText="Saving..."
-      />
     </div>
   ),
 };

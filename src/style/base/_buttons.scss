@@ -22,6 +22,7 @@
   --#{$prefix}btn-sm-font-size: #{$btn-font-size-sm};
   --#{$prefix}btn-box-shadow: #{btn-box-shadow};
 
+  position: relative;
   display: inline-flex;
   flex-direction: row;
   gap: var(--#{$prefix}btn-gap, $spacer-2);
@@ -45,10 +46,6 @@
   @include gradient-bg(var(--#{$prefix}btn-bg));
   @include box-shadow(var(--#{$prefix}btn-box-shadow));
   @include transition($btn-transition);
-
-  > span {
-    text-decoration: var(--#{$prefix}btn-text-decoration);
-  }
 
   // hover selectors
   &.hover,
@@ -80,6 +77,17 @@
     } @else {
       box-shadow: var(--#{$prefix}btn-focus-box-shadow);
     }
+  }
+  /* stylelint-disable-next-line scss/selector-no-union-class-name */
+  &-loading {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--#{$prefix}btn-loading-bg, var(--#{$prefix}body-bg));
+    border-radius: inherit;
   }
 
   .btn-check.focus-visible + &,
@@ -147,6 +155,7 @@
 @each $color, $value in $theme-colors {
   .btn-#{$color} {
     @include df-button-variant-mapper($color);
+    --#{$prefix}btn-loading-bg: var(--#{$prefix}btn-bg);
   }
 
   .btn-link-#{$color} {

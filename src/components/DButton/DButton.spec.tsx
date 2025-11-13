@@ -17,13 +17,13 @@ describe('<DButton />', () => {
     expect(container).toMatchInlineSnapshot(`
     <div>
       <button
+        aria-busy="false"
+        aria-disabled="false"
         aria-label="Test"
         class="btn btn-primary"
         type="button"
       >
-        <span>
-          ${props.text}
-        </span>
+        ${props.text}
       </button>
     </div>
   `);
@@ -73,26 +73,6 @@ describe('<DButton />', () => {
     );
 
     expect(container.querySelector('.btn-outline-secondary')).toBeInTheDocument();
-  });
-
-  it('Should disable button when state is disabled', () => {
-    const handleClick = jest.fn();
-
-    const { getByRole } = render(
-      <DButton
-        text="Disabled"
-        state="disabled"
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      />,
-    );
-
-    const button = getByRole('button');
-    fireEvent.click(button);
-
-    expect(getByRole('button')).toBeDisabled();
-    expect(handleClick).toHaveBeenCalledTimes(0);
   });
 
   it('Should render start and end icons', () => {
@@ -149,7 +129,6 @@ describe('<DButton />', () => {
     const { getByRole } = render(
       <DButton
         text="No Value"
-        value=""
       />,
     );
 

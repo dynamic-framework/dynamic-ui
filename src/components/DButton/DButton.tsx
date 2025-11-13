@@ -1,56 +1,46 @@
-/* eslint-disable react/button-has-type */
+import {
+  forwardRef,
+  useMemo,
+  type MouseEvent,
+  type ButtonHTMLAttributes,
+  useCallback,
+} from 'react';
 import classNames from 'classnames';
-import { useCallback, useMemo } from 'react';
-
-import type { MouseEvent, ReactNode } from 'react';
 
 import DIcon from '../DIcon';
-
 import type {
   BaseProps,
-  ButtonType,
+  ButtonState,
   ButtonVariant,
   ClassMap,
   ComponentColor,
   ComponentSize,
   EndIconProps,
-  InputState,
   StartIconProps,
 } from '../interface';
 
-type Props =
-& BaseProps
-& StartIconProps
-& EndIconProps
-& {
-  id?: string;
+interface Props
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'>,
+  BaseProps,
+  StartIconProps,
+  EndIconProps {
   color?: ComponentColor;
   size?: ComponentSize;
   variant?: ButtonVariant;
-  state?: InputState;
+  state?: ButtonState;
   text?: string;
-  children?: ReactNode;
-  ariaLabel?: string;
-  value?: string;
-  type?: ButtonType;
-  loadingText?: string;
   loading?: boolean;
   loadingAriaLabel?: string;
-  disabled?: boolean;
-  stopPropagationEnabled?: boolean;
-  form?: string;
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-};
+}
 
-export default function DButton(
-  {
+const DButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
+  const {
     color = 'primary',
     size,
     variant,
     state,
-    text = '',
+    text,
     children,
-    ariaLabel,
     iconStart,
     iconStartFamilyClass,
     iconStartFamilyPrefix,
@@ -59,21 +49,21 @@ export default function DButton(
     iconEndFamilyClass,
     iconEndFamilyPrefix,
     iconEndMaterialStyle,
-    loadingText,
-    value,
-    type = 'button',
     loading = false,
     loadingAriaLabel,
     disabled = false,
-    stopPropagationEnabled = true,
     className,
     style,
-    form,
     dataAttributes,
     onClick,
-  }: Props,
-) {
-  const generateClasses = useMemo<ClassMap>(() => {
+    type = 'button',
+    ...rest
+  } = props;
+
+  const isDisabled = disabled || loading;
+  const content = children || text;
+
+  const classes = useMemo<ClassMap>(() => {
     const variantClass = variant
       ? `btn-${variant}-${color}`
       : `btn-${color}`;
@@ -81,43 +71,48 @@ export default function DButton(
     return {
       btn: true,
       [variantClass]: true,
-      ...size && { [`btn-${size}`]: true },
-      ...(state && state !== 'disabled') && { [state]: true },
+      [`btn-${size}`]: !!size,
+      [state ?? '']: !!state,
       loading,
     };
   }, [variant, color, size, state, loading]);
 
-  const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    if (stopPropagationEnabled) {
-      event.stopPropagation();
+  const ariaLabel = useMemo(() => (
+    loading
+      ? loadingAriaLabel || rest['aria-label'] || text
+      : rest['aria-label'] || text
+  ), [loading, loadingAriaLabel, rest, text]);
+
+  const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    if (disabled || loading) {
+      event.preventDefault();
+      return;
     }
     onClick?.(event);
-  }, [stopPropagationEnabled, onClick]);
-
-  const isDisabled = useMemo(() => (
-    state === 'disabled' || loading || disabled
-  ), [state, loading, disabled]);
-
-  const content = children || text;
-
-  const newAriaLabel = useMemo(() => (
-    loading
-      ? (loadingAriaLabel || ariaLabel || text)
-      : (ariaLabel || text)
-  ), [loading, loadingAriaLabel, ariaLabel, text]);
+  }, [disabled, loading, onClick]);
 
   return (
     <button
-      className={classNames(generateClasses, className)}
-      style={style}
+      ref={ref}
+      // eslint-disable-next-line react/button-has-type
       type={type}
+      className={classNames(classes, className)}
+      style={style}
       disabled={isDisabled}
-      onClick={clickHandler}
-      aria-label={newAriaLabel}
-      form={form}
+      aria-label={ariaLabel}
+      aria-busy={loading}
+      aria-disabled={isDisabled}
+      onClick={handleClick}
       {...dataAttributes}
-      {...value && { value }}
+      {...rest}
     >
+      {loading && (
+        <span className="btn-loading">
+          <span className="spinner-border spinner-border-sm" aria-hidden="true" />
+          <span className="visually-hidden" role="status">Loading...</span>
+        </span>
+      )}
+
       {iconStart && (
         <DIcon
           icon={iconStart}
@@ -126,16 +121,9 @@ export default function DButton(
           materialStyle={iconStartMaterialStyle}
         />
       )}
-      {loading && (
-        <span
-          className="spinner-border spinner-border-sm"
-          role="status"
-          aria-hidden="true"
-        >
-          <span className="visually-hidden">Loading...</span>
-        </span>
-      )}
-      <span>{loading && loadingText ? loadingText : content}</span>
+
+      {content}
+
       {iconEnd && (
         <DIcon
           icon={iconEnd}
@@ -146,4 +134,8 @@ export default function DButton(
       )}
     </button>
   );
-}
+});
+
+DButton.displayName = 'DButton';
+
+export default DButton;
