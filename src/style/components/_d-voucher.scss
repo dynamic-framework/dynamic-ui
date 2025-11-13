@@ -1,21 +1,29 @@
+.d-voucher {
+  --d-voucher-header-gap: var(--#{$prefix}ref-spacer-4);
+  --d-voucher-amount-padding: var(--#{$prefix}ref-spacer-4);
+  --d-voucher-amount-background: var(--#{$prefix}secondary-50);
+  --d-voucher-amount-rounded: var(--#{$prefix}ref-spacer-4);
+  --d-voucher-footer-gap: var(--#{$prefix}ref-spacer-4);
+}
+
 .d-voucher-header {
   display: flex;
   flex-direction: column;
-  gap: var(--#{$prefix}ref-spacer-4);
+  gap: var(--d-voucher-header-gap);
   align-items: center;
   justify-content: center;
   margin-bottom: var(--#{$prefix}ref-spacer-4);
 }
 
 .d-voucher-amount {
-  padding: var(--#{$prefix}ref-spacer-4);
-  background: var(--#{$prefix}secondary-50);
-  border-radius: var(--#{$prefix}ref-spacer-4);
+  padding: var(--d-voucher-amount-padding);
+  background: var(--d-voucher-amount-background);
+  border-radius: var(--d-voucher-amount-rounded);
 }
 
 .d-voucher-footer {
   display: flex;
-  gap: var(--#{$prefix}ref-spacer-4);
+  gap: var(--d-voucher-footer-gap);
   justify-content: center;
   justify-content: flex-start;
 }
