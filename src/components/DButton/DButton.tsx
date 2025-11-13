@@ -87,8 +87,8 @@ const DButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const ariaLabelProp = rest['aria-label'];
   const ariaLabel = useMemo(() => (
     loading
-      ? loadingAriaLabel || ariaLabelProp || text
-      : ariaLabelProp || text
+      ? loadingAriaLabel || ariaLabelProp || text || "Button"
+      : ariaLabelProp || text || "Button"
   ), [loading, loadingAriaLabel, ariaLabelProp, text]);
 
   const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
