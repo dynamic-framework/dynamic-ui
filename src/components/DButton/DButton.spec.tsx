@@ -114,15 +114,16 @@ describe('<DButton />', () => {
     expect(getByRole('button')).toHaveStyle({ backgroundColor: 'red' });
   });
 
-  it('Should apply state class when state is not disabled', () => {
+  it('Should render loadingText when is passed', () => {
     const { getByRole } = render(
       <DButton
-        text="State"
-        state="active"
+        text="Loading"
+        loading
+        loadingText="Loading..."
       />,
     );
 
-    expect(getByRole('button')).toHaveClass('active');
+    expect(getByRole('status')).toHaveTextContent('Loading...');
   });
 
   it('Should not render value if empty string', () => {

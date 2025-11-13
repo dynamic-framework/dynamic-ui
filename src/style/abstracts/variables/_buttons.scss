@@ -34,3 +34,5 @@ $btn-transition: color .15s ease-in-out, background-color .15s ease-in-out, bord
 $btn-outline-primary-hover-color: inherit !default;
 $btn-outline-primary-hover-bg: transparent !default;
 $btn-outline-primary-focus-bg: transparent !default;
+
+$btn-loading-gap: var(--#{$prefix}ref-spacer-2) !default;
