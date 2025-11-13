@@ -60,8 +60,15 @@ const DButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const isDisabled = disabled || loading;
-  const content = children || text;
+  const isDisabled = useMemo(
+    () => disabled || loading,
+    [disabled, loading],
+  );
+
+  const content = useMemo(
+    () => children || text,
+    [children, text],
+  );
 
   const classes = useMemo<ClassMap>(() => {
     const variantClass = variant
