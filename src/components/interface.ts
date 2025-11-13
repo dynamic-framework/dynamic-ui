@@ -3,7 +3,6 @@ import type { CSSProperties } from 'react';
 export type ClassMap = { [className: string]: boolean };
 export type CustomStyles = Record<string, string | undefined> | undefined;
 export type InputState = 'focus-visible' | 'hover' | 'active' | 'disabled';
-export type ButtonState = 'hover' | 'focus-visible' | 'active';
 export type FormControlLayoutDirection = 'horizontal' | 'vertical';
 export type NavegableProps = {
   href: string,

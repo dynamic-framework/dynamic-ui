@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import DIcon from '../DIcon';
 import type {
   BaseProps,
-  ButtonState,
   ButtonVariant,
   ClassMap,
   ComponentColor,
@@ -27,7 +26,6 @@ interface Props
   color?: ComponentColor;
   size?: ComponentSize;
   variant?: ButtonVariant;
-  state?: ButtonState;
   text?: string;
   loading?: boolean;
   loadingAriaLabel?: string;
@@ -38,7 +36,6 @@ const DButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     color = 'primary',
     size,
     variant,
-    state,
     text,
     children,
     iconStart,
@@ -79,10 +76,9 @@ const DButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
       btn: true,
       [variantClass]: true,
       [`btn-${size}`]: !!size,
-      ...(state && { [state]: true }),
       loading,
     };
-  }, [variant, color, size, state, loading]);
+  }, [variant, color, size, loading]);
 
   const ariaLabel = useMemo(() => {
     const ariaLabelProp = rest['aria-label'];
