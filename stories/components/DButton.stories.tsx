@@ -1,5 +1,3 @@
-// DButton.stories.tsx
-
 import { Meta, StoryObj } from '@storybook/react-vite';
 import DButton from '../../src/components/DButton/DButton';
 import { DContextProvider } from '../../src';
@@ -90,6 +88,12 @@ configured with \`materialStyle: true\`, or use the icon props directly.
     color: {
       control: 'select',
       options: THEMES,
+      type: 'string',
+      table: {
+        defaultValue: {
+          summary: 'primary',
+        },
+      },
     },
     variant: {
       control: 'select',
@@ -139,16 +143,12 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         },
       },
     },
-    state: {
-      control: 'select',
-      table: {
-        defaultValue: {
-          summary: 'undefined',
-        },
-      },
+    loadingText: {
+      control: 'text',
     },
     type: {
       control: 'select',
+      options: ['button', 'submit', 'reset'],
       table: {
         defaultValue: {
           summary: 'undefined',
@@ -186,17 +186,17 @@ export default meta;
 
 type Story = StoryObj<typeof DButton>;
 
-export const Default: Story = {
+export const Example: Story = {
   args: {
     text: 'Default',
     color: 'primary',
     variant: undefined,
     loading: false,
+    loadingText: undefined,
     iconEnd: undefined,
     iconStart: undefined,
     type: 'button',
     size: undefined,
-    state: undefined,
     disabled: false,
   },
 };
@@ -205,123 +205,76 @@ export const Default: Story = {
 // ─── BASE VARIANTS ───────────────────────────────────────────────
 //
 
-export const ColorVariants: Story = {
+export const Default: Story = {
   render: () => (
-    <>
-      <div className="d-flex flex-wrap gap-4">
-        {THEMES.map((color) => (
-          <DButton key={color} color={color} text={color} />
-        ))}
-      </div>
-      <div className="d-flex flex-wrap gap-4 mt-4">
-        {THEMES.map((color) => (
-          <DButton key={color} variant="outline" color={color} text={color} />
-        ))}
-      </div>
-      <div className="d-flex flex-wrap gap-4 mt-4">
-        {THEMES.map((color) => (
-          <DButton key={color} variant="link" color={color} text={color} />
-        ))}
-      </div>
-    </>
-  ),
-};
-
-export const LoadingState: Story = {
-  render: () => (
-    <div className="d-flex flex-column gap-4">
-      <div className="d-flex flex-wrap gap-4 mb-8">
-        {THEMES.map((color) => (
-          <DButton key={color} color={color} text={color} loading />
-        ))}
-      </div>
-      <div className="d-flex flex-wrap gap-4 mb-8">
-        {THEMES.map((color) => (
-          <DButton
-            key={color}
-            color={color}
-            text={color}
-            variant="outline"
-            loading
-          />
-        ))}
-      </div>
-      <div className="d-flex flex-wrap gap-4 mb-8">
-        {THEMES.map((color) => (
-          <DButton
-            key={color}
-            color={color}
-            text={color}
-            variant="link"
-            loading
-          />
-        ))}
-      </div>
+    <div className="d-flex flex-wrap gap-4">
+      {THEMES.map((color) => (
+        <DButton key={color} color={color} text={color} />
+      ))}
     </div>
   ),
 };
 
-export const WithIcons: Story = {
+export const Outline: Story = {
   render: () => (
-    <div className="d-flex gap-4">
-      <DButton
-        color="danger"
-        text="Delete"
-        iconStart="Trash2"
-      />
-      <DButton
-        color="primary"
-        text="Primary"
-        iconEnd="ChevronRight"
-      />
+    <div className="d-flex flex-wrap gap-4 mt-4">
+      {THEMES.map((color) => (
+        <DButton key={color} variant="outline" color={color} text={color} />
+      ))}
     </div>
   ),
-  args: {
-    color: 'primary',
-    text: 'Primary',
-    iconEnd: 'ChevronRight',
-  },
-};
-
-export const SecondaryOutline: Story = {
-  args: {
-    color: 'secondary',
-    text: 'Secondary',
-    variant: 'outline',
-  },
-};
-
-export const SecondaryOutlineIconRight: Story = {
-  args: {
-    color: 'secondary',
-    text: 'Secondary',
-    variant: 'outline',
-    iconEnd: 'ChevronRight',
-  },
 };
 
 export const Link: Story = {
-  args: {
-    color: 'secondary',
-    text: 'Link',
-    variant: 'link',
-  },
+  render: () => (
+    <div className="d-flex flex-wrap gap-4 mt-4">
+      {THEMES.map((color) => (
+        <DButton key={color} variant="link" color={color} text={color} />
+      ))}
+    </div>
+  ),
 };
 
-export const LinkIconRight: Story = {
+export const IconEnd: Story = {
+  render: (args) => (
+    <div className="d-flex gap-4">
+      <DButton {...args} text="Default" />
+      <DButton {...args} variant="outline" text="Outline" />
+      <DButton {...args} variant="link" text="Link" />
+    </div>
+  ),
   args: {
-    color: 'secondary',
-    text: 'Link',
-    variant: 'link',
     iconEnd: 'ChevronRight',
   },
 };
 
-//
-// ─── SIZE VARIANTS ───────────────────────────────────────────────
-//
+export const IconStart: Story = {
+  render: (args) => (
+    <div className="d-flex gap-4">
+      <DButton {...args} text="Default" />
+      <DButton {...args} variant="outline" text="Outline" />
+      <DButton {...args} variant="link" text="Link" />
+    </div>
+  ),
+  args: {
+    iconStart: 'ChevronLeft',
+  },
+};
 
-export const SizeVariants: Story = {
+export const LoadingAndLoadingWithText: Story = {
+  render: (args) => (
+    <div className="d-flex gap-4">
+      <DButton {...args} />
+      <DButton {...args} loadingText="Loading..." />
+    </div>
+  ),
+  args: {
+    text: 'Button',
+    loading: true,
+  },
+};
+
+export const Sizes: Story = {
   render: () => (
     <div className="d-flex flex-wrap gap-2 align-items-center">
       <DButton color="primary" size="sm" text="Small" />
@@ -364,7 +317,7 @@ export const LinkSizes: Story = {
 // ─── MATERIAL STYLE VARIANTS ─────────────────────────────────────
 //
 
-export const MaterialButtons: Story = {
+export const ButtonsWithMaterialIcons: Story = {
   render: () => (
     <DContextProvider {...CONTEXT_PROVIDER_CONFIG_MATERIAL}>
       <div className="d-flex flex-wrap gap-2 align-items-center">
