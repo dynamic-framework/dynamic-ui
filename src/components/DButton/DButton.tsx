@@ -79,17 +79,17 @@ const DButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
       btn: true,
       [variantClass]: true,
       [`btn-${size}`]: !!size,
-      [state ?? '']: !!state,
+      ...(state && { [state]: true }),
       loading,
     };
   }, [variant, color, size, state, loading]);
 
-  const ariaLabelProp = rest['aria-label'];
-  const ariaLabel = useMemo(() => (
-    loading
+  const ariaLabel = useMemo(() => {
+    const ariaLabelProp = rest['aria-label'];
+    return loading
       ? loadingAriaLabel || ariaLabelProp || text
-      : ariaLabelProp || text
-  ), [loading, loadingAriaLabel, ariaLabelProp, text]);
+      : ariaLabelProp || text;
+  }, [loading, loadingAriaLabel, rest, text]);
 
   const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     if (disabled || loading) {
