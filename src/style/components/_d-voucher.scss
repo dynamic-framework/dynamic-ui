@@ -1,29 +1,30 @@
 .d-voucher {
-  --d-voucher-header-gap: var(--#{$prefix}ref-spacer-4);
-  --d-voucher-amount-padding: var(--#{$prefix}ref-spacer-4);
-  --d-voucher-amount-background: var(--#{$prefix}secondary-50);
-  --d-voucher-amount-rounded: var(--#{$prefix}ref-spacer-4);
-  --d-voucher-footer-gap: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-header-gap: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-amount-padding: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-amount-background: var(--#{$prefix}secondary-50);
+  --#{$prefix}voucher-amount-rounded: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-footer-gap: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-margin: 0 0 var(--#{$prefix}ref-spacer-4) 0;
 }
 
 .d-voucher-header {
   display: flex;
   flex-direction: column;
-  gap: var(--d-voucher-header-gap);
+  gap: var(--#{$prefix}voucher-header-gap);
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--#{$prefix}ref-spacer-4);
+  margin: var(--#{$prefix}voucher-margin);
 }
 
 .d-voucher-amount {
-  padding: var(--d-voucher-amount-padding);
-  background: var(--d-voucher-amount-background);
-  border-radius: var(--d-voucher-amount-rounded);
+  padding: var(--#{$prefix}voucher-amount-padding);
+  background: var(--#{$prefix}voucher-amount-background);
+  border-radius: var(--#{$prefix}voucher-amount-rounded);
 }
 
 .d-voucher-footer {
   display: flex;
-  gap: var(--d-voucher-footer-gap);
+  gap: var(--#{$prefix}voucher-footer-gap);
   justify-content: center;
   justify-content: flex-start;
 }
