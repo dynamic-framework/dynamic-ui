@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 const React = require('react');
 
-jest.mock('react-content-loader', () => jest.fn());
-
 jest.mock('react-responsive-pagination', () => {
   function MockPagination(props) {
     const {
