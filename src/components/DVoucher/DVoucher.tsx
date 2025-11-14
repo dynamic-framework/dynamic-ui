@@ -71,7 +71,6 @@ export default function DVoucher(
         <div className="d-voucher-header">
           <DIcon
             icon={icon}
-            size="var(--bs-ref-spacer-8)"
             color={color}
           />
           <div className="text-center">
