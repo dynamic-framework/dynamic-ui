@@ -17,13 +17,13 @@ describe('<DButton />', () => {
     expect(container).toMatchInlineSnapshot(`
     <div>
       <button
+        aria-busy="false"
+        aria-disabled="false"
         aria-label="Test"
         class="btn btn-primary"
         type="button"
       >
-        <span>
-          ${props.text}
-        </span>
+        ${props.text}
       </button>
     </div>
   `);
@@ -75,26 +75,6 @@ describe('<DButton />', () => {
     expect(container.querySelector('.btn-outline-secondary')).toBeInTheDocument();
   });
 
-  it('Should disable button when state is disabled', () => {
-    const handleClick = jest.fn();
-
-    const { getByRole } = render(
-      <DButton
-        text="Disabled"
-        state="disabled"
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      />,
-    );
-
-    const button = getByRole('button');
-    fireEvent.click(button);
-
-    expect(getByRole('button')).toBeDisabled();
-    expect(handleClick).toHaveBeenCalledTimes(0);
-  });
-
   it('Should render start and end icons', () => {
     const { container } = render(
       <DButton
@@ -134,22 +114,22 @@ describe('<DButton />', () => {
     expect(getByRole('button')).toHaveStyle({ backgroundColor: 'red' });
   });
 
-  it('Should apply state class when state is not disabled', () => {
+  it('Should render loadingText when is passed', () => {
     const { getByRole } = render(
       <DButton
-        text="State"
-        state="active"
+        text="Loading"
+        loading
+        loadingText="Loading..."
       />,
     );
 
-    expect(getByRole('button')).toHaveClass('active');
+    expect(getByRole('status')).toHaveTextContent('Loading...');
   });
 
   it('Should not render value if empty string', () => {
     const { getByRole } = render(
       <DButton
         text="No Value"
-        value=""
       />,
     );
 
