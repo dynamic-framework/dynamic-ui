@@ -1,0 +1,30 @@
+.d-voucher {
+  --#{$prefix}voucher-header-gap: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-amount-padding: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-amount-background: var(--#{$prefix}secondary-50);
+  --#{$prefix}voucher-amount-rounded: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-footer-gap: var(--#{$prefix}ref-spacer-4);
+  --#{$prefix}voucher-margin: 0 0 var(--#{$prefix}ref-spacer-4) 0;
+}
+
+.d-voucher-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}voucher-header-gap);
+  align-items: center;
+  justify-content: center;
+  margin: var(--#{$prefix}voucher-margin);
+}
+
+.d-voucher-amount {
+  padding: var(--#{$prefix}voucher-amount-padding);
+  background: var(--#{$prefix}voucher-amount-background);
+  border-radius: var(--#{$prefix}voucher-amount-rounded);
+}
+
+.d-voucher-footer {
+  display: flex;
+  gap: var(--#{$prefix}voucher-footer-gap);
+  justify-content: center;
+  justify-content: flex-start;
+}
