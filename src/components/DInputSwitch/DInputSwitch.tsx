@@ -19,6 +19,7 @@ type Props =
   name?: string;
   checked?: boolean;
   disabled?: boolean;
+  inputClassName?: string;
   invalid?: boolean;
   valid?: boolean;
   readonly?: boolean;
@@ -39,6 +40,7 @@ export default function DInputSwitch(
     className,
     style,
     dataAttributes,
+    inputClassName,
     onChange,
   }: Props,
 ) {
@@ -58,7 +60,7 @@ export default function DInputSwitch(
 
   return (
     <div
-      className="form-check form-switch"
+      className={classNames('form-check', className)}
       {...dataAttributes}
     >
       <input
@@ -71,7 +73,7 @@ export default function DInputSwitch(
             'is-invalid': invalid,
             'is-valid': valid,
           },
-          className,
+          inputClassName,
         )}
         style={style}
         type="checkbox"

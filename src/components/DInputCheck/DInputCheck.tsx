@@ -21,6 +21,7 @@ type Props =
   label?: string;
   ariaLabel?: string;
   checked?: boolean;
+  inputClassName?: string;
   disabled?: boolean;
   invalid?: boolean;
   valid?: boolean;
@@ -42,6 +43,7 @@ export default function DInputCheck(
     invalid = false,
     valid = false,
     indeterminate,
+    inputClassName,
     value,
     hint,
     onChange,
@@ -92,7 +94,7 @@ export default function DInputCheck(
           'is-invalid': invalid,
           'is-valid': valid,
         },
-        className,
+        inputClassName,
       )}
       style={style}
       id={id}
@@ -108,7 +110,7 @@ export default function DInputCheck(
     handleChange,
     invalid,
     valid,
-    className,
+    inputClassName,
     style,
     id,
     disabled,
@@ -126,7 +128,7 @@ export default function DInputCheck(
 
   return (
     <div
-      className="form-check"
+      className={classNames('form-check', className)}
       {...dataAttributes}
     >
       {inputComponent}

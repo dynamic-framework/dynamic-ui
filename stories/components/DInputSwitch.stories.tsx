@@ -48,9 +48,15 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
     className: {
       control: 'text',
       type: 'string',
+      description: 'The class name for the wrapper div',
     },
     style: {
       control: 'object',
+    },
+    inputClassName: {
+      control: 'text',
+      type: 'string',
+      description: 'The class name for the input element',
     },
     label: {
       control: 'text',
@@ -157,5 +163,14 @@ export const CheckedDisabled: Story = {
     label: 'Label',
     checked: true,
     disabled: true,
+  },
+};
+
+export const WithInputClassName: Story = {
+  args: {
+    id: 'componentId9',
+    label: 'Custom styled input',
+    checked: false,
+    inputClassName: 'border-2',
   },
 };
