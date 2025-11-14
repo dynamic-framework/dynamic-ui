@@ -23,7 +23,7 @@ describe('<DInputSwitch />', () => {
       expect(container).toMatchInlineSnapshot(`
         <div>
           <div
-            class="form-check form-switch"
+            class="form-check"
           >
             <input
               class="form-check-input"
