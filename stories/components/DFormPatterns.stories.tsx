@@ -28,15 +28,13 @@ type Story = StoryObj<typeof DBox>;
 export const OneColumn: Story = {
   render: () => (
     <DBox className="p-8" style={{ width: '800px' }}>
-      <form className="grid gap-4" style={{ '--bs-columns': '1' }}>
-        <div className="col-12">
-          <DInput id="name" label="Full Name" placeholder="Enter your full name" />
-        </div>
-        <div className="col-12">
-          <DInput id="email" type="email" label="Email" placeholder="Enter your email" />
-        </div>
-        <div className="col-12">
+      <form>
+        <fieldset>
+          <legend className="fw-semibold">Personal Information</legend>
+          <DInput className="mb-4" id="name" label="Full Name" placeholder="Enter your full name" />
+          <DInput className="mb-4" id="email" type="email" label="Email" placeholder="Enter your email" />
           <DSelect
+            className="mb-4"
             id="country"
             label="Country"
             options={[
@@ -46,16 +44,10 @@ export const OneColumn: Story = {
               { label: 'Mexico', value: 'mx' },
             ]}
           />
-        </div>
-        <div className="col-12">
-          <DInputSwitch id="newsletter" label="Subscribe to newsletter" />
-        </div>
-        <div className="col-12">
-          <DInputCheck id="terms" type="checkbox" label="I agree to the terms and conditions" />
-        </div>
-        <div className="col-12">
+          <DInputSwitch className="mb-2" id="newsletter" label="Subscribe to newsletter" />
+          <DInputCheck className="mb-4" id="terms" type="checkbox" label="I agree to the terms and conditions" />
           <DButton type="submit" text="Submit" />
-        </div>
+        </fieldset>
       </form>
     </DBox>
   ),
@@ -65,32 +57,35 @@ export const horizontalForm: Story = {
   render: () => (
     <DBox className="p-8" style={{ width: '800px' }}>
       <form>
-        <div className="grid gap-3 mb-4">
-          <label htmlFor="inputEmail3" className="g-col-sm-2 col-form-label">Email</label>
-          <div className="g-col-sm-10">
-            <DInput type="email" id="inputEmail3" />
+        <fieldset>
+          <legend className="fw-semibold">Personal Information</legend>
+          <div className="grid gap-3 mb-4">
+            <label htmlFor="inputEmail3" className="g-col-sm-2 col-form-label">Email</label>
+            <div className="g-col-sm-10">
+              <DInput type="email" id="inputEmail3" />
+            </div>
           </div>
-        </div>
-        <div className="grid gap-3 mb-4">
-          <label htmlFor="inputPassword3" className="g-col-sm-2 col-form-label">Password</label>
-          <div className="g-col-sm-10">
-            <DInputPassword />
+          <div className="grid gap-3 mb-4">
+            <label htmlFor="inputPassword3" className="g-col-sm-2 col-form-label">Password</label>
+            <div className="g-col-sm-10">
+              <DInputPassword />
+            </div>
           </div>
-        </div>
-        <hr />
-        <div className="grid gap-3 mb-4">
-          <label htmlFor="address" className="g-col-sm-2 col-form-label">Address</label>
-          <div className="g-col-sm-10">
-            <DInput id="address" />
+          <hr />
+          <div className="grid gap-3 mb-4">
+            <label htmlFor="address" className="g-col-sm-2 col-form-label">Address</label>
+            <div className="g-col-sm-10">
+              <DInput id="address" />
+            </div>
           </div>
-        </div>
-        <div className="grid gap-3 mb-4">
-          <label htmlFor="address" className="g-col-sm-2 col-form-label">Phone</label>
-          <div className="g-col-sm-10">
-            <DInput id="phone" />
+          <div className="grid gap-3 mb-4">
+            <label htmlFor="address" className="g-col-sm-2 col-form-label">Phone</label>
+            <div className="g-col-sm-10">
+              <DInput id="phone" />
+            </div>
           </div>
-        </div>
-        <DButton type="submit" text="Sign in" />
+          <DButton type="submit" text="Sign in" />
+        </fieldset>
       </form>
     </DBox>
   ),
@@ -99,49 +94,52 @@ export const horizontalForm: Story = {
 export const TwoColumns: Story = {
   render: () => (
     <DBox className="p-8" style={{ width: '800px' }}>
-      <form className="grid gap-4" style={{ '--bs-columns': '2' }}>
-        <div>
-          <DInput id="firstName" label="First Name" placeholder="Enter your first name" />
-        </div>
-        <div>
-          <DInput id="lastName" label="Last Name" placeholder="Enter your last name" />
-        </div>
-        <div>
-          <DInput id="email2" type="email" label="Email" placeholder="Enter your email" />
-        </div>
-        <div>
-          <DInput id="phone" type="tel" label="Phone" placeholder="Enter your phone number" />
-        </div>
-        <div className="col-12">
-          <DSelect
-            id="country2"
-            label="Country"
-            options={[
-              { label: 'Select a country', value: '' },
-              { label: 'United States', value: 'us' },
-              { label: 'Canada', value: 'ca' },
-              { label: 'Mexico', value: 'mx' },
-            ]}
-          />
-        </div>
-        <div className="col-12">
-          <label className="form-label" htmlFor="gender">Gender</label>
-          <div>
-            <DInputCheck id="genderMale" type="radio" name="gender" label="Male" inline />
-            <DInputCheck id="genderFemale" type="radio" name="gender" label="Female" inline />
-            <DInputCheck id="genderOther" type="radio" name="gender" label="Other" inline />
+      <form>
+        <fieldset>
+          <legend className="fw-semibold">Personal Information</legend>
+          <div className="grid gap-3">
+            <div className="g-col-6">
+              <DInput id="firstName" label="First Name" placeholder="Enter your first name" />
+            </div>
+            <div className="g-col-6">
+              <DInput id="lastName" label="Last Name" placeholder="Enter your last name" />
+            </div>
+            <div className="g-col-6">
+              <DInput id="email2" type="email" label="Email" placeholder="Enter your email" />
+            </div>
+            <div className="g-col-6">
+              <DInput id="phone" type="tel" label="Phone" placeholder="Enter your phone number" />
+            </div>
+            <div className="g-col-6">
+              <DSelect
+                id="country2"
+                label="Country"
+                options={[
+                  { label: 'Select a country', value: '' },
+                  { label: 'United States', value: 'us' },
+                  { label: 'Canada', value: 'ca' },
+                  { label: 'Mexico', value: 'mx' },
+                ]}
+              />
+            </div>
+            <div className="g-col-6">
+              <label className="form-label" htmlFor="gender">Gender</label>
+              <div className="d-flex gap-2">
+                <DInputCheck id="genderMale" type="radio" name="gender" label="Male" />
+                <DInputCheck id="genderFemale" type="radio" name="gender" label="Female" />
+                <DInputCheck id="genderOther" type="radio" name="gender" label="Other" />
+              </div>
+            </div>
+            <div className="g-col-12">
+              <DInputSwitch id="notifications" label="Enable notifications" />
+              <DInputCheck id="terms2" type="checkbox" label="I agree to the terms and conditions" />
+            </div>
+            <div className="g-col-12">
+              <DButton type="submit" className="me-2" text="Submit" />
+              <DButton type="reset" variant="outline" text="Reset" />
+            </div>
           </div>
-        </div>
-        <div className="col-12">
-          <DInputSwitch id="notifications" label="Enable notifications" />
-        </div>
-        <div className="col-12">
-          <DInputCheck id="terms2" type="checkbox" label="I agree to the terms and conditions" />
-        </div>
-        <div className="col-12">
-          <DButton type="submit" className="me-2" text="Submit" />
-          <DButton type="reset" variant="outline" text="Reset" />
-        </div>
+        </fieldset>
       </form>
     </DBox>
   ),
