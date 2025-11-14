@@ -82,6 +82,14 @@ The voucher component provides:
       action: 'error',
       description: 'Error handler for download/share failures',
     },
+    children: {
+      control: false,
+      table: {
+        type: {
+          summary: 'ReactNode',
+        },
+      },
+    },
   },
 };
 
