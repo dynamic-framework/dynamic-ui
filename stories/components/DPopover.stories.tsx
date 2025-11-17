@@ -5,7 +5,7 @@ import DButton from '../../src/components/DButton';
 import { DCard } from '../../src';
 
 const config: Meta<typeof DPopover> = {
-  title: 'Design System/Patterns/Popover',
+  title: 'Design System/Components/Popover',
   component: DPopover,
   argTypes: {
     className: {

@@ -8,7 +8,7 @@ import { TAB_VARIANTS } from '../config/constants';
 import { DChip, DIcon } from '../../src';
 
 const config: Meta<typeof DTabs> = {
-  title: 'Design System/Patterns/Tabs',
+  title: 'Design System/Components/Tabs',
   component: DTabs,
   parameters: {
     docs: {
