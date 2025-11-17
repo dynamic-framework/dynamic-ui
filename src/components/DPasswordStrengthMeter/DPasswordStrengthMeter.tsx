@@ -21,10 +21,7 @@ type Props = BaseProps & {
   value?: string;
   name?: string;
   disabled?: boolean;
-  readonly?: boolean;
   invalid?: boolean;
-  validFeedback?: string;
-  invalidFeedback?: string;
   validationMessages?: ValidationMessages;
   enabledChecks?: ValidationCheck[];
   onChange?: (value: string) => void;
@@ -47,10 +44,7 @@ export default function DPasswordStrengthMeter({
   value = '',
   name,
   disabled = false,
-  readonly = false,
   invalid = false,
-  validFeedback,
-  invalidFeedback,
   validationMessages = DEFAULT_VALIDATION_MESSAGES,
   enabledChecks = DEFAULT_ENABLED_CHECKS,
   className,
@@ -78,10 +72,7 @@ export default function DPasswordStrengthMeter({
         value={password}
         name={name}
         disabled={disabled}
-        readonly={readonly}
         invalid={invalid}
-        validFeedback={validFeedback}
-        invalidFeedback={invalidFeedback}
         onChange={handleChange}
       />
 

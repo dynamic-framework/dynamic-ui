@@ -145,16 +145,6 @@ The strength bar color is calculated based on the percentage of passed checks:
       type: 'boolean',
       description: 'Whether the input has validation errors',
     },
-    validFeedback: {
-      control: 'text',
-      type: 'string',
-      description: 'Valid feedback message',
-    },
-    invalidFeedback: {
-      control: 'text',
-      type: 'string',
-      description: 'Invalid feedback message',
-    },
     className: {
       control: 'text',
       type: 'string',
@@ -236,7 +226,6 @@ export const Invalid: Story = {
     id: 'password5',
     label: 'Password',
     invalid: true,
-    invalidFeedback: 'Password does not meet requirements',
   },
 };
 
@@ -292,8 +281,6 @@ export const WithFeedback: Story = {
         value={password}
         onChange={setPassword}
         invalid={password.length > 0 && !isValid}
-        invalidFeedback={password.length > 0 && !isValid ? 'Password must meet all requirements' : undefined}
-        validFeedback={isValid ? 'Strong password!' : undefined}
       />
     );
   },
