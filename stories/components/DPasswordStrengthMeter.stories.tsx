@@ -164,7 +164,7 @@ The strength bar color is calculated based on the percentage of passed checks:
       },
     },
     enabledChecks: {
-      control: 'multi-select',
+      control: 'inline-check',
       options: ['uppercase', 'lowercase', 'number', 'specialChar'],
       description: 'Array of validation checks to enable. Controls which requirements are shown and validated.',
       table: {
@@ -193,6 +193,7 @@ export const Default: Story = {
     id: 'password1',
     label: 'Password',
     placeholder: 'Enter your password',
+    disabled: false,
   },
 };
 
