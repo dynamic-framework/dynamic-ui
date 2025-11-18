@@ -30,6 +30,8 @@ export { default as DInputMask } from './DInputMask';
 export { default as DInputCounter } from './DInputCounter';
 export { default as DInputCurrency } from './DInputCurrency';
 export { default as DInputPassword } from './DInputPassword';
+export { default as DPasswordStrengthMeter } from './DPasswordStrengthMeter';
+export type { ValidationMessages, ValidationCheck } from './DPasswordStrengthMeter';
 export { default as DInputCheck } from './DInputCheck';
 export { default as DInputPin } from './DInputPin';
 export { default as DInputSelect } from './DInputSelect';
