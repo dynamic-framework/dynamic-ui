@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.0.0-dev.4
+ * dynamic-framework 2.0.0-dev.5
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -8463,6 +8463,8 @@ body {
   --bs-btn-sm-padding-x: 0.75rem;
   --bs-btn-sm-font-size: var(--bs-fs-small);
   --bs-btn-box-shadow: btn-box-shadow;
+  --bs-btn-loading-gap: var(--bs-ref-spacer-2);
+  position: relative;
   display: inline-flex;
   flex-direction: row;
   gap: var(--bs-btn-gap, 0.5rem);
@@ -8487,15 +8489,12 @@ body {
   background-color: var(--bs-btn-bg);
   box-shadow: var(--bs-btn-box-shadow);
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  /* stylelint-disable-next-line scss/selector-no-union-class-name */
 }
 @media (prefers-reduced-motion: reduce) {
   .btn {
     transition: none;
   }
-}
-.btn > span {
-  -webkit-text-decoration: var(--bs-btn-text-decoration);
-          text-decoration: var(--bs-btn-text-decoration);
 }
 .btn.hover, .btn:hover {
   color: var(--bs-btn-hover-color);
@@ -8514,6 +8513,15 @@ body {
   border-color: var(--bs-btn-focus-border-color, var(--bs-btn-hover-border-color));
   outline: 0;
   box-shadow: var(--bs-btn-box-shadow), var(--bs-btn-focus-box-shadow);
+}
+.btn-loading {
+  position: relative;
+  display: inline-flex;
+  gap: var(--bs-btn-loading-gap);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 .btn-check.focus-visible + .btn, .btn-check:focus-visible + .btn {
   border-color: var(--bs-btn-hover-border-color);
@@ -9294,19 +9302,16 @@ body {
 
 .btn-outline-primary {
   --bs-btn-color: var(--bs-primary-500);
-  --bs-btn-hover-border-color: var(--bs-primary-700);
   --bs-btn-border-color: var(--bs-primary-500);
-  --bs-btn-active-color: var(--bs-primary-500);
-  --bs-btn-active-border-color: var(--bs-primary-600);
-  --bs-btn-hover-color: var(--bs-primary-700);
-  --bs-btn-focus-color: var(--bs-primary-600);
-  --bs-btn-active-color: var(--bs-primary-600);
-  --bs-btn-box-shadow: 0 0 0 transparent;
+  --bs-btn-hover-color: var(--bs-primary-600);
+  --bs-btn-hover-border-color: var(--bs-primary-600);
+  --bs-btn-active-color: var(--bs-primary-700);
+  --bs-btn-active-border-color: var(--bs-primary-700);
+  --bs-btn-focus-color: var(--bs-primary-700);
   --bs-btn-focus-shadow-rgb: var(--bs-btn-primary-focus-shadow-rgb);
-}
-.btn-outline-primary:disabled, .btn-outline-primary.disabled {
-  --bs-btn-disabled-border-color: var(--bs-primary-500);
+  --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-disabled-color: var(--bs-primary-500);
+  --bs-btn-disabled-border-color: var(--bs-primary-500);
 }
 
 .btn-outline-secondary {
@@ -9314,20 +9319,16 @@ body {
   --bs-btn-hover-border-color: var(--bs-secondary-400);
   --bs-btn-border-color: var(--bs-secondary-200);
   --bs-btn-active-border-color: var(--bs-secondary-400);
-  --bs-btn-active-color: var(--bs-secondary-700);
-  --bs-btn-hover-color: var(--bs-secondary-700);
   --bs-btn-focus-color: var(--bs-secondary-700);
-  --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-focus-shadow-rgb: var(--bs-btn-secondary-focus-shadow-rgb);
-}
-.btn-outline-secondary:disabled, .btn-outline-secondary.disabled {
+  --bs-btn-box-shadow: 0 0 0 transparent;
+  --bs-btn-disabled-color: var(--bs-secondary-700);
   --bs-btn-disabled-border-color: var(--bs-secondary-200);
-  --bs-btn-disabled-color: var(--bs-secondary-600);
 }
 
 .btn-outline-light {
   --bs-btn-color: var(--bs-gray-25);
-  --bs-btn-hover-border-color: var(--bs-gray-25);
+  --bs-btn-hover-border-color: var(--bs-gray-50);
   --bs-btn-border-color: var(--bs-gray-25);
   --bs-btn-active-border-color: var(--bs-gray-50);
   --bs-btn-active-color: var(--bs-gray-50);
@@ -9335,8 +9336,6 @@ body {
   --bs-btn-focus-color: var(--bs-gray-50);
   --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-focus-shadow-rgb: var(--bs-btn-light-focus-shadow-rgb);
-}
-.btn-outline-light:disabled, .btn-outline-light.disabled {
   --bs-btn-disabled-border-color: var(--bs-gray-25);
   --bs-btn-disabled-color: var(--bs-gray-25);
   opacity: var(--bs-btn-disabled-opacity);
@@ -9352,8 +9351,6 @@ body {
   --bs-btn-focus-color: var(--bs-success-700);
   --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-focus-shadow-rgb: var(--bs-btn-success-focus-shadow-rgb);
-}
-.btn-outline-success:disabled, .btn-outline-success.disabled {
   --bs-btn-disabled-border-color: var(--bs-success-500);
   --bs-btn-disabled-color: var(--bs-success-500);
 }
@@ -9368,9 +9365,7 @@ body {
   --bs-btn-focus-color: var(--bs-danger-700);
   --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-focus-shadow-rgb: var(--bs-btn-danger-focus-shadow-rgb);
-}
-.btn-outline-danger:disabled, .btn-outline-danger.disabled {
-  --bs-btn-active-border-color: var(--bs-danger-500);
+  --bs-btn-disabled-border-color: var(--bs-danger-500);
   --bs-btn-disabled-color: var(--bs-danger-500);
 }
 
@@ -9384,40 +9379,34 @@ body {
   --bs-btn-focus-color: var(--bs-info-700);
   --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-focus-shadow-rgb: var(--bs-btn-info-focus-shadow-rgb);
-}
-.btn-outline-info:disabled, .btn-outline-info.disabled {
   --bs-btn-disabled-border-color: var(--bs-info-500);
   --bs-btn-disabled-color: var(--bs-info-500);
 }
 
 .btn-outline-warning {
-  --bs-btn-color: var(--bs-warning-600);
-  --bs-btn-hover-border-color: var(--bs-warning-700);
+  --bs-btn-color: var(--bs-warning-500);
   --bs-btn-border-color: var(--bs-warning-500);
-  --bs-btn-active-border-color: var(--bs-warning-600);
+  --bs-btn-hover-color: var(--bs-warning-600);
+  --bs-btn-hover-border-color: var(--bs-warning-600);
   --bs-btn-active-color: var(--bs-warning-700);
-  --bs-btn-hover-color: var(--bs-warning-700);
+  --bs-btn-active-border-color: var(--bs-warning-700);
   --bs-btn-focus-color: var(--bs-warning-700);
-  --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-focus-shadow-rgb: var(--bs-btn-warning-focus-shadow-rgb);
-}
-.btn-outline-warning:disabled, .btn-outline-warning.disabled {
+  --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-disabled-border-color: var(--bs-warning-500);
-  --bs-btn-disabled-color: var(--bs-warning-600);
+  --bs-btn-disabled-color: var(--bs-warning-500);
 }
 
 .btn-outline-dark {
   --bs-btn-color: var(--bs-black);
-  --bs-btn-hover-border-color: var(--bs-black);
+  --bs-btn-hover-border-color: var(--bs-gray-600);
   --bs-btn-border-color: var(--bs-black);
-  --bs-btn-active-border-color: var(--bs-black);
-  --bs-btn-active-color: var(--bs-black);
-  --bs-btn-hover-color: var(--bs-black);
+  --bs-btn-active-border-color: var(--bs-gray-600);
+  --bs-btn-active-color: var(--bs-gray-600);
+  --bs-btn-hover-color: var(--bs-gray-600);
   --bs-btn-focus-color: var(--bs-black);
   --bs-btn-box-shadow: 0 0 0 transparent;
   --bs-btn-focus-shadow-rgb: var(--bs-btn-dark-focus-shadow-rgb);
-}
-.btn-outline-dark:disabled, .btn-outline-dark.disabled {
   --bs-btn-disabled-border-color: var(--bs-black);
   --bs-btn-disabled-color: var(--bs-black);
 }
@@ -11409,6 +11398,37 @@ react-datepicker__navigation
 .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input .d-datepicker-time input[type=time]:is(::-webkit-inner-spin-button, ::-webkit-outer-spin-button) {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.d-voucher {
+  --bs-voucher-header-gap: var(--bs-ref-spacer-4);
+  --bs-voucher-amount-padding: var(--bs-ref-spacer-4);
+  --bs-voucher-amount-background: var(--bs-secondary-50);
+  --bs-voucher-amount-rounded: var(--bs-ref-spacer-4);
+  --bs-voucher-footer-gap: var(--bs-ref-spacer-4);
+  --bs-voucher-margin: 0 0 var(--bs-ref-spacer-4) 0;
+}
+
+.d-voucher-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bs-voucher-header-gap);
+  align-items: center;
+  justify-content: center;
+  margin: var(--bs-voucher-margin);
+}
+
+.d-voucher-amount {
+  padding: var(--bs-voucher-amount-padding);
+  background: var(--bs-voucher-amount-background);
+  border-radius: var(--bs-voucher-amount-rounded);
+}
+
+.d-voucher-footer {
+  display: flex;
+  gap: var(--bs-voucher-footer-gap);
+  justify-content: center;
+  justify-content: flex-start;
 }
 
 .d-close {
