@@ -8,7 +8,7 @@ import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DCollapse> = {
-  title: 'Design System/Patterns/Collapse',
+  title: 'Design System/Components/Collapse',
   component: DCollapse,
   parameters: {
     docs: {

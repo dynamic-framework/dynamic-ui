@@ -3,7 +3,7 @@ import DCarousel from '../../src/components/DCarousel/DCarousel';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DCarousel> = {
-  title: 'Design System/Patterns/Carousel',
+  title: 'Design System/Components/Carousel',
   component: DCarousel,
   parameters: {
     docs: {

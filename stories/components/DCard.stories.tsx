@@ -4,7 +4,7 @@ import DCard from '../../src/components/DCard/DCard';
 import DButton from '../../src/components/DButton';
 
 const config: Meta<typeof DCard> = {
-  title: 'Design System/Patterns/Card',
+  title: 'Design System/Components/Card',
   component: DCard,
   parameters: {
     docs: {
