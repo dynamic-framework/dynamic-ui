@@ -49,7 +49,7 @@ The component also maintains backward compatibility with Material Design icons.
 
 ## Finding Icons
 
-Browse all available Lucide icons at: https://lucide.dev/icons/
+Browse all available Lucide icons at: [https://lucide.dev/icons/](https://lucide.dev/icons/)
 
 Icon names use **PascalCase** (e.g., \`Home\`, \`Settings\`, \`User\`)
 
@@ -431,6 +431,45 @@ export const MaterialDesignInComponents: StoryObj<typeof DInput> = {
       description: {
         story: 'Material Design icons integrated with other components.',
       },
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
+
+/**
+ * Bootstrap icons style integrated with other components.
+ */
+export const BootstrapIconsStyle: StoryObj<typeof DInput> = {
+  render: () => (
+    <DContextProvider
+      icon={{
+        familyClass: 'bi',
+        familyPrefix: 'bi-',
+        materialStyle: false,
+      }}
+    >
+      <div style={{
+        display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px',
+      }}
+      >
+        <DInput
+          iconStart="at"
+          iconEnd="arrow-repeat"
+          placeholder="Email address"
+        />
+        <DInput
+          iconStart="lock"
+          iconEnd="eye"
+          type="password"
+          placeholder="Password"
+        />
+      </div>
+    </DContextProvider>
+  ),
+  parameters: {
+    docs: {
       canvas: {
         sourceState: 'shown',
       },
