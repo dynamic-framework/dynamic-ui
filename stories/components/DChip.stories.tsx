@@ -137,7 +137,7 @@ export const WithIcon: Story = {
   args: {
     color: 'primary',
     text: 'Featured',
-    icon: 'star-fill',
+    icon: 'Star',
   },
 };
 
@@ -160,7 +160,7 @@ export const IconAndClose: Story = {
   args: {
     color: 'success',
     text: 'Tag',
-    icon: 'tag',
+    icon: 'Tag',
     showClose: true,
   },
 };
@@ -197,16 +197,16 @@ export const MaterialIcon: Story = {
     >
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
         <DChip color="primary" text="Fire" icon="local_fire_department" />
-        <DChip color="success" text="Star" icon="Star" showClose />
-        <DChip color="warning" text="Alert" icon="AlertTriangle" showClose />
-        <DChip color="info" text="Info" icon="Info" />
+        <DChip color="success" text="Star" icon="star" showClose />
+        <DChip color="warning" text="Alert" icon="warning" showClose />
+        <DChip color="info" text="Info" icon="info" />
       </div>
     </DContextProvider>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'Chips using Material Icons instead of Bootstrap Icons.',
+        story: 'Chips using Material Icons instead of default Icons.',
       },
       canvas: {
         sourceState: 'shown',
