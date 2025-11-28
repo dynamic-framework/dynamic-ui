@@ -190,7 +190,6 @@ type Story = StoryObj<typeof DPasswordStrengthMeter>;
 
 export const Default: Story = {
   args: {
-    id: 'password1',
     label: 'Password',
     placeholder: 'Enter your password',
     disabled: false,
