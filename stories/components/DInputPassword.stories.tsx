@@ -136,7 +136,6 @@ type Story = StoryObj<typeof DInputPassword>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
@@ -146,7 +145,7 @@ export const Default: Story = {
 
 export const Invalid: Story = {
   args: {
-    id: 'componentId3',
+    id: 'componentId2',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
@@ -157,7 +156,7 @@ export const Invalid: Story = {
 
 export const Valid: Story = {
   args: {
-    id: 'componentId4',
+    id: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
@@ -168,7 +167,7 @@ export const Valid: Story = {
 
 export const Disabled: Story = {
   args: {
-    id: 'componentId5',
+    id: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
@@ -179,7 +178,7 @@ export const Disabled: Story = {
 
 export const Floating: Story = {
   args: {
-    id: 'componentId6',
+    id: 'componentId5',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
@@ -197,7 +196,7 @@ export const MaterialIcon: Story = {
     </DContextProvider>
   ),
   args: {
-    id: 'componentId7',
+    id: 'componentId6',
     label: 'Label',
     placeholder: 'Placeholder',
     value: undefined,
