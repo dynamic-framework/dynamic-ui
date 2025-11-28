@@ -94,7 +94,6 @@ type Story = StoryObj<typeof DInputSwitch>;
 
 export const WithoutLabel: Story = {
   args: {
-    id: 'componentId1',
     checked: false,
     disabled: false,
     ariaLabel: 'Label',

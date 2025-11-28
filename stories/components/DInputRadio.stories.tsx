@@ -88,7 +88,6 @@ type Story = StoryObj<typeof DInputCheck>;
 
 export const RadioWithoutLabel: Story = {
   args: {
-    id: 'componentId1',
     type: 'radio',
     checked: false,
     disabled: false,

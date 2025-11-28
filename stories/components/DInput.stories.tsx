@@ -251,7 +251,6 @@ type Story = StoryObj<typeof DInput>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
     type: 'text',
