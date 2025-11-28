@@ -35,8 +35,9 @@ describe('<DModal />', () => {
           <div
             aria-hidden="false"
             aria-labelledby="myModalLabel"
-            class="modal portal fade show"
+            class="modal portal show"
             id="myModal"
+            style="opacity: 0; transform: scale(0.95);"
             tabindex="-1"
           >
             <div

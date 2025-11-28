@@ -19,10 +19,10 @@ type Props = BaseProps & PropsWithChildren<{
   fullScreen?: boolean;
   fullScreenFrom?: ModalFullScreenFrom;
   size?: ModalSize;
-  // Agregar prop de transition
+  transition?: Transition;
 }>;
 
-const transition: Transition = {
+const defaultTransition: Transition = {
   ease: 'easeInOut',
   duration: 0.3,
 };
@@ -38,6 +38,7 @@ function DModal(
     fullScreen,
     fullScreenFrom,
     size,
+    transition,
     children,
     dataAttributes,
   }: Props,
@@ -72,7 +73,7 @@ function DModal(
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{
-        ...transition,
+        ...(transition ?? defaultTransition),
         delay: 0.15,
       }}
       {...staticBackdrop && ({

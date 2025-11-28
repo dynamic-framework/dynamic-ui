@@ -16,7 +16,7 @@ type Props = BaseProps & PropsWithChildren<{
   staticBackdrop?: boolean;
   scrollable?: boolean;
   openFrom?: OffcanvasPositionToggleFrom;
-  // Agregar prop de transition
+  transition?: Transition;
 }>;
 
 const variants: Variants = {
@@ -45,7 +45,7 @@ const variants: Variants = {
   },
 };
 
-const transition: Transition = {
+const defaultTransition: Transition = {
   ease: 'easeInOut',
   duration: 0.3,
 };
@@ -58,6 +58,7 @@ function DOffcanvas(
     staticBackdrop,
     scrollable,
     openFrom = 'end',
+    transition,
     children,
     dataAttributes,
   }: Props,
@@ -85,7 +86,7 @@ function DOffcanvas(
       animate="visible"
       exit="hidden"
       transition={{
-        ...transition,
+        ...(transition ?? defaultTransition),
         delay: 0.15,
       }}
       {...staticBackdrop && ({
