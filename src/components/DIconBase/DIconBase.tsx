@@ -35,7 +35,8 @@ export default function DIconBase(
     size,
     hasCircle = false,
     materialStyle = false,
-    familyClass = 'material-symbols-outlined',
+    familyClass,
+    familyPrefix,
     strokeWidth = 2,
     dataAttributes,
   }: Props,
@@ -79,15 +80,8 @@ export default function DIconBase(
 
   const generateClasses = useMemo<ClassMap>(() => ({
     'd-icon': true,
-    ...useMaterialIcons && {
-      [familyClass]: true,
-    },
     ...className && { [className]: true },
-  }), [
-    className,
-    useMaterialIcons,
-    familyClass,
-  ]);
+  }), [className]);
 
   const iconSize = useMemo(() => {
     if (size) {
@@ -101,7 +95,7 @@ export default function DIconBase(
   if (useMaterialIcons) {
     return (
       <i
-        className={classNames(generateClasses)}
+        className={classNames(generateClasses, familyClass)}
         style={generateStyleVariables}
         {...dataAttributes}
       >
@@ -112,6 +106,16 @@ export default function DIconBase(
 
   // Render Lucide icon
   if (!LucideIcon) {
+    if (familyClass && familyPrefix) {
+      return (
+        <i
+          className={classNames(generateClasses, familyClass, `${familyPrefix}${icon}`)}
+          style={generateStyleVariables}
+          {...dataAttributes}
+        />
+      );
+    }
+
     // eslint-disable-next-line no-console
     console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
     return (
