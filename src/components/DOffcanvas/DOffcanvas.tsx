@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { motion, type Transition, type Variants } from 'framer-motion';
 
 import type { PropsWithChildren } from 'react';
 
@@ -15,7 +16,39 @@ type Props = BaseProps & PropsWithChildren<{
   staticBackdrop?: boolean;
   scrollable?: boolean;
   openFrom?: OffcanvasPositionToggleFrom;
+  // Agregar prop de transition
 }>;
+
+const variants: Variants = {
+  hidden: (openFrom: OffcanvasPositionToggleFrom) => {
+    const properties: {
+      x?: string;
+      y?: string;
+    } = {};
+    if (openFrom === 'start') {
+      properties.x = '-100%';
+    }
+    if (openFrom === 'end') {
+      properties.x = '100%';
+    }
+    if (openFrom === 'top') {
+      properties.y = '-100%';
+    }
+    if (openFrom === 'bottom') {
+      properties.y = '100%';
+    }
+    return properties;
+  },
+  visible: {
+    x: 0,
+    y: 0,
+  },
+};
+
+const transition: Transition = {
+  ease: 'easeInOut',
+  duration: 0.3,
+};
 
 function DOffcanvas(
   {
@@ -30,7 +63,7 @@ function DOffcanvas(
   }: Props,
 ) {
   return (
-    <div
+    <motion.div
       className={classNames(
         'offcanvas portal show',
         {
@@ -38,11 +71,23 @@ function DOffcanvas(
         },
         className,
       )}
-      style={style}
+      style={{
+        ...style,
+        transition: 'none',
+      }}
       id={name}
       tabIndex={-1}
       aria-labelledby={`${name}Label`}
       aria-hidden="false"
+      custom={openFrom}
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      transition={{
+        ...transition,
+        delay: 0.15,
+      }}
       {...staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
@@ -54,7 +99,7 @@ function DOffcanvas(
       {...dataAttributes}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
