@@ -10,8 +10,6 @@ const config: Meta<typeof DListGroup> = {
     docs: {
       description: {
         component: `
-![Shield Badge](https://img.shields.io/badge/Beta%20Component-d81b60)
-
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
