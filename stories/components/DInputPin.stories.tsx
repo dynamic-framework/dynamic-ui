@@ -121,7 +121,6 @@ type Story = StoryObj<typeof DInputPin>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
     characters: 4,
     type: 'text',

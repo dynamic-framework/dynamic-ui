@@ -161,9 +161,6 @@ const config: Meta<typeof DInputMask> = {
     onWheel: {
       action: 'onWheel',
     },
-    onMask: {
-      action: 'onMask',
-    },
     modify: {
       action: 'modify',
     },
@@ -175,7 +172,6 @@ type Story = StoryObj<typeof DInputMask>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
     type: 'text',
     iconStart: 'Phone',

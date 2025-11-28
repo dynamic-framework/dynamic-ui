@@ -164,7 +164,6 @@ type Story = StoryObj<typeof DInputCounter>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
     minValue: 0,
     maxValue: 20,

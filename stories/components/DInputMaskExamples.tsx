@@ -13,6 +13,7 @@ export function ExampleMask() {
       value={maskValue}
       onChange={(value) => setMaskValue(value)}
       replacement={{ _: /\d/ }}
+      id="Example1"
     />
   );
 }
