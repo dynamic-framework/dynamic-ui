@@ -19,7 +19,7 @@ function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
     <DModal
       name="example"
       centered
-      staticBackdrop
+      staticBackdrop={false}
     >
       <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
