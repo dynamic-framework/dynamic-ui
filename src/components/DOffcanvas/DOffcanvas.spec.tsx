@@ -37,6 +37,7 @@ describe('<DOffcanvas />', () => {
             aria-labelledby="myOffcanvasLabel"
             class="offcanvas portal show offcanvas-end"
             id="myOffcanvas"
+            style="transition: none; transform: translateX(100%);"
             tabindex="-1"
           >
             <div
