@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DContextProvider } from '../../src';
@@ -18,11 +19,19 @@ type Story = StoryObj<typeof DContextProvider>;
 /**
  * Without arguments, it will take the default settings for:
  * + English language
- * + Boostrap icons
+ * + Lucide icons
  * + Currencies with $1,000.00 format
  * + Default portal DOM id
  */
-export const Default: Story = {};
+export const Default: Story = {
+  parameters: {
+    docs: {
+      canvas: {
+        sourceState: 'shown',
+      },
+    },
+  },
+};
 
 /**
  * To share a different language configuration we only need to change the key language
@@ -67,6 +76,8 @@ export const CurrencySettings: Story = {
 };
 
 /**
+ * By default and without additional configuration, the icons are linked to <code>Lucide icons</code>.
+ *
  * To share a different icon configuration we need to change the key icon
  *
  * This takes the settings needed to use bootstrap icons, which would
@@ -77,6 +88,8 @@ export const CurrencySettings: Story = {
  * In the particular case of material symbols, the materialStyle property was added
  * to place the name of the icon in the children of `<i />` and not as a class.
  * This setting can be used with any icon font that uses a similar style.
+ *
+ * See more about this in <a href="?path=/docs/design-system-examples-icons--docs">Examples/Icons</a>
  */
 export const IconSettings: Story = {
   parameters: {
