@@ -452,9 +452,9 @@ const OPTIONS = [
 ];
 
 const OPTIONS_WITH_ICON = [
-  { label: 'Option 1', value: '1', icon: 'fire' },
-  { label: 'Option 2', value: '2', icon: 'calendar' },
-  { label: 'Option 3', value: '3', icon: 'camera' },
+  { label: 'Option 1', value: '1', icon: 'Flame' },
+  { label: 'Option 2', value: '2', icon: 'Calendar' },
+  { label: 'Option 3', value: '3', icon: 'Camera' },
 ];
 
 const OPTIONS_WITH_EMOJI = [
