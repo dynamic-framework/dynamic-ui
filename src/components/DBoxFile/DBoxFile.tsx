@@ -111,8 +111,8 @@ export default function DBoxFile(
             <DInput
               key={`${file.name} ${index}`}
               value={file.name}
-              iconStart="paperclip"
-              iconEnd="trash"
+              iconStart="Paperclip"
+              iconEnd="Trash"
               readOnly
               onIconEndClick={() => handleRemoveFile(index)}
             />
