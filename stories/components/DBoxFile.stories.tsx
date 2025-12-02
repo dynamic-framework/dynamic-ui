@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import { DButton } from '../../src';
 import DBoxFile from '../../src/components/DBoxFile/DBoxFile';
 import { ICONS } from '../config/constants';
 
@@ -93,6 +92,18 @@ const config: Meta<typeof DBoxFile> = {
     onError: {
       action: 'onError',
     },
+    children: {
+      control: 'text',
+      table: {
+        type: {
+          summary: 'ReactNode | ((openFileDialog: () => void) => ReactNode)',
+        },
+        defaultValue: {
+          summary: 'String',
+          detail: 'Drag and drop some files here, or click to select files',
+        },
+      },
+    },
   },
 };
 
@@ -110,30 +121,12 @@ export const Default: Story = {
       </div>
     ),
   ],
-  render: (args) => (
-    <DBoxFile {...args}>
-      {(openFileDialog) => (
-        <div className="d-flex flex-column gap-4 align-items-center">
-          <p className="m-0">
-            Drag and drop it here or
-          </p>
-          <DButton
-            color="primary"
-            variant="outline"
-            text="Select the file"
-            onClick={openFileDialog}
-          />
-          <p className="text-gray m-0 small">
-            Allowed formats: svg, pdf, png, jpg
-          </p>
-        </div>
-      )}
-    </DBoxFile>
-  ),
   args: {
     accept: {
       'image/*': ['.png', '.jpg', '.jpeg', '.svg'],
     },
     disabled: false,
+    children: 'Drag and drop some files here, or click to select files',
+    autoFocus: false,
   },
 };

@@ -2,7 +2,6 @@
 import { useCallback, useState } from 'react';
 import {
   DBoxFile,
-  DButton,
   DContextProvider,
   DToastContainer,
   useDToast,
@@ -79,25 +78,7 @@ function ExampleDBoxFile({ showPreview, ...props }: Props) {
         onError={onError}
         onLoad={setImagePreview}
         {...props}
-      >
-        {(openFileDialog) => (
-          <div className="d-flex flex-column gap-4 align-items-center">
-            <p className="m-0">
-              Drag and drop it here or
-            </p>
-            <DButton
-              color="primary"
-              variant="outline"
-              text="Select the file"
-              onClick={openFileDialog}
-              {...props.disabled && { disabled: true }}
-            />
-            <p className="text-gray m-0 small">
-              Allowed formats: svg, png, jpg
-            </p>
-          </div>
-        )}
-      </DBoxFile>
+      />
       {showPreview && (
         <aside className="d-flex flex-wrap gap-4">
           {previews.map(({ name, preview }) => (
