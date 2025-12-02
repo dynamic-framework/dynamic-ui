@@ -16,7 +16,7 @@ type Props =
 & FamilyIconProps
 & DBoxFileProps
 & {
-  icon?: string;
+  icon?: string | false;
   children?: ReactNode | ((openFileDialog: () => void) => ReactNode);
 };
 
@@ -26,7 +26,7 @@ export default function DBoxFile(
     iconFamilyClass,
     iconFamilyPrefix,
     iconMaterialStyle,
-    children = 'Drag and drop some files here, or click to select files',
+    children,
     className,
     style,
     dataAttributes,
@@ -92,16 +92,22 @@ export default function DBoxFile(
             tabIndex={-1}
             accept={acceptAttr}
           />
-          <DIcon
-            icon={icon}
-            familyClass={iconFamilyClass}
-            familyPrefix={iconFamilyPrefix}
-            materialStyle={iconMaterialStyle}
-          />
+          {icon && iconProp !== false && (
+            <DIcon
+              icon={icon}
+              familyClass={iconFamilyClass}
+              familyPrefix={iconFamilyPrefix}
+              materialStyle={iconMaterialStyle}
+            />
+          )}
           <div className="d-box-content">
             {typeof children === 'function'
               ? children(openFileDialog)
-              : children}
+              : children || (
+                <p className="text-center m-0">
+                  Drag and drop some files here, or click to select files
+                </p>
+              )}
           </div>
         </div>
       </section>
