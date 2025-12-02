@@ -50,7 +50,7 @@
     border: var(--#{$prefix}box-file-disabled-border);
   }
 
-  .d-icon {
+  .d-box-file-dropzone > .d-icon {
     --#{$prefix}icon-size: var(--#{$prefix}box-file-icon-size);
     --#{$prefix}icon-color: var(--#{$prefix}box-file-icon-color);
   }
