@@ -43,7 +43,6 @@ export { default as DTabs, useTabContext, DTabContent, } from './DTabs';
 export type { DTabOption } from './DTabs';
 export { default as DToast } from './DToast';
 export { default as DToastContainer, useDToast, } from './DToastContainer';
-export { default as DTableHead } from './DTableHead';
 export { default as DInputPhone } from './DInputPhone';
 export { default as DCreditCard } from './DCreditCard';
 export { default as DDropdown } from './DDropdown';

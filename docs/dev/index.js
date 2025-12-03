@@ -6,6 +6,7 @@ var React = require('react');
 var tslib = require('tslib');
 var LucideIcons = require('lucide-react');
 var reactDom = require('react-dom');
+var framerMotion = require('framer-motion');
 var fileSelector = require('file-selector');
 var reactSplide = require('@splidejs/react-splide');
 var currency = require('currency.js');
@@ -43,7 +44,7 @@ var LucideIcons__namespace = /*#__PURE__*/_interopNamespaceDefault(LucideIcons);
 
 const PREFIX_BS = 'bs-';
 
-function DIconBase({ icon, color, style, className, size, hasCircle = false, materialStyle = false, familyClass = 'material-symbols-outlined', strokeWidth = 2, dataAttributes, }) {
+function DIconBase({ icon, color, style, className, size, hasCircle = false, materialStyle = false, familyClass, familyPrefix, strokeWidth = 2, dataAttributes, }) {
     // If materialStyle is true, use Material Design icons (legacy)
     const useMaterialIcons = materialStyle;
     // Get Lucide icon component
@@ -70,13 +71,7 @@ function DIconBase({ icon, color, style, className, size, hasCircle = false, mat
         return {};
     }, [hasCircle, color]);
     const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, size && { [`--${PREFIX_BS}icon-component-size`]: size }), colorStyle), backgroundStyle), hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` }), style)), [size, colorStyle, backgroundStyle, hasCircle, style]);
-    const generateClasses = React.useMemo(() => (Object.assign(Object.assign({ 'd-icon': true }, useMaterialIcons && {
-        [familyClass]: true,
-    }), className && { [className]: true })), [
-        className,
-        useMaterialIcons,
-        familyClass,
-    ]);
+    const generateClasses = React.useMemo(() => (Object.assign({ 'd-icon': true }, className && { [className]: true })), [className]);
     const iconSize = React.useMemo(() => {
         if (size) {
             const numSize = parseInt(size, 10);
@@ -86,10 +81,13 @@ function DIconBase({ icon, color, style, className, size, hasCircle = false, mat
     }, [size]);
     // Render Material Design icon (legacy support)
     if (useMaterialIcons) {
-        return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: icon })));
+        return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass), style: generateStyleVariables }, dataAttributes, { children: icon })));
     }
     // Render Lucide icon
     if (!LucideIcon) {
+        if (familyClass && familyPrefix) {
+            return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass, `${familyPrefix}${icon}`), style: generateStyleVariables }, dataAttributes)));
+        }
         // eslint-disable-next-line no-console
         console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
         return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: "?" })));
@@ -253,7 +251,10 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
     return (jsxRuntime.jsxs(DPortalContext.Provider, { value: value, children: [children, created && reactDom.createPortal(
             // eslint-disable-next-line max-len
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-            jsxRuntime.jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: stack.map(({ Component, name, payload, }) => (jsxRuntime.jsxs(React.Fragment, { children: [jsxRuntime.jsx("div", { className: "backdrop fade show" }), jsxRuntime.jsx(Component, { name: name, payload: payload })] }, name))) }), document.getElementById(portalName))] }));
+            jsxRuntime.jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: jsxRuntime.jsx(framerMotion.AnimatePresence, { children: stack.flatMap(({ Component, name, payload, }) => [
+                        jsxRuntime.jsx(framerMotion.motion.div, { className: "backdrop", initial: { opacity: 0 }, animate: { opacity: 0.5 }, exit: { opacity: 0, transition: { delay: 0.3 } }, transition: { duration: 0.15, ease: 'linear' } }, `${name}-backdrop`),
+                        jsxRuntime.jsx(Component, { name: name, payload: payload }, name),
+                    ]) }) }), document.getElementById(portalName))] }));
 }
 function useDPortalContext() {
     const context = React.useContext(DPortalContext);
@@ -885,9 +886,9 @@ function DBoxFile(_a) {
                     'd-box-file-disabled': props.disabled,
                     'd-box-file-valid': isDragValid,
                     'd-box-file-invalid': isDragInvalid,
-                }, className), style: style }, dataAttributes, { children: jsxRuntime.jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsxRuntime.jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }), jsxRuntime.jsx("div", { className: "d-box-content", children: typeof children === 'function'
+                }, className), style: style }, dataAttributes, { children: jsxRuntime.jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsxRuntime.jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), icon && iconProp !== false && (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsxRuntime.jsx("div", { className: "d-box-content", children: typeof children === 'function'
                                 ? children(openFileDialog)
-                                : children })] })) })), !!files.length && (jsxRuntime.jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsxRuntime.jsx(ForwardedDInput, { value: file.name, iconStart: "paperclip", iconEnd: "trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
+                                : children || (jsxRuntime.jsx("p", { className: "text-center m-0", children: "Drag and drop some files here, or click to select files" })) })] })) })), !!files.length && (jsxRuntime.jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsxRuntime.jsx(ForwardedDInput, { value: file.name, iconStart: "Paperclip", iconEnd: "Trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
 }
 
 const DButton = React.forwardRef((props, ref) => {
@@ -1919,7 +1920,11 @@ function DModalFooter({ className, style, actionPlacement, children, }) {
     return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", { className: "d-modal-separator" }), jsxRuntime.jsx("div", { className: classNames(generateClasses, className), style: style, children: children })] }));
 }
 
-function DModal$1({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, dataAttributes, }) {
+const defaultTransition$1 = {
+    ease: 'easeInOut',
+    duration: 0.3,
+};
+function DModal$1({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, }) {
     const fullScreenClass = React.useMemo(() => {
         if (fullScreen) {
             if (fullScreenFrom) {
@@ -1930,7 +1935,7 @@ function DModal$1({ name, className, style, staticBackdrop, scrollable, centered
         return '';
     }, [fullScreenFrom, fullScreen]);
     const generateModalDialogClasses = React.useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, size && { [`modal-${size}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, size]);
-    return (jsxRuntime.jsx("div", Object.assign({ className: classNames('modal portal fade show', className), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style }, staticBackdrop && ({
+    return (jsxRuntime.jsx(framerMotion.motion.div, Object.assign({ className: classNames('modal portal show', className), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style, initial: { opacity: 0, scale: 0.95 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.95 }, transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition$1)), { delay: 0.15 }) }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), dataAttributes, { children: jsxRuntime.jsx("div", { className: classNames(generateModalDialogClasses), children: jsxRuntime.jsx("div", { className: "modal-content", children: children }) }) })));
@@ -1959,10 +1964,36 @@ function DOffcanvasFooter({ actionPlacement, children, className, style, }) {
     return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("div", { className: "d-offcanvas-separator" }), jsxRuntime.jsx("div", { className: classNames(generateClasses, className), style: style, children: children })] }));
 }
 
-function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', children, dataAttributes, }) {
-    return (jsxRuntime.jsx("div", Object.assign({ className: classNames('offcanvas portal show', {
+const variants = {
+    hidden: (openFrom) => {
+        const properties = {};
+        if (openFrom === 'start') {
+            properties.x = '-100%';
+        }
+        if (openFrom === 'end') {
+            properties.x = '100%';
+        }
+        if (openFrom === 'top') {
+            properties.y = '-100%';
+        }
+        if (openFrom === 'bottom') {
+            properties.y = '100%';
+        }
+        return properties;
+    },
+    visible: {
+        x: 0,
+        y: 0,
+    },
+};
+const defaultTransition = {
+    ease: 'easeInOut',
+    duration: 0.3,
+};
+function DOffcanvas$1({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', transition, children, dataAttributes, }) {
+    return (jsxRuntime.jsx(framerMotion.motion.div, Object.assign({ className: classNames('offcanvas portal show', {
             [`offcanvas-${openFrom}`]: openFrom,
-        }, className), style: style, id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false" }, staticBackdrop && ({
+        }, className), style: Object.assign(Object.assign({}, style), { transition: 'none' }), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", custom: openFrom, variants: variants, initial: "hidden", animate: "visible", exit: "hidden", transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition)), { delay: 0.15 }) }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), scrollable && ({
@@ -2214,19 +2245,6 @@ function useDToast() {
     return {
         toast,
     };
-}
-
-function DTableHead({ className, style, field, label, value = '', onChange, }) {
-    const handleOnChange = React.useCallback(() => {
-        if (value === field) {
-            return onChange(`-${field}`);
-        }
-        if (value === `-${field}`) {
-            return onChange('');
-        }
-        return onChange(field);
-    }, [field, value, onChange]);
-    return (jsxRuntime.jsx("th", { style: style, className: classNames('d-table-head', className), children: jsxRuntime.jsxs("button", { type: "button", onClick: handleOnChange, children: [label, value && value.includes(field) && (jsxRuntime.jsx(DIcon, { icon: value === field ? 'arrow-up' : 'arrow-down' }))] }) }));
 }
 
 async function configureI8n(resources, _a = {}) {
@@ -2591,7 +2609,6 @@ exports.DStepper = DStepper;
 exports.DStepperDesktop = DStepper$2;
 exports.DStepperMobile = DStepper$1;
 exports.DTabContent = DTabContent;
-exports.DTableHead = DTableHead;
 exports.DTabs = DTabs;
 exports.DTimeline = DTimeline;
 exports.DToast = DToast;

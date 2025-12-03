@@ -9,5 +9,5 @@ type Props = BaseProps & {
     familyPrefix?: string;
     strokeWidth?: number;
 };
-export default function DIconBase({ icon, color, style, className, size, hasCircle, materialStyle, familyClass, strokeWidth, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DIconBase({ icon, color, style, className, size, hasCircle, materialStyle, familyClass, familyPrefix, strokeWidth, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

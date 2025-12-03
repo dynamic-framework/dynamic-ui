@@ -1,9 +1,10 @@
-import { jsx, jsxs, Fragment as Fragment$1 } from 'react/jsx-runtime';
+import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import classNames from 'classnames';
-import React, { useMemo, useEffect, useState, useCallback, useContext, createContext, Fragment, useLayoutEffect, forwardRef, useId, useRef, useSyncExternalStore } from 'react';
+import React, { useMemo, useEffect, useState, useCallback, useContext, createContext, useLayoutEffect, forwardRef, useId, useRef, useSyncExternalStore } from 'react';
 import { __rest } from 'tslib';
 import * as LucideIcons from 'lucide-react';
 import { createPortal } from 'react-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { fromEvent } from 'file-selector';
 import { SplideSlide, Splide } from '@splidejs/react-splide';
 import currency from 'currency.js';
@@ -22,7 +23,7 @@ import { initReactI18next } from 'react-i18next';
 
 const PREFIX_BS = 'bs-';
 
-function DIconBase({ icon, color, style, className, size, hasCircle = false, materialStyle = false, familyClass = 'material-symbols-outlined', strokeWidth = 2, dataAttributes, }) {
+function DIconBase({ icon, color, style, className, size, hasCircle = false, materialStyle = false, familyClass, familyPrefix, strokeWidth = 2, dataAttributes, }) {
     // If materialStyle is true, use Material Design icons (legacy)
     const useMaterialIcons = materialStyle;
     // Get Lucide icon component
@@ -49,13 +50,7 @@ function DIconBase({ icon, color, style, className, size, hasCircle = false, mat
         return {};
     }, [hasCircle, color]);
     const generateStyleVariables = useMemo(() => (Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, size && { [`--${PREFIX_BS}icon-component-size`]: size }), colorStyle), backgroundStyle), hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` }), style)), [size, colorStyle, backgroundStyle, hasCircle, style]);
-    const generateClasses = useMemo(() => (Object.assign(Object.assign({ 'd-icon': true }, useMaterialIcons && {
-        [familyClass]: true,
-    }), className && { [className]: true })), [
-        className,
-        useMaterialIcons,
-        familyClass,
-    ]);
+    const generateClasses = useMemo(() => (Object.assign({ 'd-icon': true }, className && { [className]: true })), [className]);
     const iconSize = useMemo(() => {
         if (size) {
             const numSize = parseInt(size, 10);
@@ -65,10 +60,13 @@ function DIconBase({ icon, color, style, className, size, hasCircle = false, mat
     }, [size]);
     // Render Material Design icon (legacy support)
     if (useMaterialIcons) {
-        return (jsx("i", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: icon })));
+        return (jsx("i", Object.assign({ className: classNames(generateClasses, familyClass), style: generateStyleVariables }, dataAttributes, { children: icon })));
     }
     // Render Lucide icon
     if (!LucideIcon) {
+        if (familyClass && familyPrefix) {
+            return (jsx("i", Object.assign({ className: classNames(generateClasses, familyClass, `${familyPrefix}${icon}`), style: generateStyleVariables }, dataAttributes)));
+        }
         // eslint-disable-next-line no-console
         console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
         return (jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: "?" })));
@@ -232,7 +230,10 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
     return (jsxs(DPortalContext.Provider, { value: value, children: [children, created && createPortal(
             // eslint-disable-next-line max-len
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-            jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: stack.map(({ Component, name, payload, }) => (jsxs(Fragment, { children: [jsx("div", { className: "backdrop fade show" }), jsx(Component, { name: name, payload: payload })] }, name))) }), document.getElementById(portalName))] }));
+            jsx("div", { onClick: ({ target }) => handleClose(target), onKeyDown: () => { }, children: jsx(AnimatePresence, { children: stack.flatMap(({ Component, name, payload, }) => [
+                        jsx(motion.div, { className: "backdrop", initial: { opacity: 0 }, animate: { opacity: 0.5 }, exit: { opacity: 0, transition: { delay: 0.3 } }, transition: { duration: 0.15, ease: 'linear' } }, `${name}-backdrop`),
+                        jsx(Component, { name: name, payload: payload }, name),
+                    ]) }) }), document.getElementById(portalName))] }));
 }
 function useDPortalContext() {
     const context = useContext(DPortalContext);
@@ -859,14 +860,14 @@ function DBoxFile(_a) {
     const { iconMap: { upload } } = useDContext();
     const icon = useMemo(() => iconProp || upload, [iconProp, upload]);
     const { inputRef, rootRef, isDragValid, isDragInvalid, acceptAttr, files, handleFileSelect, handleDrop, handleDragEnter, handleDragLeave, handleClick, handleKeyDown, handleRemoveFile, openFileDialog, } = useDBoxFile(props);
-    return (jsxs(Fragment$1, { children: [jsx("section", Object.assign({ className: classNames('d-box-file', {
+    return (jsxs(Fragment, { children: [jsx("section", Object.assign({ className: classNames('d-box-file', {
                     'd-box-file-selected': files.length > 0,
                     'd-box-file-disabled': props.disabled,
                     'd-box-file-valid': isDragValid,
                     'd-box-file-invalid': isDragInvalid,
-                }, className), style: style }, dataAttributes, { children: jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }), jsx("div", { className: "d-box-content", children: typeof children === 'function'
+                }, className), style: style }, dataAttributes, { children: jsxs("div", Object.assign({ className: "d-box-file-dropzone", ref: rootRef, onDragEnter: handleDragEnter, onDragOver: (e) => e.preventDefault(), onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: handleClick, onKeyDown: handleKeyDown }, (!props.disabled && !props.noKeyboard ? { tabIndex: 0 } : {}), { role: "presentation", children: [jsx("input", { type: "file", multiple: props.multiple, style: { display: 'none' }, ref: inputRef, disabled: props.disabled, onChange: handleFileSelect, onClick: (e) => e.stopPropagation(), tabIndex: -1, accept: acceptAttr }), icon && iconProp !== false && (jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsx("div", { className: "d-box-content", children: typeof children === 'function'
                                 ? children(openFileDialog)
-                                : children })] })) })), !!files.length && (jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsx(ForwardedDInput, { value: file.name, iconStart: "paperclip", iconEnd: "trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
+                                : children || (jsx("p", { className: "text-center m-0", children: "Drag and drop some files here, or click to select files" })) })] })) })), !!files.length && (jsx("ul", { className: "d-box-files", children: files.map((file, index) => (jsx(ForwardedDInput, { value: file.name, iconStart: "Paperclip", iconEnd: "Trash", readOnly: true, onIconEndClick: () => handleRemoveFile(index) }, `${file.name} ${index}`))) }))] }));
 }
 
 const DButton = forwardRef((props, ref) => {
@@ -919,7 +920,7 @@ const DButton = forwardRef((props, ref) => {
         // eslint-disable-next-line react/button-has-type
         type: type, className: classNames(classes, className), style: Object.assign(Object.assign({}, style), (loading && buttonWidth
             ? { minWidth: `${buttonWidth}px` }
-            : undefined)), disabled: isDisabled, "aria-label": ariaLabel, "aria-busy": loading, "aria-disabled": isDisabled, onClick: handleClick }, dataAttributes, rest, { children: [loading && (jsxs("span", { className: "btn-loading", children: [jsx("span", { className: "spinner-border spinner-border-sm", "aria-hidden": "true" }), loadingText && jsx("span", { role: "status", children: loadingText })] })), !loading && (jsxs(Fragment$1, { children: [iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), content, iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }))] }))] })));
+            : undefined)), disabled: isDisabled, "aria-label": ariaLabel, "aria-busy": loading, "aria-disabled": isDisabled, onClick: handleClick }, dataAttributes, rest, { children: [loading && (jsxs("span", { className: "btn-loading", children: [jsx("span", { className: "spinner-border spinner-border-sm", "aria-hidden": "true" }), loadingText && jsx("span", { role: "status", children: loadingText })] })), !loading && (jsxs(Fragment, { children: [iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), content, iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }))] }))] })));
 });
 DButton.displayName = 'DButton';
 
@@ -1257,7 +1258,7 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
     if (pickerType === PickerType.Quarter || pickerType === PickerType.Month) {
         return (jsxs("div", { className: classNames(`react-datepicker__header-selector react-datepicker__header-${pickerType}-selector`, className), style: style, children: [jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseYear, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), jsx("div", { className: "d-flex justify-content-center flex-grow-1", children: showHeaderSelectors ? (jsx(DSelect$1, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false })) : (jsx("p", { children: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label })) }), jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseYear, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] }));
     }
-    return (jsxs(Fragment$1, { children: [jsxs("div", { className: "datepicker-top-header", children: [showHeaderSelectors && (jsx("select", { value: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.value, onChange: (e) => changeYear(Number(e.target.value)), className: "custom-year-selector", children: years.map((year) => (jsx("option", { value: year.value, children: year.label }, year.value))) })), jsx("h4", { className: "mb-0 fw-normal", children: format(monthDate, 'LLLL, dd', { locale }) })] }), jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsx(DSelect$1, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" })) : (jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] })] }));
+    return (jsxs(Fragment, { children: [jsxs("div", { className: "datepicker-top-header", children: [showHeaderSelectors && (jsx("select", { value: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.value, onChange: (e) => changeYear(Number(e.target.value)), className: "custom-year-selector", children: years.map((year) => (jsx("option", { value: year.value, children: year.label }, year.value))) })), jsx("h4", { className: "mb-0 fw-normal", children: format(monthDate, 'LLLL, dd', { locale }) })] }), jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsx(DSelect$1, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" })) : (jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] })] }));
 }
 
 function DDatePicker(_a) {
@@ -1819,7 +1820,7 @@ function DInputRange(_a, ref) {
     if (!label) {
         return inputComponent;
     }
-    return (jsxs(Fragment$1, { children: [jsx("label", { className: "form-label", htmlFor: id, children: label }), inputComponent] }));
+    return (jsxs(Fragment, { children: [jsx("label", { className: "form-label", htmlFor: id, children: label }), inputComponent] }));
 }
 const ForwardedDInputRange = forwardRef(DInputRange);
 ForwardedDInputRange.displayName = 'DInputRange';
@@ -1883,7 +1884,7 @@ var DListGroup$1 = Object.assign(DListGroup, {
 function DModalHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
     const { iconMap: { xLg, }, } = useDContext();
     const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxs(Fragment$1, { children: [jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsx("div", { className: "d-modal-separator" })] }));
+    return (jsxs(Fragment, { children: [jsxs("div", { className: classNames('modal-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsx("div", { className: "d-modal-separator" })] }));
 }
 
 function DModalBody({ children, className, style, }) {
@@ -1895,10 +1896,14 @@ function DModalFooter({ className, style, actionPlacement, children, }) {
         'modal-footer': true,
         [`d-modal-action-${actionPlacement}`]: !!actionPlacement,
     }), [actionPlacement]);
-    return (jsxs(Fragment$1, { children: [jsx("div", { className: "d-modal-separator" }), jsx("div", { className: classNames(generateClasses, className), style: style, children: children })] }));
+    return (jsxs(Fragment, { children: [jsx("div", { className: "d-modal-separator" }), jsx("div", { className: classNames(generateClasses, className), style: style, children: children })] }));
 }
 
-function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, dataAttributes, }) {
+const defaultTransition$1 = {
+    ease: 'easeInOut',
+    duration: 0.3,
+};
+function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, }) {
     const fullScreenClass = useMemo(() => {
         if (fullScreen) {
             if (fullScreenFrom) {
@@ -1909,7 +1914,7 @@ function DModal({ name, className, style, staticBackdrop, scrollable, centered, 
         return '';
     }, [fullScreenFrom, fullScreen]);
     const generateModalDialogClasses = useMemo(() => (Object.assign({ 'modal-dialog': true, 'modal-dialog-centered': !!centered, 'modal-dialog-scrollable': !!scrollable, [fullScreenClass]: !!fullScreen }, size && { [`modal-${size}`]: true })), [fullScreenClass, centered, fullScreen, scrollable, size]);
-    return (jsx("div", Object.assign({ className: classNames('modal portal fade show', className), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style }, staticBackdrop && ({
+    return (jsx(motion.div, Object.assign({ className: classNames('modal portal show', className), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", style: style, initial: { opacity: 0, scale: 0.95 }, animate: { opacity: 1, scale: 1 }, exit: { opacity: 0, scale: 0.95 }, transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition$1)), { delay: 0.15 }) }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), dataAttributes, { children: jsx("div", { className: classNames(generateModalDialogClasses), children: jsx("div", { className: "modal-content", children: children }) }) })));
@@ -1923,7 +1928,7 @@ var DModal$1 = Object.assign(DModal, {
 function DOffcanvasHeader({ showCloseButton, onClose, children, className, style, iconFamilyClass, iconFamilyPrefix, icon: iconProp, materialStyle = false, }) {
     const { iconMap: { xLg, }, } = useDContext();
     const icon = useMemo(() => iconProp || xLg, [iconProp, xLg]);
-    return (jsxs(Fragment$1, { children: [jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsx("div", { className: "d-offcanvas-separator" })] }));
+    return (jsxs(Fragment, { children: [jsxs("div", { className: classNames('offcanvas-header', className), style: style, children: [jsx("div", { children: children }), showCloseButton && (jsx("button", { type: "button", className: "d-close align-self-center", "aria-label": "Close", onClick: onClose, children: jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: materialStyle }) }))] }), jsx("div", { className: "d-offcanvas-separator" })] }));
 }
 
 function DOffcanvasBody({ children, className, style, }) {
@@ -1935,13 +1940,39 @@ function DOffcanvasFooter({ actionPlacement, children, className, style, }) {
         'd-offcanvas-footer': true,
         [`d-offcanvas-action-${actionPlacement}`]: !!actionPlacement,
     }), [actionPlacement]);
-    return (jsxs(Fragment$1, { children: [jsx("div", { className: "d-offcanvas-separator" }), jsx("div", { className: classNames(generateClasses, className), style: style, children: children })] }));
+    return (jsxs(Fragment, { children: [jsx("div", { className: "d-offcanvas-separator" }), jsx("div", { className: classNames(generateClasses, className), style: style, children: children })] }));
 }
 
-function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', children, dataAttributes, }) {
-    return (jsx("div", Object.assign({ className: classNames('offcanvas portal show', {
+const variants = {
+    hidden: (openFrom) => {
+        const properties = {};
+        if (openFrom === 'start') {
+            properties.x = '-100%';
+        }
+        if (openFrom === 'end') {
+            properties.x = '100%';
+        }
+        if (openFrom === 'top') {
+            properties.y = '-100%';
+        }
+        if (openFrom === 'bottom') {
+            properties.y = '100%';
+        }
+        return properties;
+    },
+    visible: {
+        x: 0,
+        y: 0,
+    },
+};
+const defaultTransition = {
+    ease: 'easeInOut',
+    duration: 0.3,
+};
+function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom = 'end', transition, children, dataAttributes, }) {
+    return (jsx(motion.div, Object.assign({ className: classNames('offcanvas portal show', {
             [`offcanvas-${openFrom}`]: openFrom,
-        }, className), style: style, id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false" }, staticBackdrop && ({
+        }, className), style: Object.assign(Object.assign({}, style), { transition: 'none' }), id: name, tabIndex: -1, "aria-labelledby": `${name}Label`, "aria-hidden": "false", custom: openFrom, variants: variants, initial: "hidden", animate: "visible", exit: "hidden", transition: Object.assign(Object.assign({}, (transition !== null && transition !== void 0 ? transition : defaultTransition)), { delay: 0.15 }) }, staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
     }), scrollable && ({
@@ -2054,7 +2085,7 @@ function DStepper$1({ options, currentStep, className, style, }) {
       from 0deg,
       var(--${PREFIX_BS}step-progress-outter-fill-background-color) ${currentAngle}deg,
       var(--${PREFIX_BS}step-progress-outter-background-color) 0deg)`, [currentAngle]);
-    return (jsxs("div", { className: classNames('d-stepper', className), style: style, children: [jsx("div", { className: "d-step-bar", style: { background: progressStyle }, children: jsx("p", { className: "d-step-number", children: `${currentStep}/${options.length}` }) }), jsx("div", { className: "d-step-info", children: Object.keys(currentOption).length > 0 && (jsxs(Fragment$1, { children: [jsx("div", { className: "d-step-label", children: currentOption.label }), jsx("div", { className: "d-step-description", children: currentOption.description || '' })] })) })] }));
+    return (jsxs("div", { className: classNames('d-stepper', className), style: style, children: [jsx("div", { className: "d-step-bar", style: { background: progressStyle }, children: jsx("p", { className: "d-step-number", children: `${currentStep}/${options.length}` }) }), jsx("div", { className: "d-step-info", children: Object.keys(currentOption).length > 0 && (jsxs(Fragment, { children: [jsx("div", { className: "d-step-label", children: currentOption.label }), jsx("div", { className: "d-step-description", children: currentOption.description || '' })] })) })] }));
 }
 
 function DStepper({ options, currentStep, iconSuccess, iconSuccessFamilyClass, iconSuccessFamilyPrefix, iconSuccessMaterialStyle = false, vertical = false, breakpoint = 'lg', className, completed = false, style, dataAttributes, }) {
@@ -2096,7 +2127,7 @@ function DTooltip({ className, childrenClassName, style, offSet = ARROW_HEIGHT +
         role,
     ]);
     const generateClasses = useMemo(() => (Object.assign({ 'tooltip show': true, [`tooltip-${size}`]: !!size }, className && { [className]: true })), [size, className]);
-    return (jsxs(Fragment$1, { children: [jsx("div", Object.assign({ className: childrenClassName, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNames(generateClasses), ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), style) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, width: ARROW_WIDTH, height: ARROW_HEIGHT }), jsx("div", { className: "tooltip-inner", children: children })] }))) })] }));
+    return (jsxs(Fragment, { children: [jsx("div", Object.assign({ className: childrenClassName, ref: refs.setReference }, getReferenceProps(), { children: Component })), jsx(FloatingPortal, { children: isOpen && (jsxs("div", Object.assign({ className: classNames(generateClasses), ref: refs.setFloating, style: Object.assign(Object.assign({}, floatingStyles), style) }, getFloatingProps(), { children: [jsx(FloatingArrow, { ref: arrowRef, context: context, width: ARROW_WIDTH, height: ARROW_HEIGHT }), jsx("div", { className: "tooltip-inner", children: children })] }))) })] }));
 }
 
 function DTimeline({ className, style, dataAttributes, items, }) {
@@ -2193,19 +2224,6 @@ function useDToast() {
     return {
         toast: toast$1,
     };
-}
-
-function DTableHead({ className, style, field, label, value = '', onChange, }) {
-    const handleOnChange = useCallback(() => {
-        if (value === field) {
-            return onChange(`-${field}`);
-        }
-        if (value === `-${field}`) {
-            return onChange('');
-        }
-        return onChange(field);
-    }, [field, value, onChange]);
-    return (jsx("th", { style: style, className: classNames('d-table-head', className), children: jsxs("button", { type: "button", onClick: handleOnChange, children: [label, value && value.includes(field) && (jsx(DIcon, { icon: value === field ? 'arrow-up' : 'arrow-down' }))] }) }));
 }
 
 async function configureI8n(resources, _a = {}) {
@@ -2515,5 +2533,5 @@ function DVoucher({ amount, amountDetails, icon = 'CircleCheckBig', color = 'suc
         }, children: jsxs("div", { children: [jsxs("div", { className: "d-voucher-header", children: [jsx(DIcon, { icon: icon, color: color }), jsxs("div", { className: "text-center", children: [jsx("h3", { className: "mb-2", children: title }), jsx("p", { className: "m-0", children: message })] })] }), amount && (jsxs("div", { className: "d-voucher-amount", children: [jsx("div", { className: classNames('text-center fw-bold fs-3', amountDetails ? 'mb-1' : 'm-0'), children: amount }), amountDetails] })), jsx("hr", { className: "my-4" }), children, jsx("hr", { className: "my-4" }), jsxs("div", { className: "d-voucher-footer", children: [jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }) }));
 }
 
-export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCreditCard, DCurrencyText, DDatePicker, DDropdown, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTableHead, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
+export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCreditCard, DCurrencyText, DDatePicker, DDropdown, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
 //# sourceMappingURL=index.esm.js.map

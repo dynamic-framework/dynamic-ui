@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.0.0-dev.5
+ * dynamic-framework 2.0.0-dev.6
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -13118,7 +13118,7 @@ react-datepicker__navigation
   background: var(--bs-box-file-disabled-bg);
   border: var(--bs-box-file-disabled-border);
 }
-.d-box-file .d-icon {
+.d-box-file .d-box-file-dropzone > .d-icon {
   --bs-icon-size: var(--bs-box-file-icon-size);
   --bs-icon-color: var(--bs-box-file-icon-color);
 }
