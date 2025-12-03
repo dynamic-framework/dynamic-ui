@@ -237,12 +237,9 @@
       @include df-button-outline-variant-variables(
         "light",
         $default-color: var(--#{$prefix}gray-100),
-        $hover-bg-color: var(--#{$prefix}gray-200),
-        $hover-text-color: color-contrast-var(map-get($all-colors, gray-200)),
-        $focus-bg-color: var(--#{$prefix}gray-200),
-        $focus-text-color: color-contrast-var(map-get($all-colors, gray-200)),
-        $active-bg-color: var(--#{$prefix}gray-300),
-        $active-text-color: color-contrast-var(map-get($all-colors, gray-300)),
+        $hover-color: var(--#{$prefix}gray-200),
+        $focus-color: var(--#{$prefix}gray-200),
+        $active-color: var(--#{$prefix}gray-300),
         $focus-shadow-rgb: var(--#{$prefix}gray-100-rgb),
       );
       @include df-button-link-variant-variables(
@@ -270,12 +267,9 @@
       @include df-button-outline-variant-variables(
         "dark",
         $default-color: var(--#{$prefix}gray-900),
-        $hover-bg-color: var(--#{$prefix}gray-800),
-        $hover-text-color: color-contrast-var(map-get($all-colors, gray-800)),
-        $focus-bg-color: var(--#{$prefix}gray-800),
-        $focus-text-color: color-contrast-var(map-get($all-colors, gray-800)),
-        $active-bg-color: var(--#{$prefix}gray-700),
-        $active-text-color: color-contrast-var(map-get($all-colors, gray-700)),
+        $hover-color: var(--#{$prefix}gray-800),
+        $focus-color: var(--#{$prefix}gray-800),
+        $active-color: var(--#{$prefix}gray-700),
         $focus-shadow-rgb: var(--#{$prefix}gray-900-rgb),
       );
       @include df-button-link-variant-variables(
@@ -300,6 +294,16 @@
         $active-color: var(--#{$prefix}secondary-100),
         $active-text-color: var(--#{$prefix}secondary-700),
         $focus-shadow-rgb: var(--#{$prefix}secondary-100-rgb),
+      );
+      @include df-button-outline-variant-variables(
+        "secondary",
+        $default-color: var(--#{$prefix}secondary-500),
+        $default-border-color: var(--#{$prefix}secondary-200),
+        $hover-color: var(--#{$prefix}secondary-700),
+        $hover-border-color: var(--#{$prefix}secondary-400),
+        $focus-color: var(--#{$prefix}secondary-700),
+        $active-color: var(--#{$prefix}secondary-700),
+        $active-border-color: var(--#{$prefix}secondary-600),
       );
       @include df-button-link-variant-variables(
         "secondary",
