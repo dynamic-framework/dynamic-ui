@@ -8,7 +8,6 @@ import {
   DInput,
   DInputCheck,
   DPaginator,
-  DTableHead,
   getQueryString,
   useItemSelection,
 } from '../../src';
@@ -449,7 +448,6 @@ function CompleteTableComponent() {
 
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState(3);
-  const [sort, setSort] = useState('id');
   const totalPages = 5;
 
   return (
@@ -468,14 +466,7 @@ function CompleteTableComponent() {
               />
             </th>
             {HEADER_ENTRIES.map(([key, value]) => (
-              <DTableHead
-                style={{ width: '25%' }}
-                key={key}
-                field={key}
-                label={value}
-                value={sort}
-                onChange={setSort}
-              />
+              <th style={{ width: '25%' }} key={key}>{value}</th>
             ))}
           </tr>
         </thead>
@@ -567,10 +558,8 @@ type CompositionTableProps = {
   page: number;
   rows: number;
   totalPages: number;
-  sort: string;
   setPage(page: number): void;
   setRows(rows: number): void;
-  setSort(sort: string): void;
 };
 
 function CompositionTable(
@@ -578,10 +567,8 @@ function CompositionTable(
     page,
     rows,
     totalPages,
-    sort,
     setPage,
     setRows,
-    setSort,
   }: CompositionTableProps,
 ) {
   const {
@@ -607,14 +594,7 @@ function CompositionTable(
               />
             </th>
             {HEADER_ENTRIES.map(([key, value]) => (
-              <DTableHead
-                style={{ width: '25%' }}
-                key={key}
-                field={key}
-                label={value}
-                value={sort}
-                onChange={setSort}
-              />
+              <th style={{ width: '25%' }} key={key}>{value}</th>
             ))}
           </tr>
         </thead>
@@ -666,16 +646,15 @@ function CompositionComponent() {
 
   const [page, setPage] = useState(Number(getQueryString('page', { default: '1', useSearch: false })));
   const [rows, setRows] = useState(Number(getQueryString('rows', { default: '3', useSearch: false })));
-  const [sort, setSort] = useState(getQueryString('sort', { default: 'id', useSearch: false })!);
   const [queryString, setQueryString] = useState('');
   const totalPages = 5;
 
   useEffect(() => {
     setQueryString(changeQueryString(
-      { page, rows, sort },
+      { page, rows },
       { useSearch: false },
     ));
-  }, [setQueryString, page, rows, sort]);
+  }, [setQueryString, page, rows]);
 
   return (
     <>
@@ -700,10 +679,8 @@ function CompositionComponent() {
             page={page}
             rows={rows}
             totalPages={totalPages}
-            sort={sort}
             setPage={setPage}
             setRows={setRows}
-            setSort={setSort}
           />
         )}
       </DBox>
@@ -757,10 +734,8 @@ type CompositionTableProps = {
   page: number;
   rows: number;
   totalPages: number;
-  sort: string;
   setPage(page: number): void;
   setRows(rows: number): void;
-  setSort(sort: string): void;
 };
 
 function CompositionTable(
@@ -768,10 +743,8 @@ function CompositionTable(
     page,
     rows,
     totalPages,
-    sort,
     setPage,
     setRows,
-    setSort,
   }: CompositionTableProps,
 ) {
   const {
@@ -797,14 +770,7 @@ function CompositionTable(
               />
             </th>
             {HEADER_ENTRIES.map(([key, value]) => (
-              <DTableHead
-                style={{ width: '25%' }}
-                key={key}
-                field={key}
-                label={value}
-                value={sort}
-                onChange={setSort}
-              />
+              <th style={{ width: '25%' }} key={key}>{value}</th>
             ))}
           </tr>
         </thead>
@@ -856,16 +822,15 @@ export function Composition() {
 
   const [page, setPage] = useState(Number(getQueryString('page', { default: '1', useSearch: false })));
   const [rows, setRows] = useState(Number(getQueryString('rows', { default: '3', useSearch: false })));
-  const [sort, setSort] = useState(getQueryString('sort', { default: 'id', useSearch: false })!);
   const [queryString, setQueryString] = useState('');
   const totalPages = 5;
 
   useEffect(() => {
     setQueryString(changeQueryString(
-      { page, rows, sort },
+      { page, rows },
       { useSearch: false },
     ));
-  }, [setQueryString, page, rows, sort]);
+  }, [setQueryString, page, rows]);
 
   return (
     <>
@@ -890,10 +855,8 @@ export function Composition() {
             page={page}
             rows={rows}
             totalPages={totalPages}
-            sort={sort}
             setPage={setPage}
             setRows={setRows}
-            setSort={setSort}
           />
         )}
       </DBox>
