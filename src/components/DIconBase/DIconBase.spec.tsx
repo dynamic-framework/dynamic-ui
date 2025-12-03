@@ -88,6 +88,7 @@ describe('<DIconBase />', () => {
       <DIconBase
         icon="menu"
         materialStyle
+        familyClass="material-symbols-outlined"
         dataAttributes={{ 'data-testid': 'icon' }}
       />,
     );
