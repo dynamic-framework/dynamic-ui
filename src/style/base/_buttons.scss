@@ -155,16 +155,18 @@
 }
 
 @each $color, $value in $theme-colors {
-  .btn-#{$color} {
-    @include df-button-variant-mapper($color);
-  }
+  @if not map-has-key($theme-colors-extra, $color) {
+    .btn-#{$color} {
+      @include df-button-variant-mapper($color);
+    }
 
-  .btn-link-#{$color} {
-    @include df-button-variant-mapper($color, "link");
-  }
+    .btn-link-#{$color} {
+      @include df-button-variant-mapper($color, "link");
+    }
 
-  .btn-outline-#{$color} {
-    @include df-button-variant-outline-mapper($color);
+    .btn-outline-#{$color} {
+      @include df-button-variant-outline-mapper($color);
+    }
   }
 }
 
