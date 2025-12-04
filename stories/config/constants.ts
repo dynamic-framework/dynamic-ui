@@ -1,9 +1,4 @@
-import BOOTSTRAP_ICONS from '../bootstrap-icons.json';
-
-const LUCID_ICONS = ['Smile', 'Frown', 'Meh', 'ThumbsUp', 'ThumbsDown', 'Star', 'Heart', 'CheckCircle', 'XCircle'];
-
-export const ICONS = LUCID_ICONS;
-export const FIRST_ICON = BOOTSTRAP_ICONS[0];
+export const ICONS = ['Smile', 'Frown', 'Meh', 'ThumbsUp', 'ThumbsDown', 'Star', 'Heart', 'CheckCircle', 'XCircle'];
 
 export const COLOR_THEMES = ['primary', 'secondary', 'success', 'info', 'warning', 'danger'];
 export const THEMES = [...COLOR_THEMES, 'light', 'dark'];
