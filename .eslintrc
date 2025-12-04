@@ -7,36 +7,59 @@
   ],
   "rules": {
     "react/require-default-props": "off",
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": [
+          "state"
+        ]
+      }
+    ],
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off"
   },
   "overrides": [
     {
-      "files": ["scripts/*.js"],
+      "files": [
+        "scripts/*.js"
+      ],
       "rules": {
         "import/no-extraneous-dependencies": [
           "error",
-          { "devDependencies": true }
+          {
+            "devDependencies": true
+          }
         ]
       }
     },
     {
-      "files": ["jest.config.js", "test/**/*.ts", "jest/**/*.js"],
+      "files": [
+        "jest.config.js",
+        "test/**/*.ts",
+        "jest/**/*.js"
+      ],
       "env": {
         "jest": true
       },
       "rules": {
         "import/no-extraneous-dependencies": [
           "error",
-          { "devDependencies": true }
+          {
+            "devDependencies": true
+          }
         ]
       }
     },
     {
-      "files": ["src/**/*.ts", "src/**/*.tsx"],
+      "files": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+      ],
       "parserOptions": {
-        "project": ["./tsconfig.json"],
+        "project": [
+          "./tsconfig.json"
+        ],
         "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
       },
       "extends": [
@@ -46,9 +69,14 @@
       ]
     },
     {
-      "files": ["stories/**/*.ts", "stories/**/*.tsx"],
+      "files": [
+        "stories/**/*.ts",
+        "stories/**/*.tsx"
+      ],
       "parserOptions": {
-        "project": ["./tsconfig.json"],
+        "project": [
+          "./tsconfig.json"
+        ],
         "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
       },
       "extends": [
@@ -60,14 +88,24 @@
         "react/jsx-props-no-spreading": "off",
         "import/no-extraneous-dependencies": [
           "error",
-          { "devDependencies": ["**/*.stories.tsx"] }
+          {
+            "devDependencies": [
+              "stories/**/*.{ts,tsx}",
+              "**/*.stories.*",
+              "**/examples/**/*.{ts,tsx}"
+            ]
+          }
         ]
       }
     },
     {
-      "files": ["src/**/*.spec.tsx"],
+      "files": [
+        "src/**/*.spec.tsx"
+      ],
       "parserOptions": {
-        "project": ["./tsconfig.spec.json"],
+        "project": [
+          "./tsconfig.spec.json"
+        ],
         "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
       },
       "extends": [
@@ -78,7 +116,11 @@
       "rules": {
         "import/no-extraneous-dependencies": [
           "error",
-          { "devDependencies": ["**/*.spec.tsx"] }
+          {
+            "devDependencies": [
+              "**/*.spec.tsx"
+            ]
+          }
         ]
       }
     }
