@@ -10,11 +10,11 @@ import {
   DLayout,
 } from '../../src';
 import DBox from '../../src/components/DBox';
-import DMinimalLineChart from '../../src/components/DMinimalLineChart/DMinimalLineChart';
-import DMultiLineChart from '../../src/components/DMultiLineChart/DMultiLineChart';
-import DPieChart from '../../src/components/DPieChart/DPieChart';
-import DBarChart from '../../src/components/DBarChart/DBarChart';
-import DRadialBarChart from '../../src/components/DRadialBarChart/DRadialBarChart';
+import DMinimalLineChart from '../examples/charts/DMinimalLineChart/DMinimalLineChart';
+import DMultiLineChart from '../examples/charts/DMultiLineChart/DMultiLineChart';
+import DPieChart from '../examples/charts/DPieChart/DPieChart';
+import DBarChart from '../examples/charts/DBarChart/DBarChart';
+import DRadialBarChart from '../examples/charts/DRadialBarChart/DRadialBarChart';
 
 function CustomDocs(props: DocsContainerProps) {
   return (
