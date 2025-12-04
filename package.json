@@ -174,20 +174,11 @@
     "yup": "^1.6.1"
   },
   "peerDependencies": {
-    "framer-motion": "^12.23.24",
-    "i18next": "~25.6.1",
-    "react": "~19.2.0",
-    "react-dom": "~19.2.0",
-    "react-hot-toast": "~2.6.0",
-    "react-i18next": "~16.2.4",
-    "recharts": "~3.3.0"
-  },
-  "peerDependenciesMeta": {
-    "recharts": {
-      "optional": true
-    },
-    "formik": {
-      "optional": true
-    }
+    "framer-motion": ">=12 <13",
+    "i18next": ">=25 <26",
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20",
+    "react-hot-toast": ">=2 <3",
+    "react-i18next": ">=16 <17"
   }
 }
