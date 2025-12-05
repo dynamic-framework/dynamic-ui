@@ -5,16 +5,23 @@ import {
   DocsContainerProps,
 } from '@storybook/addon-docs/blocks';
 
+import { CSSProperties } from 'react';
 import {
-  DIcon, DButton, DProgress, DAvatar, DBadge,
+  DAvatar,
+  DBadge,
+  DBox,
+  DButton,
+  DIcon,
   DLayout,
+  DProgress,
 } from '../../src';
-import DBox from '../../src/components/DBox';
-import DMinimalLineChart from '../examples/charts/DMinimalLineChart/DMinimalLineChart';
-import DMultiLineChart from '../examples/charts/DMultiLineChart/DMultiLineChart';
-import DPieChart from '../examples/charts/DPieChart/DPieChart';
-import DBarChart from '../examples/charts/DBarChart/DBarChart';
-import DRadialBarChart from '../examples/charts/DRadialBarChart/DRadialBarChart';
+import DMinimalLineChart from './examples/charts/MinimalLineChart';
+import DMultiLineChart from './examples/charts/MultiLineChart';
+import DPieChart from './examples/charts/PieChart';
+import DBarChart from './examples/charts/BarChart';
+import DRadialBarChart from './examples/charts/RadialBarChart';
+
+import DocsTemplate from './docs/Template.mdx';
 
 function CustomDocs(props: DocsContainerProps) {
   return (
@@ -37,6 +44,7 @@ const meta: Meta<typeof DBox> = {
   parameters: {
     layout: 'fullscreen',
     docs: {
+      page: DocsTemplate,
       container: CustomDocs,
       description: {
         component:
@@ -265,7 +273,6 @@ export const Dashboard: Story = {
                     <DMinimalLineChart
                       data={task.chartData}
                       lineColor={task.chartColor}
-                      height={30}
                     />
                   </div>
                 </div>
@@ -450,7 +457,6 @@ export const Dashboard2: Story = {
                     <DMinimalLineChart
                       data={task.chartData}
                       lineColor={task.chartColor}
-                      height={30}
                     />
                   </div>
                 </div>
@@ -668,7 +674,7 @@ export const Dashboard3: Story = {
                 className="nav nav-pills nav-fill gap-1 p-1 small bg-primary-50 rounded-5"
                 id="pillNav2"
                 role="tablist"
-                style={{ '--bs-nav-link-color': 'var(--bs-gray-500)', '--bs-nav-pills-link-active-color': '#fff', '--bs-nav-pills-link-active-bg': 'var(--bs-primary)' }}
+                style={{ '--bs-nav-link-color': 'var(--bs-gray-500)', '--bs-nav-pills-link-active-color': '#fff', '--bs-nav-pills-link-active-bg': 'var(--bs-primary)' } as CSSProperties}
               >
                 <li className="nav-item" role="presentation">
                   <button className="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">24h</button>

@@ -1,18 +1,27 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Meta, StoryObj } from '@storybook/react-vite';
+import { CSSProperties } from 'react';
+
 import {
-  DInput, DSelect, DInputCheck, DInputSwitch, DButton,
+  DBox,
+  DButton,
   DIcon,
+  DInput,
+  DInputCheck,
   DInputPassword,
+  DInputSwitch,
+  DSelect,
 } from '../../src';
-import DBox from '../../src/components/DBox';
-import './custom.scss';
+import './styles/custom.scss';
+
+import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DBox> = {
   title: 'Patterns/Form Patterns',
   component: DBox,
   parameters: {
     docs: {
+      page: DocsTemplate,
       description: {
         component: 'Examples of form patterns using `DBox` and Bootstrap grid classes.',
       },
@@ -172,7 +181,7 @@ export const FieldsetForm: Story = {
 
         <fieldset className="col-12 border p-4 rounded mb-4">
           <legend className="float-none w-auto px-2">Address Information</legend>
-          <div className="grid gap-3" style={{ '--bs-columns': '1' }}>
+          <div className="grid gap-3" style={{ '--bs-columns': '1' } as CSSProperties}>
             <DInput id="fsAddress1" label="Address Line 1" placeholder="123 Main St" />
             <DInput id="fsAddress2" label="Address Line 2" placeholder="Apartment, suite, unit, etc. (Optional)" />
             <DInput id="fsCity" label="City" placeholder="Anytown" />
@@ -233,7 +242,7 @@ export const FieldsetForm2: Story = {
             <DIcon icon="Map" size="1rem" className="me-2 text-muted" />
             Address Information
           </legend>
-          <div className="grid gap-3" style={{ '--bs-columns': '1' }}>
+          <div className="grid gap-3" style={{ '--bs-columns': '1' } as CSSProperties}>
             <DInput id="fsAddress1" label="Address Line 1" placeholder="123 Main St" />
             <DInput id="fsAddress2" label="Address Line 2" placeholder="Apartment, suite, unit, etc. (Optional)" />
             <DInput id="fsCity" label="City" placeholder="Anytown" />

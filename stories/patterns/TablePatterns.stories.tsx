@@ -12,6 +12,8 @@ import {
   useItemSelection,
 } from '../../src';
 
+import DocsTemplate from './docs/Template.mdx';
+
 const HEADER_ENTRIES = [
   ['id', '#'],
   ['first', 'First'],
@@ -45,6 +47,7 @@ const meta: Meta<typeof DBox> = {
   component: DBox,
   parameters: {
     docs: {
+      page: DocsTemplate,
       description: {
         component: 'Examples of table patterns using Bootstrap table classes and Dynamic UI components.',
       },
