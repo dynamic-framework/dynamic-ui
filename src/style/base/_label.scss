@@ -9,8 +9,4 @@ label {
   font-size: var(--#{$prefix}label-font-size);
   font-weight: var(--#{$prefix}label-font-weight);
   color: var(--#{$prefix}label-color);
-
-  .d-icon {
-    --#{$prefix}icon-color: var(--#{$prefix}focus-ring-color);
-  }
 }
