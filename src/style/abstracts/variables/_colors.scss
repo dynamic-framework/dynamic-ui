@@ -362,7 +362,7 @@ $dark: $gray-900 !default;
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
-$theme-colors: (
+$theme-colors-base: (
   "primary": $primary,
   "secondary": $secondary,
   "success": $success,
@@ -371,6 +371,9 @@ $theme-colors: (
   "danger": $danger,
   "light": $light,
   "dark": $dark,
+) !default;
+
+$theme-colors-extra: (
   "indigo": $indigo,
   "purple": $purple,
   "pink": $pink,
@@ -379,8 +382,10 @@ $theme-colors: (
   "yellow": $yellow,
   "green": $green,
   "teal": $teal,
-  "cyan": $cyan
+  "cyan": $cyan,
 ) !default;
+
+$theme-colors: map-merge($theme-colors-base, $theme-colors-extra) !default;
 // scss-docs-end theme-colors-map
 
 // TODO: check this.
@@ -564,6 +569,7 @@ $theme-colors-palettes: (
   "danger-700": $danger-700,
   "danger-800": $danger-800,
   "danger-900": $danger-900,
+  // extras colors
   "indigo-25": $indigo-25,
   "indigo-50": $indigo-50,
   "indigo-100": $indigo-100,
