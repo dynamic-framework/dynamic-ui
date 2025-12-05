@@ -1,15 +1,23 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Meta, StoryObj } from '@storybook/react-vite';
-import { DocsContainer, DocsContainerProps } from '@storybook/addon-docs/blocks'; // ADD
-import DBox from '../../src/components/DBox';
-import './custom.scss';
+import { DocsContainer, DocsContainerProps } from '@storybook/addon-docs/blocks';
+import './styles/custom.scss';
 import {
-  DBadge, DButton, DButtonIcon, DIcon, DInput,
-  DInputCheck, DInputSwitch, DListGroup, DSelect,
+  DBadge,
+  DBox,
+  DButton,
+  DButtonIcon,
+  DIcon,
+  DInput,
+  DInputCheck,
+  DInputSwitch,
+  DListGroup,
   DListGroupItem,
+  DSelect,
 } from '../../src';
 
-// ADD
+import DocsTemplate from './docs/Template.mdx';
+
 function CustomDocs(props: DocsContainerProps) {
   return (
     <>
@@ -31,6 +39,7 @@ const meta: Meta<typeof DBox> = {
   parameters: {
     layout: 'fullscreen',
     docs: {
+      page: DocsTemplate,
       container: CustomDocs,
       description: {
         component: 'Examples of master detail patterns using Bootstrap grid classes.',
@@ -87,9 +96,9 @@ export const Basic: Story = {
           <div className="g-col-12 g-col-lg-6">
             <label className="form-label" htmlFor="gender">Gender</label>
             <div>
-              <DInputCheck id="genderMale" type="radio" name="gender" label="Male" inline />
-              <DInputCheck id="genderFemale" type="radio" name="gender" label="Female" inline />
-              <DInputCheck id="genderOther" type="radio" name="gender" label="Other" inline />
+              <DInputCheck id="genderMale" type="radio" name="gender" label="Male" />
+              <DInputCheck id="genderFemale" type="radio" name="gender" label="Female" />
+              <DInputCheck id="genderOther" type="radio" name="gender" label="Other" />
             </div>
           </div>
           <div className="g-col-12">
@@ -224,9 +233,9 @@ export const Menu: Story = {
           <div className="g-col-12 g-col-lg-6">
             <label className="form-label" htmlFor="gender">Gender</label>
             <div>
-              <DInputCheck id="genderMale" type="radio" name="gender" label="Male" inline />
-              <DInputCheck id="genderFemale" type="radio" name="gender" label="Female" inline />
-              <DInputCheck id="genderOther" type="radio" name="gender" label="Other" inline />
+              <DInputCheck id="genderMale" type="radio" name="gender" label="Male" />
+              <DInputCheck id="genderFemale" type="radio" name="gender" label="Female" />
+              <DInputCheck id="genderOther" type="radio" name="gender" label="Other" />
             </div>
           </div>
           <div className="g-col-12">

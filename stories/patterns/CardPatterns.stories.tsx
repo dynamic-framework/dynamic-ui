@@ -1,15 +1,21 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import DCard from '../../src/components/DCard/DCard';
-import DButton from '../../src/components/DButton/DButton';
-import DIcon from '../../src/components/DIcon/DIcon';
-import DBox from '../../src/components/DBox';
-import { DChip } from '../../src';
+import { CSSProperties } from 'react';
+import {
+  DChip,
+  DBox,
+  DIcon,
+  DButton,
+  DCard,
+} from '../../src';
+
+import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DCard> = {
   title: 'Patterns/Card Patterns',
   component: DCard,
   parameters: {
     docs: {
+      page: DocsTemplate,
       description: {
         component: `
 This story showcases different card-based patterns for the banking, insurance, and investment industries.
@@ -27,7 +33,7 @@ type Story = StoryObj<typeof DCard>;
 
 export const InsurancePlan: Story = {
   render: () => (
-    <div className="grid gap-4" style={{ '--bs-columns': 3, width: 800 }}>
+    <div className="grid gap-4" style={{ '--bs-columns': 3, width: 800 } as CSSProperties}>
       <DCard className="w-100" style={{ maxWidth: '350px' }}>
         <DCard.Body className="text-center">
           <DIcon icon="ShieldCheck" size="3rem" className="mb-3 text-primary" />
@@ -143,7 +149,7 @@ export const Plan: Story = {
     <div className="p-8">
       <div
         className="grid gap-4"
-        style={{ '--bs-columns': '3' }}
+        style={{ '--bs-columns': '3' } as CSSProperties}
       >
         <DBox>
           <p>Individuals</p>

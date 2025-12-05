@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 const config: Meta = {
-  title: 'Design System/Utilities/Text Background Variants',
+  title: 'Design System/Utils/Text Background Variants',
   parameters: {
     layout: 'centered',
     docs: {
