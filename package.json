@@ -74,7 +74,8 @@
     "publish:cdn-dev": "aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/dev/ui-react --delete --acl public-read",
     "lint-staged": "lint-staged",
     "prepare": "husky",
-    "commitlint": "commitlint --edit"
+    "commitlint": "commitlint --edit",
+    "verify": "node scripts/verify.js"
   },
   "engines": {
     "node": ">=22.0.0"
