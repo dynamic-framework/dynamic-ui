@@ -1,14 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Meta, StoryObj } from '@storybook/react-vite';
-import { DButton, DIcon, DInputCheck } from '../../src';
-import DBox from '../../src/components/DBox';
-import './custom.scss';
+import {
+  DBox,
+  DButton,
+  DIcon,
+  DInputCheck,
+} from '../../src';
+
+import './styles/custom.scss';
+import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DBox> = {
   title: 'Patterns/Radio Button Patterns',
   component: DBox,
   parameters: {
     docs: {
+      page: DocsTemplate,
       description: {
         component: 'Card-style radio buttons commonly used in industry (plans, shipping, payments). Selected items use bg-primary-50 and border-primary.',
       },

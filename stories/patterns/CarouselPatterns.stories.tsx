@@ -1,11 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 import { DCarousel, DButton, DBox } from '../../src';
 
+import DocsTemplate from './docs/Template.mdx';
+
 const meta: Meta<typeof DCarousel> = {
   title: 'Patterns/Carousel Patterns',
   component: DCarousel,
   parameters: {
     docs: {
+      page: DocsTemplate,
       description: {
         component: `
 This story showcases carousel patterns for marketing campaigns and promotional content.

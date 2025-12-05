@@ -1,12 +1,19 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 import {
-  DLayout, DIcon, DBox, DListGroup, DChip,
+  DBox,
+  DChip,
+  DIcon,
+  DLayout,
+  DListGroup,
 } from '../../src';
+
+import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta = {
   title: 'Patterns/Quick Actions Patterns',
   parameters: {
     docs: {
+      docs: DocsTemplate,
       description: {
         component: `
 This story showcases quick action patterns commonly used in financial applications.

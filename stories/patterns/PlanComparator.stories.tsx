@@ -1,9 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 import { Meta, StoryObj } from '@storybook/react-vite';
-import DButton from '../../src/components/DButton/DButton';
-import DIcon from '../../src/components/DIcon/DIcon';
-import './custom.scss';
-import DBox from '../../src/components/DBox';
+import { DBox, DButton, DIcon } from '../../src';
+
+import './styles/custom.scss';
+import DocsTemplate from './docs/Template.mdx';
 
 const fourPlanFeatures = [
   {
@@ -24,6 +24,7 @@ const meta: Meta = {
   title: 'Patterns/Plan Comparator',
   parameters: {
     docs: {
+      page: DocsTemplate,
       description: {
         component: `
 This story showcases a plan comparator design, which can be used to compare different subscription plans or product tiers.
