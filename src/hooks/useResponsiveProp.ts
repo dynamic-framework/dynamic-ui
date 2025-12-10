@@ -4,29 +4,32 @@ import {
   useMediaBreakpointUpMd,
   useMediaBreakpointUpSm,
   useMediaBreakpointUpXl,
+  useMediaBreakpointUpXs,
   useMediaBreakpointUpXxl,
 } from './useMediaBreakpointUp';
 
-export type ResponsivePropType = Partial<Record<'sm' | 'md' | 'lg' | 'xl' | 'xxl', string>>;
+export type ResponsiveProp = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl', string>>;
 
 export function useResponsiveProp(useListener: boolean = false) {
+  const bpXsUp = useMediaBreakpointUpXs(useListener);
   const bpSmUp = useMediaBreakpointUpSm(useListener);
   const bpMdUp = useMediaBreakpointUpMd(useListener);
   const bpLgUp = useMediaBreakpointUpLg(useListener);
   const bpXlUp = useMediaBreakpointUpXl(useListener);
   const bpXxlUp = useMediaBreakpointUpXxl(useListener);
 
-  const responsivePropValue = useCallback((prop: ResponsivePropType) => {
-    // Pick the highest matched breakpoint value que esté definido en prop
+  const responsivePropValue = useCallback((prop: ResponsiveProp) => {
+    // Pick the highest matched breakpoint value that is defined in prop
     if (prop.xxl !== undefined && bpXxlUp) return prop.xxl;
     if (prop.xl !== undefined && bpXlUp) return prop.xl;
     if (prop.lg !== undefined && bpLgUp) return prop.lg;
     if (prop.md !== undefined && bpMdUp) return prop.md;
     if (prop.sm !== undefined && bpSmUp) return prop.sm;
+    if (prop.xs !== undefined && bpXsUp) return prop.xs;
 
-    // Fallback: pick the smallest defined value
-    return prop.sm ?? prop.md ?? prop.lg ?? prop.xl ?? prop.xxl;
-  }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp]);
+    // Fallback: return undefined if no breakpoint matches
+    return undefined;
+  }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp, bpXsUp]);
 
   return { responsivePropValue };
 }

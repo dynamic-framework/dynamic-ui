@@ -12,14 +12,14 @@ import type {
   ComponentColor,
   CustomStyles,
 } from '../interface';
-import { ResponsivePropType, useResponsiveProp } from '../../hooks/useResponsiveProp';
+import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
 
 type Props =
   & BaseProps
   & {
     icon: string;
     color?: ComponentColor;
-    size?: string | ResponsivePropType;
+    size?: string | ResponsiveProp;
     useListenerSize?: boolean;
     hasCircle?: boolean;
     materialStyle?: boolean;

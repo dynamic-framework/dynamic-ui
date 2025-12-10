@@ -310,6 +310,7 @@ export const WithResponsiveSizes: Story = {
   args: {
     icon: 'Settings',
     size: {
+      xs: '8',
       sm: '16',
       md: '32',
       lg: '64',
