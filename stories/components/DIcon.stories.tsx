@@ -88,12 +88,6 @@ See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating f
       type: 'string',
       description: 'Color of the icon (theme-based)',
     },
-    size: {
-      type: 'string',
-      control: 'text',
-      description: 'Size of the icon in css length unit or number',
-      table: { defaultValue: { summary: '24' } },
-    },
     strokeWidth: {
       type: 'number',
       control: 'number',
@@ -297,6 +291,35 @@ export const Sizes: Story = {
         story: 'Icons in different sizes.',
       },
     },
+  },
+};
+
+export const WithResponsiveSizes: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'The size property with breakpoints does not work outside of a DContextProvider.',
+      },
+    },
+  },
+  decorators: (Story) => (
+    <DContextProvider>
+      <Story />
+    </DContextProvider>
+  ),
+  args: {
+    icon: 'Settings',
+    size: {
+      xs: '8',
+      sm: '16',
+      md: '32',
+      lg: '64',
+      xl: '128',
+      xxl: '256',
+    },
+    useListenerSize: true,
+    hasCircle: false,
+    strokeWidth: 2,
   },
 };
 
