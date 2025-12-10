@@ -12,13 +12,15 @@ import type {
   ComponentColor,
   CustomStyles,
 } from '../interface';
+import { ResponsivePropType, useResponsiveProp } from '../../hooks/useResponsiveProp';
 
 type Props =
   & BaseProps
   & {
     icon: string;
     color?: ComponentColor;
-    size?: string;
+    size?: string | ResponsivePropType;
+    useListenerSize?: boolean;
     hasCircle?: boolean;
     materialStyle?: boolean;
     familyClass?: string;
@@ -33,6 +35,7 @@ export default function DIconBase(
     style,
     className,
     size,
+    useListenerSize = false,
     hasCircle = false,
     materialStyle = false,
     familyClass,
@@ -70,13 +73,22 @@ export default function DIconBase(
     return {};
   }, [hasCircle, color]);
 
+  const { responsivePropValue } = useResponsiveProp(useListenerSize);
+
+  const resolvedSize = useMemo<string | undefined>(() => {
+    if (!size) return undefined;
+    if (typeof size === 'string') return size;
+
+    return responsivePropValue(size);
+  }, [responsivePropValue, size]);
+
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
-    ...size && { [`--${PREFIX_BS}icon-component-size`]: size },
+    ...resolvedSize && { [`--${PREFIX_BS}icon-component-size`]: resolvedSize },
     ...colorStyle,
     ...backgroundStyle,
     ...hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` },
     ...style,
-  }), [size, colorStyle, backgroundStyle, hasCircle, style]);
+  }), [resolvedSize, colorStyle, backgroundStyle, hasCircle, style]);
 
   const generateClasses = useMemo<ClassMap>(() => ({
     'd-icon': true,
@@ -84,12 +96,12 @@ export default function DIconBase(
   }), [className]);
 
   const iconSize = useMemo(() => {
-    if (size) {
-      const numSize = parseInt(size, 10);
-      return !Number.isNaN(numSize) ? numSize : size;
+    if (resolvedSize) {
+      const numSize = parseInt(resolvedSize, 10);
+      return !Number.isNaN(numSize) ? numSize : resolvedSize;
     }
     return undefined;
-  }, [size]);
+  }, [resolvedSize]);
 
   // Render Material Design icon (legacy support)
   if (useMaterialIcons) {
