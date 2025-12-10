@@ -138,10 +138,29 @@
   }
 
   .custom-year-selector {
-    width: 6ch;
-    background: none;
-    color: var(--#{$prefix}white);
-    border: 0;
+    width: 8ch;
+    background: transparent;
+    color: var(--#{$prefix}body-color);
+    margin: auto;
+
+    .input-group {
+      border: 0px;
+    }
+
+    .d-select__indicator-separator {
+      display: none;
+    }
+
+    .d-select__control {
+      background-color: var(--#{$prefix}datepicker-top-header-bg);
+      padding: var(--bs-ref-spacer-1) var(--bs-ref-spacer-1);
+      flex-wrap: nowrap;
+      color: var(--#{$prefix}white);
+      border: 0;
+    }
+    .d-select__menu-list {
+      max-height: 10lh;
+    }
   }
 
   &-selector {
