@@ -220,17 +220,14 @@ export default function DDatePickerHeaderSelector(
     <>
       <div className="datepicker-top-header">
         {showHeaderSelectors && (
-          <select
-            value={defaultYear?.value}
-            onChange={(e) => changeYear(Number(e.target.value))}
+          <DSelect
+            options={years}
+            value={defaultYear}
+            defaultValue={defaultYear}
+            onChange={(year) => changeYear(Number(year?.value))}
+            searchable={false}
             className="custom-year-selector"
-          >
-            {years.map((year) => (
-              <option key={year.value} value={year.value}>
-                {year.label}
-              </option>
-            ))}
-          </select>
+          />
         )}
         <h4 className="mb-0 fw-normal">
           {format(monthDate, 'LLLL, dd', { locale })}
