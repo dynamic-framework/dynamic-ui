@@ -67,7 +67,7 @@ export const AccountList: Story = {
       <h5 className="mb-3">My Accounts</h5>
       <DListGroup>
         <DListGroup.Item>
-          <div className="d-flex justify-content-between align-items-start">
+          <div className="d-flex justify-content-between align-items-start w-100">
             <div>
               <h6 className="mb-1">Checking Account</h6>
               <small className="text-muted">****1234</small>
