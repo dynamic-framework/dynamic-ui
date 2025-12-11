@@ -29,29 +29,17 @@ describe('<DListGroup />', () => {
             <li
               class="list-group-item"
             >
-              <div
-                class="w-100"
-              >
-                Item A
-              </div>
+              Item A
             </li>
             <li
               class="list-group-item"
             >
-              <div
-                class="w-100"
-              >
-                Item B
-              </div>
+              Item B
             </li>
             <li
               class="list-group-item"
             >
-              <div
-                class="w-100"
-              >
-                Item C
-              </div>
+              Item C
             </li>
           </ul>
         </div>
