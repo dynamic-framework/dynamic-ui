@@ -368,9 +368,6 @@ export const MaterialDesignIcons: Story = {
       description: {
         story: 'Material Design icons are still supported for backward compatibility. Use `materialStyle` prop or configure via DContextProvider.',
       },
-      canvas: {
-        sourceState: 'shown',
-      },
     },
   },
 };
@@ -416,9 +413,6 @@ export const MaterialDesignIconsWithCircle: Story = {
       description: {
         story: 'Material Design icons are still supported for backward compatibility. Use `materialStyle` prop or configure via DContextProvider.',
       },
-      canvas: {
-        sourceState: 'shown',
-      },
     },
   },
 };
@@ -454,9 +448,6 @@ export const MaterialDesignInComponents: StoryObj<typeof DInput> = {
       description: {
         story: 'Material Design icons integrated with other components.',
       },
-      canvas: {
-        sourceState: 'shown',
-      },
     },
   },
 };
@@ -491,10 +482,36 @@ export const BootstrapIconsStyle: StoryObj<typeof DInput> = {
       </div>
     </DContextProvider>
   ),
+};
+
+export const CustomColorClasses: Story = {
+  render: () => (
+    <div style={{
+      display: 'flex', gap: '24px', alignItems: 'center', flexWrap: 'wrap',
+    }}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <DIcon icon="Heart" size="32px" className="text-pink-500" />
+        <div style={{ fontSize: '12px', marginTop: '8px' }}>text-pink-500</div>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <DIcon icon="Sparkles" size="32px" className="text-purple-500" />
+        <div style={{ fontSize: '12px', marginTop: '8px' }}>text-purple-500</div>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <DIcon icon="Star" size="32px" hasCircle className="bg-pink-500 text-white" />
+        <div style={{ fontSize: '12px', marginTop: '8px' }}>bg-pink-500 text-white</div>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <DIcon icon="Bolt" size="32px" hasCircle className="bg-purple-500 text-white" />
+        <div style={{ fontSize: '12px', marginTop: '8px' }}>bg-purple-500 text-white</div>
+      </div>
+    </div>
+  ),
   parameters: {
     docs: {
-      canvas: {
-        sourceState: 'shown',
+      description: {
+        story: 'Examples using custom utility classes (e.g., text-pink-500, bg-pink-500). Colors depend on your CSS utility setup.',
       },
     },
   },
