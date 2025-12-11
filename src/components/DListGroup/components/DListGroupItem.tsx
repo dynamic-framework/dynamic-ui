@@ -110,9 +110,7 @@ export default function DListGroupItem(
           materialStyle={iconStartMaterialStyle}
         />
       )}
-      <div className="w-100">
-        {children}
-      </div>
+      {children}
       {iconEnd && (
         <DIcon
           icon={iconEnd}
