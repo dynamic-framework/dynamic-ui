@@ -5,9 +5,16 @@ import {
 } from '@storybook/addon-docs/blocks';
 
 import {
-  DListGroup, DBadge, DBox, DCollapse, DDropdown, DIcon,
+  DBadge,
+  DBox,
   DButton,
+  DCollapse,
+  DDropdown,
+  DIcon,
+  DListGroup,
 } from '../../src';
+
+import DocsTemplate from './docs/Template.mdx';
 
 function CustomDocs(props: DocsContainerProps) {
   return (
@@ -29,6 +36,7 @@ const meta: Meta<typeof DListGroup> = {
   component: DListGroup,
   parameters: {
     docs: {
+      page: DocsTemplate,
       container: CustomDocs,
       description: {
         component: `
