@@ -42,6 +42,7 @@ type NonHTMLInputElementProps =
   floatingLabel?: boolean;
   inputStart?: ReactNode;
   inputEnd?: ReactNode;
+  readonly?: boolean;
   onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
   onIconEndClick?: (value?: string) => void;
@@ -87,6 +88,7 @@ function DInput(
     value,
     placeholder = '',
     dataAttributes,
+    readonly,
     onChange,
     onIconStartClick,
     onIconEndClick,
@@ -143,6 +145,7 @@ function DInput(
         'is-valid': valid,
       })}
       disabled={disabled || loading}
+      readOnly={readonly}
       value={value}
       onChange={handleOnChange}
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
@@ -162,6 +165,7 @@ function DInput(
     floatingLabel,
     valid,
     value,
+    readonly,
   ]);
 
   const labelComponent = useMemo(() => (
