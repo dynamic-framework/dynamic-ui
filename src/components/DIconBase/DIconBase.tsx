@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import * as LucideIcons from 'lucide-react';
@@ -23,7 +24,8 @@ type Props =
     /**
      * Enables real-time breakpoint listeners for responsive size changes.
      * When set to true, the component will listen for size changes and update responsively.
-     * Note: Enabling this feature may have performance implications, especially in complex or frequently updated components.
+     * Note: Enabling this feature may have performance implications, especially
+     * in complex or frequently updated components.
      */
     useListenerSize?: boolean;
     hasCircle?: boolean;

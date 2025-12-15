@@ -11,8 +11,10 @@ import {
 /**
  * A mapping of breakpoint names to values for responsive properties.
  *
- * This type allows you to specify a value for one or more breakpoints ('xs', 'sm', 'md', 'lg', 'xl', 'xxl').
- * When used with `useResponsiveProp`, the value for the highest matching breakpoint will be selected.
+ * This type allows you to specify a value for one or more
+ * breakpoints ('xs', 'sm', 'md', 'lg', 'xl', 'xxl').
+ * When used with `useResponsiveProp`, the value for
+ * the highest matching breakpoint will be selected.
  *
  * Usage example:
  * ```ts
@@ -29,7 +31,8 @@ export type ResponsiveProp = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '
  * If no breakpoints match, `undefined` is returned.
  *
  * @param useListener - Whether to listen for breakpoint changes (default: false).
- * @returns An object with a `responsivePropValue` function that takes a `ResponsiveProp` and returns the resolved value.
+ * @returns An object with a `responsivePropValue` function that takes a
+ * `ResponsiveProp` and returns the resolved value.
  *
  * Usage example:
  * ```ts
