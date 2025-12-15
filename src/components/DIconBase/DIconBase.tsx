@@ -20,6 +20,11 @@ type Props =
     icon: string;
     color?: ComponentColor;
     size?: string | ResponsiveProp;
+    /**
+     * Enables real-time breakpoint listeners for responsive size changes.
+     * When set to true, the component will listen for size changes and update responsively.
+     * Note: Enabling this feature may have performance implications, especially in complex or frequently updated components.
+     */
     useListenerSize?: boolean;
     hasCircle?: boolean;
     materialStyle?: boolean;
