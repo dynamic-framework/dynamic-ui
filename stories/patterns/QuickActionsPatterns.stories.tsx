@@ -13,7 +13,7 @@ const meta: Meta = {
   title: 'Patterns/Quick Actions Patterns',
   parameters: {
     docs: {
-      docs: DocsTemplate,
+      page: DocsTemplate,
       description: {
         component: `
 This story showcases quick action patterns commonly used in financial applications.
