@@ -280,7 +280,7 @@ export const Sizes: Story = {
     <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
       <DIcon icon="Sparkles" size="24px" />
       <DIcon icon="Sparkles" size="32px" />
-      <DIcon icon="Sparkles" size="24px" />
+      <DIcon icon="Sparkles" size="48px" />
       <DIcon icon="Sparkles" size="64px" />
       <DIcon icon="Sparkles" size="96px" />
     </div>
