@@ -7,7 +7,7 @@ type OnChangeType = {
     country: ParsedCountry;
     isValid: boolean;
 };
-declare const ForwardedDInputPhone: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "type" | "onChange" | "onWheel" | "pattern" | "value" | "inputMode">, "size" | "onChange" | "label" | "invalid" | "value" | keyof BaseProps | keyof FamilyIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "floatingLabel" | "inputEnd" | "onIconEndClick" | "countrySelectorProps" | "filteredCountries" | "defaultCountry"> & BaseProps & FamilyIconProps & EndIconProps & {
+declare const ForwardedDInputPhone: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "pattern" | "value" | "inputMode" | "onChange" | "onWheel" | "type">, "label" | "invalid" | "value" | "onChange" | "size" | keyof BaseProps | keyof FamilyIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "floatingLabel" | "inputEnd" | "onIconEndClick" | "countrySelectorProps" | "filteredCountries" | "defaultCountry"> & BaseProps & FamilyIconProps & EndIconProps & {
     value?: string | undefined;
     label?: string | undefined;
     loading?: boolean | undefined;

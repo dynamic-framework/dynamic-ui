@@ -44,57 +44,6 @@ var LucideIcons__namespace = /*#__PURE__*/_interopNamespaceDefault(LucideIcons);
 
 const PREFIX_BS = 'bs-';
 
-function DIconBase({ icon, color, style, className, size, hasCircle = false, materialStyle = false, familyClass, familyPrefix, strokeWidth = 2, dataAttributes, }) {
-    // If materialStyle is true, use Material Design icons (legacy)
-    const useMaterialIcons = materialStyle;
-    // Get Lucide icon component
-    const LucideIcon = React.useMemo(() => {
-        if (useMaterialIcons)
-            return null;
-        // Try to find the icon in Lucide (expects PascalCase)
-        const icons = LucideIcons__namespace;
-        return icons[icon] || null;
-    }, [icon, useMaterialIcons]);
-    const colorStyle = React.useMemo(() => {
-        if (color) {
-            return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${color})` };
-        }
-        return {};
-    }, [color]);
-    const backgroundStyle = React.useMemo(() => {
-        if (hasCircle) {
-            if (color) {
-                return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}${color}-rgb), 0.1)` };
-            }
-            return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}body-color-rgb), 0.1)` };
-        }
-        return {};
-    }, [hasCircle, color]);
-    const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, size && { [`--${PREFIX_BS}icon-component-size`]: size }), colorStyle), backgroundStyle), hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` }), style)), [size, colorStyle, backgroundStyle, hasCircle, style]);
-    const generateClasses = React.useMemo(() => (Object.assign({ 'd-icon': true }, className && { [className]: true })), [className]);
-    const iconSize = React.useMemo(() => {
-        if (size) {
-            const numSize = parseInt(size, 10);
-            return !Number.isNaN(numSize) ? numSize : size;
-        }
-        return undefined;
-    }, [size]);
-    // Render Material Design icon (legacy support)
-    if (useMaterialIcons) {
-        return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass), style: generateStyleVariables }, dataAttributes, { children: icon })));
-    }
-    // Render Lucide icon
-    if (!LucideIcon) {
-        if (familyClass && familyPrefix) {
-            return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass, `${familyPrefix}${icon}`), style: generateStyleVariables }, dataAttributes)));
-        }
-        // eslint-disable-next-line no-console
-        console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
-        return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: "?" })));
-    }
-    return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: jsxRuntime.jsx(LucideIcon, { size: iconSize || 24, strokeWidth: strokeWidth }) })));
-}
-
 function useDisableBodyScrollEffect(disable) {
     React.useEffect(() => {
         if (disable) {
@@ -350,6 +299,151 @@ function useDContext() {
     return context;
 }
 
+function subscribeToMediaQuery(query, callback) {
+    const mediaQueryList = window.matchMedia(query);
+    mediaQueryList.addEventListener('change', callback);
+    return () => {
+        mediaQueryList.removeEventListener('change', callback);
+    };
+}
+function checkMediaQuery(query) {
+    return window.matchMedia(query).matches;
+}
+
+function useMediaQuery(mediaQuery, useListener = false) {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const noop = (_) => () => { };
+    return React.useSyncExternalStore(useListener ? (cb) => subscribeToMediaQuery(mediaQuery, cb) : noop, () => (mediaQuery ? checkMediaQuery(mediaQuery) : true), () => false);
+}
+
+function useMediaBreakpointUp(breakpoint, useListener = false) {
+    const { breakpoints } = useDContext();
+    const mediaQuery = React.useMemo(() => (`(min-width: ${breakpoints[breakpoint]})`), [breakpoint, breakpoints]);
+    return useMediaQuery(mediaQuery, useListener);
+}
+function useMediaBreakpointUpXs(useListener = false) {
+    return useMediaBreakpointUp('xs', useListener);
+}
+function useMediaBreakpointUpSm(useListener = false) {
+    return useMediaBreakpointUp('sm', useListener);
+}
+function useMediaBreakpointUpMd(useListener = false) {
+    return useMediaBreakpointUp('md', useListener);
+}
+function useMediaBreakpointUpLg(useListener = false) {
+    return useMediaBreakpointUp('lg', useListener);
+}
+function useMediaBreakpointUpXl(useListener = false) {
+    return useMediaBreakpointUp('xl', useListener);
+}
+function useMediaBreakpointUpXxl(useListener = false) {
+    return useMediaBreakpointUp('xxl', useListener);
+}
+
+/**
+ * React hook to resolve a responsive property value based on the current viewport breakpoint.
+ *
+ * Given a `ResponsiveProp` object, this hook returns the value for the highest matching breakpoint.
+ * If multiple breakpoints match, the value for the largest (highest) breakpoint is used.
+ * If no breakpoints match, `undefined` is returned.
+ *
+ * @param useListener - Whether to listen for breakpoint changes (default: false).
+ * @returns An object with a `responsivePropValue` function that takes a
+ * `ResponsiveProp` and returns the resolved value.
+ *
+ * Usage example:
+ * ```ts
+ * const { responsivePropValue } = useResponsiveProp();
+ * const value = responsivePropValue({ xs: "A", md: "B", xl: "C" });
+ * // value will be "C" if xl breakpoint is active, "B" if md is active, etc.
+ * ```
+ */
+function useResponsiveProp(useListener = false) {
+    const bpXsUp = useMediaBreakpointUpXs(useListener);
+    const bpSmUp = useMediaBreakpointUpSm(useListener);
+    const bpMdUp = useMediaBreakpointUpMd(useListener);
+    const bpLgUp = useMediaBreakpointUpLg(useListener);
+    const bpXlUp = useMediaBreakpointUpXl(useListener);
+    const bpXxlUp = useMediaBreakpointUpXxl(useListener);
+    const responsivePropValue = React.useCallback((prop) => {
+        // Pick the highest matched breakpoint value that is defined in prop
+        if (prop.xxl !== undefined && bpXxlUp)
+            return prop.xxl;
+        if (prop.xl !== undefined && bpXlUp)
+            return prop.xl;
+        if (prop.lg !== undefined && bpLgUp)
+            return prop.lg;
+        if (prop.md !== undefined && bpMdUp)
+            return prop.md;
+        if (prop.sm !== undefined && bpSmUp)
+            return prop.sm;
+        if (prop.xs !== undefined && bpXsUp)
+            return prop.xs;
+        // Fallback: return undefined if no breakpoint matches
+        return undefined;
+    }, [bpSmUp, bpMdUp, bpLgUp, bpXlUp, bpXxlUp, bpXsUp]);
+    return { responsivePropValue };
+}
+
+function DIconBase({ icon, color, style, className, size, useListenerSize = false, hasCircle = false, materialStyle = false, familyClass, familyPrefix, strokeWidth = 2, dataAttributes, }) {
+    // If materialStyle is true, use Material Design icons (legacy)
+    const useMaterialIcons = materialStyle;
+    // Get Lucide icon component
+    const LucideIcon = React.useMemo(() => {
+        if (useMaterialIcons)
+            return null;
+        // Try to find the icon in Lucide (expects PascalCase)
+        const icons = LucideIcons__namespace;
+        return icons[icon] || null;
+    }, [icon, useMaterialIcons]);
+    const colorStyle = React.useMemo(() => {
+        if (color) {
+            return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${color})` };
+        }
+        return {};
+    }, [color]);
+    const backgroundStyle = React.useMemo(() => {
+        if (hasCircle) {
+            if (color) {
+                return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}${color}-rgb), 0.1)` };
+            }
+            return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}body-color-rgb), 0.1)` };
+        }
+        return {};
+    }, [hasCircle, color]);
+    const { responsivePropValue } = useResponsiveProp(useListenerSize);
+    const resolvedSize = React.useMemo(() => {
+        if (!size)
+            return undefined;
+        if (typeof size === 'string')
+            return size;
+        return responsivePropValue(size);
+    }, [responsivePropValue, size]);
+    const generateStyleVariables = React.useMemo(() => (Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, resolvedSize && { [`--${PREFIX_BS}icon-component-size`]: resolvedSize }), colorStyle), backgroundStyle), hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` }), style)), [resolvedSize, colorStyle, backgroundStyle, hasCircle, style]);
+    const generateClasses = React.useMemo(() => (Object.assign({ 'd-icon': true }, className && { [className]: true })), [className]);
+    const iconSize = React.useMemo(() => {
+        if (resolvedSize) {
+            const numSize = parseInt(resolvedSize, 10);
+            return !Number.isNaN(numSize) ? numSize : resolvedSize;
+        }
+        return undefined;
+    }, [resolvedSize]);
+    // Render Material Design icon (legacy support)
+    if (useMaterialIcons) {
+        return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass), style: generateStyleVariables }, dataAttributes, { children: icon })));
+    }
+    // Render Lucide icon
+    if (!LucideIcon) {
+        if (familyClass && familyPrefix) {
+            return (jsxRuntime.jsx("i", Object.assign({ className: classNames(generateClasses, familyClass, `${familyPrefix}${icon}`), style: generateStyleVariables }, dataAttributes)));
+        }
+        // eslint-disable-next-line no-console
+        console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
+        return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: "?" })));
+    }
+    return (jsxRuntime.jsx("span", Object.assign({ className: classNames(generateClasses), style: generateStyleVariables }, dataAttributes, { children: jsxRuntime.jsx(LucideIcon, { size: iconSize || 24, strokeWidth: strokeWidth }) })));
+}
+
 function DIcon(_a) {
     var { familyClass: propFamilyClass, familyPrefix: propFamilyPrefix, materialStyle: propMaterialStyle } = _a, props = tslib.__rest(_a, ["familyClass", "familyPrefix", "materialStyle"]);
     const { icon: { familyClass, familyPrefix, materialStyle, }, } = useDContext();
@@ -417,7 +511,7 @@ function useProvidedRefOrCreate(providedRef) {
 }
 
 function DInput(_a, ref) {
-    var { id: idProp, style, className, label = '', disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconStart, iconStartDisabled, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconStartMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, hint, size, invalid = false, valid = false, floatingLabel = false, inputStart, inputEnd, value, placeholder = '', dataAttributes, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconStart", "iconStartDisabled", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconStartMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "hint", "size", "invalid", "valid", "floatingLabel", "inputStart", "inputEnd", "value", "placeholder", "dataAttributes", "onChange", "onIconStartClick", "onIconEndClick"]);
+    var { id: idProp, style, className, label = '', disabled = false, loading = false, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconStart, iconStartDisabled, iconStartFamilyClass, iconStartFamilyPrefix, iconStartAriaLabel, iconStartTabIndex, iconStartMaterialStyle, iconEnd, iconEndDisabled, iconEndFamilyClass, iconEndFamilyPrefix, iconEndAriaLabel, iconEndTabIndex, iconEndMaterialStyle, hint, size, invalid = false, valid = false, floatingLabel = false, inputStart, inputEnd, value, placeholder = '', dataAttributes, readonly, onChange, onIconStartClick, onIconEndClick } = _a, inputProps = tslib.__rest(_a, ["id", "style", "className", "label", "disabled", "loading", "iconFamilyClass", "iconFamilyPrefix", "iconMaterialStyle", "iconStart", "iconStartDisabled", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartAriaLabel", "iconStartTabIndex", "iconStartMaterialStyle", "iconEnd", "iconEndDisabled", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndAriaLabel", "iconEndTabIndex", "iconEndMaterialStyle", "hint", "size", "invalid", "valid", "floatingLabel", "inputStart", "inputEnd", "value", "placeholder", "dataAttributes", "readonly", "onChange", "onIconStartClick", "onIconEndClick"]);
     const inputRef = useProvidedRefOrCreate(ref);
     const innerId = React.useId();
     const id = React.useMemo(() => idProp || innerId, [idProp, innerId]);
@@ -454,7 +548,7 @@ function DInput(_a, ref) {
     const inputComponent = React.useMemo(() => (jsxRuntime.jsx("input", Object.assign({ ref: inputRef, id: id, className: classNames('form-control', {
             'is-invalid': invalid,
             'is-valid': valid,
-        }), disabled: disabled || loading, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
+        }), disabled: disabled || loading, readOnly: readonly, value: value, onChange: handleOnChange }, (floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }, ariaDescribedby && { 'aria-describedby': ariaDescribedby }, inputProps))), [
         ariaDescribedby,
         disabled,
         handleOnChange,
@@ -467,6 +561,7 @@ function DInput(_a, ref) {
         floatingLabel,
         valid,
         value,
+        readonly,
     ]);
     const labelComponent = React.useMemo(() => (jsxRuntime.jsx("label", { htmlFor: id, children: label })), [
         id,
@@ -1279,7 +1374,7 @@ function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMont
     if (pickerType === PickerType.Quarter || pickerType === PickerType.Month) {
         return (jsxRuntime.jsxs("div", { className: classNames(`react-datepicker__header-selector react-datepicker__header-${pickerType}-selector`, className), style: style, children: [jsxRuntime.jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseYear, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), jsxRuntime.jsx("div", { className: "d-flex justify-content-center flex-grow-1", children: showHeaderSelectors ? (jsxRuntime.jsx(DSelect, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false })) : (jsxRuntime.jsx("p", { children: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label })) }), jsxRuntime.jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseYear, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] }));
     }
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: "datepicker-top-header", children: [showHeaderSelectors && (jsxRuntime.jsx("select", { value: defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.value, onChange: (e) => changeYear(Number(e.target.value)), className: "custom-year-selector", children: years.map((year) => (jsxRuntime.jsx("option", { value: year.value, children: year.label }, year.value))) })), jsxRuntime.jsx("h4", { className: "mb-0 fw-normal", children: dateFns.format(monthDate, 'LLLL, dd', { locale }) })] }), jsxRuntime.jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsxRuntime.jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsxRuntime.jsx(DSelect, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" })) : (jsxRuntime.jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsxRuntime.jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] })] }));
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsxs("div", { className: "datepicker-top-header", children: [showHeaderSelectors && (jsxRuntime.jsx(DSelect, { options: years, value: defaultYear, defaultValue: defaultYear, onChange: (year) => changeYear(Number(year === null || year === void 0 ? void 0 : year.value)), searchable: false, className: "custom-year-selector" })), jsxRuntime.jsx("h4", { className: "mb-0 fw-normal", children: dateFns.format(monthDate, 'LLLL, dd', { locale }) })] }), jsxRuntime.jsxs("div", { className: classNames('react-datepicker__header-selector react-datepicker__header-day-selector', className), style: style, children: [jsxRuntime.jsx(DButtonIcon, { icon: iconPrev || chevronLeft, size: iconSize, variant: "link", onClick: decreaseMonth, disabled: prevMonthButtonDisabled, ariaLabel: prevMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === 0 ? 'visible' : 'hidden' } }), showHeaderSelectors ? (jsxRuntime.jsx(DSelect, { options: months, value: defaultMonth, defaultValue: defaultMonth, onChange: (month) => changeMonth((month === null || month === void 0 ? void 0 : month.value) || 0), searchable: false, className: "custom-month-selector" })) : (jsxRuntime.jsx("p", { children: `${defaultMonth.label} ${defaultYear === null || defaultYear === void 0 ? void 0 : defaultYear.label}` })), jsxRuntime.jsx(DButtonIcon, { icon: iconNext || chevronRight, size: iconSize, variant: "link", onClick: increaseMonth, disabled: nextMonthButtonDisabled, ariaLabel: nextMonthAriaLabel, className: "header-button", style: { visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' } })] })] }));
 }
 
 function DDatePicker(_a) {
@@ -1442,47 +1537,6 @@ function useItemSelection({ getItemIdentifier: getItemIdentifierProp, previousSe
         resetSelectedItems,
         setSelectedItems,
     };
-}
-
-function subscribeToMediaQuery(query, callback) {
-    const mediaQueryList = window.matchMedia(query);
-    mediaQueryList.addEventListener('change', callback);
-    return () => {
-        mediaQueryList.removeEventListener('change', callback);
-    };
-}
-function checkMediaQuery(query) {
-    return window.matchMedia(query).matches;
-}
-
-function useMediaQuery(mediaQuery, useListener = false) {
-    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const noop = (_) => () => { };
-    return React.useSyncExternalStore(useListener ? (cb) => subscribeToMediaQuery(mediaQuery, cb) : noop, () => (mediaQuery ? checkMediaQuery(mediaQuery) : true), () => false);
-}
-
-function useMediaBreakpointUp(breakpoint, useListener = false) {
-    const { breakpoints } = useDContext();
-    const mediaQuery = React.useMemo(() => (`(min-width: ${breakpoints[breakpoint]})`), [breakpoint, breakpoints]);
-    return useMediaQuery(mediaQuery, useListener);
-}
-function useMediaBreakpointUpXs(useListener = false) {
-    return useMediaBreakpointUp('xs', useListener);
-}
-function useMediaBreakpointUpSm(useListener = false) {
-    return useMediaBreakpointUp('sm', useListener);
-}
-function useMediaBreakpointUpMd(useListener = false) {
-    return useMediaBreakpointUp('md', useListener);
-}
-function useMediaBreakpointUpLg(useListener = false) {
-    return useMediaBreakpointUp('lg', useListener);
-}
-function useMediaBreakpointUpXl(useListener = false) {
-    return useMediaBreakpointUp('xl', useListener);
-}
-function useMediaBreakpointUpXxl(useListener = false) {
-    return useMediaBreakpointUp('xxl', useListener);
 }
 
 function DInputCounter(_a, ref) {
@@ -1875,7 +1929,7 @@ function DListGroupItem({ as = 'li', action: actionProp, active, disabled, href,
         }
         return Object.assign(Object.assign({}, active && { 'aria-current': true }), disabled && { 'aria-disabled': true });
     }, [Tag, active, disabled]);
-    return (jsxRuntime.jsxs(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, Tag === 'a' && href && { href }, onClick && { onClick }, ariaAttributes, dataAttributes, Tag === 'button' && { type: 'button' }, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), jsxRuntime.jsx("div", { className: "w-100", children: children }), iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle, className: "ms-auto" }))] })));
+    return (jsxRuntime.jsxs(Tag, Object.assign({ className: classNames(generateClasses, className), style: style }, Tag === 'a' && href && { href }, onClick && { onClick }, ariaAttributes, dataAttributes, Tag === 'button' && { type: 'button' }, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), children, iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle, className: "ms-auto" }))] })));
 }
 
 function DListGroup$1({ as = 'ul', numbered, flush, horizontal, children, className, style, dataAttributes, }) {
