@@ -49,8 +49,6 @@ jobs:
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
       - name: Publish to npm (dist-tag dev)
         run: npm publish --access public --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
