@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.0.0-dev.9
+ * dynamic-framework 2.0.0-dev.10
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -11044,7 +11044,6 @@ react-datepicker__navigation
 .d-voucher-footer {
   display: flex;
   gap: var(--bs-voucher-footer-gap);
-  justify-content: center;
   justify-content: flex-start;
 }
 
