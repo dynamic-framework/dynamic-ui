@@ -25,6 +25,5 @@
 .d-voucher-footer {
   display: flex;
   gap: var(--#{$prefix}voucher-footer-gap);
-  justify-content: center;
   justify-content: flex-start;
 }
