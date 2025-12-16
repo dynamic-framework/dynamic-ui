@@ -8,6 +8,10 @@ concurrency:
   group: dev-publish
   cancel-in-progress: false
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   dev-publish:
     runs-on: ubuntu-latest
@@ -20,7 +24,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           registry-url: https://registry.npmjs.org/
-          scope: '@dynamic-framework'
+      - name: Update npm
+        run: npm install -g npm@latest
       - name: Install dependencies
         run: npm ci
       - name: Ensure Rollup binary
