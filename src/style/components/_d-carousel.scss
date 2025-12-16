@@ -1,10 +1,10 @@
 @import "node_modules/@splidejs/splide/src/css/template/default/index";
-// stylelint-disable
+
 .d-carousel {
   // Arrows
   --#{$prefix}carousel-arrow-space: calc(var(--#{$prefix}ref-spacer-4) * -1);
   // Pagination
-  --#{$prefix}carousel-pagination-bottom: calc(var(--#{$prefix}ref-spacer-4) * -1);
+  --#{$prefix}carousel-pagination-bottom: auto;
   --#{$prefix}carousel-pagination-page-bg: var(--#{$prefix}secondary-100);
   --#{$prefix}carousel-pagination-active-page-bg: var(--#{$prefix}secondary);
   // :focus
@@ -19,6 +19,7 @@
     }
   }
 
+  // stylelint-disable
   .splide__pagination__page {
     margin: 0;
   }
@@ -26,7 +27,6 @@
   .d-carousel-pagination {
     bottom: var(--#{$prefix}carousel-pagination-bottom);
     position: relative;
-    bottom: auto;
     top: -0.5rem;
     width: fit-content;
     background: var(--#{$prefix}gray-25);
@@ -48,6 +48,7 @@
       }
     }
   }
+  // stylelint-enable
 
   &.splide.is-focus-in .d-carousel-arrow:focus,
   &.splide.is-focus-in .d-carousel-pagination-page:focus {
