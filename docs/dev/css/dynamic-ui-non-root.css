@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.0.0-dev.10
+ * dynamic-framework 2.0.0-dev.11
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/libraries/dynamic-ui-react/LICENSE.md
  */
@@ -11509,7 +11509,7 @@ react-datepicker__navigation
 
 .d-carousel {
   --bs-carousel-arrow-space: calc(var(--bs-ref-spacer-4) * -1);
-  --bs-carousel-pagination-bottom: calc(var(--bs-ref-spacer-4) * -1);
+  --bs-carousel-pagination-bottom: auto;
   --bs-carousel-pagination-page-bg: var(--bs-secondary-100);
   --bs-carousel-pagination-active-page-bg: var(--bs-secondary);
   --bs-carousel-focus-outline-color: var(--bs-focus-ring-color);
@@ -11526,7 +11526,6 @@ react-datepicker__navigation
 .d-carousel .d-carousel-pagination {
   bottom: var(--bs-carousel-pagination-bottom);
   position: relative;
-  bottom: auto;
   top: -0.5rem;
   width: -webkit-fit-content;
   width: -moz-fit-content;
