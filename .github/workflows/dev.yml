@@ -8,10 +8,6 @@ concurrency:
   group: dev-publish
   cancel-in-progress: false
 
-permissions:
-  id-token: write  # Required for OIDC
-  contents: read
-
 jobs:
   dev-publish:
     runs-on: ubuntu-latest
@@ -24,8 +20,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           registry-url: https://registry.npmjs.org/
-      - name: Update npm
-        run: npm install -g npm@latest
+          scope: '@dynamic-framework'
       - name: Install dependencies
         run: npm ci
       - name: Ensure Rollup binary
@@ -49,6 +44,8 @@ jobs:
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
       - name: Publish to npm (dist-tag dev)
         run: npm publish --access public --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:

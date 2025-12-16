@@ -6,7 +6,6 @@ on:
       - master
 
 permissions:
-  id-token: write  # Required for OIDC
   contents: write
   packages: write
   pull-requests: write
@@ -34,9 +33,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
           scope: '@dynamic-framework'
         if: ${{ steps.release.outputs.release_created }}
-      - name: Update npm
-        run: npm install -g npm@latest
-        if: ${{ steps.release.outputs.release_created }}
       - name: Install dependencies
         run: npm ci
         if: ${{ steps.release.outputs.release_created }}
@@ -53,4 +49,6 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - name: Publish
         run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
