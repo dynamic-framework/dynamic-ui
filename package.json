@@ -161,7 +161,7 @@
     "rimraf": "~5.0.5",
     "rollup": "^4.27.4",
     "sass": "~1.69.4",
-    "storybook": "~8.2.9",
+    "storybook": "~8.6.15",
     "stylelint": "^16.16.0",
     "stylelint-config-twbs-bootstrap": "^16.0.0",
     "ts-jest": "~29.2.3",
