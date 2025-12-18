@@ -65,7 +65,10 @@ export default function DStepper(
     >
       {options.map(({ label, value, description }) => (
         <div
-          className="d-step"
+          className={classNames({
+            'd-step': true,
+            'd-step-current': value === currentStep && !completed,
+          })}
           key={value}
         >
           <div className="d-step-value">
@@ -73,20 +76,18 @@ export default function DStepper(
               className={classNames({
                 'd-step-icon-container': true,
                 'd-step-check': value < currentStep || completed,
-                'd-step-current': value === currentStep && !completed,
               })}
             >
-              {value < currentStep || completed
-                ? (
-                  <DIcon
-                    icon={icon}
-                    familyClass={iconSuccessFamilyClass}
-                    familyPrefix={iconSuccessFamilyPrefix}
-                    materialStyle={iconSuccessMaterialStyle}
-                    className="d-step-icon"
-                  />
-                )
-                : value}
+              {((value < currentStep) || completed) && (
+                <DIcon
+                  icon={icon}
+                  familyClass={iconSuccessFamilyClass}
+                  familyPrefix={iconSuccessFamilyPrefix}
+                  materialStyle={iconSuccessMaterialStyle}
+                  className="d-step-icon"
+                />
+              )}
+              {value}
             </div>
           </div>
           <div className="d-step-text-container">

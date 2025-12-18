@@ -30,7 +30,6 @@ export type Props = BaseProps & PropsWithChildren<{
   withFocus?: boolean;
   withClick?: boolean;
   open?: boolean;
-  theme?: string;
   size?: ComponentSize;
   placement?: Placement;
   Component: ReactNode;
@@ -51,7 +50,6 @@ export default function DTooltip(
     withClick = false,
     withHover = true,
     open = false,
-    theme = 'dark',
     placement = 'top',
     size,
     Component,
@@ -99,10 +97,9 @@ export default function DTooltip(
     () => ({
       'tooltip show': true,
       [`tooltip-${size}`]: !!size,
-      [`tooltip-${theme}`]: !!theme,
       ...className && { [className]: true },
     }),
-    [size, theme, className],
+    [size, className],
   );
 
   return (

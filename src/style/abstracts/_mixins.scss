@@ -44,12 +44,12 @@
 @mixin df-button-outline-variant-variables(
   $color-name,
   $default-color: var(--#{$prefix}#{$color-name}-500),
-  $hover-bg-color: var(--#{$prefix}#{$color-name}-600),
-  $hover-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-600)),
-  $focus-bg-color: var(--#{$prefix}#{$color-name}-600),
-  $focus-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-600)),
-  $active-bg-color: var(--#{$prefix}#{$color-name}-700),
-  $active-text-color: color-contrast-var(map-get($theme-colors-palettes, #{$color-name}-700)),
+  $default-border-color: $default-color,
+  $hover-color: var(--#{$prefix}#{$color-name}-600),
+  $hover-border-color: $hover-color,
+  $focus-color: $hover-color,
+  $active-color: var(--#{$prefix}#{$color-name}-700),
+  $active-border-color: $active-color,
   $disabled-opacity: $btn-disabled-opacity,
   $box-shadow: $btn-box-shadow,
   $focus-shadow-rgb: var(--#{$prefix}#{$color-name}-500-rgb),
@@ -57,21 +57,21 @@
 ) {
   --#{$prefix}btn-outline-#{$color-name}-color: #{$default-color};
   --#{$prefix}btn-outline-#{$color-name}-bg: transparent;
-  --#{$prefix}btn-outline-#{$color-name}-border-color: #{$default-color};
+  --#{$prefix}btn-outline-#{$color-name}-border-color: #{$default-border-color};
   --#{$prefix}btn-outline-#{$color-name}-box-shadow: #{$box-shadow};
 
-  --#{$prefix}btn-outline-#{$color-name}-hover-color: #{$hover-text-color};
-  --#{$prefix}btn-outline-#{$color-name}-hover-bg: #{$hover-bg-color};
-  --#{$prefix}btn-outline-#{$color-name}-hover-border-color: #{$hover-bg-color};
+  --#{$prefix}btn-outline-#{$color-name}-hover-color: #{$hover-color};
+  --#{$prefix}btn-outline-#{$color-name}-hover-bg: transparent;
+  --#{$prefix}btn-outline-#{$color-name}-hover-border-color: #{$hover-border-color};
 
-  --#{$prefix}btn-outline-#{$color-name}-focus-color: #{$focus-text-color};
-  --#{$prefix}btn-outline-#{$color-name}-focus-bg: #{$focus-bg-color};
-  --#{$prefix}btn-outline-#{$color-name}-focus-border-color: #{$focus-bg-color};
+  --#{$prefix}btn-outline-#{$color-name}-focus-color: #{$focus-color};
+  --#{$prefix}btn-outline-#{$color-name}-focus-bg: transparent;
+  --#{$prefix}btn-outline-#{$color-name}-focus-border-color: #{$focus-color};
   --#{$prefix}btn-outline-#{$color-name}-focus-shadow-rgb: #{$focus-shadow-rgb};
 
-  --#{$prefix}btn-outline-#{$color-name}-active-color: #{$active-text-color};
-  --#{$prefix}btn-outline-#{$color-name}-active-bg: #{$active-bg-color};
-  --#{$prefix}btn-outline-#{$color-name}-active-border-color: #{$active-bg-color};
+  --#{$prefix}btn-outline-#{$color-name}-active-color: #{$active-color};
+  --#{$prefix}btn-outline-#{$color-name}-active-bg: transparent;
+  --#{$prefix}btn-outline-#{$color-name}-active-border-color: #{$active-border-color};
   --#{$prefix}btn-outline-#{$color-name}-active-box-shadow: #{$active-box-shadow};
 
   --#{$prefix}btn-outline-#{$color-name}-disabled-color: #{$default-color};
@@ -120,6 +120,24 @@
 }
 // scss-docs-end df-btn-link-variant-variables-mixin
 
+@mixin df-button-variant-outline-mapper($color-name) {
+  --#{$prefix}btn-color: var(--#{$prefix}btn-outline-#{$color-name}-color);
+  --#{$prefix}btn-border-color: var(--#{$prefix}btn-outline-#{$color-name}-border-color);
+
+  --#{$prefix}btn-hover-color: var(--#{$prefix}btn-outline-#{$color-name}-hover-color);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}btn-outline-#{$color-name}-hover-border-color);
+  --#{$prefix}btn-active-color: var(--#{$prefix}btn-outline-#{$color-name}-active-color);
+  --#{$prefix}btn-active-border-color: var(--#{$prefix}btn-outline-#{$color-name}-active-border-color);
+
+  --#{$prefix}btn-focus-color: var(--#{$prefix}btn-outline-#{$color-name}-focus-color);
+  --#{$prefix}btn-focus-shadow-rgb: var(--#{$prefix}btn-outline-#{$color-name}-focus-shadow-rgb);
+
+  --#{$prefix}btn-box-shadow: #{$btn-box-shadow};
+
+  --#{$prefix}btn-disabled-border-color: var(--#{$prefix}btn-outline-#{$color-name}-disabled-border-color);
+  --#{$prefix}btn-disabled-color: var(--#{$prefix}btn-outline-#{$color-name}-disabled-color);
+}
+
 // scss-docs-start df-btn-variant-mixin
 @mixin df-button-variant-mapper($color-name, $variant-name: "") {
   @if $variant-name != "" {
@@ -149,12 +167,6 @@
   --#{$prefix}btn-disabled-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-bg);
   --#{$prefix}btn-disabled-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-border-color);
   --#{$prefix}btn-disabled-opacity: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-disabled-opacity);
-
-  &.loading {
-    --#{$prefix}btn-disabled-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-color);
-    --#{$prefix}btn-disabled-bg: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-bg);
-    --#{$prefix}btn-disabled-border-color: var(--#{$prefix}btn-#{$variant-name}#{$color-name}-active-border-color);
-  }
 }
 // scss-docs-end df-btn-variant-mixin
 
@@ -170,7 +182,7 @@
     --#{$prefix}table-striped-color: #{$color};
     --#{$prefix}table-active-bg: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{(100% - $table-bg-scale) * $table-active-bg-factor})")};
     --#{$prefix}table-active-color: #{$color};
-    --#{$prefix}table-hover-bg: #{unquote("color-mix(in srgb, var(--#{$prefix}#{$background}), var(--#{$prefix}white) #{(100% - $table-bg-scale) * $table-hover-bg-factor})")};
+    --#{$prefix}table-hover-bg: var(--#{$prefix}gray-25);
     --#{$prefix}table-hover-color: #{$color};
 
     color: var(--#{$prefix}table-color);

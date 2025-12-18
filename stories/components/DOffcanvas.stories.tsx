@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DContextProvider } from '../../src';
-import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
+import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DOffcanvas> = {
@@ -56,12 +56,11 @@ export const Default: Story = {
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -84,7 +83,7 @@ export const CloseIcon: Story = {
   render: (args) => (
     <DOffcanvas {...args}>
       <DOffcanvas.Header
-        icon="x-circle"
+        icon="XCircle"
         showCloseButton
       >
         <h5 className="fw-bold">Advanced filters</h5>
@@ -95,12 +94,11 @@ export const CloseIcon: Story = {
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -131,12 +129,11 @@ export const ActionsPlacementStart: Story = {
       <DOffcanvas.Footer actionPlacement="start">
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -167,12 +164,11 @@ export const ActionsPlacementEnd: Story = {
       <DOffcanvas.Footer actionPlacement="end">
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -201,12 +197,11 @@ export const WithoutHeader: Story = {
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -287,12 +282,11 @@ export const WithoutCancelX: Story = {
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -341,12 +335,12 @@ export const MaterialStyleCloseIcon: Story = {
         <DOffcanvas.Footer>
           <DButton
             text="cancel"
-            theme="secondary"
+            color="secondary"
             variant="outline"
             className="d-grid"
-            pill
+
           />
-          <DButton text="ok" className="d-grid" pill />
+          <DButton text="ok" className="d-grid" />
         </DOffcanvas.Footer>
       </DOffcanvas>
     </DContextProvider>

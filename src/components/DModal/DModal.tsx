@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import classNames from 'classnames';
+import { motion, type Transition } from 'framer-motion';
 
 import type { PropsWithChildren } from 'react';
 
 import { PREFIX_BS } from '../config';
-
 import DModalHeader from './components/DModalHeader';
 import DModalBody from './components/DModalBody';
 import DModalFooter from './components/DModalFooter';
@@ -12,14 +12,20 @@ import DModalFooter from './components/DModalFooter';
 import type { BaseProps, ModalFullScreenFrom, ModalSize } from '../interface';
 
 type Props = BaseProps & PropsWithChildren<{
-  name: string;
+  name:string;
   staticBackdrop?: boolean;
   scrollable?: boolean;
   centered?: boolean;
   fullScreen?: boolean;
   fullScreenFrom?: ModalFullScreenFrom;
   size?: ModalSize;
+  transition?: Transition;
 }>;
+
+const defaultTransition: Transition = {
+  ease: 'easeInOut',
+  duration: 0.3,
+};
 
 function DModal(
   {
@@ -32,6 +38,7 @@ function DModal(
     fullScreen,
     fullScreenFrom,
     size,
+    transition,
     children,
     dataAttributes,
   }: Props,
@@ -55,13 +62,20 @@ function DModal(
   }), [fullScreenClass, centered, fullScreen, scrollable, size]);
 
   return (
-    <div
-      className={classNames('modal portal fade show', className)}
+    <motion.div
+      className={classNames('modal portal show', className)}
       id={name}
       tabIndex={-1}
       aria-labelledby={`${name}Label`}
       aria-hidden="false"
       style={style}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{
+        ...(transition ?? defaultTransition),
+        delay: 0.15,
+      }}
       {...staticBackdrop && ({
         [`data-${PREFIX_BS}backdrop`]: 'static',
         [`data-${PREFIX_BS}keyboard`]: 'false',
@@ -73,7 +87,7 @@ function DModal(
           {children}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

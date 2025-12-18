@@ -1,6 +1,6 @@
 // scss-docs-start form-text-variables
 $form-text-margin-top: var(--#{$prefix}ref-spacer-1) !default;
-$form-text-color: var(--#{$prefix}body-color) !default;
+$form-text-color: var(--#{$prefix}bs-gray-400) !default;
 // scss-docs-end form-text-variables
 
 // scss-docs-start form-label-variables
@@ -11,8 +11,8 @@ $form-label-color: var(--#{$prefix}label-color) !default;
 // scss-docs-end form-label-variables
 
 // scss-docs-start form-input-variables
-$input-padding-y: $spacer-3 !default;
-$input-padding-x: $spacer-4 !default;
+$input-padding-y: $spacer-2 !default;
+$input-padding-x: $spacer-3 !default;
 
 $input-padding-x-sm: $spacer-2 !default;
 $input-padding-y-sm: $spacer-1 !default;
@@ -35,7 +35,7 @@ $input-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-sm: var(--#{$prefix}border-radius-sm) !default;
 $input-border-radius-lg: var(--#{$prefix}border-radius-sm) !default;
 
-$input-focus-border-color: $component-focus-border-color !default; // unused
+$input-focus-border-color: var(--#{$prefix}gray-200) !default;
 $input-focus-width: $input-btn-focus-width !default;
 
 $input-placeholder-color: var(--#{$prefix}border-color) !default;

@@ -63,9 +63,11 @@ typings/
 # OS X temporary filesque
 .DS_Store
 
-.vscode
 .idea
+CLAUDE.md
+.claude/
 
 dist
 dist-transpiled
 .jest-cache
+.developers

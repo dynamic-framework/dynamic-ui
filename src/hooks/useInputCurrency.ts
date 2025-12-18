@@ -34,7 +34,7 @@ export default function useInputCurrency(
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void,
   ref?: ForwardedRef<HTMLInputElement>,
 ) {
-  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
 
   const [innerType, setInnerType] = useState('text');
   const [innerNumber, setInnerNumber] = useState<number | undefined>(value);

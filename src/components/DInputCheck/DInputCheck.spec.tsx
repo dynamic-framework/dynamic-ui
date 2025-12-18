@@ -16,19 +16,20 @@ describe('<DInputCheck />', () => {
       <DInputCheck
         id={props.id}
         type={props.type as InputCheckType}
+        value=""
       />,
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <input
-          class="form-check-input"
-          id="checkTest"
-          type="checkbox"
-          value=""
-        />
-      </div>
-    `);
+<div>
+  <input
+    class="form-check-input"
+    id="checkTest"
+    type="checkbox"
+    value=""
+  />
+</div>
+`);
   });
 
   it('should render base radio', () => {
@@ -41,19 +42,20 @@ describe('<DInputCheck />', () => {
       <DInputCheck
         id={props.id}
         type={props.type as InputCheckType}
+        value=""
       />,
     );
 
     expect(container).toMatchInlineSnapshot(`
-      <div>
-        <input
-          class="form-check-input"
-          id="radioTest"
-          type="radio"
-          value=""
-        />
-      </div>
-    `);
+<div>
+  <input
+    class="form-check-input"
+    id="radioTest"
+    type="radio"
+    value=""
+  />
+</div>
+`);
   });
 
   it('renders input without label', () => {

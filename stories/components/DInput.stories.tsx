@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
 
@@ -85,28 +85,6 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
     label: {
       control: 'text',
       type: 'string',
-    },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    labelIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconMaterialStyle: {
-      control: 'boolean',
-      type: 'boolean',
     },
     placeholder: {
       control: 'text',
@@ -273,10 +251,8 @@ type Story = StoryObj<typeof DInput>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: undefined,
     hint: 'Assistive text',
@@ -288,10 +264,9 @@ export const Invalid: Story = {
     id: 'componentId3',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: undefined,
-    iconStart: 'emoji-smile-upside-down',
+    iconStart: 'Smile',
     iconStartAriaLabel: 'start action',
     iconEnd: undefined,
     hint: 'Assistive text',
@@ -304,10 +279,9 @@ export const Valid: Story = {
     id: 'componentId4',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: undefined,
-    iconStart: 'emoji-smile-upside-down',
+    iconStart: 'Smile',
     iconStartAriaLabel: 'start action',
     iconEnd: undefined,
     hint: 'Assistive text',
@@ -320,28 +294,12 @@ export const Disabled: Story = {
     id: 'componentId5',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: undefined,
-    iconStart: 'emoji-smile-upside-down',
-    iconEnd: 'emoji-smile-upside-down',
-    iconStartAriaLabel: 'start action',
-    iconEndAriaLabel: 'end action',
+    iconEnd: 'ArrowRight',
+    iconEndAriaLabel: 'start action',
     hint: 'Assistive text',
     disabled: true,
-  },
-};
-
-export const Text: Story = {
-  args: {
-    id: 'componentId6',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    labelIcon: 'info-circle',
-    type: 'text',
-    value: undefined,
-    iconStart: undefined,
-    iconEnd: undefined,
   },
 };
 
@@ -350,12 +308,9 @@ export const Floating: Story = {
     id: 'componentId7',
     label: 'Label',
     placeholder: 'Placeholder',
-    labelIcon: undefined,
     type: 'text',
     value: '',
-    iconStart: 'emoji-smile-upside-down',
-    iconEnd: 'emoji-smile-upside-down',
-    iconStartAriaLabel: 'start action',
+    iconEnd: 'ArrowRight',
     iconEndAriaLabel: 'end action',
     hint: 'Assistive text',
     floatingLabel: true,
@@ -370,16 +325,9 @@ export const CustomInputStart: Story = {
     type: 'text',
     inputStart: (
       <DIcon
-        icon="person"
+        icon="User"
       />
     ),
-  },
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
   },
 };
 
@@ -391,16 +339,9 @@ export const CustomInputEnd: Story = {
     type: 'text',
     inputEnd: (
       <DIcon
-        icon="arrow-right"
+        icon="ArrowRight"
       />
     ),
-  },
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
   },
 };
 
@@ -418,63 +359,6 @@ export const MaterialIcon: Story = {
     placeholder: 'Placeholder',
     type: 'text',
     iconStart: 'face_5',
-    iconEnd: 'face_5',
     iconStartAriaLabel: 'start action',
-    iconEndAriaLabel: 'end action',
-  },
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
-  },
-};
-
-export const MaterialIconError: Story = {
-  render: (args: ComponentProps<typeof DInput>) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DInput {...args} />
-    </DContextProvider>
-  ),
-  args: {
-    id: 'componentId11',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    type: 'text',
-    invalid: true,
-  },
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
-  },
-};
-
-export const MaterialIconConfirm: Story = {
-  render: (args: ComponentProps<typeof DInput>) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DInput {...args} />
-    </DContextProvider>
-  ),
-  args: {
-    id: 'componentId12',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    type: 'text',
-    valid: true,
-  },
-  parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
   },
 };

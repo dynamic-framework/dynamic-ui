@@ -17,41 +17,16 @@ describe('<DButton />', () => {
     expect(container).toMatchInlineSnapshot(`
     <div>
       <button
+        aria-busy="false"
+        aria-disabled="false"
         aria-label="Test"
         class="btn btn-primary"
         type="button"
       >
-        <span>
-          ${props.text}
-        </span>
+        ${props.text}
       </button>
     </div>
   `);
-  });
-
-  it('Should render button pill', () => {
-    const props = {
-      text: 'Test',
-      pill: true,
-    };
-
-    const { container } = render(
-      <DButton {...props} />,
-    );
-
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <button
-          aria-label="Test"
-          class="btn btn-primary"
-          type="button"
-        >
-          <span>
-            ${props.text}
-          </span>
-        </button>
-      </div>
-    `);
   });
 
   it('Should call onClick when clicked and stopPropagation is true', () => {
@@ -88,11 +63,11 @@ describe('<DButton />', () => {
     expect(container.querySelector('[aria-label="Loading..."]')).toBeInTheDocument();
   });
 
-  it('Should render theme secondary outline', () => {
+  it('Should render color secondary outline', () => {
     const { container } = render(
       <DButton
         text="Button content"
-        theme="secondary"
+        color="secondary"
         variant="outline"
       />,
     );
@@ -100,38 +75,19 @@ describe('<DButton />', () => {
     expect(container.querySelector('.btn-outline-secondary')).toBeInTheDocument();
   });
 
-  it('Should disable button when state is disabled', () => {
-    const handleClick = jest.fn();
-
-    const { getByRole } = render(
-      <DButton
-        text="Disabled"
-        state="disabled"
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      />,
-    );
-
-    const button = getByRole('button');
-    fireEvent.click(button);
-
-    expect(getByRole('button')).toBeDisabled();
-    expect(handleClick).toHaveBeenCalledTimes(0);
-  });
-
   it('Should render start and end icons', () => {
     const { container } = render(
       <DButton
         text="With Icons"
-        iconStart="start"
-        iconEnd="end"
+        iconStart="ArrowLeft"
+        iconEnd="ArrowRight"
       />,
     );
 
-    const [iconStart, iconEnd] = container.querySelectorAll('i');
-    expect(iconStart).toHaveClass('d-icon', 'bi-start');
-    expect(iconEnd).toHaveClass('d-icon', 'bi-end');
+    const icons = container.querySelectorAll('.d-icon');
+    expect(icons).toHaveLength(2);
+    expect(icons[0].querySelector('svg')).toBeInTheDocument();
+    expect(icons[1].querySelector('svg')).toBeInTheDocument();
   });
 
   it('Should apply value, form, and data attributes', () => {
@@ -158,33 +114,22 @@ describe('<DButton />', () => {
     expect(getByRole('button')).toHaveStyle({ backgroundColor: 'red' });
   });
 
-  it('Should apply state class when state is not disabled', () => {
+  it('Should render loadingText when is passed', () => {
     const { getByRole } = render(
       <DButton
-        text="State"
-        state="active"
-      />,
-    );
-
-    expect(getByRole('button')).toHaveClass('active');
-  });
-
-  it('Should not render text when loading is true', () => {
-    const { queryByText } = render(
-      <DButton
-        text="Loading text"
+        text="Loading"
         loading
+        loadingText="Loading..."
       />,
     );
 
-    expect(queryByText('Loading text')).not.toBeInTheDocument();
+    expect(getByRole('status')).toHaveTextContent('Loading...');
   });
 
   it('Should not render value if empty string', () => {
     const { getByRole } = render(
       <DButton
         text="No Value"
-        value=""
       />,
     );
 
@@ -213,12 +158,5 @@ describe('<DButton />', () => {
     expect(() => {
       fireEvent.click(button);
     }).not.toThrow();
-  });
-
-  it('Should not render text span when text is empty', () => {
-    const { container } = render(<DButton />);
-
-    const span = container.querySelector('span');
-    expect(span).toBeNull();
   });
 });

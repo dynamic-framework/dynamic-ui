@@ -1,8 +1,10 @@
-import { Meta, StoryFn, StoryObj } from '@storybook/react';
-import { ComponentProps, useState } from 'react';
+import { Meta, StoryObj } from '@storybook/react-vite';
+import { ComponentProps } from 'react';
 
 import DPaginator from '../../src/components/DPaginator/DPaginator';
 import { PREFIX_BS } from '../../src/components/config';
+
+type Story = StoryObj<typeof DPaginator>;
 
 const meta: Meta<typeof DPaginator> = {
   title: 'Design System/Components/Paginator',
@@ -35,8 +37,9 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
     total: {
       control: 'number',
     },
-    page: {
+    current: {
       control: 'number',
+      type: 'number',
     },
     onPageChange: {
       action: 'onPageChange',
@@ -103,41 +106,27 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
       },
       options: [undefined, 'hash', 'omit'],
     },
-    showArrows: {
-      control: 'boolean',
-    },
-
   },
   tags: ['autodocs'],
-};
-
-export default meta;
-type Story = StoryObj<typeof DPaginator>;
-
-export const Default: Story = {
+  render: function Render(props: ComponentProps<typeof DPaginator>) {
+    return (
+      <DPaginator
+        {...props}
+      />
+    );
+  },
   decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 'calc(100dvw - 64px)' }}>
+    (Story) => (
+      <div style={{ width: '800' }}>
         <Story />
       </div>
     ),
   ],
-  render: function Render(
-    {
-      page: initialPage,
-      ...args
-    }: ComponentProps<typeof DPaginator>,
-  ) {
-    const [page, setPage] = useState<number | undefined>(initialPage);
-    return (
-      <DPaginator
-        {...args}
-        page={page}
-        onPageChange={setPage}
-        className="justify-content-center"
-      />
-    );
-  },
+};
+
+export default meta;
+
+export const Default: Story = {
   args: {
     total: 20,
     maxWidth: 400,
@@ -145,29 +134,6 @@ export const Default: Story = {
 };
 
 export const LabelArrows: Story = {
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 'calc(100dvw - 64px)' }}>
-        <Story />
-      </div>
-    ),
-  ],
-  render: function Render(
-    {
-      page: initialPage,
-      ...args
-    }: ComponentProps<typeof DPaginator>,
-  ) {
-    const [page, setPage] = useState<number | undefined>(initialPage);
-    return (
-      <DPaginator
-        {...args}
-        page={page}
-        onPageChange={setPage}
-        className="justify-content-center"
-      />
-    );
-  },
   args: {
     total: 20,
     nextLabel: 'Next',
@@ -177,91 +143,22 @@ export const LabelArrows: Story = {
 };
 
 export const NoArrows: Story = {
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 'calc(100dvw - 64px)' }}>
-        <Story />
-      </div>
-    ),
-  ],
-  render: function Render(
-    {
-      page: initialPage,
-      ...args
-    }: ComponentProps<typeof DPaginator>,
-  ) {
-    const [page, setPage] = useState<number | undefined>(initialPage);
-    return (
-      <DPaginator
-        {...args}
-        page={page}
-        onPageChange={setPage}
-        className="justify-content-center"
-      />
-    );
-  },
   args: {
-    showArrows: false,
+    renderNav: false,
     total: 20,
     maxWidth: 200,
   },
 };
 
 export const CustomCurrentPage: Story = {
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 'calc(100dvw - 64px)' }}>
-        <Story />
-      </div>
-    ),
-  ],
-  render: function Render(
-    {
-      page: initialPage,
-      ...args
-    }: ComponentProps<typeof DPaginator>,
-  ) {
-    const [page, setPage] = useState<number | undefined>(initialPage);
-    return (
-      <DPaginator
-        {...args}
-        page={page}
-        onPageChange={setPage}
-        className="justify-content-center"
-      />
-    );
-  },
   args: {
     total: 20,
-    page: 10,
+    current: 10,
     maxWidth: 200,
   },
 };
 
 export const CustomMaxWidth: Story = {
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 'calc(100dvw - 64px)' }}>
-        <Story />
-      </div>
-    ),
-  ],
-  render: function Render(
-    {
-      page: initialPage,
-      ...args
-    }: ComponentProps<typeof DPaginator>,
-  ) {
-    const [page, setPage] = useState<number | undefined>(initialPage);
-    return (
-      <DPaginator
-        {...args}
-        page={page}
-        onPageChange={setPage}
-        className="justify-content-center"
-      />
-    );
-  },
   args: {
     total: 20,
     maxWidth: 400,

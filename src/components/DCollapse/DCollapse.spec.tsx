@@ -22,28 +22,15 @@ describe('<DCollapse />', () => {
       <DCollapse {...props} />,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="collapse-container"
-        >
-          <button
-            class="collapse-button"
-            type="button"
-          >
-            <div
-              class="flex-grow-1"
-            >
-              Header Content
-            </div>
-            <i
-              class="d-icon bi bi-chevron-down"
-              style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-size: var(--bs-fs-small); --bs-icon-component-color: var(--bs-gray); --bs-icon-component-padding: 0;"
-            />
-          </button>
-        </div>
-      </div>
-    `);
+    const collapseContainer = container.querySelector('.collapse-container');
+    const button = container.querySelector('button.collapse-button');
+    const icon = button?.querySelector('.d-icon');
+
+    expect(collapseContainer).toBeInTheDocument();
+    expect(screen.getByText('Header Content')).toBeInTheDocument();
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
+    expect(screen.queryByText('Collapsible Body')).not.toBeInTheDocument();
   });
 
   it('renders with header and without body by default', () => {

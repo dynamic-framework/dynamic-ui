@@ -5,7 +5,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import {
   addDays,
   setHours,
@@ -101,7 +101,7 @@ const config: Meta<typeof DDatePicker> = {
       control: 'text',
       type: 'string',
     },
-    headerButtonTheme: {
+    headerButtonColor: {
       control: 'text',
       type: 'string',
     },
@@ -316,7 +316,7 @@ export const Default: Story = {
     inputAriaLabel: 'Calendar',
     dateFormat: 'dd/MM/yyyy',
     inline: false,
-    iconInput: 'calendar',
+    iconInput: 'Calendar',
     iconHeaderPrev: 'chevron-left',
     iconHeaderNext: 'chevron-right',
     showHeaderSelectors: false,
@@ -345,7 +345,7 @@ export const WithSelector: Story = {
     inputAriaLabel: 'Calendar',
     dateFormat: 'dd/MM/yyyy',
     inline: false,
-    iconInput: 'calendar',
+    iconInput: 'Calendar',
     iconHeaderPrev: 'chevron-left',
     iconHeaderNext: 'chevron-right',
   },
@@ -357,7 +357,7 @@ export const Weeks: Story = {
     inputAriaLabel: 'Calendar',
     dateFormat: 'dd/MM/yyyy',
     inline: true,
-    iconInput: 'calendar',
+    iconInput: 'Calendar',
     iconHeaderPrev: 'chevron-left',
     iconHeaderNext: 'chevron-right',
     showWeekNumbers: true,
@@ -416,7 +416,7 @@ export const InputValidState: Story = {
     valid: true,
     inputHint: 'This is a valid date',
     inline: false,
-    iconInput: 'calendar',
+    iconInput: 'Calendar',
     iconHeaderPrev: 'chevron-left',
     iconHeaderNext: 'chevron-right',
   },
@@ -430,7 +430,7 @@ export const InputInvalidState: Story = {
     invalid: true,
     inputHint: 'This is an invalid date',
     inline: false,
-    iconInput: 'calendar',
+    iconInput: 'Calendar',
     iconHeaderPrev: 'chevron-left',
     iconHeaderNext: 'chevron-right',
   },

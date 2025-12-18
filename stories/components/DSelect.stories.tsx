@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import DSelect from '../../src/components/DSelect';
 
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
-import type { OptionIcon, OptionEmoji } from '../../src/components/DSelect';
+import type { OptionEmoji, OptionIcon } from '../../src/components/DSelect';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL, ICONS } from '../config/constants';
 
 const config: Meta<typeof DSelect> = {
@@ -54,6 +54,9 @@ To understand in more detail the aspects covered by this component, review the f
       },
     },
   },
+  args: {
+    menuPlacement: 'bottom',
+  },
   argTypes: {
     id: {
       control: 'text',
@@ -79,31 +82,10 @@ To understand in more detail the aspects covered by this component, review the f
       type: 'string',
       description: 'The label text for the component',
     },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-      description: 'The icon for the label of the component',
-    },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
       description: 'Determines if the label should float above the input',
-    },
-    labelIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family class for the label icon',
-    },
-    labelIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-      description: 'The icon family prefix for the label icon',
     },
     iconFamilyClass: {
       control: 'text',
@@ -311,8 +293,13 @@ To understand in more detail the aspects covered by this component, review the f
       description: 'The DOM element to append the menu to',
     },
     menuPlacement: {
-      control: 'text',
-      description: 'The placement of the menu',
+      control: { type: 'select' },
+      options: ['auto', 'top', 'bottom'],
+      description: 'Placement of the menu in relation to the control',
+      table: {
+        type: { summary: '"bottom" | "auto" | "top"' },
+        defaultValue: { summary: 'bottom' },
+      },
     },
     menuPosition: {
       control: 'text',
@@ -358,9 +345,9 @@ To understand in more detail the aspects covered by this component, review the f
       control: 'object',
       description: 'Custom styles for the component',
     },
-    theme: {
+    color: {
       control: 'object',
-      description: 'Custom theme for the component',
+      description: 'Custom color for the component',
     },
     'aria-label': {
       control: 'text',
@@ -445,8 +432,10 @@ To understand in more detail the aspects covered by this component, review the f
   },
   decorators: [
     (Story) => (
-      <div style={{ height: '400px' }} className="position-relative">
-        <Story />
+      <div style={{ height: '400px' }} className="d-flex justify-content-center align-items-center">
+        <div className="position-relative">
+          <Story />
+        </div>
       </div>
     ),
   ],
@@ -463,9 +452,9 @@ const OPTIONS = [
 ];
 
 const OPTIONS_WITH_ICON = [
-  { label: 'Option 1', value: '1', icon: 'fire' },
-  { label: 'Option 2', value: '2', icon: 'calendar' },
-  { label: 'Option 3', value: '3', icon: 'camera' },
+  { label: 'Option 1', value: '1', icon: 'Flame' },
+  { label: 'Option 2', value: '2', icon: 'Calendar' },
+  { label: 'Option 3', value: '3', icon: 'Camera' },
 ];
 
 const OPTIONS_WITH_EMOJI = [

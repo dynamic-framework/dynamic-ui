@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DProgress from '../../src/components/DProgress/DProgress';
 import { PREFIX_BS } from '../../src/components/config';
@@ -226,5 +226,36 @@ export const OneHundred: Story = {
     maxValue: 100,
     enableStripedAnimation: false,
     hideCurrentValue: false,
+  },
+};
+
+export const CustomHeight: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '320px', height: '320px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DProgress {...args} />
+  ),
+  args: {
+    currentValue: 75,
+    minValue: 0,
+    maxValue: 100,
+    enableStripedAnimation: false,
+    hideCurrentValue: true,
+    style: { height: '10px' },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Progress bar with custom height (10px) without text value. Useful for compact designs.',
+      },
+    },
   },
 };

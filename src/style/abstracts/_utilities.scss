@@ -30,7 +30,7 @@ $utilities: map-merge(
         values: map-merge(
           map-get(map-get($utilities, "background-color"), "values"),
           map-loop(
-            map-merge-multiple($theme-colors-palettes, $palette-grays, $bg-surface-colors, $bg-soft-colors),
+            map-merge-multiple($theme-colors-palettes, $palette-grays),
             rgba-css-var,
             "$key",
             "bg"
@@ -66,6 +66,12 @@ $utilities: map-merge(
         responsive: true
       )
     ),
+    "position": map-merge(
+      map-get($utilities, "position"),
+      (
+        responsive: true
+      )
+    ),
     "border-color": map-merge(
       map-get($utilities, "border-color"),
       (
@@ -73,6 +79,25 @@ $utilities: map-merge(
           map-get(map-get($utilities, "border-color"), "values"),
           map-loop($palette-grays, rgba-css-var, "$key", "border"),
         )
+      )
+    ),
+    "grid-column": (
+      class: "g-col",
+      property: grid-column,
+      responsive: true,
+      values: (
+        13: auto/span 13,
+        14: auto/span 14,
+        15: auto/span 15,
+        16: auto/span 16,
+        17: auto/span 17,
+        18: auto/span 18,
+        19: auto/span 19,
+        20: auto/span 20,
+        21: auto/span 21,
+        22: auto/span 22,
+        23: auto/span 23,
+        24: auto/span 24
       )
     ),
     "overlay": (
@@ -128,6 +153,50 @@ $utilities: map-merge(
       map-get($utilities, "width"),
       (
         responsive: true,
+      )
+    ),
+    "v-align": (
+      property: vertical-align,
+      responsive: true,
+      class: "v-align",
+      values: (
+        baseline: baseline,
+        top: top,
+        bottom: bottom,
+        text-top: text-top,
+        text-bottom: text-bottom,
+        sub: sub,
+        super: super,
+        middle: middle,
+      )
+    ),
+    "display": (
+      property: display,
+      responsive: true,
+      class: "d",
+      values: (
+        inline: inline,
+        inline-block: inline-block,
+        block: block,
+        table: table,
+        table-row: table-row,
+        table-cell: table-cell,
+        flex: flex,
+        inline-flex: inline-flex,
+        none: none,
+        grid: grid,
+        table-header-group: table-header-group,
+      )
+    ),
+    "text-wrap": (
+      property: text-wrap,
+      responsive: true,
+      class: "text-wrap",
+      values: (
+        balance: balance,
+        normal: normal,
+        truncate: truncate,
+        wrap: wrap
       )
     ),
     "body-font-size": (

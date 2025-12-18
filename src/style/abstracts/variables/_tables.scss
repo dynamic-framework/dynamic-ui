@@ -10,17 +10,22 @@ $table-bg-scale: -100% !default;
 
 $table-striped-color: $table-color !default;
 $table-striped-bg-factor: .05 !default;
-$table-striped-bg: unquote("color-mix(in srgb, var(--#{$prefix}white), var(--#{$prefix}black) #{(100% - $table-bg-scale) * $table-striped-bg-factor})") !default;
 
 $table-active-color: $table-color !default;
 $table-active-bg-factor: .1 !default;
-$table-active-bg: unquote("color-mix(in srgb, var(--#{$prefix}white), var(--#{$prefix}black) #{(100% - $table-bg-scale) * $table-active-bg-factor})") !default;
 
 $table-hover-color: $table-color !default;
 $table-hover-bg-factor: .075 !default;
-$table-hover-bg: unquote("color-mix(in srgb, var(--#{$prefix}white), var(--#{$prefix}black) #{(100% - $table-bg-scale) * $table-hover-bg-factor})") !default;
+
+
+$table-bg-color-default: var(--#{$prefix}gray-25) !default;
+
+$table-hover-bg: $table-bg-color-default !default;
+$table-striped-bg: $table-bg-color-default !default;
+$table-active-bg: $table-bg-color-default !default;
 
 $table-border-factor: .1 !default;
+$table-border-color: var(--#{$prefix}gray-50) !default;
 
 
 // scss-docs-end table-variables

@@ -3,7 +3,7 @@
 // scss-docs-start list-group-variables
 $list-group-color: var(--#{$prefix}dark) !default;
 $list-group-bg: transparent !default;
-$list-group-border-color: var(--#{$prefix}gray-300) !default;
+$list-group-border-color: var(--#{$prefix}gray-100) !default;
 $list-group-border-radius: var(--#{$prefix}border-radius-sm) !default;
 
 $list-group-item-padding-y: var(--#{$prefix}ref-spacer-3) !default;
@@ -14,7 +14,7 @@ $list-group-item-bg-scale: 0% !default;
 $list-group-item-color-scale: 40% !default;
 // fusv-enable
 
-$list-group-hover-bg: var(--#{$prefix}surface-primary) !default;
+$list-group-hover-bg: var(--#{$prefix}subtle-primary) !default;
 
 $list-group-disabled-color: var(--#{$prefix}gray-600) !default;
 

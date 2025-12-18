@@ -16,11 +16,14 @@
   --#{$prefix}btn–text-decoration: #{if($link-decoration == none, null, none)};
   --#{$prefix}btn-lg-padding-y: #{$btn-padding-y-lg};
   --#{$prefix}btn-lg-padding-x: #{$btn-padding-x-lg};
-  --#{$prefix}btn-lg-font-size: #{$btn-font-size-lg};
+  --#{$prefix}btn-lg-font-size: #{$btn-lg-font-size};
   --#{$prefix}btn-sm-padding-y: #{$btn-padding-y-sm};
   --#{$prefix}btn-sm-padding-x: #{$btn-padding-x-sm};
   --#{$prefix}btn-sm-font-size: #{$btn-font-size-sm};
+  --#{$prefix}btn-box-shadow: #{btn-box-shadow};
+  --#{$prefix}btn-loading-gap: #{$btn-loading-gap};
 
+  position: relative;
   display: inline-flex;
   flex-direction: row;
   gap: var(--#{$prefix}btn-gap, $spacer-2);
@@ -28,7 +31,6 @@
   justify-content: center;
   padding: var(--#{$prefix}btn-padding-y) var(--#{$prefix}btn-padding-x);
   font-family: var(--#{$prefix}btn-font-family);
-  @include font-size(var(--#{$prefix}btn-font-size));
   font-weight: var(--#{$prefix}btn-font-weight);
   line-height: var(--#{$prefix}btn-line-height);
   color: var(--#{$prefix}btn-color);
@@ -40,13 +42,11 @@
   user-select: none;
   border: var(--#{$prefix}btn-border-width) solid var(--#{$prefix}btn-border-color);
   border-radius: var(--#{$prefix}btn-border-radius);
+  box-shadow: var(--#{$prefix}btn-box-shadow);
+  @include font-size(var(--#{$prefix}btn-font-size));
   @include gradient-bg(var(--#{$prefix}btn-bg));
   @include box-shadow(var(--#{$prefix}btn-box-shadow));
   @include transition($btn-transition);
-
-  > span {
-    text-decoration: var(--#{$prefix}btn-text-decoration);
-  }
 
   // hover selectors
   &.hover,
@@ -78,6 +78,16 @@
     } @else {
       box-shadow: var(--#{$prefix}btn-focus-box-shadow);
     }
+  }
+  /* stylelint-disable-next-line scss/selector-no-union-class-name */
+  &-loading {
+    position: relative;
+    display: inline-flex;
+    gap: var(--#{$prefix}btn-loading-gap);
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 
   .btn-check.focus-visible + &,
@@ -128,11 +138,13 @@
   &.disabled,
   &:disabled,
   fieldset:disabled & {
+
     color: var(--#{$prefix}btn-disabled-color);
     pointer-events: none;
     background-color: var(--#{$prefix}btn-disabled-bg);
     background-image: if($enable-gradients, none, null);
     border-color: var(--#{$prefix}btn-disabled-border-color);
+
     opacity: var(--#{$prefix}btn-disabled-opacity);
     @include box-shadow(none);
   }
@@ -143,16 +155,18 @@
 }
 
 @each $color, $value in $theme-colors {
-  .btn-#{$color} {
-    @include df-button-variant-mapper($color);
-  }
+  @if not map-has-key($theme-colors-extra, $color) {
+    .btn-#{$color} {
+      @include df-button-variant-mapper($color);
+    }
 
-  .btn-outline-#{$color} {
-    @include df-button-variant-mapper($color, "outline");
-  }
+    .btn-link-#{$color} {
+      @include df-button-variant-mapper($color, "link");
+    }
 
-  .btn-link-#{$color} {
-    @include df-button-variant-mapper($color, "link");
+    .btn-outline-#{$color} {
+      @include df-button-variant-outline-mapper($color);
+    }
   }
 }
 
@@ -177,8 +191,9 @@
 [class*="btn-link-"] {
   --#{$prefix}btn-text-decoration: var(--#{$prefix}link-decoration);
 
+  &.hover,
   &:hover {
-    --#{$prefix}btn-text-decoration: underline;
+    background: rgba(0, 0, 0, .03);
   }
 
   @if $enable-gradients {
@@ -192,39 +207,27 @@
 
 // Make a button look and behave like a link
 .btn-link {
-  --#{$prefix}btn-font-weight: #{$font-weight-normal};
   --#{$prefix}btn-color: #{$btn-link-color};
   --#{$prefix}btn-bg: transparent;
   --#{$prefix}btn-border-color: transparent;
-  --#{$prefix}btn-hover-color: #{$btn-link-hover-color};
+  --#{$prefix}btn-hover-color: #{$btn-link-color};
   --#{$prefix}btn-hover-border-color: transparent;
-  --#{$prefix}btn-active-color: #{$btn-link-hover-color};
+  --#{$prefix}btn-active-color: #{$btn-link-color};
   --#{$prefix}btn-active-border-color: transparent;
   --#{$prefix}btn-disabled-color: #{$btn-link-disabled-color};
   --#{$prefix}btn-disabled-border-color: transparent;
   --#{$prefix}btn-box-shadow: 0 0 0 #000; // Can't use `none` as keyword negates all values when used with multiple shadows
   --#{$prefix}btn-focus-shadow-rgb: #{$btn-link-focus-shadow-rgb};
+  --#{$prefix}btn-box-shadow: none;
 
   text-decoration: $link-decoration;
   @if $enable-gradients {
     background-image: none;
   }
 
-  &.hover,
-  &:hover,
-  &.focus-visible,
-  &:focus-visible {
-    text-decoration: $link-hover-decoration;
-  }
-
   &.focus-visible,
   &:focus-visible {
     color: var(--#{$prefix}btn-color);
-  }
-
-  &.hover,
-  &:hover {
-    color: var(--#{$prefix}btn-hover-color);
   }
 
   // No need for an active state here

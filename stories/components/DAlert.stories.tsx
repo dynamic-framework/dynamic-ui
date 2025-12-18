@@ -1,11 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { ComponentProps } from 'react';
-import DAlert from '../../src/components/DAlert/DAlert';
-import { COLOR_THEMES, ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
+import DAlert from '../../src/components/DAlert/DAlert';
+import {
+  COLOR_STATES,
+  CONTEXT_PROVIDER_CONFIG_MATERIAL,
+  ICONS,
+} from '../config/constants';
 
 const config: Meta<typeof DAlert> = {
   title: 'Design System/Components/Alert',
@@ -43,12 +47,12 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
     style: {
       control: 'object',
     },
-    theme: {
+    color: {
       control: 'select',
       type: 'string',
-      options: COLOR_THEMES,
+      options: COLOR_STATES,
       table: { defaultValue: { summary: 'success' } },
-      description: 'Toast type',
+      description: 'Alert color',
     },
     icon: {
       control: 'select',
@@ -90,86 +94,36 @@ export default config;
 type Story = StoryObj<typeof DAlert>;
 
 export const Success: Story = {
-  render: (args) => (
-    <DAlert {...args}>
-      <div>
-        <h5 className="mb-2">Heading</h5>
-        <p className="m-0">
-          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
-          Please consider using our online services Our offices are open from 9:00 AM
-          to 1:00 PM this Monday, December 1st. Please consider using our online services
-          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
-          Please consider using our online services
-        </p>
-        <a href="#" className="text-primary">Link</a>
-      </div>
-    </DAlert>
-  ),
   args: {
-    showClose: true,
+    color: 'success',
+    children: 'This is a success alert',
+    className: undefined,
+    icon: undefined,
+    iconClose: undefined,
+    showClose: false,
+    id: undefined,
+    style: undefined,
   },
 };
 
 export const Danger: Story = {
-  render: (args) => (
-    <DAlert {...args}>
-      <div>
-        <h5 className="mb-2">Heading</h5>
-        <p className="m-0">
-          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
-          Please consider using our online services Our offices are open from 9:00 AM
-          to 1:00 PM this Monday, December 1st. Please consider using our online services
-          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
-          Please consider using our online services
-        </p>
-        <a href="#" className="text-primary">Link</a>
-      </div>
-    </DAlert>
-  ),
   args: {
-    theme: 'danger',
+    color: 'danger',
+    children: 'This is a danger alert',
   },
 };
 
 export const Info: Story = {
-  render: (args) => (
-    <DAlert {...args}>
-      <div>
-        <h5 className="mb-2">Heading</h5>
-        <p className="m-0">
-          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
-          Please consider using our online services Our offices are open from 9:00 AM
-          to 1:00 PM this Monday, December 1st. Please consider using our online services
-          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
-          Please consider using our online services
-        </p>
-        <a href="#" className="text-primary">Link</a>
-      </div>
-    </DAlert>
-  ),
   args: {
-    theme: 'info',
+    color: 'info',
+    children: 'This is a info alert',
   },
 };
 
 export const Warning: Story = {
-  render: (args) => (
-    <DAlert {...args}>
-      <div>
-        <h5 className="mb-2">Heading</h5>
-        <p className="m-0">
-          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
-          Please consider using our online services Our offices are open from 9:00 AM
-          to 1:00 PM this Monday, December 1st. Please consider using our online services
-          Our offices are open from 9:00 AM to 1:00 PM this Monday, December 1st.
-          Please consider using our online services
-        </p>
-        <a href="#" className="text-primary">Link</a>
-      </div>
-    </DAlert>
-  ),
   args: {
-    theme: 'warning',
+    color: 'warning',
+    children: 'This is a warning alert',
   },
 };
 
@@ -190,7 +144,7 @@ export const SuccessIcon: Story = {
     </DAlert>
   ),
   args: {
-    theme: 'success',
+    color: 'success',
   },
 };
 
@@ -211,7 +165,7 @@ export const DangerIcon: Story = {
     </DAlert>
   ),
   args: {
-    theme: 'danger',
+    color: 'danger',
   },
 };
 
@@ -232,7 +186,7 @@ export const InfoIcon: Story = {
     </DAlert>
   ),
   args: {
-    theme: 'info',
+    color: 'info',
   },
 };
 
@@ -253,7 +207,7 @@ export const WarningIcon: Story = {
     </DAlert>
   ),
   args: {
-    theme: 'warning',
+    color: 'warning',
   },
 };
 
@@ -278,7 +232,7 @@ export const MaterialStyle: Story = {
   ),
   args: {
     showClose: true,
-    theme: 'secondary',
+    color: 'info',
   },
   parameters: {
     docs: {

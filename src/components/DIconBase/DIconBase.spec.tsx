@@ -4,75 +4,37 @@ import { render, screen } from '@testing-library/react';
 import DIconBase from '.';
 
 describe('<DIconBase />', () => {
-  it('should render my component', () => {
-    const icon = { icon: 'heart' };
-
+  it('should render Lucide icon', () => {
     const { container } = render(
-      <DIconBase {...icon} />,
+      <DIconBase icon="Heart" />,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <i
-          class="d-icon bi bi-heart"
-          style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-        />
-      </div>
-    `);
+    const iconElement = container.querySelector('.d-icon');
+    expect(iconElement).toBeInTheDocument();
+
+    // Lucide renders an SVG
+    const svg = container.querySelector('svg');
+    expect(svg).toBeInTheDocument();
   });
 
-  it('renders with default classes and styles', () => {
+  it('renders with default classes', () => {
     render(
       <DIconBase
-        icon="check"
+        icon="Check"
         dataAttributes={{ 'data-testid': 'icon' }}
       />,
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveClass('d-icon', 'bi', 'bi-check');
-    expect(icon).not.toHaveClass('d-icon-loading');
+    expect(icon).toHaveClass('d-icon');
   });
 
-  it('renders loading state and applies loading duration', () => {
+  it('applies custom size and color', () => {
     render(
       <DIconBase
-        icon="loader"
-        loading
-        dataAttributes={{ 'data-testid': 'icon' }}
-      />,
-    );
-
-    const icon = screen.getByTestId('icon');
-    expect(icon).toHaveClass('d-icon-loading');
-    expect(icon).toHaveStyle({
-      '--bs-icon-component-loading-duration': '1.8s',
-    });
-  });
-
-  it('applies custom familyClass and familyPrefix', () => {
-    render(
-      <DIconBase
-        icon="rocket"
-        familyClass="mdi"
-        familyPrefix="mdi-"
-        dataAttributes={{ 'data-testid': 'icon' }}
-      />,
-    );
-
-    const icon = screen.getByTestId('icon');
-    expect(icon).toHaveClass('mdi', 'mdi-rocket');
-  });
-
-  it('applies custom size, color, backgroundColor and circleSize', () => {
-    render(
-      <DIconBase
-        icon="star"
+        icon="Star"
         size="32px"
-        color="red"
-        backgroundColor="blue"
-        hasCircle
-        circleSize="10px"
+        color="primary"
         dataAttributes={{ 'data-testid': 'icon' }}
       />,
     );
@@ -80,17 +42,35 @@ describe('<DIconBase />', () => {
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveStyle({
       '--bs-icon-component-size': '32px',
-      '--bs-icon-component-color': 'red',
-      '--bs-icon-component-bg-color': 'blue',
-      '--bs-icon-component-padding': '10px',
+      '--bs-icon-component-color': 'var(--bs-primary)',
     });
   });
 
-  it('applies theme-based color and backgroundColor if provided', () => {
+  it('applies custom size and color with hasCircle', () => {
     render(
       <DIconBase
-        icon="star"
-        theme="primary"
+        icon="Star"
+        size="32px"
+        color="primary"
+        hasCircle
+        dataAttributes={{ 'data-testid': 'icon' }}
+      />,
+    );
+
+    const icon = screen.getByTestId('icon');
+    expect(icon).toHaveStyle({
+      '--bs-icon-component-size': '32px',
+      '--bs-icon-component-color': 'var(--bs-primary)',
+      '--bs-icon-component-bg-color': 'rgba(var(--bs-primary-rgb), 0.1)',
+      '--bs-icon-component-padding': 'calc(var(--bs-icon-component-size, 24px) * 0.4)',
+    });
+  });
+
+  it('applies color-based background when hasCircle is true', () => {
+    render(
+      <DIconBase
+        icon="Star"
+        color="primary"
         hasCircle
         dataAttributes={{ 'data-testid': 'icon' }}
       />,
@@ -103,24 +83,25 @@ describe('<DIconBase />', () => {
     });
   });
 
-  it('renders icon text when materialStyle is true and skips prefixed class', () => {
+  it('renders Material Design icon when materialStyle is true', () => {
     render(
       <DIconBase
         icon="menu"
         materialStyle
+        familyClass="material-symbols-outlined"
         dataAttributes={{ 'data-testid': 'icon' }}
       />,
     );
 
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveTextContent('menu');
-    expect(icon).not.toHaveClass('bi-menu');
+    expect(icon).toHaveClass('material-symbols-outlined');
   });
 
-  it('applies default circle background and padding when hasCircle is true and no backgroundColor is provided', () => {
+  it('applies default circle background and padding when hasCircle is true', () => {
     render(
       <DIconBase
-        icon="circle"
+        icon="Circle"
         hasCircle
         dataAttributes={{ 'data-testid': 'icon' }}
       />,
@@ -129,14 +110,14 @@ describe('<DIconBase />', () => {
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveStyle({
       '--bs-icon-component-bg-color': 'rgba(var(--bs-body-color-rgb), 0.1)',
-      '--bs-icon-component-padding': 'calc(var(--bs-icon-size) * 1)',
+      '--bs-icon-component-padding': 'calc(var(--bs-icon-component-size, 24px) * 0.4)',
     });
   });
 
   it('applies custom className when provided', () => {
     render(
       <DIconBase
-        icon="star"
+        icon="Star"
         className="custom-icon-class"
         dataAttributes={{ 'data-testid': 'icon' }}
       />,
@@ -144,5 +125,61 @@ describe('<DIconBase />', () => {
 
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveClass('custom-icon-class');
+  });
+
+  it('applies strokeWidth to Lucide icons', () => {
+    const { container } = render(
+      <DIconBase
+        icon="Heart"
+        strokeWidth={3}
+      />,
+    );
+
+    const svg = container.querySelector('svg');
+    expect(svg).toBeInTheDocument();
+  });
+
+  it('renders Lucide icon with proper size', () => {
+    const { container } = render(
+      <DIconBase
+        icon="Settings"
+        size="48px"
+      />,
+    );
+
+    const svg = container.querySelector('svg');
+    expect(svg).toBeInTheDocument();
+  });
+
+  it('shows warning for non-existent icon', () => {
+    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+    const { container } = render(
+      <DIconBase icon="NonExistentIcon" />,
+    );
+
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Icon "NonExistentIcon" not found in Lucide'),
+    );
+
+    // Should render fallback
+    const iconElement = container.querySelector('.d-icon');
+    expect(iconElement).toHaveTextContent('?');
+
+    consoleWarnSpy.mockRestore();
+  });
+
+  it('renders with custom familyClass for Material Design', () => {
+    render(
+      <DIconBase
+        icon="star"
+        materialStyle
+        familyClass="custom-icon-family"
+        dataAttributes={{ 'data-testid': 'icon' }}
+      />,
+    );
+
+    const icon = screen.getByTestId('icon');
+    expect(icon).toHaveClass('custom-icon-family');
   });
 });

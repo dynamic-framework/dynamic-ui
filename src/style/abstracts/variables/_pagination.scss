@@ -12,7 +12,7 @@ $pagination-padding-x-lg: var(--#{$prefix}ref-spacer-1) !default;
 $pagination-page-item-size: $spacer-8 !default;
 $pagination-page-item-size-lg: $spacer-10 !default;
 $pagination-page-item-size-sm: $spacer-6 !default;
-$pagination-page-border-radius: $pagination-page-item-size !default;
+$pagination-page-border-radius: var(--#{$prefix}border-radius) !default;
 $pagination-page-control-color: var(--#{$prefix}primary) !default;
 $pagination-page-control-disabled-color: var(--#{$prefix}primary-200) !default;
 // end custom
@@ -22,7 +22,7 @@ $pagination-bg: transparent !default;
 $pagination-border-width: 0 !default;
 
 $pagination-hover-color: var(--#{$prefix}body-color) !default;
-$pagination-hover-bg: var(--#{$prefix}primary-50) !default;
+$pagination-hover-bg: var(--#{$prefix}gray-50) !default;
 $pagination-hover-border-color: 0 !default; // Todo in v6: remove this?
 
 $pagination-focus-color: #{$pagination-hover-color} !default;
@@ -33,6 +33,6 @@ $pagination-focus-outline: 0 !default;
 $pagination-disabled-color: var(--#{$prefix}body-color) !default;
 $pagination-disabled-bg: var(--#{$prefix}transparent) !default;
 
-$pagination-border-radius-sm: $pagination-page-item-size-sm !default;
-$pagination-border-radius-lg: $pagination-page-item-size-lg !default;
+// $pagination-border-radius-sm: $pagination-page-item-size-sm !default;
+// $pagination-border-radius-lg: $pagination-page-item-size-lg !default;
 // scss-docs-end pagination-variables

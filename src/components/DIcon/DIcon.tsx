@@ -20,6 +20,7 @@ export default function DIcon(
       materialStyle,
     },
   } = useDContext();
+
   return (
     <DIconBase
       familyClass={propFamilyClass || familyClass}

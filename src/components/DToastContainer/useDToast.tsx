@@ -12,14 +12,15 @@ import DToast from '../DToast/DToast';
 import DIcon from '../DIcon';
 import { useDContext } from '../../contexts';
 
+import { ComponentStateColor } from '../interface';
+
 type ToastData = {
   title: string;
   description?: string;
   timestamp?: string;
   icon?: string;
   closeIcon?: string;
-  theme?: string;
-  soft?: boolean;
+  color?: ComponentStateColor;
 };
 
 type Props = Partial<Pick<Toast, 'id' | 'duration' | 'position'>>;
@@ -45,8 +46,7 @@ export default function useDToast() {
       icon,
       closeIcon,
       timestamp,
-      theme,
-      soft,
+      color,
     } = data;
 
     return reactHotToast.custom(({ id, visible }) => {
@@ -56,8 +56,7 @@ export default function useDToast() {
       if (!description) {
         return (
           <DToast className={classNames({
-            [`toast-${theme}`]: !!theme && !soft,
-            [`toast-soft-${theme}`]: !!theme && !!soft,
+            [`toast-${color}`]: !!color,
           }, 'show')}
           >
             <DToast.Body>
@@ -81,8 +80,7 @@ export default function useDToast() {
       }
       return (
         <DToast className={classNames({
-          [`toast-${theme}`]: !!theme && !soft,
-          [`toast-soft-${theme}`]: !!theme && !!soft,
+          [`toast-${color}`]: !!color,
         }, 'show')}
         >
           <DToast.Header>

@@ -1,8 +1,4 @@
-import {
-  Meta,
-  Source,
-  Unstyled,
-} from '@storybook/blocks';
+import { Meta, Source, Unstyled } from "@storybook/addon-docs/blocks";
 
 import {
   ExampleSimpleToastRoot,
@@ -10,7 +6,7 @@ import {
   ExampleCustomToastRoot,
 } from "./useToastExamples";
 
-import DAlert from '../../src/components/DAlert/DAlert';
+import DAlert from "../../src/components/DAlert/DAlert";
 
 <Meta title="Design System/Patterns/Toast" />
 
@@ -20,12 +16,16 @@ import DAlert from '../../src/components/DAlert/DAlert';
 
 Toasts use `DToastContainer` and the `useDToast` hook, which are abstractions to configure react-hot-toast in conjunction with
 a `DToast` to generate toasts. For more detailed information, refer to the official [React Hot Toast Documentation](https://react-hot-toast.com/docs).
+
 <br />
 
 <Unstyled>
-  <DAlert theme="warning">
-    <span>Toast appears in all containers because of the way react-hot-toast is programmed, however,
-    if you want to see the correct toast make it show up from the correct container.</span>
+  <DAlert color="warning">
+    <span>
+      Toast appears in all containers because of the way react-hot-toast is
+      programmed, however, if you want to see the correct toast make it show up
+      from the correct container.
+    </span>
   </DAlert>
 </Unstyled>
 
@@ -42,10 +42,13 @@ The `useDToast` hook provides a simple and flexible way to create toast notifica
 
 Below you will see examples of the use of toast in a simple way, with a custom component and with Material Icons.
 
-## Basic toast no theme
+## Basic toast no color
 
 <Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+  <div
+    className="d-flex flex-column justify-content-end align-items-end"
+    style={{ height: "200px" }}
+  >
     <ExampleSimpleToastRoot />
   </div>
 </Unstyled>
@@ -62,34 +65,25 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-  return (
-    <DContextProvider>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            { title: 'Example' },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
+return (
 
-## Basic toast secondary theme
+<DContextProvider>
+  <DButton
+    text="Show Toast"
+    onClick={() => toast({ title: "Example" }, { duration: 40000 })}
+  />
+  <DToastContainer position="top-right" />
+</DContextProvider>
+); } ` } language="tsx" dark />
+
+## Basic toast success color
 
 <Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
-    <ExampleSimpleToastRoot type='secondary'/>
+  <div
+    className="d-flex flex-column justify-content-end align-items-end"
+    style={{ height: "200px" }}
+  >
+    <ExampleSimpleToastRoot type="success" />
   </div>
 </Unstyled>
 
@@ -105,85 +99,33 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-  return (
-    <DContextProvider>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              theme: 'secondary',
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
+return (
 
-## Basic toast secondary soft
+<DContextProvider>
+  <DButton
+    text="Show Toast"
+    onClick={() =>
+      toast(
+        {
+          title: "Example",
+          color: "success",
+        },
+        { duration: 40000 }
+      )
+    }
+  />
+  <DToastContainer position="top-right" />
+</DContextProvider>
+); } ` } language="tsx" dark />
+
+## Full toast no color
 
 <Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
-    <ExampleSimpleToastRoot type='soft' />
-  </div>
-</Unstyled>
-
-<Source
-  code={
-  `
-import {
-  DContextProvider,
-  DToastContainer,
-  useDToast,
-} from '@dynamic-framework/ui-react';
-
-export function App() {
-  const { toast } = useDToast();
-
-  return (
-    <DContextProvider>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              theme: 'secondary',
-              soft: true,
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
-
-
-## Full toast no theme
-
-<Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
-    <ExampleFullToastRoot type='base' />
+  <div
+    className="d-flex flex-column justify-content-end align-items-end"
+    style={{ height: "200px" }}
+  >
+    <ExampleFullToastRoot type="base" />
   </div>
 </Unstyled>
 
@@ -199,39 +141,35 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-  return (
-    <DContextProvider>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              description: 'This is a description',
-              timestamp: 'just now',
-              icon: 'check',
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
+return (
 
-## Full toast secondary theme
+<DContextProvider>
+  <DButton
+    text="Show Toast"
+    onClick={() =>
+      toast(
+        {
+          title: "Example",
+          description: "This is a description",
+          timestamp: "just now",
+          icon: "check",
+        },
+        { duration: 40000 }
+      )
+    }
+  />
+  <DToastContainer position="top-right" />
+</DContextProvider>
+); } ` } language="tsx" dark />
+
+## Full toast success color
 
 <Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
-    <ExampleFullToastRoot type='secondary' />
+  <div
+    className="d-flex flex-column justify-content-end align-items-end"
+    style={{ height: "200px" }}
+  >
+    <ExampleFullToastRoot type="success" />
   </div>
 </Unstyled>
 
@@ -247,90 +185,35 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-  return (
-    <DContextProvider>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              description: 'This is a description',
-              timestamp: 'just now',
-              theme: 'secondary',
-              icon: 'check',
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
+return (
 
-## Full toast secondary soft
-
-<Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
-    <ExampleFullToastRoot type='soft' />
-  </div>
-</Unstyled>
-
-<Source
-  code={
-    `
-import {
-  DContextProvider,
-  DToastContainer,
-  useDToast,
-} from '@dynamic-framework/ui-react';
-
-export function App() {
-  const { toast } = useDToast();
-
-  return (
-    <DContextProvider>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            {
-              title: 'Example',
-              description: 'This is a description',
-              timestamp: 'just now',
-              theme: 'secondary',
-              soft: true,
-              icon: 'check',
-            },
-            { duration: 40000 },
-          )
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-}
-`
-  }
-  language="tsx"
-  dark
-/>
-
+<DContextProvider>
+  <DButton
+    text="Show Toast"
+    onClick={() =>
+      toast(
+        {
+          title: "Example",
+          description: "This is a description",
+          timestamp: "just now",
+          color: "success",
+          icon: "check",
+        },
+        { duration: 40000 }
+      )
+    }
+  />
+  <DToastContainer position="top-right" />
+</DContextProvider>
+); } ` } language="tsx" dark />
 
 ## Custom example
 
 <Unstyled>
-  <div className="d-flex flex-column justify-content-end align-items-end" style={{ height: '200px' }}>
+  <div
+    className="d-flex flex-column justify-content-end align-items-end"
+    style={{ height: "200px" }}
+  >
     <ExampleCustomToastRoot />
   </div>
 </Unstyled>
@@ -348,31 +231,26 @@ import {
 
 import CustomToastExample from './CustomToastExample';
 
-export function App() {
-  const { toast } = useDToast();
+  export function App() {
+    const { toast } = useDToast();
 
-  return (
-    <DContextProvider>
-      <DButton
-        text="Show Toast"
-        onClick={() => (
-          toast(
-            CustomToastExample,
-          {
-            duration: 3000,
-          })
-        )}
-      />
-      <DToastContainer
-        position="top-right"
-      />
-    </DContextProvider>
-  );
-    }
-`
-  }
-  language="tsx"
-  dark
+    return (
+      <DContextProvider>
+        <DButton
+          text="Show Toast"
+          onClick={() =>
+            toast(CustomToastExample, {
+              duration: 3000,
+            })
+          }
+        />
+        <DToastContainer position="top-right" />
+      </DContextProvider>
+    ); 
+  } 
+` } 
+  language="tsx" 
+  dark 
 />
 
 ### `CustomToastExample.tsx`
@@ -386,21 +264,22 @@ import {
 import { toast as reactToast, Toast } from 'react-hot-toast';
 
 export function CustomToastExample({ id, visible }: Toast) {
-  if (!visible) {
-    return null;
-  }
-  return (
-    <div className="bg-surface-secondary rounded-2 p-4 text-center">
-      <p className="fw-bold mt-0">Toast!</p>
-      <DButton
-        size="sm"
-        variant="outline"
-        theme="secondary"
-        text="Close toast"
-        onClick={() => reactToast.dismiss(id)}
-      />
-    </div>
-  );
+    if (!visible) {
+      return null;
+    }
+    
+    return (
+      <div className="bg-secondary-subtle rounded-2 p-4 text-center">
+        <p className="fw-bold mt-0">Toast!</p>
+        <DButton
+          size="sm"
+          variant="outline"
+          color="secondary"
+          text="Close toast"
+          onClick={() => reactToast.dismiss(id)}
+        />
+      </div>
+    );
 }
 `
   }

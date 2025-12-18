@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DContextProvider } from '../../src';
-import DModal from '../../src/components/DModal/DModal';
 import DButton from '../../src/components/DButton';
+import DModal from '../../src/components/DModal/DModal';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 const config: Meta<typeof DModal> = {
@@ -74,12 +74,11 @@ export const Default: Story = {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -105,7 +104,7 @@ export const CloseIcon: Story = {
   render: (args) => (
     <DModal {...args}>
       <DModal.Header
-        icon="x-circle"
+        icon="XCircle"
         showCloseButton
       >
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
@@ -116,12 +115,11 @@ export const CloseIcon: Story = {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -155,12 +153,11 @@ export const ActionsPlacementStart: Story = {
       <DModal.Footer actionPlacement="start">
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -194,12 +191,11 @@ export const ActionsPlacementEnd: Story = {
       <DModal.Footer actionPlacement="end">
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -230,12 +226,11 @@ export const WithoutHeader: Story = {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -325,12 +320,11 @@ export const WithoutCancelX: Story = {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   ),
@@ -382,12 +376,12 @@ export const MaterialStyleCloseIcon: Story = {
         <DModal.Footer>
           <DButton
             text="cancel"
-            theme="secondary"
+            color="secondary"
             variant="outline"
             className="d-grid"
-            pill
+
           />
-          <DButton text="ok" className="d-grid" pill />
+          <DButton text="ok" className="d-grid" />
         </DModal.Footer>
       </DModal>
     </DContextProvider>

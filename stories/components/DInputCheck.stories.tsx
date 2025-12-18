@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
 import { PREFIX_BS } from '../../src/components/config';
@@ -45,9 +45,15 @@ The Bootstrap documentation provides details on the default [Check CSS Variables
     className: {
       control: 'text',
       type: 'string',
+      description: 'The class name for the wrapper div',
     },
     style: {
       control: 'object',
+    },
+    inputClassName: {
+      control: 'text',
+      type: 'string',
+      description: 'The class name for the input element',
     },
     type: {
       control: 'select',
@@ -87,7 +93,6 @@ type Story = StoryObj<typeof DInputCheck>;
 
 export const CheckboxWithoutLabel: Story = {
   args: {
-    id: 'componentId1',
     type: 'checkbox',
     checked: false,
     disabled: false,
@@ -107,7 +112,7 @@ export const CheckboxDefault: Story = {
 
 export const CheckboxHint: Story = {
   args: {
-    id: 'componentId2',
+    id: 'componentId3',
     type: 'checkbox',
     label: 'Label',
     hint: 'Assistive text',
@@ -118,7 +123,7 @@ export const CheckboxHint: Story = {
 
 export const CheckboxValid: Story = {
   args: {
-    id: 'componentId3',
+    id: 'componentId4',
     type: 'checkbox',
     label: 'Label',
     checked: false,
@@ -129,7 +134,7 @@ export const CheckboxValid: Story = {
 
 export const CheckboxInvalid: Story = {
   args: {
-    id: 'componentId4',
+    id: 'componentId5',
     type: 'checkbox',
     label: 'Label',
     checked: false,
@@ -140,7 +145,7 @@ export const CheckboxInvalid: Story = {
 
 export const CheckboxChecked: Story = {
   args: {
-    id: 'componentId5',
+    id: 'componentId6',
     type: 'checkbox',
     label: 'Label',
     checked: true,
@@ -150,7 +155,7 @@ export const CheckboxChecked: Story = {
 
 export const CheckboxDisabled: Story = {
   args: {
-    id: 'componentId6',
+    id: 'componentId7',
     type: 'checkbox',
     label: 'Label',
     checked: false,
@@ -160,10 +165,20 @@ export const CheckboxDisabled: Story = {
 
 export const CheckboxCheckedDisabled: Story = {
   args: {
-    id: 'componentId7',
+    id: 'componentId8',
     type: 'checkbox',
     label: 'Label',
     checked: true,
     disabled: true,
+  },
+};
+
+export const CheckboxWithInputClassName: Story = {
+  args: {
+    id: 'componentId9',
+    type: 'checkbox',
+    label: 'Custom styled input',
+    checked: false,
+    inputClassName: 'border-2',
   },
 };

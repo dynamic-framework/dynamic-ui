@@ -1,5 +1,46 @@
-// keep empty.
+/* stylelint-disable declaration-no-important */
 
 .flex-1 {
   flex: 1;
+}
+
+.text-muted {
+  --#{$prefix}text-muted: var(--#{$prefix}gray-400);
+  color: var(--#{$prefix}text-muted) !important;
+}
+
+.form-text {
+  --#{$prefix}form-text: var(--#{$prefix}gray-400);
+  color: var(--#{$prefix}form-text) !important;
+}
+
+.spinner-border {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+th {
+  font-weight: var(--#{$prefix}fw-semibold) !important;
+}
+
+@media (min-width: 1200px) {
+  legend {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+}
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+) !default;
+
+@each $size, $width in $container-max-widths {
+  .max-w-#{$size} {
+    max-width: $width;
+  }
 }

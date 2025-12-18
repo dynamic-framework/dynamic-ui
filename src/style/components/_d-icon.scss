@@ -8,13 +8,20 @@
   display: inline-flex !important; /* stylelint-disable-line declaration-no-important */
   align-items: center;
   justify-content: center;
-  width: var(--#{$prefix}icon-size);
-  height: var(--#{$prefix}icon-size);
   padding: var(--#{$prefix}icon-padding);
   font-size: var(--#{$prefix}icon-size) !important; /* stylelint-disable-line declaration-no-important */
+  line-height: 1;
   color: var(--#{$prefix}icon-color);
   background-color: var(--#{$prefix}icon-bg-color);
-  border-radius: var(--#{$prefix}icon-padding);
+  border-radius: calc(var(--bs-icon-padding) * 4);
+
+  // For Lucide icons (SVG)
+  svg {
+    display: block;
+    width: var(--#{$prefix}icon-size);
+    height: var(--#{$prefix}icon-size);
+    color: var(--#{$prefix}icon-color);
+  }
 }
 
 .d-icon-loading {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputSelect from '../../src/components/DInputSelect';
 import { ICONS } from '../config/constants';
@@ -79,24 +79,6 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
       options: [undefined, 'sm', 'lg'],
     },
     label: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    labelIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconFamilyPrefix: {
       control: 'text',
       type: 'string',
     },
@@ -225,9 +207,7 @@ type Story = StoryObj<typeof DInputSelect>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -240,7 +220,6 @@ export const Selected: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -252,9 +231,8 @@ export const Selected: Story = {
 
 export const Disabled: Story = {
   args: {
-    id: 'componentId2',
+    id: 'componentId3',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -266,9 +244,8 @@ export const Disabled: Story = {
 
 export const Invalid: Story = {
   args: {
-    id: 'componentId2',
+    id: 'componentId4',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -280,9 +257,8 @@ export const Invalid: Story = {
 
 export const Valid: Story = {
   args: {
-    id: 'componentId2',
+    id: 'componentId5',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
@@ -294,16 +270,15 @@ export const Valid: Story = {
 
 export const Icon: Story = {
   args: {
-    id: 'componentId3',
+    id: 'componentId6',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },
     ],
     hint: 'Assistive text',
-    iconStart: 'emoji-smile-upside-down',
-    iconEnd: 'emoji-smile-upside-down',
+    iconStart: 'Smile',
+    iconEnd: 'Smile',
     iconStartAriaLabel: 'start action',
     iconEndAriaLabel: 'end action',
   },
@@ -314,9 +289,8 @@ export const Extractors: StoryObj<DInputSelectProps<{ id: string; text: string; 
     <DInputSelect<{ id: string; text: string; }> {...args} />
   ),
   args: {
-    id: 'componentId4',
+    id: 'componentId7',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { id: '1', text: 'Option 1' },
       { id: '2', text: 'Option 2' },
@@ -329,9 +303,8 @@ export const Extractors: StoryObj<DInputSelectProps<{ id: string; text: string; 
 
 export const Floating: Story = {
   args: {
-    id: 'componentId5',
+    id: 'componentId8',
     label: 'Label',
-    labelIcon: undefined,
     options: [
       { label: 'Option 1', value: '1' },
       { label: 'Option 2', value: '2' },

@@ -15,20 +15,15 @@ import type {
   WheelEvent,
 } from 'react';
 
-import DIcon from '../DIcon';
-import { PREFIX_BS } from '../config';
-
 import type {
   BaseProps,
   FamilyIconProps,
-  LabelIconProps,
   PinInputMode,
   PinInputType,
 } from '../interface';
 
 type Props =
 & BaseProps
-& LabelIconProps
 & FamilyIconProps
 & {
   id?: string;
@@ -51,9 +46,6 @@ export default function DInputPin(
   {
     id: idProp,
     label = '',
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
     placeholder,
     type = 'text',
     disabled = false,
@@ -110,7 +102,8 @@ export default function DInputPin(
 
     if (input.value !== '') {
       setActiveInput((prev) => {
-        const newValue = prev.with(index, input.value);
+        const newValue = [...prev];
+        newValue[index] = input.value;
         return newValue;
       });
       if (input.nextSibling) {
@@ -128,7 +121,8 @@ export default function DInputPin(
     if (key === 'Backspace') {
       const { value } = currentTarget;
       setActiveInput((prev) => {
-        const newVal = prev.with(index, '');
+        const newVal = [...prev];
+        newVal[index] = '';
         return newVal;
       });
       if (currentTarget.previousSibling && value === '') {
@@ -143,7 +137,11 @@ export default function DInputPin(
   const focusInput = useCallback((
     index: number,
   ) => {
-    setActiveInput((prev) => prev.with(index, ''));
+    setActiveInput((prev) => {
+      const newVal = [...prev];
+      newVal[index] = '';
+      return newVal;
+    });
   }, []);
 
   const wheelInput = useCallback((event: WheelEvent<HTMLInputElement>) => {
@@ -159,14 +157,6 @@ export default function DInputPin(
       {label && (
         <label htmlFor="pinIndex0">
           {label}
-          {labelIcon && (
-            <DIcon
-              icon={labelIcon}
-              size={`var(--${PREFIX_BS}input-label-font-size)`}
-              familyClass={labelIconFamilyClass}
-              familyPrefix={labelIconFamilyPrefix}
-            />
-          )}
         </label>
       )}
       <div className="d-input-pin-group" id={id}>

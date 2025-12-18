@@ -13,11 +13,11 @@ import DButton from '../../DButton';
 import DSelect from '../../DSelect';
 import type {
   BaseProps,
-  ButtonVariant,
   ComponentSize,
   FamilyIconProps,
 } from '../../interface';
 import { useDContext } from '../../../contexts';
+import DButtonIcon from '../../DButtonIcon';
 
 export enum PickerType {
   Default = 'default',
@@ -49,8 +49,6 @@ type Props =
   prevYearAriaLabel?: string;
   nextYearAriaLabel?: string;
   iconSize?: ComponentSize;
-  buttonVariant?: ButtonVariant;
-  buttonTheme?: string;
   minYearSelect?: number;
   maxYearSelect?: number;
   showHeaderSelectors?: boolean;
@@ -80,16 +78,11 @@ export default function DDatePickerHeaderSelector(
     iconNext,
     prevYearButtonDisabled,
     nextYearButtonDisabled,
-    iconFamilyClass,
-    iconFamilyPrefix,
-    iconMaterialStyle = false,
     prevMonthAriaLabel = 'decrease month',
     nextMonthAriaLabel = 'increase month',
     prevYearAriaLabel = 'decrease year',
     nextYearAriaLabel = 'increase year',
     iconSize,
-    buttonVariant = 'link',
-    buttonTheme = 'dark',
     style,
     className,
     minYearSelect = 1900,
@@ -154,28 +147,20 @@ export default function DDatePickerHeaderSelector(
         )}
         style={style}
       >
-        <DButton
-          iconStart={iconPrev || chevronLeft}
-          iconStartFamilyClass={iconFamilyClass}
-          iconStartFamilyPrefix={iconFamilyPrefix}
-          iconStartMaterialStyle={iconMaterialStyle}
+        <DButtonIcon
+          icon={iconPrev || chevronLeft}
           size={iconSize}
-          variant={buttonVariant}
-          theme={buttonTheme}
+          variant="link"
           onClick={decreaseYear}
           disabled={prevYearButtonDisabled}
           ariaLabel={prevYearAriaLabel}
           className="header-button"
         />
         <p>{`${startYear} - ${endYear}`}</p>
-        <DButton
-          iconStart={iconNext || chevronRight}
-          iconStartFamilyClass={iconFamilyClass}
-          iconStartFamilyPrefix={iconFamilyPrefix}
-          iconStartMaterialStyle={iconMaterialStyle}
+        <DButtonIcon
+          icon={iconNext || chevronRight}
           size={iconSize}
-          variant={buttonVariant}
-          theme={buttonTheme}
+          variant="link"
           onClick={increaseYear}
           disabled={nextYearButtonDisabled}
           ariaLabel={nextYearAriaLabel}
@@ -194,14 +179,10 @@ export default function DDatePickerHeaderSelector(
         )}
         style={style}
       >
-        <DButton
-          iconStart={iconPrev || chevronLeft}
-          iconStartFamilyClass={iconFamilyClass}
-          iconStartFamilyPrefix={iconFamilyPrefix}
-          iconStartMaterialStyle={iconMaterialStyle}
+        <DButtonIcon
+          icon={iconPrev || chevronLeft}
           size={iconSize}
-          variant={buttonVariant}
-          theme={buttonTheme}
+          variant="link"
           onClick={decreaseYear}
           disabled={prevMonthButtonDisabled}
           ariaLabel={prevMonthAriaLabel}
@@ -221,14 +202,10 @@ export default function DDatePickerHeaderSelector(
             <p>{defaultYear?.label}</p>
           )}
         </div>
-        <DButton
-          iconStart={iconNext || chevronRight}
-          iconStartFamilyClass={iconFamilyClass}
-          iconStartFamilyPrefix={iconFamilyPrefix}
-          iconStartMaterialStyle={iconMaterialStyle}
+        <DButtonIcon
+          icon={iconNext || chevronRight}
           size={iconSize}
-          variant={buttonVariant}
-          theme={buttonTheme}
+          variant="link"
           onClick={increaseYear}
           disabled={nextMonthButtonDisabled}
           ariaLabel={nextMonthAriaLabel}
@@ -240,37 +217,9 @@ export default function DDatePickerHeaderSelector(
   }
 
   return (
-    <div
-      className={classNames(
-        'react-datepicker__header-selector react-datepicker__header-day-selector',
-        className,
-      )}
-      style={style}
-    >
-      <DButton
-        iconStart={iconPrev || chevronLeft}
-        iconStartFamilyClass={iconFamilyClass}
-        iconStartFamilyPrefix={iconFamilyPrefix}
-        iconStartMaterialStyle={iconMaterialStyle}
-        size={iconSize}
-        variant={buttonVariant}
-        theme={buttonTheme}
-        onClick={decreaseMonth}
-        disabled={prevMonthButtonDisabled}
-        ariaLabel={prevMonthAriaLabel}
-        className="header-button"
-        style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
-      />
-      {showHeaderSelectors ? (
-        <>
-          <DSelect
-            options={months}
-            value={defaultMonth}
-            defaultValue={defaultMonth}
-            onChange={(month) => changeMonth(month?.value || 0)}
-            searchable={false}
-            className="custom-month-selector"
-          />
+    <>
+      <div className="datepicker-top-header">
+        {showHeaderSelectors && (
           <DSelect
             options={years}
             value={defaultYear}
@@ -279,24 +228,51 @@ export default function DDatePickerHeaderSelector(
             searchable={false}
             className="custom-year-selector"
           />
-        </>
-      ) : (
-        <p>{`${defaultMonth.label} ${defaultYear?.label}`}</p>
-      )}
-      <DButton
-        iconStart={iconNext || chevronRight}
-        iconStartFamilyClass={iconFamilyClass}
-        iconStartFamilyPrefix={iconFamilyPrefix}
-        iconStartMaterialStyle={iconMaterialStyle}
-        size={iconSize}
-        variant={buttonVariant}
-        theme={buttonTheme}
-        onClick={increaseMonth}
-        disabled={nextMonthButtonDisabled}
-        ariaLabel={nextMonthAriaLabel}
-        className="header-button"
-        style={{ visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' }}
-      />
-    </div>
+        )}
+        <h4 className="mb-0 fw-normal">
+          {format(monthDate, 'LLLL, dd', { locale })}
+        </h4>
+      </div>
+      <div
+        className={classNames(
+          'react-datepicker__header-selector react-datepicker__header-day-selector',
+          className,
+        )}
+        style={style}
+      >
+        <DButtonIcon
+          icon={iconPrev || chevronLeft}
+          size={iconSize}
+          variant="link"
+          onClick={decreaseMonth}
+          disabled={prevMonthButtonDisabled}
+          ariaLabel={prevMonthAriaLabel}
+          className="header-button"
+          style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
+        />
+        {showHeaderSelectors ? (
+          <DSelect
+            options={months}
+            value={defaultMonth}
+            defaultValue={defaultMonth}
+            onChange={(month) => changeMonth(month?.value || 0)}
+            searchable={false}
+            className="custom-month-selector"
+          />
+        ) : (
+          <p>{`${defaultMonth.label} ${defaultYear?.label}`}</p>
+        )}
+        <DButtonIcon
+          icon={iconNext || chevronRight}
+          size={iconSize}
+          variant="link"
+          onClick={increaseMonth}
+          disabled={nextMonthButtonDisabled}
+          ariaLabel={nextMonthAriaLabel}
+          className="header-button"
+          style={{ visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' }}
+        />
+      </div>
+    </>
   );
 }

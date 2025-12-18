@@ -14,12 +14,12 @@ import DTabContent from './components/DTabContent';
 import type { BaseProps } from '../interface';
 
 export type DTabOption = {
-  label: string;
+  label: string | React.ReactNode;
   tab: string;
   disabled?: boolean;
 };
 
-export type TabVariant = 'tabs' | 'pills' | 'underline';
+export type TabVariant = 'tabs' | 'pills' | 'underline' | 'toggle-button-group';
 
 type Props = BaseProps & PropsWithChildren<{
   classNameTab?: string;
@@ -88,7 +88,7 @@ function DTabs(
         <nav className={classNames(generateClasses)}>
           {options.map((option) => (
             <button
-              key={option.label}
+              key={option.tab}
               id={`${option.tab}Tab`}
               className={
                 classNames(

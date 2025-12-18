@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputRange from '../../src/components/DInputRange/DInputRange';
 
@@ -91,7 +91,6 @@ type Story = StoryObj<typeof DInputRange>;
 
 export const WithoutLabel: Story = {
   args: {
-    id: 'componentId1',
     min: 1,
     max: 100,
     value: 40,

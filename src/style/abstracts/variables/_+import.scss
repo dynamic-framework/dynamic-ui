@@ -19,9 +19,9 @@ $focus-ring-width: .25rem !default;
 $focus-ring-opacity: .25 !default;
 $focus-ring-blur: 0 !default;
 // custom
-$focus-ring-border-color: var(--#{$prefix}secondary-300-rgb) !default;
+$focus-ring-border-color: transparent !default;
 $focus-ring-color-mapping: "secondary-rgb" !default;
-$focus-ring-color: var(--#{$prefix}focus-ring-color) !default;
+$focus-ring-color: var(--#{$prefix}gray-100) !default;
 // end custom
 $focus-ring-box-shadow: 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color !default;
 // scss-docs-end focus-ring-variables
@@ -66,6 +66,7 @@ $input-btn-border-width: var(--#{$prefix}border-width) !default;
 @import "buttons";
 @import "forms";
 @import "z-index";
+@import "shadow";
 @import "navs";
 @import "navbar";
 @import "dropdowns";

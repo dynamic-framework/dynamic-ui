@@ -1,7 +1,7 @@
 // scss-docs-start tooltip-variables
 $tooltip-font-size: var(--#{$prefix}body-font-size) !default;
 $tooltip-max-width:  300px !default;
-$tooltip-color:  var(--#{$prefix}body-bg) !default;
+$tooltip-color: var(--#{$prefix}body-bg) !default;
 $tooltip-bg: var(--#{$prefix}emphasis-color) !default;
 $tooltip-border-radius: var(--#{$prefix}ref-spacer-1) !default;
 $tooltip-opacity: 1 !default;

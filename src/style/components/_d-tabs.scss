@@ -1,0 +1,37 @@
+.tab-content {
+  margin-bottom: var(--#{$prefix}ref-spacer-4);
+}
+
+.nav-pills {
+  --#{$prefix}nav-pills-link-active-bg: var(--#{$prefix}gray-50);
+  --#{$prefix}nav-pills-link-active-color: var(--#{$prefix}primary-500);
+}
+
+.nav-tabs {
+  --#{$prefix}nav-tabs-border-color: var(--#{$prefix}gray-100);
+  --#{$prefix}nav-tabs-link-active-border-color: var(--#{$prefix}nav-tabs-border-color);
+}
+
+.nav-toggle-button-group {
+  --#{$prefix}toggle-button-group-border-radius: 4rem;
+  --#{$prefix}toggle-button-group-link-active-color: var(--#{$prefix}white);
+  --#{$prefix}toggle-button-group-link-active-bg: var(--#{$prefix}primary);
+  --#{$prefix}toggle-button-group-link-hover-bg: var(--#{$prefix}secondary-500);
+  --#{$prefix}toggle-button-group-bg: var(--#{$prefix}gray-25);
+  --#{$prefix}toggle-button-group-radius: 4rem;
+  --#{$prefix}toggle-button-group-padding: .25rem;
+  padding: var(--#{$prefix}toggle-button-group-padding);
+  overflow: hidden;
+  background: var(--#{$prefix}toggle-button-group-bg);
+  border: 1px solid var(--#{$prefix}gray-50);
+  border-radius: var(--#{$prefix}toggle-button-group-radius);
+  .nav-link {
+    flex: 1;
+    border-radius: var(--#{$prefix}toggle-button-group-border-radius);
+  }
+  .nav-link.active {
+    font-weight: var(--#{$prefix}fw-semibold);
+    color: var(--#{$prefix}toggle-button-group-link-active-color);
+    background: var(--#{$prefix}toggle-button-group-link-active-bg);
+  }
+}

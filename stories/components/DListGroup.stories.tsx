@@ -1,16 +1,15 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DListGroup from '../../src/components/DListGroup';
+import DListGroup, { DListGroupItem } from '../../src/components/DListGroup';
 
 const config: Meta<typeof DListGroup> = {
   title: 'Design System/Components/ListGroup',
   component: DListGroup,
+  subcomponents: { DListGroupItem },
   parameters: {
     docs: {
       description: {
         component: `
-![Shield Badge](https://img.shields.io/badge/Beta%20Component-d81b60)
-
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap List Group](https://getbootstrap.com/docs/5.3/components/list-group/)
@@ -190,7 +189,7 @@ export const Variants: Story = {
       {['primary', 'secondary', 'success', 'info', 'warning', 'danger'].map((item) => (
         <DListGroup.Item
           key={item}
-          theme={item}
+          color={item}
         >
           Lorem ipsum dolor sit amet consectetur.
         </DListGroup.Item>
@@ -205,7 +204,7 @@ export const ActionVariants: Story = {
       {['primary', 'secondary', 'success', 'info', 'warning', 'danger'].map((item) => (
         <DListGroup.Item
           key={item}
-          theme={item}
+          color={item}
           action
         >
           Lorem ipsum dolor sit amet consectetur.
@@ -238,5 +237,86 @@ export const CustomContent: Story = {
   ),
   args: {
     as: 'div',
+  },
+};
+
+export const WithIcons: Story = {
+  render: (args) => (
+    <DListGroup {...args}>
+      <DListGroup.Item iconStart="Home" href="#">
+        Home
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="User" href="#">
+        Profile
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="Settings" href="#">
+        Settings
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="Mail" href="#">
+        Messages
+      </DListGroup.Item>
+    </DListGroup>
+  ),
+  args: {
+    as: 'div',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'List group items with start icons.',
+      },
+    },
+  },
+};
+
+export const WithIconsEnd: Story = {
+  render: (args) => (
+    <DListGroup {...args}>
+      <DListGroup.Item iconEnd="ChevronRight" href="#">
+        Dashboard
+      </DListGroup.Item>
+      <DListGroup.Item iconEnd="ChevronRight" href="#">
+        Analytics
+      </DListGroup.Item>
+      <DListGroup.Item iconEnd="ChevronRight" href="#">
+        Reports
+      </DListGroup.Item>
+    </DListGroup>
+  ),
+  args: {
+    as: 'div',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'List group items with end icons, useful for navigation menus.',
+      },
+    },
+  },
+};
+
+export const WithBothIcons: Story = {
+  render: (args) => (
+    <DListGroup {...args}>
+      <DListGroup.Item iconStart="CircleCheck" iconEnd="ChevronRight" color="success" action active>
+        Completed Tasks
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="Clock" iconEnd="ChevronRight" color="warning" action>
+        Pending Tasks
+      </DListGroup.Item>
+      <DListGroup.Item iconStart="CircleX" iconEnd="ChevronRight" color="danger" action>
+        Cancelled Tasks
+      </DListGroup.Item>
+    </DListGroup>
+  ),
+  args: {
+    as: 'div',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'List group items with both start and end icons, combined with colors.',
+      },
+    },
   },
 };

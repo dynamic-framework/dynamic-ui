@@ -25,6 +25,9 @@
   .modal-footer {
     gap: var(--#{$prefix}modal-footer-gap);
     padding: var(--#{$prefix}modal-footer-padding);
+    > * {
+      margin: 0;
+    }
   }
 
   .d-modal-action-fill > * {

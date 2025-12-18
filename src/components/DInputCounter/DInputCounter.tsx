@@ -62,7 +62,7 @@ function DInputCounter(
   const {
     handleOnWheel,
   } = useDisableInputWheel(ref);
-  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
   const [internalIsInvalid, setInternalIsInvalid] = useState(false);
   const [internalValue, setInternalValue] = useState<number>(value);
 

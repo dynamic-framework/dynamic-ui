@@ -1,9 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
 
 import DButtonIcon from '../../src/components/DButtonIcon/DButtonIcon';
 
+import { DContextProvider } from '../../src';
+import { PREFIX_BS } from '../../src/components/config';
 import {
   COMPONENT_SIZE,
   CONTEXT_PROVIDER_CONFIG_MATERIAL,
@@ -11,8 +13,6 @@ import {
   INPUT_STATE,
   THEMES,
 } from '../config/constants';
-import { PREFIX_BS } from '../../src/components/config';
-import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DButtonIcon> = {
   title: 'Design System/Components/Button Icon',
@@ -24,9 +24,9 @@ const config: Meta<typeof DButtonIcon> = {
 > We work with button variables at two levels, variables in root per variant (default, outline, link)
 >and internal variables in each button that use the previous ones.
 
-> - in the root there are variables for theme (\`--bs-primary\`, \`--bs-info\`, ...),
-> - then variables for variant and theme for buttons (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, ...)
-> - and finally for selectors by variant and theme (\`.btn-primary\`, \`.btn-outline-info\`, ...)
+> - in the root there are variables for color (\`--bs-primary\`, \`--bs-info\`, ...),
+> - then variables for variant and color for buttons (\`--bs-btn-primary-color\`, \`--bs-btn-outline-hover-border-color\`, ...)
+> - and finally for selectors by variant and color (\`.btn-primary\`, \`.btn-outline-info\`, ...)
 >   we define internal variables (\`.btn-color\`, \`.btn-hover- bg\`, ...) that use the previous ones.
 
 
@@ -121,18 +121,14 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
       control: 'text',
       type: 'string',
     },
-    theme: {
+    color: {
       control: 'select',
-      type: { name: 'string', required: true },
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
     },
     size: {
       control: {
         type: 'select',
-        labels: {
-          undefined: 'default',
-        },
       },
       type: 'string',
       options: COMPONENT_SIZE,
@@ -196,6 +192,10 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     onClick: {
       action: 'onClick',
     },
+    variant: {
+      control: 'select',
+      options: [undefined, 'outline', 'link'],
+    },
   },
   tags: ['autodocs'],
 };
@@ -205,34 +205,34 @@ type Story = StoryObj<typeof DButtonIcon>;
 
 export const Primary: Story = {
   args: {
-    theme: 'primary',
+    color: 'primary',
     size: undefined,
     type: 'button',
     variant: undefined,
     loading: false,
-    icon: 'arrow-left',
+    icon: 'ArrowLeft',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     size: undefined,
     type: 'button',
     variant: 'outline',
     loading: false,
-    icon: 'arrow-left',
+    icon: 'ArrowLeft',
   },
 };
 
 export const Link: Story = {
   args: {
-    theme: 'secondary',
+    color: 'secondary',
     size: undefined,
     type: 'button',
     variant: 'link',
     loading: false,
-    icon: 'arrow-left',
+    icon: 'ArrowLeft',
   },
 };
 
@@ -250,7 +250,7 @@ export const MaterialSecondaryIconRight: Story = {
     </DContextProvider>
   ),
   args: {
-    theme: 'primary',
+    color: 'primary',
     size: undefined,
     type: 'button',
     loading: false,

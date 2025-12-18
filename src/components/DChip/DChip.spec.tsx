@@ -11,33 +11,21 @@ describe('<DChip />', () => {
   it('should render a chip', () => {
     const { container } = render(
       <DChip
-        theme="primary"
+        color="primary"
         text="Chip content"
         showClose
       />,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-    <div>
-      <span
-        class="d-chip d-chip-primary"
-      >
-        <span>
-          Chip content
-        </span>
-        <button
-          aria-label="close"
-          class="d-chip-icon-container"
-          type="button"
-        >
-          <i
-            class="d-icon bi bi-x-lg"
-            style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-          />
-        </button>
-      </span>
-    </div>
-  `);
+    const chip = container.querySelector('.d-chip');
+    const closeButton = container.querySelector('button[aria-label="close"]');
+    const icon = closeButton?.querySelector('.d-icon');
+
+    expect(chip).toHaveClass('d-chip-primary');
+    expect(screen.getByText('Chip content')).toBeInTheDocument();
+    expect(closeButton).toBeInTheDocument();
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('should render the text', () => {
@@ -50,7 +38,7 @@ describe('<DChip />', () => {
     expect(screen.getByText('Chip content')).toBeInTheDocument();
   });
 
-  it('should apply the default theme', () => {
+  it('should apply the default color', () => {
     const { container } = render(
       <DChip
         text="Chip content"
@@ -63,13 +51,14 @@ describe('<DChip />', () => {
   it('should render the icon passed by props', () => {
     const { container } = render(
       <DChip
-        icon="heart"
+        icon="Heart"
         text="Chip content"
       />,
     );
 
     const icon = container.querySelector('.d-icon');
-    expect(icon).toHaveClass('bi-heart');
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('should render a close button if showClose is passed', () => {

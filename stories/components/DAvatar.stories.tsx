@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { ComponentProps } from 'react';
-import DAvatar from '../../src/components/DAvatar/DAvatar';
-import { AVATAR_SIZE, COLOR_THEMES } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
+import DAvatar from '../../src/components/DAvatar/DAvatar';
+import { AVATAR_SIZE } from '../config/constants';
 
 const config: Meta<typeof DAvatar> = {
   title: 'Design System/Components/Avatar',
@@ -63,24 +63,6 @@ const config: Meta<typeof DAvatar> = {
       type: 'boolean',
       table: { defaultValue: { summary: 'false' } },
       description: 'Take the name as name initials',
-    },
-    theme: {
-      control: 'select',
-      type: 'string',
-      options: COLOR_THEMES,
-      table: { defaultValue: { summary: 'secondary' } },
-      description: 'Theme',
-    },
-    variant: {
-      control: {
-        type: 'radio',
-        labels: {
-          undefined: 'default',
-        },
-      },
-      type: 'string',
-      options: [undefined, 'light', 'dark'],
-      description: 'Variant',
     },
   },
   tags: ['autodocs'],

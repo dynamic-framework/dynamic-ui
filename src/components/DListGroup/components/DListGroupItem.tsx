@@ -3,10 +3,19 @@ import classNames from 'classnames';
 
 import type { PropsWithChildren } from 'react';
 
-import type { BaseProps } from '../../interface';
+import DIcon from '../../DIcon';
+
+import type {
+  BaseProps,
+  ComponentColor,
+  EndIconProps,
+  StartIconProps,
+} from '../../interface';
 
 type Props =
 & BaseProps
+& StartIconProps
+& EndIconProps
 & PropsWithChildren<{
   as?: 'li' | 'a' | 'button';
   action?: boolean;
@@ -14,7 +23,7 @@ type Props =
   disabled?: boolean;
   href?: string;
   onClick?: () => void;
-  theme?: string;
+  color?: ComponentColor;
 }>;
 
 export default function DListGroupItem(
@@ -25,7 +34,15 @@ export default function DListGroupItem(
     disabled,
     href,
     onClick,
-    theme,
+    color,
+    iconStart,
+    iconStartFamilyClass,
+    iconStartFamilyPrefix,
+    iconStartMaterialStyle,
+    iconEnd,
+    iconEndFamilyClass,
+    iconEndFamilyPrefix,
+    iconEndMaterialStyle,
     children,
     className,
     style,
@@ -55,11 +72,11 @@ export default function DListGroupItem(
     () => ({
       'list-group-item': true,
       'list-group-item-action': action,
-      [`list-group-item-${theme}`]: !!theme,
+      [`list-group-item-${color}`]: !!color,
       active,
       disabled,
     }),
-    [action, active, disabled, theme],
+    [action, active, disabled, color],
   );
 
   const ariaAttributes = useMemo(() => {
@@ -85,7 +102,24 @@ export default function DListGroupItem(
       {...dataAttributes}
       {...Tag === 'button' && { type: 'button' }}
     >
+      {iconStart && (
+        <DIcon
+          icon={iconStart}
+          familyClass={iconStartFamilyClass}
+          familyPrefix={iconStartFamilyPrefix}
+          materialStyle={iconStartMaterialStyle}
+        />
+      )}
       {children}
+      {iconEnd && (
+        <DIcon
+          icon={iconEnd}
+          familyClass={iconEndFamilyClass}
+          familyPrefix={iconEndFamilyPrefix}
+          materialStyle={iconEndMaterialStyle}
+          className="ms-auto"
+        />
+      )}
     </Tag>
   );
 }

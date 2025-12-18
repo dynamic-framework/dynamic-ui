@@ -1,11 +1,35 @@
-import { Meta } from '@storybook/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
 import { DTabs } from '../src';
 
 <Meta title="Design System/Quick Start" />
 
 <div className="inline-story">
 
-  # Dynamic Framework [![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-react?style=flat-square)](https://www.npmjs.com/package/@dynamic-framework/ui-react)
+  # Dynamic Framework
+
+  {import.meta.env.STORYBOOK_DEV === 'true' ? (
+    <a
+      href="https://www.npmjs.com/package/@dynamic-framework/ui-react/v/dev"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src="https://img.shields.io/npm/v/%40dynamic-framework%2Fui-react/dev"
+        alt="Dev version"
+      />
+    </a>
+  ) : (
+    <a
+      href="https://www.npmjs.com/package/@dynamic-framework/ui-react"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src="https://img.shields.io/npm/v/%40dynamic-framework%2Fui-react/latest"
+        alt="Latest version"
+      />
+    </a>
+  )}
 
   Dynamic Framework components come with production-ready code, design guides, and an active community of financial experience experts.
 

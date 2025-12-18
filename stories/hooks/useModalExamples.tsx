@@ -2,8 +2,8 @@ import {
   DContextProvider,
   useDPortalContext,
 } from '../../src';
-import DModal from '../../src/components/DModal/DModal';
 import DButton from '../../src/components/DButton';
+import DModal from '../../src/components/DModal/DModal';
 
 import type { PortalProps } from '../../src';
 
@@ -19,7 +19,7 @@ function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
     <DModal
       name="example"
       centered
-      staticBackdrop
+      staticBackdrop={false}
     >
       <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
@@ -31,13 +31,12 @@ function ExampleModal({ payload }: PortalProps<ModalPayloads['example']>) {
       <DModal.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
           onClick={() => closePortal()}
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DModal.Footer>
     </DModal>
   );

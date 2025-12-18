@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable no-alert */
 
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
 import * as Yup from 'yup';
 import {
@@ -150,28 +150,6 @@ and all variables are scoped under the \`.d-input-phone\` class.
     label: {
       control: 'text',
       type: 'string',
-    },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
-    },
-    labelIconFamilyClass: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconFamilyPrefix: {
-      control: 'text',
-      type: 'string',
-    },
-    labelIconMaterialStyle: {
-      control: 'boolean',
-      type: 'boolean',
     },
     placeholder: {
       control: 'text',
@@ -388,39 +366,6 @@ export const MaterialIcon: Story = {
     placeholder: 'Placeholder',
     iconEnd: 'face_5',
     iconEndAriaLabel: 'end action',
-  },
-};
-
-export const MaterialIconError: Story = {
-  render: (args: ComponentProps<typeof DInputPhone>) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DInputPhone {...args} />
-    </DContextProvider>
-  ),
-  args: {
-    id: 'componentId10',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    invalid: true,
-  },
-};
-
-export const MaterialIconConfirm: Story = {
-
-  render: (args: ComponentProps<typeof DInputPhone>) => (
-    <DContextProvider
-      {...CONTEXT_PROVIDER_CONFIG_MATERIAL}
-    >
-      <DInputPhone {...args} />
-    </DContextProvider>
-  ),
-  args: {
-    id: 'componentId11',
-    label: 'Label',
-    placeholder: 'Placeholder',
-    valid: true,
   },
 };
 

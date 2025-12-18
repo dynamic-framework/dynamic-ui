@@ -14,7 +14,6 @@ import type {
   ChangeEvent,
 } from 'react';
 
-import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
@@ -23,7 +22,6 @@ import type {
   ComponentSize,
   EndIconProps,
   FamilyIconProps,
-  LabelIconProps,
   StartIconProps,
 } from '../interface';
 import type { Merge } from '../../types';
@@ -31,7 +29,6 @@ import type { Merge } from '../../types';
 type NonHTMLInputElementProps =
 & BaseProps
 & FamilyIconProps
-& LabelIconProps
 & StartIconProps
 & EndIconProps
 & {
@@ -45,6 +42,7 @@ type NonHTMLInputElementProps =
   floatingLabel?: boolean;
   inputStart?: ReactNode;
   inputEnd?: ReactNode;
+  readonly?: boolean;
   onChange?: (value: string) => void;
   onIconStartClick?: (value?: string) => void;
   onIconEndClick?: (value?: string) => void;
@@ -61,10 +59,6 @@ function DInput(
     style,
     className,
     label = '',
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
-    labelIconMaterialStyle,
     disabled = false,
     loading = false,
     iconFamilyClass,
@@ -94,6 +88,7 @@ function DInput(
     value,
     placeholder = '',
     dataAttributes,
+    readonly,
     onChange,
     onIconStartClick,
     onIconEndClick,
@@ -101,7 +96,7 @@ function DInput(
   }: Props,
   ref: ForwardedRef<HTMLInputElement>,
 ) {
-  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement>);
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
   const innerId = useId();
   const id = useMemo(() => idProp || innerId, [idProp, innerId]);
 
@@ -150,6 +145,7 @@ function DInput(
         'is-valid': valid,
       })}
       disabled={disabled || loading}
+      readOnly={readonly}
       value={value}
       onChange={handleOnChange}
       {...(floatingLabel || placeholder) && { placeholder: floatingLabel ? '' : placeholder }}
@@ -169,28 +165,16 @@ function DInput(
     floatingLabel,
     valid,
     value,
+    readonly,
   ]);
 
   const labelComponent = useMemo(() => (
     <label htmlFor={id}>
       {label}
-      {labelIcon && (
-        <DIcon
-          icon={labelIcon}
-          size={`var(--${PREFIX_BS}label-font-size)`}
-          familyClass={labelIconFamilyClass}
-          familyPrefix={labelIconFamilyPrefix}
-          materialStyle={labelIconMaterialStyle}
-        />
-      )}
     </label>
   ), [
     id,
     label,
-    labelIcon,
-    labelIconFamilyClass,
-    labelIconFamilyPrefix,
-    labelIconMaterialStyle,
   ]);
 
   const dynamicComponent = useMemo(() => {

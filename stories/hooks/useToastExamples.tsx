@@ -1,17 +1,17 @@
 import { toast as reactToast, Toast } from 'react-hot-toast';
 
-import useDToast from '../../src/components/DToastContainer/useDToast';
+import { DContextProvider } from '../../src';
 import DButton from '../../src/components/DButton';
 import DToastContainer from '../../src/components/DToastContainer';
-import { DContextProvider } from '../../src';
+import useDToast from '../../src/components/DToastContainer/useDToast';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 
 export function ExampleSimpleToastUsage() {
   const { toast } = useDToast();
   return (
     <DButton
-      text="Toast - No theme"
-      theme="light"
+      text="Toast - No color"
+      color="light"
       onClick={() => (
         toast(
           {
@@ -26,41 +26,19 @@ export function ExampleSimpleToastUsage() {
   );
 }
 
-export function ExampleSimpleSecondaryToastUsage() {
+export function ExampleSimpleSuccessToastUsage() {
   const { toast } = useDToast();
   return (
     <DButton
-      text="Toast secondary"
-      theme="light"
+      text="Toast success"
+      color="light"
       onClick={() => (
         toast(
           {
             title: 'Example',
             timestamp: 'just now',
             icon: 'check',
-            theme: 'secondary',
-          },
-          { duration: 40000 },
-        )
-      )}
-    />
-  );
-}
-
-export function ExampleSimpleSecondarySoftToastUsage() {
-  const { toast } = useDToast();
-  return (
-    <DButton
-      text="Toast soft secondary"
-      theme="light"
-      onClick={() => (
-        toast(
-          {
-            title: 'Example',
-            timestamp: 'just now',
-            icon: 'check',
-            theme: 'secondary',
-            soft: true,
+            color: 'success',
           },
           { duration: 40000 },
         )
@@ -73,8 +51,7 @@ export function ExampleSimpleToastRoot({ type = 'base' }: { type: string }) {
   return (
     <DContextProvider>
       {type === 'base' && <ExampleSimpleToastUsage />}
-      {type === 'secondary' && <ExampleSimpleSecondaryToastUsage />}
-      {type === 'soft' && <ExampleSimpleSecondarySoftToastUsage />}
+      {type === 'success' && <ExampleSimpleSuccessToastUsage />}
       <DToastContainer
         position="top-right"
       />
@@ -86,8 +63,8 @@ export function ExampleFullToastUsage() {
   const { toast } = useDToast();
   return (
     <DButton
-      text="Toast full - No theme"
-      theme="light"
+      text="Toast full - No color"
+      color="light"
       onClick={() => (
         toast(
           {
@@ -103,42 +80,19 @@ export function ExampleFullToastUsage() {
   );
 }
 
-export function ExampleFullSecondaryToastUsage() {
+export function ExampleFullSuccessToastUsage() {
   const { toast } = useDToast();
   return (
     <DButton
-      text="Toast full secondary"
-      theme="light"
+      text="Toast full success"
+      color="light"
       onClick={() => (
         toast(
           {
             title: 'Example',
             description: 'This is a description',
             timestamp: 'just now',
-            theme: 'secondary',
-            icon: 'check',
-          },
-          { duration: 4000 },
-        )
-      )}
-    />
-  );
-}
-
-export function ExampleFullSecondarySoftToastUsage() {
-  const { toast } = useDToast();
-  return (
-    <DButton
-      text="Toast soft full secondary"
-      theme="light"
-      onClick={() => (
-        toast(
-          {
-            title: 'Example',
-            description: 'This is a description',
-            timestamp: 'just now',
-            theme: 'secondary',
-            soft: true,
+            color: 'success',
             icon: 'check',
           },
           { duration: 4000 },
@@ -152,8 +106,7 @@ export function ExampleFullToastRoot({ type = 'base' }: { type: string }) {
   return (
     <DContextProvider>
       {type === 'base' && <ExampleFullToastUsage />}
-      {type === 'secondary' && <ExampleFullSecondaryToastUsage />}
-      {type === 'soft' && <ExampleFullSecondarySoftToastUsage />}
+      {type === 'success' && <ExampleFullSuccessToastUsage />}
       <DToastContainer
         position="top-right"
       />
@@ -166,12 +119,12 @@ export function CustomToastExample({ id, visible }: Toast) {
     return null;
   }
   return (
-    <div className="bg-surface-secondary rounded-2 p-4 text-center">
+    <div className="bg-secondary-subtle rounded-2 p-4 text-center">
       <p className="fw-bold mt-0">Toast!</p>
       <DButton
         size="sm"
         variant="outline"
-        theme="secondary"
+        color="secondary"
         text="Close toast"
         onClick={() => reactToast.dismiss(id)}
       />
@@ -188,7 +141,7 @@ export function ExampleCustomToastUsage() {
         toast(
           CustomToastExample,
           {
-            duration: 1000,
+            duration: 4000,
           },
         )
       )}

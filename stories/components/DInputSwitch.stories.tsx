@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputSwitch from '../../src/components/DInputSwitch/DInputSwitch';
 import { PREFIX_BS } from '../../src/components/config';
@@ -48,9 +48,15 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
     className: {
       control: 'text',
       type: 'string',
+      description: 'The class name for the wrapper div',
     },
     style: {
       control: 'object',
+    },
+    inputClassName: {
+      control: 'text',
+      type: 'string',
+      description: 'The class name for the input element',
     },
     label: {
       control: 'text',
@@ -88,7 +94,6 @@ type Story = StoryObj<typeof DInputSwitch>;
 
 export const WithoutLabel: Story = {
   args: {
-    id: 'componentId1',
     checked: false,
     disabled: false,
     ariaLabel: 'Label',
@@ -157,5 +162,14 @@ export const CheckedDisabled: Story = {
     label: 'Label',
     checked: true,
     disabled: true,
+  },
+};
+
+export const WithInputClassName: Story = {
+  args: {
+    id: 'componentId9',
+    label: 'Custom styled input',
+    checked: false,
+    inputClassName: 'border-2',
   },
 };

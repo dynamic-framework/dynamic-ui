@@ -1,14 +1,13 @@
 import { forwardRef } from 'react';
-import { InputMask } from '@react-input/mask';
+import { InputMask, type InputMaskProps } from '@react-input/mask';
 
 import type { ComponentPropsWithoutRef, ForwardedRef } from 'react';
-import type { MaskProps } from '@react-input/mask';
 
 import DInput from '../DInput';
 
 import type { Merge } from '../../types';
 
-type NonDInputProps = MaskProps;
+type NonDInputProps = InputMaskProps<typeof DInput>;
 
 type Props = Merge<ComponentPropsWithoutRef<typeof DInput>, NonDInputProps>;
 

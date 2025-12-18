@@ -6,7 +6,7 @@ import DBadge from './DBadge';
 describe('<DBadge />', () => {
   it('Should render badge', () => {
     const props = {
-      theme: 'primary',
+      color: 'primary',
       text: 'Badge content',
     };
 
@@ -38,11 +38,11 @@ describe('<DBadge />', () => {
     expect(badge).toHaveClass('badge', 'badge-primary');
   });
 
-  it('Renders with soft info theme', () => {
+  it('Renders with soft info color', () => {
     render(
       <DBadge
         text="Badge content"
-        theme="info"
+        color="info"
         soft
       />,
     );
@@ -84,26 +84,28 @@ describe('<DBadge />', () => {
     render(
       <DBadge
         text="Badge content"
-        iconStart="star"
+        iconStart="Star"
       />,
     );
 
-    const text = screen.getByText('Badge content').parentElement!;
-    const startIcon = text.querySelector('i');
-    expect(startIcon).toHaveClass('d-icon', 'bi-star');
+    const badge = screen.getByText('Badge content').parentElement!;
+    const startIcon = badge.querySelector('.d-icon');
+    expect(startIcon).toBeInTheDocument();
+    expect(startIcon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('Renders iconEnd', () => {
     render(
       <DBadge
         text="Badge content"
-        iconEnd="star"
+        iconEnd="Star"
       />,
     );
 
-    const text = screen.getByText('Badge content').parentElement!;
-    const iconEnd = text.querySelector('i');
-    expect(iconEnd).toHaveClass('d-icon', 'bi-star');
+    const badge = screen.getByText('Badge content').parentElement!;
+    const iconEnd = badge.querySelector('.d-icon');
+    expect(iconEnd).toBeInTheDocument();
+    expect(iconEnd?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('Applies data attributes', () => {

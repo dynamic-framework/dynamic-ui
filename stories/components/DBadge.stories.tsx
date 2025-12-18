@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
+import { PREFIX_BS } from '../../src/components/config';
 import DBadge from '../../src/components/DBadge/DBadge';
 import { ICONS, THEMES } from '../config/constants';
-import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DBadge> = {
   title: 'Design System/Components/Badge',
@@ -46,12 +46,12 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
       type: 'string',
       description: 'Text of badge',
     },
-    theme: {
+    color: {
       control: 'select',
       type: 'string',
       options: THEMES,
       table: { defaultValue: { summary: 'primary' } },
-      description: 'The theme to use.',
+      description: 'The color to use.',
     },
     soft: {
       control: 'boolean',
@@ -86,154 +86,113 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
 export default config;
 type Story = StoryObj<typeof DBadge>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-    theme: 'primary',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
+    color: 'primary',
+    text: 'Badge',
+    soft: false,
+    iconEnd: undefined,
+    iconStart: undefined,
+    rounded: false,
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    theme: 'secondary',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
+export const AllColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      {THEMES.map((theme) => (
+        <DBadge key={theme} color={theme} text={theme} />
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'All available color variants for badges.',
+      },
+    },
   },
 };
 
-export const Success: Story = {
-  args: {
-    theme: 'success',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
+export const SoftColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      {THEMES.map((theme) => (
+        <DBadge key={theme} color={theme} text={theme} soft />
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'All color variants with soft (subtle) styling.',
+      },
+    },
   },
 };
 
-export const Danger: Story = {
+export const WithIconStart: Story = {
   args: {
-    theme: 'danger',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
+    color: 'primary',
+    text: 'Bookmarks',
+    iconStart: 'Bookmark',
   },
 };
 
-export const Info: Story = {
+export const WithIconEnd: Story = {
   args: {
-    theme: 'info',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
+    color: 'success',
+    text: 'Check',
+    iconEnd: 'CheckCircle',
   },
 };
 
-export const Warning: Story = {
+export const WithBothIcons: Story = {
   args: {
-    theme: 'warning',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
+    color: 'info',
+    text: 'Notifications',
+    iconStart: 'Bell',
+    iconEnd: 'ChevronRight',
   },
 };
 
-export const Light: Story = {
-  args: {
-    theme: 'light',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
+export const IconVariants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <DBadge color="primary" text="Icon Start" iconStart="Star" />
+        <DBadge color="success" text="Icon End" iconEnd="CheckCircle" />
+        <DBadge color="warning" text="Both Icons" iconStart="AlertTriangle" iconEnd="ArrowRight" />
+      </div>
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <DBadge color="danger" text="Alert" iconStart="XCircle" soft />
+        <DBadge color="info" text="Info" iconEnd="Info" soft />
+        <DBadge color="secondary" text="Tags" iconStart="Tag" iconEnd="Tag" soft />
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Examples of badges with different icon configurations.',
+      },
+    },
   },
 };
 
-export const Dark: Story = {
-  args: {
-    theme: 'dark',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
-  },
-};
-
-export const PrimarySoft: Story = {
-  args: {
-    soft: true,
-    theme: 'primary',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
-  },
-};
-
-export const SecondarySoft: Story = {
-  args: {
-    soft: true,
-    theme: 'secondary',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
-  },
-};
-
-export const SuccessSoft: Story = {
-  args: {
-    soft: true,
-    theme: 'success',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
-  },
-};
-
-export const DangerSoft: Story = {
-  args: {
-    soft: true,
-    theme: 'danger',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
-  },
-};
-
-export const InfoSoft: Story = {
-  args: {
-    soft: true,
-    theme: 'info',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
-  },
-};
-
-export const WarningSoft: Story = {
-  args: {
-    soft: true,
-    theme: 'warning',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
-  },
-};
-
-export const LightSoft: Story = {
-  args: {
-    soft: true,
-    theme: 'light',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
-  },
-};
-
-export const DarkSoft: Story = {
-  args: {
-    soft: true,
-    theme: 'dark',
-    text: 'Default',
-    iconStart: 'bookmarks',
-    iconEnd: 'bookmarks',
+export const Rounded: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      <DBadge color="primary" text="Rounded" rounded />
+      <DBadge color="success" text="With Icon" iconStart="Check" rounded />
+      <DBadge color="danger" text="Soft Rounded" soft rounded />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Badges with rounded styling (pill shape).',
+      },
+    },
   },
 };

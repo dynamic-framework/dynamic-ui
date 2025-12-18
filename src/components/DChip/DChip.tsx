@@ -3,14 +3,14 @@ import classNames from 'classnames';
 
 import DIcon from '../DIcon';
 
-import type { BaseProps, FamilyIconProps } from '../interface';
+import type { BaseProps, ComponentColor, FamilyIconProps } from '../interface';
 import { useDContext } from '../../contexts';
 
 type Props =
 & BaseProps
 & FamilyIconProps
 & {
-  theme?: string;
+  color?: ComponentColor;
   text?: string;
   icon?: string;
   iconClose?: string;
@@ -24,7 +24,7 @@ type Props =
 
 export default function DChip(
   {
-    theme = 'primary',
+    color = 'primary',
     text,
     icon,
     iconFamilyClass,
@@ -45,9 +45,9 @@ export default function DChip(
   const generateClasses = useMemo(
     () => ({
       'd-chip': true,
-      [`d-chip-${theme}`]: !!theme,
+      [`d-chip-${color}`]: !!color,
     }),
-    [theme],
+    [color],
   );
   const {
     iconMap: {

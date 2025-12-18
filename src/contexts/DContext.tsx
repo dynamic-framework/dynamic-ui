@@ -12,8 +12,8 @@ import type { PropsWithChildren } from 'react';
 
 import { DPortalContextProvider, PortalContextProps } from './DPortalContext';
 
-import type { AlertThemeIconMap } from '../components/interface';
 import { PREFIX_BS } from '../components/config';
+import type { AlertThemeIconMap } from '../components/interface';
 import getCssVariable from '../utils/getCssVariable';
 
 export type CurrencyProps = {
@@ -41,8 +41,6 @@ type IconMapProps = {
   calendar: string;
   check: string;
   input: {
-    invalid: string;
-    valid: string;
     search: string;
     show: string;
     hide: string;
@@ -86,33 +84,27 @@ const DEFAULT_STATE = {
     materialStyle: false,
   },
   iconMap: {
-    x: 'x',
-    xLg: 'x-lg',
-    chevronUp: 'chevron-up',
-    chevronDown: 'chevron-down',
-    chevronLeft: 'chevron-left',
-    chevronRight: 'chevron-right',
-    upload: 'cloud-upload',
-    calendar: 'calendar',
-    check: 'check',
+    x: 'X',
+    xLg: 'X',
+    chevronUp: 'ChevronUp',
+    chevronDown: 'ChevronDown',
+    chevronLeft: 'ChevronLeft',
+    chevronRight: 'ChevronRight',
+    upload: 'Upload',
+    calendar: 'Calendar',
+    check: 'Check',
     alert: {
-      warning: 'exclamation-circle',
-      danger: 'exclamation-triangle',
-      success: 'check-circle',
-      info: 'info-circle',
-      dark: 'info-circle',
-      light: 'info-circle',
-      primary: 'info-circle',
-      secondary: 'info-circle',
+      warning: 'AlertCircle',
+      danger: 'AlertTriangle',
+      success: 'CheckCircle',
+      info: 'Info',
     },
     input: {
-      invalid: 'exclamation-circle',
-      valid: 'check',
-      search: 'search',
-      show: 'eye',
-      hide: 'eye-slash',
-      increase: 'plus-square',
-      decrease: 'dash-square',
+      search: 'Search',
+      show: 'Eye',
+      hide: 'EyeOff',
+      increase: 'Plus',
+      decrease: 'Minus',
     },
   },
   breakpoints: {

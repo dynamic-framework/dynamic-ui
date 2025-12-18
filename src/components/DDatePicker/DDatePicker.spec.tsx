@@ -11,42 +11,13 @@ it('should render datepicker', () => {
     <DDatePicker {...props} />,
   );
 
-  expect(container).toMatchInlineSnapshot(`
-  <div>
-    <div
-      class="react-datepicker-wrapper"
-    >
-      <div
-        class="react-datepicker__input-container"
-      >
-        <div
-          class=""
-        >
-          <div
-            class="input-group"
-          >
-            <input
-              class="form-control"
-              id="datepicker"
-              readonly=""
-              type="text"
-              value=""
-            />
-            <button
-              aria-label="open calendar"
-              class="input-group-text"
-              id="datepickerEnd"
-              type="button"
-            >
-              <i
-                class="d-icon bi bi-calendar"
-                style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  `);
+  const input = container.querySelector('#datepicker');
+  const button = container.querySelector('button[aria-label="open calendar"]');
+  const icon = button?.querySelector('.d-icon');
+
+  expect(input).toBeInTheDocument();
+  expect(input).toHaveAttribute('type', 'text');
+  expect(button).toBeInTheDocument();
+  expect(icon).toBeInTheDocument();
+  expect(icon?.querySelector('svg')).toBeInTheDocument();
 });

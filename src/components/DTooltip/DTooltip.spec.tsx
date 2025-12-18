@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
+import { act } from 'react';
 import {
   render,
   screen,
@@ -85,39 +85,6 @@ describe('<DTooltip />', () => {
     );
 
     expect(screen.queryByText(tooltipText)).not.toBeInTheDocument();
-  });
-
-  it('Custom classnames should be applied, size and theme', () => {
-    render(
-      <DTooltip
-        open
-        className="custom-tooltip"
-        theme="light"
-        size="sm"
-        Component={<span>Target</span>}
-      >
-        {tooltipText}
-      </DTooltip>,
-    );
-    const tooltip = screen.getByText(tooltipText).closest('div.tooltip');
-    expect(tooltip).toHaveClass('tooltip-light');
-    expect(tooltip).toHaveClass('tooltip-sm');
-    expect(tooltip).toHaveClass('custom-tooltip');
-  });
-
-  it('Text danger theme should show tooltip with tooltip-danger classname', () => {
-    render(
-      <DTooltip
-        open
-        theme="danger"
-        Component={<span>Target</span>}
-      >
-        {tooltipText}
-      </DTooltip>,
-    );
-
-    const tooltip = screen.getByText(tooltipText).closest('div.tooltip');
-    expect(tooltip).toHaveClass('tooltip-danger');
   });
 
   it('Text withFocus should show tooltip', async () => {

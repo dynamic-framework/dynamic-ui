@@ -29,7 +29,7 @@ type Props = BaseProps & PropsWithChildren<{
    * @param {boolean} open
    * @returns {React.ReactElement}
    */
-  renderComponent: (open: boolean) => ReactElement;
+  renderComponent: (open: boolean) => ReactElement<unknown>;
   open: boolean;
   setOpen?: (open: boolean) => void;
   adjustContentToRender?: boolean;
@@ -89,9 +89,9 @@ export default function DPopover(
 
   const generateStyleVariables = useMemo(() => ({
     ...style,
-    ...adjustContentToRender && {
+    ...(adjustContentToRender && {
       [`--${PREFIX_BS}popover-component-min-width`]: 'auto',
-    },
+    }),
   }), [style, adjustContentToRender]);
 
   return (

@@ -1,112 +1,163 @@
-import { useMemo } from 'react';
+/* eslint-disable max-len */
 import classNames from 'classnames';
+import { useMemo } from 'react';
+import * as LucideIcons from 'lucide-react';
 
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ComponentType } from 'react';
 
 import { PREFIX_BS } from '../config';
 
-import type { BaseProps, ClassMap, CustomStyles } from '../interface';
+import type {
+  BaseProps,
+  ClassMap,
+  ComponentColor,
+  CustomStyles,
+} from '../interface';
+import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
 
 type Props =
-& BaseProps
-& {
-  icon: string;
-  theme?: string;
-  size?: string;
-  loading?: boolean;
-  loadingDuration?: number;
-  hasCircle?: boolean;
-  circleSize?: string;
-  color?: string;
-  backgroundColor?: string;
-  materialStyle?: boolean;
-  familyClass?: string;
-  familyPrefix?: string;
-};
+  & BaseProps
+  & {
+    icon: string;
+    color?: ComponentColor;
+    size?: string | ResponsiveProp;
+    /**
+     * Enables real-time breakpoint listeners for responsive size changes.
+     * When set to true, the component will listen for size changes and update responsively.
+     * Note: Enabling this feature may have performance implications, especially
+     * in complex or frequently updated components.
+     */
+    useListenerSize?: boolean;
+    hasCircle?: boolean;
+    materialStyle?: boolean;
+    familyClass?: string;
+    familyPrefix?: string;
+    strokeWidth?: number;
+  };
 
 export default function DIconBase(
   {
     icon,
-    theme,
+    color,
     style,
     className,
     size,
-    loading = false,
-    loadingDuration = 1.8,
+    useListenerSize = false,
     hasCircle = false,
-    circleSize = `calc(var(--${PREFIX_BS}icon-size) * 1)`,
-    color,
-    backgroundColor,
     materialStyle = false,
-    familyClass = 'bi',
-    familyPrefix = 'bi-',
+    familyClass,
+    familyPrefix,
+    strokeWidth = 2,
     dataAttributes,
   }: Props,
 ) {
+  // If materialStyle is true, use Material Design icons (legacy)
+  const useMaterialIcons = materialStyle;
+
+  // Get Lucide icon component
+  const LucideIcon = useMemo<ComponentType<LucideIcons.LucideProps> | null>(() => {
+    if (useMaterialIcons) return null;
+
+    // Try to find the icon in Lucide (expects PascalCase)
+    const icons = LucideIcons as unknown as Record<string, ComponentType<LucideIcons.LucideProps>>;
+    return icons[icon] || null;
+  }, [icon, useMaterialIcons]);
+
   const colorStyle = useMemo(() => {
     if (color) {
-      return { [`--${PREFIX_BS}icon-component-color`]: color };
-    }
-    if (theme) {
-      return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${theme})` };
+      return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${color})` };
     }
     return {};
-  }, [color, theme]);
+  }, [color]);
 
   const backgroundStyle = useMemo(() => {
-    if (backgroundColor) {
-      return { [`--${PREFIX_BS}icon-component-bg-color`]: backgroundColor };
-    }
-
     if (hasCircle) {
-      if (theme) {
-        return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}${theme}-rgb), 0.1)` };
+      if (color) {
+        return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}${color}-rgb), 0.1)` };
       }
       return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}body-color-rgb), 0.1)` };
     }
     return {};
-  }, [backgroundColor, hasCircle, theme]);
+  }, [hasCircle, color]);
 
-  const circleSizeStyle = useMemo(() => {
-    if (hasCircle) {
-      return { [`--${PREFIX_BS}icon-component-padding`]: circleSize };
-    }
-    return { [`--${PREFIX_BS}icon-component-padding`]: '0' };
-  }, [circleSize, hasCircle]);
+  const { responsivePropValue } = useResponsiveProp(useListenerSize);
+
+  const resolvedSize = useMemo<string | undefined>(() => {
+    if (!size) return undefined;
+    if (typeof size === 'string') return size;
+
+    return responsivePropValue(size);
+  }, [responsivePropValue, size]);
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
-    [`--${PREFIX_BS}icon-component-loading-duration`]: `${loadingDuration}s`,
-    ...size && { [`--${PREFIX_BS}icon-component-size`]: size },
+    ...resolvedSize && { [`--${PREFIX_BS}icon-component-size`]: resolvedSize },
     ...colorStyle,
     ...backgroundStyle,
-    ...circleSizeStyle,
+    ...hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` },
     ...style,
-  }), [size, loadingDuration, colorStyle, backgroundStyle, circleSizeStyle, style]);
+  }), [resolvedSize, colorStyle, backgroundStyle, hasCircle, style]);
 
   const generateClasses = useMemo<ClassMap>(() => ({
     'd-icon': true,
-    [familyClass]: true,
-    'd-icon-loading': loading,
-    ...!materialStyle && {
-      [`${familyPrefix}${icon}`]: true,
-    },
     ...className && { [className]: true },
-  }), [
-    familyClass,
-    loading,
-    className,
-    materialStyle,
-    familyPrefix,
-    icon,
-  ]);
+  }), [className]);
+
+  const iconSize = useMemo(() => {
+    if (resolvedSize) {
+      const numSize = parseInt(resolvedSize, 10);
+      return !Number.isNaN(numSize) ? numSize : resolvedSize;
+    }
+    return undefined;
+  }, [resolvedSize]);
+
+  // Render Material Design icon (legacy support)
+  if (useMaterialIcons) {
+    return (
+      <i
+        className={classNames(generateClasses, familyClass)}
+        style={generateStyleVariables}
+        {...dataAttributes}
+      >
+        {icon}
+      </i>
+    );
+  }
+
+  // Render Lucide icon
+  if (!LucideIcon) {
+    if (familyClass && familyPrefix) {
+      return (
+        <i
+          className={classNames(generateClasses, familyClass, `${familyPrefix}${icon}`)}
+          style={generateStyleVariables}
+          {...dataAttributes}
+        />
+      );
+    }
+
+    // eslint-disable-next-line no-console
+    console.warn(`Icon "${icon}" not found in Lucide. Make sure to use PascalCase names (e.g., "Home", "User", "Settings")`);
+    return (
+      <span
+        className={classNames(generateClasses)}
+        style={generateStyleVariables}
+        {...dataAttributes}
+      >
+        ?
+      </span>
+    );
+  }
 
   return (
-    <i
+    <span
       className={classNames(generateClasses)}
       style={generateStyleVariables}
       {...dataAttributes}
     >
-      {materialStyle && icon}
-    </i>
+      <LucideIcon
+        size={iconSize || 24}
+        strokeWidth={strokeWidth}
+      />
+    </span>
   );
 }

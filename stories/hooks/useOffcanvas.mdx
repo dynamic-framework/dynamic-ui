@@ -1,12 +1,6 @@
-import {
-  Meta,
-  Unstyled,
-  Source,
-} from '@storybook/blocks';
+import { Meta, Unstyled, Source } from "@storybook/addon-docs/blocks";
 
-import {
-  ExampleOffcanvasRoot
-} from "./useOffcanvasExamples";
+import { ExampleOffcanvasRoot } from "./useOffcanvasExamples";
 
 # Offcanvas
 
@@ -20,19 +14,18 @@ This part of the documentation talks about `DOffcanvas` and directly covers its 
 <Meta title="Design System/Patterns/Offcanvas" />
 
 ## Offcanvas Types `types.ts`
+
 Type to define the payload of all the offcanvas, its structure is an object literal
 where the key is used for the name of the offcanvas and value for the payload.
 
 <Source
-  code={
-    `
+  code={`
 export type PortalPayloads = {
   example: {
     description: string;
   };
 };
-    `
-  }
+    `}
   language="tsx"
   dark
 />
@@ -72,13 +65,12 @@ export function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['exa
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
           onClick={() => closePortal()}
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   );
@@ -90,6 +82,7 @@ export function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['exa
 />
 
 ## Offcanvas Setting on the main file `App.tsx`
+
 The available offcanvas are configured on the `DOffcanvasContextProvider` so that they can
 then be opened with the `useDOffcanvasContext` hook. The payload type of the offcanvas
 is only necessary if payload will be used.

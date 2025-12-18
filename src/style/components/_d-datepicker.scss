@@ -74,8 +74,11 @@
   --#{$prefix}datepicker-in-range-disabled-bg: #{$datepicker-in-range-disabled-bg};
 
   // Time
-  --#{$prefix}datepicker-time-list-item-width: 85px;
+  --#{$prefix}datepicker-time-list-item-width: #{$datepicker-time-list-item-width};
   --#{$prefix}datepicker-time-list-item-padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-1);
+
+  // Top
+  --#{$prefix}datepicker-top-header-bg: var(--#{$prefix}primary-500);
 
 
   background-color: var(--#{$prefix}datepicker-bg);
@@ -85,6 +88,10 @@
   display: inline-block;
   position: relative;
   line-height: initial;
+  overflow: hidden;
+  p {
+    font-weight: 500;
+  }
 }
 
 .react-datepicker--time-only {
@@ -102,27 +109,10 @@
 .react-datepicker-popper {
   z-index: 1;
   line-height: 0;
+}
 
-  .react-datepicker__triangle {
-    --#{$prefix}datepicker-border-color: var(--#{$prefix}gray-100);
-    stroke: var(--#{$prefix}datepicker-border-color);
-  }
-
-  &[data-placement^="bottom"] {
-    .react-datepicker__triangle {
-      --#{$prefix}datepicker-header-bg: var(--#{$prefix}secondary-soft);
-      fill: var(--#{$prefix}datepicker-header-bg);
-      color: var(--#{$prefix}datepicker-header-bg);
-    }
-  }
-
-  &[data-placement^="top"] {
-    .react-datepicker__triangle {
-      --#{$prefix}datepicker-header-bg: var(--#{$prefix}white);
-      fill: var(--#{$prefix}datepicker-header-bg);
-      color: var(--#{$prefix}datepicker-header-bg);
-    }
-  }
+.react-datepicker__triangle {
+  display: none;
 }
 
 .react-datepicker__header {
@@ -145,6 +135,32 @@
 
   &:not(&--has-time-select) {
     border-top-right-radius: var(--#{$prefix}datepicker-border-radius);
+  }
+
+  .custom-year-selector {
+    width: 8ch;
+    background: transparent;
+    color: var(--#{$prefix}body-color);
+    margin: auto;
+
+    .input-group {
+      border: 0;
+    }
+
+    .d-select__indicator-separator {
+      display: none;
+    }
+
+    .d-select__control {
+      background-color: var(--#{$prefix}datepicker-top-header-bg);
+      padding: var(--bs-ref-spacer-1) var(--bs-ref-spacer-1);
+      flex-wrap: nowrap;
+      color: var(--#{$prefix}white);
+      border: 0;
+    }
+    .d-select__menu-list {
+      max-height: 10lh;
+    }
   }
 
   &-selector {
@@ -179,15 +195,11 @@
           }
         }
       }
-
-      &.custom-year-selector .d-select__single-value {
-        width: 4ch;
-      }
     }
 
     p {
       margin: 0;
-      font-weight: bold;
+      font-weight: 500;
     }
 
     .header-button:first-child {
@@ -237,6 +249,7 @@
 
 .react-datepicker__year {
   margin: var(--#{$prefix}datepicker-body-margin);
+  padding: 1rem;
   text-align: center;
 
   &-wrapper {
@@ -250,6 +263,34 @@
     display: inline-block;
     width: 4rem;
   }
+}
+
+.react-datepicker__month {
+  padding: 1rem;
+}
+
+.react-datepicker__header--custom,
+.react-datepicker__header-month-selector {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.react-datepicker__month-text--selected {
+  font-weight: var(--#{$prefix}fw-semibold);
+}
+
+.datepicker-top-header {
+  background: var(--#{$prefix}primary-500);
+  color: var(--#{$prefix}white);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  margin-top: -.5rem;
+}
+
+.react-datepicker__year,
+.react-datepicker__quarterPicker {
+  --#{$prefix}datepicker-body-gap: 1rem;
+  --#{$prefix}datepicker-body-margin: 1rem;
 }
 
 .react-datepicker__month,
@@ -277,6 +318,22 @@
     width: 6ch;
   }
 }
+
+.react-datepicker__month-text,
+.react-datepicker__quarter-text,
+.react-datepicker__year-text {
+  padding: .25rem;
+  border: 1px solid var(--#{$prefix}gray-50);
+  border-radius: var(--#{$prefix}datepicker-border-radius);
+}
+
+
+.react-datepicker__month-text--today,
+.react-datepicker__year-text--today,
+.react-datepicker__quarter-text--today {
+  font-weight: var(--#{$prefix}fw-semibold) !important;
+}
+
 // START TODO: Revisar con Mati diseño del time
 .react-datepicker__time-container {
   float: right;

@@ -1,0 +1,13 @@
+.d-box {
+  --#{$prefix}box-bg: #{var(--#{$prefix}white)};
+  --#{$prefix}box-border: 0;
+  --#{$prefix}box-border-radius: #{var(--#{$prefix}border-radius)};
+  --#{$prefix}box-padding: #{var(--#{$prefix}ref-spacer-4)};
+  --#{$prefix}box-shadow: #{var(--#{$prefix}box-shadow-lg)};
+  padding: var(--#{$prefix}box-padding);
+
+  background-color: var(--#{$prefix}box-bg);
+  border: var(--#{$prefix}box-border);
+  border-radius: var(--#{$prefix}box-border-radius);
+  box-shadow: var(--#{$prefix}box-shadow);
+}

@@ -5,14 +5,13 @@ import {
   render,
   screen,
 } from '@testing-library/react';
+import { ComponentStateColor } from '../interface';
 import DAlert from './DAlert';
-
-import { AlertTheme } from '../interface';
 
 describe('<DAlert />', () => {
   it('should render info alert', () => {
     const props = {
-      theme: 'info',
+      color: 'info',
       text: 'Alert content',
       id: 'alertID',
     };
@@ -20,40 +19,32 @@ describe('<DAlert />', () => {
     const { container } = render(
       <DAlert
         id={props.id}
-        theme={props.theme as AlertTheme}
+        color={props.color as ComponentStateColor}
       >
         {props.text}
       </DAlert>,
     );
 
-    expect(container).toMatchInlineSnapshot(`
-    <div>
-      <div
-        class="alert alert-info"
-        id="alertID"
-        role="alert"
-      >
-        <i
-          class="d-icon bi bi-info-circle alert-icon"
-          style="--bs-icon-component-loading-duration: 1.8s; --bs-icon-component-padding: 0;"
-        />
-        <div
-          class="alert-text"
-        >
-          Alert content
-        </div>
-      </div>
-    </div>
-  `);
+    const alert = container.querySelector('#alertID');
+    const icon = alert?.querySelector('.d-icon');
+
+    expect(alert).toHaveClass('alert', 'alert-info');
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
+    expect(screen.getByText('Alert content')).toBeInTheDocument();
   });
 
-  it('Renders with default theme and icon', () => {
+  it('Renders with default color and icon', () => {
     const message = 'Success message';
 
     render(<DAlert>{message}</DAlert>);
-    expect(screen.getByRole('alert')).toHaveClass('alert-success');
+    const alert = screen.getByRole('alert');
+    const icon = alert.querySelector('.d-icon');
+
+    expect(alert).toHaveClass('alert-success');
     expect(screen.getByText(message)).toBeInTheDocument();
-    expect(screen.getByRole('alert').querySelector('.bi-check-circle')).toBeInTheDocument();
+    expect(icon).toBeInTheDocument();
+    expect(icon?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('Renders close button when showClose is true', () => {
@@ -114,34 +105,35 @@ describe('<DAlert />', () => {
         iconMaterialStyle
         iconFamilyPrefix=""
         iconFamilyClass="material-symbols-outlined"
-        icon="heart "
+        icon="heart"
       >
         Alert content
       </DAlert>,
     );
 
-    const alert = screen.getByRole('alert').querySelector('i');
-    expect(alert?.className).toContain('material-symbols-outlined');
-    expect(alert).toHaveTextContent('heart');
+    const alertIcon = screen.getByRole('alert').querySelector('.d-icon');
+    expect(alertIcon?.className).toContain('material-symbols-outlined');
+    expect(alertIcon).toHaveTextContent('heart');
+    expect(alertIcon?.tagName).toBe('I');
 
-    const closeIcon = screen.getByRole('button').querySelector('i');
+    const closeIcon = screen.getByRole('button').querySelector('.d-icon');
     expect(closeIcon?.className).toContain('material-symbols-outlined');
     expect(closeIcon).toHaveTextContent('x');
+    expect(closeIcon?.tagName).toBe('I');
   });
 
   it('renders custom close icon if provided', () => {
     render(
       <DAlert
         showClose
-        iconClose="custom-close"
-        iconCloseFamilyClass="mdi"
-        iconCloseFamilyPrefix="mdi-"
+        iconClose="CircleX"
       >
         Alert content
       </DAlert>,
     );
-    const closeIcon = screen.getByRole('button').querySelector('i');
-    expect(closeIcon?.className).toContain('mdi');
-    expect(closeIcon?.className).toContain('mdi-custom-close');
+    const button = screen.getByRole('button');
+    const closeIcon = button.querySelector('.d-icon');
+    expect(closeIcon).toBeInTheDocument();
+    expect(closeIcon?.querySelector('svg')).toBeInTheDocument();
   });
 });

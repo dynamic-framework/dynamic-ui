@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputMask from '../../src/components/DInputMask';
 import { ICONS } from '../config/constants';
@@ -27,16 +27,6 @@ const config: Meta<typeof DInputMask> = {
     label: {
       control: 'text',
       type: 'string',
-    },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
     },
     placeholder: {
       control: 'text',
@@ -171,9 +161,6 @@ const config: Meta<typeof DInputMask> = {
     onWheel: {
       action: 'onWheel',
     },
-    onMask: {
-      action: 'onMask',
-    },
     modify: {
       action: 'modify',
     },
@@ -185,11 +172,9 @@ type Story = StoryObj<typeof DInputMask>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
-    labelIcon: undefined,
     type: 'text',
-    iconStart: 'phone',
+    iconStart: 'Phone',
     iconStartAriaLabel: 'start action',
     iconEndAriaLabel: 'end action',
     hint: 'Write your phone number',
@@ -203,9 +188,8 @@ export const Invalid: Story = {
   args: {
     id: 'componentId2',
     label: 'Label',
-    labelIcon: undefined,
     type: 'text',
-    iconStart: 'phone',
+    iconStart: 'Phone',
     iconStartAriaLabel: 'start action',
     iconEndAriaLabel: 'end action',
     hint: 'Write your phone number',
@@ -220,9 +204,8 @@ export const Valid: Story = {
   args: {
     id: 'componentId3',
     label: 'Label',
-    labelIcon: undefined,
     type: 'text',
-    iconStart: 'phone',
+    iconStart: 'Phone',
     iconStartAriaLabel: 'start action',
     iconEndAriaLabel: 'end action',
     hint: 'Write your phone number',

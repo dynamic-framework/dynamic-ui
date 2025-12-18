@@ -1,13 +1,56 @@
-import type { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/react-vite';
 
-export default {
+const config: Preview = {
   parameters: {
+    actions: { argTypesRegex: '^on.*' },
     layout: 'centered',
-    actions: { argTypesRegex: '^on[A-Z].*' },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/,
+    docs: {
+      source: {
+        excludeDecorators: true,
+        type: 'dynamic',
+      },
+      controls: {
+        matchers: {
+          color: /(background|color)$/i,
+          date: /Date$/,
+        },
+        expanded: true,
+        sort: 'requiredFirst',
+        exclude: [
+          'iconFamilyClass',
+          'iconFamilyPrefix',
+          'iconMaterialStyle',
+          'dataAttributes',
+          'iconCloseFamilyClass',
+          'iconCloseFamilyPrefix',
+          'iconCloseMaterialStyle',
+          'style',
+          'iconStartDisabled',
+          'iconStartFamilyClass',
+          'iconStartFamilyPrefix',
+          'iconStartMaterialStyle',
+          'iconStartAriaLabel',
+          'iconStartTabIndex',
+          'iconEndDisabled',
+          'iconEndFamilyClass',
+          'iconEndFamilyPrefix',
+          'iconEndMaterialStyle',
+          'iconEndAriaLabel',
+          'iconEndTabIndex',
+          'ariaLabel',
+          'loadingAriaLabel',
+          'ariaLabelledBy',
+          'ariaDescribedBy',
+          'ariaControls',
+          'ariaExpanded',
+          'ariaPressed',
+          'ariaHidden',
+          'ariaSelected',
+          'ariaDisabled',
+          'ariaChecked',
+          'ariaCurrent',
+          'ariaRole'
+        ],
       },
     },
     options: {
@@ -34,4 +77,7 @@ export default {
       },
     },
   },
-} as Preview;
+  tags: ['autodocs']
+};
+
+export default config;

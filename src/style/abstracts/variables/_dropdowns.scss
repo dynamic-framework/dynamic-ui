@@ -3,7 +3,7 @@
 // Dropdown menu container and contents.
 
 // scss-docs-start dropdown-variables
-$dropdown-padding-x: var(--#{$prefix}--#{$prefix}ref-spacer-2) !default;
+$dropdown-padding-x: var(--#{$prefix}ref-spacer-2) !default;
 $dropdown-bg: var(--#{$prefix}white) !default;
 $dropdown-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $dropdown-border-width: 0 !default;
@@ -11,8 +11,10 @@ $dropdown-border-width: 0 !default;
 $dropdown-divider-margin-y: var(--#{$prefix}ref-spacer-2) !default;
 $dropdown-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
 
-$dropdown-link-color: rgb(var(--#{$prefix}gray-500-rgb)) !default;
-$dropdown-link-hover-bg: rgb(var(--#{$prefix}gray-100-rgb)) !default;
+$dropdown-link-color: rgb(var(--#{$prefix}gray-700-rgb)) !default;
+$dropdown-link-hover-color: rgb(var(--#{$prefix}gray-700-rgb)) !default;
+$dropdown-link-hover-bg: rgb(var(--#{$prefix}gray-25-rgb)) !default;
+$dropdown-link-active-bg: rgb(var(--#{$prefix}gray-50-rgb)) !default;
 
 $dropdown-item-padding-y: var(--#{$prefix}ref-spacer-2) !default;
 $dropdown-item-padding-x: var(--#{$prefix}ref-spacer-4) !default;
@@ -28,7 +30,7 @@ $dropdown-header-color: var(--#{$prefix}gray-600) !default;
 $dropdown-dark-color: var(--#{$prefix}gray-300) !default;
 $dropdown-dark-bg: var(--#{$prefix}gray-800) !default;
 $dropdown-dark-link-hover-color: var(--#{$prefix}white) !default;
-$dropdown-dark-link-hover-bg: rgba(var(--#{$prefix}white-rgb), .15) !default;
+$dropdown-dark-link-hover-bg: var(--#{$prefix}gray-50) !default;
 $dropdown-dark-link-disabled-color: var(--#{$prefix}gray-500) !default;
 $dropdown-dark-header-color: var(--#{$prefix}gray-500) !default;
 // scss-docs-end dropdown-dark-variables

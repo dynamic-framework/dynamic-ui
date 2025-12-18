@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
-  Fragment,
   useCallback,
   useContext,
   useEffect,
@@ -14,6 +13,7 @@ import type {
   FC,
 } from 'react';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import useDisableBodyScrollEffect from '../hooks/useDisableBodyScrollEffect';
 import usePortal from '../hooks/usePortal';
 import useStackState from '../hooks/useStackState';
@@ -154,21 +154,29 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
           onClick={({ target }) => handleClose(target as Element)}
           onKeyDown={() => {}}
         >
-          {stack.map((
-            {
-              Component,
-              name,
-              payload,
-            },
-          ) => (
-            <Fragment key={name}>
-              <div className="backdrop fade show" />
+          <AnimatePresence>
+            {stack.flatMap((
+              {
+                Component,
+                name,
+                payload,
+              },
+            ) => [
+              <motion.div
+                key={`${name}-backdrop`}
+                className="backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.5 }}
+                exit={{ opacity: 0, transition: { delay: 0.3 } }}
+                transition={{ duration: 0.15, ease: 'linear' }}
+              />,
               <Component
+                key={name}
                 name={name}
                 payload={payload}
-              />
-            </Fragment>
-          ))}
+              />,
+            ])}
+          </AnimatePresence>
         </div>,
         document.getElementById(portalName) as Element,
       )}

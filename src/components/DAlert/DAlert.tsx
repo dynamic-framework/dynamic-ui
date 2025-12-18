@@ -1,18 +1,18 @@
-import { useMemo } from 'react';
 import classNames from 'classnames';
+import { useMemo } from 'react';
 
 import type { PropsWithChildren } from 'react';
 
 import DIcon from '../DIcon';
 
-import type { AlertTheme, BaseProps } from '../interface';
 import { useDContext } from '../../contexts';
+import type { BaseProps, ComponentStateColor } from '../interface';
 
 type Props =
 & BaseProps
 & PropsWithChildren<{
   id?: string;
-  theme?: AlertTheme;
+  color?: ComponentStateColor;
   icon?: string;
   iconFamilyClass?: string;
   iconFamilyPrefix?: string;
@@ -27,7 +27,7 @@ type Props =
 
 export default function DAlert(
   {
-    theme = 'success',
+    color = 'success',
     icon: iconProp,
     iconFamilyClass,
     iconFamilyPrefix,
@@ -51,17 +51,17 @@ export default function DAlert(
       xLg,
     },
   } = useDContext();
-  const icon = useMemo(() => iconProp || alert[theme], [alert, iconProp, theme]);
+  const icon = useMemo(() => iconProp || alert[color], [alert, iconProp, color]);
   const iconClose = useMemo(() => (iconCloseProp || xLg), [iconCloseProp, xLg]);
 
   const generateClasses = useMemo(
     () => ({
       alert: true,
-      [`alert-${theme}`]: true,
+      [`alert-${color}`]: true,
       'fade show': !!showClose,
       ...className && { [className]: true },
     }),
-    [theme, showClose, className],
+    [color, showClose, className],
   );
 
   return (

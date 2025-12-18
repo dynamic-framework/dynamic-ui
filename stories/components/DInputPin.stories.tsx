@@ -1,7 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputPin from '../../src/components/DInputPin/DInputPin';
-import { ICONS } from '../config/constants';
 import { PREFIX_BS } from '../../src/components/config';
 
 const config: Meta<typeof DInputPin> = {
@@ -52,16 +51,6 @@ The Bootstrap documentation provides details on the default [Input Form CSS Vari
     label: {
       control: 'text',
       type: 'string',
-    },
-    labelIcon: {
-      control: {
-        type: 'select',
-        labels: {
-          undefined: 'empty',
-        },
-      },
-      type: 'string',
-      options: [undefined, ...ICONS],
     },
     placeholder: {
       control: 'text',
@@ -132,7 +121,6 @@ type Story = StoryObj<typeof DInputPin>;
 
 export const Default: Story = {
   args: {
-    id: 'componentId1',
     label: 'Label',
     characters: 4,
     type: 'text',

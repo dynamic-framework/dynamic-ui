@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DInputCheck from '../../src/components/DInputCheck/DInputCheck';
 import { PREFIX_BS } from '../../src/components/config';
@@ -88,7 +88,6 @@ type Story = StoryObj<typeof DInputCheck>;
 
 export const RadioWithoutLabel: Story = {
   args: {
-    id: 'componentId1',
     type: 'radio',
     checked: false,
     disabled: false,

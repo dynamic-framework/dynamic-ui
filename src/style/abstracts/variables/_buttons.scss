@@ -4,17 +4,18 @@
 
 // scss-docs-start btn-variables
 $btn-color: var(--#{$prefix}body-color) !default;
-$btn-padding-y: $spacer-3 !default;
-$btn-padding-x: $spacer-8 !default;
-$btn-line-height: 1 !default;
+$btn-padding-y: $spacer-2 !default;
+$btn-padding-x: $spacer-4 !default;
+$btn-line-height: 1.5 !default;
+$btn-font-weight: $font-weight-semibold !default;
 
-$btn-padding-y-sm: $spacer-2 !default;
-$btn-padding-x-sm: $spacer-4 !default;
+$btn-padding-y-sm: $spacer-1 !default;
+$btn-padding-x-sm: $spacer-3 !default;
 $btn-font-size-sm: $small-font-size !default;
 
-$btn-padding-y-lg: $spacer-4 !default;
-$btn-padding-x-lg: $spacer-8 !default;
-$btn-font-size-lg: $h6-font-size !default;
+$btn-padding-y-lg: $spacer-3 !default;
+$btn-padding-x-lg: $spacer-5 !default;
+$btn-lg-font-size: 1.15rem !default;
 
 $btn-border-width: $input-btn-border-width !default;
 
@@ -22,9 +23,16 @@ $btn-box-shadow: 0 0 0 transparent !default; // to avoid the none in the bootstr
 $btn-disabled-opacity: .65 !default;
 $btn-active-box-shadow: 0 0 0 transparent !default; // to avoid the none in the bootstrap box-shadow calculation
 
-$btn-border-radius: var(--#{$prefix}border-radius-pill) !default;
-$btn-border-radius-sm: var(--#{$prefix}border-radius-pill) !default;
-$btn-border-radius-lg: var(--#{$prefix}border-radius-pill) !default;
+$btn-border-radius: .5rem !default;
+$btn-border-radius-lg: .5rem !default;
+$btn-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .1) !default;
+$btn-border-radius-sm: .25rem !default;
 
 $btn-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 // scss-docs-end btn-variables
+
+$btn-outline-primary-hover-color: inherit !default;
+$btn-outline-primary-hover-bg: transparent !default;
+$btn-outline-primary-focus-bg: transparent !default;
+
+$btn-loading-gap: var(--#{$prefix}ref-spacer-2) !default;

@@ -2,8 +2,8 @@ import {
   DContextProvider,
   useDPortalContext,
 } from '../../src';
-import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import DButton from '../../src/components/DButton';
+import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 
 import type { PortalProps } from '../../src';
 
@@ -32,13 +32,12 @@ function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['example']>
       <DOffcanvas.Footer>
         <DButton
           text="cancel"
-          theme="secondary"
+          color="secondary"
           variant="outline"
           className="d-grid"
-          pill
           onClick={() => closePortal()}
         />
-        <DButton text="ok" className="d-grid" pill />
+        <DButton text="ok" className="d-grid" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   );

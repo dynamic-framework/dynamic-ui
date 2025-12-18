@@ -5,8 +5,16 @@
 // custom
 $body-color-mapping: "gray-900" !default;
 $body-color: map-get($all-colors, $body-color-mapping) !default;
-$body-bg-mapping: "secondary-soft" !default;
-$body-bg: map-get($all-colors, $body-bg-mapping) !default;
+
+// $body-bg-mapping: "secondary-soft" !default;
+// $body-bg: map-get($all-colors, $body-bg-mapping) !default;
+// Se mapeaba a la variable css
+// Al final quedaba: --bs-secondary-soft-rgb
+
+// WIP: Se asigna el color manualmente
+// este color no existe en la paleta de grises
+// ¿Se tendría que agregar?
+$body-bg: #f5f6fa !default;
 
 $body-secondary-color: var(--#{$prefix}body-color-rgb) !default;
 $body-secondary-bg: var(--#{$prefix}gray-200) !default;
@@ -29,4 +37,3 @@ $link-hover-color: map-get($all-colors, $link-hover-color-mapping) !default;
 // end custom
 
 $link-decoration: none !default;
-$link-hover-decoration: underline !default;

@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DCard from '../../src/components/DCard/DCard';
 import DButton from '../../src/components/DButton';
 
 const config: Meta<typeof DCard> = {
-  title: 'Design System/Patterns/Card',
+  title: 'Design System/Components/Card',
   component: DCard,
   parameters: {
     docs: {
@@ -51,7 +51,7 @@ export const Default: Story = {
   render: (args) => (
     <DCard {...args}>
       <DCard.Header>
-        <h5 className="card-title">Title #1</h5>
+        <h5 className="card-title mb-0">Title #1</h5>
       </DCard.Header>
       <DCard.Body>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, quo?
@@ -74,7 +74,7 @@ export const HeaderAndBody: Story = {
   render: (args) => (
     <DCard {...args}>
       <DCard.Header>
-        <h5 className="card-title">Title #1</h5>
+        <h5 className="card-title mb-0">Title #1</h5>
       </DCard.Header>
       <DCard.Body>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, quo?
@@ -141,7 +141,7 @@ export const Horizontal: Story = {
         </div>
         <div className="col-md-8">
           <DCard.Body>
-            <h5 className="card-title">Card title</h5>
+            <h5 className="card-title mb-0">Card title</h5>
             <p className="card-text">
               This is a wider card with supporting text
               below as a natural lead-in to additional

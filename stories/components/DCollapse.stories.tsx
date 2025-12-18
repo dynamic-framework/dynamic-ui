@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
 
 import DCollapse from '../../src/components/DCollapse/DCollapse';
 import DIcon from '../../src/components/DIcon';
@@ -8,7 +8,7 @@ import { ICONS, CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
 import { DContextProvider } from '../../src';
 
 const config: Meta<typeof DCollapse> = {
-  title: 'Design System/Patterns/Collapse',
+  title: 'Design System/Components/Collapse',
   component: DCollapse,
   parameters: {
     docs: {
@@ -49,7 +49,7 @@ const config: Meta<typeof DCollapse> = {
         Text: 'Simple text',
         Custom: (
           <div className="d-flex align-items-center gap-3">
-            <DIcon icon="fire" hasCircle />
+            <DIcon icon="Flame" hasCircle />
             <h1 className="h4 m-0">Custom component</h1>
           </div>
         ),
@@ -143,7 +143,7 @@ export const HeaderComponent: Story = {
   args: {
     Component: (
       <div className="d-flex align-items-center gap-3">
-        <DIcon icon="fire" hasCircle />
+        <DIcon icon="Flame" hasCircle />
         <h1 className="h4 m-0">Custom component</h1>
       </div>
     ),

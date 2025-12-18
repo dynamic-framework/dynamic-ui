@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { ComponentProps } from 'react';
 import DStepper from '../../src/components/DStepper/DStepper';
@@ -109,9 +109,9 @@ export const Default: Story = {
   args: {
     currentStep: 2,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      { label: 'Personal Information', value: 1 },
+      { label: 'Payment Details', value: 2 },
+      { label: 'Confirmation', value: 3 },
     ],
   },
 };
@@ -133,9 +133,9 @@ export const DefaultMobile: Story = {
   args: {
     currentStep: 2,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      { label: 'Select Service', value: 1 },
+      { label: 'Choose Plan', value: 2 },
+      { label: 'Review Order', value: 3 },
     ],
   },
 };
@@ -157,11 +157,98 @@ export const Vertical: Story = {
   args: {
     currentStep: 2,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      { label: 'Upload Documents', value: 1 },
+      { label: 'Verify Information', value: 2 },
+      { label: 'Submit Application', value: 3 },
     ],
     vertical: true,
+  },
+};
+
+export const WithDescription: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '768px', height: '400px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DStepper {...args} />
+  ),
+  args: {
+    currentStep: 2,
+    options: [
+      {
+        label: 'Account Information',
+        description: 'Enter your personal details',
+        value: 1,
+      },
+      {
+        label: 'Billing Address',
+        description: 'Provide your billing information',
+        value: 2,
+      },
+      {
+        label: 'Confirmation',
+        description: 'Review and confirm your order',
+        value: 3,
+      },
+    ],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Stepper with description text for each step. Descriptions provide additional context about what the user should do in each step.',
+      },
+    },
+  },
+};
+
+export const WithDescriptionVertical: Story = {
+  decorators: [
+    (Story) => (
+      <div
+        style={{ width: '768px', height: '500px' }}
+        className="d-flex flex-column align-items-stretch justify-content-center gap-3"
+      >
+        <Story />
+      </div>
+    ),
+  ],
+  render: (args) => (
+    <DStepper {...args} />
+  ),
+  args: {
+    currentStep: 2,
+    options: [
+      {
+        label: 'Create Account',
+        description: 'Sign up with your email and password',
+        value: 1,
+      },
+      {
+        label: 'Verify Email',
+        description: 'Check your inbox for verification link',
+        value: 2,
+      },
+      {
+        label: 'Complete Profile',
+        description: 'Add your profile information and preferences',
+        value: 3,
+      },
+    ],
+    vertical: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Vertical stepper with descriptions. Descriptions are especially useful in vertical layouts where there is more space.',
+      },
+    },
   },
 };
 
@@ -181,9 +268,9 @@ export const MaterialStyle: Story = {
   args: {
     currentStep: 2,
     options: [
-      { label: 'Lorem ipsum dolor sit amet', value: 1 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ', value: 2 },
-      { label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut', value: 3 },
+      { label: 'Account Setup', value: 1 },
+      { label: 'Security Settings', value: 2 },
+      { label: 'Get Started', value: 3 },
     ],
     iconSuccess: 'verified',
   },
