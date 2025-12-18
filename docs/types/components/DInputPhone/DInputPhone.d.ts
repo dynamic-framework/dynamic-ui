@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
 import { CountryIso2, CountrySelectorProps, ParsedCountry } from 'react-international-phone';
-import type { BaseProps, ComponentSize, EndIconProps, FamilyIconProps, LabelIconProps } from '../interface';
+import type { BaseProps, ComponentSize, EndIconProps, FamilyIconProps } from '../interface';
 type OnChangeType = {
     phone: string;
     inputValue: string;
     country: ParsedCountry;
     isValid: boolean;
 };
-declare const ForwardedDInputPhone: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "pattern" | "value" | "type" | "onChange" | "onWheel" | "inputMode">, "size" | "loading" | "label" | "value" | "invalid" | "onChange" | keyof BaseProps | keyof FamilyIconProps | keyof LabelIconProps | keyof EndIconProps | "hint" | "valid" | "floatingLabel" | "inputEnd" | "onIconEndClick" | "countrySelectorProps" | "filteredCountries" | "defaultCountry"> & BaseProps & FamilyIconProps & LabelIconProps & EndIconProps & {
+declare const ForwardedDInputPhone: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "pattern" | "value" | "inputMode" | "onChange" | "onWheel" | "type">, "label" | "invalid" | "value" | "onChange" | "size" | keyof BaseProps | keyof FamilyIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "floatingLabel" | "inputEnd" | "onIconEndClick" | "countrySelectorProps" | "filteredCountries" | "defaultCountry"> & BaseProps & FamilyIconProps & EndIconProps & {
     value?: string | undefined;
     label?: string | undefined;
     loading?: boolean | undefined;

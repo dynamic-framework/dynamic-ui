@@ -1,3 +1,4 @@
+import { type Transition } from 'framer-motion';
 import type { PropsWithChildren } from 'react';
 import DModalHeader from './components/DModalHeader';
 import DModalBody from './components/DModalBody';
@@ -11,8 +12,9 @@ type Props = BaseProps & PropsWithChildren<{
     fullScreen?: boolean;
     fullScreenFrom?: ModalFullScreenFrom;
     size?: ModalSize;
+    transition?: Transition;
 }>;
-declare function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, children, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DModal({ name, className, style, staticBackdrop, scrollable, centered, fullScreen, fullScreenFrom, size, transition, children, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DModal & {
     Header: typeof DModalHeader;
     Body: typeof DModalBody;

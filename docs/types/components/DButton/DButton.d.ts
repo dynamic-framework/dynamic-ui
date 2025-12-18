@@ -1,22 +1,13 @@
-import type { MouseEvent } from 'react';
-import type { BaseProps, ButtonType, ButtonVariant, ComponentSize, EndIconProps, InputState, StartIconProps } from '../interface';
-type Props = BaseProps & StartIconProps & EndIconProps & {
-    id?: string;
-    theme?: string;
+import { type ButtonHTMLAttributes } from 'react';
+import type { BaseProps, ButtonVariant, ComponentColor, ComponentSize, EndIconProps, StartIconProps } from '../interface';
+interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'>, BaseProps, StartIconProps, EndIconProps {
+    color?: ComponentColor;
     size?: ComponentSize;
     variant?: ButtonVariant;
-    state?: InputState;
     text?: string;
-    ariaLabel?: string;
-    value?: string;
-    type?: ButtonType;
-    pill?: boolean;
     loading?: boolean;
+    loadingText?: string;
     loadingAriaLabel?: string;
-    disabled?: boolean;
-    stopPropagationEnabled?: boolean;
-    form?: string;
-    onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-};
-export default function DButton({ theme, size, variant, state, text, ariaLabel, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, value, type, loading, loadingAriaLabel, disabled, stopPropagationEnabled, className, style, form, dataAttributes, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
-export {};
+}
+declare const DButton: import("react").ForwardRefExoticComponent<Props & import("react").RefAttributes<HTMLButtonElement>>;
+export default DButton;

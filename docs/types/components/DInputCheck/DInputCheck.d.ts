@@ -7,6 +7,7 @@ type Props = ComponentPropsWithoutRef<'input'> & BaseProps & {
     label?: string;
     ariaLabel?: string;
     checked?: boolean;
+    inputClassName?: string;
     disabled?: boolean;
     invalid?: boolean;
     valid?: boolean;
@@ -15,5 +16,5 @@ type Props = ComponentPropsWithoutRef<'input'> & BaseProps & {
     value?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
-export default function DInputCheck({ id: idProp, type, name, label, ariaLabel, checked, disabled, invalid, valid, indeterminate, value, hint, onChange, className, style, dataAttributes, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DInputCheck({ id: idProp, type, name, label, ariaLabel, checked, disabled, invalid, valid, indeterminate, inputClassName, value, hint, onChange, className, style, dataAttributes, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

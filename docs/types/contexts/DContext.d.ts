@@ -24,8 +24,6 @@ type IconMapProps = {
     calendar: string;
     check: string;
     input: {
-        invalid: string;
-        valid: string;
         search: string;
         show: string;
         hide: string;

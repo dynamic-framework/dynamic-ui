@@ -27,11 +27,11 @@ interface ForwardRefComponent<IntrinsicElementString, OwnProps = {}> extends For
      * so that events are typed when using JSX.IntrinsicElements.
      */
     <As = IntrinsicElementString>(props: As extends '' ? {
-        as: keyof JSX.IntrinsicElements;
+        as: keyof React.JSX.IntrinsicElements;
     } : As extends React.ComponentType<infer P> ? Merge<P, OwnProps & {
         as: As;
-    }> : As extends keyof JSX.IntrinsicElements ? Merge<JSX.IntrinsicElements[As], OwnProps & {
+    }> : As extends keyof React.JSX.IntrinsicElements ? Merge<React.JSX.IntrinsicElements[As], OwnProps & {
         as: As;
-    }> : never): React.ReactElement | null;
+    }> : never): React.ReactElement<unknown> | null;
 }
 export type { ForwardRefComponent, OwnProps, IntrinsicElement, Merge };

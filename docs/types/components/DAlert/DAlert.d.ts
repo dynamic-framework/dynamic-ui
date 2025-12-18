@@ -1,8 +1,8 @@
 import type { PropsWithChildren } from 'react';
-import type { AlertTheme, BaseProps } from '../interface';
+import type { BaseProps, ComponentStateColor } from '../interface';
 type Props = BaseProps & PropsWithChildren<{
     id?: string;
-    theme?: AlertTheme;
+    color?: ComponentStateColor;
     icon?: string;
     iconFamilyClass?: string;
     iconFamilyPrefix?: string;
@@ -14,5 +14,5 @@ type Props = BaseProps & PropsWithChildren<{
     iconCloseMaterialStyle?: boolean;
     onClose?: () => void;
 }>;
-export default function DAlert({ theme, icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, onClose, children, id, className, style, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DAlert({ color, icon: iconProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, iconClose: iconCloseProp, iconCloseFamilyClass, iconCloseFamilyPrefix, iconCloseMaterialStyle, showClose, onClose, children, id, className, style, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

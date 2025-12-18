@@ -1,3 +1,4 @@
+import { type Transition } from 'framer-motion';
 import type { PropsWithChildren } from 'react';
 import DOffcanvasHeader from './components/DOffcanvasHeader';
 import DOffcanvasBody from './components/DOffcanvasBody';
@@ -8,8 +9,9 @@ type Props = BaseProps & PropsWithChildren<{
     staticBackdrop?: boolean;
     scrollable?: boolean;
     openFrom?: OffcanvasPositionToggleFrom;
+    transition?: Transition;
 }>;
-declare function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom, children, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DOffcanvas({ name, className, style, staticBackdrop, scrollable, openFrom, transition, children, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DOffcanvas & {
     Header: typeof DOffcanvasHeader;
     Body: typeof DOffcanvasBody;

@@ -2,11 +2,11 @@ import type { PropsWithChildren } from 'react';
 import DTabContent from './components/DTabContent';
 import type { BaseProps } from '../interface';
 export type DTabOption = {
-    label: string;
+    label: string | React.ReactNode;
     tab: string;
     disabled?: boolean;
 };
-export type TabVariant = 'tabs' | 'pills' | 'underline';
+export type TabVariant = 'tabs' | 'pills' | 'underline' | 'toggle-button-group';
 type Props = BaseProps & PropsWithChildren<{
     classNameTab?: string;
     onChange?: (option: DTabOption) => void;

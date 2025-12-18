@@ -20,8 +20,8 @@ export type DBoxFileProps = {
     onError?: (error: Error) => void;
 };
 export default function useDBoxFile(props: DBoxFileProps): {
-    inputRef: import("react").RefObject<HTMLInputElement>;
-    rootRef: import("react").RefObject<HTMLInputElement>;
+    inputRef: import("react").RefObject<HTMLInputElement | null>;
+    rootRef: import("react").RefObject<HTMLInputElement | null>;
     files: File[];
     isDragValid: boolean;
     isDragInvalid: boolean;

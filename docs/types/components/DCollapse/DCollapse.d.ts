@@ -1,8 +1,8 @@
-import type { PropsWithChildren, ReactNode, ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement, ReactNode } from 'react';
 import type { BaseProps, FamilyIconProps } from '../interface';
 type Props = BaseProps & FamilyIconProps & PropsWithChildren<{
     id?: string;
-    Component: ReactElement | ReactNode;
+    Component: ReactElement<unknown> | ReactNode;
     hasSeparator?: boolean;
     defaultCollapsed?: boolean;
     onChange?: (value: boolean) => void;

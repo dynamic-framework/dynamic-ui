@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import type { BaseProps, ComponentSize, EndIconProps, FamilyIconProps, LabelIconProps, StartIconProps } from '../interface';
-declare const ForwardedDInput: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "value" | "onChange">, "size" | "loading" | "label" | "value" | "invalid" | "onChange" | keyof BaseProps | keyof FamilyIconProps | keyof LabelIconProps | keyof StartIconProps | keyof EndIconProps | "hint" | "valid" | "floatingLabel" | "inputStart" | "inputEnd" | "onIconStartClick" | "onIconEndClick"> & BaseProps & FamilyIconProps & LabelIconProps & StartIconProps & EndIconProps & {
+import type { BaseProps, ComponentSize, EndIconProps, FamilyIconProps, StartIconProps } from '../interface';
+declare const ForwardedDInput: import("react").ForwardRefExoticComponent<Omit<Omit<Omit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "value" | "onChange">, "label" | "invalid" | "value" | "onChange" | "size" | keyof BaseProps | keyof FamilyIconProps | keyof StartIconProps | keyof EndIconProps | "loading" | "hint" | "valid" | "floatingLabel" | "inputStart" | "inputEnd" | "readonly" | "onIconStartClick" | "onIconEndClick"> & BaseProps & FamilyIconProps & StartIconProps & EndIconProps & {
     value?: string | undefined;
     label?: string | undefined;
     loading?: boolean | undefined;
@@ -11,6 +11,7 @@ declare const ForwardedDInput: import("react").ForwardRefExoticComponent<Omit<Om
     floatingLabel?: boolean | undefined;
     inputStart?: ReactNode;
     inputEnd?: ReactNode;
+    readonly?: boolean | undefined;
     onChange?: ((value: string) => void) | undefined;
     onIconStartClick?: ((value?: string) => void) | undefined;
     onIconEndClick?: ((value?: string) => void) | undefined;

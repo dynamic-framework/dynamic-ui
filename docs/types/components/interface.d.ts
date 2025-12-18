@@ -24,12 +24,6 @@ export type FamilyIconProps = {
     iconFamilyPrefix?: string;
     iconMaterialStyle?: boolean;
 };
-export type LabelIconProps = {
-    labelIcon?: string;
-    labelIconFamilyClass?: string;
-    labelIconFamilyPrefix?: string;
-    labelIconMaterialStyle?: boolean;
-};
 export type StartIconProps = {
     iconStart?: string;
     iconStartDisabled?: boolean;
@@ -48,9 +42,10 @@ export type EndIconProps = {
     iconEndTabIndex?: number;
     iconEndMaterialStyle?: boolean;
 };
-export type AlertTheme = 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary';
+export type ComponentColor = string;
+export type ComponentStateColor = 'success' | 'danger' | 'warning' | 'info';
 export type AlertThemeIconMap = {
-    [state in AlertTheme]: string;
+    [state in ComponentStateColor]: string;
 };
 export type ButtonVariant = 'outline' | 'link';
 export type ButtonType = 'submit' | 'reset' | 'button';

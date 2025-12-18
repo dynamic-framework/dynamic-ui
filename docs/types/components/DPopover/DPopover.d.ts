@@ -6,7 +6,7 @@ type Props = BaseProps & PropsWithChildren<{
      * @param {boolean} open
      * @returns {React.ReactElement}
      */
-    renderComponent: (open: boolean) => ReactElement;
+    renderComponent: (open: boolean) => ReactElement<unknown>;
     open: boolean;
     setOpen?: (open: boolean) => void;
     adjustContentToRender?: boolean;
