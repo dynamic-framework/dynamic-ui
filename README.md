@@ -7,16 +7,10 @@ Quickly create feature-rich financial applications through a robust micro fronte
 
 ### Installation
 
-To install `@dynamic-framework/ui-react`, use npm or yarn:
+To install `@dynamic-framework/ui-react`, use **npm**:
 
-**npm:**
 ```bash
 npm install @dynamic-framework/ui-react
-```
-
-**yarn:**
-```bash
-yarn add @dynamic-framework/ui-react
 ```
 
 For more details, visit the [npm package page](https://www.npmjs.com/package/@dynamic-framework/ui-react).
@@ -52,5 +46,7 @@ For local development and testing, you can use the following commands after clon
 - **Framework Website:** Visit our main site at [dynamicframework.dev](https://dynamicframework.dev).
 - **Component Library:** Explore our components in Storybook at [react.dynamicframework.dev](https://react.dynamicframework.dev/).
 
+<br />
+<br />
 
 **Made with 💚 by Modyo**
