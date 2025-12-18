@@ -1,5 +1,15 @@
 # Dynamic UI
 
+<!-- Badges -->
+[![npm version](https://img.shields.io/npm/v/@dynamic-framework/ui-react?style=flat-square)](https://www.npmjs.com/package/@dynamic-framework/ui-react)
+[![Build & Publish](https://img.shields.io/github/actions/workflow/status/dynamic-framework/dynamic-ui/release-please.yml?style=flat-square)](https://github.com/dynamic-framework/dynamic-ui/actions/workflows/release-please.yml)
+
+[![npm downloads](https://img.shields.io/npm/dm/@dynamic-framework/ui-react?style=flat-square)](https://www.npmjs.com/package/@dynamic-framework/ui-react)
+[![License](https://img.shields.io/badge/License-DynamicFramework-blue?style=flat-square)](https://raw.githubusercontent.com/dynamic-framework/dynamic-ui/refs/heads/master/LICENSE.md)
+[![Stars](https://img.shields.io/github/stars/dynamic-framework/dynamic-ui?style=social)](https://github.com/dynamic-framework/dynamic-ui)
+
+<br />
+
 Quickly create feature-rich financial applications through a robust micro frontend architecture of React-based components with customizable templates built for integration.
 
 
