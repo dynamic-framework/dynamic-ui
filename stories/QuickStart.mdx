@@ -1,18 +1,28 @@
 import { Meta } from '@storybook/blocks';
-import { DTabs } from '../src';
+import { DTabs, DAlert } from '../src';
 
 <Meta title="Design System/Quick Start" />
 
 <div className="inline-story">
 
-  # Dynamic Framework [![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-react?style=flat-square)](https://www.npmjs.com/package/@dynamic-framework/ui-react)
+  <DAlert 
+    theme="warning" 
+    className="new-version-available"
+  >
+    This documentation is for the <strong>legacy</strong> version of Dynamic Framework UI. For the latest version, 
+    please visit the <a href="https://react.dynamicframework.dev/" target="_blank" rel="noopener noreferrer">official documentation</a>.
+  </DAlert>
+
+  <br />
+
+  # Dynamic Framework
+  [![npm](https://img.shields.io/npm/v/@dynamic-framework/ui-react/legacy?style=flat-square)](https://www.npmjs.com/package/@dynamic-framework/ui-react/v/legacy)
 
   Dynamic Framework components come with production-ready code, design guides, and an active community of financial experience experts.
 
   Accessing the [main site](https://dynamicframework.dev/) provides additional information and resources.
 
   The [Github Repository](https://github.com/dynamic-framework/dynamic-ui) is available for review and collaboration.
-
 
   <br />
   ### Requirements
@@ -40,17 +50,17 @@ import { DTabs } from '../src';
   >
     <DTabs.Tab tab="npm">
       ```shell
-      npm install @dynamic-framework/ui-react@latest
+      npm install @dynamic-framework/ui-react@legacy
       ```
     </DTabs.Tab>
     <DTabs.Tab tab="yarn">
       ```shell
-      yarn add @dynamic-framework/ui-react@latest
+      yarn add @dynamic-framework/ui-react@legacy
       ```
     </DTabs.Tab>
     <DTabs.Tab tab="pnpm">
       ```shell
-      pnpm add @dynamic-framework/ui-react@latest
+      pnpm add @dynamic-framework/ui-react@legacy
       ```
     </DTabs.Tab>
   </DTabs>
