@@ -1,8 +1,8 @@
-name: Labeler
+name: Labeler legacy version
 on:
   pull_request:
     branches:
-      - develop
+      - releases/1.36-stable
     types: [
       opened,
       edited,
