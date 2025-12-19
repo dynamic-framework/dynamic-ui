@@ -66,4 +66,4 @@ jobs:
           FOLDER: docs
           CLEAN: true
           TARGET_FOLDER: docs/dev
-          COMMIT_MESSAGE: 'doc: update dev storybook'
+          COMMIT_MESSAGE: 'doc: update storybook (tag dev)'

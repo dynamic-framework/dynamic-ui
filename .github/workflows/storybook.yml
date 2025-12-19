@@ -35,5 +35,5 @@ jobs:
           BRANCH: docs
           FOLDER: docs
           CLEAN: true
-          TARGET_FOLDER: docs
-          COMMIT_MESSAGE: 'doc: update storybook'
+          TARGET_FOLDER: docs/latest
+          COMMIT_MESSAGE: 'doc: update storybook (tag latest)'
