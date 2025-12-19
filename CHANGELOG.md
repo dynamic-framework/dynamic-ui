@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.3](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.2...v1.36.3) (2025-12-19)
+
+
+### Bug Fixes
+
+* adjust storybook configuration and enhance QuickStart documentation ([05da627](https://github.com/dynamic-framework/dynamic-ui/commit/05da6279cc62de45a51ea39e0c9206826ddd719d))
+
 ## [1.36.2](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.1...v1.36.2) (2025-06-16)
 
 
