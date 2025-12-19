@@ -1,11 +1,11 @@
-name: Storybook
+name: Storybook legacy version
 on:
   release:
     types: [published]
 
 jobs:
   storybook:
-    if: startsWith(github.event.release.tag_name, 'v2')
+    if: startsWith(github.event.release.tag_name, 'v1.36')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,5 +29,5 @@ jobs:
           BRANCH: docs
           FOLDER: docs
           CLEAN: true
-          TARGET_FOLDER: docs
-          COMMIT_MESSAGE: 'doc: update storybook'
+          TARGET_FOLDER: docs/legacy
+          COMMIT_MESSAGE: 'doc: update storybook for legacy version'
