@@ -27,4 +27,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Publish to CDN
-        run: aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/ui-react/legacy/ --delete --acl public-read
+        run: aws s3 sync ./dist/ s3://dynamicframework-cdn/assets/legacy/ui-react --delete --acl public-read
