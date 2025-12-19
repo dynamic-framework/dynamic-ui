@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.4](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.3...v1.36.4) (2025-12-19)
+
+
+### Bug Fixes
+
+* correct CDN sync path for legacy UI assets ([efa4f0f](https://github.com/dynamic-framework/dynamic-ui/commit/efa4f0f5d63acded90d4f691e1edf7eb03e23c49))
+
 ## [1.36.3](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.2...v1.36.3) (2025-12-19)
 
 
