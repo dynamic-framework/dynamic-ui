@@ -1,0 +1,63 @@
+@mixin generate-hover-utility($utility) {
+  $values: map-get($utility, values);
+
+  // If the values are a list or string, convert it into a map
+  @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+    $values: zip($values, $values);
+  }
+
+  @each $key, $value in $values {
+    $properties: map-get($utility, property);
+
+    // Multiple properties are possible
+    @if type-of($properties) == "string" {
+      $properties: append((), $properties);
+    }
+
+    // Use custom class if present
+    $property-class: if(map-has-key($utility, class), map-get($utility, class), nth($properties, 1));
+    $property-class: if($property-class == null, "", $property-class);
+
+    // Use custom CSS variable name if present, otherwise default to `class`
+    $css-variable-name: if(map-has-key($utility, css-variable-name), map-get($utility, css-variable-name), map-get($utility, class));
+
+    // Don't prefix if value key is null (e.g., with shadow class)
+    $property-class-modifier: if($key, if($property-class == "", "", "-") + $key, "");
+
+    $is-css-var: map-get($utility, css-var);
+    $is-local-vars: map-get($utility, local-vars);
+
+    @if $value != null {
+      $escaped-prefix: "hover\\:"; // escape colon in class name
+      $selector: ".#{$escaped-prefix}#{$property-class}#{$property-class-modifier}:hover";
+
+      @if $is-css-var {
+        #{$selector} {
+          --#{$prefix}#{$css-variable-name}: #{$value};
+        }
+      } @else {
+        #{$selector} {
+          @each $property in $properties {
+            @if $is-local-vars {
+              @each $local-var, $variable in $is-local-vars {
+                --#{$prefix}#{$local-var}: #{$variable};
+              }
+            }
+            #{$property}: $value if($enable-important-utilities, !important, null);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin generate-hover-utilities($utilities-map) {
+  @each $name, $utility in $utilities-map {
+    @if map-has-key($utility, values) and map-has-key($utility, property) {
+      @include generate-hover-utility($utility);
+    }
+  }
+}
+
+// Generate all hover-prefixed utilities
+@include generate-hover-utilities($utilities);

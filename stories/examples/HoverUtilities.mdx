@@ -1,0 +1,99 @@
+import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
+import {
+  ExampleHoverShadowBoxes,
+  ExampleHoverBackgroundCard,
+  ExampleHoverTextLinks,
+  ExampleHoverOverflow,
+  ExampleHoverBorderColors,
+  ExampleHoverOpacity,
+} from './HoverUtilitiesExamples';
+
+<Meta title="Design System/Examples/Hover Utilities" />
+
+# Hover-prefixed utilities
+
+This project extends Bootstrap utilities to support Tailwind-like `hover:` variants (e.g., `hover:shadow-sm`, `hover:bg-primary-100`, `hover:text-danger`).
+
+## Shadows
+
+<Unstyled>
+  <ExampleHoverShadowBoxes />
+</Unstyled>
+
+<Source
+  code={`
+<div class="p-4 rounded border shadow-none hover:shadow-sm">...</div>
+<div class="p-4 rounded border shadow-none hover:shadow">...</div>
+<div class="p-4 rounded border shadow-none hover:shadow-lg">...</div>
+<div class="p-4 rounded border shadow-sm hover:shadow-none">...</div>
+  `}
+  language="html"
+/>
+
+## Backgrounds
+
+<Unstyled>
+  <ExampleHoverBackgroundCard />
+</Unstyled>
+
+<Source
+  code={`
+<div class="card hover:bg-secondary-100">...</div>
+  `}
+  language="html"
+/>
+
+## Text colors
+
+<Unstyled>
+  <ExampleHoverTextLinks />
+</Unstyled>
+
+<Source
+  code={`
+<a class="text-body hover:text-primary">Primary on hover</a>
+<a class="text-body hover:text-danger">Danger on hover</a>
+<a class="text-body hover:text-success">Success on hover</a>
+  `}
+  language="html"
+/>
+
+## Overflow
+
+<Unstyled>
+  <ExampleHoverOverflow />
+</Unstyled>
+
+<Source
+  code={`
+<div class="border rounded p-2 overflow-hidden hover:overflow-auto">...</div>
+  `}
+  language="html"
+/>
+
+## Border colors
+
+<Unstyled>
+  <ExampleHoverBorderColors />
+</Unstyled>
+
+<Source
+  code={`
+<div class="p-3 rounded border border-2 border-secondary hover:border-primary">...</div>
+<div class="p-3 rounded border border-2 border-dark hover:border-success">...</div>
+  `}
+  language="html"
+/>
+
+## Opacity
+
+<Unstyled>
+  <ExampleHoverOpacity />
+</Unstyled>
+
+<Source
+  code={`
+<div class="p-3 rounded border opacity-100 hover:opacity-40">...</div>
+  `}
+  language="html"
+/>
