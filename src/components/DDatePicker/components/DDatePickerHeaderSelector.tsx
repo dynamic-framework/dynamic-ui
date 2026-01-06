@@ -42,6 +42,7 @@ type Props =
   nextMonthButtonDisabled: boolean;
   prevYearButtonDisabled: boolean;
   nextYearButtonDisabled: boolean;
+  formatHeaderDate?: string;
   iconPrev?: string;
   iconNext?: string;
   prevMonthAriaLabel?: string;
@@ -70,6 +71,7 @@ export default function DDatePickerHeaderSelector(
     decreaseYear,
     increaseYear,
     monthDate,
+    formatHeaderDate = 'EE, LLLL d',
     pickerType,
     prevMonthButtonDisabled,
     nextMonthButtonDisabled,
@@ -230,7 +232,7 @@ export default function DDatePickerHeaderSelector(
           />
         )}
         <h4 className="mb-0 fw-normal">
-          {format(monthDate, 'LLLL, dd', { locale })}
+          {format(monthDate, formatHeaderDate, { locale })}
         </h4>
       </div>
       <div

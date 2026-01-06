@@ -151,6 +151,12 @@ const config: Meta<typeof DDatePicker> = {
       description: 'Format to display date',
       table: { defaultValue: { summary: 'dd/MM/yyyy' } },
     },
+    formatHeaderDate: {
+      type: 'string',
+      control: 'text',
+      description: 'Header date format (date-fns pattern)',
+      table: { defaultValue: { summary: 'LLLL dd' } },
+    },
     selectsRange: {
       type: 'boolean',
       control: 'boolean',
@@ -454,6 +460,16 @@ export const WithLocale: Story = {
     inline: true,
     locale: es,
     dateFormat: 'dd/MM/yyyy',
+  },
+};
+
+export const HeaderDateFormat: Story = {
+  render: ControlledDatePicker,
+  args: {
+    inline: true,
+    dateFormat: 'dd/MM/yyyy',
+    formatHeaderDate: 'LLL yyyy',
+    locale: es,
   },
 };
 
