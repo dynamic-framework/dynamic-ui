@@ -40,9 +40,30 @@ export function ExampleHoverBackgroundCard() {
 export function ExampleHoverTextLinks() {
   return (
     <div className="d-flex flex-column gap-2">
-      <a href="/#" className="text-body hover:text-primary">Primary on hover</a>
-      <a href="/#" className="text-body hover:text-danger">Danger on hover</a>
-      <a href="/#" className="text-body hover:text-success">Success on hover</a>
+      <a
+        href="#"
+        role="button"
+        onClick={(e) => e.preventDefault()}
+        className="text-body hover:text-primary"
+      >
+        Primary on hover
+      </a>
+      <a
+        href="#"
+        role="button"
+        onClick={(e) => e.preventDefault()}
+        className="text-body hover:text-danger"
+      >
+        Danger on hover
+      </a>
+      <a
+        href="#"
+        role="button"
+        onClick={(e) => e.preventDefault()}
+        className="text-body hover:text-success"
+      >
+        Success on hover
+      </a>
     </div>
   );
 }
