@@ -61,6 +61,7 @@ type Props =
   valid?: boolean;
   placeholder?: string;
   showHeaderSelectors?: boolean;
+  formatHeaderDate?: string;
   locale?: Locale,
 };
 
@@ -89,6 +90,7 @@ export default function DDatePicker(
     dataAttributes,
     placeholder,
     showHeaderSelectors,
+    formatHeaderDate,
     ...props
   }: Props,
 ) {
@@ -114,6 +116,7 @@ export default function DDatePicker(
       maxYearSelect={maxYearSelect}
       pickerType={pickerType}
       showHeaderSelectors={showHeaderSelectors}
+      formatHeaderDate={formatHeaderDate}
       locale={props.locale}
     />
   ), [
@@ -124,6 +127,7 @@ export default function DDatePicker(
     maxYearSelect,
     pickerType,
     showHeaderSelectors,
+    formatHeaderDate,
     props.monthsShown,
     props.locale,
   ]);
