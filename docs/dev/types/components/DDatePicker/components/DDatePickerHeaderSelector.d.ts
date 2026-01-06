@@ -21,6 +21,7 @@ type Props = BaseProps & FamilyIconProps & ReactDatePickerCustomHeaderProps & {
     nextMonthButtonDisabled: boolean;
     prevYearButtonDisabled: boolean;
     nextYearButtonDisabled: boolean;
+    formatHeaderDate?: string;
     iconPrev?: string;
     iconNext?: string;
     prevMonthAriaLabel?: string;
@@ -34,5 +35,5 @@ type Props = BaseProps & FamilyIconProps & ReactDatePickerCustomHeaderProps & {
     monthsShown?: number;
     locale?: Locale;
 } & Omit<ComponentProps<typeof DButton>, 'iconStart' | 'onClick' | 'disabled'>;
-export default function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, prevMonthAriaLabel, nextMonthAriaLabel, prevYearAriaLabel, nextYearAriaLabel, iconSize, style, className, minYearSelect, maxYearSelect, showHeaderSelectors, customHeaderCount, locale, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDatePickerHeaderSelector({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, decreaseYear, increaseYear, monthDate, formatHeaderDate, pickerType, prevMonthButtonDisabled, nextMonthButtonDisabled, monthsShown, iconPrev, iconNext, prevYearButtonDisabled, nextYearButtonDisabled, prevMonthAriaLabel, nextMonthAriaLabel, prevYearAriaLabel, nextYearAriaLabel, iconSize, style, className, minYearSelect, maxYearSelect, showHeaderSelectors, customHeaderCount, locale, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
