@@ -73,7 +73,7 @@ export function ExampleHoverOverflow() {
     <div className="border rounded p-2 overflow-hidden hover:overflow-auto" style={{ width: 280, height: 120 }}>
       <div className="d-flex flex-column gap-2">
         {Array.from({ length: 12 }).map((_, i) => (
-          /* eslint-disable-next-line react/no-array-index-key */
+          /* eslint-disable-next-line react/no-array-index-key -- safe here because this is a static, non-reorderable list */
           <div key={i} className="bg-light rounded px-2 py-1">
             Item #
             {i + 1}
