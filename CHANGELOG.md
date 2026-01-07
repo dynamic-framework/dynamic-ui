@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.0.0...v2.1.0) (2026-01-07)
+
+
+### Features
+
+* add hover utilities and update deps ([#934](https://github.com/dynamic-framework/dynamic-ui/issues/934)) ([8a03085](https://github.com/dynamic-framework/dynamic-ui/commit/8a030852c617fab85d2fc41ff1835cd46b1904fc))
+
+
+### Bug Fixes
+
+* add parameter to format date correctly ([#936](https://github.com/dynamic-framework/dynamic-ui/issues/936)) ([2f577cf](https://github.com/dynamic-framework/dynamic-ui/commit/2f577cf38383ef62abd57741b1ad2604ca6c70d3))
+
 ## [2.0.0](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.2...v2.0.0) (2025-12-18)
 
 
