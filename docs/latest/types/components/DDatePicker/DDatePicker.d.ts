@@ -22,7 +22,8 @@ type Props = BaseProps & FamilyIconProps & Omit<DatePickerProps, 'showMonthDropd
     valid?: boolean;
     placeholder?: string;
     showHeaderSelectors?: boolean;
+    formatHeaderDate?: string;
     locale?: Locale;
 };
-export default function DDatePicker({ inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel, inputId, timeId, timeInputLabel, minYearSelect, maxYearSelect, iconHeaderSize, iconMaterialStyle, iconInput, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, invalid, valid, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar, style, dataAttributes, placeholder, showHeaderSelectors, ...props }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDatePicker({ inputLabel, inputHint, inputAriaLabel, inputActionAriaLabel, inputId, timeId, timeInputLabel, minYearSelect, maxYearSelect, iconHeaderSize, iconMaterialStyle, iconInput, headerPrevMonthAriaLabel, headerNextMonthAriaLabel, invalid, valid, renderCustomHeader: renderCustomHeaderProp, className, dateFormatCalendar, style, dataAttributes, placeholder, showHeaderSelectors, formatHeaderDate, ...props }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
