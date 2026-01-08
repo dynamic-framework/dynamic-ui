@@ -23,7 +23,20 @@ type Props =
     id?: string;
     Component: ReactElement<unknown> | ReactNode;
     hasSeparator?: boolean;
+    /**
+     * Initial state of the component uncontrolled.
+     *
+     * @param true show the component closed (collapsed)
+     * @param false show the component open (expanded)
+     */
     defaultCollapsed?: boolean;
+    /**
+     * Initial state of the component controlled.
+     *
+     * @param true show the component closed (collapsed)
+     * @param false show the component open (expanded)
+     */
+    collapsed?: boolean;
     onChange?: (value: boolean) => void;
     iconOpen?: string;
     iconClose?: string;
@@ -37,6 +50,7 @@ export default function DCollapse(
     Component,
     hasSeparator = false,
     defaultCollapsed = true,
+    collapsed: collapsedProp,
     onChange,
     children,
     iconOpen: iconOpenProp,
@@ -47,10 +61,18 @@ export default function DCollapse(
     dataAttributes,
   }: Props,
 ) {
-  const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const [collapsedState, setCollapsedState] = useState(defaultCollapsed);
+  const isControlled = collapsedProp !== undefined;
+  const collapsed = isControlled ? collapsedProp as boolean : collapsedState;
 
   const onChangeCollapse = () => {
-    setCollapsed((prev) => {
+    if (isControlled) {
+      if (onChange) {
+        onChange(!collapsed);
+      }
+      return;
+    }
+    setCollapsedState((prev) => {
       const next = !prev;
       if (onChange) {
         onChange(next);
