@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
+import { useState } from 'react';
 
 import DCollapse from '../../src/components/DCollapse/DCollapse';
 import DIcon from '../../src/components/DIcon';
@@ -39,9 +40,11 @@ const config: Meta<typeof DCollapse> = {
     className: {
       control: 'text',
       type: 'string',
+      description: 'Additional CSS class for the collapse container.',
     },
     style: {
       control: 'object',
+      description: 'Inline styles for the collapse container.',
     },
     Component: {
       options: ['Text', 'Custom'],
@@ -54,12 +57,18 @@ const config: Meta<typeof DCollapse> = {
           </div>
         ),
       },
+      description: 'Header content of the collapse.',
     },
     defaultCollapsed: {
       control: 'boolean',
+      description: 'Initial or external state. When changed, the component syncs its internal state.',
+    },
+    onChange: {
+      description: 'Callback fired on toggle with the next state (true = collapsed, false = expanded). Use it to update your external state and use controlled mode.',
     },
     hasSeparator: {
       control: 'boolean',
+      description: 'Shows a separator between header and body.',
     },
     iconOpen: {
       control: {
@@ -69,6 +78,7 @@ const config: Meta<typeof DCollapse> = {
         },
       },
       options: [undefined, ...ICONS],
+      description: 'Icon shown when the collapse is collapsed (state collapsed = true).',
     },
     iconClose: {
       control: {
@@ -78,18 +88,22 @@ const config: Meta<typeof DCollapse> = {
         },
       },
       options: [undefined, ...ICONS],
+      description: 'Icon shown when the collapse is expanded (state collapsed = false).',
     },
     iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      description: 'Enable Material icons style (requires DContextProvider configuration).',
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      description: 'Icon family class to use with DIcon.',
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      description: 'Icon family prefix to use with DIcon.',
     },
   },
   tags: ['autodocs'],
@@ -205,5 +219,90 @@ export const MaterialIcon: Story = {
     hasSeparator: true,
     iconClose: 'unfold_more',
     iconOpen: 'unfold_less',
+  },
+};
+
+export const Controlled: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px', height: '320px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  render: function Example(args) {
+    const [isCollapsed, setIsCollapsed] = useState(true);
+
+    return (
+      <>
+        <div className="d-flex gap-2 mb-2">
+          <button
+            className="btn btn-sm btn-primary"
+            type="button"
+            onClick={() => setIsCollapsed((prev) => !prev)}
+          >
+            {isCollapsed ? 'Expand' : 'Collapse'}
+          </button>
+        </div>
+        <DCollapse
+          {...args}
+          defaultCollapsed={isCollapsed}
+          onChange={setIsCollapsed}
+        >
+          <div className="row d-flex flex-column gap-3 pt-3">
+            <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+            <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+            <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+          </div>
+        </DCollapse>
+      </>
+    );
+  },
+  args: {
+    Component: (
+      <span>Text</span>
+    ),
+    hasSeparator: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Controlled usage: update "defaultCollapsed" and handle "onChange" to update external state. When defaultCollapsed is true, the body is hidden; when false, it is shown.',
+      },
+      source: {
+        code: `import { useState } from 'react';
+
+export default function ControlledCollapseExample() {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  return (
+    <>
+      <div className="d-flex gap-2 mb-2">
+        <button
+          className="btn btn-sm btn-primary"
+          type="button"
+          onClick={() => setIsCollapsed((prev) => !prev)}
+        >
+          {isCollapsed ? 'Expand' : 'Collapse'}
+        </button>
+      </div>
+      <DCollapse
+        Component={<span>Text</span>}
+        defaultCollapsed={isCollapsed}
+        hasSeparator
+        onChange={setIsCollapsed}
+      >
+        <div className="row d-flex flex-column gap-3 pt-3">
+          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+          <div className="col-12">Lorem ipsum dolor sit amet consectetur.</div>
+        </div>
+      </DCollapse>
+    </>
+  );
+}
+`,
+      },
+    },
   },
 };
