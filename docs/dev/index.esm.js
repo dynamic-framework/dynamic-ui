@@ -1107,6 +1107,9 @@ function DCollapse({ id, className, style, Component, hasSeparator = false, defa
             return next;
         });
     };
+    useEffect(() => {
+        setCollapsed(defaultCollapsed);
+    }, [defaultCollapsed]);
     const { iconMap: { chevronDown, chevronUp, }, } = useDContext();
     const iconOpen = useMemo(() => iconOpenProp || chevronDown, [chevronDown, iconOpenProp]);
     const iconClose = useMemo(() => iconCloseProp || chevronUp, [chevronUp, iconCloseProp]);

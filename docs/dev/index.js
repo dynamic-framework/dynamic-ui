@@ -1128,6 +1128,9 @@ function DCollapse({ id, className, style, Component, hasSeparator = false, defa
             return next;
         });
     };
+    React.useEffect(() => {
+        setCollapsed(defaultCollapsed);
+    }, [defaultCollapsed]);
     const { iconMap: { chevronDown, chevronUp, }, } = useDContext();
     const iconOpen = React.useMemo(() => iconOpenProp || chevronDown, [chevronDown, iconOpenProp]);
     const iconClose = React.useMemo(() => iconCloseProp || chevronUp, [chevronUp, iconCloseProp]);
