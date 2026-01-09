@@ -61,14 +61,10 @@ const config: Meta<typeof DCollapse> = {
     },
     defaultCollapsed: {
       control: 'boolean',
-      description: 'Uncontrolled mode: initial state.',
-    },
-    collapsed: {
-      control: 'boolean',
-      description: 'Controlled mode: current state. When provided, the component does not mutate internal state and only calls onChange.',
+      description: 'Initial or external state. When changed, the component syncs its internal state.',
     },
     onChange: {
-      description: 'Callback fired on toggle with the next state (true = collapsed, false = expanded). Use it to update the collapsed prop in controlled mode.',
+      description: 'Callback fired on toggle with the next state (true = collapsed, false = expanded). Use it to update your external state and use controlled mode.',
     },
     hasSeparator: {
       control: 'boolean',
@@ -245,12 +241,12 @@ export const Controlled: Story = {
             type="button"
             onClick={() => setIsCollapsed((prev) => !prev)}
           >
-            Toggle
+            {isCollapsed ? 'Expand' : 'Collapse'}
           </button>
         </div>
         <DCollapse
           {...args}
-          collapsed={isCollapsed}
+          defaultCollapsed={isCollapsed}
           onChange={setIsCollapsed}
         >
           <div className="row d-flex flex-column gap-3 pt-3">
@@ -271,7 +267,7 @@ export const Controlled: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Controlled usage: pass "collapsed" and handle "onChange" to update state. When collapsed is true, the body is hidden; when false, it is shown.',
+        story: 'Controlled usage: update "defaultCollapsed" and handle "onChange" to update external state. When defaultCollapsed is true, the body is hidden; when false, it is shown.',
       },
       source: {
         code: `import { useState } from 'react';
@@ -287,12 +283,12 @@ export default function ControlledCollapseExample() {
           type="button"
           onClick={() => setIsCollapsed((prev) => !prev)}
         >
-          Toggle
+          {isCollapsed ? 'Expand' : 'Collapse'}
         </button>
       </div>
       <DCollapse
         Component={<span>Text</span>}
-        collapsed={isCollapsed}
+        defaultCollapsed={isCollapsed}
         hasSeparator
         onChange={setIsCollapsed}
       >
