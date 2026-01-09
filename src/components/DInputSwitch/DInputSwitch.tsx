@@ -60,7 +60,7 @@ export default function DInputSwitch(
 
   return (
     <div
-      className={classNames('form-check', className)}
+      className={classNames('form-check form-switch', className)}
       {...dataAttributes}
     >
       <input
