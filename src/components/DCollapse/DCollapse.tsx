@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import {
   useMemo,
   useState,
+  useEffect,
 } from 'react';
 
 import type {
@@ -58,6 +59,10 @@ export default function DCollapse(
       return next;
     });
   };
+
+  useEffect(() => {
+    setCollapsed(defaultCollapsed);
+  }, [defaultCollapsed]);
 
   const {
     iconMap: {
