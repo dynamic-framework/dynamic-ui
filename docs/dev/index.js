@@ -1861,7 +1861,7 @@ function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, i
         setInternalIsChecked(value);
         onChange === null || onChange === void 0 ? void 0 : onChange(value);
     }, [onChange]);
-    return (jsxRuntime.jsxs("div", Object.assign({ className: classNames('form-check', className) }, dataAttributes, { children: [jsxRuntime.jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', {
+    return (jsxRuntime.jsxs("div", Object.assign({ className: classNames('form-check form-switch', className) }, dataAttributes, { children: [jsxRuntime.jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', {
                     'is-invalid': invalid,
                     'is-valid': valid,
                 }, inputClassName), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsxRuntime.jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] })));
