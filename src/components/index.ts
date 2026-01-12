@@ -80,3 +80,4 @@ export { default as DInputPhone } from './DInputPhone';
 export { default as DCreditCard } from './DCreditCard';
 export { default as DDropdown } from './DDropdown';
 export { default as DVoucher } from './DVoucher';
+export { default as DOtp } from './DOtp';
