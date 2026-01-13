@@ -1107,6 +1107,9 @@ function DCollapse({ id, className, style, Component, hasSeparator = false, defa
             return next;
         });
     };
+    useEffect(() => {
+        setCollapsed(defaultCollapsed);
+    }, [defaultCollapsed]);
     const { iconMap: { chevronDown, chevronUp, }, } = useDContext();
     const iconOpen = useMemo(() => iconOpenProp || chevronDown, [chevronDown, iconOpenProp]);
     const iconClose = useMemo(() => iconCloseProp || chevronUp, [chevronUp, iconCloseProp]);
@@ -1837,7 +1840,7 @@ function DInputSwitch({ id: idProp, label, ariaLabel, name, checked, disabled, i
         setInternalIsChecked(value);
         onChange === null || onChange === void 0 ? void 0 : onChange(value);
     }, [onChange]);
-    return (jsxs("div", Object.assign({ className: classNames('form-check', className) }, dataAttributes, { children: [jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', {
+    return (jsxs("div", Object.assign({ className: classNames('form-check form-switch', className) }, dataAttributes, { children: [jsx("input", { id: id, name: name, onChange: readonly ? () => false : changeHandler, className: classNames('form-check-input', {
                     'is-invalid': invalid,
                     'is-valid': valid,
                 }, inputClassName), style: style, type: "checkbox", role: "switch", checked: internalIsChecked, disabled: disabled, "aria-label": ariaLabel }), label && (jsx("label", { className: "form-check-label", htmlFor: id, children: label }))] })));
@@ -2588,5 +2591,74 @@ function DVoucher({ amount, amountDetails, icon = 'CircleCheckBig', color = 'suc
         }, children: jsxs("div", { children: [jsxs("div", { className: "d-voucher-header", children: [jsx(DIcon, { icon: icon, color: color }), jsxs("div", { className: "text-center", children: [jsx("h3", { className: "mb-2", children: title }), jsx("p", { className: "m-0", children: message })] })] }), amount && (jsxs("div", { className: "d-voucher-amount", children: [jsx("div", { className: classNames('text-center fw-bold fs-3', amountDetails ? 'mb-1' : 'm-0'), children: amount }), amountDetails] })), jsx("hr", { className: "my-4" }), children, jsx("hr", { className: "my-4" }), jsxs("div", { className: "d-voucher-footer", children: [jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }) }));
 }
 
-export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCreditCard, DCurrencyText, DDatePicker, DDropdown, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
+function useCountdown(seconds) {
+    const [secondsLeft, setSecondsLeft] = useState(seconds);
+    const [isActive, setIsActive] = useState(true);
+    const resetCountdown = useCallback((newSeconds = seconds) => {
+        setIsActive(false);
+        setSecondsLeft(newSeconds);
+    }, [seconds]);
+    const restartCountdown = useCallback(() => {
+        resetCountdown(seconds);
+        setIsActive(true);
+    }, [resetCountdown, seconds]);
+    useEffect(() => {
+        if (!isActive) {
+            return () => { };
+        }
+        const interval = setInterval(() => {
+            setSecondsLeft((prevSeconds) => {
+                const newSeconds = prevSeconds - 1;
+                if (newSeconds <= 0) {
+                    clearInterval(interval);
+                    setIsActive(false);
+                    return 0;
+                }
+                return newSeconds;
+            });
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [isActive]);
+    return { secondsLeft, restartCountdown };
+}
+
+const defaultMessage = (secs) => (secs > 0
+    ? `Didn't get any code? Resend in: ${secs}s`
+    : "Didn't get any code?");
+function OtpCountdown({ seconds, resendText, message, }) {
+    const { secondsLeft, restartCountdown } = useCountdown(seconds);
+    return (jsxs("div", { className: "d-flex gap-2 align-items-center", children: [jsx("p", { className: "mb-0", children: message ? message(secondsLeft) : defaultMessage(secondsLeft) }), jsx(DButton, { text: resendText, variant: "link", disabled: secondsLeft > 0, onClick: restartCountdown })] }));
+}
+
+const TEXT_PROPS = {
+    resend: 'Resend',
+    resendText: 'Resend code',
+    submit: 'Authorize and continue',
+    title: 'We will send you a 6-digit code to your associated phone number so you can continue with your request.',
+    contact: (jsxs(Fragment, { children: [jsx("span", { children: "Problems with your digital token? Contact us" }), ' ', jsx("a", { href: "https://www.modyo.com", className: "link-primary text-nowrap", target: "_blank", rel: "noreferrer", children: "Contact us" })] })),
+};
+function DOtp({ className, action, isLoading, otpSize = 6, texts = TEXT_PROPS, seconds = 15, }) {
+    const [otp, setOtp] = useState('');
+    const [invalid, setInvalid] = useState(false);
+    const handler = useCallback(async () => {
+        if (otp.length < otpSize) {
+            setInvalid(true);
+            return;
+        }
+        setInvalid(false);
+        await action();
+    }, [
+        otp.length,
+        action,
+        otpSize,
+    ]);
+    return (jsxs("div", { className: className, children: [jsx("p", { children: texts.title }), jsxs("div", { className: "d-flex flex-column gap-6 pb-4 px-3", children: [jsxs("div", { className: "d-flex flex-column gap-6", children: [jsx(DInputPin, { className: "modal-otp-pin", characters: otpSize, onChange: (e) => setOtp(e), invalid: invalid && otp.length < otpSize, placeholder: "0" }), jsx(OtpCountdown, { seconds: seconds, resendText: texts.resend })] }), jsx("hr", { className: "m-0" }), jsxs("div", { className: "d-flex flex-column flex-lg-row gap-4 align-items-center", children: [jsx(DButton, { text: texts.submit, onClick: () => {
+                                    handler().catch((err) => {
+                                        // eslint-disable-next-line no-console
+                                        console.error('Error in DOtp action:', err);
+                                    });
+                                }, loading: isLoading }), jsx("p", { className: "small ms-lg-auto mb-0", children: texts.contact })] })] })] }));
+}
+
+export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCreditCard, DCurrencyText, DDatePicker, DDropdown, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
 //# sourceMappingURL=index.esm.js.map
