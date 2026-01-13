@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/dynamic-framework/dynamic-ui/compare/v2.1.0...v2.1.1) (2026-01-13)
+
+
+### Bug Fixes
+
+* add export to DOtp component ([#942](https://github.com/dynamic-framework/dynamic-ui/issues/942)) ([2f7c7e9](https://github.com/dynamic-framework/dynamic-ui/commit/2f7c7e976efc38ba236ce9447bb336c85f88b60a))
+* export dotp ([2f7c7e9](https://github.com/dynamic-framework/dynamic-ui/commit/2f7c7e976efc38ba236ce9447bb336c85f88b60a))
+* restore switch design ([#941](https://github.com/dynamic-framework/dynamic-ui/issues/941)) ([cf6f4fe](https://github.com/dynamic-framework/dynamic-ui/commit/cf6f4fe06834f3bd096f7036962b19f94925c105))
+* update DCollapse component for controlled and uncontrolled states ([#939](https://github.com/dynamic-framework/dynamic-ui/issues/939)) ([d8af713](https://github.com/dynamic-framework/dynamic-ui/commit/d8af7136f498262c1f88a82b84b4c635e1997230))
+
 ## [2.1.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.0.0...v2.1.0) (2026-01-07)
 
 
