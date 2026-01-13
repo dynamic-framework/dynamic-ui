@@ -104,6 +104,19 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         },
       },
     },
+    href: {
+      control: 'text',
+      description: 'If provided, renders as an &lt;a&gt; element instead of &lt;button&gt;.',
+    },
+    target: {
+      control: 'select',
+      options: [undefined, '_self', '_blank', '_parent', '_top'],
+      description: 'Anchor target when href is set.',
+    },
+    rel: {
+      control: 'text',
+      description: 'Anchor rel attribute (use "noopener noreferrer" with target="_blank").',
+    },
     className: {
       control: 'text',
       type: 'string',
@@ -233,6 +246,16 @@ export const Link: Story = {
       ))}
     </div>
   ),
+};
+
+export const AsAnchor: Story = {
+  args: {
+    text: 'External Link',
+    color: 'primary',
+    href: 'https://dynamicframework.dev',
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  },
 };
 
 export const IconEnd: Story = {
