@@ -1,8 +1,6 @@
 name: Dev Publish
 on:
-  push:
-    branches:
-      - develop
+  workflow_dispatch:
 
 concurrency:
   group: dev-publish
