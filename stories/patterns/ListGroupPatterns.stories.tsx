@@ -538,8 +538,8 @@ export const CollapsibleAccountDetails: Story = {
   render: () => (
     <div style={{ width: 800 }}>
       <h5 className="mb-3">Account Details</h5>
-      <DListGroup flush className="d-flex flex-column gap-1">
-        <DListGroup.Item className="p-0 border-0">
+      <DListGroup className="gap-1">
+        <DListGroup.Item className="p-0 border-0 d-block">
           <DCollapse
             Component={(
               <div className="d-flex w-100 justify-content-between align-items-center">
@@ -577,7 +577,7 @@ export const CollapsibleAccountDetails: Story = {
             </div>
           </DCollapse>
         </DListGroup.Item>
-        <DListGroup.Item className="p-0 border-0 hover-bg-gray-50">
+        <DListGroup.Item className="p-0 border-0 d-block">
           <DCollapse
             Component={(
               <div className="d-flex w-100 justify-content-between align-items-center">
@@ -615,7 +615,7 @@ export const CollapsibleAccountDetails: Story = {
             </div>
           </DCollapse>
         </DListGroup.Item>
-        <DListGroup.Item className="p-0 border-0 hover-bg-gray-50">
+        <DListGroup.Item className="p-0 border-0 d-block">
           <DCollapse
             Component={(
               <div className="d-flex w-100 justify-content-between align-items-center">
@@ -674,9 +674,9 @@ export const CollapsibleAccountDetails2: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Account Details</h5>
       <DListGroup>
-        <DListGroup.Item className="p-0">
+        <DListGroup.Item className="p-0 d-block">
           <DCollapse
-            className="shadow-none hover-bg-gray-25"
+            className="shadow-none hover:bg-gray-25"
             Component={(
               <div className="d-flex w-100 justify-content-between align-items-center">
                 <div>
@@ -713,9 +713,9 @@ export const CollapsibleAccountDetails2: Story = {
             </div>
           </DCollapse>
         </DListGroup.Item>
-        <DListGroup.Item className="p-0">
+        <DListGroup.Item className="p-0 d-block">
           <DCollapse
-            className="shadow-none hover-bg-gray-25"
+            className="shadow-none hover:bg-gray-25"
             Component={(
               <div className="d-flex w-100 justify-content-between align-items-center">
                 <div>
@@ -752,9 +752,9 @@ export const CollapsibleAccountDetails2: Story = {
             </div>
           </DCollapse>
         </DListGroup.Item>
-        <DListGroup.Item className="p-0">
+        <DListGroup.Item className="p-0 d-block">
           <DCollapse
-            className="shadow-none hover-bg-gray-25"
+            className="shadow-none hover:bg-gray-25"
             Component={(
               <div className="d-flex w-100 justify-content-between align-items-center">
                 <div>
