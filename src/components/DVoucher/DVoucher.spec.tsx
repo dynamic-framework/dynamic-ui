@@ -47,12 +47,11 @@ describe('<DVoucher />', () => {
     expect(voucherElement).toBeInTheDocument();
   });
 
-  it('renders custom icon and color', () => {
+  it('renders custom icon', () => {
     render(
       <DVoucher
         {...defaultProps}
         icon="CheckCircle"
-        color="primary"
       />,
     );
 
@@ -216,7 +215,6 @@ describe('<DVoucher />', () => {
         amount="$250.50"
         amountDetails={amountDetails}
         icon="CheckCircle"
-        color="success"
         downloadText="Save PDF"
         shareText="Share Receipt"
       >
