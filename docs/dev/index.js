@@ -2612,6 +2612,75 @@ function DVoucher({ amount, amountDetails, icon = 'CircleCheckBig', color = 'suc
         }, children: jsxRuntime.jsxs("div", { children: [jsxRuntime.jsxs("div", { className: "d-voucher-header", children: [jsxRuntime.jsx(DIcon, { icon: icon, color: color }), jsxRuntime.jsxs("div", { className: "text-center", children: [jsxRuntime.jsx("h3", { className: "mb-2", children: title }), jsxRuntime.jsx("p", { className: "m-0", children: message })] })] }), amount && (jsxRuntime.jsxs("div", { className: "d-voucher-amount", children: [jsxRuntime.jsx("div", { className: classNames('text-center fw-bold fs-3', amountDetails ? 'mb-1' : 'm-0'), children: amount }), amountDetails] })), jsxRuntime.jsx("hr", { className: "my-4" }), children, jsxRuntime.jsx("hr", { className: "my-4" }), jsxRuntime.jsxs("div", { className: "d-voucher-footer", children: [jsxRuntime.jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsxRuntime.jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }) }));
 }
 
+function useCountdown(seconds) {
+    const [secondsLeft, setSecondsLeft] = React.useState(seconds);
+    const [isActive, setIsActive] = React.useState(true);
+    const resetCountdown = React.useCallback((newSeconds = seconds) => {
+        setIsActive(false);
+        setSecondsLeft(newSeconds);
+    }, [seconds]);
+    const restartCountdown = React.useCallback(() => {
+        resetCountdown(seconds);
+        setIsActive(true);
+    }, [resetCountdown, seconds]);
+    React.useEffect(() => {
+        if (!isActive) {
+            return () => { };
+        }
+        const interval = setInterval(() => {
+            setSecondsLeft((prevSeconds) => {
+                const newSeconds = prevSeconds - 1;
+                if (newSeconds <= 0) {
+                    clearInterval(interval);
+                    setIsActive(false);
+                    return 0;
+                }
+                return newSeconds;
+            });
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [isActive]);
+    return { secondsLeft, restartCountdown };
+}
+
+const defaultMessage = (secs) => (secs > 0
+    ? `Didn't get any code? Resend in: ${secs}s`
+    : "Didn't get any code?");
+function OtpCountdown({ seconds, resendText, message, }) {
+    const { secondsLeft, restartCountdown } = useCountdown(seconds);
+    return (jsxRuntime.jsxs("div", { className: "d-flex gap-2 align-items-center", children: [jsxRuntime.jsx("p", { className: "mb-0", children: message ? message(secondsLeft) : defaultMessage(secondsLeft) }), jsxRuntime.jsx(DButton, { text: resendText, variant: "link", disabled: secondsLeft > 0, onClick: restartCountdown })] }));
+}
+
+const TEXT_PROPS = {
+    resend: 'Resend',
+    resendText: 'Resend code',
+    submit: 'Authorize and continue',
+    title: 'We will send you a 6-digit code to your associated phone number so you can continue with your request.',
+    contact: (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", { children: "Problems with your digital token? Contact us" }), ' ', jsxRuntime.jsx("a", { href: "https://www.modyo.com", className: "link-primary text-nowrap", target: "_blank", rel: "noreferrer", children: "Contact us" })] })),
+};
+function DOtp({ className, action, isLoading, otpSize = 6, texts = TEXT_PROPS, seconds = 15, }) {
+    const [otp, setOtp] = React.useState('');
+    const [invalid, setInvalid] = React.useState(false);
+    const handler = React.useCallback(async () => {
+        if (otp.length < otpSize) {
+            setInvalid(true);
+            return;
+        }
+        setInvalid(false);
+        await action();
+    }, [
+        otp.length,
+        action,
+        otpSize,
+    ]);
+    return (jsxRuntime.jsxs("div", { className: className, children: [jsxRuntime.jsx("p", { children: texts.title }), jsxRuntime.jsxs("div", { className: "d-flex flex-column gap-6 pb-4 px-3", children: [jsxRuntime.jsxs("div", { className: "d-flex flex-column gap-6", children: [jsxRuntime.jsx(DInputPin, { className: "modal-otp-pin", characters: otpSize, onChange: (e) => setOtp(e), invalid: invalid && otp.length < otpSize, placeholder: "0" }), jsxRuntime.jsx(OtpCountdown, { seconds: seconds, resendText: texts.resend })] }), jsxRuntime.jsx("hr", { className: "m-0" }), jsxRuntime.jsxs("div", { className: "d-flex flex-column flex-lg-row gap-4 align-items-center", children: [jsxRuntime.jsx(DButton, { text: texts.submit, onClick: () => {
+                                    handler().catch((err) => {
+                                        // eslint-disable-next-line no-console
+                                        console.error('Error in DOtp action:', err);
+                                    });
+                                }, loading: isLoading }), jsxRuntime.jsx("p", { className: "small ms-lg-auto mb-0", children: texts.contact })] })] })] }));
+}
+
 exports.DAlert = DAlert;
 exports.DAvatar = DAvatar;
 exports.DBadge = DBadge;
@@ -2658,6 +2727,7 @@ exports.DOffcanvas = DOffcanvas;
 exports.DOffcanvasBody = DOffcanvasBody;
 exports.DOffcanvasFooter = DOffcanvasFooter;
 exports.DOffcanvasHeader = DOffcanvasHeader;
+exports.DOtp = DOtp;
 exports.DPaginator = DPaginator;
 exports.DPasswordStrengthMeter = DPasswordStrengthMeter;
 exports.DPopover = DPopover;
