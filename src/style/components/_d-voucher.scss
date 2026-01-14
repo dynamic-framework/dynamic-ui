@@ -18,6 +18,7 @@
 
 .d-voucher-amount {
   padding: var(--#{$prefix}voucher-amount-padding);
+  text-align: center;
   background: var(--#{$prefix}voucher-amount-background);
   border-radius: var(--#{$prefix}voucher-amount-rounded);
 }
