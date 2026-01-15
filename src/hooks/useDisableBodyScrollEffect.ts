@@ -8,14 +8,16 @@ export default function useDisableBodyScrollEffect(disable: boolean) {
     let timer: number | undefined;
 
     const lock = () => {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      const { clientWidth } = document.documentElement;
+      const { innerWidth } = window;
+      const scrollbarWidth = clientWidth ? innerWidth - clientWidth : 0;
       document.body.style.overflow = 'hidden';
       document.body.style.paddingRight = `${Math.max(0, scrollbarWidth)}px`;
     };
 
     const unlock = () => {
       document.body.style.overflow = 'unset';
-      document.body.style.paddingRight = '0';
+      document.body.style.paddingRight = '0px';
     };
 
     if (disable) {
