@@ -23,16 +23,51 @@ import { initReactI18next } from 'react-i18next';
 
 const PREFIX_BS = 'bs-';
 
+/* eslint-disable no-lonely-if */
 function useDisableBodyScrollEffect(disable) {
     useEffect(() => {
-        if (disable) {
+        let observer;
+        let timer;
+        const lock = () => {
+            const { clientWidth } = document.documentElement;
+            const { innerWidth } = window;
+            const scrollbarWidth = clientWidth ? innerWidth - clientWidth : 0;
             document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = '0';
+            document.body.style.paddingRight = `${Math.max(0, scrollbarWidth)}px`;
+        };
+        const unlock = () => {
+            document.body.style.overflow = 'unset';
+            document.body.style.paddingRight = '0px';
+        };
+        if (disable) {
+            lock();
         }
         else {
-            document.body.style.overflow = 'unset';
-            document.body.style.paddingRight = 'unset';
+            // Wait until all portal elements are removed (exit animations done)
+            if (document.querySelector('.portal')) {
+                observer = new MutationObserver(() => {
+                    if (!document.querySelector('.portal')) {
+                        unlock();
+                        observer === null || observer === void 0 ? void 0 : observer.disconnect();
+                    }
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+                // Fallback in case observer misses changes
+                timer = window.setTimeout(() => {
+                    unlock();
+                    observer === null || observer === void 0 ? void 0 : observer.disconnect();
+                }, 3000);
+            }
+            else {
+                unlock();
+            }
         }
+        return () => {
+            if (observer)
+                observer.disconnect();
+            if (timer)
+                window.clearTimeout(timer);
+        };
     }, [disable]);
 }
 
@@ -966,7 +1001,7 @@ function DBoxFile(_a) {
 }
 
 const DButton = forwardRef((props, ref) => {
-    const { color = 'primary', size, variant, text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button' } = props, rest = __rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type"]);
+    const { color = 'primary', size, variant, text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button', target, rel } = props, rest = __rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type", "target", "rel"]);
     const [buttonWidth, setButtonWidth] = useState();
     const buttonRef = useRef(null);
     const isDisabled = useMemo(() => disabled || loading, [disabled, loading]);
@@ -1003,6 +1038,19 @@ const DButton = forwardRef((props, ref) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [content, iconEnd, iconStart]);
+    if (props.href) {
+        return (jsxs("a", Object.assign({ href: props.href, target: target, rel: rel, ref: (node) => {
+                buttonRef.current = node;
+                if (typeof ref === 'function')
+                    ref(node);
+                // eslint-disable-next-line max-len
+                // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+                else if (ref)
+                    ref.current = node;
+            }, className: classNames(classes, className), style: Object.assign(Object.assign({}, style), (loading && buttonWidth
+                ? { minWidth: `${buttonWidth}px` }
+                : undefined)), "aria-label": ariaLabel, "aria-busy": loading, "aria-disabled": isDisabled, onClick: handleClick }, dataAttributes, { children: [loading && (jsxs("span", { className: "btn-loading", children: [jsx("span", { className: "spinner-border spinner-border-sm", "aria-hidden": "true" }), loadingText && jsx("span", { role: "status", children: loadingText })] })), !loading && (jsxs(Fragment, { children: [iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), content, iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }))] }))] })));
+    }
     return (jsxs("button", Object.assign({ ref: (node) => {
             buttonRef.current = node;
             if (typeof ref === 'function')
@@ -1019,23 +1067,32 @@ const DButton = forwardRef((props, ref) => {
 });
 DButton.displayName = 'DButton';
 
-function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, color = 'primary', type = 'button', loading = false, disabled = false, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, }) {
+function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, color = 'primary', type = 'button', loading = false, disabled = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, }) {
     const generateClasses = useMemo(() => {
         const variantClass = variant
             ? `btn-${variant}-${color}`
             : `btn-${color}`;
         return Object.assign(Object.assign(Object.assign({ 'btn d-button-icon': true, [variantClass]: true }, size && { [`btn-${size}`]: true }), (state && state !== 'disabled') && { [state]: true }), { loading });
     }, [variant, color, size, state, loading]);
+    const isDisabled = useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
     const clickHandler = useCallback((event) => {
         if (stopPropagationEnabled) {
             event.stopPropagation();
         }
+        if (isDisabled) {
+            event.preventDefault();
+            return;
+        }
         onClick === null || onClick === void 0 ? void 0 : onClick(event);
-    }, [stopPropagationEnabled, onClick]);
-    const isDisabled = useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
+    }, [stopPropagationEnabled, onClick, isDisabled]);
     const newAriaLabel = useMemo(() => (loading
         ? (loadingAriaLabel || ariaLabel)
         : (ariaLabel)), [ariaLabel, loading, loadingAriaLabel]);
+    if (href) {
+        return (jsx("a", Object.assign({ href: href, target: target, rel: rel, className: classNames(generateClasses, className), style: style, onClick: clickHandler, "aria-label": newAriaLabel, "aria-disabled": isDisabled, id: id }, dataAttributes, { children: loading
+                ? (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
+                : (jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })) })));
+    }
     return (jsx("button", Object.assign({ className: classNames(generateClasses, className), style: style, type: type, disabled: isDisabled, onClick: clickHandler, "aria-label": newAriaLabel, id: id }, dataAttributes, { children: loading
             ? (jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
             : (jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })) })));
@@ -2418,7 +2475,7 @@ ForwardedDInputPhone.displayName = 'DInputPhone';
 const DEFAULT_IMAGE = 'https://cdn.modyo.cloud/uploads/06b434f7-b943-4f54-9543-84a904e189aa/original/Visa_Logo_1_.png';
 const CHIP_IMAGE = 'https://cdn.modyo.cloud/uploads/4660ad00-e5d8-477e-8919-52b53d0a26fb/original/chip-debit-svgrepo-com_1_.png';
 function DCreditCard({ brand = 'visa', name, number, holderText = 'Card Holder', logoImage, isChipVisible = true, className, isVertical = false, }) {
-    return (jsxs("div", { className: classNames('d-credit-card overflow-hidden text-white', 'position-relative rounded-3', 'd-none d-lg-flex', isVertical && 'is-vertical', className), children: [jsxs("div", { className: "d-credit-card-header", children: [jsx("img", { src: logoImage || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsx("div", { className: "d-credit-card-chip p-2 rounded-2", children: jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxs("div", { className: "d-credit-card-details mt-auto d-none d-sm-block", children: [jsx("div", { className: "d-credit-card-number d-none d-sm-block mb-4", children: number }), jsx("small", { className: "d-block opacity-50", children: holderText }), jsx("span", { className: "name", children: name })] })] }));
+    return (jsxs("div", { className: classNames('d-credit-card overflow-hidden text-white', 'position-relative rounded-3', 'd-flex', isVertical && 'is-vertical', className), children: [jsxs("div", { className: "d-credit-card-header", children: [jsx("img", { src: logoImage || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsx("div", { className: "d-credit-card-chip p-2 rounded-2", children: jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxs("div", { className: "d-credit-card-details mt-auto d-none d-sm-block", children: [jsx("div", { className: "d-credit-card-number d-none d-sm-block mb-4", children: number }), jsx("small", { className: "d-block opacity-50", children: holderText }), jsx("span", { className: "name", children: name })] })] }));
 }
 
 const getItemClass = (action) => {
@@ -2560,7 +2617,7 @@ function useScreenshotWebShare() {
     };
 }
 
-function DVoucher({ amount, amountDetails, icon = 'CircleCheckBig', color = 'success', title, onError, message, downloadText = 'Download', shareText = 'Share', children, }) {
+function DVoucher({ amount, amountDetails, icon, title, onError, message, downloadText = 'Download', shareText = 'Share', className, children, }) {
     const { shareRef, share } = useScreenshotWebShare();
     const { downloadRef, download } = useScreenshotDownload();
     const handleShare = () => {
@@ -2585,10 +2642,25 @@ function DVoucher({ amount, amountDetails, icon = 'CircleCheckBig', color = 'suc
             // Error already handled by onError
         });
     };
-    return (jsx("div", { className: "d-voucher", ref: (el) => {
+    const defaultIconProps = {
+        icon: 'CircleCheckBig',
+        color: 'success',
+        size: '2rem',
+        hasCircle: true,
+    };
+    const resolvedIconProps = (() => {
+        if (icon === false || icon == null)
+            return null;
+        if (typeof icon === 'string')
+            return Object.assign(Object.assign({}, defaultIconProps), { icon });
+        if (typeof icon === 'object')
+            return Object.assign(Object.assign({}, defaultIconProps), icon);
+        return defaultIconProps;
+    })();
+    return (jsx("div", { className: classNames('d-voucher', className), ref: (el) => {
             shareRef.current = el;
             downloadRef.current = el;
-        }, children: jsxs("div", { children: [jsxs("div", { className: "d-voucher-header", children: [jsx(DIcon, { icon: icon, color: color }), jsxs("div", { className: "text-center", children: [jsx("h3", { className: "mb-2", children: title }), jsx("p", { className: "m-0", children: message })] })] }), amount && (jsxs("div", { className: "d-voucher-amount", children: [jsx("div", { className: classNames('text-center fw-bold fs-3', amountDetails ? 'mb-1' : 'm-0'), children: amount }), amountDetails] })), jsx("hr", { className: "my-4" }), children, jsx("hr", { className: "my-4" }), jsxs("div", { className: "d-voucher-footer", children: [jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }) }));
+        }, children: jsxs("div", { children: [jsxs("div", { className: "d-voucher-header", children: [resolvedIconProps && (jsx(DIcon, Object.assign({}, resolvedIconProps))), jsxs("div", { className: "text-center", children: [jsx("h3", { className: "mb-2", children: title }), jsx("p", { className: "m-0", children: message })] })] }), amount && (jsxs("div", { className: "d-voucher-amount", children: [jsx("div", { className: classNames('text-center fw-bold fs-3', amountDetails ? 'mb-1' : 'm-0'), children: amount }), amountDetails] })), jsx("hr", { className: "my-4" }), children, jsx("hr", { className: "my-4" }), jsxs("div", { className: "d-voucher-footer", children: [jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }) }));
 }
 
 function useCountdown(seconds) {
