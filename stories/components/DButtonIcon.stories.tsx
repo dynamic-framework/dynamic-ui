@@ -121,6 +121,19 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
       control: 'text',
       type: 'string',
     },
+    href: {
+      control: 'text',
+      description: 'If provided, renders as an &lt;a&gt; element instead of &lt;button&gt;.',
+    },
+    target: {
+      control: 'select',
+      options: [undefined, '_self', '_blank', '_parent', '_top'],
+      description: 'Anchor target when href is set.',
+    },
+    rel: {
+      control: 'text',
+      description: 'Anchor rel attribute (use "noopener noreferrer" with target="_blank").',
+    },
     color: {
       control: 'select',
       options: THEMES,
@@ -233,6 +246,16 @@ export const Link: Story = {
     variant: 'link',
     loading: false,
     icon: 'ArrowLeft',
+  },
+};
+
+export const AsAnchor: Story = {
+  args: {
+    color: 'primary',
+    icon: 'ArrowRight',
+    href: 'https://dynamicframework.dev',
+    target: '_blank',
+    rel: 'noopener noreferrer',
   },
 };
 

@@ -31,7 +31,7 @@ export default function DCreditCard(
       className={classNames(
         'd-credit-card overflow-hidden text-white',
         'position-relative rounded-3',
-        'd-none d-lg-flex',
+        'd-flex',
         isVertical && 'is-vertical',
         className,
       )}
