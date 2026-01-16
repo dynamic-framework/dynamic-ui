@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.5](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.4...v1.36.5) (2026-01-16)
+
+
+### Bug Fixes
+
+* reduce bootstrap icon list to improve performance in docs preview ([#946](https://github.com/dynamic-framework/dynamic-ui/issues/946)) ([83e8a74](https://github.com/dynamic-framework/dynamic-ui/commit/83e8a74932095ea7dd7db9cb064b712b5a81cf1a))
+
 ## [1.36.4](https://github.com/dynamic-framework/dynamic-ui/compare/v1.36.3...v1.36.4) (2025-12-19)
 
 
