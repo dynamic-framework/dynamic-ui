@@ -159,4 +159,21 @@ describe('<DButton />', () => {
       fireEvent.click(button);
     }).not.toThrow();
   });
+
+  it('Should render as anchor when href is provided and apply target/rel', () => {
+    const { container } = render(
+      <DButton
+        text="Go"
+        href="https://example.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      />,
+    );
+
+    const anchor = container.querySelector('a');
+    expect(anchor).toBeInTheDocument();
+    expect(anchor).toHaveAttribute('href', 'https://example.com');
+    expect(anchor).toHaveAttribute('target', '_blank');
+    expect(anchor).toHaveAttribute('rel', 'noopener noreferrer');
+  });
 });
