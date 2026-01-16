@@ -33,7 +33,10 @@ type Props =
   ariaLabel?: string;
   stopPropagationEnabled?: boolean;
   disabled?: boolean;
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  href?: string;
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
+  rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
+  onClick?: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 };
 
 export default function DButtonIcon(
@@ -51,6 +54,9 @@ export default function DButtonIcon(
     type = 'button',
     loading = false,
     disabled = false,
+    href,
+    target,
+    rel,
     stopPropagationEnabled = true,
     style,
     iconFamilyClass,
@@ -73,22 +79,62 @@ export default function DButtonIcon(
     };
   }, [variant, color, size, state, loading]);
 
-  const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    if (stopPropagationEnabled) {
-      event.stopPropagation();
-    }
-    onClick?.(event);
-  }, [stopPropagationEnabled, onClick]);
-
   const isDisabled = useMemo(() => (
     state === 'disabled' || loading || disabled
   ), [state, loading, disabled]);
+
+  const clickHandler = useCallback((event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    if (stopPropagationEnabled) {
+      event.stopPropagation();
+    }
+    if (isDisabled) {
+      event.preventDefault();
+      return;
+    }
+    onClick?.(event);
+  }, [stopPropagationEnabled, onClick, isDisabled]);
 
   const newAriaLabel = useMemo(() => (
     loading
       ? (loadingAriaLabel || ariaLabel)
       : (ariaLabel)
   ), [ariaLabel, loading, loadingAriaLabel]);
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        className={classNames(generateClasses, className)}
+        style={style}
+        onClick={clickHandler}
+        aria-label={newAriaLabel}
+        aria-disabled={isDisabled}
+        id={id}
+        {...dataAttributes}
+      >
+        {loading
+          ? (
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </span>
+          )
+          : (
+            <DIcon
+              icon={icon}
+              familyClass={iconFamilyClass}
+              familyPrefix={iconFamilyPrefix}
+              materialStyle={iconMaterialStyle}
+            />
+          )}
+      </a>
+    );
+  }
 
   return (
     <button

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { PropsWithChildren, ReactNode } from 'react';
+import { ComponentProps, PropsWithChildren, ReactNode } from 'react';
 
 import useScreenshotDownload from './hooks/useScreenshotDownload';
 import useScreenshotWebShare from './hooks/useScreenshotWebShare';
@@ -9,8 +9,8 @@ import DButton from '../DButton';
 type Props = PropsWithChildren<{
   amount?: string;
   amountDetails?: ReactNode;
-  icon?: string;
-  color?: string;
+  icon?: false | null | string | Partial<ComponentProps<typeof DIcon>>;
+  className?: string;
   message: string;
   title: string;
   downloadText?: string;
@@ -22,13 +22,13 @@ export default function DVoucher(
   {
     amount,
     amountDetails,
-    icon = 'CircleCheckBig',
-    color = 'success',
+    icon,
     title,
     onError,
     message,
     downloadText = 'Download',
     shareText = 'Share',
+    className,
     children,
   }: Props,
 ) {
@@ -59,9 +59,23 @@ export default function DVoucher(
       });
   };
 
+  const defaultIconProps: ComponentProps<typeof DIcon> = {
+    icon: 'CircleCheckBig',
+    color: 'success',
+    size: '2rem',
+    hasCircle: true,
+  };
+
+  const resolvedIconProps: ComponentProps<typeof DIcon> | null = (() => {
+    if (icon === false || icon == null) return null;
+    if (typeof icon === 'string') return { ...defaultIconProps, icon };
+    if (typeof icon === 'object') return { ...defaultIconProps, ...icon };
+    return defaultIconProps;
+  })();
+
   return (
     <div
-      className="d-voucher"
+      className={classNames('d-voucher', className)}
       ref={(el) => {
         shareRef.current = el;
         downloadRef.current = el;
@@ -69,10 +83,9 @@ export default function DVoucher(
     >
       <div>
         <div className="d-voucher-header">
-          <DIcon
-            icon={icon}
-            color={color}
-          />
+          {resolvedIconProps && (
+            <DIcon {...resolvedIconProps} />
+          )}
           <div className="text-center">
             <h3 className="mb-2">{title}</h3>
             <p className="m-0">{message}</p>

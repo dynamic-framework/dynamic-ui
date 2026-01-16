@@ -27,9 +27,12 @@ The voucher component provides:
 
 ## 🎨 Features
 
-- **Icon & Color**: Customizable icon and color scheme
+- Icon customization: Accepts string name, object of DIcon props ({ icon, color, size, hasCircle }), or false/null to hide.
+- Defaults: icon="CircleCheckBig", color="success", size="1rem", hasCircle=true.
+
 - **Amount Display**: Optional amount with supporting details
 - **Actions**: Built-in download and share buttons
+- **className**: Optional CSS class to style the voucher root container
 - **Content Area**: Flexible children for additional information
 - **Error Handling**: Optional error callback for failed operations
         `,
@@ -47,12 +50,13 @@ The voucher component provides:
   ],
   argTypes: {
     icon: {
-      control: 'text',
-      description: 'Icon name from the icon library',
+      control: 'object',
+      description: 'Icon can be a string (name), an object of DIcon props ({ icon, color, size, hasCircle }), or false/null to hide',
     },
-    color: {
+
+    className: {
       control: 'text',
-      description: 'Color scheme for the icon',
+      description: 'Optional CSS class for the voucher root element',
     },
     title: {
       control: 'text',
@@ -98,8 +102,7 @@ type Story = StoryObj<typeof DVoucher>;
 
 export const Default: Story = {
   args: {
-    icon: 'CircleCheckBig',
-    color: 'success',
+    icon: { icon: 'CircleCheckBig', color: 'success' },
     title: 'Payment Successful',
     message: 'Your transaction has been completed successfully',
     amount: '$125.00',
@@ -126,8 +129,7 @@ export const Default: Story = {
 
 export const WithAmountDetails: Story = {
   args: {
-    icon: 'CircleCheckBig',
-    color: 'success',
+    icon: { icon: 'CircleCheckBig', color: 'success' },
     title: 'Payment Received',
     message: 'Thank you for your payment',
     amount: '$250.00',
@@ -154,8 +156,7 @@ export const WithAmountDetails: Story = {
 
 export const ErrorState: Story = {
   args: {
-    icon: 'CircleX',
-    color: 'danger',
+    icon: { icon: 'CircleX', color: 'danger' },
     title: 'Payment Failed',
     message: 'We could not process your payment. Please try again.',
     children: (
@@ -175,8 +176,7 @@ export const ErrorState: Story = {
 
 export const WarningState: Story = {
   args: {
-    icon: 'AlertTriangle',
-    color: 'warning',
+    icon: { icon: 'AlertTriangle', color: 'warning' },
     title: 'Payment Pending',
     message: 'Your payment is being processed. This may take a few minutes.',
     amount: '$99.99',
@@ -197,8 +197,7 @@ export const WarningState: Story = {
 
 export const WithoutAmount: Story = {
   args: {
-    icon: 'CheckCircle2',
-    color: 'info',
+    icon: { icon: 'CheckCircle2', color: 'info' },
     title: 'Registration Complete',
     message: 'Welcome! Your account has been created successfully.',
     children: (
@@ -222,8 +221,7 @@ export const WithoutAmount: Story = {
 
 export const CustomButtonText: Story = {
   args: {
-    icon: 'CircleCheckBig',
-    color: 'success',
+    icon: { icon: 'CircleCheckBig', color: 'success' },
     title: 'Receipt Generated',
     message: 'Your receipt is ready',
     amount: '$1,234.56',
