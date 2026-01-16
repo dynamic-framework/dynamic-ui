@@ -41,9 +41,9 @@ To understand in more detail the aspects covered by this component, you can cust
       type: 'string',
     },
     brand: {
-      control: 'text',
-      description: 'Card brand (used as alt text for the logo)',
-      type: 'string',
+      control: 'select',
+      options: ['visa', 'mastercard'],
+      description: 'Card brand; selects default logo unless logoImage is provided',
       table: { defaultValue: { summary: 'visa' } },
     },
     holderText: {
@@ -90,7 +90,7 @@ type Story = StoryObj<typeof DCreditCard>;
 const defaultCard = {
   name: 'John Doe',
   number: '**** **** **** 1234',
-  brand: 'Visa',
+  brand: 'visa',
 };
 
 export const Default: Story = {
@@ -142,6 +142,26 @@ export const VerticalLayout: Story = {
   },
 };
 
+export const MastercardBrand: Story = {
+  render: (args) => (
+    <div style={{ width: 300 }}>
+      <DCreditCard {...args} />
+    </div>
+  ),
+  args: {
+    ...defaultCard,
+    brand: 'mastercard',
+    logoImage: undefined,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Displays a card with the default Mastercard brand logo.',
+      },
+    },
+  },
+};
+
 export const CustomLogo: Story = {
   render: (args) => (
     <div style={{ width: 300 }}>
@@ -151,7 +171,7 @@ export const CustomLogo: Story = {
   args: {
     ...defaultCard,
     logoImage: 'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
-    brand: 'MasterCard',
+    brand: 'mastercard',
   },
   parameters: {
     docs: {
