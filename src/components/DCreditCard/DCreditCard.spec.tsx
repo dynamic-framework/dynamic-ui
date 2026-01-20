@@ -27,4 +27,16 @@ describe('<Card />', () => {
     expect(logo).toBeInTheDocument();
     expect(chip).toBeInTheDocument();
   });
+
+  it('should render mastercard logo when brand is mastercard and no custom logo provided', () => {
+    const { container } = render(
+      <DCreditCard number="123" brand="mastercard" />,
+    );
+
+    const logo = container.querySelector('.d-credit-card-logo');
+    expect(logo).toBeInTheDocument();
+    expect(logo?.getAttribute('src')).toBe(
+      'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
+    );
+  });
 });
