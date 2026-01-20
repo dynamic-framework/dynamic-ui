@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 
+type CardBrand = 'visa' | 'mastercard';
+
 type Props = {
   className?: string;
-  brand?: string;
+  brand?: CardBrand;
   isChipVisible?: boolean;
   name?: string;
   number?: string;
@@ -13,6 +15,10 @@ type Props = {
 
 const DEFAULT_IMAGE = 'https://cdn.modyo.cloud/uploads/06b434f7-b943-4f54-9543-84a904e189aa/original/Visa_Logo_1_.png';
 const CHIP_IMAGE = 'https://cdn.modyo.cloud/uploads/4660ad00-e5d8-477e-8919-52b53d0a26fb/original/chip-debit-svgrepo-com_1_.png';
+const BRAND_LOGOS: Record<CardBrand, string> = {
+  visa: DEFAULT_IMAGE,
+  mastercard: 'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
+};
 
 export default function DCreditCard(
   {
@@ -38,7 +44,7 @@ export default function DCreditCard(
     >
       <div className="d-credit-card-header">
         <img
-          src={logoImage || DEFAULT_IMAGE}
+          src={logoImage || BRAND_LOGOS[brand] || DEFAULT_IMAGE}
           alt={brand}
           className="d-credit-card-logo"
           width={100}
