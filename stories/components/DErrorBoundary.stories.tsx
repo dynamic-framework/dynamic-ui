@@ -419,11 +419,74 @@ return (
   },
 };
 
-export const CustomFallbackAndOnReset: Story = {
+export const DefaultFallbackAndOnReset: Story = {
   parameters: {
     docs: {
       description: {
         story: 'Combines the default fallback with onReset to perform custom cleanup when the boundary resets.',
+      },
+      source: {
+        code: `
+function Bomb({ explode }: { explode: boolean }) {
+  if (explode) throw new Error('Boom!');
+  return (
+    <DCard>
+      <DCard.Body>
+        Safe content
+      </DCard.Body>
+    </DCard>
+  );
+}
+
+const [explode, setExplode] = useState(false);
+return (
+  <div className="d-flex flex-column gap-2">
+    <DButton
+      size="sm"
+      className="me-auto"
+      onClick={() => setExplode(true)}
+    >
+      Trigger error
+    </DButton>
+    <DErrorBoundary
+      onReset={() => setExplode(false)}
+    >
+      <Bomb explode={explode} />
+    </DErrorBoundary>
+  </div>
+);
+`,
+      },
+    },
+  },
+  render: function Render(args) {
+    const [explode, setExplode] = useState(false);
+    return (
+      <div className="d-flex flex-column gap-2">
+        <DButton
+          size="sm"
+          className="me-auto"
+          onClick={() => setExplode(true)}
+        >
+          Trigger error
+        </DButton>
+        <DErrorBoundary
+          {...args}
+          onReset={() => setExplode(false)}
+        >
+          <Bomb explode={explode} />
+        </DErrorBoundary>
+      </div>
+    );
+  },
+  args: { name: 'DefaultFallbackWithReset' },
+};
+
+export const CustomFallbackAndOnReset: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Combines the custom fallback with onReset to perform custom cleanup when the boundary resets.',
       },
       source: {
         code: `
@@ -507,5 +570,5 @@ return (
       </div>
     );
   },
-  args: { name: 'DefaultFallbackWithReset' },
+  args: { name: 'CustomFallbackWithReset' },
 };
