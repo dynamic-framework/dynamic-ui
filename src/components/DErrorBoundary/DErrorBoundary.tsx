@@ -36,11 +36,11 @@ export default function DErrorBoundary(
     children,
   }: DErrorBoundaryProps,
 ) {
-  const handleError = (error: unknown, info: ErrorInfo) => {
+  const handleError = useCallback((error: unknown, info: ErrorInfo) => {
     // eslint-disable-next-line no-console
     console.error(`[DErrorBoundary${name ? `:${name}` : ''}]`, getErrorMessage(error), info);
     onError?.(error, info);
-  };
+  }, [name, onError]);
 
   const FallbackRender = useCallback((props: FallbackProps) => {
     if (fallback) return fallback(props);
