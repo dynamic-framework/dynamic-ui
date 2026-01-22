@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import DErrorBoundary, { useErrorBoundary } from '../../src/components/DErrorBoundary';
+import DErrorBoundary, { getErrorMessage, useErrorBoundary } from '../../src/components/DErrorBoundary';
 import { DAlert, DButton, DCard } from '../../src';
 
 const meta: Meta<typeof DErrorBoundary> = {
@@ -312,7 +312,7 @@ return (
     </DButton>
     <DErrorBoundary
       onError={(error, info) => {
-        console.log({ error: error.message, info });
+        console.log({ error: getErrorMessage(error), info });
       }}
       name="MyBoundary"
     >
@@ -338,7 +338,7 @@ return (
         <DErrorBoundary
           {...args}
           onError={(error, info) => {
-            console.log({ error: error.message, info });
+            console.log({ error: getErrorMessage(error), info });
           }}
           name="MyBoundary"
         >

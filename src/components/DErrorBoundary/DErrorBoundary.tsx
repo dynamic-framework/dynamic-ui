@@ -8,17 +8,22 @@ import {
   ErrorBoundary,
   FallbackProps,
   useErrorBoundary,
+  getErrorMessage,
 } from 'react-error-boundary';
 import DefaultErrorBoundary from './components/DefaultErrorBoundary';
 
-export { useErrorBoundary, type FallbackProps };
+export {
+  type FallbackProps,
+  useErrorBoundary,
+  getErrorMessage,
+};
 
 export type DErrorBoundaryProps = PropsWithChildren<{
   name?: string;
   fallback?: (props: FallbackProps) => ReactNode;
   resetKeys?: unknown[];
   onReset?: () => void;
-  onError?: (error: Error, info: ErrorInfo) => void;
+  onError?: (error: unknown, info: ErrorInfo) => void;
 }>;
 
 export default function DErrorBoundary(
@@ -31,9 +36,9 @@ export default function DErrorBoundary(
     children,
   }: DErrorBoundaryProps,
 ) {
-  const handleError = (error: Error, info: ErrorInfo) => {
+  const handleError = (error: unknown, info: ErrorInfo) => {
     // eslint-disable-next-line no-console
-    console.error(`[DErrorBoundary${name ? `:${name}` : ''}]`, error, info);
+    console.error(`[DErrorBoundary${name ? `:${name}` : ''}]`, getErrorMessage(error), info);
     onError?.(error, info);
   };
 

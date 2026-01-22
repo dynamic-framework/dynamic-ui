@@ -1,4 +1,13 @@
-import DErrorBoundary, { useErrorBoundary, type FallbackProps } from './DErrorBoundary';
+import DErrorBoundary,
+{
+  type FallbackProps,
+  useErrorBoundary,
+  getErrorMessage,
+} from './DErrorBoundary';
 
-export { useErrorBoundary, type FallbackProps };
+export {
+  type FallbackProps,
+  useErrorBoundary,
+  getErrorMessage,
+};
 export default DErrorBoundary;
