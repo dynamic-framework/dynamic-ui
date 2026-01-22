@@ -15,7 +15,7 @@ export { useErrorBoundary, type FallbackProps };
 
 export type DErrorBoundaryProps = PropsWithChildren<{
   name?: string;
-  fallback?: (props: Partial<FallbackProps>) => ReactNode;
+  fallback?: (props: FallbackProps) => ReactNode;
   resetKeys?: unknown[];
   onReset?: () => void;
   onError?: (error: Error, info: ErrorInfo) => void;
