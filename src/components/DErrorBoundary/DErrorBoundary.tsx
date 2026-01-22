@@ -38,7 +38,7 @@ export default function DErrorBoundary(
   };
 
   const FallbackRender = useCallback((props: FallbackProps) => {
-    if (fallback) return fallback({ ...props });
+    if (fallback) return fallback(props);
 
     return (
       <DefaultErrorBoundary
@@ -52,7 +52,7 @@ export default function DErrorBoundary(
       resetKeys={resetKeys}
       onReset={onReset}
       onError={handleError}
-      fallbackRender={(props) => FallbackRender(props)}
+      fallbackRender={FallbackRender}
     >
       {children}
     </ErrorBoundary>
