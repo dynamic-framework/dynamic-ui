@@ -2,7 +2,11 @@ import { FallbackProps } from 'react-error-boundary';
 import DAlert from '../../DAlert';
 import DButton from '../../DButton';
 
-export default function DefaultErrorBoundary({ resetErrorBoundary }: Partial<FallbackProps>) {
+type Props = {
+  resetErrorBoundary: FallbackProps['resetErrorBoundary']
+};
+
+export default function DefaultErrorBoundary({ resetErrorBoundary }: Props) {
   return (
     <DAlert
       color="danger"
