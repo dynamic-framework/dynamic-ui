@@ -81,3 +81,4 @@ export { default as DCreditCard } from './DCreditCard';
 export { default as DDropdown } from './DDropdown';
 export { default as DVoucher } from './DVoucher';
 export { default as DOtp } from './DOtp';
+export { default as DErrorBoundary, useErrorBoundary } from './DErrorBoundary';
