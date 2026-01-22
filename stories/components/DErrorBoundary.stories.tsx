@@ -67,6 +67,36 @@ export const DefaultFallback: Story = {
       description: {
         story: 'Shows the default accessible fallback. Click “Trigger error” to simulate a rendering failure inside the boundary.',
       },
+      source: {
+        code: `
+function Bomb({ explode }: { explode: boolean }) {
+  if (explode) throw new Error('Boom!');
+  return (
+    <DCard>
+      <DCard.Body>
+        Safe content
+      </DCard.Body>
+    </DCard>
+  );
+}
+
+const [explode, setExplode] = useState(false);
+return (
+  <div className="d-flex flex-column gap-2">
+    <DButton
+      size="sm"
+      className="me-auto"
+      onClick={() => setExplode(true)}
+    >
+      Trigger error
+    </DButton>
+    <DErrorBoundary>
+      <Bomb explode={explode} />
+    </DErrorBoundary>
+  </div>
+);
+        `,
+      },
     },
   },
   render: function Render(args) {
@@ -99,6 +129,44 @@ export const CustomFallback: Story = {
       description: {
         story: 'Provides a custom fallback via the fallback prop. Useful to align the error UI with specific contexts.',
       },
+      source: {
+        code: `
+function Bomb({ explode }: { explode: boolean }) {
+  if (explode) throw new Error('Boom!');
+  return (
+    <DCard>
+      <DCard.Body>
+        Safe content
+      </DCard.Body>
+    </DCard>
+  );
+}
+
+const [explode, setExplode] = useState(false);
+return (
+  <div className="d-flex flex-column gap-2">
+    <DButton
+      size="sm"
+      className="me-auto"
+      onClick={() => setExplode(true)}
+    >
+      Trigger error
+    </DButton>
+    <DErrorBoundary
+      fallback={() => (
+        <DAlert color="warning">
+          <p className="m-0">
+            An error occurred! Using a custom fallback.
+          </p>
+        </DAlert>
+      )}
+    >
+      <Bomb explode={explode} />
+    </DErrorBoundary>
+  </div>
+);
+`,
+      },
     },
   },
   render: function Render(args) {
@@ -114,7 +182,6 @@ export const CustomFallback: Story = {
         </DButton>
         <DErrorBoundary
           {...args}
-          onReset={() => setExplode(false)}
           fallback={() => (
             <DAlert color="warning">
               <p className="m-0">
@@ -136,6 +203,47 @@ export const WithResetKeys: Story = {
     docs: {
       description: {
         story: 'Resets the boundary when resetKeys change. Use this to recover from errors after state changes (e.g., refreshing inputs).',
+      },
+      source: {
+        code: `
+function Bomb({ explode }: { explode: boolean }) {
+  if (explode) throw new Error('Boom!');
+  return (
+    <DCard>
+      <DCard.Body>
+        Safe content
+      </DCard.Body>
+    </DCard>
+  );
+}
+
+const [version, setVersion] = useState(0);
+const [explode, setExplode] = useState(false);
+return (
+  <div className="d-flex flex-column gap-2">
+    <div className="d-flex gap-2">
+      <DButton
+        size="sm"
+        onClick={() => setExplode(true)}
+      >
+        Trigger error
+      </DButton>
+      <DButton
+        size="sm"
+        color="secondary"
+        onClick={() => setVersion((v) => v + 1)}
+      >
+        Change reset key
+      </DButton>
+    </div>
+    <DErrorBoundary
+      resetKeys={[version]}
+    >
+      <Bomb explode={explode} />
+    </DErrorBoundary>
+  </div>
+);
+`,
       },
     },
   },
@@ -179,6 +287,41 @@ export const WithNameAndOnError: Story = {
       description: {
         story: 'Adds name to tag logs and onError to extend logging or integrate with monitoring. Click “Trigger error” to see the event in Actions.',
       },
+      source: {
+        code: `
+function Bomb({ explode }: { explode: boolean }) {
+  if (explode) throw new Error('Boom!');
+  return (
+    <DCard>
+      <DCard.Body>
+        Safe content
+      </DCard.Body>
+    </DCard>
+  );
+}
+
+const [explode, setExplode] = useState(false);
+return (
+  <div className="d-flex flex-column gap-2">
+    <DButton
+      size="sm"
+      className="me-auto"
+      onClick={() => setExplode(true)}
+    >
+      Trigger error
+    </DButton>
+    <DErrorBoundary
+      onError={(error, info) => {
+        console.log({ error: error.message, info });
+      }}
+      name="MyBoundary"
+    >
+      <Bomb explode={explode} />
+    </DErrorBoundary>
+  </div>
+);
+`,
+      },
     },
   },
   render: function Render(args) {
@@ -194,17 +337,15 @@ export const WithNameAndOnError: Story = {
         </DButton>
         <DErrorBoundary
           {...args}
+          onError={(error, info) => {
+            console.log({ error: error.message, info });
+          }}
           name="MyBoundary"
         >
           <Bomb explode={explode} />
         </DErrorBoundary>
       </div>
     );
-  },
-  args: {
-    onError(error, info) {
-      console.log({ error: error.message, info });
-    },
   },
 };
 
@@ -213,6 +354,37 @@ export const UsingHookShowBoundary: Story = {
     docs: {
       description: {
         story: 'Uses useErrorBoundary().showBoundary to surface an error without throwing, useful inside event handlers.',
+      },
+      source: {
+        code: `
+function ChildTrigger() {
+  const { showBoundary } = useErrorBoundary();
+  return (
+    <DButton
+      size="sm"
+      className="me-auto"
+      onClick={() => showBoundary(new Error('Error from hook'))}
+    >
+      Trigger error using hook
+    </DButton>
+  );
+}
+
+return (
+  <DErrorBoundary
+    name="HookBoundary"
+  >
+    <div className="d-flex flex-column gap-2">
+      <ChildTrigger />
+      <DCard>
+        <DCard.Body>
+          Press the button to trigger an error without throwing.
+        </DCard.Body>
+      </DCard>
+    </div>
+  </DErrorBoundary>
+);
+`,
       },
     },
   },
@@ -252,6 +424,52 @@ export const CustomFallbackAndOnReset: Story = {
     docs: {
       description: {
         story: 'Combines the default fallback with onReset to perform custom cleanup when the boundary resets.',
+      },
+      source: {
+        code: `
+function Bomb({ explode }: { explode: boolean }) {
+  if (explode) throw new Error('Boom!');
+  return (
+    <DCard>
+      <DCard.Body>
+        Safe content
+      </DCard.Body>
+    </DCard>
+  );
+}
+
+const [explode, setExplode] = useState(false);
+return (
+  <div className="d-flex flex-column gap-2">
+    <DButton
+      size="sm"
+      className="me-auto"
+      onClick={() => setExplode(true)}
+    >
+      Trigger error
+    </DButton>
+    <DErrorBoundary
+      onReset={() => setExplode(false)}
+      fallback={({ resetErrorBoundary }) => (
+        <DAlert color="warning">
+          <p>
+            An error occurred! Using a custom fallback.
+          </p>
+          <DButton
+            size="sm"
+            variant="outline"
+            onClick={resetErrorBoundary}
+          >
+            Retry
+          </DButton>
+        </DAlert>
+      )}
+    >
+      <Bomb explode={explode} />
+    </DErrorBoundary>
+  </div>
+);
+`,
       },
     },
   },
