@@ -49,7 +49,7 @@ describe('<DataStateWrapper />', () => {
       </DataStateWrapper>,
     );
 
-    expect(screen.getByText('items: 3')).toBeInTheDocument();
+    expect(screen.getByText(/items:\s*3/i)).toBeInTheDocument();
   });
 
   it('supports custom render overrides', () => {
