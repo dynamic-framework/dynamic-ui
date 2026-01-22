@@ -11,7 +11,7 @@ const meta: Meta<typeof DErrorBoundary> = {
   parameters: {
     docs: {
       description: {
-        component: 'Minimal wrapper over react-error-boundary that centralizes error logging (via onError) and provides an accessible default fallback. Use name to tag logs, fallback to override the UI, and resetKeys/onReset to control recovery.',
+        component: 'Minimal wrapper over [react-error-boundary](https://www.npmjs.com/package/react-error-boundary) that centralizes error logging (via onError) and provides an accessible default fallback. Use name to tag logs, fallback to override the UI, and resetKeys/onReset to control recovery.',
       },
     },
   },
