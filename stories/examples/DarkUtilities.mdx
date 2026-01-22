@@ -3,6 +3,7 @@ import {
   ExampleDarkBackgrounds,
   ExampleDarkTextColors,
   ExampleDarkBordersAndShadow,
+  ExampleDarkAutoBackgrounds,
 } from './DarkUtilitiesExamples';
 
 <Meta title="Design System/Examples/Dark Utilities" />
@@ -56,6 +57,23 @@ Dark variants are applied automatically when the user's system prefers a dark co
 <div class="dark">
   <div class="p-3 rounded border border-2 border-secondary dark:border-primary">...</div>
   <div class="p-4 rounded border shadow-none dark:shadow">...</div>
+</div>
+  `}
+  language="html"
+/>
+
+## Automatic dark (no .dark class)
+
+<Unstyled>
+  <ExampleDarkAutoBackgrounds />
+</Unstyled>
+
+<Source
+  code={`
+<div>
+  <!-- No .dark ancestor. Will apply automatically if the OS/browser has dark mode enabled -->
+  <div class="card dark:bg-secondary-100">...</div>
+  <div class="p-3 rounded border dark:bg-primary-100">...</div>
 </div>
   `}
   language="html"

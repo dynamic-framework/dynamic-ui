@@ -50,3 +50,23 @@ export function ExampleDarkBordersAndShadow() {
     </div>
   );
 }
+
+// Automatic dark mode via prefers-color-scheme (no .dark ancestor)
+export function ExampleDarkAutoBackgrounds() {
+  return (
+    <div className="d-flex flex-wrap gap-3">
+      <DCard className="p-3 border dark:bg-secondary-100" style={{ width: 320 }}>
+        <DCard.Header>
+          <h5 className="card-title mb-0">dark:bg-secondary-100 (auto)</h5>
+        </DCard.Header>
+        <DCard.Body>
+          <p className="mb-0">Applies in browsers with dark mode enabled (no .dark class).</p>
+        </DCard.Body>
+      </DCard>
+      <DBox className="p-3 rounded border dark:bg-primary-100" style={{ width: 220 }}>
+        <strong>dark:bg-primary-100 (auto)</strong>
+        <p className="mb-0 mt-2 text-body-secondary">Primary tint in system dark mode</p>
+      </DBox>
+    </div>
+  );
+}
