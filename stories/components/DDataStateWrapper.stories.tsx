@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import { DDataStateWrapper } from '../../src/components/DDataStateWrapper/DDataStateWrapper';
-import DBox from '../../src/components/DBox';
+import { DDataStateWrapper, DBox } from '../../src/components';
 
 const meta: Meta<typeof DDataStateWrapper> = {
   title: 'Design System/Components/Data State Wrapper',
