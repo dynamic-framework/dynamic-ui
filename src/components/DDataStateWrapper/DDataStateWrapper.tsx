@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { ErrorState } from './ErrorState';
-import { EmptyState } from './EmptyState';
-import { LoadingState } from './LoadingState';
+import { ErrorState } from './components/ErrorState';
+import { EmptyState } from './components/EmptyState';
+import { LoadingState } from './components/LoadingState';
 
 type Renderable = ReactNode | (() => ReactNode);
 
@@ -21,7 +21,7 @@ type DDataStateWrapperProps<T> = {
   children: (data: T[]) => ReactNode;
 };
 
-export function DDataStateWrapper<T>({
+export default function DDataStateWrapper<T>({
   isLoading,
   isError,
   data,
