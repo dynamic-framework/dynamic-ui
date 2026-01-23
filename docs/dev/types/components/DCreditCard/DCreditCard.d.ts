@@ -1,6 +1,7 @@
+type CardBrand = 'visa' | 'mastercard';
 type Props = {
     className?: string;
-    brand?: string;
+    brand?: CardBrand;
     isChipVisible?: boolean;
     name?: string;
     number?: string;

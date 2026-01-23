@@ -18,6 +18,8 @@ import { Toaster, toast } from 'react-hot-toast';
 import { defaultCountries, parseCountry, usePhoneInput, CountrySelector } from 'react-international-phone';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import html2canvas from 'html2canvas';
+import { getErrorMessage, ErrorBoundary } from 'react-error-boundary';
+export { getErrorMessage, useErrorBoundary } from 'react-error-boundary';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -2474,8 +2476,12 @@ ForwardedDInputPhone.displayName = 'DInputPhone';
 
 const DEFAULT_IMAGE = 'https://cdn.modyo.cloud/uploads/06b434f7-b943-4f54-9543-84a904e189aa/original/Visa_Logo_1_.png';
 const CHIP_IMAGE = 'https://cdn.modyo.cloud/uploads/4660ad00-e5d8-477e-8919-52b53d0a26fb/original/chip-debit-svgrepo-com_1_.png';
+const BRAND_LOGOS = {
+    visa: DEFAULT_IMAGE,
+    mastercard: 'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
+};
 function DCreditCard({ brand = 'visa', name, number, holderText = 'Card Holder', logoImage, isChipVisible = true, className, isVertical = false, }) {
-    return (jsxs("div", { className: classNames('d-credit-card overflow-hidden text-white', 'position-relative rounded-3', 'd-flex', isVertical && 'is-vertical', className), children: [jsxs("div", { className: "d-credit-card-header", children: [jsx("img", { src: logoImage || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsx("div", { className: "d-credit-card-chip p-2 rounded-2", children: jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxs("div", { className: "d-credit-card-details mt-auto d-none d-sm-block", children: [jsx("div", { className: "d-credit-card-number d-none d-sm-block mb-4", children: number }), jsx("small", { className: "d-block opacity-50", children: holderText }), jsx("span", { className: "name", children: name })] })] }));
+    return (jsxs("div", { className: classNames('d-credit-card overflow-hidden text-white', 'position-relative rounded-3', 'd-flex', isVertical && 'is-vertical', className), children: [jsxs("div", { className: "d-credit-card-header", children: [jsx("img", { src: logoImage || BRAND_LOGOS[brand] || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsx("div", { className: "d-credit-card-chip p-2 rounded-2", children: jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxs("div", { className: "d-credit-card-details mt-auto d-none d-sm-block", children: [jsx("div", { className: "d-credit-card-number d-none d-sm-block mb-4", children: number }), jsx("small", { className: "d-block opacity-50", children: holderText }), jsx("span", { className: "name", children: name })] })] }));
 }
 
 const getItemClass = (action) => {
@@ -2732,5 +2738,63 @@ function DOtp({ className, action, isLoading, otpSize = 6, texts = TEXT_PROPS, s
                                 }, loading: isLoading }), jsx("p", { className: "small ms-lg-auto mb-0", children: texts.contact })] })] })] }));
 }
 
-export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCreditCard, DCurrencyText, DDatePicker, DDropdown, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
+function DefaultErrorBoundary({ resetErrorBoundary }) {
+    return (jsx(DAlert, { color: "danger", showClose: false, children: jsxs("div", { className: "d-flex align-items-center gap-2", children: [jsx("span", { children: "An unexpected error occurred." }), jsx(DButton, { color: "secondary", variant: "outline", size: "sm", onClick: resetErrorBoundary, children: "Retry" })] }) }));
+}
+
+function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children, }) {
+    const handleError = useCallback((error, info) => {
+        // eslint-disable-next-line no-console
+        console.error(`[DErrorBoundary${name ? `:${name}` : ''}]`, getErrorMessage(error), info);
+        onError === null || onError === void 0 ? void 0 : onError(error, info);
+    }, [name, onError]);
+    const FallbackRender = useCallback((props) => {
+        if (fallback)
+            return fallback(props);
+        return (jsx(DefaultErrorBoundary, { resetErrorBoundary: props.resetErrorBoundary }));
+    }, [fallback]);
+    return (jsx(ErrorBoundary, { resetKeys: resetKeys, onReset: onReset, onError: handleError, fallbackRender: FallbackRender, children: children }));
+}
+
+function ErrorState({ message, onRetry, retryMessage = 'Retry', color = 'danger', }) {
+    return (jsxs(DAlert, { color: color, className: "d-flex align-items-center gap-3", children: [jsx("div", { className: "flex-grow-1", children: jsx("p", { className: "mb-0", children: message !== null && message !== void 0 ? message : 'An unexpected error occurred.' }) }), onRetry && (jsx(DButton, { onClick: onRetry, text: retryMessage, variant: "outline", iconStart: "RefreshCw" }))] }));
+}
+
+function EmptyState({ message, icon = 'FileText', actionText, onAction, }) {
+    return (jsxs("div", { className: "d-flex flex-column align-items-center justify-content-center p-5 text-center", children: [jsx(DIcon, { icon: icon, size: "3rem", className: "text-secondary mb-3" }), jsx("p", { className: "text-secondary mb-3", children: message !== null && message !== void 0 ? message : 'No data available.' }), actionText && onAction && (jsx(DButton, { onClick: onAction, text: actionText, variant: "outline" }))] }));
+}
+
+function LoadingState({ ariaLabel = 'Loading...', className }) {
+    return (jsx("div", { className: `d-flex align-items-center justify-content-center p-4 ${className || ''}`.trim(), "aria-busy": "true", "aria-live": "polite", children: jsx("span", { className: "spinner-border", role: "status", "aria-label": ariaLabel }) }));
+}
+
+function render(renderable) {
+    if (renderable === undefined)
+        return null;
+    return typeof renderable === 'function' ? renderable() : renderable;
+}
+function DDataStateWrapper({ isLoading, isError, data, onRetry, renderLoading, renderEmpty, renderError, children, }) {
+    // 1. Loading
+    if (isLoading) {
+        if (renderLoading)
+            return render(renderLoading);
+        return jsx(LoadingState, {});
+    }
+    // 2. Error
+    if (isError) {
+        if (renderError)
+            return render(renderError);
+        return (jsx(ErrorState, { onRetry: onRetry }));
+    }
+    // 3. Empty
+    if (!(data === null || data === void 0 ? void 0 : data.length)) {
+        if (renderEmpty)
+            return render(renderEmpty);
+        return (jsx(EmptyState, {}));
+    }
+    // 4. Success
+    return jsx(Fragment, { children: children(data) });
+}
+
+export { DAlert, DAvatar, DBadge, DBox, DBoxFile, DButton, DButtonIcon, DCard$1 as DCard, DCardBody, DCardFooter, DCardHeader, DCarousel$1 as DCarousel, DCarouselSlide, DChip, DCollapse, DContext, DContextProvider, DCreditCard, DCurrencyText, DDataStateWrapper, DDatePicker, DDropdown, DErrorBoundary, DIcon, DIconBase, ForwardedDInput as DInput, DInputCheck, ForwardedDInputCounter as DInputCounter, ForwardedDInputCurrency as DInputCurrency, ForwardedDInputMask as DInputMask, ForwardedDInputPassword as DInputPassword, ForwardedDInputPhone as DInputPhone, DInputPin, ForwardedDInputRange as DInputRange, DInputSelect, DInputSwitch, DLayout$1 as DLayout, DLayoutPane, DListGroup$1 as DListGroup, DListGroupItem, DModal$1 as DModal, DModalBody, DModalFooter, DModalHeader, DOffcanvas$1 as DOffcanvas, DOffcanvasBody, DOffcanvasFooter, DOffcanvasHeader, DOtp, DPaginator, DPasswordStrengthMeter, DPopover, DProgress, DSelect$1 as DSelect, DStepper, DStepper$2 as DStepperDesktop, DStepper$1 as DStepperMobile, DTabContent, DTabs$1 as DTabs, DTimeline, DToast$1 as DToast, DToastContainer, DTooltip, DVoucher, changeQueryString, checkMediaQuery, configureI8n as configureI18n, formatCurrency, getCssVariable, getQueryString, subscribeToMediaQuery, useDContext, useDPortalContext, useDToast, useDisableBodyScrollEffect, useDisableInputWheel, useFormatCurrency, useInputCurrency, useItemSelection, useMediaBreakpointUpLg, useMediaBreakpointUpMd, useMediaBreakpointUpSm, useMediaBreakpointUpXl, useMediaBreakpointUpXs, useMediaBreakpointUpXxl, useMediaQuery, usePortal, useProvidedRefOrCreate, useStackState, useTabContext, validatePhoneNumber };
 //# sourceMappingURL=index.esm.js.map
