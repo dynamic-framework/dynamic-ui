@@ -16,7 +16,14 @@ const meta: Meta<typeof DDataStateWrapper> = {
   argTypes: {
     isLoading: { control: 'boolean' },
     isError: { control: 'boolean' },
-    data: { control: 'object' },
+    data: {
+      control: 'select',
+      options: ['empty', 'list'],
+      mapping: {
+        empty: undefined,
+        list: ['One', 'Two', 'Three'],
+      },
+    },
     onRetry: { control: false },
     renderLoading: { control: false },
     renderEmpty: { control: false },
