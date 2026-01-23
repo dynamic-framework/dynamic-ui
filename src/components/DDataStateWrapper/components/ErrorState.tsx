@@ -1,5 +1,5 @@
-import DAlert from '../DAlert';
-import DButton from '../DButton';
+import DAlert from '../../DAlert';
+import DButton from '../../DButton';
 
 type ErrorStateProps = {
   message?: string;

@@ -1,5 +1,5 @@
-import DButton from '../DButton';
-import DIcon from '../DIcon';
+import DButton from '../../DButton';
+import DIcon from '../../DIcon';
 
 interface EmptyStateProps {
   message?: string;
