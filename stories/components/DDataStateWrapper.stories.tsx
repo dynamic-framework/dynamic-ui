@@ -119,22 +119,3 @@ export const CustomRender: Story = {
   ),
   args: { isLoading: false, isError: false, data: [] },
 };
-
-export const DarkAuto: Story = {
-  render: (args) => (
-    <DBox className="p-3 border rounded dark:bg-secondary-100">
-      <DDataStateWrapper {...args}>
-        {(data: unknown[]) => (
-          <div className="text-body dark:text-primary">
-            Items:
-            {data?.length ?? 0}
-          </div>
-        )}
-      </DDataStateWrapper>
-    </DBox>
-  ),
-  args: { isLoading: false, isError: false, data: [] },
-  parameters: {
-    docs: { description: { story: 'Demonstrates automatic dark styles via prefers-color-scheme without using a .dark ancestor.' } },
-  },
-};
