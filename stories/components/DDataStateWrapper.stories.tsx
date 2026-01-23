@@ -3,7 +3,7 @@ import { DDataStateWrapper } from '../../src/components/DDataStateWrapper/DDataS
 import DBox from '../../src/components/DBox';
 
 const meta: Meta<typeof DDataStateWrapper> = {
-  title: 'Design System/Components/DDataStateWrapper',
+  title: 'Design System/Components/Data State Wrapper',
   component: DDataStateWrapper,
   parameters: {
     docs: {
