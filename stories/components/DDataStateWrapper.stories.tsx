@@ -84,8 +84,11 @@ export const Empty: Story = {
 export const Success: Story = {
   render: (args) => (
     <DBox className="p-3 border rounded">
-      <DDataStateWrapper {...args}>
-        {(data: string[]) => (
+      <DDataStateWrapper
+        {...args}
+        data={args.data as string[]}
+      >
+        {(data) => (
           <ul className="m-0">
             {data.map((d) => (
               <li key={d}>{d}</li>
