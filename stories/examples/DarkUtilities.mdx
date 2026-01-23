@@ -1,0 +1,132 @@
+import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
+import {
+  ExampleDarkBackgrounds,
+  ExampleDarkTextColors,
+  ExampleDarkBordersAndShadow,
+  ExampleDarkAutoBackgrounds,
+} from './DarkUtilitiesExamples';
+
+<Meta title="Design System/Examples/Dark Utilities" />
+
+# Dark-prefixed utilities
+
+This project extends Bootstrap utilities to support Tailwind-like `dark:` variants (e.g., `dark:bg-primary-100`, `dark:text-success`, `dark:shadow`).
+
+Dark variants are applied automatically when the user's system prefers a dark color scheme (`prefers-color-scheme: dark`), and can also be opt-in by adding a `dark` class to any ancestor element.
+
+## Backgrounds
+
+<Unstyled>
+  <ExampleDarkBackgrounds />
+</Unstyled>
+
+<Source
+  code={`
+<div class="dark">
+  <div class="card dark:bg-secondary-100">...</div>
+</div>
+  `}
+  language="html"
+/>
+
+## Text colors
+
+<Unstyled>
+  <ExampleDarkTextColors />
+</Unstyled>
+
+<Source
+  code={`
+<div class="dark">
+  <a class="text-body dark:text-primary">Primary in dark</a>
+  <a class="text-body dark:text-success">Success in dark</a>
+  <a class="text-body dark:text-danger">Danger in dark</a>
+</div>
+  `}
+  language="html"
+/>
+
+## Borders and shadows
+
+<Unstyled>
+  <ExampleDarkBordersAndShadow />
+</Unstyled>
+
+<Source
+  code={`
+<div class="dark">
+  <div class="p-3 rounded border border-2 border-secondary dark:border-primary">...</div>
+  <div class="p-4 rounded border shadow-none dark:shadow">...</div>
+</div>
+  `}
+  language="html"
+/>
+
+## Automatic dark (no .dark class)
+
+<Unstyled>
+  <ExampleDarkAutoBackgrounds />
+</Unstyled>
+
+<Source
+  code={`
+<div>
+  <!-- No .dark ancestor. Will apply automatically if the OS/browser has dark mode enabled -->
+  <div class="card dark:bg-secondary-100">...</div>
+  <div class="p-3 rounded border dark:bg-primary-100">...</div>
+</div>
+  `}
+  language="html"
+/>
+
+> Tip: Without the `dark` class, these utilities will also activate automatically when the browser/OS switches to night mode via `prefers-color-scheme: dark`.
+
+## Customizing Bootstrap button CSS variables in dark mode
+
+You can override component CSS variables in a plain CSS/SCSS file to tailor dark mode. Use either the automatic system preference or the `.dark` opt-in class:
+
+<Source
+  code={`
+/* System dark mode */
+@media (prefers-color-scheme: dark) {
+  .btn-primary {
+    /* Base and text */
+    --bs-btn-bg: var(--bs-primary-600);
+    --bs-btn-color: var(--bs-body-bg);
+    --bs-btn-border-color: var(--bs-primary-600);
+
+    /* Hover */
+    --bs-btn-hover-bg: var(--bs-primary-700);
+    --bs-btn-hover-border-color: var(--bs-primary-700);
+
+    /* Focus */
+    --bs-btn-focus-box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .25);
+
+    /* Active */
+    --bs-btn-active-bg: var(--bs-primary-800);
+    --bs-btn-active-border-color: var(--bs-primary-800);
+  }
+
+  .btn-outline-secondary {
+    --bs-btn-color: var(--bs-secondary-300);
+    --bs-btn-border-color: var(--bs-secondary-300);
+    --bs-btn-hover-bg: rgba(var(--bs-secondary-rgb), .12);
+    --bs-btn-hover-border-color: var(--bs-secondary-400);
+  }
+}
+
+/* Opt-in dark container */
+.dark {
+  .btn-primary {
+    --bs-btn-bg: var(--bs-primary-600);
+    --bs-btn-color: var(--bs-body-bg);
+    --bs-btn-border-color: var(--bs-primary-600);
+    --bs-btn-hover-bg: var(--bs-primary-700);
+    --bs-btn-hover-border-color: var(--bs-primary-700);
+    --bs-btn-active-bg: var(--bs-primary-800);
+    --bs-btn-active-border-color: var(--bs-primary-800);
+  }
+}
+  `}
+  language="css"
+/>
