@@ -1,7 +1,7 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import { render, screen, fireEvent } from '@testing-library/react';
-import { DDataStateWrapper } from './DDataStateWrapper';
+import DDataStateWrapper from './DDataStateWrapper';
 
 describe('<DDataStateWrapper />', () => {
   it('renders spinner when loading', () => {
