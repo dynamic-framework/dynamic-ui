@@ -1,14 +1,14 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import { render, screen, fireEvent } from '@testing-library/react';
-import { DataStateWrapper } from './DataStateWrapper';
+import { DDataStateWrapper } from './DDataStateWrapper';
 
-describe('<DataStateWrapper />', () => {
+describe('<DDataStateWrapper />', () => {
   it('renders spinner when loading', () => {
     const { container } = render(
-      <DataStateWrapper isLoading isError={false} data={undefined}>
+      <DDataStateWrapper isLoading isError={false} data={undefined}>
         {() => <div>content</div>}
-      </DataStateWrapper>,
+      </DDataStateWrapper>,
     );
 
     expect(container.querySelector('.spinner-border')).toBeInTheDocument();
@@ -17,9 +17,9 @@ describe('<DataStateWrapper />', () => {
   it('renders default error state and calls onRetry', () => {
     const onRetry = jest.fn();
     render(
-      <DataStateWrapper isLoading={false} isError data={undefined} onRetry={onRetry}>
+      <DDataStateWrapper isLoading={false} isError data={undefined} onRetry={onRetry}>
         {() => <div>content</div>}
-      </DataStateWrapper>,
+      </DDataStateWrapper>,
     );
 
     const retryBtn = screen.getByRole('button');
@@ -29,9 +29,9 @@ describe('<DataStateWrapper />', () => {
 
   it('renders default empty state when no data', () => {
     const { container } = render(
-      <DataStateWrapper isLoading={false} isError={false} data={[]}>
+      <DDataStateWrapper isLoading={false} isError={false} data={[]}>
         {() => <div>content</div>}
-      </DataStateWrapper>,
+      </DDataStateWrapper>,
     );
 
     expect(container.querySelector('.d-icon')).toBeInTheDocument();
@@ -39,14 +39,14 @@ describe('<DataStateWrapper />', () => {
 
   it('renders children when data exists', () => {
     render(
-      <DataStateWrapper isLoading={false} isError={false} data={[1, 2, 3]}>
+      <DDataStateWrapper isLoading={false} isError={false} data={[1, 2, 3]}>
         {(data) => (
           <div>
             items:
             {data.length}
           </div>
         )}
-      </DataStateWrapper>,
+      </DDataStateWrapper>,
     );
 
     expect(screen.getByText(/items:\s*3/i)).toBeInTheDocument();
@@ -54,14 +54,14 @@ describe('<DataStateWrapper />', () => {
 
   it('supports custom render overrides', () => {
     const { getByText } = render(
-      <DataStateWrapper
+      <DDataStateWrapper
         isLoading={false}
         isError={false}
         data={[]}
         renderEmpty={<div>Custom Empty</div>}
       >
         {() => <div>content</div>}
-      </DataStateWrapper>,
+      </DDataStateWrapper>,
     );
 
     expect(getByText('Custom Empty')).toBeInTheDocument();

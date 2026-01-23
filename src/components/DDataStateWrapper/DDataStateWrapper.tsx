@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
-
-import { LoadingState } from './LoadingState';
 import { ErrorState } from './ErrorState';
 import { EmptyState } from './EmptyState';
+import { LoadingState } from './LoadingState';
 
 type Renderable = ReactNode | (() => ReactNode);
 
@@ -11,7 +10,7 @@ function render(renderable?: Renderable): ReactNode | null {
   return typeof renderable === 'function' ? (renderable as () => ReactNode)() : renderable;
 }
 
-type DataStateWrapperProps<T> = {
+type DDataStateWrapperProps<T> = {
   isLoading: boolean;
   isError: boolean;
   data: T[] | undefined;
@@ -22,7 +21,7 @@ type DataStateWrapperProps<T> = {
   children: (data: T[]) => ReactNode;
 };
 
-export function DataStateWrapper<T>({
+export function DDataStateWrapper<T>({
   isLoading,
   isError,
   data,
@@ -31,7 +30,7 @@ export function DataStateWrapper<T>({
   renderEmpty,
   renderError,
   children,
-}: DataStateWrapperProps<T>) {
+}: DDataStateWrapperProps<T>) {
   // 1. Loading
   if (isLoading) {
     if (renderLoading) return render(renderLoading);

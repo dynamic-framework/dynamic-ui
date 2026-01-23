@@ -86,4 +86,4 @@ export {
   useErrorBoundary,
   type FallbackProps,
 } from './DErrorBoundary';
-export { DataStateWrapper } from './DataStateWrapper/DataStateWrapper';
+export { DDataStateWrapper } from './DDataStateWrapper/DDataStateWrapper';
