@@ -39,7 +39,7 @@ const meta: Meta<typeof DErrorBoundary> = {
   },
   decorators: [
     (Story) => (
-      <div style={{ height: 150, width: 350 }}>
+      <div style={{ height: 180, width: 350 }}>
         <Story />
       </div>
     ),
@@ -84,7 +84,6 @@ const [explode, setExplode] = useState(false);
 return (
   <div className="d-flex flex-column gap-2">
     <DButton
-      size="sm"
       className="me-auto"
       onClick={() => setExplode(true)}
     >
@@ -104,7 +103,6 @@ return (
     return (
       <div className="d-flex flex-column gap-2">
         <DButton
-          size="sm"
           className="me-auto"
           onClick={() => setExplode(true)}
         >
@@ -146,7 +144,6 @@ const [explode, setExplode] = useState(false);
 return (
   <div className="d-flex flex-column gap-2">
     <DButton
-      size="sm"
       className="me-auto"
       onClick={() => setExplode(true)}
     >
@@ -174,7 +171,6 @@ return (
     return (
       <div className="d-flex flex-column gap-2">
         <DButton
-          size="sm"
           className="me-auto"
           onClick={() => setExplode(true)}
         >
@@ -223,13 +219,11 @@ return (
   <div className="d-flex flex-column gap-2">
     <div className="d-flex gap-2">
       <DButton
-        size="sm"
         onClick={() => setExplode(true)}
       >
         Trigger error
       </DButton>
       <DButton
-        size="sm"
         color="secondary"
         onClick={() => setVersion((v) => v + 1)}
       >
@@ -254,13 +248,11 @@ return (
       <div className="d-flex flex-column gap-2">
         <div className="d-flex gap-2">
           <DButton
-            size="sm"
             onClick={() => setExplode(true)}
           >
             Trigger error
           </DButton>
           <DButton
-            size="sm"
             color="secondary"
             onClick={() => setVersion((v) => v + 1)}
           >
@@ -304,7 +296,6 @@ const [explode, setExplode] = useState(false);
 return (
   <div className="d-flex flex-column gap-2">
     <DButton
-      size="sm"
       className="me-auto"
       onClick={() => setExplode(true)}
     >
@@ -329,7 +320,6 @@ return (
     return (
       <div className="d-flex flex-column gap-2">
         <DButton
-          size="sm"
           className="me-auto"
           onClick={() => setExplode(true)}
         >
@@ -361,7 +351,6 @@ function ChildTrigger() {
   const { showBoundary } = useErrorBoundary();
   return (
     <DButton
-      size="sm"
       className="me-auto"
       onClick={() => showBoundary(new Error('Error from hook'))}
     >
@@ -393,7 +382,6 @@ return (
       const { showBoundary } = useErrorBoundary();
       return (
         <DButton
-          size="sm"
           className="me-auto"
           onClick={() => showBoundary(new Error('Error from hook'))}
         >
@@ -442,7 +430,6 @@ const [explode, setExplode] = useState(false);
 return (
   <div className="d-flex flex-column gap-2">
     <DButton
-      size="sm"
       className="me-auto"
       onClick={() => setExplode(true)}
     >
@@ -464,7 +451,6 @@ return (
     return (
       <div className="d-flex flex-column gap-2">
         <DButton
-          size="sm"
           className="me-auto"
           onClick={() => setExplode(true)}
         >
@@ -505,7 +491,7 @@ const [explode, setExplode] = useState(false);
 return (
   <div className="d-flex flex-column gap-2">
     <DButton
-      size="sm"
+      
       className="me-auto"
       onClick={() => setExplode(true)}
     >
@@ -519,7 +505,6 @@ return (
             An error occurred! Using a custom fallback.
           </p>
           <DButton
-            size="sm"
             variant="outline"
             onClick={resetErrorBoundary}
           >
@@ -541,7 +526,6 @@ return (
     return (
       <div className="d-flex flex-column gap-2">
         <DButton
-          size="sm"
           className="me-auto"
           onClick={() => setExplode(true)}
         >
@@ -556,7 +540,6 @@ return (
                 An error occurred! Using a custom fallback.
               </p>
               <DButton
-                size="sm"
                 variant="outline"
                 onClick={resetErrorBoundary}
               >
