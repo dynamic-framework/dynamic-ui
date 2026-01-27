@@ -2,7 +2,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Design System/Foundations/Typography" />
 
-<div className="inline-story" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
+<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
 
 # Typography Foundations
 
@@ -10,14 +10,14 @@ Dynamic Framework standardizes typography on top of Bootstrap 5 using the Jost t
 
 <br />
 
-## Type scale and display styles
+### Type scale and display styles
 
 - Headings: h1–h6 and heading utility classes `.h1` … `.h6`
 - Display styles: `.display-1` … `.display-6`
 - Size utilities: `.fs-1` … `.fs-6`, `.fs-small`
 - Body size: `.fs-body`
 
-<div className="d-flex flex-column gap-2 mt-2">
+<div className="d-flex flex-column gap-2 mt-2 mb-4">
   <div className="display-1">Display 1</div>
   <div className="display-4">Display 4</div>
   <h1>Heading H1</h1>
@@ -54,14 +54,14 @@ Dynamic Framework standardizes typography on top of Bootstrap 5 using the Jost t
 
 <br />
 
-## Semantic text colors
+### Semantic text colors
 
 Use `.text-{token}` with semantic states and extended palettes:
 - Tokens: Primary, Success, Warning, Danger, Info, Secondary, Light, Dark
 - Shades: `{25|50|100|200|300|400|500|600|700|800|900}` for background tints: `.bg-{token}-{shade}`
 - Light variants are intended for dark backgrounds
 
-<div className="d-flex flex-wrap gap-3 mb-2">
+<div className="d-flex flex-wrap gap-3 mb-2 mb-4">
   <p className="m-0 text-primary">Primary text</p>
   <p className="m-0 text-success">Success text</p>
   <p className="m-0 text-warning">Warning text</p>
@@ -75,7 +75,7 @@ Use `.text-{token}` with semantic states and extended palettes:
 
 <br />
 
-## Font weight and line-height
+### Font weight and line-height
 
 - Font weight utilities (responsive enabled): `.fw-light`, `.fw-normal`, `.fw-semibold`, `.fw-bold`
 - Line-height utilities: `.lh-1`, `.lh-sm`, `.lh-base`, `.lh-lg`
@@ -100,7 +100,7 @@ Use `.text-{token}` with semantic states and extended palettes:
 
 <br />
 
-## Text wrapping and truncation
+### Text wrapping and truncation
 
 - Balanced wrapping: `.text-wrap-balance`
 - Normal wrapping: `.text-wrap-normal`; Force wrap: `.text-wrap-wrap`
@@ -130,7 +130,7 @@ Use `.text-{token}` with semantic states and extended palettes:
 
 <br />
 
-## Dark mode and hover variants for text
+### Dark mode and hover variants for text
 
 - Dark mode variant: `.dark:text-{token}` adapts text color in dark contexts
 - Hover variant: `.hover:text-{token}` provides interactive feedback on text
