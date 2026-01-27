@@ -1,0 +1,100 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design System/Foundations/Extended Utilities" />
+
+<div className="inline-story">
+
+# Utilities Overview
+
+Dynamic Framework extends Bootstrap utilities for speed and flexibility. Bootstrap’s core utilities are not all responsive by default; we provide responsive variants and extensions across display, alignment, spacing, typography, and more. Below are notable additions from our utilities layer.
+
+<br />
+
+## Variants: hover: and dark:
+- Hover Utilities: <a href="/?path=/story/design-system-examples-hover-utilities">Design System/Examples/Hover Utilities</a>
+- Dark Utilities: <a href="/?path=/story/design-system-examples-dark-utilities">Design System/Examples/Dark Utilities</a>
+
+```html
+<a class="text-body hover:text-danger">Danger on hover</a>
+<div class="text-body dark:text-success">Success in dark</div>
+```
+
+<br />
+
+## Spacing (0–30)
+- Margin: `.m{t|b|s|e|x|y}-{0..30}`; Padding: `.p{t|b|s|e|x|y}-{0..30}` (responsive)
+
+```html
+<div class="mt-15 px-30 py-2">...</div>
+```
+
+<br />
+
+## Extended display and alignment
+- Display: `.d-{inline|inline-block|block|table|table-row|table-cell|flex|inline-flex|none|grid|table-header-group}` (responsive)
+- Vertical align: `.v-align-{baseline|top|bottom|text-top|text-bottom|sub|super|middle}` (responsive)
+
+```html
+<div class="d-grid v-align-middle">...</div>
+```
+
+<br />
+
+## Grid columns (CSS Grid)
+- `.g-col-{13…24}` for larger grid spans (responsive)
+
+```html
+<div class="d-grid" style="grid-template-columns: repeat(24, 1fr)">
+  <div class="g-col-6">6 cols</div>
+  <div class="g-col-18">18 cols</div>
+</div>
+```
+
+<br />
+
+## Typography utilities
+- Display font sizes: `.display-{1…6}` map to `--bs-fs-display-*` via `--bs-display-font-size`
+- Body font size: `.fs-body`
+- Line-height: `.lh-1`, `.lh-sm`, `.lh-base`, `.lh-lg`
+- Text wrap: `.text-wrap-{balance|normal|truncate|wrap}`
+- Text truncate (lines): `.text-truncate-{1…6}` (responsive)
+
+```html
+<div class="display-4">Display 4</div>
+<p class="lh-base text-wrap-balance">Balanced wrapping</p>
+<div class="text-truncate-3" style="max-width: 240px">Long text…</div>
+```
+
+See: <a href="/?path=/story/design-system-foundations-typography">Design System/Foundations/Typography</a>.
+
+<br />
+
+## Color utilities
+- Text/background/border colors include palettes and grays: `.text-{token}`, `.bg-{token}-{25|50|100|200|300|400|500|600|700|800|900}`, `.border-{token}`
+- Overlay opacity: `.overlay-{0|25|50|75|100}` (uses CSS var)
+- Opacity and text-opacity: support `40` in addition to Bootstrap defaults
+
+```html
+<div class="bg-primary-100 overlay-50">Overlayed block</div>
+```
+
+<br />
+
+## Size utilities
+- Width/Height: `.w-*`, `.h-*` extended to be responsive
+- Font-weight and position: responsive variants enabled
+
+```html
+<div class="position-relative h-100 w-100">...</div>
+```
+
+<br />
+
+## Cursor utilities
+- `.cursor-{auto|default|pointer|not-allowed|wait|text|crosshair|zoom-in|zoom-out|grab|grabbing}`
+
+```html
+<button class="cursor-pointer">Clickable</button>
+```
+
+</div>

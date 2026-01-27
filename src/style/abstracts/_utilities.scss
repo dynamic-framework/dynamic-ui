@@ -133,7 +133,13 @@ $utilities: map-merge(
       map-get($utilities, "font-size"),
       (
         responsive: true,
-        rfs: false
+        rfs: false,
+        values: map-merge(
+          map-get(map-get($utilities, "font-size"), "values"),
+          (
+            body: var(--#{$prefix}fs-body-font-size)
+          )
+        )
       )
     ),
     "display-font-size": (
@@ -198,13 +204,6 @@ $utilities: map-merge(
         truncate: truncate,
         wrap: wrap
       )
-    ),
-    "body-font-size": (
-      class: "fs-body",
-      responsive: true,
-      css-var: true,
-      css-variable-name: fs-body-font-size,
-      values: $body-font-sizes
     ),
     "line-height": (
       property: line-height,

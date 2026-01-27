@@ -1,3 +1,5 @@
+/* stylelint-disable declaration-no-important */
+
 //
 // Headings
 //
@@ -34,15 +36,19 @@
 // Type display classes
 [class*="display-"] {
   font-family: $display-font-family;
-  font-size: var(--#{$prefix}display-font-size);
+  font-size: var(--#{$prefix}display-font-size) !important;
   font-style: $display-font-style;
   font-weight: $display-font-weight;
   line-height: $display-line-height;
 }
 
 // Body display classes
-[class*="fs-body-"] {
-  font-size: var(--#{$prefix}fs-body-font-size);
+.fs-body {
+  font-size: var(--#{$prefix}-body-font-size) !important;
+}
+
+.fs-small {
+  font-size: var(--#{$prefix}-font-size-sm) !important;
 }
 
 //

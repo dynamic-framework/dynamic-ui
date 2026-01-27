@@ -1,0 +1,143 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design System/Foundations/Typography" />
+
+<div className="inline-story" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
+
+# Typography Foundations
+
+Dynamic Framework standardizes typography on top of Bootstrap 5 using the Jost typeface, a clear size scale, semantic text colors, and helpful utilities for weight, line-height, wrapping, and truncation.
+
+<br />
+
+## Type scale and display styles
+
+- Headings: h1–h6 and heading utility classes `.h1` … `.h6`
+- Display styles: `.display-1` … `.display-6`
+- Size utilities: `.fs-1` … `.fs-6`, `.fs-small`
+- Body size: `.fs-body`
+
+<div className="d-flex flex-column gap-2 mt-2">
+  <div className="display-1">Display 1</div>
+  <div className="display-4">Display 4</div>
+  <h1>Heading H1</h1>
+  <h3>Heading H3</h3>
+  <p className="h1 m-0">Heading utility (.h1)</p>
+  <p className="h4 m-0">Heading utility (.h4)</p>
+  <p className="fs-4 m-0">Text with .fs-4</p>
+  <p className="fs-body m-0">Body default (.fs-body)</p>
+  <p className="fs-small m-0 text-body-secondary">Small text (.fs-small)</p>
+</div>
+
+```css
+/* Display utilities map to CSS vars used by type rendering */
+.display-1 { --bs-display-font-size: var(--bs-fs-display-1); }
+.display-2 { --bs-display-font-size: var(--bs-fs-display-2); }
+.display-3 { --bs-display-font-size: var(--bs-fs-display-3); }
+.display-4 { --bs-display-font-size: var(--bs-fs-display-4); }
+.display-5 { --bs-display-font-size: var(--bs-fs-display-5); }
+.display-6 { --bs-display-font-size: var(--bs-fs-display-6); }
+/* Base type consumes it: font-size: var(--bs-display-font-size) */
+
+/* Size utilities */
+.fs-1 { font-size: var(--bs-fs-1); }
+.fs-2 { font-size: var(--bs-fs-2); }
+.fs-3 { font-size: var(--bs-fs-3); }
+.fs-4 { font-size: var(--bs-fs-4); }
+.fs-5 { font-size: var(--bs-fs-5); }
+.fs-6 { font-size: var(--bs-fs-6); }
+.fs-small { font-size: var(--bs-fs-small); }
+
+/* Body size utility */
+.fs-body    { font-size: var(--bs-body-font-size); }
+```
+
+<br />
+
+## Semantic text colors
+
+Use `.text-{token}` with semantic states and extended palettes:
+- Tokens: Primary, Success, Warning, Danger, Info, Secondary, Light, Dark
+- Shades: `{25|50|100|200|300|400|500|600|700|800|900}` for background tints: `.bg-{token}-{shade}`
+- Light variants are intended for dark backgrounds
+
+<div className="d-flex flex-wrap gap-3 mb-2">
+  <p className="m-0 text-primary">Primary text</p>
+  <p className="m-0 text-success">Success text</p>
+  <p className="m-0 text-warning">Warning text</p>
+  <p className="m-0 text-danger">Danger text</p>
+  <p className="m-0 text-info">Info text</p>
+  <p className="m-0 text-secondary">Secondary text</p>
+  <p className="m-0 text-dark">Dark text</p>
+</div>
+
+<div className="mt-2 p-2 rounded bg-dark text-light">Text-light over dark background</div>
+
+<br />
+
+## Font weight and line-height
+
+- Font weight utilities (responsive enabled): `.fw-light`, `.fw-normal`, `.fw-semibold`, `.fw-bold`
+- Line-height utilities: `.lh-1`, `.lh-sm`, `.lh-base`, `.lh-lg`
+
+<div className="d-flex flex-column gap-2 mt-2 mb-4">
+  <p className="fw-light my-1">Light weight</p>
+  <p className="fw-normal my-1">Normal weight</p>
+  <p className="fw-semibold my-1">Semibold weight</p>
+  <p className="fw-bold my-1">Bold weight</p>
+  <p className="lh-1 my-1">Line-height 1</p>
+  <p className="lh-sm my-1">Line-height sm</p>
+  <p className="lh-base my-1">Line-height base</p>
+  <p className="lh-lg my-1">Line-height lg</p>
+</div>
+
+```css
+/* Line-height utilities map to variables */
+.lh-sm   { line-height: var(--bs-lh-sm); }
+.lh-base { line-height: var(--bs-lh-base); }
+.lh-lg   { line-height: var(--bs-lh-lg); }
+```
+
+<br />
+
+## Text wrapping and truncation
+
+- Balanced wrapping: `.text-wrap-balance`
+- Normal wrapping: `.text-wrap-normal`; Force wrap: `.text-wrap-wrap`
+- Truncation by lines (responsive): `.text-truncate-{1..6}`
+
+<div className="d-flex flex-column gap-2 mt-2 mb-4" style={{ maxWidth: 360 }}>
+  <p className="text-wrap-balance">
+    Balanced wrapping strives for visually even lines for better readability across varying widths.
+  </p>
+  <p className="text-wrap-wrap">
+    Force wrapping when you need long identifiers or URLs to break across lines gracefully.
+  </p>
+  <div className="text-truncate-3">
+    Long text that will be truncated to three lines. Long text that will be truncated to three lines. Long text that will be truncated to three lines. Long text that will be truncated to three lines with additional content to ensure overflow beyond three lines in typical widths. This sentence adds even more content so the ellipsis appears reliably across viewports. Yet another clause to extend the content further.
+  </div>
+</div>
+
+```css
+/* Text wrap utility values */
+.text-wrap-balance { text-wrap: balance; }
+.text-wrap-normal  { text-wrap: normal; }
+.text-wrap-truncate{ text-wrap: truncate; }
+.text-wrap-wrap    { text-wrap: wrap; }
+
+/* Truncate uses CSS vars and -webkit-line-clamp under the hood */
+```
+
+<br />
+
+## Dark mode and hover variants for text
+
+- Dark mode variant: `.dark:text-{token}` adapts text color in dark contexts
+- Hover variant: `.hover:text-{token}` provides interactive feedback on text
+
+```html
+<a class="text-body hover:text-danger">Hover to see danger color</a>
+<div class="text-body dark:text-success">Text turns success in dark</div>
+```
+
+</div>
