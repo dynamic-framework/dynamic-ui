@@ -32,4 +32,19 @@
   .inline-story .docblock-source {
     margin: 0;
   }
+
+  /* Override Storybook docs/canvas typography (Nunito Sans) */
+  .sbdocs :where(p:not(.sb-anchor, .sb-unstyled, .sb-unstyled p)),
+  .docs-story :where(p:not(.sb-anchor, .sb-unstyled, .sb-unstyled p)),
+  .sb-show-main :where(p:not(.sb-anchor, .sb-unstyled, .sb-unstyled p)) {
+    font-family: var(--bs-body-font-family) !important;
+    font-size: var(--bs-fs-body-font-size) !important;
+    line-height: var(--bs-lh-base) !important;
+    color: var(--bs-body-color) !important;
+  }
+  .sbdocs :where(h1, h2, h3, h4, h5, h6, div),
+  .docs-story :where(h1, h2, h3, h4, h5, h6, div),
+  .sb-show-main :where(h1, h2, h3, h4, h5, h6, div) {
+    font-family: var(--bs-body-font-family) !important;
+  }
 </style>
