@@ -1,0 +1,163 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design System/Foundations/Color Tokens" />
+
+<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
+
+# Color Tokens
+
+Dynamic Framework provides semantic color tokens with extended shades (25, 50, 100 … 900) for text, backgrounds, borders, badges, and buttons. Tokens: Primary, Success, Warning, Danger, Info, Secondary, Light, Dark. Light variants are designed for dark backgrounds.
+
+<br />
+
+### Text colors
+Use text tokens to communicate state and semantics.
+
+<div className="d-flex flex-wrap gap-3 mb-4">
+  <p className="m-0 text-primary">.text-primary</p>
+  <p className="m-0 text-success">.text-success</p>
+  <p className="m-0 text-warning">.text-warning</p>
+  <p className="m-0 text-danger">.text-danger</p>
+  <p className="m-0 text-info">.text-info</p>
+  <p className="m-0 text-secondary">.text-secondary</p>
+  <p className="m-0 text-dark">.text-dark</p>
+  <p className="m-0 text-light bg-dark rounded px-2">.text-light (use on dark bg)</p>
+</div>
+
+```html
+<p class="text-success">Success text</p>
+<p class="text-danger">Error text</p>
+```
+
+<br />
+
+### Background tints (shades 25–900)
+Apply subtle state backgrounds with shade suffixes.
+
+<div className="d-flex flex-wrap gap-3 mb-4">
+  <div className="p-3 rounded bg-primary-100">.bg-primary-100</div>
+  <div className="p-3 rounded bg-success-100">.bg-success-100</div>
+  <div className="p-3 rounded bg-warning-100">.bg-warning-100</div>
+  <div className="p-3 rounded bg-danger-100">.bg-danger-100</div>
+  <div className="p-3 rounded bg-info-100">.bg-info-100</div>
+  <div className="p-3 rounded bg-secondary-100">.bg-secondary-100</div>
+</div>
+
+```html
+<div class="bg-info-200">Informational tint</div>
+<div class="bg-danger-50">Subtle danger tint</div>
+```
+
+<br />
+
+### Borders
+Use border tokens to frame elements.
+
+<div className="d-flex flex-wrap gap-3 mb-4">
+  <div className="p-2 rounded border border-primary">.border-primary</div>
+  <div className="p-2 rounded border border-success">.border-success</div>
+  <div className="p-2 rounded border border-warning">.border-warning</div>
+  <div className="p-2 rounded border border-danger">.border-danger</div>
+  <div className="p-2 rounded border border-info">.border-info</div>
+  <div className="p-2 rounded border border-secondary">.border-secondary</div>
+</div>
+
+```html
+<div class="border border-danger">…</div>
+```
+
+<br />
+
+### Badges
+Badges support semantic color tokens via text-bg-*.
+
+<div className="d-flex flex-wrap gap-2 mb-4">
+  <span className="badge text-bg-primary">Primary</span>
+  <span className="badge text-bg-success">Success</span>
+  <span className="badge text-bg-warning">Warning</span>
+  <span className="badge text-bg-danger">Danger</span>
+  <span className="badge text-bg-info">Info</span>
+  <span className="badge text-bg-secondary">Secondary</span>
+  <span className="badge text-bg-dark">Dark</span>
+  <span className="badge text-bg-light text-dark">Light</span>
+</div>
+
+```html
+<span class="badge text-bg-success">Success</span>
+```
+
+<br />
+
+### Buttons
+Buttons support solid and outline variants with tokens.
+
+<div className="d-flex flex-wrap gap-2 mb-4">
+  <button className="btn btn-primary">Primary</button>
+  <button className="btn btn-success">Success</button>
+  <button className="btn btn-warning">Warning</button>
+  <button className="btn btn-danger">Danger</button>
+  <button className="btn btn-info">Info</button>
+  <button className="btn btn-secondary">Secondary</button>
+  <button className="btn btn-dark">Dark</button>
+  <button className="btn btn-light text-dark">Light</button>
+</div>
+
+<div className="d-flex flex-wrap gap-2 mt-2 mb-4">
+  <button className="btn btn-outline-primary">Outline Primary</button>
+  <button className="btn btn-outline-success">Outline Success</button>
+  <button className="btn btn-outline-warning">Outline Warning</button>
+  <button className="btn btn-outline-danger">Outline Danger</button>
+  <button className="btn btn-outline-info">Outline Info</button>
+  <button className="btn btn-outline-secondary">Outline Secondary</button>
+  <button className="btn btn-outline-dark">Outline Dark</button>
+</div>
+
+```html
+<button class="btn btn-info">Info</button>
+<button class="btn btn-outline-danger">Danger</button>
+```
+
+<br />
+
+### Alerts
+Semantic alerts styled with color tokens.
+
+<div className="d-flex flex-column gap-2 mb-4">
+  <div className="alert alert-primary m-0" role="alert">Primary alert — informative message.</div>
+  <div className="alert alert-success m-0" role="alert">Success alert — action completed.</div>
+  <div className="alert alert-warning m-0" role="alert">Warning alert — proceed carefully.</div>
+  <div className="alert alert-danger m-0" role="alert">Danger alert — something went wrong.</div>
+  <div className="alert alert-info m-0" role="alert">Info alert — additional context.</div>
+  <div className="alert alert-secondary m-0" role="alert">Secondary alert — neutral notice.</div>
+  <div className="alert alert-dark m-0" role="alert">Dark alert — emphasis on dark tones.</div>
+</div>
+
+```html
+<div class="alert alert-success" role="alert">Success alert</div>
+```
+
+<br />
+
+### Overlays and opacity
+Use overlay opacity with state tints.
+
+<div className="p-3 rounded bg-primary-100 overlay-50">Overlay 50%</div>
+
+```html
+<div class="bg-primary-100 overlay-50">…</div>
+```
+
+<br />
+
+### Dark mode and utilities
+- Prefer .text-light over dark surfaces.
+- Combine tokens with dark: for system/forced dark contexts.
+See: <a href="/?path=/story/design-system-examples-dark-utilities">Design System/Examples/Dark Utilities</a> and <a href="/?path=/story/design-system-foundations-extended-utilities">Foundations/Extended Utilities</a>.
+
+<br />
+
+## Accessibility guidance
+- Ensure WCAG AA contrast when pairing text and backgrounds.
+- Use semantic tokens consistently for clear communication.
+
+</div>

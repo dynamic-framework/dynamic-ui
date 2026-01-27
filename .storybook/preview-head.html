@@ -39,12 +39,38 @@
   .sb-show-main :where(p:not(.sb-anchor, .sb-unstyled, .sb-unstyled p)) {
     font-family: var(--bs-body-font-family) !important;
     font-size: var(--bs-fs-body-font-size) !important;
-    line-height: var(--bs-lh-base) !important;
-    color: var(--bs-body-color) !important;
   }
   .sbdocs :where(h1, h2, h3, h4, h5, h6, div),
   .docs-story :where(h1, h2, h3, h4, h5, h6, div),
   .sb-show-main :where(h1, h2, h3, h4, h5, h6, div) {
     font-family: var(--bs-body-font-family) !important;
+  }
+
+  /* Emulate .mb-4 for markdown headings in stories */
+  .sbdocs .inline-story.sb-unstyled h1,
+  .sbdocs .inline-story.sb-unstyled h2,
+  .sbdocs .inline-story.sb-unstyled h3,
+  .sbdocs .inline-story.sb-unstyled h4,
+  .sbdocs .inline-story.sb-unstyled h5,
+  .sbdocs .inline-story.sb-unstyled h6,
+  .docs-story .inline-story.sb-unstyled h1,
+  .docs-story .inline-story.sb-unstyled h2,
+  .docs-story .inline-story.sb-unstyled h3,
+  .docs-story .inline-story.sb-unstyled h4,
+  .docs-story .inline-story.sb-unstyled h5,
+  .docs-story .inline-story.sb-unstyled h6 {
+    margin-bottom: var(--bs-ref-spacer-4) !important;
+  }
+  /* Ensure code tokens render monospace */
+  .sbdocs .token,
+  .docs-story .token,
+  .sb-show-main .token {
+    font-family: var(--bs-font-monospace) !important;
+  }
+  /* Force monospace for last token-like span in code blocks */
+  .sbdocs div[class^="language-"] span:last-child,
+  .docs-story div[class^="language-"] span:last-child,
+  .sb-show-main div[class^="language-"] span:last-child {
+    font-family: var(--bs-font-monospace) !important;
   }
 </style>
