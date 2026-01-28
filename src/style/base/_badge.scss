@@ -3,8 +3,8 @@
   --#{$prefix}badge-icon-size: #{$badge-font-size};
   --#{$prefix}badge-bg: #{$badge-bg};
   --#{$prefix}badge-color: #{$badge-color};
-  --#{$prefix}badge-sm-font-size: var(--#{$prefix}fs-body-small);
-  --#{$prefix}badge-lg-font-size: var(--#{$prefix}fs-body-large);
+  --#{$prefix}badge-sm-font-size: var(--#{$prefix}font-size-sm);
+  --#{$prefix}badge-lg-font-size: var(--#{$prefix}fs-5);
 
   display: inline-flex;
   gap: var(--#{$prefix}badge-gap);
