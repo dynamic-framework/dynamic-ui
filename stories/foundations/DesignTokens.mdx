@@ -1,12 +1,12 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Design System/Foundations/Theming Guide" />
+<Meta title="Design System/Foundations/Design Tokens" />
 
 <div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
 
-# Theming Guide
+# Design Tokens
 
-Dynamic Framework builds on Bootstrap 5 and exposes a robust set of CSS variables and Sass tokens to craft brand themes. Prefer overriding CSS variables at runtime for theming, and use Sass variables for build-time defaults when shipping a custom bundle.
+Dynamic Framework builds on Bootstrap 5 and exposes a robust set of CSS variables and Sass tokens to craft brand themes. Prefer overriding CSS variables at runtime for theming, and use Sass variables for build-time defaults when shipping a custom bundle. Official documentation is available at https://docs.modyo.com.
 
 <br />
 
@@ -39,7 +39,6 @@ Example:
   --bs-fs-4: 1.5rem;
   --bs-fs-5: 1.25rem;
   --bs-fs-6: 1rem;
-  --bs-fs-display-1: 6rem; /* display scale */
   --bs-fs-small: .875rem; /* small text */
 }
 ```
@@ -84,7 +83,7 @@ Example:
 Dynamic’s palettes expose base tokens and extended shades.
 - Base semantic tokens: `--bs-primary`, `--bs-success`, `--bs-warning`, `--bs-danger`, `--bs-info`, `--bs-secondary`, `--bs-light`, `--bs-dark`
 - Extended shades by state: e.g., `--bs-primary-25`, `--bs-primary-50`, …, `--bs-primary-900`
-- Text/background/border subtles: `--bs-{token}-text-emphasis`, `--bs-{token}-bg-subtle`, `--bs-{token}-border-subtle`
+- Text/background/border subtles: `--bs/{token}-text-emphasis`, `--bs/{token}-bg-subtle`, `--bs/{token}-border-subtle`
 - Body defaults: `--bs-body-color`, `--bs-body-bg`, links: `--bs-link-color`, `--bs-link-hover-color`
 
 Override with either RGB bases or direct colors:
@@ -107,7 +106,7 @@ Override with either RGB bases or direct colors:
 }
 ```
 
-##### Palette variables (25–900)
+#### Palette variables (25–900)
 ```css
 :root {
   /* Primary */
@@ -168,8 +167,7 @@ Dark mode (automatic and forced):
 
 <br />
 
-#### Spacing scale
-
+### Spacing scale
 Override spacing globally or create theme scopes:
 ```css
 :root {
@@ -238,7 +236,7 @@ Refs (1–30)
 }
 ```
 
-##### Border variables (full list)
+#### Border variables (full list)
 ```css
 :root {
   --bs-border-width: /* override */;
@@ -258,7 +256,7 @@ Refs (1–30)
 
 <br />
 
-### Component tokens (examples)
+## Component tokens (examples)
 Many component styles are derived from the core variables, but some expose specific tokens:
 - Buttons: variant tokens are generated off theme colors; customize via core color variables and (optionally) component CSS vars like --bs-btn-border-radius
 - Alerts/Badges: read semantic tokens and bg-subtle/border-subtle
@@ -273,7 +271,7 @@ Many component styles are derived from the core variables, but some expose speci
 
 <br />
 
-### Dark mode patterns
+## Dark mode patterns
 - Use dark: utilities for class-based overrides and @media prefers-color-scheme for system dark.
 - Define token pairs for light/dark to ensure consistent tints and emphasis colors.
 
@@ -287,7 +285,7 @@ Many component styles are derived from the core variables, but some expose speci
 
 <br />
 
-### Theming workflow (recommended)
+## Theming workflow (recommended)
 1. Define brand color palette (primary/success/warning/danger/info/secondary + tints 25–900).
 2. Set typography: body family/size, heading/display scales, small text, line-heights.
 3. Tune spacing scale and component gaps using --bs-ref-spacer-*.
@@ -297,7 +295,7 @@ Many component styles are derived from the core variables, but some expose speci
 
 <br />
 
-### Bootstrapping a theme (copy-paste starter)
+## Bootstrapping a theme (copy-paste starter)
 ```css
 /* Global theme */
 :root {
@@ -335,7 +333,5 @@ Many component styles are derived from the core variables, but some expose speci
   }
 }
 ```
-
-<br />
 
 </div>
