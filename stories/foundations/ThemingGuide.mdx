@@ -1,0 +1,341 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design System/Foundations/Theming Guide" />
+
+<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
+
+# Theming Guide
+
+Dynamic Framework builds on Bootstrap 5 and exposes a robust set of CSS variables and Sass tokens to craft brand themes. Prefer overriding CSS variables at runtime for theming, and use Sass variables for build-time defaults when shipping a custom bundle.
+
+<br />
+
+## Principles
+- Scope overrides: use `:root` for global themes, `[data-bs-theme="brand"]` or `body.brand` for app-specific, and `.dark` or `prefers-color-scheme` for dark mode.
+- Change variables, not classes: utilities and components read from CSS variables; overriding variables updates the whole system consistently.
+- Validate contrast: ensure WCAG AA for text/background, borders, and focus rings.
+
+<br />
+
+### Core variables (what to override)
+These variables drive components and utilities; override them to theme typography, colors, spacing, borders, shadows, and dark mode consistently.
+
+#### Typography
+Key CSS variables:
+- Family and body: `--bs-body-font-family`, `--bs-body-font-size`, `--bs-body-line-height`
+- Heading sizes: `--bs-fs-1` … `--bs-fs-6`
+- Display sizes: `--bs-fs-display-1` … `--bs-fs-display-6`
+- Small text: `--bs-fs-small`; line-heights: `--bs-lh-sm`, `--bs-lh-base`, `--bs-lh-lg`
+- Heading line-height: `--bs-heading-line-height`
+
+Example:
+```css
+:root {
+  --bs-body-font-family: "Jost", system-ui, sans-serif; /* or your brand font */
+  --bs-body-font-size: 1rem; /* base body size */
+  --bs-fs-1: 3rem; /* h1 */
+  --bs-fs-2: 2.5rem;
+  --bs-fs-3: 2rem;
+  --bs-fs-4: 1.5rem;
+  --bs-fs-5: 1.25rem;
+  --bs-fs-6: 1rem;
+  --bs-fs-display-1: 6rem; /* display scale */
+  --bs-fs-small: .875rem; /* small text */
+}
+```
+
+#### Typography variables (headings and display)
+```css
+:root {
+  /* Headings and body sizes */
+  --bs-fs-1: 3rem;
+  --bs-fs-2: 2.5rem;
+  --bs-fs-3: 2rem;
+  --bs-fs-4: 1.5rem;
+  --bs-fs-5: 1.25rem;
+  --bs-fs-6: 1rem;
+  --bs-fs-small: .875rem;
+  --bs-heading-line-height: 1.2;
+
+  /* Display sizes */
+  --bs-fs-display-1: 6rem;
+  --bs-fs-display-2: 5.5rem;
+  --bs-fs-display-3: 5rem;
+  --bs-fs-display-4: 4.5rem;
+  --bs-fs-display-5: 4rem;
+  --bs-fs-display-6: 3.5rem;
+}
+```
+
+#### Usage examples
+```html
+<h1 class="h1">Heading 1 (.h1)</h1>
+<h6 class="h6">Heading 6 (.h6)</h6>
+<div class="display-1">Display 1</div>
+<div class="display-6">Display 6</div>
+<p class="fs-1 m-0">.fs-1</p>
+<p class="fs-6 m-0">.fs-6</p>
+<p class="small m-0">Small text (.small)</p>
+```
+
+<br />
+
+#### Color system
+Dynamic’s palettes expose base tokens and extended shades.
+- Base semantic tokens: `--bs-primary`, `--bs-success`, `--bs-warning`, `--bs-danger`, `--bs-info`, `--bs-secondary`, `--bs-light`, `--bs-dark`
+- Extended shades by state: e.g., `--bs-primary-25`, `--bs-primary-50`, …, `--bs-primary-900`
+- Text/background/border subtles: `--bs-{token}-text-emphasis`, `--bs-{token}-bg-subtle`, `--bs-{token}-border-subtle`
+- Body defaults: `--bs-body-color`, `--bs-body-bg`, links: `--bs-link-color`, `--bs-link-hover-color`
+
+Override with either RGB bases or direct colors:
+```css
+:root {
+  /* Brand primaries */
+  --bs-primary: #0b74ff;
+  --bs-primary-100: #e5f0ff; /* light tint */
+  --bs-success: #0c8a50;
+  --bs-warning: #d99100;
+  --bs-danger: #c83333;
+  --bs-info: #0aa0c8;
+  --bs-secondary: #5b6670;
+
+  /* Body and links */
+  --bs-body-color: #2e3438;
+  --bs-body-bg: #ffffff;
+  --bs-link-color: #0b74ff;
+  --bs-link-hover-color: #095fd1;
+}
+```
+
+##### Palette variables (25–900)
+```css
+:root {
+  /* Primary */
+  --bs-primary-25: /* override */; --bs-primary-50: /* override */; --bs-primary-100: /* override */;
+  --bs-primary-200: /* override */; --bs-primary-300: /* override */; --bs-primary-400: /* override */;
+  --bs-primary-500: /* override */; --bs-primary-600: /* override */; --bs-primary-700: /* override */;
+  --bs-primary-800: /* override */; --bs-primary-900: /* override */;
+
+  /* Success */
+  --bs-success-25: /* override */; --bs-success-50: /* override */; --bs-success-100: /* override */;
+  --bs-success-200: /* override */; --bs-success-300: /* override */; --bs-success-400: /* override */;
+  --bs-success-500: /* override */; --bs-success-600: /* override */; --bs-success-700: /* override */;
+  --bs-success-800: /* override */; --bs-success-900: /* override */;
+
+  /* Warning */
+  --bs-warning-25: /* override */; --bs-warning-50: /* override */; --bs-warning-100: /* override */;
+  --bs-warning-200: /* override */; --bs-warning-300: /* override */; --bs-warning-400: /* override */;
+  --bs-warning-500: /* override */; --bs-warning-600: /* override */; --bs-warning-700: /* override */;
+  --bs-warning-800: /* override */; --bs-warning-900: /* override */;
+
+  /* Danger */
+  --bs-danger-25: /* override */; --bs-danger-50: /* override */; --bs-danger-100: /* override */;
+  --bs-danger-200: /* override */; --bs-danger-300: /* override */; --bs-danger-400: /* override */;
+  --bs-danger-500: /* override */; --bs-danger-600: /* override */; --bs-danger-700: /* override */;
+  --bs-danger-800: /* override */; --bs-danger-900: /* override */;
+
+  /* Info */
+  --bs-info-25: /* override */; --bs-info-50: /* override */; --bs-info-100: /* override */;
+  --bs-info-200: /* override */; --bs-info-300: /* override */; --bs-info-400: /* override */;
+  --bs-info-500: /* override */; --bs-info-600: /* override */; --bs-info-700: /* override */;
+  --bs-info-800: /* override */; --bs-info-900: /* override */;
+
+  /* Secondary */
+  --bs-secondary-25: /* override */; --bs-secondary-50: /* override */; --bs-secondary-100: /* override */;
+  --bs-secondary-200: /* override */; --bs-secondary-300: /* override */; --bs-secondary-400: /* override */;
+  --bs-secondary-500: /* override */; --bs-secondary-600: /* override */; --bs-secondary-700: /* override */;
+  --bs-secondary-800: /* override */; --bs-secondary-900: /* override */;
+}
+```
+
+Dark mode (automatic and forced):
+```css
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bs-body-bg: #0e1116;
+    --bs-body-color: #e6e6e6;
+    --bs-heading-color: #ffffff;
+    --bs-link-color: #5ba8ff;
+    --bs-link-hover-color: #8fc2ff;
+    --bs-border-color: #2a2f36;
+  }
+}
+.dark {
+  --bs-body-bg: #0e1116;
+  --bs-body-color: #e6e6e6;
+}
+```
+
+<br />
+
+#### Spacing scale
+
+Override spacing globally or create theme scopes:
+```css
+:root {
+  --bs-ref-spacer-4: 16px;  /* baseline */
+  --bs-ref-spacer-6: 24px;
+  --bs-ref-spacer-8: 32px;
+  --bs-ref-spacer-12: 48px;
+}
+[data-bs-theme="compact"] {
+  --bs-ref-spacer-6: 20px; /* tighter */
+}
+```
+
+Refs (1–30)
+```css
+:root {
+  --bs-ref-spacer-1: /* override */;
+  --bs-ref-spacer-2: /* override */;
+  --bs-ref-spacer-3: /* override */;
+  --bs-ref-spacer-4: /* override */;
+  --bs-ref-spacer-5: /* override */;
+  --bs-ref-spacer-6: /* override */;
+  --bs-ref-spacer-7: /* override */;
+  --bs-ref-spacer-8: /* override */;
+  --bs-ref-spacer-9: /* override */;
+  --bs-ref-spacer-10: /* override */;
+  --bs-ref-spacer-11: /* override */;
+  --bs-ref-spacer-12: /* override */;
+  --bs-ref-spacer-13: /* override */;
+  --bs-ref-spacer-14: /* override */;
+  --bs-ref-spacer-15: /* override */;
+  --bs-ref-spacer-16: /* override */;
+  --bs-ref-spacer-17: /* override */;
+  --bs-ref-spacer-18: /* override */;
+  --bs-ref-spacer-19: /* override */;
+  --bs-ref-spacer-20: /* override */;
+  --bs-ref-spacer-21: /* override */;
+  --bs-ref-spacer-22: /* override */;
+  --bs-ref-spacer-23: /* override */;
+  --bs-ref-spacer-24: /* override */;
+  --bs-ref-spacer-25: /* override */;
+  --bs-ref-spacer-26: /* override */;
+  --bs-ref-spacer-27: /* override */;
+  --bs-ref-spacer-28: /* override */;
+  --bs-ref-spacer-29: /* override */;
+  --bs-ref-spacer-30: /* override */;
+}
+```
+
+<br />
+
+#### Borders, radius, shadows, focus
+- Radius: `--bs-border-radius`, `--bs-border-radius-sm`, `--bs-border-radius-lg`, `--bs-border-radius-xl`, `--bs-border-radius-xxl`, `--bs-border-radius-pill`
+- Border: `--bs-border-width`, `--bs-border-style`, `--bs-border-color`, `--bs-border-color-translucent`
+- Shadows: `--bs-box-shadow`, `--bs-box-shadow-sm`, `--bs-box-shadow-lg`
+- Focus ring: `--bs-focus-ring-width`, `--bs-focus-ring-opacity`, `--bs-focus-ring-border-color`, `--bs-focus-ring-color`
+
+```css
+:root {
+  --bs-border-radius: .5rem;
+  --bs-border-radius-lg: .75rem;
+  --bs-box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  --bs-focus-ring-width: 2px;
+  --bs-focus-ring-opacity: .35;
+  --bs-focus-ring-border-color: #0b74ff;
+}
+```
+
+##### Border variables (full list)
+```css
+:root {
+  --bs-border-width: /* override */;
+  --bs-border-style: /* override */;
+  --bs-border-color: /* override */;
+  --bs-border-color-translucent: /* override */;
+
+  --bs-border-radius: /* override */;
+  --bs-border-radius-sm: /* override */;
+  --bs-border-radius-lg: /* override */;
+  --bs-border-radius-xl: /* override */;
+  --bs-border-radius-xxl: /* override */;
+  --bs-border-radius-2xl: /* alias of xxl */;
+  --bs-border-radius-pill: /* override */;
+}
+```
+
+<br />
+
+### Component tokens (examples)
+Many component styles are derived from the core variables, but some expose specific tokens:
+- Buttons: variant tokens are generated off theme colors; customize via core color variables and (optionally) component CSS vars like --bs-btn-border-radius
+- Alerts/Badges: read semantic tokens and bg-subtle/border-subtle
+- Forms: validation colors map to --bs-form-valid-color/border-color, --bs-form-invalid-color/border-color
+
+```css
+/* Optional per-component tweak */
+:root {
+  --bs-btn-border-radius: var(--bs-border-radius-lg);
+}
+```
+
+<br />
+
+### Dark mode patterns
+- Use dark: utilities for class-based overrides and @media prefers-color-scheme for system dark.
+- Define token pairs for light/dark to ensure consistent tints and emphasis colors.
+
+```css
+.dark {
+  --bs-secondary-bg: #1b2129;
+  --bs-secondary-color: rgba(230,230,230,.75);
+  --bs-danger-100: #471c1c; /* dark tint variant */
+}
+```
+
+<br />
+
+### Theming workflow (recommended)
+1. Define brand color palette (primary/success/warning/danger/info/secondary + tints 25–900).
+2. Set typography: body family/size, heading/display scales, small text, line-heights.
+3. Tune spacing scale and component gaps using --bs-ref-spacer-*.
+4. Adjust radius, borders, shadows, focus tokens for personality and accessibility.
+5. Implement dark mode via prefers-color-scheme and .dark, validate contrast.
+6. Verify utilities (fs-*, display-*, text-*, bg-*, border-*) reflect your overrides.
+
+<br />
+
+### Bootstrapping a theme (copy-paste starter)
+```css
+/* Global theme */
+:root {
+  /* Typography */
+  --bs-body-font-family: "Jost", system-ui, sans-serif;
+  --bs-body-font-size: 1rem;
+  --bs-heading-line-height: 1.2;
+  --bs-fs-small: .875rem;
+
+  /* Color tokens */
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #2e3438;
+  --bs-primary: #0b74ff;
+  --bs-success: #0c8a50;
+  --bs-warning: #d99100;
+  --bs-danger: #c83333;
+  --bs-info: #0aa0c8;
+  --bs-secondary: #5b6670;
+
+  /* Spacing */
+  --bs-ref-spacer-4: 16px;
+  --bs-ref-spacer-6: 24px;
+
+  /* Radius/Shadows */
+  --bs-border-radius: .5rem;
+  --bs-box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* System dark support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bs-body-bg: #0e1116;
+    --bs-body-color: #e6e6e6;
+    --bs-border-color: #2a2f36;
+  }
+}
+```
+
+<br />
+
+</div>
