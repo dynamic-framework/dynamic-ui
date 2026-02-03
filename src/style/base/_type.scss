@@ -42,13 +42,8 @@
   line-height: $display-line-height;
 }
 
-// Body display classes
-.fs-body {
-  font-size: var(--#{$prefix}-body-font-size) !important;
-}
-
 .fs-small {
-  font-size: var(--#{$prefix}-font-size-sm) !important;
+  font-size: var(--#{$prefix}fs-small) !important;
 }
 
 //
