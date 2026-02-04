@@ -36,7 +36,7 @@ $input-phone-dropdown-item-text-color: $input-phone-text-color !default;
 $input-phone-dropdown-item-dial-code-color: var(--#{$prefix}gray-500) !default;
 $input-phone-dropdown-item-height: 28px !default;
 $input-phone-dropdown-item-padding: var(--#{$prefix}ref-spacer-3) var(--#{$prefix}ref-spacer-3) !default;
-$input-phone-dropdown-item-font-size: var(--#{$prefix}fs-body-small) !default;
+$input-phone-dropdown-item-font-size: var(--#{$prefix}font-size-sm) !default;
 $input-phone-dropdown-item-font-weight: var(--#{$prefix}fw-normal) !default;
 
 // Selected / hover items
