@@ -9,8 +9,8 @@ $tooltip-padding-y: var(--#{$prefix}ref-spacer-2) !default;
 $tooltip-padding-x: var(--#{$prefix}ref-spacer-1) !default;
 
 // custom
-$tooltip-font-size-sm: var(--#{$prefix}font-size-sm) !default;
-$tooltip-font-size-lg: var(--#{$prefix}fs-body-medium) !default;
+$tooltip-font-size-sm: var(--#{$prefix}fs-small) !default;
+$tooltip-font-size-lg: var(--#{$prefix}fs-5) !default;
 // end custom
 
 // scss-docs-end tooltip-variables

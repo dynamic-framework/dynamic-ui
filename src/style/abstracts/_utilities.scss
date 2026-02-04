@@ -137,7 +137,7 @@ $utilities: map-merge(
         values: map-merge(
           map-get(map-get($utilities, "font-size"), "values"),
           (
-            body: var(--#{$prefix}fs-body-font-size)
+            body: var(--#{$prefix}body-font-size)
           )
         )
       )
