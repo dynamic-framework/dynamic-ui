@@ -226,7 +226,7 @@ export const PaymentMethods: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Payment Methods</h5>
       <DListGroup>
-        <DListGroup.Item action className="hover-bg-gray-25">
+        <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <div className="me-3">
@@ -243,7 +243,7 @@ export const PaymentMethods: Story = {
             <DIcon icon="ChevronRight" className="text-gray-300" />
           </div>
         </DListGroup.Item>
-        <DListGroup.Item action className="hover-bg-gray-25">
+        <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <div className="me-3">
@@ -257,7 +257,7 @@ export const PaymentMethods: Story = {
             <DIcon icon="ChevronRight" className="text-gray-300" />
           </div>
         </DListGroup.Item>
-        <DListGroup.Item action className="hover-bg-gray-25">
+        <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <div className="me-3">
@@ -271,7 +271,7 @@ export const PaymentMethods: Story = {
             <DIcon icon="ChevronRight" className="text-gray-300" />
           </div>
         </DListGroup.Item>
-        <DListGroup.Item action className="hover-bg-gray-25">
+        <DListGroup.Item action className="hover:bg-gray-25">
           <div className="align-items-center d-flex justify-content-center gap-2">
             <DIcon icon="PlusCircle" />
             Add New Payment Method
@@ -474,7 +474,7 @@ export const AccountSummaryWithActions: Story = {
     <DBox style={{ width: 800 }}>
       <h5 className="mb-3">Quick Actions</h5>
       <DListGroup>
-        <DListGroup.Item action className="hover-bg-gray-25">
+        <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <i className="bi bi-arrow-left-right fs-4 text-primary me-3" />
@@ -486,7 +486,7 @@ export const AccountSummaryWithActions: Story = {
             <i className="bi bi-chevron-right" />
           </div>
         </DListGroup.Item>
-        <DListGroup.Item action className="hover-bg-gray-25">
+        <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <i className="bi bi-receipt fs-4 text-success me-3" />
@@ -498,7 +498,7 @@ export const AccountSummaryWithActions: Story = {
             <i className="bi bi-chevron-right" />
           </div>
         </DListGroup.Item>
-        <DListGroup.Item action className="hover-bg-gray-25">
+        <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <i className="bi bi-camera fs-4 text-info me-3" />
@@ -510,7 +510,7 @@ export const AccountSummaryWithActions: Story = {
             <i className="bi bi-chevron-right" />
           </div>
         </DListGroup.Item>
-        <DListGroup.Item action className="hover-bg-gray-25">
+        <DListGroup.Item action className="hover:bg-gray-25">
           <div className="d-flex w-100 justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <i className="bi bi-file-earmark-text fs-4 text-warning me-3" />
