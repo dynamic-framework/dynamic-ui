@@ -230,7 +230,7 @@ export const WithHoverEffects: Story = {
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover-bg-gray-50"
+            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
             onClick={() => {}}
           >
             <DIcon icon="ArrowLeftRight" hasCircle size="2.5rem" className="mb-3 text-primary" />
@@ -241,7 +241,7 @@ export const WithHoverEffects: Story = {
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover-bg-gray-50"
+            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
             onClick={() => {}}
           >
             <DIcon icon="Zap" hasCircle size="2.5rem" className="mb-3 text-warning" />
@@ -252,7 +252,7 @@ export const WithHoverEffects: Story = {
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover-bg-gray-50"
+            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
             onClick={() => {}}
           >
             <DIcon icon="DollarSign" hasCircle size="2.5rem" className="mb-3 text-success" />
@@ -263,7 +263,7 @@ export const WithHoverEffects: Story = {
         <DLayout.Pane cols="6" colsMd="3">
           <button
             type="button"
-            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover-bg-gray-50"
+            className="d-flex flex-column align-items-center justify-content-center p-4 bg-white border rounded text-decoration-none w-100 h-100 hover:bg-gray-50"
             onClick={() => {}}
           >
             <DIcon icon="MessageCircle" hasCircle size="2.5rem" className="mb-3 text-info" />
