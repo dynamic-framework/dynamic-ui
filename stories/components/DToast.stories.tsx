@@ -34,9 +34,11 @@ The Bootstrap documentation provides details on the default [Toast CSS Variables
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
   },
   tags: ['autodocs'],

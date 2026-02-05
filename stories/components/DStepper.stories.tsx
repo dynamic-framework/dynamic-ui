@@ -39,14 +39,17 @@ provides a simpler alternative for scenarios where responsive behavior is not ne
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     currentStep: {
       control: 'number',
       type: 'number',
       description: 'Current step number',
+      table: { category: 'Content' },
     },
     iconSuccess: {
       control: {
@@ -56,34 +59,41 @@ provides a simpler alternative for scenarios where responsive behavior is not ne
         },
       },
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconSuccessMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     iconSuccessFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconSuccessFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     vertical: {
       control: 'boolean',
       type: 'boolean',
       description: 'Display vertical stepper',
+      table: { category: 'Appearance' },
     },
     completed: {
       control: 'boolean',
       type: 'boolean',
       description: 'Display all steps as completed',
+      table: { category: 'Behavior' },
     },
     breakpoint: {
       control: {
         type: 'radio',
       },
       options: ['sm', 'md', 'lg', 'xl', 'xxl'],
+      table: { category: 'Behavior' },
     },
   },
   tags: ['autodocs'],

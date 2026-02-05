@@ -51,22 +51,27 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
       control: 'text',
       type: 'string',
       description: 'The id of the input',
+      table: { category: 'HTML Attributes' },
     },
     name: {
       control: 'text',
       type: 'string',
       description: 'Name of the input',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     value: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     size: {
       control: {
@@ -77,10 +82,12 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
       },
       type: 'string',
       options: [undefined, 'sm', 'lg'],
+      table: { category: 'Appearance' },
     },
     label: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     iconStart: {
       control: {
@@ -91,26 +98,32 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconStartDisabled: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     iconStartFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconStartFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconStartAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     iconStartTabIndex: {
       control: 'number',
       type: 'number',
+      table: { category: 'HTML Attributes' },
     },
     iconEnd: {
       control: {
@@ -121,57 +134,77 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconEndDisabled: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     iconEndFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconEndAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     iconEndTabIndex: {
       control: 'number',
       type: 'number',
+      table: { category: 'HTML Attributes' },
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
+      table: { category: 'Content' },
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     labelExtractor: {
       table: {
         defaultValue: {
           summary: '(item: any) => item?.label',
         },
+        category: 'Behavior',
       },
     },
     valueExtractor: {
@@ -179,24 +212,32 @@ The Bootstrap documentation provides details on the default [Select CSS Variable
         defaultValue: {
           summary: '(item: any) => item?.value',
         },
+        category: 'Behavior',
       },
     },
     onIconStartClick: {
       action: 'onIconStartClick',
+      table: { category: 'Events' },
     },
     onIconEndClick: {
       action: 'onIconEndClick',
+      table: { category: 'Events' },
     },
     onChange: {
       action: 'onChange',
+      table: { category: 'Events' },
     },
     onBlur: {
       action: 'onBlur',
+      table: { category: 'Events' },
     },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
   },
   tags: ['autodocs'],

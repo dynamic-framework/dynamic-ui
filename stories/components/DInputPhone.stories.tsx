@@ -122,43 +122,53 @@ and all variables are scoped under the \`.d-input-phone\` class.
       control: 'text',
       type: 'string',
       description: 'The id of the input',
+      table: { category: 'HTML Attributes' },
     },
     name: {
       control: 'text',
       type: 'string',
       description: 'Name of the input',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     label: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     placeholder: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     value: {
       control: 'text',
       type: 'string',
       description: 'The value of the input',
+      table: { category: 'Content' },
     },
     size: {
       control: {
@@ -169,21 +179,31 @@ and all variables are scoped under the \`.d-input-phone\` class.
       },
       type: 'string',
       options: [undefined, 'sm', 'lg'],
+      table: { category: 'Appearance' },
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     iconEnd: {
       control: {
@@ -194,62 +214,83 @@ and all variables are scoped under the \`.d-input-phone\` class.
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconEndDisabled: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     iconEndAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     iconEndTabIndex: {
       control: 'number',
       type: 'number',
+      table: { category: 'HTML Attributes' },
     },
     iconEndFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconEndMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
+      table: { category: 'Content' },
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
     onIconEndClick: {
       action: 'onIconEndClicked',
+      table: { category: 'Events' },
     },
     onChange: {
       action: 'onChange',
+      table: { category: 'Events' },
     },
     onBlur: {
       action: 'onBlur',
+      table: { category: 'Events' },
     },
     onFocus: {
       action: 'onFocus',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],
