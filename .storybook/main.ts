@@ -1,22 +1,16 @@
-import { dirname, join } from 'node:path';
-import type { StorybookConfig } from '@storybook/react-vite';
 import remarkGfm from 'remark-gfm';
 
-function getAbsolutePath(value) {
-  return dirname(require.resolve(join(value, 'package.json')));
-}
-
-const config: StorybookConfig = {
+export default {
   stories: [
     '../stories/**/*.mdx', 
     '../stories/**/*.stories.@(js|jsx|ts|tsx)',
   ],
 
   addons: [
-    getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/addon-a11y'),
+    '@storybook/addon-links',
+    '@storybook/addon-a11y',
     {
-      name: getAbsolutePath('@storybook/addon-docs'),
+      name: '@storybook/addon-docs',
       options: {
         mdxPluginOptions: {
           mdxCompileOptions: {
@@ -28,7 +22,7 @@ const config: StorybookConfig = {
   ],
 
   framework: {
-    name: getAbsolutePath('@storybook/react-vite'),
+    name: '@storybook/react-vite',
     options: {},
   },
 
@@ -37,7 +31,7 @@ const config: StorybookConfig = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
-      propFilter: prop => prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+      propFilter: (prop: any) => prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
   },
 
@@ -50,5 +44,3 @@ const config: StorybookConfig = {
     '../dist',
   ]
 };
-
-export default config;
