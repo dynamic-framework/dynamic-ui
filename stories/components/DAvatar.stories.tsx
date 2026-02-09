@@ -29,13 +29,16 @@ const config: Meta<typeof DAvatar> = {
     id: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     size: {
       control: {
@@ -47,21 +50,27 @@ const config: Meta<typeof DAvatar> = {
       type: 'string',
       options: [undefined, ...AVATAR_SIZE],
       description: 'Size',
+      table: { category: 'Appearance' },
     },
     image: {
       control: 'text',
       type: 'string',
       description: 'URL of the avatar image',
+      table: { category: 'Content' },
     },
     name: {
       control: 'text',
       type: 'string',
       description: 'The text to display',
+      table: { category: 'Content' },
     },
     useNameAsInitials: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
       description: 'Take the name as name initials',
     },
   },

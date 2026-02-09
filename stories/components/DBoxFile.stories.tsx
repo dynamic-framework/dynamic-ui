@@ -60,53 +60,66 @@ The component's behavior is inspired by the [React Dropzone](https://react-dropz
     disabled: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     accept: {
       control: 'object',
+      table: { category: 'Behavior' },
     },
     multiple: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     minSize: {
       control: 'number',
       type: 'number',
+      table: { category: 'Behavior' },
     },
     maxSize: {
       control: 'number',
       type: 'number',
+      table: { category: 'Behavior' },
     },
     maxFiles: {
       control: 'number',
       type: 'number',
+      table: { category: 'Behavior' },
     },
     value: {
       control: 'text',
       type: 'string',
       description: 'Array of file URLs to preload',
+      table: { category: 'Content' },
     },
     noClick: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     noKeyboard: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     noDrag: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     autoFocus: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     icon: {
       control: {
@@ -117,33 +130,42 @@ The component's behavior is inspired by the [React Dropzone](https://react-dropz
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     onDrop: {
       action: 'onDrop',
+      table: { category: 'Events' },
     },
     onDragEnter: {
       action: 'onDragEnter',
+      table: { category: 'Events' },
     },
     onDragLeave: {
       action: 'onDragLeave',
+      table: { category: 'Events' },
     },
     onError: {
       action: 'onError',
+      table: { category: 'Events' },
     },
     children: {
       control: 'text',
+      table: { category: 'Content' },
     },
   },
   tags: ['autodocs'],

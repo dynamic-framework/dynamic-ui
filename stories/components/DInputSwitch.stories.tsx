@@ -39,51 +39,63 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
       control: 'text',
       type: 'string',
       description: 'The id of the input',
+      table: { category: 'HTML Attributes' },
     },
     name: {
       control: 'text',
       type: 'string',
       description: 'The name of the input',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
       type: 'string',
       description: 'The class name for the wrapper div',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     inputClassName: {
       control: 'text',
       type: 'string',
       description: 'The class name for the input element',
+      table: { category: 'Appearance' },
     },
     label: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     checked: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     readonly: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     onChange: {
       action: 'onChange',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],

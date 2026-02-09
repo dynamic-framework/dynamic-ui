@@ -57,49 +57,60 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       control: 'text',
       type: 'string',
       description: 'The id of the input',
+      table: { category: 'HTML Attributes' },
     },
     name: {
       control: 'text',
       type: 'string',
       description: 'Name of the input',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     label: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     placeholder: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     type: {
       control: 'select',
       options: ['text', 'email', 'number'],
       type: 'string',
       description: 'The type of the input',
+      table: { category: 'HTML Attributes' },
     },
     value: {
       control: 'text',
       type: 'string',
       description: 'The value of the input',
+      table: { category: 'Content' },
     },
     size: {
       control: {
@@ -110,31 +121,43 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       },
       type: 'string',
       options: [undefined, 'sm', 'lg'],
+      table: { category: 'Appearance' },
     },
     inputMode: {
       control: 'text',
       type: 'string',
       description: 'Input mode',
+      table: { category: 'HTML Attributes' },
     },
     pattern: {
       control: 'text',
       type: 'string',
       description: 'Pattern to validate',
+      table: { category: 'HTML Attributes' },
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     iconStart: {
       control: {
@@ -145,30 +168,37 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconStartDisabled: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     iconStartAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     iconStartTabIndex: {
       control: 'number',
       type: 'number',
+      table: { category: 'HTML Attributes' },
     },
     iconStartFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconStartFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconStartMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     iconEnd: {
       control: {
@@ -179,68 +209,91 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconEndDisabled: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     iconEndAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     iconEndTabIndex: {
       control: 'number',
       type: 'number',
+      table: { category: 'HTML Attributes' },
     },
     iconEndFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconEndFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconEndMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
+      table: { category: 'Content' },
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
     onIconStartClick: {
       action: 'onIconStartClicked',
+      table: { category: 'Events' },
     },
     onIconEndClick: {
       action: 'onIconStartClicked',
+      table: { category: 'Events' },
     },
     onChange: {
       action: 'onChange',
+      table: { category: 'Events' },
     },
     onBlur: {
       action: 'onBlur',
+      table: { category: 'Events' },
     },
     onFocus: {
       action: 'onFocus',
+      table: { category: 'Events' },
     },
     onWheel: {
       action: 'onWheel',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],

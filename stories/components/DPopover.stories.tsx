@@ -11,13 +11,16 @@ const config: Meta<typeof DPopover> = {
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     adjustContentToRender: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
   },
   decorators: [

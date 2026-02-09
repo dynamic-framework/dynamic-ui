@@ -41,10 +41,12 @@ const config: Meta<typeof DCollapse> = {
       control: 'text',
       type: 'string',
       description: 'Additional CSS class for the collapse container.',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
       description: 'Inline styles for the collapse container.',
+      table: { category: 'Appearance' },
     },
     Component: {
       options: ['Text', 'Custom'],
@@ -58,17 +60,21 @@ const config: Meta<typeof DCollapse> = {
         ),
       },
       description: 'Header content of the collapse.',
+      table: { category: 'Content' },
     },
     defaultCollapsed: {
       control: 'boolean',
       description: 'Initial or external state. When changed, the component syncs its internal state.',
+      table: { category: 'Behavior' },
     },
     onChange: {
       description: 'Callback fired on toggle with the next state (true = collapsed, false = expanded). Use it to update your external state and use controlled mode.',
+      table: { category: 'Events' },
     },
     hasSeparator: {
       control: 'boolean',
       description: 'Shows a separator between header and body.',
+      table: { category: 'Appearance' },
     },
     iconOpen: {
       control: {
@@ -79,6 +85,7 @@ const config: Meta<typeof DCollapse> = {
       },
       options: [undefined, ...ICONS],
       description: 'Icon shown when the collapse is collapsed (state collapsed = true).',
+      table: { category: 'Icon' },
     },
     iconClose: {
       control: {
@@ -89,21 +96,25 @@ const config: Meta<typeof DCollapse> = {
       },
       options: [undefined, ...ICONS],
       description: 'Icon shown when the collapse is expanded (state collapsed = false).',
+      table: { category: 'Icon' },
     },
     iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
       description: 'Enable Material icons style (requires DContextProvider configuration).',
+      table: { category: 'Icon' },
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
       description: 'Icon family class to use with DIcon.',
+      table: { category: 'Icon' },
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
       description: 'Icon family prefix to use with DIcon.',
+      table: { category: 'Icon' },
     },
   },
   tags: ['autodocs'],

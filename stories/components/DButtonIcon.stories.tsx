@@ -109,35 +109,45 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     id: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     ariaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     href: {
       control: 'text',
       description: 'If provided, renders as an &lt;a&gt; element instead of &lt;button&gt;.',
+      table: { category: 'HTML Attributes' },
     },
     target: {
       control: 'select',
       options: [undefined, '_self', '_blank', '_parent', '_top'],
       description: 'Anchor target when href is set.',
+      table: { category: 'HTML Attributes' },
     },
     rel: {
       control: 'text',
       description: 'Anchor rel attribute (use "noopener noreferrer" with target="_blank").',
+      table: { category: 'HTML Attributes' },
     },
     color: {
       control: 'select',
       options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
+      table: {
+        defaultValue: { summary: 'primary' },
+        category: 'Appearance',
+      },
     },
     size: {
       control: {
@@ -145,46 +155,63 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
       },
       type: 'string',
       options: COMPONENT_SIZE,
+      table: { category: 'Appearance' },
     },
     type: {
       control: 'select',
       type: 'string',
       options: ['submit', 'reset', 'button'],
-      table: { defaultValue: { summary: 'button' } },
+      table: {
+        defaultValue: { summary: 'button' },
+        category: 'HTML Attributes',
+      },
       description: 'The html type of the button.',
     },
     icon: {
       control: {
         type: 'select',
-        table: { defaultValue: { summary: 'arrow-left' } },
+        table: {
+          defaultValue: { summary: 'arrow-left' },
+          category: 'Icon',
+        },
       },
       options: [undefined, ...ICONS],
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     loading: {
       control: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
       type: 'boolean',
     },
     disabled: {
       control: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
       type: 'boolean',
     },
     loadingAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     state: {
       control: {
@@ -196,18 +223,24 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
       options: [undefined, ...INPUT_STATE],
       type: 'string',
       description: 'Change the state of the button',
+      table: { category: 'Behavior' },
     },
     stopPropagationEnabled: {
       control: 'boolean',
-      table: { defaultValue: { summary: 'true' } },
+      table: {
+        defaultValue: { summary: 'true' },
+        category: 'Behavior',
+      },
       type: 'boolean',
     },
     onClick: {
       action: 'onClick',
+      table: { category: 'Events' },
     },
     variant: {
       control: 'select',
       options: [undefined, 'outline', 'link'],
+      table: { category: 'Appearance' },
     },
   },
   tags: ['autodocs'],

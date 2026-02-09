@@ -72,44 +72,60 @@ See [ICON_MIGRATION_GUIDE.md](/?path=/docs/icon-migration-guide) for migrating f
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     icon: {
       control: 'select',
       options: ['Map', ...ICONS],
       type: { name: 'string', required: true },
       description: 'Icon name in PascalCase (e.g., Home, Settings, User)',
+      table: { category: 'Content' },
     },
     color: {
       control: 'select',
       options: [undefined, ...THEMES],
       type: 'string',
       description: 'Color of the icon (theme-based)',
+      table: { category: 'Appearance' },
     },
     strokeWidth: {
       type: 'number',
       control: 'number',
       description: 'Stroke width of the icon (Lucide only)',
-      table: { defaultValue: { summary: '2' } },
+      table: {
+        defaultValue: { summary: '2' },
+        category: 'Appearance',
+      },
     },
     hasCircle: {
       type: 'boolean',
       control: 'boolean',
       description: 'Add circle background around the icon',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
     materialStyle: {
       type: 'boolean',
       control: 'boolean',
       description: 'Use Material Design icons instead of Lucide',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Icon',
+      },
     },
     familyClass: {
       type: 'string',
       description: 'Icon font family class (for Material Design or custom icon sets)',
-      table: { defaultValue: { summary: 'material-symbols-outlined' } },
+      table: {
+        defaultValue: { summary: 'material-symbols-outlined' },
+        category: 'Icon',
+      },
     },
   },
   tags: ['autodocs'],

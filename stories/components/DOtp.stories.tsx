@@ -29,26 +29,32 @@ Ideal for **banking**, **insurance**, and **financial** applications.
     action: {
       description: 'Function called when submitting the OTP.',
       control: false,
+      table: { category: 'Events' },
     },
     isLoading: {
       control: 'boolean',
       description: 'Shows a loading spinner on the button.',
+      table: { category: 'Behavior' },
     },
     otpSize: {
       control: { type: 'number', min: 4, max: 8 },
       description: 'Number of digits in the OTP input.',
+      table: { category: 'Appearance' },
     },
     seconds: {
       control: { type: 'number', min: 5, max: 60 },
       description: 'Countdown seconds before resend becomes available.',
+      table: { category: 'Behavior' },
     },
     texts: {
       control: 'object',
       description: 'Customizable texts for labels, buttons, and messages.',
+      table: { category: 'Content' },
     },
     className: {
       control: 'text',
       description: 'Custom classes',
+      table: { category: 'Appearance' },
     },
   },
   tags: ['autodocs'],

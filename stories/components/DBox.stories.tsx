@@ -31,6 +31,7 @@ Think of it as a pre-styled <code>div</code> that provides a consistent containe
   argTypes: {
     children: {
       table: {
+        category: 'Content',
         type: { summary: 'ReactNode' },
         defaultValue: {
           summary: 'ReactNode',
