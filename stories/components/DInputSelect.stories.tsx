@@ -336,8 +336,8 @@ export const Extractors: StoryObj<DInputSelectProps<{ id: string; text: string; 
       { id: '1', text: 'Option 1' },
       { id: '2', text: 'Option 2' },
     ],
-    labelExtractor: (item) => item.text,
-    valueExtractor: (item) => item.id,
+    labelExtractor: (item: { text: string }) => item.text,
+    valueExtractor: (item: { id: string }) => item.id,
     hint: 'Assistive text',
   },
 };
