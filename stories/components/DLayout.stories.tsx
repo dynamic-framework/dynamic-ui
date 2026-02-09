@@ -13,6 +13,7 @@ const config: Meta<typeof DLayout> = {
       },
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing between columns (all breakpoints)',
+      table: { category: 'Appearance' },
     },
     gapSm: {
       control: {
@@ -20,6 +21,7 @@ const config: Meta<typeof DLayout> = {
       },
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing for small screens (≥576px)',
+      table: { category: 'Appearance' },
     },
     gapMd: {
       control: {
@@ -27,6 +29,7 @@ const config: Meta<typeof DLayout> = {
       },
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing for medium screens (≥768px)',
+      table: { category: 'Appearance' },
     },
     gapLg: {
       control: {
@@ -34,6 +37,7 @@ const config: Meta<typeof DLayout> = {
       },
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing for large screens (≥992px)',
+      table: { category: 'Appearance' },
     },
     gapXl: {
       control: {
@@ -41,6 +45,7 @@ const config: Meta<typeof DLayout> = {
       },
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing for extra large screens (≥1200px)',
+      table: { category: 'Appearance' },
     },
     gapXxl: {
       control: {
@@ -48,15 +53,18 @@ const config: Meta<typeof DLayout> = {
       },
       options: [0, 1, 2, 3, 4, 5],
       description: 'Gap spacing for extra extra large screens (≥1400px)',
+      table: { category: 'Appearance' },
     },
     children: {
       table: {
         type: { summary: 'ReactNode' },
+        category: 'Content',
       },
       control: false,
     },
     className: {
       type: 'string',
+      table: { category: 'Appearance' },
     },
   },
   parameters: {

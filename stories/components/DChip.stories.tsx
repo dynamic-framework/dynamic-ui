@@ -31,21 +31,27 @@ const config: Meta<typeof DChip> = {
   argTypes: {
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     text: {
       control: 'text',
       type: 'string',
       description: 'Text of badge',
+      table: { category: 'Content' },
     },
     color: {
       control: 'select',
       type: 'string',
       options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
+      table: {
+        defaultValue: { summary: 'primary' },
+        category: 'Appearance',
+      },
       description: 'The color to use.',
     },
     icon: {
@@ -56,18 +62,22 @@ const config: Meta<typeof DChip> = {
         },
       },
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     iconClose: {
       control: {
@@ -77,30 +87,39 @@ const config: Meta<typeof DChip> = {
         },
       },
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconCloseFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconCloseFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconCloseMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     showClose: {
       control: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
       type: 'boolean',
     },
     closeAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     onClose: {
       action: 'onClose',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],

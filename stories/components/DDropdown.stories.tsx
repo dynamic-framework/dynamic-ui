@@ -58,11 +58,13 @@ The dropdown automatically adjusts its position depending on the available space
       control: 'text',
       description: 'Additional class names for the dropdown container',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     actions: {
       control: 'object',
       description: 'List of actions displayed in the dropdown menu',
       table: {
+        category: 'Content',
         type: {
           summary: 'DropdownAction[]',
           detail: `{
@@ -80,6 +82,7 @@ The dropdown automatically adjusts its position depending on the available space
     dropdownToggle: {
       control: false,
       description: 'Custom element or function to render the dropdown toggle button',
+      table: { category: 'Content' },
     },
   },
   tags: ['autodocs'],

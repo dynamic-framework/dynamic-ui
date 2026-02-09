@@ -39,19 +39,25 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
     id: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     color: {
       control: 'select',
       type: 'string',
       options: COLOR_STATES,
-      table: { defaultValue: { summary: 'success' } },
+      table: {
+        defaultValue: { summary: 'success' },
+        category: 'Appearance',
+      },
       description: 'Alert color',
     },
     icon: {
@@ -59,32 +65,54 @@ The Bootstrap documentation provides details on the default [Alert CSS Variables
       type: 'string',
       options: ICONS,
       description: 'Name of icon to use (in kebab-case)',
+      table: { category: 'Icon' },
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconMaterialStyle: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Icon' },
     },
     showClose: {
       control: 'boolean',
       type: 'boolean',
       description: 'Show close button',
+      table: { category: 'Behavior' },
     },
     iconClose: {
       control: 'select',
       type: 'string',
       options: ICONS,
       description: 'Name of icon to use (in kebab-case)',
+      table: { category: 'Icon' },
+    },
+    iconCloseFamilyClass: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Icon' },
+    },
+    iconCloseFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Icon' },
+    },
+    iconCloseMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { category: 'Icon' },
     },
     onClose: {
       action: 'onClose',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],

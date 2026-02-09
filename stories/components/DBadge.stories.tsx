@@ -33,33 +33,42 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
     id: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     text: {
       control: 'text',
       type: 'string',
       description: 'Text of badge',
+      table: { category: 'Content' },
     },
     color: {
       control: 'select',
       type: 'string',
       options: THEMES,
-      table: { defaultValue: { summary: 'primary' } },
+      table: {
+        defaultValue: { summary: 'primary' },
+        category: 'Appearance',
+      },
       description: 'The color to use.',
     },
     soft: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Appearance' },
     },
     rounded: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Appearance' },
     },
     iconStart: {
       control: {
@@ -69,6 +78,7 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
         },
       },
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconEnd: {
       control: {
@@ -78,6 +88,22 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
         },
       },
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
+    },
+    iconMaterialStyle: {
+      control: 'boolean',
+      type: 'boolean',
+      table: { category: 'Icon' },
+    },
+    iconFamilyClass: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Icon' },
+    },
+    iconFamilyPrefix: {
+      control: 'text',
+      type: 'string',
+      table: { category: 'Icon' },
     },
   },
   tags: ['autodocs'],

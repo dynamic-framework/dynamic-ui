@@ -24,6 +24,28 @@ It's used to display a list of events in chronological order.
       },
     },
   },
+  argTypes: {
+    items: {
+      control: 'object',
+      description: 'List of timeline items',
+      table: { category: 'Content' },
+    },
+    className: {
+      control: 'text',
+      description: 'Additional CSS class for the timeline container.',
+      table: { category: 'Appearance' },
+    },
+    style: {
+      control: 'object',
+      description: 'Inline styles for the timeline container.',
+      table: { category: 'Appearance' },
+    },
+    dataAttributes: {
+      control: 'object',
+      description: 'Data attributes for the timeline container.',
+      table: { category: 'HTML Attributes' },
+    },
+  },
   tags: ['autodocs'],
 };
 

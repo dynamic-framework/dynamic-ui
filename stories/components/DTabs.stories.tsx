@@ -40,20 +40,28 @@ The Bootstrap documentation provides details on the default [Tabs CSS Variables]
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     vertical: {
       type: 'boolean',
       control: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
     variant: {
       type: 'string',
       options: TAB_VARIANTS,
       control: 'select',
-      table: { defaultValue: { summary: 'underline' } },
+      table: {
+        defaultValue: { summary: 'underline' },
+        category: 'Appearance',
+      },
     },
   },
   tags: ['autodocs'],
@@ -120,6 +128,12 @@ export const Default: Story = {
       </DTabs.Tab>
     </DTabs>
   ),
+  argTypes: {
+    defaultSelected: {
+      control: 'select',
+      options: ['overview', 'settings', 'empty'],
+    },
+  },
   args: {
     defaultSelected: 'overview',
     variant: 'underline',

@@ -36,66 +36,86 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
   argTypes: {
     total: {
       control: 'number',
+      table: { category: 'Content' },
     },
     current: {
       control: 'number',
       type: 'number',
+      table: { category: 'Content' },
     },
     onPageChange: {
       action: 'onPageChange',
       type: { name: 'function' },
+      table: { category: 'Events' },
     },
     maxWidth: {
       control: 'number',
+      table: { category: 'Appearance' },
     },
     className: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     extraClassName: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     pageItemClassName: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     pageLinkClassName: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     activeItemClassName: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     disabledItemClassName: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     disabledLinkClassName: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     navClassName: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     previousClassName: {
       control: 'text',
+      table: { category: 'Appearance' },
     },
     nextClassName: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     previousLabel: {
       control: 'text',
+      table: { category: 'Content' },
     },
     nextLabel: {
       control: 'text',
+      table: { category: 'Content' },
     },
     ariaPreviousLabel: {
       control: 'text',
+      table: { category: 'Content' },
     },
     ariaNextLabel: {
       control: 'text',
+      table: { category: 'Content' },
     },
     renderNav: {
       control: 'boolean',
+      table: { category: 'Appearance' },
     },
     ariaCurrentAttr: {
       control: 'boolean',
+      table: { category: 'HTML Attributes' },
     },
     linkHref: {
       control: {
@@ -105,6 +125,7 @@ The Bootstrap documentation provides details on the default [Pagination CSS Vari
         },
       },
       options: [undefined, 'hash', 'omit'],
+      table: { category: 'HTML Attributes' },
     },
   },
   tags: ['autodocs'],

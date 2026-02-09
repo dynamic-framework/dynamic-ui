@@ -15,39 +15,48 @@ const config: Meta<typeof DModal> = {
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     name: {
       control: 'text',
       type: { name: 'string', required: true },
+      table: { category: 'HTML Attributes' },
     },
     staticBackdrop: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     scrollable: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     centered: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Appearance' },
     },
     fullScreen: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Appearance' },
     },
     fullScreenFrom: {
       control: 'select',
       type: 'string',
       options: ['sm', 'md', 'lg', 'xl', 'xxl'],
+      table: { category: 'Appearance' },
     },
     size: {
       control: 'radio',
       type: 'string',
       options: ['sm', 'lg', 'xl'],
+      table: { category: 'Appearance' },
     },
   },
 };

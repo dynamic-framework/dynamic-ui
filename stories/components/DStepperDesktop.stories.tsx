@@ -44,14 +44,17 @@ const config: Meta<typeof DStepperDesktop> = {
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     currentStep: {
       control: 'number',
       type: 'number',
       description: 'Current step number',
+      table: { category: 'Content' },
     },
     iconSuccess: {
       control: {
@@ -61,21 +64,25 @@ const config: Meta<typeof DStepperDesktop> = {
         },
       },
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     vertical: {
       control: 'boolean',
       type: 'boolean',
       description: 'Display vertical stepper',
+      table: { category: 'Appearance' },
     },
     completed: {
       control: 'boolean',
       type: 'boolean',
       description: 'Display all steps as completed',
+      table: { category: 'Behavior' },
     },
     alignStart: {
       control: 'boolean',
       type: 'boolean',
       description: 'Change text alignment',
+      table: { category: 'Appearance' },
     },
   },
   tags: ['autodocs'],

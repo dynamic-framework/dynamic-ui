@@ -7,6 +7,30 @@ import { DContextProvider } from '../../src';
 const config: Meta<typeof DCurrencyText> = {
   title: 'Design System/Utils/Currency Text',
   component: DCurrencyText,
+  argTypes: {
+    value: {
+      control: 'number',
+      type: 'number',
+      description: 'The numeric value to be formatted',
+      table: { category: 'Content' },
+    },
+    className: {
+      control: 'text',
+      type: 'string',
+      description: 'Additional CSS classes',
+      table: { category: 'Appearance' },
+    },
+    style: {
+      control: 'object',
+      description: 'Inline styles',
+      table: { category: 'Appearance' },
+    },
+    dataAttributes: {
+      control: 'object',
+      description: 'Data attributes',
+      table: { category: 'HTML Attributes' },
+    },
+  },
 };
 
 export default config;

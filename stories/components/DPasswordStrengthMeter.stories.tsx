@@ -109,51 +109,61 @@ The strength bar color is calculated based on the percentage of passed checks:
       control: 'text',
       type: 'string',
       description: 'The id of the input',
+      table: { category: 'HTML Attributes' },
     },
     label: {
       control: 'text',
       type: 'string',
       description: 'The label text for the password input',
+      table: { category: 'Content' },
     },
     placeholder: {
       control: 'text',
       type: 'string',
       description: 'Placeholder text for the input',
+      table: { category: 'Content' },
     },
     value: {
       control: 'text',
       type: 'string',
       description: 'The current password value',
+      table: { category: 'Content' },
     },
     name: {
       control: 'text',
       type: 'string',
       description: 'The name attribute for the input',
+      table: { category: 'HTML Attributes' },
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
       description: 'Whether the input is disabled',
+      table: { category: 'Behavior' },
     },
     readonly: {
       control: 'boolean',
       type: 'boolean',
       description: 'Whether the input is readonly',
+      table: { category: 'Behavior' },
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
       description: 'Whether the input has validation errors',
+      table: { category: 'Behavior' },
     },
     className: {
       control: 'text',
       type: 'string',
       description: 'Additional CSS classes',
+      table: { category: 'Appearance' },
     },
     validationMessages: {
       control: 'object',
       description: 'Custom validation messages for each check',
       table: {
+        category: 'Content',
         type: {
           summary: 'ValidationMessages',
           detail: '{\n  number: string;\n  lowercaseLetter: string;\n  uppercaseLetter: string;\n  especialChar: string;\n  notMatch?: string;\n}',
@@ -168,6 +178,7 @@ The strength bar color is calculated based on the percentage of passed checks:
       options: ['uppercase', 'lowercase', 'number', 'specialChar'],
       description: 'Array of validation checks to enable. Controls which requirements are shown and validated.',
       table: {
+        category: 'Behavior',
         type: {
           summary: 'ValidationCheck[]',
           detail: "Array of: 'uppercase' | 'lowercase' | 'number' | 'specialChar'",
@@ -180,6 +191,7 @@ The strength bar color is calculated based on the percentage of passed checks:
     onChange: {
       action: 'onChange',
       description: 'Callback when password changes',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],

@@ -29,37 +29,48 @@ The Bootstrap documentation provides details on the default [Progress CSS Variab
   argTypes: {
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     currentValue: {
       control: 'number',
       type: 'number',
       description: 'Current progress value',
+      table: { category: 'Content' },
     },
     minValue: {
       control: 'number',
       type: 'number',
       description: 'Minimum value of the bar',
+      table: { category: 'Behavior' },
     },
     maxValue: {
       control: 'number',
       type: 'number',
       description: 'Maximum value of the bar',
+      table: { category: 'Behavior' },
     },
     hideCurrentValue: {
       control: 'boolean',
       type: 'boolean',
       description: 'Hide current value',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     enableStripedAnimation: {
       control: 'boolean',
       type: 'boolean',
       description: 'Enable striped animation',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
   },
   tags: ['autodocs'],
