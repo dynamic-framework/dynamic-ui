@@ -34,26 +34,32 @@ const config: Meta<typeof DDatePicker> = {
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     inputLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     inputHint: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     inputAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     inputActionAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     iconInput: {
       control: {
@@ -64,6 +70,7 @@ const config: Meta<typeof DDatePicker> = {
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconHeaderPrev: {
       control: {
@@ -74,6 +81,7 @@ const config: Meta<typeof DDatePicker> = {
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconHeaderNext: {
       control: {
@@ -84,129 +92,166 @@ const config: Meta<typeof DDatePicker> = {
       },
       type: 'string',
       options: [undefined, ...ICONS],
+      table: { category: 'Icon' },
     },
     iconFamilyClass: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     iconFamilyPrefix: {
       control: 'text',
       type: 'string',
+      table: { category: 'Icon' },
     },
     headerPrevMonthAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     headerNextMonthAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     headerButtonColor: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     inputId: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     timeId: {
       control: 'text',
       type: 'string',
+      table: { category: 'HTML Attributes' },
     },
     autoFocus: {
       type: 'boolean',
       control: 'boolean',
       description: 'Autofocus input',
+      table: { category: 'Behavior' },
     },
     date: {
       type: 'string',
       control: 'date',
       description: 'Date as string (DEFINE ISO)',
+      table: { category: 'Content' },
     },
     inline: {
       type: 'boolean',
       control: 'boolean',
       description: 'Show button inline',
       defaultValue: false,
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
     minDate: {
       type: 'string',
       control: 'text',
       description: 'Show calendar from minimum date',
+      table: { category: 'Behavior' },
     },
     showTimeInput: {
       type: 'boolean',
       control: 'boolean',
       description: 'Show time input',
+      table: { category: 'Behavior' },
     },
     calendarStartDay: {
       type: 'number',
       control: 'number',
       description: 'Number to start calendar day from',
+      table: { category: 'Behavior' },
     },
     dateFormat: {
       type: 'string',
       control: 'text',
       description: 'Format to display date',
-      table: { defaultValue: { summary: 'dd/MM/yyyy' } },
+      table: {
+        defaultValue: { summary: 'dd/MM/yyyy' },
+        category: 'Content',
+      },
     },
     formatHeaderDate: {
       type: 'string',
       control: 'text',
       description: 'Header date format (date-fns pattern)',
-      table: { defaultValue: { summary: 'LLLL dd' } },
+      table: {
+        defaultValue: { summary: 'LLLL dd' },
+        category: 'Content',
+      },
     },
     selectsRange: {
       type: 'boolean',
       control: 'boolean',
       description: 'Enable select range',
+      table: { category: 'Behavior' },
     },
     selectsStart: {
       type: 'boolean',
       control: 'boolean',
       description: 'Enable select start range (two calendar)',
+      table: { category: 'Behavior' },
     },
     selectsEnd: {
       type: 'boolean',
       control: 'boolean',
       description: 'Enable select end range (two calendar)',
+      table: { category: 'Behavior' },
     },
     startDate: {
       type: 'string',
       control: 'text',
       description: 'Start date',
+      table: { category: 'Content' },
     },
     endDate: {
       type: 'string',
       control: 'text',
       description: 'End date on range',
+      table: { category: 'Content' },
     },
     fixedHeight: {
       type: 'boolean',
       control: 'boolean',
       description: 'Calendar has fixed height',
+      table: { category: 'Appearance' },
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     placeholder: {
       type: 'string',
       control: 'text',
+      table: { category: 'Content' },
     },
     onChange: {
       action: 'onChange',
+      table: { category: 'Events' },
     },
     value: {
       type: 'string',
       control: 'date',
+      table: { category: 'Content' },
     },
     monthsShown: {
       control: {
@@ -215,47 +260,60 @@ const config: Meta<typeof DDatePicker> = {
       type: 'number',
       options: [1, 2, 3],
       defaultValue: 1,
-      table: { defaultValue: { summary: '1' } },
+      table: {
+        defaultValue: { summary: '1' },
+        category: 'Appearance',
+      },
     },
     showPopperArrow: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Appearance' },
     },
     showWeekPicker: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     showYearPicker: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     showFullMonthYearPicker: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     showMonthYearPicker: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     showPreviousMonths: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     showDateSelect: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     showDisabledMonthNavigation: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     showQuarterYearPicker: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
   },
 };

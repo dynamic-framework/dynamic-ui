@@ -84,6 +84,7 @@ configured with \`materialStyle: true\`, or use the icon props directly.
     text: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     color: {
       control: 'select',
@@ -93,6 +94,7 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'primary',
         },
+        category: 'Appearance',
       },
     },
     variant: {
@@ -102,20 +104,24 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'undefined',
         },
+        category: 'Appearance',
       },
     },
     href: {
       control: 'text',
       description: 'If provided, renders as an &lt;a&gt; element instead of &lt;button&gt;.',
+      table: { category: 'HTML Attributes' },
     },
     target: {
       control: 'select',
       options: [undefined, '_self', '_blank', '_parent', '_top'],
       description: 'Anchor target when href is set.',
+      table: { category: 'HTML Attributes' },
     },
     rel: {
       control: 'text',
       description: 'Anchor rel attribute (use "noopener noreferrer" with target="_blank").',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
@@ -124,6 +130,7 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'undefined',
         },
+        category: 'Appearance',
       },
     },
     iconStart: {
@@ -133,6 +140,7 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'undefined',
         },
+        category: 'Icon',
       },
     },
     iconEnd: {
@@ -142,11 +150,13 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'undefined',
         },
+        category: 'Icon',
       },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     size: {
       control: 'select',
@@ -154,10 +164,12 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'undefined',
         },
+        category: 'Appearance',
       },
     },
     loadingText: {
       control: 'text',
+      table: { category: 'Content' },
     },
     type: {
       control: 'select',
@@ -166,11 +178,13 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'undefined',
         },
+        category: 'HTML Attributes',
       },
     },
     disabled: {
       type: 'boolean',
       control: 'boolean',
+      table: { category: 'Behavior' },
     },
     id: {
       control: 'text',
@@ -178,6 +192,7 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'undefined',
         },
+        category: 'HTML Attributes',
       },
     },
     form: {
@@ -186,11 +201,13 @@ configured with \`materialStyle: true\`, or use the icon props directly.
         defaultValue: {
           summary: 'undefined',
         },
+        category: 'HTML Attributes',
       },
     },
     value: {
       table: {
         disable: true,
+        category: 'HTML Attributes',
       },
     },
   },

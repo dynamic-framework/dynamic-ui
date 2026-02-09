@@ -25,23 +25,28 @@ The Bootstrap documentation provides details on the default [List Group CSS Vari
   argTypes: {
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     className: {
       type: 'string',
       control: 'text',
+      table: { category: 'Appearance' },
     },
     flush: {
       type: 'boolean',
       control: 'boolean',
+      table: { category: 'Appearance' },
     },
     numbered: {
       type: 'boolean',
       control: 'boolean',
+      table: { category: 'Appearance' },
     },
     horizontal: {
       control: 'select',
       type: { name: 'string' },
       options: [undefined, true, 'sm', 'md', 'lg', 'xl', 'xxl'],
+      table: { category: 'Appearance' },
     },
   },
   tags: ['autodocs'],

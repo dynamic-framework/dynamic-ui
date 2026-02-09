@@ -37,14 +37,17 @@ const config: Meta<typeof DStepperMobile> = {
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     currentStep: {
       control: 'number',
       type: 'number',
       description: 'Current step number',
+      table: { category: 'Content' },
     },
   },
   tags: ['autodocs'],

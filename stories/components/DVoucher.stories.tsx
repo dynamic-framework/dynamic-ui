@@ -52,39 +52,48 @@ The voucher component provides:
     icon: {
       control: 'object',
       description: 'Icon can be a string (name), an object of DIcon props ({ icon, color, size, hasCircle }), or false/null to hide',
+      table: { category: 'Icon' },
     },
 
     className: {
       control: 'text',
       description: 'Optional CSS class for the voucher root element',
+      table: { category: 'Appearance' },
     },
     title: {
       control: 'text',
       description: 'Main title of the voucher',
+      table: { category: 'Content' },
     },
     message: {
       control: 'text',
       description: 'Descriptive message',
+      table: { category: 'Content' },
     },
     amount: {
       control: 'text',
       description: 'Optional amount to display',
+      table: { category: 'Content' },
     },
     amountDetails: {
       control: 'text',
       description: 'Optional additional details for the amount',
+      table: { category: 'Content' },
     },
     downloadText: {
       control: 'text',
       description: 'Text for download button',
+      table: { category: 'Content' },
     },
     shareText: {
       control: 'text',
       description: 'Text for share button',
+      table: { category: 'Content' },
     },
     onError: {
       action: 'error',
       description: 'Error handler for download/share failures',
+      table: { category: 'Events' },
     },
     children: {
       control: false,
@@ -92,6 +101,7 @@ The voucher component provides:
         type: {
           summary: 'ReactNode',
         },
+        category: 'Content',
       },
     },
   },

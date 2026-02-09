@@ -15,21 +15,26 @@ const config: Meta<typeof DOffcanvas> = {
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     name: {
       control: 'text',
       type: { name: 'string', required: true },
+      table: { category: 'HTML Attributes' },
     },
     staticBackdrop: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
     scrollable: {
       control: 'boolean',
       type: 'boolean',
+      table: { category: 'Behavior' },
     },
   },
 };

@@ -19,22 +19,27 @@ const meta: Meta<typeof DErrorBoundary> = {
     name: {
       control: 'text',
       description: 'Optional identifier to tag logs and distinguish boundaries.',
+      table: { category: 'Content' },
     },
     fallback: {
       control: false,
       description: 'Custom fallback renderer. If omitted, a default accessible alert is used.',
+      table: { category: 'Content' },
     },
     resetKeys: {
       control: false,
       description: 'Keys that, when changed, reset the boundary state.',
+      table: { category: 'Behavior' },
     },
     onReset: {
       action: 'onReset',
       description: 'Called when the boundary is reset (via resetKeys change or user action).',
+      table: { category: 'Events' },
     },
     onError: {
       action: 'onError',
       description: 'Called after internal logging when an error is captured.',
+      table: { category: 'Events' },
     },
   },
   decorators: [

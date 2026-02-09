@@ -49,31 +49,38 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       control: 'text',
       type: 'string',
       description: 'The id of the input',
+      table: { category: 'HTML Attributes' },
     },
     name: {
       control: 'text',
       type: 'string',
       description: 'The name of the input',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     label: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     placeholder: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     value: {
       control: 'text',
       type: 'string',
       description: 'The value of the input',
+      table: { category: 'Content' },
     },
     size: {
       control: {
@@ -84,48 +91,70 @@ and so it does [Input Group CSS Variables](https://getbootstrap.com/docs/5.3/for
       },
       type: 'string',
       options: [undefined, 'sm', 'lg'],
+      table: { category: 'Appearance' },
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
+      table: { category: 'Content' },
     },
     iconEndAriaLabel: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     floatingLabel: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Appearance',
+      },
     },
     onChange: {
       action: 'onChange',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],

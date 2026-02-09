@@ -33,13 +33,16 @@ To understand in more detail the aspects covered by this component, review the f
   argTypes: {
     options: {
       control: 'object',
+      table: { category: 'Behavior' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
   },
   tags: ['autodocs'],

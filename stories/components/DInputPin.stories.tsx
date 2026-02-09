@@ -40,77 +40,105 @@ The Bootstrap documentation provides details on the default [Input Form CSS Vari
       control: 'text',
       type: 'string',
       description: 'The id of the input',
+      table: { category: 'HTML Attributes' },
     },
     className: {
       control: 'text',
       type: 'string',
+      table: { category: 'Appearance' },
     },
     style: {
       control: 'object',
+      table: { category: 'Appearance' },
     },
     label: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     placeholder: {
       control: 'text',
       type: 'string',
+      table: { category: 'Content' },
     },
     type: {
       control: 'select',
       options: ['number', 'text', 'tel'],
       type: 'string',
       description: 'Type of the inputs',
+      table: { category: 'HTML Attributes' },
     },
     disabled: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     readOnly: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     loading: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     secret: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
       description: 'Hide the characters',
     },
     characters: {
       control: 'number',
       type: 'number',
       description: 'Number of characters of the pin',
+      table: { category: 'Behavior' },
     },
     innerInputMode: {
       control: 'select',
       options: ['number', 'text', 'tel'],
       type: 'string',
       description: 'Keyboard style',
+      table: { category: 'HTML Attributes' },
     },
     invalid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     valid: {
       control: 'boolean',
       type: 'boolean',
-      table: { defaultValue: { summary: 'false' } },
+      table: {
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
     },
     hint: {
       control: 'text',
       type: 'string',
       description: 'Hint to display, also used to display validity feedback',
+      table: { category: 'Content' },
     },
     onChange: {
       action: 'onChange',
+      table: { category: 'Events' },
     },
   },
   tags: ['autodocs'],
