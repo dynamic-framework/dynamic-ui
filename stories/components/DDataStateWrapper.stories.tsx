@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DDataStateWrapper, DBox } from '../../src/components';

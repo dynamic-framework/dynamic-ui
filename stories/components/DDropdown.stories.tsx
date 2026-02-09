@@ -121,7 +121,7 @@ export const CustomToggle: Story = {
   ),
   args: {
     actions: baseActions,
-    dropdownToggle: ({ open, toggle }) => (
+    dropdownToggle: ({ open, toggle }: { open: boolean, toggle: () => void }) => (
       <DButtonIcon
         icon={open ? 'ChevronUp' : 'ChevronDown'}
         color="primary"
@@ -147,7 +147,7 @@ export const CustomToggle2: Story = {
   ),
   args: {
     actions: baseActions,
-    dropdownToggle: ({ open, toggle }) => (
+    dropdownToggle: ({ open, toggle }: { open: boolean, toggle: () => void }) => (
       <DButton
         iconEnd={open ? 'ChevronUp' : 'ChevronDown'}
         color="primary"
@@ -181,7 +181,7 @@ export const WithDividers: Story = {
     </div>
   ),
   args: {
-    dropdownToggle: ({ toggle }) => (
+    dropdownToggle: ({ toggle }: { open: boolean, toggle: () => void }) => (
       <DButton onClick={toggle} text="Button" />
     ),
     actions: [

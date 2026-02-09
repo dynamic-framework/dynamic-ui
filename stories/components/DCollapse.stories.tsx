@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
 import { useState } from 'react';
 
 import DCollapse from '../../src/components/DCollapse/DCollapse';
@@ -32,9 +31,6 @@ const config: Meta<typeof DCollapse> = {
         `,
       },
     },
-  },
-  args: {
-    onChange: fn(),
   },
   argTypes: {
     className: {
