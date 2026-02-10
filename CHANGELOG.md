@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.1.1...v2.2.0) (2026-02-10)
+
+
+### Features
+
+* add DErrorBoundary component with default fallback and error handling ([#955](https://github.com/dynamic-framework/dynamic-ui/issues/955)) ([784607f](https://github.com/dynamic-framework/dynamic-ui/commit/784607f3ba3008c2365fb6ecd1338d6aaea61ca3))
+* add new DataStateWrapper component ([#956](https://github.com/dynamic-framework/dynamic-ui/issues/956)) ([b48f480](https://github.com/dynamic-framework/dynamic-ui/commit/b48f480cb8d5e2e221fe021c1056edddc22f37c8))
+* dvoucher icon props and button href props ([#947](https://github.com/dynamic-framework/dynamic-ui/issues/947)) ([ef8057d](https://github.com/dynamic-framework/dynamic-ui/commit/ef8057d9873f16d9fdd19f1891d95fe84ba13ab9))
+* support dark mode utils ([#952](https://github.com/dynamic-framework/dynamic-ui/issues/952)) ([820cf8c](https://github.com/dynamic-framework/dynamic-ui/commit/820cf8c7bbb7a5de402bca8fe3f5f1bfdbd5b1bb))
+
+
+### Bug Fixes
+
+* dcredit card brand type ([#951](https://github.com/dynamic-framework/dynamic-ui/issues/951)) ([6a0ffd3](https://github.com/dynamic-framework/dynamic-ui/commit/6a0ffd3cb343635688ce9172e4d7a543e9be0878))
+* improve scrollbar handling and stabilize body scroll locking ([#949](https://github.com/dynamic-framework/dynamic-ui/issues/949)) ([74daf26](https://github.com/dynamic-framework/dynamic-ui/commit/74daf26681f3906dc5011bdae8142d37f391cd2c))
+* remove unused hover utility ([#966](https://github.com/dynamic-framework/dynamic-ui/issues/966)) ([0d2fe25](https://github.com/dynamic-framework/dynamic-ui/commit/0d2fe253468b9c69e92a9e39b0ccc2d55d5ec7cf))
+* update license URL in package.json and package-lock.json ([#948](https://github.com/dynamic-framework/dynamic-ui/issues/948)) ([4d7cf35](https://github.com/dynamic-framework/dynamic-ui/commit/4d7cf353d56b00ff8a261099c58f44f9e253cba4))
+
 ## [2.1.1](https://github.com/dynamic-framework/dynamic-ui/compare/v2.1.0...v2.1.1) (2026-01-13)
 
 
