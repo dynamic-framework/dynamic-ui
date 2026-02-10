@@ -20,6 +20,7 @@ var reactHotToast = require('react-hot-toast');
 var reactInternationalPhone = require('react-international-phone');
 var googleLibphonenumber = require('google-libphonenumber');
 var html2canvas = require('html2canvas');
+var reactErrorBoundary = require('react-error-boundary');
 var i18n = require('i18next');
 var reactI18next = require('react-i18next');
 
@@ -44,16 +45,51 @@ var LucideIcons__namespace = /*#__PURE__*/_interopNamespaceDefault(LucideIcons);
 
 const PREFIX_BS = 'bs-';
 
+/* eslint-disable no-lonely-if */
 function useDisableBodyScrollEffect(disable) {
     React.useEffect(() => {
-        if (disable) {
+        let observer;
+        let timer;
+        const lock = () => {
+            const { clientWidth } = document.documentElement;
+            const { innerWidth } = window;
+            const scrollbarWidth = clientWidth ? innerWidth - clientWidth : 0;
             document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = '0';
+            document.body.style.paddingRight = `${Math.max(0, scrollbarWidth)}px`;
+        };
+        const unlock = () => {
+            document.body.style.overflow = 'unset';
+            document.body.style.paddingRight = '0px';
+        };
+        if (disable) {
+            lock();
         }
         else {
-            document.body.style.overflow = 'unset';
-            document.body.style.paddingRight = 'unset';
+            // Wait until all portal elements are removed (exit animations done)
+            if (document.querySelector('.portal')) {
+                observer = new MutationObserver(() => {
+                    if (!document.querySelector('.portal')) {
+                        unlock();
+                        observer === null || observer === void 0 ? void 0 : observer.disconnect();
+                    }
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+                // Fallback in case observer misses changes
+                timer = window.setTimeout(() => {
+                    unlock();
+                    observer === null || observer === void 0 ? void 0 : observer.disconnect();
+                }, 3000);
+            }
+            else {
+                unlock();
+            }
         }
+        return () => {
+            if (observer)
+                observer.disconnect();
+            if (timer)
+                window.clearTimeout(timer);
+        };
     }, [disable]);
 }
 
@@ -987,7 +1023,7 @@ function DBoxFile(_a) {
 }
 
 const DButton = React.forwardRef((props, ref) => {
-    const { color = 'primary', size, variant, text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button' } = props, rest = tslib.__rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type"]);
+    const { color = 'primary', size, variant, text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button', target, rel } = props, rest = tslib.__rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type", "target", "rel"]);
     const [buttonWidth, setButtonWidth] = React.useState();
     const buttonRef = React.useRef(null);
     const isDisabled = React.useMemo(() => disabled || loading, [disabled, loading]);
@@ -1024,6 +1060,19 @@ const DButton = React.forwardRef((props, ref) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [content, iconEnd, iconStart]);
+    if (props.href) {
+        return (jsxRuntime.jsxs("a", Object.assign({ href: props.href, target: target, rel: rel, ref: (node) => {
+                buttonRef.current = node;
+                if (typeof ref === 'function')
+                    ref(node);
+                // eslint-disable-next-line max-len
+                // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+                else if (ref)
+                    ref.current = node;
+            }, className: classNames(classes, className), style: Object.assign(Object.assign({}, style), (loading && buttonWidth
+                ? { minWidth: `${buttonWidth}px` }
+                : undefined)), "aria-label": ariaLabel, "aria-busy": loading, "aria-disabled": isDisabled, onClick: handleClick }, dataAttributes, { children: [loading && (jsxRuntime.jsxs("span", { className: "btn-loading", children: [jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", "aria-hidden": "true" }), loadingText && jsxRuntime.jsx("span", { role: "status", children: loadingText })] })), !loading && (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [iconStart && (jsxRuntime.jsx(DIcon, { icon: iconStart, familyClass: iconStartFamilyClass, familyPrefix: iconStartFamilyPrefix, materialStyle: iconStartMaterialStyle })), content, iconEnd && (jsxRuntime.jsx(DIcon, { icon: iconEnd, familyClass: iconEndFamilyClass, familyPrefix: iconEndFamilyPrefix, materialStyle: iconEndMaterialStyle }))] }))] })));
+    }
     return (jsxRuntime.jsxs("button", Object.assign({ ref: (node) => {
             buttonRef.current = node;
             if (typeof ref === 'function')
@@ -1040,23 +1089,32 @@ const DButton = React.forwardRef((props, ref) => {
 });
 DButton.displayName = 'DButton';
 
-function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, color = 'primary', type = 'button', loading = false, disabled = false, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, }) {
+function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, color = 'primary', type = 'button', loading = false, disabled = false, href, target, rel, stopPropagationEnabled = true, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, }) {
     const generateClasses = React.useMemo(() => {
         const variantClass = variant
             ? `btn-${variant}-${color}`
             : `btn-${color}`;
         return Object.assign(Object.assign(Object.assign({ 'btn d-button-icon': true, [variantClass]: true }, size && { [`btn-${size}`]: true }), (state && state !== 'disabled') && { [state]: true }), { loading });
     }, [variant, color, size, state, loading]);
+    const isDisabled = React.useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
     const clickHandler = React.useCallback((event) => {
         if (stopPropagationEnabled) {
             event.stopPropagation();
         }
+        if (isDisabled) {
+            event.preventDefault();
+            return;
+        }
         onClick === null || onClick === void 0 ? void 0 : onClick(event);
-    }, [stopPropagationEnabled, onClick]);
-    const isDisabled = React.useMemo(() => (state === 'disabled' || loading || disabled), [state, loading, disabled]);
+    }, [stopPropagationEnabled, onClick, isDisabled]);
     const newAriaLabel = React.useMemo(() => (loading
         ? (loadingAriaLabel || ariaLabel)
         : (ariaLabel)), [ariaLabel, loading, loadingAriaLabel]);
+    if (href) {
+        return (jsxRuntime.jsx("a", Object.assign({ href: href, target: target, rel: rel, className: classNames(generateClasses, className), style: style, onClick: clickHandler, "aria-label": newAriaLabel, "aria-disabled": isDisabled, id: id }, dataAttributes, { children: loading
+                ? (jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
+                : (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })) })));
+    }
     return (jsxRuntime.jsx("button", Object.assign({ className: classNames(generateClasses, className), style: style, type: type, disabled: isDisabled, onClick: clickHandler, "aria-label": newAriaLabel, id: id }, dataAttributes, { children: loading
             ? (jsxRuntime.jsx("span", { className: "spinner-border spinner-border-sm", role: "status", "aria-hidden": "true", children: jsxRuntime.jsx("span", { className: "visually-hidden", children: "Loading..." }) }))
             : (jsxRuntime.jsx(DIcon, { icon: icon, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })) })));
@@ -2438,8 +2496,12 @@ ForwardedDInputPhone.displayName = 'DInputPhone';
 
 const DEFAULT_IMAGE = 'https://cdn.modyo.cloud/uploads/06b434f7-b943-4f54-9543-84a904e189aa/original/Visa_Logo_1_.png';
 const CHIP_IMAGE = 'https://cdn.modyo.cloud/uploads/4660ad00-e5d8-477e-8919-52b53d0a26fb/original/chip-debit-svgrepo-com_1_.png';
+const BRAND_LOGOS = {
+    visa: DEFAULT_IMAGE,
+    mastercard: 'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
+};
 function DCreditCard({ brand = 'visa', name, number, holderText = 'Card Holder', logoImage, isChipVisible = true, className, isVertical = false, }) {
-    return (jsxRuntime.jsxs("div", { className: classNames('d-credit-card overflow-hidden text-white', 'position-relative rounded-3', 'd-none d-lg-flex', isVertical && 'is-vertical', className), children: [jsxRuntime.jsxs("div", { className: "d-credit-card-header", children: [jsxRuntime.jsx("img", { src: logoImage || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsxRuntime.jsx("div", { className: "d-credit-card-chip p-2 rounded-2", children: jsxRuntime.jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxRuntime.jsxs("div", { className: "d-credit-card-details mt-auto d-none d-sm-block", children: [jsxRuntime.jsx("div", { className: "d-credit-card-number d-none d-sm-block mb-4", children: number }), jsxRuntime.jsx("small", { className: "d-block opacity-50", children: holderText }), jsxRuntime.jsx("span", { className: "name", children: name })] })] }));
+    return (jsxRuntime.jsxs("div", { className: classNames('d-credit-card overflow-hidden text-white', 'position-relative rounded-3', 'd-flex', isVertical && 'is-vertical', className), children: [jsxRuntime.jsxs("div", { className: "d-credit-card-header", children: [jsxRuntime.jsx("img", { src: logoImage || BRAND_LOGOS[brand] || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsxRuntime.jsx("div", { className: "d-credit-card-chip p-2 rounded-2", children: jsxRuntime.jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxRuntime.jsxs("div", { className: "d-credit-card-details mt-auto d-none d-sm-block", children: [jsxRuntime.jsx("div", { className: "d-credit-card-number d-none d-sm-block mb-4", children: number }), jsxRuntime.jsx("small", { className: "d-block opacity-50", children: holderText }), jsxRuntime.jsx("span", { className: "name", children: name })] })] }));
 }
 
 const getItemClass = (action) => {
@@ -2581,7 +2643,7 @@ function useScreenshotWebShare() {
     };
 }
 
-function DVoucher({ amount, amountDetails, icon = 'CircleCheckBig', color = 'success', title, onError, message, downloadText = 'Download', shareText = 'Share', children, }) {
+function DVoucher({ amount, amountDetails, icon, title, onError, message, downloadText = 'Download', shareText = 'Share', className, children, }) {
     const { shareRef, share } = useScreenshotWebShare();
     const { downloadRef, download } = useScreenshotDownload();
     const handleShare = () => {
@@ -2606,10 +2668,25 @@ function DVoucher({ amount, amountDetails, icon = 'CircleCheckBig', color = 'suc
             // Error already handled by onError
         });
     };
-    return (jsxRuntime.jsx("div", { className: "d-voucher", ref: (el) => {
+    const defaultIconProps = {
+        icon: 'CircleCheckBig',
+        color: 'success',
+        size: '2rem',
+        hasCircle: true,
+    };
+    const resolvedIconProps = (() => {
+        if (icon === false || icon == null)
+            return null;
+        if (typeof icon === 'string')
+            return Object.assign(Object.assign({}, defaultIconProps), { icon });
+        if (typeof icon === 'object')
+            return Object.assign(Object.assign({}, defaultIconProps), icon);
+        return defaultIconProps;
+    })();
+    return (jsxRuntime.jsx("div", { className: classNames('d-voucher', className), ref: (el) => {
             shareRef.current = el;
             downloadRef.current = el;
-        }, children: jsxRuntime.jsxs("div", { children: [jsxRuntime.jsxs("div", { className: "d-voucher-header", children: [jsxRuntime.jsx(DIcon, { icon: icon, color: color }), jsxRuntime.jsxs("div", { className: "text-center", children: [jsxRuntime.jsx("h3", { className: "mb-2", children: title }), jsxRuntime.jsx("p", { className: "m-0", children: message })] })] }), amount && (jsxRuntime.jsxs("div", { className: "d-voucher-amount", children: [jsxRuntime.jsx("div", { className: classNames('text-center fw-bold fs-3', amountDetails ? 'mb-1' : 'm-0'), children: amount }), amountDetails] })), jsxRuntime.jsx("hr", { className: "my-4" }), children, jsxRuntime.jsx("hr", { className: "my-4" }), jsxRuntime.jsxs("div", { className: "d-voucher-footer", children: [jsxRuntime.jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsxRuntime.jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }) }));
+        }, children: jsxRuntime.jsxs("div", { children: [jsxRuntime.jsxs("div", { className: "d-voucher-header", children: [resolvedIconProps && (jsxRuntime.jsx(DIcon, Object.assign({}, resolvedIconProps))), jsxRuntime.jsxs("div", { className: "text-center", children: [jsxRuntime.jsx("h3", { className: "mb-2", children: title }), jsxRuntime.jsx("p", { className: "m-0", children: message })] })] }), amount && (jsxRuntime.jsxs("div", { className: "d-voucher-amount", children: [jsxRuntime.jsx("div", { className: classNames('text-center fw-bold fs-3', amountDetails ? 'mb-1' : 'm-0'), children: amount }), amountDetails] })), jsxRuntime.jsx("hr", { className: "my-4" }), children, jsxRuntime.jsx("hr", { className: "my-4" }), jsxRuntime.jsxs("div", { className: "d-voucher-footer", children: [jsxRuntime.jsx(DButton, { onClick: handleShare, iconStart: "Share2", text: shareText, variant: "outline", size: "sm" }), jsxRuntime.jsx(DButton, { onClick: handleDownload, iconStart: "Download", text: downloadText, variant: "outline", size: "sm" })] })] }) }));
 }
 
 function useCountdown(seconds) {
@@ -2681,6 +2758,72 @@ function DOtp({ className, action, isLoading, otpSize = 6, texts = TEXT_PROPS, s
                                 }, loading: isLoading }), jsxRuntime.jsx("p", { className: "small ms-lg-auto mb-0", children: texts.contact })] })] })] }));
 }
 
+function DefaultErrorBoundary({ resetErrorBoundary }) {
+    return (jsxRuntime.jsx(DAlert, { color: "danger", showClose: false, children: jsxRuntime.jsxs("div", { className: "d-flex align-items-center gap-2", children: [jsxRuntime.jsx("span", { children: "An unexpected error occurred." }), jsxRuntime.jsx(DButton, { color: "secondary", variant: "outline", size: "sm", onClick: resetErrorBoundary, children: "Retry" })] }) }));
+}
+
+function DErrorBoundary({ name, fallback, resetKeys, onReset, onError, children, }) {
+    const handleError = React.useCallback((error, info) => {
+        // eslint-disable-next-line no-console
+        console.error(`[DErrorBoundary${name ? `:${name}` : ''}]`, reactErrorBoundary.getErrorMessage(error), info);
+        onError === null || onError === void 0 ? void 0 : onError(error, info);
+    }, [name, onError]);
+    const FallbackRender = React.useCallback((props) => {
+        if (fallback)
+            return fallback(props);
+        return (jsxRuntime.jsx(DefaultErrorBoundary, { resetErrorBoundary: props.resetErrorBoundary }));
+    }, [fallback]);
+    return (jsxRuntime.jsx(reactErrorBoundary.ErrorBoundary, { resetKeys: resetKeys, onReset: onReset, onError: handleError, fallbackRender: FallbackRender, children: children }));
+}
+
+function ErrorState({ message, onRetry, retryMessage = 'Retry', color = 'danger', }) {
+    return (jsxRuntime.jsxs(DAlert, { color: color, className: "d-flex align-items-center gap-3", children: [jsxRuntime.jsx("div", { className: "flex-grow-1", children: jsxRuntime.jsx("p", { className: "mb-0", children: message !== null && message !== void 0 ? message : 'An unexpected error occurred.' }) }), onRetry && (jsxRuntime.jsx(DButton, { onClick: onRetry, text: retryMessage, variant: "outline", iconStart: "RefreshCw" }))] }));
+}
+
+function EmptyState({ message, icon = 'FileText', actionText, onAction, }) {
+    return (jsxRuntime.jsxs("div", { className: "d-flex flex-column align-items-center justify-content-center p-5 text-center", children: [jsxRuntime.jsx(DIcon, { icon: icon, size: "3rem", className: "text-secondary mb-3" }), jsxRuntime.jsx("p", { className: "text-secondary mb-3", children: message !== null && message !== void 0 ? message : 'No data available.' }), actionText && onAction && (jsxRuntime.jsx(DButton, { onClick: onAction, text: actionText, variant: "outline" }))] }));
+}
+
+function LoadingState({ ariaLabel = 'Loading...', className }) {
+    return (jsxRuntime.jsx("div", { className: `d-flex align-items-center justify-content-center p-4 ${className || ''}`.trim(), "aria-busy": "true", "aria-live": "polite", children: jsxRuntime.jsx("span", { className: "spinner-border", role: "status", "aria-label": ariaLabel }) }));
+}
+
+function render(renderable) {
+    if (renderable === undefined)
+        return null;
+    return typeof renderable === 'function' ? renderable() : renderable;
+}
+function DDataStateWrapper({ isLoading, isError, data, onRetry, renderLoading, renderEmpty, renderError, children, }) {
+    // 1. Loading
+    if (isLoading) {
+        if (renderLoading)
+            return render(renderLoading);
+        return jsxRuntime.jsx(LoadingState, {});
+    }
+    // 2. Error
+    if (isError) {
+        if (renderError)
+            return render(renderError);
+        return (jsxRuntime.jsx(ErrorState, { onRetry: onRetry }));
+    }
+    // 3. Empty
+    if (!(data === null || data === void 0 ? void 0 : data.length)) {
+        if (renderEmpty)
+            return render(renderEmpty);
+        return (jsxRuntime.jsx(EmptyState, {}));
+    }
+    // 4. Success
+    return jsxRuntime.jsx(jsxRuntime.Fragment, { children: children(data) });
+}
+
+Object.defineProperty(exports, "getErrorMessage", {
+    enumerable: true,
+    get: function () { return reactErrorBoundary.getErrorMessage; }
+});
+Object.defineProperty(exports, "useErrorBoundary", {
+    enumerable: true,
+    get: function () { return reactErrorBoundary.useErrorBoundary; }
+});
 exports.DAlert = DAlert;
 exports.DAvatar = DAvatar;
 exports.DBadge = DBadge;
@@ -2700,8 +2843,10 @@ exports.DContext = DContext;
 exports.DContextProvider = DContextProvider;
 exports.DCreditCard = DCreditCard;
 exports.DCurrencyText = DCurrencyText;
+exports.DDataStateWrapper = DDataStateWrapper;
 exports.DDatePicker = DDatePicker;
 exports.DDropdown = DDropdown;
+exports.DErrorBoundary = DErrorBoundary;
 exports.DIcon = DIcon;
 exports.DIconBase = DIconBase;
 exports.DInput = ForwardedDInput;

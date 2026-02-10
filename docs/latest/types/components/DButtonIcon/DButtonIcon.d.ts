@@ -13,7 +13,10 @@ type Props = BaseProps & FamilyIconProps & {
     ariaLabel?: string;
     stopPropagationEnabled?: boolean;
     disabled?: boolean;
-    onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+    href?: string;
+    target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
+    rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
+    onClick?: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 };
-export default function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, color, type, loading, disabled, stopPropagationEnabled, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, color, type, loading, disabled, href, target, rel, stopPropagationEnabled, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
