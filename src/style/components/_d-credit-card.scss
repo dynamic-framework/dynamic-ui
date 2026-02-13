@@ -17,8 +17,8 @@
   display: flex;
   flex-direction: column;
   aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
-  border-radius: var(--#{$prefix}border-radius-lg);
   padding: var(--#{$prefix}d-credit-card-padding);
+  border-radius: var(--#{$prefix}border-radius-lg);
   background: var(--#{$prefix}d-credit-card-bg);
   --#{$prefix}d-credit-card-logo-size: 22%;
 
