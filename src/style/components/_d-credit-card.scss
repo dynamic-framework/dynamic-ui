@@ -14,8 +14,9 @@
   --#{$prefix}d-credit-card-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}d-credit-card-number-size: inherit;
   --#{$prefix}d-credit-card-chip-size: 30px;
+  display: flex;
   flex-direction: column;
-
+  border-radius: var(--#{$prefix}border-radius-lg);
   aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
   padding: var(--#{$prefix}d-credit-card-padding);
   background: var(--#{$prefix}d-credit-card-bg);
@@ -27,6 +28,7 @@
   }
 
   .d-credit-card-details {
+    display: block;
     .name {
       font-size: var(--#{$prefix}ref-fs-6);
     }

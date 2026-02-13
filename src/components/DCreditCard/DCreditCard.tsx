@@ -36,8 +36,7 @@ export default function DCreditCard(
     <div
       className={classNames(
         'd-credit-card overflow-hidden text-white',
-        'position-relative rounded-3',
-        'd-flex',
+        'position-relative',
         isVertical && 'is-vertical',
         className,
       )}
@@ -61,8 +60,8 @@ export default function DCreditCard(
         )}
       </div>
 
-      <div className="d-credit-card-details mt-auto d-none d-sm-block">
-        <div className="d-credit-card-number d-none d-sm-block mb-4">
+      <div className="d-credit-card-details mt-auto">
+        <div className="d-credit-card-number mb-4">
           {number}
         </div>
         <small className="d-block opacity-50">
