@@ -35,8 +35,7 @@ export default function DCreditCard(
   return (
     <div
       className={classNames(
-        'd-credit-card overflow-hidden text-white',
-        'position-relative',
+        'd-credit-card',
         isVertical && 'is-vertical',
         className,
       )}

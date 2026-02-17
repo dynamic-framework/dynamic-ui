@@ -14,7 +14,12 @@
   --#{$prefix}d-credit-card-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}d-credit-card-number-size: inherit;
   --#{$prefix}d-credit-card-chip-size: 30px;
+  --#{$prefix}d-credit-card-color: #fff;
+
+  color: var(--#{$prefix}d-credit-card-color);
   display: flex;
+  position: relative;
+  overflow: hidden;
   flex-direction: column;
   aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
   padding: var(--#{$prefix}d-credit-card-padding);
