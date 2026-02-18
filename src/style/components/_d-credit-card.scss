@@ -21,8 +21,8 @@
   display: flex;
   flex-direction: column;
   aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
-  overflow: hidden;
   padding: var(--#{$prefix}d-credit-card-padding);
+  overflow: hidden;
   color: var(--#{$prefix}d-credit-card-color);
   background: var(--#{$prefix}d-credit-card-bg);
   border-radius: var(--#{$prefix}border-radius-lg);
