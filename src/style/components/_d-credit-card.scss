@@ -17,15 +17,15 @@
   --#{$prefix}d-credit-card-color: #fff;
   --#{$prefix}d-credit-card-logo-size: 22%;
 
-  display: flex;
   position: relative;
-  overflow: hidden;
+  display: flex;
   flex-direction: column;
+  overflow: hidden;
   aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
   padding: var(--#{$prefix}d-credit-card-padding);
   background: var(--#{$prefix}d-credit-card-bg);
-  border-radius: var(--#{$prefix}border-radius-lg);
   color: var(--#{$prefix}d-credit-card-color);
+  border-radius: var(--#{$prefix}border-radius-lg);
 
   > * {
     display: flex;
