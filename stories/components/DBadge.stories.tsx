@@ -30,6 +30,48 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
     },
   },
   argTypes: {
+    size: {
+      control: { type: 'dropdown' },
+      options: [undefined, 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+      description: 'Badge size (retrocompatible)',
+    },
+    sizeXs: {
+      control: { type: 'dropdown' },
+      options: [undefined, 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+      description: 'Responsive size for xs breakpoint',
+    },
+    sizeSm: {
+      control: { type: 'dropdown' },
+      options: [undefined, 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+      description: 'Responsive size for sm breakpoint',
+    },
+    sizeMd: {
+      control: { type: 'dropdown' },
+      options: [undefined, 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+      description: 'Responsive size for md breakpoint',
+    },
+    sizeLg: {
+      control: { type: 'dropdown' },
+      options: [undefined, 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+      description: 'Responsive size for lg breakpoint',
+    },
+    sizeXl: {
+      control: { type: 'dropdown' },
+      options: [undefined, 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+      description: 'Responsive size for xl breakpoint',
+    },
+    sizeXxl: {
+      control: { type: 'dropdown' },
+      options: [undefined, 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+      description: 'Responsive size for xxl breakpoint',
+    },
     id: {
       control: 'text',
       type: 'string',
@@ -120,6 +162,25 @@ export const Default: Story = {
     iconEnd: undefined,
     iconStart: undefined,
     rounded: false,
+  },
+};
+
+export const ResponsiveSizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      <DBadge text="Text" sizeXs="sm" sizeMd="lg" color="info" />
+      <DBadge text="Text" sizeSm="sm" sizeLg="lg" color="success" />
+      <DBadge text="Text" sizeXs="sm" sizeXl="lg" color="danger" />
+      <DBadge text="Text" sizeXs="sm" sizeSm="md" sizeLg="lg" color="primary" />
+      <DBadge text="Text" size="lg" color="secondary" />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Ejemplos de uso responsive: cambia el tamaño del badge según el breakpoint. Prueba redimensionando la ventana.',
+      },
+    },
   },
 };
 

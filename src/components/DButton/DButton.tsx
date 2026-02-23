@@ -11,6 +11,14 @@ import {
 import classNames from 'classnames';
 
 import DIcon from '../DIcon';
+import {
+  useMediaBreakpointUpXs,
+  useMediaBreakpointUpSm,
+  useMediaBreakpointUpMd,
+  useMediaBreakpointUpLg,
+  useMediaBreakpointUpXl,
+  useMediaBreakpointUpXxl,
+} from '../../hooks/useMediaBreakpointUp';
 import type {
   BaseProps,
   ButtonVariant,
@@ -21,11 +29,16 @@ import type {
   StartIconProps,
 } from '../interface';
 
+const BREAKPOINT_ORDER = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
+type Breakpoint = typeof BREAKPOINT_ORDER[number];
+type ResponsiveSizeProps = Partial<Record<`size${Capitalize<Breakpoint>}`, 'sm' | 'md' | 'lg'>>;
+
 interface Props
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'>,
   BaseProps,
   StartIconProps,
-  EndIconProps {
+  EndIconProps,
+  ResponsiveSizeProps {
   href?: string;
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
   rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
@@ -64,8 +77,46 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     type = 'button',
     target,
     rel,
+    href,
     ...rest
   } = props;
+
+  // Extrae responsiveSizes del resto
+  const responsiveSizes: ResponsiveSizeProps = {};
+  BREAKPOINT_ORDER.forEach((bp) => {
+    const prop = `size${bp.charAt(0).toUpperCase()}${bp.slice(1)}` as keyof ResponsiveSizeProps;
+    if (prop in props) {
+      responsiveSizes[prop] = props[prop] as 'sm' | 'md' | 'lg';
+    }
+  });
+
+  // Responsive size resolution using useMediaBreakpointUp
+  const matchesXxl = useMediaBreakpointUpXxl(true);
+  const matchesXl = useMediaBreakpointUpXl(true);
+  const matchesLg = useMediaBreakpointUpLg(true);
+  const matchesMd = useMediaBreakpointUpMd(true);
+  const matchesSm = useMediaBreakpointUpSm(true);
+  const matchesXs = useMediaBreakpointUpXs(true);
+
+  let resolvedSize: 'sm' | 'md' | 'lg' | undefined = size;
+  if (Object.keys(responsiveSizes).length > 0) {
+    const bpHooks = {
+      xxl: matchesXxl,
+      xl: matchesXl,
+      lg: matchesLg,
+      md: matchesMd,
+      sm: matchesSm,
+      xs: matchesXs,
+    };
+    const matchedBp = BREAKPOINT_ORDER.find((bp) => {
+      const prop = `size${bp.charAt(0).toUpperCase()}${bp.slice(1)}` as keyof ResponsiveSizeProps;
+      return responsiveSizes[prop] && bpHooks[bp];
+    });
+    if (matchedBp) {
+      const prop = `size${matchedBp.charAt(0).toUpperCase()}${matchedBp.slice(1)}` as keyof ResponsiveSizeProps;
+      resolvedSize = responsiveSizes[prop];
+    }
+  }
 
   const [buttonWidth, setButtonWidth] = useState<number>();
   const buttonRef = useRef<HTMLElement>(null);
@@ -88,10 +139,10 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     return {
       btn: true,
       [variantClass]: true,
-      [`btn-${size}`]: !!size,
+      [`btn-${resolvedSize}`]: !!resolvedSize,
       loading,
     };
-  }, [variant, color, size, loading]);
+  }, [variant, color, loading, resolvedSize]);
 
   const ariaLabel = useMemo(() => {
     const ariaLabelProp = rest['aria-label'];
@@ -119,10 +170,10 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content, iconEnd, iconStart]);
 
-  if (props.href) {
+  if (href) {
     return (
       <a
-        href={props.href}
+        href={href}
         target={target}
         rel={rel}
         ref={(node) => {

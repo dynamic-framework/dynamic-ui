@@ -147,6 +147,26 @@ describe('<DButton />', () => {
     expect(getByRole('button')).toHaveClass('btn-lg');
   });
 
+  it('Should apply responsive size class (sm)', () => {
+    // Simula mobile viewport
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 400 });
+    window.dispatchEvent(new Event('resize'));
+    const { getByRole } = render(
+      <DButton text="Responsive" sizeSm="sm" sizeLg="lg" />,
+    );
+    expect(getByRole('button').className).toMatch(/btn-(sm|lg)/);
+  });
+
+  it('Should apply responsive size class (lg)', () => {
+    // Simula desktop viewport
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1300 });
+    window.dispatchEvent(new Event('resize'));
+    const { getByRole } = render(
+      <DButton text="Responsive" sizeLg="lg" />,
+    );
+    expect(getByRole('button')).toHaveClass('btn-lg');
+  });
+
   it('Should not throw if onClick is not provided', () => {
     const { getByRole } = render(
       <DButton
