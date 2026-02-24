@@ -39,42 +39,7 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
       table: { category: 'Appearance' },
       description: 'Badge size (retrocompatible)',
     },
-    sizeXs: {
-      control: { type: 'dropdown' },
-      options: [undefined, 'sm', 'md', 'lg'],
-      table: { category: 'Appearance' },
-      description: 'Responsive size for xs breakpoint',
-    },
-    sizeSm: {
-      control: { type: 'dropdown' },
-      options: [undefined, 'sm', 'md', 'lg'],
-      table: { category: 'Appearance' },
-      description: 'Responsive size for sm breakpoint',
-    },
-    sizeMd: {
-      control: { type: 'dropdown' },
-      options: [undefined, 'sm', 'md', 'lg'],
-      table: { category: 'Appearance' },
-      description: 'Responsive size for md breakpoint',
-    },
-    sizeLg: {
-      control: { type: 'dropdown' },
-      options: [undefined, 'sm', 'md', 'lg'],
-      table: { category: 'Appearance' },
-      description: 'Responsive size for lg breakpoint',
-    },
-    sizeXl: {
-      control: { type: 'dropdown' },
-      options: [undefined, 'sm', 'md', 'lg'],
-      table: { category: 'Appearance' },
-      description: 'Responsive size for xl breakpoint',
-    },
-    sizeXxl: {
-      control: { type: 'dropdown' },
-      options: [undefined, 'sm', 'md', 'lg'],
-      table: { category: 'Appearance' },
-      description: 'Responsive size for xxl breakpoint',
-    },
+
     id: {
       control: 'text',
       type: 'string',

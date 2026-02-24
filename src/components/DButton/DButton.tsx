@@ -21,16 +21,11 @@ import type {
   StartIconProps,
 } from '../interface';
 
-const BREAKPOINT_ORDER = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
-type Breakpoint = typeof BREAKPOINT_ORDER[number];
-type ResponsiveSizeProps = Partial<Record<`size${Capitalize<Breakpoint>}`, 'sm' | 'md' | 'lg'>>;
-
 interface Props
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'>,
   BaseProps,
   StartIconProps,
-  EndIconProps,
-  ResponsiveSizeProps {
+  EndIconProps {
   href?: string;
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
   rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
@@ -72,15 +67,6 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     href,
     ...rest
   } = props;
-
-  // Extrae responsiveSizes del resto
-  const responsiveSizes: ResponsiveSizeProps = {};
-  BREAKPOINT_ORDER.forEach((bp) => {
-    const prop = `size${bp.charAt(0).toUpperCase()}${bp.slice(1)}` as keyof ResponsiveSizeProps;
-    if (prop in props) {
-      responsiveSizes[prop] = props[prop] as 'sm' | 'md' | 'lg';
-    }
-  });
 
   // Responsive size resolution using useResponsiveProp
   const { responsivePropValue } = useResponsiveProp(true);
