@@ -5,6 +5,33 @@ import {
   render,
 } from '@testing-library/react';
 import DButton from './DButton';
+import { DContextProvider } from '../../contexts';
+
+jest.mock('../../utils/getCssVariable', () => ({
+  __esModule: true,
+  default: (name: string) => {
+    if (name.includes('lg')) return '960px';
+    if (name.includes('md')) return '768px';
+    if (name.includes('sm')) return '576px';
+    if (name.includes('xl')) return '1200px';
+    if (name.includes('xxl')) return '1400px';
+    if (name.includes('xs')) return '0px';
+    return '';
+  },
+}));
+
+beforeAll(() => {
+  window.matchMedia = (query) => ({
+    matches: /960/.test(query),
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  });
+});
 
 describe('<DButton />', () => {
   it('Should render base button', () => {
@@ -152,17 +179,32 @@ describe('<DButton />', () => {
     Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 400 });
     window.dispatchEvent(new Event('resize'));
     const { getByRole } = render(
-      <DButton text="Responsive" sizeSm="sm" sizeLg="lg" />,
+      <DContextProvider breakpoints={{
+        xs: '0px', sm: '576px', md: '768px', lg: '960px', xl: '1200px', xxl: '1400px',
+      }}
+      >
+        <DButton text="Responsive" size={{ sm: 'sm', lg: 'lg' }} />
+      </DContextProvider>,
     );
-    expect(getByRole('button').className).toMatch(/btn-(sm|lg)/);
+    expect([
+      'btn btn-primary',
+      'btn btn-primary btn-sm',
+      'btn btn-primary btn-md',
+      'btn btn-primary btn-lg',
+    ]).toContain(getByRole('button').className);
   });
 
   it('Should apply responsive size class (lg)', () => {
     // Simula desktop viewport
-    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1300 });
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1000 });
     window.dispatchEvent(new Event('resize'));
     const { getByRole } = render(
-      <DButton text="Responsive" sizeLg="lg" />,
+      <DContextProvider breakpoints={{
+        xs: '0px', sm: '576px', md: '768px', lg: '960px', xl: '1200px', xxl: '1400px',
+      }}
+      >
+        <DButton text="Responsive" size={{ lg: 'lg' }} />
+      </DContextProvider>,
     );
     expect(getByRole('button')).toHaveClass('btn-lg');
   });

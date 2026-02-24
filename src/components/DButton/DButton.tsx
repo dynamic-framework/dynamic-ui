@@ -11,20 +11,12 @@ import {
 import classNames from 'classnames';
 
 import DIcon from '../DIcon';
-import {
-  useMediaBreakpointUpXs,
-  useMediaBreakpointUpSm,
-  useMediaBreakpointUpMd,
-  useMediaBreakpointUpLg,
-  useMediaBreakpointUpXl,
-  useMediaBreakpointUpXxl,
-} from '../../hooks/useMediaBreakpointUp';
+import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 import type {
   BaseProps,
   ButtonVariant,
   ClassMap,
   ComponentColor,
-  ComponentSize,
   EndIconProps,
   StartIconProps,
 } from '../interface';
@@ -43,7 +35,7 @@ interface Props
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
   rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
   color?: ComponentColor;
-  size?: ComponentSize;
+  size?: string | ResponsiveProp;
   variant?: ButtonVariant;
   text?: string;
   loading?: boolean;
@@ -90,33 +82,13 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     }
   });
 
-  // Responsive size resolution using useMediaBreakpointUp
-  const matchesXxl = useMediaBreakpointUpXxl(true);
-  const matchesXl = useMediaBreakpointUpXl(true);
-  const matchesLg = useMediaBreakpointUpLg(true);
-  const matchesMd = useMediaBreakpointUpMd(true);
-  const matchesSm = useMediaBreakpointUpSm(true);
-  const matchesXs = useMediaBreakpointUpXs(true);
-
-  let resolvedSize: 'sm' | 'md' | 'lg' | undefined = size;
-  if (Object.keys(responsiveSizes).length > 0) {
-    const bpHooks = {
-      xxl: matchesXxl,
-      xl: matchesXl,
-      lg: matchesLg,
-      md: matchesMd,
-      sm: matchesSm,
-      xs: matchesXs,
-    };
-    const matchedBp = BREAKPOINT_ORDER.find((bp) => {
-      const prop = `size${bp.charAt(0).toUpperCase()}${bp.slice(1)}` as keyof ResponsiveSizeProps;
-      return responsiveSizes[prop] && bpHooks[bp];
-    });
-    if (matchedBp) {
-      const prop = `size${matchedBp.charAt(0).toUpperCase()}${matchedBp.slice(1)}` as keyof ResponsiveSizeProps;
-      resolvedSize = responsiveSizes[prop];
-    }
-  }
+  // Responsive size resolution using useResponsiveProp
+  const { responsivePropValue } = useResponsiveProp(true);
+  const resolvedSize = useMemo(() => {
+    if (!size) return undefined;
+    if (typeof size === 'string') return size;
+    return responsivePropValue(size);
+  }, [responsivePropValue, size]);
 
   const [buttonWidth, setButtonWidth] = useState<number>();
   const buttonRef = useRef<HTMLElement>(null);

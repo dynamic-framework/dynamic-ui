@@ -330,11 +330,12 @@ export const Sizes: Story = {
 export const ResponsiveSizes: Story = {
   render: () => (
     <div className="d-flex flex-wrap gap-2 align-items-center">
-      <DButton color="info" sizeXs="sm" sizeMd="lg" text="XS=sm, MD=lg" />
-      <DButton color="success" sizeSm="sm" sizeLg="lg" text="SM=sm, LG=lg" />
-      <DButton color="danger" sizeXs="sm" sizeXl="lg" text="XS=sm, XL=lg" />
-      <DButton color="primary" sizeXs="sm" sizeSm="md" sizeLg="lg" text="XS=sm, SM=md, LG=lg" />
+      <DButton color="info" size={{ xs: 'sm', md: 'lg' }} text="XS=sm, MD=lg" />
+      <DButton color="success" size={{ sm: 'sm', lg: 'lg' }} text="SM=sm, LG=lg" />
+      <DButton color="danger" size={{ xs: 'sm', xl: 'lg' }} text="XS=sm, XL=lg" />
+      <DButton color="primary" size={{ xs: 'sm', sm: 'md', lg: 'lg' }} text="XS=sm, SM=md, LG=lg" />
       <DButton color="secondary" size="lg" text="Only size fallback" />
+      <DButton color="warning" size={{ xs: 'sm', md: 'md', xl: 'lg' }} text="ResponsiveObj" />
     </div>
   ),
   parameters: {
