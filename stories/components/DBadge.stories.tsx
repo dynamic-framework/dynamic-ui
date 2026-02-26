@@ -37,7 +37,7 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
       control: { type: 'dropdown' },
       options: [undefined, 'sm', 'md', 'lg'],
       table: { category: 'Appearance' },
-      description: 'Badge size (retrocompatible)',
+      description: 'Badge size',
     },
 
     id: {
