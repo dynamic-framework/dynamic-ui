@@ -36,16 +36,25 @@ The component also maintains backward compatibility with Material Design icons.
 - **Accessible**: Built with accessibility in mind
 - **TypeScript**: Full type safety
 
+## Classnames
+
+| Classname | Purpose | Applied when |
+|---|---|---|
+| \`.d-icon\` | Base icon container | Always |
+| \`.d-icon-has-circle\` | Enables circle background and default opacity variable \`--${PREFIX_BS}icon-component-bg-opacity\` | \`hasCircle\` prop |
+| \`.d-icon-color-{theme}\` | Sets icon color and circle bg based on theme (primary, success, info, warning, danger, etc.) | \`color\` prop |
+
 ## CSS Variables
 
-| Variable                            | Class   | Type            | Description                           |
-|-------------------------------------|---------|-----------------|---------------------------------------|
-| --${PREFIX_BS}icon-component-color  | .d-icon | css color unit  | The icon color                        |
-| --${PREFIX_BS}icon-component-bg-color | .d-icon | css color unit  | The icon background color (for circles) |
-| --${PREFIX_BS}icon-component-size   | .d-icon | css length unit | The size of icon                      |
-| --${PREFIX_BS}icon-component-padding | .d-icon | css length unit | The padding for circle background    |
+| Variable                             | Class                | Type            | Description                                    |
+|--------------------------------------|----------------------|-----------------|------------------------------------------------|
+| --${PREFIX_BS}icon-component-size    | .d-icon              | css length unit | Icon size                                       |
+| --${PREFIX_BS}icon-component-padding | .d-icon              | css length unit | Padding for circle background                   |
+| --${PREFIX_BS}icon-component-color   | .d-icon/.d-icon-color-* | css color unit  | Icon color (set via class)                      |
+| --${PREFIX_BS}icon-component-bg-color | .d-icon/.d-icon-has-circle | css color unit  | Circle background color (set via class)         |
+| --${PREFIX_BS}icon-component-bg-opacity | .d-icon-has-circle | number          | Opacity used in circle bg (default \`.1\`)     |
 
-> The colors can ref another css var like a var(--${PREFIX_BS}primary)
+> Color and circle background are controlled through classnames; variables above are resolved by those classes.
 
 ## Finding Icons
 

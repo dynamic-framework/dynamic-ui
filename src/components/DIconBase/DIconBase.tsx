@@ -2,9 +2,7 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import * as LucideIcons from 'lucide-react';
-
 import type { CSSProperties, ComponentType } from 'react';
-
 import { PREFIX_BS } from '../config';
 
 import type {
@@ -63,23 +61,6 @@ export default function DIconBase(
     return icons[icon] || null;
   }, [icon, useMaterialIcons]);
 
-  const colorStyle = useMemo(() => {
-    if (color) {
-      return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${color})` };
-    }
-    return {};
-  }, [color]);
-
-  const backgroundStyle = useMemo(() => {
-    if (hasCircle) {
-      if (color) {
-        return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}${color}-rgb), 0.1)` };
-      }
-      return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}body-color-rgb), 0.1)` };
-    }
-    return {};
-  }, [hasCircle, color]);
-
   const { responsivePropValue } = useResponsiveProp(useListenerSize);
 
   const resolvedSize = useMemo<string | undefined>(() => {
@@ -91,16 +72,16 @@ export default function DIconBase(
 
   const generateStyleVariables = useMemo<CustomStyles | CSSProperties>(() => ({
     ...resolvedSize && { [`--${PREFIX_BS}icon-component-size`]: resolvedSize },
-    ...colorStyle,
-    ...backgroundStyle,
     ...hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` },
     ...style,
-  }), [resolvedSize, colorStyle, backgroundStyle, hasCircle, style]);
+  }), [resolvedSize, hasCircle, style]);
 
   const generateClasses = useMemo<ClassMap>(() => ({
     'd-icon': true,
     ...className && { [className]: true },
-  }), [className]);
+    'd-icon-has-circle': hasCircle,
+    ...color && { [`d-icon-color-${color}`]: true },
+  }), [className, hasCircle, color]);
 
   const iconSize = useMemo(() => {
     if (resolvedSize) {
