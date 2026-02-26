@@ -48,7 +48,7 @@ export default function DCreditCard(
           width={100}
         />
         {isChipVisible && (
-          <div className="d-credit-card-chip p-2 rounded-2">
+          <div className="d-credit-card-chip">
             <img
               src={CHIP_IMAGE}
               alt="chip"
@@ -59,8 +59,8 @@ export default function DCreditCard(
         )}
       </div>
 
-      <div className="d-credit-card-details mt-auto">
-        <div className="d-credit-card-number mb-4">
+      <div className="d-credit-card-details">
+        <div className="d-credit-card-number">
           {number}
         </div>
         <small className="d-block opacity-50">
