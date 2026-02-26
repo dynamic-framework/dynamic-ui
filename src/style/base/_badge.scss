@@ -3,7 +3,7 @@
   --#{$prefix}badge-icon-size: #{$badge-font-size};
   --#{$prefix}badge-bg: #{$badge-bg};
   --#{$prefix}badge-color: #{$badge-color};
-  --#{$prefix}badge-sm-font-size: var(--#{$prefix}fs-sm);
+  --#{$prefix}badge-sm-font-size: var(--#{$prefix}fs-small);
   --#{$prefix}badge-lg-font-size: var(--#{$prefix}fs-5);
 
   display: inline-flex;
