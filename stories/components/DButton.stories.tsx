@@ -344,7 +344,7 @@ export const ResponsiveSizes: Story = {
     },
     docs: {
       description: {
-        story: 'Ejemplos de uso responsive: cambia el tamaño del botón según el breakpoint. Usa el menú de viewport de Storybook para simular mobile, tablet y desktop.',
+        story: 'Responsive usage examples: the button size changes according to the breakpoint. Use the Storybook viewport menu to simulate mobile, tablet, and desktop.',
       },
     },
   },

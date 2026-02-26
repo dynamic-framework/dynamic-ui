@@ -140,7 +140,7 @@ export const ResponsiveSizes: Story = {
       <DBadge text="SM:sm LG:lg" size={{ sm: 'sm', lg: 'lg' }} color="success" />
       <DBadge text="XS:sm XL:lg" size={{ xs: 'sm', xl: 'lg' }} color="danger" />
       <DBadge text="XS:sm SM:md LG:lg" size={{ xs: 'sm', sm: 'md', lg: 'lg' }} color="primary" />
-      <DBadge text="Solo LG" size="lg" color="secondary" />
+      <DBadge text="Only LG" size="lg" color="secondary" />
       <DBadge text="ResponsiveObj" size={{ xs: 'sm', md: 'md', xl: 'lg' }} color="warning" />
     </div>
   ),
@@ -152,7 +152,7 @@ export const ResponsiveSizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Ejemplos de uso responsive: ahora el prop size acepta un objeto ResponsiveProp. Prueba redimensionando la ventana.',
+        story: 'Responsive usage examples: now the size prop accepts a ResponsiveProp object. Try resizing the window.',
       },
     },
   },
