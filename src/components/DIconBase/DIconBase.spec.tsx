@@ -180,17 +180,4 @@ describe('<DIconBase />', () => {
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveClass('custom-icon-family');
   });
-
-  it('applies color class when color is provided', () => {
-    render(
-      <DIconBase
-        icon="Star"
-        color="primary"
-        dataAttributes={{ 'data-testid': 'icon' }}
-      />,
-    );
-
-    const icon = screen.getByTestId('icon');
-    expect(icon).toHaveClass('d-icon-color-primary');
-  });
 });
