@@ -63,10 +63,10 @@ export default function DCreditCard(
         <div className="d-credit-card-number">
           {number}
         </div>
-        <small className="d-block opacity-50">
+        <small className="d-credit-card-holder-text">
           {holderText}
         </small>
-        <span className="name">{name}</span>
+        <span className="d-credit-card-name">{name}</span>
       </div>
     </div>
   );
