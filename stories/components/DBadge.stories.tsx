@@ -3,6 +3,9 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import { PREFIX_BS } from '../../src/components/config';
 import DBadge from '../../src/components/DBadge/DBadge';
 import { ICONS, THEMES } from '../config/constants';
+import {
+  DContextProvider,
+} from '../../src';
 
 const config: Meta<typeof DBadge> = {
   title: 'Design System/Components/Badge',
@@ -30,6 +33,13 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
     },
   },
   argTypes: {
+    size: {
+      control: { type: 'dropdown' },
+      options: [undefined, 'sm', 'md', 'lg'],
+      table: { category: 'Appearance' },
+      description: 'Badge size',
+    },
+
     id: {
       control: 'text',
       type: 'string',
@@ -120,6 +130,31 @@ export const Default: Story = {
     iconEnd: undefined,
     iconStart: undefined,
     rounded: false,
+  },
+};
+
+export const ResponsiveSizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      <DBadge text="XS:sm MD:lg" size={{ xs: 'sm', md: 'lg' }} color="info" />
+      <DBadge text="SM:sm LG:lg" size={{ sm: 'sm', lg: 'lg' }} color="success" />
+      <DBadge text="XS:sm XL:lg" size={{ xs: 'sm', xl: 'lg' }} color="danger" />
+      <DBadge text="XS:sm SM:md LG:lg" size={{ xs: 'sm', sm: 'md', lg: 'lg' }} color="primary" />
+      <DBadge text="Only LG" size="lg" color="secondary" />
+      <DBadge text="ResponsiveObj" size={{ xs: 'sm', md: 'md', xl: 'lg' }} color="warning" />
+    </div>
+  ),
+  decorators: (Story: Story) => (
+    <DContextProvider>
+      <Story />
+    </DContextProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Responsive usage examples: now the size prop accepts a ResponsiveProp object. Try resizing the window.',
+      },
+    },
   },
 };
 

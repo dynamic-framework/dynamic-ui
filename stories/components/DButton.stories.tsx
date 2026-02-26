@@ -327,6 +327,29 @@ export const Sizes: Story = {
   },
 };
 
+export const ResponsiveSizes: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-2 align-items-center">
+      <DButton color="info" size={{ xs: 'sm', md: 'lg' }} text="XS=sm, MD=lg" />
+      <DButton color="success" size={{ sm: 'sm', lg: 'lg' }} text="SM=sm, LG=lg" />
+      <DButton color="danger" size={{ xs: 'sm', xl: 'lg' }} text="XS=sm, XL=lg" />
+      <DButton color="primary" size={{ xs: 'sm', sm: 'md', lg: 'lg' }} text="XS=sm, SM=md, LG=lg" />
+      <DButton color="secondary" size="lg" text="Only size fallback" />
+      <DButton color="warning" size={{ xs: 'sm', md: 'md', xl: 'lg' }} text="ResponsiveObj" />
+    </div>
+  ),
+  parameters: {
+    viewport: {
+      defaultViewport: 'responsive',
+    },
+    docs: {
+      description: {
+        story: 'Responsive usage examples: the button size changes according to the breakpoint. Use the Storybook viewport menu to simulate mobile, tablet, and desktop.',
+      },
+    },
+  },
+};
+
 export const OutlineSizes: Story = {
   render: () => (
     <div className="d-flex flex-wrap gap-2 align-items-center">
