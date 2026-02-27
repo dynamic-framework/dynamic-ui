@@ -27,11 +27,6 @@
   background: var(--#{$prefix}d-credit-card-bg);
   border-radius: var(--#{$prefix}border-radius-lg);
 
-  > * {
-    display: flex;
-    align-items: center;
-  }
-
   .d-credit-card-details {
     display: block;
     margin-top: auto;
@@ -68,6 +63,7 @@
   }
 
   .d-credit-card-header {
+    display: flex;
     align-items: center;
     justify-content: space-between;
     min-height: 45px;
