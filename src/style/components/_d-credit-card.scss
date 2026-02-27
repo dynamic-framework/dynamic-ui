@@ -14,7 +14,7 @@
   --#{$prefix}d-credit-card-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}d-credit-card-number-size: inherit;
   --#{$prefix}d-credit-card-chip-size: 30px;
-  --#{$prefix}d-credit-card-color: #fff;
+  --#{$prefix}d-credit-card-color: var(--#{$prefix}white);
   --#{$prefix}d-credit-card-logo-size: 22%;
 
   position: relative;
