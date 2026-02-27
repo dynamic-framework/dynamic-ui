@@ -24,12 +24,13 @@ export default function OtpCountdown(
 
   return (
     <div className="d-flex gap-2 align-items-center">
-      <p className="mb-0">
+      <p className="mb-0 flex-1">
         {message ? message(secondsLeft) : defaultMessage(secondsLeft)}
       </p>
       <DButton
         text={resendText}
         variant="link"
+        className="text-nowrap"
         disabled={secondsLeft > 0}
         onClick={restartCountdown}
       />
