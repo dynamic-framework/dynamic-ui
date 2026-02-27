@@ -35,9 +35,7 @@ export default function DCreditCard(
   return (
     <div
       className={classNames(
-        'd-credit-card overflow-hidden text-white',
-        'position-relative rounded-3',
-        'd-flex',
+        'd-credit-card',
         isVertical && 'is-vertical',
         className,
       )}
@@ -50,7 +48,7 @@ export default function DCreditCard(
           width={100}
         />
         {isChipVisible && (
-          <div className="d-credit-card-chip p-2 rounded-2">
+          <div className="d-credit-card-chip">
             <img
               src={CHIP_IMAGE}
               alt="chip"
@@ -61,14 +59,14 @@ export default function DCreditCard(
         )}
       </div>
 
-      <div className="d-credit-card-details mt-auto d-none d-sm-block">
-        <div className="d-credit-card-number d-none d-sm-block mb-4">
+      <div className="d-credit-card-details">
+        <div className="d-credit-card-number">
           {number}
         </div>
-        <small className="d-block opacity-50">
+        <small className="d-credit-card-holder-text">
           {holderText}
         </small>
-        <span className="name">{name}</span>
+        <span className="d-credit-card-name">{name}</span>
       </div>
     </div>
   );
