@@ -24,6 +24,23 @@
   }
 }
 
+// Circle background defaults and opacity variable
+.d-icon-has-circle {
+  --#{$prefix}icon-component-bg-opacity: .1;
+  --#{$prefix}icon-component-bg-color: rgba(var(--#{$prefix}body-color-rgb), var(--#{$prefix}icon-component-bg-opacity));
+}
+
+// Generate color classes for icon color and circle background
+@each $theme, $value in $theme-colors {
+  .d-icon-color-#{$theme} {
+    --#{$prefix}icon-component-color: var(--#{$prefix}#{$theme});
+  }
+
+  .d-icon-color-#{$theme}.d-icon-has-circle {
+    --#{$prefix}icon-component-bg-color: rgba(var(--#{$prefix}#{$theme}-rgb), var(--#{$prefix}icon-component-bg-opacity));
+  }
+}
+
 .d-icon-loading {
   animation: loading-icon var(--#{$prefix}icon-loading-duration) infinite linear;
 }
