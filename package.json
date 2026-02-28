@@ -163,7 +163,7 @@
     "recharts": "~3.3.0",
     "remark-gfm": "~4.0.1",
     "rimraf": "~6.1.0",
-    "rollup": "~4.53.1",
+    "rollup": "^4.59.0",
     "sass": "~1.69.4",
     "storybook": "^10.2.8",
     "stylelint": "^16.16.0",
