@@ -11,15 +11,15 @@ import currency from 'currency.js';
 import DatePicker from 'react-datepicker';
 import { getYear, format, getMonth } from 'date-fns';
 import Select, { components } from 'react-select';
+import { getErrorMessage, ErrorBoundary } from 'react-error-boundary';
+export { getErrorMessage, useErrorBoundary } from 'react-error-boundary';
 import { InputMask } from '@react-input/mask';
+import { defaultCountries, parseCountry, usePhoneInput, CountrySelector } from 'react-international-phone';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 import ResponsivePagination from 'react-responsive-pagination';
 import { useFloating, autoUpdate, offset, flip, shift, useClick, useDismiss, useRole, useInteractions, useId as useId$1, FloatingFocusManager, arrow, useHover, useFocus, FloatingPortal, FloatingArrow } from '@floating-ui/react';
 import { Toaster, toast } from 'react-hot-toast';
-import { defaultCountries, parseCountry, usePhoneInput, CountrySelector } from 'react-international-phone';
-import { PhoneNumberUtil } from 'google-libphonenumber';
 import html2canvas from 'html2canvas';
-import { getErrorMessage, ErrorBoundary } from 'react-error-boundary';
-export { getErrorMessage, useErrorBoundary } from 'react-error-boundary';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -412,21 +412,6 @@ function DIconBase({ icon, color, style, className, size, useListenerSize = fals
         const icons = LucideIcons;
         return icons[icon] || null;
     }, [icon, useMaterialIcons]);
-    const colorStyle = useMemo(() => {
-        if (color) {
-            return { [`--${PREFIX_BS}icon-component-color`]: `var(--${PREFIX_BS}${color})` };
-        }
-        return {};
-    }, [color]);
-    const backgroundStyle = useMemo(() => {
-        if (hasCircle) {
-            if (color) {
-                return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}${color}-rgb), 0.1)` };
-            }
-            return { [`--${PREFIX_BS}icon-component-bg-color`]: `rgba(var(--${PREFIX_BS}body-color-rgb), 0.1)` };
-        }
-        return {};
-    }, [hasCircle, color]);
     const { responsivePropValue } = useResponsiveProp(useListenerSize);
     const resolvedSize = useMemo(() => {
         if (!size)
@@ -435,8 +420,8 @@ function DIconBase({ icon, color, style, className, size, useListenerSize = fals
             return size;
         return responsivePropValue(size);
     }, [responsivePropValue, size]);
-    const generateStyleVariables = useMemo(() => (Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, resolvedSize && { [`--${PREFIX_BS}icon-component-size`]: resolvedSize }), colorStyle), backgroundStyle), hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` }), style)), [resolvedSize, colorStyle, backgroundStyle, hasCircle, style]);
-    const generateClasses = useMemo(() => (Object.assign({ 'd-icon': true }, className && { [className]: true })), [className]);
+    const generateStyleVariables = useMemo(() => (Object.assign(Object.assign(Object.assign({}, resolvedSize && { [`--${PREFIX_BS}icon-component-size`]: resolvedSize }), hasCircle && { [`--${PREFIX_BS}icon-component-padding`]: `calc(var(--${PREFIX_BS}icon-component-size, 24px) * 0.4)` }), style)), [resolvedSize, hasCircle, style]);
+    const generateClasses = useMemo(() => (Object.assign(Object.assign(Object.assign({ 'd-icon': true }, className && { [className]: true }), { 'd-icon-has-circle': hasCircle }), color && { [`d-icon-color-${color}`]: true })), [className, hasCircle, color]);
     const iconSize = useMemo(() => {
         if (resolvedSize) {
             const numSize = parseInt(resolvedSize, 10);
@@ -491,14 +476,24 @@ function DAvatar({ id, size, image, name: nameProp, useNameAsInitials = false, c
     return (jsxs("div", Object.assign({ className: classNames(generateClasses, className), style: style, id: id }, dataAttributes, { children: [image && jsx("img", { src: image, alt: nameProp, className: "d-avatar-img" }), (name && !image) && jsx("span", { className: "d-avatar-name", children: name })] })));
 }
 
-function DBadge({ text, soft = false, color = 'primary', id, rounded, className, size, style, iconStart, iconEnd, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, dataAttributes, }) {
+function DBadge(props) {
+    const { text, soft = false, color = 'primary', id, rounded, className, size, style, iconStart, iconEnd, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, dataAttributes, } = props;
+    // Responsive size resolution using useResponsiveProp
+    const { responsivePropValue } = useResponsiveProp(true);
+    const resolvedSize = useMemo(() => {
+        if (!size)
+            return undefined;
+        if (typeof size === 'string')
+            return size;
+        return responsivePropValue(size);
+    }, [responsivePropValue, size]);
     const generateClasses = useMemo(() => ({
         badge: true,
         [`badge-${color}`]: !!color && !soft,
         [`badge-soft-${color}`]: !!color && soft,
         'rounded-pill': !!rounded,
-        [`badge-${size}`]: !!size,
-    }), [rounded, soft, color, size]);
+        [`badge-${resolvedSize}`]: !!resolvedSize,
+    }), [rounded, soft, color, resolvedSize]);
     return (jsxs("span", Object.assign({ className: classNames(generateClasses, className), style: style }, id && { id }, dataAttributes, { children: [iconStart && (jsx(DIcon, { icon: iconStart, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle })), jsx("span", { children: text }), iconEnd && (jsx(DIcon, { icon: iconEnd, familyClass: iconFamilyClass, familyPrefix: iconFamilyPrefix, materialStyle: iconMaterialStyle }))] })));
 }
 
@@ -1003,7 +998,16 @@ function DBoxFile(_a) {
 }
 
 const DButton = forwardRef((props, ref) => {
-    const { color = 'primary', size, variant, text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button', target, rel } = props, rest = __rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type", "target", "rel"]);
+    const { color = 'primary', size, variant, text, children, iconStart, iconStartFamilyClass, iconStartFamilyPrefix, iconStartMaterialStyle, iconEnd, iconEndFamilyClass, iconEndFamilyPrefix, iconEndMaterialStyle, loading = false, loadingText, loadingAriaLabel, disabled = false, className, style, dataAttributes, onClick, type = 'button', target, rel, href } = props, rest = __rest(props, ["color", "size", "variant", "text", "children", "iconStart", "iconStartFamilyClass", "iconStartFamilyPrefix", "iconStartMaterialStyle", "iconEnd", "iconEndFamilyClass", "iconEndFamilyPrefix", "iconEndMaterialStyle", "loading", "loadingText", "loadingAriaLabel", "disabled", "className", "style", "dataAttributes", "onClick", "type", "target", "rel", "href"]);
+    // Responsive size resolution using useResponsiveProp
+    const { responsivePropValue } = useResponsiveProp(true);
+    const resolvedSize = useMemo(() => {
+        if (!size)
+            return undefined;
+        if (typeof size === 'string')
+            return size;
+        return responsivePropValue(size);
+    }, [responsivePropValue, size]);
     const [buttonWidth, setButtonWidth] = useState();
     const buttonRef = useRef(null);
     const isDisabled = useMemo(() => disabled || loading, [disabled, loading]);
@@ -1015,10 +1019,10 @@ const DButton = forwardRef((props, ref) => {
         return {
             btn: true,
             [variantClass]: true,
-            [`btn-${size}`]: !!size,
+            [`btn-${resolvedSize}`]: !!resolvedSize,
             loading,
         };
-    }, [variant, color, size, loading]);
+    }, [variant, color, loading, resolvedSize]);
     const ariaLabel = useMemo(() => {
         const ariaLabelProp = rest['aria-label'];
         return loading
@@ -1040,8 +1044,8 @@ const DButton = forwardRef((props, ref) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [content, iconEnd, iconStart]);
-    if (props.href) {
-        return (jsxs("a", Object.assign({ href: props.href, target: target, rel: rel, ref: (node) => {
+    if (href) {
+        return (jsxs("a", Object.assign({ href: href, target: target, rel: rel, ref: (node) => {
                 buttonRef.current = node;
                 if (typeof ref === 'function')
                     ref(node);
@@ -2481,7 +2485,7 @@ const BRAND_LOGOS = {
     mastercard: 'https://cdn.modyo.cloud/uploads/f686b9aa-65ab-4369-9db3-89ceece84f29/original/mastercard.png',
 };
 function DCreditCard({ brand = 'visa', name, number, holderText = 'Card Holder', logoImage, isChipVisible = true, className, isVertical = false, }) {
-    return (jsxs("div", { className: classNames('d-credit-card overflow-hidden text-white', 'position-relative rounded-3', 'd-flex', isVertical && 'is-vertical', className), children: [jsxs("div", { className: "d-credit-card-header", children: [jsx("img", { src: logoImage || BRAND_LOGOS[brand] || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsx("div", { className: "d-credit-card-chip p-2 rounded-2", children: jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxs("div", { className: "d-credit-card-details mt-auto d-none d-sm-block", children: [jsx("div", { className: "d-credit-card-number d-none d-sm-block mb-4", children: number }), jsx("small", { className: "d-block opacity-50", children: holderText }), jsx("span", { className: "name", children: name })] })] }));
+    return (jsxs("div", { className: classNames('d-credit-card', isVertical && 'is-vertical', className), children: [jsxs("div", { className: "d-credit-card-header", children: [jsx("img", { src: logoImage || BRAND_LOGOS[brand] || DEFAULT_IMAGE, alt: brand, className: "d-credit-card-logo", width: 100 }), isChipVisible && (jsx("div", { className: "d-credit-card-chip", children: jsx("img", { src: CHIP_IMAGE, alt: "chip", width: 30, className: "d-credit-card-chip-image" }) }))] }), jsxs("div", { className: "d-credit-card-details", children: [jsx("div", { className: "d-credit-card-number", children: number }), jsx("small", { className: "d-credit-card-holder-text", children: holderText }), jsx("span", { className: "d-credit-card-name", children: name })] })] }));
 }
 
 const getItemClass = (action) => {
@@ -2705,7 +2709,7 @@ const defaultMessage = (secs) => (secs > 0
     : "Didn't get any code?");
 function OtpCountdown({ seconds, resendText, message, }) {
     const { secondsLeft, restartCountdown } = useCountdown(seconds);
-    return (jsxs("div", { className: "d-flex gap-2 align-items-center", children: [jsx("p", { className: "mb-0", children: message ? message(secondsLeft) : defaultMessage(secondsLeft) }), jsx(DButton, { text: resendText, variant: "link", disabled: secondsLeft > 0, onClick: restartCountdown })] }));
+    return (jsxs("div", { className: "d-flex gap-2 align-items-center", children: [jsx("p", { className: "mb-0 flex-1", children: message ? message(secondsLeft) : defaultMessage(secondsLeft) }), jsx(DButton, { text: resendText, variant: "link", className: "text-nowrap", disabled: secondsLeft > 0, onClick: restartCountdown })] }));
 }
 
 const TEXT_PROPS = {

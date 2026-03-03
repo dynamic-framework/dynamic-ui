@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.0.0-dev.23
+ * dynamic-framework 2.0.0-dev.24
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/LICENSE.md
  */
@@ -519,16 +519,6 @@
   --bs-fs-6: var(--bs-rfs-fs-6);
   --bs-rfs-fs-small: 0.875em;
   --bs-fs-small: var(--bs-rfs-fs-small);
-  --bs-rfs-fs-body-large: calc(1.275rem + 0.3vw);
-  --bs-fs-body-large: var(--bs-rfs-fs-body-large);
-  --bs-rfs-fs-body-medium: 1.25rem;
-  --bs-fs-body-medium: var(--bs-rfs-fs-body-medium);
-  --bs-rfs-fs-body-normal: 1rem;
-  --bs-fs-body-normal: var(--bs-rfs-fs-body-normal);
-  --bs-rfs-fs-body-small: 0.875rem;
-  --bs-fs-body-small: var(--bs-rfs-fs-body-small);
-  --bs-rfs-fs-body-tiny: 0.8125rem;
-  --bs-fs-body-tiny: var(--bs-rfs-fs-body-tiny);
   --bs-fw-lighter: lighter;
   --bs-fw-light: 200;
   --bs-fw-normal: 400;
@@ -1122,11 +1112,5 @@
   :root,
   [data-bs-theme=dynamic] {
     --bs-rfs-fs-4: 1.5rem;
-  }
-}
-@media (min-width: 1200px) {
-  :root,
-  [data-bs-theme=dynamic] {
-    --bs-rfs-fs-body-large: 1.5rem;
   }
 }
