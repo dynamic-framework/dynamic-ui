@@ -1,12 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import changeQueryString from '../changeQueryString';
 
 describe('changeQueryString', () => {
+  const originalLocation = window.location;
+
   beforeEach(() => {
-    window.location.search = '?foo=1&bar=2';
-    window.location.href = 'http://localhost/?foo=1&bar=2';
+    delete (window as any).location;
+    window.location = {
+      ...originalLocation,
+      search: '?foo=1&bar=2',
+      href: 'http://localhost/?foo=1&bar=2',
+    } as any;
     window.history.pushState = jest.fn();
+  });
+
+  afterEach(() => {
+    window.location = originalLocation;
   });
 
   it('should add new params', () => {
