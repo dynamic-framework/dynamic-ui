@@ -98,7 +98,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    const nav = container.querySelector('nav');
+    const nav = container.querySelector('ul[role="tablist"]');
     expect(nav).toHaveClass('flex-column', 'align-items-center');
     expect(nav).toHaveClass('nav-pills');
   });
@@ -114,7 +114,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    const nav = container.querySelector('nav');
+    const nav = container.querySelector('ul[role="tablist"]');
     expect(nav).toHaveClass('custom-tabs');
   });
 
@@ -146,7 +146,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    const nav = container.querySelector('nav');
+    const nav = container.querySelector('ul[role="tablist"]');
     expect(nav).toHaveClass('nav-pills');
   });
 
@@ -161,7 +161,7 @@ describe('<DTabs />', () => {
       </DTabs>,
     );
 
-    const nav = container.querySelector('nav');
+    const nav = container.querySelector('ul[role="tablist"]');
     expect(nav).toHaveClass('flex-column');
   });
 
