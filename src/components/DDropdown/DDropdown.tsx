@@ -81,6 +81,7 @@ export default function DDropdown(
       <DButtonIcon
         variant="link"
         stopPropagationEnabled={false}
+        ariaLabel="Toggle Dropdown"
         onClick={() => setOpen(!open)}
         icon="MoreVertical"
       />
