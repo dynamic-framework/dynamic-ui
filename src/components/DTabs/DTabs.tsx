@@ -85,31 +85,35 @@ function DTabs(
         style={style}
         {...dataAttributes}
       >
-        <nav className={classNames(generateClasses)}>
+        <ul
+          className={classNames(generateClasses)}
+          role="tablist"
+        >
           {options.map((option) => (
-            <button
-              key={option.tab}
-              id={`${option.tab}Tab`}
-              className={
-                classNames(
-                  'nav-link',
-                  {
-                    active: option.tab === selected,
-                  },
-                  classNameTab,
-                )
-              }
-              type="button"
-              role="tab"
-              aria-controls={`${option.tab}Pane`}
-              aria-selected={option.tab === selected}
-              disabled={option.disabled}
-              onClick={() => onSelect(option)}
-            >
-              {option.label}
-            </button>
+            <li role="presentation" key={option.tab}>
+              <button
+                id={`${option.tab}Tab`}
+                className={
+                  classNames(
+                    'nav-link',
+                    {
+                      active: option.tab === selected,
+                    },
+                    classNameTab,
+                  )
+                }
+                type="button"
+                role="tab"
+                aria-controls={`${option.tab}Pane`}
+                aria-selected={option.tab === selected}
+                disabled={option.disabled}
+                onClick={() => onSelect(option)}
+              >
+                {option.label}
+              </button>
+            </li>
           ))}
-        </nav>
+        </ul>
         <div className="tab-content w-100">
           {children}
         </div>
