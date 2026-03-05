@@ -2,6 +2,7 @@ import {
   useState,
   useCallback,
   useEffect,
+  createRef,
   useMemo,
 } from 'react';
 import classNames from 'classnames';
@@ -28,6 +29,8 @@ type Props = BaseProps & PropsWithChildren<{
   defaultSelected: string;
   vertical?: boolean;
   variant?: TabVariant;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
 }>;
 
 function DTabs(
@@ -42,6 +45,8 @@ function DTabs(
     vertical,
     variant = 'underline',
     dataAttributes,
+    ariaLabel,
+    ariaLabelledBy,
   }: Props,
 ) {
   const [selected, setSelected] = useState<string>(defaultSelected);
@@ -75,6 +80,27 @@ function DTabs(
     [vertical, variant, className],
   );
 
+  const tabRefs: React.RefObject<HTMLButtonElement | null>[] = useMemo(
+    () => options.map(() => createRef<HTMLButtonElement>()),
+    [options],
+  );
+
+  const handleKeyDown = useCallback((idx: number, e: React.KeyboardEvent<HTMLButtonElement>) => {
+    const count = options.length;
+    if (e.key === 'ArrowRight' || (vertical && e.key === 'ArrowDown')) {
+      e.preventDefault();
+      let next = (idx + 1) % count;
+      while (options[next]?.disabled) next = (next + 1) % count;
+      tabRefs[next]?.current?.focus();
+    }
+    if (e.key === 'ArrowLeft' || (vertical && e.key === 'ArrowUp')) {
+      e.preventDefault();
+      let prev = (idx - 1 + count) % count;
+      while (options[prev]?.disabled) prev = (prev - 1 + count) % count;
+      tabRefs[prev]?.current?.focus();
+    }
+  }, [options, vertical, tabRefs]);
+
   return (
     <TabContext.Provider value={value}>
       <div
@@ -88,10 +114,14 @@ function DTabs(
         <ul
           className={classNames(generateClasses)}
           role="tablist"
+          aria-orientation={vertical ? 'vertical' : undefined}
+          {...(ariaLabel ? { 'aria-label': ariaLabel } : {})}
+          {...(ariaLabelledBy ? { 'aria-labelledby': ariaLabelledBy } : {})}
         >
-          {options.map((option) => (
+          {options.map((option, idx) => (
             <li role="presentation" key={option.tab}>
               <button
+                ref={tabRefs[idx]}
                 id={`${option.tab}Tab`}
                 className={
                   classNames(
@@ -106,8 +136,10 @@ function DTabs(
                 role="tab"
                 aria-controls={`${option.tab}Pane`}
                 aria-selected={option.tab === selected}
+                tabIndex={option.tab === selected ? 0 : -1}
                 disabled={option.disabled}
                 onClick={() => onSelect(option)}
+                onKeyDown={(e) => handleKeyDown(idx, e)}
               >
                 {option.label}
               </button>

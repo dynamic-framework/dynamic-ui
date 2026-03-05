@@ -51,7 +51,6 @@ export default function DDropdown(
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // 🆕 Calcular posición del menú al abrir
   useEffect(() => {
     if (open && dropdownRef.current) {
       const rect = dropdownRef.current.getBoundingClientRect();
@@ -82,6 +81,8 @@ export default function DDropdown(
         variant="link"
         stopPropagationEnabled={false}
         ariaLabel="Toggle Dropdown"
+        aria-haspopup="menu"
+        aria-expanded={open}
         onClick={() => setOpen(!open)}
         icon="MoreVertical"
       />
