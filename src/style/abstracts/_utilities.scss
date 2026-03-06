@@ -1,7 +1,7 @@
 /* stylelint-disable scss/dollar-variable-default */
 // Theme utilities
 
-$custom-border-values: (
+$custom-border-width-values: (
   0: 0,
   1: var(--#{$prefix}border-width),
   2: calc(var(--#{$prefix}border-width) * 2),
@@ -14,11 +14,19 @@ $custom-border-values: (
 $utilities: map-merge(
   $utilities,
   (
-    "border": map-merge(map-get($utilities, "border"), (responsive: true)),
-    "border-top": map-merge(map-get($utilities, "border-top"), (responsive: true)),
-    "border-end": map-merge(map-get($utilities, "border-end"), (responsive: true)),
-    "border-bottom": map-merge(map-get($utilities, "border-bottom"), (responsive: true)),
-    "border-start": map-merge(map-get($utilities, "border-start"), (responsive: true))
+    "border-width": map-merge(
+      map-get($utilities, "border-width"),
+      (
+        responsive: true,
+        values: $custom-border-width-values
+      )
+    ),
+    "border-color": map-merge(
+      map-get($utilities, "border-color"),
+      (
+        responsive: true
+      )
+    )
   )
 );
 
