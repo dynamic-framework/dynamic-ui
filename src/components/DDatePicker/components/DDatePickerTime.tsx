@@ -17,6 +17,7 @@ export default function DDatePickerTime(
     <DInput
       className="d-datepicker-time"
       type="time"
+      aria-label={value}
       value={value}
       id={id}
       onChange={(time) => {
