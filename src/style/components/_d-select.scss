@@ -155,31 +155,6 @@
   .d-select__option--is-selected {
     font-weight: var(--#{$prefix}select-option-selected-font-weight);
     color: var(--#{$prefix}select-option-selected-color);
-    background: var(--#{$prefix}select-option-selected-bg);
-
-    &:hover {
-      --#{$prefix}select-option-selected-bg: var(--#{$prefix}gray-100);
-    }
-  }
-
-  // select option with checkbox
-  .d-select__option--is-checkbox {
-    padding: 0;
-
-    > label {
-      width: 100%;
-      padding: $input-padding-x;
-    }
-
-    .form-check-input {
-      margin-right: $input-padding-x;
-    }
-  }
-
-  .d-select__option--is-checkbox label {
-    font-size: var(--#{$prefix}select-option-is-checkbox-font-size);
-    font-weight: var(--#{$prefix}select-option-is-checkbox-font-weight);
-    color: var(--#{$prefix}select-option-is-checkbox-color);
   }
 
   // select multi control
@@ -257,5 +232,50 @@
 
   &.disabled .d-icon {
     --#{$prefix}icon-color: var(--#{$prefix}input-disabled-color);
+  }
+
+  .d-select__check {
+    position: relative;
+    display: inline-block;
+
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    background: $input-bg;
+
+    border: 1px solid var(--#{$prefix}input-border-color);
+    border-radius: 2px;
+  }
+
+  /* checkmark */
+  .d-select__check::after {
+    position: absolute;
+
+    top: 1px;
+    left: 4px;
+
+    width: 6px;
+    height: 10px;
+    content: "";
+
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+
+    opacity: 0;
+
+    transform: rotate(45deg) scale(0);
+    transform-origin: center;
+  }
+
+  /* estado seleccionado */
+  .d-select__check--selected {
+    background: var(--#{$prefix}primary-500);
+    border-color: var(--#{$prefix}primary-500);
+  }
+
+  .d-select__check--selected::after {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
   }
 }
