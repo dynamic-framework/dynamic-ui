@@ -40,6 +40,8 @@ type Props =
   invalid?: boolean;
   valid?: boolean;
   onChange?: (value: string) => void;
+  ariaLabel?: string;
+
 };
 
 export default function DInputPin(
@@ -60,6 +62,7 @@ export default function DInputPin(
     style,
     dataAttributes,
     onChange,
+    ariaLabel = 'Pin character number',
   }: Props,
 ) {
   const innerId = useId();
@@ -169,7 +172,7 @@ export default function DInputPin(
             })}
             value={activeInput[index]}
             type={secret ? 'password' : type}
-            aria-describedby={`${id}State`}
+            aria-label={`${ariaLabel} ${index}`}
             inputMode={innerInputMode}
             id={`pinIndex${index}`}
             name={`pin-${index}`}
