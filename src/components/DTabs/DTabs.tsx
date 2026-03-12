@@ -121,10 +121,6 @@ function DTabs(
     tablistProps = { 'aria-label': ariaLabel };
   }
 
-  useEffect(() => {
-    setSelected(defaultSelected);
-  }, [defaultSelected]);
-
   const isSelected = useCallback((tab: DTabOption['tab']) => (
     selected === tab
   ), [selected]);
