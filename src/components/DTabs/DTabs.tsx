@@ -85,21 +85,47 @@ function DTabs(
     [options],
   );
 
+  // Ensure selected is never disabled
+  useEffect(() => {
+    if (options.length === 0) return;
+    const selectedOption = options.find((opt) => opt.tab === selected);
+    if (!selectedOption || selectedOption.disabled) {
+      const firstEnabled = options.find((opt) => !opt.disabled);
+      if (firstEnabled) setSelected(firstEnabled.tab);
+    }
+  }, [options, selected]);
+
   const handleKeyDown = useCallback((idx: number, e: React.KeyboardEvent<HTMLButtonElement>) => {
     const count = options.length;
+    if (count === 0) return;
+    let next = idx;
+    let prev = idx;
     if (e.key === 'ArrowRight' || (vertical && e.key === 'ArrowDown')) {
-      e.preventDefault();
-      let next = (idx + 1) % count;
-      while (options[next]?.disabled) next = (next + 1) % count;
-      tabRefs[next]?.current?.focus();
+      for (let i = 0; i < count; i += 1) {
+        next = (next + 1) % count;
+        if (!options[next].disabled) {
+          tabRefs[next]?.current?.focus();
+          break;
+        }
+      }
     }
     if (e.key === 'ArrowLeft' || (vertical && e.key === 'ArrowUp')) {
-      e.preventDefault();
-      let prev = (idx - 1 + count) % count;
-      while (options[prev]?.disabled) prev = (prev - 1 + count) % count;
-      tabRefs[prev]?.current?.focus();
+      for (let i = 0; i < count; i += 1) {
+        prev = (prev - 1 + count) % count;
+        if (!options[prev].disabled) {
+          tabRefs[prev]?.current?.focus();
+          break;
+        }
+      }
     }
   }, [options, vertical, tabRefs]);
+
+  let tablistProps = {};
+  if (ariaLabelledBy) {
+    tablistProps = { 'aria-labelledby': ariaLabelledBy };
+  } else if (ariaLabel) {
+    tablistProps = { 'aria-label': ariaLabel };
+  }
 
   return (
     <TabContext.Provider value={value}>
@@ -115,9 +141,9 @@ function DTabs(
           className={classNames(generateClasses)}
           role="tablist"
           aria-orientation={vertical ? 'vertical' : undefined}
-          {...(ariaLabel ? { 'aria-label': ariaLabel } : {})}
-          {...(ariaLabelledBy ? { 'aria-labelledby': ariaLabelledBy } : {})}
+          {...tablistProps}
         >
+
           {options.map((option, idx) => (
             <li role="presentation" key={option.tab}>
               <button
