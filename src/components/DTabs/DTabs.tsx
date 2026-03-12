@@ -62,14 +62,6 @@ function DTabs(
     setSelected(defaultSelected);
   }, [defaultSelected]);
 
-  const isSelected = useCallback((tab: DTabOption['tab']) => (
-    selected === tab
-  ), [selected]);
-
-  const value = useMemo(() => ({
-    isSelected,
-  }), [isSelected]);
-
   const generateClasses = useMemo(
     () => ({
       nav: true,
@@ -89,7 +81,7 @@ function DTabs(
   useEffect(() => {
     if (options.length === 0) return;
     const selectedOption = options.find((opt) => opt.tab === selected);
-    if (!selectedOption || selectedOption.disabled) {
+    if (selectedOption && selectedOption.disabled) {
       const firstEnabled = options.find((opt) => !opt.disabled);
       if (firstEnabled) setSelected(firstEnabled.tab);
     }
@@ -129,6 +121,18 @@ function DTabs(
     tablistProps = { 'aria-label': ariaLabel };
   }
 
+  useEffect(() => {
+    setSelected(defaultSelected);
+  }, [defaultSelected]);
+
+  const isSelected = useCallback((tab: DTabOption['tab']) => (
+    selected === tab
+  ), [selected]);
+
+  const value = useMemo(() => ({
+    isSelected,
+  }), [isSelected]);
+
   return (
     <TabContext.Provider value={value}>
       <div
@@ -145,34 +149,32 @@ function DTabs(
           aria-orientation={vertical ? 'vertical' : undefined}
           {...tablistProps}
         >
-
-          {options.map((option, idx) => (
-            <li role="presentation" key={option.tab}>
-              <button
-                ref={tabRefs[idx]}
-                id={`${option.tab}Tab`}
-                className={
-                  classNames(
+          {options.map((option, idx) => {
+            const isTabSelected = !!option.tab && option.tab === selected;
+            return (
+              <li role="presentation" key={option.tab}>
+                <button
+                  ref={tabRefs[idx]}
+                  id={`${option.tab}Tab`}
+                  className={classNames(
                     'nav-link',
-                    {
-                      active: !!option.tab && option.tab === selected,
-                    },
+                    { active: isTabSelected },
                     classNameTab,
-                  )
-                }
-                type="button"
-                role="tab"
-                aria-controls={`${option.tab}Pane`}
-                aria-selected={option.tab === selected}
-                tabIndex={option.tab === selected ? 0 : -1}
-                disabled={option.disabled}
-                onClick={() => onSelect(option)}
-                onKeyDown={(e) => handleKeyDown(idx, e)}
-              >
-                {option.label}
-              </button>
-            </li>
-          ))}
+                  )}
+                  type="button"
+                  role="tab"
+                  aria-controls={`${option.tab}Pane`}
+                  aria-selected={isTabSelected}
+                  tabIndex={isTabSelected ? 0 : -1}
+                  disabled={option.disabled}
+                  onClick={() => onSelect(option)}
+                  onKeyDown={(e) => handleKeyDown(idx, e)}
+                >
+                  {option.label}
+                </button>
+              </li>
+            );
+          })}
         </ul>
         <div className="tab-content w-100">
           {children}
