@@ -54,8 +54,10 @@ function DTabs(
   const onSelect = useCallback((option: DTabOption) => {
     if (option.tab) {
       setSelected(option.tab);
+      onChange?.(option);
+    } else {
+      onChange?.(option);
     }
-    onChange?.(option);
   }, [onChange]);
 
   useEffect(() => {
@@ -153,7 +155,7 @@ function DTabs(
                   classNames(
                     'nav-link',
                     {
-                      active: option.tab === selected,
+                      active: !!option.tab && option.tab === selected,
                     },
                     classNameTab,
                   )
