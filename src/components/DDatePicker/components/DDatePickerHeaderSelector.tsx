@@ -155,7 +155,7 @@ export default function DDatePickerHeaderSelector(
           variant="link"
           onClick={decreaseYear}
           disabled={prevYearButtonDisabled}
-          ariaLabel={prevYearAriaLabel}
+          aria-label={prevYearAriaLabel}
           className="header-button"
         />
         <p>{`${startYear} - ${endYear}`}</p>
@@ -165,7 +165,7 @@ export default function DDatePickerHeaderSelector(
           variant="link"
           onClick={increaseYear}
           disabled={nextYearButtonDisabled}
-          ariaLabel={nextYearAriaLabel}
+          aria-label={nextYearAriaLabel}
           className="header-button"
         />
       </div>
@@ -187,7 +187,7 @@ export default function DDatePickerHeaderSelector(
           variant="link"
           onClick={decreaseYear}
           disabled={prevMonthButtonDisabled}
-          ariaLabel={prevMonthAriaLabel}
+          aria-label={prevMonthAriaLabel}
           className="header-button"
           style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
         />
@@ -210,7 +210,7 @@ export default function DDatePickerHeaderSelector(
           variant="link"
           onClick={increaseYear}
           disabled={nextMonthButtonDisabled}
-          ariaLabel={nextMonthAriaLabel}
+          aria-label={nextMonthAriaLabel}
           className="header-button"
           style={{ visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' }}
         />
@@ -248,7 +248,7 @@ export default function DDatePickerHeaderSelector(
           variant="link"
           onClick={decreaseMonth}
           disabled={prevMonthButtonDisabled}
-          ariaLabel={prevMonthAriaLabel}
+          aria-label={prevMonthAriaLabel}
           className="header-button"
           style={{ visibility: customHeaderCount === 0 ? 'visible' : 'hidden' }}
         />
@@ -270,7 +270,7 @@ export default function DDatePickerHeaderSelector(
           variant="link"
           onClick={increaseMonth}
           disabled={nextMonthButtonDisabled}
-          ariaLabel={nextMonthAriaLabel}
+          aria-label={nextMonthAriaLabel}
           className="header-button"
           style={{ visibility: customHeaderCount === monthsShown - 1 ? 'visible' : 'hidden' }}
         />
