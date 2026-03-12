@@ -80,7 +80,7 @@ export default function DDropdown(
       <DButtonIcon
         variant="link"
         stopPropagationEnabled={false}
-        ariaLabel="Toggle Dropdown"
+        aria-label="Toggle Dropdown"
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen(!open)}
