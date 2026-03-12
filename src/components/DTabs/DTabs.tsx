@@ -103,6 +103,7 @@ function DTabs(
     let next = idx;
     let prev = idx;
     if (e.key === 'ArrowRight' || (vertical && e.key === 'ArrowDown')) {
+      e.preventDefault();
       for (let i = 0; i < count; i += 1) {
         next = (next + 1) % count;
         if (!options[next].disabled) {
@@ -112,6 +113,7 @@ function DTabs(
       }
     }
     if (e.key === 'ArrowLeft' || (vertical && e.key === 'ArrowUp')) {
+      e.preventDefault();
       for (let i = 0; i < count; i += 1) {
         prev = (prev - 1 + count) % count;
         if (!options[prev].disabled) {
