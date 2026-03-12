@@ -2,6 +2,7 @@ import {
   useState,
   useCallback,
   useEffect,
+  useRef,
   createRef,
   useMemo,
 } from 'react';
@@ -72,10 +73,11 @@ function DTabs(
     [vertical, variant, className],
   );
 
-  const tabRefs: React.RefObject<HTMLButtonElement | null>[] = useMemo(
-    () => options.map(() => createRef<HTMLButtonElement>()),
-    [options],
-  );
+  const tabRefs = useRef<Array<React.RefObject<HTMLButtonElement>>>([]);
+
+  useEffect(() => {
+    tabRefs.current = options.map((_, i) => tabRefs.current[i] || createRef<HTMLButtonElement>());
+  }, [options]);
 
   // Ensure selected is never disabled
   useEffect(() => {
@@ -87,6 +89,21 @@ function DTabs(
     }
   }, [options, selected]);
 
+  // Declarative focus management
+  const focusTab = (idx: number) => {
+    if (tabRefs.current[idx]?.current) {
+      tabRefs.current[idx].current.focus();
+    }
+  };
+
+  // Focus selected tab when selected changes
+  useEffect(() => {
+    const idx = options.findIndex((opt) => opt.tab === selected && !opt.disabled);
+    if (idx !== -1) {
+      focusTab(idx);
+    }
+  }, [selected, options]);
+
   const handleKeyDown = useCallback((idx: number, e: React.KeyboardEvent<HTMLButtonElement>) => {
     const count = options.length;
     if (count === 0) return;
@@ -97,7 +114,8 @@ function DTabs(
       for (let i = 0; i < count; i += 1) {
         next = (next + 1) % count;
         if (!options[next].disabled) {
-          tabRefs[next]?.current?.focus();
+          focusTab(next);
+          setSelected(options[next].tab);
           break;
         }
       }
@@ -107,12 +125,13 @@ function DTabs(
       for (let i = 0; i < count; i += 1) {
         prev = (prev - 1 + count) % count;
         if (!options[prev].disabled) {
-          tabRefs[prev]?.current?.focus();
+          focusTab(prev);
+          setSelected(options[prev].tab);
           break;
         }
       }
     }
-  }, [options, vertical, tabRefs]);
+  }, [options, vertical]);
 
   let tablistProps = {};
   if (ariaLabelledBy) {
@@ -150,7 +169,7 @@ function DTabs(
             return (
               <li role="presentation" key={option.tab}>
                 <button
-                  ref={tabRefs[idx]}
+                  ref={tabRefs.current[idx]}
                   id={`${option.tab}Tab`}
                   className={classNames(
                     'nav-link',
