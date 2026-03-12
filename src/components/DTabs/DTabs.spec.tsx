@@ -9,6 +9,62 @@ const options: DTabOption[] = [
 ];
 
 describe('<DTabs />', () => {
+  it('selects first enabled tab if defaultSelected is disabled', () => {
+    const opts = [
+      { label: 'Tab 1', tab: 'tab1', disabled: true },
+      { label: 'Tab 2', tab: 'tab2' },
+      { label: 'Tab 3', tab: 'tab3', disabled: true },
+    ];
+    render(
+      <DTabs options={opts} defaultSelected="tab1">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    expect(screen.getByRole('tab', { name: 'Tab 2' })).toHaveClass('active');
+  });
+
+  it('arrow keys move focus and skip disabled tabs', () => {
+    const opts = [
+      { label: 'Tab 1', tab: 'tab1' },
+      { label: 'Tab 2', tab: 'tab2', disabled: true },
+      { label: 'Tab 3', tab: 'tab3' },
+    ];
+    render(
+      <DTabs options={opts} defaultSelected="tab1">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    const tab1 = screen.getByRole('tab', { name: 'Tab 1' });
+    const tab3 = screen.getByRole('tab', { name: 'Tab 3' });
+    tab1.focus();
+    fireEvent.keyDown(tab1, { key: 'ArrowRight' });
+    expect(document.activeElement).toBe(tab3);
+    fireEvent.keyDown(tab3, { key: 'ArrowLeft' });
+    expect(document.activeElement).toBe(tab1);
+  });
+
+  it('applies aria-label and aria-labelledby correctly', () => {
+    const opts = [
+      { label: 'Tab 1', tab: 'tab1' },
+      { label: 'Tab 2', tab: 'tab2' },
+    ];
+    const { rerender } = render(
+      <DTabs options={opts} defaultSelected="tab1" ariaLabel="My Tabs">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    const tablist = screen.getByRole('tablist');
+    expect(tablist).toHaveAttribute('aria-label', 'My Tabs');
+    rerender(
+      <DTabs options={opts} defaultSelected="tab1" ariaLabelledBy="my-label">
+        <div>Tab Content</div>
+      </DTabs>,
+    );
+    const tablist2 = screen.getByRole('tablist');
+    expect(tablist2).toHaveAttribute('aria-labelledby', 'my-label');
+    expect(tablist2).not.toHaveAttribute('aria-label');
+  });
+
   it('renders tabs and selects default tab', () => {
     render(
       <DTabs
