@@ -54,10 +54,8 @@ function DTabs(
   const onSelect = useCallback((option: DTabOption) => {
     if (option.tab) {
       setSelected(option.tab);
-      onChange?.(option);
-    } else {
-      onChange?.(option);
     }
+    onChange?.(option);
   }, [onChange]);
 
   useEffect(() => {
