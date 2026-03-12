@@ -120,11 +120,7 @@ The Bootstrap documentation provides details on the default [Button CSS Variable
       type: 'string',
       table: { category: 'HTML Attributes' },
     },
-    ariaLabel: {
-      control: 'text',
-      type: 'string',
-      table: { category: 'HTML Attributes' },
-    },
+
     href: {
       control: 'text',
       description: 'If provided, renders as an &lt;a&gt; element instead of &lt;button&gt;.',
@@ -257,6 +253,7 @@ export const Primary: Story = {
     variant: undefined,
     loading: false,
     icon: 'ArrowLeft',
+    'aria-label': 'Go back',
   },
 };
 
