@@ -1,28 +1,23 @@
+import { ComponentProps } from 'react';
 import DInput from '../../DInput';
 
-type Props = {
-  id?: string;
-  value?: string;
-  onChange?: (time: string) => void;
-};
+type Props = Pick<ComponentProps<typeof DInput>,
+| 'id'
+| 'value'
+| 'onChange'
+| 'aria-label'
+>;
 
 export default function DDatePickerTime(
   {
-    value,
-    onChange,
-    id,
+    ...rest
   }: Props,
 ) {
   return (
     <DInput
       className="d-datepicker-time"
       type="time"
-      aria-label={value}
-      value={value}
-      id={id}
-      onChange={(time) => {
-        onChange?.(time);
-      }}
+      {...rest}
     />
   );
 }
