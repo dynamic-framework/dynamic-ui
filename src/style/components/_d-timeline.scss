@@ -83,8 +83,8 @@
     }
     &.d-timeline-item-warning {
       .d-timeline-item-icon {
-        color: var(--#{$prefix}white);
-        background-color: var(--#{$prefix}warning-500);
+        color: var(--#{$prefix}warning-800);
+        background-color: var(--#{$prefix}warning-300);
       }
     }
     &.d-timeline-item-primary {
