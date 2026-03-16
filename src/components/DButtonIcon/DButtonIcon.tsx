@@ -56,7 +56,7 @@ export default function DButtonIcon(
     iconFamilyPrefix,
     dataAttributes,
     onClick,
-    'aria-label': ariaLabel,
+    'aria-label': ariaLabelProp,
     ...rest
   }: Props,
 ) {
@@ -89,13 +89,13 @@ export default function DButtonIcon(
     onClick?.(event);
   }, [stopPropagationEnabled, onClick, isDisabled]);
 
-  const newAriaLabel = useMemo(() => {
-    const fallback = ariaLabel || `Button icon ${icon}`;
-    if (loading) {
-      return (loadingAriaLabel || fallback);
-    }
-    return fallback;
-  }, [ariaLabel, loading, icon, loadingAriaLabel]);
+  const ariaLabel = useMemo(
+    () => (
+      loading
+        ? loadingAriaLabel || ariaLabelProp
+        : ariaLabelProp),
+    [loading, loadingAriaLabel, ariaLabelProp],
+  );
 
   if (href) {
     return (
@@ -107,7 +107,7 @@ export default function DButtonIcon(
         className={classNames(generateClasses, className)}
         style={style}
         onClick={clickHandler}
-        aria-label={newAriaLabel}
+        aria-label={ariaLabel}
         aria-disabled={isDisabled}
         {...dataAttributes}
       >
@@ -139,7 +139,7 @@ export default function DButtonIcon(
       style={style}
       disabled={state === 'disabled' || loading}
       onClick={clickHandler}
-      aria-label={newAriaLabel}
+      aria-label={ariaLabel}
       {...dataAttributes}
       {...rest}
     >
