@@ -198,7 +198,7 @@ export const WarningState: Story = {
         </div>
         <div className="d-flex justify-content-between">
           <span className="text-muted">Status:</span>
-          <span className="fw-medium text-warning">Pending</span>
+          <span className="text-muted">Processing payment</span>
         </div>
       </div>
     ),
