@@ -247,7 +247,7 @@ export const Default: Story = {
 
 export const Outline: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4 mt-4">
+    <div className="d-flex flex-wrap gap-4 mt-4 bg-white p-8 rounded">
       {THEMES.map((color) => (
         <DButton key={color} variant="outline" color={color} text={color} />
       ))}
@@ -257,7 +257,7 @@ export const Outline: Story = {
 
 export const Link: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4 mt-4">
+    <div className="d-flex flex-wrap gap-4 mt-4 bg-white p-8 rounded">
       {THEMES.map((color) => (
         <DButton key={color} variant="link" color={color} text={color} />
       ))}
