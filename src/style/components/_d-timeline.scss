@@ -5,6 +5,7 @@
   --#{$prefix}timeline-icon-padding: .25rem;
   --#{$prefix}timeline-icon-color: var(--#{$prefix}gray-600);
   --#{$prefix}timeline-description-color: var(--#{$prefix}gray-500);
+  --#{$prefix}timeline-description-time-color: var(--#{$prefix}gray-500);
   --#{$prefix}timeline-icon-bg: var(--#{$prefix}white);
   position: relative;
 
@@ -64,8 +65,8 @@
     }
 
     .d-timeline-item-time {
-      font-size: .875rem;
-      color: #999;
+      font-size: var(--#{$prefix}fs-small);
+      color: var(--#{$prefix}timeline-description-time-color);
     }
 
     &.d-timeline-item-success {
