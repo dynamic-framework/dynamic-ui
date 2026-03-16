@@ -139,7 +139,7 @@ describe('', () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: '' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Search' }));
     expect(handleIconClick).toHaveBeenCalledWith('query');
   });
 
@@ -155,7 +155,7 @@ describe('', () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: '' }));
+    fireEvent.click(screen.getByRole('button', { name: 'X' }));
     expect(handleIconClick).toHaveBeenCalledWith('query');
   });
 
