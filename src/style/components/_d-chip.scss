@@ -46,7 +46,12 @@
   }
 
   &.d-chip-light {
-    --#{$prefix}chip-color: var(--#{$prefix}gray);
-    --#{$prefix}chip-bg: var(--#{$prefix}gray-100);
+    --#{$prefix}chip-color: var(--#{$prefix}gray-800);
+    --#{$prefix}chip-bg: var(--#{$prefix}gray-25);
+  }
+
+  &.d-chip-dark {
+    --#{$prefix}chip-color: var(--#{$prefix}white);
+    --#{$prefix}chip-bg: var(--#{$prefix}black);
   }
 }

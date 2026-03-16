@@ -184,7 +184,7 @@ export const Dashboard: Story = {
     ),
   ],
   render: () => (
-    <>
+    <div className="bg-primary-25 p-8">
       <div className="d-flex justify-content-between align-items-end mb-8">
         <div>
           <h2 className="mb-0 fw-normal h4">
@@ -362,7 +362,7 @@ export const Dashboard: Story = {
           </DBox>
         </DLayout.Pane>
       </DLayout>
-    </>
+    </div>
   ),
 };
 
@@ -375,7 +375,7 @@ export const Dashboard2: Story = {
     ),
   ],
   render: () => (
-    <>
+    <div className="bg-primary-25 p-8">
       <div className="d-flex justify-content-between align-items-end mb-8">
         <div>
           <h2 className="mb-0 fw-normal h4">
@@ -591,7 +591,7 @@ export const Dashboard2: Story = {
         </DLayout.Pane>
 
       </DLayout>
-    </>
+    </div>
   ),
 };
 
