@@ -244,7 +244,7 @@ export const Default: Story = {
         ))}
       </div>
       <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light variant (for dark backgrounds)</p>
+        <p className="mb-1 mt-8 small">Light (for dark backgrounds)</p>
         <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
           <DButton color="light" text="Light" />
         </div>
@@ -256,7 +256,7 @@ export const Default: Story = {
 export const Outline: Story = {
   render: () => (
     <>
-      <div className="d-flex flex-wrap gap-4 mt-4 bg-white p-8 rounded">
+      <div className="d-flex flex-wrap gap-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
           <DButton key={color} variant="outline" color={color} text={color} />
         ))}
@@ -273,19 +273,19 @@ export const Outline: Story = {
 
 export const Link: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4 mt-4 bg-white p-8 rounded">
+    <>
       <div className="d-flex flex-wrap gap-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
-          <DButton variant="link" key={color} color={color} text={color} />
+          <DButton key={color} variant="link" color={color} text={color} />
         ))}
       </div>
       <div className="mt-4">
-        <p className="mb-1 mt-8 small">Light variant (for dark backgrounds)</p>
+        <p className="mb-1 mt-8 small">Light link (for dark backgrounds)</p>
         <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
-          <DButton color="light" variant="link" text="Light" />
+          <DButton variant="link" color="light" text="Light link" />
         </div>
       </div>
-    </div>
+    </>
   ),
 };
 
