@@ -6,9 +6,9 @@
   // select
   --#{$prefix}select-menu-shadow: #{$box-shadow-sm};
   --#{$prefix}select-menu-z-index: #{$zindex-dropdown};
+  --#{$prefix}select-option-selected-bg: var(--#{$prefix}gray-50);
   --#{$prefix}select-option-focus-bg: var(--#{$prefix}gray-100);
   --#{$prefix}select-option-selected-color: var(--#{$prefix}secondary);
-  --#{$prefix}select-option-selected-bg: unset;
   --#{$prefix}select-option-selected-font-weight: var(--#{$prefix}fw-bold);
   --#{$prefix}select-option-is-checkbox-font-size: var(--#{$prefix}body-font-size);
   --#{$prefix}select-option-is-checkbox-font-weight: var(--#{$prefix}fw-normal);
@@ -28,6 +28,18 @@
 
   --#{$prefix}select-indicator-width: var(--#{$prefix}ref-spacer-5);
   --#{$prefix}select-indicator-height: var(--#{$prefix}ref-spacer-5);
+
+  // checkbox tokens
+  --#{$prefix}select-check-width: 1rem; // 16px
+  --#{$prefix}select-check-height: 1rem; // 16px
+  --#{$prefix}select-check-margin-end: .5rem; // 8px
+  --#{$prefix}select-check-border-width: .0625rem; // 1px
+  --#{$prefix}select-check-border-radius: .125rem; // 2px
+  --#{$prefix}select-check-mark-top: .0625rem; // 1px
+  --#{$prefix}select-check-mark-left: .25rem; // 4px
+  --#{$prefix}select-check-mark-width: .375rem; // 6px
+  --#{$prefix}select-check-mark-height: .625rem; // 10px
+  --#{$prefix}select-check-mark-border-width: .125rem; // 2px
 
   // focus
   &:focus-within {
@@ -148,6 +160,7 @@
     padding: $input-padding-y $input-padding-x;
   }
 
+  .d-select__option--is-selected.d-select__option--is-focused,
   .d-select__option--is-focused {
     background: var(--#{$prefix}select-option-focus-bg);
   }
@@ -155,6 +168,7 @@
   .d-select__option--is-selected {
     font-weight: var(--#{$prefix}select-option-selected-font-weight);
     color: var(--#{$prefix}select-option-selected-color);
+    background: var(--#{$prefix}select-option-selected-bg);
   }
 
   // select multi control
@@ -239,28 +253,28 @@
     display: inline-block;
 
     flex-shrink: 0;
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
+    width: var(--#{$prefix}select-check-width);
+    height: var(--#{$prefix}select-check-height);
+    margin-right: var(--#{$prefix}select-check-margin-end);
     background: $input-bg;
 
-    border: 1px solid var(--#{$prefix}input-border-color);
-    border-radius: 2px;
+    border: var(--#{$prefix}select-check-border-width) solid var(--#{$prefix}input-border-color);
+    border-radius: var(--#{$prefix}select-check-border-radius);
   }
 
   /* checkmark */
   .d-select__check::after {
     position: absolute;
 
-    top: 1px;
-    left: 4px;
+    top: var(--#{$prefix}select-check-mark-top);
+    left: var(--#{$prefix}select-check-mark-left);
 
-    width: 6px;
-    height: 10px;
+    width: var(--#{$prefix}select-check-mark-width);
+    height: var(--#{$prefix}select-check-mark-height);
     content: "";
 
-    border-right: 2px solid #fff;
-    border-bottom: 2px solid #fff;
+    border-right: var(--#{$prefix}select-check-mark-border-width) solid var(--bs-white);
+    border-bottom: var(--#{$prefix}select-check-mark-border-width) solid var(--bs-white);
 
     opacity: 0;
 
@@ -268,7 +282,7 @@
     transform-origin: center;
   }
 
-  /* estado seleccionado */
+  /* selected state */
   .d-select__check--selected {
     background: var(--#{$prefix}primary-500);
     border-color: var(--#{$prefix}primary-500);
