@@ -84,7 +84,6 @@
 // scss-docs-start df-btn-link-variant-variables-mixin
 @mixin df-button-link-variant-variables(
   $color-name,
-  // $default-color: var(--#{$prefix}#{$color-name}-500),
   $default-color: if($color-name == "warning", var(--#{$prefix}#{$color-name}-700), var(--#{$prefix}#{$color-name}-500)),
   $hover-text-color: var(--#{$prefix}#{$color-name}-600),
   $focus-text-color: var(--#{$prefix}#{$color-name}-600),
