@@ -1,4 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import { Unstyled } from '@storybook/blocks';
 
 import { DAlert } from '../../src/components';
 
@@ -8,11 +9,13 @@ import { DAlert } from '../../src/components';
 
 # CSS Distribution & Customization
 
-<DAlert color="info">
-  Starting from version 2.3.0, only `dynamic-ui.css` and `dynamic-ui.min.css` are distributed.
-  The previous variants `dynamic-ui-root.css` and `dynamic-ui-non-root.css`
-  have been removed to simplify upgrades and avoid desynchronization issues.
-</DAlert>
+<Unstyled>
+  <DAlert color="info">
+    Starting from version 2.3.0, only `dynamic-ui.css` and `dynamic-ui.min.css` are distributed.
+    The previous variants `dynamic-ui-root.css` and `dynamic-ui-non-root.css`
+    have been removed to simplify upgrades and avoid desynchronization issues.
+  </DAlert>
+</Unstyled>
 
 ### How to Customize
 
