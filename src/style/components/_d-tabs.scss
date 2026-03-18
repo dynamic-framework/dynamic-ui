@@ -30,7 +30,7 @@
     border-radius: var(--#{$prefix}toggle-button-group-border-radius);
   }
   .nav-link.active {
-    font-weight: var(--#{$prefix}fw-semibold);
+    font-weight: var(--#{$prefix}fw-normal);
     color: var(--#{$prefix}toggle-button-group-link-active-color);
     background: var(--#{$prefix}toggle-button-group-link-active-bg);
   }
