@@ -9,7 +9,7 @@ import { DAlert } from '../../src/components';
 # CSS Distribution & Customization
 
 <DAlert color="info">
-  Starting from version 2.3.0, only `dynamic-ui.css` and `dynamic-ui.min.css` are distributed. 
+  Starting from version 2.3.0, only `dynamic-ui.css` and `dynamic-ui.min.css` are distributed.
   The previous variants `dynamic-ui-root.css` and `dynamic-ui-non-root.css` 
   have been removed to simplify upgrades and avoid desynchronization issues.
 </DAlert>
@@ -17,17 +17,17 @@ import { DAlert } from '../../src/components';
 ### How to Customize
 
 1. **Include the main CSS:**
-  ```html 
-  <link rel="stylesheet" href="/path/to/dynamic-ui.css" />
+  ```html
+    <link rel="stylesheet" href="/path/to/dynamic-ui.css" />
   ```
 2. **Override variables:**
   Add your own stylesheet or snippet after the main CSS to override any design tokens or variables:
   ```css
-  :root {
-    --bs-primary: #ff0055;
-    --bs-body-font-family: 'Montserrat', sans-serif;
-    /* ...other overrides... */
-  }
+    :root {
+      --bs-primary: #ff0055;
+      --bs-body-font-family: 'Montserrat', sans-serif;
+      /* ...other overrides... */
+    }
   ```
 3. **Safe upgrades:**
   All default variables are included in the main bundle, so new tokens are available automatically and removed ones do not break the theme.
