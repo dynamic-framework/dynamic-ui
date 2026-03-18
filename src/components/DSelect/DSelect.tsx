@@ -151,7 +151,6 @@ function DSelect<
         )}
         <Select<Option, IsMulti, Group>
           id={`${id}Container`}
-          instanceId="d-select"
           inputId={id}
           aria-label={ariaLabel}
           styles={{
