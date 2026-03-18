@@ -16,7 +16,7 @@ export default function DSelectOptionCheck<
     <components.Option<Option, IsMulti, Group>
       {...props}
       isSelected={isSelected}
-      className={classNames('d-select__option', 'd-select__option--is-checkbox')}
+      className={classNames('d-select__option')}
     >
       <span
         className={classNames('d-select__check', {
