@@ -167,7 +167,11 @@ function DTabs(
           {options.map((option, idx) => {
             const isTabSelected = !!option.tab && option.tab === selected;
             return (
-              <li role="presentation" key={option.tab}>
+              <li
+                role="presentation"
+                key={option.tab}
+                className="nav-item"
+              >
                 <button
                   ref={tabRefs.current[idx]}
                   id={`${option.tab}Tab`}
