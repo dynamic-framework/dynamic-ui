@@ -100,8 +100,8 @@ export default function DCollapse(
           {Component}
         </div>
         <DIcon
-          color="gray"
-          size="1rem"
+          color="primary"
+          size="1.25rem"
           icon={collapsed ? iconOpen : iconClose}
           familyClass={iconFamilyClass}
           familyPrefix={iconFamilyPrefix}
