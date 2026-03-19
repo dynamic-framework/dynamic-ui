@@ -163,6 +163,18 @@ export const WithBreakpoints: Story = {
 };
 
 export const AutoplayAndLoop: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+The <code>autoplay</code> works automatically if reduced motion is not enabled on the device.
+
+If you need to force autoplay, you can enable it explicitly by setting <code>options: { reducedMotion: { autoplay: true } }</code>.
+        `
+        ,
+      },
+    },
+  },
   render: (args) => (
     <DCarousel
       {...args}
