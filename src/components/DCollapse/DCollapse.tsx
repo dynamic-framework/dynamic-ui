@@ -11,11 +11,10 @@ import type {
   ReactNode,
 } from 'react';
 
-import { PREFIX_BS } from '../config';
 import DIcon from '../DIcon';
 
 import { useDContext } from '../../contexts';
-import type { BaseProps, CustomStyles, FamilyIconProps } from '../interface';
+import type { BaseProps, FamilyIconProps } from '../interface';
 
 type Props =
   & BaseProps
@@ -23,7 +22,6 @@ type Props =
   & PropsWithChildren<{
     id?: string;
     Component: ReactElement<unknown> | ReactNode;
-    hasSeparator?: boolean;
     /**
      * Reactive prop for controlled and uncontrolled mode.
      *
@@ -42,7 +40,6 @@ export default function DCollapse(
     className,
     style,
     Component,
-    hasSeparator = false,
     defaultCollapsed = true,
     onChange,
     children,
@@ -80,10 +77,6 @@ export default function DCollapse(
   const iconOpen = useMemo(() => iconOpenProp || chevronDown, [chevronDown, iconOpenProp]);
   const iconClose = useMemo(() => iconCloseProp || chevronUp, [chevronUp, iconCloseProp]);
 
-  const generateStyles = useMemo<CustomStyles>(() => ({
-    [`--${PREFIX_BS}collapse-separator-display`]: hasSeparator ? 'block' : 'none',
-  }), [hasSeparator]);
-
   return (
     <div
       id={id}
@@ -108,16 +101,15 @@ export default function DCollapse(
           materialStyle={iconMaterialStyle}
         />
       </button>
-      {!collapsed && (
-        <div
-          className={classNames({
-            'collapse-body': true,
-          })}
-          style={generateStyles}
-        >
+      <div
+        className={classNames('collapse-body-wrapper', {
+          show: !collapsed,
+        })}
+      >
+        <div className="collapse-body">
           {children}
         </div>
-      )}
+      </div>
     </div>
   );
 }
