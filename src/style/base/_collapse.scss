@@ -14,6 +14,8 @@
   --#{$prefix}collapse-separator-display: none;
   --#{$prefix}collapse-separator-height: 1px;
   --#{$prefix}collapse-separator-bg: var(--#{$prefix}gray-200);
+  --#{$prefix}collapse-interpolate-size: allow-keywords;
+  --#{$prefix}collapse-transition: all ease-in-out .3s allow-discrete;
 
   background-color: var(--#{$prefix}collapse-bg);
   border-radius: var(--#{$prefix}collapse-border-radius);
@@ -40,15 +42,26 @@
     position: relative;
     padding: var(--#{$prefix}collapse-body-padding-y) var(--#{$prefix}collapse-body-padding-x);
     padding-top: 0;
+  }
 
-    &::before {
-      position: absolute;
-      top: 0;
-      display: var(--#{$prefix}collapse-separator-display);
-      width: calc(100% - (var(--#{$prefix}collapse-body-padding-x) * 2));
-      height: var(--#{$prefix}collapse-separator-height);
-      content: " ";
-      background-color: var(--#{$prefix}collapse-separator-bg);
+  .collapse-body-wrapper {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: var(--#{$prefix}collapse-transition);
+    interpolate-size: var(--#{$prefix}collapse-interpolate-size);
+    &.show {
+      display: block;
+      height: auto;
+      opacity: 1;
     }
   }
+
+  @starting-style {
+    .collapse-body-wrapper.show {
+      height: 0;
+      opacity: 0;
+    }
+  }
+
 }
