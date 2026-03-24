@@ -63,6 +63,7 @@ type Props =
   showHeaderSelectors?: boolean;
   formatHeaderDate?: string;
   locale?: Locale,
+  ariaLabelInputTime?: string;
 };
 
 export default function DDatePicker(
@@ -70,6 +71,7 @@ export default function DDatePicker(
     inputLabel,
     inputHint,
     inputAriaLabel,
+    ariaLabelInputTime,
     inputActionAriaLabel = 'open calendar',
     inputId = 'input-calendar',
     timeId = 'input-time',
@@ -164,7 +166,10 @@ export default function DDatePicker(
         />
       )}
       customTimeInput={(
-        <DDatePickerTime id={timeId} />
+        <DDatePickerTime
+          id={timeId}
+          aria-label={ariaLabelInputTime}
+        />
       )}
     />
   );

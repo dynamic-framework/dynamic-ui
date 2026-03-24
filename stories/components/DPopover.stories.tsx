@@ -44,26 +44,8 @@ function ButtonRenderComponent(toggle: boolean) {
       className="w-100"
       text="Popover on bottom"
       iconEnd={`${toggle ? 'ChevronUp' : 'ChevronDown'}`}
-      stopPropagationEnabled={false}
     />
   );
-}
-
-function CodeComponent(position: string, adjustContentToRender?: boolean) {
-  return `
-<DPopover renderComponent={(toggle: boolean) => (
-  <DButton
-    text="Popover on ${position}"
-    iconEnd={\`\${toggle ? 'ChevronUp' : 'ChevronDown'}\`}
-    stopPropagationEnabled={false}
-    ${adjustContentToRender ? 'adjustContentToRender' : ''}
-  />
-)}>
-  <DCard>
-    <DCard.Body>${position} popover</DCard.Body>
-  </DCard>
-</DPopover>
-  `;
 }
 
 export const Default: Story = {
@@ -78,16 +60,6 @@ export const Default: Story = {
   ),
   args: {
     renderComponent: ButtonRenderComponent,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: CodeComponent('Bottom'),
-      },
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
   },
 };
 
@@ -104,47 +76,5 @@ export const AdjustToContent: Story = {
   args: {
     adjustContentToRender: true,
     renderComponent: ButtonRenderComponent,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: CodeComponent('Bottom'),
-      },
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
-  },
-};
-
-export const Plain: Story = {
-  render: () => (
-    <DPopover
-      open={false}
-      renderComponent={() => (
-        <h4>Click me</h4>
-      )}
-    >
-      Plain popover
-    </DPopover>
-  ),
-  parameters: {
-    docs: {
-      source: {
-        code: `
-<DPopover
-  open={false}
-  renderComponent={() => (
-    <h4>Click me</h4>
-  )}
->
-  Plain popover
-</DPopover>
-        `,
-      },
-      canvas: {
-        sourceState: 'shown',
-      },
-    },
   },
 };
