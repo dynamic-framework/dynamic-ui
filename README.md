@@ -20,6 +20,14 @@ npm install @dynamic-framework/ui-react
 
 For more details, visit the [npm package page](https://www.npmjs.com/package/@dynamic-framework/ui-react).
 
+### CSS Distribution Change
+
+> **Important:** Starting from version 2.3.0, only `dynamic-ui.css` and `dynamic-ui.min.css` are distributed. The previous variants `dynamic-ui-root.css` and `dynamic-ui-non-root.css` have been removed to simplify upgrades and avoid desynchronization issues.
+
+- To customize design tokens or variables, include `dynamic-ui.css` and override the variables you need in your own stylesheet or snippet.
+- All default variables are included in the main bundle, ensuring safe upgrades and consistent behavior.
+- For advanced customization, refer to the [Storybook design tokens documentation](https://react.dynamicframework.dev/) and [docs.modyo.com](https://docs.modyo.com/en/dynamic/).
+
 ### Development Commands
 
 For local development and testing, you can use the following commands after clone the project:

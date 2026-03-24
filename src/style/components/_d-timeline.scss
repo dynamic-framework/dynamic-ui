@@ -4,7 +4,8 @@
   --#{$prefix}timeline-icon-size: 1rem;
   --#{$prefix}timeline-icon-padding: .25rem;
   --#{$prefix}timeline-icon-color: var(--#{$prefix}gray-600);
-  --#{$prefix}timeline-description-color: var(--#{$prefix}gray-400);
+  --#{$prefix}timeline-description-color: var(--#{$prefix}gray-500);
+  --#{$prefix}timeline-description-time-color: var(--#{$prefix}gray-500);
   --#{$prefix}timeline-icon-bg: var(--#{$prefix}white);
   position: relative;
 
@@ -64,8 +65,8 @@
     }
 
     .d-timeline-item-time {
-      font-size: .875rem;
-      color: #999;
+      font-size: var(--#{$prefix}fs-small);
+      color: var(--#{$prefix}timeline-description-time-color);
     }
 
     &.d-timeline-item-success {
@@ -82,8 +83,8 @@
     }
     &.d-timeline-item-warning {
       .d-timeline-item-icon {
-        color: var(--#{$prefix}white);
-        background-color: var(--#{$prefix}warning-500);
+        color: var(--#{$prefix}warning-800);
+        background-color: var(--#{$prefix}warning-300);
       }
     }
     &.d-timeline-item-primary {

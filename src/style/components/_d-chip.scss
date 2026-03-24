@@ -37,7 +37,7 @@
     border: 0;
   }
 
-  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
+  @each $theme, $value in map-remove($theme-colors, "light", "dark", "warning") {
     $color: color-contrast($value);
     &.d-chip-#{$theme} {
       --#{$prefix}chip-color: var(--#{$prefix}#{$theme}-700);
@@ -45,8 +45,18 @@
     }
   }
 
+  &.d-chip-warning {
+    --#{$prefix}chip-color: var(--#{$prefix}warning-800);
+    --#{$prefix}chip-bg: var(--#{$prefix}warning-100);
+  }
+
   &.d-chip-light {
-    --#{$prefix}chip-color: var(--#{$prefix}gray);
-    --#{$prefix}chip-bg: var(--#{$prefix}gray-100);
+    --#{$prefix}chip-color: var(--#{$prefix}gray-800);
+    --#{$prefix}chip-bg: var(--#{$prefix}gray-25);
+  }
+
+  &.d-chip-dark {
+    --#{$prefix}chip-color: var(--#{$prefix}white);
+    --#{$prefix}chip-bg: var(--#{$prefix}black);
   }
 }

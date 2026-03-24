@@ -73,3 +73,5 @@ dist-transpiled
 .developers
 
 AGENTS.md
+
+scripts/a11y-reports*
