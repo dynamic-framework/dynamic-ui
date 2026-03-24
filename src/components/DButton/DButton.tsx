@@ -65,6 +65,7 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     target,
     rel,
     href,
+    'aria-label': ariaLabelProp,
     ...rest
   } = props;
 
@@ -102,12 +103,13 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     };
   }, [variant, color, loading, resolvedSize]);
 
-  const ariaLabel = useMemo(() => {
-    const ariaLabelProp = rest['aria-label'];
-    return loading
-      ? loadingAriaLabel || ariaLabelProp || text
-      : ariaLabelProp || text;
-  }, [loading, loadingAriaLabel, rest, text]);
+  const ariaLabel = useMemo(
+    () => (
+      loading
+        ? loadingAriaLabel || ariaLabelProp || text
+        : ariaLabelProp || text),
+    [loading, loadingAriaLabel, text, ariaLabelProp],
+  );
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {

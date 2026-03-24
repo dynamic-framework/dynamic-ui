@@ -2,10 +2,8 @@
 .nav-tabs,
 .nav-underline {
   --#{$prefix}nav-tabs-border-color: #{$nav-tabs-border-color};
-  --#{$prefix}nav-tabs-nav-gap: #{$nav-nav-gap};
   --#{$prefix}nav-link-padding-x: #{$nav-link-padding-x};
   --#{$prefix}nav-link-padding-y: #{$nav-link-padding-y};
-  --#{$prefix}nav-tabs-link-border-active-font-weight: #{$nav-link-border-active-font-weight};
   --#{$prefix}nav-link-hover-bg: #{$nav-link-hover-bg};
   --#{$prefix}nav-link-hover-color: #{$nav-link-hover-color};
 
@@ -48,6 +46,9 @@
   .nav-link {
     padding: var(--#{$prefix}nav-link-padding-y) var(--#{$prefix}nav-link-padding-x);
     border-bottom: var(--#{$prefix}nav-underline-border-width) solid var(--#{$prefix}nav-underline-border-color);
+    &.active {
+      font-weight: var(--#{$prefix}fw-normal);
+    }
   }
 }
 

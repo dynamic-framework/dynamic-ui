@@ -37,6 +37,7 @@ SelectProps<Option, IsMulti, Group>,
 | 'isMulti'
 > & {
   label?: string;
+  ariaLabel?: string;
   hint?: string;
   invalid?: boolean;
   valid?: boolean;
@@ -91,6 +92,7 @@ function DSelect<
     onIconStartClick,
     onIconEndClick,
     dataAttributes,
+    ariaLabel = 'Search for an option',
     ...props
   }: Props<Option, IsMulti, Group>,
 ) {
@@ -150,6 +152,7 @@ function DSelect<
         <Select<Option, IsMulti, Group>
           id={`${id}Container`}
           inputId={id}
+          aria-label={ariaLabel}
           styles={{
             control: (base) => ({
               ...base,

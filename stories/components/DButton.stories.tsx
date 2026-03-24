@@ -237,31 +237,55 @@ export const Example: Story = {
 
 export const Default: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4">
-      {THEMES.map((color) => (
-        <DButton key={color} color={color} text={color} />
-      ))}
-    </div>
+    <>
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton key={color} color={color} text={color} />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButton color="light" text="Light" />
+        </div>
+      </div>
+    </>
   ),
 };
 
 export const Outline: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4 mt-4">
-      {THEMES.map((color) => (
-        <DButton key={color} variant="outline" color={color} text={color} />
-      ))}
-    </div>
+    <>
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton key={color} variant="outline" color={color} text={color} />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light outline (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButton variant="outline" color="light" text="Light Outline" />
+        </div>
+      </div>
+    </>
   ),
 };
 
 export const Link: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4 mt-4">
-      {THEMES.map((color) => (
-        <DButton key={color} variant="link" color={color} text={color} />
-      ))}
-    </div>
+    <>
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton key={color} variant="link" color={color} text={color} />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light link (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButton variant="link" color="light" text="Light link" />
+        </div>
+      </div>
+    </>
   ),
 };
 

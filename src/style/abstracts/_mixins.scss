@@ -43,12 +43,12 @@
 // scss-docs-start df-btn-outline-variant-variables-mixin
 @mixin df-button-outline-variant-variables(
   $color-name,
-  $default-color: var(--#{$prefix}#{$color-name}-500),
+  $default-color: if($color-name == "warning", var(--#{$prefix}#{$color-name}-700), var(--#{$prefix}#{$color-name}-500)),
   $default-border-color: $default-color,
-  $hover-color: var(--#{$prefix}#{$color-name}-600),
+  $hover-color: if($color-name == "warning", var(--#{$prefix}#{$color-name}-800), var(--#{$prefix}#{$color-name}-600)),
   $hover-border-color: $hover-color,
   $focus-color: $hover-color,
-  $active-color: var(--#{$prefix}#{$color-name}-700),
+  $active-color: if($color-name == "warning", var(--#{$prefix}#{$color-name}-900), var(--#{$prefix}#{$color-name}-700)),
   $active-border-color: $active-color,
   $disabled-opacity: $btn-disabled-opacity,
   $box-shadow: $btn-box-shadow,
@@ -84,7 +84,7 @@
 // scss-docs-start df-btn-link-variant-variables-mixin
 @mixin df-button-link-variant-variables(
   $color-name,
-  $default-color: var(--#{$prefix}#{$color-name}-500),
+  $default-color: if($color-name == "warning", var(--#{$prefix}#{$color-name}-700), var(--#{$prefix}#{$color-name}-500)),
   $hover-text-color: var(--#{$prefix}#{$color-name}-600),
   $focus-text-color: var(--#{$prefix}#{$color-name}-600),
   $active-text-color: var(--#{$prefix}#{$color-name}-700),

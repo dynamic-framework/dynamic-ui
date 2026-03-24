@@ -160,11 +160,19 @@ export const ResponsiveSizes: Story = {
 
 export const AllColors: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-      {THEMES.map((theme) => (
-        <DBadge key={theme} color={theme} text={theme} />
-      ))}
-    </div>
+    <>
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        {THEMES.filter((theme) => theme !== 'light').map((theme) => (
+          <DBadge key={theme} color={theme} text={theme} />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light variant (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DBadge color="light" text="Light" />
+        </div>
+      </div>
+    </>
   ),
   parameters: {
     docs: {

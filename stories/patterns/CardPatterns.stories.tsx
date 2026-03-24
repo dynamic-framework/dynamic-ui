@@ -146,7 +146,7 @@ export const InvestmentPortfolio: Story = {
 
 export const Plan: Story = {
   render: () => (
-    <div className="p-8">
+    <div className="p-8 bg-primary-25">
       <div
         className="grid gap-4"
         style={{ '--bs-columns': '3' } as CSSProperties}

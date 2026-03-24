@@ -265,6 +265,7 @@ export const Secondary: Story = {
     variant: 'outline',
     loading: false,
     icon: 'ArrowLeft',
+    'aria-label': 'Go back',
   },
 };
 
@@ -276,6 +277,7 @@ export const Link: Story = {
     variant: 'link',
     loading: false,
     icon: 'ArrowLeft',
+    'aria-label': 'Go back',
   },
 };
 
@@ -286,6 +288,7 @@ export const AsAnchor: Story = {
     href: 'https://dynamicframework.dev',
     target: '_blank',
     rel: 'noopener noreferrer',
+    'aria-label': 'Open page in new tab',
   },
 };
 
