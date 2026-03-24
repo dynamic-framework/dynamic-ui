@@ -27,7 +27,7 @@ describe('<DInputPin />', () => {
               id="myPin"
             >
               <input
-                aria-describedby="myPinState"
+                aria-label="Pin character number 1 of 4"
                 autocomplete="off"
                 class="form-control"
                 id="pinIndex0"
@@ -39,7 +39,7 @@ describe('<DInputPin />', () => {
                 value=""
               />
               <input
-                aria-describedby="myPinState"
+                aria-label="Pin character number 2 of 4"
                 autocomplete="off"
                 class="form-control"
                 id="pinIndex1"
@@ -51,7 +51,7 @@ describe('<DInputPin />', () => {
                 value=""
               />
               <input
-                aria-describedby="myPinState"
+                aria-label="Pin character number 3 of 4"
                 autocomplete="off"
                 class="form-control"
                 id="pinIndex2"
@@ -63,7 +63,7 @@ describe('<DInputPin />', () => {
                 value=""
               />
               <input
-                aria-describedby="myPinState"
+                aria-label="Pin character number 4 of 4"
                 autocomplete="off"
                 class="form-control"
                 id="pinIndex3"

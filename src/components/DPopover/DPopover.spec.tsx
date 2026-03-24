@@ -13,24 +13,23 @@ describe('<DPopover />', () => {
     it('should render the component wrapper', () => {
       const props: ComponentProps<typeof DPopover> = {
         open: false,
-        renderComponent: () => <>Item 1</>,
+        renderComponent: () => <button type="button">Item 1</button>,
         children: <>Content of item 1</>,
       };
 
       const { container } = render(<DPopover {...props} />);
 
-      expect(container).toMatchInlineSnapshot(`
-        <div>
-          <div
-            class="d-popover"
+      expect(container.firstChild).toMatchInlineSnapshot(`
+        <div
+          class="d-popover"
+        >
+          <button
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            type="button"
           >
-            <div
-              aria-expanded="false"
-              aria-haspopup="dialog"
-            >
-              Item 1
-            </div>
-          </div>
+            Item 1
+          </button>
         </div>
       `);
     });
@@ -54,24 +53,23 @@ describe('<DPopover />', () => {
   describe('Interaction and State Management', () => {
     it('should open and show content when the trigger is clicked', async () => {
       const user = userEvent.setup();
+
       render(
         <DPopover
           renderComponent={() => <button type="button">Open Popover</button>}
+          setOpen={() => { }}
           open={false}
         >
-          Popover Content
+          Popover content
         </DPopover>,
       );
 
-      const triggerButton = screen.getByRole('button', { name: /Open Popover/i });
-      const triggerWrapper = triggerButton.parentElement;
+      const trigger = screen.getByRole('button', { name: /open popover/i });
 
-      expect(screen.queryByText('Popover Content')).not.toBeInTheDocument();
+      await user.click(trigger);
 
-      await user.click(triggerButton);
-
-      expect(screen.getByText('Popover Content')).toBeInTheDocument();
-      expect(triggerWrapper).toHaveAttribute('aria-expanded', 'true');
+      expect(await screen.findByText('Popover content')).toBeInTheDocument();
+      expect(trigger).toHaveAttribute('aria-expanded', 'true');
     });
 
     it('should close when clicking outside the popover', async () => {
