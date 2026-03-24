@@ -19,7 +19,7 @@ To understand in more detail the aspects covered by this component, review the f
 + [Splide React Integration](https://splidejs.com/integration/react-splide/)
 
 ## CSS Variables
-| Variable                                         | Class       | Type            | Description                   |
+| Variable                                         | className       | Type            | Description                   |
 |--------------------------------------------------|-------------|-----------------|-------------------------------|
 | --${PREFIX_BS}carousel-arrow-space               | .d-carousel | css length unit | Arrow separation              |
 | --${PREFIX_BS}carousel-pagination-bottom         | .d-carousel | css length unit | Pagination bottom separation  |
@@ -163,6 +163,18 @@ export const WithBreakpoints: Story = {
 };
 
 export const AutoplayAndLoop: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `
+The <code>autoplay</code> works automatically if reduced motion is not enabled on the device.
+
+If you need to force autoplay, you can enable it explicitly by setting <code>options: { reducedMotion: { autoplay: true } }</code>.
+        `
+        ,
+      },
+    },
+  },
   render: (args) => (
     <DCarousel
       {...args}
