@@ -2,19 +2,7 @@
 
 // scss-docs-start carousel-variables
 $carousel-control-color: var(--#{$prefix}white) !default;
-$carousel-indicator-bg: var(--#{$prefix}primary-100) !default;
-$carousel-indicator-border: 1px solid var(--#{$prefix}primary-200) !default;
-$carousel-indicator-width: 16px !default;
-$carousel-indicator-height: 16px !default;
-$carousel-indicator-radius: 100px !default;
-$carousel-indicator-active-width: 26px !default;
-$carousel-indicator-active-bg: var(--#{$prefix}primary) !default;
-$carousel-indicator-active-border: var(--#{$prefix}primary) !default;
-$carousel-indicator-hover-bg: var(--#{$prefix}primary-200) !default;
-$carousel-control-bg: var(--#{$prefix}primary) !default;
-$carousel-control-width: 24px !default;
-$carousel-control-height: 24px !default;
-$carousel-control-radius: 48px !default;
+$carousel-indicator-active-bg: var(--#{$prefix}white) !default;
 $carousel-caption-color: var(--#{$prefix}white) !default;
 // scss-docs-end carousel-variables
 

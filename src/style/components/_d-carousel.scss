@@ -5,8 +5,8 @@
   --#{$prefix}carousel-arrow-space: calc(var(--#{$prefix}ref-spacer-4) * -1);
   // Pagination
   --#{$prefix}carousel-pagination-bottom: auto;
-  --#{$prefix}carousel-pagination-page-bg: var(--#{$prefix}primary-100);
-  --#{$prefix}carousel-pagination-active-page-bg: var(--#{$prefix}primary);
+  --#{$prefix}carousel-pagination-page-bg: var(--#{$prefix}secondary-100);
+  --#{$prefix}carousel-pagination-active-page-bg: var(--#{$prefix}secondary);
   // :focus
   --#{$prefix}carousel-focus-outline-color: var(--#{$prefix}focus-ring-color);
 
@@ -22,36 +22,14 @@
   // stylelint-disable
   .splide__pagination__page {
     margin: 0;
-    border: $carousel-indicator-border;
-    width: $carousel-indicator-width;
-    height: $carousel-indicator-width;
-    border-radius: $carousel-indicator-radius;
-    opacity: 1;
-    transition: 0.3s;
-  }
-
-  .splide__pagination__page.is-active {
-    background: $carousel-indicator-active-width;
-    width: $carousel-indicator-active-width;
-    border-color: $carousel-indicator-active-bg;
-    transform: none;
-  }
-
-  .splide__arrow {
-    width: $carousel-control-height;
-    height: $carousel-control-height;
-    background: var(--#{$prefix}primary);
-    padding: var(--#{$prefix}ref-spacer-1);
-    svg {
-      filter: invert(1);
-    }
   }
 
   .d-carousel-pagination {
     bottom: var(--#{$prefix}carousel-pagination-bottom);
     position: relative;
-    margin-top: var(--#{$prefix}--#{$prefix}ref-spacer-4);
+    top: -0.5rem;
     width: fit-content;
+    background: var(--#{$prefix}gray-25);
     padding: var(--#{$prefix}ref-spacer-2) var(--#{$prefix}ref-spacer-4);
     border-radius: var(--#{$prefix}border-radius-lg);
     margin: auto;
