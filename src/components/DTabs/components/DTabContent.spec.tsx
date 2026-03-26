@@ -77,6 +77,6 @@ describe('DTabContent component', () => {
 
     const tabPanel = screen.getByRole('tabpanel');
     expect(tabPanel).toHaveClass('custom-class');
-    expect(tabPanel).toHaveStyle('color: red');
+    expect(tabPanel).toHaveStyle('color: rgb(255, 0, 0)');
   });
 });

@@ -25,6 +25,6 @@ describe('<DToastBody />', () => {
     const style = { backgroundColor: 'red' };
     render(<DToastBody style={style}>Content body</DToastBody>);
     const toast = screen.getByText('Content body');
-    expect(toast).toHaveStyle('background-color: red');
+    expect(toast).toHaveStyle('background-color: rgb(255, 0, 0)');
   });
 });

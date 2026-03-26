@@ -21,7 +21,7 @@ describe('DLayout', () => {
 
   it('should apply custom style', () => {
     const { container } = render(<DLayout style={{ color: 'red' }}>Hello</DLayout>);
-    expect(container.firstChild).toHaveStyle('color: red');
+    expect(container.firstChild).toHaveStyle('color: rgb(255, 0, 0)');
   });
 
   it('should pass dataAttributes', () => {

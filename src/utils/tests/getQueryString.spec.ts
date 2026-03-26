@@ -2,12 +2,11 @@ import getQueryString from '../getQueryString';
 
 describe('getQueryString', () => {
   beforeEach(() => {
-    Object.defineProperty(window, 'location', {
-      configurable: true,
-      value: {
-        search: '?foo=bar&baz=qux',
-      },
-    });
+    window.history.replaceState({}, '', '?foo=bar&baz=qux');
+  });
+
+  afterEach(() => {
+    window.history.replaceState({}, '', '/');
   });
 
   it('should return value for existing param', () => {

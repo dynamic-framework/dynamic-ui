@@ -44,7 +44,7 @@ describe('<DCurrencyText />', () => {
 
     const element = screen.getByText('$100.00');
     expect(element).toHaveClass('test-class');
-    expect(element).toHaveStyle('color: red');
+    expect(element).toHaveStyle('color: rgb(255, 0, 0)');
   });
 
   it('should spread data attributes', () => {
