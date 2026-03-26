@@ -3,6 +3,8 @@ import {
   useEffect,
   useMemo,
   useState,
+  cloneElement,
+  isValidElement,
 } from 'react';
 import classNames from 'classnames';
 import {
@@ -19,17 +21,12 @@ import {
   useId,
 } from '@floating-ui/react';
 
-import type { PropsWithChildren, ReactElement } from 'react';
+import type { ReactElement, HTMLProps, PropsWithChildren } from 'react';
 import type { BaseProps } from '../interface';
 import { PREFIX_BS } from '../config';
 
 type Props = BaseProps & PropsWithChildren<{
-  /**
-   * Component to render in call to action
-   * @param {boolean} open
-   * @returns {React.ReactElement}
-   */
-  renderComponent: (open: boolean) => ReactElement<unknown>;
+  renderComponent: (open: boolean) => ReactElement;
   open: boolean;
   setOpen?: (open: boolean) => void;
   adjustContentToRender?: boolean;
@@ -55,9 +52,7 @@ export default function DPopover(
 
   const onOpenChange = useCallback((value: boolean) => {
     setIsOpen(value);
-    if (setOpen) {
-      setOpen(value);
-    }
+    setOpen?.(value);
   }, [setOpen]);
 
   const {
@@ -94,18 +89,25 @@ export default function DPopover(
     }),
   }), [style, adjustContentToRender]);
 
+  const triggerElement = renderComponent(isOpen) as ReactElement<HTMLProps<Element>>;
+
+  if (!isValidElement(triggerElement)) {
+    throw new Error('renderComponent must return a valid React element');
+  }
+
+  const reference = cloneElement(triggerElement, {
+    ref: refs.setReference,
+    ...getReferenceProps(triggerElement.props),
+  });
+
   return (
     <div
       className={classNames('d-popover', className)}
       style={generateStyleVariables}
       {...dataAttributes}
     >
-      <div
-        ref={refs.setReference}
-        {...getReferenceProps()}
-      >
-        {renderComponent(isOpen)}
-      </div>
+      {reference}
+
       {isOpen && (
         <FloatingFocusManager context={context} modal={false}>
           <div

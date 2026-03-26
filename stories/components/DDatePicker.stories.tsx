@@ -538,6 +538,7 @@ export const WithTimeInput: Story = {
     showTimeInput: true,
     timeInputLabel: 'Select time',
     dateFormat: 'dd/MM/yyyy h:mm aa',
+    ariaLabelInputTime: 'Select an hour for the selected date',
   },
 };
 

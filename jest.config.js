@@ -1,12 +1,8 @@
-const { createDefaultPreset } = require('ts-jest');
-
 module.exports = {
   verbose: true,
   testEnvironment: 'jsdom',
   transform: {
-    ...createDefaultPreset().transform,
-    '^.+\\.[jt]sx?$': 'babel-jest',
-    '^.+\\.tsx?$': [
+    '^.+\\.[jt]sx?$': [
       'ts-jest',
       {
         tsconfig: '<rootDir>/tsconfig.spec.json',

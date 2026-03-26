@@ -209,41 +209,73 @@ function DInput(
           </div>
         )}
         {iconStart && (
-          <button
-            type="button"
-            className="input-group-text"
-            id={`${id}Start`}
-            onClick={handleOnIconStartClick}
-            disabled={disabled || loading || iconStartDisabled}
-            aria-label={iconStartAriaLabel}
-            tabIndex={onIconStartClick ? iconStartTabIndex : -1}
-          >
-            <DIcon
-              icon={iconStart}
-              familyClass={iconStartFamilyClass}
-              familyPrefix={iconStartFamilyPrefix}
-              materialStyle={iconStartMaterialStyle}
-            />
-          </button>
+          onIconStartClick ? (
+            <button
+              type="button"
+              className="input-group-text"
+              id={`${id}Start`}
+              onClick={handleOnIconStartClick}
+              disabled={disabled || loading || iconStartDisabled}
+              aria-label={iconStartAriaLabel || (typeof iconStart === 'string' ? iconStart : 'start icon')}
+              tabIndex={iconStartTabIndex}
+            >
+              <DIcon
+                icon={iconStart}
+                familyClass={iconStartFamilyClass}
+                familyPrefix={iconStartFamilyPrefix}
+                materialStyle={iconStartMaterialStyle}
+              />
+            </button>
+          ) : (
+            <div
+              className="input-group-text"
+              id={`${id}Start`}
+              aria-hidden="true"
+              tabIndex={-1}
+            >
+              <DIcon
+                icon={iconStart}
+                familyClass={iconStartFamilyClass}
+                familyPrefix={iconStartFamilyPrefix}
+                materialStyle={iconStartMaterialStyle}
+              />
+            </div>
+          )
         )}
         {dynamicComponent}
         {(iconEnd && !loading) && (
-          <button
-            type="button"
-            className="input-group-text"
-            id={`${id}End`}
-            onClick={handleOnIconEndClick}
-            disabled={disabled || loading || iconEndDisabled}
-            aria-label={iconEndAriaLabel}
-            tabIndex={onIconEndClick ? iconEndTabIndex : -1}
-          >
-            <DIcon
-              icon={iconEnd}
-              familyClass={iconEndFamilyClass}
-              familyPrefix={iconEndFamilyPrefix}
-              materialStyle={iconEndMaterialStyle}
-            />
-          </button>
+          onIconEndClick ? (
+            <button
+              type="button"
+              className="input-group-text"
+              id={`${id}End`}
+              onClick={handleOnIconEndClick}
+              disabled={disabled || loading || iconEndDisabled}
+              aria-label={iconEndAriaLabel || (typeof iconEnd === 'string' ? iconEnd : 'end icon')}
+              tabIndex={iconEndTabIndex}
+            >
+              <DIcon
+                icon={iconEnd}
+                familyClass={iconEndFamilyClass}
+                familyPrefix={iconEndFamilyPrefix}
+                materialStyle={iconEndMaterialStyle}
+              />
+            </button>
+          ) : (
+            <div
+              className="input-group-text"
+              id={`${id}End`}
+              aria-hidden="true"
+              tabIndex={-1}
+            >
+              <DIcon
+                icon={iconEnd}
+                familyClass={iconEndFamilyClass}
+                familyPrefix={iconEndFamilyPrefix}
+                materialStyle={iconEndMaterialStyle}
+              />
+            </div>
+          )
         )}
         {loading && (
           <div className="input-group-text" id={`${id}Loading`}>
