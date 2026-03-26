@@ -142,7 +142,7 @@ describe('<DBadge />', () => {
     const badge = screen.getByText('Badge content').parentElement!;
     expect(badge).toHaveAttribute('id', 'badge-id');
     expect(badge).toHaveClass('extra-class');
-    expect(badge).toHaveStyle({ color: 'red' });
+    expect(badge).toHaveStyle({ color: 'rgb(255, 0, 0)' });
   });
 
   it('Renders iconStart', () => {

@@ -38,6 +38,7 @@ describe('<DInputCurrency />', () => {
             >
               <span
                 slot="input-start"
+                style="color: var(--bs-input-currency-symbol-color);"
               >
                 $
               </span>

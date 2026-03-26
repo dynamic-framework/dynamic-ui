@@ -138,7 +138,7 @@ describe('<DButton />', () => {
       <DButton text="Styled" style={{ backgroundColor: 'red' }} />,
     );
 
-    expect(getByRole('button')).toHaveStyle({ backgroundColor: 'red' });
+    expect(getByRole('button')).toHaveStyle({ backgroundColor: 'rgb(255, 0, 0)' });
   });
 
   it('Should render loadingText when is passed', () => {

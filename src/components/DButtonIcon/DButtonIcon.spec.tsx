@@ -102,7 +102,7 @@ describe('<DButtonIcon />', () => {
       <DButtonIcon icon="Check" style={{ backgroundColor: 'red' }} />,
     );
 
-    expect(getByRole('button')).toHaveStyle({ backgroundColor: 'red' });
+    expect(getByRole('button')).toHaveStyle({ backgroundColor: 'rgb(255, 0, 0)' });
   });
 
   it('Should apply state class when state is not disabled', () => {
