@@ -11,12 +11,12 @@ import {
 import classNames from 'classnames';
 
 import DIcon from '../DIcon';
+import { useResponsiveProp, ResponsiveProp } from '../../hooks/useResponsiveProp';
 import type {
   BaseProps,
   ButtonVariant,
   ClassMap,
   ComponentColor,
-  ComponentSize,
   EndIconProps,
   StartIconProps,
 } from '../interface';
@@ -30,7 +30,7 @@ interface Props
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
   rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
   color?: ComponentColor;
-  size?: ComponentSize;
+  size?: string | ResponsiveProp;
   variant?: ButtonVariant;
   text?: string;
   loading?: boolean;
@@ -64,8 +64,18 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     type = 'button',
     target,
     rel,
+    href,
+    'aria-label': ariaLabelProp,
     ...rest
   } = props;
+
+  // Responsive size resolution using useResponsiveProp
+  const { responsivePropValue } = useResponsiveProp(true);
+  const resolvedSize = useMemo(() => {
+    if (!size) return undefined;
+    if (typeof size === 'string') return size;
+    return responsivePropValue(size);
+  }, [responsivePropValue, size]);
 
   const [buttonWidth, setButtonWidth] = useState<number>();
   const buttonRef = useRef<HTMLElement>(null);
@@ -88,17 +98,18 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     return {
       btn: true,
       [variantClass]: true,
-      [`btn-${size}`]: !!size,
+      [`btn-${resolvedSize}`]: !!resolvedSize,
       loading,
     };
-  }, [variant, color, size, loading]);
+  }, [variant, color, loading, resolvedSize]);
 
-  const ariaLabel = useMemo(() => {
-    const ariaLabelProp = rest['aria-label'];
-    return loading
-      ? loadingAriaLabel || ariaLabelProp || text
-      : ariaLabelProp || text;
-  }, [loading, loadingAriaLabel, rest, text]);
+  const ariaLabel = useMemo(
+    () => (
+      loading
+        ? loadingAriaLabel || ariaLabelProp || text
+        : ariaLabelProp || text),
+    [loading, loadingAriaLabel, text, ariaLabelProp],
+  );
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
@@ -119,10 +130,10 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content, iconEnd, iconStart]);
 
-  if (props.href) {
+  if (href) {
     return (
       <a
-        href={props.href}
+        href={href}
         target={target}
         rel={rel}
         ref={(node) => {

@@ -1,6 +1,6 @@
 .d-stepper-desktop {
   /* Icon container */
-  --#{$prefix}step-icon-container-color: var(--#{$prefix}gray-400);
+  --#{$prefix}step-icon-container-color: var(--#{$prefix}gray-500);
   --#{$prefix}step-icon-container-background-color: transparent;
   --#{$prefix}step-icon-container-size: var(--#{$prefix}ref-spacer-9);
   --#{$prefix}step-icon-container-font-size: var(--#{$prefix}ref-spacer-4);
@@ -113,7 +113,7 @@
 
       .d-step-description {
         font-size: var(--#{$prefix}step-description-font-size);
-        color: var(--#{$prefix}gray-400);
+        color: var(--#{$prefix}gray-500);
       }
     }
   }

@@ -1,7 +1,7 @@
 .d-voucher {
   --#{$prefix}voucher-header-gap: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}voucher-amount-padding: var(--#{$prefix}ref-spacer-4);
-  --#{$prefix}voucher-amount-background: var(--#{$prefix}secondary-50);
+  --#{$prefix}voucher-amount-background: var(--#{$prefix}gray-25);
   --#{$prefix}voucher-amount-rounded: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}voucher-footer-gap: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}voucher-margin: 0 0 var(--#{$prefix}ref-spacer-4) 0;

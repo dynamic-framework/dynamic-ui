@@ -142,7 +142,7 @@ export const Default: Story = {
       { label: 'Settings', tab: 'settings' },
       {
         label: (
-          <span className="d-flex gap-2 align-items-center">
+          <span className="d-flex gap-2 align-items-center justify-content-center">
             Notifications
             <DChip
               color="info"
@@ -378,7 +378,7 @@ export const ToggleButtonGroup: Story = {
     ],
     vertical: false,
     variant: 'toggle-button-group',
-    className: 'mb-8',
+    className: 'mb-8 nav-fill',
   },
 };
 
@@ -578,8 +578,7 @@ export const PillsWithIconsFull: Story = {
     ],
     vertical: false,
     variant: 'pills',
-    className: 'mb-8 ',
-    classNameTab: 'flex-grow-1',
+    className: 'mb-8 nav-fill',
   },
 };
 

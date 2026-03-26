@@ -1,0 +1,44 @@
+.carousel-indicators {
+  position: relative;
+  [data-bs-target] {
+    width: $carousel-indicator-width;
+    height: $carousel-indicator-height;
+    text-align: left;
+    text-indent: 0;
+    background: $carousel-indicator-bg;
+    border: $carousel-indicator-border;
+    border-radius: $carousel-indicator-radius;
+    opacity: 1;
+    transition: .3s;
+    &.active {
+      width: $carousel-indicator-active-width;
+      background: $carousel-indicator-active-bg;
+      border-color: $carousel-indicator-active-border;
+      transition: .3s;
+      &:hover {
+        background: $carousel-indicator-active-bg;
+      }
+    }
+    &:hover {
+      background: $carousel-indicator-hover-bg;
+    }
+  }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  top: calc(50% - 20px);
+  bottom: auto;
+  width: $carousel-control-width;
+  height: $carousel-control-height;
+  padding: var(--#{$prefix}ref-spacer-1);
+  margin-inline: var(--#{$prefix}ref-spacer-1);
+  background: $carousel-control-bg;
+  border-radius: $carousel-control-radius;
+  opacity: .85;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  filter: invert(1);
+}

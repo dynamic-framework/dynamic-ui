@@ -23,11 +23,13 @@ const config: Meta<typeof DCollapse> = {
 | --${PREFIX_BS}collapse-button-padding-x  | .collapse-container | css length unit | Collapse header button padding horizontal |
 | --${PREFIX_BS}collapse-button-padding-y  | .collapse-container | css length unit | Collapse header button padding vertical   |
 | --${PREFIX_BS}collapse-button-gap        | .collapse-container | css length unit | Collapse header button gap                |
-| --${PREFIX_BS}collapse-body-padding-x    | .collapse-container | css length unit | Collapse body padding horizontal          |
-| --${PREFIX_BS}collapse-body-padding-y    | .collapse-container | css length unit | Collapse body padding vertical            |
-| --${PREFIX_BS}collapse-separator-display | .collapse-container | css display     | Collapse separator display                |
-| --${PREFIX_BS}collapse-separator-height  | .collapse-container | css length unit | Collapse separator size                   |
-| --${PREFIX_BS}collapse-separator-bg      | .collapse-container | css color unit  | Collapse separator color                  |
+| --${PREFIX_BS}collapse-body-padding-x        | .collapse-container | css length unit | Collapse body padding horizontal          |
+| --${PREFIX_BS}collapse-body-padding-y        | .collapse-container | css length unit | Collapse body padding vertical            |
+| --${PREFIX_BS}collapse-separator-display     | .collapse-container | css display     | Collapse separator display                |
+| --${PREFIX_BS}collapse-separator-height      | .collapse-container | css length unit | Collapse separator size                   |
+| --${PREFIX_BS}collapse-separator-bg          | .collapse-container | css color unit  | Collapse separator color                  |
+| --${PREFIX_BS}collapse-interpolate-size      | .collapse-container | css keyword     | Controls interpolate-size for animation   |
+| --${PREFIX_BS}collapse-transition            | .collapse-container | css transition  | Collapse body transition animation        |
         `,
       },
     },
@@ -66,11 +68,6 @@ const config: Meta<typeof DCollapse> = {
     onChange: {
       description: 'Callback fired on toggle with the next state (true = collapsed, false = expanded). Use it to update your external state and use controlled mode.',
       table: { category: 'Events' },
-    },
-    hasSeparator: {
-      control: 'boolean',
-      description: 'Shows a separator between header and body.',
-      table: { category: 'Appearance' },
     },
     iconOpen: {
       control: {
@@ -140,7 +137,6 @@ export const HeaderText: Story = {
     Component: (
       <span>Text</span>
     ),
-    hasSeparator: true,
   },
 };
 
@@ -168,7 +164,6 @@ export const HeaderComponent: Story = {
         <h1 className="h4 m-0">Custom component</h1>
       </div>
     ),
-    hasSeparator: true,
   },
 };
 
@@ -194,7 +189,6 @@ export const Expanded: Story = {
       <span>Text</span>
     ),
     defaultCollapsed: false,
-    hasSeparator: true,
   },
 };
 
@@ -223,7 +217,6 @@ export const MaterialIcon: Story = {
     Component: (
       <span>Text</span>
     ),
-    hasSeparator: true,
     iconClose: 'unfold_more',
     iconOpen: 'unfold_less',
   },
@@ -269,7 +262,6 @@ export const Controlled: Story = {
     Component: (
       <span>Text</span>
     ),
-    hasSeparator: true,
   },
   parameters: {
     docs: {
@@ -296,7 +288,6 @@ export default function ControlledCollapseExample() {
       <DCollapse
         Component={<span>Text</span>}
         defaultCollapsed={isCollapsed}
-        hasSeparator
         onChange={setIsCollapsed}
       >
         <div className="row d-flex flex-column gap-3 pt-3">

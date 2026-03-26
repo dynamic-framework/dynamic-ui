@@ -5,12 +5,12 @@
 }
 
 .text-muted {
-  --#{$prefix}text-muted: var(--#{$prefix}gray-400);
+  --#{$prefix}text-muted: var(--#{$prefix}gray-500);
   color: var(--#{$prefix}text-muted) !important;
 }
 
 .form-text {
-  --#{$prefix}form-text: var(--#{$prefix}gray-400);
+  --#{$prefix}form-text: var(--#{$prefix}gray-500);
   color: var(--#{$prefix}form-text) !important;
 }
 

@@ -1089,7 +1089,7 @@ export const CollapsibleWithList: Story = {
     },
   },
   render: () => (
-    <div style={{ width: 1000 }}>
+    <div style={{ width: 1000 }} className="bg-primary-25 p-8">
       <DCollapse
         defaultCollapsed={false}
         Component={(

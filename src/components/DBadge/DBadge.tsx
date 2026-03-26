@@ -4,24 +4,26 @@ import { useMemo } from 'react';
 import type { BaseProps, ComponentColor } from '../interface';
 import DIcon from '../DIcon';
 
-type Props =
-& BaseProps
-& {
-  text?: string;
-  soft?: boolean;
-  size?: 'sm' | 'lg';
-  rounded?: boolean;
-  color?: ComponentColor;
-  id?: string;
-  iconStart?: string;
-  iconEnd?: string;
-  iconMaterialStyle?: boolean;
-  iconFamilyClass?: string;
-  iconFamilyPrefix?: string;
-};
+import { ResponsiveProp, useResponsiveProp } from '../../hooks/useResponsiveProp';
 
-export default function DBadge(
-  {
+type Props =
+  & BaseProps
+  & {
+    text?: string;
+    soft?: boolean;
+    size?: string | ResponsiveProp;
+    rounded?: boolean;
+    color?: ComponentColor;
+    id?: string;
+    iconStart?: string;
+    iconEnd?: string;
+    iconMaterialStyle?: boolean;
+    iconFamilyClass?: string;
+    iconFamilyPrefix?: string;
+  };
+
+export default function DBadge(props: Props) {
+  const {
     text,
     soft = false,
     color = 'primary',
@@ -36,17 +38,25 @@ export default function DBadge(
     iconFamilyClass,
     iconFamilyPrefix,
     dataAttributes,
-  }: Props,
-) {
+  } = props;
+
+  // Responsive size resolution using useResponsiveProp
+  const { responsivePropValue } = useResponsiveProp(true);
+  const resolvedSize = useMemo(() => {
+    if (!size) return undefined;
+    if (typeof size === 'string') return size;
+    return responsivePropValue(size);
+  }, [responsivePropValue, size]);
+
   const generateClasses = useMemo(
     () => ({
       badge: true,
       [`badge-${color}`]: !!color && !soft,
       [`badge-soft-${color}`]: !!color && soft,
       'rounded-pill': !!rounded,
-      [`badge-${size}`]: !!size,
+      [`badge-${resolvedSize}`]: !!resolvedSize,
     }),
-    [rounded, soft, color, size],
+    [rounded, soft, color, resolvedSize],
   );
   return (
     <span

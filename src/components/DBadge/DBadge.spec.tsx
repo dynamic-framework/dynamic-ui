@@ -9,6 +9,63 @@ describe('<DBadge />', () => {
       color: 'primary',
       text: 'Badge content',
     };
+    const { container } = render(<DBadge {...props} />);
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <span
+          class="badge badge-primary"
+        >
+          <span>
+            Badge content
+          </span>
+        </span>
+      </div>
+    `);
+  });
+
+  it('Renders with size prop', () => {
+    render(<DBadge text="Badge content" size="sm" />);
+    const badge = screen.getByText('Badge content').parentElement!;
+    expect(badge).toHaveClass('badge-sm');
+  });
+
+  it('Renders with responsive size object', () => {
+    render(<DBadge text="Badge content" size={{ xs: 'sm', md: 'lg' }} />);
+    const badge = screen.getByText('Badge content').parentElement!;
+    expect([
+      'badge badge-primary',
+      'badge badge-primary badge-sm',
+      'badge badge-primary badge-md',
+      'badge badge-primary badge-lg',
+    ]).toContain(badge.className);
+  });
+
+  it('Renders with default props', () => {
+    render(<DBadge text="Badge content" />);
+    const badge = screen.getByText('Badge content').parentElement!;
+    expect(badge).toHaveClass('badge', 'badge-primary');
+  });
+
+  it('Renders with soft info color', () => {
+    render(<DBadge text="Badge content" color="info" soft />);
+    const badge = screen.getByText('Badge content').parentElement!;
+    expect(badge).toHaveClass('badge-soft-info');
+    expect(badge).not.toHaveClass('badge-info');
+  });
+
+  it('Renders rounded badge', () => {
+    render(<DBadge text="Badge content" rounded />);
+    const badge = screen.getByText('Badge content').parentElement!;
+    expect(badge).toHaveClass('rounded-pill');
+  });
+});
+
+describe('<DBadge />', () => {
+  it('Should render badge', () => {
+    const props = {
+      color: 'primary',
+      text: 'Badge content',
+    };
 
     const { container } = render(
       <DBadge {...props} />,
@@ -25,6 +82,14 @@ describe('<DBadge />', () => {
         </span>
       </div>
     `);
+  });
+
+  it('Renders with size prop', () => {
+    render(
+      <DBadge text="Badge content" size="sm" />,
+    );
+    const badge = screen.getByText('Badge content').parentElement!;
+    expect(badge).toHaveClass('badge-sm');
   });
 
   it('Renders with default props', () => {
