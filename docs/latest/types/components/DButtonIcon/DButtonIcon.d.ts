@@ -1,22 +1,18 @@
 import type { MouseEvent } from 'react';
-import type { BaseProps, ButtonType, ButtonVariant, ComponentColor, ComponentSize, FamilyIconProps, InputState } from '../interface';
-type Props = BaseProps & FamilyIconProps & {
-    id?: string;
+import type { BaseProps, ButtonVariant, ComponentColor, ComponentSize, FamilyIconProps, InputState } from '../interface';
+type Props = BaseProps & FamilyIconProps & React.ButtonHTMLAttributes<HTMLButtonElement> & {
     icon: string;
     size?: ComponentSize;
     variant?: ButtonVariant;
     color?: ComponentColor;
     state?: InputState;
-    type?: ButtonType;
     loading?: boolean;
     loadingAriaLabel?: string;
-    ariaLabel?: string;
     stopPropagationEnabled?: boolean;
-    disabled?: boolean;
     href?: string;
     target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
     rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
     onClick?: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 };
-export default function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, ariaLabel, color, type, loading, disabled, href, target, rel, stopPropagationEnabled, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DButtonIcon({ id, icon, size, className, variant, state, loadingAriaLabel, iconMaterialStyle, disabled, color, loading, href, target, rel, stopPropagationEnabled, style, iconFamilyClass, iconFamilyPrefix, dataAttributes, onClick, 'aria-label': ariaLabelProp, ...rest }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

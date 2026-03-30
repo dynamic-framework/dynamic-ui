@@ -3,7 +3,6 @@ import type { BaseProps, FamilyIconProps } from '../interface';
 type Props = BaseProps & FamilyIconProps & PropsWithChildren<{
     id?: string;
     Component: ReactElement<unknown> | ReactNode;
-    hasSeparator?: boolean;
     /**
      * Reactive prop for controlled and uncontrolled mode.
      *
@@ -15,5 +14,5 @@ type Props = BaseProps & FamilyIconProps & PropsWithChildren<{
     iconOpen?: string;
     iconClose?: string;
 }>;
-export default function DCollapse({ id, className, style, Component, hasSeparator, defaultCollapsed, onChange, children, iconOpen: iconOpenProp, iconClose: iconCloseProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DCollapse({ id, className, style, Component, defaultCollapsed, onChange, children, iconOpen: iconOpenProp, iconClose: iconCloseProp, iconFamilyClass, iconFamilyPrefix, iconMaterialStyle, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};

@@ -1,8 +1,9 @@
 import type { BaseProps, ComponentColor } from '../interface';
+import { ResponsiveProp } from '../../hooks/useResponsiveProp';
 type Props = BaseProps & {
     text?: string;
     soft?: boolean;
-    size?: 'sm' | 'lg';
+    size?: string | ResponsiveProp;
     rounded?: boolean;
     color?: ComponentColor;
     id?: string;
@@ -12,5 +13,5 @@ type Props = BaseProps & {
     iconFamilyClass?: string;
     iconFamilyPrefix?: string;
 };
-export default function DBadge({ text, soft, color, id, rounded, className, size, style, iconStart, iconEnd, iconMaterialStyle, iconFamilyClass, iconFamilyPrefix, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DBadge(props: Props): import("react/jsx-runtime").JSX.Element;
 export {};

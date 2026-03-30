@@ -14,8 +14,10 @@ type Props = BaseProps & PropsWithChildren<{
     defaultSelected: string;
     vertical?: boolean;
     variant?: TabVariant;
+    ariaLabel?: string;
+    ariaLabelledBy?: string;
 }>;
-declare function DTabs({ children, defaultSelected, onChange, options, className, classNameTab, style, vertical, variant, dataAttributes, }: Props): import("react/jsx-runtime").JSX.Element;
+declare function DTabs({ children, defaultSelected, onChange, options, className, classNameTab, style, vertical, variant, dataAttributes, ariaLabel, ariaLabelledBy, }: Props): import("react/jsx-runtime").JSX.Element;
 declare const _default: typeof DTabs & {
     Tab: typeof DTabContent;
 };
