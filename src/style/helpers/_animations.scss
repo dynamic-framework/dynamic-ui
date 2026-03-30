@@ -1,0 +1,13 @@
+// ============================================================
+// Animations
+// Utility classes for common CSS animations.
+// ============================================================
+
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadein .3s ease-in-out;
+}
