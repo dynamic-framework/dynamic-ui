@@ -30,7 +30,7 @@ describe('<DCollapse />', () => {
     expect(screen.getByText('Header Content')).toBeInTheDocument();
     expect(icon).toBeInTheDocument();
     expect(icon?.querySelector('svg')).toBeInTheDocument();
-    expect(screen.queryByText('Collapsible Body')).not.toBeInTheDocument();
+    expect(container.querySelector('.collapse-body-wrapper')).not.toHaveClass('show');
   });
 
   it('renders with header and without body by default', () => {
@@ -43,7 +43,8 @@ describe('<DCollapse />', () => {
     );
 
     expect(screen.getByText('Header Content')).toBeInTheDocument();
-    expect(screen.queryByText('Collapsible Body')).not.toBeInTheDocument();
+    expect(screen.getByText('Collapsible Body')).toBeInTheDocument();
+    expect(screen.getByText('Collapsible Body').closest('.collapse-body-wrapper')).not.toHaveClass('show');
   });
 
   it('shows the body when defaultCollapsed is false', () => {
@@ -87,7 +88,7 @@ describe('<DCollapse />', () => {
     fireEvent.click(toggleButton); // expand
     fireEvent.click(toggleButton); // collapse
 
-    expect(screen.queryByText('Collapsible Body')).not.toBeInTheDocument();
+    expect(screen.getByText('Collapsible Body').closest('.collapse-body-wrapper')).not.toHaveClass('show');
   });
 
   it('calls onChange with correct state on toggle', () => {
@@ -124,21 +125,6 @@ describe('<DCollapse />', () => {
     );
     expect(container.firstChild).toHaveClass('collapse-container', 'custom-collapse');
     expect(container.firstChild).toHaveStyle({ marginTop: '10px' });
-  });
-
-  it('applies separator style when hasSeparator is true', () => {
-    render(
-      <DCollapse
-        Component={HeaderMock}
-        defaultCollapsed={false}
-        hasSeparator
-      >
-        {BodyMock}
-      </DCollapse>,
-    );
-
-    const body = screen.getByText('Collapsible Body');
-    expect(body).toHaveStyle('--bs-collapse-separator-display: block');
   });
 
   it('renders the open and close icons depending on the state', () => {

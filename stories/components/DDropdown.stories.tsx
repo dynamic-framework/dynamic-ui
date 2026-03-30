@@ -127,6 +127,7 @@ export const CustomToggle: Story = {
         color="primary"
         variant="link"
         onClick={toggle}
+        aria-label="Open dropdown"
       />
     ),
   },

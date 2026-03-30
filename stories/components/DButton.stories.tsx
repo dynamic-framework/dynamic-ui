@@ -237,31 +237,55 @@ export const Example: Story = {
 
 export const Default: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4">
-      {THEMES.map((color) => (
-        <DButton key={color} color={color} text={color} />
-      ))}
-    </div>
+    <>
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton key={color} color={color} text={color} />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButton color="light" text="Light" />
+        </div>
+      </div>
+    </>
   ),
 };
 
 export const Outline: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4 mt-4">
-      {THEMES.map((color) => (
-        <DButton key={color} variant="outline" color={color} text={color} />
-      ))}
-    </div>
+    <>
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton key={color} variant="outline" color={color} text={color} />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light outline (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButton variant="outline" color="light" text="Light Outline" />
+        </div>
+      </div>
+    </>
   ),
 };
 
 export const Link: Story = {
   render: () => (
-    <div className="d-flex flex-wrap gap-4 mt-4">
-      {THEMES.map((color) => (
-        <DButton key={color} variant="link" color={color} text={color} />
-      ))}
-    </div>
+    <>
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton key={color} variant="link" color={color} text={color} />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light link (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButton variant="link" color="light" text="Light link" />
+        </div>
+      </div>
+    </>
   ),
 };
 
@@ -324,6 +348,29 @@ export const Sizes: Story = {
   ),
   parameters: {
     docs: { description: { story: 'Shows button size variations.' } },
+  },
+};
+
+export const ResponsiveSizes: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-2 align-items-center">
+      <DButton color="info" size={{ xs: 'sm', md: 'lg' }} text="XS=sm, MD=lg" />
+      <DButton color="success" size={{ sm: 'sm', lg: 'lg' }} text="SM=sm, LG=lg" />
+      <DButton color="danger" size={{ xs: 'sm', xl: 'lg' }} text="XS=sm, XL=lg" />
+      <DButton color="primary" size={{ xs: 'sm', sm: 'md', lg: 'lg' }} text="XS=sm, SM=md, LG=lg" />
+      <DButton color="secondary" size="lg" text="Only size fallback" />
+      <DButton color="warning" size={{ xs: 'sm', md: 'md', xl: 'lg' }} text="ResponsiveObj" />
+    </div>
+  ),
+  parameters: {
+    viewport: {
+      defaultViewport: 'responsive',
+    },
+    docs: {
+      description: {
+        story: 'Responsive usage examples: the button size changes according to the breakpoint. Use the Storybook viewport menu to simulate mobile, tablet, and desktop.',
+      },
+    },
   },
 };
 

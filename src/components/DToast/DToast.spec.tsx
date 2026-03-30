@@ -25,7 +25,7 @@ describe('<DToast />', () => {
     const style = { backgroundColor: 'red' };
     render(<DToast style={style}>Contenido</DToast>);
     const toast = screen.getByRole('alert');
-    expect(toast).toHaveStyle('background-color: red');
+    expect(toast).toHaveStyle('background-color: rgb(255, 0, 0)');
   });
 
   it('Add data-testId', () => {

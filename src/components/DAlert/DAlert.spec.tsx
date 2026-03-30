@@ -90,7 +90,7 @@ describe('<DAlert />', () => {
       </DAlert>,
     );
     const alert = screen.getByRole('alert');
-    expect(alert).toHaveStyle({ color: 'red' });
+    expect(alert).toHaveStyle({ color: 'rgb(255, 0, 0)' });
     expect(alert).toHaveAttribute('data-test', 'alert');
   });
 

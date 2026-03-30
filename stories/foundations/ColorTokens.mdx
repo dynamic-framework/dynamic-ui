@@ -21,7 +21,13 @@ Use text tokens to communicate state and semantics.
   <p className="m-0 text-info">.text-info</p>
   <p className="m-0 text-secondary">.text-secondary</p>
   <p className="m-0 text-dark">.text-dark</p>
-  <p className="m-0 text-light bg-dark rounded px-2">.text-light (use on dark bg)</p>
+</div>
+
+<div className="mt-2 mb-4">
+  <p className="mb-1 small">Light variant (for dark backgrounds)</p>
+  <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+    <span className="text-light">.text-light (use on dark bg)</span>
+  </div>
 </div>
 
 ```html
@@ -82,7 +88,13 @@ Badges support semantic color tokens via text-bg-*.
   <span className="badge text-bg-info">Info</span>
   <span className="badge text-bg-secondary">Secondary</span>
   <span className="badge text-bg-dark">Dark</span>
-  <span className="badge text-bg-light text-dark">Light</span>
+</div>
+
+<div className="mt-2 mb-4">
+  <p className="mb-1 small">Light variant (for dark backgrounds)</p>
+  <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+    <span className="badge text-bg-light text-dark">Light</span>
+  </div>
 </div>
 
 ```html
@@ -102,7 +114,14 @@ Buttons support solid and outline variants with tokens.
   <button className="btn btn-info">Info</button>
   <button className="btn btn-secondary">Secondary</button>
   <button className="btn btn-dark">Dark</button>
-  <button className="btn btn-light text-dark">Light</button>
+</div>
+
+<div className="mt-2 mb-4">
+  <p className="mb-1 small">Light variant (for dark backgrounds)</p>
+  <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+    <button className="btn btn-light text-dark me-2">Light</button>
+    <button className="btn btn-outline-light">Light Outline</button>
+  </div>
 </div>
 
 <div className="d-flex flex-wrap gap-2 mt-2 mb-4">

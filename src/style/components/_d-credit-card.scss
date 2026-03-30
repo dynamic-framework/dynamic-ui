@@ -14,25 +14,26 @@
   --#{$prefix}d-credit-card-padding: var(--#{$prefix}ref-spacer-4);
   --#{$prefix}d-credit-card-number-size: inherit;
   --#{$prefix}d-credit-card-chip-size: 30px;
-  flex-direction: column;
-
-  aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
-  padding: var(--#{$prefix}d-credit-card-padding);
-  background: var(--#{$prefix}d-credit-card-bg);
+  --#{$prefix}d-credit-card-color: var(--#{$prefix}white);
   --#{$prefix}d-credit-card-logo-size: 22%;
 
-  > * {
-    display: flex;
-    align-items: center;
-  }
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: var(--#{$prefix}d-credit-card-aspect-ratio);
+  padding: var(--#{$prefix}d-credit-card-padding);
+  overflow: hidden;
+  color: var(--#{$prefix}d-credit-card-color);
+  background: var(--#{$prefix}d-credit-card-bg);
+  border-radius: var(--#{$prefix}border-radius-lg);
 
   .d-credit-card-details {
-    .name {
-      font-size: var(--#{$prefix}ref-fs-6);
-    }
-    .date {
-      font-size: var(--#{$prefix}ref-fs-6);
-    }
+    display: block;
+    margin-top: auto;
+  }
+
+  .d-credit-card-name {
+    font-size: var(--#{$prefix}ref-fs-6);
   }
 
   .d-credit-card-logo {
@@ -40,7 +41,9 @@
   }
 
   .d-credit-card-chip {
+    padding: var(--#{$prefix}ref-spacer-1);
     background: var(--#{$prefix}d-credit-card-chip-bg);
+    border-radius: var(--#{$prefix}border-radius-sm);
   }
 
   .d-credit-card-chip-image {
@@ -48,6 +51,7 @@
   }
 
   .d-credit-card-number {
+    margin-bottom: var(--#{$prefix}ref-spacer-4);
     font-family: var(--#{$prefix}d-credit-card-font-family-number);
     font-size: var(--#{$prefix}d-credit-card-number-size);
   }
@@ -59,9 +63,15 @@
   }
 
   .d-credit-card-header {
+    display: flex;
     align-items: center;
     justify-content: space-between;
     min-height: 45px;
+  }
+
+  .d-credit-card-holder-text {
+    display: block;
+    opacity: .5;
   }
 
 }

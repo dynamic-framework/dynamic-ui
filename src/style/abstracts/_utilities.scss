@@ -41,6 +41,7 @@ $utilities: map-merge(
     "shadow": map-merge(
       map-get($utilities, "shadow"),
       (
+        responsive: true,
         values: (
           null: var(--#{$prefix}box-shadow),
           sm: var(--#{$prefix}box-shadow-sm),
@@ -52,6 +53,7 @@ $utilities: map-merge(
     "text-opacity": map-merge(
       map-get($utilities, "text-opacity"),
       (
+        responsive: true,
         values: map-merge(
           map-get(map-get($utilities, "text-opacity"), "values"),
           (
@@ -72,13 +74,80 @@ $utilities: map-merge(
         responsive: true
       )
     ),
+    "border": map-merge(
+      map-get($utilities, "border"),
+      (
+        responsive: true,
+      )
+    ),
+    "border-top": map-merge(
+      map-get($utilities, "border-top"),
+      (
+        responsive: true,
+      )
+    ),
+    "border-end": map-merge(
+      map-get($utilities, "border-end"),
+      (
+        responsive: true,
+      )
+    ),
+    "border-bottom": map-merge(
+      map-get($utilities, "border-bottom"),
+      (
+        responsive: true,
+      )
+    ),
+    "border-start": map-merge(
+      map-get($utilities, "border-start"),
+      (
+        responsive: true,
+      )
+    ),
     "border-color": map-merge(
       map-get($utilities, "border-color"),
       (
+        responsive: true,
         values: map-merge(
           map-get(map-get($utilities, "border-color"), "values"),
           map-loop($palette-grays, rgba-css-var, "$key", "border"),
         )
+      )
+    ),
+    "border-width": map-merge(
+      map-get($utilities, "border-width"),
+      (
+        responsive: true,
+      )
+    ),
+    "rounded": map-merge(
+      map-get($utilities, "rounded"),
+      (
+        responsive: true,
+      )
+    ),
+    "rounded-top": map-merge(
+      map-get($utilities, "rounded-top"),
+      (
+        responsive: true,
+      )
+    ),
+    "rounded-end": map-merge(
+      map-get($utilities, "rounded-end"),
+      (
+        responsive: true,
+      )
+    ),
+    "rounded-bottom": map-merge(
+      map-get($utilities, "rounded-bottom"),
+      (
+        responsive: true,
+      )
+    ),
+    "rounded-start": map-merge(
+      map-get($utilities, "rounded-start"),
+      (
+        responsive: true,
       )
     ),
     "grid-column": (

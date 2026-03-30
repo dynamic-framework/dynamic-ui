@@ -69,6 +69,6 @@ describe('<DAvatar />', () => {
     const avatar = container.firstChild as HTMLElement;
     expect(avatar).toHaveAttribute('id', 'avatar-id');
     expect(avatar).toHaveAttribute('data-test', 'avatar');
-    expect(avatar).toHaveStyle({ backgroundColor: 'red' });
+    expect(avatar).toHaveStyle({ backgroundColor: 'rgb(255, 0, 0)' });
   });
 });

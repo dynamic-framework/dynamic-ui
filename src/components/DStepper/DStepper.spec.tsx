@@ -72,6 +72,6 @@ describe('DStepper', () => {
 
     const stepperElement = screen.getByTestId('stepper');
     expect(stepperElement).toHaveClass('custom-class');
-    expect(stepperElement).toHaveStyle('background-color: red');
+    expect(stepperElement).toHaveStyle('background-color: rgb(255, 0, 0)');
   });
 });

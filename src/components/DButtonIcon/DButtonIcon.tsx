@@ -8,7 +8,6 @@ import DIcon from '../DIcon';
 
 import type {
   BaseProps,
-  ButtonType,
   ButtonVariant,
   ClassMap,
   ComponentColor,
@@ -18,26 +17,22 @@ import type {
 } from '../interface';
 
 type Props =
-& BaseProps
-& FamilyIconProps
-& {
-  id?: string;
-  icon: string;
-  size?: ComponentSize;
-  variant?: ButtonVariant;
-  color?: ComponentColor;
-  state?: InputState;
-  type?: ButtonType;
-  loading?: boolean;
-  loadingAriaLabel?: string;
-  ariaLabel?: string;
-  stopPropagationEnabled?: boolean;
-  disabled?: boolean;
-  href?: string;
-  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
-  rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
-  onClick?: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
-};
+  BaseProps &
+  FamilyIconProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    icon: string;
+    size?: ComponentSize;
+    variant?: ButtonVariant;
+    color?: ComponentColor;
+    state?: InputState;
+    loading?: boolean;
+    loadingAriaLabel?: string;
+    stopPropagationEnabled?: boolean;
+    href?: string;
+    target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
+    rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>['rel'];
+    onClick?: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  };
 
 export default function DButtonIcon(
   {
@@ -49,11 +44,9 @@ export default function DButtonIcon(
     state,
     loadingAriaLabel,
     iconMaterialStyle,
-    ariaLabel,
-    color = 'primary',
-    type = 'button',
-    loading = false,
     disabled = false,
+    color = 'primary',
+    loading = false,
     href,
     target,
     rel,
@@ -63,6 +56,8 @@ export default function DButtonIcon(
     iconFamilyPrefix,
     dataAttributes,
     onClick,
+    'aria-label': ariaLabelProp,
+    ...rest
   }: Props,
 ) {
   const generateClasses = useMemo<ClassMap>(() => {
@@ -94,24 +89,26 @@ export default function DButtonIcon(
     onClick?.(event);
   }, [stopPropagationEnabled, onClick, isDisabled]);
 
-  const newAriaLabel = useMemo(() => (
-    loading
-      ? (loadingAriaLabel || ariaLabel)
-      : (ariaLabel)
-  ), [ariaLabel, loading, loadingAriaLabel]);
+  const ariaLabel = useMemo(
+    () => (
+      loading
+        ? loadingAriaLabel || ariaLabelProp
+        : ariaLabelProp),
+    [loading, loadingAriaLabel, ariaLabelProp],
+  );
 
   if (href) {
     return (
       <a
+        id={id}
         href={href}
         target={target}
         rel={rel}
         className={classNames(generateClasses, className)}
         style={style}
         onClick={clickHandler}
-        aria-label={newAriaLabel}
+        aria-label={ariaLabel}
         aria-disabled={isDisabled}
-        id={id}
         {...dataAttributes}
       >
         {loading
@@ -140,12 +137,11 @@ export default function DButtonIcon(
     <button
       className={classNames(generateClasses, className)}
       style={style}
-      type={type}
-      disabled={isDisabled}
+      disabled={state === 'disabled' || loading}
       onClick={clickHandler}
-      aria-label={newAriaLabel}
-      id={id}
+      aria-label={ariaLabel}
       {...dataAttributes}
+      {...rest}
     >
       {loading
         ? (

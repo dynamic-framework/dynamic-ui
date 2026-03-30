@@ -42,8 +42,8 @@ describe('<DIconBase />', () => {
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveStyle({
       '--bs-icon-component-size': '32px',
-      '--bs-icon-component-color': 'var(--bs-primary)',
     });
+    expect(icon).toHaveClass('d-icon-color-primary');
   });
 
   it('applies custom size and color with hasCircle', () => {
@@ -60,10 +60,10 @@ describe('<DIconBase />', () => {
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveStyle({
       '--bs-icon-component-size': '32px',
-      '--bs-icon-component-color': 'var(--bs-primary)',
-      '--bs-icon-component-bg-color': 'rgba(var(--bs-primary-rgb), 0.1)',
       '--bs-icon-component-padding': 'calc(var(--bs-icon-component-size, 24px) * 0.4)',
     });
+    expect(icon).toHaveClass('d-icon-color-primary');
+    expect(icon).toHaveClass('d-icon-has-circle');
   });
 
   it('applies color-based background when hasCircle is true', () => {
@@ -77,10 +77,8 @@ describe('<DIconBase />', () => {
     );
 
     const icon = screen.getByTestId('icon');
-    expect(icon).toHaveStyle({
-      '--bs-icon-component-color': 'var(--bs-primary)',
-      '--bs-icon-component-bg-color': 'rgba(var(--bs-primary-rgb), 0.1)',
-    });
+    expect(icon).toHaveClass('d-icon-color-primary');
+    expect(icon).toHaveClass('d-icon-has-circle');
   });
 
   it('renders Material Design icon when materialStyle is true', () => {
@@ -109,9 +107,9 @@ describe('<DIconBase />', () => {
 
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveStyle({
-      '--bs-icon-component-bg-color': 'rgba(var(--bs-body-color-rgb), 0.1)',
       '--bs-icon-component-padding': 'calc(var(--bs-icon-component-size, 24px) * 0.4)',
     });
+    expect(icon).toHaveClass('d-icon-has-circle');
   });
 
   it('applies custom className when provided', () => {

@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import changeQueryString from '../changeQueryString';
 
 describe('changeQueryString', () => {
   beforeEach(() => {
-    window.location.search = '?foo=1&bar=2';
-    window.location.href = 'http://localhost/?foo=1&bar=2';
-    window.history.pushState = jest.fn();
+    window.history.replaceState({}, '', '?foo=1&bar=2');
+  });
+
+  afterEach(() => {
+    window.history.replaceState({}, '', '/');
+    jest.restoreAllMocks();
   });
 
   it('should add new params', () => {
@@ -31,11 +32,10 @@ describe('changeQueryString', () => {
   });
 
   it('should call pushState if pushState is true', () => {
-    const pushStateMock = jest.fn();
-    window.history.pushState = pushStateMock;
+    const pushStateMock = jest.spyOn(window.history, 'pushState').mockImplementation(jest.fn());
     changeQueryString({ foo: 123 }, { pushState: true });
     expect(pushStateMock).toHaveBeenCalled();
-    const { calls } = (pushStateMock).mock;
+    const { calls } = pushStateMock.mock;
     const url = calls[0][2];
     expect(url).toContain('foo=123');
   });

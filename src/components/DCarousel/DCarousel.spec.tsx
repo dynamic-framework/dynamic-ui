@@ -94,6 +94,7 @@ describe('<DCarousel />', () => {
                 class="splide__slide d-carousel-slide is-active is-visible"
                 id="splide01-slide01"
                 role="tabpanel"
+                style="width: calc(100%);"
               >
                 Slide 1
               </li>
@@ -103,6 +104,7 @@ describe('<DCarousel />', () => {
                 class="splide__slide d-carousel-slide is-visible is-next"
                 id="splide01-slide02"
                 role="tabpanel"
+                style="width: calc(100%);"
               >
                 Slide 2
               </li>
@@ -112,6 +114,7 @@ describe('<DCarousel />', () => {
                 class="splide__slide d-carousel-slide is-visible"
                 id="splide01-slide03"
                 role="tabpanel"
+                style="width: calc(100%);"
               >
                 Slide 3
               </li>

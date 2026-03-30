@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import type { BaseProps } from '../interface';
+import DIcon from '../DIcon';
 
 export type DTimelineItem = {
   title: string;
@@ -36,7 +37,7 @@ export default function DTimeline({
         >
           <div className="d-timeline-item-connector" />
           <div className="d-timeline-item-icon">
-            <i className={`bi bi-${item.icon || 'check'}`} />
+            <DIcon icon={item.icon || 'check'} size="1rem" />
           </div>
           <div className="d-timeline-item-content">
             <div className="d-timeline-item-title">{item.title}</div>

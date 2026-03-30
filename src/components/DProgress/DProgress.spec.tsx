@@ -96,7 +96,7 @@ describe('<DProgress />', () => {
     const progressBar = screen.getByRole('progressbar');
     const progressContainer = progressBar.parentElement;
 
-    expect(progressContainer).toHaveStyle('background-color: blue');
+    expect(progressContainer).toHaveStyle('background-color: rgb(0, 0, 255)');
     expect(progressBar).toHaveStyle('width: 40%');
   });
 

@@ -1,0 +1,72 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+
+import { DAlert } from '../../src/components';
+
+<Meta title="Design System/Foundations/CSS Distribution" />
+
+<div className="inline-story sb-unstyled" style={{ fontFamily: 'var(--bs-body-font-family)' }}>
+
+# CSS Distribution & Customization
+
+<Unstyled>
+  <DAlert color="info">
+    Starting from version 2.3.0, only `dynamic-ui.css` and `dynamic-ui.min.css` are distributed.
+    The previous variants `dynamic-ui-root.css` and `dynamic-ui-non-root.css`
+    have been removed to simplify upgrades and avoid desynchronization issues.
+  </DAlert>
+</Unstyled>
+
+### How to Customize
+
+1. **Include the main CSS:**
+    ```html
+    <link rel="stylesheet" href="/path/to/dynamic-ui.css" />
+    ```
+2. **Override variables:**
+  Add your own stylesheet or snippet after the main CSS to override any design tokens or variables:
+    ```css
+    :root {
+      --bs-primary: #ff0055;
+      --bs-body-font-family: 'Montserrat', sans-serif;
+      /* ...other overrides... */
+    }
+    ```
+3. **Safe upgrades:**
+  All default variables are included in the main bundle, so new tokens are available automatically and removed ones do not break the theme.
+
+<br />
+### Example: Custom Theme Snippet
+
+```html
+<link rel="stylesheet" href="/path/to/dynamic-ui.css" />
+<style>
+  :root {
+    --bs-primary: #ff0055;
+    --bs-body-font-family: 'Montserrat', sans-serif;
+    --bs-body-bg: #f5f5f5;
+    --bs-border-radius: 0.75rem;
+  }
+</style>
+```
+
+<br />
+### Migration Guide
+
+- If you previously used `dynamic-ui-root.css` or `dynamic-ui-non-root.css`, switch to `dynamic-ui.css` and apply your overrides as shown above.
+- For advanced theming, refer to the [Design Tokens](?path=/docs/design-system-foundations-design-tokens--docs) page and [docs.modyo.com](https://docs.modyo.com/en/dynamic/).
+
+<br />
+### FAQ
+
+**Q: What happens if there are two `:root` blocks?**
+<br />A: The last one loaded wins for each variable, thanks to CSS cascade. You can safely override any token after loading the main CSS.
+
+**Q: How do I keep my theme up to date?**
+<br />A: Since all tokens are included in the main bundle, you only need to override what you want. New tokens are available automatically after upgrades.
+
+**Q: Where can I find a list of available tokens?**
+<br />A: See the [Design Tokens](?path=/docs/design-system-foundations-design-tokens--docs) page or Storybook for a visual reference.
+
+<br />
+
+</div>

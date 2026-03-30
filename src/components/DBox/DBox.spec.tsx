@@ -16,7 +16,7 @@ describe('DBox', () => {
 
   it('should apply custom style', () => {
     const { container } = render(<DBox style={{ color: 'red' }}>Hello</DBox>);
-    expect(container.firstChild).toHaveStyle('color: red');
+    expect(container.firstChild).toHaveStyle('color: rgb(255, 0, 0)');
   });
 
   it('should pass dataAttributes', () => {
