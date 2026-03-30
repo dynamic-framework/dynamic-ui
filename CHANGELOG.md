@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.2.0...v2.3.0) (2026-03-30)
+
+
+### Features
+
+* enhance accessibility features and add develop report generation script ([#993](https://github.com/dynamic-framework/dynamic-ui/issues/993)) ([ae4a437](https://github.com/dynamic-framework/dynamic-ui/commit/ae4a437ac86693954c7c686762199c42c1ac5bba))
+* fade in utility ([#1008](https://github.com/dynamic-framework/dynamic-ui/issues/1008)) ([b9e0164](https://github.com/dynamic-framework/dynamic-ui/commit/b9e016491712fd3678c26e5fa5c227b6e0ec0619))
+* responsive sizes components DButton and DBadge ([#977](https://github.com/dynamic-framework/dynamic-ui/issues/977)) ([9c19c84](https://github.com/dynamic-framework/dynamic-ui/commit/9c19c8416db7ef9be1c18704c4740d783a33195f))
+* support responsive on shadows, text-opacity, rounded and borders ([#988](https://github.com/dynamic-framework/dynamic-ui/issues/988)) ([5193175](https://github.com/dynamic-framework/dynamic-ui/commit/51931758b76648de8b1b397e420a7084264209f9))
+
+
+### Bug Fixes
+
+* add area-labels to some components and adjust role bug on tabs ([#985](https://github.com/dynamic-framework/dynamic-ui/issues/985)) ([6cdd196](https://github.com/dynamic-framework/dynamic-ui/commit/6cdd196e9ac6782121678d554a7395b72fbfa075))
+* adjustement border radius ([224f146](https://github.com/dynamic-framework/dynamic-ui/commit/224f1460a07cc7f64b77c9034bf92f202c805ca5))
+* adjustement border radius on Alert component ([#974](https://github.com/dynamic-framework/dynamic-ui/issues/974)) ([224f146](https://github.com/dynamic-framework/dynamic-ui/commit/224f1460a07cc7f64b77c9034bf92f202c805ca5))
+* correct commitlint range for validating PR commits ([#1004](https://github.com/dynamic-framework/dynamic-ui/issues/1004)) ([6a2f322](https://github.com/dynamic-framework/dynamic-ui/commit/6a2f32296124b81bd1ac958ca982d4b9d3a31d22))
+* resend code white-space ([#980](https://github.com/dynamic-framework/dynamic-ui/issues/980)) ([846badd](https://github.com/dynamic-framework/dynamic-ui/commit/846badd4b3ad8b1d424f7775e74a394696299569))
+* restore link-underline utility ([#1000](https://github.com/dynamic-framework/dynamic-ui/issues/1000)) ([91a45b1](https://github.com/dynamic-framework/dynamic-ui/commit/91a45b16936440b4ad93d06c367748986ba07f5d))
+
 ## [2.2.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.1.1...v2.2.0) (2026-02-10)
 
 
