@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/dynamic-framework/dynamic-ui/compare/v2.3.0...v2.3.1) (2026-04-01)
+
+
+### Bug Fixes
+
+* remove shadow utility in favor to use bootstrap setup with css vars ([#1012](https://github.com/dynamic-framework/dynamic-ui/issues/1012)) ([0197c1f](https://github.com/dynamic-framework/dynamic-ui/commit/0197c1f85826aa5394bb25aab5be555d105ab625))
+* update variable names for box component styles in _d-box.scss ([#1013](https://github.com/dynamic-framework/dynamic-ui/issues/1013)) ([6e10866](https://github.com/dynamic-framework/dynamic-ui/commit/6e108669ee2f3abec9bcc20f8c7a7a40eab7d86b))
+
 ## [2.3.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.2.0...v2.3.0) (2026-03-30)
 
 
