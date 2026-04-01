@@ -38,18 +38,6 @@ $utilities: map-merge(
         )
       )
     ),
-    "shadow": map-merge(
-      map-get($utilities, "shadow"),
-      (
-        responsive: true,
-        values: (
-          null: var(--#{$prefix}box-shadow),
-          sm: var(--#{$prefix}box-shadow-sm),
-          lg: var(--#{$prefix}box-shadow-lg),
-          none: none
-        )
-      )
-    ),
     "text-opacity": map-merge(
       map-get($utilities, "text-opacity"),
       (
