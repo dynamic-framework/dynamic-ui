@@ -63,7 +63,6 @@ const parser = docgen.withCustomConfig(TSCONFIG_PATH, {
 
 // --- Parsear ---
 const results = {};
-let parsed = 0;
 let failed = 0;
 
 for (const filePath of componentFiles) {
@@ -89,7 +88,6 @@ for (const filePath of componentFiles) {
           ])
         ),
       };
-      parsed++;
     }
   } catch (err) {
     const componentName = basename(filePath, '.tsx');
