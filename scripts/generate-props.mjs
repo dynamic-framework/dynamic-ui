@@ -8,7 +8,7 @@
  * Uso: node scripts/generate-props.mjs
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
+import { writeFileSync, existsSync, readdirSync } from 'fs';
 import { resolve, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import * as docgen from 'react-docgen-typescript';
@@ -93,7 +93,8 @@ for (const filePath of componentFiles) {
     }
   } catch (err) {
     const componentName = basename(filePath, '.tsx');
-    console.warn(`  ⚠️  Failed: ${componentName} — ${err.message}`);
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    console.warn(`  ⚠️  Failed: ${componentName} — ${errorMessage}`);
     failed++;
   }
 }
@@ -103,8 +104,9 @@ const OUTPUT_PATH = resolve(OUTPUT_DIR, 'props.json');
 writeFileSync(OUTPUT_PATH, JSON.stringify(results, null, 2));
 
 const sizeKB = (Buffer.byteLength(JSON.stringify(results)) / 1024).toFixed(1);
+const uniqueComponents = Object.keys(results).length;
 console.log(`\n✅ Generated docs/props.json`);
-console.log(`   Components: ${parsed} parsed, ${failed} failed`);
+console.log(`   Components: ${uniqueComponents} exported (from ${componentFiles.length} source files), ${failed} failed`);
 console.log(`   Size: ${sizeKB} KB`);
 if (failed > 0) {
   console.log(`\n⚠️  ${failed} components failed — check warnings above`);
