@@ -35,6 +35,7 @@ const COMPONENTS_DIR = resolve(ROOT, 'src/components');
 
 const componentFiles = readdirSync(COMPONENTS_DIR, { withFileTypes: true })
   .filter(entry => entry.isDirectory() && entry.name.startsWith('D'))
+  .sort((a, b) => a.name.localeCompare(b.name))
   .map(entry => {
     // Archivo principal del componente: D{Name}/D{Name}.tsx
     const mainFile = resolve(COMPONENTS_DIR, entry.name, `${entry.name}.tsx`);
@@ -71,6 +72,10 @@ for (const filePath of componentFiles) {
 
     for (const doc of docs) {
       if (!doc.displayName) continue;
+
+      if (results[doc.displayName]) {
+        console.warn(`  ⚠️  Duplicate displayName: ${doc.displayName} (from ${basename(filePath, '.tsx')}, already seen) — overwriting`);
+      }
 
       results[doc.displayName] = {
         description: doc.description ?? '',
