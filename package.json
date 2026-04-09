@@ -60,7 +60,7 @@
     "clean": "rimraf dist-transpiled && rimraf dist",
     "compile": "tsc -p . && rollup -c rollup.config.mjs",
     "storybook": "storybook dev -p 6006",
-    "build:storybook": "storybook build --docs -o docs",
+    "build:storybook": "storybook build --docs -o docs && node scripts/generate-props.mjs",
     "eslint": "npm run eslint:src && npm run eslint:stories && npm run eslint:test",
     "eslint:src": "eslint 'src/**/*.ts' 'src/**/*.tsx' --ignore-pattern '**/*.spec.tsx'",
     "eslint:stories": "eslint stories/**/*.stories.tsx",
