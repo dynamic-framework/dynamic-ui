@@ -104,13 +104,15 @@ for (const filePath of componentFiles) {
 
 // --- Output ---
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'props.json');
-writeFileSync(OUTPUT_PATH, JSON.stringify(results, null, 2));
+const output = JSON.stringify(results, null, 2);
+writeFileSync(OUTPUT_PATH, output);
 
-const sizeKB = (Buffer.byteLength(JSON.stringify(results)) / 1024).toFixed(1);
+const sizeKB = (Buffer.byteLength(output) / 1024).toFixed(1);
 const uniqueComponents = Object.keys(results).length;
 console.log(`\n✅ Generated docs/props.json`);
 console.log(`   Components: ${uniqueComponents} exported (from ${componentFiles.length} source files), ${failed} failed`);
 console.log(`   Size: ${sizeKB} KB`);
 if (failed > 0) {
-  console.log(`\n⚠️  ${failed} components failed — check warnings above`);
+  console.error(`\n❌ ${failed} components failed — check warnings above`);
+  process.exit(1);
 }
