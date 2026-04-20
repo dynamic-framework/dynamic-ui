@@ -410,10 +410,10 @@ $dark-text-emphasis: var(--#{$prefix}gray-25) !default;
 // scss-docs-start theme-bg-subtle-variables
 $primary-bg-subtle: var(--#{$prefix}primary-100) !default;
 $secondary-bg-subtle: var(--#{$prefix}secondary-100) !default;
-$success-bg-subtle: var(--#{$prefix}success-100) !default;
-$info-bg-subtle: var(--#{$prefix}info-100) !default;
-$warning-bg-subtle: var(--#{$prefix}warning-100) !default;
-$danger-bg-subtle: var(--#{$prefix}danger-100) !default;
+$success-bg-subtle: var(--#{$prefix}success-25) !default;
+$info-bg-subtle: var(--#{$prefix}info-25) !default;
+$warning-bg-subtle: var(--#{$prefix}warning-25) !default;
+$danger-bg-subtle: var(--#{$prefix}danger-25) !default;
 $light-bg-subtle: var(--#{$prefix}gray-100) !default;
 $dark-bg-subtle: var(--#{$prefix}gray-400) !default;
 // scss-docs-end theme-bg-subtle-variables

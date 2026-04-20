@@ -63,17 +63,6 @@
     --#{$prefix}#{$color}-text-emphasis: #{$value};
   }
 
-  $theme-colors-bg-subtle: (
-    "primary": $primary-bg-subtle,
-    "secondary": $secondary-bg-subtle,
-    "success": $green-25,
-    "info": $blue-25,
-    "warning": $yellow-25,
-    "danger": $red-25,
-    "light": $light-bg-subtle,
-    "dark": $dark-bg-subtle,
-  );
-
   @each $color, $value in $theme-colors-bg-subtle {
     --#{$prefix}#{$color}-bg-subtle: #{$value};
   }
@@ -355,7 +344,7 @@
   --#{$prefix}default-accordion-body-padding-x: var(--#{$prefix}default-accordion-padding-x);
   --#{$prefix}default-accordion-body-padding-y: var(--#{$prefix}default-accordion-padding-y);
   --#{$prefix}default-accordion-active-color: var(--#{$prefix}body-color);
-  --#{$prefix}default-accordion-active-bg: var(--#{$prefix}secondary-soft);
+  --#{$prefix}default-accordion-active-bg: var(--#{$prefix}secondary-50);
 }
 
 @if $enable-dark-mode {
