@@ -35,7 +35,7 @@ jobs:
           scope: '@dynamic-framework'
         if: ${{ steps.release.outputs.release_created }}
       - name: Update npm
-        run: npm install -g npm@latest
+        run: npm install -g npm@11.5.1
         if: ${{ steps.release.outputs.release_created }}
       - name: Check npm version
         run: npm --version
