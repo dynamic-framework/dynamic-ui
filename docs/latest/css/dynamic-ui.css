@@ -1,5 +1,5 @@
 /*!
- * dynamic-framework 2.3.1
+ * dynamic-framework 2.4.0
  * bootstrap ~5.3.8
  * license https://github.com/dynamic-framework/dynamic-ui/blob/master/LICENSE.md
  */
@@ -422,10 +422,10 @@
   --bs-dark-text-emphasis: var(--bs-gray-25);
   --bs-primary-bg-subtle: var(--bs-primary-100);
   --bs-secondary-bg-subtle: var(--bs-secondary-100);
-  --bs-success-bg-subtle: #f4f9f6;
-  --bs-info-bg-subtle: #f4f7fd;
-  --bs-warning-bg-subtle: #fffbf2;
-  --bs-danger-bg-subtle: #fdf5f6;
+  --bs-success-bg-subtle: var(--bs-success-25);
+  --bs-info-bg-subtle: var(--bs-info-25);
+  --bs-warning-bg-subtle: var(--bs-warning-25);
+  --bs-danger-bg-subtle: var(--bs-danger-25);
   --bs-light-bg-subtle: var(--bs-gray-100);
   --bs-dark-bg-subtle: var(--bs-gray-400);
   --bs-primary-border-subtle: var(--bs-primary-100);
@@ -1052,7 +1052,7 @@
   --bs-default-accordion-body-padding-x: var(--bs-default-accordion-padding-x);
   --bs-default-accordion-body-padding-y: var(--bs-default-accordion-padding-y);
   --bs-default-accordion-active-color: var(--bs-body-color);
-  --bs-default-accordion-active-bg: var(--bs-secondary-soft);
+  --bs-default-accordion-active-bg: var(--bs-secondary-50);
 }
 @media (min-width: 1200px) {
   :root,

@@ -1,0 +1,5156 @@
+{
+  "DAlert": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "color": {
+        "type": "undefined | \"success\" | \"danger\" | \"warning\" | \"info\"",
+        "required": false,
+        "defaultValue": "success",
+        "description": ""
+      },
+      "icon": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "showClose": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconClose": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconCloseFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconCloseFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconCloseMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "onClose": {
+        "type": "(() => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DAvatar": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"xs\" | \"sm\" | \"lg\" | \"xl\" | \"xxl\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "image": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "name": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "useNameAsInitials": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      }
+    }
+  },
+  "DBadge": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "text": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "soft": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "rounded": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "color": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DBox": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DBoxFile": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "accept": {
+        "type": "AcceptType",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "multiple": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "minSize": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "maxSize": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "maxFiles": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "disabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "string[] | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "noClick": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "noKeyboard": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "noDrag": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "autoFocus": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onDrop": {
+        "type": "((acceptedFiles: File[], rejectedFiles: RejectedFile[], event?: Event | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onDragEnter": {
+        "type": "((event: DragEvent<HTMLDivElement>) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onDragLeave": {
+        "type": "((event: DragEvent<HTMLDivElement>) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onLoad": {
+        "type": "((acceptedFiles: File[]) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onError": {
+        "type": "((error: Error) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "icon": {
+        "type": "string | false | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DButton": {
+    "description": "",
+    "props": {
+      "href": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "target": {
+        "type": "HTMLAttributeAnchorTarget | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "rel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "color": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "variant": {
+        "type": "undefined | \"outline\" | \"link\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "text": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loadingText": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loadingAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DButtonIcon": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "icon": {
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "variant": {
+        "type": "undefined | \"link\" | \"outline\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "state": {
+        "type": "undefined | \"disabled\" | \"focus-visible\" | \"hover\" | \"active\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "loadingAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "stopPropagationEnabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": true,
+        "description": ""
+      },
+      "href": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "target": {
+        "type": "HTMLAttributeAnchorTarget | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DCard": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DCarousel": {
+    "description": "",
+    "props": {
+      "onMounted": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onReady": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onMove": {
+        "type": "((splide: Splide, index: number, prev: number, dest: number) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onMoved": {
+        "type": "((splide: Splide, index: number, prev: number, dest: number) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onClick": {
+        "type": "((splide: Splide, Slide: SlideComponent, e: MouseEvent) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onActive": {
+        "type": "((splide: Splide, Slide: SlideComponent) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onInactive": {
+        "type": "((splide: Splide, Slide: SlideComponent) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onVisible": {
+        "type": "((splide: Splide, Slide: SlideComponent) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onHidden": {
+        "type": "((splide: Splide, Slide: SlideComponent) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onRefresh": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onUpdated": {
+        "type": "((splide: Splide, options: Options) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onResize": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onResized": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onDrag": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onDragging": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onDragged": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onScroll": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onScrolled": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onDestroy": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onArrowsMounted": {
+        "type": "((splide: Splide, prev: HTMLButtonElement, next: HTMLButtonElement) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onArrowsUpdated": {
+        "type": "((splide: Splide, prev: HTMLButtonElement, next: HTMLButtonElement, prevIndex: number, nextIndex: number) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onPaginationMounted": {
+        "type": "((splide: Splide, data: PaginationData, item: PaginationItem) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onPaginationUpdated": {
+        "type": "((splide: Splide, data: PaginationData, prev: PaginationItem, curr: PaginationItem) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onNavigationMounted": {
+        "type": "((splide: Splide, splides: Splide[]) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onAutoplayPlay": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onAutoplayPlaying": {
+        "type": "((splide: Splide, rate: number) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onAutoplayPause": {
+        "type": "((splide: Splide) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onLazyLoadLoaded": {
+        "type": "((splide: Splide, img: HTMLImageElement, Slide: SlideComponent) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DChip": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "color": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "primary",
+        "description": ""
+      },
+      "text": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "icon": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconClose": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconCloseFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconCloseFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconCloseMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showClose": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "closeAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "close",
+        "description": ""
+      },
+      "onClose": {
+        "type": "(() => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DCollapse": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "Component": {
+        "type": "ReactNode | ReactElement<unknown, string | JSXElementConstructor<any>>",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "defaultCollapsed": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": true,
+        "description": "Reactive prop for controlled and uncontrolled mode.\n@param true show the component closed (collapsed)\n@param false show the component open (expanded)"
+      },
+      "onChange": {
+        "type": "((value: boolean) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconOpen": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconClose": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DCreditCard": {
+    "description": "",
+    "props": {
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "brand": {
+        "type": "undefined | \"visa\" | \"mastercard\"",
+        "required": false,
+        "defaultValue": "visa",
+        "description": ""
+      },
+      "isChipVisible": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": true,
+        "description": ""
+      },
+      "name": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "number": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "holderText": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "Card Holder",
+        "description": ""
+      },
+      "isVertical": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "logoImage": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DCurrencyText": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DDataStateWrapper": {
+    "description": "",
+    "props": {
+      "isLoading": {
+        "type": "boolean",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "isError": {
+        "type": "boolean",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "data": {
+        "type": "T[] | undefined",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onRetry": {
+        "type": "(() => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "renderLoading": {
+        "type": "Renderable",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "renderEmpty": {
+        "type": "Renderable",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "renderError": {
+        "type": "Renderable",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DDatePicker": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((date: Date | null, event?: MouseEvent<HTMLElement, MouseEvent> | KeyboardEvent<HTMLElement> | undefined) => void) | ((date: [...], event?: MouseEvent<...> | ... 1 more ... | undefined) => void) | ((date: Date[] | null, event?: MouseEvent<...> | ... 1 more ... | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onSelect": {
+        "type": "((date: Date | null, event?: MouseEvent<HTMLElement, MouseEvent> | KeyboardEvent<HTMLElement> | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dateFormat": {
+        "type": "string | string[] | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onYearMouseEnter": {
+        "type": "((event: MouseEvent<HTMLDivElement, MouseEvent>, year: number) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onYearMouseLeave": {
+        "type": "((event: MouseEvent<HTMLDivElement, MouseEvent>, year: number) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "selectsMultiple": {
+        "type": "true | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "selectsRange": {
+        "type": "true | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onDayMouseEnter": {
+        "type": "((date: Date) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "highlightDates": {
+        "type": "(Date | HighlightDate)[] | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "holidays": {
+        "type": "Holiday[] | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showYearPicker": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showTimeSelect": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showTimeInput": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "useWeekdaysShort": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "forceShowMonthNavigation": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showDisabledMonthNavigation": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "formatWeekDay": {
+        "type": "((date: string) => string) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "weekDayClassName": {
+        "type": "((date: Date) => string) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onMonthChange": {
+        "type": "((date: Date) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onYearChange": {
+        "type": "((date: Date) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onMonthMouseLeave": {
+        "type": "VoidFunction | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "weekLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onClickOutside": {
+        "type": "ClickOutsideHandler | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "previousMonthButtonLabel": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "previousYearButtonLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "previousMonthAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "previousYearAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "nextMonthButtonLabel": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "nextYearButtonLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "nextMonthAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "nextYearAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showPreviousMonths": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "monthsShown": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "renderCustomHeader": {
+        "type": "((props: ReactDatePickerCustomHeaderProps) => ReactElement<unknown, string | JSXElementConstructor<any>>) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "monthAriaLabelPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "timeFormat": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "timeIntervals": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dateFormatCalendar": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "calendarClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "calendarContainer": {
+        "type": "ElementType<any, keyof IntrinsicElements> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onKeyDown": {
+        "type": "((event: KeyboardEvent<HTMLElement>) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "popperClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showPopperArrow": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "open": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "disabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "readOnly": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "startOpen": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onFocus": {
+        "type": "FocusEventHandler<HTMLElement> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onBlur": {
+        "type": "FocusEventHandler<HTMLElement> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onInputClick": {
+        "type": "VoidFunction | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "preventOpenOnFocus": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "closeOnScroll": {
+        "type": "boolean | ((event: Event) => boolean) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "isClearable": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "clearButtonTitle": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "clearButtonClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabelClose": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "customInput": {
+        "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showDateSelect": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onCalendarOpen": {
+        "type": "VoidFunction | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onCalendarClose": {
+        "type": "VoidFunction | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "strictParsing": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "swapRange": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onInputError": {
+        "type": "((error: { code: 1; msg: string; }) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "allowSameDay": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "focusSelectedMonth": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showIcon": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "calendarIconClassname": {
+        "type": "undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "calendarIconClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "toggleCalendarOnIconClick": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "customInputRef": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "name": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "form": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "autoFocus": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "placeholderText": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "autoComplete": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "title": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "required": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "tabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaDescribedBy": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaInvalid": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabelledBy": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaRequired": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChangeRaw": {
+        "type": "((event?: MouseEvent<HTMLElement, MouseEvent> | KeyboardEvent<HTMLElement> | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputHint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputActionAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "open calendar",
+        "description": ""
+      },
+      "iconInput": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputId": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "input-calendar",
+        "description": ""
+      },
+      "timeId": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "input-time",
+        "description": ""
+      },
+      "iconHeaderPrev": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconHeaderNext": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconHeaderSize": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "headerPrevMonthAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "headerNextMonthAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "headerButtonVariant": {
+        "type": "undefined | \"link\" | \"outline\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "headerButtonColor": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "minYearSelect": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "maxYearSelect": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "placeholder": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "showHeaderSelectors": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "formatHeaderDate": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "locale": {
+        "type": "Locale | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabelInputTime": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DDropdown": {
+    "description": "",
+    "props": {
+      "actions": {
+        "type": "DropdownAction[]",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dropdownToggle": {
+        "type": "((props: { open: boolean; toggle: () => void; }) => ReactNode) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DErrorBoundary": {
+    "description": "",
+    "props": {
+      "name": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "fallback": {
+        "type": "((props: FallbackProps) => ReactNode) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "resetKeys": {
+        "type": "unknown[] | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onReset": {
+        "type": "(() => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onError": {
+        "type": "((error: unknown, info: ErrorInfo) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "useErrorBoundary": {
+    "description": "Convenience hook for imperatively showing or dismissing error boundaries.\n\n⚠️ This hook must only be used within an `ErrorBoundary` subtree.",
+    "props": {}
+  },
+  "getErrorMessage": {
+    "description": "",
+    "props": {}
+  },
+  "DIcon": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "icon": {
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "color": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "useListenerSize": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": "Enables real-time breakpoint listeners for responsive size changes.\nWhen set to true, the component will listen for size changes and update responsively.\nNote: Enabling this feature may have performance implications, especially\nin complex or frequently updated components."
+      },
+      "hasCircle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "materialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "familyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "familyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "strokeWidth": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DIconBase": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "icon": {
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "color": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "useListenerSize": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": "Enables real-time breakpoint listeners for responsive size changes.\nWhen set to true, the component will listen for size changes and update responsively.\nNote: Enabling this feature may have performance implications, especially\nin complex or frequently updated components."
+      },
+      "hasCircle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "materialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "familyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "familyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "strokeWidth": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": 2,
+        "description": ""
+      }
+    }
+  },
+  "DInput": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "floatingLabel": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputStart": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputEnd": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "readonly": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((value: string) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconStartClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconEndClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputCheck": {
+    "description": "",
+    "props": {
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "indeterminate": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputCounter": {
+    "description": "",
+    "props": {
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "floatingLabel": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputStart": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputEnd": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "readonly": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconStartClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconEndClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "minValue": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "maxValue": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((value?: number | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputCurrency": {
+    "description": "",
+    "props": {
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "floatingLabel": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputStart": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputEnd": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "readonly": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconStartClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconEndClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "minValue": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "maxValue": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "currencyCode": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((value?: number | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputMask": {
+    "description": "",
+    "props": {
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((value: string) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "floatingLabel": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputStart": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputEnd": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "readonly": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconStartClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconEndClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "component": {
+        "type": "ForwardRefExoticComponent<Omit<Omit<Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, \"ref\">, \"value\" | \"onChange\">, \"label\" | ... 16 more ... | \"onIconEndClick\"> & ... 5 more ... & RefAttributes<...>> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputPassword": {
+    "description": "",
+    "props": {
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((value: string) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "floatingLabel": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputStart": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputEnd": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "readonly": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconStartClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconEndClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputPhone": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "floatingLabel": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputEnd": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((value: OnChangeType) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconEndClick": {
+        "type": "((value?: string | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "countrySelectorProps": {
+        "type": "Omit<CountrySelectorProps, \"disabled\" | \"onSelect\" | \"selectedCountry\" | \"countries\"> | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "filteredCountries": {
+        "type": "CountryIso2[] | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "defaultCountry": {
+        "type": "CountryIso2 | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputPin": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "",
+        "description": ""
+      },
+      "placeholder": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "type": {
+        "type": "undefined | \"number\" | \"text\" | \"tel\"",
+        "required": false,
+        "defaultValue": "text",
+        "description": ""
+      },
+      "disabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "readOnly": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "secret": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "characters": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": 4,
+        "description": ""
+      },
+      "innerInputMode": {
+        "type": "undefined | \"text\" | \"tel\" | \"numeric\"",
+        "required": false,
+        "defaultValue": "text",
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((value: string) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "aria-label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "Pin character number",
+        "description": ""
+      }
+    }
+  },
+  "DInputRange": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "filledValue": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputSelect": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "name": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "",
+        "description": ""
+      },
+      "disabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "floatingLabel": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "onBlur": {
+        "type": "((event: FocusEvent<Element, Element>) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconStartClick": {
+        "type": "((event: MouseEvent<Element, MouseEvent>) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconEndClick": {
+        "type": "((event: MouseEvent<Element, MouseEvent>) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "options": {
+        "type": "T[]",
+        "required": false,
+        "defaultValue": "[]",
+        "description": ""
+      },
+      "value": {
+        "type": "string | number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((selectedOption: T) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "valueExtractor": {
+        "type": "((item: T) => string | number) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "labelExtractor": {
+        "type": "((item: T) => string) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DInputSwitch": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "name": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "checked": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "disabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "inputClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "readonly": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((isChecked: boolean) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DLayout": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "gap": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "gapSm": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "gapMd": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "gapLg": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "gapXl": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "gapXxl": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "columns": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DListGroup": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "as": {
+        "type": "undefined | \"ul\" | \"ol\" | \"div\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "numbered": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "flush": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "horizontal": {
+        "type": "boolean | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\" | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DModal": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "name": {
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "staticBackdrop": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "scrollable": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "centered": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "fullScreen": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "fullScreenFrom": {
+        "type": "undefined | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\" | \"xl\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "transition": {
+        "type": "Transition | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DOffcanvas": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "name": {
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "staticBackdrop": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "scrollable": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "openFrom": {
+        "type": "undefined | \"top\" | \"bottom\" | \"start\" | \"end\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "transition": {
+        "type": "Transition | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DOtp": {
+    "description": "",
+    "props": {
+      "action": {
+        "type": "() => void | Promise<void>",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "isLoading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "otpSize": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": 6,
+        "description": ""
+      },
+      "seconds": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": 15,
+        "description": ""
+      },
+      "texts": {
+        "type": "{ submit?: string | undefined; resend?: string | undefined; title?: string | undefined; contact?: ReactNode; resendText?: string | undefined; } | undefined",
+        "required": false,
+        "defaultValue": "{\n  resend: 'Resend',\n  resendText: 'Resend code',\n  submit: 'Authorize and continue',\n  title: 'We will send you a 6-digit code to your associated phone number so you can continue with your request.',\n  contact: (\n    <>\n      <span>Problems with your digital token? Contact us</span>\n      {' '}\n      <a\n        href=\"https://www.modyo.com\"\n        className=\"link-primary text-nowrap\"\n        target=\"_blank\"\n        rel=\"noreferrer\"\n      >\n        Contact us\n      </a>\n    </>\n  ),\n}",
+        "description": ""
+      }
+    }
+  },
+  "DPaginator": {
+    "description": "",
+    "props": {
+      "current": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "total": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onPageChange": {
+        "type": "(page: number) => void",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "maxWidth": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "narrowBehaviour": {
+        "type": "NarrowBehaviour | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "extraClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "pageItemClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "pageLinkClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "activeItemClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "disabledItemClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "disabledLinkClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "navClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "previousClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "nextClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "previousLabel": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "nextLabel": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaPreviousLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaNextLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "renderNav": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaCurrentAttr": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "linkHref": {
+        "type": "((page: number) => string) | \"hash\" | \"omit\" | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "labelBehaviour": {
+        "type": "LabelBehaviour | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DPasswordStrengthMeter": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "id": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "Password",
+        "description": ""
+      },
+      "placeholder": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "value": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "",
+        "description": ""
+      },
+      "name": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "disabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "validationMessages": {
+        "type": "ValidationMessages | undefined",
+        "required": false,
+        "defaultValue": "{\n  number: 'At least one number',\n  lowercaseLetter: 'At least one lowercase letter',\n  uppercaseLetter: 'At least one uppercase letter',\n  especialChar: 'At least one of these special characters: ~!@#$^*-_=[]{}|;,.?',\n  notMatch: 'The password confirmation and the new password do not match.',\n}",
+        "description": ""
+      },
+      "enabledChecks": {
+        "type": "ValidationCheck[] | undefined",
+        "required": false,
+        "defaultValue": "['uppercase', 'lowercase', 'number', 'specialChar']",
+        "description": ""
+      },
+      "onChange": {
+        "type": "((value: string) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DPopover": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "renderComponent": {
+        "type": "(open: boolean) => ReactElement<unknown, string | JSXElementConstructor<any>>",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "open": {
+        "type": "boolean",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "setOpen": {
+        "type": "((open: boolean) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "adjustContentToRender": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      }
+    }
+  },
+  "DProgress": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "currentValue": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "minValue": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": 0,
+        "description": ""
+      },
+      "maxValue": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": 100,
+        "description": ""
+      },
+      "hideCurrentValue": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "enableStripedAnimation": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "height": {
+        "type": "string | number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DSelect": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": "Sets a className attribute on the outer component"
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStart": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconStartMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEnd": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndDisabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndAriaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndTabIndex": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconEndMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "label": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "hint": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "invalid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "valid": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "menuWithMaxContent": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "floatingLabel": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconStartClick": {
+        "type": "((value?: PropsValue<Option> | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onIconEndClick": {
+        "type": "((value?: PropsValue<Option> | undefined) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "disabled": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "clearable": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "loading": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "rtl": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "searchable": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "multi": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DStepper": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "options": {
+        "type": "Step[]",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "currentStep": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconSuccess": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconSuccessFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconSuccessFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconSuccessMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "vertical": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "completed": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "breakpoint": {
+        "type": "undefined | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"",
+        "required": false,
+        "defaultValue": "lg",
+        "description": ""
+      }
+    }
+  },
+  "DStepperDesktop": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "options": {
+        "type": "Step[]",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "currentStep": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconSuccess": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconSuccessFamilyClass": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconSuccessFamilyPrefix": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "iconSuccessMaterialStyle": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "vertical": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "completed": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "alignStart": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      }
+    }
+  },
+  "DStepperMobile": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "options": {
+        "type": "Step[]",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "currentStep": {
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DTabs": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "classNameTab": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "onChange": {
+        "type": "((option: DTabOption) => void) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "options": {
+        "type": "DTabOption[]",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "defaultSelected": {
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "vertical": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "variant": {
+        "type": "undefined | \"tabs\" | \"pills\" | \"underline\" | \"toggle-button-group\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabel": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "ariaLabelledBy": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DTimeline": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "items": {
+        "type": "DTimelineItem[]",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DToast": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DToastContainer": {
+    "description": "",
+    "props": {}
+  },
+  "DTooltip": {
+    "description": "",
+    "props": {
+      "style": {
+        "type": "CSSProperties | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "dataAttributes": {
+        "type": "DataAttributes | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "childrenClassName": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "offSet": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": "ARROW_HEIGHT + GAP",
+        "description": ""
+      },
+      "padding": {
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "withHover": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": true,
+        "description": ""
+      },
+      "withFocus": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "withClick": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "open": {
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      },
+      "size": {
+        "type": "undefined | \"sm\" | \"lg\"",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "placement": {
+        "type": "undefined | \"top\" | \"right\" | \"bottom\" | \"left\" | \"top-start\" | \"top-end\" | \"right-start\" | \"right-end\" | \"bottom-start\" | \"bottom-end\" | \"left-start\" | \"left-end\"",
+        "required": false,
+        "defaultValue": "top",
+        "description": ""
+      },
+      "Component": {
+        "type": "ReactNode",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  },
+  "DVoucher": {
+    "description": "",
+    "props": {
+      "amount": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "amountDetails": {
+        "type": "ReactNode",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "icon": {
+        "type": "string | false | Partial<BaseProps & { icon: string; color?: string | undefined; size?: string | Partial<Record<\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\", string>> | undefined; ... 5 more ...; strokeWidth?: number | undefined; }> | null | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "className": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      "message": {
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "title": {
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      "downloadText": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "Download",
+        "description": ""
+      },
+      "shareText": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "Share",
+        "description": ""
+      },
+      "onError": {
+        "type": "((err: Error) => void | Promise<void>) | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      }
+    }
+  }
+}
