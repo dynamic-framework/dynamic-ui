@@ -34,8 +34,10 @@ jobs:
           registry-url: https://registry.npmjs.org/
           scope: '@dynamic-framework'
         if: ${{ steps.release.outputs.release_created }}
-      - name: Update npm
-        run: npm install -g npm@latest
+      - name: Use npm 11
+        run: |
+          corepack enable
+          corepack prepare npm@11.5 --activate
         if: ${{ steps.release.outputs.release_created }}
       - name: Check npm version
         run: npm --version
