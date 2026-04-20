@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.3.1...v2.4.0) (2026-04-20)
+
+
+### Features
+
+* add props.json exporter for MCP Hub integration ([#1018](https://github.com/dynamic-framework/dynamic-ui/issues/1018)) ([4fbf0cd](https://github.com/dynamic-framework/dynamic-ui/commit/4fbf0cdcec31194e8409da527958454d97583e3b))
+
+
+### Bug Fixes
+
+* specify npm version to 11.5.1 for consistency in release workflow ([e71eec0](https://github.com/dynamic-framework/dynamic-ui/commit/e71eec0dfaf2bb5d02f95d49bb8f417928f8c8bf))
+* update subtle background colors for improved theme consistency ([#1023](https://github.com/dynamic-framework/dynamic-ui/issues/1023)) ([a3f0060](https://github.com/dynamic-framework/dynamic-ui/commit/a3f0060237e243db8a8b50d145a7722036814e54))
+
 ## [2.3.1](https://github.com/dynamic-framework/dynamic-ui/compare/v2.3.0...v2.3.1) (2026-04-01)
 
 
