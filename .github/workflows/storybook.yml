@@ -3,16 +3,19 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+
 jobs:
   storybook:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           persist-credentials: false
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: '.nvmrc'
       - name: Install dependencies
@@ -28,8 +31,8 @@ jobs:
         run: npm run build
       - name: Build storybook
         run: npm run build:storybook
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.6.2
+      - name: Deploy latest storybook
+        uses: JamesIves/github-pages-deploy-action@e80c869f0057899fc2cd28819b5bbe9de890524a # 3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: docs

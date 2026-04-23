@@ -2,6 +2,9 @@ name: Dev Publish
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: dev-publish
   cancel-in-progress: false
@@ -10,11 +13,11 @@ jobs:
   dev-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: '.nvmrc'
           registry-url: https://registry.npmjs.org/
@@ -45,7 +48,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ec61189d14ec14c8efccab744f656cffd0e33f37 # v6.1.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -56,8 +59,8 @@ jobs:
         run: npm run build:storybook
         env:
           STORYBOOK_DEV: "true"
-      - name: Deploy dev storybook 🚀
-        uses: JamesIves/github-pages-deploy-action@3.6.2
+      - name: Deploy dev storybook
+        uses: JamesIves/github-pages-deploy-action@e80c869f0057899fc2cd28819b5bbe9de890524a # 3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: docs
