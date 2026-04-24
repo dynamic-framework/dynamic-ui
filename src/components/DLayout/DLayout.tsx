@@ -8,9 +8,9 @@ import type { BaseProps } from '../interface';
 
 /**
  * Define the spacing (gap) on a scale from 0 to 5 (Bootstrap gap utilities).
- * @type {number}
+ * @type {0 | 1 | 2 | 3 | 4 | 5}
  */
-type Gap = number;
+type Gap = 0 | 1 | 2 | 3 | 4 | 5;
 
 type Props = PropsWithChildren<BaseProps & {
   gap?: Gap;
