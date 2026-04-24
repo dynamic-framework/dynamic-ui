@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
 
 import DLayout from '../../src/components/DLayout/DLayout';
@@ -77,7 +78,7 @@ DLayout is a grid-based layout component that uses Bootstrap's CSS Grid system t
 
 - **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
 - **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-24).
-- **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0-30).
+- **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0–5). The story controls intentionally show this 0–5 range.
 - **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
 - **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
 - **Responsive:** Built on Bootstrap's grid system for responsive designs.
@@ -491,8 +492,8 @@ Append a breakpoint infix to make the column span apply only from that breakpoin
 | \`.g-col-sm-{n}\` | ≥ 576 px |
 | \`.g-col-md-{n}\` | ≥ 768 px |
 | \`.g-col-lg-{n}\` | ≥ 992 px |
-| \`.g-col-xl-{n}\` | ≥ 1 200 px |
-| \`.g-col-xxl-{n}\` | ≥ 1 400 px |
+| \`.g-col-xl-{n}\` | ≥ 1200 px |
+| \`.g-col-xxl-{n}\` | ≥ 1400 px |
 
 \`\`\`html
 <!-- Full width on mobile, half on tablet, one-third on desktop -->
@@ -616,7 +617,7 @@ Override the number of columns with the \`--bs-columns\` CSS variable on the con
           {'Custom 5-column grid - '}
           <code>--bs-columns: 5</code>
         </p>
-        <div className="grid gap-2" style={{ ['--bs-columns' as string]: 5 }}>
+        <div className="grid gap-2" style={{ '--bs-columns': 5 } as CSSProperties}>
           <div className="g-col-1"><DBox><p className="mb-0">1/5</p></DBox></div>
           <div className="g-col-1"><DBox><p className="mb-0">2/5</p></DBox></div>
           <div className="g-col-1"><DBox><p className="mb-0">3/5</p></DBox></div>

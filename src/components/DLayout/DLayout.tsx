@@ -7,7 +7,7 @@ import DLayoutPane from './components/DLayoutPane';
 import type { BaseProps } from '../interface';
 
 /**
- * Define the spacing (gap) on a scale from 0 to 30.
+ * Define the spacing (gap) on a scale from 0 to 5 (Bootstrap gap utilities).
  * @type {number}
  */
 type Gap = number;
