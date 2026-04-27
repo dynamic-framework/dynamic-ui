@@ -7,18 +7,18 @@ import DLayoutPane from './components/DLayoutPane';
 import type { BaseProps } from '../interface';
 
 /**
- * Define the spacing (gap) on a scale from 0 to 30.
- * @type {number}
+ * Define the spacing (gap) on a scale from 0 to 5 (Bootstrap gap utilities).
+ * @type {0 | 1 | 2 | 3 | 4 | 5}
  */
-type Gap = number;
+export type DLayoutGap = 0 | 1 | 2 | 3 | 4 | 5;
 
 type Props = PropsWithChildren<BaseProps & {
-  gap?: Gap;
-  gapSm?: Gap;
-  gapMd?: Gap;
-  gapLg?: Gap;
-  gapXl?: Gap;
-  gapXxl?: Gap;
+  gap?: DLayoutGap;
+  gapSm?: DLayoutGap;
+  gapMd?: DLayoutGap;
+  gapLg?: DLayoutGap;
+  gapXl?: DLayoutGap;
+  gapXxl?: DLayoutGap;
   columns?: number;
 }>;
 
