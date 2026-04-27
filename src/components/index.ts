@@ -24,6 +24,7 @@ export {
   default as DLayout,
   DLayoutPane,
 } from './DLayout';
+export type { DLayoutGap } from './DLayout';
 export { default as DIconBase } from './DIconBase';
 export { default as DInput } from './DInput';
 export { default as DInputMask } from './DInputMask';
