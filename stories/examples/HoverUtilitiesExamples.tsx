@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import DBox from '../../src/components/DBox';
 import DCard from '../../src/components/DCard';
 
@@ -73,7 +74,7 @@ export function ExampleHoverOverflow() {
     <div className="border rounded p-2 overflow-hidden hover:overflow-auto" style={{ width: 280, height: 120 }}>
       <div className="d-flex flex-column gap-2">
         {Array.from({ length: 12 }).map((_, i) => (
-          /* eslint-disable-next-line react/no-array-index-key -- safe here because this is a static, non-reorderable list */
+          /* eslint-disable-next-line react/no-array-index-key */
           <div key={i} className="bg-light rounded px-2 py-1">
             Item #
             {i + 1}
@@ -105,6 +106,42 @@ export function ExampleHoverOpacity() {
       <div className="p-3 rounded border opacity-100 hover:opacity-40" style={{ width: 220 }}>
         <strong>hover:opacity-40</strong>
         <p className="mb-0 mt-2 text-body-secondary">Reduce opacity on hover</p>
+      </div>
+    </div>
+  );
+}
+
+export function ExampleHoverTextColorVariants() {
+  return (
+    <div className="d-flex flex-column gap-2">
+      <span className="hover:text-primary-100">hover:text-primary-100</span>
+      <span className="hover:text-primary-300">hover:text-primary-300</span>
+      <span className="hover:text-primary-700">hover:text-primary-700</span>
+      <span className="hover:text-danger-200">hover:text-danger-200</span>
+      <span className="hover:text-success-400">hover:text-success-400</span>
+      <span className="hover:text-warning-500">hover:text-warning-500</span>
+    </div>
+  );
+}
+
+export function ExampleHoverBorderColorVariants() {
+  return (
+    <div className="d-flex flex-wrap gap-3">
+      <div className="p-3 rounded border border-2 border-secondary hover:border-primary-100" style={{ width: 220 }}>
+        <strong>hover:border-primary-100</strong>
+        <p className="mb-0 mt-2 text-body-secondary">Border changes to primary-100</p>
+      </div>
+      <div className="p-3 rounded border border-2 border-secondary hover:border-primary-300" style={{ width: 220 }}>
+        <strong>hover:border-primary-300</strong>
+        <p className="mb-0 mt-2 text-body-secondary">Border changes to primary-300</p>
+      </div>
+      <div className="p-3 rounded border border-2 border-secondary hover:border-danger-200" style={{ width: 220 }}>
+        <strong>hover:border-danger-200</strong>
+        <p className="mb-0 mt-2 text-body-secondary">Border changes to danger-200</p>
+      </div>
+      <div className="p-3 rounded border border-2 border-secondary hover:border-success-400" style={{ width: 220 }}>
+        <strong>hover:border-success-400</strong>
+        <p className="mb-0 mt-2 text-body-secondary">Border changes to success-400</p>
       </div>
     </div>
   );
