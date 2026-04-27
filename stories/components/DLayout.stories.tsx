@@ -480,6 +480,8 @@ Each child uses \`.g-col-{n}\` to declare how many columns it occupies. The defa
 | \`.g-col-9\` | 9 |
 | \`.g-col-12\` | 12 (full width) |
 
+> **Extended spans (13–24):** Classes \`.g-col-13\` through \`.g-col-24\` are also available. They become useful when you increase the column count via \`--bs-columns\` on the container or via the \`columns\` prop on \`DLayout\` (e.g. \`columns={24}\`). See the *Custom column count* section below and the *24-column layout* story for an example.
+
 ---
 
 ### Responsive column spans
