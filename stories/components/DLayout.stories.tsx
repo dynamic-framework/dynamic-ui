@@ -4,6 +4,8 @@ import { Meta, StoryObj } from '@storybook/react-vite';
 import DLayout from '../../src/components/DLayout/DLayout';
 import { DBox } from '../../src';
 
+const GAP_OPTIONS = Array.from({ length: 31 }, (_, i) => i);
+
 const config: Meta<typeof DLayout> = {
   title: 'Design System/Components/Layout',
   component: DLayout,
@@ -12,7 +14,7 @@ const config: Meta<typeof DLayout> = {
       control: {
         type: 'select',
       },
-      options: [0, 1, 2, 3, 4, 5],
+      options: GAP_OPTIONS,
       description: 'Gap spacing between columns (all breakpoints)',
       table: { category: 'Appearance' },
     },
@@ -20,7 +22,7 @@ const config: Meta<typeof DLayout> = {
       control: {
         type: 'select',
       },
-      options: [0, 1, 2, 3, 4, 5],
+      options: GAP_OPTIONS,
       description: 'Gap spacing for small screens (≥576px)',
       table: { category: 'Appearance' },
     },
@@ -28,7 +30,7 @@ const config: Meta<typeof DLayout> = {
       control: {
         type: 'select',
       },
-      options: [0, 1, 2, 3, 4, 5],
+      options: GAP_OPTIONS,
       description: 'Gap spacing for medium screens (≥768px)',
       table: { category: 'Appearance' },
     },
@@ -36,7 +38,7 @@ const config: Meta<typeof DLayout> = {
       control: {
         type: 'select',
       },
-      options: [0, 1, 2, 3, 4, 5],
+      options: GAP_OPTIONS,
       description: 'Gap spacing for large screens (≥992px)',
       table: { category: 'Appearance' },
     },
@@ -44,7 +46,7 @@ const config: Meta<typeof DLayout> = {
       control: {
         type: 'select',
       },
-      options: [0, 1, 2, 3, 4, 5],
+      options: GAP_OPTIONS,
       description: 'Gap spacing for extra large screens (≥1200px)',
       table: { category: 'Appearance' },
     },
@@ -52,7 +54,7 @@ const config: Meta<typeof DLayout> = {
       control: {
         type: 'select',
       },
-      options: [0, 1, 2, 3, 4, 5],
+      options: GAP_OPTIONS,
       description: 'Gap spacing for extra extra large screens (≥1400px)',
       table: { category: 'Appearance' },
     },
@@ -78,7 +80,7 @@ DLayout is a grid-based layout component that uses Bootstrap's CSS Grid system t
 
 - **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
 - **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-24).
-- **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0–5). The story controls intentionally show this 0–5 range.
+- **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0–30).
 - **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
 - **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
 - **Responsive:** Built on Bootstrap's grid system for responsive designs.
