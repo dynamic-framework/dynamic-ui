@@ -598,9 +598,15 @@ Override the number of columns with the \`--bs-columns\` CSS variable on the con
           <code>.g-col-4</code>
         </p>
         <div className="grid gap-2">
-          <div className="g-col-4"><DBox><p className="mb-0">.g-col-4</p></DBox></div>
-          <div className="g-col-4"><DBox><p className="mb-0">.g-col-4</p></DBox></div>
-          <div className="g-col-4"><DBox><p className="mb-0">.g-col-4</p></DBox></div>
+          <div className="g-col-4">
+            <DBox><p className="mb-0">.g-col-4</p></DBox>
+          </div>
+          <div className="g-col-4">
+            <DBox><p className="mb-0">.g-col-4</p></DBox>
+          </div>
+          <div className="g-col-4">
+            <DBox><p className="mb-0">.g-col-4</p></DBox>
+          </div>
         </div>
       </div>
 
@@ -610,9 +616,15 @@ Override the number of columns with the \`--bs-columns\` CSS variable on the con
           <code>.g-col-12 .g-col-md-6 .g-col-lg-4</code>
         </p>
         <div className="grid gap-2">
-          <div className="g-col-12 g-col-md-6 g-col-lg-4"><DBox><p className="mb-0">12 / md:6 / lg:4</p></DBox></div>
-          <div className="g-col-12 g-col-md-6 g-col-lg-4"><DBox><p className="mb-0">12 / md:6 / lg:4</p></DBox></div>
-          <div className="g-col-12 g-col-md-12 g-col-lg-4"><DBox><p className="mb-0">12 / md:12 / lg:4</p></DBox></div>
+          <div className="g-col-12 g-col-md-6 g-col-lg-4">
+            <DBox><p className="mb-0">12 / md:6 / lg:4</p></DBox>
+          </div>
+          <div className="g-col-12 g-col-md-6 g-col-lg-4">
+            <DBox><p className="mb-0">12 / md:6 / lg:4</p></DBox>
+          </div>
+          <div className="g-col-12 g-col-md-12 g-col-lg-4">
+            <DBox><p className="mb-0">12 / md:12 / lg:4</p></DBox>
+          </div>
         </div>
       </div>
 
@@ -621,12 +633,25 @@ Override the number of columns with the \`--bs-columns\` CSS variable on the con
           {'Custom 5-column grid - '}
           <code>--bs-columns: 5</code>
         </p>
-        <div className="grid gap-2" style={{ '--bs-columns': 5 } as CSSProperties}>
-          <div className="g-col-1"><DBox><p className="mb-0">1/5</p></DBox></div>
-          <div className="g-col-1"><DBox><p className="mb-0">2/5</p></DBox></div>
-          <div className="g-col-1"><DBox><p className="mb-0">3/5</p></DBox></div>
-          <div className="g-col-1"><DBox><p className="mb-0">4/5</p></DBox></div>
-          <div className="g-col-1"><DBox><p className="mb-0">5/5</p></DBox></div>
+        <div
+          className="grid gap-2"
+          style={{ '--bs-columns': 5 } as CSSProperties}
+        >
+          <div className="g-col-1">
+            <DBox><p className="mb-0">1/5</p></DBox>
+          </div>
+          <div className="g-col-1">
+            <DBox><p className="mb-0">2/5</p></DBox>
+          </div>
+          <div className="g-col-1">
+            <DBox><p className="mb-0">3/5</p></DBox>
+          </div>
+          <div className="g-col-1">
+            <DBox><p className="mb-0">4/5</p></DBox>
+          </div>
+          <div className="g-col-1">
+            <DBox><p className="mb-0">5/5</p></DBox>
+          </div>
         </div>
       </div>
 
@@ -636,10 +661,18 @@ Override the number of columns with the \`--bs-columns\` CSS variable on the con
           <code>.gap-1 .gap-md-2 .gap-lg-4</code>
         </p>
         <div className="grid gap-1 gap-md-2 gap-lg-4">
-          <div className="g-col-12 g-col-md-6 g-col-lg-3"><DBox><p className="mb-0">Card 1</p></DBox></div>
-          <div className="g-col-12 g-col-md-6 g-col-lg-3"><DBox><p className="mb-0">Card 2</p></DBox></div>
-          <div className="g-col-12 g-col-md-6 g-col-lg-3"><DBox><p className="mb-0">Card 3</p></DBox></div>
-          <div className="g-col-12 g-col-md-6 g-col-lg-3"><DBox><p className="mb-0">Card 4</p></DBox></div>
+          <div className="g-col-12 g-col-md-6 g-col-lg-3">
+            <DBox><p className="mb-0">Card 1</p></DBox>
+          </div>
+          <div className="g-col-12 g-col-md-6 g-col-lg-3">
+            <DBox><p className="mb-0">Card 2</p></DBox>
+          </div>
+          <div className="g-col-12 g-col-md-6 g-col-lg-3">
+            <DBox><p className="mb-0">Card 3</p></DBox>
+          </div>
+          <div className="g-col-12 g-col-md-6 g-col-lg-3">
+            <DBox><p className="mb-0">Card 4</p></DBox>
+          </div>
         </div>
       </div>
     </div>
