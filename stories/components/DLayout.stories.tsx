@@ -81,7 +81,7 @@ DLayout is a grid-based layout component that uses Bootstrap's CSS Grid system t
 - **Grid-Based:** Uses Bootstrap's <code>.grid</code> class for flexible layouts.
 - **Column System:** Leverages <code>.g-col-##</code> classes for defining column widths (1-24).
 - **Gap Control:** Supports <code>gap</code> property for controlling spacing between columns using Bootstrap's gap utilities (0–30).
-- **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>.
+- **Responsive Gap:** Supports responsive gap properties: <code>gapSm</code>, <code>gapMd</code>, <code>gapLg</code>, <code>gapXl</code>, <code>gapXxl</code>, using the same Bootstrap gap utility range (0–30).
 - **Pane Component:** Includes <code>DLayout.Pane</code> sub-component for individual columns.
 - **Responsive:** Built on Bootstrap's grid system for responsive designs.
 
