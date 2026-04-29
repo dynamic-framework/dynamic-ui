@@ -508,7 +508,7 @@ Append a breakpoint infix to make the column span apply only from that breakpoin
 
 ### Gap utilities: \`.gap-{n}\`
 
-Control the spacing between columns with Bootstrap gap utility classes. DLayout supports gap values \`0–5\`, which is the full range exposed by the component and the Storybook controls above. Responsive infixes follow the same pattern as column classes.
+Control the spacing between columns with Bootstrap gap utility classes. DLayout supports gap values \`0–30\`, which is the full range exposed by the component and the Storybook controls above. Responsive infixes follow the same pattern as column classes.
 
 | Class | Breakpoint |
 |---|---|
