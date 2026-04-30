@@ -4,6 +4,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import classNames from 'classnames';
 import DButtonIcon from '../DButtonIcon';
 import DIcon from '../DIcon';
 
@@ -21,11 +22,17 @@ type Props = {
   actions: DropdownAction[];
   dropdownToggle?: ((props: { open: boolean, toggle: () => void }) => React.ReactNode);
   className?: string;
+  classNameMenu?: string;
 };
 
 const getItemClass = (action: DropdownAction) => {
-  const base = `dropdown-item d-flex align-items-center 
-  ${action.color ? `dropdown-item-${action.color}` : ''} ${action.disabled ? 'disabled' : ''}`;
+  const base = classNames(
+    {
+      'dropdown-item d-flex align-items-center': true,
+      [`dropdown-item-${action.color}`]: !!action.color,
+      disabled: action.disabled,
+    },
+  );
   return base;
 };
 
@@ -34,6 +41,7 @@ export default function DDropdown(
     actions,
     dropdownToggle,
     className,
+    classNameMenu,
   }: Props,
 ) {
   const [open, setOpen] = useState(false);
@@ -91,7 +99,10 @@ export default function DDropdown(
 
   return (
     <div
-      className={`dropdown position-relative drop-${position} ${className}`}
+      className={classNames(
+        `dropdown drop-${position}`,
+        className,
+      )}
       ref={dropdownRef}
     >
       {ToggleElement}
@@ -104,7 +115,11 @@ export default function DDropdown(
           right: position === 'start' ? '0' : 'auto',
           transform: 'translateY(4px)',
         }}
-        className={`dropdown-menu p-2 ${open ? 'show' : ''}`}
+        className={classNames(
+          'dropdown-menu p-2',
+          { show: open },
+          classNameMenu,
+        )}
       >
         {actions.map((action, index) => {
           if (action.isDivider) {
@@ -134,7 +149,6 @@ export default function DDropdown(
                       icon={action.icon}
                       className="me-2"
                       size="1rem"
-                    // style={{ '--bs-icon-size': '1rem' }}
                     />
                   )}
                   {action.label}
