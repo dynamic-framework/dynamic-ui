@@ -71,7 +71,7 @@ export default function useDToast() {
    * Dispatches a toast notification rendered as a `DToast` component.
    * When `data` is a `ToastData` object, the default DToast layout is used.
    * When `data` is a render function, full custom content is rendered instead.
-   * Returns the toast ID, which can be passed to `toast.dismiss(id)`.
+   * Returns the toast ID, which can be passed to `reactHotToast.dismiss(id)`.
    * @param data - Toast content as `ToastData` or a render function for custom layouts.
    * @param toastProps - Optional per-toast overrides: id, duration, position.
    */
