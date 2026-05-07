@@ -87,9 +87,7 @@
   "files": [
     "dist/",
     "src/style",
-    "jest/",
-    "docs/api.json",
-    "docs/props.json"
+    "jest/"
   ],
   "dependencies": {
     "@floating-ui/react": "~0.27.16",
