@@ -38,6 +38,19 @@ export type ToastData = {
 /** Options forwarded to react-hot-toast for a single toast instance. */
 type ToastOptions = Partial<Pick<Toast, 'id' | 'duration' | 'position'>>;
 
+/**
+ * Hook that provides a `toast` function to dispatch DToast notifications.
+ *
+ * Prerequisites:
+ * - The calling component must be inside `DContextProvider` (provides icon context).
+ * - `DToastContainer` must be present somewhere in the component tree as a render target.
+ *
+ * @returns {{ toast }} Object containing a `toast` dispatcher function.
+ *
+ * @example
+ * const { toast } = useDToast();
+ * toast({ title: 'Saved', color: 'success' });
+ */
 export default function useDToast() {
   const {
     iconMap: {
@@ -45,6 +58,14 @@ export default function useDToast() {
     },
   } = useDContext();
 
+  /**
+   * Dispatches a toast notification rendered as a `DToast` component.
+   * When `data` is a `ToastData` object, the default DToast layout is used.
+   * When `data` is a render function, full custom content is rendered instead.
+   * Returns the toast ID, which can be passed to `toast.dismiss(id)`.
+   * @param data - Toast content as `ToastData` or a render function for custom layouts.
+   * @param toastProps - Optional per-toast overrides: id, duration, position.
+   */
   const toast = useCallback((
     data: ToastData | ValueFunction<Renderable, Toast>,
     toastProps?: ToastOptions,
