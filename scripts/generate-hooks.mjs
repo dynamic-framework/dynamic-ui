@@ -364,7 +364,6 @@ if (existsSync(PROPS_PATH)) {
 const { version } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
 
 const apiOutput = {
-  $schema: 'https://raw.githubusercontent.com/dynamic-framework/dynamic-ui/refs/heads/main/docs/api.schema.json',
   version,
   components: componentsSection,
   hooks: hooksSection,
