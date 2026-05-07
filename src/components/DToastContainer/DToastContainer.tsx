@@ -45,7 +45,7 @@ export default function DToastContainer(
     reverseOrder = false,
     containerStyle,
     toastOptions,
-    gutter,
+    gutter = 8,
   }: DToastContainerProps,
 ) {
   return (
