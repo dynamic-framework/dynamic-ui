@@ -36,6 +36,12 @@ Before calling `useDToast`, two things must be present in the component tree:
 1. **`DContextProvider`** — provides the icon map used by `DToast` for close and status icons.
 2. **`DToastContainer`** — the portal where toasts are rendered. Place it once near the root of your app.
 
+```
+DContextProvider
+├── <YourApp>          ← useDToast() → toast("Hello!")
+└── <DToastContainer>  ← renders the notification portal
+```
+
 <Source
   code={`
 import {
