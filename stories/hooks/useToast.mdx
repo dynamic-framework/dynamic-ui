@@ -14,35 +14,99 @@ import DAlert from "../../src/components/DAlert/DAlert";
 
 ![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
 
-Toasts use `DToastContainer` and the `useDToast` hook, which are abstractions to configure react-hot-toast in conjunction with
-a `DToast` to generate toasts. For more detailed information, refer to the official [React Hot Toast Documentation](https://react-hot-toast.com/docs).
+The toast pattern combines two pieces: a **`DToastContainer`** component (the render target) and the **`useDToast`** hook (the dispatcher).
+Both are thin abstractions over [react-hot-toast](https://react-hot-toast.com/docs) that integrate with the Dynamic UI icon context and component system.
 
 <br />
 
 <Unstyled>
   <DAlert color="warning">
     <span>
-      Toast appears in all containers because of the way react-hot-toast is
-      programmed, however, if you want to see the correct toast make it show up
-      from the correct container.
+      Because react-hot-toast uses a global store, a toast dispatched in one
+      container may appear in all active containers. For predictable behavior,
+      keep a single <code>DToastContainer</code> per page.
     </span>
   </DAlert>
 </Unstyled>
 
-## Usage DToastContainer
+## Prerequisites
 
-To get started, include the **`<DToastContainer />`** component once in your app, typically near the root of your component tree.
-This ensures that all toasts are rendered correctly. Here you can customize general styles for all toasts and configure a default
-placement for displaying toasts. You can override this position in any single toast if needed.
+Before calling `useDToast`, two things must be present in the component tree:
 
-## Usage useDToast
+1. **`DContextProvider`** — provides the icon map used by `DToast` for close and status icons.
+2. **`DToastContainer`** — the portal where toasts are rendered. Place it once near the root of your app.
 
-The `useDToast` hook provides a simple and flexible way to create toast notifications in your application. By **default**, it uses the
-`DToast` component to display the toast message. However, you can also render a custom component if needed.
+<Source
+  code={`
+import {
+  DContextProvider,
+  DToastContainer,
+} from '@dynamic-framework/ui-react';
 
-Below you will see examples of the use of toast in a simple way, with a custom component and with Material Icons.
+export function App() {
+  return (
+    <DContextProvider>
+      {/* your app content */}
+      <DToastContainer position="top-right" />
+    </DContextProvider>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
 
-## Basic toast no color
+## `useDToast`
+
+Call `useDToast` inside any component that is a descendant of `DContextProvider`.
+It returns a single `toast` function.
+
+<Source
+  code={`const { toast } = useDToast();`}
+  language="tsx"
+  dark
+/>
+
+### Return value — `toast` function
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `data` | `ToastData \| ((t: Toast) => Renderable)` | ✅ | Toast content. Pass a `ToastData` object to use the default `DToast` layout, or a render function for fully custom content. |
+| `toastProps` | `{ id?, duration?, position? }` | — | Per-toast overrides forwarded to react-hot-toast. |
+
+**Returns** `string` — the toast ID, which can be passed to `reactHotToast.dismiss(id)` to programmatically close the toast.
+
+## `ToastData`
+
+Fields used when dispatching a toast with the default `DToast` layout.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | `string` | ✅ | Main text displayed in the toast. |
+| `description` | `string` | — | Optional secondary text. When present, activates the header + body layout with a timestamp row. |
+| `timestamp` | `string` | — | Timestamp string shown in the header (e.g. `"just now"`). Only visible when `description` is set. |
+| `icon` | `string` | — | Icon name from the active icon set in `DContextProvider`. Shown before the title. |
+| `closeIcon` | `string` | — | Overrides the default close icon from the context icon map. |
+| `color` | `ComponentStateColor` | — | Applies the `toast-{color}` CSS modifier class (e.g. `"success"`, `"danger"`, `"warning"`, `"info"`). |
+
+## `DToastContainerProps`
+
+Props accepted by `DToastContainer`.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `position` | `ToastPosition` | `'bottom-center'` | Default position for toasts that do not specify their own `position`. |
+| `reverseOrder` | `boolean` | `false` | When `true`, new toasts appear at the bottom of the stack instead of the top. |
+| `gutter` | `number` | `8` | Gap in pixels between stacked toasts. |
+| `containerClassName` | `string` | — | Additional CSS class applied to the portal container `<div>`. |
+| `containerStyle` | `CSSProperties` | — | Inline styles applied to the portal container `<div>`. |
+| `toastOptions` | `DefaultToastOptions` | — | Default options merged into every toast rendered inside this container. |
+
+---
+
+## Examples
+
+### Simple toast (no color)
 
 <Unstyled>
   <div
@@ -54,8 +118,7 @@ Below you will see examples of the use of toast in a simple way, with a custom c
 </Unstyled>
 
 <Source
-  code={
-  `
+  code={`
 import {
   DContextProvider,
   DToastContainer,
@@ -65,18 +128,22 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-return (
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() => toast({ title: 'Example', timestamp: 'just now', icon: 'check' }, { duration: 40000 })}
+      />
+      <DToastContainer position="top-right" />
+    </DContextProvider>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
 
-<DContextProvider>
-  <DButton
-    text="Show Toast"
-    onClick={() => toast({ title: "Example" }, { duration: 40000 })}
-  />
-  <DToastContainer position="top-right" />
-</DContextProvider>
-); } ` } language="tsx" dark />
-
-## Basic toast success color
+### Simple toast with color
 
 <Unstyled>
   <div
@@ -88,8 +155,7 @@ return (
 </Unstyled>
 
 <Source
-  code={
-  `
+  code={`
 import {
   DContextProvider,
   DToastContainer,
@@ -99,26 +165,29 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-return (
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() =>
+          toast(
+            { title: 'Example', timestamp: 'just now', icon: 'check', color: 'success' },
+            { duration: 40000 },
+          )
+        }
+      />
+      <DToastContainer position="top-right" />
+    </DContextProvider>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
 
-<DContextProvider>
-  <DButton
-    text="Show Toast"
-    onClick={() =>
-      toast(
-        {
-          title: "Example",
-          color: "success",
-        },
-        { duration: 40000 }
-      )
-    }
-  />
-  <DToastContainer position="top-right" />
-</DContextProvider>
-); } ` } language="tsx" dark />
+### Full toast (title + description)
 
-## Full toast no color
+When `description` is provided the toast switches to a two-row layout with a header (title + timestamp) and a body (description).
 
 <Unstyled>
   <div
@@ -130,8 +199,7 @@ return (
 </Unstyled>
 
 <Source
-  code={
-    `
+  code={`
 import {
   DContextProvider,
   DToastContainer,
@@ -141,28 +209,32 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-return (
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() =>
+          toast(
+            {
+              title: 'Example',
+              description: 'This is a description',
+              timestamp: 'just now',
+              icon: 'check',
+            },
+            { duration: 40000 },
+          )
+        }
+      />
+      <DToastContainer position="top-right" />
+    </DContextProvider>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
 
-<DContextProvider>
-  <DButton
-    text="Show Toast"
-    onClick={() =>
-      toast(
-        {
-          title: "Example",
-          description: "This is a description",
-          timestamp: "just now",
-          icon: "check",
-        },
-        { duration: 40000 }
-      )
-    }
-  />
-  <DToastContainer position="top-right" />
-</DContextProvider>
-); } ` } language="tsx" dark />
-
-## Full toast success color
+### Full toast with color
 
 <Unstyled>
   <div
@@ -174,8 +246,7 @@ return (
 </Unstyled>
 
 <Source
-  code={
-    `
+  code={`
 import {
   DContextProvider,
   DToastContainer,
@@ -185,29 +256,36 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-return (
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() =>
+          toast(
+            {
+              title: 'Example',
+              description: 'This is a description',
+              timestamp: 'just now',
+              color: 'success',
+              icon: 'check',
+            },
+            { duration: 40000 },
+          )
+        }
+      />
+      <DToastContainer position="top-right" />
+    </DContextProvider>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
 
-<DContextProvider>
-  <DButton
-    text="Show Toast"
-    onClick={() =>
-      toast(
-        {
-          title: "Example",
-          description: "This is a description",
-          timestamp: "just now",
-          color: "success",
-          icon: "check",
-        },
-        { duration: 40000 }
-      )
-    }
-  />
-  <DToastContainer position="top-right" />
-</DContextProvider>
-); } ` } language="tsx" dark />
+### Custom render function
 
-## Custom example
+Pass a render function as the first argument to `toast` for fully custom content.
+The function receives the react-hot-toast `Toast` object, which includes `id` and `visible`.
 
 <Unstyled>
   <div
@@ -218,71 +296,60 @@ return (
   </div>
 </Unstyled>
 
-### `App.tsx`
+#### `CustomToastExample.tsx`
 
 <Source
-  code={
-    `
+  code={`
+import { DButton } from '@dynamic-framework/ui-react';
+import { toast as reactToast, Toast } from 'react-hot-toast';
+
+export function CustomToastExample({ id, visible }: Toast) {
+  if (!visible) return null;
+
+  return (
+    <div className="bg-secondary-subtle rounded-2 p-4 text-center">
+      <p className="fw-bold mt-0">Toast!</p>
+      <DButton
+        size="sm"
+        variant="outline"
+        color="secondary"
+        text="Close toast"
+        onClick={() => reactToast.dismiss(id)}
+      />
+    </div>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
+
+#### `App.tsx`
+
+<Source
+  code={`
 import {
   DContextProvider,
   DToastContainer,
   useDToast,
 } from '@dynamic-framework/ui-react';
 
-import CustomToastExample from './CustomToastExample';
+import { CustomToastExample } from './CustomToastExample';
 
-  export function App() {
-    const { toast } = useDToast();
+export function App() {
+  const { toast } = useDToast();
 
-    return (
-      <DContextProvider>
-        <DButton
-          text="Show Toast"
-          onClick={() =>
-            toast(CustomToastExample, {
-              duration: 3000,
-            })
-          }
-        />
-        <DToastContainer position="top-right" />
-      </DContextProvider>
-    ); 
-  } 
-` } 
-  language="tsx" 
-  dark 
-/>
-
-### `CustomToastExample.tsx`
-
-<Source
-  code={
-    `
-import {
-  DButton,
-} from '@dynamic-framework/ui-react';
-import { toast as reactToast, Toast } from 'react-hot-toast';
-
-export function CustomToastExample({ id, visible }: Toast) {
-    if (!visible) {
-      return null;
-    }
-    
-    return (
-      <div className="bg-secondary-subtle rounded-2 p-4 text-center">
-        <p className="fw-bold mt-0">Toast!</p>
-        <DButton
-          size="sm"
-          variant="outline"
-          color="secondary"
-          text="Close toast"
-          onClick={() => reactToast.dismiss(id)}
-        />
-      </div>
-    );
+  return (
+    <DContextProvider>
+      <DButton
+        text="Show Toast"
+        onClick={() => toast(CustomToastExample, { duration: 3000 })}
+      />
+      <DToastContainer position="top-right" />
+    </DContextProvider>
+  );
 }
-`
-  }
+`}
   language="tsx"
   dark
 />
