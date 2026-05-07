@@ -76,23 +76,60 @@ function typeNodeText(typeNode, sourceFile) {
 }
 
 /**
- * Walks a TypeLiteralNode and returns a map of field name → { type, required, description }.
- * Only processes PropertySignature members (skips index signatures etc.).
+ * Resolves a TypeScript Type to a self-contained serializable descriptor.
+ *
+ * - String-literal union  → { type: 'string', values: ['a', 'b', ...] }
+ * - Object / mapped type  → { type: 'object', fields: { prop: { type, required, description } } }
+ * - Scalar / other        → { type: '<checker string>' }
+ *
+ * Union members that are `undefined` are stripped so optional properties stay clean
+ * (the `required` flag on the parent field already captures optionality).
+ * Recursion is capped at depth 3 to avoid expanding deep library internals.
  */
-function extractTypeLiteralFields(typeNode, sourceFile) {
-  if (!typeNode || !ts.isTypeLiteralNode(typeNode)) return {};
-  return typeNode.members.reduce((result, member) => {
-    if (!ts.isPropertySignature(member) || !member.name) return result;
-    const name = member.name.getText(sourceFile);
-    return {
-      ...result,
-      [name]: {
-        type: typeNodeText(member.type, sourceFile),
-        required: !member.questionToken,
-        description: getNodeJsDoc(member),
-      },
-    };
-  }, {});
+function resolveTypeInfo(type, checker, locationNode, depth = 0) {
+  if (depth > 3) return { type: checker.typeToString(type) };
+
+  // Guard primitive types before getPropertiesOfType, which would otherwise
+  // return String/Number interface methods for primitive string/number.
+  // eslint-disable-next-line no-bitwise
+  if (type.flags & ts.TypeFlags.String) return { type: 'string' };
+  // eslint-disable-next-line no-bitwise
+  if (type.flags & ts.TypeFlags.Number) return { type: 'number' };
+  // eslint-disable-next-line no-bitwise
+  if (type.flags & ts.TypeFlags.Boolean) return { type: 'boolean' };
+
+  if (type.isUnion()) {
+    // eslint-disable-next-line no-bitwise
+    const nonUndefined = type.types.filter((t) => !(t.flags & ts.TypeFlags.Undefined));
+
+    if (nonUndefined.length > 0 && nonUndefined.every((t) => t.isStringLiteral())) {
+      return { type: 'string', values: nonUndefined.map((t) => t.value) };
+    }
+    if (nonUndefined.length === 1) {
+      return resolveTypeInfo(nonUndefined[0], checker, locationNode, depth);
+    }
+    return { type: checker.typeToString(type) };
+  }
+
+  // Object / mapped type (TypeLiteral, interface, Partial<Pick<...>>, etc.)
+  const props = checker.getPropertiesOfType(type);
+  if (props.length > 0) {
+    const fields = {};
+    props.forEach((prop) => {
+      const propType = checker.getTypeOfSymbolAtLocation(prop, locationNode);
+      // eslint-disable-next-line no-bitwise
+      const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
+      const desc = ts.displayPartsToString(prop.getDocumentationComment(checker)).trim();
+      fields[prop.name] = {
+        ...resolveTypeInfo(propType, checker, locationNode, depth + 1),
+        required: !isOptional,
+        ...(desc ? { description: desc } : {}),
+      };
+    });
+    return { type: 'object', fields };
+  }
+
+  return { type: checker.typeToString(type) };
 }
 
 /**
@@ -208,11 +245,13 @@ function extractHookDoc(relPath) {
     // eslint-disable-next-line no-bitwise
     const isDefault = (flags & ts.ModifierFlags.Default) !== 0;
 
-    // Collect exported type aliases (e.g. export type ToastData = { ... })
+    // Collect exported type aliases — fully resolved via the type checker
+    // so referenced types (e.g. ComponentStateColor) are expanded inline.
     if (ts.isTypeAliasDeclaration(node) && isExported) {
+      const aliasType = checker.getTypeAtLocation(node.name);
       doc.types[node.name.text] = {
         description: getNodeJsDoc(node),
-        fields: extractTypeLiteralFields(node.type, sourceFile),
+        ...resolveTypeInfo(aliasType, checker, node),
       };
     }
 
