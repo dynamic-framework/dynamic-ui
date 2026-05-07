@@ -245,13 +245,15 @@ function extractHookDoc(relPath) {
     // eslint-disable-next-line no-bitwise
     const isDefault = (flags & ts.ModifierFlags.Default) !== 0;
 
-    // Collect exported type aliases — fully resolved via the type checker
+    // Collect exported type aliases and interfaces — fully resolved via the type checker
     // so referenced types (e.g. ComponentStateColor) are expanded inline.
-    if (ts.isTypeAliasDeclaration(node) && isExported) {
-      const aliasType = checker.getTypeAtLocation(node.name);
+    const isExportedTypeOrInterface = isExported
+      && (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node));
+    if (isExportedTypeOrInterface) {
+      const declType = checker.getTypeAtLocation(node.name);
       doc.types[node.name.text] = {
         description: getNodeJsDoc(node),
-        ...resolveTypeInfo(aliasType, checker, node),
+        ...resolveTypeInfo(declType, checker, node),
       };
     }
 
@@ -359,7 +361,11 @@ if (existsSync(PROPS_PATH)) {
   process.stdout.write(`  merged ${Object.keys(componentsSection).length} components from props.json\n`);
 }
 
+const { version } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+
 const apiOutput = {
+  $schema: 'https://raw.githubusercontent.com/dynamic-framework/dynamic-ui/refs/heads/main/docs/api.schema.json',
+  version,
   components: componentsSection,
   hooks: hooksSection,
 };

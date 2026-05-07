@@ -5,6 +5,7 @@ import {
   toast as reactHotToast,
   Renderable,
   Toast,
+  ToastPosition,
   ValueFunction,
 } from 'react-hot-toast';
 import classNames from 'classnames';
@@ -36,7 +37,14 @@ export type ToastData = {
 };
 
 /** Options forwarded to react-hot-toast for a single toast instance. */
-export type DToastOptions = Partial<Pick<Toast, 'id' | 'duration' | 'position'>>;
+export interface DToastOptions {
+  /** Stable id; reusing it updates the existing toast in place. */
+  id?: string;
+  /** Auto-dismiss delay in milliseconds. */
+  duration?: number;
+  /** Overrides the container default position for this individual toast. */
+  position?: ToastPosition;
+}
 
 /**
  * Hook that provides a `toast` function to dispatch DToast notifications.
