@@ -16,10 +16,17 @@ import { PREFIX_BS } from '../components/config';
 import type { AlertThemeIconMap } from '../components/interface';
 import getCssVariable from '../utils/getCssVariable';
 
+/**
+ * Currency formatting configuration used by `DContextProvider`.
+ */
 export type CurrencyProps = {
+  /** Currency symbol (e.g. `"$"`, `"€"`). */
   symbol: string;
+  /** Number of decimal places (e.g. `2`). */
   precision: number;
+  /** Thousands separator character (e.g. `","`). */
   separator: string;
+  /** Decimal separator character (e.g. `"."`). */
   decimal: string;
 };
 
@@ -49,12 +56,22 @@ type IconMapProps = {
   };
 };
 
+/**
+ * CSS breakpoint pixel values resolved from Bootstrap CSS variables at runtime.
+ * These are populated automatically by `DContextProvider` on mount.
+ */
 export type BreakpointProps = {
+  /** `--bs-breakpoint-xs` value (usually `"0px"`). */
   xs: string;
+  /** `--bs-breakpoint-sm` value (usually `"576px"`). */
   sm: string;
+  /** `--bs-breakpoint-md` value (usually `"768px"`). */
   md: string;
+  /** `--bs-breakpoint-lg` value (usually `"992px"`). */
   lg: string;
+  /** `--bs-breakpoint-xl` value (usually `"1200px"`). */
   xl: string;
+  /** `--bs-breakpoint-xxl` value (usually `"1400px"`). */
   xxl: string;
 };
 
@@ -121,6 +138,14 @@ const DEFAULT_STATE = {
 
 export const DContext = createContext<Partial<Context<any>>>(DEFAULT_STATE);
 
+/**
+ * Root context provider for Dynamic UI. Wrap your application with this
+ * component to configure icons, currency, language, and portal settings
+ * for all descendant Dynamic UI components.
+ *
+ * @template T - Map of portal name → payload shape (e.g. `{ modal: { title: string } }`).
+ *   Pass it once at the top level: `<DContextProvider<MyPortals> ...>`.
+ */
 export function DContextProvider<T extends Record<string, unknown>>(
   {
     language = DEFAULT_STATE.language,
@@ -180,6 +205,14 @@ export function DContextProvider<T extends Record<string, unknown>>(
   );
 }
 
+/**
+ * Returns the Dynamic UI context value set by `DContextProvider`.
+ * Use it to read or update icon, currency, language, and portal configuration.
+ *
+ * @requires DContextProvider
+ * @template T - Map of portal name → payload shape. Must match the type passed
+ *   to the nearest `DContextProvider`.
+ */
 export function useDContext<T extends Record<string, unknown>>() {
   const context = useContext(DContext) as Context<T>;
 

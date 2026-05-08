@@ -38,10 +38,11 @@ if (!existsSync(TSCONFIG_PATH)) {
   process.exit(1);
 }
 
-// --- Public hook files to document (relative to project root) ---
+// --- Public hook/context files to document (relative to project root) ---
 const HOOK_FILES = [
   'src/components/DToastContainer/useDToast.tsx',
   'src/contexts/DPortalContext.tsx',
+  'src/contexts/DContext.tsx',
 ];
 
 // --- Load tsconfig ---
@@ -207,18 +208,16 @@ function buildSignature(hookName, parameters, returnKeys) {
 // --- Core extraction ---
 
 /**
- * Parses a hook source file and returns a structured API descriptor:
- * {
- *   source,        // relative file path
- *   description,   // hook JSDoc
- *   requires,      // prerequisite components/providers (@requires tags)
- *   signature,     // TypeScript-style function signature
- *   parameters,    // hook function parameters (usually empty for React hooks)
- *   returns,       // map of returned properties → their call signature
- *   types,         // exported type aliases with field descriptions
- * }
+ * Parses a source file and returns an array of API descriptor objects, one per
+ * exported hook (`use*`) or documented provider component found in the file.
+ *
+ * Each hook entry:
+ * { source, kind:'hook', description, requires, signature, parameters, returns, types }
+ *
+ * Each component entry:
+ * { source, kind:'component', description, requires, signature, props, types }
  */
-function extractHookDoc(relPath) {
+function extractFileDocs(relPath) {
   const filePath = resolve(ROOT, relPath);
   if (!existsSync(filePath)) throw new Error(`File not found: ${filePath}`);
 
@@ -227,24 +226,27 @@ function extractHookDoc(relPath) {
   const sourceFile = program.getSourceFile(filePath);
   if (!sourceFile) throw new Error(`Could not load source file: ${filePath}`);
 
-  // hookName is derived from the file name as a fallback; overridden below when
-  // a named exported function whose name starts with "use" is found.
-  let hookName = relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
-  const doc = {
-    source: relPath,
-    description: '',
-    requires: [],
-    signature: '',
-    parameters: [],
-    returns: {},
-    types: {},
-  };
+  // Exported types with JSDoc — shared across all entries from this file.
+  const sharedTypes = {};
+
+  // Collected doc entries (one per exported hook or documented component).
+  const entries = [];
 
   /**
-   * Processes a function declaration node that is the hook entry point.
-   * Shared by both `export default function` and `export function useXxx`.
+   * Processes an exported hook function (`use*`) and pushes a hook entry.
    */
   function processHookNode(node, name) {
+    const doc = {
+      source: relPath,
+      kind: 'hook',
+      description: '',
+      requires: [],
+      signature: '',
+      parameters: [],
+      returns: {},
+      types: {},
+    };
+
     doc.description = getNodeJsDoc(node);
     doc.requires = getJsDocRequires(node);
 
@@ -317,7 +319,62 @@ function extractHookDoc(relPath) {
       }
     }
 
-    doc.signature = buildSignature(name ? name.getText(sourceFile) : hookName, doc.parameters, Object.keys(doc.returns));
+    const funcName = name ? name.getText(sourceFile) : relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
+    doc.signature = buildSignature(funcName, doc.parameters, Object.keys(doc.returns));
+    entries.push(doc);
+  }
+
+  /**
+   * Processes an exported provider component (non-`use*` function with JSDoc)
+   * and pushes a component entry. Props are extracted from the first parameter type.
+   */
+  function processComponentNode(node, name) {
+    const doc = {
+      source: relPath,
+      kind: 'component',
+      description: '',
+      requires: [],
+      signature: '',
+      props: {},
+      types: {},
+    };
+
+    doc.description = getNodeJsDoc(node);
+    doc.requires = getJsDocRequires(node);
+
+    // Extract props by inspecting the first parameter's resolved type.
+    // For generic components (e.g. DContextProvider<T>) the checker resolves
+    // Partial<Props<T>> at the declaration site, enumerating all prop names.
+    if (node.parameters?.length > 0) {
+      const firstParam = node.parameters[0];
+      const paramType = checker.getTypeAtLocation(firstParam);
+      checker.getPropertiesOfType(paramType).forEach((prop) => {
+        const symbolDoc = ts.displayPartsToString(
+          prop.getDocumentationComment(checker),
+        ).trim();
+        const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+        // eslint-disable-next-line no-bitwise
+        const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
+        doc.props[prop.name] = {
+          description: symbolDoc,
+          ...resolveTypeInfo(propType, checker, node),
+          required: !isOptional,
+        };
+      });
+    }
+
+    const funcName = name ? name.getText(sourceFile) : 'Component';
+    const propList = Object.entries(doc.props)
+      .filter(([, p]) => p.required)
+      .map(([n]) => n)
+      .concat(
+        Object.entries(doc.props)
+          .filter(([, p]) => !p.required)
+          .map(([n]) => `${n}?`),
+      )
+      .join(', ');
+    doc.signature = `${funcName}({ ${propList} }) => JSX.Element`;
+    entries.push(doc);
   }
 
   ts.forEachChild(sourceFile, (node) => {
@@ -338,7 +395,7 @@ function extractHookDoc(relPath) {
       // Only include types that have JSDoc documentation (public API surface).
       if (nodeDescription) {
         const declType = checker.getTypeAtLocation(node.name);
-        doc.types[node.name.text] = {
+        sharedTypes[node.name.text] = {
           description: nodeDescription,
           ...resolveTypeInfo(declType, checker, node),
         };
@@ -349,18 +406,22 @@ function extractHookDoc(relPath) {
       if (isDefault) {
         // `export default function useXxx()` — original pattern (e.g. useDToast)
         processHookNode(node, node.name ?? null);
-      } else if (
-        node.name
-        && node.name.text.startsWith('use')
-      ) {
-        // `export function useXxx()` — named export pattern (e.g. useDPortalContext)
-        hookName = node.name.text;
+      } else if (node.name && node.name.text.startsWith('use')) {
+        // `export function useXxx()` — named export hook (e.g. useDPortalContext)
         processHookNode(node, node.name);
+      } else if (node.name && getNodeJsDoc(node)) {
+        // `export function XxxProvider()` with JSDoc — documented provider component
+        processComponentNode(node, node.name);
       }
     }
   });
 
-  return doc;
+  // Attach shared types to every entry from this file.
+  entries.forEach((entry) => {
+    entry.types = { ...sharedTypes };
+  });
+
+  return entries;
 }
 
 // --- Run ---
@@ -371,14 +432,13 @@ let failed = 0;
 HOOK_FILES.forEach((relPath) => {
   const fileBaseName = relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
   try {
-    const hookDoc = extractHookDoc(relPath);
-    // Use the hook function name extracted from the source (e.g. useDPortalContext)
-    // rather than the file name (e.g. DPortalContext) as the JSON key.
-    const key = hookDoc.signature
-      ? hookDoc.signature.split('(')[0]
-      : fileBaseName;
-    hooksSection[key] = hookDoc;
-    process.stdout.write(`  ok ${key}\n`);
+    const docs = extractFileDocs(relPath);
+    docs.forEach((doc) => {
+      // Use the function name from the signature as the JSON key.
+      const key = doc.signature.split('(')[0];
+      hooksSection[key] = doc;
+      process.stdout.write(`  ok ${key} [${doc.kind}]\n`);
+    });
   } catch (err) {
     process.stderr.write(`  FAIL ${fileBaseName}: ${err.message}\n`);
     failed += 1;

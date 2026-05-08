@@ -8,7 +8,7 @@ import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
  * Context Provider to share settings between components
  */
 const config: Meta<typeof DContextProvider> = {
-  title: 'Design System/Components/Context Provider',
+  title: 'Design System/Context/ContextProvider',
   component: DContextProvider,
   tags: ['autodocs'],
 };
