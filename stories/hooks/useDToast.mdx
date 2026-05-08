@@ -80,7 +80,7 @@ It returns a single `toast` function.
 | `data` | `ToastData \| ((t: Toast) => Renderable)` | ✅ | Toast content. Pass a `ToastData` object to use the default `DToast` layout, or a render function for fully custom content. |
 | `toastProps` | `DToastOptions` | — | Per-toast overrides forwarded to react-hot-toast. |
 
-**Returns** `string` — the toast ID, which can be passed to `reactHotToast.dismiss(id)` to programmatically close the toast.
+**Returns** `string` — the toast ID, which can be passed to react-hot-toast's `toast.dismiss(id)` to programmatically close the toast.
 
 ## `ToastData`
 
