@@ -86,6 +86,13 @@ The dropdown automatically adjusts its position depending on the available space
     },
   },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div style={{ height: 250 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default config;
@@ -100,11 +107,6 @@ const baseActions: DropdownAction[] = [
 ];
 
 export const DisabledActions: Story = {
-  render: (args) => (
-    <div style={{ height: 300 }}>
-      <DDropdown {...args} />
-    </div>
-  ),
   args: {
     actions: [
       { label: 'Active action', icon: 'Check' },
@@ -114,11 +116,6 @@ export const DisabledActions: Story = {
 };
 
 export const CustomToggle: Story = {
-  render: (args) => (
-    <div style={{ height: 300 }}>
-      <DDropdown {...args} />
-    </div>
-  ),
   args: {
     actions: baseActions,
     dropdownToggle: ({ open, toggle }: { open: boolean, toggle: () => void }) => (
@@ -141,11 +138,6 @@ export const CustomToggle: Story = {
 };
 
 export const CustomToggle2: Story = {
-  render: (args) => (
-    <div style={{ height: 300 }}>
-      <DDropdown {...args} />
-    </div>
-  ),
   args: {
     actions: baseActions,
     dropdownToggle: ({ open, toggle }: { open: boolean, toggle: () => void }) => (
@@ -176,11 +168,6 @@ export const WithLinks: Story = {
 };
 
 export const WithDividers: Story = {
-  render: (args) => (
-    <div style={{ height: 300 }}>
-      <DDropdown {...args} />
-    </div>
-  ),
   args: {
     dropdownToggle: ({ toggle }: { open: boolean, toggle: () => void }) => (
       <DButton onClick={toggle} text="Button" />
