@@ -25,8 +25,16 @@ type PortalAvailableList<T extends Record<string, unknown>> = {
   [K in keyof T]: PortalComponent<T[K]>;
 };
 
+/**
+ * Props for the `DPortalContextProvider` (mounted internally by `DContextProvider`).
+ * Consumers should configure these props on `DContextProvider` directly — never
+ * use `DPortalContextProvider` directly.
+ * @template T - Map of portal name → payload shape (e.g. `{ modal: { title: string } }`).
+ */
 export type PortalContextProps<T extends Record<string, unknown>> = PropsWithChildren<{
+  /** DOM element id used as the portal mount point. */
   portalName: string;
+  /** Map of portal name to the component that renders it. */
   availablePortals?: PortalAvailableList<T>;
 }>;
 type PortalStackItem<N extends string = string, P = any> = {
@@ -36,14 +44,35 @@ type PortalStackItem<N extends string = string, P = any> = {
 };
 type OpenPortalFunction<P = unknown> = (name: string, payload: P) => void;
 type ClosePortalFunction = () => void;
+
+/**
+ * Value returned by `useDPortalContext`. Provides methods to open/close portals
+ * and inspect the current portal stack.
+ * @template T - Map of portal name → payload shape.
+ */
 export type PortalContextType<T extends Record<string, unknown>> = {
+  /** Currently open portals, ordered from oldest (bottom) to newest (top). */
   stack: PortalStackItem<string, T[keyof T]>[];
+  /**
+   * Pushes a named portal onto the stack, rendering its registered component
+   * with the given payload.
+   * @param name - Key of the portal to open (must be registered in `availablePortals`).
+   * @param payload - Data forwarded to the portal component via `PortalProps.payload`.
+   */
   openPortal: OpenPortalFunction<T[keyof T]>;
+  /** Pops the topmost portal off the stack, closing it. */
   closePortal: ClosePortalFunction;
 };
 
+/**
+ * Props interface received by every component registered in `availablePortals`.
+ * Use `PortalProps<Payloads['myPortal']>` to type a specific portal component.
+ * @template P - The payload shape for this portal.
+ */
 export type PortalProps<P = unknown> = {
+  /** Portal identifier, matches the key used in `openPortal`. */
   name: string;
+  /** Data passed via `openPortal`. */
   payload: P;
 };
 
@@ -184,11 +213,32 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   );
 }
 
+/**
+ * Hook to open/close registered portals (modals, offcanvas, etc.).
+ *
+ * **Prerequisite**: must be called inside a `DContextProvider` configured with
+ * `portalName` and `availablePortals`. `DContextProvider` mounts
+ * `DPortalContextProvider` internally — consumers never use
+ * `DPortalContextProvider` directly.
+ *
+ * @template T - Map of portal name → payload shape (e.g. `ModalPayloads`).
+ *   Typing this generic gives you autocomplete on `openPortal` arguments.
+ * @returns `{ openPortal, closePortal, stack }` from the nearest portal context.
+ * @throws If called outside of `DContextProvider` / `DPortalContextProvider`.
+ *
+ * @requires DContextProvider
+ *
+ * @example
+ * ```tsx
+ * const { openPortal, closePortal } = useDPortalContext<ModalPayloads>();
+ * openPortal('confirm', { message: 'Are you sure?' });
+ * ```
+ */
 export function useDPortalContext<T extends Record<string, unknown>>(): PortalContextType<T> {
   const context = useContext(DPortalContext) as PortalContextType<T>;
 
   if (context === undefined) {
-    throw new Error('usePortalContext was used outside of PortalContextProvider');
+    throw new Error('useDPortalContext was used outside of DPortalContextProvider');
   }
 
   return context;

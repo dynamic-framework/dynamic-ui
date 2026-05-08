@@ -1,11 +1,11 @@
 import {
   DContextProvider,
   useDPortalContext,
-} from '../../src';
-import DButton from '../../src/components/DButton';
-import DModal from '../../src/components/DModal/DModal';
+} from '../../../src';
+import DButton from '../../../src/components/DButton';
+import DModal from '../../../src/components/DModal/DModal';
 
-import type { PortalProps } from '../../src';
+import type { PortalProps } from '../../../src';
 
 type ModalPayloads = {
   example: {

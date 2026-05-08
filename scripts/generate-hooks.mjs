@@ -41,6 +41,7 @@ if (!existsSync(TSCONFIG_PATH)) {
 // --- Public hook files to document (relative to project root) ---
 const HOOK_FILES = [
   'src/components/DToastContainer/useDToast.tsx',
+  'src/contexts/DPortalContext.tsx',
 ];
 
 // --- Load tsconfig ---
@@ -226,7 +227,9 @@ function extractHookDoc(relPath) {
   const sourceFile = program.getSourceFile(filePath);
   if (!sourceFile) throw new Error(`Could not load source file: ${filePath}`);
 
-  const hookName = relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
+  // hookName is derived from the file name as a fallback; overridden below when
+  // a named exported function whose name starts with "use" is found.
+  let hookName = relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
   const doc = {
     source: relPath,
     description: '',
@@ -236,6 +239,86 @@ function extractHookDoc(relPath) {
     returns: {},
     types: {},
   };
+
+  /**
+   * Processes a function declaration node that is the hook entry point.
+   * Shared by both `export default function` and `export function useXxx`.
+   */
+  function processHookNode(node, name) {
+    doc.description = getNodeJsDoc(node);
+    doc.requires = getJsDocRequires(node);
+
+    // Hook-level parameters (typically none for React hooks)
+    doc.parameters = (node.parameters ?? []).map((param) => ({
+      name: param.name.getText(sourceFile),
+      // For generic hooks the type annotation may reference a type parameter (e.g. T).
+      // We preserve it as a readable string rather than trying to expand it.
+      type: typeNodeText(param.type, sourceFile),
+      required: !param.questionToken && !param.initializer,
+      description: getNodeJsDoc(param),
+    }));
+
+    // Collect JSDoc from `const x = useCallback(...)` declarations inside the body.
+    // TypeScript attaches doc comments to variable declarations, not return symbols,
+    // so we pre-build maps of variable name → { description, paramDescriptions }
+    // for the return enrichment step.
+    const innerJsDoc = {};
+    const innerParamDescriptions = {};
+    if (node.body) {
+      ts.forEachChild(node.body, (stmt) => {
+        if (
+          ts.isVariableStatement(stmt)
+          && stmt.declarationList
+          && stmt.declarationList.declarations.length
+        ) {
+          const decl = stmt.declarationList.declarations[0];
+          if (decl.name && ts.isIdentifier(decl.name)) {
+            const jsDoc = getNodeJsDoc(stmt);
+            if (jsDoc) innerJsDoc[decl.name.text] = jsDoc;
+            const paramMap = getJsDocParamDescriptions(stmt);
+            if (Object.keys(paramMap).length) {
+              innerParamDescriptions[decl.name.text] = paramMap;
+            }
+          }
+        }
+      });
+    }
+
+    // Use the type checker to inspect the hook's return type.
+    // For generic hooks (e.g. useDPortalContext<T>()) the checker resolves the
+    // instantiated return type at the declaration site, which gives us the
+    // property names we need even if their types reference type parameters.
+    if (name) {
+      const hookSymbol = checker.getSymbolAtLocation(name);
+      if (hookSymbol) {
+        const hookType = checker.getTypeOfSymbolAtLocation(hookSymbol, node);
+        const sigs = checker.getSignaturesOfType(hookType, ts.SignatureKind.Call);
+        if (sigs.length) {
+          const returnType = checker.getReturnTypeOfSignature(sigs[0]);
+          checker.getPropertiesOfType(returnType).forEach((prop) => {
+            const symbolDoc = ts.displayPartsToString(
+              prop.getDocumentationComment(checker),
+            ).trim();
+            doc.returns[prop.name] = {
+              description: symbolDoc || innerJsDoc[prop.name] || '',
+              parameters: extractCallParams(prop, checker, node).map((p) => ({
+                ...p,
+                description:
+                  p.description
+                  || (innerParamDescriptions[prop.name] ?? {})[p.name]
+                  || '',
+              })),
+              returns: {
+                type: extractReturnTypeString(prop, checker, node),
+              },
+            };
+          });
+        }
+      }
+    }
+
+    doc.signature = buildSignature(name ? name.getText(sourceFile) : hookName, doc.parameters, Object.keys(doc.returns));
+  }
 
   ts.forEachChild(sourceFile, (node) => {
     // eslint-disable-next-line no-bitwise
@@ -247,86 +330,33 @@ function extractHookDoc(relPath) {
 
     // Collect exported type aliases and interfaces — fully resolved via the type checker
     // so referenced types (e.g. ComponentStateColor) are expanded inline.
+    // Skip types that are purely internal implementation details (no JSDoc description).
     const isExportedTypeOrInterface = isExported
       && (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node));
     if (isExportedTypeOrInterface) {
-      const declType = checker.getTypeAtLocation(node.name);
-      doc.types[node.name.text] = {
-        description: getNodeJsDoc(node),
-        ...resolveTypeInfo(declType, checker, node),
-      };
+      const nodeDescription = getNodeJsDoc(node);
+      // Only include types that have JSDoc documentation (public API surface).
+      if (nodeDescription) {
+        const declType = checker.getTypeAtLocation(node.name);
+        doc.types[node.name.text] = {
+          description: nodeDescription,
+          ...resolveTypeInfo(declType, checker, node),
+        };
+      }
     }
 
-    // Process the default-exported hook function
-    if (ts.isFunctionDeclaration(node) && isExported && isDefault) {
-      doc.description = getNodeJsDoc(node);
-      doc.requires = getJsDocRequires(node);
-
-      // Hook-level parameters (typically none for React hooks)
-      doc.parameters = (node.parameters ?? []).map((param) => ({
-        name: param.name.getText(sourceFile),
-        type: typeNodeText(param.type, sourceFile),
-        required: !param.questionToken && !param.initializer,
-        description: getNodeJsDoc(param),
-      }));
-
-      // Collect JSDoc from `const x = useCallback(...)` declarations inside the body.
-      // TypeScript attaches doc comments to variable declarations, not return symbols,
-      // so we pre-build maps of variable name → { description, paramDescriptions }
-      // for the return enrichment step.
-      const innerJsDoc = {};
-      const innerParamDescriptions = {};
-      if (node.body) {
-        ts.forEachChild(node.body, (stmt) => {
-          if (
-            ts.isVariableStatement(stmt)
-            && stmt.declarationList
-            && stmt.declarationList.declarations.length
-          ) {
-            const decl = stmt.declarationList.declarations[0];
-            if (decl.name && ts.isIdentifier(decl.name)) {
-              const jsDoc = getNodeJsDoc(stmt);
-              if (jsDoc) innerJsDoc[decl.name.text] = jsDoc;
-              const paramMap = getJsDocParamDescriptions(stmt);
-              if (Object.keys(paramMap).length) {
-                innerParamDescriptions[decl.name.text] = paramMap;
-              }
-            }
-          }
-        });
+    if (ts.isFunctionDeclaration(node) && isExported) {
+      if (isDefault) {
+        // `export default function useXxx()` — original pattern (e.g. useDToast)
+        processHookNode(node, node.name ?? null);
+      } else if (
+        node.name
+        && node.name.text.startsWith('use')
+      ) {
+        // `export function useXxx()` — named export pattern (e.g. useDPortalContext)
+        hookName = node.name.text;
+        processHookNode(node, node.name);
       }
-
-      // Use the type checker to inspect the hook's return type
-      if (node.name) {
-        const hookSymbol = checker.getSymbolAtLocation(node.name);
-        if (hookSymbol) {
-          const hookType = checker.getTypeOfSymbolAtLocation(hookSymbol, node);
-          const sigs = checker.getSignaturesOfType(hookType, ts.SignatureKind.Call);
-          if (sigs.length) {
-            const returnType = checker.getReturnTypeOfSignature(sigs[0]);
-            checker.getPropertiesOfType(returnType).forEach((prop) => {
-              const symbolDoc = ts.displayPartsToString(
-                prop.getDocumentationComment(checker),
-              ).trim();
-              doc.returns[prop.name] = {
-                description: symbolDoc || innerJsDoc[prop.name] || '',
-                parameters: extractCallParams(prop, checker, node).map((p) => ({
-                  ...p,
-                  description:
-                    p.description
-                    || (innerParamDescriptions[prop.name] ?? {})[p.name]
-                    || '',
-                })),
-                returns: {
-                  type: extractReturnTypeString(prop, checker, node),
-                },
-              };
-            });
-          }
-        }
-      }
-
-      doc.signature = buildSignature(hookName, doc.parameters, Object.keys(doc.returns));
     }
   });
 
@@ -339,12 +369,18 @@ const hooksSection = {};
 let failed = 0;
 
 HOOK_FILES.forEach((relPath) => {
-  const hookName = relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
+  const fileBaseName = relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
   try {
-    hooksSection[hookName] = extractHookDoc(relPath);
-    process.stdout.write(`  ok ${hookName}\n`);
+    const hookDoc = extractHookDoc(relPath);
+    // Use the hook function name extracted from the source (e.g. useDPortalContext)
+    // rather than the file name (e.g. DPortalContext) as the JSON key.
+    const key = hookDoc.signature
+      ? hookDoc.signature.split('(')[0]
+      : fileBaseName;
+    hooksSection[key] = hookDoc;
+    process.stdout.write(`  ok ${key}\n`);
   } catch (err) {
-    process.stderr.write(`  FAIL ${hookName}: ${err.message}\n`);
+    process.stderr.write(`  FAIL ${fileBaseName}: ${err.message}\n`);
     failed += 1;
   }
 });
