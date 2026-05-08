@@ -22,8 +22,16 @@
   "overrides": [
     {
       "files": [
-        "scripts/*.js"
+        "scripts/*.js",
+        "scripts/*.mjs"
       ],
+      "parserOptions": {
+        "ecmaVersion": 2022,
+        "sourceType": "module"
+      },
+      "env": {
+        "node": true
+      },
       "rules": {
         "import/no-extraneous-dependencies": [
           "error",
