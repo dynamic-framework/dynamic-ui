@@ -138,7 +138,7 @@ export function App() {
     <DContextProvider>
       <DButton
         text="Show Toast"
-        onClick={() => toast({ title: 'Example', timestamp: 'just now', icon: 'check' }, { duration: 40000 })}
+        onClick={() => toast({ title: 'Example', icon: 'check' }, { duration: 40000 })}
       />
       <DToastContainer position="top-right" />
     </DContextProvider>
@@ -177,7 +177,7 @@ export function App() {
         text="Show Toast"
         onClick={() =>
           toast(
-            { title: 'Example', timestamp: 'just now', icon: 'check', color: 'success' },
+            { title: 'Example', icon: 'check', color: 'success' },
             { duration: 40000 },
           )
         }

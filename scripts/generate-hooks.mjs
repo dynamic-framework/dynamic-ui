@@ -356,7 +356,7 @@ if (existsSync(PROPS_PATH)) {
   const propsRaw = readFileSync(PROPS_PATH, 'utf8');
   const propsData = JSON.parse(propsRaw);
   Object.entries(propsData).forEach(([name, data]) => {
-    componentsSection[name] = { props: data.props ?? {} };
+    componentsSection[name] = { description: data.description ?? '', props: data.props ?? {} };
   });
   process.stdout.write(`  merged ${Object.keys(componentsSection).length} components from props.json\n`);
 }
