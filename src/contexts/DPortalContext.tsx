@@ -42,7 +42,10 @@ type PortalStackItem<N extends string = string, P = any> = {
   Component: PortalComponent<P>;
   payload: P;
 };
-type OpenPortalFunction<P = unknown> = (name: string, payload: P) => void;
+type OpenPortalFunction<T extends Record<string, unknown>> = <K extends keyof T>(
+  name: K,
+  payload: T[K],
+) => void;
 type ClosePortalFunction = () => void;
 
 /**
@@ -58,8 +61,9 @@ export type PortalContextType<T extends Record<string, unknown>> = {
    * with the given payload.
    * @param name - Key of the portal to open (must be registered in `availablePortals`).
    * @param payload - Data forwarded to the portal component via `PortalProps.payload`.
+   *   TypeScript will enforce that `payload` matches the shape declared for `name` in `T`.
    */
-  openPortal: OpenPortalFunction<T[keyof T]>;
+  openPortal: OpenPortalFunction<T>;
   /** Pops the topmost portal off the stack, closing it. */
   closePortal: ClosePortalFunction;
 };
@@ -89,25 +93,25 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   const [stack, { push, pop, isEmpty }] = useStackState<PortalStackItem<string, T[keyof T]>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
-  const openPortal = useCallback<PortalContextType<T>['openPortal']>(
-    (name, payload) => {
+  const openPortal = useCallback(
+    (name: keyof T, payload: T[keyof T]) => {
       if (!availablePortals) {
         throw new Error(`there is no component for portal ${name.toString()}`);
       }
 
-      const Component = availablePortals[name as keyof T] as PortalComponent<T[keyof T]>;
+      const Component = availablePortals[name] as PortalComponent<T[keyof T]>;
       if (!Component) {
         throw new Error(`there is no component for portal ${name.toString()}`);
       }
       push({
-        name,
+        name: name as string,
         Component,
         payload,
       });
       (document.activeElement as HTMLElement)?.blur();
     },
     [availablePortals, push],
-  );
+  ) as PortalContextType<T>['openPortal'];
 
   const closePortal = useCallback<PortalContextType<T>['closePortal']>(
     () => {

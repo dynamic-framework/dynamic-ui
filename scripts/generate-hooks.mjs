@@ -87,8 +87,7 @@ function typeNodeText(typeNode, sourceFile) {
  * Union members that are `undefined` are stripped so optional properties stay clean
  * (the `required` flag on the parent field already captures optionality).
  * Recursion is capped at depth 3 to avoid expanding deep library internals.
- */
-/**
+ *
  * @param {boolean} [expand=false] When true, always expand object types inline
  *   even when they have a named alias (used for the top-level `types` section).
  *   When false (default), a type with a user-defined alias symbol is emitted as
