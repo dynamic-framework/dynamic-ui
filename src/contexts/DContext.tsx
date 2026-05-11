@@ -30,28 +30,54 @@ export type CurrencyProps = {
   decimal: string;
 };
 
-type IconProps = {
+/**
+ * Icon font configuration used by `DContextProvider` to resolve icon classes.
+ */
+export type IconProps = {
+  /** CSS class that identifies the icon font family (e.g. `"bi"`). */
   familyClass: string;
+  /** CSS prefix for icon names within the family (e.g. `"bi-"`). */
   familyPrefix: string;
+  /** When `true`, icons are rendered in Material Design outlined style. */
   materialStyle: boolean;
 };
 
-type IconMapProps = {
+/**
+ * Map of semantic icon names to their icon-font class suffixes.
+ * Used by Dynamic UI components to look up icons consistently.
+ */
+export type IconMapProps = {
+  /** Class suffix for the generic close/dismiss icon. */
   x: string;
+  /** Class suffix for the large close/dismiss icon. */
   xLg: string;
+  /** Class suffix for the chevron-down icon. */
   chevronDown: string;
+  /** Class suffix for the chevron-up icon. */
   chevronUp: string;
+  /** Class suffix for the chevron-left icon. */
   chevronLeft: string;
+  /** Class suffix for the chevron-right icon. */
   chevronRight: string;
+  /** Per-state alert icon map (one icon per `ComponentStateColor` value). */
   alert: AlertThemeIconMap;
+  /** Class suffix for the upload/attach icon. */
   upload: string;
+  /** Class suffix for the calendar/date-picker icon. */
   calendar: string;
+  /** Class suffix for the checkmark icon. */
   check: string;
+  /** Icon class suffixes for text input adornments. */
   input: {
+    /** Search/magnifier icon. */
     search: string;
+    /** Show password icon. */
     show: string;
+    /** Hide password icon. */
     hide: string;
+    /** Numeric decrease icon. */
     decrease: string;
+    /** Numeric increase icon. */
     increase: string;
   };
 };

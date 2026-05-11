@@ -88,7 +88,14 @@ function typeNodeText(typeNode, sourceFile) {
  * (the `required` flag on the parent field already captures optionality).
  * Recursion is capped at depth 3 to avoid expanding deep library internals.
  */
-function resolveTypeInfo(type, checker, locationNode, depth = 0) {
+/**
+ * @param {boolean} [expand=false] When true, always expand object types inline
+ *   even when they have a named alias (used for the top-level `types` section).
+ *   When false (default), a type with a user-defined alias symbol is emitted as
+ *   `{ type: "AliasName" }` instead of being expanded — this produces cleaner
+ *   references such as `CurrencyProps` instead of an anonymous `object` with fields.
+ */
+function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false) {
   if (depth > 3) return { type: checker.typeToString(type) };
 
   // Guard primitive types before getPropertiesOfType, which would otherwise
@@ -108,8 +115,24 @@ function resolveTypeInfo(type, checker, locationNode, depth = 0) {
       return { type: 'string', values: nonUndefined.map((t) => t.value) };
     }
     if (nonUndefined.length === 1) {
-      return resolveTypeInfo(nonUndefined[0], checker, locationNode, depth);
+      return resolveTypeInfo(nonUndefined[0], checker, locationNode, depth, expand);
     }
+    return { type: checker.typeToString(type) };
+  }
+
+  // Array types — emit `ElementType[]` rather than expanding all Array.prototype
+  // methods (push, pop, splice, sort, …) which are noise in documentation.
+  if (checker.isArrayType(type)) {
+    const [elemType] = checker.getTypeArguments(type) ?? [];
+    const elemStr = elemType ? checker.typeToString(elemType) : 'unknown';
+    return { type: `${elemStr}[]` };
+  }
+
+  // Named type aliases (e.g. CurrencyProps, BreakpointProps) — when expand is
+  // false, emit the alias name as a reference instead of expanding inline.
+  // This keeps prop definitions clean and avoids duplicating the type details
+  // that are already present in the `types` section of the API output.
+  if (!expand && type.aliasSymbol) {
     return { type: checker.typeToString(type) };
   }
 
@@ -123,6 +146,8 @@ function resolveTypeInfo(type, checker, locationNode, depth = 0) {
       const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
       const desc = ts.displayPartsToString(prop.getDocumentationComment(checker)).trim();
       fields[prop.name] = {
+        // Nested fields within an explicitly expanded type never get further
+        // expand=true to avoid infinite recursion on self-referential types.
         ...resolveTypeInfo(propType, checker, locationNode, depth + 1),
         required: !isOptional,
         ...(desc ? { description: desc } : {}),
@@ -301,19 +326,32 @@ function extractFileDocs(relPath) {
             const symbolDoc = ts.displayPartsToString(
               prop.getDocumentationComment(checker),
             ).trim();
-            doc.returns[prop.name] = {
-              description: symbolDoc || innerJsDoc[prop.name] || '',
-              parameters: extractCallParams(prop, checker, node).map((p) => ({
-                ...p,
-                description:
-                  p.description
-                  || (innerParamDescriptions[prop.name] ?? {})[p.name]
-                  || '',
-              })),
-              returns: {
-                type: extractReturnTypeString(prop, checker, node),
-              },
-            };
+            const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+            const propSigs = checker.getSignaturesOfType(propType, ts.SignatureKind.Call);
+            const description = symbolDoc || innerJsDoc[prop.name] || '';
+
+            if (propSigs.length > 0) {
+              // Function-typed return value — emit callable descriptor.
+              doc.returns[prop.name] = {
+                description,
+                parameters: extractCallParams(prop, checker, node).map((p) => ({
+                  ...p,
+                  description:
+                    p.description
+                    || (innerParamDescriptions[prop.name] ?? {})[p.name]
+                    || '',
+                })),
+                returns: {
+                  type: extractReturnTypeString(prop, checker, node),
+                },
+              };
+            } else {
+              // Non-callable return value (plain data property) — emit type info.
+              doc.returns[prop.name] = {
+                description,
+                ...resolveTypeInfo(propType, checker, node),
+              };
+            }
           });
         }
       }
@@ -397,7 +435,9 @@ function extractFileDocs(relPath) {
         const declType = checker.getTypeAtLocation(node.name);
         sharedTypes[node.name.text] = {
           description: nodeDescription,
-          ...resolveTypeInfo(declType, checker, node),
+          // expand=true: always expand fields in the types section even when
+          // the type has a named alias (e.g. CurrencyProps itself).
+          ...resolveTypeInfo(declType, checker, node, 0, true),
         };
       }
     }
