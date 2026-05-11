@@ -4,4 +4,5 @@ export type {
   PortalProps,
   PortalContextType,
   PortalContextProps,
+  PortalStackEntry,
 } from './DPortalContext';

@@ -49,13 +49,25 @@ type OpenPortalFunction<T extends Record<string, unknown>> = <K extends keyof T>
 type ClosePortalFunction = () => void;
 
 /**
+ * Consumer-facing shape of a single entry in the portal stack.
+ * Only exposes `name` and `payload` — the internal `Component` field is not part of the public API.
+ * @template T - Map of portal name → payload shape.
+ */
+export type PortalStackEntry<T extends Record<string, unknown>> = {
+  /** Portal identifier — matches the key passed to `openPortal`. */
+  name: keyof T & string;
+  /** Payload forwarded from `openPortal`. */
+  payload: T[keyof T];
+};
+
+/**
  * Value returned by `useDPortalContext`. Provides methods to open/close portals
  * and inspect the current portal stack.
  * @template T - Map of portal name → payload shape.
  */
 export type PortalContextType<T extends Record<string, unknown>> = {
   /** Currently open portals, ordered from oldest (bottom) to newest (top). */
-  stack: PortalStackItem<string, T[keyof T]>[];
+  stack: PortalStackEntry<T>[];
   /**
    * Pushes a named portal onto the stack, rendering its registered component
    * with the given payload.
@@ -94,18 +106,19 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   const openPortal = useCallback(
-    (name: keyof T, payload: T[keyof T]) => {
+    // eslint-disable-next-line prefer-arrow-callback
+    function openPortalImpl<K extends keyof T>(name: K, payload: T[K]) {
       if (!availablePortals) {
-        throw new Error(`there is no component for portal ${name.toString()}`);
+        throw new Error(`there is no component for portal ${String(name)}`);
       }
 
-      const Component = availablePortals[name] as PortalComponent<T[keyof T]>;
+      const Component = availablePortals[name] as PortalComponent<T[K]>;
       if (!Component) {
-        throw new Error(`there is no component for portal ${name.toString()}`);
+        throw new Error(`there is no component for portal ${String(name)}`);
       }
       push({
         name: name as string,
-        Component,
+        Component: Component as PortalComponent<T[keyof T]>,
         payload,
       });
       (document.activeElement as HTMLElement)?.blur();
