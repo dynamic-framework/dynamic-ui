@@ -480,6 +480,7 @@ function extractFileDocs(relPath) {
 // --- Run ---
 process.stdout.write('Generating docs/api.json...\n');
 const hooksSection = {};
+const contextsSection = {};
 let failed = 0;
 
 HOOK_FILES.forEach((relPath) => {
@@ -489,7 +490,12 @@ HOOK_FILES.forEach((relPath) => {
     docs.forEach((doc) => {
       // Use the function name from the signature as the JSON key.
       const key = doc.signature.split('(')[0];
-      hooksSection[key] = doc;
+      if (doc.kind === 'component') {
+        // Provider components go into the dedicated `contexts` section.
+        contextsSection[key] = doc;
+      } else {
+        hooksSection[key] = doc;
+      }
       process.stdout.write(`  ok ${key} [${doc.kind}]\n`);
     });
   } catch (err) {
@@ -516,6 +522,7 @@ const apiOutput = {
   version,
   components: componentsSection,
   hooks: hooksSection,
+  contexts: contextsSection,
 };
 
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'api.json');
@@ -525,6 +532,7 @@ writeFileSync(OUTPUT_PATH, output);
 const sizeKB = (Buffer.byteLength(output) / 1024).toFixed(1);
 process.stdout.write('\nGenerated docs/api.json\n');
 process.stdout.write(`  Hooks: ${Object.keys(hooksSection).length} documented, ${failed} failed\n`);
+process.stdout.write(`  Contexts: ${Object.keys(contextsSection).length} documented\n`);
 process.stdout.write(`  Components: ${Object.keys(componentsSection).length} included\n`);
 process.stdout.write(`  Size: ${sizeKB} KB\n`);
 
