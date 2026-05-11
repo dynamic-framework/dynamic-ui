@@ -188,6 +188,17 @@ function getJsDocRequires(node) {
 }
 
 /**
+ * Reads `@throws` JSDoc tags from a node and returns the first description found,
+ * or `undefined` if no `@throws` tag is present.
+ */
+function getJsDocThrows(node) {
+  const tag = ts.getJSDocTags(node).find(
+    (t) => t.tagName && t.tagName.text === 'throws',
+  );
+  return tag ? jsDocCommentToString(tag.comment) || undefined : undefined;
+}
+
+/**
  * Extracts the call parameters of a function-typed symbol using the type checker.
  * Returns [{ name, type, required, description }].
  */
@@ -237,7 +248,7 @@ function buildSignature(hookName, parameters, returnKeys) {
  * exported hook (`use*`) or documented provider component found in the file.
  *
  * Each hook entry:
- * { source, kind:'hook', description, requires, signature, parameters, returns, types }
+ * { source, kind:'hook', description, requires, throws?, signature, parameters, returns, types }
  *
  * Each component entry:
  * { source, kind:'component', description, requires, signature, props, types }
@@ -274,6 +285,8 @@ function extractFileDocs(relPath) {
 
     doc.description = getNodeJsDoc(node);
     doc.requires = getJsDocRequires(node);
+    const hookThrows = getJsDocThrows(node);
+    if (hookThrows) doc.throws = hookThrows;
 
     // Hook-level parameters (typically none for React hooks)
     doc.parameters = (node.parameters ?? []).map((param) => ({
