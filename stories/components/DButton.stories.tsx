@@ -297,9 +297,22 @@ export const Soft: Story = {
           <DButton key={color} variant="soft" color={color} text={color} />
         ))}
       </div>
+
       <div className="d-flex flex-wrap gap-4 mt-4">
         {THEMES.filter((color) => color !== 'light').map((color) => (
-          <DButton key={color} variant="soft" color={color} text={color} disabled />
+          <DButton
+            key={color}
+            variant="soft"
+            color={color}
+            text={color}
+            iconStart="Star"
+          />
+        ))}
+      </div>
+
+      <div className="d-flex flex-wrap gap-4 mt-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton disabled key={color} variant="soft" color={color} text="Disabled" />
         ))}
       </div>
       <div className="mt-4">
