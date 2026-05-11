@@ -240,6 +240,18 @@
           $active-bg-color: var(--#{$prefix}gray-300),
           $focus-shadow-rgb: var(--#{$prefix}gray-100-rgb),
         );
+        @include df-button-soft-variant-variables(
+          "light",
+          $default-color: var(--#{$prefix}gray-700),
+          $default-bg: var(--#{$prefix}gray-25),
+          $hover-color: var(--#{$prefix}gray-700),
+          $hover-bg: var(--#{$prefix}gray-50),
+          $focus-color: var(--#{$prefix}gray-700),
+          $focus-bg: var(--#{$prefix}gray-50),
+          $active-color: var(--#{$prefix}gray-700),
+          $active-bg: var(--#{$prefix}gray-100),
+          $focus-shadow-rgb: var(--#{$prefix}gray-100-rgb),
+        );
       } @else if $color == "dark" {
         @include df-button-variant-variables(
           "dark",
@@ -270,6 +282,18 @@
           $active-bg-color: var(--#{$prefix}gray-700),
           $focus-shadow-rgb: var(--#{$prefix}gray-900-rgb),
         );
+        @include df-button-soft-variant-variables(
+          "dark",
+          $default-color: var(--#{$prefix}gray-700),
+          $default-bg: var(--#{$prefix}gray-50),
+          $hover-color: var(--#{$prefix}gray-800),
+          $hover-bg: var(--#{$prefix}gray-100),
+          $focus-color: var(--#{$prefix}gray-800),
+          $focus-bg: var(--#{$prefix}gray-100),
+          $active-color: var(--#{$prefix}gray-900),
+          $active-bg: var(--#{$prefix}gray-200),
+          $focus-shadow-rgb: var(--#{$prefix}gray-900-rgb),
+        );
 
       } @else if $color == "secondary" {
         @include df-button-variant-variables(
@@ -298,10 +322,12 @@
           "secondary",
           $active-bg-color: var(--#{$prefix}secondary-100),
         );
+        @include df-button-soft-variant-variables("secondary");
       } @else {
         @include df-button-variant-variables($color);
         @include df-button-outline-variant-variables($color);
         @include df-button-link-variant-variables($color);
+        @include df-button-soft-variant-variables($color);
       }
     }
   }

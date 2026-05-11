@@ -167,6 +167,10 @@
     .btn-outline-#{$color} {
       @include df-button-variant-outline-mapper($color);
     }
+
+    .btn-soft-#{$color} {
+      @include df-button-variant-mapper($color, "soft");
+    }
   }
 }
 
