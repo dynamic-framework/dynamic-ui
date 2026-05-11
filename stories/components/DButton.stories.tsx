@@ -297,6 +297,11 @@ export const Soft: Story = {
           <DButton key={color} variant="soft" color={color} text={color} />
         ))}
       </div>
+      <div className="d-flex flex-wrap gap-4 mt-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton key={color} variant="soft" color={color} text={color} disabled />
+        ))}
+      </div>
       <div className="mt-4">
         <p className="mb-1 mt-8 small">Light soft (for dark backgrounds)</p>
         <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
