@@ -90,11 +90,12 @@ function typeNodeText(typeNode, sourceFile) {
  *
  * @param {boolean} [expand=false] When true, always expand object types inline
  *   even when they have a named alias (used for the top-level `types` section).
- *   When false (default), a type with a user-defined alias symbol is emitted as
- *   `{ type: "AliasName" }` instead of being expanded — this produces cleaner
- *   references such as `CurrencyProps` instead of an anonymous `object` with fields.
+ * @param {Set<string>} [knownTypeNames] Set of type names that are documented in
+ *   `sharedTypes`. Only types in this set are emitted as named references; all
+ *   other aliased types (library types, unexported aliases, etc.) fall through to
+ *   the expand / typeToString path so consumers always get a usable definition.
  */
-function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false) {
+function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false, knownTypeNames = new Set()) {
   if (depth > 3) return { type: checker.typeToString(type) };
 
   // Guard primitive types before getPropertiesOfType, which would otherwise
@@ -114,7 +115,7 @@ function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false)
       return { type: 'string', values: nonUndefined.map((t) => t.value) };
     }
     if (nonUndefined.length === 1) {
-      return resolveTypeInfo(nonUndefined[0], checker, locationNode, depth, expand);
+      return resolveTypeInfo(nonUndefined[0], checker, locationNode, depth, expand, knownTypeNames);
     }
     return { type: checker.typeToString(type) };
   }
@@ -127,11 +128,11 @@ function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false)
     return { type: `${elemStr}[]` };
   }
 
-  // Named type aliases (e.g. CurrencyProps, BreakpointProps) — when expand is
-  // false, emit the alias name as a reference instead of expanding inline.
-  // This keeps prop definitions clean and avoids duplicating the type details
-  // that are already present in the `types` section of the API output.
-  if (!expand && type.aliasSymbol) {
+  // Named type aliases — only emit the alias name when it is a *documented*
+  // type present in sharedTypes (e.g. CurrencyProps, BreakpointProps).
+  // Library types (ReactNode, Partial<...>) and unexported aliases are NOT in
+  // knownTypeNames so they fall through to expand / typeToString instead.
+  if (!expand && type.aliasSymbol && knownTypeNames.has(type.aliasSymbol.name)) {
     return { type: checker.typeToString(type) };
   }
 
@@ -147,7 +148,7 @@ function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false)
       fields[prop.name] = {
         // Nested fields within an explicitly expanded type never get further
         // expand=true to avoid infinite recursion on self-referential types.
-        ...resolveTypeInfo(propType, checker, locationNode, depth + 1),
+        ...resolveTypeInfo(propType, checker, locationNode, depth + 1, false, knownTypeNames),
         required: !isOptional,
         ...(desc ? { description: desc } : {}),
       };
@@ -261,6 +262,18 @@ function extractFileDocs(relPath) {
   const sourceFile = program.getSourceFile(filePath);
   if (!sourceFile) throw new Error(`Could not load source file: ${filePath}`);
 
+  // Pre-scan: collect names of exported type aliases / interfaces that have JSDoc.
+  // Only these names will be emitted as references in props/returns; library types
+  // and unexported aliases will be expanded or stringified instead.
+  const knownTypeNames = new Set();
+  ts.forEachChild(sourceFile, (node) => {
+    // eslint-disable-next-line no-bitwise
+    const isExported = !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export);
+    if (isExported && (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node))) {
+      if (getNodeJsDoc(node)) knownTypeNames.add(node.name.text);
+    }
+  });
+
   // Exported types with JSDoc — shared across all entries from this file.
   const sharedTypes = {};
 
@@ -361,7 +374,7 @@ function extractFileDocs(relPath) {
               // Non-callable return value (plain data property) — emit type info.
               doc.returns[prop.name] = {
                 description,
-                ...resolveTypeInfo(propType, checker, node),
+                ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
               };
             }
           });
@@ -407,8 +420,7 @@ function extractFileDocs(relPath) {
         const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
         doc.props[prop.name] = {
           description: symbolDoc,
-          ...resolveTypeInfo(propType, checker, node),
-          required: !isOptional,
+          ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
         };
       });
     }
@@ -449,7 +461,7 @@ function extractFileDocs(relPath) {
           description: nodeDescription,
           // expand=true: always expand fields in the types section even when
           // the type has a named alias (e.g. CurrencyProps itself).
-          ...resolveTypeInfo(declType, checker, node, 0, true),
+          ...resolveTypeInfo(declType, checker, node, 0, true, knownTypeNames),
         };
       }
     }

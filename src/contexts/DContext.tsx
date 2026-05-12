@@ -233,18 +233,13 @@ export function DContextProvider<T extends Record<string, unknown>>(
 
 /**
  * Returns the Dynamic UI context value set by `DContextProvider`.
- * Use it to read or update icon, currency, language, and portal configuration.
+ * Falls back to the library's built-in defaults when no `DContextProvider`
+ * is present in the tree — wrap your application with `DContextProvider`
+ * to customise icons, currency, language, and portal settings.
  *
- * @requires DContextProvider
  * @template T - Map of portal name → payload shape. Must match the type passed
  *   to the nearest `DContextProvider`.
  */
 export function useDContext<T extends Record<string, unknown>>() {
-  const context = useContext(DContext) as Context<T>;
-
-  if (context === undefined) {
-    throw new Error('useDContext was used outside of DContextProvider');
-  }
-
-  return context;
+  return useContext(DContext) as Context<T>;
 }

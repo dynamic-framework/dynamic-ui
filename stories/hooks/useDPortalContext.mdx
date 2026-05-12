@@ -95,7 +95,7 @@ Consumers set these on `DContextProvider` — never use `DPortalContextProvider`
 | Property | Type | Description |
 |---|---|---|
 | `portalName` | `string` | DOM element id used as the portal mount point. |
-| `availablePortals` | `{ [K in keyof T]: FC<PortalProps<T[K]>> }` | Map of portal name to the component that renders it. |
+| `availablePortals?` | `{ [K in keyof T]: FC<PortalProps<T[K]>> }` | Map of portal name to the component that renders it. Optional on `DContextProvider`, but calling `openPortal` without a registered component for the given portal name will throw at runtime. |
 | `children` | `ReactNode` | React children to render inside the context. |
 
 ## Basic Usage
