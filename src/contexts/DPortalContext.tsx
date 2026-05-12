@@ -54,11 +54,13 @@ type ClosePortalFunction = () => void;
  * @template T - Map of portal name → payload shape.
  */
 export type PortalStackEntry<T extends Record<string, unknown>> = {
-  /** Portal identifier — matches the key passed to `openPortal`. */
-  name: keyof T & string;
-  /** Payload forwarded from `openPortal`. */
-  payload: T[keyof T];
-};
+  [K in keyof T]: {
+    /** Portal identifier — matches the key passed to `openPortal`. */
+    name: K & string;
+    /** Payload forwarded from `openPortal`. */
+    payload: T[K];
+  };
+}[keyof T];
 
 /**
  * Value returned by `useDPortalContext`. Provides methods to open/close portals
@@ -257,11 +259,11 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
  * ```
  */
 export function useDPortalContext<T extends Record<string, unknown>>(): PortalContextType<T> {
-  const context = useContext(DPortalContext) as PortalContextType<T>;
+  const context = useContext(DPortalContext);
 
   if (context === undefined) {
     throw new Error('useDPortalContext was used outside of DPortalContextProvider');
   }
 
-  return context;
+  return context as PortalContextType<T>;
 }
