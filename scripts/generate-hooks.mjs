@@ -62,9 +62,10 @@ function jsDocCommentToString(comment) {
   return ts.displayPartsToString(comment).trim();
 }
 
-/** Reads the JSDoc text attached directly to a node via ts.getJSDocCommentsAndTags. */
+/** Reads the main JSDoc description text attached to a node, excluding tag comments. */
 function getNodeJsDoc(node) {
   return ts.getJSDocCommentsAndTags(node)
+    .filter((d) => ts.isJSDoc(d))
     .map((d) => jsDocCommentToString(d.comment))
     .filter(Boolean)
     .join('\n')
