@@ -42,6 +42,9 @@ type PortalStackItem<N extends string = string, P = any> = {
   Component: PortalComponent<P>;
   payload: P;
 };
+type InternalStackItem<T extends Record<string, unknown>> = {
+  [K in keyof T & string]: PortalStackItem<K, T[K]>;
+}[keyof T & string];
 type OpenPortalFunction<T extends Record<string, unknown>> = <K extends keyof T & string>(
   name: K,
   payload: T[K],
@@ -104,8 +107,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   }: PortalContextProps<T>,
 ) {
   const { created } = usePortal(portalName);
-  // eslint-disable-next-line max-len
-  const [stack, { push, pop, isEmpty }] = useStackState<PortalStackItem<keyof T & string, T[keyof T]>>([]);
+  const [stack, { push, pop, isEmpty }] = useStackState<InternalStackItem<T>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   const openPortal = useCallback(
@@ -119,11 +121,9 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
       if (!Component) {
         throw new Error(`there is no component for portal ${String(name)}`);
       }
-      push({
-        name,
-        Component: Component as PortalComponent<T[keyof T]>,
-        payload,
-      });
+      // K is a specific member of keyof T & string so the object satisfies
+      // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
+      push({ name, Component, payload } as unknown as InternalStackItem<T>);
       (document.activeElement as HTMLElement)?.blur();
     },
     [availablePortals, push],
