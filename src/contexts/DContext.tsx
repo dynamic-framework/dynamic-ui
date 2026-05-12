@@ -101,16 +101,18 @@ export type BreakpointProps = {
   xxl: string;
 };
 
-type Props<T extends Record<string, unknown>> = {
+type Props = {
   language: string;
   currency: CurrencyProps,
   icon: IconProps;
   iconMap: IconMapProps;
   breakpoints: BreakpointProps;
-} & PortalContextProps<T>;
+};
 
-type Context<T extends Record<string, unknown>> = Props<T> & {
-  setContext: (value: Partial<Props<T>>) => void;
+type DContextProviderProps<T extends Record<string, unknown>> = Props & PortalContextProps<T>;
+
+type Context = Props & {
+  setContext: (value: Partial<Props>) => void;
 };
 
 const DEFAULT_STATE = {
@@ -159,10 +161,9 @@ const DEFAULT_STATE = {
     xxl: '',
   },
   setContext: () => {},
-  portalName: 'd-portal',
 };
 
-export const DContext = createContext<Partial<Context<any>>>(DEFAULT_STATE);
+export const DContext = createContext<Partial<Context>>(DEFAULT_STATE);
 
 /**
  * Root context provider for Dynamic UI. Wrap your application with this
@@ -178,15 +179,15 @@ export function DContextProvider<T extends Record<string, unknown>>(
     currency = DEFAULT_STATE.currency,
     icon = DEFAULT_STATE.icon,
     iconMap = DEFAULT_STATE.iconMap,
-    portalName = DEFAULT_STATE.portalName,
+    portalName = 'd-portal',
     availablePortals,
     children,
-  }: PropsWithChildren<Partial<Props<T>>>,
+  }: PropsWithChildren<Partial<DContextProviderProps<T>>>,
 ) {
   const [
     internalContext,
     setInternalContext,
-  ] = useState<Partial<Props<T>>>({
+  ] = useState<Partial<Props>>({
     language,
     currency,
     icon,
@@ -194,7 +195,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
     breakpoints: DEFAULT_STATE.breakpoints,
   });
 
-  const setContext = useCallback((newValue: Partial<Props<T>>) => (
+  const setContext = useCallback((newValue: Partial<Props>) => (
     setInternalContext((prevInternalContext) => ({
       ...prevInternalContext,
       ...newValue,
@@ -236,10 +237,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
  * Falls back to the library's built-in defaults when no `DContextProvider`
  * is present in the tree — wrap your application with `DContextProvider`
  * to customise icons, currency, language, and portal settings.
- *
- * @template T - Map of portal name → payload shape. Must match the type passed
- *   to the nearest `DContextProvider`.
  */
-export function useDContext<T extends Record<string, unknown>>() {
-  return useContext(DContext) as Context<T>;
+export function useDContext() {
+  return useContext(DContext) as Context;
 }
