@@ -163,7 +163,7 @@ const DEFAULT_STATE = {
   setContext: () => {},
 };
 
-export const DContext = createContext<Partial<Context>>(DEFAULT_STATE);
+export const DContext = createContext<Context>(DEFAULT_STATE);
 
 /**
  * Root context provider for Dynamic UI. Wrap your application with this
@@ -187,7 +187,7 @@ export function DContextProvider<T extends Record<string, unknown>>(
   const [
     internalContext,
     setInternalContext,
-  ] = useState<Partial<Props>>({
+  ] = useState<Props>({
     language,
     currency,
     icon,
@@ -239,5 +239,5 @@ export function DContextProvider<T extends Record<string, unknown>>(
  * to customise icons, currency, language, and portal settings.
  */
 export function useDContext() {
-  return useContext(DContext) as Context;
+  return useContext(DContext);
 }

@@ -190,6 +190,8 @@ Ensure your component is rendered inside a `DContextProvider`:
 
 <Source
   code={`
+import { useDPortalContext, DContextProvider } from '@dynamic-framework/ui-react';
+
 // ✗ Wrong — hook called at the root, outside DContextProvider
 export function App() {
   const { openPortal } = useDPortalContext(); // throws!

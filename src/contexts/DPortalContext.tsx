@@ -104,7 +104,8 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   }: PortalContextProps<T>,
 ) {
   const { created } = usePortal(portalName);
-  const [stack, { push, pop, isEmpty }] = useStackState<PortalStackItem<string, T[keyof T]>>([]);
+  // eslint-disable-next-line max-len
+  const [stack, { push, pop, isEmpty }] = useStackState<PortalStackItem<keyof T & string, T[keyof T]>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   const openPortal = useCallback(
