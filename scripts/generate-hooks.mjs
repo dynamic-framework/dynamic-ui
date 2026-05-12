@@ -230,6 +230,15 @@ function extractReturnTypeString(symbol, checker, locationNode) {
 }
 
 /**
+ * Returns a TypeScript-style generic type parameter string for a node, e.g. `<T, U>`.
+ * Returns an empty string when the node has no type parameters.
+ */
+function getTypeParamsStr(node) {
+  if (!node.typeParameters?.length) return '';
+  return `<${node.typeParameters.map((tp) => tp.name.text).join(', ')}>`;
+}
+
+/**
  * Builds a TypeScript-style signature string for a hook.
  * Example: `useDToast() => { toast }`
  */
@@ -383,7 +392,9 @@ function extractFileDocs(relPath) {
     }
 
     const funcName = name ? name.getText(sourceFile) : relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
-    doc.signature = buildSignature(funcName, doc.parameters, Object.keys(doc.returns));
+    const typeParams = getTypeParamsStr(node);
+    doc.name = funcName;
+    doc.signature = buildSignature(`${funcName}${typeParams}`, doc.parameters, Object.keys(doc.returns));
     entries.push(doc);
   }
 
@@ -427,6 +438,8 @@ function extractFileDocs(relPath) {
     }
 
     const funcName = name ? name.getText(sourceFile) : 'Component';
+    const typeParams = getTypeParamsStr(node);
+    doc.name = funcName;
     const propList = Object.entries(doc.props)
       .filter(([, p]) => p.required)
       .map(([n]) => n)
@@ -436,7 +449,7 @@ function extractFileDocs(relPath) {
           .map(([n]) => `${n}?`),
       )
       .join(', ');
-    doc.signature = `${funcName}({ ${propList} }) => JSX.Element`;
+    doc.signature = `${funcName}${typeParams}({ ${propList} }) => JSX.Element`;
     entries.push(doc);
   }
 
@@ -500,8 +513,8 @@ HOOK_FILES.forEach((relPath) => {
   try {
     const docs = extractFileDocs(relPath);
     docs.forEach((doc) => {
-      // Use the function name from the signature as the JSON key.
-      const key = doc.signature.split('(')[0];
+      // Use the dedicated `name` field as the JSON key (the signature may include generics).
+      const key = doc.name;
       if (doc.kind === 'component') {
         // Provider components go into the dedicated `contexts` section.
         contextsSection[key] = doc;

@@ -42,7 +42,7 @@ type PortalStackItem<N extends string = string, P = any> = {
   Component: PortalComponent<P>;
   payload: P;
 };
-type OpenPortalFunction<T extends Record<string, unknown>> = <K extends keyof T>(
+type OpenPortalFunction<T extends Record<string, unknown>> = <K extends keyof T & string>(
   name: K,
   payload: T[K],
 ) => void;
@@ -109,7 +109,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   const openPortal = useCallback(
     // eslint-disable-next-line prefer-arrow-callback
-    function openPortalImpl<K extends keyof T>(name: K, payload: T[K]) {
+    function openPortalImpl<K extends keyof T & string>(name: K, payload: T[K]) {
       if (!availablePortals) {
         throw new Error(`there is no component for portal ${String(name)}`);
       }
@@ -119,7 +119,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
         throw new Error(`there is no component for portal ${String(name)}`);
       }
       push({
-        name: name as string,
+        name,
         Component: Component as PortalComponent<T[keyof T]>,
         payload,
       });
