@@ -136,11 +136,16 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
     [isEmpty, pop],
   );
 
+  const publicStack = useMemo(
+    () => stack.map(({ name, payload }) => ({ name, payload })) as PortalStackEntry<T>[],
+    [stack],
+  );
+
   const value = useMemo(() => ({
-    stack,
+    stack: publicStack,
     openPortal,
     closePortal,
-  }), [stack, openPortal, closePortal]) as PortalContextType<any>;
+  }), [publicStack, openPortal, closePortal]) as PortalContextType<any>;
 
   const handleClose = useCallback((target: Element) => {
     if (!(target instanceof HTMLDivElement)) {

@@ -420,6 +420,7 @@ function extractFileDocs(relPath) {
         const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
         doc.props[prop.name] = {
           description: symbolDoc,
+          required: !isOptional,
           ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
         };
       });
