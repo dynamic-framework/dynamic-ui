@@ -114,12 +114,18 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
     // eslint-disable-next-line prefer-arrow-callback
     function openPortalImpl<K extends keyof T & string>(name: K, payload: T[K]) {
       if (!availablePortals) {
-        throw new Error(`there is no component for portal ${String(name)}`);
+        throw new Error(
+          'openPortal was called but DContextProvider has no availablePortals configured. '
+          + 'Pass an availablePortals map to DContextProvider.',
+        );
       }
 
       const Component = availablePortals[name] as PortalComponent<T[K]>;
       if (!Component) {
-        throw new Error(`there is no component for portal ${String(name)}`);
+        throw new Error(
+          `No component registered for portal "${String(name)}". `
+          + `Ensure "${String(name)}" has an entry in the availablePortals map on DContextProvider.`,
+        );
       }
       // K is a specific member of keyof T & string so the object satisfies
       // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
