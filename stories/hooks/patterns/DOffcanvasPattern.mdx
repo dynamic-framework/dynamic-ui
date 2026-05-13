@@ -1,6 +1,6 @@
 import { Meta, Unstyled, Source } from "@storybook/addon-docs/blocks";
 
-import { ExampleOffcanvasRoot } from "./useOffcanvasExamples";
+import { ExampleOffcanvasRoot } from "./DOffcanvasPatternExamples";
 
 # Offcanvas
 
@@ -83,8 +83,8 @@ export function ExampleOffcanvas({ payload }: PortalProps<OffcanvasPayloads['exa
 
 ## Offcanvas Setting on the main file `App.tsx`
 
-The available offcanvas are configured on the `DOffcanvasContextProvider` so that they can
-then be opened with the `useDOffcanvasContext` hook. The payload type of the offcanvas
+The available offcanvas are configured on the `DContextProvider` so that they can
+then be opened with the `useDPortalContext` hook. The payload type of the offcanvas
 is only necessary if payload will be used.
 
 <Source
@@ -130,11 +130,11 @@ import {
 import type { OffcanvasPayloads } from './types';
 
 export function ExampleOffcanvasUsage() {
-  const { openOffcanvas } = useDPortalContext<OffcanvasPayloads>();
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
   return (
     <DButton
       text="Open Offcanvas"
-      onClick={() => openOffcanvas('example', { description: 'from offcanvas payload' })}
+      onClick={() => openPortal('example', { description: 'from offcanvas payload' })}
     />
   );
 }

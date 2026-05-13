@@ -1,0 +1,224 @@
+import { Meta, Source, Unstyled } from "@storybook/addon-docs/blocks";
+
+import {
+  ExamplePortalContextRoot,
+} from "./useDPortalContextExamples";
+
+import DAlert from "../../src/components/DAlert/DAlert";
+
+<Meta title="Design System/Utils/Hooks/useDPortalContext" />
+
+# useDPortalContext
+
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
+`useDPortalContext` is the primary hook for managing portals — modals, offcanvas panels, and any other
+overlay rendered outside the normal React tree. It provides a stack-based API so multiple portals can
+be layered and closed in LIFO order.
+
+<br />
+
+<Unstyled>
+  <DAlert color="warning">
+    <span>
+      <code>useDPortalContext</code> must be called inside a component tree that
+      is wrapped by <code>DContextProvider</code>. Using it outside of that tree
+      will throw an error at runtime.
+    </span>
+  </DAlert>
+</Unstyled>
+
+## Prerequisites
+
+Before calling `useDPortalContext`, two things must be present in the component tree:
+
+1. **`DContextProvider`** — registers the portal mount point and the available portal components.
+2. A **DOM element** with the `id` matching `portalName` — `DContextProvider` creates this automatically.
+
+```
+DContextProvider  (portalName="appPortal", availablePortals={{ modal: MyModal }})
+└── <YourApp>    ← useDPortalContext() → openPortal('modal', payload)
+```
+
+<Source
+  code={`
+import {
+  DContextProvider,
+} from '@dynamic-framework/ui-react';
+
+import { MyModal } from './MyModal';
+
+import type { MyPayloads } from './types';
+
+export function App() {
+  return (
+    <DContextProvider<MyPayloads>
+      portalName="appPortal"
+      availablePortals={{
+        modal: MyModal,
+      }}
+    >
+      {/* your app content */}
+    </DContextProvider>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
+
+## API
+
+### Return value
+
+| Property | Type | Description |
+|---|---|---|
+| `openPortal` | `<K extends keyof T & string>(name: K, payload: T[K]) => void` | Pushes a named portal onto the stack, rendering its registered component with the given payload. TypeScript correlates `name` with the expected `payload` shape. |
+| `closePortal` | `() => void` | Pops the topmost portal off the stack, closing it. |
+| `stack` | `PortalStackEntry<T>[]` | Currently open portals, ordered from oldest (bottom) to newest (top). Each entry exposes `name` and `payload` — use `stack.length` to check if any portal is open. |
+
+### `PortalProps<P>`
+
+Props received by every component registered in `availablePortals`. Use
+`PortalProps<Payloads['myPortal']>` to type a specific portal component.
+
+| Property | Type | Description |
+|---|---|---|
+| `name` | `string` | Portal identifier — matches the key used in `openPortal`. |
+| `payload` | `P` | Data passed via `openPortal`. |
+
+### `PortalContextProps<T>`
+
+Props consumed by `DContextProvider` to configure the portal system.
+Consumers set these on `DContextProvider` — never use `DPortalContextProvider` directly.
+
+| Property | Type | Description |
+|---|---|---|
+| `portalName` | `string` | DOM element id used as the portal mount point. |
+| `availablePortals?` | `{ [K in keyof T]: FC<PortalProps<T[K]>> }` | Map of portal name to the component that renders it. Optional on `DContextProvider`, but calling `openPortal` without a registered component for the given portal name will throw at runtime. |
+| `children` | `ReactNode` | React children to render inside the context. |
+
+## Basic Usage
+
+<Source
+  code={`
+import { useDPortalContext } from '@dynamic-framework/ui-react';
+
+import type { MyPayloads } from './types';
+
+export function OpenModalButton() {
+  const { openPortal } = useDPortalContext<MyPayloads>();
+  return (
+    <button onClick={() => openPortal('modal', { title: 'Hello' })}>
+      Open Modal
+    </button>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
+
+Closing a portal from inside the portal component:
+
+<Source
+  code={`
+import { DModal, DButton, useDPortalContext } from '@dynamic-framework/ui-react';
+import type { PortalProps } from '@dynamic-framework/ui-react';
+import type { MyPayloads } from './types';
+
+export function MyModal({ payload }: PortalProps<MyPayloads['modal']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DModal name="modal">
+      <DModal.Header onClose={closePortal} showCloseButton>
+        <h5>{payload.title}</h5>
+      </DModal.Header>
+      <DModal.Body>Modal content</DModal.Body>
+    </DModal>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
+
+## Advanced Typing
+
+Providing the payload type map as a generic argument enables TypeScript to
+enforce the payload shape for each portal name:
+
+<Source
+  code={`
+// types.ts
+export type AppPortalPayloads = {
+  confirm: { message: string };
+  userDetail: { userId: string };
+};
+`}
+  language="tsx"
+  dark
+/>
+
+<Source
+  code={`
+import { useDPortalContext } from '@dynamic-framework/ui-react';
+import type { AppPortalPayloads } from './types';
+
+// TypeScript will validate payload shapes:
+const { openPortal } = useDPortalContext<AppPortalPayloads>();
+openPortal('confirm', { message: 'Are you sure?' });      // ✓
+openPortal('userDetail', { userId: 'abc-123' });          // ✓
+openPortal('confirm', { userId: 'abc-123' });             // ✗ type error
+`}
+  language="tsx"
+  dark
+/>
+
+## Live Example
+
+<Unstyled>
+  <ExamplePortalContextRoot />
+</Unstyled>
+
+## Common Errors
+
+### `useDPortalContext was used outside of DPortalContextProvider`
+
+This error is thrown when `useDPortalContext` is called outside a `DContextProvider` subtree.
+Ensure your component is rendered inside a `DContextProvider`:
+
+<Source
+  code={`
+import { useDPortalContext, DContextProvider } from '@dynamic-framework/ui-react';
+
+// ✗ Wrong — hook called at the root, outside DContextProvider
+export function App() {
+  const { openPortal } = useDPortalContext(); // throws!
+  return <DContextProvider>...</DContextProvider>;
+}
+
+// ✓ Correct — component that uses the hook is inside DContextProvider
+export function App() {
+  return (
+    <DContextProvider portalName="app" availablePortals={{}}>
+      <MyComponent />  {/* useDPortalContext() is safe here */}
+    </DContextProvider>
+  );
+}
+`}
+  language="tsx"
+  dark
+/>
+
+### Portal component not found
+
+If `openPortal` is called with a name not registered in `availablePortals`, an error is thrown.
+Make sure every portal name you pass to `openPortal` has a matching entry in `availablePortals`.
+
+## Patterns
+
+For full implementation patterns see:
+
+- [Design System/Patterns/Modal](?path=/docs/design-system-patterns-modal--docs) — modal pattern with `DModal`
+- [Design System/Patterns/Offcanvas](?path=/docs/design-system-patterns-offcanvas--docs) — offcanvas pattern with `DOffcanvas`
