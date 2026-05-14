@@ -1,0 +1,48 @@
+name: Publish NPM
+
+# Runs after the Storybook workflow completes successfully on a release event.
+# This guarantees that api.json is already live on CDN before the npm package
+# is published, so consumers can always resolve the api.json URL at install time.
+on:
+  workflow_run:
+    workflows: [Storybook]
+    types: [completed]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    # Only run when storybook succeeded AND it was triggered by a release event
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'release'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: https://registry.npmjs.org/
+          scope: '@dynamic-framework'
+      - name: Update npm
+        run: npm install -g npm@11.5.1
+      - name: Install dependencies
+        run: npm ci
+      - name: Ensure Rollup binary
+        run: |
+          if [ ! -d "node_modules/@rollup/rollup-linux-x64-gnu" ]; then
+            echo "Installing missing Rollup Linux binary..."
+            npm install @rollup/rollup-linux-x64-gnu --no-save --no-package-lock
+          fi
+      - name: Build packages
+        run: npm run build
+      - name: Publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

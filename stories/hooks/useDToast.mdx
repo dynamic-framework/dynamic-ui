@@ -7,6 +7,7 @@ import {
 } from "./useDToastExamples";
 
 import DAlert from "../../src/components/DAlert/DAlert";
+import { ApiTable } from "../helpers/ApiTable";
 
 <Meta title="Design System/Patterns/Toast" />
 
@@ -75,12 +76,7 @@ It returns a single `toast` function.
 
 ### Return value — `toast` function
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `data` | `ToastData \| ((t: Toast) => Renderable)` | ✅ | Toast content. Pass a `ToastData` object to use the default `DToast` layout, or a render function for fully custom content. |
-| `toastProps` | `DToastOptions` | — | Per-toast overrides forwarded to react-hot-toast. |
-
-**Returns** `string` — the toast ID, which can be passed to react-hot-toast's `toast.dismiss(id)` to programmatically close the toast.
+<ApiTable category="hooks" name="useDToast" />
 
 ## `ToastData`
 

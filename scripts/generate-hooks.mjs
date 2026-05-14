@@ -542,10 +542,15 @@ if (existsSync(PROPS_PATH)) {
   process.stdout.write(`  merged ${Object.keys(componentsSection).length} components from props.json\n`);
 }
 
-const { version } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+const { version: packageVersion } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+
+const CDN_BASE_URL = process.env.CDN_BASE_URL ?? 'https://cdn.modyo.com/dynamic-ui';
 
 const apiOutput = {
-  version,
+  $schema: `${CDN_BASE_URL}/schema/v1.json`,
+  schemaVersion: '1.0.0',
+  packageVersion,
+  generatedAt: new Date().toISOString(),
   components: componentsSection,
   hooks: hooksSection,
   contexts: contextsSection,
