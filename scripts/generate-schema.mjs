@@ -57,6 +57,11 @@ const schema = {
       pattern: '^\\d+\\.\\d+\\.\\d+.*$',
       description: 'npm package version of @dynamic-framework/ui-react that produced this file.',
     },
+    repository: {
+      type: ['string', 'null'],
+      format: 'uri',
+      description: 'GitHub repository URL of the design system.',
+    },
     generatedAt: {
       type: 'string',
       format: 'date-time',

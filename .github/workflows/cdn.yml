@@ -28,7 +28,7 @@ jobs:
         run: npm run build
       - name: Generate registry assets
         run: |
-          node scripts/generate-hooks.mjs
+          node scripts/generate-api.mjs
           node scripts/generate-schema.mjs
       - name: Fetch existing manifest from CDN
         run: |

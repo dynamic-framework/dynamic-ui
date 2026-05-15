@@ -30,6 +30,7 @@ rely on.
   "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
   "schemaVersion": "1.0.0",   // version of this JSON structure (not the package)
   "packageVersion": "2.4.0",  // npm package version
+  "repository": "https://github.com/dynamic-framework/dynamic-ui",
   "generatedAt": "2025-01-01T00:00:00.000Z",
   "components": { ... },
   "hooks": { ... },
@@ -44,6 +45,7 @@ rely on.
 | `$schema` | `string` | URI of the JSON Schema that describes this file |
 | `schemaVersion` | `string` (semver) | Version of the `api.json` structure itself |
 | `packageVersion` | `string` (semver) | npm version of `@dynamic-framework/dynamic-ui` |
+| `repository` | `string` (URL) | GitHub repository URL of the design system |
 | `generatedAt` | `string` (ISO 8601) | Build timestamp |
 | `components` | `object` | Component prop tables (keyed by component name) |
 | `hooks` | `object` | Hook API tables (keyed by hook name) |
@@ -143,6 +145,6 @@ RELEASE_TAG=v0.0.0-local node scripts/generate-manifest.mjs
 ## See also
 
 - [CONTRIBUTING.md](CONTRIBUTING.md) — development workflow
-- [`scripts/generate-hooks.mjs`](scripts/generate-hooks.mjs) — source of truth for `api.json`
+- [`scripts/generate-api.mjs`](scripts/generate-api.mjs) — source of truth for `api.json`
 - [`scripts/generate-schema.mjs`](scripts/generate-schema.mjs) — JSON Schema generator
 - [`scripts/generate-manifest.mjs`](scripts/generate-manifest.mjs) — manifest generator

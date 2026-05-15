@@ -105,7 +105,7 @@ locally.
 npm run build:storybook
 
 # Regenerate JSON artifacts only (requires docs/ to exist)
-node scripts/generate-hooks.mjs
+node scripts/generate-api.mjs
 node scripts/generate-schema.mjs
 RELEASE_TAG=v0.0.0-local node scripts/generate-manifest.mjs
 ```
@@ -114,8 +114,8 @@ RELEASE_TAG=v0.0.0-local node scripts/generate-manifest.mjs
 
 If you modify `api.json`'s root structure (add/remove/rename top-level fields):
 
-1. Update `scripts/generate-hooks.mjs` (source of truth).
+1. Update `scripts/generate-api.mjs` (source of truth).
 2. Update `scripts/generate-schema.mjs` to keep the JSON Schema in sync.
-3. Bump `schemaVersion` in `generate-hooks.mjs` if the change is breaking.
+3. Bump `schemaVersion` in `generate-api.mjs` if the change is breaking.
 4. Update `API_CONTRACT.md` to document the change.
 

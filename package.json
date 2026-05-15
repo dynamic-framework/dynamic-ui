@@ -61,7 +61,7 @@
     "compile": "tsc -p . && rollup -c rollup.config.mjs",
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build --docs -o docs",
-    "generate:registry": "node scripts/generate-hooks.mjs && node scripts/generate-schema.mjs",
+    "generate:registry": "node scripts/generate-api.mjs && node scripts/generate-schema.mjs",
     "eslint": "npm run eslint:src && npm run eslint:stories && npm run eslint:test",
     "eslint:src": "eslint 'src/**/*.ts' 'src/**/*.tsx' --ignore-pattern '**/*.spec.tsx'",
     "eslint:stories": "eslint stories/**/*.stories.tsx",

@@ -1,5 +1,5 @@
 /**
- * generate-hooks.mjs
+ * generate-api.mjs
  *
  * Generates registry/api.json — a unified public API descriptor for Dynamic UI.
  * Includes:
@@ -10,7 +10,7 @@
  * and call signatures — information that react-docgen-typescript cannot provide
  * because it only processes React components, not plain functions.
  *
- * Usage: node scripts/generate-hooks.mjs
+ * Usage: node scripts/generate-api.mjs
  */
 
 import {
@@ -585,7 +585,8 @@ for (const filePath of componentFiles) {
 
 process.stdout.write(`  Components: ${Object.keys(componentsSection).length} parsed (${componentsFailed} failed)\n`);
 
-const { version: packageVersion } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+const { version: packageVersion, repository } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+const repositoryUrl = repository?.url?.replace(/^git\+/, '').replace(/\.git$/, '') ?? null;
 
 const CDN_BASE_URL = process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets';
 
@@ -593,6 +594,7 @@ const apiOutput = {
   $schema: `${CDN_BASE_URL}/schema/v1.json`,
   schemaVersion: '1.0.0',
   packageVersion,
+  repository: repositoryUrl,
   generatedAt: new Date().toISOString(),
   components: componentsSection,
   hooks: hooksSection,
