@@ -40,15 +40,15 @@ if (!RELEASE_TAG) {
 // --- Load existing manifest (if provided) ---
 const { argv } = process;
 const existingManifestPath = argv[2];
-let existingManifest = { versions: [] };
+let existingManifest = { versions: {} };
 
 if (existingManifestPath && existsSync(existingManifestPath)) {
   try {
     const raw = readFileSync(existingManifestPath, 'utf8');
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed?.versions)) {
+    if (parsed?.versions && typeof parsed.versions === 'object' && !Array.isArray(parsed.versions)) {
       existingManifest = parsed;
-      process.stdout.write(`  Loaded existing manifest with ${parsed.versions.length} version(s)\n`);
+      process.stdout.write(`  Loaded existing manifest with ${Object.keys(parsed.versions).length} version(s)\n`);
     }
   } catch {
     process.stdout.write('  Existing manifest malformed — starting fresh\n');
@@ -60,25 +60,23 @@ if (existingManifestPath && existsSync(existingManifestPath)) {
 const semver = RELEASE_TAG.replace(/^v/, '');
 
 const newEntry = {
-  tag: RELEASE_TAG,
-  packageVersion: semver,
-  apiUrl: `${CDN_BASE_URL}/${semver}/ui-react/api.json`,
+  'ui-react': `${CDN_BASE_URL}/${semver}/ui-react/api.json`,
   publishedAt: new Date().toISOString(),
   deprecated: false,
 };
 
-// Deduplicate: replace entry with same tag if it already exists, otherwise prepend
-const filtered = existingManifest.versions.filter((v) => v.tag !== RELEASE_TAG);
-const versions = [newEntry, ...filtered];
+// Prepend the new version, skipping any existing entry with the same semver key
+const { [semver]: _replaced, ...rest } = existingManifest.versions;
+const versions = { [semver]: newEntry, ...rest };
 
 const manifest = {
   updatedAt: new Date().toISOString(),
-  latest: RELEASE_TAG,
+  latest: semver,
   versions,
 };
 
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'manifest.json');
 writeFileSync(OUTPUT_PATH, JSON.stringify(manifest, null, 2));
 process.stdout.write(
-  `Generated registry/manifest.json (${versions.length} version(s), latest: ${RELEASE_TAG})\n`,
+  `Generated registry/manifest.json (${Object.keys(versions).length} version(s), latest: ${semver})\n`,
 );
