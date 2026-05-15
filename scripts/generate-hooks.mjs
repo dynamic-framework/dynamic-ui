@@ -369,6 +369,7 @@ function extractFileDocs(relPath) {
             if (propSigs.length > 0) {
               // Function-typed return value — emit callable descriptor.
               doc.returns[prop.name] = {
+                type: 'function',
                 description,
                 parameters: extractCallParams(prop, checker, node).map((p) => ({
                   ...p,

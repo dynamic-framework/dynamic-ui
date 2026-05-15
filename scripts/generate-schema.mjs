@@ -27,7 +27,7 @@ const propSchema = {
   properties: {
     type: { type: 'string', description: 'TypeScript type as a string.' },
     required: { type: 'boolean' },
-    defaultValue: { type: ['string', 'null'] },
+    defaultValue: { type: ['string', 'number', 'boolean', 'null'] },
     description: { type: 'string' },
   },
 };
@@ -71,6 +71,10 @@ const schema = {
         additionalProperties: false,
         properties: {
           description: { type: 'string' },
+          sourcePath: {
+            type: 'string',
+            description: 'Relative path from the repo root to the source file.',
+          },
           props: {
             type: 'object',
             additionalProperties: propSchema,
@@ -109,8 +113,32 @@ const schema = {
               type: 'object',
               required: ['type'],
               properties: {
-                type: { type: 'string' },
+                type: {
+                  type: 'string',
+                  description: 'TypeScript type string, or "function" for callable values.',
+                },
                 description: { type: 'string' },
+                parameters: {
+                  type: 'array',
+                  description: 'Present when type is "function".',
+                  items: {
+                    type: 'object',
+                    required: ['name', 'type'],
+                    properties: {
+                      name: { type: 'string' },
+                      type: { type: 'string' },
+                      required: { type: 'boolean' },
+                      description: { type: 'string' },
+                    },
+                  },
+                },
+                returns: {
+                  type: 'object',
+                  description: 'Return type of the function. Present when type is "function".',
+                  properties: {
+                    type: { type: 'string' },
+                  },
+                },
               },
             },
           },
@@ -135,8 +163,32 @@ const schema = {
               type: 'object',
               required: ['type'],
               properties: {
-                type: { type: 'string' },
+                type: {
+                  type: 'string',
+                  description: 'TypeScript type string, or "function" for callable values.',
+                },
                 description: { type: 'string' },
+                parameters: {
+                  type: 'array',
+                  description: 'Present when type is "function".',
+                  items: {
+                    type: 'object',
+                    required: ['name', 'type'],
+                    properties: {
+                      name: { type: 'string' },
+                      type: { type: 'string' },
+                      required: { type: 'boolean' },
+                      description: { type: 'string' },
+                    },
+                  },
+                },
+                returns: {
+                  type: 'object',
+                  description: 'Return type of the function. Present when type is "function".',
+                  properties: {
+                    type: { type: 'string' },
+                  },
+                },
               },
             },
           },
