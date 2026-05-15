@@ -14,7 +14,9 @@
  * Usage: node scripts/generate-hooks.mjs
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import {
+  readFileSync, writeFileSync, existsSync, mkdirSync,
+} from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
@@ -28,8 +30,7 @@ const ROOT = resolve(dirPath, '..');
 // --- Validation ---
 const OUTPUT_DIR = resolve(ROOT, 'docs');
 if (!existsSync(OUTPUT_DIR)) {
-  process.stderr.write('docs/ not found. Run `npm run build:storybook` first.\n');
-  process.exit(1);
+  mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
 const TSCONFIG_PATH = resolve(ROOT, 'tsconfig.json');
@@ -542,10 +543,15 @@ if (existsSync(PROPS_PATH)) {
   process.stdout.write(`  merged ${Object.keys(componentsSection).length} components from props.json\n`);
 }
 
-const { version } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+const { version: packageVersion } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+
+const CDN_BASE_URL = process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets';
 
 const apiOutput = {
-  version,
+  $schema: `${CDN_BASE_URL}/schema/v1.json`,
+  schemaVersion: '1.0.0',
+  packageVersion,
+  generatedAt: new Date().toISOString(),
   components: componentsSection,
   hooks: hooksSection,
   contexts: contextsSection,

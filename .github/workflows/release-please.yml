@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   release-please:
-    name: Version and Publish
+    name: Version and Release
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
@@ -23,37 +23,40 @@ jobs:
           release-type: node
           target-branch: master
           config-file: release-please-config.json
+
       - uses: actions/checkout@v4
-        # these if statements ensure that a publication only occurs when
-        # a new release is created:
         if: ${{ steps.release.outputs.release_created }}
+
       - name: Setup Node.js
+        if: ${{ steps.release.outputs.release_created }}
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           registry-url: https://registry.npmjs.org/
           scope: '@dynamic-framework'
-        if: ${{ steps.release.outputs.release_created }}
+
       - name: Update npm
+        if: ${{ steps.release.outputs.release_created }}
         run: npm install -g npm@11.5.1
-        if: ${{ steps.release.outputs.release_created }}
-      - name: Check npm version
-        run: npm --version
-        if: ${{ steps.release.outputs.release_created }}
+
       - name: Install dependencies
-        run: npm ci
         if: ${{ steps.release.outputs.release_created }}
+        run: npm ci
+
       - name: Ensure Rollup binary
+        if: ${{ steps.release.outputs.release_created }}
         run: |
-          # Workaround for Rollup optional dependencies issue in CI
           if [ ! -d "node_modules/@rollup/rollup-linux-x64-gnu" ]; then
             echo "Installing missing Rollup Linux binary..."
             npm install @rollup/rollup-linux-x64-gnu --no-save --no-package-lock
           fi
-        if: ${{ steps.release.outputs.release_created }}
+
       - name: Build packages
+        if: ${{ steps.release.outputs.release_created }}
         run: npm run build
+
+      - name: Publish to NPM
         if: ${{ steps.release.outputs.release_created }}
-      - name: Publish
         run: npm publish --access public
-        if: ${{ steps.release.outputs.release_created }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

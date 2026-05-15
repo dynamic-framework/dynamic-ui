@@ -5,6 +5,7 @@ import {
 } from "./useDPortalContextExamples";
 
 import DAlert from "../../src/components/DAlert/DAlert";
+import { ApiTable } from "../helpers/ApiTable";
 
 <Meta title="Design System/Utils/Hooks/useDPortalContext" />
 
@@ -71,11 +72,7 @@ export function App() {
 
 ### Return value
 
-| Property | Type | Description |
-|---|---|---|
-| `openPortal` | `<K extends keyof T & string>(name: K, payload: T[K]) => void` | Pushes a named portal onto the stack, rendering its registered component with the given payload. TypeScript correlates `name` with the expected `payload` shape. |
-| `closePortal` | `() => void` | Pops the topmost portal off the stack, closing it. |
-| `stack` | `PortalStackEntry<T>[]` | Currently open portals, ordered from oldest (bottom) to newest (top). Each entry exposes `name` and `payload` — use `stack.length` to check if any portal is open. |
+<ApiTable category="hooks" name="useDPortalContext" />
 
 ### `PortalProps<P>`
 

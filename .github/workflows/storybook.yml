@@ -31,6 +31,16 @@ jobs:
       - name: Extract release version
         id: version
         run: echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+      - name: Fetch existing manifest from docs branch
+        run: |
+          git fetch origin docs 2>/dev/null || true
+          git show origin/docs:docs/manifest.json > /tmp/manifest-prev.json 2>/dev/null \
+            || echo '{"versions":[]}' > /tmp/manifest-prev.json
+        continue-on-error: true
+      - name: Generate manifest
+        run: node scripts/generate-manifest.mjs /tmp/manifest-prev.json
+        env:
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
       - name: Deploy latest 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
@@ -49,3 +59,34 @@ jobs:
           CLEAN: false
           TARGET_FOLDER: docs/${{ steps.version.outputs.tag }}
           COMMIT_MESSAGE: 'doc: update storybook (${{ steps.version.outputs.tag }})'
+      - name: Deploy manifest to docs branch 🚀
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin docs
+          git worktree add /tmp/docs-branch origin/docs
+          mkdir -p /tmp/docs-branch/docs
+          cp docs/manifest.json /tmp/docs-branch/docs/manifest.json
+          cd /tmp/docs-branch
+          git add docs/manifest.json
+          git diff --cached --quiet \
+            || git commit -m "doc: update manifest (${{ steps.version.outputs.tag }})"
+          git push origin HEAD:docs
+      - name: Smoke test — verify versioned api.json is accessible on CDN
+        run: |
+          SEMVER="${{ steps.version.outputs.tag }}"
+          SEMVER="${SEMVER#v}"
+          URL="https://cdn.dynamicframework.dev/assets/${SEMVER}/ui-react/api.json"
+          echo "Checking $URL"
+          for i in $(seq 1 24); do
+            STATUS=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
+            if [ "$STATUS" = "200" ]; then
+              echo "✓ api.json is accessible on CDN (HTTP 200)"
+              exit 0
+            fi
+            echo "Attempt $i/24: HTTP $STATUS — waiting 5s..."
+            sleep 5
+          done
+          echo "✗ api.json not accessible on CDN after 2 minutes" >&2
+          exit 1
+
