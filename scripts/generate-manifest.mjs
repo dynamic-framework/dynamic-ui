@@ -1,7 +1,7 @@
 /**
  * generate-manifest.mjs
  *
- * Generates (or updates) docs/manifest.json — an index of all deployed
+ * Generates (or updates) registry/manifest.json — an index of all deployed
  * api.json versions. Consumers (e.g., the MCP server) read this file to
  * discover the exact api.json URL for any given package version without
  * hardcoding path conventions.
@@ -19,17 +19,16 @@
  *                    (default: "https://cdn.dynamicframework.dev/assets")
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const dirPath = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(dirPath, '..');
-const OUTPUT_DIR = resolve(ROOT, 'docs');
+const OUTPUT_DIR = resolve(ROOT, 'registry');
 
 if (!existsSync(OUTPUT_DIR)) {
-  process.stderr.write('docs/ not found. Run `npm run build:storybook` first.\n');
-  process.exit(1);
+  mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
 const { RELEASE_TAG, CDN_BASE_URL = 'https://cdn.dynamicframework.dev/assets' } = process.env;
@@ -73,15 +72,13 @@ const filtered = existingManifest.versions.filter((v) => v.tag !== RELEASE_TAG);
 const versions = [newEntry, ...filtered];
 
 const manifest = {
-  $schema: `${CDN_BASE_URL}/schema/manifest-v1.json`,
   updatedAt: new Date().toISOString(),
-  latestTag: RELEASE_TAG,
-  latestUrl: `${CDN_BASE_URL}/latest/ui-react/api.json`,
+  latest: RELEASE_TAG,
   versions,
 };
 
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'manifest.json');
 writeFileSync(OUTPUT_PATH, JSON.stringify(manifest, null, 2));
 process.stdout.write(
-  `Generated docs/manifest.json (${versions.length} version(s), latest: ${RELEASE_TAG})\n`,
+  `Generated registry/manifest.json (${versions.length} version(s), latest: ${RELEASE_TAG})\n`,
 );

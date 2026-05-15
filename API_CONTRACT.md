@@ -13,7 +13,7 @@ rely on.
 |---|---|
 | Latest `api.json` | `https://cdn.dynamicframework.dev/assets/latest/ui-react/api.json` |
 | Versioned `api.json` | `https://cdn.dynamicframework.dev/assets/{semver}/ui-react/api.json` |
-| Version manifest | `https://dynamic-framework.github.io/dynamic-ui/docs/manifest.json` |
+| Version manifest | `https://cdn.dynamicframework.dev/assets/manifest.json` |
 | JSON Schema (v1) | `https://cdn.dynamicframework.dev/assets/schema/v1.json` |
 
 `{tag}` is the full release tag, e.g. `v2.4.0`.
@@ -80,10 +80,8 @@ exact `api.json` URL for any version without hardcoding path patterns.
 
 ```jsonc
 {
-  "$schema": "https://cdn.dynamicframework.dev/assets/schema/manifest-v1.json",
   "updatedAt": "2025-01-01T00:00:00.000Z",
-  "latestTag": "v2.4.0",
-  "latestUrl": "https://cdn.dynamicframework.dev/assets/latest/ui-react/api.json",
+  "latest": "v2.4.0",
   "versions": [
     {
       "tag": "v2.4.0",
@@ -96,8 +94,7 @@ exact `api.json` URL for any version without hardcoding path patterns.
 }
 ```
 
-Versions are sorted newest-first. The `deprecated` flag is set manually when
-a version has known issues.
+Versions are sorted newest-first (`versions[0]` is always the latest).
 
 ---
 
@@ -120,14 +117,20 @@ specific fields.
 ## Generating `api.json` locally
 
 ```bash
-npm run build:storybook
+npm run generate:registry
 ```
 
-The file is written to `docs/api.json` alongside the full Storybook build.
-The JSON Schema (`docs/schema/v1.json`) and the version manifest
-(`docs/manifest.json`) are generated in the same step.
+The files are written to `registry/`:
 
-To regenerate only the JSON artifacts without rebuilding Storybook:
+```
+registry/
+├── api.json
+├── manifest.json        (requires RELEASE_TAG env var)
+└── schema/
+    └── v1.json
+```
+
+To run the scripts individually:
 
 ```bash
 node scripts/generate-hooks.mjs

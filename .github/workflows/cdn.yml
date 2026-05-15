@@ -26,10 +26,20 @@ jobs:
           fi
       - name: Build packages
         run: npm run build
-      - name: Generate api.json and schema
+      - name: Generate registry assets
         run: |
           node scripts/generate-hooks.mjs
           node scripts/generate-schema.mjs
+      - name: Fetch existing manifest from CDN
+        run: |
+          curl -f https://cdn.dynamicframework.dev/assets/manifest.json \
+            -o /tmp/manifest-prev.json 2>/dev/null \
+            || echo '{"versions":[]}' > /tmp/manifest-prev.json
+        continue-on-error: true
+      - name: Generate manifest
+        run: node scripts/generate-manifest.mjs /tmp/manifest-prev.json
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -43,16 +53,21 @@ jobs:
         run: echo "semver=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
       - name: Upload api.json to CDN (versioned + latest)
         run: |
-          aws s3 cp docs/api.json \
+          aws s3 cp registry/api.json \
             s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/api.json \
             --acl public-read
-          aws s3 cp docs/api.json \
+          aws s3 cp registry/api.json \
             s3://dynamicframework-cdn/assets/latest/ui-react/api.json \
             --acl public-read
       - name: Upload JSON Schema to CDN
         run: |
-          aws s3 cp docs/schema/v1.json \
+          aws s3 cp registry/schema/v1.json \
             s3://dynamicframework-cdn/assets/schema/v1.json \
+            --acl public-read
+      - name: Upload manifest to CDN
+        run: |
+          aws s3 cp registry/manifest.json \
+            s3://dynamicframework-cdn/assets/manifest.json \
             --acl public-read
       - name: Smoke test — verify versioned api.json is accessible on CDN
         run: |
