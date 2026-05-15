@@ -59,19 +59,19 @@ jobs:
           CLEAN: false
           TARGET_FOLDER: docs/${{ steps.version.outputs.tag }}
           COMMIT_MESSAGE: 'doc: update storybook (${{ steps.version.outputs.tag }})'
-      - name: Deploy manifest and schema to docs root 🚀
+      - name: Deploy manifest to docs branch 🚀
         run: |
-          mkdir -p docs-root
-          cp docs/manifest.json docs-root/manifest.json
-          cp -r docs/schema docs-root/schema
-      - uses: JamesIves/github-pages-deploy-action@3.6.2
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: docs
-          FOLDER: docs-root
-          CLEAN: false
-          TARGET_FOLDER: docs
-          COMMIT_MESSAGE: 'doc: update manifest and schema (${{ steps.version.outputs.tag }})'
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin docs
+          git worktree add /tmp/docs-branch origin/docs
+          mkdir -p /tmp/docs-branch/docs
+          cp docs/manifest.json /tmp/docs-branch/docs/manifest.json
+          cd /tmp/docs-branch
+          git add docs/manifest.json
+          git diff --cached --quiet \
+            || git commit -m "doc: update manifest (${{ steps.version.outputs.tag }})"
+          git push origin HEAD:docs
       - name: Smoke test — verify versioned api.json is accessible on CDN
         run: |
           SEMVER="${{ steps.version.outputs.tag }}"
