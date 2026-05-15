@@ -11,10 +11,10 @@ rely on.
 
 | Resource | URL |
 |---|---|
-| Latest `api.json` | `https://cdn.modyo.com/dynamic-ui/latest/api.json` |
-| Versioned `api.json` | `https://cdn.modyo.com/dynamic-ui/{tag}/api.json` |
-| Version manifest | `https://cdn.modyo.com/dynamic-ui/docs/manifest.json` |
-| JSON Schema (v1) | `https://cdn.modyo.com/dynamic-ui/docs/schema/v1.json` |
+| Latest `api.json` | `https://cdn.dynamicframework.dev/assets/latest/ui-react/api.json` |
+| Versioned `api.json` | `https://cdn.dynamicframework.dev/assets/{semver}/ui-react/api.json` |
+| Version manifest | `https://dynamic-framework.github.io/dynamic-ui/docs/manifest.json` |
+| JSON Schema (v1) | `https://cdn.dynamicframework.dev/assets/schema/v1.json` |
 
 `{tag}` is the full release tag, e.g. `v2.4.0`.
 
@@ -27,7 +27,7 @@ rely on.
 
 ```jsonc
 {
-  "$schema": "https://cdn.modyo.com/dynamic-ui/docs/schema/v1.json",
+  "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
   "schemaVersion": "1.0.0",   // version of this JSON structure (not the package)
   "packageVersion": "2.4.0",  // npm package version
   "generatedAt": "2025-01-01T00:00:00.000Z",
@@ -80,15 +80,15 @@ exact `api.json` URL for any version without hardcoding path patterns.
 
 ```jsonc
 {
-  "$schema": "https://cdn.modyo.com/dynamic-ui/docs/schema/manifest-v1.json",
+  "$schema": "https://cdn.dynamicframework.dev/assets/schema/manifest-v1.json",
   "updatedAt": "2025-01-01T00:00:00.000Z",
   "latestTag": "v2.4.0",
-  "latestUrl": "https://cdn.modyo.com/dynamic-ui/latest/api.json",
+  "latestUrl": "https://cdn.dynamicframework.dev/assets/latest/ui-react/api.json",
   "versions": [
     {
       "tag": "v2.4.0",
       "packageVersion": "2.4.0",
-      "apiUrl": "https://cdn.modyo.com/dynamic-ui/v2.4.0/api.json",
+      "apiUrl": "https://cdn.dynamicframework.dev/assets/2.4.0/ui-react/api.json",
       "publishedAt": "2025-01-01T00:00:00.000Z",
       "deprecated": false
     }

@@ -72,19 +72,21 @@ jobs:
           CLEAN: false
           TARGET_FOLDER: docs
           COMMIT_MESSAGE: 'doc: update manifest and schema (${{ steps.version.outputs.tag }})'
-      - name: Smoke test — verify versioned api.json is accessible
+      - name: Smoke test — verify versioned api.json is accessible on CDN
         run: |
-          URL="${{ vars.PAGES_BASE_URL || 'https://dynamic-framework.github.io/dynamic-ui' }}/docs/${{ steps.version.outputs.tag }}/api.json"
+          SEMVER="${{ steps.version.outputs.tag }}"
+          SEMVER="${SEMVER#v}"
+          URL="https://cdn.dynamicframework.dev/assets/${SEMVER}/ui-react/api.json"
           echo "Checking $URL"
           for i in $(seq 1 24); do
             STATUS=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
             if [ "$STATUS" = "200" ]; then
-              echo "✓ api.json is accessible (HTTP 200)"
+              echo "✓ api.json is accessible on CDN (HTTP 200)"
               exit 0
             fi
             echo "Attempt $i/24: HTTP $STATUS — waiting 5s..."
             sleep 5
           done
-          echo "✗ api.json not accessible after 2 minutes" >&2
+          echo "✗ api.json not accessible on CDN after 2 minutes" >&2
           exit 1
 

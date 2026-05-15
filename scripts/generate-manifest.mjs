@@ -16,7 +16,7 @@
  * Environment variables:
  *   RELEASE_TAG    — current release tag, e.g. "v2.4.0" (required)
  *   CDN_BASE_URL   — base URL for all api.json links
- *                    (default: "https://cdn.modyo.com/dynamic-ui")
+ *                    (default: "https://cdn.dynamicframework.dev/assets")
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
@@ -32,7 +32,7 @@ if (!existsSync(OUTPUT_DIR)) {
   process.exit(1);
 }
 
-const { RELEASE_TAG, CDN_BASE_URL = 'https://cdn.modyo.com/dynamic-ui' } = process.env;
+const { RELEASE_TAG, CDN_BASE_URL = 'https://cdn.dynamicframework.dev/assets' } = process.env;
 if (!RELEASE_TAG) {
   process.stderr.write('RELEASE_TAG environment variable is required (e.g. "v2.4.0").\n');
   process.exit(1);
@@ -63,7 +63,7 @@ const semver = RELEASE_TAG.replace(/^v/, '');
 const newEntry = {
   tag: RELEASE_TAG,
   packageVersion: semver,
-  apiUrl: `${CDN_BASE_URL}/${RELEASE_TAG}/api.json`,
+  apiUrl: `${CDN_BASE_URL}/${semver}/ui-react/api.json`,
   publishedAt: new Date().toISOString(),
   deprecated: false,
 };
@@ -76,7 +76,7 @@ const manifest = {
   $schema: `${CDN_BASE_URL}/schema/manifest-v1.json`,
   updatedAt: new Date().toISOString(),
   latestTag: RELEASE_TAG,
-  latestUrl: `${CDN_BASE_URL}/latest/api.json`,
+  latestUrl: `${CDN_BASE_URL}/latest/ui-react/api.json`,
   versions,
 };
 
