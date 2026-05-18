@@ -1,11 +1,11 @@
 import {
   DContextProvider,
   useDPortalContext,
-} from '../../src';
-import DButton from '../../src/components/DButton';
-import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
+} from '../../../src';
+import DButton from '../../../src/components/DButton';
+import DOffcanvas from '../../../src/components/DOffcanvas/DOffcanvas';
 
-import type { PortalProps } from '../../src';
+import type { PortalProps } from '../../../src';
 
 type OffcanvasPayloads = {
   example: {
@@ -48,7 +48,7 @@ function ExampleOffcanvasUsage() {
   return (
     <DButton
       text="Open Offcanvas"
-      onClick={() => openPortal('example', { description: 'from portal payload' })}
+      onClick={() => openPortal('example', { description: 'from offcanvas payload' })}
     />
   );
 }
