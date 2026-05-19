@@ -92,14 +92,19 @@ const schema = {
       description: 'Custom React hook signatures, keyed by hook name.',
       additionalProperties: {
         type: 'object',
+        additionalProperties: false,
         required: ['description'],
         properties: {
+          name: { type: 'string' },
+          source: { type: 'string', description: 'Relative path to the source file.' },
+          kind: { type: 'string', enum: ['hook'] },
           description: { type: 'string' },
+          signature: { type: 'string' },
           requires: {
             type: 'array',
             items: { type: 'string' },
           },
-          params: {
+          parameters: {
             type: 'array',
             items: {
               type: 'object',
@@ -147,20 +152,48 @@ const schema = {
               },
             },
           },
+          types: {
+            type: 'object',
+            description: 'Named TypeScript types referenced by this hook.',
+            additionalProperties: { type: 'object' },
+          },
+          throws: {
+            type: 'array',
+            description: 'Error conditions documented via @throws JSDoc tag.',
+            items: { type: 'string' },
+          },
         },
       },
     },
     contexts: {
       type: 'object',
-      description: 'React context values, keyed by context/hook name.',
+      description: 'React context providers, keyed by component/hook name.',
       additionalProperties: {
         type: 'object',
+        additionalProperties: false,
         required: ['description'],
         properties: {
+          name: { type: 'string' },
+          source: { type: 'string', description: 'Relative path to the source file.' },
+          kind: { type: 'string', enum: ['context', 'component'] },
           description: { type: 'string' },
+          signature: { type: 'string' },
           requires: {
             type: 'array',
             items: { type: 'string' },
+          },
+          props: {
+            type: 'object',
+            description: 'Props accepted by the context provider component.',
+            additionalProperties: {
+              type: 'object',
+              properties: {
+                type: { type: 'string' },
+                required: { type: 'boolean' },
+                defaultValue: { type: ['string', 'number', 'boolean', 'null'] },
+                description: { type: 'string' },
+              },
+            },
           },
           returns: {
             type: 'object',
@@ -196,6 +229,11 @@ const schema = {
                 },
               },
             },
+          },
+          types: {
+            type: 'object',
+            description: 'Named TypeScript types referenced by this context.',
+            additionalProperties: { type: 'object' },
           },
         },
       },

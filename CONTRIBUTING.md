@@ -104,10 +104,8 @@ locally.
 # Full build (recommended)
 npm run build:storybook
 
-# Regenerate JSON artifacts only (requires docs/ to exist)
-node scripts/generate-api.mjs
-node scripts/generate-schema.mjs
-RELEASE_TAG=v0.0.0-local node scripts/generate-manifest.mjs
+# Regenerate JSON artifacts only (no Storybook build needed)
+npm run generate:registry
 ```
 
 ### Changing the API structure

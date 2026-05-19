@@ -16,7 +16,7 @@ rely on.
 | Version manifest | `https://cdn.dynamicframework.dev/assets/manifest.json` |
 | JSON Schema (v1) | `https://cdn.dynamicframework.dev/assets/schema/v1.json` |
 
-`{tag}` is the full release tag, e.g. `v2.4.0`.
+`{semver}` is the bare semver string (no leading `v`), e.g. `2.4.0`.
 
 > **Stability guarantee**: once a versioned URL is published it is immutable.
 > The `latest` alias always points to the most-recent non-prerelease version.
@@ -44,7 +44,7 @@ rely on.
 |---|---|---|
 | `$schema` | `string` | URI of the JSON Schema that describes this file |
 | `schemaVersion` | `string` (semver) | Version of the `api.json` structure itself |
-| `packageVersion` | `string` (semver) | npm version of `@dynamic-framework/dynamic-ui` |
+| `packageVersion` | `string` (semver) | npm version of `@dynamic-framework/ui-react` |
 | `repository` | `string` (URL) | GitHub repository URL of the design system |
 | `generatedAt` | `string` (ISO 8601) | Build timestamp |
 | `components` | `object` | Component prop tables (keyed by component name) |
@@ -53,25 +53,58 @@ rely on.
 
 ### `components[name]`
 
-Each component entry is an array of prop descriptors:
+Each component entry is an object with the following shape:
 
 ```jsonc
 {
-  "DButton": [
-    {
-      "name": "text",
-      "type": "string",
-      "required": false,
-      "defaultValue": "",
-      "description": "Button label"
+  "DButton": {
+    "description": "Primary action button.",
+    "sourcePath": "src/components/DButton/DButton.tsx",
+    "props": {
+      "text": {
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": "Button label"
+      }
     }
-  ]
+  }
 }
 ```
 
-### `hooks[name]` / `contexts[name]`
+### `hooks[name]`
 
-Hook and context entries share the same shape as component entries.
+Each hook entry has this shape:
+
+```jsonc
+{
+  "useDToast": {
+    "name": "useDToast",
+    "source": "src/components/DToastContainer/useDToast.tsx",
+    "kind": "hook",
+    "description": "Hook that provides a toast dispatcher.",
+    "signature": "useDToast() => { toast }",
+    "requires": ["DContextProvider", "DToastContainer"],
+    "parameters": [],
+    "returns": {
+      "toast": {
+        "type": "function",
+        "description": "Dispatches a toast notification.",
+        "parameters": [{ "name": "data", "type": "ToastData", "required": true, "description": "" }],
+        "returns": { "type": "string" }
+      }
+    },
+    "types": {
+      "ToastData": { "description": "...", "type": "object", "fields": { ... } }
+    }
+  }
+}
+```
+
+### `contexts[name]`
+
+Context entries follow the same shape as hooks but describe React context providers.
+The `props` field lists the props accepted by the provider component.
 
 ---
 
@@ -83,20 +116,23 @@ exact `api.json` URL for any version without hardcoding path patterns.
 ```jsonc
 {
   "updatedAt": "2025-01-01T00:00:00.000Z",
-  "latest": "v2.4.0",
-  "versions": [
-    {
-      "tag": "v2.4.0",
-      "packageVersion": "2.4.0",
-      "apiUrl": "https://cdn.dynamicframework.dev/assets/2.4.0/ui-react/api.json",
+  "latest": "2.4.0",
+  "versions": {
+    "2.4.0": {
+      "ui-react": "https://cdn.dynamicframework.dev/assets/2.4.0/ui-react/api.json",
       "publishedAt": "2025-01-01T00:00:00.000Z",
       "deprecated": false
+    },
+    "2.3.1": {
+      "ui-react": "https://cdn.dynamicframework.dev/assets/2.3.1/ui-react/api.json",
+      "publishedAt": "2024-12-01T00:00:00.000Z",
+      "deprecated": false
     }
-  ]
+  }
 }
 ```
 
-Versions are sorted newest-first (`versions[0]` is always the latest).
+Versions are ordered newest-first (object insertion order). `latest` is bare semver (no leading `v`).
 
 ---
 
@@ -135,7 +171,7 @@ registry/
 To run the scripts individually:
 
 ```bash
-node scripts/generate-hooks.mjs
+node scripts/generate-api.mjs
 node scripts/generate-schema.mjs
 RELEASE_TAG=v0.0.0-local node scripts/generate-manifest.mjs
 ```

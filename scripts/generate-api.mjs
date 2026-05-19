@@ -190,14 +190,15 @@ function getJsDocRequires(node) {
 }
 
 /**
- * Reads `@throws` JSDoc tags from a node and returns the first description found,
- * or `undefined` if no `@throws` tag is present.
+ * Reads `@throws` JSDoc tags from a node and returns all descriptions found
+ * as an array, or `undefined` if no `@throws` tag is present.
  */
 function getJsDocThrows(node) {
-  const tag = ts.getJSDocTags(node).find(
+  const tags = ts.getJSDocTags(node).filter(
     (t) => t.tagName && t.tagName.text === 'throws',
   );
-  return tag ? jsDocCommentToString(tag.comment) || undefined : undefined;
+  if (tags.length === 0) return undefined;
+  return tags.map((t) => jsDocCommentToString(t.comment) || '').filter(Boolean);
 }
 
 /**
