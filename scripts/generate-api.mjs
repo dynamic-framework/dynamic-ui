@@ -586,7 +586,11 @@ for (const filePath of componentFiles) {
 process.stdout.write(`  Components: ${Object.keys(componentsSection).length} parsed (${componentsFailed} failed)\n`);
 
 const { version: packageVersion, repository } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
-const repositoryUrl = repository?.url?.replace(/^git\+/, '').replace(/\.git$/, '') ?? null;
+const repoBase = repository?.url?.replace(/^git\+/, '').replace(/\.git$/, '') ?? null;
+const releaseTag = process.env.RELEASE_TAG ?? null;
+const repositoryUrl = (repoBase && releaseTag)
+  ? `${repoBase}/releases/tag/${releaseTag}`
+  : repoBase;
 
 const CDN_BASE_URL = process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets';
 

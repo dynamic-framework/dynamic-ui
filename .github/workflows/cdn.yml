@@ -30,6 +30,8 @@ jobs:
         run: |
           node scripts/generate-api.mjs
           node scripts/generate-schema.mjs
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
       - name: Fetch existing manifest from CDN
         run: |
           curl -f https://cdn.dynamicframework.dev/assets/manifest.json \
