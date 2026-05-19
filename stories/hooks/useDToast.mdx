@@ -7,7 +7,6 @@ import {
 } from "./useDToastExamples";
 
 import DAlert from "../../src/components/DAlert/DAlert";
-import { ApiTable } from "../helpers/ApiTable";
 
 <Meta title="Design System/Patterns/Toast" />
 
@@ -76,7 +75,12 @@ It returns a single `toast` function.
 
 ### Return value — `toast` function
 
-<ApiTable category="hooks" name="useDToast" />
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `data` | `ToastData \| ((t: Toast) => Renderable)` | ✅ | Toast content. Pass a `ToastData` object to use the default `DToast` layout, or a render function for fully custom content. |
+| `toastProps` | `DToastOptions` | — | Per-toast overrides forwarded to react-hot-toast. |
+
+**Returns** `string` — the toast ID, which can be passed to react-hot-toast's `toast.dismiss(id)` to programmatically close the toast.
 
 ## `ToastData`
 
@@ -95,7 +99,14 @@ Fields used when dispatching a toast with the default `DToast` layout.
 
 Props accepted by `DToastContainer`.
 
-<ApiTable category="components" name="DToastContainer" />
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `position` | `ToastPosition` | `'bottom-center'` | Default position for toasts that do not specify their own `position`. |
+| `reverseOrder` | `boolean` | `false` | When `true`, new toasts appear at the bottom of the stack instead of the top. |
+| `gutter` | `number` | `8` | Gap in pixels between stacked toasts. |
+| `containerClassName` | `string` | — | Additional CSS class applied to the portal container `<div>`. |
+| `containerStyle` | `CSSProperties` | — | Inline styles applied to the portal container `<div>`. |
+| `toastOptions` | `DefaultToastOptions` | — | Default options merged into every toast rendered inside this container. |
 
 ---
 

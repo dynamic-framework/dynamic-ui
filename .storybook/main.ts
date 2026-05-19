@@ -1,4 +1,3 @@
-import { readFileSync } from 'fs';
 import remarkGfm from 'remark-gfm';
 
 export default {
@@ -43,18 +42,5 @@ export default {
   staticDirs: [
     './public',
     '../dist',
-  ],
-
-  viteFinal: async (config: any) => {
-    const { version } = JSON.parse(readFileSync('./package.json', 'utf-8'));
-    return {
-      ...config,
-      define: {
-        ...config.define,
-        // Injected into ApiTable at build time so each Storybook version
-        // fetches its own api.json from the CDN versioned path.
-        DYNAMIC_PACKAGE_VERSION: JSON.stringify(version),
-      },
-    };
-  },
+  ]
 };
