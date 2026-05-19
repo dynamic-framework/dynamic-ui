@@ -59,19 +59,27 @@ if (existingManifestPath && existsSync(existingManifestPath)) {
 // Strip leading "v" from tag to get the semver string (e.g. "v2.4.0" → "2.4.0")
 const semver = RELEASE_TAG.replace(/^v/, '');
 
+// Detect prereleases: any semver with a hyphen suffix (e.g. "2.4.0-rc.1", "2.5.0-beta.2")
+const isPrerelease = semver.includes('-');
+
 const newEntry = {
   'ui-react': `${CDN_BASE_URL}/${semver}/ui-react/api.json`,
   publishedAt: new Date().toISOString(),
   deprecated: false,
+  ...(isPrerelease ? { prerelease: true } : {}),
 };
 
 // Prepend the new version, skipping any existing entry with the same semver key
 const { [semver]: _replaced, ...rest } = existingManifest.versions;
 const versions = { [semver]: newEntry, ...rest };
 
+// Advance `latest` only for stable releases (never for prereleases)
+const currentLatest = existingManifest.latest ?? null;
+const latest = isPrerelease ? currentLatest : semver;
+
 const manifest = {
   updatedAt: new Date().toISOString(),
-  latest: semver,
+  latest,
   versions,
 };
 
