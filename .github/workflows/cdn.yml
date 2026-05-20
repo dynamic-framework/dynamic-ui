@@ -42,14 +42,6 @@ jobs:
         run: node scripts/generate-manifest.mjs /tmp/manifest-prev.json
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Publish to CDN
-        run: npm run publish:cdn
       - name: Extract semver from package.json
         id: version
         run: echo "semver=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
@@ -61,6 +53,14 @@ jobs:
             echo "::error::Release tag ($TAG_VERSION) does not match package.json version ($PKG_VERSION)"
             exit 1
           fi
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Publish to CDN
+        run: npm run publish:cdn
       - name: Upload api.json to CDN (versioned + latest)
         run: |
           aws s3 cp registry/api.json \

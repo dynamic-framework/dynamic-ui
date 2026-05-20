@@ -30,7 +30,7 @@ rely on.
   "$schema": "https://cdn.dynamicframework.dev/assets/schema/v1.json",
   "schemaVersion": "1.0.0",   // version of this JSON structure (not the package)
   "packageVersion": "2.4.0",  // npm package version
-  "repository": "https://github.com/dynamic-framework/dynamic-ui",
+  "repository": "https://github.com/dynamic-framework/dynamic-ui/releases/tag/v2.4.0",
   "generatedAt": "2025-01-01T00:00:00.000Z",
   "components": { ... },
   "hooks": { ... },
@@ -45,7 +45,7 @@ rely on.
 | `$schema` | `string` | URI of the JSON Schema that describes this file |
 | `schemaVersion` | `string` (semver) | Version of the `api.json` structure itself |
 | `packageVersion` | `string` (semver) | npm version of `@dynamic-framework/ui-react` |
-| `repository` | `string` (URL) | GitHub repository URL of the design system |
+| `repository` | `string` (URL) | GitHub release tag URL when published via CI (`releases/tag/vX.Y.Z`); repo root URL when generated locally |
 | `generatedAt` | `string` (ISO 8601) | Build timestamp |
 | `components` | `object` | Component prop tables (keyed by component name) |
 | `hooks` | `object` | Hook API tables (keyed by hook name) |

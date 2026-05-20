@@ -10,7 +10,7 @@
  *   node scripts/generate-manifest.mjs [path-to-existing-manifest.json]
  *
  * The optional first argument should be the path to the manifest.json from
- * the previous release (fetched from the docs branch in CI). If omitted or
+ * the previous release (fetched from the CDN in CI). If omitted or
  * if the file is absent/malformed, the manifest is initialised from scratch.
  *
  * Environment variables:
