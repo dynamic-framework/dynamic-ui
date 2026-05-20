@@ -35,10 +35,17 @@ jobs:
           RELEASE_PUBLISHED_AT: ${{ github.event.release.published_at }}
       - name: Fetch existing manifest from CDN
         run: |
-          curl -f https://cdn.dynamicframework.dev/assets/manifest.json \
-            -o /tmp/manifest-prev.json 2>/dev/null \
-            || echo '{"versions":{}}' > /tmp/manifest-prev.json
-        continue-on-error: true
+          HTTP_STATUS=$(curl -s -o /tmp/manifest-prev.json -w "%{http_code}" \
+            https://cdn.dynamicframework.dev/assets/manifest.json)
+          if [ "$HTTP_STATUS" = "200" ]; then
+            echo "Manifest fetched (200)."
+          elif [ "$HTTP_STATUS" = "404" ]; then
+            echo "Manifest not found (404) — first publish, starting fresh."
+            echo '{"versions":{}}' > /tmp/manifest-prev.json
+          else
+            echo "::error::Unexpected HTTP status $HTTP_STATUS fetching manifest. Aborting to protect version history."
+            exit 1
+          fi
       - name: Generate manifest
         run: node scripts/generate-manifest.mjs /tmp/manifest-prev.json
         env:
