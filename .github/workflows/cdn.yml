@@ -61,7 +61,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Publish to CDN
-        run: npm run publish:cdn
+        run: |
+          if [[ "${{ steps.version.outputs.semver }}" == *"-"* ]]; then
+            npm run publish:cdn-version
+          else
+            npm run publish:cdn
+          fi
       - name: Upload api.json to CDN (versioned)
         run: |
           aws s3 cp registry/api.json \
