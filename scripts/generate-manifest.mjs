@@ -75,6 +75,13 @@ const versions = { [semver]: newEntry, ...rest };
 
 // Advance `latest` only for stable releases (never for prereleases)
 const currentLatest = existingManifest.latest ?? null;
+if (isPrerelease && !currentLatest) {
+  process.stderr.write(
+    'ERROR: Cannot publish a prerelease as the first version — no stable "latest" exists in the manifest.\n'
+    + 'Publish a stable release first.\n',
+  );
+  process.exit(1);
+}
 const latest = isPrerelease ? currentLatest : semver;
 
 const manifest = {
