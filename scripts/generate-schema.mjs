@@ -93,7 +93,7 @@ const schema = {
       additionalProperties: {
         type: 'object',
         additionalProperties: false,
-        required: ['name', 'source', 'kind', 'description', 'signature', 'parameters', 'returns'],
+        required: ['name', 'source', 'kind', 'description', 'signature', 'requires', 'parameters', 'returns', 'types'],
         properties: {
           name: { type: 'string' },
           source: { type: 'string', description: 'Relative path to the source file.' },
@@ -176,7 +176,7 @@ const schema = {
       additionalProperties: {
         type: 'object',
         additionalProperties: false,
-        required: ['name', 'source', 'kind', 'description', 'signature', 'props'],
+        required: ['name', 'source', 'kind', 'description', 'signature', 'requires', 'props', 'types'],
         properties: {
           name: { type: 'string' },
           source: { type: 'string', description: 'Relative path to the source file.' },
