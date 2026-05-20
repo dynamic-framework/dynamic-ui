@@ -86,5 +86,5 @@ const manifest = {
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'manifest.json');
 writeFileSync(OUTPUT_PATH, JSON.stringify(manifest, null, 2));
 process.stdout.write(
-  `Generated registry/manifest.json (${Object.keys(versions).length} version(s), latest: ${semver})\n`,
+  `Generated registry/manifest.json (${Object.keys(versions).length} version(s), latest: ${latest ?? 'none'})\n`,
 );
