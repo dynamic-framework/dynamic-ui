@@ -145,6 +145,8 @@ const schema = {
                 returns: {
                   type: 'object',
                   description: 'Return type of the function. Present when type is "function".',
+                  required: ['type'],
+                  additionalProperties: false,
                   properties: {
                     type: { type: 'string' },
                   },
@@ -215,6 +217,8 @@ const schema = {
                 returns: {
                   type: 'object',
                   description: 'Return type of the function. Present when type is "function".',
+                  required: ['type'],
+                  additionalProperties: false,
                   properties: {
                     type: { type: 'string' },
                   },
