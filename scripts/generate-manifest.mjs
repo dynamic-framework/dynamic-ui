@@ -44,16 +44,25 @@ const existingManifestPath = argv[2];
 let existingManifest = { versions: {} };
 
 if (existingManifestPath && existsSync(existingManifestPath)) {
+  let parsed;
   try {
-    const raw = readFileSync(existingManifestPath, 'utf8');
-    const parsed = JSON.parse(raw);
-    if (parsed?.versions && typeof parsed.versions === 'object' && !Array.isArray(parsed.versions)) {
-      existingManifest = parsed;
-      process.stdout.write(`  Loaded existing manifest with ${Object.keys(parsed.versions).length} version(s)\n`);
-    }
-  } catch {
-    process.stdout.write('  Existing manifest malformed — starting fresh\n');
+    parsed = JSON.parse(readFileSync(existingManifestPath, 'utf8'));
+  } catch (err) {
+    process.stderr.write(
+      `ERROR: Existing manifest at "${existingManifestPath}" is not valid JSON.\n`
+      + 'Aborting to avoid overwriting version history with an empty manifest.\n',
+    );
+    process.exit(1);
   }
+  if (!parsed?.versions || typeof parsed.versions !== 'object' || Array.isArray(parsed.versions)) {
+    process.stderr.write(
+      `ERROR: Existing manifest at "${existingManifestPath}" has an unexpected shape (missing or invalid "versions" object).\n`
+      + 'Aborting to avoid overwriting version history with an empty manifest.\n',
+    );
+    process.exit(1);
+  }
+  existingManifest = parsed;
+  process.stdout.write(`  Loaded existing manifest with ${Object.keys(parsed.versions).length} version(s)\n`);
 }
 
 // --- Build new version entry ---
