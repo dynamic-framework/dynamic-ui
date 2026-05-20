@@ -109,6 +109,7 @@ const schema = {
             items: {
               type: 'object',
               required: ['name', 'type'],
+              additionalProperties: false,
               properties: {
                 name: { type: 'string' },
                 type: { type: 'string' },
@@ -122,6 +123,7 @@ const schema = {
             additionalProperties: {
               type: 'object',
               required: ['type'],
+              additionalProperties: false,
               properties: {
                 type: {
                   type: 'string',
@@ -134,6 +136,7 @@ const schema = {
                   items: {
                     type: 'object',
                     required: ['name', 'type'],
+                    additionalProperties: false,
                     properties: {
                       name: { type: 'string' },
                       type: { type: 'string' },
@@ -194,6 +197,7 @@ const schema = {
             additionalProperties: {
               type: 'object',
               required: ['type'],
+              additionalProperties: false,
               properties: {
                 type: {
                   type: 'string',
@@ -206,6 +210,7 @@ const schema = {
                   items: {
                     type: 'object',
                     required: ['name', 'type'],
+                    additionalProperties: false,
                     properties: {
                       name: { type: 'string' },
                       type: { type: 'string' },
