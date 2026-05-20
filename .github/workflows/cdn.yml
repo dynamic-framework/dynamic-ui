@@ -32,6 +32,7 @@ jobs:
           node scripts/generate-schema.mjs
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_PUBLISHED_AT: ${{ github.event.release.published_at }}
       - name: Fetch existing manifest from CDN
         run: |
           curl -f https://cdn.dynamicframework.dev/assets/manifest.json \
@@ -61,12 +62,15 @@ jobs:
           aws-region: us-east-1
       - name: Publish to CDN
         run: npm run publish:cdn
-      - name: Upload api.json to CDN (versioned + latest)
+      - name: Upload api.json to CDN (versioned)
         run: |
           aws s3 cp registry/api.json \
             s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/api.json \
             --acl public-read \
             --cache-control "public, max-age=31536000, immutable"
+      - name: Upload api.json to CDN (latest — stable releases only)
+        if: ${{ !contains(steps.version.outputs.semver, '-') }}
+        run: |
           aws s3 cp registry/api.json \
             s3://dynamicframework-cdn/assets/latest/ui-react/api.json \
             --acl public-read \

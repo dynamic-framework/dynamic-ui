@@ -65,7 +65,7 @@ const isPrerelease = semver.includes('-');
 
 const newEntry = {
   'ui-react': `${CDN_BASE_URL}/${semver}/ui-react/api.json`,
-  publishedAt: new Date().toISOString(),
+  publishedAt: existingManifest.versions[semver]?.publishedAt ?? new Date().toISOString(),
   deprecated: false,
   ...(isPrerelease ? { prerelease: true } : {}),
 };

@@ -600,7 +600,7 @@ const apiOutput = {
   schemaVersion: '1.0.0',
   packageVersion,
   repository: repositoryUrl,
-  generatedAt: new Date().toISOString(),
+  generatedAt: process.env.RELEASE_PUBLISHED_AT ?? new Date().toISOString(),
   components: componentsSection,
   hooks: hooksSection,
   contexts: contextsSection,
