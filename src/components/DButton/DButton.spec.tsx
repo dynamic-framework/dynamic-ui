@@ -239,52 +239,21 @@ describe('<DButton />', () => {
     expect(anchor).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
-  it('Should render soft variant with primary color', () => {
+  it.each([
+    ['primary', 'Soft Primary'],
+    ['secondary', 'Soft Secondary'],
+    ['danger', 'Soft Danger'],
+    ['success', 'Soft Success'],
+  ])('Should render soft variant with %s color', (color, text) => {
     const { container } = render(
       <DButton
-        text="Soft Primary"
-        color="primary"
+        text={text}
+        color={color}
         variant="soft"
       />,
     );
 
-    expect(container.querySelector('.btn-soft-primary')).toBeInTheDocument();
-  });
-
-  it('Should render soft variant with secondary color', () => {
-    const { container } = render(
-      <DButton
-        text="Soft Secondary"
-        color="secondary"
-        variant="soft"
-      />,
-    );
-
-    expect(container.querySelector('.btn-soft-secondary')).toBeInTheDocument();
-  });
-
-  it('Should render soft variant with danger color', () => {
-    const { container } = render(
-      <DButton
-        text="Soft Danger"
-        color="danger"
-        variant="soft"
-      />,
-    );
-
-    expect(container.querySelector('.btn-soft-danger')).toBeInTheDocument();
-  });
-
-  it('Should render soft variant with success color', () => {
-    const { container } = render(
-      <DButton
-        text="Soft Success"
-        color="success"
-        variant="soft"
-      />,
-    );
-
-    expect(container.querySelector('.btn-soft-success')).toBeInTheDocument();
+    expect(container.querySelector(`.btn-soft-${color}`)).toBeInTheDocument();
   });
 
   it('Should render soft variant with size class', () => {
