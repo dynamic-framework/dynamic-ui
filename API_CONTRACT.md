@@ -103,8 +103,38 @@ Each hook entry has this shape:
 
 ### `contexts[name]`
 
-Context entries follow the same shape as hooks but describe React context providers.
-The `props` field lists the props accepted by the provider component.
+Context entries describe React context providers. Unlike hooks, they use `props` instead
+of `parameters`/`returns`:
+
+```jsonc
+{
+  "DContextProvider": {
+    "name": "DContextProvider",
+    "source": "src/contexts/DContext.tsx",
+    "kind": "component",
+    "description": "Root context provider for Dynamic UI.",
+    "signature": "DContextProvider<T>({ language?, currency?, ... }) => JSX.Element",
+    "props": {
+      "language": { "type": "string", "required": false, "description": "" },
+      "currency": { "type": "string", "required": false, "description": "" }
+    },
+    "requires": [],
+    "types": {}
+  }
+}
+```
+
+| Field | Required | Description |
+|---|---|---|
+| `name` | ✓ | Entry name (matches the object key) |
+| `source` | ✓ | Relative path to the source file |
+| `kind` | ✓ | `"context"` or `"component"` |
+| `description` | ✓ | JSDoc description |
+| `signature` | ✓ | Full TypeScript signature |
+| `props` | ✓ | Props accepted by the provider component (same shape as `components[name].props`) |
+| `requires` | — | Names of components/hooks this context depends on |
+| `returns` | — | Present if the context hook returns values |
+| `types` | — | Named TypeScript types referenced by this entry |
 
 ---
 
@@ -123,6 +153,12 @@ exact `api.json` URL for any version without hardcoding path patterns.
       "publishedAt": "2025-01-01T00:00:00.000Z",
       "deprecated": false
     },
+    "2.4.0-rc.1": {
+      "ui-react": "https://cdn.dynamicframework.dev/assets/2.4.0-rc.1/ui-react/api.json",
+      "publishedAt": "2024-12-15T00:00:00.000Z",
+      "deprecated": false,
+      "prerelease": true
+    },
     "2.3.1": {
       "ui-react": "https://cdn.dynamicframework.dev/assets/2.3.1/ui-react/api.json",
       "publishedAt": "2024-12-01T00:00:00.000Z",
@@ -133,6 +169,8 @@ exact `api.json` URL for any version without hardcoding path patterns.
 ```
 
 Versions are ordered newest-first (object insertion order). `latest` is bare semver (no leading `v`).
+Prerelease versions (tags containing `-`) are included in `versions` but do **not** advance `latest`
+and carry a `"prerelease": true` flag.
 
 ---
 

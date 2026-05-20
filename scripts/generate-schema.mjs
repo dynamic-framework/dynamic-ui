@@ -60,7 +60,7 @@ const schema = {
     repository: {
       type: ['string', 'null'],
       format: 'uri',
-      description: 'GitHub repository URL of the design system.',
+      description: 'GitHub release tag URL in CI (e.g. releases/tag/v2.4.0); repo root URL when generated locally; null if repository metadata is unavailable.',
     },
     generatedAt: {
       type: 'string',
