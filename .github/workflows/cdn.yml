@@ -52,7 +52,7 @@ jobs:
         run: npm run publish:cdn
       - name: Extract semver from package.json
         id: version
-        run: echo "semver=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+        run: echo "semver=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
       - name: Validate tag matches package.json version
         run: |
           TAG_VERSION="${GITHUB_REF_NAME#v}"

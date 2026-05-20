@@ -158,14 +158,16 @@ specific fields.
 npm run generate:registry
 ```
 
-The files are written to `registry/`:
+This writes `registry/api.json` and `registry/schema/v1.json`. The manifest is
+generated separately because it requires a `RELEASE_TAG` and fetches the
+existing manifest from the CDN to preserve prior version history:
 
 ```
 registry/
 ├── api.json
-├── manifest.json        (requires RELEASE_TAG env var)
-└── schema/
-    └── v1.json
+├── schema/
+│   └── v1.json
+└── manifest.json   (generated separately — see below)
 ```
 
 To run the scripts individually:
@@ -173,8 +175,12 @@ To run the scripts individually:
 ```bash
 node scripts/generate-api.mjs
 node scripts/generate-schema.mjs
-RELEASE_TAG=v0.0.0-local node scripts/generate-manifest.mjs
+RELEASE_TAG=v0.0.0 node scripts/generate-manifest.mjs
 ```
+
+> **Note:** Use a stable tag (no `-` suffix) for local testing.
+> `generate-manifest.mjs` will exit with an error if a prerelease tag is used
+> and no existing manifest with a stable `latest` is provided.
 
 ---
 
