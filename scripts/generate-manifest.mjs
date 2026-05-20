@@ -31,7 +31,8 @@ if (!existsSync(OUTPUT_DIR)) {
   mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-const { RELEASE_TAG, CDN_BASE_URL = 'https://cdn.dynamicframework.dev/assets' } = process.env;
+const { RELEASE_TAG, CDN_BASE_URL: cdnBaseRaw = 'https://cdn.dynamicframework.dev/assets' } = process.env;
+const CDN_BASE_URL = cdnBaseRaw.replace(/\/$/, '');
 if (!RELEASE_TAG) {
   process.stderr.write('RELEASE_TAG environment variable is required (e.g. "v2.4.0").\n');
   process.exit(1);

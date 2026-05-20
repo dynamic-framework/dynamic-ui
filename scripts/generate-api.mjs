@@ -593,7 +593,7 @@ const repositoryUrl = (repoBase && releaseTag)
   ? `${repoBase}/releases/tag/${releaseTag}`
   : repoBase;
 
-const CDN_BASE_URL = process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets';
+const CDN_BASE_URL = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets').replace(/\/$/, '');
 
 const apiOutput = {
   $schema: `${CDN_BASE_URL}/schema/v1.json`,
