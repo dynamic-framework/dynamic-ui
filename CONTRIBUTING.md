@@ -101,12 +101,17 @@ locally.
 ### Generating API artifacts locally
 
 ```bash
-# Generate JSON registry artifacts (api.json, schema/v1.json, manifest.json)
+# Generate JSON registry artifacts (api.json and schema/v1.json)
 npm run generate:registry
 
 # Full Storybook build (separate from registry generation)
 npm run build:storybook
 ```
+
+> **Note:** `manifest.json` is generated and uploaded to the CDN exclusively
+> during the release CI workflow. It requires `RELEASE_TAG` and fetches the
+> existing manifest from the CDN to preserve version history. It cannot be
+> generated locally with `generate:registry`.
 
 ### Changing the API structure
 
