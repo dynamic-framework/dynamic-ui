@@ -7,6 +7,8 @@ jobs:
   build:
     name: Build and Sync
     runs-on: ubuntu-latest
+    env:
+      CDN_BASE_URL: https://cdn.dynamicframework.dev/assets
     steps:
       - uses: actions/checkout@v4
         with:
@@ -36,7 +38,7 @@ jobs:
       - name: Fetch existing manifest from CDN
         run: |
           HTTP_STATUS=$(curl -s -o /tmp/manifest-prev.json -w "%{http_code}" \
-            https://cdn.dynamicframework.dev/assets/manifest.json)
+            ${{ env.CDN_BASE_URL }}/manifest.json)
           if [ "$HTTP_STATUS" = "200" ]; then
             echo "Manifest fetched (200)."
           elif [ "$HTTP_STATUS" = "404" ]; then
@@ -102,7 +104,7 @@ jobs:
             --cache-control "public, max-age=60"
       - name: Smoke test — verify versioned api.json is accessible on CDN
         run: |
-          URL="https://cdn.dynamicframework.dev/assets/${{ steps.version.outputs.semver }}/ui-react/api.json"
+          URL="${{ env.CDN_BASE_URL }}/${{ steps.version.outputs.semver }}/ui-react/api.json"
           echo "Checking $URL"
           for i in $(seq 1 24); do
             STATUS=$(curl -s -o /dev/null -w '%{http_code}' "$URL")

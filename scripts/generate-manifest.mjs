@@ -17,9 +17,13 @@
  * history.
  *
  * Environment variables:
- *   RELEASE_TAG    — current release tag, e.g. "v2.4.0" (required)
- *   CDN_BASE_URL   — base URL for all api.json links
- *                    (default: "https://cdn.dynamicframework.dev/assets")
+ *   RELEASE_TAG          — current release tag, e.g. "v2.4.0" (required)
+ *   CDN_BASE_URL         — base URL for all api.json links
+ *                          (default: "https://cdn.dynamicframework.dev/assets")
+ *   RELEASE_PUBLISHED_AT — ISO 8601 timestamp of the release (optional).
+ *                          When set, used as the `publishedAt` value for the
+ *                          new version entry, enabling deterministic reruns.
+ *                          Falls back to the current time if not provided.
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';

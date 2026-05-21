@@ -101,11 +101,11 @@ locally.
 ### Generating API artifacts locally
 
 ```bash
-# Full build (recommended)
-npm run build:storybook
-
-# Regenerate JSON artifacts only (no Storybook build needed)
+# Generate JSON registry artifacts (api.json, schema/v1.json, manifest.json)
 npm run generate:registry
+
+# Full Storybook build (separate from registry generation)
+npm run build:storybook
 ```
 
 ### Changing the API structure
