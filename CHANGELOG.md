@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.4.0...v2.5.0) (2026-05-22)
+
+
+### Features
+
+* add css grid utilities to doc ([#1033](https://github.com/dynamic-framework/dynamic-ui/issues/1033)) ([ade793a](https://github.com/dynamic-framework/dynamic-ui/commit/ade793ad5a13668dfbabf40780ec4a9c82c8236d))
+* add hover variants for text and border colors in utilities ([#1032](https://github.com/dynamic-framework/dynamic-ui/issues/1032)) ([fed0fa1](https://github.com/dynamic-framework/dynamic-ui/commit/fed0fa1ee0e86a8a2aca7f5d1821d5a520a8aa23))
+* expose api.json, schema/v1.json, and manifest.json as versioned CDN assets ([#1045](https://github.com/dynamic-framework/dynamic-ui/issues/1045)) ([38281ab](https://github.com/dynamic-framework/dynamic-ui/commit/38281abc06cde342c597c6da555d7e0724bcfa9c))
+* soft variant button ([#1046](https://github.com/dynamic-framework/dynamic-ui/issues/1046)) ([cbd0f06](https://github.com/dynamic-framework/dynamic-ui/commit/cbd0f06b5f547e629ff62b255b1787b6fc094b4c))
+
+
+### Bug Fixes
+
+* **storybook:** preserve docs for each release version ([#1044](https://github.com/dynamic-framework/dynamic-ui/issues/1044)) ([6976d35](https://github.com/dynamic-framework/dynamic-ui/commit/6976d35a0cfa9faf8cf026457414158e891f5d7d)), closes [#1036](https://github.com/dynamic-framework/dynamic-ui/issues/1036)
+
 ## [2.4.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.3.1...v2.4.0) (2026-04-20)
 
 
