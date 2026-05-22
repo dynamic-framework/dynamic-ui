@@ -326,7 +326,7 @@ export const Soft: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Soft variant uses a pastel background (`-50`) with dark text (`-700`) for a subtle but branded look. Hover transitions to `-100`.',
+        story: 'Soft variant uses a pastel background with darker text for a subtle but branded look. For semantic colors, this typically maps to `-50` background, `-700` text, and hover to `-100`. `light` and `dark` use alternate gray-based tokens',
       },
     },
   },
