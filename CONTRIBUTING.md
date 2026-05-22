@@ -85,3 +85,40 @@ Scopes provide additional context for clearer changelogs. Scopes follow the same
 - **feat(DInput): add loading state**. Adds a loading state feature to the DInput component.
 - **fix(style): DInput loading text color**. Fixes the loading text color in the DInput component's SCSS.
 - **docs(DSelect): set error state as control**. Sets control in storybook to enable error state
+
+---
+
+## :scroll: API Contract
+
+Every release publishes a machine-readable API description (`api.json`) to a
+stable CDN URL. This file is the contract between this library and its
+consumers (including MCP servers, documentation generators, and other tooling).
+
+See **[API_CONTRACT.md](API_CONTRACT.md)** for the full specification:
+stable URLs, file structure, versioning policy, and how to generate the file
+locally.
+
+### Generating API artifacts locally
+
+```bash
+# Generate JSON registry artifacts (api.json and schema/v1.json)
+npm run generate:registry
+
+# Full Storybook build (separate from registry generation)
+npm run build:storybook
+```
+
+> **Note:** `manifest.json` is generated and uploaded to the CDN exclusively
+> during the release CI workflow. It requires `RELEASE_TAG` and fetches the
+> existing manifest from the CDN to preserve version history. It cannot be
+> generated locally with `generate:registry`.
+
+### Changing the API structure
+
+If you modify `api.json`'s root structure (add/remove/rename top-level fields):
+
+1. Update `scripts/generate-api.mjs` (source of truth).
+2. Update `scripts/generate-schema.mjs` to keep the JSON Schema in sync.
+3. Bump `schemaVersion` in `generate-api.mjs` if the change is breaking.
+4. Update `API_CONTRACT.md` to document the change.
+
