@@ -238,4 +238,65 @@ describe('<DButton />', () => {
     expect(anchor).toHaveAttribute('target', '_blank');
     expect(anchor).toHaveAttribute('rel', 'noopener noreferrer');
   });
+
+  it.each([
+    ['primary', 'Soft Primary'],
+    ['secondary', 'Soft Secondary'],
+    ['danger', 'Soft Danger'],
+    ['success', 'Soft Success'],
+  ])('Should render soft variant with %s color', (color, text) => {
+    const { container } = render(
+      <DButton
+        text={text}
+        color={color}
+        variant="soft"
+      />,
+    );
+
+    expect(container.querySelector(`.btn-soft-${color}`)).toBeInTheDocument();
+  });
+
+  it('Should render soft variant with size class', () => {
+    const { container } = render(
+      <DButton
+        text="Soft Large"
+        color="primary"
+        variant="soft"
+        size="lg"
+      />,
+    );
+
+    const btn = container.querySelector('button');
+    expect(btn).toHaveClass('btn-soft-primary');
+    expect(btn).toHaveClass('btn-lg');
+  });
+
+  it('Should render soft variant in disabled state', () => {
+    const { container } = render(
+      <DButton
+        text="Soft Disabled"
+        color="primary"
+        variant="soft"
+        disabled
+      />,
+    );
+
+    const btn = container.querySelector('button');
+    expect(btn).toHaveClass('btn-soft-primary');
+    expect(btn).toBeDisabled();
+  });
+
+  it('Should render soft variant in loading state', () => {
+    const { container } = render(
+      <DButton
+        text="Soft Loading"
+        color="primary"
+        variant="soft"
+        loading
+      />,
+    );
+
+    expect(container.querySelector('.btn-soft-primary')).toBeInTheDocument();
+    expect(container.querySelector('.spinner-border')).toBeInTheDocument();
+  });
 });

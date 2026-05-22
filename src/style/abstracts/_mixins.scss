@@ -120,6 +120,52 @@
 }
 // scss-docs-end df-btn-link-variant-variables-mixin
 
+// scss-docs-start df-btn-soft-variant-variables-mixin
+@mixin df-button-soft-variant-variables(
+  $color-name,
+  $default-color: var(--#{$prefix}#{$color-name}-700),
+  $default-bg: var(--#{$prefix}#{$color-name}-50),
+  $default-border-color: transparent,
+  $hover-color: var(--#{$prefix}#{$color-name}-700),
+  $hover-bg: var(--#{$prefix}#{$color-name}-100),
+  $hover-border-color: transparent,
+  $focus-color: var(--#{$prefix}#{$color-name}-700),
+  $focus-bg: var(--#{$prefix}#{$color-name}-100),
+  $focus-border-color: transparent,
+  $active-color: var(--#{$prefix}#{$color-name}-700),
+  $active-bg: var(--#{$prefix}#{$color-name}-200),
+  $active-border-color: transparent,
+  $disabled-opacity: $btn-disabled-opacity,
+  $box-shadow: $btn-box-shadow,
+  $focus-shadow-rgb: var(--#{$prefix}#{$color-name}-500-rgb),
+  $active-box-shadow: $btn-active-box-shadow,
+) {
+  --#{$prefix}btn-soft-#{$color-name}-color: #{$default-color};
+  --#{$prefix}btn-soft-#{$color-name}-bg: #{$default-bg};
+  --#{$prefix}btn-soft-#{$color-name}-border-color: #{$default-border-color};
+  --#{$prefix}btn-soft-#{$color-name}-box-shadow: #{$box-shadow};
+
+  --#{$prefix}btn-soft-#{$color-name}-hover-color: #{$hover-color};
+  --#{$prefix}btn-soft-#{$color-name}-hover-bg: #{$hover-bg};
+  --#{$prefix}btn-soft-#{$color-name}-hover-border-color: #{$hover-border-color};
+
+  --#{$prefix}btn-soft-#{$color-name}-focus-color: #{$focus-color};
+  --#{$prefix}btn-soft-#{$color-name}-focus-bg: #{$focus-bg};
+  --#{$prefix}btn-soft-#{$color-name}-focus-border-color: #{$focus-border-color};
+  --#{$prefix}btn-soft-#{$color-name}-focus-shadow-rgb: #{$focus-shadow-rgb};
+
+  --#{$prefix}btn-soft-#{$color-name}-active-color: #{$active-color};
+  --#{$prefix}btn-soft-#{$color-name}-active-bg: #{$active-bg};
+  --#{$prefix}btn-soft-#{$color-name}-active-border-color: #{$active-border-color};
+  --#{$prefix}btn-soft-#{$color-name}-active-box-shadow: #{$active-box-shadow};
+
+  --#{$prefix}btn-soft-#{$color-name}-disabled-color: #{$default-color};
+  --#{$prefix}btn-soft-#{$color-name}-disabled-bg: #{$default-bg};
+  --#{$prefix}btn-soft-#{$color-name}-disabled-border-color: #{$default-border-color};
+  --#{$prefix}btn-soft-#{$color-name}-disabled-opacity: #{$disabled-opacity};
+}
+// scss-docs-end df-btn-soft-variant-variables-mixin
+
 @mixin df-button-variant-outline-mapper($color-name) {
   --#{$prefix}btn-color: var(--#{$prefix}btn-outline-#{$color-name}-color);
   --#{$prefix}btn-border-color: var(--#{$prefix}btn-outline-#{$color-name}-border-color);

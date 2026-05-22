@@ -99,7 +99,7 @@ configured with \`materialStyle: true\`, or use the icon props directly.
     },
     variant: {
       control: 'select',
-      options: [undefined, 'outline', 'link'],
+      options: [undefined, 'outline', 'link', 'soft'],
       table: {
         defaultValue: {
           summary: 'undefined',
@@ -289,6 +289,49 @@ export const Link: Story = {
   ),
 };
 
+export const Soft: Story = {
+  render: () => (
+    <>
+      <div className="d-flex flex-wrap gap-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton key={color} variant="soft" color={color} text={color} />
+        ))}
+      </div>
+
+      <div className="d-flex flex-wrap gap-4 mt-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton
+            key={color}
+            variant="soft"
+            color={color}
+            text={color}
+            iconStart="Star"
+          />
+        ))}
+      </div>
+
+      <div className="d-flex flex-wrap gap-4 mt-4">
+        {THEMES.filter((color) => color !== 'light').map((color) => (
+          <DButton disabled key={color} variant="soft" color={color} text="Disabled" />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p className="mb-1 mt-8 small">Light soft (for dark backgrounds)</p>
+        <div className="p-4 rounded" style={{ background: 'var(--bs-primary-800, #1a237e)' }}>
+          <DButton variant="soft" color="light" text="Light Soft" />
+        </div>
+      </div>
+    </>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Soft variant uses a pastel background with darker text for a subtle but branded look. For semantic colors, this typically maps to `-50` background, `-700` text, and hover to `-100`. `light` and `dark` use alternate gray-based tokens',
+      },
+    },
+  },
+};
+
 export const AsAnchor: Story = {
   args: {
     text: 'External Link',
@@ -397,6 +440,19 @@ export const LinkSizes: Story = {
   ),
   parameters: {
     docs: { description: { story: 'Link variant with different sizes.' } },
+  },
+};
+
+export const SoftSizes: Story = {
+  render: () => (
+    <div className="d-flex flex-wrap gap-2 align-items-center">
+      <DButton color="primary" size="sm" variant="soft" text="Small" />
+      <DButton color="primary" variant="soft" text="Medium" />
+      <DButton color="primary" size="lg" variant="soft" text="Large" />
+    </div>
+  ),
+  parameters: {
+    docs: { description: { story: 'Soft variant with size options.' } },
   },
 };
 
