@@ -98,6 +98,12 @@ const meta: Meta<typeof DDataStateWrapper> = {
       },
       control: false,
     },
+    messages: {
+      description: 'Override the default built-in strings (loading spinner label, empty message, error message, retry button label) without replacing the default markup. All keys are optional.',
+      table: {
+        category: 'Customization',
+      },
+    },
   },
   decorators: [
     (Story) => (
@@ -178,6 +184,81 @@ export const Error: Story = {
   args: {
     ...Default.args,
     isError: true,
+  },
+};
+
+/**
+ * Pass a `messages` object to override the hardcoded default strings without
+ * replacing the built-in markup.  All keys are optional — only supply what you
+ * need (e.g. from an i18n catalogue).
+ */
+export const CustomMessages: Story = {
+  render: function Render(args) {
+    const [state, setState] = useState({
+      isLoading: args.isLoading,
+      isError: args.isError,
+      data: args.data,
+    });
+
+    const setStatus = (loading: boolean, error: boolean, data: unknown[]) => {
+      setState({ isLoading: loading, isError: error, data });
+    };
+
+    return (
+      <div className="d-flex flex-column gap-3">
+        <div className="d-flex gap-2 mb-3">
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm"
+            onClick={() => setStatus(true, false, [])}
+          >
+            Loading
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-danger btn-sm"
+            onClick={() => setStatus(false, true, [])}
+          >
+            Error
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+            onClick={() => setStatus(false, false, [])}
+          >
+            Empty
+          </button>
+        </div>
+        <DDataStateWrapper
+          {...args}
+          isLoading={state.isLoading}
+          isError={state.isError}
+          data={state.data as unknown[]}
+        />
+      </div>
+    );
+  },
+  args: {
+    isLoading: false,
+    isError: false,
+    data: [],
+    messages: {
+      loading: 'Cargando…',
+      empty: 'Sin datos disponibles.',
+      error: 'Ocurrió un error inesperado.',
+      retry: 'Reintentar',
+    },
+    children: (data) => (
+      <ul className="list-group">
+        {(data as string[]).map((item) => (
+          <li key={item} className="list-group-item">{item}</li>
+        ))}
+      </ul>
+    ),
+  },
+  argTypes: {
+    isLoading: { control: 'boolean' },
+    isError: { control: 'boolean' },
   },
 };
 
