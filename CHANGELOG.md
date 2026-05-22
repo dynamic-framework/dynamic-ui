@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/dynamic-framework/dynamic-ui/compare/v2.5.0...v2.5.1) (2026-05-22)
+
+
+### Bug Fixes
+
+* **cdn:** handle 403 as first publish when manifest.json does not exist ([0fe2f52](https://github.com/dynamic-framework/dynamic-ui/commit/0fe2f52d77da04245a51b2d4dd4f7302b79c28ef))
+
 ## [2.5.0](https://github.com/dynamic-framework/dynamic-ui/compare/v2.4.0...v2.5.0) (2026-05-22)
 
 
