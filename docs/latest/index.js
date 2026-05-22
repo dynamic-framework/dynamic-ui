@@ -93,6 +93,12 @@ function useDisableBodyScrollEffect(disable) {
     }, [disable]);
 }
 
+/**
+ * @internal
+ * Creates a DOM `<div>` portal mount point and appends it to `document.body`.
+ * This hook is used exclusively by `DPortalContextProvider` and is **not** part
+ * of the public API. Use `useDPortalContext` instead.
+ */
 function usePortal(portalName) {
     const [hasPortal, setHasPortal] = React.useState(false);
     React.useEffect(() => {
@@ -159,20 +165,22 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
     const { created } = usePortal(portalName);
     const [stack, { push, pop, isEmpty }] = useStackState([]);
     useDisableBodyScrollEffect(Boolean(stack.length));
-    const openPortal = React.useCallback((name, payload) => {
+    const openPortal = React.useCallback(
+    // eslint-disable-next-line prefer-arrow-callback
+    function openPortalImpl(name, payload) {
         var _a;
         if (!availablePortals) {
-            throw new Error(`there is no component for portal ${name.toString()}`);
+            throw new Error('openPortal was called but DContextProvider has no availablePortals configured. '
+                + 'Pass an availablePortals map to DContextProvider.');
         }
         const Component = availablePortals[name];
         if (!Component) {
-            throw new Error(`there is no component for portal ${name.toString()}`);
+            throw new Error(`No component registered for portal "${String(name)}". `
+                + `Ensure "${String(name)}" has an entry in the availablePortals map on DContextProvider.`);
         }
-        push({
-            name,
-            Component,
-            payload,
-        });
+        // K is a specific member of keyof T & string so the object satisfies
+        // InternalStackItem<T>, but TS can't verify generic-over-union assignability.
+        push({ name, Component, payload });
         (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.blur();
     }, [availablePortals, push]);
     const closePortal = React.useCallback(() => {
@@ -181,11 +189,12 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
         }
         pop();
     }, [isEmpty, pop]);
+    const publicStack = React.useMemo(() => stack.map(({ name, payload }) => ({ name, payload })), [stack]);
     const value = React.useMemo(() => ({
-        stack,
+        stack: publicStack,
         openPortal,
         closePortal,
-    }), [stack, openPortal, closePortal]);
+    }), [publicStack, openPortal, closePortal]);
     const handleClose = React.useCallback((target) => {
         if (!(target instanceof HTMLDivElement)) {
             return;
@@ -241,10 +250,31 @@ function DPortalContextProvider({ portalName, children, availablePortals, }) {
                         jsxRuntime.jsx(Component, { name: name, payload: payload }, name),
                     ]) }) }), document.getElementById(portalName))] }));
 }
+/**
+ * Hook to open/close registered portals (modals, offcanvas, etc.).
+ *
+ * **Prerequisite**: must be called inside a `DContextProvider` configured with
+ * `portalName` and `availablePortals`. `DContextProvider` mounts
+ * `DPortalContextProvider` internally — consumers never use
+ * `DPortalContextProvider` directly.
+ *
+ * @template T - Map of portal name → payload shape (e.g. `ModalPayloads`).
+ *   Typing this generic gives you autocomplete on `openPortal` arguments.
+ * @returns `{ openPortal, closePortal, stack }` from the nearest portal context.
+ * @throws If called outside of `DContextProvider` / `DPortalContextProvider`.
+ *
+ * @requires DContextProvider
+ *
+ * @example
+ * ```tsx
+ * const { openPortal, closePortal } = useDPortalContext<ModalPayloads>();
+ * openPortal('confirm', { message: 'Are you sure?' });
+ * ```
+ */
 function useDPortalContext() {
     const context = React.useContext(DPortalContext);
     if (context === undefined) {
-        throw new Error('usePortalContext was used outside of PortalContextProvider');
+        throw new Error('useDPortalContext was used outside of DPortalContextProvider');
     }
     return context;
 }
@@ -300,10 +330,17 @@ const DEFAULT_STATE = {
         xxl: '',
     },
     setContext: () => { },
-    portalName: 'd-portal',
 };
 const DContext = React.createContext(DEFAULT_STATE);
-function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAULT_STATE.currency, icon = DEFAULT_STATE.icon, iconMap = DEFAULT_STATE.iconMap, portalName = DEFAULT_STATE.portalName, availablePortals, children, }) {
+/**
+ * Root context provider for Dynamic UI. Wrap your application with this
+ * component to configure icons, currency, language, and portal settings
+ * for all descendant Dynamic UI components.
+ *
+ * @template T - Map of portal name → payload shape (e.g. `{ modal: { title: string } }`).
+ *   Pass it once at the top level: `<DContextProvider<MyPortals> ...>`.
+ */
+function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAULT_STATE.currency, icon = DEFAULT_STATE.icon, iconMap = DEFAULT_STATE.iconMap, portalName = 'd-portal', availablePortals, children, }) {
     const [internalContext, setInternalContext,] = React.useState({
         language,
         currency,
@@ -327,12 +364,14 @@ function DContextProvider({ language = DEFAULT_STATE.language, currency = DEFAUL
     const value = React.useMemo(() => (Object.assign(Object.assign({}, internalContext), { setContext })), [internalContext, setContext]);
     return (jsxRuntime.jsx(DContext.Provider, { value: value, children: jsxRuntime.jsx(DPortalContextProvider, { portalName: portalName, availablePortals: availablePortals, children: children }) }));
 }
+/**
+ * Returns the Dynamic UI context value set by `DContextProvider`.
+ * Falls back to the library's built-in defaults when no `DContextProvider`
+ * is present in the tree — wrap your application with `DContextProvider`
+ * to customise icons, currency, language, and portal settings.
+ */
 function useDContext() {
-    const context = React.useContext(DContext);
-    if (context === undefined) {
-        throw new Error('useDContext was used outside of DContextProvider');
-    }
-    return context;
+    return React.useContext(DContext);
 }
 
 function subscribeToMediaQuery(query, callback) {
@@ -2399,12 +2438,34 @@ var DToast = Object.assign(DToast$1, {
     Body: DToastBody,
 });
 
-function DToastContainer({ containerClassName, position = 'bottom-center', reverseOrder = false, containerStyle, toastOptions, gutter, }) {
+function DToastContainer({ containerClassName, position = 'bottom-center', reverseOrder = false, containerStyle, toastOptions, gutter = 8, }) {
     return (jsxRuntime.jsx(reactHotToast.Toaster, { containerClassName: containerClassName, position: position, reverseOrder: reverseOrder, containerStyle: containerStyle, gutter: gutter, toastOptions: toastOptions }));
 }
 
+/**
+ * Hook that provides a `toast` function to dispatch DToast notifications.
+ *
+ * Prerequisites:
+ * - The calling component must be inside `DContextProvider` (provides icon context).
+ * - `DToastContainer` must be present somewhere in the component tree as a render target.
+ *
+ * @returns {{ toast }} Object containing a `toast` dispatcher function.
+ * @requires DContextProvider
+ * @requires DToastContainer
+ * @example
+ * const { toast } = useDToast();
+ * toast({ title: 'Saved', color: 'success' });
+ */
 function useDToast() {
     const { iconMap: { xLg, }, } = useDContext();
+    /**
+     * Dispatches a toast notification rendered as a `DToast` component.
+     * When `data` is a `ToastData` object, the default DToast layout is used.
+     * When `data` is a render function, full custom content is rendered instead.
+     * Returns the toast ID, which can be passed to `reactHotToast.dismiss(id)`.
+     * @param data - Toast content as `ToastData` or a render function for custom layouts.
+     * @param toastProps - Optional per-toast overrides: id, duration, position.
+     */
     const toast = React.useCallback((data, toastProps) => {
         if (typeof data === 'function') {
             return reactHotToast.toast.custom(data, toastProps);
@@ -2571,11 +2632,14 @@ function DCreditCard({ brand = 'visa', name, number, holderText = 'Card Holder',
 }
 
 const getItemClass = (action) => {
-    const base = `dropdown-item d-flex align-items-center 
-  ${action.color ? `dropdown-item-${action.color}` : ''} ${action.disabled ? 'disabled' : ''}`;
+    const base = classNames({
+        'dropdown-item d-flex align-items-center': true,
+        [`dropdown-item-${action.color}`]: !!action.color,
+        disabled: action.disabled,
+    });
     return base;
 };
-function DDropdown({ actions, dropdownToggle, className, }) {
+function DDropdown({ actions, dropdownToggle, className, classNameMenu, }) {
     const [open, setOpen] = React.useState(false);
     const dropdownRef = React.useRef(null);
     const [position, setPosition] = React.useState('down'); // 🆕
@@ -2617,14 +2681,14 @@ function DDropdown({ actions, dropdownToggle, className, }) {
     else {
         ToggleElement = (jsxRuntime.jsx(DButtonIcon, { variant: "link", stopPropagationEnabled: false, "aria-label": "Toggle Dropdown", "aria-haspopup": "menu", "aria-expanded": open, onClick: () => setOpen(!open), icon: "MoreVertical" }));
     }
-    return (jsxRuntime.jsxs("div", { className: `dropdown position-relative drop-${position} ${className}`, ref: dropdownRef, children: [ToggleElement, jsxRuntime.jsx("ul", { style: {
+    return (jsxRuntime.jsxs("div", { className: classNames(`dropdown drop-${position}`, className), ref: dropdownRef, children: [ToggleElement, jsxRuntime.jsx("ul", { style: {
                     position: 'absolute',
                     top: position === 'up' ? 'auto' : '100%',
                     bottom: position === 'up' ? '100%' : 'auto',
                     left: position === 'start' ? 'auto' : 0,
                     right: position === 'start' ? '0' : 'auto',
                     transform: 'translateY(4px)',
-                }, className: `dropdown-menu p-2 ${open ? 'show' : ''}`, children: actions.map((action, index) => {
+                }, className: classNames('dropdown-menu p-2', { show: open }, classNameMenu), children: actions.map((action, index) => {
                     if (action.isDivider) {
                         return (jsxRuntime.jsx("hr", { className: "dropdown-divider" }, index));
                     }
@@ -2975,7 +3039,6 @@ exports.useMediaBreakpointUpXl = useMediaBreakpointUpXl;
 exports.useMediaBreakpointUpXs = useMediaBreakpointUpXs;
 exports.useMediaBreakpointUpXxl = useMediaBreakpointUpXxl;
 exports.useMediaQuery = useMediaQuery;
-exports.usePortal = usePortal;
 exports.useProvidedRefOrCreate = useProvidedRefOrCreate;
 exports.useStackState = useStackState;
 exports.useTabContext = useTabContext;

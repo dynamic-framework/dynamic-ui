@@ -576,7 +576,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">3/60 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">58/60 infos</a><span class="filter-pill ok" aria-disabled="true">418 stories ok</span><a class="filter-pill ok" data-k="docs" href="#filter-docs">22 docs ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">3/60 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">58/60 infos</a><span class="filter-pill ok" aria-disabled="true">421 stories ok</span><a class="filter-pill ok" data-k="docs" href="#filter-docs">23 docs ok</a></div>
   </div>
 </header>
 <main>
@@ -3974,7 +3974,7 @@ value?: Array&lt;string&gt;</code></pre>
       <div class="badges">
         <label for="c-10-design-system-components-button-props" class="badge ok as-toggle">27 prop types</label>
         <label for="c-10-design-system-components-button-info" class="badge info as-toggle">1 info</label>
-        <label for="c-10-design-system-components-button-stories" class="badge ok as-toggle">14 stories</label>
+        <label for="c-10-design-system-components-button-stories" class="badge ok as-toggle">16 stories</label>
         
       </div>
     </div>
@@ -4062,7 +4062,7 @@ target?: React.AnchorHTMLAttributes&lt;HTMLAnchorElement&gt;[&#39;target&#39;]
 
 text?: string
 
-variant?: &#39;outline&#39; | &#39;link&#39;</code></pre>
+variant?: &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;</code></pre>
           </div>
         </div>
     
@@ -4161,6 +4161,47 @@ variant?: &#39;outline&#39; | &#39;link&#39;</code></pre>
       &lt;p className=&quot;mb-1 mt-8 small&quot;&gt;Light link (for dark backgrounds)&lt;/p&gt;
       &lt;div className=&quot;p-4 rounded&quot; style={{ background: &#39;var(--bs-primary-800, #1a237e)&#39; }}&gt;
         &lt;DButton variant=&quot;link&quot; color=&quot;light&quot; text=&quot;Light link&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Soft</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Soft = () =&gt; (
+  &lt;&gt;
+    &lt;div className=&quot;d-flex flex-wrap gap-4&quot;&gt;
+      {THEMES.filter((color) =&gt; color !== &#39;light&#39;).map((color) =&gt; (
+        &lt;DButton key={color} variant=&quot;soft&quot; color={color} text={color} /&gt;
+      ))}
+    &lt;/div&gt;
+
+    &lt;div className=&quot;d-flex flex-wrap gap-4 mt-4&quot;&gt;
+      {THEMES.filter((color) =&gt; color !== &#39;light&#39;).map((color) =&gt; (
+        &lt;DButton
+          key={color}
+          variant=&quot;soft&quot;
+          color={color}
+          text={color}
+          iconStart=&quot;Star&quot;
+        /&gt;
+      ))}
+    &lt;/div&gt;
+
+    &lt;div className=&quot;d-flex flex-wrap gap-4 mt-4&quot;&gt;
+      {THEMES.filter((color) =&gt; color !== &#39;light&#39;).map((color) =&gt; (
+        &lt;DButton disabled key={color} variant=&quot;soft&quot; color={color} text=&quot;Disabled&quot; /&gt;
+      ))}
+    &lt;/div&gt;
+    &lt;div className=&quot;mt-4&quot;&gt;
+      &lt;p className=&quot;mb-1 mt-8 small&quot;&gt;Light soft (for dark backgrounds)&lt;/p&gt;
+      &lt;div className=&quot;p-4 rounded&quot; style={{ background: &#39;var(--bs-primary-800, #1a237e)&#39; }}&gt;
+        &lt;DButton variant=&quot;soft&quot; color=&quot;light&quot; text=&quot;Light Soft&quot; /&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/&gt;
@@ -4278,6 +4319,21 @@ variant?: &#39;outline&#39; | &#39;link&#39;</code></pre>
     &lt;DButton color=&quot;primary&quot; size=&quot;sm&quot; variant=&quot;link&quot; text=&quot;Small&quot; /&gt;
     &lt;DButton color=&quot;primary&quot; variant=&quot;link&quot; text=&quot;Medium&quot; /&gt;
     &lt;DButton color=&quot;primary&quot; size=&quot;lg&quot; variant=&quot;link&quot; text=&quot;Large&quot; /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Soft Sizes</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const SoftSizes = () =&gt; (
+  &lt;div className=&quot;d-flex flex-wrap gap-2 align-items-center&quot;&gt;
+    &lt;DButton color=&quot;primary&quot; size=&quot;sm&quot; variant=&quot;soft&quot; text=&quot;Small&quot; /&gt;
+    &lt;DButton color=&quot;primary&quot; variant=&quot;soft&quot; text=&quot;Medium&quot; /&gt;
+    &lt;DButton color=&quot;primary&quot; size=&quot;lg&quot; variant=&quot;soft&quot; text=&quot;Large&quot; /&gt;
   &lt;/div&gt;
 );</code></pre>
             </div>
@@ -4412,7 +4468,7 @@ style?: CSSProperties
 
 target?: React.AnchorHTMLAttributes&lt;HTMLAnchorElement&gt;[&#39;target&#39;]
 
-variant?: &#39;outline&#39; | &#39;link&#39;</code></pre>
+variant?: &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;</code></pre>
           </div>
         </div>
     
@@ -6149,13 +6205,13 @@ style?: CSSProperties</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DContextProvider</h2>
       <div class="badges">
-        <label for="c-18-design-system-components-context-provider-props" class="badge ok as-toggle">5 prop types</label>
+        <label for="c-18-design-system-context-contextprovider-props" class="badge ok as-toggle">5 prop types</label>
         
-        <label for="c-18-design-system-components-context-provider-stories" class="badge ok as-toggle">4 stories</label>
+        <label for="c-18-design-system-context-contextprovider-stories" class="badge ok as-toggle">4 stories</label>
         
       </div>
     </div>
-    <div class="meta" title="./stories/components/DContext.stories.tsx">design-system-components-context-provider · ./stories/components/DContext.stories.tsx</div>
+    <div class="meta" title="./stories/context/DContext.stories.tsx">design-system-context-contextprovider · ./stories/context/DContext.stories.tsx</div>
     
     <div class="hint">Context Provider to share settings between components</div>
     
@@ -6164,9 +6220,9 @@ style?: CSSProperties</code></pre>
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
   
-  <input id="c-18-design-system-components-context-provider-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-18-design-system-context-contextprovider-stories" class="tg tg-stories" type="checkbox" hidden />
   
-  <input id="c-18-design-system-components-context-provider-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-18-design-system-context-contextprovider-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -6864,7 +6920,7 @@ formatHeaderDate?: string
 
 headerButtonColor?: string
 
-headerButtonVariant?: &#39;outline&#39; | &#39;link&#39;
+headerButtonVariant?: &#39;outline&#39; | &#39;link&#39; | &#39;soft&#39;
 
 headerNextMonthAriaLabel?: string
 
@@ -7714,7 +7770,7 @@ To understand in more detail the aspects covered by this component, review the f
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> DDropdown</h2>
       <div class="badges">
-        <label for="c-23-design-system-components-dropdown-props" class="badge ok as-toggle">3 prop types</label>
+        <label for="c-23-design-system-components-dropdown-props" class="badge ok as-toggle">4 prop types</label>
         <label for="c-23-design-system-components-dropdown-info" class="badge info as-toggle">1 info</label>
         <label for="c-23-design-system-components-dropdown-stories" class="badge ok as-toggle">5 stories</label>
         
@@ -7748,13 +7804,15 @@ To understand in more detail the aspects covered by this component, review the f
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">3 prop types</span>
+              <span class="badge ok">4 prop types</span>
             </div>
             <pre><code>Component: src/components/DDropdown/DDropdown.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>actions: DropdownAction[]
 
 className?: string
+
+classNameMenu?: string
 
 dropdownToggle?: unknown</code></pre>
           </div>
@@ -7779,13 +7837,11 @@ dropdownToggle?: unknown</code></pre>
               </div>
               
               
-              <pre><code>const DisabledActions = () =&gt; &lt;div style={{ height: 300 }}&gt;
-    &lt;DDropdown
-        actions={[
-          { label: &#39;Active action&#39;, icon: &#39;Check&#39; },
-          { label: &#39;Disabled action&#39;, disabled: true },
-        ]} /&gt;
-&lt;/div&gt;;</code></pre>
+              <pre><code>const DisabledActions = () =&gt; &lt;DDropdown
+    actions={[
+      { label: &#39;Active action&#39;, icon: &#39;Check&#39; },
+      { label: &#39;Disabled action&#39;, disabled: true },
+    ]} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -7794,19 +7850,17 @@ dropdownToggle?: unknown</code></pre>
               </div>
               
               
-              <pre><code>const CustomToggle = () =&gt; &lt;div style={{ height: 300 }}&gt;
-    &lt;DDropdown
-        actions={baseActions}
-        dropdownToggle={({ open, toggle }: { open: boolean, toggle: () =&gt; void }) =&gt; (
-          &lt;DButtonIcon
-            icon={open ? &#39;ChevronUp&#39; : &#39;ChevronDown&#39;}
-            color=&quot;primary&quot;
-            variant=&quot;link&quot;
-            onClick={toggle}
-            aria-label=&quot;Open dropdown&quot;
-          /&gt;
-        )} /&gt;
-&lt;/div&gt;;</code></pre>
+              <pre><code>const CustomToggle = () =&gt; &lt;DDropdown
+    actions={baseActions}
+    dropdownToggle={({ open, toggle }: { open: boolean, toggle: () =&gt; void }) =&gt; (
+      &lt;DButtonIcon
+        icon={open ? &#39;ChevronUp&#39; : &#39;ChevronDown&#39;}
+        color=&quot;primary&quot;
+        variant=&quot;link&quot;
+        onClick={toggle}
+        aria-label=&quot;Open dropdown&quot;
+      /&gt;
+    )} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -7815,18 +7869,16 @@ dropdownToggle?: unknown</code></pre>
               </div>
               
               
-              <pre><code>const CustomToggle2 = () =&gt; &lt;div style={{ height: 300 }}&gt;
-    &lt;DDropdown
-        actions={baseActions}
-        dropdownToggle={({ open, toggle }: { open: boolean, toggle: () =&gt; void }) =&gt; (
-          &lt;DButton
-            iconEnd={open ? &#39;ChevronUp&#39; : &#39;ChevronDown&#39;}
-            color=&quot;primary&quot;
-            text=&quot;Button&quot;
-            onClick={toggle}
-          /&gt;
-        )} /&gt;
-&lt;/div&gt;;</code></pre>
+              <pre><code>const CustomToggle2 = () =&gt; &lt;DDropdown
+    actions={baseActions}
+    dropdownToggle={({ open, toggle }: { open: boolean, toggle: () =&gt; void }) =&gt; (
+      &lt;DButton
+        iconEnd={open ? &#39;ChevronUp&#39; : &#39;ChevronDown&#39;}
+        color=&quot;primary&quot;
+        text=&quot;Button&quot;
+        onClick={toggle}
+      /&gt;
+    )} /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -7848,19 +7900,17 @@ dropdownToggle?: unknown</code></pre>
               </div>
               
               
-              <pre><code>const WithDividers = () =&gt; &lt;div style={{ height: 300 }}&gt;
-    &lt;DDropdown
-        dropdownToggle={({ toggle }: { open: boolean, toggle: () =&gt; void }) =&gt; (
-          &lt;DButton onClick={toggle} text=&quot;Button&quot; /&gt;
-        )}
-        actions={[
-          { label: &#39;First action&#39;, icon: &#39;Star&#39; },
-          { isDivider: true, label: &#39;&#39; },
-          { label: &#39;Second action&#39;, icon: &#39;Check&#39; },
-          { isDivider: true, label: &#39;&#39; },
-          { label: &#39;Third action&#39;, icon: &#39;Trash2&#39;, color: &#39;danger&#39; },
-        ]} /&gt;
-&lt;/div&gt;;</code></pre>
+              <pre><code>const WithDividers = () =&gt; &lt;DDropdown
+    dropdownToggle={({ toggle }: { open: boolean, toggle: () =&gt; void }) =&gt; (
+      &lt;DButton onClick={toggle} text=&quot;Button&quot; /&gt;
+    )}
+    actions={[
+      { label: &#39;First action&#39;, icon: &#39;Star&#39; },
+      { isDivider: true, label: &#39;&#39; },
+      { label: &#39;Second action&#39;, icon: &#39;Check&#39; },
+      { isDivider: true, label: &#39;&#39; },
+      { label: &#39;Third action&#39;, icon: &#39;Trash2&#39;, color: &#39;danger&#39; },
+    ]} /&gt;;</code></pre>
             </div>
         </div>
     
@@ -11017,7 +11067,7 @@ valid?: boolean = false</code></pre>
       <div class="badges">
         
         <label for="c-38-design-system-components-layout-info" class="badge info as-toggle">1 info</label>
-        <label for="c-38-design-system-components-layout-stories" class="badge ok as-toggle">9 stories</label>
+        <label for="c-38-design-system-components-layout-stories" class="badge ok as-toggle">10 stories</label>
         
       </div>
     </div>
@@ -11324,6 +11374,128 @@ valid?: boolean = false</code></pre>
         &lt;/DBox&gt;
       &lt;/DLayout.Pane&gt;
     &lt;/&gt;)&lt;/DLayout&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Grid Utilities</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const GridUtilities = () =&gt; (
+  &lt;div style={{ display: &#39;flex&#39;, flexDirection: &#39;column&#39;, gap: &#39;2rem&#39; }}&gt;
+    &lt;div&gt;
+      &lt;p className=&quot;mb-2 fw-semibold&quot;&gt;
+        {&#39;Sidebar layout - &#39;}
+        &lt;code&gt;.grid .gap-3&lt;/code&gt;
+        {&#39; with &#39;}
+        &lt;code&gt;.g-col-3&lt;/code&gt;
+        {&#39; / &#39;}
+        &lt;code&gt;.g-col-9&lt;/code&gt;
+      &lt;/p&gt;
+      &lt;div className=&quot;grid gap-3&quot;&gt;
+        &lt;div className=&quot;g-col-3&quot;&gt;
+          &lt;DBox&gt;
+            &lt;strong&gt;Sidebar&lt;/strong&gt;
+            &lt;p className=&quot;mb-0&quot;&gt;.g-col-3&lt;/p&gt;
+          &lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-9&quot;&gt;
+          &lt;DBox&gt;
+            &lt;strong&gt;Main Content&lt;/strong&gt;
+            &lt;p className=&quot;mb-0&quot;&gt;.g-col-9&lt;/p&gt;
+          &lt;/DBox&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div&gt;
+      &lt;p className=&quot;mb-2 fw-semibold&quot;&gt;
+        {&#39;Three equal columns - &#39;}
+        &lt;code&gt;.grid&lt;/code&gt;
+        {&#39; with &#39;}
+        &lt;code&gt;.g-col-4&lt;/code&gt;
+      &lt;/p&gt;
+      &lt;div className=&quot;grid gap-2&quot;&gt;
+        &lt;div className=&quot;g-col-4&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;.g-col-4&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-4&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;.g-col-4&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-4&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;.g-col-4&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div&gt;
+      &lt;p className=&quot;mb-2 fw-semibold&quot;&gt;
+        {&#39;Responsive columns - &#39;}
+        &lt;code&gt;.g-col-12 .g-col-md-6 .g-col-lg-4&lt;/code&gt;
+      &lt;/p&gt;
+      &lt;div className=&quot;grid gap-2&quot;&gt;
+        &lt;div className=&quot;g-col-12 g-col-md-6 g-col-lg-4&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;12 / md:6 / lg:4&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-12 g-col-md-6 g-col-lg-4&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;12 / md:6 / lg:4&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-12 g-col-md-12 g-col-lg-4&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;12 / md:12 / lg:4&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div&gt;
+      &lt;p className=&quot;mb-2 fw-semibold&quot;&gt;
+        {&#39;Custom 5-column grid - &#39;}
+        &lt;code&gt;--bs-columns: 5&lt;/code&gt;
+      &lt;/p&gt;
+      &lt;div
+        className=&quot;grid gap-2&quot;
+        style={{ &#39;--bs-columns&#39;: 5 } as CSSProperties}
+      &gt;
+        &lt;div className=&quot;g-col-1&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;1/5&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-1&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;2/5&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-1&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;3/5&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-1&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;4/5&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-1&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;5/5&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div&gt;
+      &lt;p className=&quot;mb-2 fw-semibold&quot;&gt;
+        {&#39;Responsive gap - &#39;}
+        &lt;code&gt;.gap-1 .gap-md-2 .gap-lg-4&lt;/code&gt;
+      &lt;/p&gt;
+      &lt;div className=&quot;grid gap-1 gap-md-2 gap-lg-4&quot;&gt;
+        &lt;div className=&quot;g-col-12 g-col-md-6 g-col-lg-3&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;Card 1&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-12 g-col-md-6 g-col-lg-3&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;Card 2&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-12 g-col-md-6 g-col-lg-3&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;Card 3&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+        &lt;div className=&quot;g-col-12 g-col-md-6 g-col-lg-3&quot;&gt;
+          &lt;DBox&gt;&lt;p className=&quot;mb-0&quot;&gt;Card 4&lt;/p&gt;&lt;/DBox&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+);</code></pre>
             </div>
         </div>
     
@@ -21656,7 +21828,7 @@ import { DTabs, DLayout, DBox } from &#39;../src&#39;;
         <label for="doc-1-design-system-patterns-modal-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
-    <div class="meta" title="./stories/hooks/useModal.mdx">design-system-patterns-modal--docs · ./stories/hooks/useModal.mdx</div>
+    <div class="meta" title="./stories/hooks/patterns/DModalPattern.mdx">design-system-patterns-modal--docs · ./stories/hooks/patterns/DModalPattern.mdx</div>
     
   </div>
 
@@ -21671,7 +21843,7 @@ import { DTabs, DLayout, DBox } from &#39;../src&#39;;
           <div class="mdx-content">
             <pre><code>import { Meta, Unstyled, Source } from &quot;@storybook/addon-docs/blocks&quot;;
 
-import { ExampleModalRoot } from &quot;./useModalExamples&quot;;
+import { ExampleModalRoot } from &quot;./DModalPatternExamples&quot;;
 
 # Modal
 
@@ -21754,7 +21926,7 @@ export function ExampleModal({ payload }: PortalProps&lt;ModalPayloads[&#39;exam
 ## Modal Setting on the main file `App.tsx`
 
 The available modals are configured on the `DContextProvider` so that they can
-then be opened with the `useDModalContext` hook. The payload type of the modals
+then be opened with the `useDPortalContext` hook. The payload type of the modals
 is only necessary if payload will be used.
 
 &lt;Source
@@ -21836,7 +22008,7 @@ export function ExampleModalUsage() {
         <label for="doc-2-design-system-patterns-offcanvas-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
-    <div class="meta" title="./stories/hooks/useOffcanvas.mdx">design-system-patterns-offcanvas--docs · ./stories/hooks/useOffcanvas.mdx</div>
+    <div class="meta" title="./stories/hooks/patterns/DOffcanvasPattern.mdx">design-system-patterns-offcanvas--docs · ./stories/hooks/patterns/DOffcanvasPattern.mdx</div>
     
   </div>
 
@@ -21851,7 +22023,7 @@ export function ExampleModalUsage() {
           <div class="mdx-content">
             <pre><code>import { Meta, Unstyled, Source } from &quot;@storybook/addon-docs/blocks&quot;;
 
-import { ExampleOffcanvasRoot } from &quot;./useOffcanvasExamples&quot;;
+import { ExampleOffcanvasRoot } from &quot;./DOffcanvasPatternExamples&quot;;
 
 # Offcanvas
 
@@ -21934,8 +22106,8 @@ export function ExampleOffcanvas({ payload }: PortalProps&lt;OffcanvasPayloads[&
 
 ## Offcanvas Setting on the main file `App.tsx`
 
-The available offcanvas are configured on the `DOffcanvasContextProvider` so that they can
-then be opened with the `useDOffcanvasContext` hook. The payload type of the offcanvas
+The available offcanvas are configured on the `DContextProvider` so that they can
+then be opened with the `useDPortalContext` hook. The payload type of the offcanvas
 is only necessary if payload will be used.
 
 &lt;Source
@@ -21981,11 +22153,11 @@ import {
 import type { OffcanvasPayloads } from &#39;./types&#39;;
 
 export function ExampleOffcanvasUsage() {
-  const { openOffcanvas } = useDPortalContext&lt;OffcanvasPayloads&gt;();
+  const { openPortal } = useDPortalContext&lt;OffcanvasPayloads&gt;();
   return (
     &lt;DButton
       text=&quot;Open Offcanvas&quot;
-      onClick={() =&gt; openOffcanvas(&#39;example&#39;, { description: &#39;from offcanvas payload&#39; })}
+      onClick={() =&gt; openPortal(&#39;example&#39;, { description: &#39;from offcanvas payload&#39; })}
     /&gt;
   );
 }
@@ -22017,7 +22189,7 @@ export function ExampleOffcanvasUsage() {
         <label for="doc-3-design-system-patterns-toast-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
-    <div class="meta" title="./stories/hooks/useToast.mdx">design-system-patterns-toast--docs · ./stories/hooks/useToast.mdx</div>
+    <div class="meta" title="./stories/hooks/useDToast.mdx">design-system-patterns-toast--docs · ./stories/hooks/useDToast.mdx</div>
     
   </div>
 
@@ -22036,7 +22208,7 @@ import {
   ExampleSimpleToastRoot,
   ExampleFullToastRoot,
   ExampleCustomToastRoot,
-} from &quot;./useToastExamples&quot;;
+} from &quot;./useDToastExamples&quot;;
 
 import DAlert from &quot;../../src/components/DAlert/DAlert&quot;;
 
@@ -22046,35 +22218,105 @@ import DAlert from &quot;../../src/components/DAlert/DAlert&quot;;
 
 ![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
 
-Toasts use `DToastContainer` and the `useDToast` hook, which are abstractions to configure react-hot-toast in conjunction with
-a `DToast` to generate toasts. For more detailed information, refer to the official [React Hot Toast Documentation](https://react-hot-toast.com/docs).
+The toast pattern combines two pieces: a **`DToastContainer`** component (the render target) and the **`useDToast`** hook (the dispatcher).
+Both are thin abstractions over [react-hot-toast](https://react-hot-toast.com/docs) that integrate with the Dynamic UI icon context and component system.
 
 &lt;br /&gt;
 
 &lt;Unstyled&gt;
   &lt;DAlert color=&quot;warning&quot;&gt;
     &lt;span&gt;
-      Toast appears in all containers because of the way react-hot-toast is
-      programmed, however, if you want to see the correct toast make it show up
-      from the correct container.
+      Because react-hot-toast uses a global store, a toast dispatched in one
+      container may appear in all active containers. For predictable behavior,
+      keep a single &lt;code&gt;DToastContainer&lt;/code&gt; per page.
     &lt;/span&gt;
   &lt;/DAlert&gt;
 &lt;/Unstyled&gt;
 
-## Usage DToastContainer
+## Prerequisites
 
-To get started, include the **`&lt;DToastContainer /&gt;`** component once in your app, typically near the root of your component tree.
-This ensures that all toasts are rendered correctly. Here you can customize general styles for all toasts and configure a default
-placement for displaying toasts. You can override this position in any single toast if needed.
+Before calling `useDToast`, two things must be present in the component tree:
 
-## Usage useDToast
+1. **`DContextProvider`** — provides the icon map used by `DToast` for close and status icons.
+2. **`DToastContainer`** — the portal where toasts are rendered. Place it once near the root of your app.
 
-The `useDToast` hook provides a simple and flexible way to create toast notifications in your application. By **default**, it uses the
-`DToast` component to display the toast message. However, you can also render a custom component if needed.
+```
+DContextProvider
+├── &lt;YourApp&gt;          ← useDToast() → toast(&quot;Hello!&quot;)
+└── &lt;DToastContainer&gt;  ← renders the notification portal
+```
 
-Below you will see examples of the use of toast in a simple way, with a custom component and with Material Icons.
+&lt;Source
+  code={`
+import {
+  DContextProvider,
+  DToastContainer,
+} from &#39;@dynamic-framework/ui-react&#39;;
 
-## Basic toast no color
+export function App() {
+  return (
+    &lt;DContextProvider&gt;
+      {/* your app content */}
+      &lt;DToastContainer position=&quot;top-right&quot; /&gt;
+    &lt;/DContextProvider&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+## `useDToast`
+
+Call `useDToast` inside any component that is a descendant of `DContextProvider`.
+It returns a single `toast` function.
+
+&lt;Source
+  code={`const { toast } = useDToast();`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+### Return value — `toast` function
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `data` | `ToastData \| ((t: Toast) =&gt; Renderable)` | ✅ | Toast content. Pass a `ToastData` object to use the default `DToast` layout, or a render function for fully custom content. |
+| `toastProps` | `DToastOptions` | — | Per-toast overrides forwarded to react-hot-toast. |
+
+**Returns** `string` — the toast ID, which can be passed to react-hot-toast&#39;s `toast.dismiss(id)` to programmatically close the toast.
+
+## `ToastData`
+
+Fields used when dispatching a toast with the default `DToast` layout.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | `string` | ✅ | Main text displayed in the toast. |
+| `description` | `string` | — | Optional secondary text. When present, activates the header + body layout with a timestamp row. |
+| `timestamp` | `string` | — | Timestamp string shown in the header (e.g. `&quot;just now&quot;`). Only visible when `description` is set. |
+| `icon` | `string` | — | Icon name from the active icon set in `DContextProvider`. Shown before the title. |
+| `closeIcon` | `string` | — | Overrides the default close icon from the context icon map. |
+| `color` | `ComponentStateColor` | — | Applies the `toast-{color}` CSS modifier class (e.g. `&quot;success&quot;`, `&quot;danger&quot;`, `&quot;warning&quot;`, `&quot;info&quot;`). |
+
+## `DToastContainerProps`
+
+Props accepted by `DToastContainer`.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `position` | `ToastPosition` | `&#39;bottom-center&#39;` | Default position for toasts that do not specify their own `position`. |
+| `reverseOrder` | `boolean` | `false` | When `true`, new toasts appear at the bottom of the stack instead of the top. |
+| `gutter` | `number` | `8` | Gap in pixels between stacked toasts. |
+| `containerClassName` | `string` | — | Additional CSS class applied to the portal container `&lt;div&gt;`. |
+| `containerStyle` | `CSSProperties` | — | Inline styles applied to the portal container `&lt;div&gt;`. |
+| `toastOptions` | `DefaultToastOptions` | — | Default options merged into every toast rendered inside this container. |
+
+---
+
+## Examples
+
+### Simple toast (no color)
 
 &lt;Unstyled&gt;
   &lt;div
@@ -22086,8 +22328,7 @@ Below you will see examples of the use of toast in a simple way, with a custom c
 &lt;/Unstyled&gt;
 
 &lt;Source
-  code={
-  `
+  code={`
 import {
   DContextProvider,
   DToastContainer,
@@ -22097,18 +22338,22 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-return (
+  return (
+    &lt;DContextProvider&gt;
+      &lt;DButton
+        text=&quot;Show Toast&quot;
+        onClick={() =&gt; toast({ title: &#39;Example&#39;, icon: &#39;check&#39; }, { duration: 40000 })}
+      /&gt;
+      &lt;DToastContainer position=&quot;top-right&quot; /&gt;
+    &lt;/DContextProvider&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
 
-&lt;DContextProvider&gt;
-  &lt;DButton
-    text=&quot;Show Toast&quot;
-    onClick={() =&gt; toast({ title: &quot;Example&quot; }, { duration: 40000 })}
-  /&gt;
-  &lt;DToastContainer position=&quot;top-right&quot; /&gt;
-&lt;/DContextProvider&gt;
-); } ` } language=&quot;tsx&quot; dark /&gt;
-
-## Basic toast success color
+### Simple toast with color
 
 &lt;Unstyled&gt;
   &lt;div
@@ -22120,8 +22365,7 @@ return (
 &lt;/Unstyled&gt;
 
 &lt;Source
-  code={
-  `
+  code={`
 import {
   DContextProvider,
   DToastContainer,
@@ -22131,26 +22375,29 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-return (
+  return (
+    &lt;DContextProvider&gt;
+      &lt;DButton
+        text=&quot;Show Toast&quot;
+        onClick={() =&gt;
+          toast(
+            { title: &#39;Example&#39;, icon: &#39;check&#39;, color: &#39;success&#39; },
+            { duration: 40000 },
+          )
+        }
+      /&gt;
+      &lt;DToastContainer position=&quot;top-right&quot; /&gt;
+    &lt;/DContextProvider&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
 
-&lt;DContextProvider&gt;
-  &lt;DButton
-    text=&quot;Show Toast&quot;
-    onClick={() =&gt;
-      toast(
-        {
-          title: &quot;Example&quot;,
-          color: &quot;success&quot;,
-        },
-        { duration: 40000 }
-      )
-    }
-  /&gt;
-  &lt;DToastContainer position=&quot;top-right&quot; /&gt;
-&lt;/DContextProvider&gt;
-); } ` } language=&quot;tsx&quot; dark /&gt;
+### Full toast (title + description)
 
-## Full toast no color
+When `description` is provided the toast switches to a two-row layout with a header (title + timestamp) and a body (description).
 
 &lt;Unstyled&gt;
   &lt;div
@@ -22162,8 +22409,7 @@ return (
 &lt;/Unstyled&gt;
 
 &lt;Source
-  code={
-    `
+  code={`
 import {
   DContextProvider,
   DToastContainer,
@@ -22173,28 +22419,32 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-return (
+  return (
+    &lt;DContextProvider&gt;
+      &lt;DButton
+        text=&quot;Show Toast&quot;
+        onClick={() =&gt;
+          toast(
+            {
+              title: &#39;Example&#39;,
+              description: &#39;This is a description&#39;,
+              timestamp: &#39;just now&#39;,
+              icon: &#39;check&#39;,
+            },
+            { duration: 40000 },
+          )
+        }
+      /&gt;
+      &lt;DToastContainer position=&quot;top-right&quot; /&gt;
+    &lt;/DContextProvider&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
 
-&lt;DContextProvider&gt;
-  &lt;DButton
-    text=&quot;Show Toast&quot;
-    onClick={() =&gt;
-      toast(
-        {
-          title: &quot;Example&quot;,
-          description: &quot;This is a description&quot;,
-          timestamp: &quot;just now&quot;,
-          icon: &quot;check&quot;,
-        },
-        { duration: 40000 }
-      )
-    }
-  /&gt;
-  &lt;DToastContainer position=&quot;top-right&quot; /&gt;
-&lt;/DContextProvider&gt;
-); } ` } language=&quot;tsx&quot; dark /&gt;
-
-## Full toast success color
+### Full toast with color
 
 &lt;Unstyled&gt;
   &lt;div
@@ -22206,8 +22456,7 @@ return (
 &lt;/Unstyled&gt;
 
 &lt;Source
-  code={
-    `
+  code={`
 import {
   DContextProvider,
   DToastContainer,
@@ -22217,29 +22466,36 @@ import {
 export function App() {
   const { toast } = useDToast();
 
-return (
+  return (
+    &lt;DContextProvider&gt;
+      &lt;DButton
+        text=&quot;Show Toast&quot;
+        onClick={() =&gt;
+          toast(
+            {
+              title: &#39;Example&#39;,
+              description: &#39;This is a description&#39;,
+              timestamp: &#39;just now&#39;,
+              color: &#39;success&#39;,
+              icon: &#39;check&#39;,
+            },
+            { duration: 40000 },
+          )
+        }
+      /&gt;
+      &lt;DToastContainer position=&quot;top-right&quot; /&gt;
+    &lt;/DContextProvider&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
 
-&lt;DContextProvider&gt;
-  &lt;DButton
-    text=&quot;Show Toast&quot;
-    onClick={() =&gt;
-      toast(
-        {
-          title: &quot;Example&quot;,
-          description: &quot;This is a description&quot;,
-          timestamp: &quot;just now&quot;,
-          color: &quot;success&quot;,
-          icon: &quot;check&quot;,
-        },
-        { duration: 40000 }
-      )
-    }
-  /&gt;
-  &lt;DToastContainer position=&quot;top-right&quot; /&gt;
-&lt;/DContextProvider&gt;
-); } ` } language=&quot;tsx&quot; dark /&gt;
+### Custom render function
 
-## Custom example
+Pass a render function as the first argument to `toast` for fully custom content.
+The function receives the react-hot-toast `Toast` object, which includes `id` and `visible`.
 
 &lt;Unstyled&gt;
   &lt;div
@@ -22250,71 +22506,60 @@ return (
   &lt;/div&gt;
 &lt;/Unstyled&gt;
 
-### `App.tsx`
+#### `CustomToastExample.tsx`
 
 &lt;Source
-  code={
-    `
+  code={`
+import { DButton } from &#39;@dynamic-framework/ui-react&#39;;
+import { toast as reactToast, Toast } from &#39;react-hot-toast&#39;;
+
+export function CustomToastExample({ id, visible }: Toast) {
+  if (!visible) return null;
+
+  return (
+    &lt;div className=&quot;bg-secondary-subtle rounded-2 p-4 text-center&quot;&gt;
+      &lt;p className=&quot;fw-bold mt-0&quot;&gt;Toast!&lt;/p&gt;
+      &lt;DButton
+        size=&quot;sm&quot;
+        variant=&quot;outline&quot;
+        color=&quot;secondary&quot;
+        text=&quot;Close toast&quot;
+        onClick={() =&gt; reactToast.dismiss(id)}
+      /&gt;
+    &lt;/div&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+#### `App.tsx`
+
+&lt;Source
+  code={`
 import {
   DContextProvider,
   DToastContainer,
   useDToast,
 } from &#39;@dynamic-framework/ui-react&#39;;
 
-import CustomToastExample from &#39;./CustomToastExample&#39;;
+import { CustomToastExample } from &#39;./CustomToastExample&#39;;
 
-  export function App() {
-    const { toast } = useDToast();
+export function App() {
+  const { toast } = useDToast();
 
-    return (
-      &lt;DContextProvider&gt;
-        &lt;DButton
-          text=&quot;Show Toast&quot;
-          onClick={() =&gt;
-            toast(CustomToastExample, {
-              duration: 3000,
-            })
-          }
-        /&gt;
-        &lt;DToastContainer position=&quot;top-right&quot; /&gt;
-      &lt;/DContextProvider&gt;
-    ); 
-  } 
-` } 
-  language=&quot;tsx&quot; 
-  dark 
-/&gt;
-
-### `CustomToastExample.tsx`
-
-&lt;Source
-  code={
-    `
-import {
-  DButton,
-} from &#39;@dynamic-framework/ui-react&#39;;
-import { toast as reactToast, Toast } from &#39;react-hot-toast&#39;;
-
-export function CustomToastExample({ id, visible }: Toast) {
-    if (!visible) {
-      return null;
-    }
-    
-    return (
-      &lt;div className=&quot;bg-secondary-subtle rounded-2 p-4 text-center&quot;&gt;
-        &lt;p className=&quot;fw-bold mt-0&quot;&gt;Toast!&lt;/p&gt;
-        &lt;DButton
-          size=&quot;sm&quot;
-          variant=&quot;outline&quot;
-          color=&quot;secondary&quot;
-          text=&quot;Close toast&quot;
-          onClick={() =&gt; reactToast.dismiss(id)}
-        /&gt;
-      &lt;/div&gt;
-    );
+  return (
+    &lt;DContextProvider&gt;
+      &lt;DButton
+        text=&quot;Show Toast&quot;
+        onClick={() =&gt; toast(CustomToastExample, { duration: 3000 })}
+      /&gt;
+      &lt;DToastContainer position=&quot;top-right&quot; /&gt;
+    &lt;/DContextProvider&gt;
+  );
 }
-`
-  }
+`}
   language=&quot;tsx&quot;
   dark
 /&gt;
@@ -22329,10 +22574,264 @@ export function CustomToastExample({ id, visible }: Toast) {
   aria-label="Docs">
   <div class="head">
     <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Design System/Utils/Hooks/useDPortalContext</h2>
+      <div class="badges">
+        
+        <label for="doc-4-design-system-utils-hooks-usedportalcontext-docs-content" class="badge ok as-toggle">view content</label>
+      </div>
+    </div>
+    <div class="meta" title="./stories/hooks/useDPortalContext.mdx">design-system-utils-hooks-usedportalcontext--docs · ./stories/hooks/useDPortalContext.mdx</div>
+    
+  </div>
+
+  <!-- Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="doc-4-design-system-utils-hooks-usedportalcontext-docs-content" class="tg tg-content" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-content">
+          <div class="mdx-content">
+            <pre><code>import { Meta, Source, Unstyled } from &quot;@storybook/addon-docs/blocks&quot;;
+
+import {
+  ExamplePortalContextRoot,
+} from &quot;./useDPortalContextExamples&quot;;
+
+import DAlert from &quot;../../src/components/DAlert/DAlert&quot;;
+
+&lt;Meta title=&quot;Design System/Utils/Hooks/useDPortalContext&quot; /&gt;
+
+# useDPortalContext
+
+![Shield Badge](https://img.shields.io/badge/Abstraction%20Component-4848b7)
+
+`useDPortalContext` is the primary hook for managing portals — modals, offcanvas panels, and any other
+overlay rendered outside the normal React tree. It provides a stack-based API so multiple portals can
+be layered and closed in LIFO order.
+
+&lt;br /&gt;
+
+&lt;Unstyled&gt;
+  &lt;DAlert color=&quot;warning&quot;&gt;
+    &lt;span&gt;
+      &lt;code&gt;useDPortalContext&lt;/code&gt; must be called inside a component tree that
+      is wrapped by &lt;code&gt;DContextProvider&lt;/code&gt;. Using it outside of that tree
+      will throw an error at runtime.
+    &lt;/span&gt;
+  &lt;/DAlert&gt;
+&lt;/Unstyled&gt;
+
+## Prerequisites
+
+Before calling `useDPortalContext`, two things must be present in the component tree:
+
+1. **`DContextProvider`** — registers the portal mount point and the available portal components.
+2. A **DOM element** with the `id` matching `portalName` — `DContextProvider` creates this automatically.
+
+```
+DContextProvider  (portalName=&quot;appPortal&quot;, availablePortals={{ modal: MyModal }})
+└── &lt;YourApp&gt;    ← useDPortalContext() → openPortal(&#39;modal&#39;, payload)
+```
+
+&lt;Source
+  code={`
+import {
+  DContextProvider,
+} from &#39;@dynamic-framework/ui-react&#39;;
+
+import { MyModal } from &#39;./MyModal&#39;;
+
+import type { MyPayloads } from &#39;./types&#39;;
+
+export function App() {
+  return (
+    &lt;DContextProvider&lt;MyPayloads&gt;
+      portalName=&quot;appPortal&quot;
+      availablePortals={{
+        modal: MyModal,
+      }}
+    &gt;
+      {/* your app content */}
+    &lt;/DContextProvider&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+## API
+
+### Return value
+
+| Property | Type | Description |
+|---|---|---|
+| `openPortal` | `&lt;K extends keyof T &amp; string&gt;(name: K, payload: T[K]) =&gt; void` | Pushes a named portal onto the stack, rendering its registered component with the given payload. TypeScript correlates `name` with the expected `payload` shape. |
+| `closePortal` | `() =&gt; void` | Pops the topmost portal off the stack, closing it. |
+| `stack` | `PortalStackEntry&lt;T&gt;[]` | Currently open portals, ordered from oldest (bottom) to newest (top). Each entry exposes `name` and `payload` — use `stack.length` to check if any portal is open. |
+
+### `PortalProps&lt;P&gt;`
+
+Props received by every component registered in `availablePortals`. Use
+`PortalProps&lt;Payloads[&#39;myPortal&#39;]&gt;` to type a specific portal component.
+
+| Property | Type | Description |
+|---|---|---|
+| `name` | `string` | Portal identifier — matches the key used in `openPortal`. |
+| `payload` | `P` | Data passed via `openPortal`. |
+
+### `PortalContextProps&lt;T&gt;`
+
+Props consumed by `DContextProvider` to configure the portal system.
+Consumers set these on `DContextProvider` — never use `DPortalContextProvider` directly.
+
+| Property | Type | Description |
+|---|---|---|
+| `portalName` | `string` | DOM element id used as the portal mount point. |
+| `availablePortals?` | `{ [K in keyof T]: FC&lt;PortalProps&lt;T[K]&gt;&gt; }` | Map of portal name to the component that renders it. Optional on `DContextProvider`, but calling `openPortal` without a registered component for the given portal name will throw at runtime. |
+| `children` | `ReactNode` | React children to render inside the context. |
+
+## Basic Usage
+
+&lt;Source
+  code={`
+import { useDPortalContext } from &#39;@dynamic-framework/ui-react&#39;;
+
+import type { MyPayloads } from &#39;./types&#39;;
+
+export function OpenModalButton() {
+  const { openPortal } = useDPortalContext&lt;MyPayloads&gt;();
+  return (
+    &lt;button onClick={() =&gt; openPortal(&#39;modal&#39;, { title: &#39;Hello&#39; })}&gt;
+      Open Modal
+    &lt;/button&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+Closing a portal from inside the portal component:
+
+&lt;Source
+  code={`
+import { DModal, DButton, useDPortalContext } from &#39;@dynamic-framework/ui-react&#39;;
+import type { PortalProps } from &#39;@dynamic-framework/ui-react&#39;;
+import type { MyPayloads } from &#39;./types&#39;;
+
+export function MyModal({ payload }: PortalProps&lt;MyPayloads[&#39;modal&#39;]&gt;) {
+  const { closePortal } = useDPortalContext();
+  return (
+    &lt;DModal name=&quot;modal&quot;&gt;
+      &lt;DModal.Header onClose={closePortal} showCloseButton&gt;
+        &lt;h5&gt;{payload.title}&lt;/h5&gt;
+      &lt;/DModal.Header&gt;
+      &lt;DModal.Body&gt;Modal content&lt;/DModal.Body&gt;
+    &lt;/DModal&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+## Advanced Typing
+
+Providing the payload type map as a generic argument enables TypeScript to
+enforce the payload shape for each portal name:
+
+&lt;Source
+  code={`
+// types.ts
+export type AppPortalPayloads = {
+  confirm: { message: string };
+  userDetail: { userId: string };
+};
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+&lt;Source
+  code={`
+import { useDPortalContext } from &#39;@dynamic-framework/ui-react&#39;;
+import type { AppPortalPayloads } from &#39;./types&#39;;
+
+// TypeScript will validate payload shapes:
+const { openPortal } = useDPortalContext&lt;AppPortalPayloads&gt;();
+openPortal(&#39;confirm&#39;, { message: &#39;Are you sure?&#39; });      // ✓
+openPortal(&#39;userDetail&#39;, { userId: &#39;abc-123&#39; });          // ✓
+openPortal(&#39;confirm&#39;, { userId: &#39;abc-123&#39; });             // ✗ type error
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+## Live Example
+
+&lt;Unstyled&gt;
+  &lt;ExamplePortalContextRoot /&gt;
+&lt;/Unstyled&gt;
+
+## Common Errors
+
+### `useDPortalContext was used outside of DPortalContextProvider`
+
+This error is thrown when `useDPortalContext` is called outside a `DContextProvider` subtree.
+Ensure your component is rendered inside a `DContextProvider`:
+
+&lt;Source
+  code={`
+import { useDPortalContext, DContextProvider } from &#39;@dynamic-framework/ui-react&#39;;
+
+// ✗ Wrong — hook called at the root, outside DContextProvider
+export function App() {
+  const { openPortal } = useDPortalContext(); // throws!
+  return &lt;DContextProvider&gt;...&lt;/DContextProvider&gt;;
+}
+
+// ✓ Correct — component that uses the hook is inside DContextProvider
+export function App() {
+  return (
+    &lt;DContextProvider portalName=&quot;app&quot; availablePortals={{}}&gt;
+      &lt;MyComponent /&gt;  {/* useDPortalContext() is safe here */}
+    &lt;/DContextProvider&gt;
+  );
+}
+`}
+  language=&quot;tsx&quot;
+  dark
+/&gt;
+
+### Portal component not found
+
+If `openPortal` is called with a name not registered in `availablePortals`, an error is thrown.
+Make sure every portal name you pass to `openPortal` has a matching entry in `availablePortals`.
+
+## Patterns
+
+For full implementation patterns see:
+
+- [Design System/Patterns/Modal](?path=/docs/design-system-patterns-modal--docs) — modal pattern with `DModal`
+- [Design System/Patterns/Offcanvas](?path=/docs/design-system-patterns-offcanvas--docs) — offcanvas pattern with `DOffcanvas`
+</code></pre>
+          </div>
+        </div>
+  </div>
+</article>
+<article
+  class="card is-doc no-doc-error"
+  role="listitem"
+  aria-label="Docs">
+  <div class="head">
+    <div class="title">
       <h2><span class="status-dot dot-ok"></span> Design System/Utils/Hooks/useFormatCurrency</h2>
       <div class="badges">
         
-        <label for="doc-4-design-system-utils-hooks-useformatcurrency-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-5-design-system-utils-hooks-useformatcurrency-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/hooks/useFormatCurrency.mdx">design-system-utils-hooks-useformatcurrency--docs · ./stories/hooks/useFormatCurrency.mdx</div>
@@ -22341,7 +22840,7 @@ export function CustomToastExample({ id, visible }: Toast) {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-4-design-system-utils-hooks-useformatcurrency-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-5-design-system-utils-hooks-useformatcurrency-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -22464,7 +22963,7 @@ export function App() {
       <h2><span class="status-dot dot-ok"></span> Design System/Utils/Hooks/useItemSelection</h2>
       <div class="badges">
         
-        <label for="doc-5-design-system-utils-hooks-useitemselection-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-6-design-system-utils-hooks-useitemselection-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/hooks/useItemSelection.mdx">design-system-utils-hooks-useitemselection--docs · ./stories/hooks/useItemSelection.mdx</div>
@@ -22473,7 +22972,7 @@ export function App() {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-5-design-system-utils-hooks-useitemselection-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-6-design-system-utils-hooks-useitemselection-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -22606,7 +23105,7 @@ export function ExampleOfUse() {
       <h2><span class="status-dot dot-ok"></span> Design System/Utils/Hooks/useMediaBreakpointUp</h2>
       <div class="badges">
         
-        <label for="doc-6-design-system-utils-hooks-usemediabreakpointup-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-7-design-system-utils-hooks-usemediabreakpointup-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/hooks/useMediaBreakpointUp.mdx">design-system-utils-hooks-usemediabreakpointup--docs · ./stories/hooks/useMediaBreakpointUp.mdx</div>
@@ -22615,7 +23114,7 @@ export function ExampleOfUse() {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-6-design-system-utils-hooks-usemediabreakpointup-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-7-design-system-utils-hooks-usemediabreakpointup-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -22686,7 +23185,7 @@ export function ExampleOfUse() {
       <h2><span class="status-dot dot-ok"></span> Design System/Examples/Dark Utilities</h2>
       <div class="badges">
         
-        <label for="doc-7-design-system-examples-dark-utilities-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-8-design-system-examples-dark-utilities-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/examples/DarkUtilities.mdx">design-system-examples-dark-utilities--docs · ./stories/examples/DarkUtilities.mdx</div>
@@ -22695,7 +23194,7 @@ export function ExampleOfUse() {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-7-design-system-examples-dark-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-8-design-system-examples-dark-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -22848,7 +23347,7 @@ You can override component CSS variables in a plain CSS/SCSS file to tailor dark
       <h2><span class="status-dot dot-ok"></span> Design System/Examples/Graphs</h2>
       <div class="badges">
         
-        <label for="doc-8-design-system-examples-graphs-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-9-design-system-examples-graphs-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/examples/Graphs.mdx">design-system-examples-graphs--docs · ./stories/examples/Graphs.mdx</div>
@@ -22857,7 +23356,7 @@ You can override component CSS variables in a plain CSS/SCSS file to tailor dark
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-8-design-system-examples-graphs-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-9-design-system-examples-graphs-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -23240,7 +23739,7 @@ export function ExampleProgressiveBarChart() {
       <h2><span class="status-dot dot-ok"></span> Design System/Examples/Hover Utilities</h2>
       <div class="badges">
         
-        <label for="doc-9-design-system-examples-hover-utilities-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-10-design-system-examples-hover-utilities-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/examples/HoverUtilities.mdx">design-system-examples-hover-utilities--docs · ./stories/examples/HoverUtilities.mdx</div>
@@ -23249,7 +23748,7 @@ export function ExampleProgressiveBarChart() {
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-9-design-system-examples-hover-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-10-design-system-examples-hover-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -23264,6 +23763,8 @@ import {
   ExampleHoverOverflow,
   ExampleHoverBorderColors,
   ExampleHoverOpacity,
+  ExampleHoverBorderColorVariants,
+  ExampleHoverTextColorVariants,
 } from &#39;./HoverUtilitiesExamples&#39;;
 
 &lt;Meta title=&quot;Design System/Examples/Hover Utilities&quot; /&gt;
@@ -23355,6 +23856,44 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
   `}
   language=&quot;html&quot;
 /&gt;
+
+## Text color variants
+
+Palette-level variants (e.g., `hover:text-primary-100`, `hover:text-danger-200`) are supported on top of the base `hover:text-*` classes.
+
+&lt;Unstyled&gt;
+  &lt;ExampleHoverTextColorVariants /&gt;
+&lt;/Unstyled&gt;
+
+&lt;Source
+  code={`
+&lt;span class=&quot;hover:text-primary-100&quot;&gt;hover:text-primary-100&lt;/span&gt;
+&lt;span class=&quot;hover:text-primary-300&quot;&gt;hover:text-primary-300&lt;/span&gt;
+&lt;span class=&quot;hover:text-primary-700&quot;&gt;hover:text-primary-700&lt;/span&gt;
+&lt;span class=&quot;hover:text-danger-200&quot;&gt;hover:text-danger-200&lt;/span&gt;
+&lt;span class=&quot;hover:text-success-400&quot;&gt;hover:text-success-400&lt;/span&gt;
+&lt;span class=&quot;hover:text-warning-500&quot;&gt;hover:text-warning-500&lt;/span&gt;
+  `}
+  language=&quot;html&quot;
+/&gt;
+
+## Border color variants
+
+Palette-level variants (e.g., `hover:border-primary-100`, `hover:border-danger-200`) are supported by combining the `hover:` prefix with any palette shade available in the design system.
+
+&lt;Unstyled&gt;
+  &lt;ExampleHoverBorderColorVariants /&gt;
+&lt;/Unstyled&gt;
+
+&lt;Source
+  code={`
+&lt;div class=&quot;border border-2 hover:border-primary-100&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;border border-2 hover:border-primary-300&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;border border-2 hover:border-danger-200&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;border border-2 hover:border-success-400&quot;&gt;...&lt;/div&gt;
+  `}
+  language=&quot;html&quot;
+/&gt;
 </code></pre>
           </div>
         </div>
@@ -23369,7 +23908,7 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
       <h2><span class="status-dot dot-ok"></span> Design System/Examples/Icons</h2>
       <div class="badges">
         
-        <label for="doc-10-design-system-examples-icons-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-11-design-system-examples-icons-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/examples/Icons.mdx">design-system-examples-icons--docs · ./stories/examples/Icons.mdx</div>
@@ -23378,7 +23917,7 @@ This project extends Bootstrap utilities to support Tailwind-like `hover:` varia
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-10-design-system-examples-icons-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-11-design-system-examples-icons-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -23493,7 +24032,7 @@ To use Material icons, configure the `DContextProvider` as follows:
       <h2><span class="status-dot dot-ok"></span> Design System/Foundations/Color Tokens</h2>
       <div class="badges">
         
-        <label for="doc-11-design-system-foundations-color-tokens-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-12-design-system-foundations-color-tokens-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/foundations/ColorTokens.mdx">design-system-foundations-color-tokens--docs · ./stories/foundations/ColorTokens.mdx</div>
@@ -23502,7 +24041,7 @@ To use Material icons, configure the `DContextProvider` as follows:
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-11-design-system-foundations-color-tokens-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-12-design-system-foundations-color-tokens-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -23708,7 +24247,7 @@ See: &lt;a href=&quot;/?path=/story/design-system-examples-dark-utilities&quot;&
       <h2><span class="status-dot dot-ok"></span> Design System/Foundations/CSS Distribution</h2>
       <div class="badges">
         
-        <label for="doc-12-design-system-foundations-css-distribution-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-13-design-system-foundations-css-distribution-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/foundations/CSSDistribution.mdx">design-system-foundations-css-distribution--docs · ./stories/foundations/CSSDistribution.mdx</div>
@@ -23717,7 +24256,7 @@ See: &lt;a href=&quot;/?path=/story/design-system-examples-dark-utilities&quot;&
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-12-design-system-foundations-css-distribution-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-13-design-system-foundations-css-distribution-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -23809,7 +24348,7 @@ import { DAlert } from &#39;../../src/components&#39;;
       <h2><span class="status-dot dot-ok"></span> Design System/Foundations/Design Tokens</h2>
       <div class="badges">
         
-        <label for="doc-13-design-system-foundations-design-tokens-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-14-design-system-foundations-design-tokens-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/foundations/DesignTokens.mdx">design-system-foundations-design-tokens--docs · ./stories/foundations/DesignTokens.mdx</div>
@@ -23818,7 +24357,7 @@ import { DAlert } from &#39;../../src/components&#39;;
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-13-design-system-foundations-design-tokens-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-14-design-system-foundations-design-tokens-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -24177,7 +24716,7 @@ Many component styles are derived from the core variables, but some expose speci
       <h2><span class="status-dot dot-ok"></span> Design System/Foundations/Extended Utilities</h2>
       <div class="badges">
         
-        <label for="doc-14-design-system-foundations-extended-utilities-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-15-design-system-foundations-extended-utilities-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/foundations/UtilitiesOverview.mdx">design-system-foundations-extended-utilities--docs · ./stories/foundations/UtilitiesOverview.mdx</div>
@@ -24186,7 +24725,7 @@ Many component styles are derived from the core variables, but some expose speci
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-14-design-system-foundations-extended-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-15-design-system-foundations-extended-utilities-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -24303,6 +24842,13 @@ See: &lt;a href=&quot;/?path=/story/design-system-foundations-typography&quot;&g
 
 Useful for conditionally rendered elements, modals, alerts, or any content that appears dynamically. The animation runs once on mount and does not loop.
 
+&lt;br /&gt;
+
+### Layout component (DLayout)
+For more advanced responsive grid layouts, the `DLayout` component provides a declarative API on top of these CSS utilities, with customizable `columns` and responsive `gap*` props. Use `DLayout.Pane` with responsive `cols*` props to control individual pane widths, alongside standard `className`, `style`, and `dataAttributes` support.
+
+See: &lt;a href=&quot;/?path=/story/design-system-components-layout--default&quot;&gt;Design System/Components/Layout&lt;/a&gt;.
+
 &lt;/div&gt;
 </code></pre>
           </div>
@@ -24318,7 +24864,7 @@ Useful for conditionally rendered elements, modals, alerts, or any content that 
       <h2><span class="status-dot dot-ok"></span> Design System/Foundations/Typography</h2>
       <div class="badges">
         
-        <label for="doc-15-design-system-foundations-typography-docs-content" class="badge ok as-toggle">view content</label>
+        <label for="doc-16-design-system-foundations-typography-docs-content" class="badge ok as-toggle">view content</label>
       </div>
     </div>
     <div class="meta" title="./stories/foundations/Typography.mdx">design-system-foundations-typography--docs · ./stories/foundations/Typography.mdx</div>
@@ -24327,7 +24873,7 @@ Useful for conditionally rendered elements, modals, alerts, or any content that 
 
   <!-- Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="doc-15-design-system-foundations-typography-docs-content" class="tg tg-content" type="checkbox" hidden />
+  <input id="doc-16-design-system-foundations-typography-docs-content" class="tg tg-content" type="checkbox" hidden />
 
   <div class="panels">
     

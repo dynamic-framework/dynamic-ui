@@ -15,6 +15,7 @@ type Props = {
         toggle: () => void;
     }) => React.ReactNode);
     className?: string;
+    classNameMenu?: string;
 };
-export default function DDropdown({ actions, dropdownToggle, className, }: Props): import("react/jsx-runtime").JSX.Element;
+export default function DDropdown({ actions, dropdownToggle, className, classNameMenu, }: Props): import("react/jsx-runtime").JSX.Element;
 export {};
