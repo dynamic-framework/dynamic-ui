@@ -24,6 +24,7 @@ export {
   default as DLayout,
   DLayoutPane,
 } from './DLayout';
+export type { DLayoutGap } from './DLayout';
 export { default as DIconBase } from './DIconBase';
 export { default as DInput } from './DInput';
 export { default as DInputMask } from './DInputMask';
@@ -75,6 +76,7 @@ export {
   default as DToastContainer,
   useDToast,
 } from './DToastContainer';
+export type { DToastContainerProps, DToastOptions, ToastData } from './DToastContainer';
 
 export { default as DInputPhone } from './DInputPhone';
 export { default as DCreditCard } from './DCreditCard';

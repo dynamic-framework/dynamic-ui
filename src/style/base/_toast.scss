@@ -25,29 +25,31 @@
     --#{$prefix}icon-color: var(--#{$prefix}toast-icon-color);
   }
 
-  @each $theme, $value in map-remove($theme-colors, "light", "dark") {
-    $color: color-contrast-var($value);
+  @each $theme, $value in map-remove($theme-colors-base, "warning", "light", "dark") {
     &.toast-#{$theme} {
-      --#{$prefix}toast-border-color: var(--#{$prefix}#{$theme});
-      --#{$prefix}toast-color: #{$color};
-      --#{$prefix}toast-close-color: #{$color};
-      --#{$prefix}toast-header-color: #{$color};
-      --#{$prefix}toast-bg: var(--#{$prefix}#{$theme});
-      --#{$prefix}toast-header-bg: var(--#{$prefix}#{$theme});
+      --#{$prefix}toast-border-color: var(--#{$prefix}#{$theme}-50);
+      --#{$prefix}toast-color: var(--#{$prefix}#{$theme}-700);
+      --#{$prefix}toast-close-color: var(--#{$prefix}#{$theme}-700);
+      --#{$prefix}toast-header-color: var(--#{$prefix}#{$theme}-700);
+      --#{$prefix}toast-bg: var(--#{$prefix}#{$theme}-50);
+      --#{$prefix}toast-header-bg: var(--#{$prefix}#{$theme}-50);
 
       .d-close {
         color: var(--#{$prefix}toast-close-color);
       }
     }
+  }
 
-    &.toast-soft-#{$theme} {
-      --#{$prefix}toast-color: var(--#{$prefix}gray-900);
-      --#{$prefix}toast-close-color: var(--#{$prefix}gray-900);
-      --#{$prefix}toast-header-color: var(--#{$prefix}gray-900);
-      --#{$prefix}toast-icon-color: var(--#{$prefix}#{$theme}-500);
-      --#{$prefix}toast-border-color: var(--#{$prefix}#{$theme}-100);
-      --#{$prefix}toast-bg: var(--#{$prefix}#{$theme}-100);
-      --#{$prefix}toast-header-bg: var(--#{$prefix}#{$theme}-100);
+  &.toast-warning {
+    --#{$prefix}toast-border-color: var(--#{$prefix}warning-50);
+    --#{$prefix}toast-color: var(--#{$prefix}warning-800);
+    --#{$prefix}toast-close-color: var(--#{$prefix}warning-800);
+    --#{$prefix}toast-header-color: var(--#{$prefix}warning-800);
+    --#{$prefix}toast-bg: var(--#{$prefix}warning-50);
+    --#{$prefix}toast-header-bg: var(--#{$prefix}warning-50);
+
+    .d-close {
+      color: var(--#{$prefix}toast-close-color);
     }
   }
 }

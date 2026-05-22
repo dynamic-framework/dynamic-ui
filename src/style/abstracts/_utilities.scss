@@ -98,7 +98,7 @@ $utilities: map-merge(
         responsive: true,
         values: map-merge(
           map-get(map-get($utilities, "border-color"), "values"),
-          map-loop($palette-grays, rgba-css-var, "$key", "border"),
+          map-loop(map-merge-multiple($theme-colors-palettes, $palette-grays), rgba-css-var, "$key", "border"),
         )
       )
     ),

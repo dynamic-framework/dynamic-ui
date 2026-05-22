@@ -4,33 +4,43 @@
 
 // scss-docs-start dropdown-variables
 $dropdown-padding-x: var(--#{$prefix}ref-spacer-2) !default;
+$dropdown-color: var(--#{$prefix}body-color) !default;
 $dropdown-bg: var(--#{$prefix}white) !default;
+$dropdown-border-color: var(--#{$prefix}border-color-translucent) !default;
 $dropdown-border-radius: var(--#{$prefix}border-radius-sm) !default;
 $dropdown-border-width: 0 !default;
-
-$dropdown-divider-margin-y: var(--#{$prefix}ref-spacer-2) !default;
+$dropdown-divider-bg: $dropdown-border-color !default;
 $dropdown-box-shadow: var(--#{$prefix}box-shadow-sm) !default;
 
-$dropdown-link-color: rgb(var(--#{$prefix}gray-700-rgb)) !default;
-$dropdown-link-hover-color: rgb(var(--#{$prefix}gray-700-rgb)) !default;
+$dropdown-link-color: var(--#{$prefix}body-color) !default;
+$dropdown-link-hover-color: $dropdown-link-color !default;
 $dropdown-link-hover-bg: rgb(var(--#{$prefix}gray-25-rgb)) !default;
+
+$dropdown-link-active-color: var(--#{$prefix}body-color) !default;
 $dropdown-link-active-bg: rgb(var(--#{$prefix}gray-50-rgb)) !default;
+
+$dropdown-link-disabled-color: var(--#{$prefix}gray-100) !default;
 
 $dropdown-item-padding-y: var(--#{$prefix}ref-spacer-2) !default;
 $dropdown-item-padding-x: var(--#{$prefix}ref-spacer-4) !default;
+
+$dropdown-header-color: var(--#{$prefix}gray-600) !default;
 
 // custom
 $dropdown-item-border-radius: var(--#{$prefix}border-radius-sm) !default;
 // end custom
 
-$dropdown-header-color: var(--#{$prefix}gray-600) !default;
 // scss-docs-end dropdown-variables
-
-// scss-docs-start dropdown-dark-variables
 $dropdown-dark-color: var(--#{$prefix}gray-300) !default;
 $dropdown-dark-bg: var(--#{$prefix}gray-800) !default;
+$dropdown-dark-border-color: var(--#{$prefix}border-color-translucent) !default;
+$dropdown-dark-divider-bg: $dropdown-dark-border-color !default;
+$dropdown-dark-box-shadow: null !default;
+$dropdown-dark-link-color: $dropdown-dark-color !default;
 $dropdown-dark-link-hover-color: var(--#{$prefix}white) !default;
-$dropdown-dark-link-hover-bg: var(--#{$prefix}gray-50) !default;
+$dropdown-dark-link-hover-bg: rgba(var(--#{$prefix}white-rgb), .15) !default;
+$dropdown-dark-link-active-color: $dropdown-link-active-color !default;
+$dropdown-dark-link-active-bg: $dropdown-link-active-bg !default;
 $dropdown-dark-link-disabled-color: var(--#{$prefix}gray-500) !default;
 $dropdown-dark-header-color: var(--#{$prefix}gray-500) !default;
 // scss-docs-end dropdown-dark-variables

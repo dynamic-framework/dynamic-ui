@@ -1,0 +1,623 @@
+/**
+ * generate-api.mjs
+ *
+ * Generates registry/api.json — a unified public API descriptor for Dynamic UI.
+ * Includes:
+ *   - component props parsed directly from TypeScript source (react-docgen-typescript)
+ *   - hook signatures extracted via TypeScript Compiler API
+ *
+ * Hook extraction covers exported types, JSDoc (description, @requires, @param),
+ * and call signatures — information that react-docgen-typescript cannot provide
+ * because it only processes React components, not plain functions.
+ *
+ * Usage: node scripts/generate-api.mjs
+ */
+
+import {
+  readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync,
+} from 'fs';
+import { resolve, dirname, basename, relative } from 'path';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
+import * as docgen from 'react-docgen-typescript';
+
+const require = createRequire(import.meta.url);
+const ts = require('typescript');
+
+const dirPath = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(dirPath, '..');
+
+// --- Validation ---
+const OUTPUT_DIR = resolve(ROOT, 'registry');
+if (!existsSync(OUTPUT_DIR)) {
+  mkdirSync(OUTPUT_DIR, { recursive: true });
+}
+
+const TSCONFIG_PATH = resolve(ROOT, 'tsconfig.json');
+if (!existsSync(TSCONFIG_PATH)) {
+  process.stderr.write('tsconfig.json not found at project root.\n');
+  process.exit(1);
+}
+
+// --- Public hook/context files to document (relative to project root) ---
+const HOOK_FILES = [
+  'src/components/DToastContainer/useDToast.tsx',
+  'src/contexts/DPortalContext.tsx',
+  'src/contexts/DContext.tsx',
+];
+
+// --- Load tsconfig ---
+const tsConfigFile = ts.readConfigFile(TSCONFIG_PATH, ts.sys.readFile);
+const { options: compilerOptions } = ts.parseJsonConfigFileContent(
+  tsConfigFile.config,
+  ts.sys,
+  dirname(TSCONFIG_PATH),
+);
+
+// --- Helpers ---
+
+/** Extracts plain text from a JSDoc comment (string or NodeArray). */
+function jsDocCommentToString(comment) {
+  if (!comment) return '';
+  if (typeof comment === 'string') return comment.trim();
+  return ts.displayPartsToString(comment).trim();
+}
+
+/** Reads the main JSDoc description text attached to a node, excluding tag comments. */
+function getNodeJsDoc(node) {
+  return ts.getJSDocCommentsAndTags(node)
+    .filter((d) => ts.isJSDoc(d))
+    .map((d) => jsDocCommentToString(d.comment))
+    .filter(Boolean)
+    .join('\n')
+    .trim();
+}
+
+/** Returns the raw source text of a TypeNode (best-effort inline type display). */
+function typeNodeText(typeNode, sourceFile) {
+  if (!typeNode) return 'unknown';
+  return typeNode.getText(sourceFile).replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Resolves a TypeScript Type to a self-contained serializable descriptor.
+ *
+ * - String-literal union  → { type: 'string', values: ['a', 'b', ...] }
+ * - Object / mapped type  → { type: 'object', fields: { prop: { type, required, description } } }
+ * - Scalar / other        → { type: '<checker string>' }
+ *
+ * Union members that are `undefined` are stripped so optional properties stay clean
+ * (the `required` flag on the parent field already captures optionality).
+ * Recursion is capped at depth 3 to avoid expanding deep library internals.
+ *
+ * @param {boolean} [expand=false] When true, always expand object types inline
+ *   even when they have a named alias (used for the top-level `types` section).
+ * @param {Set<string>} [knownTypeNames] Set of type names that are documented in
+ *   `sharedTypes`. Only types in this set are emitted as named references; all
+ *   other aliased types (library types, unexported aliases, etc.) fall through to
+ *   the expand / typeToString path so consumers always get a usable definition.
+ */
+function resolveTypeInfo(type, checker, locationNode, depth = 0, expand = false, knownTypeNames = new Set()) {
+  if (depth > 3) return { type: checker.typeToString(type) };
+
+  // Guard primitive types before getPropertiesOfType, which would otherwise
+  // return String/Number interface methods for primitive string/number.
+  // eslint-disable-next-line no-bitwise
+  if (type.flags & ts.TypeFlags.String) return { type: 'string' };
+  // eslint-disable-next-line no-bitwise
+  if (type.flags & ts.TypeFlags.Number) return { type: 'number' };
+  // eslint-disable-next-line no-bitwise
+  if (type.flags & ts.TypeFlags.Boolean) return { type: 'boolean' };
+
+  if (type.isUnion()) {
+    // eslint-disable-next-line no-bitwise
+    const nonUndefined = type.types.filter((t) => !(t.flags & ts.TypeFlags.Undefined));
+
+    if (nonUndefined.length > 0 && nonUndefined.every((t) => t.isStringLiteral())) {
+      return { type: 'string', values: nonUndefined.map((t) => t.value) };
+    }
+    if (nonUndefined.length === 1) {
+      return resolveTypeInfo(nonUndefined[0], checker, locationNode, depth, expand, knownTypeNames);
+    }
+    return { type: checker.typeToString(type) };
+  }
+
+  // Array types — emit `ElementType[]` rather than expanding all Array.prototype
+  // methods (push, pop, splice, sort, …) which are noise in documentation.
+  if (checker.isArrayType(type)) {
+    const [elemType] = checker.getTypeArguments(type) ?? [];
+    const elemStr = elemType ? checker.typeToString(elemType) : 'unknown';
+    return { type: `${elemStr}[]` };
+  }
+
+  // Named type aliases — only emit the alias name when it is a *documented*
+  // type present in sharedTypes (e.g. CurrencyProps, BreakpointProps).
+  // Library types (ReactNode, Partial<...>) and unexported aliases are NOT in
+  // knownTypeNames so they fall through to expand / typeToString instead.
+  if (!expand && type.aliasSymbol && knownTypeNames.has(type.aliasSymbol.name)) {
+    return { type: checker.typeToString(type) };
+  }
+
+  // Object / mapped type (TypeLiteral, interface, Partial<Pick<...>>, etc.)
+  const props = checker.getPropertiesOfType(type);
+  if (props.length > 0) {
+    const fields = {};
+    props.forEach((prop) => {
+      const propType = checker.getTypeOfSymbolAtLocation(prop, locationNode);
+      // eslint-disable-next-line no-bitwise
+      const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
+      const desc = ts.displayPartsToString(prop.getDocumentationComment(checker)).trim();
+      fields[prop.name] = {
+        // Nested fields within an explicitly expanded type never get further
+        // expand=true to avoid infinite recursion on self-referential types.
+        ...resolveTypeInfo(propType, checker, locationNode, depth + 1, false, knownTypeNames),
+        required: !isOptional,
+        ...(desc ? { description: desc } : {}),
+      };
+    });
+    return { type: 'object', fields };
+  }
+
+  return { type: checker.typeToString(type) };
+}
+
+/**
+ * Reads `@param` JSDoc tags from a node and returns name → description map.
+ * This handles inline-documented parameters (e.g. on `useCallback` wrappers)
+ * that are not accessible via the type checker's documentation comments.
+ */
+function getJsDocParamDescriptions(node) {
+  return ts.getJSDocTags(node).reduce((result, tag) => {
+    if (!ts.isJSDocParameterTag(tag) || !tag.name) return result;
+    const raw = tag.name.getText ? tag.name.getText() : String(tag.name);
+    const name = raw.replace(/^-?\s*/, '').trim();
+    return {
+      ...result,
+      [name]: jsDocCommentToString(tag.comment).replace(/^-\s*/, '').trim(),
+    };
+  }, {});
+}
+
+/**
+ * Reads `@requires` JSDoc tags from a node and returns an ordered string array.
+ * Used to document prerequisites (context providers, companion components) for a hook.
+ */
+function getJsDocRequires(node) {
+  return ts.getJSDocTags(node)
+    .filter((tag) => tag.tagName && tag.tagName.text === 'requires')
+    .map((tag) => jsDocCommentToString(tag.comment))
+    .filter(Boolean);
+}
+
+/**
+ * Reads `@throws` JSDoc tags from a node and returns all descriptions found
+ * as an array, or `undefined` if no `@throws` tag is present.
+ */
+function getJsDocThrows(node) {
+  const tags = ts.getJSDocTags(node).filter(
+    (t) => t.tagName && t.tagName.text === 'throws',
+  );
+  if (tags.length === 0) return undefined;
+  return tags.map((t) => jsDocCommentToString(t.comment) || '').filter(Boolean);
+}
+
+/**
+ * Extracts the call parameters of a function-typed symbol using the type checker.
+ * Returns [{ name, type, required, description }].
+ */
+function extractCallParams(symbol, checker, locationNode) {
+  const type = checker.getTypeOfSymbolAtLocation(symbol, locationNode);
+  const sigs = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
+  if (!sigs.length) return [];
+  return sigs[0].parameters.map((param) => ({
+    name: param.name,
+    type: checker.typeToString(
+      checker.getTypeOfSymbolAtLocation(param, locationNode),
+    ),
+    required: /* eslint-disable-next-line no-bitwise */
+      !(Number(param.flags) & Number(ts.SymbolFlags.Optional)),
+    description: ts.displayPartsToString(
+      param.getDocumentationComment(checker),
+    ).trim(),
+  }));
+}
+
+/**
+ * Returns the string representation of the return type of a function-typed symbol.
+ */
+function extractReturnTypeString(symbol, checker, locationNode) {
+  const type = checker.getTypeOfSymbolAtLocation(symbol, locationNode);
+  const sigs = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
+  if (!sigs.length) return 'void';
+  return checker.typeToString(checker.getReturnTypeOfSignature(sigs[0]));
+}
+
+/**
+ * Returns a TypeScript-style generic type parameter string for a node, e.g. `<T, U>`.
+ * Returns an empty string when the node has no type parameters.
+ */
+function getTypeParamsStr(node) {
+  if (!node.typeParameters?.length) return '';
+  return `<${node.typeParameters.map((tp) => tp.name.text).join(', ')}>`;
+}
+
+/**
+ * Builds a TypeScript-style signature string for a hook.
+ * Example: `useDToast() => { toast }`
+ */
+function buildSignature(hookName, parameters, returnKeys) {
+  const params = parameters
+    .map((p) => `${p.name}${p.required ? '' : '?'}: ${p.type}`)
+    .join(', ');
+  const ret = returnKeys.length ? `{ ${returnKeys.join(', ')} }` : 'void';
+  return `${hookName}(${params}) => ${ret}`;
+}
+
+// --- Core extraction ---
+
+/**
+ * Parses a source file and returns an array of API descriptor objects, one per
+ * exported hook (`use*`) or documented provider component found in the file.
+ *
+ * Each hook entry:
+ * { source, kind:'hook', description, requires, throws?, signature, parameters, returns, types }
+ *
+ * Each component entry:
+ * { source, kind:'component', description, requires, signature, props, types }
+ */
+function extractFileDocs(relPath) {
+  const filePath = resolve(ROOT, relPath);
+  if (!existsSync(filePath)) throw new Error(`File not found: ${filePath}`);
+
+  const program = ts.createProgram([filePath], { ...compilerOptions, noEmit: true });
+  const checker = program.getTypeChecker();
+  const sourceFile = program.getSourceFile(filePath);
+  if (!sourceFile) throw new Error(`Could not load source file: ${filePath}`);
+
+  // Pre-scan: collect names of exported type aliases / interfaces that have JSDoc.
+  // Only these names will be emitted as references in props/returns; library types
+  // and unexported aliases will be expanded or stringified instead.
+  const knownTypeNames = new Set();
+  ts.forEachChild(sourceFile, (node) => {
+    // eslint-disable-next-line no-bitwise
+    const isExported = !!(ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export);
+    if (isExported && (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node))) {
+      if (getNodeJsDoc(node)) knownTypeNames.add(node.name.text);
+    }
+  });
+
+  // Exported types with JSDoc — shared across all entries from this file.
+  const sharedTypes = {};
+
+  // Collected doc entries (one per exported hook or documented component).
+  const entries = [];
+
+  /**
+   * Processes an exported hook function (`use*`) and pushes a hook entry.
+   */
+  function processHookNode(node, name) {
+    const doc = {
+      source: relPath,
+      kind: 'hook',
+      description: '',
+      requires: [],
+      signature: '',
+      parameters: [],
+      returns: {},
+      types: {},
+    };
+
+    doc.description = getNodeJsDoc(node);
+    doc.requires = getJsDocRequires(node);
+    const hookThrows = getJsDocThrows(node);
+    if (hookThrows) doc.throws = hookThrows;
+
+    // Hook-level parameters (typically none for React hooks)
+    doc.parameters = (node.parameters ?? []).map((param) => ({
+      name: param.name.getText(sourceFile),
+      // For generic hooks the type annotation may reference a type parameter (e.g. T).
+      // We preserve it as a readable string rather than trying to expand it.
+      type: typeNodeText(param.type, sourceFile),
+      required: !param.questionToken && !param.initializer,
+      description: getNodeJsDoc(param),
+    }));
+
+    // Collect JSDoc from `const x = useCallback(...)` declarations inside the body.
+    // TypeScript attaches doc comments to variable declarations, not return symbols,
+    // so we pre-build maps of variable name → { description, paramDescriptions }
+    // for the return enrichment step.
+    const innerJsDoc = {};
+    const innerParamDescriptions = {};
+    if (node.body) {
+      ts.forEachChild(node.body, (stmt) => {
+        if (
+          ts.isVariableStatement(stmt)
+          && stmt.declarationList
+          && stmt.declarationList.declarations.length
+        ) {
+          const decl = stmt.declarationList.declarations[0];
+          if (decl.name && ts.isIdentifier(decl.name)) {
+            const jsDoc = getNodeJsDoc(stmt);
+            if (jsDoc) innerJsDoc[decl.name.text] = jsDoc;
+            const paramMap = getJsDocParamDescriptions(stmt);
+            if (Object.keys(paramMap).length) {
+              innerParamDescriptions[decl.name.text] = paramMap;
+            }
+          }
+        }
+      });
+    }
+
+    // Use the type checker to inspect the hook's return type.
+    // For generic hooks (e.g. useDPortalContext<T>()) the checker resolves the
+    // instantiated return type at the declaration site, which gives us the
+    // property names we need even if their types reference type parameters.
+    if (name) {
+      const hookSymbol = checker.getSymbolAtLocation(name);
+      if (hookSymbol) {
+        const hookType = checker.getTypeOfSymbolAtLocation(hookSymbol, node);
+        const sigs = checker.getSignaturesOfType(hookType, ts.SignatureKind.Call);
+        if (sigs.length) {
+          const returnType = checker.getReturnTypeOfSignature(sigs[0]);
+          checker.getPropertiesOfType(returnType).forEach((prop) => {
+            const symbolDoc = ts.displayPartsToString(
+              prop.getDocumentationComment(checker),
+            ).trim();
+            const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+            const propSigs = checker.getSignaturesOfType(propType, ts.SignatureKind.Call);
+            const description = symbolDoc || innerJsDoc[prop.name] || '';
+
+            if (propSigs.length > 0) {
+              // Function-typed return value — emit callable descriptor.
+              doc.returns[prop.name] = {
+                type: 'function',
+                description,
+                parameters: extractCallParams(prop, checker, node).map((p) => ({
+                  ...p,
+                  description:
+                    p.description
+                    || (innerParamDescriptions[prop.name] ?? {})[p.name]
+                    || '',
+                })),
+                returns: {
+                  type: extractReturnTypeString(prop, checker, node),
+                },
+              };
+            } else {
+              // Non-callable return value (plain data property) — emit type info.
+              doc.returns[prop.name] = {
+                description,
+                ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
+              };
+            }
+          });
+        }
+      }
+    }
+
+    const funcName = name ? name.getText(sourceFile) : relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
+    const typeParams = getTypeParamsStr(node);
+    doc.name = funcName;
+    doc.signature = buildSignature(`${funcName}${typeParams}`, doc.parameters, Object.keys(doc.returns));
+    entries.push(doc);
+  }
+
+  /**
+   * Processes an exported provider component (non-`use*` function with JSDoc)
+   * and pushes a component entry. Props are extracted from the first parameter type.
+   */
+  function processComponentNode(node, name) {
+    const doc = {
+      source: relPath,
+      kind: 'component',
+      description: '',
+      requires: [],
+      signature: '',
+      props: {},
+      types: {},
+    };
+
+    doc.description = getNodeJsDoc(node);
+    doc.requires = getJsDocRequires(node);
+
+    // Extract props by inspecting the first parameter's resolved type.
+    // For generic components (e.g. DContextProvider<T>) the checker resolves
+    // Partial<Props<T>> at the declaration site, enumerating all prop names.
+    if (node.parameters?.length > 0) {
+      const firstParam = node.parameters[0];
+      const paramType = checker.getTypeAtLocation(firstParam);
+      checker.getPropertiesOfType(paramType).forEach((prop) => {
+        const symbolDoc = ts.displayPartsToString(
+          prop.getDocumentationComment(checker),
+        ).trim();
+        const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+        // eslint-disable-next-line no-bitwise
+        const isOptional = !!(Number(prop.flags) & Number(ts.SymbolFlags.Optional));
+        doc.props[prop.name] = {
+          description: symbolDoc,
+          required: !isOptional,
+          ...resolveTypeInfo(propType, checker, node, 0, false, knownTypeNames),
+        };
+      });
+    }
+
+    const funcName = name ? name.getText(sourceFile) : 'Component';
+    const typeParams = getTypeParamsStr(node);
+    doc.name = funcName;
+    const propList = Object.entries(doc.props)
+      .filter(([, p]) => p.required)
+      .map(([n]) => n)
+      .concat(
+        Object.entries(doc.props)
+          .filter(([, p]) => !p.required)
+          .map(([n]) => `${n}?`),
+      )
+      .join(', ');
+    doc.signature = `${funcName}${typeParams}({ ${propList} }) => JSX.Element`;
+    entries.push(doc);
+  }
+
+  ts.forEachChild(sourceFile, (node) => {
+    // eslint-disable-next-line no-bitwise
+    const flags = ts.getCombinedModifierFlags(node);
+    // eslint-disable-next-line no-bitwise
+    const isExported = (flags & ts.ModifierFlags.Export) !== 0;
+    // eslint-disable-next-line no-bitwise
+    const isDefault = (flags & ts.ModifierFlags.Default) !== 0;
+
+    // Collect exported type aliases and interfaces — fully resolved via the type checker
+    // so referenced types (e.g. ComponentStateColor) are expanded inline.
+    // Skip types that are purely internal implementation details (no JSDoc description).
+    const isExportedTypeOrInterface = isExported
+      && (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node));
+    if (isExportedTypeOrInterface) {
+      const nodeDescription = getNodeJsDoc(node);
+      // Only include types that have JSDoc documentation (public API surface).
+      if (nodeDescription) {
+        const declType = checker.getTypeAtLocation(node.name);
+        sharedTypes[node.name.text] = {
+          description: nodeDescription,
+          // expand=true: always expand fields in the types section even when
+          // the type has a named alias (e.g. CurrencyProps itself).
+          ...resolveTypeInfo(declType, checker, node, 0, true, knownTypeNames),
+        };
+      }
+    }
+
+    if (ts.isFunctionDeclaration(node) && isExported) {
+      if (isDefault) {
+        // `export default function useXxx()` — original pattern (e.g. useDToast)
+        processHookNode(node, node.name ?? null);
+      } else if (node.name && node.name.text.startsWith('use')) {
+        // `export function useXxx()` — named export hook (e.g. useDPortalContext)
+        processHookNode(node, node.name);
+      } else if (node.name && getNodeJsDoc(node)) {
+        // `export function XxxProvider()` with JSDoc — documented provider component
+        processComponentNode(node, node.name);
+      }
+    }
+  });
+
+  // Attach shared types to every entry from this file.
+  entries.forEach((entry) => {
+    entry.types = { ...sharedTypes };
+  });
+
+  return entries;
+}
+
+// --- Run ---
+process.stdout.write('Generating registry/api.json...\n');
+const hooksSection = {};
+const contextsSection = {};
+let failed = 0;
+
+HOOK_FILES.forEach((relPath) => {
+  const fileBaseName = relPath.split('/').pop().replace(/\.(tsx?|jsx?)$/, '');
+  try {
+    const docs = extractFileDocs(relPath);
+    docs.forEach((doc) => {
+      // Use the dedicated `name` field as the JSON key (the signature may include generics).
+      const key = doc.name;
+      if (doc.kind === 'component') {
+        // Provider components go into the dedicated `contexts` section.
+        contextsSection[key] = doc;
+      } else {
+        hooksSection[key] = doc;
+      }
+      process.stdout.write(`  ok ${key} [${doc.kind}]\n`);
+    });
+  } catch (err) {
+    process.stderr.write(`  FAIL ${fileBaseName}: ${err.message}\n`);
+    failed += 1;
+  }
+});
+
+// --- Parse component props directly from TypeScript source ---
+const COMPONENTS_DIR = resolve(ROOT, 'src/components');
+const componentFiles = readdirSync(COMPONENTS_DIR, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && entry.name.startsWith('D'))
+  .sort((a, b) => a.name.localeCompare(b.name))
+  .map((entry) => {
+    const mainFile = resolve(COMPONENTS_DIR, entry.name, `${entry.name}.tsx`);
+    return existsSync(mainFile) ? mainFile : null;
+  })
+  .filter(Boolean);
+
+const propsParser = docgen.withCustomConfig(TSCONFIG_PATH, {
+  shouldExtractLiteralValuesFromEnum: true,
+  propFilter: (prop) => {
+    if (prop.parent) return !/node_modules/.test(prop.parent.fileName);
+    return true;
+  },
+});
+
+const componentsSection = {};
+let componentsFailed = 0;
+
+for (const filePath of componentFiles) {
+  try {
+    const docs = propsParser.parse(filePath);
+    for (const doc of docs) {
+      if (!doc.displayName) continue;
+      componentsSection[doc.displayName] = {
+        description: doc.description ?? '',
+        sourcePath: relative(ROOT, filePath),
+        props: Object.fromEntries(
+          Object.entries(doc.props).map(([name, prop]) => [
+            name,
+            {
+              type: prop.type?.name === 'enum' && Array.isArray(prop.type?.value)
+                ? prop.type.value.map((v) => v.value).join(' | ')
+                : prop.type?.name ?? 'unknown',
+              required: prop.required,
+              defaultValue: prop.defaultValue?.value ?? null,
+              description: prop.description ?? '',
+            },
+          ]),
+        ),
+      };
+    }
+  } catch (err) {
+    process.stderr.write(`  ⚠️  Failed: ${basename(filePath, '.tsx')} — ${err instanceof Error ? err.message : String(err)}\n`);
+    componentsFailed++;
+  }
+}
+
+process.stdout.write(`  Components: ${Object.keys(componentsSection).length} parsed (${componentsFailed} failed)\n`);
+
+const { version: packageVersion, repository } = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+const repoBase = repository?.url?.replace(/^git\+/, '').replace(/\.git$/, '') ?? null;
+const releaseTag = process.env.RELEASE_TAG ?? null;
+const repositoryUrl = (repoBase && releaseTag)
+  ? `${repoBase}/releases/tag/${releaseTag}`
+  : repoBase;
+
+const CDN_BASE_URL = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets').replace(/\/$/, '');
+
+const apiOutput = {
+  $schema: `${CDN_BASE_URL}/schema/v1.json`,
+  schemaVersion: '1.0.0',
+  packageVersion,
+  repository: repositoryUrl,
+  generatedAt: process.env.RELEASE_PUBLISHED_AT ?? new Date().toISOString(),
+  components: componentsSection,
+  hooks: hooksSection,
+  contexts: contextsSection,
+};
+
+const OUTPUT_PATH = resolve(OUTPUT_DIR, 'api.json');
+const output = JSON.stringify(apiOutput, null, 2);
+writeFileSync(OUTPUT_PATH, output);
+
+const sizeKB = (Buffer.byteLength(output) / 1024).toFixed(1);
+process.stdout.write('\nGenerated registry/api.json\n');
+process.stdout.write(`  Hooks: ${Object.keys(hooksSection).length} documented, ${failed} failed\n`);
+process.stdout.write(`  Contexts: ${Object.keys(contextsSection).length} documented\n`);
+process.stdout.write(`  Components: ${Object.keys(componentsSection).length} included\n`);
+process.stdout.write(`  Size: ${sizeKB} KB\n`);
+
+if (failed > 0 || componentsFailed > 0) {
+  process.stderr.write(`\n${failed} hooks failed, ${componentsFailed} components failed\n`);
+  process.exit(1);
+}

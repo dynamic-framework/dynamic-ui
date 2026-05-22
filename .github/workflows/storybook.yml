@@ -28,7 +28,10 @@ jobs:
         run: npm run build
       - name: Build storybook
         run: npm run build:storybook
-      - name: Deploy 🚀
+      - name: Extract release version
+        id: version
+        run: echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+      - name: Deploy latest 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -36,4 +39,13 @@ jobs:
           FOLDER: docs
           CLEAN: true
           TARGET_FOLDER: docs/latest
-          COMMIT_MESSAGE: 'doc: update storybook (tag latest)'
+          COMMIT_MESSAGE: 'doc: update storybook (latest)'
+      - name: Deploy versioned 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: docs
+          FOLDER: docs
+          CLEAN: false
+          TARGET_FOLDER: docs/${{ steps.version.outputs.tag }}
+          COMMIT_MESSAGE: 'doc: update storybook (${{ steps.version.outputs.tag }})'
