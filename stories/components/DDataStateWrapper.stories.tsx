@@ -100,7 +100,7 @@ const meta: Meta<typeof DDataStateWrapper> = {
       control: false,
     },
     messages: {
-      description: 'Override the default built-in strings (loading spinner label, empty message, error message, retry button label) without replacing the default markup. All keys are optional.',
+      description: 'Override the default built-in strings without replacing the default markup. The loading key maps to the spinner aria-label (accessibility label, not visible text); empty/error/retry map to visible UI text. All keys are optional.',
       table: {
         category: 'Customization',
       },
