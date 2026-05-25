@@ -2,6 +2,7 @@
 /// <reference types="@testing-library/jest-dom" />
 
 import {
+  act,
   fireEvent,
   render,
   screen,
@@ -42,10 +43,10 @@ describe('<DInputSearch />', () => {
 
     expect(handleChange).not.toHaveBeenCalled();
 
-    jest.advanceTimersByTime(299);
+    act(() => { jest.advanceTimersByTime(299); });
     expect(handleChange).not.toHaveBeenCalled();
 
-    jest.advanceTimersByTime(1);
+    act(() => { jest.advanceTimersByTime(1); });
     expect(handleChange).toHaveBeenCalledWith('poliza');
   });
 
@@ -65,7 +66,7 @@ describe('<DInputSearch />', () => {
     fireEvent.change(input, { target: { value: 'po' } });
     fireEvent.change(input, { target: { value: 'pol' } });
 
-    jest.advanceTimersByTime(300);
+    act(() => { jest.advanceTimersByTime(300); });
 
     expect(handleChange).toHaveBeenCalledTimes(1);
     expect(handleChange).toHaveBeenCalledWith('pol');
@@ -123,7 +124,7 @@ describe('<DInputSearch />', () => {
     expect(input.value).toBe('fixed');
     expect(handleChange).not.toHaveBeenCalled();
 
-    jest.advanceTimersByTime(300);
+    act(() => { jest.advanceTimersByTime(300); });
     // but onChange fires with what the user typed so the parent can decide to update
     expect(handleChange).toHaveBeenCalledWith('attempted change');
   });
@@ -145,7 +146,7 @@ describe('<DInputSearch />', () => {
 
     expect(handleChange).not.toHaveBeenCalled();
 
-    jest.advanceTimersByTime(300);
+    act(() => { jest.advanceTimersByTime(300); });
     expect(handleChange).toHaveBeenCalledTimes(1);
     expect(handleChange).toHaveBeenCalledWith('account');
   });
@@ -179,7 +180,7 @@ describe('<DInputSearch />', () => {
       />,
     );
 
-    jest.advanceTimersByTime(300);
+    act(() => { jest.advanceTimersByTime(300); });
     expect(handleChange).toHaveBeenCalledWith('policy abc');
   });
 
@@ -207,7 +208,7 @@ describe('<DInputSearch />', () => {
       />,
     );
 
-    jest.advanceTimersByTime(300);
+    act(() => { jest.advanceTimersByTime(300); });
     expect(handleChange).toHaveBeenCalledWith('typed');
   });
 
@@ -236,7 +237,7 @@ describe('<DInputSearch />', () => {
     const input = screen.getByLabelText('Search input') as HTMLInputElement;
     expect(input.value).toBe('server-updated');
 
-    jest.advanceTimersByTime(300);
+    act(() => { jest.advanceTimersByTime(300); });
     expect(handleChange).not.toHaveBeenCalled();
   });
 
@@ -256,7 +257,7 @@ describe('<DInputSearch />', () => {
     expect(input.value).toBe('prefilled');
 
     // no debounce fires on mount — only on user interaction
-    jest.advanceTimersByTime(300);
+    act(() => { jest.advanceTimersByTime(300); });
     expect(handleChange).not.toHaveBeenCalled();
   });
 });
