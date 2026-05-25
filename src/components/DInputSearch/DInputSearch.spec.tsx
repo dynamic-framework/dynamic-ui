@@ -208,4 +208,53 @@ describe('<DInputSearch />', () => {
     jest.advanceTimersByTime(300);
     expect(handleChange).toHaveBeenCalledWith('typed');
   });
+
+  it('should reflect externally updated value without triggering onChange', () => {
+    const handleChange = jest.fn();
+
+    const { rerender } = render(
+      <DInputSearch
+        label="Search input"
+        value="initial"
+        debounceMs={300}
+        onChange={handleChange}
+      />,
+    );
+
+    // parent drives update without any user keystroke
+    rerender(
+      <DInputSearch
+        label="Search input"
+        value="server-updated"
+        debounceMs={300}
+        onChange={handleChange}
+      />,
+    );
+
+    const input = screen.getByLabelText('Search input');
+    expect(input.value).toBe('server-updated');
+
+    jest.advanceTimersByTime(300);
+    expect(handleChange).not.toHaveBeenCalled();
+  });
+
+  it('should initialize uncontrolled input with defaultValue', () => {
+    const handleChange = jest.fn();
+
+    render(
+      <DInputSearch
+        label="Search input"
+        defaultValue="prefilled"
+        debounceMs={300}
+        onChange={handleChange}
+      />,
+    );
+
+    const input = screen.getByLabelText('Search input');
+    expect(input.value).toBe('prefilled');
+
+    // no debounce fires on mount — only on user interaction
+    jest.advanceTimersByTime(300);
+    expect(handleChange).not.toHaveBeenCalled();
+  });
 });
