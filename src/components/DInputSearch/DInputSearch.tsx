@@ -13,7 +13,7 @@ import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
 type DInputProps = ComponentProps<typeof DInput>;
 
-export type DInputSearchProps = Omit<DInputProps, 'onChange' | 'defaultValue'> & {
+export type DInputSearchProps = Omit<DInputProps, 'onChange' | 'defaultValue' | 'type'> & {
   debounceMs?: number;
   defaultValue?: string;
   onChange?: (value: string) => void;
@@ -80,8 +80,8 @@ function DInputSearch({
   return (
     <DInput
       ref={inputRef}
-      type="search"
       {...props}
+      type="search"
       value={internalValue}
       onChange={handleChange}
       placeholder={placeholder}
