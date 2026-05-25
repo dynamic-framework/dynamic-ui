@@ -151,6 +151,43 @@ describe('<DInputSearch />', () => {
     expect(handleChange).toHaveBeenCalledWith('account');
   });
 
+  it('should reflect parent value update after onChange and not fire onChange again (full controlled loop)', () => {
+    const handleChange = jest.fn();
+
+    const { rerender } = render(
+      <DInputSearch
+        label="Search input"
+        value=""
+        debounceMs={300}
+        onChange={handleChange}
+      />,
+    );
+
+    const input = screen.getByLabelText('Search input') as HTMLInputElement;
+    fireEvent.change(input, { target: { value: 'account' } });
+
+    // display stays frozen while debounce is pending
+    expect(input.value).toBe('');
+
+    act(() => { jest.advanceTimersByTime(300); });
+    expect(handleChange).toHaveBeenCalledWith('account');
+
+    // parent responds to onChange by updating value
+    rerender(
+      <DInputSearch
+        label="Search input"
+        value="account"
+        debounceMs={300}
+        onChange={handleChange}
+      />,
+    );
+
+    expect(input.value).toBe('account');
+    // value update from parent must not trigger a second onChange
+    act(() => { jest.advanceTimersByTime(300); });
+    expect(handleChange).toHaveBeenCalledTimes(1);
+  });
+
   it('should support controlled mode with onImmediateChange and keep debounced onChange working', () => {
     const handleImmediateChange = jest.fn();
     const handleChange = jest.fn();
