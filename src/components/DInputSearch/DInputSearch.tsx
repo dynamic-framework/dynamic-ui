@@ -1,11 +1,15 @@
 import {
+  forwardRef,
   useCallback,
   useEffect,
   useRef,
   useState,
   type ComponentProps,
+  type ForwardedRef,
+  type RefObject,
 } from 'react';
 import DInput from '../DInput';
+import useProvidedRefOrCreate from '../../hooks/useProvidedRefOrCreate';
 
 type DInputProps = ComponentProps<typeof DInput>;
 
@@ -20,7 +24,7 @@ function normalizeValue(value: string | undefined): string {
   return value ?? '';
 }
 
-export default function DInputSearch({
+function DInputSearch({
   debounceMs = 300,
   onChange,
   onImmediateChange,
@@ -28,10 +32,11 @@ export default function DInputSearch({
   defaultValue,
   placeholder = 'Search...',
   ...props
-}: DInputSearchProps) {
+}: DInputSearchProps, ref: ForwardedRef<HTMLInputElement>) {
+  const inputRef = useProvidedRefOrCreate(ref as RefObject<HTMLInputElement | null>);
   const isControlled = value !== undefined;
   const onChangeRef = useRef(onChange);
-  useEffect(() => { onChangeRef.current = onChange; });
+  onChangeRef.current = onChange;
 
   const [internalValue, setInternalValue] = useState<string>(
     normalizeValue(isControlled ? value : defaultValue),
@@ -74,6 +79,7 @@ export default function DInputSearch({
 
   return (
     <DInput
+      ref={inputRef}
       type="search"
       {...props}
       value={internalValue}
@@ -82,3 +88,7 @@ export default function DInputSearch({
     />
   );
 }
+
+const ForwardedDInputSearch = forwardRef<HTMLInputElement, DInputSearchProps>(DInputSearch);
+ForwardedDInputSearch.displayName = 'DInputSearch';
+export default ForwardedDInputSearch;
