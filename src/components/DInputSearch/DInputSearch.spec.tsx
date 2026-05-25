@@ -18,12 +18,13 @@ describe('<DInputSearch />', () => {
   });
 
   it('should render with search defaults', () => {
-    const { container } = render(
+    render(
       <DInputSearch label="Search input" />,
     );
 
-    expect(screen.getByLabelText('Search input')).toHaveAttribute('placeholder', 'Search...');
-    expect(container.querySelector('.lucide-search')).toBeInTheDocument();
+    const input = screen.getByLabelText('Search input');
+    expect(input).toHaveAttribute('placeholder', 'Search...');
+    expect(input).toHaveAttribute('type', 'search');
   });
 
   it('should call onChange only after debounce', () => {

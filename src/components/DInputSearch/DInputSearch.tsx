@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useRef,
   useState,
   type ComponentProps,
 } from 'react';
@@ -25,11 +26,13 @@ export default function DInputSearch({
   onImmediateChange,
   value,
   defaultValue,
-  iconStart = 'Search',
   placeholder = 'Search...',
   ...props
 }: DInputSearchProps) {
   const isControlled = value !== undefined;
+  const onChangeRef = useRef(onChange);
+  useEffect(() => { onChangeRef.current = onChange; });
+
   const [internalValue, setInternalValue] = useState<string>(
     normalizeValue(isControlled ? value : defaultValue),
   );
@@ -54,10 +57,12 @@ export default function DInputSearch({
 
     if (pendingValue !== null) {
       if (debounceMs <= 0) {
-        onChange?.(pendingValue);
+        onChangeRef.current?.(pendingValue);
+        setPendingValue(null);
       } else {
         timeoutId = window.setTimeout(() => {
-          onChange?.(pendingValue);
+          onChangeRef.current?.(pendingValue);
+          setPendingValue(null);
         }, debounceMs);
       }
     }
@@ -65,14 +70,14 @@ export default function DInputSearch({
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [debounceMs, pendingValue, onChange]);
+  }, [debounceMs, pendingValue]);
 
   return (
     <DInput
+      type="search"
       {...props}
       value={internalValue}
       onChange={handleChange}
-      iconStart={iconStart}
       placeholder={placeholder}
     />
   );
