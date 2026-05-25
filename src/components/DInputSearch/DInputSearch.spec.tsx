@@ -252,7 +252,7 @@ describe('<DInputSearch />', () => {
       />,
     );
 
-    const input = screen.getByLabelText('Search input');
+    const input = screen.getByLabelText('Search input') as HTMLInputElement;
     expect(input.value).toBe('prefilled');
 
     // no debounce fires on mount — only on user interaction
