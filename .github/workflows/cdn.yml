@@ -41,8 +41,8 @@ jobs:
             ${{ env.CDN_BASE_URL }}/manifest.json)
           if [ "$HTTP_STATUS" = "200" ]; then
             echo "Manifest fetched (200)."
-          elif [ "$HTTP_STATUS" = "404" ]; then
-            echo "Manifest not found (404) — first publish, starting fresh."
+          elif [ "$HTTP_STATUS" = "404" ] || [ "$HTTP_STATUS" = "403" ]; then
+            echo "Manifest not found ($HTTP_STATUS) — first publish, starting fresh."
             echo '{"versions":{}}' > /tmp/manifest-prev.json
           else
             echo "::error::Unexpected HTTP status $HTTP_STATUS fetching manifest. Aborting to protect version history."
