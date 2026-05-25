@@ -90,3 +90,4 @@ export {
   getErrorMessage,
 } from './DErrorBoundary';
 export { default as DDataStateWrapper } from './DDataStateWrapper';
+export type { DDataStateMessages } from './DDataStateWrapper';

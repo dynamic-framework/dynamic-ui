@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
+import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DDataStateWrapper, DBox } from '../../src/components';
 
@@ -194,14 +195,11 @@ export const Error: Story = {
  */
 export const CustomMessages: Story = {
   render: function Render(args) {
-    const [state, setState] = useState({
-      isLoading: args.isLoading,
-      isError: args.isError,
-      data: args.data,
-    });
+    type ArgsUpdater = (update: Partial<typeof args>) => void;
+    const [, updateArgs] = (useArgs as () => [typeof args, ArgsUpdater, () => void])();
 
     const setStatus = (loading: boolean, error: boolean, data: unknown[]) => {
-      setState({ isLoading: loading, isError: error, data });
+      updateArgs({ isLoading: loading, isError: error, data });
     };
 
     return (
@@ -228,13 +226,15 @@ export const CustomMessages: Story = {
           >
             Empty
           </button>
+          <button
+            type="button"
+            className="btn btn-outline-success btn-sm"
+            onClick={() => setStatus(false, false, ['Alpha', 'Beta', 'Gamma'])}
+          >
+            Success
+          </button>
         </div>
-        <DDataStateWrapper
-          {...args}
-          isLoading={state.isLoading}
-          isError={state.isError}
-          data={state.data as unknown[]}
-        />
+        <DDataStateWrapper {...args} />
       </div>
     );
   },
