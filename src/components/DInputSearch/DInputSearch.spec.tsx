@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /// <reference types="@testing-library/jest-dom" />
 
 import {
@@ -58,7 +59,7 @@ describe('<DInputSearch />', () => {
       />,
     );
 
-    const input = screen.getByLabelText('Search input');
+    const input = screen.getByLabelText('Search input') as HTMLInputElement;
     fireEvent.change(input, { target: { value: 'p' } });
     fireEvent.change(input, { target: { value: 'po' } });
     fireEvent.change(input, { target: { value: 'pol' } });
@@ -112,7 +113,7 @@ describe('<DInputSearch />', () => {
       />,
     );
 
-    const input = screen.getByLabelText('Search input');
+    const input = screen.getByLabelText('Search input') as HTMLInputElement;
     expect(input.value).toBe('fixed');
 
     fireEvent.change(input, { target: { value: 'attempted change' } });
@@ -138,7 +139,7 @@ describe('<DInputSearch />', () => {
       />,
     );
 
-    const input = screen.getByLabelText('Search input');
+    const input = screen.getByLabelText('Search input') as HTMLInputElement;
     fireEvent.change(input, { target: { value: 'account' } });
 
     expect(handleChange).not.toHaveBeenCalled();
@@ -162,7 +163,7 @@ describe('<DInputSearch />', () => {
       />,
     );
 
-    const input = screen.getByLabelText('Search input');
+    const input = screen.getByLabelText('Search input') as HTMLInputElement;
     fireEvent.change(input, { target: { value: 'policy abc' } });
 
     expect(handleImmediateChange).toHaveBeenCalledWith('policy abc');
@@ -231,7 +232,7 @@ describe('<DInputSearch />', () => {
       />,
     );
 
-    const input = screen.getByLabelText('Search input');
+    const input = screen.getByLabelText('Search input') as HTMLInputElement;
     expect(input.value).toBe('server-updated');
 
     jest.advanceTimersByTime(300);
