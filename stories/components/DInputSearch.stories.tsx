@@ -11,16 +11,16 @@ import {
 } from '../../src/components';
 
 const mockRecords = [
-  'Poliza de vida #1021',
-  'Poliza de auto #8842',
-  'Cuenta corriente #110-22',
-  'Cuenta de ahorro #220-91',
-  'Transaccion SPEI #88A1',
-  'Transaccion internacional #IP-204',
-  'Reembolso siniestro #R-778',
-  'Pago de prima #P-0912',
-  'Estado de cuenta abril',
-  'Estado de cuenta mayo',
+  'Life policy #1021',
+  'Auto policy #8842',
+  'Checking account #110-22',
+  'Savings account #220-91',
+  'Wire transfer #88A1',
+  'International transfer #IP-204',
+  'Claim reimbursement #R-778',
+  'Premium payment #P-0912',
+  'April statement',
+  'May statement',
 ];
 
 const meta: Meta<typeof DInputSearch> = {
@@ -77,16 +77,16 @@ type Story = StoryObj<typeof DInputSearch>;
 
 export const Playground: Story = {
   args: {
-    label: 'Buscar',
-    placeholder: 'Buscar poliza, cuenta o transaccion',
+    label: 'Search',
+    placeholder: 'Search policy, account, or transaction',
     debounceMs: 300,
   },
 };
 
 export const DummyApiSearch: Story = {
   args: {
-    label: 'Buscar movimientos',
-    placeholder: 'Ej: poliza, cuenta, transaccion',
+    label: 'Search records',
+    placeholder: 'e.g. policy, account, transaction',
     debounceMs: 400,
   },
   render: function Render(args) {
@@ -117,7 +117,7 @@ export const DummyApiSearch: Story = {
       };
     }, [debouncedQuery]);
 
-    const totalText = useMemo(() => `${results.length} resultado(s)`, [results.length]);
+    const totalText = useMemo(() => `${results.length} result(s)`, [results.length]);
 
     return (
       <div className="d-flex flex-column gap-3" style={{ maxWidth: '640px' }}>
@@ -129,13 +129,13 @@ export const DummyApiSearch: Story = {
         />
 
         <div className="small text-secondary">
-          <strong>Query inmediato:</strong>
+          <strong>Immediate query:</strong>
           {' '}
-          {rawQuery || '(vacio)'}
+          {rawQuery || '(empty)'}
           {' | '}
-          <strong>Query debounced:</strong>
+          <strong>Debounced query:</strong>
           {' '}
-          {debouncedQuery || '(vacio)'}
+          {debouncedQuery || '(empty)'}
         </div>
 
         <DDataStateWrapper

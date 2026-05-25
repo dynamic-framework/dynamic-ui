@@ -1,7 +1,6 @@
 import {
   useCallback,
   useEffect,
-  useRef,
   useState,
   type ComponentProps,
 } from 'react';
@@ -34,7 +33,8 @@ export default function DInputSearch({
   const [internalValue, setInternalValue] = useState<string>(
     normalizeValue(isControlled ? value : defaultValue),
   );
-  const isFirstRender = useRef(true);
+  // null = no keystroke has occurred yet (skip debounce on mount)
+  const [pendingValue, setPendingValue] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isControlled) return;
@@ -45,30 +45,27 @@ export default function DInputSearch({
     if (!isControlled) {
       setInternalValue(nextValue);
     }
+    setPendingValue(nextValue);
     onImmediateChange?.(nextValue);
   }, [isControlled, onImmediateChange]);
 
   useEffect(() => {
     let timeoutId: number | undefined;
 
-    if (onChange) {
-      if (isFirstRender.current) {
-        isFirstRender.current = false;
-      } else if (debounceMs <= 0) {
-        onChange(internalValue);
+    if (pendingValue !== null) {
+      if (debounceMs <= 0) {
+        onChange?.(pendingValue);
       } else {
         timeoutId = window.setTimeout(() => {
-          onChange(internalValue);
+          onChange?.(pendingValue);
         }, debounceMs);
       }
     }
 
     return () => {
-      if (timeoutId !== undefined) {
-        window.clearTimeout(timeoutId);
-      }
+      window.clearTimeout(timeoutId);
     };
-  }, [debounceMs, internalValue, onChange]);
+  }, [debounceMs, pendingValue, onChange]);
 
   return (
     <DInput

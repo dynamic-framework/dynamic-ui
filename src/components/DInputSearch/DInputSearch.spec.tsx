@@ -99,4 +99,113 @@ describe('<DInputSearch />', () => {
 
     expect(handleChange).toHaveBeenCalledWith('transaccion');
   });
+
+  it('should keep input displayed value unchanged in controlled mode without onImmediateChange but still emit debounced onChange', () => {
+    const handleChange = jest.fn();
+
+    render(
+      <DInputSearch
+        label="Search input"
+        value="fixed"
+        debounceMs={300}
+        onChange={handleChange}
+      />,
+    );
+
+    const input = screen.getByLabelText('Search input');
+    expect(input.value).toBe('fixed');
+
+    fireEvent.change(input, { target: { value: 'attempted change' } });
+
+    // display stays frozen because parent hasn't updated value prop
+    expect(input.value).toBe('fixed');
+    expect(handleChange).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(300);
+    // but onChange fires with what the user typed so the parent can decide to update
+    expect(handleChange).toHaveBeenCalledWith('attempted change');
+  });
+
+  it('should support value + onChange without onImmediateChange (common controlled pattern)', () => {
+    const handleChange = jest.fn();
+
+    render(
+      <DInputSearch
+        label="Search input"
+        value=""
+        debounceMs={300}
+        onChange={handleChange}
+      />,
+    );
+
+    const input = screen.getByLabelText('Search input');
+    fireEvent.change(input, { target: { value: 'account' } });
+
+    expect(handleChange).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(300);
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledWith('account');
+  });
+
+  it('should support controlled mode with onImmediateChange and keep debounced onChange working', () => {
+    const handleImmediateChange = jest.fn();
+    const handleChange = jest.fn();
+
+    const { rerender } = render(
+      <DInputSearch
+        label="Search input"
+        value="policy"
+        debounceMs={300}
+        onImmediateChange={handleImmediateChange}
+        onChange={handleChange}
+      />,
+    );
+
+    const input = screen.getByLabelText('Search input');
+    fireEvent.change(input, { target: { value: 'policy abc' } });
+
+    expect(handleImmediateChange).toHaveBeenCalledWith('policy abc');
+
+    rerender(
+      <DInputSearch
+        label="Search input"
+        value="policy abc"
+        debounceMs={300}
+        onImmediateChange={handleImmediateChange}
+        onChange={handleChange}
+      />,
+    );
+
+    jest.advanceTimersByTime(300);
+    expect(handleChange).toHaveBeenCalledWith('policy abc');
+  });
+
+  it('should emit current value when onChange is provided after initial render', () => {
+    const handleChange = jest.fn();
+
+    const { rerender } = render(
+      <DInputSearch
+        label="Search input"
+        value="initial"
+        debounceMs={300}
+      />,
+    );
+
+    // type before onChange is wired
+    fireEvent.change(screen.getByLabelText('Search input'), { target: { value: 'typed' } });
+
+    // now wire onChange
+    rerender(
+      <DInputSearch
+        label="Search input"
+        value="initial"
+        debounceMs={300}
+        onChange={handleChange}
+      />,
+    );
+
+    jest.advanceTimersByTime(300);
+    expect(handleChange).toHaveBeenCalledWith('typed');
+  });
 });
