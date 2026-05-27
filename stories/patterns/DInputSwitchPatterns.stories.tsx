@@ -315,8 +315,8 @@ export const TermsAndConditionsCard: Story = {
         </style>
 
         <div className="p-16 bg-gray-50">
-          <DBox
-            className="tc-card d-flex align-items-start gap-3"
+          <label
+            className="d-box tc-card d-flex align-items-start gap-3"
             style={{ width: '560px' }}
           >
             <DInputSwitch
@@ -335,7 +335,7 @@ export const TermsAndConditionsCard: Story = {
             </div>
 
             <DIcon className="tc-check" icon="CheckCircle" size="1.25rem" />
-          </DBox>
+          </label>
         </div>
       </>
     );

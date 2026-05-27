@@ -202,7 +202,7 @@ export const SeeMoreExamples: Story = {
       role="note"
       aria-label="See more examples"
     >
-      <span className="fs-4">💡</span>
+      <span className="fs-4" aria-hidden="true">💡</span>
       <div>
         <strong className="d-block mb-1">Looking for more examples?</strong>
         <span className="text-secondary">
