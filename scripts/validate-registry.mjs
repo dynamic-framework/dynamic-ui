@@ -21,13 +21,36 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const schemaPath = resolve(ROOT, 'registry/schema/v1.json');
 const dataPath = resolve(ROOT, 'registry/api.json');
 
-const schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
-const data = JSON.parse(readFileSync(dataPath, 'utf8'));
+function readJson(filePath) {
+  let raw;
+  try {
+    raw = readFileSync(filePath, 'utf8');
+  } catch (err) {
+    process.stderr.write(`Error: cannot read file "${filePath}": ${err.message}\n`);
+    process.exit(1);
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    process.stderr.write(`Error: "${filePath}" contains invalid JSON: ${err.message}\n`);
+    process.exit(1);
+  }
+}
+
+const schema = readJson(schemaPath);
+const data = readJson(dataPath);
 
 const ajv = new Ajv({ allErrors: true, allowUnionTypes: true });
 addFormats(ajv);
 
-const validate = ajv.compile(schema);
+let validate;
+try {
+  validate = ajv.compile(schema);
+} catch (err) {
+  process.stderr.write(`Error: schema compilation failed — ${err.message}\n`);
+  process.exit(1);
+}
+
 const valid = validate(data);
 
 if (valid) {
