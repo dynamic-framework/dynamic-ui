@@ -87,10 +87,12 @@ function ConfirmModal({ name, payload }: PortalProps<ModalPayloads['confirm']>) 
           text="Cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
           onClick={() => closePortal()}
         />
-        <DButton text="Ok" className="d-grid" />
+        <DButton
+          text="Ok"
+          onClick={() => closePortal()}
+        />
       </DModal.Footer>
     </DModal>
   );
@@ -141,10 +143,12 @@ function ConfirmModal({ name, payload }: PortalProps<ModalPayloads['confirm']>) 
           text="Cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
           onClick={() => closePortal()}
         />
-        <DButton text="Ok" className="d-grid" />
+        <DButton
+          text="Ok"
+          onClick={() => closePortal()}
+        />
       </DModal.Footer>
     </DModal>
   );
@@ -207,9 +211,8 @@ export const Default: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DModal.Footer>
     </DModal>
   ),
@@ -248,9 +251,8 @@ export const CloseIcon: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DModal.Footer>
     </DModal>
   ),
@@ -286,9 +288,8 @@ export const ActionsPlacementStart: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DModal.Footer>
     </DModal>
   ),
@@ -324,9 +325,8 @@ export const ActionsPlacementEnd: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DModal.Footer>
     </DModal>
   ),
@@ -359,9 +359,8 @@ export const WithoutHeader: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DModal.Footer>
     </DModal>
   ),
@@ -453,9 +452,8 @@ export const WithoutCancelX: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DModal.Footer>
     </DModal>
   ),
@@ -508,10 +506,9 @@ export const MaterialStyleCloseIcon: Story = {
             text="cancel"
             color="secondary"
             variant="outline"
-            className="d-grid"
 
           />
-          <DButton text="ok" className="d-grid" />
+          <DButton text="ok" />
         </DModal.Footer>
       </DModal>
     </DContextProvider>
