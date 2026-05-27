@@ -71,10 +71,10 @@ type ModalPayloads = {
   };
 };
 
-function ConfirmModal({ payload }: PortalProps<ModalPayloads['confirm']>) {
+function ConfirmModal({ name, payload }: PortalProps<ModalPayloads['confirm']>) {
   const { closePortal } = useDPortalContext();
   return (
-    <DModal name="confirm" centered staticBackdrop={false}>
+    <DModal name={name} centered staticBackdrop={false}>
       <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
@@ -125,10 +125,10 @@ type ModalPayloads = {
   };
 };
 
-function ConfirmModal({ payload }: PortalProps<ModalPayloads['confirm']>) {
+function ConfirmModal({ name, payload }: PortalProps<ModalPayloads['confirm']>) {
   const { closePortal } = useDPortalContext();
   return (
-    <DModal name="confirm" centered staticBackdrop={false}>
+    <DModal name={name} centered staticBackdrop={false}>
       <DModal.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Do you want to reject the offer?</h5>
       </DModal.Header>
