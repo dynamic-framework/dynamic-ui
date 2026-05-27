@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
 
@@ -74,7 +75,6 @@ export const NotificationPreferences: Story = {
           {items.map(({ id, title, desc }) => (
             <label
               key={id}
-              htmlFor={id}
               className="np-row d-flex align-items-center justify-content-between gap-3 p-3 rounded border"
             >
               <div>
@@ -161,7 +161,6 @@ export const FeatureCards: Story = {
           }) => (
             <label
               key={id}
-              htmlFor={id}
               className="fc-card d-flex flex-column gap-3 p-4 rounded border"
             >
               <div className="d-flex justify-content-between align-items-start">
@@ -251,7 +250,6 @@ export const PrivacySettings: Story = {
                 {items.map(({ id, title, desc }, i) => (
                   <label
                     key={id}
-                    htmlFor={id}
                     className={`ps-row d-flex align-items-center m-0 justify-content-between gap-3 p-3${i < items.length - 1 ? ' border-bottom' : ''}`}
                   >
                     <div>
@@ -276,14 +274,14 @@ export const PrivacySettings: Story = {
 };
 
 /**
- * Terms acceptance block with switch on the left, shadow-only container,
+ * Terms acceptance block with switch on the left, subtle border container,
  * and a trailing check icon that appears when accepted using CSS `:has()`.
  */
 export const TermsAndConditionsCard: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Modern terms acceptance pattern with switch on the left. The full box is highlighted with shadow (no border), and a trailing check icon appears when accepted using pure CSS `:has()`.',
+        story: 'Modern terms acceptance pattern with switch on the left. The full box uses a subtle border and highlighted background when accepted, and shows a trailing check icon using pure CSS `:has()`.',
       },
     },
   },
@@ -316,9 +314,9 @@ export const TermsAndConditionsCard: Story = {
         `}
         </style>
 
-        <div className="p-16 bg-gray-50 w-full">
-          <div
-            className="d-box tc-card d-flex align-items-start gap-3"
+        <div className="p-16 bg-gray-50">
+          <DBox
+            className="tc-card d-flex align-items-start gap-3"
             style={{ width: '560px' }}
           >
             <DInputSwitch
@@ -337,7 +335,7 @@ export const TermsAndConditionsCard: Story = {
             </div>
 
             <DIcon className="tc-check" icon="CheckCircle" size="1.25rem" />
-          </div>
+          </DBox>
         </div>
       </>
     );
