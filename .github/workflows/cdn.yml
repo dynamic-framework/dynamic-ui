@@ -28,6 +28,8 @@ jobs:
           fi
       - name: Build packages
         run: npm run build
+      - name: Build Storybook (for versioned manifests)
+        run: npm run build:storybook
       - name: Generate registry assets
         run: |
           node scripts/generate-api.mjs
@@ -85,6 +87,18 @@ jobs:
             s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/api.json \
             --acl public-read \
             --cache-control "public, max-age=31536000, immutable"
+      - name: Upload Storybook components manifest to CDN (versioned)
+        run: |
+          aws s3 cp docs/manifests/components.json \
+            s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/manifests/components.json \
+            --acl public-read \
+            --cache-control "public, max-age=31536000, immutable"
+      - name: Upload Storybook docs manifest to CDN (versioned)
+        run: |
+          aws s3 cp docs/manifests/docs.json \
+            s3://dynamicframework-cdn/assets/${{ steps.version.outputs.semver }}/ui-react/manifests/docs.json \
+            --acl public-read \
+            --cache-control "public, max-age=31536000, immutable"
       - name: Upload api.json to CDN (latest — stable releases only)
         if: ${{ !contains(steps.version.outputs.semver, '-') }}
         run: |
@@ -104,18 +118,25 @@ jobs:
             s3://dynamicframework-cdn/assets/manifest.json \
             --acl public-read \
             --cache-control "public, max-age=60"
-      - name: Smoke test — verify versioned api.json is accessible on CDN
+      - name: Smoke test — verify versioned assets are accessible on CDN
         run: |
-          URL="${{ env.CDN_BASE_URL }}/${{ steps.version.outputs.semver }}/ui-react/api.json"
-          echo "Checking $URL"
-          for i in $(seq 1 24); do
-            STATUS=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
-            if [ "$STATUS" = "200" ]; then
-              echo "✓ api.json is accessible on CDN (HTTP 200)"
-              exit 0
+          BASE="${{ env.CDN_BASE_URL }}/${{ steps.version.outputs.semver }}/ui-react"
+          for path in "api.json" "manifests/components.json" "manifests/docs.json"; do
+            URL="$BASE/$path"
+            echo "Checking $URL"
+            success=0
+            for i in $(seq 1 24); do
+              STATUS=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
+              if [ "$STATUS" = "200" ]; then
+                echo "✓ $path is accessible on CDN (HTTP 200)"
+                success=1
+                break
+              fi
+              echo "Attempt $i/24: HTTP $STATUS — waiting 5s..."
+              sleep 5
+            done
+            if [ "$success" = "0" ]; then
+              echo "✗ $path not accessible on CDN after 2 minutes" >&2
+              exit 1
             fi
-            echo "Attempt $i/24: HTTP $STATUS — waiting 5s..."
-            sleep 5
           done
-          echo "✗ api.json not accessible on CDN after 2 minutes" >&2
-          exit 1
