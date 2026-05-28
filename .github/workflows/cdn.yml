@@ -35,6 +35,8 @@ jobs:
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
           RELEASE_PUBLISHED_AT: ${{ github.event.release.published_at }}
+      - name: Validate api.json against schema/v1.json
+        run: npm run validate:registry
       - name: Fetch existing manifest from CDN
         run: |
           HTTP_STATUS=$(curl -s -o /tmp/manifest-prev.json -w "%{http_code}" \
