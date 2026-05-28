@@ -53,6 +53,7 @@ export type AlertThemeIconMap = {
 
 export type ButtonVariant = 'outline' | 'link' | 'soft';
 export type ButtonType = 'submit' | 'reset' | 'button';
+export type InputSwitchVariant = 'outline';
 
 export type InputCheckType = 'checkbox' | 'radio';
 

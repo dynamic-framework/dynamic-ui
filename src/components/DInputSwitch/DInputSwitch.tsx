@@ -8,7 +8,7 @@ import {
 import classNames from 'classnames';
 import type { ChangeEvent } from 'react';
 
-import type { BaseProps } from '../interface';
+import type { BaseProps, InputSwitchVariant } from '../interface';
 
 type Props =
 & BaseProps
@@ -23,6 +23,7 @@ type Props =
   invalid?: boolean;
   valid?: boolean;
   readonly?: boolean;
+  variant?: InputSwitchVariant;
   onChange?: (isChecked: boolean) => void;
 };
 
@@ -37,6 +38,7 @@ export default function DInputSwitch(
     invalid = false,
     valid = false,
     readonly,
+    variant,
     className,
     style,
     dataAttributes,
@@ -60,7 +62,13 @@ export default function DInputSwitch(
 
   return (
     <div
-      className={classNames('form-check form-switch', className)}
+      className={classNames(
+        'form-check form-switch',
+        {
+          'form-switch-outline': variant === 'outline',
+        },
+        className,
+      )}
       {...dataAttributes}
     >
       <input

@@ -85,6 +85,16 @@ describe('<DInputSwitch />', () => {
       const switchControl = screen.getByLabelText('My Switch');
       expect(switchControl).toHaveClass('is-valid');
     });
+
+    it('should apply the outline variant class', () => {
+      const { container } = render(
+        <DContextProvider>
+          <DInputSwitch label="My Switch" variant="outline" />
+        </DContextProvider>,
+      );
+
+      expect(container.querySelector('.form-switch-outline')).toBeInTheDocument();
+    });
   });
 
   describe('User Interaction and Events', () => {

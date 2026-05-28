@@ -63,6 +63,13 @@ The Bootstrap documentation provides details on the default [Checks CSS Variable
       description: 'The class name for the input element',
       table: { category: 'Appearance' },
     },
+    variant: {
+      control: 'select',
+      options: ['outline'],
+      type: 'string',
+      description: 'Visual variant for the switch',
+      table: { category: 'Appearance' },
+    },
     label: {
       control: 'text',
       type: 'string',
@@ -183,5 +190,14 @@ export const WithInputClassName: Story = {
     label: 'Custom styled input',
     checked: false,
     inputClassName: 'border-2',
+  },
+};
+
+export const Outline: Story = {
+  args: {
+    id: 'componentId10',
+    label: 'Outline switch',
+    checked: false,
+    variant: 'outline',
   },
 };

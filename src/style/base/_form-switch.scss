@@ -28,3 +28,27 @@
     --#{$prefix}form-switch-bg: #{escape-svg($form-switch-invalid-bg-image)};
   }
 }
+
+.form-switch.form-switch-outline {
+  .form-check-input {
+    // Keep a visible thumb in checked state while using an outlined track.
+    --#{$prefix}form-switch-checked-bg-image: #{escape-svg($form-switch-bg-image)};
+    background-color: transparent;
+    border-color: var(--#{$prefix}border-color);
+
+    &:focus {
+      background-color: transparent;
+      border-color: var(--#{$prefix}primary);
+    }
+
+    &:checked {
+      --#{$prefix}form-switch-checked-bg-image: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$primary}'/></svg>"))};
+      background-color: transparent;
+      border-color: var(--#{$prefix}primary);
+    }
+
+    &:disabled {
+      background-color: transparent;
+    }
+  }
+}
