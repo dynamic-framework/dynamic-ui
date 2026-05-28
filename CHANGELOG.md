@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.2](https://github.com/dynamic-framework/dynamic-ui/compare/v2.5.1...v2.5.2) (2026-05-28)
+
+
+### Features
+
+* **cdn:** publish Storybook manifests as versioned CDN assets ([#1071](https://github.com/dynamic-framework/dynamic-ui/issues/1071)) ([73aef97](https://github.com/dynamic-framework/dynamic-ui/commit/73aef972eb1bacc3313be0bc9e7f4ce5e6afedcb))
+* **cdn:** validate api.json against schema/v1.json before S3 upload ([#1063](https://github.com/dynamic-framework/dynamic-ui/issues/1063)) ([ba5d5fe](https://github.com/dynamic-framework/dynamic-ui/commit/ba5d5fe0bfa435cdcd866cba9d3af21818096746))
+
 ## [2.5.1](https://github.com/dynamic-framework/dynamic-ui/compare/v2.5.0...v2.5.1) (2026-05-22)
 
 
