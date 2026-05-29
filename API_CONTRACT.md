@@ -15,6 +15,8 @@ rely on.
 | Versioned `api.json` | `https://cdn.dynamicframework.dev/assets/{semver}/ui-react/api.json` |
 | Version manifest | `https://cdn.dynamicframework.dev/assets/manifest.json` |
 | JSON Schema (v1) | `https://cdn.dynamicframework.dev/assets/schema/v1.json` |
+| Versioned Storybook component manifest | `https://cdn.dynamicframework.dev/assets/{semver}/ui-react/manifests/components.json` |
+| Versioned Storybook docs manifest | `https://cdn.dynamicframework.dev/assets/{semver}/ui-react/manifests/docs.json` |
 
 `{semver}` is the bare semver string (no leading `v`), e.g. `2.4.0`.
 
@@ -175,6 +177,47 @@ JSON parsers and languages. To find the current stable release, read the
 the keys with a semver comparator.
 Prerelease versions (tags containing `-`) are included in `versions` but do **not** advance `latest`
 and carry a `"prerelease": true` flag.
+
+---
+
+## Storybook manifests
+
+Each release also publishes the official **Storybook 10.x AI-ready manifests**
+alongside `api.json`. They are emitted by `storybook build` and serve as the
+canonical source for story snippet code, prop metadata, and inline MDX
+content.
+
+| Resource | URL |
+|---|---|
+| Versioned component manifest | `https://cdn.dynamicframework.dev/assets/{semver}/ui-react/manifests/components.json` |
+| Versioned docs manifest | `https://cdn.dynamicframework.dev/assets/{semver}/ui-react/manifests/docs.json` |
+
+### Contract properties
+
+- **Versioned only.** No `/latest/` alias is published — `publish:cdn-latest`
+  uses `aws s3 sync --delete --exclude 'api.json'` and would purge anything
+  else on the next release. Consumers must address a specific semver.
+- **Immutable per version.** Served with
+  `Cache-Control: public, max-age=31536000, immutable`, matching versioned
+  `api.json`.
+- **Upstream schema.** The shape is owned by Storybook (`v: 0` experimental
+  AI-manifest schema, maintained upstream at
+  <https://github.com/storybookjs/storybook>). It is **not** covered by
+  Dynamic Framework's `schema/v1.json`. Non-breaking schema additions appear
+  without bumping `v`. Consumers should treat unknown fields as additive.
+
+### Quick reference
+
+`components.json` is a `{ v, components }` envelope where `components` is a
+record keyed by display name (e.g. `"DButton"`), each entry containing
+`stories[]` with snippet code, `reactDocgen` props, JSDoc tags, source
+`path`, and the canonical `import` statement.
+
+`docs.json` is a `{ v, docs }` envelope where `docs` is a record keyed by
+Storybook story id (e.g.
+`"design-system-patterns-list-group-patterns--transaction-history"`), each
+entry containing the inline MDX `content` of one documentation or pattern
+story.
 
 ---
 
