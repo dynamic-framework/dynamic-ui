@@ -13,9 +13,9 @@ import {
 } from '../../src';
 import DocsTemplate from './docs/Template.mdx';
 
-const meta: Meta<typeof DBox> = {
+const meta: Meta<typeof DProgress> = {
   title: 'Patterns/Progress Patterns',
-  component: DBox,
+  component: DProgress,
   parameters: {
     docs: {
       page: DocsTemplate,
@@ -29,7 +29,7 @@ const meta: Meta<typeof DBox> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DBox>;
+type Story = StoryObj<typeof DProgress>;
 
 export const OnboardingChecklist: Story = {
   parameters: {
@@ -96,12 +96,13 @@ export const OnboardingChecklist: Story = {
               type="button"
               onClick={() => setDone((prev) => ({ ...prev, [step.id]: !prev[step.id] }))}
               className="d-flex align-items-start gap-3 p-3 border rounded bg-white text-start"
-              style={{ cursor: 'pointer' }}
             >
-              <DIcon
-                icon={done[step.id] ? 'CheckCircle' : 'Circle'}
-                className={done[step.id] ? 'text-success mt-1' : 'text-secondary mt-1'}
-              />
+              <span aria-hidden="true">
+                <DIcon
+                  icon={done[step.id] ? 'CheckCircle' : 'Circle'}
+                  className={done[step.id] ? 'text-success mt-1' : 'text-secondary mt-1'}
+                />
+              </span>
               <span>
                 <span className="d-block fw-medium">{step.title}</span>
                 <small className="text-secondary">{step.hint}</small>
