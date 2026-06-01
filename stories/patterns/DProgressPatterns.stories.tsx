@@ -94,6 +94,7 @@ export const OnboardingChecklist: Story = {
             <button
               key={step.id}
               type="button"
+              aria-pressed={done[step.id]}
               onClick={() => setDone((prev) => ({ ...prev, [step.id]: !prev[step.id] }))}
               className="d-flex align-items-start gap-3 p-3 border rounded bg-white text-start"
             >
