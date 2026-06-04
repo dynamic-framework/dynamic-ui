@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import { DContextProvider } from '../../src';
+import { DContextProvider, useDPortalContext } from '../../src';
+import type { PortalProps } from '../../src';
 import DButton from '../../src/components/DButton';
 import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
@@ -42,6 +43,131 @@ const config: Meta<typeof DOffcanvas> = {
 export default config;
 type Story = StoryObj<typeof DOffcanvas>;
 
+type OffcanvasPayloads = {
+  filters: {
+    description: string;
+  };
+};
+
+function FiltersOffcanvas({ name, payload }: PortalProps<OffcanvasPayloads['filters']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end">
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+        <small>{payload.description}</small>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton
+          text="Cancel"
+          color="secondary"
+          variant="outline"
+          onClick={() => closePortal()}
+        />
+        <DButton
+          text="Ok"
+          onClick={() => closePortal()}
+        />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenFiltersOffcanvasButton() {
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
+  return (
+    <div className="p-8">
+      <DButton
+        text="Open Offcanvas"
+        onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+      />
+    </div>
+  );
+}
+
+export const RealUsageWithOpenPortal: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          'Real usage pattern: `DOffcanvas` is registered in `DContextProvider.availablePortals` and opened imperatively via `openPortal`. '
+          + 'This is the recommended approach — **not** rendering `<DOffcanvas>` directly as a conditional JSX element.',
+      },
+      source: {
+        code: `
+type OffcanvasPayloads = {
+  filters: {
+    description: string;
+  };
+};
+
+function FiltersOffcanvas({ name, payload }: PortalProps<OffcanvasPayloads['filters']>) {
+  const { closePortal } = useDPortalContext();
+  return (
+    <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end">
+      <DOffcanvas.Header onClose={closePortal} showCloseButton>
+        <h5 className="fw-bold">Advanced filters</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p>Offcanvas body</p>
+        <small>{payload.description}</small>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton
+          text="Cancel"
+          color="secondary"
+          variant="outline"
+          onClick={() => closePortal()}
+        />
+        <DButton
+          text="Ok"
+          onClick={() => closePortal()}
+        />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function OpenFiltersOffcanvasButton() {
+  const { openPortal } = useDPortalContext<OffcanvasPayloads>();
+  return (
+    <DButton
+      text="Open Offcanvas"
+      onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+    />
+  );
+}
+
+function App() {
+  return (
+    <DContextProvider<OffcanvasPayloads>
+      portalName="dOffcanvasStoryPortal"
+      availablePortals={{ filters: FiltersOffcanvas }}
+    >
+      <OpenFiltersOffcanvasButton />
+    </DContextProvider>
+  );
+}
+        `.trim(),
+        language: 'tsx',
+        type: 'code',
+      },
+    },
+  },
+  render: () => (
+    <DContextProvider<OffcanvasPayloads>
+      portalName="dOffcanvasStoryPortal"
+      availablePortals={{ filters: FiltersOffcanvas }}
+    >
+      <OpenFiltersOffcanvasButton />
+    </DContextProvider>
+  ),
+};
+
 export const Default: Story = {
   decorators: [
     (Story) => (
@@ -63,9 +189,8 @@ export const Default: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -101,9 +226,8 @@ export const CloseIcon: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -136,9 +260,8 @@ export const ActionsPlacementStart: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -171,9 +294,8 @@ export const ActionsPlacementEnd: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -204,9 +326,8 @@ export const WithoutHeader: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -289,9 +410,8 @@ export const WithoutCancelX: Story = {
           text="cancel"
           color="secondary"
           variant="outline"
-          className="d-grid"
         />
-        <DButton text="ok" className="d-grid" />
+        <DButton text="ok" />
       </DOffcanvas.Footer>
     </DOffcanvas>
   ),
@@ -342,10 +462,9 @@ export const MaterialStyleCloseIcon: Story = {
             text="cancel"
             color="secondary"
             variant="outline"
-            className="d-grid"
 
           />
-          <DButton text="ok" className="d-grid" />
+          <DButton text="ok" />
         </DOffcanvas.Footer>
       </DOffcanvas>
     </DContextProvider>
