@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useState } from 'react';
-import { useArgs } from '@storybook/preview-api';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import {
+  useState,
+  type ComponentProps,
+  type ReactElement,
+} from 'react';
 import {
   DDataStateWrapper,
   DBox,
@@ -18,7 +20,7 @@ import {
  * It provides sensible defaults for each state (like a spinner for loading) but allows
  * full customization through render props.
  */
-const meta: Meta<typeof DDataStateWrapper> = {
+const meta = {
   title: 'Design System/Components/Data State Wrapper',
   component: DDataStateWrapper,
   tags: [
@@ -113,7 +115,7 @@ const meta: Meta<typeof DDataStateWrapper> = {
     },
   },
   decorators: [
-    (Story) => (
+    (Story: () => ReactElement) => (
       <div style={{ height: 180 }}>
         <Story />
       </div>
@@ -123,7 +125,13 @@ const meta: Meta<typeof DDataStateWrapper> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DDataStateWrapper>;
+type WrapperProps = ComponentProps<typeof DDataStateWrapper>;
+
+type Story = {
+  args?: Record<string, unknown>;
+  render?: (args: WrapperProps) => ReactElement;
+  argTypes?: Record<string, unknown>;
+};
 
 /**
  * The basic state showing the empty view by default.
@@ -133,7 +141,7 @@ export const Default: Story = {
     isLoading: false,
     isError: false,
     data: [],
-    children: (data) => (
+    children: (data: unknown) => (
       <ul className="list-group">
         {(data as string[]).map((item) => (
           <li
@@ -170,7 +178,7 @@ export const Loading: Story = {
     ...Default.args,
     isLoading: true,
   },
-  render: (args) => (
+  render: (args: WrapperProps) => (
     <div
       style={{
         minHeight: '150px',
@@ -200,12 +208,19 @@ export const Error: Story = {
  * need (e.g. from an i18n catalogue).
  */
 export const CustomMessages: Story = {
-  render: function Render(args) {
-    type ArgsUpdater = (update: Partial<typeof args>) => void;
-    const [, updateArgs] = (useArgs as () => [typeof args, ArgsUpdater, () => void])();
+  render: function Render(args: WrapperProps) {
+    const [state, setState] = useState({
+      isLoading: args.isLoading,
+      isError: args.isError,
+      data: args.data,
+    });
 
     const setStatus = (loading: boolean, error: boolean, data: unknown[]) => {
-      updateArgs({ isLoading: loading, isError: error, data });
+      setState({
+        isLoading: loading,
+        isError: error,
+        data,
+      });
     };
 
     return (
@@ -240,7 +255,12 @@ export const CustomMessages: Story = {
             Success
           </button>
         </div>
-        <DDataStateWrapper {...args} />
+        <DDataStateWrapper
+          {...args}
+          isLoading={state.isLoading}
+          isError={state.isError}
+          data={state.data as unknown[]}
+        />
       </div>
     );
   },
@@ -254,7 +274,7 @@ export const CustomMessages: Story = {
       error: 'Ocurrió un error inesperado.',
       retry: 'Reintentar',
     },
-    children: (data) => (
+    children: (data: unknown) => (
       <ul className="list-group">
         {(data as string[]).map((item) => (
           <li key={item} className="list-group-item">{item}</li>
@@ -273,7 +293,7 @@ export const CustomMessages: Story = {
  * This story is interactive, allowing you to test each state using the buttons below.
  */
 export const CustomTemplates: Story = {
-  render: function Render(args) {
+  render: function Render(args: WrapperProps) {
     const [state, setState] = useState({
       isLoading: args.isLoading,
       isError: args.isError,
@@ -387,7 +407,7 @@ export const CustomTemplates: Story = {
         </button>
       </DBox>
     ),
-    children: (data) => (
+    children: (data: unknown) => (
       <div>
         Data loaded:
         {' '}
@@ -423,14 +443,14 @@ export const StandaloneStates: Story = {
           message="No items found"
           icon="Search"
           actionText="Create New"
-          onAction={() => alert('Create action triggered')}
+          onAction={() => undefined}
         />
       </div>
       <div>
         <h6 className="text-muted mb-3">ErrorState (Danger)</h6>
         <ErrorState
           message="Failed to load data. Please check your connection."
-          onRetry={() => alert('Retry triggered')}
+          onRetry={() => undefined}
           retryMessage="Retry"
           color="danger"
         />
@@ -439,7 +459,7 @@ export const StandaloneStates: Story = {
         <h6 className="text-muted mb-3">ErrorState (Warning)</h6>
         <ErrorState
           message="Something went wrong, but you can try again."
-          onRetry={() => alert('Retry triggered')}
+          onRetry={() => undefined}
           retryMessage="Try Again"
           color="warning"
         />
