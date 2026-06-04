@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
+  useEffect,
   useState,
   type ComponentProps,
   type ReactElement,
@@ -215,6 +216,14 @@ export const CustomMessages: Story = {
       data: args.data,
     });
 
+    useEffect(() => {
+      setState({
+        isLoading: args.isLoading,
+        isError: args.isError,
+        data: args.data,
+      });
+    }, [args.isLoading, args.isError, args.data]);
+
     const setStatus = (loading: boolean, error: boolean, data: unknown[]) => {
       setState({
         isLoading: loading,
@@ -299,6 +308,14 @@ export const CustomTemplates: Story = {
       isError: args.isError,
       data: args.data,
     });
+
+    useEffect(() => {
+      setState({
+        isLoading: args.isLoading,
+        isError: args.isError,
+        data: args.data,
+      });
+    }, [args.isLoading, args.isError, args.data]);
 
     const setStatus = (loading: boolean, error: boolean, data: unknown[]) => {
       setState({
