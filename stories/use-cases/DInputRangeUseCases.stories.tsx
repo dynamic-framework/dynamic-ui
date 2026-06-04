@@ -10,7 +10,7 @@ import {
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DBox> = {
-  title: 'Patterns/Input Range Patterns',
+  title: 'Use Cases/Input Range',
   component: DBox,
   parameters: {
     docs: {

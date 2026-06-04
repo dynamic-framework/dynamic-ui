@@ -11,7 +11,7 @@ import {
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DBox> = {
-  title: 'Patterns/Input Switch Patterns',
+  title: 'Use Cases/Input Switch',
   component: DBox,
   parameters: {
     docs: {
