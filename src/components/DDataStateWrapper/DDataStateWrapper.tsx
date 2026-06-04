@@ -10,11 +10,19 @@ function render(renderable?: Renderable): ReactNode | null {
   return typeof renderable === 'function' ? (renderable as () => ReactNode)() : renderable;
 }
 
+export type DDataStateMessages = {
+  loading?: string;
+  empty?: string;
+  error?: string;
+  retry?: string;
+};
+
 type DDataStateWrapperProps<T> = {
   isLoading: boolean;
   isError: boolean;
   data: T[] | undefined;
   onRetry?: () => void;
+  messages?: DDataStateMessages;
   renderLoading?: Renderable;
   renderEmpty?: Renderable;
   renderError?: Renderable;
@@ -26,6 +34,7 @@ export default function DDataStateWrapper<T>({
   isError,
   data,
   onRetry,
+  messages,
   renderLoading,
   renderEmpty,
   renderError,
@@ -34,7 +43,7 @@ export default function DDataStateWrapper<T>({
   // 1. Loading
   if (isLoading) {
     if (renderLoading) return render(renderLoading);
-    return <LoadingState />;
+    return <LoadingState ariaLabel={messages?.loading} />;
   }
 
   // 2. Error
@@ -43,6 +52,8 @@ export default function DDataStateWrapper<T>({
     return (
       <ErrorState
         onRetry={onRetry}
+        message={messages?.error}
+        retryMessage={messages?.retry}
       />
     );
   }
@@ -51,7 +62,7 @@ export default function DDataStateWrapper<T>({
   if (!data?.length) {
     if (renderEmpty) return render(renderEmpty);
     return (
-      <EmptyState />
+      <EmptyState message={messages?.empty} />
     );
   }
 
