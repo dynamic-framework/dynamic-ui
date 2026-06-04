@@ -66,4 +66,84 @@ describe('<DDataStateWrapper />', () => {
 
     expect(getByText('Custom Empty')).toBeInTheDocument();
   });
+
+  describe('messages prop', () => {
+    it('uses messages.loading as aria-label for the spinner', () => {
+      render(
+        <DDataStateWrapper
+          isLoading
+          isError={false}
+          data={undefined}
+          messages={{ loading: 'Cargando...' }}
+        >
+          {() => <div>content</div>}
+        </DDataStateWrapper>,
+      );
+
+      expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'Cargando...');
+    });
+
+    it('renders messages.empty as the empty-state message', () => {
+      render(
+        <DDataStateWrapper
+          isLoading={false}
+          isError={false}
+          data={[]}
+          messages={{ empty: 'Sin datos disponibles.' }}
+        >
+          {() => <div>content</div>}
+        </DDataStateWrapper>,
+      );
+
+      expect(screen.getByText('Sin datos disponibles.')).toBeInTheDocument();
+    });
+
+    it('renders messages.error as the error-state message', () => {
+      render(
+        <DDataStateWrapper
+          isLoading={false}
+          isError
+          data={undefined}
+          messages={{ error: 'Ocurrió un error inesperado.' }}
+        >
+          {() => <div>content</div>}
+        </DDataStateWrapper>,
+      );
+
+      expect(screen.getByText('Ocurrió un error inesperado.')).toBeInTheDocument();
+    });
+
+    it('renders messages.retry as the retry-button label', () => {
+      render(
+        <DDataStateWrapper
+          isLoading={false}
+          isError
+          data={undefined}
+          onRetry={jest.fn()}
+          messages={{ retry: 'Reintentar' }}
+        >
+          {() => <div>content</div>}
+        </DDataStateWrapper>,
+      );
+
+      expect(screen.getByRole('button', { name: /Reintentar/i })).toBeInTheDocument();
+    });
+
+    it('renderError overrides messages.error when both are supplied', () => {
+      render(
+        <DDataStateWrapper
+          isLoading={false}
+          isError
+          data={undefined}
+          renderError={<div>Custom Error UI</div>}
+          messages={{ error: 'Ocurrió un error inesperado.' }}
+        >
+          {() => <div>content</div>}
+        </DDataStateWrapper>,
+      );
+
+      expect(screen.getByText('Custom Error UI')).toBeInTheDocument();
+      expect(screen.queryByText('Ocurrió un error inesperado.')).not.toBeInTheDocument();
+    });
+  });
 });
