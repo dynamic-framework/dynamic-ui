@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
+import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DDataStateWrapper, DBox } from '../../src/components';
 
@@ -98,6 +99,12 @@ const meta: Meta<typeof DDataStateWrapper> = {
       },
       control: false,
     },
+    messages: {
+      description: 'Override the default built-in strings without replacing the default markup. The loading key maps to the spinner aria-label (accessibility label, not visible text); empty/error/retry map to visible UI text. All keys are optional.',
+      table: {
+        category: 'Customization',
+      },
+    },
   },
   decorators: [
     (Story) => (
@@ -178,6 +185,80 @@ export const Error: Story = {
   args: {
     ...Default.args,
     isError: true,
+  },
+};
+
+/**
+ * Pass a `messages` object to override the hardcoded default strings without
+ * replacing the built-in markup.  All keys are optional — only supply what you
+ * need (e.g. from an i18n catalogue).
+ */
+export const CustomMessages: Story = {
+  render: function Render(args) {
+    type ArgsUpdater = (update: Partial<typeof args>) => void;
+    const [, updateArgs] = (useArgs as () => [typeof args, ArgsUpdater, () => void])();
+
+    const setStatus = (loading: boolean, error: boolean, data: unknown[]) => {
+      updateArgs({ isLoading: loading, isError: error, data });
+    };
+
+    return (
+      <div className="d-flex flex-column gap-3">
+        <div className="d-flex gap-2 mb-3">
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm"
+            onClick={() => setStatus(true, false, [])}
+          >
+            Loading
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-danger btn-sm"
+            onClick={() => setStatus(false, true, [])}
+          >
+            Error
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+            onClick={() => setStatus(false, false, [])}
+          >
+            Empty
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-success btn-sm"
+            onClick={() => setStatus(false, false, ['Alpha', 'Beta', 'Gamma'])}
+          >
+            Success
+          </button>
+        </div>
+        <DDataStateWrapper {...args} />
+      </div>
+    );
+  },
+  args: {
+    isLoading: false,
+    isError: false,
+    data: [],
+    messages: {
+      loading: 'Cargando…',
+      empty: 'Sin datos disponibles.',
+      error: 'Ocurrió un error inesperado.',
+      retry: 'Reintentar',
+    },
+    children: (data) => (
+      <ul className="list-group">
+        {(data as string[]).map((item) => (
+          <li key={item} className="list-group-item">{item}</li>
+        ))}
+      </ul>
+    ),
+  },
+  argTypes: {
+    isLoading: { control: 'boolean' },
+    isError: { control: 'boolean' },
   },
 };
 
