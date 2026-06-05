@@ -12,6 +12,10 @@ Quickly create feature-rich financial applications through a robust micro fronte
 
 ## Getting Started
 
+### Requirements
+
+- Node.js `>= 22.0.0`
+
 ### Installation
 
 ```bash

@@ -91,5 +91,10 @@ export {
   type FallbackProps,
   getErrorMessage,
 } from './DErrorBoundary';
-export { default as DDataStateWrapper } from './DDataStateWrapper';
+export {
+  default as DDataStateWrapper,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+} from './DDataStateWrapper';
 export type { DDataStateMessages } from './DDataStateWrapper';
