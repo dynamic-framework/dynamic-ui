@@ -3,9 +3,8 @@
 import {
   useEffect,
   useState,
-  type ComponentProps,
-  type ReactElement,
 } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   DDataStateWrapper,
   DBox,
@@ -21,7 +20,7 @@ import {
  * It provides sensible defaults for each state (like a spinner for loading) but allows
  * full customization through render props.
  */
-const meta = {
+const meta: Meta<typeof DDataStateWrapper> = {
   title: 'Design System/Components/Data State Wrapper',
   component: DDataStateWrapper,
   tags: [
@@ -116,7 +115,7 @@ const meta = {
     },
   },
   decorators: [
-    (Story: () => ReactElement) => (
+    (Story) => (
       <div style={{ height: 180 }}>
         <Story />
       </div>
@@ -126,13 +125,7 @@ const meta = {
 
 export default meta;
 
-type WrapperProps = ComponentProps<typeof DDataStateWrapper>;
-
-type Story = {
-  args?: Record<string, unknown>;
-  render?: (args: WrapperProps) => ReactElement;
-  argTypes?: Record<string, unknown>;
-};
+type Story = StoryObj<typeof DDataStateWrapper>;
 
 /**
  * The basic state showing the empty view by default.
@@ -179,7 +172,7 @@ export const Loading: Story = {
     ...Default.args,
     isLoading: true,
   },
-  render: (args: WrapperProps) => (
+  render: (args) => (
     <div
       style={{
         minHeight: '150px',
@@ -209,7 +202,7 @@ export const Error: Story = {
  * need (e.g. from an i18n catalogue).
  */
 export const CustomMessages: Story = {
-  render: function Render(args: WrapperProps) {
+  render: function Render(args) {
     const [state, setState] = useState({
       isLoading: args.isLoading,
       isError: args.isError,
@@ -268,7 +261,7 @@ export const CustomMessages: Story = {
           {...args}
           isLoading={state.isLoading}
           isError={state.isError}
-          data={state.data as unknown[]}
+          data={state.data}
         />
       </div>
     );
@@ -302,7 +295,7 @@ export const CustomMessages: Story = {
  * This story is interactive, allowing you to test each state using the buttons below.
  */
 export const CustomTemplates: Story = {
-  render: function Render(args: WrapperProps) {
+  render: function Render(args) {
     const [state, setState] = useState({
       isLoading: args.isLoading,
       isError: args.isError,
