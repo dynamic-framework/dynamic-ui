@@ -43,7 +43,7 @@ const ROWS = [
 ];
 
 const meta: Meta<typeof DBox> = {
-  title: 'Patterns/Table Patterns',
+  title: 'Use Cases/Table',
   component: DBox,
   parameters: {
     docs: {

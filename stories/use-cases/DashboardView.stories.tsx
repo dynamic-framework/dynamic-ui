@@ -39,7 +39,7 @@ function CustomDocs(props: DocsContainerProps) {
 }
 
 const meta: Meta<typeof DBox> = {
-  title: 'Patterns/Dashboard View',
+  title: 'Use Cases/Dashboard View',
   component: DBox,
   parameters: {
     layout: 'fullscreen',

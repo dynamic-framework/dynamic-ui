@@ -11,7 +11,7 @@ import {
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DCard> = {
-  title: 'Patterns/Card Patterns',
+  title: 'Use Cases/Card',
   component: DCard,
   parameters: {
     docs: {

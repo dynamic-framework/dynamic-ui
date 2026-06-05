@@ -159,14 +159,14 @@ export const SeeMoreExamples: Story = {
       role="note"
       aria-label="See more examples"
     >
-      <span className="fs-4">💡</span>
+      <span className="fs-4" aria-hidden="true">💡</span>
       <div>
         <strong className="d-block mb-1">Looking for more examples?</strong>
         <span className="text-secondary">
           To see more examples, you can review the
           {' '}
-          <a href="/?path=/docs/patterns-input-range-patterns--docs" target="_parent">
-            <strong>Patterns / Input Range Patterns</strong>
+          <a href="/?path=/docs/use-cases-input-range--docs" target="_parent">
+            <strong>Use Cases / Input Range</strong>
           </a>
           {' '}
           stories, where you will find real-world usage patterns like live value display,
