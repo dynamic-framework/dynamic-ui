@@ -83,7 +83,7 @@
       ],
       "parserOptions": {
         "project": [
-          "./tsconfig.json"
+          "./stories/tsconfig.json"
         ],
         "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
       },

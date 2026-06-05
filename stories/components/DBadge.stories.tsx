@@ -34,7 +34,7 @@ The Bootstrap documentation provides details on the default [Badge CSS Variables
   },
   argTypes: {
     size: {
-      control: { type: 'dropdown' },
+      control: 'select',
       options: [undefined, 'sm', 'md', 'lg'],
       table: { category: 'Appearance' },
       description: 'Badge size',
@@ -144,7 +144,7 @@ export const ResponsiveSizes: Story = {
       <DBadge text="ResponsiveObj" size={{ xs: 'sm', md: 'md', xl: 'lg' }} color="warning" />
     </div>
   ),
-  decorators: (Story: Story) => (
+  decorators: (Story) => (
     <DContextProvider>
       <Story />
     </DContextProvider>

@@ -31,8 +31,10 @@
   },
   "include": [
     "src",
-    "stories",
     "@types"
+  ],
+  "exclude": [
+    "stories"
   ],
   "compileOnSave": false,
   "buildOnSave": false

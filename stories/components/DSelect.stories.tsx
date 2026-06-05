@@ -408,11 +408,6 @@ To understand in more detail the aspects covered by this component, review the f
       description: 'Custom styles for the component',
       table: { category: 'Appearance' },
     },
-    color: {
-      control: 'object',
-      description: 'Custom color for the component',
-      table: { category: 'Appearance' },
-    },
     'aria-label': {
       control: 'text',
       description: 'ARIA label for the component',
