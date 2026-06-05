@@ -95,7 +95,7 @@ const SUMMARY = [
 ];
 
 const generateChartData = () => {
-  const data = [];
+  const data: { time: string; value1: number; value2: number }[] = [];
   let value1 = 100;
   let value2 = 120;
   for (let i = 0; i < 30; i++) {
@@ -111,7 +111,7 @@ const generateChartData = () => {
 };
 
 const generateTaskChartData = () => {
-  const data = [];
+  const data: { time: string; value: number }[] = [];
   let value = Math.random() * 50 + 50; // Start between 50 and 100
   for (let i = 0; i < 10; i++) {
     data.push({
