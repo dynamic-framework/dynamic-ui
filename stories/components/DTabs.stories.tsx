@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Meta, StoryObj } from '@storybook/react-vite';
 
+import { CSSProperties } from 'react';
 import DTabs from '../../src/components/DTabs';
 import DBox from '../../src/components/DBox';
 import { PREFIX_BS } from '../../src/components/config';
@@ -149,7 +150,7 @@ export const Default: Story = {
               style={{
                 '--bs-chip-font-size': '10px',
                 lineHeight: 1,
-              }}
+              } as CSSProperties}
               className="p-1"
               text="2"
             />
