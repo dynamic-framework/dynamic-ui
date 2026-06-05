@@ -319,7 +319,7 @@ export const CustomTemplates: Story = {
           {...args}
           isLoading={state.isLoading}
           isError={state.isError}
-          data={state.data as unknown[]}
+          data={state.data}
         />
       </div>
     );
