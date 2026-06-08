@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
+  type ReactNode,
+  type PropsWithChildren,
   useCallback,
   useContext,
   useLayoutEffect,
@@ -8,13 +10,24 @@ import {
   useState,
 } from 'react';
 
-import type { PropsWithChildren } from 'react';
-
-import { DPortalContextProvider, PortalContextProps } from './DPortalContext';
+import {
+  DPortalContextProvider,
+  type PortalContextProps,
+  type PortalProps,
+} from './DPortalContext';
 
 import { PREFIX_BS } from '../components/config';
 import type { AlertThemeIconMap } from '../components/interface';
 import getCssVariable from '../utils/getCssVariable';
+
+type InternalRenderPortalPayload = {
+  render: (payload: unknown) => ReactNode;
+  payload: unknown;
+};
+
+function InternalRenderPortal({ payload }: PortalProps<InternalRenderPortalPayload>) {
+  return payload.render(payload.payload);
+}
 
 /**
  * Currency formatting configuration used by `DContextProvider`.
@@ -220,11 +233,17 @@ export function DContextProvider<T extends Record<string, unknown>>(
     setContext,
   }), [internalContext, setContext]);
 
+  // Merge built-in portals with user-provided portals
+  const mergedPortals = useMemo(() => ({
+    confirmModal: InternalRenderPortal,
+    ...availablePortals,
+  }), [availablePortals]);
+
   return (
     <DContext.Provider value={value}>
       <DPortalContextProvider
         portalName={portalName}
-        availablePortals={availablePortals}
+        availablePortals={mergedPortals}
       >
         {children}
       </DPortalContextProvider>

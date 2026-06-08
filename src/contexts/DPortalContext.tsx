@@ -107,7 +107,7 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
   }: PortalContextProps<T>,
 ) {
   const { created } = usePortal(portalName);
-  const [stack, { push, pop, isEmpty }] = useStackState<InternalStackItem<T>>([]);
+  const [stack, { push, pop }] = useStackState<InternalStackItem<T>>([]);
   useDisableBodyScrollEffect(Boolean(stack.length));
 
   const openPortal = useCallback(
@@ -137,12 +137,10 @@ export function DPortalContextProvider<T extends Record<string, unknown>>(
 
   const closePortal = useCallback<PortalContextType<T>['closePortal']>(
     () => {
-      if (isEmpty()) {
-        return;
-      }
+      // pop() is safe on empty stacks, so close remains idempotent.
       pop();
     },
-    [isEmpty, pop],
+    [pop],
   );
 
   const publicStack = useMemo(
