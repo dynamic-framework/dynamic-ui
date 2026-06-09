@@ -17,6 +17,20 @@ Requires `DContextProvider` (which includes `DPortalContext`) wrapping your appl
 
 ---
 
+## ⚠️ IMPORTANT: Requires DContextProvider
+
+**This hook MUST be used within a `<DContextProvider>`**. If you use `useConfirmModal` without wrapping your component tree with `<DContextProvider>`, it will throw an error.
+
+If you forget to add the provider and see this error:
+```
+Error: useConfirmModal must be used within a <DContextProvider>. 
+Wrap your component tree with <DContextProvider> to use confirmation modals.
+```
+
+Follow the [Setup guide](#setup-apptsx) below to wrap your application.
+
+---
+
 ## Parameters
 
 ### `UseConfirmModalConfig`

@@ -145,9 +145,19 @@ function ConfirmModalPortal({ payload }: { payload: ConfirmModalPayload }) {
 export default function useConfirmModal(
   config: UseConfirmModalConfig,
 ): UseConfirmModalReturn {
-  const { openPortal, closePortal } = useDPortalContext<{
-    confirmModal: ConfirmModalPortalPayload;
-  }>();
+  let context;
+  try {
+    context = useDPortalContext<{
+      confirmModal: ConfirmModalPortalPayload;
+    }>();
+  } catch (error) {
+    throw new Error(
+      'useConfirmModal must be used within a <DContextProvider>. '
+      + 'Wrap your component tree with <DContextProvider> to use confirmation modals.',
+    );
+  }
+
+  const { openPortal, closePortal } = context;
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = useCallback(() => {
