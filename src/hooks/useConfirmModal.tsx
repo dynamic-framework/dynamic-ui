@@ -84,6 +84,7 @@ function ConfirmModalPortal({ payload }: { payload: ConfirmModalPayload }) {
       name="confirmModal"
       size="lg"
       centered
+      className={`confirm-modal ${critical ? 'critical-modal' : ''}`}
     >
       <DModal.Header onClose={handleClose} showCloseButton>
         <h5 className="fw-bold">{title}</h5>
