@@ -180,9 +180,20 @@ export const DContext = createContext<Context>(DEFAULT_STATE);
  * your root layout), similar to how `DToastContainer` works:
  *
  * ```tsx
+ * // Default: portalName="d-portal"
  * <DContextProvider>
  *   <App />
  *   <DConfirmModalContainer nodeId="d-portal" />
+ * </DContextProvider>
+ * ```
+ *
+ * If you customize `portalName`, match it in `DConfirmModalContainer.nodeId`:
+ *
+ * ```tsx
+ * // Custom portalName
+ * <DContextProvider portalName="my-custom-portal">
+ *   <App />
+ *   <DConfirmModalContainer nodeId="my-custom-portal" />
  * </DContextProvider>
  * ```
  *
