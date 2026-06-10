@@ -4,7 +4,10 @@ import {
   DContextProvider,
   DButton,
   DAvatar,
+  useDPortalContext,
+  DConfirmModalContainer,
 } from '../../src';
+import DModal from '../../src/components/DModal/DModal';
 import DDropdown from '../../src/components/DDropdown/DDropdown';
 import { useConfirmModal } from '../../src/hooks';
 
@@ -17,6 +20,7 @@ const meta: Meta = {
     (Story) => (
       <DContextProvider>
         <Story />
+        <DConfirmModalContainer nodeId="d-portal" />
       </DContextProvider>
     ),
   ],
@@ -631,4 +635,155 @@ function ContactListContent() {
  */
 export const ContactList: StoryObj = {
   render: () => <ContactListContent />,
+};
+
+// ---------------------------------------------------------------------------
+// Confirm Modal over another Modal
+// ---------------------------------------------------------------------------
+
+type EditProfilePayloads = {
+  editProfile: Record<string, never>;
+};
+
+function EditProfileModal() {
+  const { closePortal } = useDPortalContext();
+  const [saved, setSaved] = useState(false);
+
+  const confirmDiscard = useConfirmModal({
+    title: 'Discard changes?',
+    message: 'You have unsaved changes. If you close this form your progress will be lost.',
+    confirmLabel: 'Discard',
+    cancelLabel: 'Keep editing',
+    confirmColor: 'danger',
+    onConfirm: async () => {
+      await new Promise<void>((resolve) => { setTimeout(resolve, 600); });
+      closePortal();
+    },
+  });
+
+  return (
+    <DModal name="editProfileModal" centered size="lg">
+      <DModal.Header onClose={confirmDiscard.open} showCloseButton>
+        <h5 className="fw-bold">Edit Profile</h5>
+      </DModal.Header>
+      <DModal.Body className="py-3 px-5">
+        <p className="text-muted mb-3">
+          Fill in your details below. Changes are not saved until you click
+          {' '}
+          <strong>Save</strong>
+          .
+        </p>
+        <div className="mb-3">
+          <input
+            className="form-control"
+            defaultValue="Sarah Mitchell"
+            aria-label="Full name"
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            className="form-control"
+            defaultValue="sarah.mitchell@email.com"
+            aria-label="Email"
+          />
+        </div>
+        {saved && <p className="alert alert-success mb-0">Changes saved successfully!</p>}
+      </DModal.Body>
+      <DModal.Footer>
+        <DButton
+          text="Close"
+          variant="outline"
+          onClick={confirmDiscard.open}
+          className="d-grid"
+        />
+        <DButton
+          text="Save changes"
+          color="primary"
+          onClick={() => setSaved(true)}
+          className="d-grid"
+        />
+      </DModal.Footer>
+    </DModal>
+  );
+}
+
+function ConfirmOnModalContent() {
+  const { openPortal } = useDPortalContext<EditProfilePayloads>();
+
+  return (
+    <div className="text-center">
+      <DButton
+        text="Open Form Modal"
+        onClick={() => openPortal('editProfile', {})}
+      />
+    </div>
+  );
+}
+
+/**
+ * Confirm modal rendered **above** another open modal.
+ *
+ * Click **Close** inside the form modal to trigger the discard confirmation
+ * on top of the already-open modal.
+ */
+export const ConfirmOnModal: StoryObj = {
+  name: 'Confirm on top of a Modal',
+  decorators: [
+    (Story) => (
+      <DContextProvider<EditProfilePayloads>
+        availablePortals={{ editProfile: EditProfileModal }}
+      >
+        <Story />
+        <DConfirmModalContainer nodeId="d-portal" />
+      </DContextProvider>
+    ),
+  ],
+  render: () => <ConfirmOnModalContent />,
+  parameters: {
+    docs: {
+      source: {
+        code: `type EditProfilePayloads = {
+  editProfile: Record<string, never>;
+};
+
+function EditProfileModal({ }: PortalProps<EditProfilePayloads['editProfile']>) {
+  const { closePortal } = useDPortalContext();
+
+  const confirmDiscard = useConfirmModal({
+    title: 'Discard changes?',
+    message: 'You have unsaved changes. If you close this form your progress will be lost.',
+    confirmLabel: 'Discard',
+    cancelLabel: 'Keep editing',
+    confirmColor: 'danger',
+    onConfirm: async () => {
+      closePortal();
+    },
+  });
+
+  return (
+    <DModal name="editProfileModal" centered size="lg">
+      <DModal.Header onClose={confirmDiscard.open} showCloseButton>
+        <h5 className="fw-bold">Edit Profile</h5>
+      </DModal.Header>
+      <DModal.Body className="py-3 px-5">
+        <input className="form-control mb-3" defaultValue="Sarah Mitchell" aria-label="Full name" />
+        <input className="form-control" defaultValue="sarah.mitchell@email.com" aria-label="Email" />
+      </DModal.Body>
+      <DModal.Footer>
+        <DButton text="Close" variant="outline" onClick={confirmDiscard.open} className="d-grid" />
+        <DButton text="Save changes" color="primary" onClick={closePortal} className="d-grid" />
+      </DModal.Footer>
+    </DModal>
+  );
+}
+
+// Wrap your app with availablePortals including the EditProfileModal:
+<DContextProvider<EditProfilePayloads>
+  availablePortals={{ editProfile: EditProfileModal }}
+>
+  <App />
+</DContextProvider>`,
+      },
+    },
+  },
 };

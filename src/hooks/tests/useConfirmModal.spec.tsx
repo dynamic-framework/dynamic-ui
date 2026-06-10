@@ -7,10 +7,16 @@ import {
 import userEvent from '@testing-library/user-event';
 import type { PropsWithChildren } from 'react';
 import { DContextProvider } from '../../contexts';
+import DConfirmModalContainer from '../../components/DConfirmModal/DConfirmModalContainer';
 import useConfirmModal from '../useConfirmModal';
 
 function Wrapper({ children }: PropsWithChildren) {
-  return <DContextProvider>{children}</DContextProvider>;
+  return (
+    <DContextProvider>
+      {children}
+      <DConfirmModalContainer nodeId="d-portal" />
+    </DContextProvider>
+  );
 }
 
 describe('useConfirmModal', () => {
@@ -73,41 +79,6 @@ describe('useConfirmModal', () => {
     });
   });
 
-  it('should set isLoading while async confirm is in progress and close after resolve', async () => {
-    const user = userEvent.setup();
-    let resolveConfirm: (() => void) | undefined;
-    const onConfirm = jest.fn(() => new Promise<void>((resolve) => {
-      resolveConfirm = resolve;
-    }));
-
-    const { result } = renderHook(() => useConfirmModal({
-      title: 'Async Action',
-      message: 'Proceed?',
-      onConfirm,
-    }), { wrapper: Wrapper });
-
-    act(() => {
-      result.current.open();
-    });
-
-    await user.click(screen.getByRole('button', { name: 'Confirm' }));
-
-    expect(onConfirm).toHaveBeenCalledTimes(1);
-    expect(result.current.isLoading).toBe(true);
-
-    act(() => {
-      resolveConfirm?.();
-    });
-
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
-
-    await waitFor(() => {
-      expect(screen.queryByText('Async Action')).not.toBeInTheDocument();
-    });
-  });
-
   it('should require matching critical code before enabling confirm', async () => {
     const user = userEvent.setup();
     const { result } = renderHook(() => useConfirmModal({
@@ -135,32 +106,5 @@ describe('useConfirmModal', () => {
     await user.clear(input);
     await user.type(input, 'DELETE ACCOUNT');
     expect(confirmButton).toBeEnabled();
-  });
-
-  it('should close programmatically with close()', async () => {
-    const onClose = jest.fn();
-    const { result } = renderHook(() => useConfirmModal({
-      title: 'Close Test',
-      message: 'Close me',
-      onConfirm: jest.fn(),
-      onClose,
-    }), { wrapper: Wrapper });
-
-    act(() => {
-      result.current.open();
-    });
-    expect(screen.getByText('Close Test')).toBeInTheDocument();
-
-    act(() => {
-      result.current.close();
-    });
-
-    await waitFor(() => {
-      expect(onClose).toHaveBeenCalledTimes(1);
-    });
-
-    await waitFor(() => {
-      expect(screen.queryByText('Close Test')).not.toBeInTheDocument();
-    });
   });
 });

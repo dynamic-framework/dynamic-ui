@@ -17,9 +17,9 @@ Requires `DContextProvider` (which includes `DPortalContext`) wrapping your appl
 
 ---
 
-## ⚠️ IMPORTANT: Requires DContextProvider
+## ⚠️ IMPORTANT: Requires DContextProvider + DConfirmModalContainer
 
-**This hook MUST be used within a `<DContextProvider>`**. If you use `useConfirmModal` without wrapping your component tree with `<DContextProvider>`, it will throw an error.
+**This hook MUST be used within a `<DContextProvider>`**. Additionally, you must mount **`<DConfirmModalContainer>`** somewhere inside that provider — it is the component that physically renders the modal. Without it, calling `open()` will have no visible effect.
 
 If you forget to add the provider and see this error:
 ```
@@ -69,23 +69,24 @@ type ConfirmModalColor = 'primary' | 'danger' | 'warning';
 | Property | Type | Description |
 | --- | --- | --- |
 | `open` | `() => void` | Opens the confirmation modal. |
-| `close` | `() => void` | Programmatically closes the modal and fires `onClose` if provided. |
-| `isLoading` | `boolean` | `true` while `onConfirm` is executing. Useful to disable triggers while a confirmation is in progress. |
 
 ---
 
 ## Setup `App.tsx`
 
-Wrap your application with `DContextProvider` to enable portal rendering.
+Wrap your application with `DContextProvider` and place `DConfirmModalContainer` inside it.
+This follows the same pattern as `DToastContainer` — the container must be mounted once per provider to render confirmation modals into the portal.
 
 <Source
-  code={`import { DContextProvider } from '@dynamic-framework/ui-react';
+  code={`import { DContextProvider, DConfirmModalContainer } from '@dynamic-framework/ui-react';
 import ExampleOfUse from './ExampleOfUse';
 
 export function App() {
   return (
     <DContextProvider>
       <ExampleOfUse />
+      {/* Required: renders confirmation modals into the portal */}
+      <DConfirmModalContainer nodeId="d-portal" />
     </DContextProvider>
   );
 }`}
@@ -97,36 +98,19 @@ export function App() {
 
 ## Basic example `ExampleOfUse.tsx`
 
-Simple destructive confirmation with a danger color.
+Only `onConfirm` is required. Everything else has sensible defaults.
 
 <Source
-  code={`import { useState } from 'react';
-import { DButton, useConfirmModal } from '@dynamic-framework/ui-react';
+  code={`import { DButton, useConfirmModal } from '@dynamic-framework/ui-react';
 
 export function ExampleOfUse() {
-  const [result, setResult] = useState('');
-
   const confirm = useConfirmModal({
-    title: 'Delete Item',
-    message: 'Are you sure you want to delete this item? This action cannot be undone.',
-    confirmLabel: 'Delete',
-    cancelLabel: 'Cancel',
-    confirmColor: 'danger',
     onConfirm: async () => {
-      await deleteItem();
-      setResult('Item deleted successfully.');
-    },
-    onClose: () => {
-      setResult('Action cancelled.');
+      await doSomething();
     },
   });
 
-  return (
-    <div className="d-flex flex-column align-items-center gap-3">
-      <DButton text="Delete Item" color="danger" onClick={confirm.open} />
-      {result && <p className="alert alert-info mb-0">{result}</p>}
-    </div>
-  );
+  return <DButton text="Proceed" onClick={confirm.open} />;
 }`}
   language="tsx"
   dark

@@ -98,3 +98,5 @@ export {
   LoadingState,
 } from './DDataStateWrapper';
 export type { DDataStateMessages } from './DDataStateWrapper';
+export { default as DConfirmModalContainer } from './DConfirmModal/DConfirmModalContainer';
+export type { ConfirmModalEntry, ConfirmModalStore } from './DConfirmModal/types';

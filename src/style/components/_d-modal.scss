@@ -52,3 +52,10 @@
     display: block;
   }
 }
+
+.confirm-modal {
+  --#{$prefix}shadow-confirm-modal: var(--#{$prefix}box-shadow-sm), 0 0 100px 20px rgba(0, 0, 0, .2);
+  .modal-content {
+    --#{$prefix}modal-box-shadow: var(--#{$prefix}shadow-confirm-modal);
+  }
+}

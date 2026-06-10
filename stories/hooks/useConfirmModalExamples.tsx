@@ -3,31 +3,20 @@ import {
   DContextProvider,
   DButton,
   DAvatar,
+  DConfirmModalContainer,
 } from '../../src';
 import { useConfirmModal } from '../../src/hooks';
 
 function BasicExampleContent() {
-  const [result, setResult] = useState('');
-
   const confirm = useConfirmModal({
-    title: 'Delete Item',
-    message: 'Are you sure you want to delete this item? This action cannot be undone.',
-    confirmLabel: 'Delete',
-    cancelLabel: 'Cancel',
-    confirmColor: 'danger',
     onConfirm: async () => {
       await new Promise<void>((resolve) => { setTimeout(resolve, 800); });
-      setResult('Item deleted successfully.');
-    },
-    onClose: () => {
-      setResult('Action cancelled.');
     },
   });
 
   return (
     <div className="d-flex flex-column align-items-center gap-3">
-      <DButton text="Delete Item" color="danger" onClick={confirm.open} />
-      {result && <p className="alert alert-info mb-0">{result}</p>}
+      <DButton text="Proceed" onClick={confirm.open} />
     </div>
   );
 }
@@ -138,6 +127,7 @@ export function BasicExample() {
   return (
     <DContextProvider>
       <BasicExampleContent />
+      <DConfirmModalContainer nodeId="d-portal" />
     </DContextProvider>
   );
 }
@@ -146,6 +136,7 @@ export function CriticalExample() {
   return (
     <DContextProvider>
       <CriticalExampleContent />
+      <DConfirmModalContainer nodeId="d-portal" />
     </DContextProvider>
   );
 }
@@ -154,6 +145,7 @@ export function CloseCallbackExample() {
   return (
     <DContextProvider>
       <CloseCallbackExampleContent />
+      <DConfirmModalContainer nodeId="d-portal" />
     </DContextProvider>
   );
 }
@@ -162,6 +154,7 @@ export function ContactRowExample() {
   return (
     <DContextProvider>
       <ContactRowExampleContent />
+      <DConfirmModalContainer nodeId="d-portal" />
     </DContextProvider>
   );
 }

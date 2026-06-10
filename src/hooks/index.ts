@@ -10,7 +10,6 @@ export { default as useConfirmModal } from './useConfirmModal';
 export type {
   UseConfirmModalConfig,
   UseConfirmModalReturn,
-  ConfirmModalPayload,
   ConfirmModalColor,
   CriticalConfirmConfig,
 } from './useConfirmModal';
