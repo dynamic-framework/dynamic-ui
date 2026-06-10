@@ -59,7 +59,7 @@ export default function DConfirmModalContainer({ nodeId }: Props) {
         // Close the top (last) confirm modal
         entries[entries.length - 1].onCloseAction();
         // Prevent the event from reaching other handlers (e.g., DPortalContextProvider)
-        event.stopImmediatePropagation();
+        event.stopPropagation();
         event.preventDefault();
       }
     };
