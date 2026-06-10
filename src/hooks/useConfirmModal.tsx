@@ -13,21 +13,33 @@ export type {
 /**
  * Hook to display a confirmation modal.
  *
- * Renders via a dedicated portal node (`#d-confirm-modal-root`) mounted directly
- * on `document.body`, so the confirm modal always sits above any other modal or overlay.
+ * Renders into the portal node specified by `DConfirmModalContainer` (typically `#d-portal`).
+ * The confirm modal floats above the portal stack and handles its own Escape key,
+ * preventing interference with underlying modals.
  *
- * Requires `DContextProvider` wrapping your application so that
- * `DConfirmModalContainer` is present and listening.
+ * Requires both `DContextProvider` wrapping your application AND an explicit
+ * `<DConfirmModalContainer nodeId="d-portal" />` mounted in your app.
  *
  * @example
- * const confirm = useConfirmModal({
- *   title: 'Delete Account',
- *   message: 'This action cannot be undone.',
- *   critical: { code: 'DELETE ACCOUNT' },
- *   onConfirm: async () => { await deleteAccount(); },
- * });
+ * function App() {
+ *   return (
+ *     <DContextProvider>
+ *       <YourContent />
+ *       <DConfirmModalContainer nodeId="d-portal" />
+ *     </DContextProvider>
+ *   );
+ * }
  *
- * <DButton onClick={confirm.open} text="Delete" color="danger" />
+ * function MyComponent() {
+ *   const confirm = useConfirmModal({
+ *     title: 'Delete Account',
+ *     message: 'This action cannot be undone.',
+ *     critical: { code: 'DELETE ACCOUNT' },
+ *     onConfirm: async () => { await deleteAccount(); },
+ *   });
+ *
+ *   return <DButton onClick={confirm.open} text="Delete" color="danger" />;
+ * }
  */
 export default function useConfirmModal(
   config: UseConfirmModalConfig,
@@ -51,6 +63,9 @@ export default function useConfirmModal(
         // Keep modal open on error
       }
     };
+
+    // Remove any existing entry with this id to prevent duplicates on re-entrancy
+    store.remove(idRef.current);
 
     store.push({
       ...config,

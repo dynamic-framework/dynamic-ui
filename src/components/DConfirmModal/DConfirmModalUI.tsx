@@ -46,7 +46,7 @@ export default function DConfirmModalUI({ entry }: Props) {
 
   return (
     <DModal
-      name="dConfirmModal"
+      name={entry.id}
       size="lg"
       className={`confirm-modal ${critical ? 'critical-modal' : ''}`}
     >

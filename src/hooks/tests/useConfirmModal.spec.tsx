@@ -107,4 +107,26 @@ describe('useConfirmModal', () => {
     await user.type(input, 'DELETE ACCOUNT');
     expect(confirmButton).toBeEnabled();
   });
+
+  it('should deduplicate if open() is called multiple times before modal closes', () => {
+    const onConfirm = jest.fn();
+    const { result } = renderHook(() => useConfirmModal({
+      title: 'Delete Item',
+      message: 'Are you sure?',
+      onConfirm,
+    }), { wrapper: Wrapper });
+
+    act(() => {
+      result.current.open();
+    });
+
+    // Simulate double-click: call open() again before modal closes
+    act(() => {
+      result.current.open();
+    });
+
+    // Should only have one modal visible, not two
+    const modals = screen.getAllByText('Delete Item');
+    expect(modals).toHaveLength(1);
+  });
 });

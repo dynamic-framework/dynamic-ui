@@ -83,7 +83,7 @@ export const SimpleConfirm: StoryObj = {
       await new Promise<void>((resolve) => { setTimeout(resolve, 1000); });
       setResult('Item deleted successfully');
     },
-    onCancel: () => {
+    onClose: () => {
       setResult('Deletion cancelled');
     },
   });
@@ -273,7 +273,7 @@ export const DeleteContact: StoryObj = {
         setIsDeleting(false);
       }
     },
-    onCancel: () => {
+    onClose: () => {
       setResult('Deletion cancelled');
     },
   });
@@ -731,10 +731,11 @@ export const ConfirmOnModal: StoryObj = {
   decorators: [
     (Story) => (
       <DContextProvider<EditProfilePayloads>
+        portalName="d-portal-inner"
         availablePortals={{ editProfile: EditProfileModal }}
       >
         <Story />
-        <DConfirmModalContainer nodeId="d-portal" />
+        <DConfirmModalContainer nodeId="d-portal-inner" />
       </DContextProvider>
     ),
   ],
