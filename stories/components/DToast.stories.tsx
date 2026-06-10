@@ -17,7 +17,7 @@ const config: Meta<typeof DToast> = {
     To achieve the behavior of a toast it is necessary to use the
     **DToastContainer** and the **useToast** hook. For detailed
     guidance on the **correct usage** of toasts, please refer to the [Toast
-    pattern section](/docs/design-system-overlays-toast--docs) in our
+    Usage](/docs/design-system-components-toast-usage--docs) page in our
     documentation.
   </p>
 </div>
