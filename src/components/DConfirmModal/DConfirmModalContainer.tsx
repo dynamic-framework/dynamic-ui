@@ -29,7 +29,7 @@ type Props = {
  * @example
  * <DContextProvider>
  *   <App />
- *   <DConfirmModalContainer nodeId="d-portal-inner" />
+ *   <DConfirmModalContainer nodeId="d-portal" />
  * </DContextProvider>
  */
 export default function DConfirmModalContainer({ nodeId }: Props) {

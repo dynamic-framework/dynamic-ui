@@ -18,14 +18,14 @@ export type {
  * preventing interference with underlying modals.
  *
  * Requires both `DContextProvider` wrapping your application AND an explicit
- * `<DConfirmModalContainer nodeId="d-portal-inner" />` mounted in your app.
+ * `<DConfirmModalContainer nodeId="d-portal" />` mounted in your app.
  *
  * @example
  * function App() {
  *   return (
  *     <DContextProvider>
  *       <YourContent />
- *       <DConfirmModalContainer nodeId="d-portal-inner" />
+ *       <DConfirmModalContainer nodeId="d-portal" />
  *     </DContextProvider>
  *   );
  * }

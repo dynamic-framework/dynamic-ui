@@ -20,7 +20,7 @@ const meta: Meta = {
     (Story) => (
       <DContextProvider>
         <Story />
-        <DConfirmModalContainer nodeId="d-portal-inner" />
+        <DConfirmModalContainer nodeId="d-portal" />
       </DContextProvider>
     ),
   ],
@@ -735,7 +735,7 @@ export const ConfirmOnModal: StoryObj = {
         availablePortals={{ editProfile: EditProfileModal }}
       >
         <Story />
-        <DConfirmModalContainer nodeId="d-portal-inner" />
+        <DConfirmModalContainer nodeId="d-portal" />
       </DContextProvider>
     ),
   ],
