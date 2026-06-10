@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import DToast from '../../src/components/DToast/DToast';
+import { DToast } from '../../src/components';
 import { DIcon } from '../../src';
 import { PREFIX_BS } from '../../src/components/config';
 
@@ -12,6 +12,16 @@ const config: Meta<typeof DToast> = {
     docs: {
       description: {
         component: `
+<div class="alert alert-warning my-4 py-2" role="alert">
+  <p>
+    To achieve the behavior of a toast it is necessary to use the
+    **DToastContainer** and the **useToast** hook. For detailed
+    guidance on the **correct usage** of toasts, please refer to the [Toast
+    pattern section](/docs/design-system-overlays-toast--docs) in our
+    documentation.
+  </p>
+</div>
+
 To understand in more detail the aspects covered by this component, review the following documentation:
 
 + [Bootstrap Toast](https://getbootstrap.com/docs/5.3/components/toasts/)
