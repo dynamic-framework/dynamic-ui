@@ -20,7 +20,7 @@ const meta: Meta = {
     (Story) => (
       <DContextProvider>
         <Story />
-        <DConfirmModalContainer nodeId="d-portal" />
+        <DConfirmModalContainer nodeId="d-portal-inner" />
       </DContextProvider>
     ),
   ],

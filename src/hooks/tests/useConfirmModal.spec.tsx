@@ -14,7 +14,7 @@ function Wrapper({ children }: PropsWithChildren) {
   return (
     <DContextProvider>
       {children}
-      <DConfirmModalContainer nodeId="d-portal" />
+      <DConfirmModalContainer nodeId="d-portal-inner" />
     </DContextProvider>
   );
 }

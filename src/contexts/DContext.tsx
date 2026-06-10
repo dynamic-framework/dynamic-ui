@@ -183,7 +183,7 @@ export const DContext = createContext<Context>(DEFAULT_STATE);
  * // Default: portalName="d-portal"
  * <DContextProvider>
  *   <App />
- *   <DConfirmModalContainer nodeId="d-portal" />
+ *   <DConfirmModalContainer nodeId="d-portal-inner" />
  * </DContextProvider>
  * ```
  *

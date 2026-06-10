@@ -127,7 +127,7 @@ export function BasicExample() {
   return (
     <DContextProvider>
       <BasicExampleContent />
-      <DConfirmModalContainer nodeId="d-portal" />
+      <DConfirmModalContainer nodeId="d-portal-inner" />
     </DContextProvider>
   );
 }
@@ -136,7 +136,7 @@ export function CriticalExample() {
   return (
     <DContextProvider>
       <CriticalExampleContent />
-      <DConfirmModalContainer nodeId="d-portal" />
+      <DConfirmModalContainer nodeId="d-portal-inner" />
     </DContextProvider>
   );
 }
@@ -145,7 +145,7 @@ export function CloseCallbackExample() {
   return (
     <DContextProvider>
       <CloseCallbackExampleContent />
-      <DConfirmModalContainer nodeId="d-portal" />
+      <DConfirmModalContainer nodeId="d-portal-inner" />
     </DContextProvider>
   );
 }
@@ -154,7 +154,7 @@ export function ContactRowExample() {
   return (
     <DContextProvider>
       <ContactRowExampleContent />
-      <DConfirmModalContainer nodeId="d-portal" />
+      <DConfirmModalContainer nodeId="d-portal-inner" />
     </DContextProvider>
   );
 }
