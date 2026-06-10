@@ -12,15 +12,8 @@ const config: Meta<typeof DToast> = {
     docs: {
       description: {
         component: `
-<div class="alert alert-warning my-4 py-2" role="alert">
-  <p>
-    To achieve the behavior of a toast it is necessary to use the
-    **DToastContainer** and the **useToast** hook. For detailed
-    guidance on the **correct usage** of toasts, please refer to the [Toast
-    Usage](/docs/design-system-components-toast-usage--docs) page in our
-    documentation.
-  </p>
-</div>
+> ⚠️ To achieve the behavior of a toast it is necessary to use the **\`DToastContainer\`** and the **\`useDToast\`** hook. For detailed guidance on the **correct usage** of toasts, please refer to the [Toast Usage](/docs/design-system-components-toast-usage--docs) page in our documentation.
+
 
 To understand in more detail the aspects covered by this component, review the following documentation:
 
