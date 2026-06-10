@@ -9,6 +9,7 @@
 }
 
 .backdrop-confirm-modal {
+  --#{$prefix}backdrop-zindex: #{$zindex-modal + 9};
   --#{$prefix}backdrop-filter: 3px;
   --#{$prefix}backdrop-bg: transparent;
   backdrop-filter: blur(var(--#{$prefix}backdrop-filter));
