@@ -11,6 +11,7 @@ import {
 } from './confirmModalStore';
 import DConfirmModalUI from './DConfirmModalUI';
 import useDisableBodyScrollEffect from '../../hooks/useDisableBodyScrollEffect';
+import { useDPortalContext } from '../../contexts/DPortalContext';
 
 type Props = {
   /** ID of the DOM element (portal node) to render the confirm modal into. */
@@ -33,9 +34,11 @@ type Props = {
  */
 export default function DConfirmModalContainer({ nodeId }: Props) {
   const store = useConfirmModalStore();
+  const { stack } = useDPortalContext();
   const [entries, setEntries] = useState<ConfirmModalEntry[]>([]);
 
-  useDisableBodyScrollEffect(entries.length > 0);
+  // Lock body scroll while either confirm modals or portals are open
+  useDisableBodyScrollEffect(entries.length > 0 || stack.length > 0);
 
   useEffect(() => {
     const unsubscribe = store.subscribe((next) => {
@@ -83,7 +86,6 @@ export default function DConfirmModalContainer({ nodeId }: Props) {
           exit={{ opacity: 0, transition: { delay: 0.3 } }}
           transition={{ duration: 0.15, ease: 'linear' }}
         >
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <div
             className="backdrop backdrop-confirm-modal"
             onClick={entry.onCloseAction}

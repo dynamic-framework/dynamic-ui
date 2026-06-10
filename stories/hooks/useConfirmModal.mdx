@@ -22,10 +22,7 @@ Requires `DContextProvider` (which includes `DPortalContext`) wrapping your appl
 **This hook MUST be used within a `<DContextProvider>`**. Additionally, you must mount **`<DConfirmModalContainer>`** somewhere inside that provider — it is the component that physically renders the modal. Without it, calling `open()` will have no visible effect.
 
 If you forget to add the provider and see this error:
-```
-Error: useConfirmModal must be used within a <DContextProvider>. 
-Wrap your component tree with <DContextProvider> to use confirmation modals.
-```
+Error: useConfirmModal must be used within a `<DContextProvider>`.
 
 Follow the [Setup guide](#setup-apptsx) below to wrap your application.
 
@@ -86,7 +83,7 @@ export function App() {
     <DContextProvider>
       <ExampleOfUse />
       {/* Required: renders confirmation modals into the portal */}
-      <DConfirmModalContainer nodeId="d-portal-inner" />
+      <DConfirmModalContainer nodeId="d-portal" />
     </DContextProvider>
   );
 }`}

@@ -1,6 +1,8 @@
 import {
   useState,
   useCallback,
+  useEffect,
+  useRef,
 } from 'react';
 import DModal from '../DModal';
 import DButton from '../DButton';
@@ -25,6 +27,17 @@ export default function DConfirmModalUI({ entry }: Props) {
 
   const [confirmationCode, setConfirmationCode] = useState('');
   const [internalLoading, setInternalLoading] = useState(false);
+  const isMountedRef = useRef(true);
+
+  useEffect(
+    () => {
+      const cleanup = () => {
+        isMountedRef.current = false;
+      };
+      return cleanup;
+    },
+    [],
+  );
 
   const handleClose = useCallback(() => {
     onCloseAction();
@@ -40,7 +53,11 @@ export default function DConfirmModalUI({ entry }: Props) {
     onConfirmAction()
       .catch(() => undefined)
       .finally(() => {
-        setInternalLoading(false);
+        // Only update state if the component is still mounted.
+        // onConfirmAction() removes the entry on success, which unmounts this component.
+        if (isMountedRef.current) {
+          setInternalLoading(false);
+        }
       });
   }, [onConfirmAction]);
 
