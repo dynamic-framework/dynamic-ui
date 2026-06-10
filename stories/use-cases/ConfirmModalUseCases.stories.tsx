@@ -6,9 +6,12 @@ import {
   DAvatar,
   useDPortalContext,
   DConfirmModalContainer,
+  DInputSwitch,
 } from '../../src';
 import DModal from '../../src/components/DModal/DModal';
 import DDropdown from '../../src/components/DDropdown/DDropdown';
+import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
+import type { PortalProps } from '../../src';
 import { useConfirmModal } from '../../src/hooks';
 
 const meta: Meta = {
@@ -694,13 +697,11 @@ function EditProfileModal() {
           text="Close"
           variant="outline"
           onClick={confirmDiscard.open}
-          className="d-grid"
         />
         <DButton
           text="Save changes"
           color="primary"
           onClick={() => setSaved(true)}
-          className="d-grid"
         />
       </DModal.Footer>
     </DModal>
@@ -771,8 +772,8 @@ function EditProfileModal({ }: PortalProps<EditProfilePayloads['editProfile']>) 
         <input className="form-control" defaultValue="sarah.mitchell@email.com" aria-label="Email" />
       </DModal.Body>
       <DModal.Footer>
-        <DButton text="Close" variant="outline" onClick={confirmDiscard.open} className="d-grid" />
-        <DButton text="Save changes" color="primary" onClick={closePortal} className="d-grid" />
+        <DButton text="Close" variant="outline" onClick={confirmDiscard.open} />
+        <DButton text="Save changes" color="primary" onClick={closePortal} />
       </DModal.Footer>
     </DModal>
   );
@@ -783,6 +784,147 @@ function EditProfileModal({ }: PortalProps<EditProfilePayloads['editProfile']>) 
   availablePortals={{ editProfile: EditProfileModal }}
 >
   <App />
+</DContextProvider>`,
+      },
+    },
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Confirm Modal on top of an Offcanvas
+// ---------------------------------------------------------------------------
+
+type SettingsOffcanvasPayloads = {
+  settings: Record<string, never>;
+};
+
+function SettingsOffcanvas({ name }: PortalProps<SettingsOffcanvasPayloads['settings']>) {
+  const { closePortal } = useDPortalContext();
+
+  const confirmDiscard = useConfirmModal({
+    title: 'Discard changes?',
+    message: 'You have unsaved changes. If you close this panel your progress will be lost.',
+    confirmLabel: 'Discard',
+    cancelLabel: 'Keep editing',
+    confirmColor: 'danger',
+    onConfirm: async () => {
+      await new Promise<void>((resolve) => { setTimeout(resolve, 500); });
+      closePortal();
+    },
+  });
+
+  return (
+    <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end">
+      <DOffcanvas.Header onClose={confirmDiscard.open} showCloseButton>
+        <h5 className="fw-bold">Settings</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        <p className="text-muted mb-4">
+          Update your preferences below. Changes are not saved until you click
+          {' '}
+          <strong>Save</strong>
+          .
+        </p>
+        <div className="mb-3">
+          <p className="form-label mb-2">Notification email</p>
+          <DInputSwitch label="Email notifications" />
+          <DInputSwitch label="Newsletter subscription" />
+        </div>
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton
+          text="Discard"
+          variant="outline"
+          color="secondary"
+          onClick={confirmDiscard.open}
+        />
+        <DButton
+          text="Save"
+          color="primary"
+          onClick={() => closePortal()}
+        />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+function ConfirmOnOffcanvasContent() {
+  const { openPortal } = useDPortalContext<SettingsOffcanvasPayloads>();
+
+  return (
+    <div className="text-center">
+      <DButton
+        text="Open Settings"
+        onClick={() => openPortal('settings', {})}
+      />
+    </div>
+  );
+}
+
+/**
+ * Confirm modal rendered **above** an open offcanvas.
+ *
+ * Click **Discard** or the ✕ button inside the settings panel to trigger
+ * the discard confirmation on top of the already-open offcanvas.
+ */
+export const ConfirmOnOffcanvas: StoryObj = {
+  name: 'Confirm on top of an Offcanvas',
+  decorators: [
+    (Story) => (
+      <DContextProvider<SettingsOffcanvasPayloads>
+        portalName="d-portal-offcanvas"
+        availablePortals={{ settings: SettingsOffcanvas }}
+      >
+        <Story />
+        <DConfirmModalContainer nodeId="d-portal-offcanvas" />
+      </DContextProvider>
+    ),
+  ],
+  render: () => <ConfirmOnOffcanvasContent />,
+  parameters: {
+    docs: {
+      source: {
+        code: `type SettingsOffcanvasPayloads = {
+  settings: Record<string, never>;
+};
+
+function SettingsOffcanvas({ name }: PortalProps<SettingsOffcanvasPayloads['settings']>) {
+  const { closePortal } = useDPortalContext();
+
+  const confirmDiscard = useConfirmModal({
+    title: 'Discard changes?',
+    message: 'You have unsaved changes. If you close this panel your progress will be lost.',
+    confirmLabel: 'Discard',
+    cancelLabel: 'Keep editing',
+    confirmColor: 'danger',
+    onConfirm: async () => {
+      closePortal();
+    },
+  });
+
+  return (
+    <DOffcanvas name={name} openFrom="end">
+      <DOffcanvas.Header onClose={confirmDiscard.open} showCloseButton>
+        <h5 className="fw-bold">Settings</h5>
+      </DOffcanvas.Header>
+      <DOffcanvas.Body>
+        {/* form fields */}
+      </DOffcanvas.Body>
+      <DOffcanvas.Footer>
+        <DButton text="Discard" variant="outline" onClick={confirmDiscard.open} />
+        <DButton text="Save" color="primary" onClick={closePortal} />
+      </DOffcanvas.Footer>
+    </DOffcanvas>
+  );
+}
+
+// Wrap with a unique portalName so it doesn't collide with the app-level portal:
+<DContextProvider<SettingsOffcanvasPayloads>
+  portalName="d-portal-offcanvas"
+  availablePortals={{ settings: SettingsOffcanvas }}
+>
+  <App />
+  <DConfirmModalContainer nodeId="d-portal-offcanvas" />
 </DContextProvider>`,
       },
     },
