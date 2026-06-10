@@ -21,7 +21,7 @@ const fourPlanFeatures = [
 ];
 
 const meta: Meta = {
-  title: 'Use Cases/Plan Comparator',
+  title: 'Patterns/Plan Comparator',
   parameters: {
     docs: {
       page: DocsTemplate,

@@ -4,7 +4,7 @@ import { DCarousel, DButton, DBox } from '../../src';
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DCarousel> = {
-  title: 'Use Cases/Carousel',
+  title: 'Patterns/Carousel',
   component: DCarousel,
   parameters: {
     docs: {
