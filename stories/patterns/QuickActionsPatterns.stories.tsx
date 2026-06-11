@@ -10,7 +10,7 @@ import {
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta = {
-  title: 'Use Cases/Quick Actions',
+  title: 'Patterns/Quick Actions',
   parameters: {
     docs: {
       page: DocsTemplate,

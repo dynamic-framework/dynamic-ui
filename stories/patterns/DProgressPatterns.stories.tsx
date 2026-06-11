@@ -14,7 +14,7 @@ import {
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DProgress> = {
-  title: 'Use Cases/Progress',
+  title: 'Patterns/Progress',
   component: DProgress,
   parameters: {
     docs: {

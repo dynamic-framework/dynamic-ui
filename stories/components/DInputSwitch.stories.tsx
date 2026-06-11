@@ -208,8 +208,8 @@ export const SeeMoreExamples: Story = {
         <span className="text-secondary">
           To see more examples, you can review the
           {' '}
-          <a href="/?path=/docs/use-cases-input-switch--docs" target="_parent">
-            <strong>Use Cases / Input Switch</strong>
+          <a href="/?path=/docs/patterns-input-switch--docs" target="_parent">
+            <strong>Patterns / Input Switch</strong>
           </a>
           {' '}
           stories, where you will find real-world usage patterns with descriptions
