@@ -165,8 +165,8 @@ export const SeeMoreExamples: Story = {
         <span className="text-secondary">
           To see more examples, you can review the
           {' '}
-          <a href="/?path=/docs/use-cases-input-range--docs" target="_parent">
-            <strong>Use Cases / Input Range</strong>
+          <a href="/?path=/docs/patterns-input-range--docs" target="_parent">
+            <strong>Patterns / Input Range</strong>
           </a>
           {' '}
           stories, where you will find real-world usage patterns like live value display,

@@ -293,8 +293,8 @@ export const SeeMoreExamples: Story = {
         <span className="text-secondary">
           To see more real-world usage, check the
           {' '}
-          <a href="/?path=/docs/use-cases-progress--docs" target="_parent">
-            <strong>Use Cases / Progress</strong>
+          <a href="/?path=/docs/patterns-progress--docs" target="_parent">
+            <strong>Patterns / Progress</strong>
           </a>
           {' '}
           stories for onboarding, uploads, and financial trackers.
