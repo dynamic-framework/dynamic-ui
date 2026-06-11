@@ -870,3 +870,678 @@ export function Composition() {
     },
   },
 };
+
+type FinanceTransactionType = 'Credit' | 'Debit';
+type FinanceTransactionStatus = 'Posted' | 'Pending' | 'Flagged';
+
+type FinanceTransaction = {
+  id: string;
+  date: string;
+  reference: string;
+  account: string;
+  category: 'Payroll' | 'Card Processing' | 'Vendor Payment' | 'Chargeback' | 'Treasury' | 'Adjustment';
+  type: FinanceTransactionType;
+  status: FinanceTransactionStatus;
+  amount: number;
+};
+
+const FINANCE_TRANSACTIONS: FinanceTransaction[] = [
+  {
+    id: 'TX-10491',
+    date: '2026-06-08',
+    reference: 'Payroll Batch - ACME',
+    account: 'Main Operating',
+    category: 'Payroll',
+    type: 'Debit',
+    status: 'Posted',
+    amount: -42500.9,
+  },
+  {
+    id: 'TX-10492',
+    date: '2026-06-08',
+    reference: 'Card Settlement',
+    account: 'Merchant Clearing',
+    category: 'Card Processing',
+    type: 'Credit',
+    status: 'Posted',
+    amount: 19880.22,
+  },
+  {
+    id: 'TX-10493',
+    date: '2026-06-09',
+    reference: 'Wire Out - Supplier',
+    account: 'Main Operating',
+    category: 'Vendor Payment',
+    type: 'Debit',
+    status: 'Pending',
+    amount: -7420,
+  },
+  {
+    id: 'TX-10494',
+    date: '2026-06-09',
+    reference: 'ACH Return',
+    account: 'Collections',
+    category: 'Chargeback',
+    type: 'Debit',
+    status: 'Flagged',
+    amount: -1280.35,
+  },
+  {
+    id: 'TX-10495',
+    date: '2026-06-10',
+    reference: 'Treasury Sweep',
+    account: 'Liquidity Reserve',
+    category: 'Treasury',
+    type: 'Credit',
+    status: 'Posted',
+    amount: 65500,
+  },
+  {
+    id: 'TX-10496',
+    date: '2026-06-10',
+    reference: 'Manual Adjustment',
+    account: 'Main Operating',
+    category: 'Adjustment',
+    type: 'Debit',
+    status: 'Pending',
+    amount: -560,
+  },
+];
+
+type PortfolioLoan = {
+  id: string;
+  borrower: string;
+  product: string;
+  disbursed: number;
+  paidInstallments: number;
+  totalInstallments: number;
+  daysPastDue: number;
+};
+
+const PORTFOLIO_LOANS: PortfolioLoan[] = [
+  {
+    id: 'LN-8801',
+    borrower: 'A. Ibarra',
+    product: 'Personal Loan',
+    disbursed: 12000,
+    paidInstallments: 8,
+    totalInstallments: 12,
+    daysPastDue: 0,
+  },
+  {
+    id: 'LN-8802',
+    borrower: 'Norte Retail SA',
+    product: 'Working Capital',
+    disbursed: 95000,
+    paidInstallments: 4,
+    totalInstallments: 18,
+    daysPastDue: 12,
+  },
+  {
+    id: 'LN-8803',
+    borrower: 'M. Zuniga',
+    product: 'Auto Loan',
+    disbursed: 24500,
+    paidInstallments: 2,
+    totalInstallments: 24,
+    daysPastDue: 47,
+  },
+  {
+    id: 'LN-8804',
+    borrower: 'Pacifica Foods',
+    product: 'Invoice Financing',
+    disbursed: 60000,
+    paidInstallments: 9,
+    totalInstallments: 12,
+    daysPastDue: 0,
+  },
+];
+
+type PaymentApproval = {
+  id: string;
+  beneficiary: string;
+  account: string;
+  amount: number;
+  dueDate: string;
+};
+
+const PAYMENT_APPROVALS: PaymentApproval[] = [
+  {
+    id: 'AP-301',
+    beneficiary: 'Riverside Logistics',
+    account: 'Operating - 0012',
+    amount: 14800,
+    dueDate: '2026-06-12',
+  },
+  {
+    id: 'AP-302',
+    beneficiary: 'Cloud Ops Inc.',
+    account: 'Technology - 9981',
+    amount: 2350.75,
+    dueDate: '2026-06-13',
+  },
+  {
+    id: 'AP-303',
+    beneficiary: 'Servicios Aurora',
+    account: 'Operations - 7810',
+    amount: 4210,
+    dueDate: '2026-06-13',
+  },
+  {
+    id: 'AP-304',
+    beneficiary: 'Northwind Holdings',
+    account: 'Treasury - 1300',
+    amount: 90640,
+    dueDate: '2026-06-15',
+  },
+];
+
+const USD = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+function financeStatusColor(status: FinanceTransactionStatus) {
+  if (status === 'Posted') return 'success';
+  if (status === 'Pending') return 'warning';
+  return 'danger';
+}
+
+function loanRisk(daysPastDue: number) {
+  if (daysPastDue >= 30) return { text: 'High', color: 'danger' as const };
+  if (daysPastDue > 0) return { text: 'Medium', color: 'warning' as const };
+  return { text: 'Low', color: 'success' as const };
+}
+
+function FinancialTransactionHistoryComponent() {
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState<'all' | FinanceTransactionType>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | FinanceTransactionStatus>('all');
+
+  const rows = FINANCE_TRANSACTIONS.filter((row) => {
+    const query = search.trim().toLowerCase();
+    const matchesSearch = query.length === 0
+      || row.id.toLowerCase().includes(query)
+      || row.reference.toLowerCase().includes(query)
+      || row.account.toLowerCase().includes(query);
+    const matchesType = typeFilter === 'all' || row.type === typeFilter;
+    const matchesStatus = statusFilter === 'all' || row.status === statusFilter;
+    return matchesSearch && matchesType && matchesStatus;
+  });
+
+  return (
+    <DBox style={{ width: '100%', maxWidth: '1100px' }}>
+      <div className="d-flex flex-wrap gap-3 align-items-end mb-3">
+        <div style={{ minWidth: '320px', flex: 1 }}>
+          <small className="d-block text-secondary mb-1">Search transaction</small>
+          <DInput
+            type="text"
+            value={search}
+            placeholder="Search by id, account, or reference"
+            onChange={setSearch}
+          />
+        </div>
+        <div>
+          <small className="d-block text-secondary mb-1">Type</small>
+          <select
+            className="form-select"
+            value={typeFilter}
+            onChange={(event) => setTypeFilter(event.target.value as 'all' | FinanceTransactionType)}
+          >
+            <option value="all">All</option>
+            <option value="Credit">Credit</option>
+            <option value="Debit">Debit</option>
+          </select>
+        </div>
+        <div>
+          <small className="d-block text-secondary mb-1">Status</small>
+          <select
+            className="form-select"
+            value={statusFilter}
+            onChange={(event) => setStatusFilter(event.target.value as 'all' | FinanceTransactionStatus)}
+          >
+            <option value="all">All</option>
+            <option value="Posted">Posted</option>
+            <option value="Pending">Pending</option>
+            <option value="Flagged">Flagged</option>
+          </select>
+        </div>
+      </div>
+
+      <table className="table table-hover align-middle">
+        <caption>Transaction History</caption>
+        <thead>
+          <tr>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Account</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th className="text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              <td>
+                <div className="fw-semibold">{row.id}</div>
+                <small className="text-secondary">{row.reference}</small>
+              </td>
+              <td>{row.date}</td>
+              <td>{row.account}</td>
+              <td>{row.category}</td>
+              <td>
+                <DBadge text={row.status} color={financeStatusColor(row.status)} />
+              </td>
+              <td className={`text-end fw-semibold ${row.amount >= 0 ? 'text-success' : 'text-danger'}`}>
+                {USD.format(row.amount)}
+              </td>
+            </tr>
+          ))}
+          {rows.length === 0 && (
+            <tr>
+              <td colSpan={6} className="text-center text-secondary py-4">
+                No transactions match your current filters.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </DBox>
+  );
+}
+
+export const TransactionHistory: Story = {
+  render: () => <FinancialTransactionHistoryComponent />,
+};
+
+function FinancialTransactionOffcanvasComponent() {
+  const [search, setSearch] = useState('');
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [typeFilter, setTypeFilter] = useState<'all' | FinanceTransactionType>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | FinanceTransactionStatus>('all');
+  const [minAmountFilter, setMinAmountFilter] = useState('0');
+
+  const minAmount = Number(minAmountFilter) || 0;
+
+  const rows = FINANCE_TRANSACTIONS.filter((row) => {
+    const query = search.trim().toLowerCase();
+    const matchesSearch = query.length === 0
+      || row.id.toLowerCase().includes(query)
+      || row.reference.toLowerCase().includes(query)
+      || row.account.toLowerCase().includes(query);
+    const matchesType = typeFilter === 'all' || row.type === typeFilter;
+    const matchesStatus = statusFilter === 'all' || row.status === statusFilter;
+    const matchesAmount = Math.abs(row.amount) >= minAmount;
+    return matchesSearch && matchesType && matchesStatus && matchesAmount;
+  });
+
+  return (
+    <DBox style={{ width: '100%', maxWidth: '1100px', position: 'relative' }}>
+      <div className="d-flex gap-2 align-items-end mb-3 flex-wrap">
+        <div style={{ minWidth: '320px', flex: 1 }}>
+          <small className="d-block text-secondary mb-1">Search transaction</small>
+          <DInput
+            type="text"
+            value={search}
+            placeholder="Search by id, account, or reference"
+            onChange={setSearch}
+          />
+        </div>
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={() => setIsFiltersOpen(true)}
+        >
+          Advanced Filters
+        </button>
+      </div>
+
+      {(typeFilter !== 'all' || statusFilter !== 'all' || minAmount > 0) && (
+        <div className="d-flex gap-2 flex-wrap mb-3">
+          {typeFilter !== 'all' && <DBadge text={`Type: ${typeFilter}`} color="primary" />}
+          {statusFilter !== 'all' && <DBadge text={`Status: ${statusFilter}`} color="warning" />}
+          {minAmount > 0 && <DBadge text={`Min Amount: ${USD.format(minAmount)}`} color="secondary" />}
+        </div>
+      )}
+
+      <table className="table table-striped table-hover align-middle">
+        <caption>Transaction Screening</caption>
+        <thead>
+          <tr>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Account</th>
+            <th>Status</th>
+            <th className="text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              <td>
+                <div className="fw-semibold">{row.id}</div>
+                <small className="text-secondary">{row.reference}</small>
+              </td>
+              <td>{row.date}</td>
+              <td>{row.account}</td>
+              <td>
+                <DBadge text={row.status} color={financeStatusColor(row.status)} />
+              </td>
+              <td className={`text-end fw-semibold ${row.amount >= 0 ? 'text-success' : 'text-danger'}`}>
+                {USD.format(row.amount)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {isFiltersOpen && (
+        <>
+          <button
+            type="button"
+            className="btn position-fixed top-0 start-0 w-100 h-100 bg-dark"
+            style={{ opacity: 0.35, zIndex: 1040 }}
+            aria-label="Close filters"
+            onClick={() => setIsFiltersOpen(false)}
+          />
+          <aside
+            className="position-fixed top-0 end-0 h-100 bg-white border-start p-3"
+            style={{ width: '360px', zIndex: 1045, overflowY: 'auto' }}
+            aria-label="Advanced filters panel"
+          >
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h6 className="mb-0">Advanced Filters</h6>
+              <button
+                type="button"
+                className="btn-close"
+                aria-label="Close advanced filters"
+                onClick={() => setIsFiltersOpen(false)}
+              />
+            </div>
+
+            <div className="mb-3">
+              <small className="d-block text-secondary mb-1">Type</small>
+              <select
+                className="form-select"
+                value={typeFilter}
+                onChange={(event) => setTypeFilter(event.target.value as 'all' | FinanceTransactionType)}
+              >
+                <option value="all">All</option>
+                <option value="Credit">Credit</option>
+                <option value="Debit">Debit</option>
+              </select>
+            </div>
+
+            <div className="mb-3">
+              <small className="d-block text-secondary mb-1">Status</small>
+              <select
+                className="form-select"
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value as 'all' | FinanceTransactionStatus)}
+              >
+                <option value="all">All</option>
+                <option value="Posted">Posted</option>
+                <option value="Pending">Pending</option>
+                <option value="Flagged">Flagged</option>
+              </select>
+            </div>
+
+            <div className="mb-3">
+              <small className="d-block text-secondary mb-1">Minimum absolute amount</small>
+              <DInput
+                type="number"
+                value={minAmountFilter}
+                onChange={setMinAmountFilter}
+              />
+            </div>
+
+            <div className="d-flex gap-2 mt-4">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setIsFiltersOpen(false)}
+              >
+                Apply
+              </button>
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  setTypeFilter('all');
+                  setStatusFilter('all');
+                  setMinAmountFilter('0');
+                }}
+              >
+                Clear Filters
+              </button>
+            </div>
+          </aside>
+        </>
+      )}
+    </DBox>
+  );
+}
+
+export const TransactionHistoryOffcanvas: Story = {
+  render: () => <FinancialTransactionOffcanvasComponent />,
+};
+
+function LoanPortfolioComponent() {
+  const [sortBy, setSortBy] = useState<'borrower' | 'disbursed' | 'daysPastDue'>('daysPastDue');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+
+  const rows = [...PORTFOLIO_LOANS].sort((left, right) => {
+    let base = 0;
+    if (sortBy === 'borrower') {
+      base = left.borrower.localeCompare(right.borrower);
+    }
+    if (sortBy === 'disbursed') {
+      base = left.disbursed - right.disbursed;
+    }
+    if (sortBy === 'daysPastDue') {
+      base = left.daysPastDue - right.daysPastDue;
+    }
+    return sortDirection === 'asc' ? base : -base;
+  });
+
+  const onSort = (field: 'borrower' | 'disbursed' | 'daysPastDue') => {
+    if (sortBy === field) {
+      setSortDirection((previous) => (previous === 'asc' ? 'desc' : 'asc'));
+      return;
+    }
+    setSortBy(field);
+    setSortDirection('desc');
+  };
+
+  return (
+    <DBox style={{ width: '100%', maxWidth: '1100px' }}>
+      <div className="d-flex justify-content-between align-items-center mb-2">
+        <h6 className="mb-0">Loan Portfolio</h6>
+        <small className="text-secondary">Click sortable columns to reorder</small>
+      </div>
+
+      <table className="table table-hover align-middle">
+        <caption>Credit Risk Monitoring</caption>
+        <thead>
+          <tr>
+            <th>
+              <button type="button" className="btn btn-link p-0 text-decoration-none" onClick={() => onSort('borrower')}>
+                Borrower
+              </button>
+            </th>
+            <th>Product</th>
+            <th>
+              <button type="button" className="btn btn-link p-0 text-decoration-none" onClick={() => onSort('disbursed')}>
+                Disbursed
+              </button>
+            </th>
+            <th>Installments</th>
+            <th>
+              <button type="button" className="btn btn-link p-0 text-decoration-none" onClick={() => onSort('daysPastDue')}>
+                Days Past Due
+              </button>
+            </th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((loan) => {
+            const risk = loanRisk(loan.daysPastDue);
+
+            return (
+              <tr key={loan.id}>
+                <td>
+                  <div className="fw-semibold">{loan.borrower}</div>
+                  <small className="text-secondary">{loan.id}</small>
+                </td>
+                <td>{loan.product}</td>
+                <td className="fw-semibold">{USD.format(loan.disbursed)}</td>
+                <td>
+                  {loan.paidInstallments}
+                  /
+                  {loan.totalInstallments}
+                </td>
+                <td>
+                  {loan.daysPastDue === 0 ? (
+                    <span className="text-success">Current</span>
+                  ) : (
+                    <span className="text-danger fw-semibold">
+                      {loan.daysPastDue}
+                      {' '}
+                      days
+                    </span>
+                  )}
+                </td>
+                <td>
+                  <DBadge text={risk.text} color={risk.color} />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </DBox>
+  );
+}
+
+export const LoanPortfolio: Story = {
+  render: () => <LoanPortfolioComponent />,
+};
+
+function BulkActionsComponent() {
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [lastAction, setLastAction] = useState('');
+
+  const allSelected = selectedIds.length === PAYMENT_APPROVALS.length;
+
+  const toggleRow = (id: string) => {
+    setSelectedIds((previous) => {
+      if (previous.includes(id)) {
+        return previous.filter((itemId) => itemId !== id);
+      }
+      return [...previous, id];
+    });
+  };
+
+  const selectedAmount = PAYMENT_APPROVALS
+    .filter((row) => selectedIds.includes(row.id))
+    .reduce((total, row) => total + row.amount, 0);
+
+  return (
+    <DBox style={{ width: '100%', maxWidth: '1100px' }}>
+      {selectedIds.length > 0 && (
+        <div className="alert alert-primary d-flex justify-content-between align-items-center mb-3">
+          <span>
+            <strong>{selectedIds.length}</strong>
+            {' '}
+            selected
+            {' '}
+            <span className="text-secondary">
+              (Total:
+              {' '}
+              {USD.format(selectedAmount)}
+              )
+            </span>
+          </span>
+          <div className="d-flex gap-2">
+            <button
+              type="button"
+              className="btn btn-sm btn-success"
+              onClick={() => setLastAction(`Approved ${selectedIds.length} payments`)}
+            >
+              Approve
+            </button>
+            <button
+              type="button"
+              className="btn btn-sm btn-warning"
+              onClick={() => setLastAction(`Sent ${selectedIds.length} payments to review`)}
+            >
+              Send to Review
+            </button>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => setLastAction(`Exported ${selectedIds.length} payments`)}
+            >
+              Export CSV
+            </button>
+          </div>
+        </div>
+      )}
+
+      {lastAction && <p className="small text-muted">{lastAction}</p>}
+
+      <table className="table table-hover align-middle">
+        <caption>Payment Approval Queue</caption>
+        <thead>
+          <tr>
+            <th>
+              <DInputCheck
+                type="checkbox"
+                checked={allSelected}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    setSelectedIds(PAYMENT_APPROVALS.map((row) => row.id));
+                    return;
+                  }
+                  setSelectedIds([]);
+                }}
+              />
+            </th>
+            <th>Beneficiary</th>
+            <th>Account</th>
+            <th>Due Date</th>
+            <th className="text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {PAYMENT_APPROVALS.map((row) => (
+            <tr key={row.id} className={selectedIds.includes(row.id) ? 'table-active' : undefined}>
+              <td>
+                <DInputCheck
+                  type="checkbox"
+                  checked={selectedIds.includes(row.id)}
+                  onChange={() => toggleRow(row.id)}
+                />
+              </td>
+              <td>
+                <div className="fw-semibold">{row.beneficiary}</div>
+                <small className="text-secondary">{row.id}</small>
+              </td>
+              <td>{row.account}</td>
+              <td>{row.dueDate}</td>
+              <td className="text-end fw-semibold">{USD.format(row.amount)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </DBox>
+  );
+}
+
+export const BulkActions: Story = {
+  render: () => <BulkActionsComponent />,
+};
