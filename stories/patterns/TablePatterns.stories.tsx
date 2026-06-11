@@ -5,6 +5,7 @@ import {
   changeQueryString,
   DBadge,
   DBox,
+  DIcon,
   DInput,
   DInputCheck,
   DPaginator,
@@ -686,7 +687,7 @@ function CompositionComponent() {
     <>
       {'Query String = '}
       {queryString && (
-        <DBadge text={queryString} color="primary" />
+        <DBadge soft size="sm" text={queryString} color="primary" />
       )}
       <br />
       <br />
@@ -862,7 +863,7 @@ export function Composition() {
     <>
       {'Query String = '}
       {queryString && (
-        <DBadge text={queryString} color="primary" />
+        <DBadge soft size="sm" text={queryString} color="primary" />
       )}
       <br />
       <br />
@@ -1226,8 +1227,8 @@ function FinancialTransactionOffcanvasComponent() {
       {(typeFilter !== 'all' || statusFilter !== 'all' || minAmount > 0) && (
         <div className="d-flex gap-2 flex-wrap mb-3">
           {typeFilter !== 'all' && <DBadge text={`Type: ${typeFilter}`} color="primary" />}
-          {statusFilter !== 'all' && <DBadge text={`Status: ${statusFilter}`} color="warning" />}
-          {minAmount > 0 && <DBadge text={`Min Amount: ${USD.format(minAmount)}`} color="secondary" />}
+          {statusFilter !== 'all' && <DBadge soft size="sm" text={`Status: ${statusFilter}`} color="warning" />}
+          {minAmount > 0 && <DBadge soft size="sm" text={`Min Amount: ${USD.format(minAmount)}`} color="secondary" />}
         </div>
       )}
 
@@ -1252,7 +1253,7 @@ function FinancialTransactionOffcanvasComponent() {
               <td>{row.date}</td>
               <td>{row.account}</td>
               <td>
-                <DBadge text={row.status} color={financeStatusColor(row.status)} />
+                <DBadge soft size="sm" text={row.status} color={financeStatusColor(row.status)} />
               </td>
               <td className={`text-end fw-semibold ${row.amount >= 0 ? 'text-success' : 'text-danger'}`}>
                 {USD.format(row.amount)}
@@ -1360,6 +1361,18 @@ function LoanPortfolioComponent() {
   const [sortBy, setSortBy] = useState<'borrower' | 'disbursed' | 'daysPastDue'>('daysPastDue');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
+  const getSortIcon = (field: 'borrower' | 'disbursed' | 'daysPastDue') => {
+    if (sortBy !== field) {
+      return <DIcon icon="ArrowUpDown" size="0.9rem" className="text-gray-300" />;
+    }
+
+    if (sortDirection === 'asc') {
+      return <DIcon icon="ArrowUp" size="0.9rem" className="text-primary" />;
+    }
+
+    return <DIcon icon="ArrowDown" size="0.9rem" className="text-primary" />;
+  };
+
   const rows = [...PORTFOLIO_LOANS].sort((left, right) => {
     let base = 0;
     if (sortBy === 'borrower') {
@@ -1395,20 +1408,35 @@ function LoanPortfolioComponent() {
         <thead>
           <tr>
             <th>
-              <button type="button" className="btn btn-link p-0 text-decoration-none" onClick={() => onSort('borrower')}>
+              <button
+                type="button"
+                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                onClick={() => onSort('borrower')}
+              >
                 Borrower
+                {getSortIcon('borrower')}
               </button>
             </th>
             <th>Product</th>
             <th>
-              <button type="button" className="btn btn-link p-0 text-decoration-none" onClick={() => onSort('disbursed')}>
+              <button
+                type="button"
+                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                onClick={() => onSort('disbursed')}
+              >
                 Disbursed
+                {getSortIcon('disbursed')}
               </button>
             </th>
             <th>Installments</th>
             <th>
-              <button type="button" className="btn btn-link p-0 text-decoration-none" onClick={() => onSort('daysPastDue')}>
+              <button
+                type="button"
+                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                onClick={() => onSort('daysPastDue')}
+              >
                 Days Past Due
+                {getSortIcon('daysPastDue')}
               </button>
             </th>
             <th>Risk</th>
@@ -1443,7 +1471,7 @@ function LoanPortfolioComponent() {
                   )}
                 </td>
                 <td>
-                  <DBadge text={risk.text} color={risk.color} />
+                  <DBadge soft size="sm" text={risk.text} color={risk.color} />
                 </td>
               </tr>
             );
