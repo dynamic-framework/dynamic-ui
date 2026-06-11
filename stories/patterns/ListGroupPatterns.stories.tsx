@@ -32,7 +32,7 @@ function CustomDocs(props: DocsContainerProps) {
 }
 
 const meta: Meta<typeof DListGroup> = {
-  title: 'Use Cases/List Group',
+  title: 'Patterns/List Group',
   component: DListGroup,
   parameters: {
     docs: {

@@ -11,7 +11,7 @@ import './styles/custom.scss';
 import DocsTemplate from './docs/Template.mdx';
 
 const meta: Meta<typeof DBox> = {
-  title: 'Use Cases/Radio Button',
+  title: 'Patterns/Radio Button',
   component: DBox,
   parameters: {
     docs: {

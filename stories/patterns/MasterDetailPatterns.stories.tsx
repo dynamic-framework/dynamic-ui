@@ -34,7 +34,7 @@ function CustomDocs(props: DocsContainerProps) {
 }
 
 const meta: Meta<typeof DBox> = {
-  title: 'Use Cases/Master Detail',
+  title: 'Patterns/Master Detail',
   component: DBox,
   parameters: {
     layout: 'fullscreen',
