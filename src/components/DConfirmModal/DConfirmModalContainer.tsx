@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState,
-} from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -10,8 +7,6 @@ import {
   type ConfirmModalEntry,
 } from './confirmModalStore';
 import DConfirmModalUI from './DConfirmModalUI';
-import useDisableBodyScrollEffect from '../../hooks/useDisableBodyScrollEffect';
-import { useDPortalContext } from '../../contexts/DPortalContext';
 
 type Props = {
   /** ID of the DOM element (portal node) to render the confirm modal into. */
@@ -34,11 +29,7 @@ type Props = {
  */
 export default function DConfirmModalContainer({ nodeId }: Props) {
   const store = useConfirmModalStore();
-  const { stack } = useDPortalContext();
   const [entries, setEntries] = useState<ConfirmModalEntry[]>([]);
-
-  // Lock body scroll while either confirm modals or portals are open
-  useDisableBodyScrollEffect(entries.length > 0 || stack.length > 0);
 
   useEffect(() => {
     const unsubscribe = store.subscribe((next) => {

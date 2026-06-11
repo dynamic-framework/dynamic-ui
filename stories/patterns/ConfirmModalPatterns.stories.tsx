@@ -732,7 +732,7 @@ export const ConfirmOnModal: StoryObj = {
   decorators: [
     (Story) => (
       <DContextProvider<EditProfilePayloads>
-        portalName="d-portal-inner"
+        portalName="d-portal"
         availablePortals={{ editProfile: EditProfileModal }}
       >
         <Story />
