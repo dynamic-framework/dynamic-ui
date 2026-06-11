@@ -650,7 +650,6 @@ type EditProfilePayloads = {
 
 function EditProfileModal() {
   const { closePortal } = useDPortalContext();
-  const [saved, setSaved] = useState(false);
 
   const confirmDiscard = useConfirmModal({
     title: 'Discard changes?',
@@ -690,7 +689,6 @@ function EditProfileModal() {
             aria-label="Email"
           />
         </div>
-        {saved && <p className="alert alert-success mb-0">Changes saved successfully!</p>}
       </DModal.Body>
       <DModal.Footer>
         <DButton
@@ -701,7 +699,7 @@ function EditProfileModal() {
         <DButton
           text="Save changes"
           color="primary"
-          onClick={() => setSaved(true)}
+          onClick={closePortal}
         />
       </DModal.Footer>
     </DModal>
