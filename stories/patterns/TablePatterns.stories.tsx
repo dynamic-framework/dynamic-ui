@@ -14,6 +14,21 @@ import {
 
 import DocsTemplate from './docs/Template.mdx';
 
+function DocsFullWidthStyle() {
+  return (
+    <style>
+      {`
+        .sbdocs.sbdocs-content {
+          max-width: min(1800px, calc(100vw - 2rem)) !important;
+        }
+          .docs-story {
+          background: var(--bs-gray-25) !important;
+          }
+      `}
+    </style>
+  );
+}
+
 const HEADER_ENTRIES = [
   ['id', '#'],
   ['first', 'First'],
@@ -45,6 +60,14 @@ const ROWS = [
 const meta: Meta<typeof DBox> = {
   title: 'Patterns/Table',
   component: DBox,
+  decorators: [
+    (Story) => (
+      <>
+        <DocsFullWidthStyle />
+        <Story />
+      </>
+    ),
+  ],
   parameters: {
     docs: {
       page: DocsTemplate,
@@ -62,7 +85,7 @@ type Story = StoryObj<typeof DBox>;
 
 export const BasicTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <table className="table">
         <thead>
           <tr>
@@ -89,7 +112,7 @@ export const BasicTable: Story = {
 
 export const Borderless: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <table className="table table-borderless">
         <thead>
           <tr>
@@ -116,7 +139,7 @@ export const Borderless: Story = {
 
 export const StripedTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <h6>Striped Rows</h6>
       <table className="table table-striped">
         <thead>
@@ -166,7 +189,7 @@ export const StripedTable: Story = {
 
 export const HoverTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <h6>Hover Rows</h6>
       <table className="table table-hover">
         <thead>
@@ -216,7 +239,7 @@ export const HoverTable: Story = {
 
 export const DarkTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <h6>Dark</h6>
       <table className="table table-dark">
         <thead>
@@ -266,7 +289,7 @@ export const DarkTable: Story = {
 
 export const BorderedTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <h6>Bordered</h6>
       <table className="table table-bordered">
         <thead>
@@ -316,7 +339,7 @@ export const BorderedTable: Story = {
 
 export const SmallTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <table className="table table-sm">
         <thead>
           <tr>
@@ -343,7 +366,7 @@ export const SmallTable: Story = {
 
 export const ActiveTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <table className="table">
         <thead>
           <tr>
@@ -370,7 +393,7 @@ export const ActiveTable: Story = {
 
 export const ColorTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <table className="table">
         <thead>
           <tr>
@@ -404,7 +427,7 @@ export const ColorTable: Story = {
 
 export const LoadingTable: Story = {
   render: () => (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <table className="table placeholder-wave">
         <caption>
           <div className="placeholder rounded-1 bg-gray-100 w-100" />
@@ -454,7 +477,7 @@ function CompleteTableComponent() {
   const totalPages = 5;
 
   return (
-    <DBox style={{ width: '800px' }}>
+    <DBox style={{ width: '1100px' }}>
       <table className="table table-hover">
         <caption>List of users</caption>
         <thead>
@@ -667,7 +690,7 @@ function CompositionComponent() {
       )}
       <br />
       <br />
-      <DBox style={{ width: '800px' }}>
+      <DBox style={{ width: '1100px' }}>
         <DInputCheck
           type="checkbox"
           label="Loading"
@@ -843,7 +866,7 @@ export function Composition() {
       )}
       <br />
       <br />
-      <DBox style={{ width: '800px' }}>
+      <DBox style={{ width: '1100px' }}>
         <DInputCheck
           type="checkbox"
           label="Loading"
@@ -1072,10 +1095,9 @@ function FinancialTransactionHistoryComponent() {
   });
 
   return (
-    <DBox style={{ width: '100%', maxWidth: '1100px' }}>
+    <DBox style={{ width: '100%' }}>
       <div className="d-flex flex-wrap gap-3 align-items-end mb-3">
         <div style={{ minWidth: '320px', flex: 1 }}>
-          <small className="d-block text-secondary mb-1">Search transaction</small>
           <DInput
             type="text"
             value={search}
@@ -1133,7 +1155,7 @@ function FinancialTransactionHistoryComponent() {
               <td>{row.account}</td>
               <td>{row.category}</td>
               <td>
-                <DBadge text={row.status} color={financeStatusColor(row.status)} />
+                <DBadge soft size="sm" text={row.status} color={financeStatusColor(row.status)} />
               </td>
               <td className={`text-end fw-semibold ${row.amount >= 0 ? 'text-success' : 'text-danger'}`}>
                 {USD.format(row.amount)}
@@ -1155,6 +1177,9 @@ function FinancialTransactionHistoryComponent() {
 
 export const TransactionHistory: Story = {
   render: () => <FinancialTransactionHistoryComponent />,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 function FinancialTransactionOffcanvasComponent() {
@@ -1179,10 +1204,9 @@ function FinancialTransactionOffcanvasComponent() {
   });
 
   return (
-    <DBox style={{ width: '100%', maxWidth: '1100px', position: 'relative' }}>
+    <DBox style={{ width: '100%', position: 'relative' }}>
       <div className="d-flex gap-2 align-items-end mb-3 flex-wrap">
         <div style={{ minWidth: '320px', flex: 1 }}>
-          <small className="d-block text-secondary mb-1">Search transaction</small>
           <DInput
             type="text"
             value={search}
@@ -1327,6 +1351,9 @@ function FinancialTransactionOffcanvasComponent() {
 
 export const TransactionHistoryOffcanvas: Story = {
   render: () => <FinancialTransactionOffcanvasComponent />,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 function LoanPortfolioComponent() {
@@ -1357,7 +1384,7 @@ function LoanPortfolioComponent() {
   };
 
   return (
-    <DBox style={{ width: '100%', maxWidth: '1100px' }}>
+    <DBox style={{ width: '100%' }}>
       <div className="d-flex justify-content-between align-items-center mb-2">
         <h6 className="mb-0">Loan Portfolio</h6>
         <small className="text-secondary">Click sortable columns to reorder</small>
@@ -1429,6 +1456,9 @@ function LoanPortfolioComponent() {
 
 export const LoanPortfolio: Story = {
   render: () => <LoanPortfolioComponent />,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 function BulkActionsComponent() {
@@ -1451,7 +1481,7 @@ function BulkActionsComponent() {
     .reduce((total, row) => total + row.amount, 0);
 
   return (
-    <DBox style={{ width: '100%', maxWidth: '1100px' }}>
+    <DBox style={{ width: '100%' }}>
       {selectedIds.length > 0 && (
         <div className="alert alert-primary d-flex justify-content-between align-items-center mb-3">
           <span>
@@ -1544,4 +1574,7 @@ function BulkActionsComponent() {
 
 export const BulkActions: Story = {
   render: () => <BulkActionsComponent />,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
