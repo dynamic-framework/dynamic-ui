@@ -100,14 +100,14 @@ export default function DDatePicker(
   // Some test runtimes can resolve react-datepicker as a module object.
   // Normalize to a renderable component for both function and { default } shapes.
   const SafeDatePicker = useMemo<ComponentType<DatePickerProps>>(() => {
-    if (typeof DatePicker === 'function') {
-      return DatePicker;
-    }
-
     const interopDefault = (DatePicker as unknown as { default?: unknown }).default;
 
-    if (typeof interopDefault === 'function') {
+    if (interopDefault !== undefined) {
       return interopDefault as ComponentType<DatePickerProps>;
+    }
+
+    if (typeof DatePicker === 'function') {
+      return DatePicker as unknown as ComponentType<DatePickerProps>;
     }
 
     return DatePicker as unknown as ComponentType<DatePickerProps>;
