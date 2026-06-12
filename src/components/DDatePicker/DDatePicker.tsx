@@ -1,6 +1,7 @@
 import {
   useCallback,
   useMemo,
+  type ComponentType,
 } from 'react';
 import DatePicker from 'react-datepicker';
 
@@ -96,6 +97,22 @@ export default function DDatePicker(
     ...props
   }: Props,
 ) {
+  // Some test runtimes can resolve react-datepicker as a module object.
+  // Normalize to a renderable component for both function and { default } shapes.
+  const SafeDatePicker = useMemo<ComponentType<DatePickerProps>>(() => {
+    const interopDefault = (DatePicker as unknown as { default?: unknown }).default;
+
+    if (interopDefault !== undefined) {
+      return interopDefault as ComponentType<DatePickerProps>;
+    }
+
+    if (typeof DatePicker === 'function') {
+      return DatePicker as unknown as ComponentType<DatePickerProps>;
+    }
+
+    return DatePicker as unknown as ComponentType<DatePickerProps>;
+  }, []);
+
   const pickerType = useMemo(() => {
     if (props.showQuarterYearPicker) return PickerType.Quarter;
     if (props.showMonthYearPicker) return PickerType.Month;
@@ -144,7 +161,7 @@ export default function DDatePicker(
   );
 
   return (
-    <DatePicker
+    <SafeDatePicker
       {...dataAttributes}
       {...props as DatePickerProps}
       calendarClassName="d-date-picker"
