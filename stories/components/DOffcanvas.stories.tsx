@@ -1,10 +1,23 @@
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
+import type { Transition } from 'framer-motion';
 
-import { DContextProvider, useDPortalContext } from '../../src';
+import { DContextProvider, DSelect, useDPortalContext } from '../../src';
 import type { PortalProps } from '../../src';
 import DButton from '../../src/components/DButton';
 import DOffcanvas from '../../src/components/DOffcanvas/DOffcanvas';
 import { CONTEXT_PROVIDER_CONFIG_MATERIAL } from '../config/constants';
+
+type TransitionPreset = { label: string; value: Transition };
+
+const TRANSITION_PRESETS: TransitionPreset[] = [
+  { label: 'Default', value: { ease: 'easeInOut', duration: 0.3 } },
+  { label: 'Spring', value: { type: 'spring', stiffness: 300, damping: 20 } },
+  { label: 'Slow', value: { ease: 'easeInOut', duration: 0.8 } },
+  { label: 'Bouncy', value: { type: 'spring', stiffness: 400, damping: 10 } },
+  { label: 'Fast', value: { ease: 'easeOut', duration: 0.15 } },
+  { label: 'None', value: { ease: 'linear', duration: 0 } },
+];
 
 const config: Meta<typeof DOffcanvas> = {
   title: 'Design System/Components/Offcanvas',
@@ -46,13 +59,20 @@ type Story = StoryObj<typeof DOffcanvas>;
 type OffcanvasPayloads = {
   filters: {
     description: string;
+    transition?: Transition;
   };
 };
 
 function FiltersOffcanvas({ name, payload }: PortalProps<OffcanvasPayloads['filters']>) {
   const { closePortal } = useDPortalContext();
   return (
-    <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end">
+    <DOffcanvas
+      name={name}
+      staticBackdrop={false}
+      scrollable={false}
+      openFrom="end"
+      transition={payload.transition}
+    >
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Advanced filters</h5>
       </DOffcanvas.Header>
@@ -77,20 +97,39 @@ function FiltersOffcanvas({ name, payload }: PortalProps<OffcanvasPayloads['filt
 }
 
 function OpenFiltersOffcanvasButton() {
+  const [selectedPreset, setSelectedPreset] = useState<TransitionPreset>(TRANSITION_PRESETS[0]);
   const { openPortal } = useDPortalContext<OffcanvasPayloads>();
   return (
-    <div className="p-8">
+    <div className="d-flex flex-column gap-2 align-items-center">
+      <DSelect<TransitionPreset>
+        label="Transition Preset"
+        options={TRANSITION_PRESETS}
+        value={selectedPreset}
+        onChange={(opt) => { if (opt) setSelectedPreset(opt); }}
+      />
       <DButton
         text="Open Offcanvas"
-        onClick={() => openPortal('filters', { description: 'Payload passed via openPortal.' })}
+        onClick={() => openPortal(
+          'filters',
+          {
+            description: 'Payload passed via openPortal.',
+            transition: selectedPreset.value,
+          },
+        )}
       />
+      <div className="mt-4">
+        <pre>
+          <code>
+            {JSON.stringify({ transition: selectedPreset.value }, null, 2)}
+          </code>
+        </pre>
+      </div>
     </div>
   );
 }
 
 export const RealUsageWithOpenPortal: Story = {
   parameters: {
-    controls: { disable: true },
     docs: {
       description: {
         story:
@@ -99,6 +138,8 @@ export const RealUsageWithOpenPortal: Story = {
       },
       source: {
         code: `
+const springTransition: Transition = { type: 'spring', stiffness: 300, damping: 20 };
+
 type OffcanvasPayloads = {
   filters: {
     description: string;
@@ -108,7 +149,7 @@ type OffcanvasPayloads = {
 function FiltersOffcanvas({ name, payload }: PortalProps<OffcanvasPayloads['filters']>) {
   const { closePortal } = useDPortalContext();
   return (
-    <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end">
+    <DOffcanvas name={name} staticBackdrop={false} scrollable={false} openFrom="end" transition={springTransition}>
       <DOffcanvas.Header onClose={closePortal} showCloseButton>
         <h5 className="fw-bold">Advanced filters</h5>
       </DOffcanvas.Header>
@@ -158,6 +199,13 @@ function App() {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ height: '400px' }} className="position-relative">
+        <Story />
+      </div>
+    ),
+  ],
   render: () => (
     <DContextProvider<OffcanvasPayloads>
       portalName="dOffcanvasStoryPortal"
