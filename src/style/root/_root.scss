@@ -295,6 +295,37 @@
           $focus-shadow-rgb: var(--#{$prefix}gray-900-rgb),
         );
 
+      } @else if $color == "warning" {
+        @include df-button-variant-variables($color);
+        @include df-button-outline-variant-variables($color);
+        @include df-button-link-variant-variables($color);
+
+        // Manual soft warning variant: keep default soft backgrounds,
+        // but force the text one tone darker for better contrast.
+        --#{$prefix}btn-soft-warning-color: var(--#{$prefix}warning-800);
+        --#{$prefix}btn-soft-warning-bg: var(--#{$prefix}warning-50);
+        --#{$prefix}btn-soft-warning-border-color: transparent;
+        --#{$prefix}btn-soft-warning-box-shadow: #{$btn-box-shadow};
+
+        --#{$prefix}btn-soft-warning-hover-color: var(--#{$prefix}warning-800);
+        --#{$prefix}btn-soft-warning-hover-bg: var(--#{$prefix}warning-100);
+        --#{$prefix}btn-soft-warning-hover-border-color: transparent;
+
+        --#{$prefix}btn-soft-warning-focus-color: var(--#{$prefix}warning-800);
+        --#{$prefix}btn-soft-warning-focus-bg: var(--#{$prefix}warning-100);
+        --#{$prefix}btn-soft-warning-focus-border-color: transparent;
+        --#{$prefix}btn-soft-warning-focus-shadow-rgb: var(--#{$prefix}warning-500-rgb);
+
+        --#{$prefix}btn-soft-warning-active-color: var(--#{$prefix}warning-800);
+        --#{$prefix}btn-soft-warning-active-bg: var(--#{$prefix}warning-200);
+        --#{$prefix}btn-soft-warning-active-border-color: transparent;
+        --#{$prefix}btn-soft-warning-active-box-shadow: #{$btn-active-box-shadow};
+
+        --#{$prefix}btn-soft-warning-disabled-color: var(--#{$prefix}warning-800);
+        --#{$prefix}btn-soft-warning-disabled-bg: var(--#{$prefix}warning-50);
+        --#{$prefix}btn-soft-warning-disabled-border-color: transparent;
+        --#{$prefix}btn-soft-warning-disabled-opacity: #{$btn-disabled-opacity};
+
       } @else if $color == "secondary" {
         @include df-button-variant-variables(
           "secondary",
