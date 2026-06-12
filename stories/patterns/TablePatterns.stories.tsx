@@ -1260,7 +1260,7 @@ export const TransactionHistory: Story = {
               <td>{row.account}</td>
               <td>{row.category}</td>
               <td>
-                <DBadge soft size="sm" text={row.status} color={statusColor(row.status)} />
+                                 <DBadge soft size="sm" text={row.status} color={financeStatusColor(row.status)} />
               </td>
               <td className={\`text-end fw-semibold \${row.amount >= 0 ? 'text-success' : 'text-danger'}\`}>
                 {USD.format(row.amount)}
@@ -1291,8 +1291,7 @@ function FinancialTransactionOffcanvasComponent() {
   const [statusFilter, setStatusFilter] = useState<'all' | FinanceTransactionStatus>('all');
   const [minAmountFilter, setMinAmountFilter] = useState('0');
 
-  const minAmount = Number(minAmountFilter) || 0;
-
+  const minAmount = Math.max(0, Number(minAmountFilter) || 0);
   const rows = FINANCE_TRANSACTIONS.filter((row) => {
     const query = search.trim().toLowerCase();
     const matchesSearch = query.length === 0
