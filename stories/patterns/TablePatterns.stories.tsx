@@ -1776,30 +1776,23 @@ export const LoanPortfolio: Story = {
 };
 
 function BulkActionsComponent() {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const {
+    selectedItems,
+    setSelectedItems,
+    toggleSelectedItem,
+    isSelectedItem,
+  } = useItemSelection<PaymentApproval>();
+
   const [lastAction, setLastAction] = useState('');
 
-  const allSelected = selectedIds.length === PAYMENT_APPROVALS.length;
-
-  const toggleRow = (id: string) => {
-    setSelectedIds((previous) => {
-      if (previous.includes(id)) {
-        return previous.filter((itemId) => itemId !== id);
-      }
-      return [...previous, id];
-    });
-  };
-
-  const selectedAmount = PAYMENT_APPROVALS
-    .filter((row) => selectedIds.includes(row.id))
-    .reduce((total, row) => total + row.amount, 0);
+  const selectedAmount = selectedItems.reduce((total, row) => total + row.amount, 0);
 
   return (
     <DBox style={{ width: '100%' }}>
-      {selectedIds.length > 0 && (
+      {selectedItems.length > 0 && (
         <div className="alert alert-primary d-flex justify-content-between align-items-center mb-3">
           <span>
-            <strong>{selectedIds.length}</strong>
+            <strong>{selectedItems.length}</strong>
             {' '}
             selected
             {' '}
@@ -1814,21 +1807,21 @@ function BulkActionsComponent() {
             <button
               type="button"
               className="btn btn-sm btn-success"
-              onClick={() => setLastAction(`Approved ${selectedIds.length} payments`)}
+              onClick={() => setLastAction(`Approved ${selectedItems.length} payments`)}
             >
               Approve
             </button>
             <button
               type="button"
               className="btn btn-sm btn-warning"
-              onClick={() => setLastAction(`Sent ${selectedIds.length} payments to review`)}
+              onClick={() => setLastAction(`Sent ${selectedItems.length} payments to review`)}
             >
               Send to Review
             </button>
             <button
               type="button"
               className="btn btn-sm btn-outline-secondary"
-              onClick={() => setLastAction(`Exported ${selectedIds.length} payments`)}
+              onClick={() => setLastAction(`Exported ${selectedItems.length} payments`)}
             >
               Export CSV
             </button>
@@ -1845,13 +1838,9 @@ function BulkActionsComponent() {
             <th>
               <DInputCheck
                 type="checkbox"
-                checked={allSelected}
+                checked={selectedItems.length === PAYMENT_APPROVALS.length}
                 onChange={(event) => {
-                  if (event.target.checked) {
-                    setSelectedIds(PAYMENT_APPROVALS.map((row) => row.id));
-                    return;
-                  }
-                  setSelectedIds([]);
+                  setSelectedItems(event.target.checked ? PAYMENT_APPROVALS : []);
                 }}
               />
             </th>
@@ -1863,12 +1852,12 @@ function BulkActionsComponent() {
         </thead>
         <tbody>
           {PAYMENT_APPROVALS.map((row) => (
-            <tr key={row.id} className={selectedIds.includes(row.id) ? 'table-active' : undefined}>
+            <tr key={row.id} className={isSelectedItem(row) ? 'table-active' : undefined}>
               <td>
                 <DInputCheck
                   type="checkbox"
-                  checked={selectedIds.includes(row.id)}
-                  onChange={() => toggleRow(row.id)}
+                  checked={isSelectedItem(row)}
+                  onChange={() => toggleSelectedItem(row)}
                 />
               </td>
               <td>
@@ -1893,40 +1882,34 @@ export const BulkActions: Story = {
     docs: {
       source: {
         code: `function BulkActionsExample() {
-  const [selectedIds, setSelectedIds] = useState([]);
+  const {
+    selectedItems,
+    setSelectedItems,
+    toggleSelectedItem,
+    isSelectedItem,
+  } = useItemSelection();
+
   const [lastAction, setLastAction] = useState('');
 
-  const allSelected = selectedIds.length === PAYMENTS.length;
-
-  const toggleRow = (id) => {
-    setSelectedIds((previous) => (
-      previous.includes(id)
-        ? previous.filter((itemId) => itemId !== id)
-        : [...previous, id]
-    ));
-  };
-
-  const selectedAmount = PAYMENTS
-    .filter((row) => selectedIds.includes(row.id))
-    .reduce((total, row) => total + row.amount, 0);
+  const selectedAmount = selectedItems.reduce((total, row) => total + row.amount, 0);
 
   return (
     <DBox style={{ width: '100%' }}>
-      {selectedIds.length > 0 && (
+      {selectedItems.length > 0 && (
         <div className="alert alert-primary d-flex justify-content-between align-items-center mb-3">
           <span>
-            <strong>{selectedIds.length}</strong> selected
+            <strong>{selectedItems.length}</strong> selected
             <span className="text-secondary"> (Total: {USD.format(selectedAmount)})</span>
           </span>
           <div className="d-flex gap-2">
             <button type="button" className="btn btn-sm btn-success"
-              onClick={() => setLastAction(\`Approved \${selectedIds.length} payments\`)}
+              onClick={() => setLastAction(\`Approved \${selectedItems.length} payments\`)}
             >Approve</button>
             <button type="button" className="btn btn-sm btn-warning"
-              onClick={() => setLastAction(\`Sent \${selectedIds.length} payments to review\`)}
+              onClick={() => setLastAction(\`Sent \${selectedItems.length} payments to review\`)}
             >Send to Review</button>
             <button type="button" className="btn btn-sm btn-outline-secondary"
-              onClick={() => setLastAction(\`Exported \${selectedIds.length} payments\`)}
+              onClick={() => setLastAction(\`Exported \${selectedItems.length} payments\`)}
             >Export CSV</button>
           </div>
         </div>
@@ -1941,13 +1924,9 @@ export const BulkActions: Story = {
             <th>
               <DInputCheck
                 type="checkbox"
-                checked={allSelected}
+                checked={selectedItems.length === PAYMENTS.length}
                 onChange={(event) => {
-                  if (event.target.checked) {
-                    setSelectedIds(PAYMENTS.map((row) => row.id));
-                    return;
-                  }
-                  setSelectedIds([]);
+                  setSelectedItems(event.target.checked ? PAYMENTS : []);
                 }}
               />
             </th>
@@ -1959,12 +1938,12 @@ export const BulkActions: Story = {
         </thead>
         <tbody>
           {PAYMENTS.map((row) => (
-            <tr key={row.id} className={selectedIds.includes(row.id) ? 'table-active' : undefined}>
+            <tr key={row.id} className={isSelectedItem(row) ? 'table-active' : undefined}>
               <td>
                 <DInputCheck
                   type="checkbox"
-                  checked={selectedIds.includes(row.id)}
-                  onChange={() => toggleRow(row.id)}
+                  checked={isSelectedItem(row)}
+                  onChange={() => toggleSelectedItem(row)}
                 />
               </td>
               <td>
