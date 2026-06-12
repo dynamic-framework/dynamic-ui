@@ -1260,7 +1260,7 @@ export const TransactionHistory: Story = {
               <td>{row.account}</td>
               <td>{row.category}</td>
               <td>
-                                 <DBadge soft size="sm" text={row.status} color={financeStatusColor(row.status)} />
+                <DBadge soft size="sm" text={row.status} color={financeStatusColor(row.status)} />
               </td>
               <td className={\`text-end fw-semibold \${row.amount >= 0 ? 'text-success' : 'text-danger'}\`}>
                 {USD.format(row.amount)}
