@@ -16,6 +16,7 @@ const TRANSITION_PRESETS: TransitionPreset[] = [
   { label: 'Slow', value: { ease: 'easeInOut', duration: 0.8 } },
   { label: 'Bouncy', value: { type: 'spring', stiffness: 400, damping: 20 } },
   { label: 'Fast', value: { ease: 'easeOut', duration: 0.15 } },
+  { label: 'None', value: { ease: 'linear', duration: 0 } },
 ];
 
 const config: Meta<typeof DModal> = {
