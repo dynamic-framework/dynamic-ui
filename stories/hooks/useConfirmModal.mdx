@@ -1,0 +1,242 @@
+import { Meta, Unstyled, Source } from '@storybook/addon-docs/blocks';
+import {
+  ExampleRoot,
+  CriticalExample,
+  CloseCallbackExample,
+  ContactRowExample,
+} from './useConfirmModalExamples';
+
+<Meta title="Design System/Hooks/useConfirmModal" />
+
+# useConfirmModal
+
+Custom hook to display a confirmation modal via `DPortalContext`.
+It handles all internal state (loading, critical code validation) and renders the modal automatically — no JSX needed at the call site.
+
+Requires `DContextProvider` (which includes `DPortalContext`) wrapping your application.
+
+---
+
+## ⚠️ IMPORTANT: Requires DContextProvider + DConfirmModalContainer
+
+**This hook MUST be used within a `<DContextProvider>`**. Additionally, you must mount **`<DConfirmModalContainer>`** somewhere inside that provider — it is the component that physically renders the modal. Without it, calling `open()` will have no visible effect.
+
+If you forget to add the provider and see this error:
+Error: useConfirmModal must be used within a `<DContextProvider>`.
+
+Follow the [Setup guide](#setup-apptsx) below to wrap your application.
+
+---
+
+## Parameters
+
+### `UseConfirmModalConfig`
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `title` | `string` | | `'Are you sure you want to proceed?'` | Modal header title. |
+| `message` | `string` | | `'Please confirm if you want to continue with this action.'` | Body text shown inside the modal. |
+| `confirmLabel` | `string` | | `'Confirm'` | Label for the confirm button. |
+| `cancelLabel` | `string` | | `'Cancel'` | Label for the cancel/close button. |
+| `confirmColor` | `ConfirmModalColor` | | `'primary'` | Color variant of the confirm button. |
+| `onConfirm` | `() => void \| Promise<void>` | ✅ | — | Async-safe callback executed when the user confirms. The modal stays open (with a loading state) until the promise resolves. |
+| `onClose` | `() => void` | | — | Called after the modal closes via the cancel button or the X icon. |
+| `critical` | `CriticalConfirmConfig` | | — | Enables a critical confirmation mode that requires the user to type a specific code before confirming. |
+
+### `ConfirmModalColor`
+
+```ts
+type ConfirmModalColor = 'primary' | 'danger' | 'warning';
+```
+
+### `CriticalConfirmConfig`
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `code` | `string` | ✅ | — | The exact string the user must type to enable the confirm button. |
+| `codeLabel` | `string` | | `'Confirmation code'` | Label shown above the code input. |
+| `inputPlaceholder` | `string` | | — | Placeholder text for the code input. |
+
+---
+
+## Return Values
+
+### `UseConfirmModalReturn`
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `open` | `() => void` | Opens the confirmation modal. |
+
+---
+
+## Setup `App.tsx`
+
+Wrap your application with `DContextProvider` and place `DConfirmModalContainer` inside it.
+This follows the same pattern as `DToastContainer` — the container must be mounted once per provider to render confirmation modals into the portal.
+
+<Source
+  code={`import { DContextProvider, DConfirmModalContainer } from '@dynamic-framework/ui-react';
+import ExampleOfUse from './ExampleOfUse';
+
+export function App() {
+  return (
+    <DContextProvider>
+      <ExampleOfUse />
+      {/* Required: renders confirmation modals into the portal */}
+      <DConfirmModalContainer nodeId="d-portal" />
+    </DContextProvider>
+  );
+}`}
+  language="tsx"
+  dark
+/>
+
+---
+
+## Basic example `ExampleOfUse.tsx`
+
+Only `onConfirm` is required. Everything else has sensible defaults.
+
+<Source
+  code={`import { DButton, useConfirmModal } from '@dynamic-framework/ui-react';
+
+export function ExampleOfUse() {
+  const confirm = useConfirmModal({
+    onConfirm: async () => {
+      await doSomething();
+    },
+  });
+
+  return <DButton text="Proceed" onClick={confirm.open} />;
+}`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <ExampleRoot />
+</Unstyled>
+
+---
+
+## Critical confirmation
+
+When a destructive action is irreversible, use `critical` to force the user to type a confirmation code before enabling the confirm button.
+
+<Source
+  code={`import { useState } from 'react';
+import { DButton, useConfirmModal } from '@dynamic-framework/ui-react';
+
+export function DeleteAccountButton() {
+  const [result, setResult] = useState('');
+
+  const confirm = useConfirmModal({
+    title: 'Delete Account',
+    message: 'This is a permanent action. All your data will be erased and cannot be recovered.',
+    confirmLabel: 'Delete Account',
+    cancelLabel: 'Cancel',
+    confirmColor: 'danger',
+    critical: {
+      code: 'DELETE ACCOUNT',
+      codeLabel: 'Type the confirmation code to proceed',
+      inputPlaceholder: 'Type: DELETE ACCOUNT',
+    },
+    onConfirm: async () => {
+      await deleteAccount();
+      setResult('Account deleted permanently.');
+    },
+  });
+
+  return (
+    <div className="d-flex flex-column align-items-center gap-3">
+      <DButton text="Delete Account" color="danger" onClick={confirm.open} />
+      {result && <p className="alert alert-danger mb-0">{result}</p>}
+    </div>
+  );
+}`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <CriticalExample />
+</Unstyled>
+
+---
+
+## Using `onClose` callback
+
+`onClose` fires after the modal closes via the cancel button or the X icon. Use it to react to user cancellation.
+
+<Source
+  code={`const confirm = useConfirmModal({
+  title: 'Archive Record',
+  message: 'This record will be moved to the archive. You can restore it later.',
+  confirmLabel: 'Archive',
+  cancelLabel: 'Keep',
+  confirmColor: 'warning',
+  onConfirm: async () => {
+    await archiveRecord();
+  },
+  onClose: () => {
+    console.log('User dismissed the modal.');
+  },
+});`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <CloseCallbackExample />
+</Unstyled>
+
+---
+
+## Dynamic message per item
+
+Pass a dynamic `message` by calling `useConfirmModal` inside the component that owns the item's data. Each instance is fully independent.
+
+<Source
+  code={`function ContactRow({ contact, onDeleted }) {
+  const confirm = useConfirmModal({
+    title: 'Delete Contact',
+    message: \`Are you sure you want to delete \${contact.name} from your contact list?\`,
+    confirmLabel: 'Delete',
+    cancelLabel: 'Cancel',
+    confirmColor: 'danger',
+    onConfirm: async () => {
+      await deleteContact(contact.id);
+      onDeleted(contact.id);
+    },
+  });
+
+  return (
+    <div className="d-flex align-items-center gap-3">
+      <span>{contact.name}</span>
+      <DButton text="Delete" color="danger" variant="outline" onClick={confirm.open} />
+    </div>
+  );
+}`}
+  language="tsx"
+  dark
+/>
+
+<Unstyled>
+  <ContactRowExample />
+</Unstyled>
+
+---
+
+## See more examples
+
+<div
+  className="alert d-flex align-items-start gap-3 p-4 rounded border border-primary-subtle bg-primary-subtle"
+  role="note"
+  aria-label="See more examples"
+>
+  <span className="fs-4" aria-hidden="true">💡</span>
+  <div>
+    <strong className="d-block mb-1">Looking for more examples?</strong>
+    <span className="text-secondary">To explore more real-world flows, visit <a href="/?path=/story/patterns-confirm-modal--docs" target="_parent"><strong>Patterns / Confirm Modal</strong></a> stories in Storybook.</span>
+  </div>
+</div>

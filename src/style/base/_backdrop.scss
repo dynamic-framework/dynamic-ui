@@ -7,3 +7,10 @@
 
   @include overlay-backdrop(var(--#{$prefix}backdrop-zindex), var(--#{$prefix}backdrop-bg), var(--#{$prefix}backdrop-opacity));
 }
+
+.backdrop-confirm-modal {
+  --#{$prefix}backdrop-zindex: #{$zindex-modal + 9};
+  --#{$prefix}backdrop-filter: 5px;
+  --#{$prefix}backdrop-bg: transparent;
+  backdrop-filter: blur(var(--#{$prefix}backdrop-filter));
+}

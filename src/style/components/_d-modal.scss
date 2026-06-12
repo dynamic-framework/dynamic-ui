@@ -52,3 +52,11 @@
     display: block;
   }
 }
+
+.confirm-modal {
+  --#{$prefix}modal-zindex: #{$zindex-modal + 10};
+  --#{$prefix}shadow-confirm-modal: var(--#{$prefix}box-shadow-sm), 0 0 100px 30px rgba(0, 0, 0, .3);
+  .modal-content {
+    --#{$prefix}modal-box-shadow: var(--#{$prefix}shadow-confirm-modal);
+  }
+}
