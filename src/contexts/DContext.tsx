@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
+  type PropsWithChildren,
   useCallback,
   useContext,
   useLayoutEffect,
@@ -8,9 +8,14 @@ import {
   useState,
 } from 'react';
 
-import type { PropsWithChildren } from 'react';
-
-import { DPortalContextProvider, PortalContextProps } from './DPortalContext';
+import {
+  DPortalContextProvider,
+  type PortalContextProps,
+} from './DPortalContext';
+import {
+  createConfirmModalStore,
+  ConfirmModalStoreContext,
+} from '../components/DConfirmModal/confirmModalStore';
 
 import { PREFIX_BS } from '../components/config';
 import type { AlertThemeIconMap } from '../components/interface';
@@ -170,6 +175,28 @@ export const DContext = createContext<Context>(DEFAULT_STATE);
  * component to configure icons, currency, language, and portal settings
  * for all descendant Dynamic UI components.
  *
+ * To enable confirmation modals you must also mount `DConfirmModalContainer`
+ * somewhere inside this provider (typically right before the closing tag of
+ * your root layout), similar to how `DToastContainer` works:
+ *
+ * ```tsx
+ * // Default: portalName="d-portal"
+ * <DContextProvider>
+ *   <App />
+ *   <DConfirmModalContainer nodeId="d-portal" />
+ * </DContextProvider>
+ * ```
+ *
+ * If you customize `portalName`, match it in `DConfirmModalContainer.nodeId`:
+ *
+ * ```tsx
+ * // Custom portalName
+ * <DContextProvider portalName="my-custom-portal">
+ *   <App />
+ *   <DConfirmModalContainer nodeId="my-custom-portal" />
+ * </DContextProvider>
+ * ```
+ *
  * @template T - Map of portal name → payload shape (e.g. `{ modal: { title: string } }`).
  *   Pass it once at the top level: `<DContextProvider<MyPortals> ...>`.
  */
@@ -215,20 +242,27 @@ export function DContextProvider<T extends Record<string, unknown>>(
     });
   }, [setContext]);
 
-  const value = useMemo(() => ({
+  const value = useMemo<Context>(() => ({
     ...internalContext,
     setContext,
   }), [internalContext, setContext]);
 
+  const confirmStore = useMemo(
+    () => createConfirmModalStore(),
+    [],
+  );
+
   return (
-    <DContext.Provider value={value}>
-      <DPortalContextProvider
-        portalName={portalName}
-        availablePortals={availablePortals}
-      >
-        {children}
-      </DPortalContextProvider>
-    </DContext.Provider>
+    <ConfirmModalStoreContext.Provider value={confirmStore}>
+      <DContext.Provider value={value}>
+        <DPortalContextProvider
+          portalName={portalName}
+          availablePortals={availablePortals}
+        >
+          {children}
+        </DPortalContextProvider>
+      </DContext.Provider>
+    </ConfirmModalStoreContext.Provider>
   );
 }
 

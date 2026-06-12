@@ -36,7 +36,7 @@ export default function useDisableBodyScrollEffect(disable: boolean) {
         timer = window.setTimeout(() => {
           unlock();
           observer?.disconnect();
-        }, 3000);
+        }, 300);
       } else {
         unlock();
       }
