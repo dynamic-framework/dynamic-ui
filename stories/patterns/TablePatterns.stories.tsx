@@ -1180,6 +1180,107 @@ export const TransactionHistory: Story = {
   render: () => <FinancialTransactionHistoryComponent />,
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      source: {
+        code: `function TransactionHistoryExample() {
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  const rows = TRANSACTIONS.filter((row) => {
+    const query = search.trim().toLowerCase();
+    const matchesSearch = query.length === 0
+      || row.id.toLowerCase().includes(query)
+      || row.reference.toLowerCase().includes(query)
+      || row.account.toLowerCase().includes(query);
+    const matchesType = typeFilter === 'all' || row.type === typeFilter;
+    const matchesStatus = statusFilter === 'all' || row.status === statusFilter;
+    return matchesSearch && matchesType && matchesStatus;
+  });
+
+  return (
+    <DBox style={{ width: '100%' }}>
+      <div className="d-flex flex-wrap gap-3 align-items-end mb-3">
+        <div style={{ minWidth: '320px', flex: 1 }}>
+          <small className="d-block text-secondary mb-1">Search transaction</small>
+          <DInput
+            type="text"
+            value={search}
+            placeholder="Search by id, account, or reference"
+            onChange={setSearch}
+          />
+        </div>
+        <div>
+          <small className="d-block text-secondary mb-1">Type</small>
+          <select
+            className="form-select"
+            value={typeFilter}
+            onChange={(event) => setTypeFilter(event.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="Credit">Credit</option>
+            <option value="Debit">Debit</option>
+          </select>
+        </div>
+        <div>
+          <small className="d-block text-secondary mb-1">Status</small>
+          <select
+            className="form-select"
+            value={statusFilter}
+            onChange={(event) => setStatusFilter(event.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="Posted">Posted</option>
+            <option value="Pending">Pending</option>
+            <option value="Flagged">Flagged</option>
+          </select>
+        </div>
+      </div>
+
+      <table className="table table-hover align-middle">
+        <caption>Transaction History</caption>
+        <thead>
+          <tr>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Account</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th className="text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              <td>
+                <div className="fw-semibold">{row.id}</div>
+                <small className="text-secondary">{row.reference}</small>
+              </td>
+              <td>{row.date}</td>
+              <td>{row.account}</td>
+              <td>{row.category}</td>
+              <td>
+                <DBadge soft size="sm" text={row.status} color={statusColor(row.status)} />
+              </td>
+              <td className={\`text-end fw-semibold \${row.amount >= 0 ? 'text-success' : 'text-danger'}\`}>
+                {USD.format(row.amount)}
+              </td>
+            </tr>
+          ))}
+          {rows.length === 0 && (
+            <tr>
+              <td colSpan={6} className="text-center text-secondary py-4">
+                No transactions match your current filters.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </DBox>
+  );
+}`,
+      },
+    },
   },
 };
 
@@ -1354,6 +1455,93 @@ export const TransactionHistoryOffcanvas: Story = {
   render: () => <FinancialTransactionOffcanvasComponent />,
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      source: {
+        code: `function TransactionHistoryOffcanvasExample() {
+  const [search, setSearch] = useState('');
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [typeFilter, setTypeFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [minAmountFilter, setMinAmountFilter] = useState('0');
+
+  const minAmount = Number(minAmountFilter) || 0;
+
+  const rows = TRANSACTIONS.filter((row) => {
+    const query = search.trim().toLowerCase();
+    const matchesSearch = query.length === 0
+      || row.id.toLowerCase().includes(query)
+      || row.reference.toLowerCase().includes(query);
+    const matchesType = typeFilter === 'all' || row.type === typeFilter;
+    const matchesStatus = statusFilter === 'all' || row.status === statusFilter;
+    const matchesAmount = Math.abs(row.amount) >= minAmount;
+    return matchesSearch && matchesType && matchesStatus && matchesAmount;
+  });
+
+  return (
+    <DBox style={{ width: '100%', position: 'relative' }}>
+      <div className="d-flex gap-2 align-items-end mb-3 flex-wrap">
+        <div style={{ minWidth: '320px', flex: 1 }}>
+          <DInput
+            type="text"
+            value={search}
+            placeholder="Search by id, account, or reference"
+            onChange={setSearch}
+          />
+        </div>
+        <button type="button" className="btn btn-outline-primary" onClick={() => setIsFiltersOpen(true)}>
+          Advanced Filters
+        </button>
+      </div>
+
+      {(typeFilter !== 'all' || statusFilter !== 'all' || minAmount > 0) && (
+        <div className="d-flex gap-2 flex-wrap mb-3">
+          {typeFilter !== 'all' && <DBadge text={\`Type: \${typeFilter}\`} color="primary" />}
+          {statusFilter !== 'all' && <DBadge soft size="sm" text={\`Status: \${statusFilter}\`} color="warning" />}
+          {minAmount > 0 && <DBadge soft size="sm" text={\`Min Amount: \${USD.format(minAmount)}\`} color="secondary" />}
+        </div>
+      )}
+
+      <table className="table table-striped table-hover align-middle">
+        {/* ...rows */}
+      </table>
+
+      {isFiltersOpen && (
+        <>
+          <button
+            type="button"
+            className="btn position-fixed top-0 start-0 w-100 h-100 bg-dark"
+            style={{ opacity: 0.35, zIndex: 1040 }}
+            aria-label="Close filters"
+            onClick={() => setIsFiltersOpen(false)}
+          />
+          <aside
+            className="position-fixed top-0 end-0 h-100 bg-white border-start p-3"
+            style={{ width: '360px', zIndex: 1045, overflowY: 'auto' }}
+            aria-label="Advanced filters panel"
+          >
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h6 className="mb-0">Advanced Filters</h6>
+              <button type="button" className="btn-close" aria-label="Close advanced filters" onClick={() => setIsFiltersOpen(false)} />
+            </div>
+            {/* type, status, min amount selects */}
+            <div className="d-flex gap-2 mt-4">
+              <button type="button" className="btn btn-primary" onClick={() => setIsFiltersOpen(false)}>Apply</button>
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => { setTypeFilter('all'); setStatusFilter('all'); setMinAmountFilter('0'); }}
+              >
+                Clear Filters
+              </button>
+            </div>
+          </aside>
+        </>
+      )}
+    </DBox>
+  );
+}`,
+      },
+    },
   },
 };
 
@@ -1486,6 +1674,104 @@ export const LoanPortfolio: Story = {
   render: () => <LoanPortfolioComponent />,
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      source: {
+        code: `function LoanPortfolioExample() {
+  const [sortBy, setSortBy] = useState('daysPastDue');
+  const [sortDirection, setSortDirection] = useState('desc');
+
+  const getSortIcon = (field) => {
+    if (sortBy !== field) return <DIcon icon="ArrowUpDown" size="0.9rem" className="text-gray-300" />;
+    if (sortDirection === 'asc') return <DIcon icon="ArrowUp" size="0.9rem" className="text-primary" />;
+    return <DIcon icon="ArrowDown" size="0.9rem" className="text-primary" />;
+  };
+
+  const rows = [...LOANS].sort((left, right) => {
+    let base = 0;
+    if (sortBy === 'borrower') base = left.borrower.localeCompare(right.borrower);
+    if (sortBy === 'disbursed') base = left.disbursed - right.disbursed;
+    if (sortBy === 'daysPastDue') base = left.daysPastDue - right.daysPastDue;
+    return sortDirection === 'asc' ? base : -base;
+  });
+
+  const onSort = (field) => {
+    if (sortBy === field) {
+      setSortDirection((previous) => (previous === 'asc' ? 'desc' : 'asc'));
+      return;
+    }
+    setSortBy(field);
+    setSortDirection('desc');
+  };
+
+  return (
+    <DBox style={{ width: '100%' }}>
+      <table className="table table-hover align-middle">
+        <caption>Credit Risk Monitoring</caption>
+        <thead>
+          <tr>
+            <th>
+              <button
+                type="button"
+                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                onClick={() => onSort('borrower')}
+              >
+                Borrower
+                {getSortIcon('borrower')}
+              </button>
+            </th>
+            <th>Product</th>
+            <th>
+              <button
+                type="button"
+                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                onClick={() => onSort('disbursed')}
+              >
+                Disbursed
+                {getSortIcon('disbursed')}
+              </button>
+            </th>
+            <th>Installments</th>
+            <th>
+              <button
+                type="button"
+                className="btn btn-link p-0 text-decoration-none d-inline-flex align-items-center gap-1"
+                onClick={() => onSort('daysPastDue')}
+              >
+                Days Past Due
+                {getSortIcon('daysPastDue')}
+              </button>
+            </th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((loan) => {
+            const risk = loanRisk(loan.daysPastDue);
+            return (
+              <tr key={loan.id}>
+                <td>
+                  <div className="fw-semibold">{loan.borrower}</div>
+                  <small className="text-secondary">{loan.id}</small>
+                </td>
+                <td>{loan.product}</td>
+                <td className="fw-semibold">{USD.format(loan.disbursed)}</td>
+                <td>{loan.paidInstallments}/{loan.totalInstallments}</td>
+                <td>
+                  {loan.daysPastDue === 0
+                    ? <span className="text-success">Current</span>
+                    : <span className="text-danger fw-semibold">{loan.daysPastDue} days</span>}
+                </td>
+                <td><DBadge soft size="sm" text={risk.text} color={risk.color} /></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </DBox>
+  );
+}`,
+      },
+    },
   },
 };
 
@@ -1604,5 +1890,98 @@ export const BulkActions: Story = {
   render: () => <BulkActionsComponent />,
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      source: {
+        code: `function BulkActionsExample() {
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [lastAction, setLastAction] = useState('');
+
+  const allSelected = selectedIds.length === PAYMENTS.length;
+
+  const toggleRow = (id) => {
+    setSelectedIds((previous) => (
+      previous.includes(id)
+        ? previous.filter((itemId) => itemId !== id)
+        : [...previous, id]
+    ));
+  };
+
+  const selectedAmount = PAYMENTS
+    .filter((row) => selectedIds.includes(row.id))
+    .reduce((total, row) => total + row.amount, 0);
+
+  return (
+    <DBox style={{ width: '100%' }}>
+      {selectedIds.length > 0 && (
+        <div className="alert alert-primary d-flex justify-content-between align-items-center mb-3">
+          <span>
+            <strong>{selectedIds.length}</strong> selected
+            <span className="text-secondary"> (Total: {USD.format(selectedAmount)})</span>
+          </span>
+          <div className="d-flex gap-2">
+            <button type="button" className="btn btn-sm btn-success"
+              onClick={() => setLastAction(\`Approved \${selectedIds.length} payments\`)}
+            >Approve</button>
+            <button type="button" className="btn btn-sm btn-warning"
+              onClick={() => setLastAction(\`Sent \${selectedIds.length} payments to review\`)}
+            >Send to Review</button>
+            <button type="button" className="btn btn-sm btn-outline-secondary"
+              onClick={() => setLastAction(\`Exported \${selectedIds.length} payments\`)}
+            >Export CSV</button>
+          </div>
+        </div>
+      )}
+
+      {lastAction && <p className="small text-muted">{lastAction}</p>}
+
+      <table className="table table-hover align-middle">
+        <caption>Payment Approval Queue</caption>
+        <thead>
+          <tr>
+            <th>
+              <DInputCheck
+                type="checkbox"
+                checked={allSelected}
+                onChange={(event) => {
+                  if (event.target.checked) {
+                    setSelectedIds(PAYMENTS.map((row) => row.id));
+                    return;
+                  }
+                  setSelectedIds([]);
+                }}
+              />
+            </th>
+            <th>Beneficiary</th>
+            <th>Account</th>
+            <th>Due Date</th>
+            <th className="text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {PAYMENTS.map((row) => (
+            <tr key={row.id} className={selectedIds.includes(row.id) ? 'table-active' : undefined}>
+              <td>
+                <DInputCheck
+                  type="checkbox"
+                  checked={selectedIds.includes(row.id)}
+                  onChange={() => toggleRow(row.id)}
+                />
+              </td>
+              <td>
+                <div className="fw-semibold">{row.beneficiary}</div>
+                <small className="text-secondary">{row.id}</small>
+              </td>
+              <td>{row.account}</td>
+              <td>{row.dueDate}</td>
+              <td className="text-end fw-semibold">{USD.format(row.amount)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </DBox>
+  );
+}`,
+      },
+    },
   },
 };
