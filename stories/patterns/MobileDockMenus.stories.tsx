@@ -67,15 +67,11 @@ function MobileViewport(
 ) {
   return (
     <div
+      className="bg-gray-25 border position-relative overflow-hidden rounded-2"
       style={{
         width: '390px',
         maxWidth: '100%',
         height: '760px',
-        borderRadius: '1.25rem',
-        border: '1px solid var(--bs-gray-200)',
-        overflow: 'hidden',
-        background: 'var(--bs-gray-25)',
-        position: 'relative',
       }}
     >
       {children}
