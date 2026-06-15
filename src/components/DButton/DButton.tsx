@@ -42,7 +42,7 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
   const {
     color = 'primary',
     size,
-    variant,
+    variant = 'solid',
     text,
     children,
     iconStart,
@@ -91,9 +91,9 @@ const DButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>((props,
   );
 
   const classes = useMemo<ClassMap>(() => {
-    const variantClass = variant
-      ? `btn-${variant}-${color}`
-      : `btn-${color}`;
+    const variantClass = variant === 'solid'
+      ? `btn-${color}`
+      : `btn-${variant}-${color}`;
 
     return {
       btn: true,
