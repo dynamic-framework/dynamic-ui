@@ -8,6 +8,7 @@ import {
   DButtonIcon,
   DDropdown,
   DIcon,
+  DListGroup,
 } from '../../src';
 
 import DocsTemplate from './docs/Template.mdx';
@@ -95,6 +96,7 @@ const SWIPE_ACTIONS_SOURCE = String.raw`import {
   type KeyboardEvent,
   type PointerEvent,
 } from 'react';
+import { DListGroup } from '../../src';
 
 type UseSwipeableRowsOptions = {
   actionsWidth: number;
@@ -268,14 +270,14 @@ function SwipeActionsList() {
         </div>
 
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <div className="d-flex flex-column gap-2">
+          <DListGroup flush>
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
               return (
-                <div
+                <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border"
+                  className="position-relative rounded-2 overflow-hidden bg-white border p-0"
                 >
                   <div
                     aria-hidden="true"
@@ -299,7 +301,7 @@ function SwipeActionsList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3"
+                    className="position-relative px-3 py-3 w-100 d-block"
                     style={{
                       transform: 'translateX(' + swipe.getTranslateX(item.id) + 'px)',
                       transition: isDragging ? 'none' : 'transform 180ms ease',
@@ -321,10 +323,10 @@ function SwipeActionsList() {
                       </strong>
                     </div>
                   </div>
-                </div>
+                </DListGroup.Item>
               );
             })}
-          </div>
+          </DListGroup>
         </div>
       </div>
     </MobileViewport>
@@ -337,7 +339,7 @@ const ICON_ONLY_SOURCE = String.raw`import {
   type KeyboardEvent,
   type PointerEvent,
 } from 'react';
-import { DButtonIcon } from '../../src';
+import { DButtonIcon, DListGroup } from '../../src';
 
 type UseSwipeableRowsOptions = { actionsWidth: number; openThreshold: number; };
 type SwipeListItem = { id: string; title: string; subtitle: string; amount: string; };
@@ -429,13 +431,13 @@ function IconOnlySwipeActionsList() {
           <small className="text-muted">Swipe left to reveal icon-only actions</small>
         </div>
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <div className="d-flex flex-column gap-2">
+          <DListGroup flush>
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
               return (
-                <div
+                <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border"
+                  className="position-relative rounded-2 overflow-hidden bg-white border p-0"
                 >
                   <div
                     aria-hidden="true"
@@ -470,7 +472,7 @@ function IconOnlySwipeActionsList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3"
+                    className="position-relative px-3 py-3 w-100 d-block"
                     style={{
                       transform: 'translateX(' + swipe.getTranslateX(item.id) + 'px)',
                       transition: isDragging ? 'none' : 'transform 180ms ease',
@@ -492,10 +494,10 @@ function IconOnlySwipeActionsList() {
                       </strong>
                     </div>
                   </div>
-                </div>
+                </DListGroup.Item>
               );
             })}
-          </div>
+          </DListGroup>
         </div>
       </div>
     </MobileViewport>
@@ -508,7 +510,11 @@ const DROPDOWN_SOURCE = String.raw`import {
   type KeyboardEvent,
   type PointerEvent,
 } from 'react';
-import { DDropdown, DIcon } from '../../src';
+import {
+  DDropdown,
+  DIcon,
+  DListGroup,
+} from '../../src';
 
 type UseSwipeableRowsOptions = { actionsWidth: number; openThreshold: number; };
 type SwipeListItem = { id: string; title: string; subtitle: string; amount: string; };
@@ -600,13 +606,13 @@ function SwipeActionsWithDropdownList() {
           <small className="text-muted">Swipe left to reveal quick actions and a dropdown menu</small>
         </div>
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <div className="d-flex flex-column gap-2">
+          <DListGroup>
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
               return (
-                <div
+                <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border"
+                  className="position-relative overflow-hidden p-0"
                 >
                   <div
                     aria-hidden="true"
@@ -641,7 +647,7 @@ function SwipeActionsWithDropdownList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3"
+                    className="position-relative px-3 py-3 w-100 d-block"
                     style={{
                       transform: 'translateX(' + swipe.getTranslateX(item.id) + 'px)',
                       transition: isDragging ? 'none' : 'transform 180ms ease',
@@ -663,10 +669,10 @@ function SwipeActionsWithDropdownList() {
                       </strong>
                     </div>
                   </div>
-                </div>
+                </DListGroup.Item>
               );
             })}
-          </div>
+          </DListGroup>
         </div>
       </div>
     </MobileViewport>
@@ -688,14 +694,14 @@ function SwipeActionsList() {
         </div>
 
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <div className="d-flex flex-column gap-2">
+          <DListGroup flush>
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
               return (
-                <div
+                <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border"
+                  className="position-relative rounded-2 overflow-hidden bg-white border p-0"
                 >
                   <div
                     aria-hidden="true"
@@ -746,7 +752,7 @@ function SwipeActionsList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3"
+                    className="position-relative px-3 py-3 w-100 d-block"
                     style={{
                       transform: `translateX(${swipe.getTranslateX(item.id)}px)`,
                       transition: isDragging ? 'none' : 'transform 180ms ease',
@@ -768,10 +774,10 @@ function SwipeActionsList() {
                       </strong>
                     </div>
                   </div>
-                </div>
+                </DListGroup.Item>
               );
             })}
-          </div>
+          </DListGroup>
         </div>
       </div>
     </MobileViewport>
@@ -810,14 +816,14 @@ function IconOnlySwipeActionsList() {
         </div>
 
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <div className="d-flex flex-column gap-2">
+          <DListGroup flush>
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
               return (
-                <div
+                <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border"
+                  className="position-relative rounded-2 overflow-hidden bg-white border p-0"
                 >
                   <div
                     aria-hidden="true"
@@ -853,7 +859,7 @@ function IconOnlySwipeActionsList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3"
+                    className="position-relative px-3 py-3 w-100 d-block"
                     style={{
                       transform: `translateX(${swipe.getTranslateX(item.id)}px)`,
                       transition: isDragging ? 'none' : 'transform 180ms ease',
@@ -875,10 +881,10 @@ function IconOnlySwipeActionsList() {
                       </strong>
                     </div>
                   </div>
-                </div>
+                </DListGroup.Item>
               );
             })}
-          </div>
+          </DListGroup>
         </div>
       </div>
     </MobileViewport>
@@ -902,14 +908,14 @@ function SwipeActionsWithDropdownList() {
         </div>
 
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <div className="d-flex flex-column gap-2">
+          <DListGroup>
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
               return (
-                <div
+                <DListGroup.Item
                   key={item.id}
-                  className="position-relative rounded-2 overflow-hidden bg-white border"
+                  className="position-relative overflow-hidden p-0"
                 >
                   <div
                     aria-hidden="true"
@@ -959,7 +965,7 @@ function SwipeActionsWithDropdownList() {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="position-relative px-3 py-3"
+                    className="position-relative px-3 py-3 w-100 d-block"
                     style={{
                       transform: `translateX(${swipe.getTranslateX(item.id)}px)`,
                       transition: isDragging ? 'none' : 'transform 180ms ease',
@@ -981,10 +987,10 @@ function SwipeActionsWithDropdownList() {
                       </strong>
                     </div>
                   </div>
-                </div>
+                </DListGroup.Item>
               );
             })}
-          </div>
+          </DListGroup>
         </div>
       </div>
     </MobileViewport>
