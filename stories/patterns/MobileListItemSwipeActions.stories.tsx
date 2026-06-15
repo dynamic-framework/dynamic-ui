@@ -270,7 +270,7 @@ function SwipeActionsList() {
         </div>
 
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <DListGroup flush>
+          <DListGroup flush className="gap-1">
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
@@ -431,7 +431,7 @@ function IconOnlySwipeActionsList() {
           <small className="text-muted">Swipe left to reveal icon-only actions</small>
         </div>
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <DListGroup flush>
+          <DListGroup flush className="gap-1">
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
               return (
@@ -694,7 +694,7 @@ function SwipeActionsList() {
         </div>
 
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <DListGroup flush>
+          <DListGroup flush className="gap-1">
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
@@ -816,7 +816,7 @@ function IconOnlySwipeActionsList() {
         </div>
 
         <div className="px-3 pb-3 overflow-auto no-visible-scroll" style={{ minHeight: 0 }}>
-          <DListGroup flush>
+          <DListGroup flush className="gap-1">
             {SWIPE_LIST_ITEMS.map((item) => {
               const isDragging = swipe.isDragging(item.id);
 
