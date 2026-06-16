@@ -90,16 +90,34 @@ export default function DDropdown(
       resolvedPlacement = placement;
     }
 
-    const alignRight = resolvedPlacement === 'start';
+    const openStart = resolvedPlacement === 'start';
+    const openEnd = resolvedPlacement === 'end';
     const openUp = resolvedPlacement === 'up';
+    let availableHeight = spaceBottom;
+    if (openUp) {
+      availableHeight = spaceTop;
+    } else if (openStart || openEnd) {
+      availableHeight = window.innerHeight - rect.top;
+    }
+
+    const verticalCoords = openUp
+      ? { bottom: window.innerHeight - rect.top + 4 }
+      : { top: openStart || openEnd ? rect.top : rect.bottom + 4 };
+
+    let horizontalCoords: Pick<MenuCoords, 'left' | 'right'>;
+    if (openStart) {
+      horizontalCoords = { right: window.innerWidth - rect.left + 4 };
+    } else if (openEnd) {
+      horizontalCoords = { left: rect.right + 4 };
+    } else {
+      horizontalCoords = { left: rect.left };
+    }
 
     setMenuCoords({
-      ...openUp ? { bottom: window.innerHeight - rect.top + 4 } : { top: rect.bottom + 4 },
-      ...alignRight
-        ? { right: window.innerWidth - rect.right }
-        : { left: rect.left },
+      ...verticalCoords,
+      ...horizontalCoords,
       minWidth: Math.max(rect.width, 160),
-      maxHeight: `${Math.max((openUp ? spaceTop : spaceBottom) - 12, 120)}px`,
+      maxHeight: `${Math.max(availableHeight - 12, 120)}px`,
     });
   }, [placement]);
 
@@ -117,7 +135,7 @@ export default function DDropdown(
 
   // Outside-click: portal mode (must check both toggle and floating menu)
   useEffect(() => {
-    if (!asPortal) return () => {};
+    if (!asPortal || !open) return () => {};
     const handler = (event: MouseEvent) => {
       const target = event.target as Node;
       if (!toggleRef.current?.contains(target) && !menuRef.current?.contains(target)) {
@@ -126,7 +144,7 @@ export default function DDropdown(
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, [asPortal]);
+  }, [asPortal, open]);
 
   // Auto-position: default mode
   useEffect(() => {
@@ -187,13 +205,41 @@ export default function DDropdown(
     }
     : undefined;
 
+  let inlineTop: React.CSSProperties['top'] = '100%';
+  if (resolvedInlinePosition === 'up') {
+    inlineTop = 'auto';
+  } else if (resolvedInlinePosition === 'start' || resolvedInlinePosition === 'end') {
+    inlineTop = 0;
+  }
+
+  let inlineLeft: React.CSSProperties['left'] = 0;
+  if (resolvedInlinePosition === 'start') {
+    inlineLeft = 'auto';
+  } else if (resolvedInlinePosition === 'end') {
+    inlineLeft = '100%';
+  }
+
+  let inlineRight: React.CSSProperties['right'] = 'auto';
+  if (resolvedInlinePosition === 'start') {
+    inlineRight = '100%';
+  }
+
+  let inlineTransform: React.CSSProperties['transform'] = 'translateY(4px)';
+  if (resolvedInlinePosition === 'up') {
+    inlineTransform = 'translateY(-4px)';
+  } else if (resolvedInlinePosition === 'start') {
+    inlineTransform = 'translateX(-4px)';
+  } else if (resolvedInlinePosition === 'end') {
+    inlineTransform = 'translateX(4px)';
+  }
+
   const inlineMenuStyle: React.CSSProperties = {
     position: 'absolute',
-    top: resolvedInlinePosition === 'up' ? 'auto' : '100%',
+    top: inlineTop,
     bottom: resolvedInlinePosition === 'up' ? '100%' : 'auto',
-    left: resolvedInlinePosition === 'start' ? 'auto' : 0,
-    right: resolvedInlinePosition === 'start' ? '0' : 'auto',
-    transform: resolvedInlinePosition === 'up' ? 'translateY(-4px)' : 'translateY(4px)',
+    left: inlineLeft,
+    right: inlineRight,
+    transform: inlineTransform,
   };
 
   const menuItems = (

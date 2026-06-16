@@ -377,7 +377,7 @@ function TextOnlyDockMenuWithNotificationsExample() {
                   );
                 }
                 return (
-                  <DButton key={item.id} variant="secondary" size="sm" color="secondary" onClick={() => setActiveItem(item.id)} className={isActive ? 'fw-semibold' : 'fw-normal'}>
+                  <DButton key={item.id} variant="link" size="sm" color="secondary" onClick={() => setActiveItem(item.id)} className={isActive ? 'fw-semibold' : 'fw-normal'}>
                     {item.label}
                     {typeof item.notifications === 'number' && item.notifications > 0 && (
                       <span className="rounded-pill text-white bg-danger d-inline-flex align-items-center justify-content-center" style={{ minWidth: '16px', height: '16px', paddingInline: '4px', fontSize: '8px', lineHeight: 1 }}>

@@ -46,6 +46,7 @@ export function useSwipeableRows({
     setDraggingRowId(rowId);
     dragOriginXRef.current = clientX;
     dragStartOffsetRef.current = openRowId === rowId ? -actionsWidth : 0;
+    setDragOffset(dragStartOffsetRef.current);
 
     if (openRowId && openRowId !== rowId) {
       setOpenRowId(null);
@@ -111,6 +112,15 @@ export function useSwipeableRows({
 
     if (event.key === 'ArrowRight' || event.key === 'Escape') {
       closeRow();
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (openRowId === rowId) {
+        closeRow();
+      } else {
+        openRow(rowId);
+      }
     }
   };
 

@@ -139,6 +139,7 @@ function useSwipeableRows({
     setDraggingRowId(rowId);
     dragOriginXRef.current = clientX;
     dragStartOffsetRef.current = openRowId === rowId ? -actionsWidth : 0;
+    setDragOffset(dragStartOffsetRef.current);
 
     if (openRowId && openRowId !== rowId) {
       setOpenRowId(null);
@@ -204,6 +205,15 @@ function useSwipeableRows({
 
     if (event.key === 'ArrowRight' || event.key === 'Escape') {
       closeRow();
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (openRowId === rowId) {
+        closeRow();
+      } else {
+        openRow(rowId);
+      }
     }
   };
 
@@ -364,6 +374,7 @@ function useSwipeableRows({ actionsWidth, openThreshold }: UseSwipeableRowsOptio
     setDraggingRowId(rowId);
     dragOriginXRef.current = clientX;
     dragStartOffsetRef.current = openRowId === rowId ? -actionsWidth : 0;
+    setDragOffset(dragStartOffsetRef.current);
     if (openRowId && openRowId !== rowId) setOpenRowId(null);
   };
 
@@ -402,6 +413,10 @@ function useSwipeableRows({ actionsWidth, openThreshold }: UseSwipeableRowsOptio
   const getKeyboardHandler = (rowId: string) => (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'ArrowLeft') openRow(rowId);
     if (e.key === 'ArrowRight' || e.key === 'Escape') closeRow();
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openRowId === rowId ? closeRow() : openRow(rowId);
+    }
   };
 
   return { closeRow, getKeyboardHandler, getPointerHandlers, getTranslateX, isDragging };
@@ -539,6 +554,7 @@ function useSwipeableRows({ actionsWidth, openThreshold }: UseSwipeableRowsOptio
     setDraggingRowId(rowId);
     dragOriginXRef.current = clientX;
     dragStartOffsetRef.current = openRowId === rowId ? -actionsWidth : 0;
+    setDragOffset(dragStartOffsetRef.current);
     if (openRowId && openRowId !== rowId) setOpenRowId(null);
   };
 
@@ -577,6 +593,10 @@ function useSwipeableRows({ actionsWidth, openThreshold }: UseSwipeableRowsOptio
   const getKeyboardHandler = (rowId: string) => (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'ArrowLeft') openRow(rowId);
     if (e.key === 'ArrowRight' || e.key === 'Escape') closeRow();
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openRowId === rowId ? closeRow() : openRow(rowId);
+    }
   };
 
   return { closeRow, getKeyboardHandler, getPointerHandlers, getTranslateX, isDragging };
