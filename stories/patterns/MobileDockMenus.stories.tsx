@@ -9,6 +9,7 @@ import {
 import {
   DBox,
   DButton,
+  DButtonIcon,
   DDropdown,
   DIcon,
 } from '../../src';
@@ -38,6 +39,14 @@ const H_SCROLL_DOCK_ITEMS: DockItem[] = [
   { id: 'invest', label: 'Invest', icon: 'TrendingUp' },
   { id: 'insurance', label: 'Insurance', icon: 'Shield' },
   { id: 'support', label: 'Support', icon: 'Headset' },
+  { id: 'profile', label: 'Profile', icon: 'UserRound' },
+];
+
+const ICON_ONLY_DOCK_ITEMS: DockItem[] = [
+  { id: 'home', label: 'Home', icon: 'House' },
+  { id: 'accounts', label: 'Accounts', icon: 'Wallet' },
+  { id: 'transfer', label: 'Transfer', icon: 'ArrowLeftRight' },
+  { id: 'cards', label: 'Cards', icon: 'CreditCard' },
   { id: 'profile', label: 'Profile', icon: 'UserRound' },
 ];
 
@@ -368,7 +377,7 @@ function TextOnlyDockMenuWithNotificationsExample() {
                   );
                 }
                 return (
-                  <DButton key={item.id} variant="link" size="sm" color="secondary" onClick={() => setActiveItem(item.id)} className={isActive ? 'fw-semibold' : 'fw-normal'}>
+                  <DButton key={item.id} variant="secondary" size="sm" color="secondary" onClick={() => setActiveItem(item.id)} className={isActive ? 'fw-semibold' : 'fw-normal'}>
                     {item.label}
                     {typeof item.notifications === 'number' && item.notifications > 0 && (
                       <span className="rounded-pill text-white bg-danger d-inline-flex align-items-center justify-content-center" style={{ minWidth: '16px', height: '16px', paddingInline: '4px', fontSize: '8px', lineHeight: 1 }}>
@@ -378,6 +387,50 @@ function TextOnlyDockMenuWithNotificationsExample() {
                   </DButton>
                 );
               })}
+            </div>
+          </nav>
+        </div>
+      </div>
+    </MobileViewport>
+  );
+}`;
+
+const ICON_ONLY_DOCK_MENU_SOURCE = String.raw`import { DButtonIcon } from '../../src';
+
+const ICON_ONLY_DOCK_ITEMS = [
+  { id: 'home', label: 'Home', icon: 'House' },
+  { id: 'accounts', label: 'Accounts', icon: 'Wallet' },
+  { id: 'transfer', label: 'Transfer', icon: 'ArrowLeftRight' },
+  { id: 'cards', label: 'Cards', icon: 'CreditCard' },
+  { id: 'profile', label: 'Profile', icon: 'UserRound' },
+];
+
+function IconOnlyDockMenuExample() {
+  return (
+    <MobileViewport>
+      <div className="h-100 position-relative bg-gray-25">
+        <div className="p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="mb-1">Icon shortcuts</h5>
+          <small className="text-muted">Icon-only dock with pill style actions</small>
+          <div className="card p-3 mt-3">
+            <small className="text-muted">Quick access</small>
+            <strong>5 main actions</strong>
+          </div>
+        </div>
+        <div className="position-absolute start-0 end-0" style={{ bottom: '12px', paddingInline: '12px' }}>
+          <nav aria-label="Icon-only dock menu" className="bg-primary rounded-pill p-2" style={{ boxShadow: '0 10px 24px rgba(13, 110, 253, 0.32)' }}>
+            <div className="d-grid" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
+              {ICON_ONLY_DOCK_ITEMS.map((item) => (
+                <div key={item.id} className="d-flex justify-content-center">
+                  <DButtonIcon
+                    variant={item.id === 'home' ? 'solid' : 'link'}
+                    color="light"
+                    className="rounded-pill hover:bg-primary-400 text-white"
+                    icon={item.icon}
+                    aria-label={item.label}
+                  />
+                </div>
+              ))}
             </div>
           </nav>
         </div>
@@ -814,4 +867,65 @@ export const TextOnlyDockMenuWithNotifications: Story = {
     },
   },
   render: () => <TextOnlyDockWithNotifications />,
+};
+
+export const IconOnlyDockMenu: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Dock menu with only icons using DButtonIcon in light color and rounded-pill style over a bg-primary rounded-pill container.',
+      },
+      source: {
+        code: ICON_ONLY_DOCK_MENU_SOURCE,
+        language: 'tsx',
+      },
+    },
+  },
+  render: () => (
+    <MobileViewport>
+      <div className="h-100 position-relative bg-gray-25">
+        <div className="p-4" style={{ paddingBottom: '112px' }}>
+          <h5 className="mb-1">Icon shortcuts</h5>
+          <small className="text-muted">Icon-only dock with pill style actions</small>
+
+          <div className="card p-3 mt-3">
+            <small className="text-muted">Quick access</small>
+            <strong>5 main actions</strong>
+          </div>
+        </div>
+
+        <div
+          className="position-absolute start-0 end-0"
+          style={{
+            bottom: '12px',
+            paddingInline: '12px',
+          }}
+        >
+          <nav
+            aria-label="Icon-only dock menu"
+            className="bg-primary rounded-pill p-1 shadow-lg"
+          >
+            <div
+              className="d-grid"
+              style={{
+                gridTemplateColumns: `repeat(${ICON_ONLY_DOCK_ITEMS.length}, minmax(0, 1fr))`,
+              }}
+            >
+              {ICON_ONLY_DOCK_ITEMS.map((item) => (
+                <div key={item.id} className="d-flex justify-content-center">
+                  <DButtonIcon
+                    variant={item.id === 'home' ? 'solid' : 'link'}
+                    color="light"
+                    className={`border-0 rounded-pill ${item.id === 'home' ? 'bg-primary-400 text-white' : ''}`}
+                    icon={item.icon}
+                    aria-label={item.label}
+                  />
+                </div>
+              ))}
+            </div>
+          </nav>
+        </div>
+      </div>
+    </MobileViewport>
+  ),
 };
