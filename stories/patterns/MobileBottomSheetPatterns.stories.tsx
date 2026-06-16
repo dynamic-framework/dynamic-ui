@@ -54,9 +54,9 @@ const meta: Meta<typeof DBox> = {
 
 Open each example in its own Storybook canvas:
 
-- [Account actions bottom sheet](?path=/story/patterns-mobile-bottom-sheets--account-actions-bottom-sheet)
-- [Transfer review bottom sheet](?path=/story/patterns-mobile-bottom-sheets--transfer-review-bottom-sheet)
-- [Card controls bottom sheet](?path=/story/patterns-mobile-bottom-sheets--card-controls-bottom-sheet)
+- [Account actions bottom sheet](?path=/story/mobile-patterns-mobile-bottom-sheets--account-actions-bottom-sheet)
+- [Transfer review bottom sheet](?path=/story/mobile-patterns-mobile-bottom-sheets--transfer-review-bottom-sheet)
+- [Card controls bottom sheet](?path=/story/mobile-patterns-mobile-bottom-sheets--card-controls-bottom-sheet)
 `,
       },
     },
