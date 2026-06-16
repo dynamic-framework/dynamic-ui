@@ -21,12 +21,15 @@ export type DropdownAction = {
 };
 
 type MenuCoords = {
-  top: number;
+  top?: number;
+  bottom?: number;
   left?: number;
   right?: number;
   minWidth: number;
   maxHeight: string;
 };
+
+type DropdownPlacement = 'auto' | 'down' | 'up' | 'start' | 'end';
 
 type Props = {
   actions: DropdownAction[];
@@ -34,6 +37,7 @@ type Props = {
   className?: string;
   classNameMenu?: string;
   asPortal?: boolean;
+  placement?: DropdownPlacement;
 };
 
 const getItemClass = (action: DropdownAction) => classNames({
@@ -49,6 +53,7 @@ export default function DDropdown(
     className,
     classNameMenu,
     asPortal = false,
+    placement = 'auto',
   }: Props,
 ) {
   const [open, setOpen] = useState(false);
@@ -63,6 +68,7 @@ export default function DDropdown(
   const menuRef = useRef<HTMLUListElement>(null);
 
   const toggle = () => setOpen((prev) => !prev);
+  const resolvedInlinePosition = placement === 'auto' ? position : placement;
 
   // Compute fixed coords from the toggle's bounding rect (portal mode only)
   const computePortalCoords = useCallback(() => {
@@ -70,15 +76,32 @@ export default function DDropdown(
     const rect = toggleRef.current.getBoundingClientRect();
     const spaceRight = window.innerWidth - rect.right;
     const spaceBottom = window.innerHeight - rect.bottom;
+    const spaceTop = rect.top;
+    let resolvedPlacement: DropdownPlacement;
+    if (placement === 'auto') {
+      if (spaceBottom < 150) {
+        resolvedPlacement = 'up';
+      } else if (spaceRight < 150) {
+        resolvedPlacement = 'start';
+      } else {
+        resolvedPlacement = 'down';
+      }
+    } else {
+      resolvedPlacement = placement;
+    }
+
+    const alignRight = resolvedPlacement === 'start';
+    const openUp = resolvedPlacement === 'up';
 
     setMenuCoords({
-      top: rect.bottom + 4,
-      left: spaceRight >= 160 ? rect.left : undefined,
-      right: spaceRight < 160 ? window.innerWidth - rect.right : undefined,
+      ...openUp ? { bottom: window.innerHeight - rect.top + 4 } : { top: rect.bottom + 4 },
+      ...alignRight
+        ? { right: window.innerWidth - rect.right }
+        : { left: rect.left },
       minWidth: Math.max(rect.width, 160),
-      maxHeight: `${Math.max(spaceBottom - 12, 120)}px`,
+      maxHeight: `${Math.max((openUp ? spaceTop : spaceBottom) - 12, 120)}px`,
     });
-  }, []);
+  }, [placement]);
 
   // Outside-click: default mode
   useEffect(() => {
@@ -107,14 +130,14 @@ export default function DDropdown(
 
   // Auto-position: default mode
   useEffect(() => {
-    if (asPortal || !open || !dropdownRef.current) return;
+    if (asPortal || !open || !dropdownRef.current || placement !== 'auto') return;
     const rect = dropdownRef.current.getBoundingClientRect();
     const spaceBottom = window.innerHeight - rect.bottom;
     const spaceRight = window.innerWidth - rect.right;
     if (spaceBottom < 150) setPosition('up');
     else if (spaceRight < 150) setPosition('start');
     else setPosition('down');
-  }, [asPortal, open]);
+  }, [asPortal, open, placement]);
 
   // Compute + track coords: portal mode
   // Re-runs whenever the menu opens and keeps coords fresh on scroll/resize
@@ -153,6 +176,7 @@ export default function DDropdown(
     ? {
       position: 'fixed',
       top: menuCoords.top,
+      bottom: menuCoords.bottom,
       left: menuCoords.left,
       right: menuCoords.right,
       minWidth: menuCoords.minWidth,
@@ -165,11 +189,11 @@ export default function DDropdown(
 
   const inlineMenuStyle: React.CSSProperties = {
     position: 'absolute',
-    top: position === 'up' ? 'auto' : '100%',
-    bottom: position === 'up' ? '100%' : 'auto',
-    left: position === 'start' ? 'auto' : 0,
-    right: position === 'start' ? '0' : 'auto',
-    transform: 'translateY(4px)',
+    top: resolvedInlinePosition === 'up' ? 'auto' : '100%',
+    bottom: resolvedInlinePosition === 'up' ? '100%' : 'auto',
+    left: resolvedInlinePosition === 'start' ? 'auto' : 0,
+    right: resolvedInlinePosition === 'start' ? '0' : 'auto',
+    transform: resolvedInlinePosition === 'up' ? 'translateY(-4px)' : 'translateY(4px)',
   };
 
   const menuItems = (
