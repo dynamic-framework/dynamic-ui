@@ -290,7 +290,7 @@ function SwipeActionsList() {
                   className="position-relative rounded-2 overflow-hidden bg-white border p-0"
                 >
                   <div
-                    aria-hidden="true"
+                    aria-hidden={swipe.openRowId !== item.id}
                     className="position-absolute top-0 bottom-0 end-0 d-flex align-items-stretch px-2 bg-gray-50"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
@@ -419,7 +419,14 @@ function useSwipeableRows({ actionsWidth, openThreshold }: UseSwipeableRowsOptio
     }
   };
 
-  return { closeRow, getKeyboardHandler, getPointerHandlers, getTranslateX, isDragging };
+  return {
+    closeRow,
+    getKeyboardHandler,
+    getPointerHandlers,
+    getTranslateX,
+    isDragging,
+    openRowId,
+  };
 }
 
 const SWIPE_LIST_ITEMS: SwipeListItem[] = [
@@ -455,7 +462,7 @@ function IconOnlySwipeActionsList() {
                   className="position-relative rounded-2 overflow-hidden bg-white border p-0"
                 >
                   <div
-                    aria-hidden="true"
+                    aria-hidden={swipe.openRowId !== item.id}
                     className="position-absolute top-0 bottom-0 end-0 d-flex align-items-center justify-content-around px-2 bg-gray-50"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
@@ -599,7 +606,14 @@ function useSwipeableRows({ actionsWidth, openThreshold }: UseSwipeableRowsOptio
     }
   };
 
-  return { closeRow, getKeyboardHandler, getPointerHandlers, getTranslateX, isDragging };
+  return {
+    closeRow,
+    getKeyboardHandler,
+    getPointerHandlers,
+    getTranslateX,
+    isDragging,
+    openRowId,
+  };
 }
 
 const SWIPE_LIST_ITEMS: SwipeListItem[] = [
@@ -635,7 +649,7 @@ function SwipeActionsWithDropdownList() {
                   className="position-relative overflow-hidden p-0"
                 >
                   <div
-                    aria-hidden="true"
+                    aria-hidden={swipe.openRowId !== item.id}
                     className="position-absolute top-0 bottom-0 end-0 d-flex align-items-center justify-content-between px-2 bg-gray-50"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
@@ -724,7 +738,7 @@ function SwipeActionsList() {
                   className="position-relative rounded-2 overflow-hidden bg-white border p-0"
                 >
                   <div
-                    aria-hidden="true"
+                    aria-hidden={swipe.openRowId !== item.id}
                     className="position-absolute top-0 bottom-0 end-0 d-flex align-items-stretch px-2 bg-gray-50"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
@@ -846,7 +860,7 @@ function IconOnlySwipeActionsList() {
                   className="position-relative rounded-2 overflow-hidden bg-white border p-0"
                 >
                   <div
-                    aria-hidden="true"
+                    aria-hidden={swipe.openRowId !== item.id}
                     className="position-absolute top-0 bottom-0 end-0 d-flex align-items-center justify-content-around px-2 bg-gray-50"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
@@ -938,7 +952,7 @@ function SwipeActionsWithDropdownList() {
                   className="position-relative overflow-hidden p-0"
                 >
                   <div
-                    aria-hidden="true"
+                    aria-hidden={swipe.openRowId !== item.id}
                     className="position-absolute top-0 bottom-0 end-0 d-flex align-items-center justify-content-between px-2 bg-gray-50"
                     style={{
                       boxShadow: '12px 0 24px -15px rgba(0,0,0,.3) inset',
