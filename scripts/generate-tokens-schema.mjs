@@ -67,6 +67,7 @@ const tintExtension = {
     space: { const: 'srgb' },
     method: { enum: ['bootstrap-mix', 'hand-authored'] },
     fidelity: { enum: ['approximate'] },
+    regenerable: { type: 'boolean' },
     note: { type: 'string' },
     steps: tintStepsSchema(),
   },
@@ -74,9 +75,11 @@ const tintExtension = {
 };
 
 function familySchema() {
+  // A family is a pure DTCG group: $type + $extensions + step children, NO own
+  // $value (additionalProperties:false makes an own $value invalid). Every step,
+  // including -500, is a literal hex leaf.
   const properties = {
     $type: { const: 'color' },
-    $value: HEX, // family-level base/-500
     $extensions: {
       type: 'object',
       required: ['dev.dynamicframework.tint'],
@@ -85,11 +88,11 @@ function familySchema() {
     },
   };
   for (const step of STEPS) {
-    properties[step] = step === '500' ? colorLeaf(ALIAS) : colorLeaf(HEX);
+    properties[step] = colorLeaf(HEX);
   }
   return {
     type: 'object',
-    required: ['$type', '$value', '$extensions', ...STEPS],
+    required: ['$type', '$extensions', ...STEPS],
     properties,
     additionalProperties: false,
   };

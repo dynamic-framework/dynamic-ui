@@ -57,18 +57,23 @@ function main() {
   }
   process.stdout.write('✓ schema valid\n');
 
-  // 2) Round-trip tint fidelity for bootstrap-mix families.
+  // 2) Structural (Fix A) + round-trip tint fidelity.
   let checked = 0;
   let mixFamilies = 0;
   for (const [name, node] of Object.entries(tokens.color)) {
     const tint = node.$extensions?.['dev.dynamicframework.tint'];
-    if (!tint || tint.method !== 'bootstrap-mix') continue;
+    if (!tint) continue; // roles have no tint extension
+    // Family nodes must be pure DTCG groups: no own $value (a token, not a group).
+    if (Object.prototype.hasOwnProperty.call(node, '$value')) {
+      fail(`${name}: family node must be a group (must NOT have its own $value)`);
+    }
+    if (tint.method !== 'bootstrap-mix') continue;
     mixFamilies += 1;
-    const baseRgb = hexToRgb(node.$value);
+    const baseRgb = hexToRgb(node['500'].$value); // -500 holds the literal base
     for (const [step, def] of Object.entries(tint.steps)) {
       if (def.op === 'base') {
-        if (node[step].$value !== `{color.${name}}`) {
-          fail(`${name}.${step} expected alias {color.${name}}, got ${node[step].$value}`);
+        if (!/^#[0-9a-f]{6}$/.test(node[step].$value)) {
+          fail(`${name}.${step} expected literal base hex, got ${node[step].$value}`);
         }
         continue;
       }
