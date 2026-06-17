@@ -5,11 +5,11 @@
   --#{$prefix}icon-padding: var(--#{$prefix}icon-component-padding, 0);
   --#{$prefix}icon-loading-duration: var(--#{$prefix}icon-component-loading-duration, 1.8);
 
-  display: inline-flex !important; /* stylelint-disable-line declaration-no-important */
+  display: inline-flex if($enable-important-utilities, !important, null);
   align-items: center;
   justify-content: center;
   padding: var(--#{$prefix}icon-padding);
-  font-size: var(--#{$prefix}icon-size) !important; /* stylelint-disable-line declaration-no-important */
+  font-size: var(--#{$prefix}icon-size) if($enable-important-utilities, !important, null);
   line-height: 1;
   color: var(--#{$prefix}icon-color);
   background-color: var(--#{$prefix}icon-bg-color);

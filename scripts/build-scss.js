@@ -26,33 +26,43 @@ const HEADER_COMMENT = `/*!
  */
 `;
 
-const file = './src/style/dynamic-ui.scss';
-const filename = 'dynamic-ui';
+const bundles = [
+  {
+    file: './src/style/dynamic-ui.scss',
+    filename: 'dynamic-ui',
+  },
+  {
+    file: './src/style/dynamic-ui-no-important.scss',
+    filename: 'dynamic-ui-no-important',
+  },
+];
 
-const rawFilePath = path.join(dirPath, `${filename}.css`);
-const minFilePath = path.join(dirPath, `${filename}.min.css`);
+for (const { file, filename } of bundles) {
+  const rawFilePath = path.join(dirPath, `${filename}.css`);
+  const minFilePath = path.join(dirPath, `${filename}.min.css`);
 
-execSync(`sass --trace --color --load-path=./ --no-source-map ${file} > ${rawFilePath}`);
-execSync(`sass --trace --color --load-path=./ --no-source-map --style=compressed ${file} > ${minFilePath}`);
+  execSync(`sass --trace --color --load-path=./ --no-source-map ${file} > ${rawFilePath}`);
+  execSync(`sass --trace --color --load-path=./ --no-source-map --style=compressed ${file} > ${minFilePath}`);
 
-const rawContent = fs.readFileSync(rawFilePath, 'utf8');
-const minContent = fs.readFileSync(minFilePath, 'utf8');
+  const rawContent = fs.readFileSync(rawFilePath, 'utf8');
+  const minContent = fs.readFileSync(minFilePath, 'utf8');
 
-fs.writeFileSync(
-  rawFilePath,
-  Buffer.concat([
-    Buffer.from(HEADER_COMMENT, 'utf8'),
-    Buffer.from(rawContent, 'utf8'),
-  ]),
-  'utf8',
-);
-fs.writeFileSync(
-  minFilePath,
-  Buffer.concat([
-    Buffer.from(HEADER_COMMENT, 'utf8'),
-    Buffer.from(minContent.replace(/\uFEFF/g, ''), 'utf8'),
-  ]),
-  'utf8',
-);
+  fs.writeFileSync(
+    rawFilePath,
+    Buffer.concat([
+      Buffer.from(HEADER_COMMENT, 'utf8'),
+      Buffer.from(rawContent, 'utf8'),
+    ]),
+    'utf8',
+  );
+  fs.writeFileSync(
+    minFilePath,
+    Buffer.concat([
+      Buffer.from(HEADER_COMMENT, 'utf8'),
+      Buffer.from(minContent.replace(/\uFEFF/g, ''), 'utf8'),
+    ]),
+    'utf8',
+  );
+}
 
 execSync(`postcss ${path.join(dirPath, '*.css')} --replace --use autoprefixer --no-map`);

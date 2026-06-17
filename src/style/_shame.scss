@@ -1,17 +1,15 @@
-/* stylelint-disable declaration-no-important */
-
 .flex-1 {
   flex: 1;
 }
 
 .text-muted {
   --#{$prefix}text-muted: var(--#{$prefix}gray-500);
-  color: var(--#{$prefix}text-muted) !important;
+  color: var(--#{$prefix}text-muted) if($enable-important-utilities, !important, null);
 }
 
 .form-text {
   --#{$prefix}form-text: var(--#{$prefix}gray-500);
-  color: var(--#{$prefix}form-text) !important;
+  color: var(--#{$prefix}form-text) if($enable-important-utilities, !important, null);
 }
 
 .spinner-border {
@@ -20,7 +18,7 @@
 }
 
 th {
-  font-weight: var(--#{$prefix}fw-semibold) !important;
+  font-weight: var(--#{$prefix}fw-semibold) if($enable-important-utilities, !important, null);
 }
 
 @media (min-width: 1200px) {

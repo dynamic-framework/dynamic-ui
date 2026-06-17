@@ -80,6 +80,28 @@ import { DTabs, DLayout, DBox } from '../src';
   </DTabs>
 
   <br />
+  ### CSS bundles (2 consumption modes)
+
+  Dynamic Framework publishes two CSS bundles so each project can choose how utilities behave in the cascade.
+
+  1. **Standard bundle (default):** includes utility classes with `!important` behavior.
+  2. **No-important bundle:** removes utility `!important` behavior to make local overrides easier.
+
+  Use only one of them at a time.
+
+  **Option A: Standard (recommended for backwards compatibility)**
+  ```html
+  <link rel="stylesheet" href="/path/to/dynamic-ui.css" />
+  ```
+
+  **Option B: No-important utilities (recommended for stricter cascade control)**
+  ```html
+  <link rel="stylesheet" href="/path/to/dynamic-ui-no-important.css" />
+  ```
+
+  For production, use minified files (`dynamic-ui.min.css` or `dynamic-ui-no-important.min.css`).
+
+  <br />
   ### Getting started with templates
 
   Modyo provides a base of templates with the framework configured ready to use. The simplest is ```dynamic-react-base-template```, it is recommended to download this template using the [CLI](https://docs.modyo.com/es/platform/channels/cli.html). For further exploration and contribution, you can visit the [GitHub repository.](https://github.com/dynamic-framework/dynamic-react-base-template)
