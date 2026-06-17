@@ -181,7 +181,7 @@ function WelcomeOnboardingSplitActionsExample() {
   return (
     <div className="border position-relative overflow-hidden rounded-2" style={{ width: '390px', maxWidth: '100%', height: '760px', background: 'linear-gradient(180deg, #0f2f35 0%, #164952 44%, #1a5d67 100%)' }}>
       <style>
-        {'.welcome-photo-carousel .splide__pagination { bottom: 156px; z-index: 4; } .splide__track { height: 100%; }'}
+        {'.welcome-photo-carousel .splide__pagination { bottom: 156px; z-index: 4; } .welcome-photo-carousel .splide__track { height: 100%; }'}
       </style>
       <div className="h-100 position-relative">
         <div className="position-absolute top-0 start-0 bottom-0 end-0">
@@ -377,7 +377,7 @@ export const WelcomeOnboardingSplitActions: Story = {
             bottom: 156px;
             z-index: 4;
           }
-          .splide__track {
+          .welcome-photo-carousel .splide__track {
             height: 100%;
           }
         `}
