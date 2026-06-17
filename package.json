@@ -63,6 +63,8 @@
     "build:storybook": "storybook build --docs -o docs",
     "generate:registry": "node scripts/generate-api.mjs && node scripts/generate-schema.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
+    "generate:tokens": "node scripts/generate-tokens-schema.mjs && node scripts/generate-tokens.mjs",
+    "validate:tokens": "node scripts/validate-tokens.mjs",
     "eslint": "npm run eslint:src && npm run eslint:stories && npm run eslint:test",
     "eslint:src": "eslint 'src/**/*.ts' 'src/**/*.tsx' --ignore-pattern '**/*.spec.tsx'",
     "eslint:stories": "eslint stories/**/*.stories.tsx",
