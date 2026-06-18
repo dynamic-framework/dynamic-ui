@@ -1,0 +1,56 @@
+// DTCG token export harness — read-only data extraction.
+//
+// This partial is NEVER imported by the component stylesheet (dynamic-ui.scss).
+// It is compiled on its own, to a throwaway temp file, by scripts/generate-tokens.mjs
+// purely to read back the Sass-resolved values that feed registry/tokens.json.
+//
+// It emits ONLY the minimal data the contract needs (per SPEC §3):
+//   - the resolved hex of every chromatic-family ramp step (blue..cyan)
+//   - the resolved hex of every gray ramp step
+//   - the base hex of every family (the `$colors` entry == the -500/base)
+//   - the role -> target mapping ($theme-colors-mapping)
+//
+// Compile with the project's dart-sass and the same load-path the real build uses:
+//   node_modules/.bin/sass --no-source-map --load-path=src/style --load-path=./ \
+//     scripts/tokens/_export-harness.scss <tmp>.css
+//
+// Importing abstracts/+import brings in the Bootstrap tint-color/shade-color
+// functions and then _colors.scss, where the ramps are generated at compile time.
+
+@import "abstracts/+import";
+
+// The 10 chromatic families, each pointing at its fully-resolved ramp map
+// ($blues..$cyans are built in _colors.scss via tint-color/shade-color).
+$tok-families: (
+  "blue": $blues,
+  "indigo": $indigos,
+  "purple": $purples,
+  "pink": $pinks,
+  "red": $reds,
+  "orange": $oranges,
+  "yellow": $yellows,
+  "green": $greens,
+  "teal": $teals,
+  "cyan": $cyans,
+) !default;
+
+dtcg-export {
+  // Chromatic family ramps. $step-key is already prefixed, e.g. "blue-25".
+  @each $fam, $ramp in $tok-families {
+    @each $step-key, $val in $ramp {
+      --ramp-#{$step-key}: #{$val};
+    }
+    --base-#{$fam}: #{map-get($colors, $fam)};
+  }
+
+  // Gray ramp (hand-authored neutral scale in _colors.scss; $k is "25".."900").
+  @each $k, $v in $grays {
+    --ramp-gray-#{$k}: #{$v};
+  }
+  --base-gray: #{map-get($colors, "gray")};
+
+  // Role -> target mapping. Target is a quoted string, e.g. "gray-800" or "blue".
+  @each $role, $target in $theme-colors-mapping {
+    --map-#{$role}: "#{$target}";
+  }
+}
