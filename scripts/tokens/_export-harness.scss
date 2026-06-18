@@ -21,7 +21,7 @@
 
 // The 10 chromatic families, each pointing at its fully-resolved ramp map
 // ($blues..$cyans are built in _colors.scss via tint-color/shade-color).
-$_tok-families: (
+$tok-families: (
   "blue": $blues,
   "indigo": $indigos,
   "purple": $purples,
@@ -32,11 +32,11 @@ $_tok-families: (
   "green": $greens,
   "teal": $teals,
   "cyan": $cyans,
-);
+) !default;
 
 dtcg-export {
   // Chromatic family ramps. $step-key is already prefixed, e.g. "blue-25".
-  @each $fam, $ramp in $_tok-families {
+  @each $fam, $ramp in $tok-families {
     @each $step-key, $val in $ramp {
       --ramp-#{$step-key}: #{$val};
     }
