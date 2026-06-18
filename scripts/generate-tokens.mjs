@@ -287,9 +287,19 @@ function buildSpacing(space) {
     node[k] = { $value: dim };
     steps[k] = { factor: base.value === 0 ? 0 : dim.value / base.value };
   }
+  // The recipe base ($spacer) must coincide with one emitted level. Find that
+  // level instead of assuming `4`, so the alias stays correct (and fails fast)
+  // if the source scale ever changes such that $spacer != spacer-4.
+  const baseLevel = levels.find((k) => {
+    const d = parseDim(space[k]);
+    return d.value === base.value && d.unit === base.unit;
+  });
+  if (!baseLevel) {
+    throw new Error(`spacing base (${space.base}) matches no emitted level — cannot anchor the scale recipe`);
+  }
   node.$extensions = {
     'dev.dynamicframework.scale': {
-      base: '{spacing.4}', // $spacer == spacer-4 == 1rem
+      base: `{spacing.${baseLevel}}`,
       method: 'scalar-multiple',
       steps,
     },

@@ -205,11 +205,15 @@ const scaleExtension = {
   properties: {
     base: ALIAS,
     method: { const: 'scalar-multiple' },
+    // Constrained to the same fixed levels as `spacing` (0–30): a recipe that
+    // omits a level or invents one fails schema validation.
     steps: {
       type: 'object',
-      additionalProperties: {
+      required: SPACING_LEVELS,
+      properties: fromEntries(SPACING_LEVELS, {
         type: 'object', required: ['factor'], properties: { factor: { type: 'number' } }, additionalProperties: false,
-      },
+      }),
+      additionalProperties: false,
     },
   },
   additionalProperties: false,

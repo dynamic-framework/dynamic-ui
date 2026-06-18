@@ -135,17 +135,41 @@ function main() {
   }
   if (!failures) process.stdout.write(`✓ round-trip spacing: ${spaceChecked} levels reproduce from base × factor\n`);
 
-  // 5) Propagation: regenerate a family base and confirm it flows to the semantics.
-  const ref = tokens.semantic.primary['bg-subtle'].$value; // {color.blue.100}
-  const before = resolveAlias(tokens, ref);
-  const clone = JSON.parse(JSON.stringify(tokens));
-  const NEW_BASE = '#ff3300';
-  regenerateFamily(clone.color.blue, NEW_BASE);
-  const after = resolveAlias(clone, ref);
-  const expectedNew = rgbToHex(mix(WHITE, hexToRgb(NEW_BASE), 0.8)); // blue-100 = lighten 80%
-  if (after === before) fail('propagation: semantic did not change after regenerating the base (alias not propagating)');
-  if (after !== expectedNew) fail(`propagation: semantic resolved to ${after}, expected regenerated ${expectedNew}`);
-  if (!failures) process.stdout.write(`✓ propagation: regenerating blue base flows through ${ref} (${before} → ${after})\n`);
+  // 5) Propagation: regenerate a family base and confirm it flows through the
+  //    alias graph to the semantics. The probe is chosen dynamically (any
+  //    semantic aliasing a regenerable family) and the expected value is derived
+  //    from that step's own tint definition — no hard-coded family/step/weight.
+  const probe = (() => {
+    for (const [role, props] of Object.entries(tokens.semantic)) {
+      if (role === '$type') continue;
+      for (const [prop, t] of Object.entries(props)) {
+        const m = /^\{color\.([a-z]+)\.(\d{2,3})\}$/.exec(t.$value);
+        if (!m) continue;
+        const [, fam, step] = m;
+        const ext = tokens.color[fam]?.$extensions;
+        const tint = ext?.['dev.dynamicframework.tint'];
+        const deriv = ext?.['dev.dynamicframework.derivability'];
+        if (!tint || (deriv && deriv.regenerable === false)) continue; // need a regenerable family
+        return { ref: t.$value, role, prop, fam, step, def: tint.steps[step] };
+      }
+    }
+    return null;
+  })();
+  if (!probe) {
+    fail('propagation: found no semantic alias into a regenerable family to probe');
+  } else {
+    const before = resolveAlias(tokens, probe.ref);
+    const clone = JSON.parse(JSON.stringify(tokens));
+    const NEW_BASE = '#ff3300';
+    regenerateFamily(clone.color[probe.fam], NEW_BASE);
+    const after = resolveAlias(clone, probe.ref);
+    const expected = probe.def.op === 'base'
+      ? NEW_BASE
+      : rgbToHex(mix(probe.def.op === 'lighten' ? WHITE : BLACK, hexToRgb(NEW_BASE), probe.def.weight));
+    if (after === before) fail(`propagation: ${probe.ref} did not change after regenerating ${probe.fam} (alias not propagating)`);
+    else if (after !== expected) fail(`propagation: ${probe.ref} resolved to ${after}, expected ${expected}`);
+    else process.stdout.write(`✓ propagation: regenerating ${probe.fam} flows through semantic.${probe.role}.${probe.prop} ${probe.ref} (${before} → ${after})\n`);
+  }
 
   if (failures) { process.stderr.write(`\n${failures} check(s) FAILED.\n`); process.exit(1); }
   process.stdout.write('✓ tokens.json valid\n');
