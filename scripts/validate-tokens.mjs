@@ -63,13 +63,14 @@ function main() {
   for (const [name, node] of Object.entries(tokens.color)) {
     const tint = node.$extensions?.['dev.dynamicframework.tint'];
     if (!tint) continue; // roles have no tint extension
-    // Family nodes must be pure DTCG groups: no own $value (a token, not a group).
+    // Family nodes are DTCG groups: they must NOT carry their own $value
+    // (a node with $value is a token, which cannot also hold child tokens).
     if (Object.prototype.hasOwnProperty.call(node, '$value')) {
       fail(`${name}: family node must be a group (must NOT have its own $value)`);
     }
     if (tint.method !== 'bootstrap-mix') continue;
     mixFamilies += 1;
-    const baseRgb = hexToRgb(node['500'].$value); // -500 holds the literal base
+    const baseRgb = hexToRgb(node['500'].$value); // the 500 step holds the literal base
     for (const [step, def] of Object.entries(tint.steps)) {
       if (def.op === 'base') {
         if (!/^#[0-9a-f]{6}$/.test(node[step].$value)) {

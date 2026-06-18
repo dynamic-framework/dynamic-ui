@@ -77,9 +77,10 @@ const tintExtension = {
 };
 
 function familySchema() {
-  // A family is a pure DTCG group: $type + $extensions + step children, NO own
-  // $value (additionalProperties:false makes an own $value invalid). Every step,
-  // including -500, is a literal hex leaf.
+  // A family is a DTCG group: no own $value (additionalProperties:false makes one
+  // invalid), carrying a group-level $type:"color" that its step tokens inherit,
+  // plus the tint recipe in $extensions. Every step — including the 500 step,
+  // which holds the family base — is a literal hex leaf.
   const properties = {
     $type: { const: 'color' },
     $extensions: {
