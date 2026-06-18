@@ -25,6 +25,8 @@ const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPT_DIR, '..');
 const OUTPUT_DIR = resolve(ROOT, 'registry/schema');
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'tokens.v1.json');
+// Overridable for local/CI/alternate CDN, consistent with generate-schema.mjs.
+const CDN_BASE = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets').replace(/\/$/, '');
 
 const CHROMATIC = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan'];
 const ALL_FAMILIES = [...CHROMATIC, 'gray'];
@@ -319,7 +321,7 @@ function main() {
 
   const schema = {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
-    $id: 'https://cdn.dynamicframework.dev/assets/tokens/schema/tokens.v1.json',
+    $id: `${CDN_BASE}/tokens/schema/tokens.v1.json`,
     title: 'Dynamic UI DTCG token contract (v1)',
     type: 'object',
     required: ['$schema', '$extensions', 'color', 'semantic', 'typography', 'spacing', 'radius', 'shadow'],

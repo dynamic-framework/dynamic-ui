@@ -27,7 +27,10 @@ import { fileURLToPath } from 'node:url';
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPT_DIR, '..');
-const SASS_BIN = resolve(ROOT, 'node_modules/.bin/sass'); // R2: never the PATH `sass`
+// R2: the project's dart-sass, never the PATH `sass` (Ruby gem). Invoked via
+// `node <sass.js>` rather than the .bin shim so it also works on Windows
+// (where the shim is sass.cmd and execFileSync would not resolve it).
+const SASS_JS = resolve(ROOT, 'node_modules/sass/sass.js');
 const HARNESS = resolve(SCRIPT_DIR, 'tokens/_export-harness.scss');
 const OUTPUT_DIR = resolve(ROOT, 'registry');
 const OUTPUT_PATH = resolve(OUTPUT_DIR, 'tokens.json');
@@ -36,7 +39,8 @@ const OUTPUT_PATH = resolve(OUTPUT_DIR, 'tokens.json');
 // (new top-level groups), not a rebrand — so it bumps the contract's minor
 // (I4 forbids only rebrands from bumping), staying within schema major v1.
 const SCHEMA_VERSION = '1.1.0';
-const CDN_BASE = 'https://cdn.dynamicframework.dev/assets';
+// Overridable for local/CI/alternate CDN, consistent with generate-api.mjs.
+const CDN_BASE = (process.env.CDN_BASE_URL ?? 'https://cdn.dynamicframework.dev/assets').replace(/\/$/, '');
 
 // The 11-step tint curve, verbatim from _colors.scss (tint-color/shade-color).
 //   lighten w == mix(white, base, w*100%);  darken w == mix(black, base, w*100%) — sRGB.
@@ -114,8 +118,8 @@ function compileHarness() {
   const out = join(tmp, 'harness.css');
   try {
     execFileSync(
-      SASS_BIN,
-      ['--no-source-map', '--load-path=src/style', '--load-path=./', HARNESS, out],
+      process.execPath,
+      [SASS_JS, '--no-source-map', '--load-path=src/style', '--load-path=./', HARNESS, out],
       { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'] },
     );
     return { css: readFileSync(out, 'utf8'), tmp };
@@ -354,7 +358,9 @@ function main() {
   for (const [role, target] of Object.entries(mapping)) color[role] = buildRole(role, target);
 
   const tokens = {
-    $schema: `${CDN_BASE}/${version}/tokens/schema/tokens.v1.json`,
+    // Unversioned, matching the schema's own $id and the api.json precedent
+    // (assets/schema/v1.json). The contract version lives in `dynamicUi` below.
+    $schema: `${CDN_BASE}/tokens/schema/tokens.v1.json`,
     $extensions: {
       'dev.dynamicframework.contract': {
         schemaVersion: SCHEMA_VERSION,
